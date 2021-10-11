@@ -9,12 +9,12 @@ const config = {
     title: 'Orkes Conductor Documentation',
     tagline: 'Making Stateful Serverless Easy',
     url: 'https://orkes-io.github.io',
-    baseUrl: '/',
+    baseUrl: '/docs/',
     onBrokenLinks: 'warn',
     onBrokenMarkdownLinks: 'warn',
     favicon: 'img/favicon.ico',
-    organizationName: 'orkesio', // Usually your GitHub org/user name.
-    projectName: '/docs/', // Usually your repo name.
+    organizationName: 'orkes-io', // Usually your GitHub org/user name.
+    projectName: 'docs', // Usually your repo name.
     trailingSlash: false,
     presets: [
         [
