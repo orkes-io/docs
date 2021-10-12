@@ -17,3 +17,7 @@ After completing the steps in this article, you will have:
 > Have the UI spun up against the API server with the ability to search
 
 DOCKER TODO
+
+```js reference
+https://github.com/saucelabs/docusaurus-theme-github-codeblock/blob/main/src/theme/ReferenceCodeBlock/index.tsx#L105-L108
+```
