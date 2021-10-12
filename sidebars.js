@@ -48,7 +48,7 @@ module.exports = {
         {
             type: 'category',
             label: 'System Tasks',
-            collapsed: false,
+            collapsed: true,
             items: [
                 'system-tasks/do-while-task',
                 'system-tasks/dynamic-fork-task',
@@ -71,7 +71,7 @@ module.exports = {
         {
             type: 'category',
             label: 'Running Workflows',
-            collapsed: false,
+            collapsed: true,
             items: [
                 'running-workflows/running-first-worker',
                 'running-workflows/running-first-workflow',
@@ -82,7 +82,7 @@ module.exports = {
         {
             type: 'category',
             label: 'Running in Production',
-            collapsed: false,
+            collapsed: true,
             items: [
                 'running-in-production/running-in-aws',
                 'running-in-production/running-in-gcp',

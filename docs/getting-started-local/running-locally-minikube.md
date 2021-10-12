@@ -4,16 +4,19 @@ sidebar_position: 3
 
 # Running Locally - Minikube - k8s
 
-In this article we will explore how you can set up Netflix Conductor on your local machine for trying out some of its
-features.
+It is quite straightforward to deploy Conductor to Kubernetes. We learned how to use docker-compose in our previous
+article here. We can
+follow [the guide here](https://kubernetes.io/docs/tasks/configure-pod-container/translate-compose-kubernetes/) to
+convert our docker-compose into a working kubernetes installation.
 
-This article shows you how to start Netflix Conductor in your local Kubernetes environment. We will use Minikube, but
-the steps should be common for any local kubernetes environments.
+This guide will walk through step by step on how this works. In case you find any steps as not working, please check the
+link above to see if there are any updates. You can also help us by editing this page if you find any discrepancy.
 
-After completing the steps in this article, you will have:
+### Prerequisites
 
-> A local instance of Netflix Conductor API server running
+1. Install minikube or a similar Kubernetes cluster in your local or development environment
+   [https://minikube.sigs.k8s.io/docs/start/](https://minikube.sigs.k8s.io/docs/start/)
 
-> Have the UI spun up against the API server with the ability to search
+### Steps
 
-MINIKUBE TODO
+
