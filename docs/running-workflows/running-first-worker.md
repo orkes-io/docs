@@ -6,6 +6,11 @@ sidebar_position: 2
 
 In this article we will explore how you can get your first worker task running.
 
+We are hosting the full code used in this article in the following location. You can clone and use it as a reference
+locally.
+
+#### https://github.com/orkes-io/orkesworkers
+
 In the previous article, you used an `HTTP` task run your first simple workflow. Now it's time to explore how to run a
 custom worker that you will implement yourself.
 
