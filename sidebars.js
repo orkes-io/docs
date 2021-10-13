@@ -26,8 +26,8 @@ module.exports = {
             label: 'Running Workflows',
             collapsed: false,
             items: [
-                'running-workflows/running-first-worker',
                 'running-workflows/running-first-workflow',
+                'running-workflows/running-first-worker',
                 'running-workflows/running-workers-microservices'
             ],
         }
@@ -48,7 +48,7 @@ module.exports = {
         {
             type: 'category',
             label: 'System Tasks',
-            collapsed: true,
+            collapsed: false,
             items: [
                 'system-tasks/do-while-task',
                 'system-tasks/dynamic-fork-task',
@@ -66,27 +66,6 @@ module.exports = {
                 'system-tasks/switch-task',
                 'system-tasks/terminate-task',
                 'system-tasks/wait-task',
-            ],
-        },
-        {
-            type: 'category',
-            label: 'Running Workflows',
-            collapsed: true,
-            items: [
-                'running-workflows/running-first-worker',
-                'running-workflows/running-first-workflow',
-                'running-workflows/running-workers-microservices'
-            ],
-        }
-        ,
-        {
-            type: 'category',
-            label: 'Running in Production',
-            collapsed: true,
-            items: [
-                'running-in-production/running-in-aws',
-                'running-in-production/running-in-gcp',
-                'running-in-production/running-in-azure'
             ],
         }
     ]
