@@ -6,15 +6,23 @@ sidebar_position: 5
 
 ### What is FORK Task?
 
-Fork Task is used to schedule parallel set of tasks, specified by `"type":"FORK_JOIN"`.
+Fork Task is used to schedule parallel set of tasks.
 
 ### What is a common FORK Task use case?
 
-If there is a scenario where, we need to schedule and run set of tasks
+Consider, there is a scenario where, we need to schedule and run set of tasks
 in parallel. FORK Task would be the best option to use.
 
 
 ### How is it defined?
+
+FORK task is defined directly inside the workflow with `"type":"FORK_JOIN"`.
+
+### Example of FORK Task
+
+Following is an example of Fork Task which can be defined inside the
+workflow.
+
 
 ```json
 [
