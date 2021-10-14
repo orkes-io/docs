@@ -6,7 +6,7 @@ sidebar_position: 2
 
 In this article we will explore how you can get your first worker task running.
 
-We are hosting the full code used in this article in the following location. You can clone and use it as a reference
+We are hosting the code used in this article in the following location. You can clone and use it as a reference
 locally.
 
 #### https://github.com/orkes-io/orkesworkers
@@ -14,7 +14,7 @@ locally.
 In the previous article, you used an `HTTP` task run your first simple workflow. Now it's time to explore how to run a
 custom worker that you will implement yourself.
 
-After completing the steps in this article, you will have:
+After completing the steps in this article, you will:
 
 1. Learn about a SIMPLE worker type which runs your custom code
 2. Learn about how a custom worker task runs from your environment and connects to Conductor
