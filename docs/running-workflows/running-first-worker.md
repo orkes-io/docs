@@ -222,7 +222,7 @@ change the outputs and re-run and see how it works.
 
 ## Summary
 
-In this blog post — we learned how to run a sample workflow in your Conductor installation with a custom worker.
+In this blog post — we learned how to run a sample workflow in our Conductor installation with a custom worker.
 Concepts we touched on:
 
 1. Adding Task (worker) definition

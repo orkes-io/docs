@@ -106,7 +106,7 @@ This will take a couple of mins, and it should run successfully. And then you ca
 UI:
 
 ```shell
-ui $ yarn start
+ui $ yarn run start
 ```
 
 Once running you will see the link to access this in your console. When running in this way - it starts in a development
