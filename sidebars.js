@@ -9,16 +9,20 @@
  Create as many sidebars as you want.
  */
 module.exports = {
+    showcaseSideBar: [
+        'showcase'
+    ],
     tutorialsSideBar: [
         'intro',
         {
             type: 'category',
-            label: 'Getting Started - Local',
+            label: 'Installation Guide',
             collapsed: false,
             items: [
-                'getting-started-local/running-locally',
-                'getting-started-local/running-locally-docker',
-                'getting-started-local/running-locally-minikube'
+                'installing-conductor/running-locally',
+                'installing-conductor/running-locally-docker',
+                'installing-conductor/running-locally-minikube',
+                'installing-conductor/running-binaries'
             ],
         },
         {
@@ -39,7 +43,7 @@ module.exports = {
             items: [
                 'running-in-production/running-in-aws',
                 'running-in-production/running-in-gcp',
-                'running-in-production/running-in-azure'
+                'running-in-production/running-in-azure',
             ],
         }
     ],
