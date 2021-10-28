@@ -9,6 +9,38 @@
  Create as many sidebars as you want.
  */
 module.exports = {
+    tutorialsSideBarV2: [
+        'tutorials',
+        {
+            type: 'category',
+            label: 'Installation Guide',
+            collapsed: false,
+            items: [
+                'installing-conductor/running-locally',
+                'installing-conductor/running-locally-docker',
+                'installing-conductor/running-locally-minikube',
+                'installing-conductor/running-binaries'
+            ],
+        },
+        {
+            type: 'category',
+            label: 'Running Workflows',
+            collapsed: false,
+            items: [
+                'running-workflows/create-workflow',
+                'running-workflows/execute-workflow',
+                'running-workflows/adding-tasks',
+                'running-workflows/adding-system-tasks',
+                'running-workflows/running-task-workers',
+                'running-workflows/using-java-client-sdk',
+                'running-workflows/tasks-across-microservices',
+                'running-workflows/handling-errors',
+                'running-workflows/restarting-worklows',
+                'running-workflows/pause-resume-workflows',
+                'running-workflows/viewing-definitions',
+            ],
+        },
+    ],
     showcaseSideBar: [
         'showcase'
     ],
