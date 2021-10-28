@@ -67,7 +67,7 @@ const config = {
                     },
                     {
                         type: 'doc',
-                        docId: 'docsIntro',
+                        docId: 'howtos',
                         position: 'left',
                         label: 'How-Tos',
                     },
