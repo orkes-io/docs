@@ -9,6 +9,36 @@
  Create as many sidebars as you want.
  */
 module.exports = {
+    howtoSideBar: [
+        'howtos',
+        {
+            type: 'category',
+            label: 'Workflows',
+            collapsed: false,
+            items: [
+                'how-tos/view-workflow-executions',
+                'how-tos/searching-workflows',
+                'how-tos/debugging-workflows',
+                'how-tos/updating-workflows',
+                'how-tos/using-domains',
+            ],
+        },
+        {
+            type: 'category',
+            label: 'Tasks',
+            collapsed: false,
+            items: [
+                'how-tos/task-configurations',
+                'how-tos/updating-tasks',
+                'how-tos/reusing-tasks',
+                'how-tos/monitoring-task-queues',
+                'how-tos/using-dynamic-tasks',
+                'how-tos/using-dynamic-forks',
+                'how-tos/using-switch',
+                'how-tos/using-sub-workflows',
+            ],
+        },
+    ],
     tutorialsSideBarV2: [
         'tutorials',
         {
@@ -35,7 +65,7 @@ module.exports = {
                 'running-workflows/using-java-client-sdk',
                 'running-workflows/tasks-across-microservices',
                 'running-workflows/handling-errors',
-                'running-workflows/restarting-worklows',
+                'running-workflows/restarting-workflows',
                 'running-workflows/pause-resume-workflows',
                 'running-workflows/viewing-definitions',
             ],
