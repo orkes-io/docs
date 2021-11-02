@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-# Running Hello World Worker
+# Running First Worker
 
 In this article we will explore how you can get your first worker task running.
 

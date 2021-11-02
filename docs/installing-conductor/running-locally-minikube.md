@@ -2,7 +2,7 @@
 sidebar_position: 3
 ---
 
-# Running Locally - Minikube - k8s
+# Running on Minikube - k8s
 
 It is quite straightforward to deploy Conductor to Kubernetes. We learned how to use docker-compose in our previous
 article here. We can

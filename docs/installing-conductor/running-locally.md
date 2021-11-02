@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# Running Locally - From Code
+# Running From Code
 
 In this article we will explore how you can set up Netflix Conductor on your local machine for trying out some of its
 features.

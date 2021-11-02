@@ -54,21 +54,21 @@ const config = {
                 items: [
                     {
                         type: 'doc',
-                        docId: 'intro',
+                        docId: 'tutorials',
                         position: 'left',
                         label: 'Tutorials',
                     },
                     {
                         type: 'doc',
-                        docId: 'docsIntro',
+                        docId: 'howtos',
                         position: 'left',
-                        label: 'Docs',
+                        label: 'How-Tos',
                     },
                     {
                         type: 'doc',
-                        docId: 'intro',
+                        docId: 'showcase',
                         position: 'left',
-                        label: 'Showcase',
+                        label: 'Reference Docs',
                     },
                     {
                         to: '/blog',
