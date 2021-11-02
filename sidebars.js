@@ -38,6 +38,51 @@ module.exports = {
                 'how-tos/using-sub-workflows',
             ],
         },
+        {
+            type: 'category',
+            label: 'Workers',
+            collapsed: false,
+            items: [
+                'how-tos/build-a-java-task-worker',
+                'how-tos/build-a-python-task-worker',
+                'how-tos/build-a-golang-task-worker',
+                'how-tos/build-a-nodejs-task-worker',
+            ],
+        },
+        {
+            type: 'category',
+            label: 'Client SDKs',
+            collapsed: false,
+            items: [
+                'how-tos/java-sdk',
+                'how-tos/python-sdk',
+                'how-tos/golang-sdk',
+                'how-tos/nodejs-sdk',
+            ],
+        },
+        {
+            type: 'category',
+            label: 'Best Practises',
+            collapsed: false,
+            items: [
+                'how-tos/maintaining-workflows',
+                'how-tos/idempotency',
+                'how-tos/retry-configurations',
+                'how-tos/timeouts',
+            ],
+        },
+        {
+            type: 'category',
+            label: 'Running in Production',
+            collapsed: false,
+            items: [
+                'how-tos/conductor-configurations',
+                'how-tos/scaling-the-system',
+                'how-tos/archival-of-workflows',
+                'how-tos/configuring-metrics',
+            ],
+        },
+
     ],
     tutorialsSideBarV2: [
         'tutorials',
@@ -71,8 +116,64 @@ module.exports = {
             ],
         },
     ],
+
     showcaseSideBar: [
-        'showcase'
+        'showcase',
+        {
+            type:'category',
+            label:'Concepts',
+            collapsed:false,
+            items:[
+                'reference-docs/workflows',
+                'reference-docs/tasks-and-workers',
+                'reference-docs/operators',
+                'reference-docs/system-tasks',
+            ],
+        },
+        {
+            type:'category',
+            label:'System Tasks',
+            collapsed:false,
+            items:[
+                'reference-docs/http-task',
+                'reference-docs/kafka-publish-task',
+                'reference-docs/json-jq-transform-task',
+                'reference-docs/set-variable-task',
+            ],
+        },
+        {
+            type:'category',
+            label:'Operators',
+            collapsed:false,
+            items:[
+                'reference-docs/switch-task',
+                'reference-docs/do-while-task',
+                'reference-docs/fork-task',
+                'reference-docs/dynamic-fork-task',
+                'reference-docs/join-task',
+                'reference-docs/exclusive-join-task',
+                'reference-docs/wait-task',
+                'reference-docs/dynamic-task',
+                'reference-docs/inline-task',
+                'reference-docs/terminate-task',
+            ],
+        },
+        {
+            type:'category',
+            label:'Event Task',
+            collapsed:false,
+            items:[
+
+            ],
+        },
+        {
+            type:'category',
+            label:'Sub Workflows',
+            collapsed:false,
+            items:[
+
+            ],
+        },
     ],
     tutorialsSideBar: [
         'intro',
@@ -84,7 +185,7 @@ module.exports = {
                 'installing-conductor/running-locally',
                 'installing-conductor/running-locally-docker',
                 'installing-conductor/running-locally-minikube',
-                'installing-conductor/running-binaries'
+                'installing-conductor/running-binaries',
             ],
         },
         {
@@ -94,10 +195,9 @@ module.exports = {
             items: [
                 'running-workflows/running-first-workflow',
                 'running-workflows/running-first-worker',
-                'running-workflows/running-workers-microservices'
+                'running-workflows/running-workers-microservices',
             ],
-        }
-        ,
+        },
         {
             type: 'category',
             label: 'Running in Production',
