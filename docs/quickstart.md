@@ -23,7 +23,7 @@ com.netflix.conductor.Conductor [] - Started Conductor in 5.912 seconds (JVM run
 
 Navigate to the server URL: [http://localhost:8080/](http://localhost:8080/)
 
-![Conductor Server Home Page](/img/tutorial/conductorHome.png)
+<img src="/docs/img/tutorial/conductorHome.png" width="300" height="200"/>
 
 ## 3. Launch UI
 Building UI requires `node` and `yarn` to be installed.  Download them if required:
@@ -34,7 +34,11 @@ Once downloaded, build and install UI
 
 ```shell
 $ cd conductor/ui
+```
+```shell
 yarn install
+```
+```shell
 yarn run start
 ```
 
