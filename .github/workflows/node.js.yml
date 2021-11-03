@@ -18,8 +18,8 @@ jobs:
       with:
         node-version: '16'
         cache: 'npm'
-#     - run: npm install
-#     - run: npm run build
+    - run: npm install
+    - run: npm run build
 #         "https://$USER_NAME:$API_TOKEN_GITHUB@$GITHUB_SERVER/$DESTINATION_REPOSITORY_USERNAME/$DESTINATION_REPOSITORY_NAME.git"
     - run: ls -larth
     - run: |
