@@ -30,6 +30,7 @@ jobs:
         git config -l
         git clone --single-branch --branch "gh-pages" "https://${{secrets.GH_USER}}:${{secrets.GH_DEPLOY_TOKEN}}@github.com/orkes-io/orkesio-site.git" "$CLONE_DIR"
         ls -la "$CLONE_DIR"
+        rm -rf $CLONE_DIR/content/*
         rsync -a ./build/ $CLONE_DIR/content/
         cd $CLONE_DIR
         git add .
@@ -37,5 +38,5 @@ jobs:
         git commit -m "Committing Changes from build ${{ github.run_id }}-${{ github.run_number }}"
         git status
         git push
-        
-        
+
+
