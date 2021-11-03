@@ -9,7 +9,7 @@ const config = {
     title: 'Orkes Conductor Documentation',
     tagline: 'Making Stateful Serverless Easy',
     url: 'https://orkes-io.github.io',
-    baseUrl: '/docs/',
+    baseUrl: '/content/',
     onBrokenLinks: 'warn',
     onBrokenMarkdownLinks: 'warn',
     favicon: 'img/favicon.ico',
@@ -27,6 +27,7 @@ const config = {
                     editUrl: 'https://github.com/facebook/docusaurus/edit/main/website/',
                 },
                 blog: {
+                    path: './blog',
                     showReadingTime: true,
                     // Please change this to your repo.
                     editUrl:
