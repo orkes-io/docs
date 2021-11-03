@@ -20,6 +20,7 @@ jobs:
         cache: 'npm'
 #     - run: npm install
 #     - run: npm run build
+#         "https://$USER_NAME:$API_TOKEN_GITHUB@$GITHUB_SERVER/$DESTINATION_REPOSITORY_USERNAME/$DESTINATION_REPOSITORY_NAME.git"
     - run: ls -larth
     - run: |
         CLONE_DIR=$(mktemp -d)
@@ -27,5 +28,7 @@ jobs:
         git config --global user.email "${{ secrets.GH_USER_EMAIL }}"
         git config --global user.name "${{ secrets.GH_USER }}"
         git config -l
+        git clone --single-branch --branch "gh-pages" "git@github.com:orkes-io/orkesio-site.git" "$CLONE_DIR"
+        ls -la "$CLONE_DIR"
         
         
