@@ -57,7 +57,7 @@ const config = {
                 title: 'Orkes Conductor',
                 logo: {
                     alt: 'Orkes Conductor Logo',
-                    src: 'img/logo.svg',
+                    src: 'img/Logo-Small.png',
                 },
                 items: [
                     {
