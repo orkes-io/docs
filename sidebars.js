@@ -104,6 +104,7 @@ module.exports = {
             items: [
                 'running-workflows/create-workflow',
                 'running-workflows/execute-workflow',
+                'running-workflows/create-task',
                 'running-workflows/adding-tasks',
                 'running-workflows/adding-system-tasks',
                 'running-workflows/running-task-workers',
@@ -124,6 +125,7 @@ module.exports = {
             label:'Concepts',
             collapsed:false,
             items:[
+                'reference-docs/concepts-overview',
                 'reference-docs/workflows',
                 'reference-docs/tasks-and-workers',
                 'reference-docs/operators',
