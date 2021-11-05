@@ -33,10 +33,13 @@ jobs:
         rm -rf $CLONE_DIR/content/*
         rsync -a ./build/ $CLONE_DIR/content/
         cd $CLONE_DIR
-        git add .
-        git status
-        git commit -m "Committing Changes from build ${{ github.run_id }}-${{ github.run_number }}"
-        git status
-        git push
+        git status -s
+        echo `git status -s`
+        [ ! -z "git status -s" ]  && git add . && git commit -m "Adding website changes ${{ github.run_id }}-${{ github.run_number }}" && git push
+#        git add .
+#        git status
+#        git commit -m "Committing Changes from build ${{ github.run_id }}-${{ github.run_number }}"
+#        git status
+#        git push
 
 
