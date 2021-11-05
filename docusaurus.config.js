@@ -16,6 +16,13 @@ const config = {
     organizationName: 'orkes-io', // Usually your GitHub org/user name.
     projectName: 'docs', // Usually your repo name.
     trailingSlash: false,
+    scripts: [
+	'https://www.googletagmanager.com/gtag/js?id=G-4400JPTLRF',
+	{
+		src: '/docs/js/ga.js',
+		async: true,
+        },
+    ],
     presets: [
         [
             '@docusaurus/preset-classic',
