@@ -3,13 +3,13 @@
 
 const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
-
+const baseUrlName = '/content';
 /** @type {import('@docusaurus/types').Config} */
 const config = {
     title: 'Orkes Conductor Documentation',
     tagline: 'Making Stateful Serverless Easy',
     url: 'https://orkes-io.github.io',
-    baseUrl: '/content/',
+    baseUrl: baseUrlName + '/',
     onBrokenLinks: 'warn',
     onBrokenMarkdownLinks: 'warn',
     favicon: 'img/favicon.ico',
@@ -19,7 +19,7 @@ const config = {
     scripts: [
 	'https://www.googletagmanager.com/gtag/js?id=G-4400JPTLRF',
 	{
-		src: '/docs/js/ga.js',
+		src: baseUrlName + '/js/ga.js',
 		async: true,
         },
     ],
