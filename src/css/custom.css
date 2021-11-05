@@ -23,6 +23,15 @@
   padding: 0 var(--ifm-pre-padding);
 }
 
+@font-face {
+  font-family: 'Gothic-A1-Regular';
+  src: url(fonts/GothicA1-Regular.ttf);
+}
+
 html[data-theme='dark'] .docusaurus-highlight-code-line {
   background-color: rgba(0, 0, 0, 0.3);
+}
+body {
+    font-family: Gothic-A1-Regular;
+    font-size: 0.9em;
 }
