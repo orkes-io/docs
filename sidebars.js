@@ -104,6 +104,7 @@ module.exports = {
             items: [
                 'running-workflows/create-workflow',
                 'running-workflows/execute-workflow',
+                'running-workflows/create-task',
                 'running-workflows/adding-tasks',
                 'running-workflows/adding-system-tasks',
                 'running-workflows/running-task-workers',

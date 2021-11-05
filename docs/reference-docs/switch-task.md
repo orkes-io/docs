@@ -45,6 +45,7 @@ Suppose in a workflow, we have to take decision to ship the courier with the shi
 service providers on the basis of input provided while running the workflow.
 
 Tasks are same as we defined in [Dynamic Task](/docs/reference-docs/dynamic-task).
+Tasks are same as we defined in `Dynamic Task`.
 
 We will create the Workflow with the following definition :
 
