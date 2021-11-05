@@ -35,10 +35,10 @@ jobs:
         echo "Moving to clone directory: $CLONE_DIR"
         cd $CLONE_DIR
         echo "Running Git Status"
-        git status -s
-        echo "Git Status: "`git status -s`
+        gitstatustext=`git status -s`
+        echo "Git Status: $gitstatustext"
         echo "Running Git Push If Needed"
-        [ ! -z "git status -s" ]  && git add . && git commit -m "Adding website changes ${{ github.run_id }}-${{ github.run_number }}" && git push
+        [ ! "$gitstatustext" == "" ]  && (git add . && git commit -m "Adding website changes ${{ github.run_id }}-${{ github.run_number }}" && git push)
 #        git add .
 #        git status
 #        git commit -m "Committing Changes from build ${{ github.run_id }}-${{ github.run_number }}"
