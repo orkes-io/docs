@@ -5,15 +5,15 @@ sidebar_position: 1
 # Workflows
 
 ## What are Workflows?
-At a high level, a workflow is the Conductor primitive that encompasses the definition and flow of your business logic. It is through a workflow definition that you specify what are the Tasks that you want Conductor to execute, the ordering of execution flows across these Tasks and how results from different Tasks should be combined together to give you the final result.
+At a high level, a workflow is the Conductor primitive that encompasses the definition and flow of your business logic. It is through a workflow definition that you specify what are the [Tasks](tasks-and-workers.md) that you want Conductor to execute, the ordering of execution flows across these Tasks and how results from different Tasks should be combined together to give you the final result. This orchestration of Tasks can happen a hybrid ecosystem that includes micro services, serverless functions, monolithic applications that spans public cloud and on-premise datacenter footprints. 
 
 One key benefit of this approach is that you can build a complex application using simple and granular tasks that do not need to be aware of or keep track of the state of your application's execution flow. Conductor will keep track of that, calls tasks in the right order (sequentially or parallelly, as defined by you), retry calls if needed, handle failure scenarios gracefully and outputs the final result. 
 
-Leveraging workflows in Conductor enables developers to truly focus on their core mission - building their application code. Conductor meanwhile does the heavy lifting associated with ensuring high reliability, transactional consistency and long durability of their workflows.
+Leveraging workflows in Conductor enables developers to truly focus on their core mission - building their application code in the languages of their choice. Conductor meanwhile does the heavy lifting associated with ensuring high reliability, transactional consistency and long durability of their workflows. Simply put, wherever your application's component lives and whichever languages they were written in, you can build a workflow in Conductor to orchestrate their execution in a reliable & scalable manner.
 
 ## How does a Workflow look like?
-Lets start with a very basic workflow and understand what are the different aspects of it. In particular, we will talk about two stages of a workflow, *defining* a workflow and *executing* a workflow
-### *Simple Shipping Workflow*
+Lets start with a  basic workflow and understand what are the different aspects of it. In particular, we will talk about two stages of a workflow, *defining* a workflow and *executing* a workflow
+### *Simple Workflow Example*
 Assume your business logic is to simply to get some shipping information and then do the shipping. You start by logically partitioning them into two tasks
 * **shipping_info** 
 * **shipping_task** 
@@ -24,7 +24,7 @@ After that, you [add those tasks into the workflow](../running-workflows/adding-
 
 ![Simple Shipping Workflow - Visual Representation](../../static/img/tutorial/ShippingWorkflow.png)
 
-### *Multiple Vendor Shipping Workflow*
+### *Multiple Paths Workflow Example*
 
 Next lets see a more complex example where you want to support multiple shipping vendors (e.g. FedEx, DHL, UPS) and the code for each of them ive in separate services. This is a good design pattern to follow since you can now independtly change each of them without having to worry about breaking others. Usually this means you now have to take on the work of wiring up many different services into your primary execution path. But with Conductor, this just means adding a [switch operator](../system-tasks/switch-task.md) to decide which vendor to call depending on an incoming parameter, and then during execution time the right one will be called! 
 

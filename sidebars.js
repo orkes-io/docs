@@ -125,6 +125,7 @@ module.exports = {
             label:'Concepts',
             collapsed:false,
             items:[
+                'reference-docs/concepts-overview',
                 'reference-docs/workflows',
                 'reference-docs/tasks-and-workers',
                 'reference-docs/operators',
