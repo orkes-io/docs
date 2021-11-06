@@ -62,7 +62,7 @@ module.exports = {
         },
         {
             type: 'category',
-            label: 'Best Practises',
+            label: 'Best Practices',
             collapsed: false,
             items: [
                 'how-tos/maintaining-workflows',

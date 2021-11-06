@@ -17,10 +17,10 @@ const config = {
     projectName: 'docs', // Usually your repo name.
     trailingSlash: false,
     scripts: [
-	'https://www.googletagmanager.com/gtag/js?id=G-4400JPTLRF',
-	{
-		src: baseUrlName + '/js/ga.js',
-		async: true,
+        'https://www.googletagmanager.com/gtag/js?id=G-4400JPTLRF',
+        {
+            src: baseUrlName + '/js/ga.js',
+            async: true,
         },
     ],
     presets: [
@@ -30,15 +30,12 @@ const config = {
             ({
                 docs: {
                     sidebarPath: require.resolve('./sidebars.js'),
-                    // Please change this to your repo.
-                    editUrl: 'https://github.com/facebook/docusaurus/edit/main/website/',
+                    editUrl: 'https://github.com/orkes-io/docs/edit/main/',
                 },
                 blog: {
                     path: './blog',
                     showReadingTime: true,
-                    // Please change this to your repo.
-                    editUrl:
-                        'https://github.com/facebook/docusaurus/edit/main/website/blog/',
+                    editUrl: 'https://github.com/orkes-io/docs/edit/main/',
                 },
                 theme: {
                     customCss: require.resolve('./src/css/custom.css'),
@@ -57,7 +54,7 @@ const config = {
                 title: 'Orkes Conductor',
                 logo: {
                     alt: 'Orkes Conductor Logo',
-                    src: 'img/Logo-Small.png',
+                    src: 'img/Logo-Small.png'
                 },
                 items: [
                     {
@@ -84,13 +81,15 @@ const config = {
                         position: 'left'
                     },
                     {
-                        to: 'https://orkes.io',
+                        href: 'https://orkes.io',
                         label: 'orkes.io',
+                        target: '_orkes_io',
                         position: 'left'
                     },
                     {
                         href: 'https://github.com/Netflix/conductor',
                         label: 'GitHub',
+                        target: '_orkes_io',
                         position: 'right',
                     },
                 ],
