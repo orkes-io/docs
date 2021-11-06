@@ -93,8 +93,7 @@ module.exports = {
             items: [
                 'installing-conductor/running-locally',
                 'installing-conductor/running-locally-docker',
-                'installing-conductor/running-locally-minikube',
-                'installing-conductor/running-binaries'
+                'installing-conductor/running-locally-minikube'
             ],
         },
         {
@@ -158,6 +157,8 @@ module.exports = {
                 'reference-docs/dynamic-task',
                 'reference-docs/inline-task',
                 'reference-docs/terminate-task',
+                'reference-docs/set-variable-task',
+                'reference-docs/sub-workflow-task',
             ],
         },
         {
@@ -166,14 +167,6 @@ module.exports = {
             collapsed:false,
             items:[
 
-            ],
-        },
-        {
-            type:'category',
-            label:'Sub Workflows',
-            collapsed:false,
-            items:[
-                'reference-docs/sub-workflow-task',
             ],
         },
     ],
@@ -187,7 +180,6 @@ module.exports = {
                 'installing-conductor/running-locally',
                 'installing-conductor/running-locally-docker',
                 'installing-conductor/running-locally-minikube',
-                'installing-conductor/running-binaries',
             ],
         },
         {
@@ -218,22 +210,10 @@ module.exports = {
             label: 'System Tasks',
             collapsed: false,
             items: [
-                'system-tasks/do-while-task',
-                'system-tasks/dynamic-fork-task',
-                'system-tasks/dynamic-task',
-                'system-tasks/event-task',
-                'system-tasks/exclusive-join-task',
-                'system-tasks/fork-task',
-                'system-tasks/http-task',
-                'system-tasks/inline-task',
-                'system-tasks/join-task',
-                'system-tasks/json-jq-transform-task',
-                'system-tasks/kafka-publish-task',
-                'system-tasks/set-variable-task',
-                'system-tasks/sub-workflow-task',
-                'system-tasks/switch-task',
-                'system-tasks/terminate-task',
-                'system-tasks/wait-task',
+                'reference-docs/system-tasks/http-task',
+                'reference-docs/system-tasks/inline-task',
+                'reference-docs/system-tasks/json-jq-transform-task',
+                'reference-docs/system-tasks/kafka-publish-task',
             ],
         }
     ]
