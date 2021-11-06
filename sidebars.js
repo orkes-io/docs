@@ -10,7 +10,7 @@
  */
 module.exports = {
     howtoSideBar: [
-        'howtos',
+        'how-tos',
         {
             type: 'category',
             label: 'Workflows',
@@ -118,8 +118,8 @@ module.exports = {
         },
     ],
 
-    showcaseSideBar: [
-        'showcase',
+    referenceDocsSideBar: [
+        'reference-docs',
         {
             type:'category',
             label:'Concepts',

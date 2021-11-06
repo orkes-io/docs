@@ -114,8 +114,8 @@ const config = {
                                 href: 'https://stackoverflow.com/questions/tagged/netflix-conductor',
                             },
                             {
-                                label: 'Slack (Pending)',
-                                href: 'https://discordapp.com/invite/docusaurus',
+                                label: 'Slack Community',
+                                href: 'https://join.slack.com/t/orkes-conductor/shared_invite/zt-xyxqyseb-YZ3hwwAgHJH97bsrYRnSZg',
                             },
                             {
                                 label: 'Twitter',
@@ -127,11 +127,8 @@ const config = {
                         title: 'More',
                         items: [
                             {
-                                label: 'Conductor Roadmap',
-                                to: '/roadmap',
-                            }, {
                                 label: 'Blog',
-                                to: '/blog',
+                                to: '/content/blog',
                             },
                             {
                                 label: 'GitHub',
@@ -140,7 +137,7 @@ const config = {
                         ],
                     },
                 ],
-                copyright: `Copyright © ${new Date().getFullYear()} Orkes Conductor.`,
+                copyright: `Copyright © ${new Date().getFullYear()} Orkes Inc`,
             },
             prism: {
                 theme: lightCodeTheme,
