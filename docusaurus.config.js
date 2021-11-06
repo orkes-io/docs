@@ -65,13 +65,13 @@ const config = {
                     },
                     {
                         type: 'doc',
-                        docId: 'howtos',
+                        docId: 'how-tos',
                         position: 'left',
                         label: 'How-Tos',
                     },
                     {
                         type: 'doc',
-                        docId: 'showcase',
+                        docId: 'reference-docs',
                         position: 'left',
                         label: 'Reference Docs',
                     },
