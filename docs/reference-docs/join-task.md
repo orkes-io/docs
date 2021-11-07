@@ -25,8 +25,8 @@ and `my_task_ref_2` as specified by the `joinOn` attribute.
 
 ```json
 {
-  "name": "image_multiple_convert_resize_join",
-  "taskReferenceName": "image_multiple_convert_resize_join_ref",
+  "name": "join_task",
+  "taskReferenceName": "my_join_task_ref",
   "type": "JOIN",
   "joinOn": [
     "my_task_ref_1",
