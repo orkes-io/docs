@@ -6,8 +6,8 @@ sidebar_position: 1
 
 ### Introduction
 
-A Fork operation in conductor, lets you run a specified list of other tasks or sub workflows in parallel after the fork
-task. A fork task is followed by a join operation that waits on the forked tasks or sub workflows to finish. The `JOIN`
+A Fork operation in conductor, lets you run a specified list of other tasks or sub workflows in parallel. A fork task is
+followed by a join operation that waits on the forked tasks or sub workflows to finish. The `JOIN`
 task also collects outputs from each of the forked tasks or sub workflows.
 
 ### Use Cases
@@ -23,7 +23,8 @@ A `FORK_JOIN` task, has a `forkTasks` attribute that expects an array. Each arra
 sub-lists and then invoked in parallel. The tasks defined within each sublist can be sequential or any other way as
 desired.
 
-A FORK_JOIN task has to be followed by a JOIN operation. The `JOIN` operator specifies which of the forked tasks to `joinOn` (wait for completion)
+A FORK_JOIN task has to be followed by a JOIN operation. The `JOIN` operator specifies which of the forked tasks
+to `joinOn` (wait for completion)
 before moving to the next stage in the workflow.
 
 ```json
@@ -108,19 +109,20 @@ references that were being `joinOn`. The corresponding values are the outputs of
 | taskReferenceName   | Task Reference Name. A unique reference to this task. There can be multiple references of a task within the same workflow definition        |
 | type   | Task Type. In this case, `FORK_JOIN`        |
 | inputParameters   | The input parameters that will be supplied to this task    |
-| forkTasks   | A list of a list of tasks. Each of the outer list will be invoked in parallel.  The inner list can be a graph of other tasks and sub-workflows   |
+| forkTasks   | A list of a list of tasks. Each of the outer list will be invoked in parallel. The inner list can be a graph of other tasks and sub-workflows   |
 
 #### Output Configuration
 
-This is the output configuration of the `JOIN` task that is used in conjunction with the `FORK_JOIN` task. The output of the
-`JOIN` task is a map, where the keys are the names of the task reference names where were being `joinOn` and the keys are
-the corresponding outputs of those tasks.
-
+This is the output configuration of the `JOIN` task that is used in conjunction with the `FORK_JOIN` task. The output of
+the
+`JOIN` task is a map, where the keys are the names of the task reference names where were being `joinOn` and the keys
+are the corresponding outputs of those tasks.
 
 | Attribute      | Description |
 | ----------- | ----------- |
-| result   | The first results returned by the JQ expression     |
-| resultList   | A List of results returned by the JQ expression        |
-| error | An optional error message, indicating that the JQ query failed processing |
+| task_ref_name_1  | A task reference name that was being `joinOn`. The value is the output of that task     |
+| task_ref_name_2  | A task reference name that was being `joinOn`. The value is the output of that task     |
+| ...   | ...     |
+| task_ref_name_N  | A task reference name that was being `joinOn`. The value is the output of that task     |
 
 ### Best Practices
