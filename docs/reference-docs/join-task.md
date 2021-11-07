@@ -14,7 +14,7 @@ a `FORK_JOIN_DYNAMIC` task, it implicitly waits for all of the dynamically forke
 
 FORK_JOIN and FORK_JOIN_DYNAMIC task are used to execute a collection of other tasks or sub workflows in parallel. In
 such cases, there is a need for these forked tasks to complete before moving to the next stage in the workflow. E.g in a
-notifcation workflow, you could have a FORK_JOIN task that may have an email notification task, a SMS notification task,
+notification workflow, you could have a FORK_JOIN task that may have an email notification task, a SMS notification task,
 a HTTP notification task. A JOIN task can specify zero or more of these notification tasks to complete before proceeding
 to the next step.
 
