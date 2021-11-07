@@ -136,10 +136,11 @@ module.exports = {
             label:'System Tasks',
             collapsed:false,
             items:[
-                'reference-docs/http-task',
-                'reference-docs/kafka-publish-task',
-                'reference-docs/json-jq-transform-task',
-                'reference-docs/set-variable-task',
+                'reference-docs/system-tasks/http-task',
+                'reference-docs/system-tasks/inline-task',
+                'reference-docs/system-tasks/json-jq-transform-task',
+                'reference-docs/system-tasks/kafka-publish-task',
+                'reference-docs/system-tasks/event-task',
             ],
         },
         {
@@ -214,6 +215,7 @@ module.exports = {
                 'reference-docs/system-tasks/inline-task',
                 'reference-docs/system-tasks/json-jq-transform-task',
                 'reference-docs/system-tasks/kafka-publish-task',
+                'reference-docs/system-tasks/event-task',
             ],
         }
     ]
