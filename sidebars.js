@@ -124,11 +124,11 @@ module.exports = {
             label:'Concepts',
             collapsed:false,
             items:[
-                'reference-docs/concepts-overview',
-                'reference-docs/workflows',
-                'reference-docs/tasks-and-workers',
-                'reference-docs/operators',
-                'reference-docs/system-tasks',
+                'reference-docs/concepts/concepts-overview',
+                'reference-docs/concepts/workflows',
+                'reference-docs/concepts/tasks-and-workers',
+                'reference-docs/concepts/operators',
+                'reference-docs/concepts/system-tasks',
             ],
         },
         {
