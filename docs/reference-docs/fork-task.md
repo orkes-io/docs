@@ -112,7 +112,6 @@ references that were being `joinOn`. The corresponding values are the outputs of
 
 #### Output Configuration
 
-
 This is the output configuration of the `JOIN` task that is used in conjunction with the `FORK_JOIN` task. The output of the
 `JOIN` task is a map, where the keys are the names of the task reference names where were being `joinOn` and the keys are
 the corresponding outputs of those tasks.
