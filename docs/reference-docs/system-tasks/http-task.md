@@ -68,7 +68,7 @@ Following is the example of HTTP task with `PUT` method.
   "taskReferenceName": "put_example",
   "inputParameters": {
     "http_request": {
-      "uri": "https://jsonplaceholder.typicode.com/posts/",
+      "uri": "https://jsonplaceholder.typicode.com/posts/1",
       "method": "PUT",
       "body": {
         "title": "${get_example.output.response.body.title}",
