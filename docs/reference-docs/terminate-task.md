@@ -3,8 +3,8 @@ sidebar_position: 1
 ---
 # Terminate Task
 
-```
-taskType: TERMINATE
+```json
+"type" : "TERMINATE"
 ```
 
 Task that can terminate a workflow with a given status and modify the workflow's output with a given parameter, 

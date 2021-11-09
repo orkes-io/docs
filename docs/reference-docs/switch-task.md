@@ -8,10 +8,8 @@ sidebar_position: 1
 "type" : "SWITCH"
 ```
 
-A switch task is similar to `case...switch` statement in a programming language. The `switch` expression, however, is
-simply an input parameter
-(`value-param` evaluator) or a complex javascript expression
-(`javascript` evaluator). Currently, two evaluators are supported in conductor.
+A switch task is similar to `case...switch` statement in a programming language. The `switch` expression, is
+a configuration on the `SWITCH` task type. Currently, two evaluators are supported:
 
 |name|description|
 |---|---|
@@ -27,75 +25,47 @@ Useful in any situation where we have to execute one of many task options.
 In this example workflow, we have to ship a package with the shipping service providers on the basis of input provided
 while running the workflow.
 
-Let's create a Workflow with the following definition:
+Let's create a Workflow with the following switch task definition that uses `value-param` evaluatorType:
 
 ```json
 {
-  "name": "Switch_Task_Shipping_Info",
-  "description": "Switch_Task_Shipping_Info",
-  "version": 1,
-  "ownerEmail": "abc@example.com",
-  "tasks": [
+  "name": "switch_task",
+  "taskReferenceName": "switch_task",
+  "inputParameters": {
+    "switchCaseValue": "${workflow.input.service}"
+  },
+  "type": "SWITCH",
+  "evaluatorType": "value-param",
+  "expression": "switchCaseValue",
+  "defaultCase": [
     {
-      "name": "shipping_info",
-      "taskReferenceName": "shipping_info",
-      "inputParameters": {
-        "service": "${workflow.input.service}"
-      },
-      "type": "SIMPLE"
-    },
-    {
-      "name": "switch_task",
-      "taskReferenceName": "switch_task",
-      "inputParameters": {
-        "switch_case_value": "${workflow.input.service}"
-      },
-      "type": "SWITCH",
-      "evaluatorType": "value-param",
-      "expression": "switch_case_value",
-      "ownerEmail": "abc@example.com",
-      "defaultCase": [
-        {
-          "name": "ship_via_dhl",
-          "taskReferenceName": "ship_via_dhl",
-          "type": "SIMPLE"
-        }
-      ],
-      "decisionCases": {
-        "fedex": [
-          {
-            "name": "ship_via_fedex",
-            "taskReferenceName": "ship_via_fedex",
-            "type": "SIMPLE"
-          }
-        ],
-        "ups": [
-          {
-            "name": "ship_via_ups",
-            "taskReferenceName": "ship_via_ups",
-            "type": "SIMPLE"
-          }
-        ]
-      }
+      ...
     }
   ],
-  "restartable": true,
-  "workflowStatusListenerEnabled": true,
-  "schemaVersion": 2
+  "decisionCases": {
+    "fedex": [
+      {
+        ...
+      }
+    ],
+    "ups": [
+      {
+        ...
+      }
+    ]
+  }
 }
 ```
 
-In the workflow definition above, `switch_task` is a `SWITCH` task and the value of the parameter `switch_case_value`
-is used to determine the case. In this example, the evaluator type is `value-param` and the expression is a direct
-reference to the name of an input parameter.
-
-If the workflow is started with the input: `"service":"fedex"` the decision case `ship_via_fedex` is executed as shown
-below.
+In the definition above the value of the parameter `switch_case_value`
+is used to determine the switch-case. The evaluator type is `value-param` and the expression is a direct reference to
+the name of an input parameter. If the value of `switch_case_value` is `fedex` then the decision case `ship_via_fedex`is
+executed as shown below.
 
 ![Conductor UI - Workflow Run](/img/tutorial/Switch_Fedex.png)
 
-In a similar way - if the service input was `ups`, then `ship_via_ups` will be executed. If none of the cases match then
-the default option is executed.
+In a similar way - if the input was `ups`, then `ship_via_ups` will be executed. If none of the cases match then the
+default option is executed.
 
 Here is an example using the `javascript` evaluator type:
 
@@ -104,21 +74,26 @@ Here is an example using the `javascript` evaluator type:
   "name": "switch_task",
   "taskReferenceName": "switch_task",
   "inputParameters": {
-    "input_val": "${workflow.input.service}"
+    "inputValue": "${workflow.input.service}"
   },
   "type": "SWITCH",
   "evaluatorType": "javascript",
-  "expression": "$.script_input_val == 'fedex' ? 'fedex' : 'ups'",
-  "ownerEmail": "abc@example.com",
+  "expression": "$.inputValue == 'fedex' ? 'fedex' : 'ups'",
   "defaultCase": [
-    {...}
+    {
+      ...
+    }
   ],
   "decisionCases": {
     "fedex": [
-      {...}
+      {
+        ...
+      }
     ],
     "ups": [
-      {...}
+      {
+        ...
+      }
     ]
   }
 }
