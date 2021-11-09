@@ -1,92 +1,35 @@
 ---
-sidebar_position: 3
+sidebar_position: 1
 ---
 
 # HTTP Task
-
-### What is HTTP Task?
 
 An HTTP task is useful when you have a requirements such as
 
 1. Making calls to another service that exposes an API via HTTP
 2. Fetch any resource or data present on an endpoint
 
-### What is a common HTTP Task use case?
+## Common Use Cases
 
-If there is a scenario where, we need to make a call to a microservice and fetch some data or resource and use it inside
-our workflow. In such cases HTTP Task would very helpful. Using HTTP tasks you can avoid having to write the code that
-talks to these services and instead let Conductor manage it directly. This can reduce the code you have to maintain and
-allows for a lot of flexibility.
+If we have a scenario where we need to make an HTTP call into another service, we can make use of HTTP tasks. You can
+use the data returned from the HTTP call in your subsequent tasks as inputs. Using HTTP tasks you can avoid having to
+write the code that talks to these services and instead let Conductor manage it directly. This can reduce the code you
+have to maintain and allows for a lot of flexibility.
 
-### How is it defined?
-
-HTTP task is defined directly inside the workflow with type `HTTP`.
-
-```json
-    {
-  "name": "get_population_data",
-  "taskReferenceName": "get_population_data",
-  "inputParameters": {
-    "http_request": {
-      "uri": "https://datausa.io/api/data?drilldowns=Nation&measures=Population",
-      "method": "GET"
-    }
-  },
-  "type": "HTTP"
-}
-```
-
-### What are the configuration options?
-
-In the above example, we have defined HTTP task with the following parameters.
-
-1. `"name"` : Name of the HTTP task
-
-2. `"taskReferenceName"` : This is a reference to this HTTP task in this specific workflow implementation.
-
-3. `"inputParameters"` : These are the inputs into your HTTP task. You can hard code inputs. You can also provide
-   dynamic inputs such as from the workflow input or based on the output of another worker. You can find examples of
-   this in our documentation.
-
-4. `"type"` : This is what defines what the type of worker is. In our example - this is `HTTP`. There are more task
-   types which you can find in the Conductor documentation.
-
-5. `"http_request"` : Please see the table below for detailed reference
-
-|Name|Type|Example|Description|
-|---|---|---|---|
-| uri | String || URI for the service. Can be a partial when using vipAddress or includes the server address.|
-| method | String || HTTP method. One of the GET, PUT, POST, DELETE, OPTIONS, HEAD|
-| accept | String || Accept header as required by server. Defaults to ```application/json``` |
-| contentType | String || Content Type - supported types are ```text/plain```, ```text/html```, and ```application/json``` (Default)|
-| headers| Map[String, Any] || A map of additional http headers to be sent along with the request.|
-| body| Map[] || Request body |
-| vipAddress | String || When using discovery based service URLs.|
-| asyncComplete | Boolean |TODO: Link to details| ```false``` to mark status COMPLETED upon execution ; ```true``` to keep it IN_PROGRESS, wait for an external event (via Conductor or SQS or EventHandler) to complete it.
-| oauthConsumerKey | String || [OAuth](https://oauth.net/core/1.0/) client consumer key  |
-| oauthConsumerSecret | String || [OAuth](https://oauth.net/core/1.0/) client consumer secret |
-| connectionTimeOut | Integer || Connection Time Out in milliseconds. If set to 0, equivalent to infinity. Default: 100. |
-| readTimeOut | Integer || Read Time Out in milliseconds. If set to 0, equivalent to infinity. Default: 150. |
-
-#### Output
-
-1. `"response"` : JSON body containing the response if one is present
-2. `"headers"` : Response Headers
-3. `"statusCode"` : Http Status Code
-4. `"reasonPhrase"` : Http Status Code's reason phrase
-
-### Example Workflow Definition
+### Examples
 
 Following is the example of HTTP task with `GET` method.
 
-```json
+We can use variables in our URI as show in the example below. For details on how to use inputs, refer to
+this [page](how-tos/task-inputs.md).
 
+```json
 {
   "name": "Get Example",
   "taskReferenceName": "get_example",
   "inputParameters": {
     "http_request": {
-      "uri": "https://jsonplaceholder.typicode.com/posts/1",
+      "uri": "https://jsonplaceholder.typicode.com/posts/${workflow.input.queryid}",
       "method": "GET"
     }
   },
@@ -96,14 +39,21 @@ Following is the example of HTTP task with `GET` method.
 
 Following is the example of HTTP task with `POST` method.
 
+> Here we are using variables for our POST body which happens to be data from a previous task. This is an example of how you can **chain** HTTP calls to make complex flows happen without writing any additional code.
+
 ```json
 {
-  "name": "POST Example",
+  "name": "http_post_example",
   "taskReferenceName": "post_example",
   "inputParameters": {
     "http_request": {
       "uri": "https://jsonplaceholder.typicode.com/posts/",
-      "method": "POST"
+      "method": "POST",
+      "body": {
+        "title": "${get_example.output.response.body.title}",
+        "userId": "${get_example.output.response.body.userId}",
+        "action": "doSomething"
+      }
     }
   },
   "type": "HTTP"
@@ -114,12 +64,17 @@ Following is the example of HTTP task with `PUT` method.
 
 ```json
 {
-  "name": "PUT Example",
+  "name": "http_put_example",
   "taskReferenceName": "put_example",
   "inputParameters": {
     "http_request": {
       "uri": "https://jsonplaceholder.typicode.com/posts/1",
-      "method": "PUT"
+      "method": "PUT",
+      "body": {
+        "title": "${get_example.output.response.body.title}",
+        "userId": "${get_example.output.response.body.userId}",
+        "action": "doSomethingDifferent"
+      }
     }
   },
   "type": "HTTP"
@@ -142,21 +97,43 @@ Following is the example of HTTP task with `DELETE` method.
 }
 ```
 
-In order to implement HTTP task in our workflow, we need to define HTTP task as shown above under the tasks section in
-the workflow. We can choose our method type and specify all the attributes.
+## Configuration / Properties
 
-### FAQs
+HTTP task is defined directly inside the workflow with the task type `HTTP`.
 
-TODOs
+|name|type|description|
+|---|---|---|
+| http_request | HttpRequest | JSON object (see below) |
 
-1. Convert the documentation to a table format, link to examples
-2. Describe how to use asyncComplete
-3. Example for OAuth, scenarios where it is useful
-4. Examples and details of how timeouts work
-5. Describe what vipAddress is (internal to Netflix)
-6. Add additional FAQ questions
+### Inputs
 
+|Name|Type|Example|Description|
+|---|---|---|---|
+| uri | String || URI for the service. Can be a partial when using vipAddress or includes the server address.|
+| method | String || HTTP method. One of the GET, PUT, POST, DELETE, OPTIONS, HEAD|
+| accept | String || Accept header as required by server. Defaults to ```application/json``` |
+| contentType | String || Content Type - supported types are ```text/plain```, ```text/html```, and ```application/json``` (Default)|
+| headers| Map[String, Any] || A map of additional http headers to be sent along with the request.|
+| body| Map[] || Request body |
+| vipAddress | String || When using discovery based service URLs.|
+| asyncComplete | Boolean |TODO: Link to details| ```false``` to mark status COMPLETED upon execution ; ```true``` to keep it IN_PROGRESS, wait for an external event (via Conductor or SQS or EventHandler) to complete it.
+| oauthConsumerKey | String || [OAuth](https://oauth.net/core/1.0/) client consumer key  |
+| oauthConsumerSecret | String || [OAuth](https://oauth.net/core/1.0/) client consumer secret |
+| connectionTimeOut | Integer || Connection Time Out in milliseconds. If set to 0, equivalent to infinity. Default: 100. |
+| readTimeOut | Integer || Read Time Out in milliseconds. If set to 0, equivalent to infinity. Default: 150. |
 
+### Output
 
+|name|type|description|
+|---|---|---|
+| response | Map |  JSON body containing the response if one is present |
+| headers | Map[String, Any] | Response Headers |
+| statusCode | Integer | [Http Status Code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes) |
+| reasonPhrase | String | Http Status Code's reason phrase |
 
+## Best Practices
 
+1. Why are my HTTP tasks not getting picked up?
+    1. We might have too many HTTP tasks in the queue. There is a concept called Isolation Groups that you can rely on
+       for prioritizing certain HTTP tasks over others. Read more here: [Isolation Groups](https://netflix.github.io/conductor/configuration/isolationgroups/)
+   
