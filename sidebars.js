@@ -28,6 +28,7 @@ module.exports = {
             label: 'Tasks',
             collapsed: false,
             items: [
+                'how-tos/task-inputs',
                 'how-tos/task-configurations',
                 'how-tos/updating-tasks',
                 'how-tos/reusing-tasks',
