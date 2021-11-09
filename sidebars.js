@@ -52,17 +52,6 @@ module.exports = {
         },
         {
             type: 'category',
-            label: 'Client SDKs',
-            collapsed: false,
-            items: [
-                'how-tos/java-sdk',
-                'how-tos/python-sdk',
-                'how-tos/golang-sdk',
-                'how-tos/nodejs-sdk',
-            ],
-        },
-        {
-            type: 'category',
             label: 'Best Practices',
             collapsed: false,
             items: [
