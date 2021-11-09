@@ -157,7 +157,6 @@ module.exports = {
                 'reference-docs/exclusive-join-task',
                 'reference-docs/wait-task',
                 'reference-docs/dynamic-task',
-                'reference-docs/inline-task',
                 'reference-docs/terminate-task',
                 'reference-docs/set-variable-task',
                 'reference-docs/sub-workflow-task',
