@@ -85,7 +85,7 @@ module.exports = {
 
     ],
     tutorialsSideBarV2: [
-        'tutorials',
+        'introduction',
         {
             type:'category',
             label:'Concepts',
@@ -172,7 +172,7 @@ module.exports = {
         },
     ],
     tutorialsSideBar: [
-        'intro',
+        'introduction',
         {
             type: 'category',
             label: 'Installation Guide',
