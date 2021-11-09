@@ -44,7 +44,7 @@ Furthermore, with Conductor, in addition to the above design view of the workflo
 
 ### *Starting Workflows*
 Once a workflow is defined in Conductor, it is ready to be invoked. An invocation executes the workflow and passes in any arguments that were provided by the caller. There are three ways in which a workflow can be invoked.
-* [Calling the Conductor API via REST or gRPC](../../running-workflows/execute-workflow.md#Start-a-workflow-by-calling-an-API). An example of how to do this is also in the [running workflows](../../running-workflows/running-first-workflow.md#Running-our-First-Workflow) article
+* [Calling the Conductor API via REST or gRPC](../../running-workflows/execute-workflow.md#Start-a-workflow-by-calling-an-API). An example of how to do this is also in the [running workflows](../run/running-first-workflow.md#Running-our-First-Workflow) article
 * [Posting an event to a queue that Conductor is listening to for incoming workflow invocation requests](../../running-workflows/execute-workflow.md#Start-a-workflow-by-posting-an-event)
 * [Scheduling a time at which Conductor should invoke the workflow](../../running-workflows/execute-workflow.md#Schedule-a-workflow-for-later)
 
@@ -64,6 +64,6 @@ When your application's business logic evolves or you need to fix an error in yo
 * [Learn more about tasks and workers](tasks-and-workers.md)
 * [Learn more about system tasks](system-tasks.md)
 * [Learn more about operators](operators.md)
-* [Run your first workflow](../../running-workflows/running-first-workflow.md)
+* [Run your first workflow](../run/running-first-workflow.md)
 
 

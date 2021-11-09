@@ -4,28 +4,20 @@ sidebar_position: 1
 
 # Running First Workflow
 
-In this article we will explore how we can run a really simple workflow that runs without any microservice. Yes!
-Conductor has in-built tasks that we can use to run quite a bit of things. We will use one of these in-built tasks to
-run our very first workflow.
+In this article we will explore how we can run a really simple workflow that runs without deploying any new microservice. 
 
-Using system or in-built tasks is a great way to run a lot of our code in production.
+Conductor can orchestrate HTTP services out of the box without implementing any code.  We will use that to create and run the first workflow.
 
-After following the steps listed in this article, we would have:
+See [System Task](getting-started/concepts/system-tasks) for the list of such built-in tasks.
+Using system tasks is a great way to run a lot of our code in production.
 
-1. Run our first workflow
-2. Learn how system or in-built tasks work - specifically the HTTP
-
-This post is specifically for running a sample workflow in our environment to ensure that everything is working as
-expected. We can refer to one of the following posts to set up our environments before continuing with the post if we
-don’t already have an environment up and running.
-
-1. [Running Locally - From Code](../getting-started/install/running-locally.md)
-2. [Running Locally - Docker Compose](../getting-started/install/running-locally-docker.md)
-3. [Running Locally - Kubernetes](../getting-started/install/running-locally-minikube.md)
+To bring up a local instance of Conductor follow one of the recommended steps:
+1. [Running Locally - From Code](../install/running-locally.md)
+2. [Running Locally - Docker Compose](../install/running-locally-docker.md)
 
 ---
 
-## 1. Configuring our First Workflow
+## Configuring our First Workflow
 
 This is a sample workflow that we can leverage for our test.
 
@@ -57,8 +49,7 @@ This is a sample workflow that we can leverage for our test.
   "workflowStatusListenerEnabled": false,
   "ownerEmail": "example@email.com",
   "timeoutPolicy": "ALERT_ONLY",
-  "timeoutSeconds": 0,
-  "variables": {}
+  "timeoutSeconds": 0
 }
 ```
 
