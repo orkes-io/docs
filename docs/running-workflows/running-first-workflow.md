@@ -19,9 +19,9 @@ This post is specifically for running a sample workflow in our environment to en
 expected. We can refer to one of the following posts to set up our environments before continuing with the post if we
 don’t already have an environment up and running.
 
-1. [Running Locally - From Code](../installing-conductor/running-locally.md)
-2. [Running Locally - Docker Compose](../installing-conductor/running-locally-docker.md)
-3. [Running Locally - Kubernetes](../installing-conductor/running-locally-minikube.md)
+1. [Running Locally - From Code](../getting-started/install/running-locally.md)
+2. [Running Locally - Docker Compose](../getting-started/install/running-locally-docker.md)
+3. [Running Locally - Kubernetes](../getting-started/install/running-locally-minikube.md)
 
 ---
 

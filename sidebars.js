@@ -104,9 +104,8 @@ module.exports = {
             label: 'Installation Guide',
             collapsed: false,
             items: [
-                'installing-conductor/running-locally',
-                'installing-conductor/running-locally-docker',
-                'installing-conductor/running-locally-minikube'
+                'getting-started/install/running-locally',
+                'getting-started/install/running-locally-docker',
             ],
         },
         {

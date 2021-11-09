@@ -10,7 +10,7 @@ stateless code without having to manage the state and complexities of building a
 Conductor is cloud native and scales seamlessly as your workload grows.
      
 ### How to run Conductor
-[Short Tutorial on Running Conductor locally](installing-conductor/running-locally)
+[Short Tutorial on Running Conductor locally](getting-started/install/running-locally)
 
 ### What use case Conductor can solve?
 Conductor has been adopted widely across multiple industries ranging from Media (Netflix) to security and finance.
