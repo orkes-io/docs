@@ -26,7 +26,7 @@ After that, you [add those tasks into the workflow](../../running-workflows/addi
 
 ### *Multiple Paths Workflow Example*
 
-Next lets see a more complex example where you want to support multiple shipping vendors (e.g. FedEx, DHL, UPS) and the code for each of them ive in separate services. This is a good design pattern to follow since you can now independtly change each of them without having to worry about breaking others. Usually this means you now have to take on the work of wiring up many different services into your primary execution path. But with Conductor, this just means adding a [switch operator](../switch-task.md) to decide which vendor to call depending on an incoming parameter, and then during execution time the right one will be called! 
+Next lets see a more complex example where you want to support multiple shipping vendors (e.g. FedEx, DHL, UPS) and the code for each of them ive in separate services. This is a good design pattern to follow since you can now independtly change each of them without having to worry about breaking others. Usually this means you now have to take on the work of wiring up many different services into your primary execution path. But with Conductor, this just means adding a [switch operator](../../reference-docs/switch-task.md) to decide which vendor to call depending on an incoming parameter, and then during execution time the right one will be called! 
 
 ![Multi-vendor Shipping Workflow - Visual Representation of Design](../../../static/img/tutorial/Switch_Workflow.png)
 

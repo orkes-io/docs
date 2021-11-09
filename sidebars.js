@@ -92,11 +92,11 @@ module.exports = {
             label:'Concepts',
             collapsed:false,
             items:[
-                'reference-docs/concepts/concepts-overview',
-                'reference-docs/concepts/workflows',
-                'reference-docs/concepts/tasks-and-workers',
-                'reference-docs/concepts/operators',
-                'reference-docs/concepts/system-tasks',
+                'getting-started/concepts/concepts-overview',
+                'getting-started/concepts/workflows',
+                'getting-started/concepts/tasks-and-workers',
+                'getting-started/concepts/operators',
+                'getting-started/concepts/system-tasks',
             ],
         },
         {
