@@ -16,9 +16,9 @@ Check the [JQ Manual](https://stedolan.github.io/jq/manual/v1.5/), and the
 
 JSON is a popular format of choice for data-interchange. It is widely used in web and server applications, document
 storage, API I/O etc. It’s also used within Conductor to define workflow and task definitions and passing data and state
-between tasks and workflows. This make a tool like JQ a natural fit for processing tasks data. Some common usages within
-conductor include working with HTTP task, JOIN tasks or standalone tasks that try to transform data from the output of
-one task to the input of another.
+between tasks and workflows. This makes a tool like JQ a natural fit for processing task related data. Some common
+usages within Conductor includes, working with HTTP task, JOIN tasks or standalone tasks that try to transform data from
+the output of one task to the input of another.
 
 ### Configuration
 
@@ -31,7 +31,7 @@ that has the following
 2. A key with the name `queryExpression`, whose value is a JQ expression. The expression will operate on the value of
    the `inputParameters` attribute. In the example below, the `inputParameters` has 2 inner objects named by attributes
    `key1` and `key2`, each of which has an object that is named `value1` and `value2`. They have an associated array of
-   strings as values, `"a", "b"` and `"c", "d"`. The expression `key3: (.key1.value1 + .key2.value2)` concats the 2
+   strings as values, `"a", "b"` and `"c", "d"`. The expression `key3: (.key1.value1 + .key2.value2)` concat's the 2
    string arrays into a single array against an attribute named `key3`
 
 ```json
@@ -58,8 +58,8 @@ that has the following
 ```
 
 The execution of this example task above will provide the following output. The `resultList` attribute stores the full
-list of the
-`queryExpression` result. The `result` attribute stores the first element of the resultList. An optional `error`
+list of the `queryExpression` result. The `result` attribute stores the first element of the resultList. An
+optional `error`
 attribute along with a string message will be returned if there was an error processing the query expression.
 
 ```json
