@@ -157,7 +157,6 @@ module.exports = {
                 'reference-docs/exclusive-join-task',
                 'reference-docs/wait-task',
                 'reference-docs/dynamic-task',
-                'reference-docs/inline-task',
                 'reference-docs/terminate-task',
                 'reference-docs/set-variable-task',
                 'reference-docs/sub-workflow-task',
@@ -171,39 +170,6 @@ module.exports = {
 
             ],
         },
-    ],
-    tutorialsSideBar: [
-        'introduction',
-        {
-            type: 'category',
-            label: 'Installation Guide',
-            collapsed: false,
-            items: [
-                'installing-conductor/running-locally',
-                'installing-conductor/running-locally-docker',
-                'installing-conductor/running-locally-minikube',
-            ],
-        },
-        {
-            type: 'category',
-            label: 'Running Workflows',
-            collapsed: false,
-            items: [
-                'running-workflows/running-first-workflow',
-                'running-workflows/running-first-worker',
-                'running-workflows/running-workers-microservices',
-            ],
-        },
-        {
-            type: 'category',
-            label: 'Running in Production',
-            collapsed: false,
-            items: [
-                'running-in-production/running-in-aws',
-                'running-in-production/running-in-gcp',
-                'running-in-production/running-in-azure',
-            ],
-        }
     ],
     docsSideBar: [
         'docsIntro',
