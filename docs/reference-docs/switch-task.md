@@ -97,6 +97,33 @@ below.
 In a similar way - if the service input was `ups`, then `ship_via_ups` will be executed. If none of the cases match then
 the default option is executed.
 
+Here is an example using the `javascript` evaluator type:
+
+```json
+{
+  "name": "switch_task",
+  "taskReferenceName": "switch_task",
+  "inputParameters": {
+    "input_val": "${workflow.input.service}"
+  },
+  "type": "SWITCH",
+  "evaluatorType": "javascript",
+  "expression": "$.script_input_val == 'fedex' ? 'fedex' : 'ups'",
+  "ownerEmail": "abc@example.com",
+  "defaultCase": [
+    {...}
+  ],
+  "decisionCases": {
+    "fedex": [
+      {...}
+    ],
+    "ups": [
+      {...}
+    ]
+  }
+}
+```
+
 ## Configuration / Properties
 
 ### Task Configuration Parameters
