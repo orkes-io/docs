@@ -15,6 +15,9 @@
     --ifm-color-primary-lightest: rgb(146, 224, 208);
     --ifm-code-font-size: 95%;
     --ifm-link-decoration: none;
+    --ifm-blockquote-padding-vertical: 20px;
+    --ifm-blockquote-border-left-width: 4px;
+    --ifm-blockquote-font-size: 16px;
     --ifm-font-family-base: GothicA1-Regular, system-ui, -apple-system, BlinkMacSystemFont,
     'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji',
     'Segoe UI Emoji', 'Segoe UI Symbol';
