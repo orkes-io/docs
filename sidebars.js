@@ -16,8 +16,8 @@ module.exports = {
             label: 'Workflows',
             collapsed: false,
             items: [
-                'how-tos/view-workflow-executions',
                 'how-tos/searching-workflows',
+                'how-tos/view-workflow-executions',
                 'how-tos/debugging-workflows',
                 'how-tos/updating-workflows',
                 'how-tos/using-domains',

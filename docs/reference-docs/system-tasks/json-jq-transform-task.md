@@ -4,7 +4,9 @@ sidebar_position: 1
 
 # JSON JQ Transform Task
 
-### Introduction
+```json
+"type" : "JSON_JQ_TRANSFORM_TASK"
+```
 
 JSON_JQ_TRANSFORM_TASK is a System task that allows processing of JSON data that is supplied to the task, by using the
 popular JQ processing tool’s query expression language.
