@@ -119,7 +119,7 @@ It's time to kick off a workflow. We can use the following curl command to run t
 so its left as empty.
 
 ```shell
-curl 'http://conductorapp.trescommas.dev/api/workflow/sample_workflow_with_multiple_workers' \
+curl 'http://localhost:8080/api/workflow/sample_workflow_with_multiple_workers' \
   -H 'accept: text/plain' \
   -H 'Referer: ' \
   -H 'Content-Type: application/json' \
