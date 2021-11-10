@@ -4,6 +4,9 @@ sidebar_position: 1
 
 # HTTP Task
 
+```json
+"type" : "HTTP"
+```
 An HTTP task is useful when you have a requirements such as
 
 1. Making calls to another service that exposes an API via HTTP
