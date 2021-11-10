@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# Updating Workflows
+# Updating Workflow Definitions
 
 Workflows can be created or updated using the workflow metadata API
 
@@ -13,7 +13,7 @@ PUT /api/metadata/workflow
 ### Example using curl 
 
 ```shell
-curl 'https://localhost:8080/api/metadata/workflow' \
+curl 'http://localhost:8080/api/metadata/workflow' \
   -X 'PUT' \
   -H 'accept: */*' \
   -H 'content-type: application/json' \
@@ -23,7 +23,7 @@ curl 'https://localhost:8080/api/metadata/workflow' \
 ### Example using node fetch
 
 ```javascript
-fetch("https://localhost:8080/api/metadata/workflow", {
+fetch("http://localhost:8080/api/metadata/workflow", {
   "headers": {
     "accept": "*/*",
     "content-type": "application/json"
