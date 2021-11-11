@@ -22,7 +22,7 @@ Conductor provides java client libraries, which we will use to build a simple ta
 implementation group: 'com.netflix.conductor', name: 'conductor-client', version: '3.3.4'
 ```
 
-## Creating a Worker
+## Implementing a Task a Worker
 To create a worker, implement the `Worker` interface.
 ```java
 public class SampleWorker implements Worker {
