@@ -2,6 +2,14 @@
 sidebar_position: 1
 ---
 
+# Download and Run Conductor
+```shell script
+export CONDUCTOR_VERSION=3.3.4
+curl https://repo1.maven.org/maven2/com/netflix/conductor/conductor-server/$CONDUCTOR_VERSION/conductor-server-$CONDUCTOR_VERSION-boot.jar \
+--output conductor-server-$CONDUCTOR_VERSION-boot.jar; java -jar conductor-server-$CONDUCTOR_VERSION-boot.jar 
+```
+Navigate to the swagger URL: [http://localhost:8080/swagger-ui/index.html?configUrl=/api-docs/swagger-config](http://localhost:8080/swagger-ui/index.html?configUrl=/api-docs/swagger-config)
+
 # Build and Run Conductor Locally
 
 In this article we will explore how you can set up Netflix Conductor on your local machine for trying out some of its
