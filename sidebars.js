@@ -35,9 +35,7 @@ module.exports = {
                 'how-tos/task-timeouts',
                 'how-tos/monitoring-task-queues',
                 'how-tos/reusing-tasks',
-                'how-tos/using-dynamic-tasks',
-                'how-tos/using-dynamic-forks',
-                'how-tos/using-sub-workflows',
+                'how-tos/dynamic-vs-switch-tasks',
             ],
         },
         {
