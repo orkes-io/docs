@@ -35,7 +35,25 @@ def main():
 if __name__ == '__main__':
     main()
 ```
+### `ConductorWorker` parameters
+```python
+server_url: str
+    The url to the server hosting the conductor api.
+    Ex: 'http://localhost:8080/api'
 
+thread_count: int
+    The number of threads that will be polling for and
+    executing tasks in case of using the start method.
+
+polling_interval: float
+    The number of seconds that each worker thread will wait
+    between polls to the conductor server.
+
+worker_id: str, optional
+    The worker_id of the worker that is going to execute the
+    task. For further details, refer to the documentation
+    By default, it is set to hostname of the machine
+```
 ### `start` method parameters
 ```pythhon
 taskType: str

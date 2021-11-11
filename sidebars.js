@@ -46,7 +46,6 @@ module.exports = {
                 'how-tos/build-a-java-task-worker',
                 'how-tos/build-a-python-task-worker',
                 'how-tos/build-a-golang-task-worker',
-                'how-tos/build-a-nodejs-task-worker',
             ],
         },
         {
