@@ -54,10 +54,8 @@ module.exports = {
             label: 'Best Practices',
             collapsed: false,
             items: [
-                'how-tos/maintaining-workflows',
-                'how-tos/idempotency',
-                'how-tos/retry-configurations',
-                'how-tos/timeouts',
+                'how-tos/versioning-workflows',
+                'how-tos/idempotent-tasks',
             ],
         },
         {
