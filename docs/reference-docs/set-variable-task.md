@@ -2,31 +2,25 @@
 sidebar_position: 1
 ---
 
-# Set Variable Task
+# Set Variable
 
-## What is a Set Variable Task?
-
-This task allows us to set workflow variables by creating or updating them
+```json
+"type" : "SET_VARIABLE"
+```
+### Introduction
+Set Variable allows us to set workflow variables by creating or updating them
 with new values.
 
-## Common Use Cases
+### Use Cases
 
 Variables can be initialized in the workflow definition as well as during
 the workflow run. Once a variable was initialized it can be read or
 overwritten with a new value by any other task.
 
-## Configuration / Properties
+### Configuration
 
 Set Variable task is defined directly inside the workflow with type
 `SET_VARIABLE`.
-
-### Inputs
-
-No inputs
-
-### Output
-
-No output
 
 ## Examples
 
@@ -69,17 +63,3 @@ Following is the workflow definition with `SET_VARIABLE` task.
 In the above example, it can be seen that the task `Set_Name` is a Set Variable Task and
 the variable `name` is set to `Orkes` and later in the workflow it is referenced by
 `"${workflow.variables.name}"` in another task.
-
-
-
-
-## FAQs
-
-TODO: Gotchas and other nuances
-
-1. Question 1
-    1. Answer
-
-1. Question 2
-    1. Answer
-

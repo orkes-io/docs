@@ -2,7 +2,10 @@
 sidebar_position: 1
 ---
 
-# Fork Task
+# Fork
+```json
+"type" : "FORK_JOIN"
+```
 
 ### Introduction
 
@@ -124,5 +127,3 @@ are the corresponding outputs of those tasks.
 | task_ref_name_2  | A task reference name that was being `joinOn`. The value is the output of that task     |
 | ...   | ...     |
 | task_ref_name_N  | A task reference name that was being `joinOn`. The value is the output of that task     |
-
-### Best Practices

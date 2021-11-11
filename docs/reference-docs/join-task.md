@@ -2,7 +2,10 @@
 sidebar_position: 1
 ---
 
-# Join Task
+# Join
+```json
+"type" : "JOIN"
+```
 
 ### Introduction
 

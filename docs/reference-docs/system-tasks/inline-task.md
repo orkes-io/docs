@@ -7,6 +7,7 @@ sidebar_position: 11
 ```json
 "type": "INLINE"
 ```
+### Introduction
 
 Inline Task helps execute necessary logic at Workflow run-time,
 using an evaluator. There are two supported evaluators as of now:
@@ -16,13 +17,13 @@ using an evaluator. There are two supported evaluators as of now:
 | value-param | Use a parameter directly as the value |
 | javascript | Evaluate Javascript expressions and compute value |
 
-### What is a common Inline Task use case?
+### Use Cases
 
 Consider a scenario, we have to run simple evaluations in
 Conductor server while creating Workers. Inline task can be used to run these
 evaluations using an evaluator engine.
 
-### Example of Inline Task
+### Configuration
 ```json
 {
   "name": "inline_task_example",

@@ -1,23 +1,25 @@
 ---
 sidebar_position: 1
 ---
-# Dynamic Task
+# Dynamic
+```json
+"type" : "DYNAMIC"
+```
 
-## What is a Dynamic Task?
-
+### Introduction
 Dynamic Task allows to execute one of the registered Tasks dynamically at run-time.
 It accepts the task name to execute as `taskToExecute` in `inputParameters`.
 
-## Common Use Cases 
+### Use Cases 
 
 Consider a scenario, when we have to make decision of executing a task dynamically i.e. while the workflow is still
 running. In such cases, Dynamic Task would be useful.
 
-## Configuration / Properties
+### Configuration
 
 Dynamic task is defined directly inside the workflow with type `DYNAMIC`.
 
-### Inputs
+#### Inputs
 
 Following are the input parameters :
 
@@ -25,12 +27,12 @@ Following are the input parameters :
 |---|---|
 | dynamicTaskNameParam|Name of the parameter from the task input whose value is used to schedule the task.  e.g. if the value of the parameter is ABC, the next task scheduled is of type 'ABC'.|
 
-### Output
+#### Output
 
 TODO: Talk about output of the task, what to expect
 
 
-## Examples
+### Examples
 
 Suppose in a workflow, we have to take decision to ship the courier with the shipping
 service providers on the basis of Post Code.
@@ -163,16 +165,3 @@ we get the error `"Invalid task specified. Cannot find task by name in the task 
 
 If the null reference is provided in the task name then also the workflow fails and we get the
 error `"Cannot map a dynamic task based on the parameter and input. Parameter= taskToExecute, input= {taskToExecute=null}"`
-
-
-
-
-## FAQs
-
-TODO: Gotchas and other nuances
-
-1. Question 1 
-   1. Answer
-
-1. Question 2
-    1. Answer

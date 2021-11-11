@@ -2,12 +2,12 @@
 sidebar_position: 1
 ---
 
-# Switch Task
+# Switch
 
 ```json
 "type" : "SWITCH"
 ```
-
+### Introduction
 A switch task is similar to `case...switch` statement in a programming language. The `switch` expression, is
 a configuration on the `SWITCH` task type. Currently, two evaluators are supported:
 
@@ -16,11 +16,11 @@ a configuration on the `SWITCH` task type. Currently, two evaluators are support
 | value-param | Use a parameter directly as the value |
 | javascript | Evaluate Javascript expressions and compute value |
 
-## Common Use Cases
+### Use Cases
 
 Useful in any situation where we have to execute one of many task options.
 
-### Example Use Case
+#### Example
 
 In this example workflow, we have to ship a package with the shipping service providers on the basis of input provided
 while running the workflow.
@@ -99,9 +99,7 @@ Here is an example using the `javascript` evaluator type:
 }
 ```
 
-## Configuration / Properties
-
-### Task Configuration Parameters
+## Configuration
 
 Following are the task configuration parameters :
 

@@ -2,9 +2,12 @@
 sidebar_position: 1
 ---
 
-# Dynamic Fork Task
+# Dynamic Fork
+```json
+"type" : "FORK_JOIN_DYNAMIC"
+```
 
-## Introduction
+### Introduction
 
 A Fork operation in conductor, lets you run a specified list of other tasks or sub workflows in parallel after the fork
 task. A fork task is followed by a join operation that waits on the forked tasks or sub workflows to finish. The `JOIN`
@@ -21,7 +24,7 @@ There are three things that are needed to configure a `FORK_JOIN_DYNAMIC` task.
 3. A task prior to the `FORK_JOIN_DYNAMIC` tasks outputs 1 and 2 above that can be wired in as in input to
    the `FORK_JOIN_DYNAMIC` tasks
 
-## Use Cases
+### Use Cases
 
 A `FORK_JOIN_DYNAMIC` is useful, when a set of tasks or sub-workflows needs to be executed and the number of tasks or
 sub-workflows are determined at run time. E.g. Let's say we have a task that resizes an image, and we need to create a
@@ -31,7 +34,7 @@ single image resize task does one job. The `FORK_JOIN_DYNAMIC` and the following
 invokes of the single image resize task. Here, the responsibilities are clearly broken out, where the single image resize
 task does the core job and `FORK_JOIN_DYNAMIC` manages the orchestration and fault tolerance aspects.
 
-## Configuration
+### Configuration
 
 Here is an example of a `FORK_JOIN_DYNAMIC` task followed by a `JOIN` task
 
@@ -62,7 +65,7 @@ fooBarTask This is a task that is defined prior to the FORK_JOIN_DYNAMIC in the 
 to output (outputParameters) 1 and 2 above so that it can be wired into inputParameters of the FORK_JOIN_DYNAMIC
 tasks. (dynamicTasks and dynamicTasksInput)
 
-### Input Configuration
+#### Input Configuration
 
 | Attribute      | Description |
 | ----------- | ----------- |

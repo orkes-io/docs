@@ -128,7 +128,6 @@ module.exports = {
                 'reference-docs/fork-task',
                 'reference-docs/dynamic-fork-task',
                 'reference-docs/join-task',
-                'reference-docs/exclusive-join-task',
                 'reference-docs/wait-task',
                 'reference-docs/dynamic-task',
                 'reference-docs/terminate-task',

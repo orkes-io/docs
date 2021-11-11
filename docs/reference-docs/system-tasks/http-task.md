@@ -7,17 +7,54 @@ sidebar_position: 1
 ```json
 "type" : "HTTP"
 ```
+
+### Introduction
+
 An HTTP task is useful when you have a requirements such as
 
 1. Making calls to another service that exposes an API via HTTP
 2. Fetch any resource or data present on an endpoint
 
-## Common Use Cases
+### Use Cases
 
 If we have a scenario where we need to make an HTTP call into another service, we can make use of HTTP tasks. You can
 use the data returned from the HTTP call in your subsequent tasks as inputs. Using HTTP tasks you can avoid having to
 write the code that talks to these services and instead let Conductor manage it directly. This can reduce the code you
 have to maintain and allows for a lot of flexibility.
+
+### Configuration
+
+HTTP task is defined directly inside the workflow with the task type `HTTP`.
+
+|name|type|description|
+|---|---|---|
+| http_request | HttpRequest | JSON object (see below) |
+
+#### Inputs
+
+|Name|Type|Example|Description|
+|---|---|---|---|
+| uri | String || URI for the service. Can be a partial when using vipAddress or includes the server address.|
+| method | String || HTTP method. One of the GET, PUT, POST, DELETE, OPTIONS, HEAD|
+| accept | String || Accept header as required by server. Defaults to ```application/json``` |
+| contentType | String || Content Type - supported types are ```text/plain```, ```text/html```, and ```application/json``` (Default)|
+| headers| Map[String, Any] || A map of additional http headers to be sent along with the request.|
+| body| Map[] || Request body |
+| vipAddress | String || When using discovery based service URLs.|
+| asyncComplete | Boolean |TODO: Link to details| ```false``` to mark status COMPLETED upon execution ; ```true``` to keep it IN_PROGRESS, wait for an external event (via Conductor or SQS or EventHandler) to complete it.
+| oauthConsumerKey | String || [OAuth](https://oauth.net/core/1.0/) client consumer key  |
+| oauthConsumerSecret | String || [OAuth](https://oauth.net/core/1.0/) client consumer secret |
+| connectionTimeOut | Integer || Connection Time Out in milliseconds. If set to 0, equivalent to infinity. Default: 100. |
+| readTimeOut | Integer || Read Time Out in milliseconds. If set to 0, equivalent to infinity. Default: 150. |
+
+#### Output
+
+|name|type|description|
+|---|---|---|
+| response | Map |  JSON body containing the response if one is present |
+| headers | Map[String, Any] | Response Headers |
+| statusCode | Integer | [Http Status Code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes) |
+| reasonPhrase | String | Http Status Code's reason phrase |
 
 ### Examples
 
@@ -100,41 +137,7 @@ Following is the example of HTTP task with `DELETE` method.
 }
 ```
 
-## Configuration / Properties
-
-HTTP task is defined directly inside the workflow with the task type `HTTP`.
-
-|name|type|description|
-|---|---|---|
-| http_request | HttpRequest | JSON object (see below) |
-
-### Inputs
-
-|Name|Type|Example|Description|
-|---|---|---|---|
-| uri | String || URI for the service. Can be a partial when using vipAddress or includes the server address.|
-| method | String || HTTP method. One of the GET, PUT, POST, DELETE, OPTIONS, HEAD|
-| accept | String || Accept header as required by server. Defaults to ```application/json``` |
-| contentType | String || Content Type - supported types are ```text/plain```, ```text/html```, and ```application/json``` (Default)|
-| headers| Map[String, Any] || A map of additional http headers to be sent along with the request.|
-| body| Map[] || Request body |
-| vipAddress | String || When using discovery based service URLs.|
-| asyncComplete | Boolean |TODO: Link to details| ```false``` to mark status COMPLETED upon execution ; ```true``` to keep it IN_PROGRESS, wait for an external event (via Conductor or SQS or EventHandler) to complete it.
-| oauthConsumerKey | String || [OAuth](https://oauth.net/core/1.0/) client consumer key  |
-| oauthConsumerSecret | String || [OAuth](https://oauth.net/core/1.0/) client consumer secret |
-| connectionTimeOut | Integer || Connection Time Out in milliseconds. If set to 0, equivalent to infinity. Default: 100. |
-| readTimeOut | Integer || Read Time Out in milliseconds. If set to 0, equivalent to infinity. Default: 150. |
-
-### Output
-
-|name|type|description|
-|---|---|---|
-| response | Map |  JSON body containing the response if one is present |
-| headers | Map[String, Any] | Response Headers |
-| statusCode | Integer | [Http Status Code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes) |
-| reasonPhrase | String | Http Status Code's reason phrase |
-
-## Best Practices
+### Best Practices
 
 1. Why are my HTTP tasks not getting picked up?
     1. We might have too many HTTP tasks in the queue. There is a concept called Isolation Groups that you can rely on

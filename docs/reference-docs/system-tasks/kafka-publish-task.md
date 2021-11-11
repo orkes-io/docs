@@ -3,20 +3,23 @@ sidebar_position: 13
 ---
 
 # Kafka Publish Task
+```json
+"type" : "KAFKA_PUBLISH"
+```
 
-### What is Kafka Publish Task?
+### Introduction
 
 A Kafka Publish task is used to push messages to another microservice via Kafka.
 
-### What is a common Kafka Publish Task use case?
+### Use Cases
 
 
-### How is it defined?
+### Configuration
 
 Kafka Publish task is defined directly inside the workflow with
 `"type":"KAFKA_PUBLISH"`.
 
-### Example of Kafka Publish Task
+### Examples
 
 Sample Task 
 

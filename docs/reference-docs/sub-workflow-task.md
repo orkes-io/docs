@@ -1,22 +1,23 @@
 ---
 sidebar_position: 1
 ---
-# Sub Workflow Task
-
-## What is a Sub Workflow Task?
-
+# Sub Workflow
+```json
+"type" : "SUB_WORKFLOW"
+```
+### Introduction
 Sub Workflow task allows for nesting a workflow within another workflow.
 
-## Common Use Cases
+### Use Cases
 
 Suppose we want to include another workflow inside our current workflow. In that
 case, Sub Workflow Task would be used.
 
-## Configuration / Properties
+### Configuration
 
 Sub Workflow task is defined directly inside the workflow with `"SUB_WORKFLOW"`.
 
-### Inputs
+#### Inputs
 
 **Parameters:**
 
@@ -33,13 +34,14 @@ Sub Workflow task is defined directly inside the workflow with `"SUB_WORKFLOW"`.
 | taskToDomain | Map[String, String] | Allows scheduling the sub workflow's tasks per given mappings. See [Task Domains](conductor/configuration/taskdomains/) for instructions to configure taskDomains. |
 | workflowDefinition | [WorkflowDefinition](conductor/configuration/workflowdef/) | Allows starting a subworkflow with a dynamic workflow definition. |
 
-### Output
+#### Output
 
 |name|type|description|
 |---|---|---|
 | subWorkflowId | String | Subworkflow execution Id generated when running the subworkflow |
-0
-## Examples
+
+
+### Examples
 
 Suppose in a workflow, we have to run another workflow. Consider the example that we took
 in Dynamic Task. Let's extend that example. Suppose in an E-Commerce website user places
@@ -146,15 +148,3 @@ We can create workers as we did in `Dynamic Task` section and for running this w
 After execution workflow looks like.
 
 ![Conductor UI - Workflow Diagram](/img/tutorial/Sub_Workflow_Run.png)
-
-
-
-## FAQs
-
-TODO: Gotchas and other nuances
-
-1. Question 1
-    1. Answer
-
-1. Question 2
-    1. Answer

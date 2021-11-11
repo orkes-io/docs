@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# Do While Task
+# Do While
 
 TODO
 

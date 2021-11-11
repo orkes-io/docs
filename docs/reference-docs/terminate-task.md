@@ -1,21 +1,21 @@
 ---
 sidebar_position: 1
 ---
-# Terminate Task
+# Terminate
 
 ```json
 "type" : "TERMINATE"
 ```
-
+### Introduction
 Task that can terminate a workflow with a given status and modify the workflow's output with a given parameter, 
 it can act as a `return` statement for conditions where you simply want to terminate your workflow. 
 
-## Common Use Cases
+### Use Cases
 Use it when you want to terminate the workflow without continuing the execution.  
 For example, if you have a decision where the first condition is met, you want to execute some tasks, 
 otherwise you want to finish your workflow.
 
-## Configuration / Properties
+### Configuration
 
 Terminate task is defined directly inside the workflow with type
 `TERMINATE`.
@@ -34,7 +34,7 @@ Terminate task is defined directly inside the workflow with type
 }
 ```
 
-### Inputs
+#### Inputs
 
 **Parameters:**
 
@@ -51,7 +51,7 @@ Terminate task is defined directly inside the workflow with type
 |---|---|---|
 |output|Map|The content of `workflowOutput` from the inputParameters. An empty object if `workflowOutput` is not set.|
 
-## Examples
+### Examples
 
 Let's consider the same example we had in [Switch Task](/docs/reference-docs/switch-task).
 
@@ -86,6 +86,6 @@ Workflow gets created as shown in the diagram.
 ![Conductor UI - Workflow Diagram](/img/tutorial/Terminate_Task.png)
 
 
-## Best Practices
+### Best Practices
 1. Include termination reason when terminating the workflow with failure status to make it easy to understand the cause.
 2. Include any additional details (e.g. output of the tasks, switch case etc) that helps understand the path taken to termination.

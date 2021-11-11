@@ -7,6 +7,7 @@ sidebar_position: 1
 ```json
 "type" : "JSON_JQ_TRANSFORM_TASK"
 ```
+### Introduction
 
 JSON_JQ_TRANSFORM_TASK is a System task that allows processing of JSON data that is supplied to the task, by using the
 popular JQ processing tool’s query expression language.
@@ -105,5 +106,3 @@ attribute along with a string message will be returned if there was an error pro
 | result   | The first results returned by the JQ expression     |
 | resultList   | A List of results returned by the JQ expression        |
 | error | An optional error message, indicating that the JQ query failed processing |
-
-### Best Practices
