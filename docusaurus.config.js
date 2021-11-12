@@ -8,7 +8,7 @@ const baseUrlName = '/content';
 const config = {
     title: 'Orkes Conductor Documentation',
     tagline: 'Making Stateful Serverless Easy',
-    url: 'https://orkes-io.github.io',
+    url: 'https://orkes.io',
     baseUrl: baseUrlName + '/',
     onBrokenLinks: 'warn',
     onBrokenMarkdownLinks: 'warn',
