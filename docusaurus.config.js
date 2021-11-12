@@ -23,6 +23,16 @@ const config = {
             async: true,
         },
     ],
+    plugins: [
+    [
+      '@docusaurus/plugin-sitemap',
+      {
+	id: 'plugin-sitemap',
+        changefreq: 'hourly',
+        priority: 0.9,
+      },
+    ],
+   ],
     presets: [
         [
             '@docusaurus/preset-classic',
