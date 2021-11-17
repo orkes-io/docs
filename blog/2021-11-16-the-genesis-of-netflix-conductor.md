@@ -1,9 +1,9 @@
 ---
-slug: launching-orkes-conductor title: Launching Orkes Conductor authors: jeu
+slug: the-genesis-of-netflix-conductor-orkes title: The Genesis of Netflix Conductor authors: jeu
 tags: [Netflix Conductor, orkes, conductor, genesis, microservices, 2021]
 ---
 
-# Age of the monoliths
+# Age of the Monoliths
 
 Rewind the clocks back a few years, the early 2000’s. Age of the Monoliths. It was very common to have large companies
 run critical pieces of their software on large boxes. Scaling was only vertical. Single points of failure were common
