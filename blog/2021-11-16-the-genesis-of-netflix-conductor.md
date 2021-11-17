@@ -1,11 +1,13 @@
 ---
-slug: the-genesis-of-netflix-conductor-orkes title: The Genesis of Netflix Conductor authors: jeu
+slug: the-genesis-of-netflix-conductor-orkes
+title: The Genesis of Netflix Conductor 
+authors: jeu
 tags: [Netflix Conductor, orkes, conductor, genesis, microservices, 2021]
 ---
 
 # Age of the Monoliths
 
-Rewind the clocks back a few years, the early 2000’s. Age of the Monoliths. It was very common to have large companies
+Rewind the clock back a few years, the early 2000’s. Age of the Monoliths. It was very common to have large companies
 run critical pieces of their software on large boxes. Scaling was only vertical. Single points of failure were common
 scenarios that developers and operations often had to deal with. We have all heard stories of companies having
 multi-hour , even multi-day outages. Social media wasn't a thing back then, so you usually heard it on news sites or by
@@ -31,14 +33,14 @@ scaling applications using microservices architecture came out of this. Netflix 
 computing. In the early days, AWS tooling wasn't as rich as what you see today. Netflix built out a lot of this, open
 sourced it. Understandably, Amazon adopted a lot of these principles and made it available on the AWS platform.
 
-# Golden Era of Microservices - The beginning
+# Golden Era of Microservices - The Beginning
 
 The next 10 years and counting were the golden years of cloud computing and adoption of microservices architecture.
 Azure, GCP and other providers followed suit as this industry blossomed. This also led to the birth of many startups in
 this microservices space. Traditionally, what used to be done using desktop software, was now moving to the cloud.
 Checkpoint became Z-Scaler, Tape drives became S3. Every segment of computing was now done in the cloud.
 
-# Microservice orchestration
+# Microservice Orchestration
 
 This explosion in microservices was natural, given the move to the cloud, but then led to another interesting problem,
 Orchestration challenges. Things that were typically done by simple function calls in monolith systems became harder to
@@ -50,7 +52,7 @@ orchestration solutions, orchestration through messaging platform based solution
 these really solved the problems that came with the microservice explosion. Netflix conductor was created out of this
 need.
 
-# The Birth of conductor
+# The Birth of Conductor
 
 As Netflix was moving its business from DVDs to streaming, the initial catalogue on the services were mostly licensed.
 Licensed content however, did provide enough differentiation to its competitors, since everyone was trying to pay for
