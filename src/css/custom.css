@@ -111,3 +111,12 @@ h3 {
     font-size: 24px;
     font-family: GothicA1-Bold, sans-serif;
 }
+.menu__link--sublist:after {
+    background: none;
+}
+.menu__link--sublist {
+    font-weight: bold;
+}
+aside {
+    border-right: none;
+}

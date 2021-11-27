@@ -50,15 +50,6 @@ module.exports = {
         },
         {
             type: 'category',
-            label: 'Best Practices',
-            collapsed: false,
-            items: [
-                'how-tos/versioning-workflows',
-                'how-tos/idempotent-tasks',
-            ],
-        },
-        {
-            type: 'category',
             label: 'Running in Production',
             collapsed: false,
             items: [
