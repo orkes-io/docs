@@ -92,6 +92,6 @@ founding team of Netflix Conductor. [Learn more about Orkes](https://orkes.io "M
 
 [Join the Orkes Conductor Slack community here](https://join.slack.com/t/orkes-conductor/shared_invite/zt-xyxqyseb-YZ3hwwAgHJH97bsrYRnSZg "Join the Conductor Slack Community")
 
-[Want to work at Orkes?](https://www.linkedin.com/jobs/search/?f_C=76643442 "Apply to Jobs at Orkes" )
+[Want to work at Orkes?](https://jobs.lever.co/Orkes/ "Apply to Jobs at Orkes" )
 
 
