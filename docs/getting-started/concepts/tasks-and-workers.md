@@ -17,10 +17,10 @@ polling threads, metrics and server communication that makes creating workers ea
 
 Each worker embodies Microservice design pattern and follows certain basic principles:
 
-1. Workers are stateless and does not implement an workflow specific logic.  
+1. Workers are stateless and does not implement a workflow specific logic.  
 2. Each worker executes a very specific task and produces well defined output given specific inputs.
 3. Workers are meant to be idempotent (or should handle cases where the task that partially executed gets rescheduled due to timeouts etc.)
-4. Workers do not implement the logic to handle retires etc, that is taken care by the Conductor server.
+4. Workers do not implement the logic to handle retries etc, that is taken care by the Conductor server.
  
 ## Handling failures, etc
 Each task has a associated metadata defined in Conductor server. 
@@ -89,7 +89,7 @@ Note: Rate limiting is only supported for the Redis-persistence module and is no
 
 * `inputKeys` and `outputKeys` can be considered as parameters and return values for the Task. 
 * Consider the task Definition as being represented by an interface: ```(value1, value2 .. valueN) someTaskDefinition(key1, key2 .. keyN);```
-* However, these parameters are not strictly enforced at the moment. Both `inputKeys` and `outputKeys` act as a documentation for task re-use. The tasks in workflow need not define all of the keys in the task definition.
+* However, these parameters are not strictly enforced at the moment. Both `inputKeys` and `outputKeys` act as a documentation for task re-use. The tasks in workflow need not define all the keys in the task definition.
 * In the future, this can be extended to be a strict template that all task implementations must adhere to, just like interfaces in programming languages.
 
 ### Using inputTemplate

@@ -26,11 +26,11 @@ After that, you [add those tasks into the workflow](../../running-workflows/addi
 
 ### *Multiple Paths Workflow Example*
 
-Next lets see a more complex example where you want to support multiple shipping vendors (e.g. FedEx, DHL, UPS) and the code for each of them ive in separate services. This is a good design pattern to follow since you can now independtly change each of them without having to worry about breaking others. Usually this means you now have to take on the work of wiring up many different services into your primary execution path. But with Conductor, this just means adding a [switch operator](../../reference-docs/switch-task.md) to decide which vendor to call depending on an incoming parameter, and then during execution time the right one will be called! 
+Next lets see a more complex example where you want to support multiple shipping vendors (e.g. FedEx, DHL, UPS) and the code for each of them ive in separate services. This is a good design pattern to follow since you can now independently change each of them without having to worry about breaking others. Usually this means you now have to take on the work of wiring up many different services into your primary execution path. But with Conductor, this just means adding a [switch operator](../../reference-docs/switch-task.md) to decide which vendor to call depending on an incoming parameter, and then during execution time the right one will be called! 
 
 ![Multi-vendor Shipping Workflow - Visual Representation of Design](../../../static/img/tutorial/Switch_Workflow.png)
 
-Furthermore, with Conductor, in addition to the above design view of the workflow, you can also see the execution view of the workflow. In this particular example, the workflow picked UPS at runtime and as seen from the green color of the tasks in the execution path, this workflow completed successfully. If a particular task had failed, it would be show in red.
+Furthermore, with Conductor, in addition to the above design view of the workflow, you can also see the execution view of the workflow. In this particular example, the workflow picked UPS at runtime and as seen from the green color of the tasks in the execution path, this workflow completed successfully. If a particular task had failed, it would be shown in red.
 
 ![Multi-vendor Shipping Workflow - Visual Representation of Execution](../../../static/img/tutorial/Switch_UPS.png)
 
@@ -38,7 +38,7 @@ Furthermore, with Conductor, in addition to the above design view of the workflo
 > ### The Power of Seeing
 > These  visual representations of workflows are key to how Conductor turbocharges the productivity of engineering teams. 
 > * Workflows definitions serve as the enduring documentation for all the different applications a team owns and this benefit becomes even more powerful as the team scales in size and scope. Furthermore, it allows anyone new to the team to quickly get ramped up . 
-> * The execution visualization allows you to quickly identify problem areas and provides you details on the error responses received, details on where the failing task was executing etc. This makes debugging much faster than digging across distributed logs and events amking Conductor's approach to workflows relevant not only during the creation time but also during live operations of the workflows in production
+> * The execution visualization allows you to quickly identify problem areas and provides you details on the error responses received, details on where the failing task was executing etc. This makes debugging much faster than digging across distributed logs and events making Conductor's approach to workflows relevant not only during the creation time but also during live operations of the workflows in production
 
 ## How do I use Workflows?
 
@@ -56,9 +56,9 @@ Once a workflow is invoked, it starts running and you can [view details of its e
 When your application's business logic evolves or you need to fix an error in your workflow definition, you can [udpate your workflows](../../how-tos/updating-workflows.md) in Conductor with built-in support for versioning.
 
 > ### The Power of Versioning
-> Conductor's native support for versioning allows developers to rapidly iterate on new features even with multiple invocations of the same workflow are in-flight. Unlike other platforms where you either need to wait till those in-flight executions finsh or forcefully error them out, with Conductor you can have both versions in-flight at the same time. In addition to increase in developer agility, this also unlocks other benefits
+> Conductor's native support for versioning allows developers to rapidly iterate on new features even with multiple invocations of the same workflow are in-flight. Unlike other platforms where you either need to wait till those in-flight executions finish or forcefully error them out, with Conductor you can have both versions in-flight at the same time. In addition to increase in developer agility, this also unlocks other benefits
 > * Experiment new features for a small subset of users
-> * Safely test changes in production while containing any issue's blast raidus to a known value 
+> * Safely test changes in production while containing any issue's blast radius to a known value 
 
 ## Further Reading
 * [Learn more about tasks and workers](tasks-and-workers.md)
