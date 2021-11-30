@@ -145,7 +145,7 @@ Successful POST request should return a workflow id, which you can use to find t
 
 ### Step 4 - Poll for Worker Task
 
-If you look up the worker using the following URL, you will notice that the worker is in `SCHEDULED` state. This is
+If you look up the worker using the following URL `http://localhost:8080/api/tasks/{taskId}`, you will notice that the worker is in `SCHEDULED` state. This is
 because we haven't implemented the worker yet. Let's walk through the steps to implement the worker.
 
 #### Prerequisite

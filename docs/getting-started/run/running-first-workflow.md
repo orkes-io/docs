@@ -8,7 +8,7 @@ In this article we will explore how we can run a really simple workflow that run
 
 Conductor can orchestrate HTTP services out of the box without implementing any code.  We will use that to create and run the first workflow.
 
-See [System Task](getting-started/concepts/system-tasks) for the list of such built-in tasks.
+See [System Task](../concepts/system-tasks) for the list of such built-in tasks.
 Using system tasks is a great way to run a lot of our code in production.
 
 To bring up a local instance of Conductor follow one of the recommended steps:
@@ -85,8 +85,8 @@ with the most important values:
 Here is a list of fields and what it does:
 
 1. `"name"` : Name of our worker
-2. `"taskReferenceName"` : This is a reference to this worker in this specific workflow implementation. We can multiple
-   workers of the same name in our workflow but we will need a unique task reference name for each of them. Task
+2. `"taskReferenceName"` : This is a reference to this worker in this specific workflow implementation. We can have multiple
+   workers of the same name in our workflow, but we will need a unique task reference name for each of them. Task
    reference name should be unique across our entire workflow.
 3. `"inputParameters"` : These are the inputs into our worker. We can hard code inputs as we have done here. We can
    also provide dynamic inputs such as from the workflow input or based on the output of another worker. We can find
