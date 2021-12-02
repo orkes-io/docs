@@ -117,6 +117,26 @@ h3 {
 .menu__link--sublist {
     font-weight: bold;
 }
+
+.menu__link {
+    line-height: 1.5em;
+    font-size: 15px;
+}
+
 aside {
     border-right: none;
 }
+
+.markdown>p, .markdown>pre, .markdown>ul, .markdown li, .table-of-contents__link, table {
+    letter-spacing: -0.003em;
+    line-height: 32px;
+    font-size: 21px;
+    font-family: charter, Georgia, Cambria, "Times New Roman", Times, serif;
+}
+
+pre code {
+    letter-spacing: -0.003em;
+    line-height: 32px;
+    font-size: 21px;
+}
+
