@@ -12,15 +12,27 @@ Conductor is cloud native and scales seamlessly as your workload grows.
 ### How to run Conductor
 [Short Tutorial on Running Conductor locally](getting-started/install/running-locally)
 
-### What use case Conductor can solve?
-Conductor has been adopted widely across multiple industries ranging from Media (Netflix) to security and finance.
-Some of the common use case that have been solved by Conductor are:
-1. Media Processing Pipeline
+### What use cases can Conductor solve?
+
+Conductor is a general-purpose orchestration engine that is language agnostic and has been adopted widely across
+multiple industries, ranging from Media to security to finance and more. Some of the common use cases that have been
+solved by Conductor are:
+
+1. Media Processing Pipelines (Image Processing, Video Transcoding, etc..)
 2. Security and Threat detection workflows
-3. Order Management
-4. Human centric business process automation
-5. Orchestrating Microservices exposed over HTTP
-6. Orchestrating business logic acrosss various cloud functions (AWS Lambda, GCP functions etc.) 
+3. Order Management workflows
+4. Financial transactions
+5. Distributed Transactions
+6. Human-centric business process automation
+7. Orchestrating Microservices (HTTP,  background services, etc.)
+8. Orchestrating business logic across various cloud functions (AWS Lambda, GCP functions, etc.)
+9. Infrastructure Provisioning
+10. CICD Pipelines
+11. Long running processes and workflows
+12. Monitoring
+13. Distributed Transactions
+14. Localization Pipelines
+15. Content Management and Publishing Workflows
 
 ### What License does Conductor use?
 Netflix conductor is available under Apache 2.0 Open source license.
