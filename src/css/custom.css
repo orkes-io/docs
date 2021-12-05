@@ -129,14 +129,14 @@ aside {
 
 .markdown>p, .markdown>pre, .markdown>ul, .markdown li, .table-of-contents__link, table {
     letter-spacing: -0.003em;
-    line-height: 32px;
-    font-size: 21px;
-    font-family: charter, Georgia, Cambria, "Times New Roman", Times, serif;
+    line-height: 28px;
+    font-size: 17px;
+    font-family: var(--ifm-font-family-base);
 }
 
 pre code {
     letter-spacing: -0.003em;
-    line-height: 32px;
-    font-size: 21px;
+    line-height: 28px;
+    font-size: 17px;
 }
 
