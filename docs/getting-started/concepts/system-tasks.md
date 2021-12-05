@@ -4,9 +4,9 @@ sidebar_position: 1
 
 # System Task
 
-System Tasks are built-in tasks which are general purpose and re-usable workers that runs on the Conductor server.
-Having such re-usable general purpose tasks allows you to get started without having to write custom workers.
- 
+System Tasks (Workers) are built-in tasks that are general purpose and re-usable. They run on the Conductor servers.
+Such tasks allow you to get started without having to write custom workers.
+
 ## Available System Tasks
 
 Conductor has the following set of system tasks available.

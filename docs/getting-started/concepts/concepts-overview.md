@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Overview
 
-There are four primitives that are used with Conductor as you build your applications with it.
+There are four primitives, that are used with Conductor.
 
 ## [Tasks](tasks-and-workers.md#Conductor-Tasks)
 Tasks are the basic logical unit of work. It has defined inputs and outputs, does a specific activity and returns an execution status of success or failure. 
@@ -40,7 +40,7 @@ Once the tasks' code is written to implement a task - you can choose the languag
 There are multiple ways in which you can run a Worker
 * **Micro Services:** The most common way a worker is implemented by Conductor users is by building a micro service to do that and deploying it as a container. This option allows you to have granularity in your application development, scale your tasks independently, and contain the blast radius of any task level failures.
 * **Serverless Functions:** Your Task code can be written as a stateless and serverless function that can be hosted with a serverless provider such as [AWS Lambda](https://aws.amazon.com/lambda/), [Azure Functions](https://azure.microsoft.com/en-us/services/functions/), [Google Cloud Functions](https://cloud.google.com/functions) etc. Choosing this option to run your Tasks allows you to not have to spend time and resources managing a server footprint
-* **Monolith:** Many applications run as part of a monolith that encompasses other applications or even entirely different business lines. Conductor fully supports executing workers in these stacks. This gives developers the flexibility to have parts of their application running in micro services and others in a monolith. Customers have used this flexibility to plan and execute their micro services isolation strategy (sometimes along with a cloud migration strategy) and also for their ongoing hybrid operational strategy which different parts of their business logic lies in different parts of their backend ecosystem.
+* **Monolith:** Many applications run as part of a monolith that encompasses other applications or even entirely different business lines. Conductor fully supports executing workers in these stacks. This gives developers the flexibility to have parts of their application running in micro services and others in a monolith. Customers have used this flexibility to plan and execute their micro services isolation strategy (sometimes along with a cloud migration strategy) and also for their ongoing hybrid operational strategy which different parts of their business logic lie in different parts of their backend ecosystem.
 
 ## Further Reading
 * [Tasks](tasks-and-workers.md#Conductor-Tasks)
