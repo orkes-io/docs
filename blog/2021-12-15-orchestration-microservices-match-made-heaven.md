@@ -109,7 +109,7 @@ version of Netflix Conductor offering full compatibility with the open-source ve
 Early access to the platform is now available for interested
 customers [https://orkes.io](https://orkes.io "Microservices and Workflow Orchestration at scale")
 
-[Follow/Star the Netflix Conductor Open Source Github Repo] (https://netflix.github.io/conductor/ "Netflix Conductor")
+[Follow/Star the Netflix Conductor Open Source Github Repo] (https://github.com/Netflix/conductor "Netflix Conductor")
 
 [Learn more about Orkes](https://orkes.io "Microservices and Workflow Orchestration at scale")
 
