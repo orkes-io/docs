@@ -2,7 +2,7 @@
 slug: the-genesis-of-netflix-conductor-orkes
 title: The Genesis of Netflix Conductor 
 authors: jeu
-tags: [Netflix Conductor, orkes, conductor, genesis, microservices, 2021]
+tags: [Netflix Conductor, Orkes, Conductor, genesis, microservices, 2021]
 ---
 
 # Age of the Monoliths
@@ -12,6 +12,8 @@ run critical pieces of their software on large boxes. Scaling was only vertical.
 scenarios that developers and operations often had to deal with. We have all heard stories of companies having
 multi-hour , even multi-day outages. Social media wasn't a thing back then, so you usually heard it on news sites or by
 word of mouth.
+
+![Netflix](./assets/netflix-n.jpg) 
 
 # Netflix, AWS and Microservices
 
@@ -25,6 +27,8 @@ was still the biggest revenue maker) to Streaming. If the bet proved successful,
 be a really large scale. And if that happened, the company had to be focused on the core of that business (Content
 Acquisition, Personalization, Content Creation, Streaming etc. at planet scale) and not spend their resources on
 building a world class cloud infrastructure. The decision was made to move completely to AWS.
+
+![AWS](./assets/1024px-Amazon_Web_Services_Logo.png)
 
 # Poster Child of Cloud Computing
 
@@ -52,6 +56,8 @@ orchestration solutions, orchestration through messaging platform based solution
 these really solved the problems that came with the microservice explosion. Netflix conductor was created out of this
 need.
 
+![Netflix Conductor](./assets/conductor-vector-x.png)
+
 # The Birth of Conductor
 
 As Netflix was moving its business from DVDs to streaming, the initial catalogue on the services were mostly licensed.
@@ -67,6 +73,9 @@ started with kids programming and eventually moved to the mainstream with movies
 time it found its footprint across the entire company, it is now the service of choice, for microservice and workflow
 orchestration.
 
+
+![Netflix OSS](./assets/Netflix-OSS-Logo.png)
+
 # Open Source and Industry Usage
 
 While the focus of the company was to build the best streaming service in the world, it also led to the birth of several
@@ -79,6 +88,8 @@ Open Sourcing Conductor enabled several large and popular companies like Tesla, 
 just use Conductor but also contribute back to it. Conductor, being built as a general purpose, language and cloud
 agnostic engine further accelerated its adoption. Today, it is the software of choice, when it comes to microservice and
 workflow orchestration.
+
+![Orkes](./assets/orkes-logo.png)
 
 # Orkes
 
