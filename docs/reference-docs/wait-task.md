@@ -8,7 +8,7 @@ sidebar_position: 1
 ```
 ### Introduction
 
-WAIT is used when the worklfow needs to be paused for an external signal to continue.
+WAIT is used when the workflow needs to be paused for an external signal to continue.
 
 ### Use Cases
 WAIT is used when the workflow needs to wait and pause for an external signal such as a human intervention 

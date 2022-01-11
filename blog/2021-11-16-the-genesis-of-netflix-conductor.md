@@ -61,7 +61,7 @@ need.
 # The Birth of Conductor
 
 As Netflix was moving its business from DVDs to streaming, the initial catalogue on the services were mostly licensed.
-Licensed content however, did provide enough differentiation to its competitors, since everyone was trying to pay for
+Licensed content however, did not provide enough differentiation to its competitors, since everyone was trying to pay for
 the same pieces of content, leading to a low margin, high cost business model. Netflix, made another big bet, marking
 its entry into Original programming. After seeing early signs of success, Netflix made a push to become the largest
 studio in the world. Conductor was born out of this need. Netflix developers were known for doings at breakneck speed,
@@ -70,7 +70,7 @@ Conductor was built with this in mind. It was designed to fit brownfield applica
 agnostic. It was designed for operational excellence. It was designed to debug and fix things fast, when systems fail.
 The very first use case for conductor was to solve for a new type of content in Netflix. Interactive Content!. It
 started with kids programming and eventually moved to the mainstream with movies like Bandersnatch (Black Mirror!!) With
-time it found its footprint across the entire company, it is now the service of choice, for microservice and workflow
+time it found its footprint across the entire company, it is now the service of choice for microservice and workflow
 orchestration.
 
 

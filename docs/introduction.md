@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Getting Started
 ### What is Conductor
-Conductor is a Microservices and Workflow orchestration engine.
+Conductor is a microservice and workflow orchestration engine.
 Conductor allows developers to build stateful applications using simple, 
 stateless code without having to manage the state and complexities of building a distributed application.
 Conductor is cloud native and scales seamlessly as your workload grows.
@@ -35,7 +35,7 @@ solved by Conductor are:
 15. Content Management and Publishing Workflows
 
 ### What License does Conductor use?
-Netflix conductor is available under Apache 2.0 Open source license.
+Netflix conductor is available under Apache 2.0 Open Source license.
 
 ### How can I run Conductor in production?
 Conductor can be deployed using various backend (Redis, MySQL, Postgres), 
