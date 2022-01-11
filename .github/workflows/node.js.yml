@@ -28,7 +28,7 @@ jobs:
         git config --global user.email "${{ secrets.GH_USER_EMAIL }}"
         git config --global user.name "${{ secrets.GH_USER }}"
         git config -l
-        git clone --single-branch --branch "gh-pages" "https://${{secrets.GH_USER}}:${{secrets.GH_DEPLOY_TOKEN}}@github.com/orkes-io/orkesio-site.git" "$CLONE_DIR"
+        git clone --single-branch --branch "gh-pages" "https://${{secrets.GH_USER}}:${{secrets.GH_DEPLOY_TOKEN}}@github.com/orkes-io/docs.git" "$CLONE_DIR"
         ls -la "$CLONE_DIR"
         rm -rf $CLONE_DIR/content/*
         rsync -a ./build/ $CLONE_DIR/content/
