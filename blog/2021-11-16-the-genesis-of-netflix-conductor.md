@@ -61,7 +61,7 @@ need.
 # The Birth of Conductor
 
 As Netflix was moving its business from DVDs to streaming, the initial catalogue on the services were mostly licensed.
-Licensed content however, did provide enough differentiation to its competitors, since everyone was trying to pay for
+Licensed content however, did not provide enough differentiation to its competitors, since everyone was trying to pay for
 the same pieces of content, leading to a low margin, high cost business model. Netflix, made another big bet, marking
 its entry into Original programming. After seeing early signs of success, Netflix made a push to become the largest
 studio in the world. Conductor was born out of this need. Netflix developers were known for doings at breakneck speed,
