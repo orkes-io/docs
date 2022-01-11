@@ -70,7 +70,7 @@ Conductor was built with this in mind. It was designed to fit brownfield applica
 agnostic. It was designed for operational excellence. It was designed to debug and fix things fast, when systems fail.
 The very first use case for conductor was to solve for a new type of content in Netflix. Interactive Content!. It
 started with kids programming and eventually moved to the mainstream with movies like Bandersnatch (Black Mirror!!) With
-time it found its footprint across the entire company, it is now the service of choice, for microservice and workflow
+time it found its footprint across the entire company, it is now the service of choice for microservice and workflow
 orchestration.
 
 

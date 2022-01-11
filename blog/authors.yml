@@ -2,11 +2,16 @@ boney:
   name: Boney Sekh
   title: CTO
   url: https://github.com/boney9
-  image_url: https://media-exp1.licdn.com/dms/image/C4E03AQF7EptCzA9uDQ/profile-displayphoto-shrink_200_200/0/1579844293358?e=1641427200&v=beta&t=V7iWgOSirNKuiHWZNZO9nlmYz4DT6t7Fk4vb-spD6Sc
+  image_url: https://media-exp1.licdn.com/dms/image/D5635AQGACYt5bMQdHg/profile-framedphoto-shrink_400_400/0/1641376945125?e=1641999600&v=beta&t=-bCzlO-gftanQLIQxiyCjSA8mLfYERHDBrUnARxJRGo
 
 jeu:
   name: Jeu George
   title: CEO
   url: https://github.com/nohup23
-  image_url: https://media-exp1.licdn.com/dms/image/C4E03AQEHWy5icFieCw/profile-displayphoto-shrink_200_200/0/1516312651412?e=1641427200&v=beta&t=Y1Dc2qwSg0u3cBd862lkSh1laxqGLF_EFZ4bkPqbe2s
+  image_url: https://media-exp1.licdn.com/dms/image/C4E03AQEHWy5icFieCw/profile-displayphoto-shrink_400_400/0/1516312651412?e=1647475200&v=beta&t=q-anYjIu64_kfK4Oxcuye52d7q5eIZzU5EMK-_ClVkc
 
+doug:
+  name: Doug Sillars
+  title: Developer Relations Engineer
+  url: https://github.com/dougsillars
+  image_url: https://avatars.githubusercontent.com/u/1514288?v=4
