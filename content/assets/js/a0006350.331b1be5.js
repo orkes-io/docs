@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocumentation=self.webpackChunkdocumentation||[]).push([[7768],{7968:function(e){e.exports=JSON.parse('{"allTagsPath":"/content/blog/tags","slug":"/content/blog/tags/microservices","name":"microservices","count":3,"permalink":"/content/blog/tags/microservices"}')}}]);

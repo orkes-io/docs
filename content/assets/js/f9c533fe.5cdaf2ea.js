@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocumentation=self.webpackChunkdocumentation||[]).push([[7172],{5948:function(e){e.exports=JSON.parse('{"allTagsPath":"/content/blog/tags","slug":"/content/blog/tags/genesis","name":"genesis","count":1,"permalink":"/content/blog/tags/genesis"}')}}]);
