@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://orkes.io/content/blog</id>
+    <title>Orkes Conductor Documentation Blog</title>
+    <updated>2021-12-15T00:00:00.000Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://orkes.io/content/blog"/>
+    <subtitle>Orkes Conductor Documentation Blog</subtitle>
+    <icon>https://orkes.io/content/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[Orchestration and Microservices - A match made in heaven]]></title>
+        <id>orchestration-microservices-match-made-heaven</id>
+        <link href="https://orkes.io/content/blog/orchestration-microservices-match-made-heaven"/>
+        <updated>2021-12-15T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Microservices have emerged as the dominant application development paradigm in the software world today. It has]]></summary>
+        <author>
+            <name>Boney Sekh</name>
+            <uri>https://github.com/boney9</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[The Genesis of Netflix Conductor]]></title>
+        <id>the-genesis-of-netflix-conductor-orkes</id>
+        <link href="https://orkes.io/content/blog/the-genesis-of-netflix-conductor-orkes"/>
+        <updated>2021-11-16T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Rewind the clock back a few years, the early 2000’s. Age of the Monoliths. It was very common to have large companies]]></summary>
+        <author>
+            <name>Jeu George</name>
+            <uri>https://github.com/nohup23</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Welcome to Orkes Conductor Blogs]]></title>
+        <id>welcome</id>
+        <link href="https://orkes.io/content/blog/welcome"/>
+        <updated>2021-11-02T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Welcome to Orkes Conductor Blogs. We will post our company's journey and details about how Conductor is helping the]]></summary>
+        <author>
+            <name>Boney Sekh</name>
+            <uri>https://github.com/boney9</uri>
+        </author>
+        <author>
+            <name>Jeu George</name>
+            <uri>https://github.com/nohup23</uri>
+        </author>
+    </entry>
+</feed>
