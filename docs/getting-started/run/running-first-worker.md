@@ -139,11 +139,13 @@ curl 'http://localhost:8080/api/workflow/first_sample_workflow_with_worker' \
 The API path contains the workflow name `first_sample_workflow_with_worker` and in our workflow since we don't need any
 inputs we will specify `{}`
 
-Successful POST request should return a workflow id, which you can use to find the execution in the UI.
+Successful POST request should return a workflow id, which you can use to find the execution in the UI by navigating to `http://localhost:5000/execution/<workflowId>`.
 
 *Note: You can also run this using the Swagger UI instead of curl.*
 
 ### Step 4 - Poll for Worker Task
+
+To get your Worker taskId, you first naviaget to `http://localhost:5000/execution/<workflowId>`. Next, click on the `simple_worker_ref_1` in the UI. This will open a summary pane with the `Task Execution ID`
 
 If you look up the worker using the following URL `http://localhost:8080/api/tasks/{taskId}`, you will notice that the worker is in `SCHEDULED` state. This is
 because we haven't implemented the worker yet. Let's walk through the steps to implement the worker.
@@ -156,9 +158,17 @@ because we haven't implemented the worker yet. Let's walk through the steps to i
 
 In your project, add the following dependencies. We are showing here how you will do this in gradle:
 
-```javascript reference
-https://github.com/orkes-io/orkesworkers/blob/main/build.gradle#L14-L20
+```javascript
+implementation("com.netflix.conductor:conductor-client:${versions.conductor}") {
+        exclude group: 'com.github.vmg.protogen', module: 'protogen-annotations'
+    }
+
+implementation("com.netflix.conductor:conductor-common:${versions.conductor}") {
+    exclude group: 'com.github.vmg.protogen', module: 'protogen-annotations'
+}
 ```
+
+[See full example on GitHub](https://github.com/orkes-io/orkesworkers/blob/main/build.gradle)
 
 You can do this for Maven as well, just need to use the appropriate syntax. We will need the following two libraries
 available in maven repo and you can use the latest version if required.
