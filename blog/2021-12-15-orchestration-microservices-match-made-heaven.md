@@ -18,6 +18,8 @@ consistent and reliable system at the end of a business process.
 Solutions to solve this “coordination” problem have led to the rise of a new set of application patterns that can be
 broadly classified into two main groups - Choreography and Orchestration.
 
+<!--truncate-->
+
 Let us tackle the first group - choreography which advocates the usage of events as a coordination mechanism to complete
 local tasks within each microservice involved in an end-to-end business transaction. Each microservice is responsible
 for its local execution of the transaction resulting in the publishing of events that other microservices react to and

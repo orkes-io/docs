@@ -5,6 +5,8 @@ authors: jeu
 tags: [Netflix Conductor, Orkes, Conductor, genesis, microservices, 2021]
 ---
 
+
+<!--truncate-->
 # Age of the Monoliths
 
 Rewind the clock back a few years, the early 2000’s. Age of the Monoliths. It was very common to have large companies
