@@ -5,7 +5,6 @@ authors: jeu
 tags: [Netflix Conductor, Orkes, Conductor, genesis, microservices, 2021]
 ---
 
-
 <!--truncate-->
 # Age of the Monoliths
 
