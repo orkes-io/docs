@@ -34,6 +34,22 @@ $ git clone https://github.com/Netflix/conductor.git
 ```
 #### 2. Build and run Server
 
+
+> **NOTE for Mac users**: If you are using a new Mac with an Apple Silicon Chip, you must make a small change to ```conductor/grpc/build.gradle``` - adding "osx-x86_64" to two lines:
+```
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:${revProtoBuf}:osx-x86_64"
+    }
+    plugins {
+        grpc {
+            artifact = "io.grpc:protoc-gen-grpc-java:${revGrpc}:osx-x86_64"
+        }
+    }
+...
+} 
+```
+
 ```shell
 $ cd conductor
 conductor $ cd server
