@@ -9,10 +9,7 @@ There are many tools available to work with images - resizing, changing the form
 
 In this post, we'll run Conductor locally on your computer. The Conductor workflow consists of two tasks.  The first task reads in an image and resizes it according to the parameters provided (labeled "image_conver_resize_ref" in the image below).  The second task ("image_toS3_ref" below) takes the resized image and saves the it to an Amazon S3 bucket.
 
-
 ![Diagram of our image processing workflow](./assets/imageprocessing-workflow-diagram.png)
-
-
 
 Using a microservice architecture for this process allows for easy swapping of components, and allwos for easy extension of the workflow - easily adding additional image processing steps (or even swapping in and out different processes for different workflows). We could also easily change the location of the saved file based on different parameters. 
 <!--truncate -->
