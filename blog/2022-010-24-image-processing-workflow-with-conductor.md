@@ -7,7 +7,14 @@ tags: [Netflix Conductor, Orkes, Conductor, orchestration, image processing, 202
 
 There are many tools available to work with images - resizing, changing the format, cropping, changing colors, etc.  Tools like Photoshop require a lot of manual work to create image.  Online tools for image processing are also extremely popular. But, rather than doing the work manually, or paying for a service to modify your images, wouldn't it be cool to have a workflow that does image resizing for you automatically?  In this post, we'll build just this using Conductor to orchestrate the microservices involved, and to create an API-like surface for image processing.
 
-In this post, we'll run Conductor locally on your computer. The Conductor workflow consists of one task.  This task reads in an image, resizes it according to the parameters provided, and then saves the modified image to an Amazon S3 bucket.
+In this post, we'll run Conductor locally on your computer. The Conductor workflow consists of two tasks.  The first task reads in an image and resizes it according to the parameters provided (labeled "image_conver_resize_ref" in the image below).  The second task ("image_toS3_ref" below) takes the resized image and saves the it to an Amazon S3 bucket.
+
+
+![Diagram of our image processing workflow](./assets/imageprocessing-workflow-diagram.png)
+
+
+
+Using a microservice architecture for this process allows for easy swapping of components, and allwos for easy extension of the workflow - easily adding additional image processing steps (or even swapping in and out different processes for different workflows). We could also easily change the location of the saved file based on different parameters. 
 <!--truncate -->
 
 ## Getting started
@@ -82,7 +89,8 @@ https://github.com/orkes-io/orkesworkers
 
 ### Tasks
 
-This workflow has just one task - input an image and modification instructions. This task will output the URL of the final image on S3.
+#### Resizing the image 
+The first task takes an image input along with modification instructions. This task will save the image locally.
 
 Here's the task: ``` /data/task/image_convert_resize.json```:
 
@@ -126,6 +134,34 @@ curl -X 'POST' \
      ]'
 ```
 
+#### Saving the image to S3
+
+The second task will begin on the completion of the first task - its input is the saved location of the image from the first task.  The image is read into memory, and then the sent to the S3 bucket.  The output of this task is the URL on S3:
+
+```
+{
+"name": "image_toS3",
+"retryCount": 3,"timeoutSeconds": 30,
+"pollTimeoutSeconds": 30,
+"inputKeys": [
+  "fileLocation"
+],
+"outputKeys": [
+  "s3Url"
+],
+"timeoutPolicy": "TIME_OUT_WF",
+"retryLogic": "FIXED",
+"retryDelaySeconds": 30,
+"responseTimeoutSeconds": 30,
+"concurrentExecLimit": 100,
+"rateLimitFrequencyInSeconds": 30,
+"rateLimitPerFrequency": 50,
+"ownerEmail": "devrel@orkes.io"
+}
+```
+
+We'll use all the same retry and timeout values as the first task.
+
 
 ### Workflow
 
@@ -156,10 +192,27 @@ The workflow is the wrapper around our tasks, telling Conductor the tasks, and t
      "defaultExclusiveJoinTask": [],
      "asyncComplete": false,
      "loopOver": []
-   }
+   },
+    {
+      "name": "image_toS3",
+      "taskReferenceName": "image_toS3_ref",
+      "inputParameters": {
+        "fileLocation": "${image_convert_resize_ref.output.fileLocation}"
+      },
+      "type": "SIMPLE",
+      "decisionCases": {},
+      "defaultCase": [],
+      "forkTasks": [],
+      "startDelay": 0,
+      "joinOn": [],
+      "optional": false,
+      "defaultExclusiveJoinTask": [],
+      "asyncComplete": false,
+      "loopOver": []
+    }
  ],
  "outputParameters": {
-   "fileLocation": "${image_convert_resize_ref.output.fileLocation}"
+   "fileLocation": "${image_toS3_ref.output.fileLocation}"
  },
  "schemaVersion": 2,
  "restartable": true,
@@ -172,7 +225,17 @@ The workflow is the wrapper around our tasks, telling Conductor the tasks, and t
 }
 ```
 
-Our workflow defines the one SIMPLE task of image processing.  It expects 4 inputs and will output the file location.
+In the workflow, you can see that 2 tasks are defined.  In the workflow definition, we defined the input parameters.  
+
+### Input for the first task
+
+The first task reads in the image URL and three modification parameters. These are supplied from the workflow input (note that the first two parameters are ```workflow.input```).
+
+### Input for the second task
+
+The second task takes location of the modified image on the local machine to upload to S3.  The location of the image on the device comes from the output of the first task (```image_convert_resize_ref.output.fileLocation```),
+
+### Running our workflow
 
 Submitting this workflow to Conductor via CURL looks like this (Note that this endpoint expects just JSON, not a list):
 
@@ -186,22 +249,24 @@ curl -X 'POST' \
 ```
 
 
-With these 2 calls, our orchestration is all set to run. Now we need to run the Java app that will do the resizing.  The app is in the orkesworkers Github repository, and can be started by running the OrkesWorkersApplication.java.  
+With just 3 API calls (defining 2 tasks and the workflow), our orchestration is all set to run. Now we need to run the Java apps that will do the resizing.  The app is in the orkesworkers Github repository, and can be started by running the OrkesWorkersApplication.java.  
+
+Since the file is being saved locally - these 2 microservices must run on the same device.
 
 ## Testing our orchestration
 
-Our Orchestration is ready to go, and with a simple API call, we can kick it off.  To test this, we'll use a photo of TikTok's favourite trainspotter, Francis Bourgeois (grabbed from Twitter):
+Our Orchestration is ready to go, and with a simple API call, we can kick it off.  To test this, we'll use a photo of TikTok's favourite trainspotter, Francis Bourgeois (image grabbed from Twitter):
 
 ![](https://pbs.twimg.com/media/FJY7ud0XEAYVCS8?format=jpg&name=900x900)
 Source: https://pbs.twimg.com/media/FJY7ud0XEAYVCS8?format=jpg&name=900x900
 
-This image is a png, and is 900x900 pixels.  We'll use the API to create a jpg that is 300x300.  The JSON we submit must follow the formatting of the Workflow input parameters (after ```workflow.input.```), and so must have the following format:
+This image is a png, and is 900x900 pixels.  We'll use the API to create a gif that is 300x300.  The JSON we submit must follow the formatting of the Workflow input parameters (after ```workflow.input.```), and so must have the following format:
 
 ```
 {
 	"fileLocation": "https://pbs.twimg.com/media/FJY7ud0XEAYVCS8?format=png&name=900x900",
 	"recipeParameters": {
-		"outputFormat": "jpg",
+		"outputFormat": "gif",
 		"outputSize": {
 			"width": 300,
 			"height": 300
@@ -209,7 +274,7 @@ This image is a png, and is 900x900 pixels.  We'll use the API to create a jpg t
 	}
 }
 ```
-Our workflow is listening at ```http://localhost:8080/api/workflopw/image_processising``` for the input. So, we can send a curl command:
+Our workflow is listening at ```http://localhost:8080/api/workflow/image_processesing``` for the input. So, we can send a curl command:
 
 ```
 curl -X 'POST' \
@@ -218,7 +283,7 @@ curl -X 'POST' \
   -H 'Content-Type: application/json' \
   -d '{"fileLocation": "https://pbs.twimg.com/media/FJY7ud0XEAYVCS8?format=png&name=900x900",
         "recipeParameters": {
-          "outputFormat": "jpg",
+          "outputFormat": "gif",
           "outputSize": {
             "width": 300,
             "height": 300
@@ -232,14 +297,14 @@ The response will be a Workflow ID. If you have ElasticSeacrh running on your sy
 
 You'll see a page similar to the one below with “completed” in green next to the workflowId:
 
-![](./assets/image-execution.png)
+![Netflix Conductor screenshot of a completed workflow](./assets/image-execution.png)
 
 
 If you click on the Workflow input/output tab, you'll see the output.fileLocation:
 
-![](./assets/execution-json.png)
+![Completed Netflix Conductor workflow with JSON](./assets/json-execution.png)
 
-Imagemagick supports creating webp, jpg, png, gif, and many more. Looking closely at the output above, you can see that in this workflow the image was converted to a 300x300 AVIF image.  
+Imagemagick supports creating webp, jpg, png, gif, and many more (avif works!). Looking closely at the output above, you can see that in this workflow the image was converted to a 300x300 GIF image.  
 
 
 ## Conclusion
