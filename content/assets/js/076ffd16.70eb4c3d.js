@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkdocumentation=self.webpackChunkdocumentation||[]).push([[2412],{2741:function(t){t.exports=JSON.parse('{"allTagsPath":"/content/blog/tags","slug":"/content/blog/tags/netflix","name":"netflix","count":1,"permalink":"/content/blog/tags/netflix"}')}}]);

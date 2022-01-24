@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkdocumentation=self.webpackChunkdocumentation||[]).push([[2346],{5459:function(t){t.exports=JSON.parse('{"allTagsPath":"/content/blog/tags","slug":"/content/blog/tags/orchestration","name":"orchestration","count":2,"permalink":"/content/blog/tags/orchestration"}')}}]);
