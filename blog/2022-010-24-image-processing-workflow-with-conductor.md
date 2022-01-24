@@ -271,7 +271,7 @@ This image is a png, and is 900x900 pixels.  We'll use the API to create a gif t
 	}
 }
 ```
-Our workflow is listening at ```http://localhost:8080/api/workflow/image_processesing``` for the input. So, we can send a curl command:
+Our workflow is listening at ```http://localhost:8080/api/workflow/image_processing``` for the input. So, we can send a curl command:
 
 ```
 curl -X 'POST' \
