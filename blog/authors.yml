@@ -4,14 +4,21 @@ boney:
   url: https://github.com/boney9
   image_url: https://media-exp1.licdn.com/dms/image/D5635AQGACYt5bMQdHg/profile-framedphoto-shrink_400_400/0/1641376945125?e=1641999600&v=beta&t=-bCzlO-gftanQLIQxiyCjSA8mLfYERHDBrUnARxJRGo
 
+doug:
+  name: Doug Sillars
+  title: Senior Developer Relations Engineer
+  url: https://github.com/dougsillars
+  image_url: https://avatars.githubusercontent.com/u/1514288?v=4
+  
 jeu:
   name: Jeu George
   title: CEO
   url: https://github.com/nohup23
   image_url: https://media-exp1.licdn.com/dms/image/C4E03AQEHWy5icFieCw/profile-displayphoto-shrink_400_400/0/1516312651412?e=1647475200&v=beta&t=q-anYjIu64_kfK4Oxcuye52d7q5eIZzU5EMK-_ClVkc
 
-doug:
-  name: Doug Sillars
-  title: Senior Developer Relations Engineer
-  url: https://github.com/dougsillars
-  image_url: https://avatars.githubusercontent.com/u/1514288?v=4
+orkes:
+  name: orkes
+  title: The Orkes Team
+  url: https://github.com/orkes-io
+  image_url: https://res.cloudinary.com/practicaldev/image/fetch/s--bUMCrBmH--/c_fill,f_auto,fl_progressive,h_320,q_auto,w_320/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/766956/a64ec272-2caf-4656-b999-146e8cfb6ea4.png
+

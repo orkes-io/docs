@@ -89,7 +89,7 @@ https://github.com/orkes-io/orkesworkers
 #### Resizing the image 
 The first task takes an image input along with modification instructions. This task will save the image locally.
 
-Here's the task: ``` /data/task/image_convert_resize.json```:
+Here's the path to the task in GitHub: ``` /data/task/image_convert_resize.json```:
 
 ```
 {
@@ -127,7 +127,7 @@ curl -X 'POST' \
   -H 'accept: */*' \
   -H 'Content-Type: application/json' \
   -d '[
-     {your JSON here}
+{"name":"image_convert_resize","retryCount":3,"timeoutSeconds":30,"pollTimeoutSeconds":30,"inputKeys":["fileLocation","outputFormat","outputWidth","outputHeight"],"outputKeys":["fileLocation"],"timeoutPolicy":"TIME_OUT_WF","retryLogic":"FIXED","retryDelaySeconds":60,"responseTimeoutSeconds":60,"concurrentExecLimit":100,"rateLimitFrequencyInSeconds":60,"rateLimitPerFrequency":50,"ownerEmail":"devrel@orkes.io"}
      ]'
 ```
 
@@ -137,7 +137,7 @@ The second task will begin on the completion of the first task - its input is th
 
 ```
 {
-"name": "image_toS3",
+"name": "upload_toS3_ref",
 "retryCount": 3,"timeoutSeconds": 30,
 "pollTimeoutSeconds": 30,
 "inputKeys": [
@@ -191,8 +191,8 @@ The workflow is the wrapper around our tasks, telling Conductor the tasks, and t
      "loopOver": []
    },
     {
-      "name": "image_toS3",
-      "taskReferenceName": "image_toS3_ref",
+      "name": "upload_toS3_ref",
+      "taskReferenceName": "upload_toS3_ref",
       "inputParameters": {
         "fileLocation": "${image_convert_resize_ref.output.fileLocation}"
       },
@@ -209,7 +209,7 @@ The workflow is the wrapper around our tasks, telling Conductor the tasks, and t
     }
  ],
  "outputParameters": {
-   "fileLocation": "${image_toS3_ref.output.fileLocation}"
+   "fileLocation": "${upload_toS3_ref.output.fileLocation}"
  },
  "schemaVersion": 2,
  "restartable": true,
@@ -232,7 +232,7 @@ The first task reads in the image URL and three modification parameters. These a
 
 The second task takes location of the modified image on the local machine to upload to S3.  The location of the image on the device comes from the output of the first task (```image_convert_resize_ref.output.fileLocation```),
 
-### Running our workflow
+### Submitting our workflow to Conductor
 
 Submitting this workflow to Conductor via CURL looks like this (Note that this endpoint expects just JSON, not a list):
 
@@ -241,14 +241,34 @@ curl -X 'POST' \
   'http://localhost:8080/api/metadata/workflow' \
   -H 'accept: */*' \
   -H 'Content-Type: application/json' \
-  -d ' <your JSON here>'
+  -d ' {"name":"image_processing","description":"Image Processing Workflow","version":1,"tasks":[{"name":"image_convert_resize","taskReferenceName":"image_convert_resize_ref","inputParameters":{"fileLocation":"${workflow.input.fileLocation}","outputFormat":"${workflow.input.recipeParameters.outputFormat}","outputWidth":"${workflow.input.recipeParameters.outputSize.width}","outputHeight":"${workflow.input.recipeParameters.outputSize.height}"},"type":"SIMPLE","decisionCases":{},"defaultCase":[],"forkTasks":[],"startDelay":0,"joinOn":[],"optional":false,"defaultExclusiveJoinTask":[],"asyncComplete":false,"loopOver":[]},{"name":"image_toS3","taskReferenceName":"image_toS3_ref","inputParameters":{"fileLocation":"${image_convert_resize_ref.output.fileLocation}"},"type":"SIMPLE","decisionCases":{},"defaultCase":[],"forkTasks":[],"startDelay":0,"joinOn":[],"optional":false,"defaultExclusiveJoinTask":[],"asyncComplete":false,"loopOver":[]}],"outputParameters":{"fileLocation":"${image_toS3_ref.output.fileLocation}"},"schemaVersion":2,"restartable":true,"workflowStatusListenerEnabled":true,"ownerEmail":"devrel@orkes.io","timeoutPolicy":"ALERT_ONLY","timeoutSeconds":0,"variables":{},"inputTemplate":{}}'
 
 ```
 
 
-With just 3 API calls (defining 2 tasks and the workflow), our orchestration is all set to run. Now we need to run the Java apps that will do the resizing.  The app is in the orkesworkers Github repository, and can be started by running the OrkesWorkersApplication.java.  
+With just 3 API calls (defining 2 tasks and the workflow), our orchestration is all set to run. Now we need to run the Java apps that will do the resizing.  
 
-Since the file is being saved locally - these 2 microservices must run on the same device.
+## The Java Workers
+
+Our Java apps are in the [orkesworkers](https://github.com/orkes-io/orkesworkers) GitHub repository, and can be started by running the OrkesWorkersApplication.java.  
+
+The OrkesWorkersApplication creates a list all of the workers that are available in the repository, and reports those to the conductor.server.url (defined in ```resources/app;ication.properties``` as ```http://localhost:8000/api```).
+
+This will poll the Conductor server for any tasks for any of the workers that are running locally.  When a task appears, Conductor will send it to the worker.  
+
+When a image_processing API call to Conductor is made - Conductor will identify the data as belionging to the first task, and send the image (and modification data) to ```ImageConvertResize.java```.  
+
+### Resizing the image
+
+ImageConvertResize.java reads in the image, and the new parameters, and then uese imageMagick to resize the image and save it locally.  The saved file location is returned to Conductor.
+
+The workflow shows that the output from image resizing is the input for the upload to S3 worker.
+
+### Upload to S3
+
+The Upload to S3 worker takes the location of the local file (note that since the file is saved locally, these 2 services must run on the same instance), and sends it to the AWS bucket.  The worker then returns the URL of the image hosted at AWS.  
+
+Conductor outputs this URL as the output of the overall workflow.
 
 ## Testing our orchestration
 
@@ -300,6 +320,10 @@ You'll see a page similar to the one below with “completed” in green next to
 If you click on the Workflow input/output tab, you'll see the output.fileLocation:
 
 ![Completed Netflix Conductor workflow with JSON](./assets/json-execution.png)
+
+Here's an example PNG file created by the workflow:
+
+![](https://image-processing-sandbox.s3.amazonaws.com/958995de-2a3f-4a90-afcb-b289bb1e4ad5.png)
 
 Imagemagick supports creating webp, jpg, png, gif, and many more (avif works!). Looking closely at the output above, you can see that in this workflow the image was converted to a 300x300 GIF image.  
 
