@@ -11,7 +11,7 @@ In this post, we'll run Conductor locally on your computer. The Conductor workfl
 
 ![Diagram of our image processing workflow](./assets/imageprocessing-workflow-diagram.png)
 
-Using a microservice architecture for this process allows for easy swapping of components, and allwos for easy extension of the workflow - easily adding additional image processing steps (or even swapping in and out different processes for different workflows). We could also easily change the location of the saved file based on different parameters. 
+Using a microservice architecture for this process allows for easy swapping of components, and allows for easy extension of the workflow - easily adding additional image processing steps (or even swapping in and out different processes for different workflows). We could also easily change the location of the saved file based on different parameters. 
 <!--truncate -->
 
 ## Getting started
@@ -256,11 +256,11 @@ The OrkesWorkersApplication creates a list all of the workers that are available
 
 This will poll the Conductor server for any tasks for any of the workers that are running locally.  When a task appears, Conductor will send it to the worker.  
 
-When a image_processing API call to Conductor is made - Conductor will identify the data as belionging to the first task, and send the image (and modification data) to ```ImageConvertResize.java```.  
+When a image_processing API call to Conductor is made - Conductor will identify the data as belonging to the first task, and send the image (and modification data) to ```ImageConvertResize.java```.  
 
 ### Resizing the image
 
-ImageConvertResize.java reads in the image, and the new parameters, and then uese imageMagick to resize the image and save it locally.  The saved file location is returned to Conductor.
+ImageConvertResize.java reads in the image, and the new parameters, and then use imageMagick to resize the image and save it locally.  The saved file location is returned to Conductor.
 
 The workflow shows that the output from image resizing is the input for the upload to S3 worker.
 
