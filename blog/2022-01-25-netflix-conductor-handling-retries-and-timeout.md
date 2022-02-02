@@ -18,8 +18,11 @@ Conductor workflows are orchestration of many activities known as `task`.  Each 
 Conductor allows you to define your stateful applications that can handle failures and temporary degradation of services and without having to write code for that. 
 
 ### Configuring tasks to handle failures
-Each task in Conductor can be configured how it responds to availability events such as: 1) Failures 2) Timeouts and 3) Rate limits
+Each task in Conductor can be configured how it responds to availability events such as: 1) Failures 2) Timeouts and 3) Rate limits.
+
+
 Here is a sample task defintion:
+
 ```
 {
   "createdBy": "user",
@@ -37,7 +40,7 @@ Here is a sample task defintion:
 ```
 
 
-retry* parameters specify how to handle cases where the task execution fails and retries can be configured to be with fixed delay or exponential backoff.  Similarly timeout* parameters specify how time time to give for task to complete execution and if the task should be marked as 'Timed Out' if it runs longer than that.
+```retry*``` parameters specify how to handle cases where the task execution fails and retries can be configured to be with fixed delay or exponential backoff.  Similarly ```timeout*``` parameters specify how much time to give for task to complete execution and if the task should be marked as 'Timed Out' if it runs longer than that.
 
 ## More Details
 [https://orkes.io/content/docs/how-tos/task-configurations](https://orkes.io/content/docs/how-tos/task-configurations)

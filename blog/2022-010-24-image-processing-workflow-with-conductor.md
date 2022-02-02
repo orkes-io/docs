@@ -166,7 +166,7 @@ The workflow is the wrapper around our tasks, telling Conductor the tasks, and t
 
 ```
 {
- "name": "image_processing",
+ "name": "image_convert_resize",
  "description": "Image Processing Workflow",
  "version": 1,
  "tasks": [
@@ -241,7 +241,7 @@ curl -X 'POST' \
   'http://localhost:8080/api/metadata/workflow' \
   -H 'accept: */*' \
   -H 'Content-Type: application/json' \
-  -d ' {"name":"image_processing","description":"Image Processing Workflow","version":1,"tasks":[{"name":"image_convert_resize","taskReferenceName":"image_convert_resize_ref","inputParameters":{"fileLocation":"${workflow.input.fileLocation}","outputFormat":"${workflow.input.recipeParameters.outputFormat}","outputWidth":"${workflow.input.recipeParameters.outputSize.width}","outputHeight":"${workflow.input.recipeParameters.outputSize.height}"},"type":"SIMPLE","decisionCases":{},"defaultCase":[],"forkTasks":[],"startDelay":0,"joinOn":[],"optional":false,"defaultExclusiveJoinTask":[],"asyncComplete":false,"loopOver":[]},{"name":"image_toS3","taskReferenceName":"image_toS3_ref","inputParameters":{"fileLocation":"${image_convert_resize_ref.output.fileLocation}"},"type":"SIMPLE","decisionCases":{},"defaultCase":[],"forkTasks":[],"startDelay":0,"joinOn":[],"optional":false,"defaultExclusiveJoinTask":[],"asyncComplete":false,"loopOver":[]}],"outputParameters":{"fileLocation":"${image_toS3_ref.output.fileLocation}"},"schemaVersion":2,"restartable":true,"workflowStatusListenerEnabled":true,"ownerEmail":"devrel@orkes.io","timeoutPolicy":"ALERT_ONLY","timeoutSeconds":0,"variables":{},"inputTemplate":{}}'
+  -d ' {"name":"image_convert_resize","description":"Image Processing Workflow","version":1,"tasks":[{"name":"image_convert_resize","taskReferenceName":"image_convert_resize_ref","inputParameters":{"fileLocation":"${workflow.input.fileLocation}","outputFormat":"${workflow.input.recipeParameters.outputFormat}","outputWidth":"${workflow.input.recipeParameters.outputSize.width}","outputHeight":"${workflow.input.recipeParameters.outputSize.height}"},"type":"SIMPLE","decisionCases":{},"defaultCase":[],"forkTasks":[],"startDelay":0,"joinOn":[],"optional":false,"defaultExclusiveJoinTask":[],"asyncComplete":false,"loopOver":[]},{"name":"image_toS3","taskReferenceName":"image_toS3_ref","inputParameters":{"fileLocation":"${image_convert_resize_ref.output.fileLocation}"},"type":"SIMPLE","decisionCases":{},"defaultCase":[],"forkTasks":[],"startDelay":0,"joinOn":[],"optional":false,"defaultExclusiveJoinTask":[],"asyncComplete":false,"loopOver":[]}],"outputParameters":{"fileLocation":"${image_toS3_ref.output.fileLocation}"},"schemaVersion":2,"restartable":true,"workflowStatusListenerEnabled":true,"ownerEmail":"devrel@orkes.io","timeoutPolicy":"ALERT_ONLY","timeoutSeconds":0,"variables":{},"inputTemplate":{}}'
 
 ```
 
@@ -252,7 +252,7 @@ With just 3 API calls (defining 2 tasks and the workflow), our orchestration is 
 
 Our Java apps are in the [orkesworkers](https://github.com/orkes-io/orkesworkers) GitHub repository, and can be started by running the OrkesWorkersApplication.java.  
 
-The OrkesWorkersApplication creates a list all of the workers that are available in the repository, and reports those to the conductor.server.url (defined in ```resources/app;ication.properties``` as ```http://localhost:8000/api```).
+The OrkesWorkersApplication creates a list all of the workers that are available in the repository, and reports those to the conductor.server.url (defined in ```resources/application.properties``` as ```http://localhost:8080/api```).
 
 This will poll the Conductor server for any tasks for any of the workers that are running locally.  When a task appears, Conductor will send it to the worker.  
 
@@ -295,7 +295,7 @@ Our workflow is listening at ```http://localhost:8080/api/workflow/image_process
 
 ```
 curl -X 'POST' \
-  'http://localhost:8080/api/workflow/image_processing?priority=0' \
+  'http://localhost:8080/api/workflow/image_convert_resize?priority=0' \
   -H 'accept: text/plain' \
   -H 'Content-Type: application/json' \
   -d '{"fileLocation": "https://pbs.twimg.com/media/FJY7ud0XEAYVCS8?format=png&name=900x900",
