@@ -15,6 +15,6 @@ In your main workflow definition, you can configure a workflow to run upon failu
 * failureStatus
 
 
-##  Set ```workfowStatusListenerEnabled``` 
+##  Set ```workflowStatusListenerEnabled``` 
 
 When this is enabled, notifications are now possible, and by building a custome implementation of the Workflow Status Listener, a notifictaion can be sent to an external service. [More details.](https://github.com/Netflix/conductor/issues/1017#issuecomment-468869173)

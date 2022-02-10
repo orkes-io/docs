@@ -2,7 +2,7 @@
 slug: image-processing-multiple-images-forks
 title: Using Conductor Forks to run tasks in parallel - creating multiple images
 authors: doug
-tags: [Netflix Conductor, Orkes, Conductor, orchestration, image processing, fork, dynamic fork, 2022]
+tags: [Netflix Conductor, Orkes, Conductor, orchestration, image processing, fork, dynamic fork, tutorial,2022]
 ---
 
 

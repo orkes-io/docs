@@ -1,0 +1,163 @@
+{
+
+    ".": [
+        {
+            "type": "doc",
+            "id": "version-opensource/index", 
+            "label": "Open Source Index"          },
+          {
+            "type": "doc",
+            "id": "version-opensource/architecture", 
+            "label": "Architecture"
+          },
+       
+        {
+            "type": "category",
+            "label": "Getting Started",
+            "collapsed": false,
+        
+            "items":[
+                {
+                    "type": "doc",
+                    "id": "version-opensource/gettingstarted/basicconcepts", 
+                    "label": "Basic Concepts"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "version-opensource/gettingstarted/client", 
+                    "label": "Using the Client"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "version-opensource/gettingstarted/startworkflow", 
+                    "label": "Start a Workflow"
+                  }
+            ]
+
+        },
+        {
+            "type": "category",
+            "label": "Configuration",
+            "collapsed": false,
+        
+            "items":[
+                {
+                    "type": "doc",
+                    "id": "version-opensource/configuration/taskdef", 
+                    "label": "Task Definition"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "version-opensource/configuration/workflowdef", 
+                    "label": "Workflow Definition"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "version-opensource/configuration/systask", 
+                    "label": "System Tasks"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "version-opensource/configuration/eventhandlers", 
+                    "label": "Eventy Handlers"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "version-opensource/configuration/taskdomains", 
+                    "label": "Task Domains"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "version-opensource/configuration/isolationgroups", 
+                    "label": "Isonlation Groups"
+                  }
+            ]
+
+        },
+        {
+            "type": "doc",
+            "id": "version-opensource/apispec",
+            "label": "API Spec"
+          },
+        
+        {
+            "type": "category",
+            "label": "Conductor Metrics",
+            "collapsed": false,
+        
+            "items":[
+                {
+                    "type": "doc",
+                    "id": "version-opensource/metrics/server", 
+                    "label": "Server Metrics"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "version-opensource/metrics/client", 
+                    "label": "Client Metrics"
+                  }
+            ]
+
+        },
+        {
+            "type": "doc",
+            "id": "version-opensource/extend",
+            "label": "Extending Conductor"
+          },
+          {
+            "type": "doc",
+            "id":  "version-opensource/tasklifecycle", 
+            "label": "Task Lifecycle"
+          },
+          {
+            "type": "doc",
+            "id":  "version-opensource/externalpayloadstorage",
+            "label": "External Payload Structure"
+          },
+   
+        {
+            "type": "category",
+            "label": "Developer Labs",
+            "collapsed": false,
+        
+            "items":[
+                {
+                    "type": "doc",
+                    "id":  "version-opensource/labs/beginner",
+                    "label": "Beginner"
+                  },
+                  {
+                    "type": "doc",
+                    "id":  "version-opensource/labs/eventhandlers",
+                    "label": "Events and Event Handlers"
+                  },
+                  {
+                    "type": "doc",
+                    "id":  "version-opensource/labs/kitchensink",
+                    "label": "Kitchen Sink"
+                  }
+            ]
+
+        },
+        {
+            "type": "doc",
+            "id":  "version-opensource/bestpractices",
+            "label": "Best Practices"
+          },
+          {
+            "type": "doc",
+            "id":  "version-opensource/faq",
+            "label": "FAQ"
+          },
+          {
+            "type": "doc",
+            "id":  "version-opensource/technicaldetails",
+            "label": "Techncial Details"
+          },
+          {
+            "type": "doc",
+            "id":  "version-opensource/license",
+            "label": "Netflix License"
+          }
+        ]
+}

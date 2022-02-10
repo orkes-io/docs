@@ -2,7 +2,7 @@
 slug: image-processing-workflow-with-conductor
 title: Building an Image processing workflow with Netflix Conductor
 authors: doug
-tags: [Netflix Conductor, Orkes, Conductor, orchestration, image processing, 2022]
+tags: [Netflix Conductor, Orkes, Conductor, orchestration, image processing, tutorial,2022]
 ---
 
 There are many tools available to work with images - resizing, changing the format, cropping, changing colors, etc.  Tools like Photoshop require a lot of manual work to create image.  Online tools for image processing are also extremely popular. But, rather than doing the work manually, or paying for a service to modify your images, wouldn't it be cool to have a workflow that does image resizing for you automatically?  In this post, we'll build just this using Conductor to orchestrate the microservices involved, and to create an API-like surface for image processing.

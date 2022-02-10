@@ -35,6 +35,62 @@ const config = {
         priority: 0.9,
       },
     ],
+    [
+        "docusaurus-plugin-remote-content",
+        {
+            // options here
+            name: "content", // used by CLI, must be path safe
+            sourceBaseUrl: "https://raw.githubusercontent.com/Netflix/conductor/main/docs/docs/", // the base url for the markdown (gets prepended to all of the documents when fetching)
+            outDir: "docs/versioned_docs/version-opensource/", // the base directory to output to.
+            documents: ["apispec.md", 
+                        "architecture.md", 
+                        "bestpractices.md",
+                        "extend.md",
+                        "externalpayloadstorage.md", 
+                        "faq.md", 
+                        "index.md",
+                        "license.md",
+                        "server.md",
+                        "tasklifecycle.md",
+                        "technicaldetails.md",
+                        "configuration/eventhandlers.md",
+                        "configuration/isolationgroups.md",
+                        "configuration/systask.md",
+                        "configuration/taskdef.md",
+                        "configuration/taskdomains.md",
+                        "configuration/workflowdef.md",
+                        "gettingstarted/basicconcepts.md",
+                        "gettingstarted/client.md",
+                        "gettingstarted/startworkflow.md",
+                        "img/ResponseTimeoutSeconds.png",
+                        "img/TaskFailure.png",
+                        "img/TimeoutSeconds.png",
+                        "img/conductor-architecture.png",
+                        "img/conductor-vector-x.png",
+                        "img/conductor-vector.pdf",
+                        "img/corner-logo-oss.png",
+                        "img/corner-logo.png",
+                        "img/corner-logo2-oss.png",
+                        "img/corner-logo2.png",
+                        "img/kitchensink.png",
+                        "img/overview.png",
+                        "img/task_states.png",
+                        "img/task_states.svg",
+                        "labs/beginner.md",
+                        "labs/eventhandlers.md",
+                        "labs/kitchensink.md",
+                        "labs/img/EventHandlerCycle.png",
+                        "labs/img/bgnr_complete_workflow.png",
+                        "labs/img/bgnr_state_scheduled.png",
+                        "labs/img/bgnr_systask_state.png",
+                        "metrics/client.md",
+                        "metrics/server.md",
+
+
+
+                        ], // the file names to download
+        },
+    ],
    ],
     presets: [
         [
@@ -44,16 +100,33 @@ const config = {
                 docs: {
                     sidebarPath: require.resolve('./sidebars.js'),
                     editUrl: 'https://github.com/orkes-io/docs/edit/main/',
+                    lastVersion: 'current',
+                    versions: {
+                        'opensource': {
+                            label: "Netflix Conductor Open Source Docs",
+                            banner: 'none'
+    
+                        },
+                        current:{
+                            label: "Orkes Enterprise Conductor Docs",
+                            banner: 'none',
+                            path: 'enterprise'
+    
+                        },
+                    },
                 },
                 blog: {
                     path: './blog',
                     showReadingTime: true,
                     editUrl: 'https://github.com/orkes-io/docs/edit/main/',
+                    blogSidebarTitle: 'All posts',
+                    blogSidebarCount: 'ALL'
             
                 },
                 theme: {
                     customCss: require.resolve('./src/css/custom.css'),
                 },
+
             }),
         ],
     ],
@@ -84,11 +157,17 @@ const config = {
                         label: 'How-Tos',
                     },
                     {
+                        
+                        type: 'docsVersionDropdown',
+                        position: 'left',
+                    },
+                    //generic docs link replaced with the versioning dropdown
+                    /*{
                         type: 'doc',
                         docId: 'reference-docs',
                         position: 'left',
                         label: 'Reference Docs',
-                    },
+                    },*/
                     {
                         to: '/blog',
                         label: 'Blog',
@@ -100,6 +179,8 @@ const config = {
                         target: '_orkes_io',
                         position: 'left'
                     },
+                 
+                
                     {
                         href: 'https://github.com/Netflix/conductor',
                         label: 'GitHub',
@@ -115,8 +196,16 @@ const config = {
                         title: 'Docs',
                         items: [
                             {
-                                label: 'Tutorial',
-                                to: '/docs/introduction',
+                                label: 'Orkes Conductor',
+                                to: '/docs/enterprise/how-tos',
+                            },
+                            {
+                                label: 'Netflix Conductor - open source',
+                                to: '/docs/opensource/index',
+                            },
+                            {
+                                label: 'Tutorials',
+                                to: '/blog/tags/tutorial',
                             },
                         ],
                     },
