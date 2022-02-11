@@ -3,6 +3,7 @@ slug: Meetup-Using-Conductor-in-production
 title: Meetup recap - Using Conductor in Production  
 authors: doug
 tags: [Netflix Conductor, Orkes, Conductor, meetup, presentation, video,2022]
+image: https://orkes.io/content/assets/images/Simple-image-workflow-5a4043a8cc44c7d8bdef5f2456fb4105.png
 ---
 
 In early Feb 2022, we had our first meetup on Netflix Conductor: [Using Conductor in Production](https://www.meetup.com/san-francisco-microservices-orchestration-meetup-group/events/283657274/). It was also co-hosted by the [Netflix Conductor](https://www.meetup.com/Netflix-Open-Source-Platform/events/283685727/) team.
