@@ -18,6 +18,11 @@
         
             "items":[
                 {
+                "type": "doc",
+                "id": "version-opensource/server", 
+                "label": "Installing Conductor"
+              },
+              {
                     "type": "doc",
                     "id": "version-opensource/gettingstarted/basicconcepts", 
                     "label": "Basic Concepts"
@@ -41,6 +46,8 @@
             "collapsed": false,
         
             "items":[
+
+
                 {
                     "type": "doc",
                     "id": "version-opensource/configuration/taskdef", 
@@ -69,7 +76,7 @@
                   {
                     "type": "doc",
                     "id": "version-opensource/configuration/isolationgroups", 
-                    "label": "Isonlation Groups"
+                    "label": "Isolation Groups"
                   }
             ]
 
