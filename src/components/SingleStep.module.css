@@ -1,0 +1,7 @@
+.singleStep {
+  background-color: var(--ifm-color-athens-gray);
+}
+
+.title {
+  color: var(--ifm-color-primary); /* this is not the exact color exact color is 45,136,217 */
+}
