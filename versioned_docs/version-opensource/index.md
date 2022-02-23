@@ -1,12 +1,19 @@
-<center><img src ='img/conductor-vector-x.png' alt="Logo"></center>
-<center><img src ="img/corner-logo-oss.png" alt = "Logo"></center>
 
+<div style={{textAlign: 'center'}}>
 
-<center><h1>Conductor is a _Workflow Orchestration engine_ that runs in the cloud. </h1></center>
+![alt](/img/conductor-vector-x.png)
+
+</div>
+
+<div style={{textAlign: 'center'}}>
+
+![alt](/img/corner-logo-oss.png)
+
+</div>
+
+<center><h1>Conductor is a Workflow Orchestration engine that runs in the cloud. </h1></center>
 
 ## Motivation
-
-
 
 ## Conductor was built to help Netflix orchestrate microservices based process flows with the following features:
 
