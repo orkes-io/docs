@@ -5,8 +5,8 @@ Conductor definitions are like class definitions in OOP paradigm, or templates. 
 Tasks are the building blocks of Workflow. There must be at least one task in a Workflow.  
 Tasks can be categorized into two types: 
 
- * [System tasks](../../configuration/systask) - executed by Conductor server.
- * [Worker tasks](../../configuration/workerdef) - executed by your own workers.
+ * [System tasks](/docs/configuration/systask) - executed by Conductor server.
+ * [Worker tasks](../configuration/workerdef) - executed by your own workers.
 
 ## Workflow
 A Workflow is the container of your process flow. It could include several different types of Tasks, Sub-Workflows, inputs and outputs connected to each other, to effectively achieve the desired result. The tasks are either control tasks (fork, conditional etc) or application tasks (e.g. encode a file) that are executed on a remote machine.

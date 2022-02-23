@@ -11,7 +11,7 @@ In this article we will learn how to view workflow executions via the UI.
 1. Conductor app and UI installed and running in an environment. If required we can look at the following options to get
    an environment up and running.
 
-    1. [Build and Run Conductor Locally](../../running-locally)
+    1. [Build and Run Conductor Locally](../../server)
     2. [Running via Docker Compose](../../running-locally-docker)
 
 ### Viewing a Workflow Execution
