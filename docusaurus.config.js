@@ -129,8 +129,9 @@ const config = {
                 docs: {
                     sidebarPath: require.resolve('./sidebars.js'),
                     editUrl: 'https://github.com/orkes-io/docs/edit/main/',
-                    lastVersion: 'current',
-                    versions: {
+                    //lastVersion: 'current',
+                    //no versioning for now
+                    /*versions: {
                         'opensource': {
                             label: "Conductor Open Source Docs",
                             banner: 'none'
@@ -142,7 +143,7 @@ const config = {
                             path: 'enterprise'
     
                         },
-                    },
+                    },*/
                 },
                 blog: {
                     path: './blog',
@@ -175,10 +176,10 @@ const config = {
                 items: [
                   
                     {
-                        to: '/docs/opensource/index',
+                        to: 'docs/index',
                         position: 'left',
-                        label: 'Open Source Reference',
-                    },/* hiding from the navigation since there is no content yet
+                        label: 'Reference Docs',
+                    },/* hiding from the navigation since there is no content hyeyt
                     {
                         to: '/docs/enterprise/introduction',
                         position: 'left',
