@@ -173,44 +173,17 @@ const config = {
                     src: 'img/Logo-Small.png'
                 },
                 items: [
-                   /*
-                    {
-                        type: 'doc',
-                        docId: 'introduction',
-                        position: 'left',
-                        label: 'Getting Started',
-                    },
-                    {
-                        type: 'doc',
-                        docId: 'how-tos',
-                        position: 'left',
-                        label: 'How-Tos',
-                    },
-                    */
-                    /*
-                    {
-                        
-                        type: 'docsVersionDropdown',
-                        position: 'left',
-                    },
-                    */
-                    //generic docs link replaced with the versioning dropdown
-                    /*{
-                        type: 'doc',
-                        docId: 'reference-docs',
-                        position: 'left',
-                        label: 'Reference Docs',
-                    },*/
+                  
                     {
                         to: '/docs/opensource/index',
                         position: 'left',
                         label: 'Open Source Reference',
-                    },
+                    },/* hiding from the navigation since there is no content yet
                     {
                         to: '/docs/enterprise/introduction',
                         position: 'left',
                         label: 'Orkes Cloud Docs',
-                    },
+                    },*/
                     {
                         to: '/blog',
                         label: 'Blog',
