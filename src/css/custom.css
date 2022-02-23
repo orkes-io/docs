@@ -15,6 +15,14 @@
     --ifm-color-primary-light: rgb(70, 203, 174);
     --ifm-color-primary-lighter: rgb(102, 212, 189);
     --ifm-color-primary-lightest: rgb(146, 224, 208);
+    --ifm-color-athens-gray: rgb(248, 249, 251);
+    --ifm-color-info: #6458f5;
+    --ifm-color-info-lightest: #bbb6fb;
+    --ifm-color-info-lighter: #9087f8;
+    --ifm-color-info-light: #8177f7;
+    --ifm-color-info-dark: #4739f3;
+    --ifm-color-info-darker: #3829f2;
+    --ifm-color-info-darkest: #1d0ddc;
     --ifm-code-font-size: 95%;
     --ifm-link-decoration: none;
     --ifm-blockquote-padding-vertical: 20px;
@@ -40,6 +48,14 @@ body {
     font-family: "Gothic A1", sans-serif;
     font-weight: 400;
     font-size: 0.9em;
+}
+
+.navbar {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    margin: 0 auto;
+    max-width: var(--ifm-container-width-xl);
+    width: 100%;
 }
 
 .navbar__brand {
@@ -209,3 +225,32 @@ html[data-theme='dark'] .midSectionOdd {
     background-color: #131314;
 }
 
+.row--center {
+  justify-content: center;
+}
+
+.outline-tabs .tabs__item {
+    font-size: 15px;
+    line-height: 1px;
+    border: 1px solid var(--ifm-color-info);
+    width: 100%;
+    justify-content: center;
+    color: var(--ifm-color-info);
+    border-radius:0.2rem;
+}
+
+.outline-tabs .tabs__item--active {
+    background-color: var(--ifm-color-info);
+    color: #fff;
+    /* border-radius: var(--ifm-global-radius); */
+}
+
+.noStyleLink,
+.noStyleLink:hover,
+.noStyleLink:visited,
+.noStyleLink:focus,
+.noStyleLink:active {
+  text-decoration: none;
+  color: inherit;
+  /* outline: 0; */
+}
