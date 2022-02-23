@@ -112,10 +112,13 @@ h3 {
     font-family: GothicA1-Bold, sans-serif;
 }
 .menu__link--sublist:after {
-    background: none;
+    /*this hides the arrow drop down*/
+   /* background: none;*/
 }
 .menu__link--sublist {
+
     font-weight: bold;
+    color: darkgreen;
 }
 
 .menu__link {
@@ -140,3 +143,7 @@ pre code {
     font-size: 17px;
 }
 
+/* this hides the version "label", which I think looks bad :) */
+.badge {
+    display: none;
+}

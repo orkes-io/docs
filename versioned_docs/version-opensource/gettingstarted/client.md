@@ -20,12 +20,13 @@ Implement the [Worker](https://github.com/Netflix/conductor/blob/main/client/src
 The TaskRunnerConfigurer can be used to register the worker(s) and initialize the polling loop.  
 Manages the task workers thread pool and server communication (poll and task update).  
 
-Use the [Builder](https://github.com/Netflix/conductor/blob/master/client/src/main/java/com/netflix/conductor/client/automator/TaskRunnerConfigurer.java#L62) to create an instance of the TaskRunnerConfigurer. The builder accepts the following parameters:
+Use the [Builder](https://github.com/Netflix/conductor/blob/main/client/src/main/java/com/netflix/conductor/client/automator/TaskRunnerConfigurer.java#L106) to create an instance of the TaskRunnerConfigurer. The builder accepts the following parameters:
 
 Initialize the Builder with the following:
- TaskClient | TaskClient used to communicate to the Conductor server |
-| Workers | Workers that will be used for polling work and task execution. |
 
+ TaskClient 
+ | TaskClient used to communicate to the Conductor server |
+| Workers | Workers that will be used for polling work and task execution. |
 
 | Parameter | Description | Default |
 | --- | --- | --- |

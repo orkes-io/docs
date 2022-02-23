@@ -4,33 +4,44 @@ import styles from './HomepageFeatures.module.css';
 
 const FeatureList = [
   {
-    title: 'Getting Started',
-    Svg: require('../../static/img/undraw_docusaurus_mountain.svg').default,
-    description: (
-      <>
-        Learn about how to get started on your local. Build your first workflow and learn the key features of Conductor.
-      </>
-    ),
-  },
-  {
-    title: 'SDKs (Client Libraries)',
-    Svg: require('../../static/img/undraw_docusaurus_tree.svg').default,
-    description: (
-      <>
-        Our support for multiple languages will make it easy for you to go to production.
-      </>
-    ),
-  },
-  {
-    title: 'Production Deployment',
+    title: 'What is Conductor?',
     Svg: require('../../static/img/undraw_docusaurus_react.svg').default,
     description: (
       <>
-        Learn how to install and manage a production environment for Conductor. This section also covers details of how
-          you can run at scale.
+        
+        <br/>
+        What use cases do Conductor solve?
       </>
     ),
   },
+  {
+    title: 'Conductor Open Source Docs',
+    Svg: require('../../static/img/undraw_docusaurus_mountain.svg').default,
+    description: (
+      <>
+        The open source docs for Conductor. build locally, tutorials and all the docs you need to harness the power of Open Source Conductor.
+      </>
+    ),
+  },
+  {
+    title: 'Conductor Open Source Docs',
+    Svg: require('../../static/img/undraw_docusaurus_mountain.svg').default,
+    description: (
+      <>
+        The open source docs for Conductor. build locally, tutorials and all the docs you need to harness the power of Open Source Conductor.
+      </>
+    ),
+  },
+  {
+    title: 'Orkes Enterprise Docs',
+    Svg: require('../../static/img/undraw_docusaurus_tree.svg').default,
+    description: (
+      <>
+       Run your Conductor workflow in our managed Cloud.  Try it out with our free playground!.
+      </>
+    ),
+  },
+  
 ];
 
 function Feature({Svg, title, description}) {

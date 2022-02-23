@@ -27,6 +27,16 @@ const config = {
         },
     ],
     plugins: [
+        [
+            '@docusaurus/plugin-ideal-image',
+            {
+              quality: 70,
+              max: 1030, // max resized image's size.
+              min: 640, // min resized image's size. if original is lower, use that size.
+              steps: 2, // the max number of images generated between min and max (inclusive)
+              disableInDev: false,
+            },
+        ],
     [
       '@docusaurus/plugin-sitemap',
       {
@@ -40,9 +50,11 @@ const config = {
         {
             // options here
             name: "content", // used by CLI, must be path safe
-            sourceBaseUrl: "https://raw.githubusercontent.com/Netflix/conductor/main/docs/docs/", // the base url for the markdown (gets prepended to all of the documents when fetching)
-            outDir: "docs/versioned_docs/version-opensource/", // the base directory to output to.
-            documents: ["apispec.md", 
+            sourceBaseUrl: "https://raw.githubusercontent.com/netflix/conductor/main/docs/docs/", // the base url for the markdown (gets prepended to all of the documents when fetching)
+            outDir: "docs/versioned_docs/", // the base directory to output to.
+            documents: [
+                /*
+                "apispec.md", 
                         "architecture.md", 
                         "bestpractices.md",
                         "extend.md",
@@ -56,6 +68,8 @@ const config = {
                         "configuration/eventhandlers.md",
                         "configuration/isolationgroups.md",
                         "configuration/systask.md",
+                        "configuration/sysoperator",
+                        "configuration/workerdef",
                         "configuration/taskdef.md",
                         "configuration/taskdomains.md",
                         "configuration/workflowdef.md",
@@ -85,7 +99,22 @@ const config = {
                         "labs/img/bgnr_systask_state.png",
                         "metrics/client.md",
                         "metrics/server.md",
-
+                        "reference-docs/Wait-task",
+                       "reference-docs/do-while-task",
+                        "reference-docs/dynamic-fork-task",
+                        "reference-docs/dynamic-task",
+                        "reference-docs/event-task",
+                        "reference-docs/fork-task",
+                        "reference-docs/http-task",
+                       "reference-docs/inline-task",
+                        "reference-docs/join-task",
+                        "reference-docs/json-jq-transform-task",
+                        "reference-docs/kafka-publish-task",
+                        "reference-docs/set-variable-task",
+                        "reference-docs/sub-workflow-task",
+                       "reference-docs/switch-task",
+                        "reference-docs/terminate-task"
+*/
 
 
                         ], // the file names to download
@@ -103,12 +132,12 @@ const config = {
                     lastVersion: 'current',
                     versions: {
                         'opensource': {
-                            label: "Netflix Conductor Open Source Docs",
+                            label: "Conductor Open Source Docs",
                             banner: 'none'
     
                         },
                         current:{
-                            label: "Orkes Enterprise Conductor Docs",
+                            label: "Orkes Cloud Docs",
                             banner: 'none',
                             path: 'enterprise'
     
@@ -144,6 +173,7 @@ const config = {
                     src: 'img/Logo-Small.png'
                 },
                 items: [
+                   /*
                     {
                         type: 'doc',
                         docId: 'introduction',
@@ -156,11 +186,14 @@ const config = {
                         position: 'left',
                         label: 'How-Tos',
                     },
+                    */
+                    /*
                     {
                         
                         type: 'docsVersionDropdown',
                         position: 'left',
                     },
+                    */
                     //generic docs link replaced with the versioning dropdown
                     /*{
                         type: 'doc',
@@ -168,6 +201,16 @@ const config = {
                         position: 'left',
                         label: 'Reference Docs',
                     },*/
+                    {
+                        to: '/docs/opensource/index',
+                        position: 'left',
+                        label: 'Open Source Reference',
+                    },
+                    {
+                        to: '/docs/enterprise/introduction',
+                        position: 'left',
+                        label: 'Orkes Cloud Docs',
+                    },
                     {
                         to: '/blog',
                         label: 'Blog',
@@ -200,7 +243,7 @@ const config = {
                                 to: '/docs/enterprise/how-tos',
                             },
                             {
-                                label: 'Netflix Conductor - open source',
+                                label: 'Netflix Conductor open source',
                                 to: '/docs/opensource/index',
                             },
                             {
