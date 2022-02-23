@@ -44,8 +44,8 @@ const config = {
         changefreq: 'hourly',
         priority: 0.9,
       },
-    ],
-    [
+    ],/*
+    [   
         "docusaurus-plugin-remote-content",
         {
             // options here
@@ -53,7 +53,7 @@ const config = {
             sourceBaseUrl: "https://raw.githubusercontent.com/netflix/conductor/main/docs/docs/", // the base url for the markdown (gets prepended to all of the documents when fetching)
             outDir: "docs/versioned_docs/", // the base directory to output to.
             documents: [
-                /*
+                
                 "apispec.md", 
                         "architecture.md", 
                         "bestpractices.md",
@@ -114,12 +114,12 @@ const config = {
                         "reference-docs/sub-workflow-task",
                        "reference-docs/switch-task",
                         "reference-docs/terminate-task"
-*/
+
 
 
                         ], // the file names to download
         },
-    ],
+    ], */
    ],
     presets: [
         [
