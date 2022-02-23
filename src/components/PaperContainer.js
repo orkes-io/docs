@@ -32,11 +32,12 @@ export const PaperColumnRenderer = ({ columns, spaceEvenly = false }) => {
   );
 };
 
-export const InfoPaper = ({ title, infoColumn1, infoColumn2 }) => (
+export const InfoPaper = ({ title, infoColumn1, infoColumn2, children }) => (
   <PaperContainer className={`container padding--lg`}>
     <div className="row row--no-gutters">
       <h4>{title}</h4>
     </div>
     <ColumnRenderer columns={[infoColumn1, infoColumn2]} />
+    {children}
   </PaperContainer>
 );
