@@ -213,10 +213,10 @@
 //   );
 // }
 import React from "react";
-import clsx from "clsx";
 import Layout from "@theme/Layout";
 import Link from "@docusaurus/Link";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
+import CodeBlock from '@theme/CodeBlock';
 import styles from "./index.module.css";
 import HomepageFeatures from "../components/HomepageFeatures";
 import {
@@ -229,12 +229,12 @@ import { Text } from "../components/Text";
 import { WorkflowLanguageExamples } from "../components/WorkflowLanguageExamples";
 import Sampleworkflow from "/img/workflow_fork.png";
 import SmallDiagram from "/img/small_diagram.png";
-import JavaSample from "./md/_JavaSample.mdx";
-import PythonSample from "./md/_PythonSample.mdx";
-import JavascriptSample from "./md/_Javascript.mdx";
-import TypescriptSample from "./md/_Typescript.mdx";
-import RustSample from "./md/_Rust.mdx";
-import CurlSample from "./md/_Curl.mdx";
+import { 
+  JavaSample,
+  JavascriptSample,
+  PythonSample,
+  TypescriptSample,
+  RustSample} from "./_Languages.js";
 
 export default function Home() {
   const { siteConfig } = useDocusaurusContext();
@@ -387,7 +387,9 @@ export default function Home() {
                   javascript: <JavascriptSample/>,
                   typescript: <TypescriptSample/>,
                   rust: <RustSample/>,
-                  curl: <CurlSample/>,
+                  curl:<CodeBlock className="language-bash">
+                      {"yarn install\nyarn start"}
+                  </CodeBlock> 
                 }}
               />
             }
