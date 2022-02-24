@@ -60,12 +60,10 @@ export default function HomepageFeatures() {
     <section>
       <div className="midSection">
           <div style={{
-              width: 1100,
-              height: 300,
+              width: 550,
               padding: 20,
               paddingTop: 40
-          }}>
-              <h4 style={{
+          }}><h4 style={{
                   fontSize: 18,
                   fontFamily: "GothicA1-Medium"
               }}>What is Conductor?</h4>
@@ -86,6 +84,16 @@ export default function HomepageFeatures() {
                       Go from whiteboard to implementation directly
                   </li>
               </ul>
+          </div>
+          <div style={{
+              width: 550,
+              padding: 20,
+              paddingTop: 40
+          }}>
+              <iframe width={"550"} height={"300"} src={"https://www.youtube.com/embed/du7mls9XMUE"}
+                      title={"Orkes"} frameBorder={"0"}
+                      allow={"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"}
+                      allowFullScreen></iframe>
           </div>
       </div>
         <div className="bottomSection">
