@@ -3,13 +3,13 @@ sidebar_position: 1
 ---
 
 # Getting Started
-### What is Conductor
+### What is Conductor?
 Conductor is a microservice and workflow orchestration engine.
 Conductor allows developers to build stateful applications using simple, 
 stateless code without having to manage the state and complexities of building a distributed application.
 Conductor is cloud native and scales seamlessly as your workload grows.
      
-### How to run Conductor
+### How to run Conductor?
 [Short Tutorial on Running Conductor locally](getting-started/install/running-locally)
 
 ### What use cases can Conductor solve?
@@ -43,4 +43,3 @@ and can be deployed in data centers as well as various clouds.
   
 ### What about scale?
 Conductor has been battle tested at Netflix at scale and uses Chaos engineering principles to build a robust, highly scalable system.
- 

@@ -102,16 +102,19 @@ body {
 }
 
 h1 {
-    font-size: 36px;
-    font-family: GothicA1-Bold, sans-serif;
-}
-h2 {
     font-size: 28px;
     font-family: GothicA1-Bold, sans-serif;
 }
-h3 {
-    font-size: 24px;
+h2 {
+    font-size: 22px;
     font-family: GothicA1-Bold, sans-serif;
+}
+h3 {
+    font-size: 20px;
+    font-family: GothicA1-Bold, sans-serif;
+}
+p {
+
 }
 .menu__link--sublist:after {
     background: none;
@@ -132,7 +135,7 @@ aside {
 .markdown>p, .markdown>pre, .markdown>ul, .markdown li, .table-of-contents__link, table {
     letter-spacing: -0.003em;
     line-height: 28px;
-    font-size: 17px;
+    font-size: 15px;
     font-family: var(--ifm-font-family-base);
 }
 

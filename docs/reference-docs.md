@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# Conductor Reference Documentation
+# Reference Documentation
 
 Select a topic from the left panel.
 
@@ -10,4 +10,5 @@ Select a topic from the left panel.
 1. [HTTP Task](reference-docs/system-tasks/http-task)
 2. [Switch / Decision](reference-docs/switch-task)
 3. [Fork](reference-docs/fork-task)
+3. [Wait](reference-docs/wait-task)
 
