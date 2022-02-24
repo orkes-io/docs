@@ -160,3 +160,89 @@ pre code {
 .navbar__item {
     font-size: 16px;
 }
+
+.bottomSection {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding-bottom: 100px;
+}
+
+.liClass {
+    margin-top: 12px;
+}
+
+.communityClassWrapper {
+    height: 100px;
+    width: 50%;
+    padding: 20px 20px 5px 5px;
+    margin-bottom: 20px;
+}
+
+.communityClass {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.communityClass h4 {
+    font-family: "GothicA1-Bold", serif;
+    font-size: 16px;
+}
+
+.communityClassHeader {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    align-content: center;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+.communityClassHeader h4 {
+    margin: 0 0 0 10px;
+}
+
+
+.aClass {
+    text-decoration: none;
+    color: #555;
+}
+
+.aClass:hover {
+    text-decoration: none;
+    color: #7033ff;
+}
+
+html[data-theme='dark'] .aClass {
+    color: #ddd;
+}
+
+html[data-theme='dark'] .aClass:hover {
+    color: #b696ff;
+}
+
+.midSection {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    background-color: ghostwhite;
+    padding-bottom: 50px;
+}
+
+.homeHeader {
+    background-color: #fff;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+}
+
+html[data-theme='dark'] .homeHeader {
+    background-color: transparent;
+}
+
+html[data-theme='dark'] .midSection {
+    background-color: #131314;
+}
+

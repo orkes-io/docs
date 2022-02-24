@@ -5,22 +5,128 @@ import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import styles from './index.module.css';
 import HomepageFeatures from '../components/HomepageFeatures';
+import { faLinkedin } from '@fortawesome/free-brands-svg-icons'
+
+const boxWidth = 240;
+const boxMargin = 20;
 
 function HomepageHeader() {
   const {siteConfig} = useDocusaurusContext();
-  return (
-    <header className={clsx('hero hero--primary', styles.heroBanner)}>
-      <div className="container">
-        <h1 className="hero__title">{siteConfig.title}</h1>
-        <p className="hero__subtitle">{siteConfig.tagline}</p>
-        <div className={styles.buttons}>
-          <Link
-            className="button button--secondary button--lg"
-            to="/docs/introduction">
-            Conductor Tutorial - 5 min ⏱️
-          </Link>
+    let aLinkStyle = {
+    };
+    return (
+    <header className={"homeHeader"}>
+        <div style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+            flexWrap: "wrap",
+            paddingTop: 20,
+            paddingBottom: 40,
+        }}>
+            <a href={"/content/docs/introduction"} style={aLinkStyle} className={"aClass"}>
+                <div style={{
+                    height: 150,
+                    width: boxWidth,
+                    marginLeft: boxMargin,
+                    marginTop: boxMargin,
+                    marginRight: boxMargin,
+                    padding: 20,
+                    border: "1px solid grey",
+                    borderRadius: 5,
+                }}>
+                    <h4 style={{
+                        fontSize: 18,
+                        fontFamily: "GothicA1-Medium"
+                    }}>Getting Started</h4>
+                    <p style={{
+                        fontSize: 14,
+                        fontFamily: "GothicA1-Regular"
+                    }}>
+                        Learn about Conductor and its concepts
+                    </p>
+                </div>
+            </a>
+            <a href={"/content/docs/getting-started/install/running-locally#download-and-run"} style={aLinkStyle} className={"aClass"}>
+                <div style={{
+                    height: 150,
+                    width: boxWidth,
+                    marginLeft: boxMargin,
+                    marginTop: boxMargin,
+                    marginRight: boxMargin,
+                    padding: 20,
+                    border: "1px solid grey",
+                    borderRadius: 5,
+                }}>
+                    <h4 style={{
+                        fontSize: 18,
+                        fontFamily: "GothicA1-Medium"
+                    }}>Running Conductor</h4>
+                    <p style={{
+                        fontSize: 14,
+                        fontFamily: "GothicA1-Regular"
+                    }}>
+                        Learn how to run Conductor locally and via Docker
+                    </p>
+                </div>
+            </a>
+            <a href={"/content/docs/getting-started/run/running-first-workflow"} style={aLinkStyle} className={"aClass"}>
+                <div style={{
+                    height: 150,
+                    width: boxWidth,
+                    marginLeft: boxMargin,
+                    marginTop: boxMargin,
+                    marginRight: boxMargin,
+                    padding: 20,
+                    border: "1px solid grey",
+                    borderRadius: 5,
+                }}>
+                    <h4 style={{
+                        fontSize: 18,
+                        fontFamily: "GothicA1-Medium"
+                    }}>Running First Workflow</h4>
+                    <p style={{
+                        fontSize: 14,
+                        fontFamily: "GothicA1-Regular"
+                    }}>
+                        Run a workflow to see Conductor in action
+                    </p>
+                </div>
+            </a>
+            <a href={"/content/docs/getting-started/run/running-first-worker"} style={aLinkStyle} className={"aClass"}>
+                <div style={{
+                    height: 150,
+                    width: boxWidth,
+                    marginLeft: boxMargin,
+                    marginTop: boxMargin,
+                    marginRight: boxMargin,
+                    padding: 20,
+                    border: "1px solid grey",
+                    borderRadius: 5,
+                }}>
+                    <h4 style={{
+                        fontSize: 18,
+                        fontFamily: "GothicA1-Medium"
+                    }}>Running First Worker</h4>
+                    <p style={{
+                        fontSize: 14,
+                        fontFamily: "GothicA1-Regular"
+                    }}>
+                        Add a custom worker that runs your code as part of a workflow
+                    </p>
+                </div>
+            </a>
         </div>
-      </div>
+
+      {/*<div className="container">*/}
+      {/*  <div className={styles.buttons}>*/}
+      {/*    <Link*/}
+      {/*      className="button button--secondary button--lg"*/}
+      {/*      to="/docs/introduction">*/}
+      {/*      Conductor Tutorial - 5 min ⏱️*/}
+      {/*    </Link>*/}
+      {/*  </div>*/}
+      {/*</div>*/}
     </header>
   );
 }
