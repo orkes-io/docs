@@ -72,16 +72,13 @@ export default function HomepageFeatures() {
                       Conductor is an open-source, Apache 2.0 licensed microservices and workflow orchestration framework
                   </li>
                   <li className={"liClass"}>
-                      Build highly reliable distributed applications using the language of our choice
+                      Build highly reliable distributed applications using the language of choice
                   </li>
                   <li className={"liClass"}>
-                      Lets us focus on coding the business logic of our application instead of complexities of a distributed ecosystem
+                      Lets us focus on coding the business logic of the application instead of managing complexities of a distributed ecosystem
                   </li>
                   <li className={"liClass"}>
-                      Cleanly decouple the design of your application from the implementation
-                  </li>
-                  <li className={"liClass"}>
-                      Go from whiteboard to implementation directly
+                      Cleanly decouple the design of the application flow from the implementation
                   </li>
               </ul>
           </div>
