@@ -20,7 +20,9 @@ import {
   JavascriptSample,
   PythonSample,
   TypescriptSample,
-  RustSample} from "./_Languages.js";
+  RustSample,
+  CurlSample,
+} from "./_Languages.js";
 
 export default function Home() {
   const { siteConfig } = useDocusaurusContext();
@@ -173,9 +175,7 @@ export default function Home() {
                   javascript: <JavascriptSample/>,
                   typescript: <TypescriptSample/>,
                   rust: <RustSample/>,
-                  curl:<CodeBlock className="language-bash">
-                      {"yarn install\nyarn start"}
-                  </CodeBlock> 
+                  curl: <CurlSample /> 
                 }}
               />
             }
