@@ -212,13 +212,10 @@ const config = {
                     {
                         title: 'Docs',
                         items: [
+                       
                             {
-                                label: 'Orkes Conductor',
-                                to: '/docs/enterprise/how-tos',
-                            },
-                            {
-                                label: 'Netflix Conductor open source',
-                                to: '/docs/opensource/index',
+                                label: 'Documentation',
+                                to: '/docs/introduction',
                             },
                             {
                                 label: 'Tutorials',

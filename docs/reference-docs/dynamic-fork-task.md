@@ -167,5 +167,5 @@ sub-workflow objects and all of the input parameters that these tasks will need 
 
 ### The Join
 
-The [JOIN](../../reference-docs/join-task) task will run after all of the dynamic tasks, collecting the output for all of the tasks.
+The [JOIN](./../reference-docs/join-task) task will run after all of the dynamic tasks, collecting the output for all of the tasks.
 

@@ -10,7 +10,7 @@ stateless code without having to manage the state and complexities of building a
 Conductor is cloud native and scales seamlessly as your workload grows.
      
 ### How to run Conductor
-[Short Tutorial on Running Conductor locally](getting-started/install/running-locally)
+[Short Tutorial on Running Conductor locally](server)
 
 ### What use cases can Conductor solve?
 

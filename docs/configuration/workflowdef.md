@@ -111,9 +111,9 @@ The mail_a_box workflow has 2 tasks:
 |description|Description of the task|optional|
 |optional|true  or false.  When set to true - workflow continues even if the task fails.  The status of the task is reflected as `COMPLETED_WITH_ERRORS`|Defaults to `false`|
 |inputParameters|JSON template that defines the input given to the task|See [Wiring Inputs and Outputs](#wiring-inputs-and-outputs) for details|
-|domain|See [Task Domains](/conductor/configuration/taskdomains) for more information.|optional|
+|domain|See [Task Domains](taskdomains) for more information.|optional|
 
-In addition to these parameters, System Tasks have their own parameters. Checkout [System Tasks](/conductor/configuration/systask/) for more information.
+In addition to these parameters, System Tasks have their own parameters. Checkout [System Tasks](systask) for more information.
 
 ## Wiring Inputs and Outputs
 
@@ -226,4 +226,4 @@ And `url` would be `https://some_url:7004 if no `url` was provided as input to y
 
 ## Workflow notifications
 
-Conductor can be configured to publish notifications to external systems upon completion/termination of workflows. See [extending conductor](../../extend/#workflow-status-listener) for details.
+Conductor can be configured to publish notifications to external systems upon completion/termination of workflows. See [extending conductor](../extend/#workflow-status-listener) for details.

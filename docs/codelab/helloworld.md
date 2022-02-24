@@ -20,7 +20,7 @@ TODO add image of completed WF
 
 ## Requirements
 
-You'll need to have Conductor running locally [natively](/server), or in a [Docker server](/running-locally-docker).  To run the Java worker, you'll need to have Java installed.
+You'll need to have Conductor running locally [natively](../../server), or in a [Docker server](running-locally-docker).  To run the Java worker, you'll need to have Java installed.
 
 ## A Simple Hello World (version 0.1)
 

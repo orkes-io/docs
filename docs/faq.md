@@ -19,14 +19,14 @@ Ensure all the tasks are registered via `/metadata/taskdefs` APIs.  Add any miss
 ### Where does my worker run?  How does conductor run my tasks?
 
 Conductor does not run the workers.  When a task is scheduled, it is put into the queue maintained by Conductor.  Workers are required to poll for tasks using `/tasks/poll` API at periodic interval, execute the business logic for the task and report back the results using `POST /tasks` API call. 
-Conductor, however will run [system tasks](../configuration/systask/) on the Conductor server.
+Conductor, however will run [system tasks](configuration/systask/) on the Conductor server.
 
 
 ### How can I schedule workflows to run at a specific time?
 
 Netflix Conductor itself does not provide any scheduling mechanism.  But there is a community project [_Schedule Conductor Workflows_](https://github.com/jas34/scheduledwf) which provides workflow scheduling capability as a pluggable module as well as workflow server.
 Other way is you can use any of the available scheduling systems to make REST calls to Conductor to start a workflow.  Alternatively, publish a message to a supported eventing system like SQS to trigger a workflow.  
-More details about [eventing](../configuration/eventhandlers/).
+More details about [eventing](configuration/eventhandlers).
 
 
 ### How do I setup Dynomite cluster?
@@ -55,7 +55,7 @@ Make sure that the worker is actively polling for this task. Navigate to the `Po
 
 ### How do I configure a notification when my workflow completes or fails?
 
-Refer this [documentation](../configuration/workflowdef/#workflow-notifications) to extend conductor to send out events/notifications upon workflow completion/failure.
+Refer to this [documentation](configuration/workflowdef/#workflow-notifications) to extend conductor to send out events/notifications upon workflow completion/failure.
 
 
 ### I want my worker to stop polling and executing tasks when the process is being terminated. (Java client)
