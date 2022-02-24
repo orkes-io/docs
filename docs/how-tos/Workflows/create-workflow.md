@@ -4,8 +4,4 @@ sidebar_position: 1
 
 # Creating Workflows
 
-TODO
-
-## Summary
-
-TODO
+See our Tutorial on [creating your first Workflow](../../getting-started/run/running-first-workflow) for a complete walk through on creating workflows.
