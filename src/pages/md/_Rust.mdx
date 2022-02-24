@@ -1,8 +1,0 @@
-```rs
-fn task(arg: i32) -> (i32, u32) {
-    let x = random::<u32>();
-    let s = x % 5000;
-    thread::sleep(Duration::from_millis(s as u64));
-    (arg, s)
-}
-```

@@ -1,126 +1,8 @@
-// import React from 'react';
-// import Layout from '@theme/Layout';
-// import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
-// import HomepageFeatures from '../components/HomepageFeatures';
-
-// const boxWidth = 240;
-// const boxMargin = 20;
-
-// function HomepageHeader() {
-//   const {siteConfig} = useDocusaurusContext();
-//     let aLinkStyle = {
-//     };
-//     return (
-//     <header className={"homeHeader"}>
-//         <div style={{
-//             display: "flex",
-//             flexDirection: "row",
-//             justifyContent: "center",
-//             flexWrap: "wrap",
-//             paddingTop: 20,
-//             paddingBottom: 40,
-//         }}>
-//             <a href={"/content/docs/introduction"} style={aLinkStyle} className={"aClass"}>
-//                 <div style={{
-//                     height: 150,
-//                     width: boxWidth,
-//                     marginLeft: boxMargin,
-//                     marginTop: boxMargin,
-//                     marginRight: boxMargin,
-//                     padding: 20,
-//                     border: "1px solid grey",
-//                     borderRadius: 5,
-//                 }}>
-//                     <h4 style={{
-//                         fontSize: 18,
-//                         fontFamily: "GothicA1-Medium"
-//                     }}>Getting Started</h4>
-//                     <p style={{
-//                         fontSize: 14,
-//                         fontFamily: "GothicA1-Regular"
-//                     }}>
-//                         Learn about Conductor and its concepts
-//                     </p>
-//                 </div>
-//             </a>
-//             <a href={"/content/docs/getting-started/install/running-locally#download-and-run"} style={aLinkStyle} className={"aClass"}>
-//                 <div style={{
-//                     height: 150,
-//                     width: boxWidth,
-//                     marginLeft: boxMargin,
-//                     marginTop: boxMargin,
-//                     marginRight: boxMargin,
-//                     padding: 20,
-//                     border: "1px solid grey",
-//                     borderRadius: 5,
-//                 }}>
-//                     <h4 style={{
-//                         fontSize: 18,
-//                         fontFamily: "GothicA1-Medium"
-//                     }}>Running Conductor</h4>
-//                     <p style={{
-//                         fontSize: 14,
-//                         fontFamily: "GothicA1-Regular"
-//                     }}>
-//                         Learn how to run Conductor locally and via Docker
-//                     </p>
-//                 </div>
-//             </a>
-//             <a href={"/content/docs/getting-started/run/running-first-workflow"} style={aLinkStyle} className={"aClass"}>
-//                 <div style={{
-//                     height: 150,
-//                     width: boxWidth,
-//                     marginLeft: boxMargin,
-//                     marginTop: boxMargin,
-//                     marginRight: boxMargin,
-//                     padding: 20,
-//                     border: "1px solid grey",
-//                     borderRadius: 5,
-//                 }}>
-//                     <h4 style={{
-//                         fontSize: 18,
-//                         fontFamily: "GothicA1-Medium"
-//                     }}>Running First Workflow</h4>
-//                     <p style={{
-//                         fontSize: 14,
-//                         fontFamily: "GothicA1-Regular"
-//                     }}>
-//                         Run a workflow to see Conductor in action
-//                     </p>
-//                 </div>
-//             </a>
-//             <a href={"/content/docs/getting-started/run/running-first-worker"} style={aLinkStyle} className={"aClass"}>
-//                 <div style={{
-//                     height: 150,
-//                     width: boxWidth,
-//                     marginLeft: boxMargin,
-//                     marginTop: boxMargin,
-//                     marginRight: boxMargin,
-//                     padding: 20,
-//                     border: "1px solid grey",
-//                     borderRadius: 5,
-//                 }}>
-//                     <h4 style={{
-//                         fontSize: 18,
-//                         fontFamily: "GothicA1-Medium"
-//                     }}>Running First Worker</h4>
-//                     <p style={{
-//                         fontSize: 14,
-//                         fontFamily: "GothicA1-Regular"
-//                     }}>
-//                         Add a custom worker that runs your code as part of a workflow
-//                     </p>
-//                 </div>
-//             </a>
-//         </div>
-//     </header>
-//   );
-// }
 import React from "react";
-import clsx from "clsx";
 import Layout from "@theme/Layout";
 import Link from "@docusaurus/Link";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
+import CodeBlock from '@theme/CodeBlock';
 import styles from "./index.module.css";
 import HomepageFeatures from "../components/HomepageFeatures";
 import {
@@ -133,12 +15,12 @@ import { Text } from "../components/Text";
 import { WorkflowLanguageExamples } from "../components/WorkflowLanguageExamples";
 import Sampleworkflow from "/img/workflow_fork.png";
 import SmallDiagram from "/img/small_diagram.png";
-import JavaSample from "./md/_JavaSample.mdx";
-import PythonSample from "./md/_PythonSample.mdx";
-import JavascriptSample from "./md/_Javascript.mdx";
-import TypescriptSample from "./md/_Typescript.mdx";
-import RustSample from "./md/_Rust.mdx";
-import CurlSample from "./md/_Curl.mdx";
+import { 
+  JavaSample,
+  JavascriptSample,
+  PythonSample,
+  TypescriptSample,
+  RustSample} from "./_Languages.js";
 
 export default function Home() {
   const { siteConfig } = useDocusaurusContext();
@@ -291,7 +173,9 @@ export default function Home() {
                   javascript: <JavascriptSample/>,
                   typescript: <TypescriptSample/>,
                   rust: <RustSample/>,
-                  curl: <CurlSample/>,
+                  curl:<CodeBlock className="language-bash">
+                      {"yarn install\nyarn start"}
+                  </CodeBlock> 
                 }}
               />
             }
