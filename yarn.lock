@@ -1576,7 +1576,7 @@
     tslib "^2.3.1"
     utility-types "^3.10.0"
 
-"@docusaurus/theme-search-algolia@2.0.0-beta.15":
+"@docusaurus/theme-search-algolia@2.0.0-beta.15", "@docusaurus/theme-search-algolia@^2.0.0-beta.15":
   version "2.0.0-beta.15"
   resolved "https://registry.npmjs.org/@docusaurus/theme-search-algolia/-/theme-search-algolia-2.0.0-beta.15.tgz"
   integrity sha512-XrrQKyjOPzmEuOcdsaAn1tzNJkNMA3PC86PwPZUaah0cYPpBGptcJYDlIW4VHIrCBfkQvhvmg/B3qKF6bMMi8g==
