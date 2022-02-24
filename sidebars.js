@@ -102,6 +102,14 @@ module.exports = {
                 'getting-started/run/running-first-worker',
             ],
         },
+        {
+            type: 'category',
+            label: 'Conductor Playground',
+            collapsed: false,
+            items: [
+                'getting-started/playground/using-conductor-playground',
+            ],
+        },
     ],
 
     referenceDocsSideBar: [
