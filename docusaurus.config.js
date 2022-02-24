@@ -171,7 +171,7 @@ const config = {
                 title: 'Orkes Conductor',
                 logo: {
                     alt: 'Orkes Conductor Logo',
-                    src: 'img/Logo-Small.png'
+                    src: 'img/Logo-Small-new.png'
                 },
                 items: [
                   
