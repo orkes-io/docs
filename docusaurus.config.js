@@ -12,7 +12,7 @@ const config = {
     baseUrl: baseUrlName + '/',
     onBrokenLinks: 'warn',
     onBrokenMarkdownLinks: 'warn',
-    favicon: 'img/favicon.ico',
+    favicon: 'img/branding/orkes-favicon-purple.png',
     organizationName: 'orkes-io', // Usually your GitHub org/user name.
     projectName: 'docs', // Usually your repo name.
     trailingSlash: false,
@@ -49,7 +49,7 @@ const config = {
                     path: './blog',
                     showReadingTime: true,
                     editUrl: 'https://github.com/orkes-io/docs/edit/main/',
-            
+
                 },
                 theme: {
                     customCss: require.resolve('./src/css/custom.css'),
@@ -65,10 +65,11 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
         ({
             navbar: {
-                title: 'Orkes Conductor',
+                title: 'Conductor Docs',
                 logo: {
-                    alt: 'Orkes Conductor Logo',
-                    src: 'img/Logo-Small.png'
+                    alt: 'Orkes Conductor',
+                    src: 'img/branding/orkes-logo-purple-4x.png',
+                    srcDark: 'img/branding/orkes-logo-purple-inverted-4x.png',
                 },
                 items: [
                     {

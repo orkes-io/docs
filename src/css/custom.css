@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Mukta:wght@200;300;400;500;600;700;800&display=swap');
+
 /**
  * Any CSS included here will be global. The classic template
  * bundles Infima by default. Infima is a CSS framework designed to
@@ -140,3 +142,18 @@ pre code {
     font-size: 17px;
 }
 
+.navbar__logo {
+    height: 45px;
+    margin-top: -5px;
+}
+
+.navbar {
+}
+.navbar__brand {
+    font-size: 18px;
+    margin-top: 2px;
+}
+
+.navbar__item {
+    font-size: 16px;
+}
