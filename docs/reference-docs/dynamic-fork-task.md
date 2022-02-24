@@ -9,7 +9,7 @@ sidebar_position: 1
 
 ## Introduction
 
-Dynamic Forks are an extension of the [Fork](../fork-task) operation in conductor.
+Dynamic Forks are an extension of the [Fork](./fork-task) operation in conductor.
 
 In a regular fork operation (`FORK_JOIN` task), the size of the fork is defined at the time of workflow definition. 
 

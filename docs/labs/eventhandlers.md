@@ -1,3 +1,6 @@
+
+# Using Event Handlers
+
 ## About
 
 In this Lab, we shall:

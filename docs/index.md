@@ -1,10 +1,7 @@
 
 
----
-sidebar_position: 1
----
 
-## About Conductor
+# Conductor
 
 ![alt](/img/conductor-vector-x.png)
 

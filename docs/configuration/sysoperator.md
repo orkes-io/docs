@@ -9,12 +9,12 @@ Conductor supports the following programming language constructs:
 
 |Language Construct|Conductor Operator|
 |---|---|
-|Do/While or Loops|[Do While Task](../../reference-docs/do-while-task) |
-|Dynamic Fork|[Dynamic Fork Task](../../reference-docs/dynamic-fork-task)X|
-|Fork / Parallel execution|[Fork Task](../../reference-docs/fork-task)| 
-|Join|[Join Task](../../reference-docs/join-task)|
-|Sub Process / Sub-Flow|[Sub Workflow Task](../../reference-docs/sub-workflow-task)|
-|Switch//Decision/if..then...else|[Switch Task](../../reference-docs/switch-task)|
-|Terminate|[Terminate Task](../../reference-docs/terminate-task)|
-|Variables|[Variable Task](../../reference-docs/set-variable-task)|
-|Wait|[Wait Task](../../reference-docs/wait-task)|
+|Do/While or Loops|[Do While Task](./../reference-docs/do-while-task) |
+|Dynamic Fork|[Dynamic Fork Task](./../reference-docs/dynamic-fork-task)|
+|Fork / Parallel execution|[Fork Task](./../reference-docs/fork-task)| 
+|Join|[Join Task](./../reference-docs/join-task)|
+|Sub Process / Sub-Flow|[Sub Workflow Task](./../reference-docs/sub-workflow-task)|
+|Switch//Decision/if..then...else|[Switch Task](./../reference-docs/switch-task)|
+|Terminate|[Terminate Task](./../reference-docs/terminate-task)|
+|Variables|[Variable Task](./../reference-docs/set-variable-task)|
+|Wait|[Wait Task](./../reference-docs/wait-task)|

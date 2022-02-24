@@ -1,3 +1,6 @@
+
+# Kitchen Sink
+
 An example kitchensink workflow that demonstrates the usage of all the schema constructs.
 
 ### Definition

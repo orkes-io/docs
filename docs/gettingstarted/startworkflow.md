@@ -1,4 +1,4 @@
-## Start Workflow Request
+# Start a Workflow Request
 
 When starting a Workflow execution with a registered definition, Workflow accepts following parameters:
 

@@ -191,7 +191,7 @@ module.exports = {
                 {
                   "type": "doc",
                   "id": "reference-docs/json-jq-transform-task", 
-                  "label": "JSON JQ TRansform Task"
+                  "label": "JSON JQ Transform Task"
                 },
                 {
                   "type": "doc",
@@ -271,11 +271,7 @@ module.exports = {
                     "id": "configuration/eventhandlers", 
                     "label": "Event Handlers"
                   },
-                  {
-                    "type": "doc",
-                    "id":  "tasklifecycle", 
-                    "label": "Task Lifecycle"
-                  },
+            
                   {
                     "type": "doc",
                     "id": "configuration/taskdomains", 

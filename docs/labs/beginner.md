@@ -1,3 +1,6 @@
+
+# Build your First Workflow
+
 ## Hands on mode
 Please feel free to follow along using any of these resources:
 
@@ -22,7 +25,7 @@ The workflow in this lab will look like this:
 This workflow contains the following:
 
 * Worker Task `verify_if_idents_are_added` to verify if Idents are already added.
-* [Decision Task](/configuration/systask/#decision) that takes output from the previous task, and decides whether to schedule the `add_idents` task.
+* Decision Task that takes output from the previous task, and decides whether to schedule the `add_idents` task.
 * `add_idents` task which is another worker Task.
 
 ### Creating Task definitions

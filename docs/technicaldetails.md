@@ -1,3 +1,5 @@
+# Technical Details
+
 ### gRPC Framework
 As part of this addition, all of the modules and bootstrap code within them were refactored to leverage providers, which facilitated moving  the Jetty server into a separate module and the conformance to Guice guidelines and best practices. 
 This feature constitutes a server-side gRPC implementation along with protobuf RPC schemas for the workflow, metadata and task APIs that can be run concurrently with the Jersey-based HTTP/REST server. The protobuf models for all the types are exposed through the API. gRPC java clients for the workflow, metadata and task APIs are also available for use. Another valuable addition is an idiomatic Go gRPC client implementation for the worker API.

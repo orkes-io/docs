@@ -1,3 +1,4 @@
+# Best Practices
 ## Response Timeout
 - Configure the responseTimeoutSeconds of each task to be > 0.
 - Should be less than or equal to timeoutSeconds.

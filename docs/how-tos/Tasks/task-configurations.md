@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Task Configurations
 
-Refer to [Task Definitions](../getting-started/concepts/tasks-and-workers#task-definitions) for details on how to configure task definitions
+Refer to [Task Definitions](./creating-tasks) for details on how to configure task definitions
 
 ### Example
 

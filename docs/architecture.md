@@ -1,12 +1,12 @@
-## High Level Architecture
-![Architecture](/img/conductor-architecture.png)
+# High Level Architecture
+![Architecture](img/conductor-architecture.png)
 
 The API and storage layers are pluggable and provide ability to work with different backends and queue service providers.
 
 ## Installing and Running
 
 !!! hint "Running in production"
-	For a detailed configuration guide on installing and running Conductor server in production visit [Conductor Server](../server) documentation.
+	For a detailed configuration guide on installing and running Conductor server in production visit [Conductor Server](server) documentation.
 
 ### Running In-Memory Server
 
