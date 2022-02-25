@@ -10,6 +10,6 @@ const textAlignmentToClass = (alignmentEnum) => {
   }
 };
 
-export const Text = ({ children, align }) => {
-  return <p className={`${textAlignmentToClass(align)}`}>{children}</p>;
+export const Text = ({ children, align, className }) => {
+  return <p className={`${textAlignmentToClass(align)} ${className}`}>{children}</p>;
 };
