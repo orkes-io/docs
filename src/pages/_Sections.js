@@ -94,24 +94,26 @@ export const YourfirstWorkflowSection = ({
   <div className="row">
     <InfoPaper
       title={title}
-      infoColumn1={
-        <WorkflowLanguageExamples
-          languageSamples={
-            languageSamples
-          }
-        />
-      }
-      infoColumn2={
-        <PaperContainer className={styles.firstWorkflowContainer}>
-          <img
-            src={rightImage}
-            alt="small-diagram"
-            width="300px"
-            height="800px"
-          ></img>
-        </PaperContainer>
-      }
     >
+      <div className="row">
+        <div className="col col--8">
+         <WorkflowLanguageExamples
+           languageSamples={
+             languageSamples
+           }
+         />
+        </div>
+        <div className="col col--4">
+         <PaperContainer className={styles.firstWorkflowContainer}>
+           <img
+             src={rightImage}
+             alt="small-diagram"
+             width="300px"
+             height="800px"
+           ></img>
+         </PaperContainer>
+        </div>
+        </div>
       <Text align="center" className={styles.firstWorkflowFooter}>{sectionFooter}</Text>
     </InfoPaper>
   </div>

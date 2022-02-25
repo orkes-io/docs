@@ -235,7 +235,9 @@ html[data-theme='dark'] .midSectionOdd {
 .row--center {
   justify-content: center;
 }
-
+.outline-tabs {
+  max-width: 600px;
+}
 .outline-tabs .tabs__item {
   font-size: 15px;
   line-height: 1px;
