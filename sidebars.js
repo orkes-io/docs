@@ -108,6 +108,7 @@ module.exports = {
             collapsed: false,
             items: [
                 'getting-started/playground/using-conductor-playground',
+                'getting-started/playground/first-playground-application',
             ],
         },
     ],
