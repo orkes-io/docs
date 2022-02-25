@@ -40,18 +40,20 @@ export const WhatIsConductorSection = ({
         </div>
       }
       infoColumn2={
-        <>
-          <iframe
-            width="560"
-            height="315"
-            src={videoSrc}
-            title={videoTitle}
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen=""
-          ></iframe>
-          <Text align="center">{videoFooterCaption}</Text>
-        </>
+        <div className="container">
+          <div className="row videoContainer">
+            <iframe
+              src={videoSrc}
+              title={videoTitle}
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen=""
+            ></iframe>
+          </div>
+          <div className="row">
+            <Text align="center" className={styles.videoFooterCaption}>{videoFooterCaption}</Text>
+          </div>
+        </div>
       }
     />
   </div>
@@ -92,29 +94,25 @@ export const YourfirstWorkflowSection = ({
   sectionFooter,
 }) => (
   <div className="row">
-    <InfoPaper
-      title={title}
-    >
+    <InfoPaper title={title}>
       <div className="row">
         <div className="col col--8">
-         <WorkflowLanguageExamples
-           languageSamples={
-             languageSamples
-           }
-         />
+          <WorkflowLanguageExamples languageSamples={languageSamples} />
         </div>
         <div className="col col--4">
-         <PaperContainer className={styles.firstWorkflowContainer}>
-           <img
-             src={rightImage}
-             alt="small-diagram"
-             width="300px"
-             height="800px"
-           ></img>
-         </PaperContainer>
+          <PaperContainer className={styles.firstWorkflowContainer}>
+            <img
+              src={rightImage}
+              alt="small-diagram"
+              width="300px"
+              height="800px"
+            ></img>
+          </PaperContainer>
         </div>
-        </div>
-      <Text align="center" className={styles.firstWorkflowFooter}>{sectionFooter}</Text>
+      </div>
+      <Text align="center" className={styles.firstWorkflowFooter}>
+        {sectionFooter}
+      </Text>
     </InfoPaper>
   </div>
 );

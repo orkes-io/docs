@@ -1,4 +1,3 @@
-
 .firstWorkflowContainer {
   display: flex;
   justify-content: center;
@@ -11,4 +10,9 @@
 
 .firstWorkflowFooter {
   letter-spacing: 1px;
+}
+.videoFooterCaption {
+  line-height: 20px;
+  width: 100%;
+  padding-top: 0.5rem;
 }
