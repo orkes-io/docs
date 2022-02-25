@@ -7,4 +7,7 @@
   color: var(
     --ifm-color-primary
   ); /* this is not the exact color exact color is 45,136,217 */
+  text-align: center;
+  height: 3rem;
+  width: 100%;
 }

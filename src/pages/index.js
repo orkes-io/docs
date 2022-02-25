@@ -31,22 +31,25 @@ export default function Home() {
         <StepBoxesSection
           steps={[
             {
-              title: "Get Started",
-              description: "Setup your environment to get started",
+              title: "Getting Started",
+              description: "Learn about Conductor and its concepts",
               to: "/docs/getting-started",
             },
             {
-              title: "Cookbook",
+              title: "Running Conductor",
+              description: "Learn how to run Conductor locally and via Docker",
+              to: "/docs/getting-started/install/running-locally#download-and-run",
+            },
+            {
+              title: "Running First Workflow",
+              description: "Run a workflow to see Conductor in action",
+              to: "/docs/getting-started/run/running-first-workflow",
+            },
+            {
+              title: "Running First Worker",
               description:
-                "Browse a list of sample workflows that you can build",
-            },
-            {
-              title: "Use Cases",
-              description: "Setup your environment to get started",
-            },
-            {
-              title: "Videos",
-              description: "Watch demo videos, how to guides",
+                "Add a customer worker that runs your code as part of a workflow",
+              to: "/docs/getting-started/run/running-first-worker",
             },
             {
               title: "API Docs",
@@ -110,18 +113,18 @@ export default function Home() {
 "
         />
         <YourfirstWorkflowSection
-                languageSamples={{
-                  java: <JavaSample />,
-                  python: <PythonSample />,
-                  javascript: <JavascriptSample />,
-                  typescript: <TypescriptSample />,
-                  rust: <RustSample />,
-                  curl: <CurlSample />,
-                }}
-            title="Your First Workflow"
-            rightImage={SmallDiagram}
-            sectionFooter="Simple functional code that can run complex flows"
-       /> 
+          languageSamples={{
+            java: <JavaSample />,
+            python: <PythonSample />,
+            javascript: <JavascriptSample />,
+            typescript: <TypescriptSample />,
+            rust: <RustSample />,
+            curl: <CurlSample />,
+          }}
+          title="Your First Workflow"
+          rightImage={SmallDiagram}
+          sectionFooter="Simple functional code that can run complex flows"
+        />
       </main>
     </Layout>
   );

@@ -8,7 +8,7 @@ export const SingleStep = ({ title, description, to }) => (
     <Link to={to} className="noStyleLink">
       <div className={`container padding--md`}>
         <div className="row padding-horiz--md">
-          <h4 className={styles.title}>{title}</h4>
+          <h3 className={styles.title}>{title}</h3>
         </div>
         <div className="row padding-horiz--md">
           <p className="description">{description}</p>
