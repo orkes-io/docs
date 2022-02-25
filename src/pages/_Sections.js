@@ -33,10 +33,16 @@ export const WhatIsConductorSection = ({
       title={title}
       infoColumn1={
         <div className="row">
-          <div className="col col--6">{description}</div>
-          <div className="col col--6">
-            <img src={sideImage} alt="sample_workflow" width="200px"></img>
-          </div>
+          {sideImage == null ? (
+             description 
+          ) : (
+            <>
+              <div className="col col--6">{description}</div>
+              <div className="col col--6">
+                <img src={sideImage} alt="sample_workflow" width="200px"></img>
+              </div>
+            </>
+          )}
         </div>
       }
       infoColumn2={
@@ -51,7 +57,9 @@ export const WhatIsConductorSection = ({
             ></iframe>
           </div>
           <div className="row">
-            <Text align="center" className={styles.videoFooterCaption}>{videoFooterCaption}</Text>
+            <Text align="center" className={styles.videoFooterCaption}>
+              {videoFooterCaption}
+            </Text>
           </div>
         </div>
       }

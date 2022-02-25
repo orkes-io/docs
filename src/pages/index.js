@@ -60,9 +60,27 @@ export default function Home() {
         />
         <WhatIsConductorSection
           title="What is Conductor?"
-          sideImage={SampleWorkflow}
-          description="Build powerful workflows across microservices without worrying
-                  about maintaining state"
+          //   sideImage={SampleWorkflow}
+          description={
+            <ul className={styles.spacedUl}>
+              <li>
+                Conductor is an open-source, Apache 2.0 licensed microservices
+                and workflow orchestration framework
+              </li>
+              <li>
+                Build highly reliable distributed applications using the
+                language of choice
+              </li>
+              <li>
+                Lets us focus on coding the business logic of the application
+                instead of managing complexities of a distributed ecosystem
+              </li>
+              <li>
+                Cleanly decouple the design of the application flow from the
+                implementation
+              </li>
+            </ul>
+          }
           videoTitle="Explain Like I'm 5: Docusaurus"
           videoSrc="https://www.youtube.com/embed/du7mls9XMUE"
           videoFooterCaption="

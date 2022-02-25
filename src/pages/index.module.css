@@ -31,3 +31,10 @@
   margin-bottom: 1rem;
 }
 
+.spacedUl{
+  display: flex;
+  flex-direction: column;
+  gap:10px;
+  padding-top:1rem;
+  padding-right: 1rem;
+}
