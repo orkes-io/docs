@@ -123,7 +123,7 @@ pre code {
     font-size: 16px;
 }
 
-.bottomSection {
+.midSectionPair {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
@@ -185,7 +185,7 @@ html[data-theme='dark'] .aClass:hover {
     color: #b696ff;
 }
 
-.midSection {
+.midSectionOdd {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
@@ -205,7 +205,7 @@ html[data-theme='dark'] .homeHeader {
     background-color: transparent;
 }
 
-html[data-theme='dark'] .midSection {
+html[data-theme='dark'] .midSectionOdd {
     background-color: #131314;
 }
 
