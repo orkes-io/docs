@@ -61,7 +61,7 @@ export default function Home() {
           description="Build powerful workflows across microservices without worrying
                   about maintaining state"
           videoTitle="Explain Like I'm 5: Docusaurus"
-          videoSrc="https://www.youtube.com/embed/_An9EsKPhp0"
+          videoSrc="https://www.youtube.com/embed/du7mls9XMUE"
           videoFooterCaption="
                   Watch this short video to learn more about conductor
                 "
