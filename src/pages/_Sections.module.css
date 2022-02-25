@@ -1,0 +1,14 @@
+
+.firstWorkflowContainer {
+  display: flex;
+  justify-content: center;
+  height: 95%;
+}
+
+.whiteFont {
+  color: #fff;
+}
+
+.firstWorkflowFooter {
+  letter-spacing: 1px;
+}

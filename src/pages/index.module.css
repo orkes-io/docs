@@ -21,19 +21,13 @@
   align-items: center;
   justify-content: center;
 }
-.whiteFont {
-  color: #fff;
-}
+
 .mainContainer {
   padding-top: 1rem;
 }
+
 .mainContainer > div {
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
 
-.firstWorkflowContainer {
-  display: flex;
-  justify-content: center;
-  height: 95%;
-}
