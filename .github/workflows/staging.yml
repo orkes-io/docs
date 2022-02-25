@@ -1,12 +1,12 @@
 # This workflow will do a clean install of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: Orkes.IO Deployment
+name: Staging Deployment
 
 on:
   workflow_dispatch:
   push:
-    branches: [ main ]
+    branches: [ staging ]
 
 jobs:
   build:
@@ -28,7 +28,7 @@ jobs:
         git config --global user.email "${{ secrets.GH_USER_EMAIL }}"
         git config --global user.name "${{ secrets.GH_USER }}"
         git config -l
-        git clone --single-branch --branch "gh-pages" "https://${{secrets.GH_USER}}:${{secrets.GH_DEPLOY_TOKEN}}@github.com/orkes-io/orkesio-site.git" "$CLONE_DIR"
+        git clone --single-branch --branch "main" "https://${{secrets.GH_USER}}:${{secrets.GH_DEPLOY_TOKEN}}@github.com/orkes-io/orkesio-site-staging.git" "$CLONE_DIR"
         ls -la "$CLONE_DIR"
         rm -rf $CLONE_DIR/content/*
         rsync -a ./build/ $CLONE_DIR/content/
