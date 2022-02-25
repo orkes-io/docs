@@ -65,7 +65,8 @@ export default function HomepageFeatures() {
               paddingTop: 40
           }}><h4 style={{
                   fontSize: 18,
-                  fontFamily: "GothicA1-Medium"
+                  fontFamily: "Gothic A1",
+                  fontWeight: "bold",
               }}>What is Conductor?</h4>
               <ul style={{paddingTop: 10}}>
                   <li className={"liClass"}>
@@ -97,10 +98,12 @@ export default function HomepageFeatures() {
             <div style={{
                 width: 1100,
                 padding: 20,
+                paddingTop: 60,
             }}>
                 <h4 style={{
                     fontSize: 18,
-                    fontFamily: "GothicA1-Medium"
+                    fontFamily: "Gothic A1",
+                    fontWeight: "bold",
                 }}>Conductor Community</h4>
                 <div style={{
                     display: "flex",
