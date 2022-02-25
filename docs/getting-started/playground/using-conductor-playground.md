@@ -25,6 +25,8 @@ Once you are logged in, you will be directed to the Playground.  The Playground 
 
 Inside the playground, the left Navigation provides you with insight as you what you can do in the playground:
 
+
+
 ![left navigation](/img/playground-left-nav.png)
 
 * **Workflow Executions**:  Here you will see every workflow execution for your workflows.

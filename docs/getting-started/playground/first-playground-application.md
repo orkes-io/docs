@@ -246,6 +246,8 @@ and press ```Run Workflow```.  You'll get a workflowId. Click the ID, and you ca
 ![completed workflow](/img/playground-workflow-completed.png)
 
 
+
+
 Your output JSON should include a file location of a resized image:
 
 ![resized image](https://image-processing-sandbox.s3.amazonaws.com/f1b4314d-f72b-4060-8758-d07b17bbc552.jpg)
