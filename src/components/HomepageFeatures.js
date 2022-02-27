@@ -58,27 +58,28 @@ function Feature({Svg, title, description}) {
 export default function HomepageFeatures() {
   return (
     <section>
-      <div className="midSection">
+      <div className="midSectionOdd">
           <div style={{
               width: 550,
               padding: 20,
               paddingTop: 40
           }}><h4 style={{
                   fontSize: 18,
-                  fontFamily: "GothicA1-Medium"
+                  fontFamily: "Gothic A1",
+                  fontWeight: "bold",
               }}>What is Conductor?</h4>
               <ul style={{paddingTop: 10}}>
                   <li className={"liClass"}>
                       Conductor is an open-source, Apache 2.0 licensed microservices and workflow orchestration framework
                   </li>
                   <li className={"liClass"}>
-                      Build highly reliable distributed applications using the language of choice
+                      With Conductor you can build highly reliable distributed applications using the language of choice
                   </li>
                   <li className={"liClass"}>
-                      Lets us focus on coding the business logic of the application instead of managing complexities of a distributed ecosystem
+                      Conductor scales seamlessly whether you have a few hundred workflow executions or a few billion
                   </li>
                   <li className={"liClass"}>
-                      Cleanly decouple the design of the application flow from the implementation
+                      Conductor is battle tested and runs mission critical workflows for organizations ranging from startups to Fortune 100s
                   </li>
               </ul>
           </div>
@@ -93,14 +94,67 @@ export default function HomepageFeatures() {
                       allowFullScreen></iframe>
           </div>
       </div>
-        <div className="bottomSection">
+      <div className="midSectionPair">
+          <div style={{
+              width: 550,
+              padding: 20,
+              paddingTop: 40
+          }}><h4 style={{
+                  fontSize: 18,
+                  fontFamily: "Gothic A1",
+                  fontWeight: "bold",
+              }}>Why should you use Conductor?</h4>
+              <ul style={{paddingTop: 10}}>
+                  <li className={"liClass"}>
+                    Lets you focus on coding the business logic of the application instead of managing the state and complexities of a distributed ecosystem
+                  </li>
+                  <li className={"liClass"}>
+                    You can cleanly decouple the design of the application flow from the implementation
+                  </li>
+                  <li className={"liClass"}>
+                    Your application’s resilience is increased with native support in Conductor for retries, error handling and rich metrics
+                  </li>
+                  <li className={"liClass"}>
+                    You have a powerful visualizations of your application’s execution paths that can shorten debugging times from hours to minutes
+                  </li>
+              </ul>
+          </div>
+          <div style={{
+              width: 550,
+              padding: 20,
+              paddingTop: 40
+          }}>
+            <h4 style={{
+                  fontSize: 18,
+                  fontFamily: "Gothic A1",
+                  fontWeight: "bold",
+              }}>What can you build with Conductor?</h4>
+              <ul style={{paddingTop: 10}}>
+                  <li className={"liClass"}>
+                    Applications composed of distributed microservices or serverless functions
+                  </li>
+                  <li className={"liClass"}>
+                    Hybrid applications that span across multiple deployment models (e.g. VM deployed monolith, kubernetes deployed containers)
+                  </li>
+                  <li className={"liClass"}>
+                    Long running workflows that need to wait for days, months or even years between executions (e.g. monthly subscription billing)
+                  </li>
+                  <li className={"liClass"}>
+                    Mission critical applications with high reliability requirements (e.g. financial transactions)
+                  </li>
+              </ul>
+          </div>
+      </div>
+        <div className="midSectionOdd">
             <div style={{
                 width: 1100,
                 padding: 20,
+                paddingTop: 60,
             }}>
                 <h4 style={{
                     fontSize: 18,
-                    fontFamily: "GothicA1-Medium"
+                    fontFamily: "Gothic A1",
+                    fontWeight: "bold",
                 }}>Conductor Community</h4>
                 <div style={{
                     display: "flex",

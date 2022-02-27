@@ -10,6 +10,16 @@ function HomepageHeader() {
   const {siteConfig} = useDocusaurusContext();
     let aLinkStyle = {
     };
+    let headerBoxStyle = {
+        fontSize: 17,
+        fontFamily: "Gothic A1",
+        fontWeight: "bold",
+    };
+    let headerBoxTextStyle = {
+        fontSize: 14,
+        fontFamily: "Gothic A1",
+        fontWeight: 400,
+    };
     return (
     <header className={"homeHeader"}>
         <div style={{
@@ -31,14 +41,8 @@ function HomepageHeader() {
                     border: "1px solid grey",
                     borderRadius: 5,
                 }}>
-                    <h4 style={{
-                        fontSize: 18,
-                        fontFamily: "GothicA1-Medium"
-                    }}>Getting Started</h4>
-                    <p style={{
-                        fontSize: 14,
-                        fontFamily: "GothicA1-Regular"
-                    }}>
+                    <h4 style={headerBoxStyle}>Getting Started</h4>
+                    <p style={headerBoxTextStyle}>
                         Learn about Conductor and its concepts
                     </p>
                 </div>
@@ -54,14 +58,8 @@ function HomepageHeader() {
                     border: "1px solid grey",
                     borderRadius: 5,
                 }}>
-                    <h4 style={{
-                        fontSize: 18,
-                        fontFamily: "GothicA1-Medium"
-                    }}>Running Conductor</h4>
-                    <p style={{
-                        fontSize: 14,
-                        fontFamily: "GothicA1-Regular"
-                    }}>
+                    <h4 style={headerBoxStyle}>Running Conductor</h4>
+                    <p style={headerBoxTextStyle}>
                         Learn how to run Conductor locally and via Docker
                     </p>
                 </div>
@@ -77,14 +75,8 @@ function HomepageHeader() {
                     border: "1px solid grey",
                     borderRadius: 5,
                 }}>
-                    <h4 style={{
-                        fontSize: 18,
-                        fontFamily: "GothicA1-Medium"
-                    }}>Running First Workflow</h4>
-                    <p style={{
-                        fontSize: 14,
-                        fontFamily: "GothicA1-Regular"
-                    }}>
+                    <h4 style={headerBoxStyle}>Running First Workflow</h4>
+                    <p style={headerBoxTextStyle}>
                         Run a workflow to see Conductor in action
                     </p>
                 </div>
@@ -100,14 +92,8 @@ function HomepageHeader() {
                     border: "1px solid grey",
                     borderRadius: 5,
                 }}>
-                    <h4 style={{
-                        fontSize: 18,
-                        fontFamily: "GothicA1-Medium"
-                    }}>Running First Worker</h4>
-                    <p style={{
-                        fontSize: 14,
-                        fontFamily: "GothicA1-Regular"
-                    }}>
+                    <h4 style={headerBoxStyle}>Running First Worker</h4>
+                    <p style={headerBoxTextStyle}>
                         Add a custom worker that runs your code as part of a workflow
                     </p>
                 </div>
