@@ -38,10 +38,10 @@ logically partitioning them into two tasks
 * **shipping_info**
 * **shipping_task**
 
-The next step is to [create a workflow in Conductor using JSON](../../running-workflows/create-workflow.md) and
-then [create the associated tasks in Conductor](../../running-workflows/create-task.md) for the above identified ones.
+The next step is to [create a workflow in Conductor using JSON](/content/docs/how-tos/Workflows/create-workflow) and
+then [create the associated tasks in Conductor](/content/docs/how-tos/Tasks/creating-tasks) for the above identified ones.
 
-After that, you [add those tasks into the workflow](../../running-workflows/adding-tasks.md) to have **shipping_info**
+After that, you add those tasks into the workflow to have **shipping_info**
 called first and then, if it is successful, call **shipping_task**. You now have a *definition* of the workflow in
 Conductor and Conductor will then generate an easy to understand visual representation of this workflow
 

@@ -61,7 +61,7 @@ HTTP task is defined directly inside the workflow with the task type `HTTP`.
 Following is the example of HTTP task with `GET` method.
 
 We can use variables in our URI as show in the example below. For details on how to use inputs, refer to
-this [page](how-tos/task-inputs.md).
+the [Task Inputs page](/content/docs/how-tos/Tasks/task-inputs).
 
 ```json
 {

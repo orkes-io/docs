@@ -20,7 +20,7 @@ Popular Topics
 
 ## Monitoring
 
-1. [Monitoring Task Queues](./how-tos/monitoring-task-queues.md)
+1. [Monitoring Task Queues](./how-tos/Tasks/monitoring-task-queues.md)
 
 ## Tasks
 1. [Creating Tasks](./how-tos/Tasks/creating-tasks)
