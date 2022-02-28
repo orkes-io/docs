@@ -41,36 +41,35 @@ Finally, one of our founders (and the commiter of the first line of Conductor co
 
 Throughout the meetup, the attendees asked a number of great questions. They are reproduced here for visibility outside the meetup.
 
-### **Hello, thanks for organizing such an event. I would like to know if there are any performance metrics for Conductor? We are planning to use it in a system with heavy traffic(multimillion requests each of them would trigger a workflow) and I would like to know if it’ll be reliable enough. Thank you :)**
+**Hello, thanks for organizing such an event. I would like to know if there are any performance metrics for Conductor? We are planning to use it in a system with heavy traffic(multimillion requests each of them would trigger a workflow) and I would like to know if it’ll be reliable enough. Thank you :)**
 
-Conductor is horizontally scalable and we have known users scaling to handle workloads at the scale you mentioned.  Here is a recent discussion on scale on [Github](https://github.com/Netflix/conductor/discussions/2299), and a [post from Netflix](https://netflixtechblog.com/evolution-of-netflix-conductor-16600be36bca") talking about the scale.
+Conductor is horizontally scalable and we have known users scaling to handle workloads at the scale you mentioned.  Here is a recent discussion on scale on [Github](https://github.com/Netflix/conductor/discussions/2299), and a [post from Netflix](https://netflixtechblog.com/evolution-of-netflix-conductor-16600be36bca) talking about the scale.
 
 Conductor was built ground up for high reliability and performance. There are several companies that are running multi-million workflows on their core business flows.
 
-### **I hear Netflix also is using Temporal.io which is cadence based. https://www.youtube.com/watch?v=JQ6FRTnQWFI How do the two overlap at Netflix and the reason behind the use of Temporal.**
+**I hear Netflix also is using Temporal.io which is cadence based. https://www.youtube.com/watch?v=JQ6FRTnQWFI How do the two overlap at Netflix and the reason behind the use of Temporal?**
 
 Conductor is the default workflow orchestration tool of choice at Netflix. That said, engineers are free to choose the tool that’s best for their needs. The Spinnaker team at Netflix felt that Temporal is best aligned with their needs.
 
-### **You mention CLI. Any thoughts about SDK as well?**
+**You mention CLI. Any thoughts about SDK as well?**
 
-Yes, we are working on that - stay tuned :) (Note: Check out the Orkes video above)
+Yes, we are working on that - stay tuned :) (Note: Check out the Orkes video above on things we are planning for next couple quarters)
 
-### **Can AWS Lambda be hooked up as a task in workflow**
+**Can AWS Lambda be hooked up as a task in workflow**
 
 AWS Lambda can be hooked up, but it's not available as a default task. There is an extension available that will allow integrating with  AWS lambdas. We can send you details about this.
 
-### **How often are conductor versions released to the community?**
+**How often are conductor versions released to the community?**
 
-Quoting Aravindan - Frequent releases - upto twice per month. Recent releases: https://github.com/Netflix/conductor/releases
+Frequent releases - upto twice per month. You can see the recent releases here: https://github.com/Netflix/conductor/releases
 
-### **From the previous presenter, what is the expected timeline for all those features to be released?**
+**From the previous presenter, what is the expected timeline for all those features to be released?**
 
-Quoting Aravindan - Frequent releases - up to twice per month. Recent releases: https://github.com/Netflix/conductor/releases
+Most of the features we mentioned today will be released over the next 2-3 quarters in phases.
 
-### **Any pointers about production level setup instructions of Dynomite (with the consideration of DR) on K8s cluster?**
+**Any pointers about production level setup instructions of Dynomite (with the consideration of DR) on K8s cluster?**
 
-Hi Guru, We’d love to help out. If you are up for a meet, we can discuss in detail on what a good configuration would be to run Conductor in K8s. In the next month or so, we will also publish a detailed blog about this topic that will help community users set up Conductor in production.
-
+Please connect with us on our community slack channel or via Github discussions. Dynomite is not actively maintained anymore and is on its way towards being deprecated. There are alternatives that will offer similar features of Dynomite.
 
 ## Thank you
 
@@ -78,4 +77,4 @@ Thank you to all the speakers for their incredible presentations, and also to ou
 
 In the meantime - don't forget to [Star the Conductor repository](https://github.com/Netflix/conductor/).
 
-For the latest udpates on Conductor and Orkes, subscribe to our [YouTube channel](https://www.youtube.com/channel/UCI7sk4DD6F6r9CWg9gHRlVg), and follow us on [Twitter](https://twitter.com/orkesio).
+For the latest updates on Conductor and Orkes, please subscribe to our [YouTube channel](https://www.youtube.com/channel/UCI7sk4DD6F6r9CWg9gHRlVg), and follow us on [Twitter](https://twitter.com/orkesio).

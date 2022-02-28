@@ -127,31 +127,31 @@ This task reads in all of the parameters (the image location, and the output for
 The Java app listening for this task creates the dynamicTasks and dynamicTasksInput:
 
 ```
-            List<WorkflowTask> dynamicTasks =  Lists.newArrayList();
-            Map<String, Object> dynamicTasksInput = Maps.newHashMap();
+List<WorkflowTask> dynamicTasks =  Lists.newArrayList();
+Map<String, Object> dynamicTasksInput = Maps.newHashMap();
 
-            int i=0;
-            String dynamicTaskName = "image_convert_resize";
-            for (String outputFormat :
-                    outputFormats) {
-                for (Size size:
-                     outputSizes) {
-                    String taskRefName = String.format("%s_%s_%sx%s_%d",dynamicTaskName, outputFormat, size.width, size.height, i++);
-                    WorkflowTask dynamicTask = new WorkflowTask();
-                    dynamicTask.setName(dynamicTaskName);
-                    dynamicTask.setTaskReferenceName(taskRefName);
-                    dynamicTasks.add(dynamicTask);
+int i=0;
+String dynamicTaskName = "image_convert_resize";
+for (String outputFormat :
+        outputFormats) {
+    for (Size size:
+         outputSizes) {
+        String taskRefName = String.format("%s_%s_%sx%s_%d",dynamicTaskName, outputFormat, size.width, size.height, i++);
+        WorkflowTask dynamicTask = new WorkflowTask();
+        dynamicTask.setName(dynamicTaskName);
+        dynamicTask.setTaskReferenceName(taskRefName);
+        dynamicTasks.add(dynamicTask);
 
-                    Map<String, Object> dynamicTaskInput = Maps.newHashMap();
-                    dynamicTaskInput.put("fileLocation", fileLocation);
-                    dynamicTaskInput.put("outputFormat", outputFormat);
-                    dynamicTaskInput.put("outputWidth", size.width);
-                    dynamicTaskInput.put("outputHeight", size.height);
-                    dynamicTaskInput.put("maintainAspectRatio", maintainAspectRatio);
+        Map<String, Object> dynamicTaskInput = Maps.newHashMap();
+        dynamicTaskInput.put("fileLocation", fileLocation);
+        dynamicTaskInput.put("outputFormat", outputFormat);
+        dynamicTaskInput.put("outputWidth", size.width);
+        dynamicTaskInput.put("outputHeight", size.height);
+        dynamicTaskInput.put("maintainAspectRatio", maintainAspectRatio);
 
-                    dynamicTasksInput.put(taskRefName,dynamicTaskInput );
-                }
-            }
+        dynamicTasksInput.put(taskRefName,dynamicTaskInput );
+    }
+}
 
 ```
 
@@ -169,7 +169,7 @@ Each of the tasks is given a unique reference at the end, appending the format, 
 
 ```String taskRefName = String.format("%s_%s_%sx%s_%d",dynamicTaskName, outputFormat, size.width, size.height, i++);```
 
-Tbis task is also present in the [Github repository](https://github.com/orkes-io/orkesworkers/blob/main/data/task/image_convert_resize.json)
+This task is also present in the [Github repository](https://github.com/orkes-io/orkesworkers/blob/main/data/task/image_convert_resize.json)
 
 ## Creating the workflow in Conductor
 
@@ -185,7 +185,6 @@ curl -X 'POST' \
   -d '[
 <JSON HERE>
      ]'
-
 ```
 
 Nex, we'll create the workflow - again, copying the JSON from Github, and using curl:
@@ -196,7 +195,6 @@ curl -X 'POST' \
   -H 'accept: */*' \
   -H 'Content-Type: application/json' \
   -d ' <JSON here>'
-
 ```
 
 ## Running our workflow
@@ -207,19 +205,15 @@ Now that the workflow is defined, we are ready to run it.  Let's create 3 differ
 {
 	"fileLocation": "https://pbs.twimg.com/media/FJY7ud0XEAYVCS8?format=png&name=900x900",
 	"outputFormats": ["png","jpg","webp"],
-	
 	"outputSizes": [
 		{"width":300,
 		"height":300},
 		{"width":200,
 		"height":200},
-    {"width":1200,
+        {"width":1200,
 		"height":1200}
-		
-	
-	]}
-	
-
+	]
+}
 ```
 
 ```

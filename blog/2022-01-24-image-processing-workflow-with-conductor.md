@@ -9,7 +9,7 @@ There are many tools available to work with images - resizing, changing the form
 
 In this post, we'll run Conductor locally on your computer. The Conductor workflow consists of two tasks.  The first task reads in an image and resizes it according to the parameters provided (labeled "image_conver_resize_ref" in the image below).  The second task ("image_toS3_ref" below) takes the resized image and saves the it to an Amazon S3 bucket.
 
-![Diagram of our image processing workflow](./assets/imageprocessing-workflow-diagram.png)
+<img src="/content/img/blogassets/imageprocessing-workflow-diagram.png" alt="Diagram of our image processing workflow" width="350" style={{paddingBottom: 40, paddingTop: 0}} />
 
 Using a microservice architecture for this process allows for easy swapping of components, and allows for easy extension of the workflow - easily adding additional image processing steps (or even swapping in and out different processes for different workflows). We could also easily change the location of the saved file based on different parameters. 
 <!--truncate -->
@@ -62,7 +62,7 @@ The UI is now accessible at ```http://localhost:5000```
 
 You'll need an AWS account, and the [AWS command line interface](https://aws.amazon.com/cli/)  installed.  Set up a S3 bucket to host the images, and then create a IAM worker that has access to write to the bucket.  For the example here, we created a user called “orkes-workers” that has permissions to list read & write into our S3 bucket.
 
-![](./assets/aws-workers.png)
+<img src="/content/img/blogassets/aws-workers.png" width="550" style={{paddingBottom: 40, paddingTop: 40}} />
 
 Under the “security credentials” tab, we added an Access Key ID (and the related Secret Access key). Add these credentials to your CLI as follows:
 
@@ -274,8 +274,7 @@ Conductor outputs this URL as the output of the overall workflow.
 
 Our Orchestration is ready to go, and with a simple API call, we can kick it off.  To test this, we'll use a photo of TikTok's favourite trainspotter, Francis Bourgeois (image grabbed from Twitter):
 
-![](https://pbs.twimg.com/media/FJY7ud0XEAYVCS8?format=jpg&name=900x900)
-Source: https://pbs.twimg.com/media/FJY7ud0XEAYVCS8?format=jpg&name=900x900
+<img src="https://image-processing-sandbox.s3.amazonaws.com/958995de-2a3f-4a90-afcb-b289bb1e4ad5.png" width="500" style={{paddingBottom: 40, paddingTop: 0}} />
 
 This image is a png, and is 900x900 pixels.  We'll use the API to create a gif that is 300x300.  The JSON we submit must follow the formatting of the Workflow input parameters (after ```workflow.input.```), and so must have the following format:
 
@@ -330,4 +329,4 @@ Imagemagick supports creating webp, jpg, png, gif, and many more (avif works!). 
 
 ## Conclusion
 
-This very simple Conductor workflow takes an image input, runs a Java task to resize the image and save it in an AWS S3 bucket, and outputs the url.  Git it a try yourself, and join the [Orkes-Conductor](https://join.slack.com/t/orkes-conductor/shared_invite/zt-xyxqyseb-YZ3hwwAgHJH97bsrYRnSZg) community on Slack!
+This very simple Conductor workflow takes an image input, runs a Java task to resize the image and save it in an AWS S3 bucket, and outputs the url.  Give it a try yourself, and join the [Orkes-Conductor](https://join.slack.com/t/orkes-conductor/shared_invite/zt-xyxqyseb-YZ3hwwAgHJH97bsrYRnSZg) community on Slack!
