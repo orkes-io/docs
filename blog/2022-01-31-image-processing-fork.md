@@ -32,7 +32,7 @@ Let's start off by building a workflow that will create 2 different versions of 
 
 The visualization of this workflow will be:
 
-![workflow diagram with a fork](./assets/workflow_fork.png)
+<img src="/content/img/blogassets/workflow_fork.png" alt="workflow diagram with a fork" width="400" style={{paddingBottom: 40, paddingTop: 40}} />
 
 Our first task in this workflow is the fork - splitting the workflow. At the fork, we'll have 2 paths, one to create a jpg and the other to create a webp version of the image.
 
@@ -83,7 +83,7 @@ Let's look at the workflow JSON file (I have removed the fork tasks for readabil
 }
 
 ```
-Like all workflows, we gve the workflow a name, description and version. After these terms, we begin defining the tasks in our workflow.
+Like all workflows, we gave the workflow a name, description and version. After these terms, we begin defining the tasks in our workflow.
 
 Our first task is the task ```image_convert_resize_multipleformat_fork```.  It's type is ```FORK_JOIN``` - and its job is to split the workflow into two flows that will run in parallel.  (Of course, this example uses 2 parallel tracks - there is no reason there cannot be more than two!)
 
@@ -107,24 +107,24 @@ Our first task is the task ```image_convert_resize_multipleformat_fork```.  It's
 The parallel workflows will run until they are re-connected by the JOIN task:
 
 ```
-    {
-      "name": "image_convert_resize_multipleformat_join",
-      "taskReferenceName": "image_convert_resize_multipleformat_join_ref",
-      "type": "JOIN",
-      "joinOn": [
-        "upload_toS3_jpg_ref",
-        "upload_toS3_webp_ref"
-      ]
-    }
+{
+  "name": "image_convert_resize_multipleformat_join",
+  "taskReferenceName": "image_convert_resize_multipleformat_join_ref",
+  "type": "JOIN",
+  "joinOn": [
+    "upload_toS3_jpg_ref",
+    "upload_toS3_webp_ref"
+  ]
+}
 ```
 
 When the 2 workflows have completed, the last task in each flow will fire that it is completed.  In this case, the last task for the 2 flows is the upload to S3: ```upload_toS3_<imageFormat>_ref```.  When these 2 (or more) final tasks have completed, the workflow will rejoin.  Upon rejoining, we've completed all the work to be done, so we can provide the output parameters:
 
 ```
-  "outputParameters": {
+"outputParameters": {
     "fileLocationJpg": "${upload_toS3_jpg_ref.output.fileLocation}",
     "fileLocationWebp": "${upload_toS3_webp_ref.output.fileLocation}"
-  },
+},
 ```
 This creates a JSON object with our 2 AWS S3 URLs where our new jpg and webp images are now hosted.
 
@@ -136,25 +136,25 @@ This creates a JSON object with our 2 AWS S3 URLs where our new jpg and webp ima
 In the workflow above, we omitted the workflow tasks.  Let's look at the first workflow:
 
 ```
-        [     
-          {
-            "name": "image_convert_resize",
-            "taskReferenceName":"image_convert_resize_jpg_ref",
-            "inputParameters": {
-              "fileLocation": "${workflow.input.fileLocation}",
-              "outputWidth": "${workflow.input.recipeParameters.outputSize.width}",
-              "outputHeight": "${workflow.input.recipeParameters.outputSize.height}",
-              "outputFormat": "jpg"
-            }
-          },
-          {
-            "name": "upload_toS3",
-            "taskReferenceName": "upload_toS3_jpg_ref",
-            "inputParameters": {
-              "fileLocation": "${image_convert_resize_jpg_ref.output.fileLocation}"
-            }
-          }
-        ]
+[     
+  {
+    "name": "image_convert_resize",
+    "taskReferenceName":"image_convert_resize_jpg_ref",
+    "inputParameters": {
+      "fileLocation": "${workflow.input.fileLocation}",
+      "outputWidth": "${workflow.input.recipeParameters.outputSize.width}",
+      "outputHeight": "${workflow.input.recipeParameters.outputSize.height}",
+      "outputFormat": "jpg"
+    }
+  },
+  {
+    "name": "upload_toS3",
+    "taskReferenceName": "upload_toS3_jpg_ref",
+    "inputParameters": {
+      "fileLocation": "${image_convert_resize_jpg_ref.output.fileLocation}"
+    }
+  }
+]
 ```
 
 These two tasks should be familiar to those who read the first image processesing post. They are very nearly the same - the only difference is the addition of ```_jpg_``` to the taskReferenceName, and the ```"outputFormat"``` term) is now hardcoded to ```jpg```.
@@ -172,27 +172,25 @@ This fork is nearly identical to the first one.  The only change is that every i
 
 ```
 [
-          {
-            "name": "image_convert_resize",
-            "taskReferenceName":"image_convert_resize_webp_ref",
-            "inputParameters": {
-              "fileLocation": "${workflow.input.fileLocation}",
-              "outputWidth": "${workflow.input.recipeParameters.outputSize.width}",
-              "outputHeight": "${workflow.input.recipeParameters.outputSize.height}",
-              "outputFormat": "webp"
-            }
-          },
-          {
-            "name": "upload_toS3",
-            "taskReferenceName": "upload_toS3_webp_ref",
-            "inputParameters": {
-              "fileLocation": "${image_convert_resize_webp_ref.output.fileLocation}"
-            }
+  {
+    "name": "image_convert_resize",
+    "taskReferenceName":"image_convert_resize_webp_ref",
+    "inputParameters": {
+      "fileLocation": "${workflow.input.fileLocation}",
+      "outputWidth": "${workflow.input.recipeParameters.outputSize.width}",
+      "outputHeight": "${workflow.input.recipeParameters.outputSize.height}",
+      "outputFormat": "webp"
+    }
+  },
+  {
+    "name": "upload_toS3",
+    "taskReferenceName": "upload_toS3_webp_ref",
+    "inputParameters": {
+      "fileLocation": "${image_convert_resize_webp_ref.output.fileLocation}"
+    }
 
-          }
-
-        ]
-
+  }
+]
 ```
 
 Each of the forks end on the ```upload_toS3_<imageformat>_ref```, which the JOIN then uses to know when all of the forks have completed.
@@ -204,7 +202,7 @@ The two tasks that must be defined are ```image_convert_resize``` and ```upload_
 
 We'll just reuse the same tasks again!  It's like landing on a big ladder in Snakes and Ladders - you can skip the next few steps, and rejoin us at [Ready to Go](#ready-to-go).
 
-![](./assets/snakes_ladders.png)
+<img src="/content/img/blogassets/snakes_ladders.png" width="300" style={{paddingBottom: 40, paddingTop: 40}} />
 
 If you have not defined these two tasks yet, here's the path to the task in [GitHub](https://github.com/orkes-io/orkesworkers): ```/data/task/image_convert_resize.json```:
 

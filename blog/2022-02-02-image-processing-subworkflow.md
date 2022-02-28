@@ -5,13 +5,13 @@ authors: doug
 tags: [Netflix Conductor, Orkes, Conductor, orchestration, image processing, fork, subworkflow, tutorial,2022]
 ---
 
-in our initial image processing workflow using Netflix Conductor, we [initially built a workflow](image-processing-workflow-with-conductor) that takes one image, resizes it and uploads it to S3.
+In our initial image processing workflow using Netflix Conductor, we [initially built a workflow](image-processing-workflow-with-conductor) that takes one image, resizes it and uploads it to S3.
 
-![](./assets/Simple-image-workflow.png)
+<img src="/content/img/blogassets/Simple-image-workflow.png" width="300" style={{paddingBottom: 40, paddingTop: 0}} />
 
 In our 2nd post, we [utilized a fork to create two images in parallel](image-processing-multiple-images-forks).  When building this workflow, we reused all of the tasks from the first workflow, connecting them in a way that allowing for parallel processing of two images at once.
 
-![](./assets/workflow_fork.png)
+<img src="/content/img/blogassets/workflow_fork.png" width="400" style={{paddingBottom: 40, paddingTop: 0}} />
 
 
 In both of these workflows, two tasks are reused: ```image_convert_resize``` and ```upload_toS3```.  This is onegreat advantage of using microservices - we create the service once, and reuse it many times in different ways.
@@ -100,34 +100,33 @@ Now to insert our subworkflow into the full workflow.  Here's the JSON that need
 
 ```
 {
-            "name": "image_convert_resize_sub",
-            "taskReferenceName": "subworkflow_jpg_ref",
-            "inputParameters": {
-              "fileLocation": "${workflow.input.fileLocation}",
-              "recipeParameters": {
-                "outputSize": {
-                  "width": "${workflow.input.recipeParameters.outputSize.width}",
-                  "height": "${workflow.input.recipeParameters.outputSize.height}"
-                },
-                "outputFormat": "jpg"
-              }
-            },
-            "type": "SUB_WORKFLOW",
-            "decisionCases": {},
-            "defaultCase": [],
-            "forkTasks": [],
-            "startDelay": 0,
-            "subWorkflowParam": {
-              "name": "image_convert_resize",
-              "version": 1
-            },
-            "joinOn": [],
-            "optional": false,
-            "defaultExclusiveJoinTask": [],
-            "asyncComplete": false,
-            "loopOver": []
-          }
-
+  "name": "image_convert_resize_sub",
+  "taskReferenceName": "subworkflow_jpg_ref",
+  "inputParameters": {
+    "fileLocation": "${workflow.input.fileLocation}",
+    "recipeParameters": {
+      "outputSize": {
+        "width": "${workflow.input.recipeParameters.outputSize.width}",
+        "height": "${workflow.input.recipeParameters.outputSize.height}"
+      },
+      "outputFormat": "jpg"
+    }
+  },
+  "type": "SUB_WORKFLOW",
+  "decisionCases": {},
+  "defaultCase": [],
+  "forkTasks": [],
+  "startDelay": 0,
+  "subWorkflowParam": {
+    "name": "image_convert_resize",
+    "version": 1
+  },
+  "joinOn": [],
+  "optional": false,
+  "defaultExclusiveJoinTask": [],
+  "asyncComplete": false,
+  "loopOver": []
+}
 ```
 
 There's a name, and a taskReferenceName. Next, we have to supply the subworkflow with input parameters - the image location, new size, and (in this case) a hardcoded jpg format.  (This looks very similar to the code in the actual workflow itself.)

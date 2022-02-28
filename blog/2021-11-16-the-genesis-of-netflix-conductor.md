@@ -14,7 +14,7 @@ scenarios that developers and operations often had to deal with. We have all hea
 multi-hour , even multi-day outages. Social media wasn't a thing back then, so you usually heard it on news sites or by
 word of mouth.
 
-![Netflix](./assets/netflix-n.jpg) 
+<img src="/content/img/blogassets/netflix-n.jpg" width="150" style={{paddingBottom: 40, paddingTop: 40}} />
 
 # Netflix, AWS and Microservices
 
@@ -29,7 +29,7 @@ be a really large scale. And if that happened, the company had to be focused on 
 Acquisition, Personalization, Content Creation, Streaming etc. at planet scale) and not spend their resources on
 building a world class cloud infrastructure. The decision was made to move completely to AWS.
 
-![AWS](./assets/1024px-Amazon_Web_Services_Logo.png)
+<img src="/content/img/blogassets/1024px-Amazon_Web_Services_Logo.png" width="120" style={{paddingBottom: 40, paddingTop: 40}} />
 
 # Poster Child of Cloud Computing
 
@@ -57,7 +57,7 @@ orchestration solutions, orchestration through messaging platform based solution
 these really solved the problems that came with the microservice explosion. Netflix conductor was created out of this
 need.
 
-![Netflix Conductor](./assets/conductor-vector-x.png)
+<img src="/content/img/blogassets/conductor-vector-x.png" width="250" style={{paddingBottom: 40, paddingTop: 40}} />
 
 # The Birth of Conductor
 
@@ -75,7 +75,7 @@ time it found its footprint across the entire company, it is now the service of 
 orchestration.
 
 
-![Netflix OSS](./assets/Netflix-OSS-Logo.png)
+<img src="/content/img/blogassets/Netflix-OSS-Logo.png" width="250" style={{paddingBottom: 40, paddingTop: 40}} />
 
 # Open Source and Industry Usage
 
@@ -90,7 +90,7 @@ just use Conductor but also contribute back to it. Conductor, being built as a g
 agnostic engine further accelerated its adoption. Today, it is the software of choice, when it comes to microservice and
 workflow orchestration.
 
-![Orkes](./assets/orkes-logo.png)
+<img src="/content/img/branding/orkes-logo-purple-2x.png" />
 
 # Orkes
 
