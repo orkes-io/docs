@@ -6,11 +6,8 @@ import SampleWorkflow from "/img/workflow_fork.png";
 import SmallDiagram from "/img/small_diagram.png";
 import {
   JavaSample,
-  JavascriptSample,
   PythonSample,
-  TypescriptSample,
-  RustSample,
-  CurlSample,
+  GoSample,
 } from "./_Languages.js";
 import {
   BuildYourFirstWorkflowLinkButton,
@@ -88,56 +85,34 @@ export default function Home() {
                 "
         />
         <TitleDoubleTextSection
-          title="Why Conductor?"
-          firstColumnText="
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                sunt in culpa qui officia deserunt mollit anim id est laborum
-            "
-          secondColumnText="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                sunt in culpa qui officia deserunt mollit anim id est laborum
-"
+          title1="Why should you use Conductor?"
+          firstColumnText={(
+            <ul className="liClass">
+              <li>Lets you focus on coding the business logic of the application instead of managing the state and complexities of a distributed ecosystem</li>
+              <li>You can cleanly decouple the design of the application flow from the implementation</li>
+              <li>Your application’s resilience is increased with native support in Conductor for retries, error handling and rich metrics</li>
+              <li>You have a powerful visualizations of your application’s execution paths that can shorten debugging times from hours to minutes</li>
+            </ul>
+          )}
+          title2="What can you build with Conductor?"
+          secondColumnText={(
+            <ul className="liClass">
+              <li>Applications composed of distributed microservices or serverless functions</li>
+              <li>Hybrid applications that span across multiple deployment models (e.g. VM deployed monolith, kubernetes deployed containers)</li>
+              <li>Long running workflows that need to wait for days, months or even years between executions (e.g. monthly subscription billing)</li>
+              <li>Mission critical applications with high reliability requirements (e.g. financial transactions</li>
+            </ul>
+          )}
         />
         <BuildYourFirstWorkflowLinkButton
           caption="Build your first Workflow in 2 Minutes"
-          to="/docs/introduction"
-        />
-        <TitleDoubleTextSection
-          title="What can you build with Conductor ?"
-          firstColumnText="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                sunt in culpa qui officia deserunt mollit anim id est laborum
-"
-          secondColumnText="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                sunt in culpa qui officia deserunt mollit anim id est laborum
-"
+          to="/docs/getting-started/run/running-first-workflow"
         />
         <YourfirstWorkflowSection
           languageSamples={{
             java: <JavaSample />,
             python: <PythonSample />,
-            javascript: <JavascriptSample />,
-            typescript: <TypescriptSample />,
-            rust: <RustSample />,
-            curl: <CurlSample />,
+            go: <GoSample />,
           }}
           title="Your First Workflow"
           rightImage={SmallDiagram}
