@@ -161,6 +161,7 @@ const config = {
             prism: {
                 theme: lightCodeTheme,
                 darkTheme: darkCodeTheme,
+                additionalLanguages: ['java'],
             },
             algolia: {
                 appId: "YOUR_APP_ID",
