@@ -35,7 +35,7 @@ $ git clone https://github.com/Netflix/conductor.git
 #### 2. Build and run Server
 
 
-> **NOTE for Mac users**: If you are using a new Mac with an Apple Silicon Chip, you must make a small change to ```conductor/grpc/build.gradle``` - adding "osx-x86_64" to two lines:
+> **NOTE for Mac users**: If you are using a new Mac with an Apple Silicon Chip, you must install rosetta ```softwareupdate --install-rosetta``` and make a small change to ```conductor/grpc/build.gradle``` - adding "osx-x86_64" to two lines:
 ```
 protobuf {
     protoc {
