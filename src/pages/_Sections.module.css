@@ -16,3 +16,9 @@
   width: 100%;
   padding-top: 0.5rem;
 }
+
+@media screen and (max-width: 966px) {
+  .mobileSpaced {
+    margin-top: 1rem;
+  }
+}

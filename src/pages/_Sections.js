@@ -3,6 +3,7 @@ import {
   PaperColumnRenderer,
   PaperContainer,
   InfoPaper,
+  DoubleInfoPaper
 } from "../components/PaperContainer";
 import { SingleStep } from "../components/SingleStep";
 import Link from "@docusaurus/Link";
@@ -14,12 +15,14 @@ export const StepBoxesSection = ({ steps = [] }) => (
   <div className="row">
     <PaperColumnRenderer
       spaceEvenly
+      colClassName={styles.mobileSpaced}
       columns={steps.map((singleStepJson) => (
         <SingleStep {...singleStepJson} key={singleStepJson.title} />
       ))}
     />
   </div>
 );
+
 export const WhatIsConductorSection = ({
   title = "What is Conductor?",
   description = "",
@@ -68,15 +71,17 @@ export const WhatIsConductorSection = ({
 );
 
 export const TitleDoubleTextSection = ({
-  title = "Why Conductor?",
+  title1 = "Why Conductor?",
+  title2 = "",
   firstColumnText,
   secondColumnText,
 }) => (
   <div className="row">
-    <InfoPaper
-      title={title}
-      infoColumn1={<p>{firstColumnText}</p>}
-      infoColumn2={<p>{secondColumnText}</p>}
+    <DoubleInfoPaper
+      title1={title1}
+      title2={title2}
+      infoColumn1={firstColumnText}
+      infoColumn2={secondColumnText}
     />
   </div>
 );
