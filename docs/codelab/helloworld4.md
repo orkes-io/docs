@@ -1,6 +1,7 @@
 # Hello World Codelab 
 
-## Parts 1-3
+
+Welcome to part 4 of the codelab.
 
 What we've covered so far:
 
@@ -12,23 +13,27 @@ What we've covered so far:
 
 ## Part 4
 
-In Part 4 of the code lab, we'll add in an inline task to perform simple logic operations during our workflow.
+In Part 4 of the codelab, we'll add in an [Inline task](content/docs/reference-docs/system-tasks/inline-task) to perform some basic logic operations (using JavaScript).  Inline tasks are great because they allow for computations on teh COnductor server as a part of the workflow, without having to standup another task & microservice to complete the computation.
 
 ## Where we stand
+In part 3 of this codelab, our workflow was split into 2 forks, one that creates the "Hello World!" message, and the other fork that grabs the users IP address, and extracts their location:
 
-![Forked workflow](img/hw3_workflow.png)
 
-Our workflow is split into 2 forks, one that creates the "Hello World!" message, and the other fork that grabs the users IP address, and extracts their location.
+<p align="center"><img src="/content/img/codelab/hw3_workflow.png" alt="Forked workflow" width="600" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
-Let's add a second task that extracts the time of the user, and spits out the local time.  To do this we will utilize the [Inline Task](content/docs/reference-docs/system-tasks/inline-task).
+
+
+Let's add a second task to the "right fork" (at least in the diagram) that extracts the time of the user, and spits out the local time.  There are two parameters in the ```Get_IP``` output that allow us to do this:  The date header (giving the time in GMT), and the body parameter ```offset```.  ```offset``` is the time (in seconds from GMT at the location of the user.  
+
+To do this calculation, we will utilize the [Inline Task](content/docs/reference-docs/system-tasks/inline-task).
 
 ## Inline task
 
-Inline tasks run basic JavaScript calculations.  In this case, we will get the current time (GMT) from the Conductor server, and then calculate the users' current time.  The ```get_IP``` task returns a lot of details about the IP address, and one of the responses is ```offset``` which is the time difference (in seconds) from GMT.
+Inline tasks run basic JavaScript calculations.  Since the ```Get_IP``` task outputs both the time in GMT, and the offset from GMT at the local location, we can write a script to calculate the users' current time. In JavaScript, the code to convert the time from GMT to the current time looks like:
 
-in JavaScript, the code to convert the time from GMT to the current time looks like:
+> Note: Several members of the Orkes team live in India, where the timezone is 30 minutes offset from traditional timezones.  This code accounts for time zones that have hour fractions in them.
 
-> Note: this code accounts for time zones that have hour fractions in them.
+The JavaScript will have two inputs ```$.date``` and ```$.offset```.  The rest is just logic and math:
 
 ```
 function e() {
@@ -78,11 +83,23 @@ function e() {
 e();
 ```
 
+The function returns the hour and the minute at the location of the IP address.
+
+## Adding the task to the workflow
+
 An Inline Task has ```inputParameters``` for all the values needed in the computation, and for the ```expression``` to be evaluated.  To add our JavaScript expression, we need to [minify the JS](https://www.toptal.com/developers/javascript-minifier/) using an online JS minifier.  
 
 ## Version 4 of the workflow
 
-The inline task calculation will run in the same fork as the getIP.  The JOIN will now wait for the inline task to finish (instead of the get_IP task).
+Changes to this version of the workflow:
+
+1.  Version updated to 4.
+2.  Added the Inline task to the Fork array (after the ```Get_IP``` task).
+3. Added 2 parameters as input to the inline task: 
+        ```"date":"${get_IP.output.response.headers.Date[0]",```
+        ```"offsetSeconds" : "${get_IP.output.response.body.offset}",```
+4. Updated the Join to ```joinOn``` the inline task ```calculate_local_time_ref``` (instead of the get_IP task).
+5. Added a new ```outputParameter``` called ```hw_time``` to announce the local time.
 
 ```
 {
@@ -169,16 +186,11 @@ The inline task calculation will run in the same fork as the getIP.  The JOIN wi
 
 ```
 
-The changes are:  
-1. Adding the ```calculate_local_time``` task in the fork after ```get_IP``` with the minified JavaScript code.
-2. In the Join, we now ```joinOn calculate_local_time_ref``` instead of ```Get_IP```, because the calculation task is now the last task in the fork.
-3.  The ```outputParameters``` now have a ```hw_time``` parameter that gives the local time.
+With these changes to the workflow, version 4 of ```hello_world``` now appears as:  
 
-The diagram is now:  
+<p align="center"><img src="/content/img/codelab/hw4_diagram.png" alt="version four workflow diagram" width="600" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
-![version four workflow diagram](img/hw4_diagram.png)
-
-When we run the workflow, the workflow output is now:
+When we run version 4 of the workflow (there are no changes to the input), the workflow output is now:
 
 ```
 {
@@ -191,7 +203,6 @@ When we run the workflow, the workflow output is now:
 ## Next Steps
 
 This completes part 4 of the Hello World Codelab. To review what we've done:
-
 
 In [Part 1](helloworld), we created a workflow using the Netflix Conductor in the Orkes Playground
 

@@ -1,12 +1,10 @@
 # Hello World Codelab 
 
-## Parts 1-2
-
-What we've covered so far:
+You've made it to Part 3!  Thanks for keeping at it! What we've covered so far:
 
 [Hello World Part 1](./helloworld) We created the Hello World Workflow.
 
-[Hello World Part 2](./helloworld2)  We created V2 of Hello World (Versioning) and added a HTTP Task.
+[Hello World Part 2](./helloworld2)  We created V2 of Hello World (learning about versioning) and added a HTTP Task to query information about the user's IP address.
 
 ## Part 3
 
@@ -16,20 +14,35 @@ In Hello World Part 3, we'll introduce the [Fork](/content/docs/reference-docs/f
 
 At the end of Part 2, our workflow appears as:
 
-![version 2 diagram](img/hw2_workflowdiagram.png)
 
-Now, these two tasks are very simple, and do not take long to run, but what if each of these workflows took several seconds to complete?  The workflow would take the sum of their execution times to complete.
+<p align="center"><img src="/content/img/codelab/hw2_workflowdiagram.png" alt="version 2 diagram" width="400" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+
+
+Now, these two tasks are very simple, and do not take long to run, but what if each of these workflows took several seconds to complete?  The overall workflow processing time would take the sum of their execution times to complete.
 
 Neither of these tasks are dependant on one another, and can run independently. In this section, we'll introduce the Fork & Join tasks that allows us to run independent tasks in parallel.
 
 
-## Fork and Join
+## Fork
 
-The Fork ann Join tasks run on the Conductor server, and thus do not require a special task definition.
+The Fork ann Join tasks run on the Conductor server, and thus do not require a special task definition (or any unique identifier).
 
-Inside the Fork task, each parallel set of tasks is defined as an array attribute.
+Each 'tine' of the fork runs independently and concurrently to the other 'tines'.  Each parallel set of tasks is defined as an array attribute inside the Fork task.
 
 Since ```hello_world``` and ```get_IP``` are independent, we can place them in separate parallel forks in version 3 of our workflow.
+
+## Join
+
+The JOIN task tells the workflow that when the independent paths are completed, the workflow can continue on.  In this case, we are waiting for ```get_IP``` and ```hello_world_ref```. These two tasks are added to the ```joinOn``` parameter - telling the Join that once they are completed, the workflow can move ahead.  
+
+
+## Updating the workflow
+
+Changes made:
+
+1. Version set to 3.
+2. Fork Task added, and the existing ```hello_world_<uniqueId>``` and ```get_IP``` tasks are placed into arrays.
+3. Join task is added, and the joinOn attributes set.
 
 ```
 {
@@ -102,14 +115,9 @@ Since ```hello_world``` and ```get_IP``` are independent, we can place them in s
 
 ```
 
-## Joining back
-
-The JOIN task tells the workflow that when the tasks indicated are completed, the workflow can continue on.  In this case, we are waiting for ```get_IP``` and ```hello_world_ref```. Once they are completed, the workflow can move ahead.
-
-
 When this version of the workflow is submitted, we have a new diagram showing the power of the FORK task:
 
-![Forked workflow](img/hw3_workflow.png)
+<p align="center"><img src="/content/img/codelab/hw3_workflow.png" alt="Forked workflow" width="600" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
 ## Running Version 3
 

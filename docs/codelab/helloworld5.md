@@ -1,6 +1,4 @@
-# Hello World Codelab 
-
-## Parts 1-4
+# Hello World Codelab Part 5
 
 What we've covered so far:
 
@@ -14,11 +12,11 @@ What we've covered so far:
 
 # Part 5  
 
-In part 5 of the Hello World codelab, we add a [Switch Task](content/docs/reference-docs/switch-task), and [Set a Variable](content/docs/reference-docs/set-variable-task).
+In part 5 of the Hello World codelab, we'll wrap up our ```hello_world``` application by adding a [Switch Task](content/docs/reference-docs/switch-task), and several [Set a Variable Tasks](content/docs/reference-docs/set-variable-task).
 
 In Part 4, we calculated the local time - based on the users IP address, and converting GMT to the local time. In Part 5, we'll wish the user a "Good [time of day]" based on the hour calculation.  
 
-> Note: Clearly, this would be much easier to do in the Inline task with just a couple more lines of JavaScript, but why not show off the power of Conductor's Switch task?
+> Note: Clearly, this would be much easier to do in the same Inline task with just a couple of more lines of JavaScript, but why not show off the power of Conductor's Switch task?
 
 ## The Switch
 
@@ -31,7 +29,16 @@ The expression below will return a different time of day based on the hour calcu
 3. 12-18 (12 -6 PM) returns "afternoon"
 4. After 1800 (after 6 PM) returns "evening" 
 
-Based on this data, a different set of tasks will be run.
+Based on this data, a different set of tasks will be run.  In this case we'll set a different variable for each time of day.
+
+
+## The Workflow
+
+The workflow is getting very long, so let's just walk through the differences. Here is the basics of the Switch task:
+
+1. The ```hour``` input parameter comes from the calculate_local_time_ref output.
+2. The expressing is a simple if/else statement in JavaScript (and minified).  It defines the periods of the day, and returns the category.
+3. There are ```decisionCases``` set for each category determined in the switch case.
 
 {
   "name": "time_of_day",
@@ -73,11 +80,11 @@ Based on this data, a different set of tasks will be run.
 }
 
 
-## What should we do in each task?
+## What should we do in each case?
 
 In each "case" of the switch, we'll call a [Set variable task](/content/docs/reference-docs/set-variable-task) to set a variable named ```message```.
 
-For example the morning task might be:
+For example the morning task will be:
 
 ```
    {
@@ -92,7 +99,7 @@ For example the morning task might be:
 
 We'll build a similar SET_VARIABLE task for afternoon, evening and night - ensuring that ```message``` has a value in every possible case of the ```SWITCH```.
 
-The Switch task with 4 cases, each with one embedded task looks like this:
+Putting all of this logic together to create a Switch task with 4 cases, each with one embedded task looks like this:
 
 ```
 {
@@ -150,7 +157,7 @@ The Switch task with 4 cases, each with one embedded task looks like this:
 		  }
 
 ```
-Place this task in the JSON after the ```calculate_local_time``` task.  Additionally:
+Place this task in the JSON inside the FORK, right after the ```calculate_local_time``` task.  Additionally:
 
 1. Update the version of the workflow to 5.
 2. Change the joinOn from ```calculate_local_time_ref``` to ```time_of_day_ref```
@@ -158,7 +165,7 @@ Place this task in the JSON after the ```calculate_local_time``` task.  Addition
 
 Now the workflow diagram will look like:  
 
-![version 5 workflow diagram](img/hw5_workflow.png)
+<p align="center"><img src="/content/img/codelab/hw5_workflow.png" alt="version 5 workflow diagram" width="600" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
 ## How it works
 
