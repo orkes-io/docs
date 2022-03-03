@@ -8,21 +8,25 @@ In the tutorial, there is some setup to get your AWS S3 account provisioned with
 
 ## Sign up
 
-Create an account at [Orkes Playground](https://play.orkes.io) with your Google account or email account.  You'll be redirected into the playground.
+Create an account at [Orkes Playground](https://play.orkes.io) with a Google account or email account.  on registration, the browser will be redirected into the playground.
 
 ## Workflow definition
 
 To define a workflow in Orkes Playground, click ```Workflow Definitions``` from the left nav, and click the ```Define Workflow``` button.
 
-```
+This workflow creates the image processing workflow - one task reads the image in, and resizes it.  The second task takes the locally stored image and uploads to S3.
+
+> NOTE: all workflows and tasks in the Playground require unique names. Replace each instance of ```<uniqueId>``` with a new value.
+
+```json
 {
   "updateTime": 1645804152106,
-  "name": "image_convert_resize",
+  "name": "image_convert_resize<uniqueId>",
   "description": "Image Processing Workflow",
   "version": 1,
   "tasks": [
     {
-      "name": "image_convert_resize",
+      "name": "image_convert_resize<uniqueId>",
       "taskReferenceName": "image_convert_resize_ref",
       "inputParameters": {
         "fileLocation": "${workflow.input.fileLocation}",
@@ -42,7 +46,7 @@ To define a workflow in Orkes Playground, click ```Workflow Definitions``` from 
       "loopOver": []
     },
     {
-      "name": "upload_toS3",
+      "name": "upload_toS3<uniqueId>",
       "taskReferenceName": "upload_toS3_ref",
       "inputParameters": {
         "fileLocation": "${image_convert_resize_ref.output.fileLocation}"
@@ -88,9 +92,9 @@ Investigating the workflow shows that there are 2 ```SIMPLE``` tasks that will r
 Under ```Task Definitions``` press the ```Define Task``` and paste in each JSON file, one at a time.
 
 *image_convert_resize*
-```
+``` json
   {
-  "name": "image_convert_resize",
+  "name": "image_convert_resize<uniqueId>",
   "retryCount": 3,
   "timeoutSeconds": 30,
   "pollTimeoutSeconds": 30,
@@ -116,9 +120,9 @@ Under ```Task Definitions``` press the ```Define Task``` and paste in each JSON 
 ```
 
 *upload_toS3*
-```
+```json
 {
-"name": "upload_toS3",
+"name": "upload_toS3<uniqueId>",
 "retryCount": 3,"timeoutSeconds": 30,
 "pollTimeoutSeconds": 30,
 "inputKeys": [
@@ -174,7 +178,7 @@ We've now created everything in the Playground that our Worker will need to conn
 
 With your key and secret, you can generate a JWT token.  This can be done via curl (with the token response shown):
 
-```
+``` bash
 curl -s -X "POST" "https://play.orkes.io/api/token"    -H 'Content-Type: application/json; charset=utf-8'    -d '{
  "keyId": "<key>",
  "keySecret": "<secret>"
@@ -195,7 +199,7 @@ conductor.server.auth.token=<your token>
 
 In the ```OrkesWorkersApplication.java```, there is a polling mechanism.  We've added code to insert the token as the AUTHORIZATION header:
 
-```
+```java
 <snip>
 
  String token = env.getProperty("conductor.server.auth.token");
@@ -219,16 +223,24 @@ In the ```OrkesWorkersApplication.java```, there is a polling mechanism.  We've 
 </snip>
 ```
 
-Now, when you run this application, it will poll the task queue at ```play.orkes.io.``` for these two tasks. (You'll probably see a lot of errors in the console, as the other workers are not provisioned on the playground.  To emliminate these errors, you can remove the other workers from ```orkesworkers/src/main/java/io/orkes/samples/workers/```).
+Now, when you run this application, it will poll the task queue at ```play.orkes.io.``` for these two tasks. (You'll probably see a lot of errors in the console, as the other workers are not provisioned on the playground.  To eliminate these errors, you can remove the other workers from ```orkesworkers/src/main/java/io/orkes/samples/workers/```).
+
+In each worker that is running in orkesworkers, ```upload_toS3.java``` and ```ImageConvertResizeWorker.java```, rename the getTaskDefName to match the name of your task (with the uniqueId at the end).
+
+```js
+    public String getTaskDefName() {
+        return "upload_toS3";
+    }
+```
 
 ## Running your Worker
 
-Now that you've defined the workflow and tasks and created the authetication Application for your workers, we're ready to test your workflow. Click the ```Run Workflow``` in the left nav:
+Now that you've defined the workflow and tasks and created the authentication Application for your workers, we're ready to test your workflow. Click the ```Run Workflow``` in the left nav:
 
-* select ```image_convert_resize``` as your Workflow
+* select ```image_convert_resize<uniqueId>``` as your Workflow
 * Input:  
 
-```
+```json
 {
 	"fileLocation": "https://user-images.githubusercontent.com/1514288/155636237-caa91ec9-e19f-4ab0-aa65-106e09b381b0.png",
 	"recipeParameters":{
@@ -253,8 +265,8 @@ Your output JSON should include a file location of a resized image:
 ![resized image](https://image-processing-sandbox.s3.amazonaws.com/f1b4314d-f72b-4060-8758-d07b17bbc552.jpg)
 
 
-## Conclustion
+## Conclusion
 
-You've completed your first Conductor workflow in Orkes Playground!  Build your own, workflows and see how Condutor's workflow engine makes building orchetration pipelines easy!
+You've completed your first Conductor workflow in Orkes Playground!  Build your own, workflows and see how Conductor's workflow engine makes building orchestration pipelines easy!
 
 If you have any [feedback](https://share.hsforms.com/1TmggEej4TbCm0sTWKFDahwcfl4g) - please pass it on. We want to make the Orkes Cloud Conductor the best tool for you and your development team!
