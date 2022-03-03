@@ -40,6 +40,7 @@ The workflow is getting very long, so let's just walk through the differences. H
 2. The expressing is a simple if/else statement in JavaScript (and minified).  It defines the periods of the day, and returns the category.
 3. There are ```decisionCases``` set for each category determined in the switch case.
 
+```json
 {
   "name": "time_of_day",
   "taskReferenceName": "time_of_day_ref",
@@ -78,7 +79,7 @@ The workflow is getting very long, so let's just walk through the differences. H
     
   }
 }
-
+```
 
 ## What should we do in each case?
 
@@ -86,7 +87,7 @@ In each "case" of the switch, we'll call a [Set variable task](/content/docs/ref
 
 For example the morning task will be:
 
-```
+```json
    {
       "name": "set_morning_variable",
       "taskReferenceName": "set_morning_variable_ref",
@@ -101,7 +102,7 @@ We'll build a similar SET_VARIABLE task for afternoon, evening and night - ensur
 
 Putting all of this logic together to create a Switch task with 4 cases, each with one embedded task looks like this:
 
-```
+```json
 {
 		    "name": "time_of_day",
 		    "taskReferenceName": "time_of_day_ref",
@@ -175,7 +176,7 @@ The hour is calculated in the task before. The ```SWITCH``` decides if the hour 
 
 The input for version 5 is the same - just the ipaddress.  The result of the workflow adds the variable phrase in the ```hw_time_of_day``` greeting:
 
-```
+```json
 {
 "hw_location":"We hope the weather is nice near Bengaluru"
 "hw_time":"The Local time is 23:41"

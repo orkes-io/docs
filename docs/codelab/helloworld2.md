@@ -44,7 +44,7 @@ The parameters to this task are:
 
 > The URI parameter uses a Conductor variable in the string.  The parameter ```${workflow.input.ipaddress}``` indicates that the workflow will have an input parameter called ```ipaddress```.
 
-```
+```json
 {
   "name": "hello_world_<uniqueId>",
   "description": "hello world Workflow",
@@ -101,27 +101,27 @@ The response comes back with details about this IP address in JSON format. One o
 
  ```   "hw_location": "We hope the weather is nice near ${get_IP.output.response.body.city}"```
 
-When this change is made to the workflow, there are now two versions of the workflow.  In the screenshot below, you can see the "2" in the URL path, and as a dropdown next to the workflow name:
+When this change is made to the workflow, there are now two versions of the workflow.  In the screenshot below, there is a  "2" in the URL path, and as a dropdown next to the workflow name:
 
 <p align="center"><img src="/content/img/codelab/hw2_workflow.png" alt="workflow version 2 screenshot" width="800" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
 ## Running the new workflow
 
-Clicking the Run Workflow button - you'll now have two options for the version. Let's pick version 2, and in the input add:
+Clicking the Run Workflow button - now there are two options for the version. Let's pick version 2, and in the input add:
 
 ```
 {"ipaddress":"<your IP address>"}
 ```
 
-> You can find your IP address by Googling "What's my IP address?"
+> To can find your IP address: Googling "What's my IP address?"
 
 Click run workflow, and click on the workflowId.  If either of the tasks are blue, click the refresh until they are green:
 
 <p align="center"><img src="/content/img/codelab/hw2_completed.png" alt="hello world 2 completed" width="800" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
-If you click the ```Workflow Input/Output``` tab, you should see something similar to:
+Clicking the ```Workflow Input/Output``` tab should display something similar to:
 
-```
+```json
 {
 "ipaddress":"98.11.11.125"
 }
@@ -153,5 +153,5 @@ In [Part 1](helloworld), we created a workflow using the Netflix Conductor in th
 
 In Part 2, we extended the workflow using versioning, and added a HTTP Task.
 
-In [Part 3](helloworld3), we'll investigate using FORK tasks in your Workflow. Are you ready to continue? Let's go! [On to Part 3](helloworld3)
+In [Part 3](helloworld3), we'll investigate using FORK tasks in your Workflow. Ready to continue? Let's go! [On to Part 3](helloworld3)
 

@@ -35,7 +35,7 @@ Inline tasks run basic JavaScript calculations.  Since the ```Get_IP``` task out
 
 The JavaScript will have two inputs ```$.date``` and ```$.offset```.  The rest is just logic and math:
 
-```
+```js
 function e() {
 	var offsetSeconds = $.offsetSeconds;
     var today = new Date($.date);
@@ -101,7 +101,7 @@ Changes to this version of the workflow:
 4. Updated the Join to ```joinOn``` the inline task ```calculate_local_time_ref``` (instead of the get_IP task).
 5. Added a new ```outputParameter``` called ```hw_time``` to announce the local time.
 
-```
+```json
 {
   "name": "hello_world_<uniqueId>",
   "description": "hello world Workflow",
@@ -192,7 +192,7 @@ With these changes to the workflow, version 4 of ```hello_world``` now appears a
 
 When we run version 4 of the workflow (there are no changes to the input), the workflow output is now:
 
-```
+```json
 {
 "hw_location":"We hope the weather is nice near Kennebunk"
 "hw_time":"The Local time is 11:02"

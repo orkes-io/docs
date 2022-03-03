@@ -4,12 +4,12 @@
 
 "Hello World" is the traditional *first application* that a developer builds in any product that is new to them.  This Hello World demonstration is no different, kicking off the tutorial that outputs those famous two words, but we will also dig deeper into the powerful capabilities of Conductor. We'll extend our Hello World with additional messages.
 
-After Part 1, your workflow will look like:
+After Part 1, the workflow that is created will look like:
 
 <p align="center"><img src="/content/img/codelab/hw1_diagram.png" alt="version 1 diagram" width="400" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
 
-When you've completed this code lab, you'll be familiar with:
+As we complete this code lab, we'll be familiar with these aspects of Netflix Conductor:
 
 * Workflows
 * Workflow versioning
@@ -30,14 +30,14 @@ ON completion of the codelab, the final Hello World workflow looks a lot more co
 
 ## Requirements
 
-This demo will use the Orkes [Conductor playground](https://play.orkes.io) to run the workflow.  You can get an account for free by signing up with your email or Google account.  Alternatively, you can also use the open source Conductor [installed locally](/docs/getting-started/install/running-locally) using the API to add Tasks and Workflows.  The UI in the Playground screenshots will be otherwise similar.
+This demo will use the Orkes [Conductor playground](https://play.orkes.io) to run the workflow.  Create  an account for free by signing up with an email address or Google account.  Alternatively, the open source Conductor [installed locally](/docs/getting-started/install/running-locally) can also be used, using the API to add Tasks and Workflows.  The UI in the Playground screenshots will be otherwise similar.
 
-To run the Java worker, you'll need to have Java installed.
+To run the Java worker, Java must be installed on yur local computer.
 
 ## A Simple Hello World 
 
 
-Our initial Hello World workflow will call a task (and it's underlying Java Worker) that will return the text "Hello World."  It is a very simple use case, and not one that you'd typically use Conductor for, but we'll use this extremely simple example as the foundation of our knowledge to build a larger orchestration workflow.
+Our initial Hello World workflow will call a task (and it's underlying Java Worker) that will return the text "Hello World."  It is a very simple use case, and not one that would typically use Conductor for, but we'll use this extremely simple example as the foundation of our knowledge to build a larger orchestration workflow.
 
 To get this workflow up and running, we'll need to create a task, a workflow and a Java application worker.  The Orkes Playground will also require some basic permissioning (that we will also cover in the codelab).
 
@@ -51,7 +51,7 @@ Our ```helloworld``` task takes no inputs, and provides no inputs to the Java ap
 
 
 helloworld_task.json
-```
+``` json
 {
 "name": "hello_world_<uniquetag>",
 "retryCount": 3,
@@ -80,14 +80,14 @@ To add this Task in your Playground:
 1. Click "Task Definitions" in the left navigation.
 2. lick the "Define Task" button in the upper right.  
 3. Paste the workflow into the edit field. Remember to change ```<uniquetag>``` in the ```name``` field, and update your e-mail address in the ```ownerEmail``` field.
-4. Press ```Save``` and ```Confirm Save```.  You'll now see your Task in the list of task definitions.
+4. Press ```Save``` and ```Confirm Save```.  The Task is now visible in the list of task definitions.
 
 
 ### Creating the workflow
 
 The Conductor workflow defines all of the tasks that will be run (and the order that they will run in).  In part 1 of this codelab, we will define a workflow with just one single task.
 
-We will define this workflow as version 1. Version numbers can only be integers, and as we walk through the codelab, we can increment the version as the complexity increases.  This also allows us to run the different versions at the same time.  You can imagine a use case where team a is ready to jump to an updated workflow, but team b is not.  The versioning allows you to easily support both teams.
+We will define this workflow as version 1. Version numbers can only be integers, and as we walk through the codelab, we can increment the version as the complexity increases.  This also allows us to run the different versions at the same time.  Imagine a use case where team a is ready to jump to an updated workflow, but team b is not.  The versioning makes it easy to support both teams.
 
 Things to note:
 
@@ -97,7 +97,7 @@ Things to note:
 4. Feel free to change the owner email.
 
 
-```
+```json
 {
   "name": "hello_world_<uniquetag>",
   "description": "hello world Workflow",
@@ -161,11 +161,11 @@ And repeat the process to add the task
 2. Target: ```hello_world_<uniqueid>```
 3. Access: ```Execute```
 
-**In general, all of your tasks (and workflows) must be added to an application in the PLayground for the application to run.**
+**In general, all tasks (and workflows) must be added to an application in the Playground for the application to run.**
 
 Now, create an Access Key by pressing the ```+``` button in the top table. This will generate a Key and Secret Id for the application.  Record these in a safe place. We use these values to generate a JWT Authorization token:
 
-```
+```bash
 curl -s -X "POST" "https://play.orkes.io/api/token"    -H 'Content-Type: application/json; charset=utf-8'    -d '{
  "keyId": "<key>",
  "keySecret": "<secret>"
@@ -184,12 +184,12 @@ The Java app can be found in the [orkesworkers](https://github.com/orkes-io/orke
 There are 2 small changes to be made to the [application.properties](https://github.com/orkes-io/orkesworkers/blob/main/src/main/resources/application.properties) file:
 
 1. Choose ```conductor.server.url=https://play.orkes.io/api/``` so that the app polls the correct Conductor server.
-2. Set ```conductor.server.auth.token=<tokenId>``` using the tokenId you generated in the last section.
+2. Set ```conductor.server.auth.token=<tokenId>``` using the tokenId generated in the last section.
 
 
 The worker is called ```helloworld.java```, and looks as follows:
 
-```
+```js
 @Component
 public class helloworld implements Worker {
     @Override
@@ -222,14 +222,14 @@ We now can test our workflow!
 
 ## Running our First Hello World
 
-We can test our workflow by clicking the ```Run Workflow``` box in the left navigation. Select your workflow name, choose version 1, and leave the input blank (or empty {}), since there are no input parameters:
+We can test our workflow by clicking the ```Run Workflow``` box in the left navigation. Select the workflow name, choose version 1, and leave the input blank (or empty {}), since there are no input parameters:
 
 
 <p align="center"><img src="/content/img/codelab/hw1_runworkflow.png" alt="running Hello World" width="800" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
 
 
-As you can see in the screenshot above, submitting the workflow creates a workflowId - it appears below the ```Run Workflow``` button. Clicking this link will take you to the Workflow execution page (the url is ```play.orkes.io/execution/<workflowid>```):
+As we can see in the screenshot above, submitting the workflow creates a workflowId - it appears below the ```Run Workflow``` button. Clicking this link will take open the Workflow execution page (the url is ```play.orkes.io/execution/<workflowid>```):
 
 
 <p align="center"><img src="/content/img/codelab/hw1_execution.png" alt="Hello World execution" width="800" style={{paddingBottom: 40, paddingTop: 40}} /></p>

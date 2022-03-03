@@ -1,6 +1,6 @@
 # Hello World Codelab 
 
-You've made it to Part 3!  Thanks for keeping at it! What we've covered so far:
+We've made it to Part 3!  Thanks for keeping at it! What we've covered so far:
 
 [Hello World Part 1](./helloworld) We created the Hello World Workflow.
 
@@ -44,7 +44,7 @@ Changes made:
 2. Fork Task added, and the existing ```hello_world_<uniqueId>``` and ```get_IP``` tasks are placed into arrays.
 3. Join task is added, and the joinOn attributes set.
 
-```
+``` json
 {
   "name": "hello_world_<uniqueId>",
   "description": "hello world Workflow",
@@ -121,9 +121,9 @@ When this version of the workflow is submitted, we have a new diagram showing th
 
 ## Running Version 3
 
-You can now run the workflow version 3 with similar input. Since we didn't change the output, you should get the same response.
+We can now run the workflow version 3 with similar input. Since we didn't change the output, the response should be the same.
 
-We'll leave running the workflow to the user to complete (but it is identical to part 2 if you get stuck).
+We'll leave running the workflow to the user to complete (but it is identical to part 2 if any issues arise).
 
 ## Next Steps
 
@@ -135,4 +135,4 @@ In [Part 2](helloworld2), we extended the workflow using versioning, and added a
 
 In Part 3, we created parallel workflows using the FORK task.
 
-In Part 4, we'll extend one of the forks and add an [Inline Task](content/docs/reference-docs/system-tasks/inline-task).  Ready to go? [On to Part 4!](helloworld4)
+In Part 4, we'll extend one of the forks and add an [Inline Task](/content/docs/reference-docs/system-tasks/inline-task).  Ready to go? [On to Part 4!](helloworld4)
