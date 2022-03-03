@@ -117,8 +117,6 @@ export const YourfirstWorkflowSection = ({
             <img
               src={rightImage}
               alt="small-diagram"
-              width="300px"
-              height="800px"
             ></img>
           </PaperContainer>
         </div>
