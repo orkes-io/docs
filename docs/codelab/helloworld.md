@@ -170,7 +170,7 @@ curl -s -X "POST" "https://play.orkes.io/api/token"    -H 'Content-Type: applica
  "keyId": "<key>",
  "keySecret": "<secret>"
 }'
-{"token":"eyJhbGciOiJIUzUxMiJ9.eyJvcmtlc19rZXkiOiJhZWQ0YWFmZi0wZDYyLTRlYTEtOTdlNS04YjBkZDA1MzlmMzMiLCJvcmtlc19jb25kdWN0b3JfdG9rZW4iOnRydWUsInN1YiI6ImFwcDo1OGExMmRjYi1jMmEyLTQ3MDAtYmJjNS1jZDY1YjA3WWI0NDEiLCJpYXQiOjE2NDU4MjIzOTY1Njd9.yDVwu2Y2j111vUwNwbxCOFKn16AUlDXG8-e4oD6wA8QSBbQF38KJhbFiK2IFc4t_DeTi9jKjydKOKKkyw5LqJQ"}
+{"token":"<JWT Token>"}
 ```
 
 Keep this token handy for the next step.
@@ -213,8 +213,6 @@ We can examine our workflow by browsing through ```Workflow definitions``` -> ``
 
 
 <p align="center"><img src="/content/img/codelab/hw_playworkflow1.png" alt="workflow screenshot" width="800" style={{paddingBottom: 40, paddingTop: 40}} /></p>
-
-
 
 
 

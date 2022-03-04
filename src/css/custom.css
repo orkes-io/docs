@@ -79,10 +79,13 @@ p {
 
 }
 .menu__link--sublist:after {
-    background: none;
+ /*this hides the arrow drop down*/
+   /* background: none;*/
+
 }
 .menu__link--sublist {
     font-weight: bold;
+    color: rebeccapurple;
 }
 
 .menu__link {
