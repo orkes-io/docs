@@ -138,6 +138,15 @@ module.exports = {
         },
         {
             type: 'category',
+            label: 'Code Labs',
+            collapsed: false,
+            items: [
+                'codelab/helloworld'
+                
+            ],
+        },
+        {
+            type: 'category',
             label: 'Tutorials',
             collapsed: false,
             items: [
