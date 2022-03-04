@@ -2,8 +2,15 @@ import React from "react";
 import CodeBlock from "@theme/CodeBlock";
 import styles from "./_Languages.module.css";
 
+
+const CodeBlockWrapper = ({lang,children})=>(
+  <CodeBlock className={`language-${lang} ${styles.codeBlock}`}>
+    {children}
+  </CodeBlock>
+)
+
 export const JavaSample = () => (
-  <CodeBlock className={`language-java ${styles.codeBlock}`}>
+  <CodeBlockWrapper lang="java">
     {`
 public class SimpleWorker implements Worker {
 
@@ -25,21 +32,21 @@ public class SimpleWorker implements Worker {
 
 }
     `}
-  </CodeBlock>
+  </CodeBlockWrapper>
 );
 
 export const JavascriptSample = () => (
-  <CodeBlock className="language-js">
+  <CodeBlockWrapper lang="js">
     {`
 function helloWorld() {
     console.log('Hello, world!');
 }
     `}
-  </CodeBlock>
+  </CodeBlockWrapper>
 );
 
 export const PythonSample = () => (
-  <CodeBlock className="language-py">
+  <CodeBlockWrapper lang="py">
     {`
 from conductor.client.worker.worker_interface import WorkerInterface
 
@@ -51,20 +58,20 @@ class SimplePythonWorker(WorkerInterface):
         task_result.status = 'COMPLETED'
         return task_result
     `}
-  </CodeBlock>
+  </CodeBlockWrapper>
 );
 
 export const TypescriptSample = () => (
-  <CodeBlock className="language-ts">
+  <CodeBlockWrapper lang="ts">
     {`
 const helloWorld:string = "Hello World"
 console.log(helloWorld);
     `}
-  </CodeBlock>
+  </CodeBlockWrapper>
 );
 
 export const RustSample = () => (
-  <CodeBlock className="language-rust">
+  <CodeBlockWrapper lang="rust">
     {`
 fn task(arg: i32) -> (i32, u32) {
     let x = random::<u32>();
@@ -73,11 +80,11 @@ fn task(arg: i32) -> (i32, u32) {
     (arg, s)
 }
     `}
-  </CodeBlock>
+  </CodeBlockWrapper>
 );
 
 export const GoSample = () => (
-  <CodeBlock className="language-go">
+  <CodeBlockWrapper lang="go">
     {`
 package task
 
@@ -100,6 +107,6 @@ func Task_1_Execution_Function(t *task.Task) (taskResult *task.TaskResult, err e
     return taskResult, err
 }
     `}
-  </CodeBlock>
+  </CodeBlockWrapper>
 );
 
