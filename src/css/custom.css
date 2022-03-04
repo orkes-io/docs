@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Gothic+A1:wght@400;500;600;700;800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Gothic+A1:wght@400;500;600;700;800&display=swap");
 
 /**
  * Any CSS included here will be global. The classic template
@@ -8,77 +8,97 @@
 
 /* You can override the default Infima variables here. */
 :root {
-    --ifm-color-primary: #1f96ff;
-    --ifm-color-primary-dark: rgb(33, 175, 144);
-    --ifm-color-primary-darker: rgb(31, 165, 136);
-    --ifm-color-primary-darkest: rgb(26, 136, 112);
-    --ifm-color-primary-light: rgb(70, 203, 174);
-    --ifm-color-primary-lighter: rgb(102, 212, 189);
-    --ifm-color-primary-lightest: rgb(146, 224, 208);
-    --ifm-code-font-size: 95%;
-    --ifm-link-decoration: none;
-    --ifm-blockquote-padding-vertical: 20px;
-    --ifm-blockquote-border-left-width: 4px;
-    --ifm-blockquote-font-size: 16px;
-    --ifm-font-family-base: "Gothic A1", system-ui, -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji',
-    'Segoe UI Emoji', 'Segoe UI Symbol';
+  --ifm-color-primary: #1f96ff;
+  --ifm-color-primary-dark: rgb(33, 175, 144);
+  --ifm-color-primary-darker: rgb(31, 165, 136);
+  --ifm-color-primary-darkest: rgb(26, 136, 112);
+  --ifm-color-primary-light: rgb(70, 203, 174);
+  --ifm-color-primary-lighter: rgb(102, 212, 189);
+  --ifm-color-primary-lightest: rgb(146, 224, 208);
+  --ifm-color-athens-gray: rgb(248, 249, 251);
+  --ifm-color-info: #6458f5;
+  --ifm-color-info-lightest: #bbb6fb;
+  --ifm-color-info-lighter: #9087f8;
+  --ifm-color-info-light: #8177f7;
+  --ifm-color-info-dark: #4739f3;
+  --ifm-color-info-darker: #3829f2;
+  --ifm-color-info-darkest: #1d0ddc;
+  --ifm-code-font-size: 95%;
+  --ifm-link-decoration: none;
+  --ifm-blockquote-padding-vertical: 20px;
+  --ifm-blockquote-border-left-width: 4px;
+  --ifm-blockquote-font-size: 16px;
+  --ifm-font-family-base: "Gothic A1", system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+[data-theme="dark"] {
+  --ifm-color-athens-gray: #333;
 }
 
 .docusaurus-highlight-code-line {
-    background-color: rgba(0, 0, 0, 0.1);
-    display: block;
-    margin: 0 calc(-1 * var(--ifm-pre-padding));
-    padding: 0 var(--ifm-pre-padding);
+  background-color: rgba(0, 0, 0, 0.1);
+  display: block;
+  margin: 0 calc(-1 * var(--ifm-pre-padding));
+  padding: 0 var(--ifm-pre-padding);
 }
 
-html[data-theme='dark'] .docusaurus-highlight-code-line {
-    background-color: rgba(0, 0, 0, 0.3);
+html[data-theme="dark"] .docusaurus-highlight-code-line {
+  background-color: rgba(0, 0, 0, 0.3);
 }
 
 body {
-    font-family: "Gothic A1", sans-serif;
-    font-weight: 400;
-    font-size: 0.9em;
+  font-family: "Gothic A1", sans-serif;
+  font-weight: 400;
+  font-size: 0.9em;
+}
+
+.navbar {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  margin: 0 auto;
+  max-width: var(--ifm-container-width-xl);
+  width: 100%;
 }
 
 .navbar__brand {
-    font-size: 24px;
-    font-family: "Gothic A1", sans-serif;
-    font-weight: 700;
+  font-size: 24px;
+  font-family: "Gothic A1", sans-serif;
+  font-weight: 700;
 }
 
 .navbar__item {
-    font-size: 16px;
-    font-family: "Gothic A1", sans-serif;
-    font-weight: 500;
+  font-size: 16px;
+  font-family: "Gothic A1", sans-serif;
+  font-weight: 500;
 }
 
 h1 {
-    font-size: 28px;
-    font-family: "Gothic A1", sans-serif;
-    font-weight: 700;
+  font-size: 28px;
+  font-family: "Gothic A1", sans-serif;
+  font-weight: 700;
 }
 h2 {
-    font-size: 22px;
-    font-family: "Gothic A1", sans-serif;
-    font-weight: 700;
+  font-size: 22px;
+  font-family: "Gothic A1", sans-serif;
+  font-weight: 700;
 }
 h3 {
-    font-size: 20px;
-    font-family: "Gothic A1", sans-serif;
-    font-weight: 700;
+  font-size: 20px;
+  font-family: "Gothic A1", sans-serif;
+  font-weight: 700;
 }
 h4 {
-    font-size: 18px;
-    font-family: "Gothic A1", sans-serif;
-    font-weight: 500;
+  font-size: 18px;
+  font-family: "Gothic A1", sans-serif;
+  font-weight: 500;
 }
 
 p {
-
 }
 .menu__link--sublist:after {
+
  /*this hides the arrow drop down*/
    /* background: none;*/
 
@@ -86,129 +106,190 @@ p {
 .menu__link--sublist {
     font-weight: bold;
     color: rebeccapurple;
+
+  background: none;
 }
 
+
 .menu__link {
-    line-height: 1.5em;
-    font-size: 15px;
+  line-height: 1.5em;
+  font-size: 15px;
 }
 
 aside {
-    border-right: none;
+  border-right: none;
 }
 
-.markdown>p, .markdown>pre, .markdown>ul, .markdown li, .table-of-contents__link, table {
-    letter-spacing: -0.003em;
-    line-height: 28px;
-    font-size: 15px;
-    font-family: var(--ifm-font-family-base);
+.markdown > p,
+.markdown > pre,
+.markdown > ul,
+.markdown li,
+.table-of-contents__link,
+table {
+  letter-spacing: -0.003em;
+  line-height: 28px;
+  font-size: 15px;
+  font-family: var(--ifm-font-family-base);
 }
 
 pre code {
-    letter-spacing: -0.003em;
-    line-height: 28px;
-    font-size: 17px;
+  letter-spacing: -0.003em;
+  line-height: 28px;
+  font-size: 17px;
 }
 
 .navbar__logo {
-    height: 45px;
-    margin-top: -5px;
+  height: 45px;
+  margin-top: -5px;
 }
 
 .navbar {
 }
 .navbar__brand {
-    font-size: 18px;
-    margin-top: 2px;
+  font-size: 18px;
+  margin-top: 2px;
 }
 
 .navbar__item {
-    font-size: 16px;
+  font-size: 16px;
 }
 
-.midSectionPair {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    padding-bottom: 100px;
+.bottomSection {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding-bottom: 100px;
 }
 
-.liClass {
-    margin-top: 12px;
+.liClass li {
+  margin-top: 12px;
 }
 
 .communityClassWrapper {
-    width: 50%;
-    padding: 20px 20px 5px 5px;
-    margin-bottom: 20px;
-    min-width: 350px;
+  width: 50%;
+  padding: 20px 20px 5px 5px;
+  margin-bottom: 20px;
+  min-width: 350px;
 }
 
 .communityClass {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .communityClass h4 {
-    font-family: "Gothic A1", serif;
-    font-weight: 700;
-    font-size: 16px;
+  font-family: "Gothic A1", serif;
+  font-weight: 700;
+  font-size: 16px;
 }
 
 .communityClassHeader {
-    display: flex;
-    justify-content: left;
-    align-items: center;
-    align-content: center;
-    padding-bottom: 10px;
-    padding-top: 10px;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  align-content: center;
+  padding-bottom: 10px;
+  padding-top: 10px;
 }
 
 .communityClassHeader h4 {
-    margin: 0 0 0 10px;
+  margin: 0 0 0 10px;
 }
 
-
 .aClass {
-    text-decoration: none;
-    color: #555;
+  text-decoration: none;
+  color: #555;
 }
 
 .aClass:hover {
-    text-decoration: none;
-    color: #7033ff;
+  text-decoration: none;
+  color: #7033ff;
 }
 
-html[data-theme='dark'] .aClass {
-    color: #ddd;
+html[data-theme="dark"] .aClass {
+  color: #ddd;
 }
 
-html[data-theme='dark'] .aClass:hover {
-    color: #b696ff;
+html[data-theme="dark"] .aClass:hover {
+  color: #b696ff;
 }
 
 .midSectionOdd {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    background-color: ghostwhite;
-    padding-bottom: 70px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  background-color: ghostwhite;
+  padding-bottom: 70px;
 }
 
 .homeHeader {
-    background-color: #fff;
-    display: flex;
-    align-content: center;
-    align-items: center;
-    justify-content: center;
+  background-color: #fff;
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
 }
 
-html[data-theme='dark'] .homeHeader {
-    background-color: transparent;
+html[data-theme="dark"] .homeHeader {
+  background-color: transparent;
 }
 
-html[data-theme='dark'] .midSectionOdd {
-    background-color: #131314;
+html[data-theme="dark"] .midSectionOdd {
+  background-color: #131314;
 }
 
+.row--center {
+  justify-content: center;
+}
+.outline-tabs {
+  max-width: 600px;
+}
+.outline-tabs .tabs__item {
+  font-size: 15px;
+  line-height: 1px;
+  border: 1px solid var(--ifm-color-info);
+  width: 100%;
+  justify-content: center;
+  color: var(--ifm-color-info);
+  border-radius: 0.2rem;
+}
+
+.outline-tabs .tabs__item--active {
+  background-color: var(--ifm-color-info);
+  color: #fff;
+  /* border-radius: var(--ifm-global-radius); */
+}
+
+.noStyleLink,
+.noStyleLink:hover,
+.noStyleLink:visited,
+.noStyleLink:focus,
+.noStyleLink:active {
+  text-decoration: none;
+  color: inherit;
+  /* outline: 0; */
+}
+
+.videoContainer {
+  height: 0;
+  overflow: hidden;
+  padding-bottom: 56.25%;
+  padding-top: 30px;
+  position: relative;
+}
+.videoContainer iframe,
+.videoContainer object,
+.videoContainer embed {
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+@media screen and (max-width: 966px) {
+  .button--lg {
+    --ifm-button-size-multiplier: 1.28;
+  }
+}

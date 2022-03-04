@@ -1,0 +1,24 @@
+.firstWorkflowContainer {
+  display: flex;
+  justify-content: center;
+  height: 95%;
+}
+
+.whiteFont {
+  color: #fff;
+}
+
+.firstWorkflowFooter {
+  letter-spacing: 1px;
+}
+.videoFooterCaption {
+  line-height: 20px;
+  width: 100%;
+  padding-top: 0.5rem;
+}
+
+@media screen and (max-width: 966px) {
+  .mobileSpaced {
+    margin-top: 1rem;
+  }
+}

@@ -104,17 +104,17 @@ export default function HomepageFeatures() {
                   fontFamily: "Gothic A1",
                   fontWeight: "bold",
               }}>Why should you use Conductor?</h4>
-              <ul style={{paddingTop: 10}}>
-                  <li className={"liClass"}>
+              <ul style={{paddingTop: 10}} className="liClass">
+                  <li >
                     Lets you focus on coding the business logic of the application instead of managing the state and complexities of a distributed ecosystem
                   </li>
-                  <li className={"liClass"}>
+                  <li >
                     You can cleanly decouple the design of the application flow from the implementation
                   </li>
-                  <li className={"liClass"}>
+                  <li >
                     Your application’s resilience is increased with native support in Conductor for retries, error handling and rich metrics
                   </li>
-                  <li className={"liClass"}>
+                  <li >
                     You have a powerful visualizations of your application’s execution paths that can shorten debugging times from hours to minutes
                   </li>
               </ul>
@@ -129,17 +129,17 @@ export default function HomepageFeatures() {
                   fontFamily: "Gothic A1",
                   fontWeight: "bold",
               }}>What can you build with Conductor?</h4>
-              <ul style={{paddingTop: 10}}>
-                  <li className={"liClass"}>
+              <ul style={{paddingTop: 10}} className="liClass">
+                  <li >
                     Applications composed of distributed microservices or serverless functions
                   </li>
-                  <li className={"liClass"}>
+                  <li >
                     Hybrid applications that span across multiple deployment models (e.g. VM deployed monolith, kubernetes deployed containers)
                   </li>
-                  <li className={"liClass"}>
+                  <li >
                     Long running workflows that need to wait for days, months or even years between executions (e.g. monthly subscription billing)
                   </li>
-                  <li className={"liClass"}>
+                  <li >
                     Mission critical applications with high reliability requirements (e.g. financial transactions)
                   </li>
               </ul>

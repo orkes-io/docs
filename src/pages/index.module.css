@@ -21,3 +21,20 @@
   align-items: center;
   justify-content: center;
 }
+
+.mainContainer {
+  padding-top: 1rem;
+}
+
+.mainContainer > div {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.spacedUl{
+  display: flex;
+  flex-direction: column;
+  gap:10px;
+  padding-top:1rem;
+  padding-right: 1rem;
+}
