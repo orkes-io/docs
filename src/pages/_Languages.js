@@ -12,25 +12,15 @@ const CodeBlockWrapper = ({lang,children})=>(
 export const JavaSample = () => (
   <CodeBlockWrapper lang="java">
     {`
-public class SimpleWorker implements Worker {
-
-    @Override
-    public String getTaskDefName() {
-        return "simple_worker";
-    }
-
     @Override
     public TaskResult execute(Task task) {
         TaskResult result = new TaskResult(task);
         result.setStatus(TaskResult.Status.COMPLETED);
         String currentTimeOnServer = Instant.now().toString();
-        result.log("This is a test log at time: " + currentTimeOnServer);
         result.addOutputData("currentTimeOnServer", currentTimeOnServer);
         result.addOutputData("message", "Hello World!");
         return result;
     }
-
-}
     `}
   </CodeBlockWrapper>
 );
@@ -48,9 +38,6 @@ function helloWorld() {
 export const PythonSample = () => (
   <CodeBlockWrapper lang="py">
     {`
-from conductor.client.worker.worker_interface import WorkerInterface
-
-
 class SimplePythonWorker(WorkerInterface):
     def execute(self, task):
         task_result = self.get_task_result_from_task(task)
@@ -86,17 +73,7 @@ fn task(arg: i32) -> (i32, u32) {
 export const GoSample = () => (
   <CodeBlockWrapper lang="go">
     {`
-package task
-
-import (
-    "fmt"
-)
-
-// Implementation for "task_1"
-func Task_1_Execution_Function(t *task.Task) (taskResult *task.TaskResult, err error) {
-    log.Println("Executing Task_1_Execution_Function for", t.TaskType)
-
-    //Do some logic
+func Hello_World_Execute_Function(t *task.Task) (taskResult *task.TaskResult, err error) {
     taskResult = task.NewTaskResult(t)
     
     output := map[string]interface{}{"message":"Hello World"}
