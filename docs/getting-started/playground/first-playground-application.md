@@ -8,21 +8,25 @@ In the tutorial, there is some setup to get your AWS S3 account provisioned with
 
 ## Sign up
 
-Create an account at [Orkes Playground](https://play.orkes.io) with your Google account or email account.  You'll be redirected into the playground.
+Create an account at [Orkes Playground](https://play.orkes.io) with a Google account or email account.  on registration, the browser will be redirected into the playground.
 
 ## Workflow definition
 
 To define a workflow in Orkes Playground, click ```Workflow Definitions``` from the left nav, and click the ```Define Workflow``` button.
 
-```
+This workflow creates the image processing workflow - one task reads the image in, and resizes it.  The second task takes the locally stored image and uploads to S3.
+
+> NOTE: all workflows and tasks in the Playground require unique names. Replace each instance of ```<uniqueId>``` with a new value.
+
+```json
 {
   "updateTime": 1645804152106,
-  "name": "image_convert_resize",
+  "name": "image_convert_resize<uniqueId>",
   "description": "Image Processing Workflow",
   "version": 1,
   "tasks": [
     {
-      "name": "image_convert_resize",
+      "name": "image_convert_resize<uniqueId>",
       "taskReferenceName": "image_convert_resize_ref",
       "inputParameters": {
         "fileLocation": "${workflow.input.fileLocation}",
@@ -42,7 +46,7 @@ To define a workflow in Orkes Playground, click ```Workflow Definitions``` from 
       "loopOver": []
     },
     {
-      "name": "upload_toS3",
+      "name": "upload_toS3<uniqueId>",
       "taskReferenceName": "upload_toS3_ref",
       "inputParameters": {
         "fileLocation": "${image_convert_resize_ref.output.fileLocation}"
@@ -88,9 +92,9 @@ Investigating the workflow shows that there are 2 ```SIMPLE``` tasks that will r
 Under ```Task Definitions``` press the ```Define Task``` and paste in each JSON file, one at a time.
 
 *image_convert_resize*
-```
+``` json
   {
-  "name": "image_convert_resize",
+  "name": "image_convert_resize<uniqueId>",
   "retryCount": 3,
   "timeoutSeconds": 30,
   "pollTimeoutSeconds": 30,
@@ -116,9 +120,9 @@ Under ```Task Definitions``` press the ```Define Task``` and paste in each JSON 
 ```
 
 *upload_toS3*
-```
+```json
 {
-"name": "upload_toS3",
+"name": "upload_toS3<uniqueId>",
 "retryCount": 3,"timeoutSeconds": 30,
 "pollTimeoutSeconds": 30,
 "inputKeys": [
@@ -172,63 +176,77 @@ We've now created everything in the Playground that our Worker will need to conn
 
 ## Worker
 
-With your key and secret, you can generate a JWT token.  This can be done via curl (with the token response shown):
-
-```
-curl -s -X "POST" "https://play.orkes.io/api/token"    -H 'Content-Type: application/json; charset=utf-8'    -d '{
- "keyId": "<key>",
- "keySecret": "<secret>"
-}'
-{"token":"eyJhbGciOiJIUzUxMiJ9.eyJvcmtlc19rZXkiOiJhZWQ0YWFmZi0wZDYyLTRlYTEtOTdlNS04YjBkZDA1MzlmMzMiLCJvcmtlc19jb25kdWN0b3JfdG9rZW4iOnRydWUsInN1YiI6ImFwcDo1OGExMmRjYi1jMmEyLTQ3MDAtYmJjNS1jZDY1YjA3WWI0NDEiLCJpYXQiOjE2NDU4MjIzOTY1Njd9.yDVwu2Y2j111vUwNwbxCOFKn16AUlDXG8-e4oD6wA8QSBbQF38KJhbFiK2IFc4t_DeTi9jKjydKOKKkyw5LqJQ"}
-
-```
-
-We now need to add this JWT token into all polling headers that hit the Playground server.
-
-In the Orkesworkers repository, ```resources/application.properties``` ensure you have these two lines:
+With your key and secret, we can run the OrkesWorkers application.  In the Orkesworkers repository, ```resources/application.properties``` ensure you have these two lines:
 
 
 ```
 conductor.server.url=https://play.orkes.io/api/
-conductor.server.auth.token=<your token>
+
+conductor.security.client.key-id=_CHANGE_ME_
+conductor.security.client.secret=_CHANGE_ME_
+
 ```
 
-In the ```OrkesWorkersApplication.java```, there is a polling mechanism.  We've added code to insert the token as the AUTHORIZATION header:
+To add this to your own application:
+
+add a new maven repository and dependency in your ```build.gradle```
+```
+maven {
+   url "https://orkes-artifacts-repo.s3.amazonaws.com/releases"
+}
+
+...
+implementation("io.orkes.conductor:orkes-conductor-client:0.0.1-SNAPSHOT")
 
 ```
-<snip>
+ 
 
- String token = env.getProperty("conductor.server.auth.token");
-  
-        
-        //start of added code - see also lines 30 & 48
+ The OrkesWorkersApplication.java now uses the keyId and Secret to make the secure connection to Orkes:
 
-        ClientFilter filter = new ClientFilter() {
-            @Override
-            public ClientResponse handle(ClientRequest request) throws ClientHandlerException {
-                try {
-                    request.getHeaders().add(AUTHORIZATION_HEADER, token);
-                    return getNext().handle(request);
-                } catch (ClientHandlerException e) {
-                    e.printStackTrace();
-                    throw e;
-                }
-            }
-        };
-        TaskClient taskClient = new TaskClient(new DefaultClientConfig(), (ClientHandler) null, filter);
-</snip>
+ ```java
+ private void setCredentialsIfPresent(OrkesClient client) {
+        String keyId = env.getProperty(CONDUCTOR_CLIENT_KEY_ID);
+        String secret = env.getProperty(CONDUCTOR_CLIENT_SECRET);
+
+        if ("_CHANGE_ME_".equals(keyId) || "_CHANGE_ME_".equals(secret)) {
+            log.error("Please provide an application key id and secret");
+            System.exit(-1);
+        }
+        if (!StringUtils.isBlank(keyId) && !StringUtils.isBlank(secret)) {
+            log.info("setCredentialsIfPresent: Using authentication with access key '{}'", keyId);
+            client.withCredentials(keyId, secret);
+        } else {
+            log.info("setCredentialsIfPresent: Proceeding without client authentication");
+        }
+    }
+ ```
+
+
+
+The app will create an authorization token that will allow the OrkesWorkersApplication and the workers to interact with the tasks on the Playground.
+
+Now, when you run this application, it will poll the task queue at ```play.orkes.io.``` for these two tasks. (You'll probably see a lot of errors in the console, as the other workers are not provisioned on the playground.  To eliminate these errors, you can remove the other workers from ```orkesworkers/src/main/java/io/orkes/samples/workers/```).
+
+In each worker that is running in orkesworkers, ```upload_toS3.java``` and ```ImageConvertResizeWorker.java```, rename the getTaskDefName to match the name of your task (with the uniqueId at the end).
+
+```js
+    public String getTaskDefName() {
+        return "upload_toS3";
+    }
 ```
 
-Now, when you run this application, it will poll the task queue at ```play.orkes.io.``` for these two tasks. (You'll probably see a lot of errors in the console, as the other workers are not provisioned on the playground.  To emliminate these errors, you can remove the other workers from ```orkesworkers/src/main/java/io/orkes/samples/workers/```).
+To run this application locally, you can run right from your IDE, or run ```./gradlew bootRun
+12:40
+``` on the command line. 
 
-## Running your Worker
+## Running your Workflow
 
-Now that you've defined the workflow and tasks and created the authetication Application for your workers, we're ready to test your workflow. Click the ```Run Workflow``` in the left nav:
+Now that you've defined the workflow and tasks and created the authentication Application for your workers (and your worker application is running locally on your computer), we're ready to test your workflow. Click the ```Run Workflow``` in the left nav:
 
-* select ```image_convert_resize``` as your Workflow
+* select ```image_convert_resize<uniqueId>``` as your Workflow
 * Input:  
 
-```
+```json
 {
 	"fileLocation": "https://user-images.githubusercontent.com/1514288/155636237-caa91ec9-e19f-4ab0-aa65-106e09b381b0.png",
 	"recipeParameters":{
@@ -253,8 +271,8 @@ Your output JSON should include a file location of a resized image:
 ![resized image](https://image-processing-sandbox.s3.amazonaws.com/f1b4314d-f72b-4060-8758-d07b17bbc552.jpg)
 
 
-## Conclustion
+## Conclusion
 
-You've completed your first Conductor workflow in Orkes Playground!  Build your own, workflows and see how Condutor's workflow engine makes building orchetration pipelines easy!
+You've completed your first Conductor workflow in Orkes Playground!  Build your own, workflows and see how Conductor's workflow engine makes building orchestration pipelines easy!
 
 If you have any [feedback](https://share.hsforms.com/1TmggEej4TbCm0sTWKFDahwcfl4g) - please pass it on. We want to make the Orkes Cloud Conductor the best tool for you and your development team!
