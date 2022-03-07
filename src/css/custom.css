@@ -105,11 +105,14 @@ p {
 }
 .menu__link--sublist {
     font-weight: bold;
-    color: rebeccapurple;
-
-  background: none;
+    color: #0481e3;
+    background: none;
 }
-
+[data-theme='dark'] .menu__link--sublist {
+    font-weight: bold;
+    color: #e64769;
+    background: none;
+}
 
 .menu__link {
   line-height: 1.5em;
