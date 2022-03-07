@@ -176,52 +176,54 @@ We've now created everything in the Playground that our Worker will need to conn
 
 ## Worker
 
-With your key and secret, you can generate a JWT token.  This can be done via curl (with the token response shown):
-
-``` bash
-curl -s -X "POST" "https://play.orkes.io/api/token"    -H 'Content-Type: application/json; charset=utf-8'    -d '{
- "keyId": "<key>",
- "keySecret": "<secret>"
-}'
-{"token":"eyJhbGciOiJIUzUxMiJ9.eyJvcmtlc19rZXkiOiJhZWQ0YWFmZi0wZDYyLTRlYTEtOTdlNS04YjBkZDA1MzlmMzMiLCJvcmtlc19jb25kdWN0b3JfdG9rZW4iOnRydWUsInN1YiI6ImFwcDo1OGExMmRjYi1jMmEyLTQ3MDAtYmJjNS1jZDY1YjA3WWI0NDEiLCJpYXQiOjE2NDU4MjIzOTY1Njd9.yDVwu2Y2j111vUwNwbxCOFKn16AUlDXG8-e4oD6wA8QSBbQF38KJhbFiK2IFc4t_DeTi9jKjydKOKKkyw5LqJQ"}
-
-```
-
-We now need to add this JWT token into all polling headers that hit the Playground server.
-
-In the Orkesworkers repository, ```resources/application.properties``` ensure you have these two lines:
+With your key and secret, we can run the OrkesWorkers application.  In the Orkesworkers repository, ```resources/application.properties``` ensure you have these two lines:
 
 
 ```
 conductor.server.url=https://play.orkes.io/api/
-conductor.server.auth.token=<your token>
+
+conductor.security.client.key-id=_CHANGE_ME_
+conductor.security.client.secret=_CHANGE_ME_
+
 ```
 
-In the ```OrkesWorkersApplication.java```, there is a polling mechanism.  We've added code to insert the token as the AUTHORIZATION header:
+To add this to your own application:
 
-```java
-<snip>
-
- String token = env.getProperty("conductor.server.auth.token");
-  
-        
-        //start of added code - see also lines 30 & 48
-
-        ClientFilter filter = new ClientFilter() {
-            @Override
-            public ClientResponse handle(ClientRequest request) throws ClientHandlerException {
-                try {
-                    request.getHeaders().add(AUTHORIZATION_HEADER, token);
-                    return getNext().handle(request);
-                } catch (ClientHandlerException e) {
-                    e.printStackTrace();
-                    throw e;
-                }
-            }
-        };
-        TaskClient taskClient = new TaskClient(new DefaultClientConfig(), (ClientHandler) null, filter);
-</snip>
+add a new maven repository and dependency in your ```build.gradle```
 ```
+maven {
+   url "https://orkes-artifacts-repo.s3.amazonaws.com/releases"
+}
+
+...
+implementation("io.orkes.conductor:orkes-conductor-client:0.0.1-SNAPSHOT")
+
+```
+ 
+
+ The OrkesWorkersApplication.java now uses the keyId and Secret to make the secure connection to Orkes:
+
+ ```java
+ private void setCredentialsIfPresent(OrkesClient client) {
+        String keyId = env.getProperty(CONDUCTOR_CLIENT_KEY_ID);
+        String secret = env.getProperty(CONDUCTOR_CLIENT_SECRET);
+
+        if ("_CHANGE_ME_".equals(keyId) || "_CHANGE_ME_".equals(secret)) {
+            log.error("Please provide an application key id and secret");
+            System.exit(-1);
+        }
+        if (!StringUtils.isBlank(keyId) && !StringUtils.isBlank(secret)) {
+            log.info("setCredentialsIfPresent: Using authentication with access key '{}'", keyId);
+            client.withCredentials(keyId, secret);
+        } else {
+            log.info("setCredentialsIfPresent: Proceeding without client authentication");
+        }
+    }
+ ```
+
+
+
+The app will create an authorization token that will allow the OrkesWorkersApplication and the workers to interact with the tasks on the Playground.
 
 Now, when you run this application, it will poll the task queue at ```play.orkes.io.``` for these two tasks. (You'll probably see a lot of errors in the console, as the other workers are not provisioned on the playground.  To eliminate these errors, you can remove the other workers from ```orkesworkers/src/main/java/io/orkes/samples/workers/```).
 
