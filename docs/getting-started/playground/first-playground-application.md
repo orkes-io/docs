@@ -233,9 +233,13 @@ In each worker that is running in orkesworkers, ```upload_toS3.java``` and ```Im
     }
 ```
 
-## Running your Worker
+To run this application locally, you can run right from your IDE, or run ```./gradlew bootRun
+12:40
+``` on the command line. 
 
-Now that you've defined the workflow and tasks and created the authentication Application for your workers, we're ready to test your workflow. Click the ```Run Workflow``` in the left nav:
+## Running your Workflow
+
+Now that you've defined the workflow and tasks and created the authentication Application for your workers (and your worker application is running locally on your computer), we're ready to test your workflow. Click the ```Run Workflow``` in the left nav:
 
 * select ```image_convert_resize<uniqueId>``` as your Workflow
 * Input:  
