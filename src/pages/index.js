@@ -26,7 +26,7 @@ export default function Home() {
               {
                 title: "Getting Started",
                 description: "Learn about Conductor and its concepts",
-                to: "/docs/getting-started",
+                to: "/docs/introduction",
               },
               {
                 title: "Running Conductor",
