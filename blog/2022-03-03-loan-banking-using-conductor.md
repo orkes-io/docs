@@ -1,7 +1,7 @@
 ---
 slug: loan-banking-using-conductor 
 title: Modern Loan Banking (Lending) Using Conductor
-authors: orkes
+authors: altad
 tags: [Netflix Conductor, Orkes, Conductor, orchestration, 2022]
 ---
 
@@ -9,41 +9,43 @@ tags: [Netflix Conductor, Orkes, Conductor, orchestration, 2022]
 
 ## Introduction
 
-We got introduced to Conductor in the [Introduction](../docs/introduction) article. 
+As the [Introduction](../docs/introduction) documentation shoes, Netflix Conductor can be used for a variety of uses cases, solving complex workflow problems that plague many companies worldwide.
 
-Let's now try to understand how we can use Conductor to solve a Lending problem that exists in Banking and Fintech sector. 
+Let's now try to understand how we can use Conductor to solve a Lending problem that exists in the Banking and Fintech sector. 
 
 ## Use Case / Problem
 
-In this era of Fintech, bank customers are slowly moving from traditional banking to digital banking. Hence, in order to keep up with the customer demands various banks are trying to automate their banking processes and one among them is loan banking (lending) process to its customers. 
+In the new modern era of Fintech, bank customers are moving from traditional banking to digital banking. With that, there is an expectation that the processes that are run will be faster and more streamlined.  Hence, in order to keep up with the customer demands various banks are trying to automate their banking processes.  One common (and complicated) process that many banks are automating  to its customers is the loan banking (lending) process. 
 
-Lending workflows can be very common and potential problem that can be solved by the conductor.
+Lending workflows can be very common and potential problem that can be solved by Conductor.
 
-![](./assets/lending_meme_Medium.png)
+
+![banking meme](./assets/lending_meme_Medium.png)
 
 #### Yes we are serious !!!!
-#### JP Morgan Chase and American Express are already using conductor for their Banking needs !!!!
+#### JP Morgan Chase and American Express are already using Conductor for their Banking needs !!!!
 
 ## Solution Using Conductor
 
-Every Bank have their own set of rules in the area of Lending. This lending process is from Bank to the Customer, it depends on various factors that are evaluated and computed on details provided by the customer. On the basis of these details, banks measure the risk and offer loans to its customers on different parameters (for example - interest rate, tenure, EMIs, etc). This varies from Bank to Bank.
+Every Bank has their own set of rules in the area of Lending. As this lending process is from Bank to the Customer, it depends on various factors that are evaluated and computed on details provided by the customer. On the basis of these details, banks measure the risk and offer loans to its customers on different parameters (for example - interest rate, tenure, EMIs, etc). This varies from Bank to Bank.
 
 The complexities that banks go through behind the scenes to do the complex calculations, and on the top of that they have to maintain high level of security from potential threat, this all can be taken care by conductor.
 
-#### Let's consider a simple workflow to understand how we can use features of Conductor in this Use Case :
+#### Let's consider a simple workflow to understand how we can use features of Conductor
+#### In this Use Case:
 
 This is an example of lending workflow in banks, there can be few complex tasks involved in this workflow. 
-For now, we have created a workflow with only the most obvious and neccessary tasks.
+For now, we have created a workflow with only the most obvious and necessary tasks.
 
-![](./assets/lending_flow.png)
+![Conductor lending workflow](./assets/lending_flow.png)
 
-The first task is `customer_details` , basic details (name, address, loan type,...) of the customer is fetched.
+The first task is `customer_details`, basic details (name, address, loan type,...) of the customer is fetched.
 
 On the basis of loan type applied by the customer, `loan_type` a [switch-task](../docs/reference-docs/switch-task) makes decision of proceeding workflow.
 
 #### If customer applies for education loan, the workflow looks like.
 
-![](./assets/loanType_education.png)
+![education workflow](./assets/loanType_education.png)
 
 The workflow proceeds with the tasks `education_details` and `education_details_verification`. (Workflow would have went the other two ways if  `loanType : business`  or  `loanType : property`  were provided to the  `loan_type`  switch task). 
 
