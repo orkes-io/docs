@@ -6,7 +6,7 @@ tags: [Netflix Conductor, Orkes, Conductor, orchestration, image processing, for
 ---
 
 
-In our [previous post](image-processing-workflow-with-conductor) on image processing workflows, we built a Netflix Conductor workflow that took an image input, and then ran 2 tasks: The first task resizes and reformats the image, and the second task uploads the image to an AWS S3 bucket.
+In our [previous post](/content/blog/image-processing-workflow-with-conductor) on image processing workflows, we built a Netflix Conductor workflow that took an image input, and then ran 2 tasks: The first task resizes and reformats the image, and the second task uploads the image to an AWS S3 bucket.
 
 With today's varied screen sizes, and varied browser support, it is a common requirement that the image processing pipeline must create multiple images with different sizes and formats of each image.
 
@@ -16,7 +16,7 @@ In this post, our workflow will create 2 versions of the same image - a jpg and 
 
 <!-- truncate  -->
 
-> NOTE:  This demo is provided to explain the FORK task in Conductor, but is not the best workflow to generate multiple images.  For that - please read the [Image processing with dynamic workflows](image-processing-multiple-images-dynamic) post.
+> NOTE:  This demo is provided to explain the FORK task in Conductor, but is not the best workflow to generate multiple images.  For that - please read the [Image processing with dynamic workflows](/content/blog/image-processing-multiple-images-dynamic) post.
 
 ## Getting Started
 

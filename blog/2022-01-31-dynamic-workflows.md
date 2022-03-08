@@ -5,9 +5,9 @@ authors: doug
 tags: [Netflix Conductor, Orkes, Conductor, orchestration, image processing, fork, dynamic fork, tutorial, 2022]
 ---
 
-In recent posts, we have built several image processing workflows with Conductor.  In our first post, we created an [image processing workflow for one image](image-processing-workflow-with-conductor) - where we provide an image along with the desired output dimensions and format.  The workflow output a link on Amazon S3 to the desired file.
+In recent posts, we have built several image processing workflows with Conductor.  In our first post, we created an [image processing workflow for one image](/content/blog/image-processing-workflow-with-conductor) - where we provide an image along with the desired output dimensions and format.  The workflow output a link on Amazon S3 to the desired file.
 
-In the 2nd example, we used the FORK System task to create [multiple images](image-processing-multiple-images-forks) in parallel.  The number of images was hardcoded in the workflow - as FORK generates exactly as many paths as are coded into the workflow.
+In the 2nd example, we used the FORK System task to create [multiple images](/content/blog/image-processing-multiple-images-forks) in parallel.  The number of images was hardcoded in the workflow - as FORK generates exactly as many paths as are coded into the workflow.
 
 As number of images is hardcoded in the workflow - only 2 images are created.  When it comes to image generation, there is often a need for more images (as new formats become popular) or sizes - as more screens are supported.
 
