@@ -1,7 +1,7 @@
 ---
 slug: loan-banking-using-conductor 
 title: Modern Loan Banking (Lending) Using Conductor
-authors: altad
+authors: altaf
 tags: [Netflix Conductor, Orkes, Conductor, orchestration, 2022]
 ---
 
