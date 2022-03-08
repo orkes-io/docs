@@ -107,7 +107,7 @@ Software Development Kit for Netflix Conductor, written on and providing support
         }
       ]'
     ```
-6. Create a `Workerflow` within `Conductor`. Example:
+6. Create a `Workflow` within `Conductor`. Example:
     ```shell
     $ curl -X 'POST' \
         'http://localhost:8080/api/metadata/workflow' \
