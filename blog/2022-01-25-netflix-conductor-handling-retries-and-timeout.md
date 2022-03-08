@@ -21,7 +21,7 @@ Conductor allows you to define your stateful applications that can handle failur
 Each task in Conductor can be configured how it responds to availability events such as: 1) Failures 2) Timeouts and 3) Rate limits.
 
 
-Here is a sample task defintion:
+Here is a sample task definition:
 
 ```
 {

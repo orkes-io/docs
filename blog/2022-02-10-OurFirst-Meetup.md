@@ -10,7 +10,7 @@ In early Feb 2022, we had our first meetup on Netflix Conductor: [Using Conducto
 
 We had two excellent talks from Maros Marasalek at FRINX and Nick Tomlin at Netflix.  
 
-After the two talks, we had 2 roadmap sessions.  Ther first session was by the Netflix Conductor team - where they discussed recent releases, and walked through the Open Source roadmap for the coming months.  The second session, by our own Viren Baraiya, introduced Orkes, and our plans for extending Netflix Conductor.
+After the two talks, we had 2 roadmap sessions.  The first session was by the Netflix Conductor team - where they discussed recent releases, and walked through the Open Source roadmap for the coming months.  The second session, by our own Viren Baraiya, introduced Orkes, and our plans for extending Netflix Conductor.
 
 
 ## Conductor in FRINX
@@ -33,7 +33,7 @@ Our third talk was from the Netflix Conductor team - where they presented the ro
 
 ## Introducing Orkes
 
-Finally, one of our founders (and the commiter of the first line of Conductor code) Viren Baraiya presented Orkes and *our* roadmap:
+Finally, one of our founders (and the committer of the first line of Conductor code) Viren Baraiya presented Orkes and *our* roadmap:
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/MnC25X0jtYE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
