@@ -9,7 +9,7 @@ tags: [Netflix Conductor, Orkes, Conductor, orchestration, 2022]
 
 ## Introduction
 
-As the [Introduction](../docs/introduction) documentation shoes, Netflix Conductor can be used for a variety of uses cases, solving complex workflow problems that plague many companies worldwide.
+As the [Introduction](../docs/introduction) documentation shows, Netflix Conductor can be used for a variety of uses cases, solving complex workflow problems that plague many companies worldwide.
 
 Let's now try to understand how we can use Conductor to solve a Lending problem that exists in the Banking and Fintech sector. 
 
@@ -78,5 +78,6 @@ Whatever the Customer decision, on the basis of it the `customer_decision` a [(s
 ![](./assets/lending_meme_finish.jpg)
 
 ## Thank You For Reading !!
+
 
 
