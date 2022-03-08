@@ -79,5 +79,8 @@ Whatever the Customer decision, on the basis of it the `customer_decision` a [(s
 
 ## Thank You For Reading !!
 
+You can see the workflow in our [Playground](https://play.orkes.io/workflowDef/loan_banking). Note that there are no workers actually powering the workflow, so it is only there to share the definition and the diagram.
+
+Feel free to make your own copy of the workflow,a nd build your own loan processing workflow in the playground.  If you run into issues, (or want to share your results), drop a message in our [Discord server](https://discord.gg/pYYdYsYTAw).
 
 
