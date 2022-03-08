@@ -5,11 +5,11 @@ authors: doug
 tags: [Netflix Conductor, Orkes, Conductor, orchestration, image processing, fork, subworkflow, tutorial,2022]
 ---
 
-In our initial image processing workflow using Netflix Conductor, we [initially built a workflow](image-processing-workflow-with-conductor) that takes one image, resizes it and uploads it to S3.
+In our initial image processing workflow using Netflix Conductor, we [initially built a workflow](/content/blog/image-processing-workflow-with-conductor) that takes one image, resizes it and uploads it to S3.
 
 <img src="/content/img/blogassets/Simple-image-workflow.png" width="300" style={{paddingBottom: 40, paddingTop: 0}} />
 
-In our 2nd post, we [utilized a fork to create two images in parallel](image-processing-multiple-images-forks).  When building this workflow, we reused all of the tasks from the first workflow, connecting them in a way that allowing for parallel processing of two images at once.
+In our 2nd post, we [utilized a fork to create two images in parallel](/content/blog/image-processing-multiple-images-forks).  When building this workflow, we reused all of the tasks from the first workflow, connecting them in a way that allowing for parallel processing of two images at once.
 
 <img src="/content/img/blogassets/workflow_fork.png" width="400" style={{paddingBottom: 40, paddingTop: 0}} />
 
@@ -31,7 +31,7 @@ There are a number of advantages to calling a sub-workflow:
 
 ## Creating our Subworkflow
 
-We want to use the ```image_convert_resize``` workflow already created in our [simple workflow](image-processing-workflow-with-conductor) example.  If you have not yet created this workflow (and the tasks that run under this workflow), you must first create a local Conductor instance, and then define this workflow (the instructions are in the blog post).  It's also a good idea to test this workflow before using as a subworkflow - just to make sure that it is working as expected :D.
+We want to use the ```image_convert_resize``` workflow already created in our [simple workflow](/content/blog/image-processing-workflow-with-conductor) example.  If you have not yet created this workflow (and the tasks that run under this workflow), you must first create a local Conductor instance, and then define this workflow (the instructions are in the blog post).  It's also a good idea to test this workflow before using as a subworkflow - just to make sure that it is working as expected :D.
 
 
 ## The (full) workflow
@@ -43,7 +43,7 @@ In this example, we'll utilize the ```image_convert_resize``` workflow as our su
 
 ### The workflow code
 
-The overall workflow is essentially the same as the one built in the [forked workflow](image-processing-multiple-images-forks):
+The overall workflow is essentially the same as the one built in the [forked workflow](/content/blog/image-processing-multiple-images-forks):
 
 ```
 {
