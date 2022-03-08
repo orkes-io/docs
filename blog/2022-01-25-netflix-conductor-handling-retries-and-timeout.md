@@ -43,7 +43,7 @@ Here is a sample task definition:
 ```retry*``` parameters specify how to handle cases where the task execution fails and retries can be configured to be with fixed delay or exponential backoff.  Similarly ```timeout*``` parameters specify how much time to give for task to complete execution and if the task should be marked as 'Timed Out' if it runs longer than that.
 
 ## More Details
-[https://orkes.io/content/docs/how-tos/task-configurations](https://orkes.io/content/docs/how-tos/task-configurations)
+[https://orkes.io/content/docs/how-tos/Tasks/task-configurations](https://orkes.io/content/docs/how-tos/Tasks/task-configurations)
 
 Follow us on [https://github.com/Netflix/conductor/](https://github.com/Netflix/conductor/)
 for the source code and updates.
