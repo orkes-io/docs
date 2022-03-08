@@ -1,17 +1,17 @@
 ---
 slug: image-processing-multiple-images-dynamic
-title: Dyanmic forks- scaling your system at runtime - an image processing example
+title: Dynamic forks- scaling your system at runtime - an image processing example
 authors: doug
 tags: [Netflix Conductor, Orkes, Conductor, orchestration, image processing, fork, dynamic fork, tutorial, 2022]
 ---
 
-In recent posts, we have built several image processesing workflows with Conductor.  In our first post, we created an [image processing workflow for one image](image-processing-workflow-with-conductor) - where we provide an image along with the desired output dimensions and format.  The workflow output a link on Amazon S3 to the desired file.
+In recent posts, we have built several image processing workflows with Conductor.  In our first post, we created an [image processing workflow for one image](image-processing-workflow-with-conductor) - where we provide an image along with the desired output dimensions and format.  The workflow output a link on Amazon S3 to the desired file.
 
 In the 2nd example, we used the FORK System task to create [multiple images](image-processing-multiple-images-forks) in parallel.  The number of images was hardcoded in the workflow - as FORK generates exactly as many paths as are coded into the workflow.
 
-As number of images is hardcoded in the workflow - only 2 images are created.  When it ocmes to image generation, there is often a need for more images (as new formats become popular) or sizes - as more screens are supported.
+As number of images is hardcoded in the workflow - only 2 images are created.  When it comes to image generation, there is often a need for more images (as new formats become popular) or sizes - as more screens are supported.
 
-Luckily, Conductor supports this flexibility, and has a feature to specify the number of tasks to be created at runtime.  In this post, we'll demonstrate the use of [dynamic forks](https://orkes.io/content/docs/reference-docs/dynamic-fork-task), where the workflow splitting is done at runtime.
+Luckily, Conductor supports this flexibility, and has a feature to specify the number of tasks to be created at runtime.  In this post, we'll demonstrate the use of [dynamic forks](/content/docs/reference-docs/dynamic-fork-task), where the workflow splitting is done at runtime.
 
 Learn how to create a dynamic fork workflow in this post!
 
@@ -175,7 +175,7 @@ This task is also present in the [Github repository](https://github.com/orkes-io
 
 We will need to create 2 tasks (and for simplicity, we can just copy the files from Github):  ```image_multiple_convert_resize.json``` and ```image_convert_resize.json```.  
 
-You can add these definintions using curl:
+You can add these definitions using curl:
 
 ```
 curl -X 'POST' \
@@ -228,9 +228,9 @@ This will spawn 9 different processes and create 9 images.
 
 ### Not quite the same
 
-In this workflow, our dynamic task creates the resized and reformatted images.  In the earlier workflows, there is a second task that uploads the videos to S3.  A Dyanmic task will only run one task, so in this case, we are just generating the image.
+In this workflow, our dynamic task creates the resized and reformatted images.  In the earlier workflows, there is a second task that uploads the videos to S3.  A Dynamic task will only run one task, so in this case, we are just generating the image.
 
-To run several tasks per dyanmica task, we'll need to create a [subworkflow](https://orkes.io/content/docs/reference-docs/sub-workflow-task) inside the dynamic task.
+To run several tasks per dynamic task, we'll need to create a [subworkflow](https://orkes.io/content/docs/reference-docs/sub-workflow-task) inside the dynamic task.
 
-For simplicity, we've introduced the dyanmica task here, and in our next post, we will combine the dynamic task with a subworkflow to create the images AND upload them to S3.
+For simplicity, we've introduced the dynamic task here, and in our next post, we will combine the dynamic task with a subworkflow to create the images AND upload them to S3.
 

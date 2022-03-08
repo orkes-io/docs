@@ -1,4 +1,4 @@
-# Hello World Codelab 
+# Hello World Codelab 3
 
 We've made it to Part 3!  Thanks for keeping at it! What we've covered so far:
 

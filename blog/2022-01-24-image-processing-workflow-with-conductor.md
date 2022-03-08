@@ -7,7 +7,7 @@ tags: [Netflix Conductor, Orkes, Conductor, orchestration, image processing, 202
 
 There are many tools available to work with images - resizing, changing the format, cropping, changing colors, etc.  Tools like Photoshop require a lot of manual work to create image.  Online tools for image processing are also extremely popular. But, rather than doing the work manually, or paying for a service to modify your images, wouldn't it be cool to have a workflow that does image resizing for you automatically?  In this post, we'll build just this using Conductor to orchestrate the microservices involved, and to create an API-like surface for image processing.
 
-In this post, we'll run Conductor locally on your computer. The Conductor workflow consists of two tasks.  The first task reads in an image and resizes it according to the parameters provided (labeled "image_conver_resize_ref" in the image below).  The second task ("image_toS3_ref" below) takes the resized image and saves the it to an Amazon S3 bucket.
+In this post, we'll run Conductor locally on your computer. The Conductor workflow consists of two tasks.  The first task reads in an image and resizes it according to the parameters provided (labeled "image_convert_resize_ref" in the image below).  The second task ("image_toS3_ref" below) takes the resized image and saves the it to an Amazon S3 bucket.
 
 <img src="/content/img/blogassets/imageprocessing-workflow-diagram.png" alt="Diagram of our image processing workflow" width="350" style={{paddingBottom: 40, paddingTop: 0}} />
 
@@ -41,7 +41,7 @@ Now we can build and run the Conductor server:
 
 ```
 cd conductor
-$ cd serverserver 
+$ cd server
 $ ../gradlew bootRun
 ```
 
@@ -308,7 +308,7 @@ curl -X 'POST' \
       }'
 ```
 
-The response will be a Workflow ID. If you have ElasticSeacrh running on your system, the results will appear at localhost:5000.  If you do not (and it was not a part of this tutorial) - you can browse to the workflow manually by visiting ```http://localhost:5000/execution/[workflowid]```
+The response will be a Workflow ID. If you have ElasticSearch running on your system, the results will appear at localhost:5000.  If you do not (and it was not a part of this tutorial) - you can browse to the workflow manually by visiting ```http://localhost:5000/execution/[workflowid]```
 
 
 You'll see a page similar to the one below with “completed” in green next to the workflowId:

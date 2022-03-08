@@ -6,23 +6,23 @@ tags: [Netflix Conductor, Orkes, Conductor, orchestration, image processing, for
 ---
 
 
-In our [previous post](image-processing-workflow-with-conductor) on image processesing workflows, we built a Netflix Conductor workflow that took an image input, and then ran 2 tasks: The first task resizes and reformats the image, and the second task uploads the image to an AWS S3 bucket.
+In our [previous post](image-processing-workflow-with-conductor) on image processing workflows, we built a Netflix Conductor workflow that took an image input, and then ran 2 tasks: The first task resizes and reformats the image, and the second task uploads the image to an AWS S3 bucket.
 
 With today's varied screen sizes, and varied browser support, it is a common requirement that the image processing pipeline must create multiple images with different sizes and formats of each image.
 
-To do this with a Conductor workflow, we'll utilize the [FORK](https://orkes.io/content/docs/reference-docs/fork-task) operation to create parallel processes to generate multiple versions of the same image.  The FORK task creates multiple parallel processes, so each iamge will be created asynchronously - ensuring a fast and efficient process.
+To do this with a Conductor workflow, we'll utilize the [FORK](/content/docs/reference-docs/fork-task) operation to create parallel processes to generate multiple versions of the same image.  The FORK task creates multiple parallel processes, so each image will be created asynchronously - ensuring a fast and efficient process.
 
 In this post, our workflow will create 2 versions of the same image - a jpg and webp.
 
 <!-- truncate  -->
 
-> NOTE:  This demo is provided to explain the FORK task in Conductor, but is not the best workflow to generate multiple images.  For that - please read the [Image processesing with dynamic workflows](image-processing-multiple-images-dynamic) post.
+> NOTE:  This demo is provided to explain the FORK task in Conductor, but is not the best workflow to generate multiple images.  For that - please read the [Image processing with dynamic workflows](image-processing-multiple-images-dynamic) post.
 
-## Geting Started
+## Getting Started
 
-In this demonstration, we'll be running Conductor locally. Once you have followed the steps for [setting up a local Conductor instance](https://orkes.io/content/docs/getting-started/install/running-locally), you'll be ready to go.
+In this demonstration, we'll be running Conductor locally. Once you have followed the steps for [setting up a local Conductor instance](/content/docs/getting-started/install/running-locally), you'll be ready to go.
 
-Since we are doing image processesing, you'll also want to have ImageMagick [installed on your machine](https://imagemagick.org/script/download.php).
+Since we are doing image processing, you'll also want to have ImageMagick [installed on your machine](https://imagemagick.org/script/download.php).
 
 The workflow, tasks and Java workers are all a part of the [orkesworkers](https://github.com/orkes-io/orkesworkers) GitHub repository.
 
@@ -128,7 +128,7 @@ When the 2 workflows have completed, the last task in each flow will fire that i
 ```
 This creates a JSON object with our 2 AWS S3 URLs where our new jpg and webp images are now hosted.
 
-> The JOIN and FORK tasks are System tasks, and therefore do not require an additional task definitio- the workflow definition is suffcient.
+> The JOIN and FORK tasks are System tasks, and therefore do not require an additional task definition- the workflow definition is sufficient.
 
 
 ## The Fork Tasks
@@ -157,7 +157,7 @@ In the workflow above, we omitted the workflow tasks.  Let's look at the first w
 ]
 ```
 
-These two tasks should be familiar to those who read the first image processesing post. They are very nearly the same - the only difference is the addition of ```_jpg_``` to the taskReferenceName, and the ```"outputFormat"``` term) is now hardcoded to ```jpg```.
+These two tasks should be familiar to those who read the first image processing post. They are very nearly the same - the only difference is the addition of ```_jpg_``` to the taskReferenceName, and the ```"outputFormat"``` term) is now hardcoded to ```jpg```.
 
 
 In the first fork, we have 2 tasks: ```image_convert_resize``` and ```upload_toS3```.  
@@ -237,7 +237,7 @@ This task is described in our [previous post](image-processing-workflow-with-con
 }
 ```
 
-Here's how to add it to your lcoal Conductor instance:
+Here's how to add it to your local Conductor instance:
 
 ```
 curl -X 'POST' \

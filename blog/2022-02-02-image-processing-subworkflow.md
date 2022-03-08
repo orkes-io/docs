@@ -14,7 +14,7 @@ In our 2nd post, we [utilized a fork to create two images in parallel](image-pro
 <img src="/content/img/blogassets/workflow_fork.png" width="400" style={{paddingBottom: 40, paddingTop: 0}} />
 
 
-In both of these workflows, two tasks are reused: ```image_convert_resize``` and ```upload_toS3```.  This is onegreat advantage of using microservices - we create the service once, and reuse it many times in different ways.
+In both of these workflows, two tasks are reused: ```image_convert_resize``` and ```upload_toS3```.  This is one great advantage of using microservices - we create the service once, and reuse it many times in different ways.
 
 In this post, we'll take that abstraction a step further, and replace the tasks in the two forks with a ```SUB_WORKFLOW```. This allows us to simplify the full workflow by abstracting a frequently used set of tasks into a single task.
 
@@ -22,12 +22,12 @@ In this post, we'll take that abstraction a step further, and replace the tasks 
 
 ## Subworkflow
 
-A [subworkflow](https://orkes.io/content/docs/reference-docs/sub-workflow-task) is exactly what it sounds like: a fully functional workflow called inside a larger workflow.
+A [subworkflow](/content/docs/reference-docs/sub-workflow-task) is exactly what it sounds like: a fully functional workflow called inside a larger workflow.
 
 There are a number of advantages to calling a sub-workflow:
 
 1. Simplicity.  In the current case, we replace 2 tasks with one workflow.  In more complicated examples, the definition will be even further simplified. 
-2. Continutity.  Our [simple workflow](image-processing-workflow-with-conductor) and [forked workflow](image-processing-multiple-images-forks) use the same tasks.  If a change is made to the simple workflow (but not the forked one) - the two workflows are now different - perhaps unintentionally.  If we utilize the ```simple workflow``` as a subworkflow - any changes to the workflow are immediately propagated to the forked workflow with no user intervention.
+2. Continuity.  Our [simple workflow](image-processing-workflow-with-conductor) and [forked workflow](image-processing-multiple-images-forks) use the same tasks.  If a change is made to the simple workflow (but not the forked one) - the two workflows are now different - perhaps unintentionally.  If we utilize the ```simple workflow``` as a subworkflow - any changes to the workflow are immediately propagated to the forked workflow with no user intervention.
 
 ## Creating our Subworkflow
 
@@ -142,6 +142,6 @@ Converting the 2 webp tasks to a subworkflow is not included in this post, but b
 
 ## Conclusion
 
-Integrating subworkflows can simplify your workflow, allowing you to extract (and reuse) complex steps thhroughout your workflow.  They also have the added advantage of beaing easily updated - one change to the workflow will propgate automatically to every location it is referenced in all of your orchestration.
+Integrating subworkflows can simplify your workflow, allowing you to extract (and reuse) complex steps throughout your workflow.  They also have the added advantage of being easily updated - one change to the workflow will propagate automatically to every location it is referenced in all of your orchestration.
 
 
