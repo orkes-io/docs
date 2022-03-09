@@ -4,11 +4,25 @@ sidebar_position: 1
 
 # Reference Documentation
 
-Select a topic from the left panel.
+Our reference documentation provides detailed information on the System tasks and Operators that can be run in Conductor:
 
-#### Popular topics
-1. [HTTP Task](reference-docs/system-tasks/http-task)
-2. [Switch / Decision](reference-docs/switch-task)
-3. [Fork](reference-docs/fork-task)
-3. [Wait](reference-docs/wait-task)
 
+## System Tasks
+
+* [HTTP Task](/content/docs/reference-docs/system-tasks/http-task)
+* [JSON JQ Transformation](/content/docs/reference-docs/system-tasks/json-jq-transform-task)
+* [Event Task](/content/docs/reference-docs/system-tasks/event-task)
+* [Inline Task](/content/docs/reference-docs/system-tasks/inline-task)
+* [Kafka Publish Task](/content/docs/reference-docs/system-tasks/kafka-publish-task)
+
+## Operator Tasks
+* [Switch](/content/docs/reference-docs/switch-task)
+* [Do While](/content/docs/reference-docs/do-while-task)
+* [Fork](/content/docs/reference-docs/fork-task)
+* [Dynamic Fork](/content/docs/reference-docs/dynamic-fork-task)
+* [Join](/content/docs/reference-docs/join-task)
+* [Wait](/content/docs/reference-docs/wait-task)
+* [Dynamic](/content/docs/reference-docs/dynamic-task)
+* [Terminate](/content/docs/reference-docs/terminate-task)
+* [Set Variable](/content/docs/reference-docs/set-variable-task)
+* [Sub Workflow](/content/docs/reference-docs/sub-workflow-task)
