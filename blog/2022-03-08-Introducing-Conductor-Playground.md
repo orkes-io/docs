@@ -27,7 +27,7 @@ We have also included a set of pre-built workflows for everyone so that you have
 
 It is also worth noting the scope we had in mind when we built the playground so that you can better plan your journey of learning (and loving!) Conductor. While the playground is a great place to test your workflows and understand how Conductor works, it is not intended for production usage. When you are ready for running your production workloads, we recommend using some of the other ways in which Conductor can be run as dedicated for your needs. We are here to help you with that, whether you want to get going on [running the open source Conductor](https://orkes.io/content/docs/getting-started/install/running-locally#download-and-run) on your own or use the fully managed service from [Orkes Cloud](https://orkes.io/cloud/) which can run on your cloud or be hosted by Orkes.
 
-## TODO 
+
 ## Using the Conductor Playground
 
 Using the playground is easy - just go to [https://play.orkes.io/](https://play.orkes.io/]) and you will be presented with a simple login screen which allows us to create a dedicated namespace for you. [Once you login](https://orkes.io/content/docs/getting-started/playground/using-conductor-playground#logging-in-to-conductor-playground), you will be dropped to the Conductor UI that organizes tasks, workflows and their executions for easy navigation. The Conductor documentation site has [more details about the various components of the playground](https://orkes.io/content/docs/getting-started/playground/using-conductor-playground#conductor-playground-components). 
