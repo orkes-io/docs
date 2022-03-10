@@ -213,7 +213,6 @@ pre code {
 
 .aClass:hover {
   text-decoration: none;
-  color: #7033ff;
 }
 
 html[data-theme="dark"] .aClass {
