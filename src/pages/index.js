@@ -10,6 +10,7 @@ import {
   TitleDoubleTextSection,
   WhatIsConductorSection,
   YourfirstWorkflowSection,
+  CommunitySection,
 } from "./_Sections";
 
 export default function Home() {
@@ -143,6 +144,7 @@ export default function Home() {
             rightImage={SmallDiagram}
             sectionFooter="Simple functional code that can run complex flows"
           />
+          <CommunitySection />
         </main>
       </Layout>
     </div>

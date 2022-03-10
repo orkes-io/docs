@@ -6,11 +6,13 @@ export const PaperContainer = ({ children, className = "" }) => {
 };
 
 export const ColumnRenderer = ({ columns, spaceEvenly = false }) => {
-  const columnAmount = Math.round(12 / columns.length);
-  return (
+  return columns.length === 0 ? null : (
     <div className={`row ${spaceEvenly ? styles.spaceEvenly : ""}`}>
       {columns.map((elem, idx) => (
-        <div key={`col-${idx}`} className={`col col--${columnAmount}`}>
+        <div
+          key={`col-${idx}`}
+          className={`col col--${Math.round(12 / columns.length)}`}
+        >
           {elem}
         </div>
       ))}
@@ -40,9 +42,15 @@ export const PaperColumnRenderer = ({
   );
 };
 
-export const InfoPaper = ({ title, infoColumn1, infoColumn2, children }) => (
+export const InfoPaper = ({
+  title,
+  infoColumn1,
+  infoColumn2,
+  children,
+  titleContainerClass = "",
+}) => (
   <PaperContainer className={`container padding--lg`}>
-    <div className="row row--no-gutters">
+    <div className={`row row--no-gutters ${titleContainerClass}`}>
       <h4>{title}</h4>
     </div>
     <ColumnRenderer columns={[infoColumn1, infoColumn2]} />

@@ -17,6 +17,17 @@
   padding-top: 0.5rem;
 }
 
+.iconHeader {
+  display: inline-flex;
+}
+
+.iconHeader h5 {
+  margin: auto;
+}
+.communityRow {
+  min-height: 130px;
+}
+
 @media screen and (max-width: 966px) {
   .mobileSpaced {
     margin-top: 1rem;
