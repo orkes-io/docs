@@ -147,7 +147,7 @@ export const CommunitySection = ({}) => (
       infoColumn1={
         <>
           <div className={`row ${styles.communityRow}`}>
-            <div className="col col--10">
+            <div className="col col--12">
               <a
                 className={"aClass"}
                 href={
@@ -165,7 +165,7 @@ export const CommunitySection = ({}) => (
             </div>
           </div>
           <div className={`row ${styles.communityRow}`}>
-            <div className="col col--10">
+            <div className="col col--12">
               <a
                 className={"aClass"}
                 href={"https://discord.com/invite/P6vVt9xKSQ"}
@@ -180,7 +180,7 @@ export const CommunitySection = ({}) => (
             </div>
           </div>
           <div className={`row ${styles.communityRow}`}>
-            <div className="col col--10">
+            <div className="col col--12">
               <a
                 className={"aClass"}
                 href={"https://twitter.com/orkesio"}
@@ -199,7 +199,7 @@ export const CommunitySection = ({}) => (
       infoColumn2={
         <>
           <div className={`row ${styles.communityRow}`}>
-            <div className="col col--10">
+            <div className="col col--12">
               <a
                 className={"aClass"}
                 href={"https://github.com/Netflix/conductor"}
@@ -215,7 +215,7 @@ export const CommunitySection = ({}) => (
             </div>
           </div>
           <div className={`row ${styles.communityRow}`}>
-            <div className="col col--10">
+            <div className="col col--12">
               <a
                 className={"aClass"}
                 href={"https://www.linkedin.com/company/orkes-inc/"}
@@ -231,7 +231,7 @@ export const CommunitySection = ({}) => (
             </div>
           </div>
           <div className={`row ${styles.communityRow}`}>
-            <div className="col col--10">
+            <div className="col col--12">
               <a
                 className={"aClass"}
                 href={
