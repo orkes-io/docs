@@ -93,6 +93,11 @@ h3 {
 h4 {
   font-size: 18px;
   font-family: "Gothic A1", sans-serif;
+  font-weight: 600;
+}
+h5 {
+  font-size: 16px;
+  font-family: "Gothic A1", sans-serif;
   font-weight: 500;
 }
 
@@ -208,7 +213,6 @@ pre code {
 
 .aClass:hover {
   text-decoration: none;
-  color: #7033ff;
 }
 
 html[data-theme="dark"] .aClass {
