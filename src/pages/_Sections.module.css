@@ -1,10 +1,12 @@
 .firstWorkflowContainer {
   display: flex;
   justify-content: center;
+  min-height: 520px;
   height: 95%;
   padding: 20px 0;
   border-radius: 20px;
   background-color: #9FE2F7;
+  position: relative;
 }
 
 .whiteFont {
@@ -26,6 +28,18 @@
 }
 .communityRow {
   min-height: 130px;
+}
+
+.diagramIdle {
+  position: absolute;
+  z-index: 1;
+}
+
+.diagramReady {
+  transition: opacity .5s;
+  transition-delay: 1s;
+  position: absolute;
+  z-index: 2;
 }
 
 @media screen and (max-width: 966px) {
