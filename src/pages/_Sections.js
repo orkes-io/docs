@@ -23,8 +23,8 @@ export const StepBoxesSection = ({ steps = [] }) => (
     <PaperColumnRenderer
       spaceEvenly
       colClassName={styles.mobileSpaced}
-      columns={steps.map((singleStepJson) => (
-        <SingleStep {...singleStepJson} key={singleStepJson.title} />
+      columns={steps.map((singleStepJson, index) => (
+        <SingleStep {...singleStepJson} index={index} key={singleStepJson.title} />
       ))}
     />
   </div>

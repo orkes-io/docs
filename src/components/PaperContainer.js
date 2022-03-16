@@ -25,14 +25,13 @@ export const PaperColumnRenderer = ({
   spaceEvenly = false,
   colClassName = "",
 }) => {
-  const columnAmount = Math.round(12 / columns.length);
   return (
     <PaperContainer className={`container padding--lg`}>
       <div className={`row ${spaceEvenly ? styles.spaceEvenly : ""}`}>
         {columns.map((elem, idx) => (
           <div
             key={`col-${idx}`}
-            className={`col col--${columnAmount} ${colClassName}`}
+            className={`col ${colClassName}`}
           >
             {elem}
           </div>
