@@ -68,6 +68,19 @@ html[data-theme="dark"] .navbar {
   background: rgba(35,35,35,.65);
 }
 
+/*
+ * Backdrop-filter is not yet supported by Firefox:
+ * https://caniuse.com/css-backdrop-filter
+ */
+@-moz-document url-prefix() {
+  .navbar {
+    background: rgba(220,220,220,.95);
+  }
+  html[data-theme="dark"] .navbar {
+    background: rgba(35,35,35,.95);
+  }
+}
+
 .homePage .navbar__inner {
   width: var(--ifm-container-width-xl);
   margin: auto;
