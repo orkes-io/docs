@@ -278,6 +278,7 @@ html[data-theme="dark"] .midSectionOdd {
 }
 .outline-tabs {
   max-width: 600px;
+  gap: 10px;
 }
 .outline-tabs .tabs__item {
   font-size: 15px;

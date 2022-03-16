@@ -2,15 +2,15 @@
   display: flex;
   justify-content: center;
   height: 95%;
+  padding: 20px 0;
+  border-radius: 20px;
+  background-color: #9FE2F7;
 }
 
 .whiteFont {
   color: #fff;
 }
 
-.firstWorkflowFooter {
-  letter-spacing: 1px;
-}
 .videoFooterCaption {
   line-height: 20px;
   width: 100%;
