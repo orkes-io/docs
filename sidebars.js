@@ -141,7 +141,8 @@ module.exports = {
             label: 'Code Labs',
             collapsed: false,
             items: [
-                'codelab/helloworld'
+                'codelab/helloworld',
+                'codelab/beginner'
                 
             ],
         },
