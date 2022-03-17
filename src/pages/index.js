@@ -3,7 +3,6 @@ import Layout from "@theme/Layout";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import styles from "./index.module.css";
 import SmallDiagram from "/img/small_diagram.png";
-import SmallDiagramReady from "/img/small_diagram_completed.png";
 import { JavaSample, PythonSample, GoSample } from "./_Languages.js";
 import {
   BuildYourFirstWorkflowLinkButton,
@@ -143,7 +142,6 @@ export default function Home() {
             }}
             title="Your First Workflow"
             rightImage={SmallDiagram}
-            rightImageReady={SmallDiagramReady}
             sectionFooter="Simple functional code that can run complex flows"
           />
           <CommunitySection />

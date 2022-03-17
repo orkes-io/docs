@@ -111,31 +111,8 @@ export const YourfirstWorkflowSection = ({
   title,
   languageSamples,
   rightImage,
-  rightImageReady,
   sectionFooter,
 }) => {
-  const diagramElement = useRef(null);
-  const scrollObserver = useRef(null);
-  const [ image, setImage ] = useState('idle');
-
-  useEffect(() => {
-    const element = diagramElement.current;
-    scrollObserver.current = new IntersectionObserver(entries => {
-      // Skip if there are no articles yet (i.e.: the first load)
-      // or if it's already loading a page
-      if (entries[0].isIntersecting) {
-        setImage('ready');
-      } else {
-        setImage('idle');
-      }
-    }, { threshold: 1 });
-    scrollObserver.current.observe(element);
-
-    return () => {
-      scrollObserver.current.unobserve(element);
-    }
-  }, [image]);
-
   return (
   <div className="row">
     <InfoPaper title={title}>
@@ -143,10 +120,9 @@ export const YourfirstWorkflowSection = ({
         <div className="col col--8">
           <WorkflowLanguageExamples languageSamples={languageSamples} />
         </div>
-        <div className="col col--4" ref={diagramElement}>
+        <div className="col col--4">
           <PaperContainer className={styles.firstWorkflowContainer}>
-            <img className={styles.diagramIdle} src={rightImage} alt="Diagram of a workflow."></img>
-            <img style={{ opacity: image === 'idle' ? 0 : 1 }} src={rightImageReady} className={styles.diagramReady} alt="Diagram of a completed workflow."></img>
+            <img src={rightImage} alt="Diagram of a workflow."></img>
           </PaperContainer>
         </div>
       </div>
