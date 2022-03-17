@@ -1,6 +1,7 @@
 .singleStep {
+  position: relative;
   background-color: var(--ifm-color-athens-gray);
-  height: 100%;
+  height: 200px;
   border-radius: 10px;
   box-shadow: 0 2px 16px rgba(0,0,0,.25);
   color: white;
@@ -32,10 +33,32 @@
   box-shadow: 0 2px 8px rgba(0,0,0,.25);
 }
 
+.singleStepContent {
+  margin: auto;
+  position: absolute;
+  background: var(--ifm-background-color);
+  top: 5px;
+  bottom: 5px;
+  left: 5px;
+  right: 5px;
+  width: calc(100% - 10px);
+  border-radius: 5px;
+  z-index: 2;
+}
+
+html[data-theme="light"] .singleStepContent {
+  background: white;
+}
+
 .title {
   color: white;
   font-weight: 700;
   text-align: left;
   height: 3rem;
   width: 100%;
+}
+
+html[data-theme="light"] .title,
+html[data-theme="light"] .singleStepContent {
+  color: var(--ifm-heading-color, black);
 }
