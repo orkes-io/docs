@@ -35,7 +35,7 @@ At AT&T, to get access to the *big pot of funding*, we had to demonstrate that o
 
 WE got the money to build the new version of Video Optimizer! But privately, I was asking the team -  how are we going to build the connecting lines between our microservices - how are they going to communicate and make sure the data flows properly between these small apps?
 
-## Workflow orchestration
+## Workflow orchestration - connecting the dots
 
 Of course, the problem at hand was workflow orchestration - getting these fast, modular microservices to work together and produce the results we were used to seeing in our monolith.
 
