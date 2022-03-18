@@ -6,6 +6,7 @@ On of the primary reasons for microservice/workflow architectures is that servic
 
 This code lab is based on a [Stack Overflow question](https://stackoverflow.com/questions/71370237/java-design-pattern-orchestration-workflow/71385718#71385718) on the same topic.
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/zUIWC6Cj8GQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ### Why HTTP Tasks?
 
