@@ -142,7 +142,8 @@ module.exports = {
             collapsed: false,
             items: [
                 'codelab/helloworld',
-                'codelab/beginner'
+                'codelab/beginner',
+                'codelab/sequentialHTTPtasks'
                 
             ],
         },
