@@ -1,16 +1,15 @@
 .firstWorkflowContainer {
   display: flex;
   justify-content: center;
-  height: 95%;
+  height: 100%;
+  padding: 20px 0;
+  flex-shrink: 0;
 }
 
 .whiteFont {
   color: #fff;
 }
 
-.firstWorkflowFooter {
-  letter-spacing: 1px;
-}
 .videoFooterCaption {
   line-height: 20px;
   width: 100%;

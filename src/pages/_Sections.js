@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   PaperColumnRenderer,
   PaperContainer,
@@ -23,8 +23,8 @@ export const StepBoxesSection = ({ steps = [] }) => (
     <PaperColumnRenderer
       spaceEvenly
       colClassName={styles.mobileSpaced}
-      columns={steps.map((singleStepJson) => (
-        <SingleStep {...singleStepJson} key={singleStepJson.title} />
+      columns={steps.map((singleStepJson, index) => (
+        <SingleStep {...singleStepJson} index={index} key={singleStepJson.title} />
       ))}
     />
   </div>
@@ -112,7 +112,8 @@ export const YourfirstWorkflowSection = ({
   languageSamples,
   rightImage,
   sectionFooter,
-}) => (
+}) => {
+  return (
   <div className="row">
     <InfoPaper title={title}>
       <div className="row">
@@ -121,7 +122,7 @@ export const YourfirstWorkflowSection = ({
         </div>
         <div className="col col--4">
           <PaperContainer className={styles.firstWorkflowContainer}>
-            <img src={rightImage} alt="small-diagram"></img>
+            <img src={rightImage} alt="Diagram of a workflow."></img>
           </PaperContainer>
         </div>
       </div>
@@ -130,7 +131,7 @@ export const YourfirstWorkflowSection = ({
       </Text>
     </InfoPaper>
   </div>
-);
+)};
 
 const IconHeader = ({ icon, header }) => (
   <div className={styles.iconHeader}>
