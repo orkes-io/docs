@@ -22,6 +22,8 @@ Lending workflows can be very common and potential problem that can be solved by
 
 ![banking meme](./assets/lending_meme_Medium.png)
 
+<!--truncate-->
+
 #### Yes we are serious !!!!
 #### JP Morgan Chase and American Express are already using Conductor for their Banking needs !!!!
 
