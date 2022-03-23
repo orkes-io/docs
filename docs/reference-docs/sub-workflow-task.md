@@ -43,108 +43,133 @@ Sub Workflow task is defined directly inside the workflow with `"SUB_WORKFLOW"`.
 
 ### Examples
 
-Suppose in a workflow, we have to run another workflow. Consider the example that we took
-in Dynamic Task. Let's extend that example. Suppose in an E-Commerce website user places
-the order we have to take the decision based on the inputs to ship the product via a
-courier service. We can run another workflow inside our workflow which we already
-created in `Dynamic Task`.
 
-Following task `order_details` fetches data about the order.
+Imagine we have a workflow that has a fork in it.. In the example below, we inputting one image, but using a fork to create 2 images simultaneously:
+
+![](img/workflow_fork.png)
+
+The left fork will create a JPG, and the right fork a WEBP image. Maintaining this workflow might be difficult, as changes made to one side of the fork do not automatically propagate the other.  Rather than using 2 tasks, we can define a ```image_convert_resize``` workflow that we can call for both forks as a subworkflow:
 
 ```json
-{
-  "name": "order_details",
-  "retryCount": 1,
-  "timeoutSeconds": 600,
-  "pollTimeoutSeconds": 1200,
-  "timeoutPolicy": "TIME_OUT_WF",
-  "retryLogic": "FIXED",
-  "retryDelaySeconds": 300,
-  "responseTimeoutSeconds": 300,
-  "concurrentExecLimit": 100,
-  "rateLimitFrequencyInSeconds": 60,
-  "ownerEmail":"abc@example.com",
-  "rateLimitPerFrequency": 1
+
+{{
+	"name": "image_convert_resize_subworkflow1",
+	"description": "Image Processing Workflow",
+	"version": 1,
+	"tasks": [{
+			"name": "image_convert_resize_multipleformat_fork",
+			"taskReferenceName": "image_convert_resize_multipleformat_ref",
+			"inputParameters": {},
+			"type": "FORK_JOIN",
+			"decisionCases": {},
+			"defaultCase": [],
+			"forkTasks": [
+				[{
+					"name": "image_convert_resize_sub",
+					"taskReferenceName": "subworkflow_jpg_ref",
+					"inputParameters": {
+						"fileLocation": "${workflow.input.fileLocation}",
+						"recipeParameters": {
+							"outputSize": {
+								"width": "${workflow.input.recipeParameters.outputSize.width}",
+								"height": "${workflow.input.recipeParameters.outputSize.height}"
+							},
+							"outputFormat": "jpg"
+						}
+					},
+					"type": "SUB_WORKFLOW",
+					"subWorkflowParam": {
+						"name": "image_convert_resize",
+						"version": 1
+					}
+				}],
+				[{
+						"name": "image_convert_resize_sub",
+						"taskReferenceName": "subworkflow_webp_ref",
+						"inputParameters": {
+							"fileLocation": "${workflow.input.fileLocation}",
+							"recipeParameters": {
+								"outputSize": {
+									"width": "${workflow.input.recipeParameters.outputSize.width}",
+									"height": "${workflow.input.recipeParameters.outputSize.height}"
+								},
+								"outputFormat": "webp"
+							}
+						},
+						"type": "SUB_WORKFLOW",
+						"subWorkflowParam": {
+							"name": "image_convert_resize",
+							"version": 1
+						}
+					}
+
+				]
+			]
+		},
+		{
+			"name": "image_convert_resize_multipleformat_join",
+			"taskReferenceName": "image_convert_resize_multipleformat_join_ref",
+			"inputParameters": {},
+			"type": "JOIN",
+			"decisionCases": {},
+			"defaultCase": [],
+			"forkTasks": [],
+			"startDelay": 0,
+			"joinOn": [
+				"subworkflow_jpg_ref",
+				"upload_toS3_webp_ref"
+			],
+			"optional": false,
+			"defaultExclusiveJoinTask": [],
+			"asyncComplete": false,
+			"loopOver": []
+		}
+	],
+	"inputParameters": [],
+	"outputParameters": {
+		"fileLocationJpg": "${subworkflow_jpg_ref.output.fileLocation}",
+		"fileLocationWebp": "${subworkflow_webp_ref.output.fileLocation}"
+	},
+	"schemaVersion": 2,
+	"restartable": true,
+	"workflowStatusListenerEnabled": true,
+	"ownerEmail": "devrel@orkes.io",
+	"timeoutPolicy": "ALERT_ONLY",
+	"timeoutSeconds": 0,
+	"variables": {},
+	"inputTemplate": {}
 }
 ```
 
-Now we will be nesting the workflow named `Shipping_Flow` (defined inside Dynamic Task section)
-inside our new Workflow by following definition -
+Now our diagram will appear as:
+![workflow with 2 subworkflows](../img/subworkflow_diagram.png)
 
-```json
+
+The inputs to both sides of the workflow are identical before and after - but we've abstracted the tasks into the subworkflow.  nay change to the subworkflow will automatically occur in bth sides of the fork.
+
+Looking at the subworkflow (the WEBP version):
+
+```
 {
-  "name": "E_Commerce_Website_Example",
-  "description": "E_Commerce_Website_Example",
-  "version": 1,
-  "tasks": [
-    {
-      "name": "order_details",
-      "taskReferenceName": "order_details",
-      "inputParameters": {
-      },
-      "type": "SIMPLE"
-    },
-    {
-      "name": "Shipping_Flow",
-      "taskReferenceName": "Shipping_Flow",
-      "type": "SUB_WORKFLOW",
-      "inputParameters": {
-        "subWorkflowParam": {
-          "name": "Shipping_Flow",
-          "version": 1,
-          "taskToDomain": {
-            "*": "mydomain"
-          },
-          "workflowDefinition": {
-            "name": "Shipping_Flow",
-            "description": "Ships smartly on the basis of Shipping info",
-            "version": 1,
-            "tasks": [
-              {
-                "name": "shipping_info",
-                "taskReferenceName": "shipping_info",
-                "inputParameters": {
-                },
-                "type": "SIMPLE"
-              },
-              {
-                "name": "shipping_task",
-                "taskReferenceName": "shipping_task",
-                "inputParameters": {
-                  "taskToExecute": "${shipping_info.output.shipping_service}"
-                },
-                "type": "DYNAMIC",
-                "dynamicTaskNameParam": "taskToExecute"
-              }
-
-            ],
-            "restartable": true,
-            "ownerEmail":"abc@example.com",
-            "workflowStatusListenerEnabled": true,
-            "schemaVersion": 2
-          }
-        }
-      }
-    }
-
-  ],
-  "restartable": true,
-  "ownerEmail":"abc@example.com",
-  "workflowStatusListenerEnabled": true,
-  "schemaVersion": 2
-}
+                        "name": "image_convert_resize_sub",
+                        "taskReferenceName": "subworkflow_webp_ref",
+                        "inputParameters": {
+                            "fileLocation": "${workflow.input.fileLocation}",
+                            "recipeParameters": {
+                                "outputSize": {
+                                    "width": "${workflow.input.recipeParameters.outputSize.width}",
+                                    "height": "${workflow.input.recipeParameters.outputSize.height}"
+                                },
+                                "outputFormat": "webp"
+                            }
+                        },
+                        "type": "SUB_WORKFLOW",
+                        "subWorkflowParam": {
+                            "name": "image_convert_resize",
+                            "version": 1
+                        }
+                    }
 ```
 
-Workflow is the created as shown in the below diagram.
-
-![Conductor UI - Workflow Diagram](/img/tutorial/SubWorkflow.png)
-
-We can see in the above diagram that Workflow named `Shipping_Flow` gets nested inside
-the workflow we just created. Hence, in scenarios where we need to nest a workflow inside
-another workflow `Set Workflow` task can be used.
-
-We can create workers as we did in `Dynamic Task` section and for running this workflow.
-
-After execution workflow looks like.
-
-![Conductor UI - Workflow Diagram](/img/tutorial/Sub_Workflow_Run.png)
+The ```subWorkflowParam``` tells conductor which workflow to call. The task is marked as completed upon the completion of the spawned workflow. 
+If the sub-workflow is terminated or fails the task is marked as failure and retried if configured. 
