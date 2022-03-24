@@ -1,0 +1,61 @@
+# Order Fulfillment Codelab part 4
+
+You're running order fulfillment at Bob's Widgets, and it's totally manual.  You're working with Conductor to create workflows and work to better automate the system.
+
+In part 1 of this codelab, we created our first workflow and task - all built to run the ```widget_shipping``` worker that Bob gave you on your first day.
+
+In part 2, we got the worker (the microservice) up and running, and connected the application with our remote Conductor server.  
+
+In part 3, we ran the worker, and saw the power of Conductor in action!  
+
+In part 4, we begin extending our workflow using versioning, improving the automation by ensuring that labels are created for every item in the order.
+
+##  Initial Workflow
+
+<p align="center"><img src="/content/img/codelab/of1_diagram.png" alt="version 1 diagram" width="400" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+
+It turns out that most of the orders are in quantities of 5 or more. Running the same workflow over and over for each order seems suboptimal.  We want to improve the shipping label production - while not impacting day-to-day shipping.
+
+## Versioning
+
+With workflow versioning - the existing workflow (version 1) can continue running while we iterate and improve on version 2. These two versions could run side-by-side in production, if needed.  As we edit the workflow with our improvements, we'll only edit V2 - keeping V1 live and in production for our daily shipping needs.
+
+## Forks
+
+A Fork (and a Join) are system tasks that run inside the Conductor server. This means that they do not require task definitions or workers running remotely, making it very easy to create and use as a part of your workflow.
+
+Forks split your workflow into multiple paths that can be run asynchronously.  The JOIN task tells Conductor when to reconnect the paths and continue through the workflow.
+
+An example fork might look like:
+```
+   {
+      "name": "ship_multiple_fork",
+      "taskReferenceName": "ship_fork_ref",
+      "type": "FORK_JOIN",
+      "forkTasks":[
+        [
+          <widget_shipping<uniqueId>_1>
+        ],
+        [
+          <widget_shipping<uniqueId>_2>
+        ]
+      ]
+    },
+    {
+      "name": "shipping_join",
+      "taskReferenceName": "shipping_join_ref",
+      "type": "JOIN",
+      "joinOn": [
+        "shipping_widget1",
+        "shipping_widget2"
+      ]
+    }
+```
+For space, the 2 forkTasks are left out, but imagine reusing the ```widget_shipping``` tasks in version 1, and then appending a unique value (in this case 1 &2) to ensure each task has a unique reference.  The workflow would look something like:
+
+<p align="center"><img src="/content/img/codelab/of4_forkexample.png" alt="version 2 regular fork" width="600" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+
+Now, this is really great.... if we build workflows for all possible order quantities.  ...that doesn't sound like so much fun though.
+
+Luckily, there's another type of fork, where the number of 'tines' can be determined at workflow runtime.  This is the ```DYNAMIC_FORK```.
+
