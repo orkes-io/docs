@@ -223,7 +223,7 @@ module.exports = {
                                 dirName: 'how-tos/Monitoring', // generate sidebar from the docs folder (or versioned_docs/<version>)
                               },
                         ],
-                    },
+                    },/*
                     {
                         type: 'category',
                         label: 'Running in Production',
@@ -234,7 +234,7 @@ module.exports = {
                           //  'how-tos/archival-of-workflows',
                           //  'how-tos/configuring-metrics',
                         ],
-                    },
+                    },*/
 
                  
                
@@ -273,7 +273,7 @@ module.exports = {
                         'reference-docs/set-variable-task',
                         'reference-docs/sub-workflow-task',
                     ],
-                },
+                },/*
                 {
                     type:'category',
                     label:'Event Task',
@@ -281,7 +281,8 @@ module.exports = {
                     items:[
         
                     ],
-                },
+                },*/
+                'reference-docs/directed-acyclic-graph'
             ],
 
         },
