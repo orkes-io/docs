@@ -59,3 +59,63 @@ Now, this is really great.... if we build workflows for all possible order quant
 
 Luckily, there's another type of fork, where the number of 'tines' can be determined at workflow runtime.  This is the ```DYNAMIC_FORK```.
 
+## Dynamic task inputs
+
+Before we create a Dynamic fork we need to format the data to match the required input for a Dynamic fork.  Dynamic forks take 2 inputs. One input is a JSON array of tasks to run, and the other is a JSON array of values.  
+
+IF we had 2 widgets to ship to Bob, the JSON ```dynamicForkTasksParam``` or list of task/task references to be run might look like:
+
+```json
+{"dynamicTasks": [
+  0 : {
+    "name": :"shipping_widget",
+    "taskReferenceName": "shipping_widget_1"
+  },
+  1: {
+    "name": :"shipping_widget",
+    "taskReferenceName": "shipping_widget_2",
+  }
+]
+}
+```
+
+This tells Conductor: "inside that dynamic fork, create 2 tasks using the ```shipping_widget``` task, and increment them as 1 &2 so they have unique names."  We could increment these tasks any way you'd like.
+
+Now, we must also create the ```dynamicForkTasksInputParamName``` JSON for each task reference - with the input values we want to give the task:
+
+```json
+
+"dynamicForkTasksInputParamName":[
+0:{
+      "name":"shipping_widget"
+      "taskReferenceName":"shipping_widget_1"
+      "type":"SIMPLE"
+      "retryCount":3
+      "timeoutSeconds":1200
+      "inputParameters": {
+        "name": "${workflow.input.name}",
+        "street": "${workflow.input.street}",
+        "city": "${workflow.input.city}",
+        "state": "${workflow.input.state}",
+        "zip": "${workflow.input.zip}"
+      }
+  },
+1: {
+      "name":"shipping_widget"
+      "taskReferenceName":"shipping_widget_2"
+      "type":"SIMPLE"
+      "retryCount":3
+      "timeoutSeconds":1200
+      "inputParameters": {
+        "name": "${workflow.input.name}",
+        "street": "${workflow.input.street}",
+        "city": "${workflow.input.city}",
+        "state": "${workflow.input.state}",
+        "zip": "${workflow.input.zip}"
+      }
+  }
+]
+}
+```
+
+Now, we have all the inputs required to generate these JSON files, but we don't have these exact JSON files.  To build these, we'll use the ```JQ JSON task```

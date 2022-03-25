@@ -27,14 +27,32 @@ const config = {
         },
     ],
     plugins: [
-    [
-      '@docusaurus/plugin-sitemap',
-      {
-	id: 'plugin-sitemap',
-        changefreq: 'hourly',
-        priority: 0.9,
-      },
-    ],
+        [
+            '@docusaurus/plugin-client-redirects',
+            {
+              redirects: 
+              [
+                // /docs/oldDoc -> /docs/newDoc
+                {
+                  to: '/docs/how-tos/Workflows/starting-workflows',
+                  from: '/docs/how-tos/starting-workflows',
+                },
+                {
+                    to: '/docs/how-tos/Tasks/task-configurations',
+                    from: '/docs/how-tos/task-configurations',
+                },
+              ],
+            },
+        ],
+        
+        [
+        '@docusaurus/plugin-sitemap',
+        {
+        id: 'plugin-sitemap',
+            changefreq: 'hourly',
+            priority: 0.9,
+        },
+        ],
    ],
     presets: [
         [
@@ -58,7 +76,7 @@ const config = {
         ],
     ],
     themes: [
-        '@saucelabs/theme-github-codeblock'
+       // '@saucelabs/theme-github-codeblock'
     ],
 
     themeConfig:
