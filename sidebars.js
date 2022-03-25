@@ -273,15 +273,7 @@ module.exports = {
                         'reference-docs/set-variable-task',
                         'reference-docs/sub-workflow-task',
                     ],
-                },/*
-                {
-                    type:'category',
-                    label:'Event Task',
-                    collapsed:false,
-                    items:[
-        
-                    ],
-                },*/
+                },
                 'reference-docs/directed-acyclic-graph'
             ],
 
