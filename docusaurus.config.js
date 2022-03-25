@@ -30,20 +30,20 @@ const config = {
         [
             '@docusaurus/plugin-client-redirects',
             {
-              redirects: [
+              redirects: 
+              [
                 // /docs/oldDoc -> /docs/newDoc
                 {
-                  to: '/content/docs/how-tos/Workflows/starting-workflows',
-                  from: '/content/docs/how-tos/starting-workflows',
+                  to: '/docs/how-tos/Workflows/starting-workflows',
+                  from: '/docs/how-tos/starting-workflows',
                 },
-                // Redirect from multiple old paths to the new path
                 {
-                    to: '/content/docs/how-tos/Tasks/task-configurations',
-                    from: '/content/docs/how-tos/task-configurations',
-                  },
+                    to: '/docs/how-tos/Tasks/task-configurations',
+                    from: '/docs/how-tos/task-configurations',
+                },
               ],
             },
-          ],
+        ],
         
         [
         '@docusaurus/plugin-sitemap',
