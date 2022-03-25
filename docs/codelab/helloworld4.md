@@ -13,7 +13,7 @@ What we've covered so far:
 
 ## Part 4
 
-In Part 4 of the codelab, we'll add in an [Inline task](content/docs/reference-docs/system-tasks/inline-task) to perform some basic logic operations (using JavaScript).  Inline tasks are great because they allow for computations on teh COnductor server as a part of the workflow, without having to standup another task & microservice to complete the computation.
+In Part 4 of the codelab, we'll add in an [Inline task](/content/docs/reference-docs/system-tasks/inline-task) to perform some basic logic operations (using JavaScript).  Inline tasks are great because they allow for computations on teh COnductor server as a part of the workflow, without having to standup another task & microservice to complete the computation.
 
 ## Where we stand
 In part 3 of this codelab, our workflow was split into 2 forks, one that creates the "Hello World!" message, and the other fork that grabs the users IP address, and extracts their location:
@@ -25,7 +25,7 @@ In part 3 of this codelab, our workflow was split into 2 forks, one that creates
 
 Let's add a second task to the "right fork" (at least in the diagram) that extracts the time of the user, and spits out the local time.  There are two parameters in the ```Get_IP``` output that allow us to do this:  The date header (giving the time in GMT), and the body parameter ```offset```.  ```offset``` is the time (in seconds from GMT at the location of the user.  
 
-To do this calculation, we will utilize the [Inline Task](content/docs/reference-docs/system-tasks/inline-task).
+To do this calculation, we will utilize the [Inline Task](/content/docs/reference-docs/system-tasks/inline-task).
 
 ## Inline task
 

@@ -1,6 +1,6 @@
 # Extending System Tasks
 
-[System tasks](content/docs/reference-docs) allow Conductor to run simple tasks on the server - removing the need to build (and deploy) workers for basic tasks.  This allows for automating more mundane tasks without building specific microservices for them.
+[System tasks](/content/docs/reference-docs) allow Conductor to run simple tasks on the server - removing the need to build (and deploy) workers for basic tasks.  This allows for automating more mundane tasks without building specific microservices for them.
 
 However, sometimes it might be necessary to add additional parameters to a System Task to gain the behavior that is desired.
 
@@ -60,7 +60,7 @@ When this workflow is run - it fails, as expected.
 
 Now, sometimes an API call might fail due to an issue on the remote server, and retrying the call will result in a response.  With many Conductor tasks,  ```retryCount```, ```retryDelaySeconds``` and ```retryLogic``` fields can be applied to retry the worker (with the desired parameters).
 
-By default, the [HTTP Task](/content/docs/reference-docs/http-task) does not have ```retryCount```, ```retryDelaySeconds``` or ```retryLogic``` built in.  Attempting to add these parameters to a HTTP Task results in an error.
+By default, the [HTTP Task](/content/docs/reference-docs/system-tasks/http-task) does not have ```retryCount```, ```retryDelaySeconds``` or ```retryLogic``` built in.  Attempting to add these parameters to a HTTP Task results in an error.
 
 ## The Solution
 
