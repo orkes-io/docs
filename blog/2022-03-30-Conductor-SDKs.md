@@ -29,19 +29,24 @@ Coming soon (the SDK is in active development):
 
 When a workflow is run, each task is run in order, based on the design of the orchestration.  Each task has a queue of jobs that are picked up by the workers  - and then completed.
 
-This means that every worker must poll the Conductor server at regular intervals, pick up assigned tasks and then complete them.  
+So your worker must:
 
-Connecting the Worker to Conductor (including authentication), and creating the polling can now be done with just a few lines of code.
+* Connect (and potentially authenticate) with your Conductor server.
+* Connect workers to the Conductor tasks
+* Regularly poll tasks for work to be run 
+
+This can be a rather daunting bit of code to create, and with our SDKs, we abstract all of this to a few lines of configuration - allowing you to focus on the business logic and getting your workflows up and running.
 
 ## Moving Python and Golang
 
-The Python and Golang SDKs are moving from the main Conductor repo to allow for faster iteration and improvements to the SDKs.
+Conductor already has Python and Golang SDKs.  These have been dramatically improved, and are now on par (or perhaps even ahead - not that this is a competition) of the Java SDK. These SDKs are being removed from the main Conductor repo to allow for faster iteration and improvements to the SDKs.
 
 ## Clojure and C#
 
-The Clojure SDK was created by the Orkes team, and the C-Sharp SDK has been contributed by Sean McAdams.  
-
+The Clojure SDK was created by the Orkes team, and the C-Sharp SDK has been contributed by Sean McAdams.  They feature all of the same great features as the Java, Python and Golang SDKs already launched (and now re-launched).
 
 ## What's next?
 
 Over the coming weeks, we'll be working to improve the documentation and sample applications for all of the SDKs.  We'll also continue work on the JavaScript SDK.
+
+We are very excited about announcing our new SDKs and we are here to facilitate your creation of Conductor workflows.  If you have any suggestions of future SDK work, drop us a note in our [Discord](https://bit.ly/35hgY8n), or send us a DM on [Twitter](https://twitter.com/orkesio).  We'd love to hear wht you think!
