@@ -1,14 +1,11 @@
-# Order Fulfillment Codelab part 4
+# Order Fulfillment Codelab part 6
 
-You're running order fulfillment at Bob's Widgets, and it's totally manual.  You're working with Conductor to create workflows and work to better automate the system.
+You're running order fulfillment at Bob's Widgets, and at the start of this tutorial, it was a totally manual process.  We've got 2 versions of the process running in Conductor, with error handling, and the ability to process multiple orders at once.
 
-In part 1 of this codelab, we created our first workflow and task - all built to run the ```widget_shipping``` worker that Bob gave you on your first day.
+The sales team has learned that many of Bob's Widget's customers are buying multiple widgets and then sending then out again to valued customers.  They know that offering 'drop-shipping' - or the ability for customers to upload a list of addresses, and to have Bob's Widgets mail them directly - would be a feature that our customers would pay extra for.
 
-In part 2, we got the worker (the microservice) up and running, and connected the application with our remote Conductor server.  
+Our workflow creates the labels for multiple shipments - but cirrently only handles one address as input.  So, this will require a new version of our workflow (but it will lean heavily on the existing work already completed).
 
-In part 3, we ran the worker, and saw the power of Conductor in action!  
-
-In part 4, we begin extending our workflow using versioning, improving the automation by ensuring that labels are created for every item in the order.
 
 ## Seeing the Limitations
 

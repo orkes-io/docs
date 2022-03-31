@@ -19,9 +19,13 @@ Further, all of the (non-Java) SDKs have a new GitHub home: the [Conductor SDK](
 * [C#](https://github.com/conductor-sdk/conductor-csharp)
 * [Clojure](https://github.com/conductor-sdk/conductor-clojure)
 
-Coming soon (the SDK is in active development):
+Coming soon:
 
-* [JavaScript](https://github.com/conductor-sdk/conductor-javascript)
+* [JavaScript/TypeScript](https://github.com/conductor-sdk/conductor-javascript)
+* Rust
+* Ruby
+* Kotlin
+* PHP
 
 <!-- truncate -->
 
@@ -49,4 +53,4 @@ The Clojure SDK was created by the Orkes team, and the C-Sharp SDK has been cont
 
 Over the coming weeks, we'll be working to improve the documentation and sample applications for all of the SDKs.  We'll also continue work on the JavaScript SDK.
 
-We are very excited about announcing our new SDKs and we are here to facilitate your creation of Conductor workflows.  If you have any suggestions of future SDK work, drop us a note in our [Discord](https://bit.ly/35hgY8n), or send us a DM on [Twitter](https://twitter.com/orkesio).  We'd love to hear wht you think!
+We are very excited about announcing our new SDKs and we are here to facilitate your creation of Conductor workflows.  If you have any suggestions of future SDK work, drop us a note in our [Discord](https://bit.ly/35hgY8n), or send us a DM on [Twitter](https://twitter.com/orkesio).  We'd love to hear what you think!
