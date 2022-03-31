@@ -40,7 +40,7 @@ logically partitioning them into two tasks
 
 The next step is to [create a workflow in Conductor using JSON](/content/docs/how-tos/Workflows/create-workflow) and
 then [create the associated tasks in Conductor](/content/docs/how-tos/Tasks/creating-tasks) for the above identified ones.
-
+f
 After that, you add those tasks into the workflow to have **shipping_info**
 called first and then, if it is successful, call **shipping_task**. You now have a *definition* of the workflow in
 Conductor and Conductor will then generate an easy to understand visual representation of this workflow
@@ -87,12 +87,12 @@ any arguments that were provided by the caller. There are three ways in which a 
 ### *View Workflows*
 
 Once a workflow is invoked, it starts running and you
-can [view details of its execution status](../../how-tos/view-workflow-executions.md)
+can [view details of its execution status](../../how-tos/Workflows/view-workflow-executions.md)
 
 ### *Update Workflows*
 
 When your application's business logic evolves or you need to fix an error in your workflow definition, you
-can [update your workflows](../../how-tos/updating-workflows.md) in Conductor with built-in support for versioning.
+can [update your workflows](../../how-tos/Workflows/updating-workflows.md) in Conductor with built-in support for versioning.
 
 > ### The Power of Versioning
 > Conductor's native support for versioning allows developers to rapidly iterate on new features even with multiple invocations of the same workflow are in-flight. Unlike other platforms where you either need to wait till those in-flight executions finish or forcefully error them out, with Conductor you can have both versions in-flight at the same time. In addition to increasing developer agility, this also unlocks other benefits

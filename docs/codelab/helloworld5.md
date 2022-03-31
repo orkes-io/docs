@@ -12,7 +12,7 @@ What we've covered so far:
 
 # Part 5  
 
-In part 5 of the Hello World codelab, we'll wrap up our ```hello_world``` application by adding a [Switch Task](content/docs/reference-docs/switch-task), and several [Set a Variable Tasks](content/docs/reference-docs/set-variable-task).
+In part 5 of the Hello World codelab, we'll wrap up our ```hello_world``` application by adding a [Switch Task](/content/docs/reference-docs/switch-task), and several [Set a Variable Tasks](/content/docs/reference-docs/set-variable-task).
 
 In Part 4, we calculated the local time - based on the users IP address, and converting GMT to the local time. In Part 5, we'll wish the user a "Good [time of day]" based on the hour calculation.  
 

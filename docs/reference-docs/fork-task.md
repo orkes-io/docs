@@ -214,4 +214,4 @@ references that were being `joinOn`. The corresponding values are the outputs of
 }
 ```
 
-See [JOIN](content/docs/reference-docs/join-task) for more details on the JOIN aspect of the FORK.
+See [JOIN](/content/docs/reference-docs/join-task) for more details on the JOIN aspect of the FORK.

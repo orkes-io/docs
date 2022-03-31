@@ -177,7 +177,7 @@ module.exports = {
             collapsed: true,
             items: [
                 'how-tos',
-                'how-tos/python-sdk',
+                'how-tos/SDKs',
                 {
                     
                         type: 'category',

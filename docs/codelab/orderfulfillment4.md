@@ -1,121 +1,78 @@
 # Order Fulfillment Codelab part 4
 
-You're running order fulfillment at Bob's Widgets, and it's totally manual.  You're working with Conductor to create workflows and work to better automate the system.
+You're running order fulfillment at Bob's Widgets, and when you started, it was 100% manual.  In parts 1-3 of the codelab, you got a shipping workflow up and running, but there's still a lot of room for improvement.
 
-In part 1 of this codelab, we created our first workflow and task - all built to run the ```widget_shipping``` worker that Bob gave you on your first day.
+## Keeping up the inventory
 
-In part 2, we got the worker (the microservice) up and running, and connected the application with our remote Conductor server.  
+When you started in your role, there was a scrap of paper next to your computer:
 
-In part 3, we ran the worker, and saw the power of Conductor in action!  
+<p align="center"><img src="/content/img/codelab/of4_orders.jpg" alt="order counting version 0" width="800" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
-In part 4, we begin extending our workflow using versioning, improving the automation by ensuring that labels are created for every item in the order.
+You're still a bit shocked by the conversion that followed:
 
-##  Initial Workflow
+You: Hey Bob - what's this?
+Bob: Oh. We mark the count of orders each week, and then at the end of the week, we call up our supplier to order more widgets.
+Bob: Its very, very important that we order the right number of widgets each week.  If we miss a few ticks each week - we end up running out of widgets, and our customers get mad.
 
-<p align="center"><img src="/content/img/codelab/of1_diagram.png" alt="version 1 diagram" width="400" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+...clearly, there's room for more automation.
 
-It turns out that most of the orders are in quantities of 5 or more. Running the same workflow over and over for each order seems suboptimal.  We want to improve the shipping label production - while not impacting day-to-day shipping.
+## Reordering API
 
-## Versioning
+You talk to your widget supplier, and they have an API.  Add as much to your order during the week, and they'll ship out our total widget order every Friday morning.
 
-With workflow versioning - the existing workflow (version 1) can continue running while we iterate and improve on version 2. These two versions could run side-by-side in production, if needed.  As we edit the workflow with our improvements, we'll only edit V2 - keeping V1 live and in production for our daily shipping needs.
+You ask for the details of the API, and it turns out it is really simple:
 
-## Forks
+You send a post message to the endpont ```appendorder``` with the items and quantity:
 
-A Fork (and a Join) are system tasks that run inside the Conductor server. This means that they do not require task definitions or workers running remotely, making it very easy to create and use as a part of your workflow.
-
-Forks split your workflow into multiple paths that can be run asynchronously.  The JOIN task tells Conductor when to reconnect the paths and continue through the workflow.
-
-An example fork might look like:
+```json
+{"item": "widget", "count": "2"}'
 ```
-   {
-      "name": "ship_multiple_fork",
-      "taskReferenceName": "ship_fork_ref",
-      "type": "FORK_JOIN",
-      "forkTasks":[
-        [
-          <widget_shipping<uniqueId>_1>
-        ],
-        [
-          <widget_shipping<uniqueId>_2>
-        ]
-      ]
-    },
-    {
-      "name": "shipping_join",
-      "taskReferenceName": "shipping_join_ref",
-      "type": "JOIN",
-      "joinOn": [
-        "shipping_widget1",
-        "shipping_widget2"
-      ]
+
+and the supplier will automatically append your order.  Come the end of the week, they'll pack up a bunch of widgets, and you'll have your resupply in the warehouse on Monday.
+
+## Automating the API call
+
+With Conductor, it is easy to add an REST API into your workflow.  Conductor has a built in System Task that can make HTTP calls for you.  A system task runs on the Conductor server - so there is no task deployment required - you simply wire the [HTTP task](https://orkes.io/content/docs/reference-docs/system-tasks/http-task) into your workflow and you are off and running.
+
+We can add this to our list of tasks.  Since it doesn't matter if it occurs before or after the shipping label, we'll place the reorder after the shipping label is produced.
+
+```JSON
+{
+      "name": "reorder_widgets",
+      "taskReferenceName": "reorder_widgets_ref",
+      "inputParameters": {
+        "http_request": {
+          "uri": "http://restfuldemo.herokuapp.com/appendorder",
+          "method": "POST",
+          "body": {
+                "item": "widget",
+                "count": "1"
+            },
+          "connectionTimeOut": 5000,
+          "readTimeOut": 5000
+        }
+      },
+      "type": "HTTP",
+      "decisionCases": {},
+      "defaultCase": [],
+      "forkTasks": [],
+      "startDelay": 0,
+      "joinOn": [],
+      "optional": false,
+      "defaultExclusiveJoinTask": [],
+      "asyncComplete": false,
+      "loopOver": [],
+      "retryCount": 3
     }
 ```
-For space, the 2 forkTasks are left out, but imagine reusing the ```widget_shipping``` tasks in version 1, and then appending a unique value (in this case 1 &2) to ensure each task has a unique reference.  The workflow would look something like:
 
-<p align="center"><img src="/content/img/codelab/of4_forkexample.png" alt="version 2 regular fork" width="600" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+We have hardcoded in the item ("widget") - since we only sell one thing.  We also hardwired the count to one, as our order form only allows for one widget to be purchased at a time (There's a lot of work to be done here!!).
 
-Now, this is really great.... if we build workflows for all possible order quantities.  ...that doesn't sound like so much fun though.
+The other thing to note is that with an HTTP task, the ```connectionTimeout``` and ```readTimeout``` can be set. Since the ```appendorder``` is located on a free Heroku instance, it sometimes needs to restart before it is available, so we give the API a full 5 seconds to reply.
 
-Luckily, there's another type of fork, where the number of 'tines' can be determined at workflow runtime.  This is the ```DYNAMIC_FORK```.
+## No more tickmarks
 
-## Dynamic task inputs
+The shipping bay no longer looks like inmates marking the days on the wall.  The inventory is updated automatically with our HTTP task sent to our supplier.
 
-Before we create a Dynamic fork we need to format the data to match the required input for a Dynamic fork.  Dynamic forks take 2 inputs. One input is a JSON array of tasks to run, and the other is a JSON array of values.  
+Things are looking up, but there's still a lot of automation ahead!
 
-IF we had 2 widgets to ship to Bob, the JSON ```dynamicForkTasksParam``` or list of task/task references to be run might look like:
-
-```json
-{"dynamicTasks": [
-  0 : {
-    "name": :"shipping_widget",
-    "taskReferenceName": "shipping_widget_1"
-  },
-  1: {
-    "name": :"shipping_widget",
-    "taskReferenceName": "shipping_widget_2",
-  }
-]
-}
-```
-
-This tells Conductor: "inside that dynamic fork, create 2 tasks using the ```shipping_widget``` task, and increment them as 1 &2 so they have unique names."  We could increment these tasks any way you'd like.
-
-Now, we must also create the ```dynamicForkTasksInputParamName``` JSON for each task reference - with the input values we want to give the task:
-
-```json
-
-"dynamicForkTasksInputParamName":[
-0:{
-      "name":"shipping_widget"
-      "taskReferenceName":"shipping_widget_1"
-      "type":"SIMPLE"
-      "retryCount":3
-      "timeoutSeconds":1200
-      "inputParameters": {
-        "name": "${workflow.input.name}",
-        "street": "${workflow.input.street}",
-        "city": "${workflow.input.city}",
-        "state": "${workflow.input.state}",
-        "zip": "${workflow.input.zip}"
-      }
-  },
-1: {
-      "name":"shipping_widget"
-      "taskReferenceName":"shipping_widget_2"
-      "type":"SIMPLE"
-      "retryCount":3
-      "timeoutSeconds":1200
-      "inputParameters": {
-        "name": "${workflow.input.name}",
-        "street": "${workflow.input.street}",
-        "city": "${workflow.input.city}",
-        "state": "${workflow.input.state}",
-        "zip": "${workflow.input.zip}"
-      }
-  }
-]
-}
-```
-
-Now, we have all the inputs required to generate these JSON files, but we don't have these exact JSON files.  To build these, we'll use the ```JQ JSON task```

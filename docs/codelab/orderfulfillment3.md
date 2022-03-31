@@ -40,9 +40,8 @@ There is a lot of information about your workflow on this page, and in this shor
 
 <p align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/agL-WHXbfX4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
 
-## Seeing the Limitations
 
-Once ou run the workflow, you realize that this works for one shipping label.  But most of your customers buy in quantities of 5.  When you ask Bob, he says "Just re-run the app 'x' times for each order."  Knowing this is suboptimal, you begin planning your first update to the Conductor workflow - generating one shipping label *per item ordered*.
+## Initial Workflow complete
 
-Read on to the next section where we learn about creating parallel workflows - one for each order - using a FORK (and more accurately a DYNAMIC_FORK) to create the correct number of shipping labels.
+Congratulations - your automation has begun.  But, you still have a lot of things you'd like to automate, and so we'll build on this initial workflow in part 4.
 
