@@ -1,3 +1,7 @@
+---
+displayed_sidebar:     orderfulfillment
+---
+# Building and Deploying a Worker
 # Order Fulfillment Codelab part 2
 
 You're running order fulfillment at Bob's Widgets, and it's totally manual.  You're working with Conductor to create workflows and work to better automate the system.
