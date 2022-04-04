@@ -49,6 +49,14 @@ Conductor already has Python and Golang SDKs.  These have been dramatically impr
 
 The Clojure SDK was created by the Orkes team, and the C-Sharp SDK has been contributed by Sean McAdams.  They feature all of the same great features as the Java, Python and Golang SDKs already launched (and now re-launched).
 
+## The announcement
+
+We announced our GitHub repo and our planning around Conductor SDKs at our [Meetup](https://www.meetup.com/san-francisco-microservices-orchestration-meetup-group/). Here's the video of our CTO Boney:
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/9Fzmu1NP_bg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+
 ## What's next?
 
 Over the coming weeks, we'll be working to improve the documentation and sample applications for all of the SDKs.  We'll also continue work on the JavaScript SDK.
