@@ -110,6 +110,18 @@ module.exports = {
         }
     ]
     */
+    orderfulfillment: [
+        {items : [
+            'codelab/orderfulfillment',
+            'codelab/orderfulfillment2',
+            'codelab/orderfulfillment3',
+            'codelab/orderfulfillment4',
+            'codelab/orderfulfillment5',
+            'codelab/orderfulfillment5_5',
+            'codelab/orderfulfillment6',
+            'codelab/orderfulfillment7'
+        ]}
+    ],
     mySidebar: [
         'introduction',
         {

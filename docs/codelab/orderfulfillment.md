@@ -1,5 +1,9 @@
-# Order Fulfillment Codelab part 1
+---
+displayed_sidebar:     orderfulfillment
+---
 
+# Creating a Workflow and task
+# Order Fulfillment Codelab part 1
 Bob's Widgets has just moved out of Bob's garage, and he's hired you to overhaul the shipping and fulfillment process.  Everything today is manual and you think that building an automated workflow to efficiently get the orders out to the growing customer base is the best way to scale the system (and save your team from going insane).
 
 You've heard of Netflix Conductor, and have read about the flexibility of a microservice-based architecture. You are pretty sure that building small modular applications and wiring them into a Conductor workflow is the way to go. You know that the initial workflow will be really simple (these widgets don't ship themselves, you know!), but will quickly grow in complexity as the company grows.
