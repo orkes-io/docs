@@ -119,7 +119,8 @@ module.exports = {
             'codelab/orderfulfillment5',
             'codelab/orderfulfillment5_5',
             'codelab/orderfulfillment6',
-            'codelab/orderfulfillment7'
+            'codelab/orderfulfillment7',
+            'codelab/orderfulfillment8'
         ]}
     ],
     mySidebar: [
@@ -190,6 +191,26 @@ module.exports = {
             items: [
                 'how-tos',
                 'how-tos/SDKs',
+                {
+                    
+                    type: 'category',
+                    label: 'SDK list',
+                    collapsed: true,
+                    items: [
+                        {   type: 'doc', 
+                            id: 'how-tos/sdks/conductor-python/main/README',
+                            label:"Python"},
+                        {   type: 'doc', 
+                            id: 'how-tos/sdks/conductor-go/main/README',
+                            label:"Go"},
+                        {   type: 'doc', 
+                            id: 'how-tos/sdks/conductor-csharp/main/README',
+                            label:"CSharp"},
+                        {   type: 'doc', 
+                            id: 'how-tos/sdks/conductor-clojure/main/README',
+                            label:"Clojure"}
+                     ],
+                },
                 {
                     
                         type: 'category',

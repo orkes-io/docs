@@ -127,8 +127,7 @@ However, we have 2 tasks that will be called on each Dynamic fork - the loop, an
   ],
   "inputParameters": [],
   "outputParameters": {
-    "data": "${get_population_data.output.response.body.data}",
-    "source": "${get_population_data.output.response.body.source}"
+      "orderDetails": "${shipping_loop_ref.output}"
   },
   "schemaVersion": 2,
   "restartable": true,
@@ -140,6 +139,8 @@ However, we have 2 tasks that will be called on each Dynamic fork - the loop, an
   "inputTemplate": {}
 }
 ```
+> Note: This workflow outputs the JSON from the loop.  This will allow us to take the output from all o fthe subworkflows and combine them in the output of the overall workflow.
+
 <p align="center"><img src="/content/img/codelab/of6_subworkflow.png" alt="subworkflow for dynamic task" width="800" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
 If we wanted to, we could update our existing workflow to call a Subworkflow in place of the loop/shipping widget.  Replacing the Do/while loop in the workflow with a subworkflow task.  This task defines the workflow (and the version of the workflow to be called.  IN reality - this will look outwardly as if nothing is different.
