@@ -28,6 +28,20 @@ const config = {
     ],
     plugins: [
         [
+            "docusaurus-plugin-remote-content",
+            {
+                // options here
+                name: "content", // used by CLI, must be path safe
+                sourceBaseUrl: "https://raw.githubusercontent.com/conductor-sdk", // the base url for the markdown (gets prepended to all of the documents when fetching)
+                outDir: "docs/how-tos/sdks", // the base directory to output to.
+                documents: ["/conductor-python/main/README.md",
+                            "/conductor-go/main/README.md",
+                            "/conductor-csharp/main/README.md",
+                            "conductor-clojure/main/README.md"], // the file names to download
+            },
+        ],
+
+        [
             '@docusaurus/plugin-client-redirects',
             {
               redirects: 
