@@ -13,7 +13,7 @@ Our workflow creates the labels for multiple shipments - but currently only hand
 
 <p align="center"><img src="/content/img/codelab/of5_5_loopworkflow.png" alt="adding the do-while loop" width="400" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
-In order to support drop-sipping while still supporting multiple shipments to a single address, we need to run the ```shipping_loop``` (and the internal ```widget_shipping```) tasks once per address.  Conductor has a FORK attribute thatcan allow us to run multiple addresses at once:
+In order to support drop-shipping while still supporting multiple shipments to a single address, we need to run the ```shipping_loop``` (and the internal ```widget_shipping```) tasks once per address.  To do this, we'll utilize the [FORK](/content/docs/reference-docs/fork-task) System task. The Fork task creates a number of parallel task flows thcat can run simultaneously.  We'll use a FORK to create address labels for multiple addresses at once.
 
 ## Forks
 
@@ -44,38 +44,22 @@ An example fork might look like:
       ]
     }
 ```
-For space, the 2 forkTasks are left out, but imagine reusing the ```widget_shipping``` tasks in version 1, and then appending a unique value (in this case 1 &2) to ensure each task has a unique reference.  The workflow would look something like:
+For space, the 2 forkTasks are left out, but imagine reusing the ```widget_shipping``` tasks in version 1, and then appending a unique value (in this case 1 & 2) to ensure each task has a unique reference.  The workflow would look something like:
 
 <p align="center"><img src="/content/img/codelab/of4_forkexample.png" alt="version 2 regular fork" width="600" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
-Now, this is really great...but the number of 'tines' in the fork are defined at workflow definition.  Since the number of addresses is dynamic and can change on each order, we need something more flexible - a DYNAMIC_FORK.  Dynamic forks determine the number of 'times' at workflow runtime - providing the flexibility we need to support dropshipping of Bob's widgets.
+Now, this is really great...but with a FORK, the number of 'tines' in the fork are defined at workflow definition.  Since the number of addresses will change on each order, we need something more flexible, that can be defined at runtime.  Luckily we have that - the [DYNAMIC_FORK](content/docs/reference-docs/dynamic-fork-task).  Dynamic forks determine the number of 'tines' at workflow runtime - which is exactly what we need to build our dropshipping application.  This will provide the flexibility we need to support dropshipping of Bob's widgets.
 
+But - before we build our dynamic fork, we have a lot of housekeeping to take care of. 
 
-## Dynamic task inputs
+* Reorganize our tasks with a subworkflow.
+* Create the input JSON required for a Dynamic fork.
 
-Before we create a Dynamic fork we need to format the data to match the required input for a Dynamic fork.  Dynamic forks take 2 inputs. One input is a JSON array of tasks to run, and the other is a JSON array of values.  
-
-If we had 2 widgets to ship to Bob, the JSON ```dynamicForkTasksParam``` or list of task/task references to be run might look like:
-
-```json
-{"dynamicTasks": [
-  0 : {
-    "name": :"shipping_loop",
-    "taskReferenceName": "shipping_loop_1"
-  },
-  1: {
-    "name": :"shipping_loop",
-    "taskReferenceName": "shipping_loop_2",
-  }
-]
-}
-```
-
-This tells Conductor: "inside that dynamic fork, create 2 tasks using the ```shipping_loop``` task, and increment them as 1 &2 so they have unique names."  We could increment these tasks any way you'd like.
+This is going to be a bit of work, so we'll start with creating a subworkflow.
 
 ## Subworkflow 
 
-However, we have 2 tasks that will be called on each Dynamic fork - the loop, and then the ```shipping_widget``` inside the loop.  To simplify this, we'll create a new workflow of just these these two steps:
+For our dynamic fork to work have 2 tasks that will be called on each Dynamic fork - the loop, and then the ```shipping_widget``` inside the loop.  To simplify this, we'll create a new workflow of just these these two steps:
 
 ```JSON
 {
