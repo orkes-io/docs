@@ -1,9 +1,9 @@
-# Dynamic forks
+# Scaling parallel tasks with Dynamic forks
 # Order Fulfillment Codelab part 8
 
 We've automated the shipping workflow at Bob's widgets using Conductor.  Our workflow creates shipping labels for each ordered widgets, and reorders widgets to keep the inventory up.  We added error catching when the workflow fails, sending messages to Slack whenever the workflow fails.
 
-IN the latest iteration of our order fulfillment workflow, we are adding the ability to ship to multiple addresses - also known as dropshipping.  Our sales team has determined that we can add  a 15% markup if we dropship widgets for our customers, and we can accomplish this *just in code* with no other changes to the process.
+In the latest iteration of our order fulfillment workflow, we are adding the ability to ship to multiple addresses - also known as dropshipping.  Our sales team has determined that we can add a 15% markup if we dropship widgets for our customers, and we can accomplish this *just in code* with no other changes to the process.
 
 ## Dynamic Fork preparation
 
@@ -11,12 +11,21 @@ We're using a dynamic fork for our shipping - creating a set of tasks that run i
 
 In the previous sections, we prepared our workflow in incorporate dynamic tasks.  First, We moved our do/while loop and widget_shipping task into a Subworkflow task, as Dynamic forks can only have one named task.
 
-Next, we used JQ Transform tasks to parse all of the input data and create the JSON in the required formats to run a Dynamic fork.
+In the last section, we used JQ Transform tasks to create the input data in the required JSON format for the Dynamic fork. 
+
+So, now we are finally ready to build the dynamic fork that will allow for one order to have multiple shipping addresses.
 
 
 ## Building the Dynamic Fork
 
 Now we can build our Dynamic fork.
+
+The inputs parameters are the outputs of the JQ transform tasks created in the previous sections, and these are applied to ```dynamicForkTasksParam``` and ```dynamicForkTasksInputParamName```. 
+
+* ```dynamicForkTasksParam``` lists all of the tasks that need to be created dynamically.
+* ```dynamicForkTasksInputParamName``` applies the input data for each dynamically created task.
+
+We add a JOIN to tell Conductor when to continue - and the workflow will continue when each dynamic task has completed. 
 
 ```
 {
@@ -43,7 +52,7 @@ Next we'll take the output of the JOIN ```shipping_multiple_addresses_join_ref.o
 
 ## One last item
 
-The number of widgets being ordered no longer works.  In version 2 of the workflow, there was just one ```numberOfWidgets``` property, but now there is one per address.  We *could* have added the shipping into the subworkflow - but with multiple order "appends", this increases the chance that the workflow will fail.  
+The reordering task no longer works as expected. In version 2 of the workflow, there was just one ```numberOfWidgets``` value, but now there are ```numberOfWidgets``` for each address. 
 
 To add up the ```numberOfWidgets``` we'll use another JQ transform.  The code to sum up the values is:
 
@@ -51,7 +60,7 @@ To add up the ```numberOfWidgets``` we'll use another JQ transform.  The code to
 [.addressList[].numberOfWidgets | tonumber ] | add
 ```
 
-This takes the JSON list, converts eachg ```numberOfWidgets`` to a number, and then adds them up. Our JQ transform looks like:
+This takes the JSON list, converts each ```numberOfWidgets`` to a number, and then adds them up. Our JQ transform looks like:
 
 ```json
 {
@@ -74,18 +83,18 @@ This takes the JSON list, converts eachg ```numberOfWidgets`` to a number, and t
     },
 ```
 
-Now, we run our workflow, and every piece is working.  We can add 1-n addresses, with 1-m widgets shipped to that address, and our workflow will create shipping labels for each one.  The total number of widgets will be reordered, and the workflow will output all of the results.
+Wiring the output of this task into the reordering widget now ensures that the correct number of widgets is reordered.
+
+Now we can run our workflow, and see that every piece is working.  We can add n addresses as input, each with m widgets shipped to that address, and our workflow will create shipping labels for each one.  The total number of widgets will be reordered, and the workflow will output all of the results.
 
 Our workflow diagram now looks like:
 
 <p align="center"><img src="/content/img/codelab/of8_finalworkflow.png" alt="final workflopw" width="400" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
 
-
-
 ## Conclusion
 
-Marketing is over the moon - the the new dropshipping feature - sales are growing - and profits are up! 
+Marketing is over the moon - the the new dropshipping feature - sales are growing - and profits are up!  There was no fundamental change to the way shipping works - we just added some code that provided our customers with more value.  And adding it with COnductor tasks made it very easy and modular to change.
 
 This ends our order fulfillment codelab. Of course, if this were the real world, your iteration may never finish.  
 

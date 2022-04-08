@@ -1,7 +1,7 @@
 ---
 displayed_sidebar:     orderfulfillment
 ---
-# HTTP Task addition
+# Adding a REST API Task
 # Order Fulfillment Codelab part 4
 
 You're running order fulfillment at Bob's Widgets, and when you started, it was 100% manual.  In parts 1-3 of the codelab, we built the initial version of our order fulfillment workflow up and running, but there's still a lot of room for improvement.

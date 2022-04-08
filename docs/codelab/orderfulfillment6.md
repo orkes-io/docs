@@ -1,5 +1,5 @@
 
-# Forks, Dynamic Forks and Subworkflows
+# Parallel Tasks and Subworkflows
 # Order Fulfillment Codelab part 6
 
 You're running order fulfillment at Bob's Widgets, and at the start of this tutorial, it was a totally manual process.  We've got 2 versions of the process running in Conductor, with error handling, and the ability to process multiple orders at once.
@@ -52,18 +52,27 @@ Now, this is really great...but with a FORK, the number of 'tines' in the fork a
 
 But - before we build our dynamic fork, we have a lot of housekeeping to take care of. 
 
-* Reorganize our tasks with a subworkflow.
+* Reorganize our tasks into a subworkflow.
 * Create the input JSON required for a Dynamic fork.
 
 This is going to be a bit of work, so we'll start with creating a subworkflow.
 
 ## Subworkflow 
 
-For our dynamic fork to work have 2 tasks that will be called on each Dynamic fork - the loop, and then the ```shipping_widget``` inside the loop.  To simplify this, we'll create a new workflow of just these these two steps:
+Each tine of our dynamic fork is to have a DO/WHILE loop with the ```widget_shipping``` task inside it.  However, a dynamic forks can only reference ONE task.  To make this work, we'll encase these two tasks inside a subworkflow.
+
+
+Conductor has a system task called the [SUB_WORKFLOW](/content/docs/reference-docs/sub-workflow-task).  It allows an entire workflow to be called in the place of a task.  There are a number of reasons SUBWORKFLOWS are useful.
+
+* Placing a series of tasks in a Dynamic fork (our use case).
+* Simplifying workflows when a series of tasks are reused multiple times.
+* Simplifying complex workflow diagrams.
+
+
+To encase our two tasks into the Dynamic Fork, we'll create the following subworkflow:
 
 ```JSON
 {
-  "updateTime": 1648841156147,
   "name": "Shipping_loop_workflow",
   "description": "shipping loop workflow to be used as a subworkflow",
   "version": 1,
@@ -123,11 +132,13 @@ For our dynamic fork to work have 2 tasks that will be called on each Dynamic fo
   "inputTemplate": {}
 }
 ```
-> Note: This workflow outputs the JSON from the loop.  This will allow us to take the output from all o fthe subworkflows and combine them in the output of the overall workflow.
+> Note: We updated the workflow ```outputParameters``` to output the JSON from the loop.  This will allow us to take the output from all of the subworkflows and combine them in the output of the overall workflow.
+
+> Also note: This new workflow must be added to the application logic under ```Applications``` in the playground - so that the application management knows that the workflow is authorized to run with the same Key/Secret. We did this in the 2nd page of this codelab [here's a link for a refresher](/content/docs/codelab/orderfulfillment2#workflow-and-task-permissions).
 
 <p align="center"><img src="/content/img/codelab/of6_subworkflow.png" alt="subworkflow for dynamic task" width="800" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
-If we wanted to, we could update our existing workflow to call a Subworkflow in place of the loop/shipping widget.  Replacing the Do/while loop in the workflow with a subworkflow task.  This task defines the workflow (and the version of the workflow to be called.  IN reality - this will look outwardly as if nothing is different.
+Before implementing the Dynamic Fork, we can update our existing workflow to call our new Subworkflow in place of the loop/shipping widget.  This is done by replacing the Do/while loop (and the embedded task) in the workflow with a subworkflow task.  This task defines the workflow (and the version of the workflow to be called.  
 
 ```JSON
 {
@@ -151,7 +162,7 @@ If we wanted to, we could update our existing workflow to call a Subworkflow in 
     }
 ```
 
-In reality, the ```Bobs_widget_fulfillment``` workflow will create a ```shipping_loop_workflow``` for the looping portion.
+Outwardly, the workflow will behave in exactly the same way - all the same tasks are called in exactly the same order.  IF we look under the hood, however, we see that  the ```Bobs_widget_fulfillment``` workflow creates a ```shipping_loop_workflow``` for the looping portion.  So there are now 2 workflow executions (the parent and the one subworkflow) whenever the workflow is run.
 
 <p align="center"><img src="/content/img/codelab/of6_twoexecutions.png" alt="table showing 2 workflow executions" width="800" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
