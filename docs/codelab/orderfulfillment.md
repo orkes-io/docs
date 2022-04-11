@@ -37,6 +37,8 @@ You're in a world of hurt. Bob's Widgets is taking off, and you are barely keepi
 
 ## Conductor basics
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/cxMrS8LBPEc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 Before we start building, let's review a few terms that are frequently used in Conductor.
 
 * **Workflow:** Workflows are the heart of Conductor. A workflow defines the set of tasks - and the order that the tasks are run.
@@ -50,6 +52,9 @@ You currently have one application (worker) at your disposal. (We will look at t
 Basically, Bob wrote a Java app that takes in an address, buys a shipping label from your shipper, and sends the label to the printer in the shipping bay to be affixed to a widget box (we will just assume that this is a magical printer that always works).  With just a little bit of work, we can make this application a part of a Conductor workflow.
 
 ## Creating the workflow
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/zZRlxjcbzyA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 
 In our initial workflow, we'll wire up Bob's Java app as a worker, and have a simple workflow with just one task and one worker.  As we build more requirements around our shipping workflow, we can add additional workers and improve the automation of the order fulfillment process.
 

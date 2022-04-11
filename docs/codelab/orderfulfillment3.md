@@ -14,13 +14,16 @@ In part 3, we'll actually run the worker, and see Conductor in action!
 
 Let's get started by running the workflow!
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/5K-jlxfPBy8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
 ## Running the workflow
 
 To run our workflow, click the ```Run Workflow``` box in the left nav. This will open a panel looking for parameters.  Choose the workflow named ```Bobs_widget_fulfillment``` and as input, add an address. Here's an example address:
 
 ```json
 {
-"name": "bob",
+"name": "Bob McBobface",
 "street":"123 Main St.",
 "city": "Anytown",
 "state":"ME",

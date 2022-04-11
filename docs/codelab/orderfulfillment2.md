@@ -16,6 +16,8 @@ The worker can be found in the [Orkesworkers GitHub repository](https://github.c
 
 ##  Our First worker
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/J-Nk6nlnwxI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 Let's take a look at the code that we received from Bob, modified to make it a Conductor Worker. 
 
 A Conductor worker has 2 parts:
@@ -77,6 +79,8 @@ With Orkes Playground, you don't want anyone to be able to call your ```widget_s
 To prevent such disasters from happening, we've built security your workers and workflows in the Orkes Playground.  For your workflow and task to run your worker, you'll need a key & secret from the playground embedded in your worker.  This ensures that only the applications provisioned to create shipping labels will actually create shipping labels.
 
 ### Key and secret
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/o6g6j6lWw-k" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 To create your key & secret, click ```Applications``` in the left nav of the Playground.  Click ```Create Application``` to create the application.  We'll name our new application "Bobs_orders."  There are two tables (both empty).  At the of the pag click the ```Create Access Key``` button.  This will generate an Id and Secret.  Record both of these values (if you forget, you can create additional Id/Secrets).  We'll use these in the worker application to allow for the connection.  
 
