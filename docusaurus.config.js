@@ -31,6 +31,7 @@ const config = {
             "docusaurus-plugin-remote-content",
             {
                 // options here
+                id: "OS_sdks",
                 name: "content", // used by CLI, must be path safe
                 sourceBaseUrl: "https://raw.githubusercontent.com/conductor-sdk", // the base url for the markdown (gets prepended to all of the documents when fetching)
                 outDir: "docs/how-tos/sdks", // the base directory to output to.
@@ -39,8 +40,23 @@ const config = {
                             "/conductor-csharp/main/README.md",
                             "conductor-clojure/main/README.md"], // the file names to download
             },
+        
         ],
-
+        [
+            "docusaurus-plugin-remote-content",
+            {
+                // options here
+                id: "javasdk",
+                name: "content", // used by CLI, must be path safe
+                sourceBaseUrl: "https://raw.githubusercontent.com/Netflix/conductor/main/", // the base url for the markdown (gets prepended to all of the documents when fetching)
+                outDir: "docs/how-tos/sdks", // the base directory to output to.
+                documents: ["/java-sdk/workflow_sdk.md",
+                            "/java-sdk/worker_sdk.md",
+                            "/java-sdk/testing_framework.md" 
+                             ]               // the file names to download
+            },
+            
+        ],
         [
             '@docusaurus/plugin-client-redirects',
             {
