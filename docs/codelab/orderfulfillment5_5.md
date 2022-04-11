@@ -1,4 +1,4 @@
-# Versioning and Do/While loop
+# Workflow Versioning and adding a loop
 # Order Fulfillment Codelab part 5.5
 
 
@@ -6,16 +6,17 @@ Now that we have some notification of workflow failures, we can continue with ou
 
 ## Versioning
 
-Until now, all of the changes have been made on the same workflow - as the changes have been improvements - but have not materially changed the workflow in any way.
+Until now, all of the changes have been made on the same workflow - as the changes have been improvements but have not materially changed the way the workflow works in any way.
 
 When a large change is made, a new version of the same workflow can be created.  Versions are integer based, so we've been working on V1, meaning that this next version will be V2.   
 
 What is great about versioning is that *both* workflows can be live and in production at once. If some of your users are not ready to upgrade to the latest version of your workflow - they can remain on the older version indefinitely - while others are are the newer version(s).  Additionally, during a migration - any workflows running on V1 will remain on V1 - and only new workflows will move to the V2 version - ensuring that the user experience of your workflows never break.
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/WiJQua49R8k" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Big changes
 
-The biggest issue with your widget order fulfillment is that customers can only order one widget at a time. The suggestion from Bob was "just run the app a bunch of times" - and today - if there are multiple iorders, the workflow is just called multiple times.  
+The biggest issue with your widget order fulfillment is that customers can only order one widget at a time. The suggestion from Bob was "just run the app a bunch of times" - and today - if there are multiple orders, the workflow is just called multiple times.  
 
 We can do better, and in V2, we'll accept the address parameters AND the number of widgets parameter.
 
@@ -36,8 +37,7 @@ There are 2 places we will use the ```numberOfWidgets``` param.
 2. We'll update the HTTP Task that reorders widgets to not order one (currently hardcoded into the API call), but to reorder as many as are being shipped out.
 
 ## Do/While Loop
-
-for developers, a [Do/While](/content/docs/reference-docs/do-while-task) loop should be pretty familiar.  It basically continues to repeat a set of tasks until a certain criteria is met.
+For developers, a [Do/While](/content/docs/reference-docs/do-while-task) loop is probably a familiar construct.  It will DO something over and over WHILE a certain criteria is valid.
 
 Here's what our Do/While task (called ```shipping_loop```) looks like:
 
@@ -86,16 +86,18 @@ Here's what our Do/While task (called ```shipping_loop```) looks like:
 
 The ```loopCondition``` says that as long as the iterator of the loop (indexed at zero) is less than the number of widgets ordered - run the loop.
 
-This will create the shipping label and tracking number for each widget.  
+This will create the shipping label and tracking number for each widget ordered.  
 
-Our new workflow now appears as :
+> Before saving this change - be sure to update the workflow version to 2
+
+Our new workflow now appears as:
 
 <p align="center"><img src="/content/img/codelab/of5_5_loopworkflow.png" alt="adding the do-while loop" width="800" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
 
 ## Updating the reorder
 
-Since our workflow can now process more than one widget at a time, we must update our replenishment order with the number of widgets ordered. IN version 1, we had hardcoded the re-order value to one.  Now, we can use the workflow input variable ```numberOfWidgets``` to correctly update the ```count``` parameter of the reorder:
+Since our workflow can now process more than one widget at a time, we must update our replenishment order with the number of widgets ordered. In version 1, we had hardcoded the re-order value to one.  Now, we can use the workflow input variable ```numberOfWidgets``` to correctly update the ```count``` parameter of the reorder:
 
 ```json
 {

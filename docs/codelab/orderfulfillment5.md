@@ -1,4 +1,4 @@
-# Dealing with workflow failure
+# Workflow Failure & Workflow Termination
 # Order Fulfillment Codelab part 5
 
 You're running order fulfillment at Bob's Widgets, and when you started, it was 100% manual.  
@@ -15,27 +15,31 @@ Then, on Friday afternoon, you get an email from the supplier, confirming your o
 
 What could have gone wrong!?!
 
-## Examining for issues
+<iframe width="560" height="315" src="https://www.youtube.com/embed/lRvkQn-FD-A" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-In your Conductor panel, you can search for all workflow executions for the Bob's widget workflow.  All of the workflows completed (as seen in the rightmost column below):
+## Examining Workflow executions
+
+In your Conductor panel, you can search for all workflow executions for the Bob's widget workflow.  All of the workflows completed successfully (as seen in the rightmost column below):
 
 <p align="center"><img src="/content/img/codelab/of5_execution.png" alt="conductor execution workflow list" width="800" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
-You roll up your sleeves and begin looking at individual workflows to find the error.  When you open an  order, and look at the ```workflow input/output pab``` you want to see data like this:
+You roll up your sleeves and begin looking at individual workflows to find the error.  When you open an order, and look at the ```workflow input/output tab``` you want to see data like this:
 
 
 <p align="center"><img src="/content/img/codelab/of5_goodwf.png" alt="a good successful workflow" width="800" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
 
-We see that the output includes the address, and the output from the HTTP_task from the supplier confirming that an order for 1 widget was placed.  But, as you continue to hunt, you find workflows that look like this:
+We see that the output includes the address, and the output from the HTTP task from the supplier confirming that an order for 1 widget was placed.  But, as you continue to hunt, you begin to find workflows that look like this:
 
 <p align="center"><img src="/content/img/codelab/of5_badwf.png" alt="a nad successful workflow" width="800" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
-As far as Conductor is concerned - a response came back from the HTTP Task, so the workflow was successful.  But, from an inventory replenishment status, this is not ok.
+As far as Conductor is concerned - a 200 response came back from the API referenced in the HTTP Task, so the workflow was successful.  
 
-## why did the order fail?
+But, from an inventory replenishment status, this is not ok, so we need to update our workflow to take care of this.
 
-Seeing as this is a 3rd party API - there are lots of reasons that a failure might occur. In the REST API that was built to model the ```appendOrder``` endpoint, we have added a 10% failure rate to the code:
+## Why did the order fail?
+
+Reordering widgets is a 3rd party API - there are lots of reasons that a failure might occur. In the REST API that was built to model the ```appendOrder``` endpoint, we have added a 10% failure rate to the code:
 
 ```javascript
     var failure = 0.1;
@@ -53,13 +57,15 @@ Hopefully, any API used in a production Conductor workflow will behave better th
 
 ## Adding a error flow
 
-To ensure that orders are correctly placed, we need to parse the output from the HTTP_Task, and if the order is successfully placed, the workflow can continue as it does today. However, if the HTTP task returns with an error, we need to know this, so that we can fix the order manually.
+To ensure that orders are correctly placed, we need to parse the output from the HTTP_Task, and if the order is successfully placed, the workflow can continue as it does today. However, if the HTTP task returns with an error, we need to know this, so that we can fix the widget order manually.
 
 We know that a 'good' response from the API reads: ```Success![number] widgets ordered```, while a 'bad' response reads ```Order failed.```
 
 ## Adding a Switch task
 
-A [Switch task](https://orkes.io/content/docs/reference-docs/switch-task) takes in a value, and can choose which case the workflow should follow.  There is a default case (in this workflow, we'll assume that a order will be placed), and then the alternative case is when the output reads "Order Failed"
+A [Switch task](https://orkes.io/content/docs/reference-docs/switch-task) takes in a value, and can choose which case the workflow should follow.  There is a default case (in this workflow, we'll assume that a order will be placed), and then the alternative case is when the output reads "Order Failed".
+
+The switch case can evaulate the input in several ways (including running JavaScript), but in this case, we can use the ``` "evaluatorType": "value-param"``` meaning the decision will be bsaed completely on the data that comes in the ```switchCaseValue``` parameter. The ```switchCaseValue``` reads the output body from the API, and if it says "Order failed." we'll run a different pathway for the workflow.
 
 
 ```json
@@ -89,7 +95,9 @@ A [Switch task](https://orkes.io/content/docs/reference-docs/switch-task) takes 
 
 In this workflow, the switch case is at the end of the workflow, so we'll insert 2 [terminate tasks](https://orkes.io/content/docs/reference-docs/terminate-task0): one for the default case, and one for the failure case.
 
-A terminate task does exactly what it sounds like - it ends the workflow.  We'll end the 'good' path with a ```COMPLETED``` result, and end the 'bad' path with a ```FAILED``` state. our completed switch now looks like:
+## Terminate task
+
+A terminate task is a System task that does exactly what it it's name says - it ends the workflow.  Depending on the ```terminationStatus``` of the task, you can decide if the workflow is ```COMPLETED``` or if it ```FAILED```.  We'll end the 'good' path with a ```COMPLETED``` result, and end the 'bad' path with a ```FAILED``` state. our completed switch now looks like:
 
 ```JSON
 {
@@ -171,7 +179,9 @@ Comparing a successful and failed workflow, the difference is in the switch task
 
 ## Failing the workflow
 
-While it is now a lot easier to *find* failed workflow executions, we need to automate a failure workflow, so that we are alerted whenever a workflow fails.
+While it is now a lot easier to *find* failed workflow executions, it would be much better for an automated task to occur upon failure. To do this, we can add a failure workflow, so that we are alerted whenever a workflow fails. 
+
+> Note: A failure workflow will run whenever a workflow fails, not just on the termination task with status ```FAILED```. This will give us more control of the failures in our workflow - even when the reorder task works.
 
 ## Failure workflow
 
@@ -181,9 +191,11 @@ We'll create a second workflow that will be run whenever there the ```Bobs_widge
 "failureWorkflow": "shipping_failure"
 ```
 
-This tells Conductor to run this workflow whenever there is a failure.
+This tells Conductor to run this workflow whenever there is a failure in the parent workflow.
 
-Now, we'll define this second workflow.  When the main workflow fails, we want to be alerted right away, so we created a [Slack bot](https://api.slack.com/authentication/basics) that sends a message to a specific Slack channel whenever the workflow fails.  In the definition below, we hide the bot token in the url, and in the message, we attach the failed workflowId and the reason for failure.  
+Now, we'll define this second workflow.  When the main workflow fails, we want to be alerted right away, so we created a [Slack bot](https://api.slack.com/authentication/basics) that sends a message to a specific Slack channel whenever the workflow fails.  It turns out that Slack has an API, so we can turn to an HTTP Task to run this task.
+
+In the definition below, we've hidden the bot token in the url. The message sent in Slack is in the Body, in the "text" parameter.  The message will include the failed workflowId and the reason for failure.  
 
 ```JSON
 {
@@ -200,7 +212,7 @@ Now, we'll define this second workflow.  When the main workflow fails, we want t
           "headers": {
             "Content-type": "application/json"
           },
-          "uri": "https://hooks.slack.com/services/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",
+          "uri": "https://hooks.slack.com/services/<slack token>",
           "method": "POST",
           "body": {
             "text": "workflow: ${workflow.input.workflowId} failed. ${workflow.input.reason}"
@@ -239,5 +251,8 @@ Now, we have instrumented our Workflow to tell us when there is a failure- in rd
 
 <p align="center"><img src="/content/img/codelab/of5_failurebot.png" alt="slack message indicating workflow failure" width="400" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
-Now that we have some notification of workflow failures, we can continue with our automation of our shipping workflow.  At this point, we're going to make a bigger change to the workflow - adding additional inputs that might break the current workflow.  So we'll create a new version of the workflow.
+Now that we have some notification of workflow failures, we can continue with our automation of our shipping workflow.  
+
+
+The next big task we want to tackle - allowing orders of more than one widget at a time.This is a bigger change, as the *input* to the workflow is changing, we'll have a numberOfWidgets parameter. So, as a part of improving the workflow, we'll also be creating a new version of the workflow.
 

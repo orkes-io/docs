@@ -2,7 +2,7 @@
 There are a number of SDKs to help you build and run workers in Conductor:
 
 
-* Java SDK as a part of the [Netflix Conductor](https://https://github.com/Netflix/conductor).
+* Java SDK as a part of the [Netflix Conductor](https://github.com/Netflix/conductor/tree/main/java-sdk) repository.
 * [Golang](/content/docs/how-tos/sdks/conductor-go/main)
 * [Python](/content/docs/how-tos/sdks/conductor-python/main)
 * [C#](/content/docs/how-tos/sdks/conductor-csharp/main)

@@ -34,7 +34,7 @@ To find out more about Conductor visit: [https://github.com/Netflix/conductor](h
     {
         public MyWorkflowTask2(){}
 
-        public string TaskType => "test_ctask";
+        public string TaskType => "test_ctask2";
         public int? Priority => null;
 
         public async Task<TaskResult> Execute(Conductor.Client.Models.Task task, CancellationToken token)
@@ -153,7 +153,7 @@ curl -X 'POST' \
   -H 'accept: */*' \
   -H 'Content-Type: application/json' \
   -d '[{
-    "name": "csharp_task_example",
+    "name": "test_ctask",
     "description": "C# task example",
     "retryCount": 3,
     "retryLogic": "FIXED",
@@ -177,15 +177,15 @@ curl -X 'POST' \
     "version": 1,
     "tasks": [
       {
-        "name": "csharp_task_example",
-        "taskReferenceName": "csharp_task_example_ref_1",
+        "name": "test_ctask",
+        "taskReferenceName": "test_ctask",
         "inputParameters": {},
         "type": "SIMPLE"
       }
     ],
     "inputParameters": [],
     "outputParameters": {
-      "workerOutput": "${csharp_task_example.output}"
+      "workerOutput": "${test_ctask.output}"
     },
     "schemaVersion": 2,
     "restartable": true,

@@ -151,7 +151,7 @@ The core strength provided by microservice orchestration is the level of abstrac
 
 #### Why Choose Orkes for Microservice Orchestration?
 
-[Orkes](https://orkes.io) offers a distributed orchestration engine that handles microservice orchestration and also provides the benefits listed above to quickly gear up your hybrid cloud setup. 
+[Orkes](https://orkes.io) offers a orchestration engine that handles microservice orchestration and also provides the benefits listed above to quickly gear up your hybrid cloud setup. 
 
 [Orkes Conductor](https://orkes.io/what-is-conductor/) is a managed workflow orchestration tool best suited for microservices. It has been adopted widely across industries, from media to finance (supporting financial and distributed transactions). It uses a domain-specific language (DSL) to define the process flow, and is a well-established high-performance tool (as tested for high volumes at Netflix for concurrent processing). It uses [chaos engineering principles](https://en.wikipedia.org/wiki/Chaos_engineering) to build robust and highly scalable systems.
 
