@@ -23,7 +23,7 @@ Bob: It's *very, very* important that we order the right number of widgets each 
 ...clearly, there's room for more automation.
 
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/vFpBDmId8KU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<p align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/vFpBDmId8KU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
 
 ## Reordering API
 

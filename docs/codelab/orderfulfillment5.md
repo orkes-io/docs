@@ -15,7 +15,7 @@ Then, on Friday afternoon, you get an email from the supplier, confirming your o
 
 What could have gone wrong!?!
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/lRvkQn-FD-A" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<p align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/lRvkQn-FD-A" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
 
 ## Examining Workflow executions
 
