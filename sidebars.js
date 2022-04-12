@@ -156,6 +156,9 @@ module.exports = {
             items: [
                 'codelab/helloworld',
                 'codelab/beginner',
+                {   type: 'doc', 
+                            id: 'codelab/orderfulfillment',
+                            label:"Order Fulfillment Codelab"},
                 'codelab/sequentialHTTPtasks'
                 
             ],
