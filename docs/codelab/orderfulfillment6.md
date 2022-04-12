@@ -17,6 +17,8 @@ In order to support drop-shipping while still supporting multiple shipments to a
 
 ## Forks
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/01LG4qLeXw4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 A Fork (and a Join) are system tasks that run inside the Conductor server. Forks split your workflow into multiple paths that can be run asynchronously.  The JOIN task tells Conductor when to reconnect the paths and continue through the workflow.
 
 An example fork might look like:
@@ -58,6 +60,8 @@ But - before we build our dynamic fork, we have a lot of housekeeping to take ca
 This is going to be a bit of work, so we'll start with creating a subworkflow.
 
 ## Subworkflow 
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/TUm0C3x_vYg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 Each tine of our dynamic fork is to have a DO/WHILE loop with the ```widget_shipping``` task inside it.  However, a dynamic forks can only reference ONE task.  To make this work, we'll encase these two tasks inside a subworkflow.
 

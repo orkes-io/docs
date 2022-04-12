@@ -52,7 +52,11 @@ const config = {
                 outDir: "docs/how-tos/sdks", // the base directory to output to.
                 documents: ["/java-sdk/workflow_sdk.md",
                             "/java-sdk/worker_sdk.md",
-                            "/java-sdk/testing_framework.md" 
+                            "/java-sdk/testing_framework.md",
+                            "/java-sdk/src/main/java/com/netflix/conductor/sdk/workflow/def/ConductorWorkflow.java",
+                            "/java-sdk/src/main/java/com/netflix/conductor/sdk/workflow/def/tasks/SimpleTask.java",
+                            "/java-sdk/src/main/java/com/netflix/conductor/sdk/workflow/def/tasks/ForkJoin.java",
+                            
                              ]               // the file names to download
             },
             
@@ -171,8 +175,16 @@ const config = {
                         title: 'Docs',
                         items: [
                             {
-                                label: 'Tutorial',
+                                label: 'Getting Started',
                                 to: '/docs/introduction',
+                            },
+                            {
+                                label: 'SDKs',
+                                to: '/docs/how-tos/SDKs',
+                            },
+                            {
+                                label: 'Code Labs',
+                                to: '/docs/codelab/helloworld',
                             },
                         ],
                     },
