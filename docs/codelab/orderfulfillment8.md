@@ -91,6 +91,7 @@ Our workflow diagram now looks like:
 
 <p align="center"><img src="/content/img/codelab/of8_finalworkflow.png" alt="final workflopw" width="400" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
+<p align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/Ql2LgK2WWcI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
 
 ## Conclusion
 

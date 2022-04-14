@@ -9,6 +9,10 @@ In this section, we'll jq to parse and re-format the data we have into the forma
 
 > Tip:  JQ has a great [playground](https://jqplay.org/) to help you figure out your JQ queries.
 
+
+<p align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/qixjZpylaiQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
+
+
 ## The data we need
 
 There are 2 sets of JSON that the Dynamic Fork will need:

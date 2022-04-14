@@ -11,7 +11,7 @@ You'll learn how to:
 * Create Conductor Workflows & tasks
 * [Build and deploy a worker (including Application Authentication)](/content/docs/codelab/orderfulfillment2)
 * [Run your Workflow](/content/docs/codelab/orderfulfillment3)
-* [Add a HTTP Task)](/content/docs/codelab/orderfulfillment4)
+* [Add a REST API using the  HTTP Task](/content/docs/codelab/orderfulfillment4)
 * [Handle failures in your Workflow](/content/docs/codelab/orderfulfillment5)
 * [Add workflow versioning & add Do/While Task)](/content/docs/codelab/orderfulfillment5_5)
 * [Add Forks, Dynamic Forks, Sub-workflows](/content/docs/codelab/orderfulfillment6)
@@ -37,7 +37,7 @@ You're in a world of hurt. Bob's Widgets is taking off, and you are barely keepi
 
 ## Conductor basics
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/cxMrS8LBPEc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<p align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/cxMrS8LBPEc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
 
 Before we start building, let's review a few terms that are frequently used in Conductor.
 
@@ -53,7 +53,7 @@ Basically, Bob wrote a Java app that takes in an address, buys a shipping label 
 
 ## Creating the workflow
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/zZRlxjcbzyA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<p align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/zZRlxjcbzyA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
 
 
 In our initial workflow, we'll wire up Bob's Java app as a worker, and have a simple workflow with just one task and one worker.  As we build more requirements around our shipping workflow, we can add additional workers and improve the automation of the order fulfillment process.

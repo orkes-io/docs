@@ -17,6 +17,8 @@ In order to support drop-shipping while still supporting multiple shipments to a
 
 ## Forks
 
+<p align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/01LG4qLeXw4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
+
 A Fork (and a Join) are system tasks that run inside the Conductor server. Forks split your workflow into multiple paths that can be run asynchronously.  The JOIN task tells Conductor when to reconnect the paths and continue through the workflow.
 
 An example fork might look like:
@@ -46,7 +48,7 @@ An example fork might look like:
 ```
 For space, the 2 forkTasks are left out, but imagine reusing the ```widget_shipping``` tasks in version 1, and then appending a unique value (in this case 1 & 2) to ensure each task has a unique reference.  The workflow would look something like:
 
-<p align="center"><img src="/content/img/codelab/of4_forkexample.png" alt="version 2 regular fork" width="600" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+<p align="center"><img src="/content/img/codelab/of4_forkexample.png" alt="version 2 regular fork" width="500" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
 Now, this is really great...but with a FORK, the number of 'tines' in the fork are defined at workflow definition.  Since the number of addresses will change on each order, we need something more flexible, that can be defined at runtime.  Luckily we have that - the [DYNAMIC_FORK](content/docs/reference-docs/dynamic-fork-task).  Dynamic forks determine the number of 'tines' at workflow runtime - which is exactly what we need to build our dropshipping application.  This will provide the flexibility we need to support dropshipping of Bob's widgets.
 
@@ -58,6 +60,8 @@ But - before we build our dynamic fork, we have a lot of housekeeping to take ca
 This is going to be a bit of work, so we'll start with creating a subworkflow.
 
 ## Subworkflow 
+
+<p align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/TUm0C3x_vYg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
 
 Each tine of our dynamic fork is to have a DO/WHILE loop with the ```widget_shipping``` task inside it.  However, a dynamic forks can only reference ONE task.  To make this work, we'll encase these two tasks inside a subworkflow.
 
@@ -136,7 +140,7 @@ To encase our two tasks into the Dynamic Fork, we'll create the following subwor
 
 > Also note: This new workflow must be added to the application logic under ```Applications``` in the playground - so that the application management knows that the workflow is authorized to run with the same Key/Secret. We did this in the 2nd page of this codelab [here's a link for a refresher](/content/docs/codelab/orderfulfillment2#workflow-and-task-permissions).
 
-<p align="center"><img src="/content/img/codelab/of6_subworkflow.png" alt="subworkflow for dynamic task" width="800" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+<p align="center"><img src="/content/img/codelab/of6_subworkflow.png" alt="subworkflow for dynamic task" width="400" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
 Before implementing the Dynamic Fork, we can update our existing workflow to call our new Subworkflow in place of the loop/shipping widget.  This is done by replacing the Do/while loop (and the embedded task) in the workflow with a subworkflow task.  This task defines the workflow (and the version of the workflow to be called.  
 

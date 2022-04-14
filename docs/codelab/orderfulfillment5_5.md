@@ -12,7 +12,7 @@ When a large change is made, a new version of the same workflow can be created. 
 
 What is great about versioning is that *both* workflows can be live and in production at once. If some of your users are not ready to upgrade to the latest version of your workflow - they can remain on the older version indefinitely - while others are are the newer version(s).  Additionally, during a migration - any workflows running on V1 will remain on V1 - and only new workflows will move to the V2 version - ensuring that the user experience of your workflows never break.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/WiJQua49R8k" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<p align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/WiJQua49R8k" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
 
 ## Big changes
 
@@ -92,7 +92,7 @@ This will create the shipping label and tracking number for each widget ordered.
 
 Our new workflow now appears as:
 
-<p align="center"><img src="/content/img/codelab/of5_5_loopworkflow.png" alt="adding the do-while loop" width="800" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+<p align="center"><img src="/content/img/codelab/of5_5_loopworkflow.png" alt="adding the do-while loop" width="400" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
 
 ## Updating the reorder

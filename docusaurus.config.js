@@ -52,7 +52,11 @@ const config = {
                 outDir: "docs/how-tos/sdks", // the base directory to output to.
                 documents: ["/java-sdk/workflow_sdk.md",
                             "/java-sdk/worker_sdk.md",
-                            "/java-sdk/testing_framework.md" 
+                            "/java-sdk/testing_framework.md",
+                            "/java-sdk/src/main/java/com/netflix/conductor/sdk/workflow/def/ConductorWorkflow.java",
+                            "/java-sdk/src/main/java/com/netflix/conductor/sdk/workflow/def/tasks/SimpleTask.java",
+                            "/java-sdk/src/main/java/com/netflix/conductor/sdk/workflow/def/tasks/ForkJoin.java",
+                            
                              ]               // the file names to download
             },
             
@@ -171,8 +175,16 @@ const config = {
                         title: 'Docs',
                         items: [
                             {
-                                label: 'Tutorial',
+                                label: 'Getting Started',
                                 to: '/docs/introduction',
+                            },
+                            {
+                                label: 'SDKs',
+                                to: '/docs/how-tos/SDKs',
+                            },
+                            {
+                                label: 'Code Labs',
+                                to: '/docs/codelab/helloworld',
                             },
                         ],
                     },
@@ -215,21 +227,21 @@ const config = {
                 additionalLanguages: ['java'],
             },
             algolia: {
-                appId: "YOUR_APP_ID",
+                appId: "F6Z9JYN7SD",
 
                 // Public API key: it is safe to commit it
-                apiKey: "YOUR_SEARCH_API_KEY",
+                apiKey: "4b16b443762534d364363a6dee383487",
 
-                indexName: "YOUR_INDEX_NAME",
+                indexName: "prod_docs",
 
                 // Optional: see doc section below
-                contextualSearch: true,
+                contextualSearch: false,
 
                 // Optional: Specify domains where the navigation should occur through window.location instead on history.push. Useful when our Algolia config crawls multiple documentation sites and we want to navigate with window.location.href to them.
-                externalUrlRegex: "external\\.com|domain\\.com",
+                // externalUrlRegex: "external\\.com|domain\\.com",
 
                 // Optional: Algolia search parameters
-                searchParameters: {},
+                // searchParameters: {},
             },
         }),
 };
