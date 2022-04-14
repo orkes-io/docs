@@ -92,7 +92,7 @@ This will create the shipping label and tracking number for each widget ordered.
 
 Our new workflow now appears as:
 
-<p align="center"><img src="/content/img/codelab/of5_5_loopworkflow.png" alt="adding the do-while loop" width="400" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+<p align="center"><img src="/content/img/codelab/OF5_5_loopworkflow.png" alt="adding the do-while loop" width="400" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
 
 ## Updating the reorder
