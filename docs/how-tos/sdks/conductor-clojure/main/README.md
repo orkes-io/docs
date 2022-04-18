@@ -2,6 +2,9 @@
 
 Software Development Kit for Netflix Conductor, written on and providing support for Clojure
 
+## Get the SDK
+https://clojars.org/io.orkes/conductor-clojure
+
 ## Quick Guide
 
 1. Create connection options
