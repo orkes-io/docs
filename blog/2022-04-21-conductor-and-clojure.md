@@ -7,7 +7,7 @@ image: https://orkes.io/content/img/blogassets/clojure.jpeg
 ---
 
 
-#Enhancing Conductor With Clojure
+# Enhancing Conductor With Clojure
 
 ## What is Conductor
 
@@ -18,7 +18,7 @@ Workflows are defined in JSON and Tasks are defined in JSON. Workflows can be co
 Clojure is a functional programming language that runs on the JVM, with really interesting features, that match really well with the way I understand Conductor. Workflows and tasks are "just data" and Clojure programs are "just data"
 
 In the POST I want to show you how you can create tasks, workflows and run Clojure workers, with just data.
-
+<!-- truncate -->
 ## Getting started
 
 For this example you'll need a conductor instance, you can go ahead and clone `https://github.com/Netflix/conductor` cd into the docker folder and build with docker-compose
