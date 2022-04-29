@@ -74,7 +74,7 @@ Often, recipes have variations to preparation, and they can be read like an IF s
 
 ### Cooking a burrito
 
-Let's look at a common example - from a burrito in my freezer.  The directions vary depending on the cooking method.
+Let's look at a common example - from a burrito in my freezer.  The preparation directions vary depending on the cooking method.
 
 <p align="center"><img src="/content/img/blogassets/burrito.jpg" alt="burrito instructions" width="400" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
@@ -90,4 +90,12 @@ Workflows are a series of tasks that must be followed in a certain order. In thi
 
 We created sample workflows for making a peanut and jelly sandwich ([version 1](https://play.orkes.io/workflowDef/PBJ/1) and [version2](https://play.orkes.io/workflowDef/PBJ/2)) and another workflow to cook a [frozen burrito](https://play.orkes.io/workflowDef/burrito) with microwave or oven instructions.
 
-If you're curious about how to build a workflow orchestration - it might be a fun exercise to try your favorite recipe as a workflow.  You can build on the workflows from this post in our free playground.  Feel free to share what you came up with in our [Discord](https://discord.gg/pYYdYsYTAw). We love seeing creative uses of workflows!
+<<<<<<< Local Changes
+We are able to reuse a number of tasks:
+
+* The ```zap``` task is used twice in the microwave branch.
+* The ```bake``` task in the oven branch.
+* The ```flip``` task is used in both branches.
+
+When reusing tasks, the ```taskReferenceName``` (shown at the top of the box) must be unique.=======
+If you're curious about how to build a workflow orchestration - it might be a fun exercise to try your favorite recipe as a workflow.  You can build on the workflows from this post in our free playground.  Feel free to share what you came up with in our [Discord](https://discord.gg/pYYdYsYTAw). We love seeing creative uses of workflows!>>>>>>> External Changes
