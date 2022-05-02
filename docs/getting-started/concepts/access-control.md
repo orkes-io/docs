@@ -28,7 +28,7 @@ Click ```Applications``` and then ```Create Application```.  To add a Workflow/T
 
 Once all of the workflows and tasks have been added, the table will display them all. This application is set for running the [order fulfillment codelab](/content/docs/codelab/orderfulfillment).
 
-> Note: 
+> Note: When adding tasks, you can specify a domain 
 
 <p align="center"><img src="/content/img/all_permissions.png" alt="permissions table" width="800" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
