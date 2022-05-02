@@ -1,13 +1,13 @@
 
-# Role Based Access Control
+# Access Control
 
-With [Orkes Cloud](https://orkes.io/cloud), your Conductor server may be running in a different hosted environment than your workers.  The endpoints to run your workflows are API points that are exposed on the internet.
+With [Orkes Cloud](https://orkes.io/cloud), your Conductor server may be running in a different hosted environment than your workers.  The APIs to run your workflows are exposed on the internet, so controlling access is needed.
 
-To ensure that all workflow executions & worker tasks are only run by authorized users, Orkes has added a layer of Role Based Access Control to all parts of the Orchestration workflow lifecycle.
+To ensure that all workflow executions & worker tasks are only run by authorized users, Orkes has added a layer of Access Control to all parts of the Orchestration workflow lifecycle.
 
 ## Applications
 
-In the context of Access control, an application is a collection of workflows and their respective tasks.  Each application will have its own set of Access Keys.
+In the context of Access control, an application grants programmatic access to a process or application through access keys. Each application will have its own set of Access Keys.  An application can grant access to workflows, tasks or both. 
 
 ### Workflow & Task permissions
 
@@ -27,6 +27,8 @@ Click ```Applications``` and then ```Create Application```.  To add a Workflow/T
 <p align="center"><img src="/content/img/application_permission.png" alt="permission dialog" width="500" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
 Once all of the workflows and tasks have been added, the table will display them all. This application is set for running the [order fulfillment codelab](/content/docs/codelab/orderfulfillment).
+
+> Note: When adding tasks, you can specify a domain 
 
 <p align="center"><img src="/content/img/all_permissions.png" alt="permissions table" width="800" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
