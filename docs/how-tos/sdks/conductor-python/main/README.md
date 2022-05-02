@@ -6,129 +6,55 @@ To find out more about Conductor visit: [https://github.com/Netflix/conductor](h
 
 ## Quick Start
 
-1. [Create virtual environment](#Virtual-Environment-Setup)
-2. [Write worker](#Write-worker)
-3. [Run workers](#Run-workers)
-4. [Worker Configurations](#Worker-Configurations)
-5. [C/C++ Support](#cc-support)
+- [Netflix Conductor Client SDK](#netflix-conductor-client-sdk)
+  - [Quick Start](#quick-start)
+    - [Virtual Environment Setup](#virtual-environment-setup)
+    - [Local Environment Setup](#local-environment-setup)
+    - [Write worker](#write-worker)
+    - [Run workers](#run-workers)
+    - [Running Conductor server locally in 2-minute](#running-conductor-server-locally-in-2-minute)
+    - [Execute workers](#execute-workers)
+    - [Create your first workflow](#create-your-first-workflow)
+  - [Worker Configurations](#worker-configurations)
+    - [Server Configurations](#server-configurations)
+    - [Metrics](#metrics)
+    - [Authentication](#authentication)
+  - [C/C++ Support](#cc-support)
+    - [1. Export your C++ functions as `extern "C"`:](#1-export-your-c-functions-as-extern-c)
+    - [2. Compile and share its library:](#2-compile-and-share-its-library)
+    - [3. Use the C++ library in your python worker](#3-use-the-c-library-in-your-python-worker)
+  - [Unit Tests](#unit-tests)
+    - [Simple validation](#simple-validation)
+    - [Run with code coverage](#run-with-code-coverage)
 
 ### Virtual Environment Setup
 
- ```shell
-  $ virtualenv conductor
-  $ source conductor/bin/activate
-```
-Install conductor-python package
 ```shell
-python3 -m pip install conductor-python
+$ virtualenv conductor
+$ source conductor/bin/activate
+```
+Install `conductor-python` package
+```shell
+$ python3 -m pip install conductor-python
+```
+
+### Local Environment Setup
+
+```shell
+$ git clone https://github.com/conductor-sdk/conductor-python.git
+$ cd conductor-python/
+$ python3 -m pip install .
+$ python3 ./src/example/main/main.py
 ```
 
 ### Write worker    
 
-```python
-from conductor.client.http.models.task import Task
-from conductor.client.http.models.task_result import TaskResult
-from conductor.client.http.models.task_result_status import TaskResultStatus
-from conductor.client.worker.worker_interface import WorkerInterface
-
-
-class SimplePythonWorker(WorkerInterface):
-    def execute(self, task: Task) -> TaskResult:
-        task_result = self.get_task_result_from_task(task)
-        
-        # Add any outputs that the task should produce as part of the execution
-        task_result.add_output_data('key', 'value')
-        task_result.add_output_data('temperature', 32)
-        
-        # Mark the task status as COMPLETED
-        task_result.status = TaskResultStatus.COMPLETED
-        return task_result
-```
+Worker examples:
+- [C++](src/example/worker/cpp/)
+- [Python](src/example/worker/python/)
 ### Run workers
-Create main method that does the following:
-1. Adds configurations such as metrics, authentication, thread count, Conductor server URL
-2. Add your workers
-3. Start the workers to poll for work
 
-```python
-from conductor.client.automator.task_handler import TaskHandler
-from conductor.client.configuration.configuration import Configuration
-from conductor.client.configuration.settings.metrics_settings import MetricsSettings
-from conductor.client.http.models.task_result_status import TaskResultStatus
-from conductor.client.worker.worker_interface import WorkerInterface
-from conductor.client.http.models import Task, TaskResult
-from conductor.client.configuration.settings.authentication_settings import AuthenticationSettings
-from pathlib import Path
-import os
-
-
-class SimplePythonWorker(WorkerInterface):
-    def execute(self, task: Task) -> TaskResult:
-        task_result = self.get_task_result_from_task(task)
-        task_result.add_output_data('key1', 'value')
-        task_result.add_output_data('key2', 42)
-        task_result.add_output_data('key3', False)
-        task_result.status = TaskResultStatus.COMPLETED
-        return task_result
-
-
-class WorkerA(WorkerInterface):
-    def execute(self, task: Task) -> TaskResult:
-        task_result = self.get_task_result_from_task(task)
-        task_result.add_output_data('key', 'A')
-        task_result.status = TaskResultStatus.COMPLETED
-        return task_result
-
-
-class WorkerB(WorkerInterface):
-    def execute(self, task: Task) -> TaskResult:
-        task_result = self.get_task_result_from_task(task)
-        task_result.add_output_data('key', 'B')
-        task_result.status = TaskResultStatus.COMPLETED
-        return task_result
-
-
-def main():
-    # Create a temp folder for metrics logs
-    metrics_dir = str(Path.home()) + '/tmp/'
-    if not os.path.isdir(metrics_dir):
-        os.mkdir(metrics_dir)
-
-    metrics_settings = MetricsSettings(
-        directory=metrics_dir
-    )
-
-    # Optionally, if you are using Conductor server that requires authentication,  setup key_id and secret
-    auth = AuthenticationSettings(
-        key_id='id',
-        key_secret='secret'
-    )
-
-    # Point to the Conductor Server
-    configuration = Configuration(
-        base_url='http://localhost:8080',
-        debug=True,
-        # authentication_settings=auth      # Optional if you are using server that requires authentication
-    )
-
-    # Add three workers
-    workers = [
-        SimplePythonWorker('python_task_example'),
-        WorkerA('task_A'),
-        WorkerB('task_B'),
-    ]
-
-    # Start the worker processes and wait
-    with TaskHandler(workers, configuration=configuration, metrics_settings=metrics_settings) as task_handler:
-        task_handler.start_processes()
-        task_handler.join_processes()
-
-
-if __name__ == '__main__':
-    main()
-```
-
-Save this as `main.py`
+`main.py` [example](src/example/main/main.py)
 
 ### Running Conductor server locally in 2-minute
 More details on how to run Conductor see https://netflix.github.io/conductor/server/ 
@@ -209,7 +135,7 @@ curl -X 'POST' \
 
 
 ## Worker Configurations
-Worker configuration is handled via `Configuraiton` object passed when initializing `TaskHandler`
+Worker configuration is handled via `Configuration` object passed when initializing `TaskHandler`
 
 ### Server Configurations
 * base_url : Conductor server address.  e.g. `http://localhost:8000` if running locally 
@@ -233,7 +159,7 @@ Use if your conductor server requires authentication
 Python is great, but at times you need to call into native C/C++ code. 
 Here is an example how you can do that with Conductor SDK.
 
-### 1.  Export your C++ functions as `extern "C"`:
+### 1. Export your C++ functions as `extern "C"`:
    * C++ function example (sum two integers)
         ```cpp
         #include <iostream>
