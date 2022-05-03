@@ -223,6 +223,7 @@ module.exports = {
                             label:"Clojure"}
                      ],
                 },
+                'how-tos/continuous_integration',
                 {
                     
                         type: 'category',

@@ -1,0 +1,142 @@
+# Continuous Integration Continuous Deployment
+
+Continuous Integration Continuous Deployment (CI/CD) is the concept of frequently updating your code, and pushing the updates into production immediately.
+
+In this tutorial, we will use GitHub Actions to update our Conductor "super_weather" workflow definitions in Github, and also immediately push the changes to our Conductor server. 
+
+Our GitHub repo can be found at https://github.com/orkes-io/workflowCICD.  Fork this repo into your Github Repository to follow along.
+
+<p align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/QN1Aa4bbsX4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
+
+## Creating the workflow
+
+We begin by manually creating a workflow in [Orkes Playground](https://play.orkes.io).  We choose ```Workflow Definitions```, and press the ```Define Workflow``` button.  We can paste in the contents of the ```suoer_weather_v1.json``` into the form, and save/confirm save the workflow.
+
+We now have a workflow in our Conductor server.  Now, we'll set up the CI/CD to update the workflow from GitHub.
+
+##  Access Control
+
+Our Conductor server is the [Orkes Playground](https://play.orkes.io) which has Access Control enabled (this is a feature of Orkes' Cloud, and not in the open source Conductor). If you are using the Open Source Conductor, you can skip this section.
+
+In the PLayground, select ```Applications```, and add create a new application. 
+
+<p align="center"><img src="/content/img/application_view.png" alt="empty application view" width="800" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+
+First, we will *turn on* the Metadata API slider.  This gives our application permission to update workflow definitions.
+
+Second, We'll create an Access Key.  Save the KeyId and Secret in a safe place.
+
+Thirdly, we'll add a Workflow permission.  Click the ```+```, then choose workflow, pick ```super_weather```, and give the permission ```Update``` (if you want your users to be able to execute with the same access keys, you can add this permission as well.)
+
+<p align="center"><img src="/content/img/weather_application_view.png" alt="weather application view" width="800" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+
+This establishes the Access Control required to update your Workflow.
+
+### GitHub Secrets
+
+The Github Action that updates the workflow will need to authenticate to the Playground.  To do this, we'll have to create Github Secrets.  On the Github page for the repository, Click ```Settings``` from the top menu bar.  Chose ```Secrets``` in the left navigation. Click Actions and create 2 ```New Repository Secrets```:  ```ORKES_WEATHER_KEY``` and ```ORKES_WEATHER_SECRET```.
+
+<p align="center"><img src="/content/img/creating_secrets.png" alt="secret creation" width="800" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+
+Now we're ready to create the GitHub Action.
+
+## GitHub Action Basics
+
+If you've never created a Github action, there are a number of templates you can begin with:
+
+```yaml
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+
+      # Runs a single command using the runners shell
+      - name: Run a one-line script
+        run: echo Hello, world!
+
+      # Runs a set of commands using the runners shell
+      - name: Run a multi-line script
+        run: |
+          echo Add other actions to build,
+          echo test, and deploy your project.
+```
+So, what does this do?
+* This workflow runs on push or pull_request to the main branch.
+* There is 1 ```Job``` called ```build``` with a number of steps.
+
+Our Action is built on this template, and so we'll just show the steps (there are 4 steps):
+
+```yaml
+- name: Checkout
+      uses: actions/checkout@v2
+    - name: authenticate
+      id: authenticate
+      uses: fjogeleit/http-request-action@v1.9.1
+      with:  
+        # Request URL
+        url: 'https://play.orkes.io/api/token'
+        # Request Method
+        method: 'POST' # optional, default is POST
+        # Content Type
+        contentType: 'application/json' # optional
+        data: '{"keyId": "${{ secrets.ORKES_WEATHER_KEY }}", "keySecret": "${{ secrets.ORKES_WEATHER_SECRET }}"}'
+    - name: update workflow v1
+      uses: fjogeleit/http-request-action@v1.9.1
+      with: # Set the secret as an input
+          # Request URLss
+          url: 'https://play.orkes.io/api/metadata/workflow'
+          customHeaders: '{"X-Authorization": "${{ fromJson(steps.authenticate.outputs.response).token }}"}'
+          # Request Method
+          method: 'PUT' # optional, default is POSTss
+          # Content Type
+          contentType: 'application/json' 
+          file: "super_weather_v1.json"
+    - name: update workflow v2
+      uses: fjogeleit/http-request-action@v1.9.1
+      with: # Set the secret as an input
+          # Request URLss
+          url: 'https://play.orkes.io/api/metadata/workflow'
+          customHeaders: '{"X-Authorization": "${{ fromJson(steps.authenticate.outputs.response).token }}"}'
+          # Request Method
+          method: 'PUT' # optional, default is POSTss
+          # Content Type
+          contentType: 'application/json' 
+          file: "super_weather_v2.json"
+```
+1. Checkout. This enables the action to access the files in the repository (since we need to upload them to Conductor).
+2. authenticate.  If you are using an Orkes version of Conductor, you need to use you Key & Secret to authenticate and create a JWT to upload your workflow. 
+   * This uses the ```http-request-action``` to generate the api token at ```https://play.orkes.io/api/token```.  The Body of the POST is the Key and Secret that we stored in our GitHub Secrets.
+2. Update Workflow 1. This is a HTTP PUT request that updates version 1 of the workflow.  Let's walk through the process:
+    * The endpoint is ```'https://play.orkes.io/api/metadata/workflow'```
+    * The headers reference the output of the authentication step.  ```fromJson``` parses the JSON string into a JSON object, allowing us to extract the value of the ```token```.
+    * The method is ```PUT```
+    * The JSON uploaded is ```super_weather_v1.json```, which contains v1 of the workflow.
+3. This is identical to step 2, except we upload v2 of the workflow.
+
+> Note: The PUT command for Conductor expects a JSON array.  If you examine the JSON files, the JSON is encapsulated in ```[]```.
+
+> Note: We could have included both V1 and V1 in the same file, but that does impact readability and editing, so in this case we opted to upload 2 distinct files.
+
+
