@@ -11,14 +11,18 @@ In the context of Access control, an application grants programmatic access to a
 
 ### Workflow & Task permissions
 
-When an application is created, tasks and workflows are chosen that can be run under the auspices of the application.
+When an application is created, tasks and workflows are chosen that can be run under the auspices of the application.  There are several roles in the Access Control (Role Based Access Control or RBAC) that can be turned on and off in the UI:
+
+* **Worker**: Poll and update Tasks. (Default on)
+* **Metadata API**: Create and manage Workflow and Task Definitions. (Default off)
+* **Application API**: Create and manage Applications & Access Keys. (Default off)
 
 Each workflow/task in the application can have different permissions:
 
-* **Read** - User can see the workflow/task, but cannot modify or run.
-* **Execute** - Allows the user to run the workflow or task.
-* **Update** - Allows the user to update to the workflow/task.
-* **Delete** = Allows the user to delete to the workflow/task.
+* **Read** - User can see the workflow/task, but cannot modify or run. Requires **Metadata API** Role to be on.
+* **Execute** - Allows the user to run the workflow or task. Requires **Worker** Role to be on.
+* **Update** - Allows the user to update to the workflow/task. Requires **Metadata API** Role to be on.
+* **Delete** = Allows the user to delete to the workflow/task. Requires **Metadata API** Role to be on.
 
 #### Example
 
