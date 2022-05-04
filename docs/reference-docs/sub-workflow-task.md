@@ -14,7 +14,7 @@ Suppose we want to include another workflow inside our current workflow. In that
 case, Sub Workflow Task would be used.
 
 **Examples**
-* The ```Do-While``` Task does not allow nested ```Do-while``` tasks.  But - it does permit a subworkflow that can have a ```Do-while``` loop inside it.
+* The ```Do-While``` Task does not allow nested ```Do-While``` tasks.  But  it does permit a subworkflow that can have a ```Do-While``` loop inside it.
 * ```Dynamic Forks ``` can only contain one task. But that one task can be a subworkflow containing many additional tasks.
 
 ### Configuration
@@ -78,7 +78,7 @@ Instead, we can call the existing workflow as a ```SUB_WORKFLOW``` task.
 
 ```
 
-<p align="center"><img src="/content/img/subworkfow_in_action.png" alt="example workflow with subworkflow" width="400" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+<p align="center"><img src="/content/img/subworkflow_in_action.png" alt="example workflow with subworkflow" width="400" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
 Not only is your workflow more readable, with easier to edit JSON, but it will update with the ```postage_rate``` workflow.
 
