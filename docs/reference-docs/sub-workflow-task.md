@@ -13,6 +13,10 @@ Sub Workflow task allows for nesting a workflow within another workflow.
 Suppose we want to include another workflow inside our current workflow. In that
 case, Sub Workflow Task would be used.
 
+**Examples**
+* The ```Do-While``` Task does not allow nested ```Do-while``` tasks.  But - it does permit a subworkflow that can have a ```Do-while``` loop inside it.
+* ```Dynamic Forks ``` can only contain one task. But that one task can be a subworkflow containing many additional tasks.
+
 ### Configuration
 
 Sub Workflow task is defined directly inside the workflow with `"SUB_WORKFLOW"`.
@@ -43,133 +47,39 @@ Sub Workflow task is defined directly inside the workflow with `"SUB_WORKFLOW"`.
 
 ### Examples
 
+Imagine that a colleague has created a address verification workflow:
 
-Imagine we have a workflow that has a fork in it.. In the example below, we inputting one image, but using a fork to create 2 images simultaneously:
+<p align="center"><img src="/content/img/postage_rate_workflow.png" alt="example workflow" width="400" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
-![](/img/workflow_fork.png)
+If you wanted to add this functionality to another workflow, it would be possible to copy all 201 lines of JSON and insert it into your workflow.  However, any updates made by your colleague will not be reflected in your workflow - you have a "frozen in time" version of the code.
 
-The left fork will create a JPG, and the right fork a WEBP image. Maintaining this workflow might be difficult, as changes made to one side of the fork do not automatically propagate the other.  Rather than using 2 tasks, we can define a ```image_convert_resize``` workflow that we can call for both forks as a subworkflow:
-
-```json
-
-{{
-	"name": "image_convert_resize_subworkflow1",
-	"description": "Image Processing Workflow",
-	"version": 1,
-	"tasks": [{
-			"name": "image_convert_resize_multipleformat_fork",
-			"taskReferenceName": "image_convert_resize_multipleformat_ref",
-			"inputParameters": {},
-			"type": "FORK_JOIN",
-			"decisionCases": {},
-			"defaultCase": [],
-			"forkTasks": [
-				[{
-					"name": "image_convert_resize_sub",
-					"taskReferenceName": "subworkflow_jpg_ref",
-					"inputParameters": {
-						"fileLocation": "${workflow.input.fileLocation}",
-						"recipeParameters": {
-							"outputSize": {
-								"width": "${workflow.input.recipeParameters.outputSize.width}",
-								"height": "${workflow.input.recipeParameters.outputSize.height}"
-							},
-							"outputFormat": "jpg"
-						}
-					},
-					"type": "SUB_WORKFLOW",
-					"subWorkflowParam": {
-						"name": "image_convert_resize",
-						"version": 1
-					}
-				}],
-				[{
-						"name": "image_convert_resize_sub",
-						"taskReferenceName": "subworkflow_webp_ref",
-						"inputParameters": {
-							"fileLocation": "${workflow.input.fileLocation}",
-							"recipeParameters": {
-								"outputSize": {
-									"width": "${workflow.input.recipeParameters.outputSize.width}",
-									"height": "${workflow.input.recipeParameters.outputSize.height}"
-								},
-								"outputFormat": "webp"
-							}
-						},
-						"type": "SUB_WORKFLOW",
-						"subWorkflowParam": {
-							"name": "image_convert_resize",
-							"version": 1
-						}
-					}
-
-				]
-			]
-		},
-		{
-			"name": "image_convert_resize_multipleformat_join",
-			"taskReferenceName": "image_convert_resize_multipleformat_join_ref",
-			"inputParameters": {},
-			"type": "JOIN",
-			"decisionCases": {},
-			"defaultCase": [],
-			"forkTasks": [],
-			"startDelay": 0,
-			"joinOn": [
-				"subworkflow_jpg_ref",
-				"upload_toS3_webp_ref"
-			],
-			"optional": false,
-			"defaultExclusiveJoinTask": [],
-			"asyncComplete": false,
-			"loopOver": []
-		}
-	],
-	"inputParameters": [],
-	"outputParameters": {
-		"fileLocationJpg": "${subworkflow_jpg_ref.output.fileLocation}",
-		"fileLocationWebp": "${subworkflow_webp_ref.output.fileLocation}"
-	},
-	"schemaVersion": 2,
-	"restartable": true,
-	"workflowStatusListenerEnabled": true,
-	"ownerEmail": "devrel@orkes.io",
-	"timeoutPolicy": "ALERT_ONLY",
-	"timeoutSeconds": 0,
-	"variables": {},
-	"inputTemplate": {}
-}
-```
-
-Now our diagram will appear as:
-![workflow with 2 subworkflows](/img/subworkflow_diagram.png)
-
-
-The inputs to both sides of the workflow are identical before and after - but we've abstracted the tasks into the subworkflow.  nay change to the subworkflow will automatically occur in bth sides of the fork.
-
-Looking at the subworkflow (the WEBP version):
+Instead, we can call the existing workflow as a ```SUB_WORKFLOW``` task.  
 
 ```
 {
-                        "name": "image_convert_resize_sub",
-                        "taskReferenceName": "subworkflow_webp_ref",
-                        "inputParameters": {
-                            "fileLocation": "${workflow.input.fileLocation}",
-                            "recipeParameters": {
-                                "outputSize": {
-                                    "width": "${workflow.input.recipeParameters.outputSize.width}",
-                                    "height": "${workflow.input.recipeParameters.outputSize.height}"
-                                },
-                                "outputFormat": "webp"
-                            }
-                        },
-                        "type": "SUB_WORKFLOW",
-                        "subWorkflowParam": {
-                            "name": "image_convert_resize",
-                            "version": 1
-                        }
-                    }
+      "name": "postage_rate_subworkflow",
+      "taskReferenceName": "postage_rate_subworkflow_ref",
+      "inputParameters": {},
+      "type": "SUB_WORKFLOW",
+      "decisionCases": {},
+      "defaultCase": [],
+      "forkTasks": [],
+      "startDelay": 0,
+      "subWorkflowParam": {
+        "name": "shipping_rate",
+        "version": 1
+      },
+      "joinOn": [],
+      "optional": false,
+      "defaultExclusiveJoinTask": [],
+      "asyncComplete": false,
+      "loopOver": []
+    }
+
 ```
 
-The ```subWorkflowParam``` tells conductor which workflow to call. The task is marked as completed upon the completion of the spawned workflow. 
-If the sub-workflow is terminated or fails the task is marked as failure and retried if configured. 
+<p align="center"><img src="/content/img/subworkfow_in_action.png" alt="example workflow with subworkflow" width="400" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+
+Not only is your workflow more readable, with easier to edit JSON, but it will update with the ```postage_rate``` workflow.
+
+
