@@ -223,6 +223,7 @@ module.exports = {
                             label:"Clojure"}
                      ],
                 },
+                'how-tos/continuous_integration',
                 {
                     
                         type: 'category',
@@ -291,6 +292,7 @@ module.exports = {
             collapsed: true,
             items: [
                 'reference-docs',
+                'reference-docs/scheduler',
                 {
                     type:'category',
                     label:'System Tasks',

@@ -145,7 +145,7 @@ Changes to this version of the workflow:
                 "taskReferenceName":"calculate_local_time_ref",
                 "type":"INLINE",
                 "inputParameters":{
-                    "date":"${get_IP.output.response.headers.Date[0]",
+                    "date":"${get_IP.output.response.headers.Date[0]}",
                     "offsetSeconds" : "${get_IP.output.response.body.offset}",
                     "evaluatorType": "javascript",
                     "expression":<minified JS>
