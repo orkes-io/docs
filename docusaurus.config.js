@@ -12,7 +12,7 @@ const config = {
     baseUrl: baseUrlName + '/',
     onBrokenLinks: 'warn',
     onBrokenMarkdownLinks: 'warn',
-    favicon: 'img/branding/orkes-favicon-purple.png',
+    favicon: 'https://orkes.io/icons/icon-144x144.png',
     organizationName: 'orkes-io', // Usually your GitHub org/user name.
     projectName: 'docs', // Usually your repo name.
     trailingSlash: false,

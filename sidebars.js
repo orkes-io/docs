@@ -292,6 +292,7 @@ module.exports = {
             collapsed: true,
             items: [
                 'reference-docs',
+                'reference-docs/scheduler',
                 {
                     type:'category',
                     label:'System Tasks',
