@@ -16,9 +16,9 @@ We now have a workflow in our Conductor server.  Now, we'll set up the CI/CD to 
 
 ##  Access Control
 
-Our Conductor server is the [Orkes Playground](https://play.orkes.io) which has Access Control enabled (this is a feature of Orkes' Cloud, and not in the open source Conductor). If you are using the Open Source Conductor, you can skip this section.
+Our Conductor server is the [Orkes Playground](https://play.orkes.io) which has Access Control enabled (this is a feature of Orkes' Cloud, and not in the open source Conductor). If using the Open Source Conductor, skip this section.
 
-In the PLayground, select ```Applications```, and add create a new application. 
+In the Playground, select ```Applications```, and add create a new application. 
 
 <p align="center"><img src="/content/img/application_view.png" alt="empty application view" width="800" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
@@ -42,7 +42,7 @@ Now we're ready to create the GitHub Action.
 
 ## GitHub Action Basics
 
-If you've never created a Github action, there are a number of templates you can begin with:
+Having never created a Github action, there are a number of templates one can begin with:
 
 ```yaml
 # This is a basic workflow to help you get started with Actions
@@ -126,7 +126,7 @@ Our Action is built on this template, and so we'll just show the steps (there ar
           file: "super_weather_v2.json"
 ```
 1. Checkout. This enables the action to access the files in the repository (since we need to upload them to Conductor).
-2. authenticate.  If you are using an Orkes version of Conductor, you need to use you Key & Secret to authenticate and create a JWT to upload your workflow. 
+2. authenticate.  When using an Orkes version of Conductor, authentication with a Key & Secret is required to create a JWT to upload the workflow. 
    * This uses the ```http-request-action``` to generate the api token at ```https://play.orkes.io/api/token```.  The Body of the POST is the Key and Secret that we stored in our GitHub Secrets.
 2. Update Workflow 1. This is a HTTP PUT request that updates version 1 of the workflow.  Let's walk through the process:
     * The endpoint is ```'https://play.orkes.io/api/metadata/workflow'```
@@ -135,7 +135,7 @@ Our Action is built on this template, and so we'll just show the steps (there ar
     * The JSON uploaded is ```super_weather_v1.json```, which contains v1 of the workflow.
 3. This is identical to step 2, except we upload v2 of the workflow.
 
-> Note: The PUT command for Conductor expects a JSON array.  If you examine the JSON files, the JSON is encapsulated in ```[]```.
+> Note: The PUT command for Conductor expects a JSON array.  If we examine the JSON files, the JSON is encapsulated in ```[]```.
 
 > Note: We could have included both V1 and V1 in the same file, but that does impact readability and editing, so in this case we opted to upload 2 distinct files.
 
