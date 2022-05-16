@@ -6,7 +6,7 @@ tags: [Netflix Conductor, Orkes, Github, Orbit, JQ, ETL, 2022]
 image: https://orkes.io/content/img/blogassets/collaboration.jpg
 ---
 
-In our previous post on [Using Conductor to Parse Data](https://orkes.io/content/blog/simple-data-processing-with-conductor), we discussed a Netflix Conductor workflow that extracts data from GitHub, transforms it, and then uploads the results to Orbit.  This basically describes an ETL (Extract, Transform, Load) process - automated as a Conductor workflow.  In this post, we'll detail how the workflow is constructed - examining what each task does.  This workflow will run daily at midnight GMT, ensuring that the data in our Orbit instance is always up to date.
+In our previous post on [Using Conductor to Parse Data](https://orkes.io/content/blog/simple-data-processing-with-conductor), we discussed a Netflix Conductor workflow that extracts data from GitHub, transforms it, and then uploads the results to Orbit.  This basically describes an ETL (Extract, Transform, Load) process - automated as a Conductor workflow.  In this post, we'll go in-depth as to how the workflow is constructed - examining what each task does.  This workflow will run daily at midnight GMT, ensuring that the data in our Orbit instance is always up to date with the data on GitHub.
 
 <!-- truncate -->
 
@@ -75,7 +75,7 @@ With this data obtained, we can now begin OUR ETL by Extracting and Transforming
 
 <p align="center"><img src="/content/img/blogassets/orbitworkflow_extract.png" alt="Extracting the data from GitHub" width="400" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
-The next section of the workflow extracts the data from GitHub.  The main feature of this section is a [DO/WHILE](https://orkes.io/content/docs/reference-docs/do-while-task) loop called ```get_all_stars```.  The GitHub API only provides 100 results at a time. We have our start cutoff from the input JSON, and the end cutoff from the total number of stars, so this loop calculates how many times a query must be made, and then loops through these queries.    
+The next section of the workflow extracts the data from GitHub.  The main feature of this section is a [DO/WHILE](https://orkes.io/content/docs/reference-docs/do-while-task) loop called ```get_all_stars```.  The GitHub API only provides 100 results at a time, so we can utilize a loop to grab more than 100 entries from GitHub. We have our "start" ```cutoff``` value from the input JSON, and the end cutoff from the total number of stars, so this loop calculates how many times a query must be made, and then loops through these queries.    
 
 Here's how the DO/WHILE completes the calculation:
 
@@ -90,12 +90,11 @@ Here's how the DO/WHILE completes the calculation:
 
 The input parameters give us the start number (the ```star_offset``` input parameter - which in this example is 3800), and the total number of stars (```stargazers```).
 
-The loop condition will continue as long as there are stargazers to grab.  For example, on May 16, 2022, there are 4319 stars. 4319-3800 (the initial offset) is 519.  GitHub allows for 100 items per response, so we need 5.19 calls to GitHub. The Math.ceil rounds this up to 6 for us.
+The loop condition will continue as long as there are stargazers to grab.  For example, on May 16, 2022, there are 4319 stars for Netflix Conductor. 4319-3800 (the initial offset) is 519.  As each GitHub response contains a max of 100 items, so we'll need 5.19 calls to GitHub. The Math.ceil rounds this up to 6 for us.
 
 With this loop mechanism in place, there are three tasks run in each loop:
 
-1. **pagination_calc_ref**:  The GitHub pagination in our example should start at page 39 (3800/100) +1 (there is a off-by-one issue where where page 1 consists of entries 1-99).  We can use the DO/WHILE iterator as the value to increment the page value, so this INLINE task just uses JavaScript to create the gitHub page counter:
- parseInt(offset/100) + iterator.
+1. **pagination_calc_ref**:  The GitHub stars 3800 - 3899 will occur on page 39 of the GitHub results (there is a off-by-one issue where where page 1 consists of entries 1-99). However, the DO/WHILE iterator starts with the value of 1. This INLINE task uses JavaScript to create the GitHub page counter: ```parseInt(offset/100) + iterator``` - loop 1 will start at page 39 in our example.
 
 2. **100_stargazers**: Using the workflow input data -  GitHub owner, repository & API key - along with the pagination calculated in the previous task, we can extract 100 entries from GitHub.
 
@@ -122,8 +121,6 @@ With this loop mechanism in place, there are three tasks run in each loop:
 
   ```
 
-
-
  The response from the API looks like:
 
  ```json
@@ -149,12 +146,14 @@ With this loop mechanism in place, there are three tasks run in each loop:
             "site_admin":false
         }
  ```
-We only want two data points from this:```starred_at``` and ```user.login```.  This brings us to task 3 in the DO/WHILE loop, our first transform.
+We only want two data points from this output:```starred_at``` and ```user.login```.  This brings us to task 3 in the DO/WHILE loop, our first data transform task.
 
 
 ## Transforming data from GitHub
 
-* **jq_cleanup_stars**  This task takes the large output from GitHub and simplifies it to only display the values we require for Orbit.  To do this, we use the [JQ Transform Task](https://orkes.io/content/docs/reference-docs/system-tasks/json-jq-transform-task). Here is the task.  There is a lot going on here, so we will unpack this step by step:
+* **jq_cleanup_stars**  This task takes the large output from GitHub and simplifies it to only display the values we require for Orbit. We will also format the JSON to match the format that Orbit requires for inputting the data.  
+
+To do this, we use the [JQ Transform Task](https://orkes.io/content/docs/reference-docs/system-tasks/json-jq-transform-task). There is a lot going on here, so we will unpack this step by step:
 
 ```json
 {
@@ -165,44 +164,34 @@ We only want two data points from this:```starred_at``` and ```user.login```.  T
             "starlist": "${hundred_stargazers_ref.output.response.body}",
             "queryExpression": "[.starlist[] | select (.starred_at > \"${calculate_start_cutoff_ref.output.result}\") |{occurred_at:.starred_at, title: \"${workflow.input.activity_name}\", member: {github:  .user.login}}]"
           },
-          "type": "JSON_JQ_TRANSFORM",
-          "decisionCases": {},
-          "defaultCase": [],
-          "forkTasks": [],
-          "startDelay": 0,
-          "joinOn": [],
-          "optional": false,
-          "defaultExclusiveJoinTask": [],
-          "asyncComplete": false,
-          "loopOver": []
+          "type": "JSON_JQ_TRANSFORM"
         }
 ```
 
-For inputs, we take the activityName (in this case ```starredConductor```), the list of stars from the last task, and then run it through a JQ query.
+For inputs, we take the activityName (in this case ```starredConductor```), the list of stars ```starlist``` from the last task, and then run it through a JQ query.
 
 ### The ```queryExpression```
 
 1. Our queryExpression uses the startlist[] array.  
 
-2. The first argument (between the pipes): ``` select (.starred_at > \"${calculate_start_cutoff_ref.output.result}\")``` This compares the starred_at value in the GitHub output to the calculated cutoff.  If the entry is "new", we can continue with the transformation.
+2. The first argument (between the pipes): ``` select (.starred_at > \"${calculate_start_cutoff_ref.output.result}\")``` This compares the starred_at value in the GitHub output to the calculated cutoff. This filters the list of GitHub Stars to only those where the star action occurred in the last 24 hours. If the entry is "new", we can continue with the transformation.
 
-3. Now that we have determined that the data fits our criteria, we can build the JSON input in the format that Orbit requires:  ```|{occurred_at:.starred_at, title: \"${workflow.input.activity_name}\", member: {github:  .user.login}}]```
+3. Now that we have determined that the data fits our timing criteria, we can build the JSON input in the format that Orbit requires:  ```|{occurred_at:.starred_at, title: \"${workflow.input.activity_name}\", member: {github:  .user.login}}]```
 
   * ```occurred_at```: When the activity occurred (GitHub calls this starredAt)
   * ```title```: The name of the activity to record in Orbit.
   * ```member.github```: The only information we have about the member is their GitHub username, so we add that to the activity.
 
 
-Once the DO/WHILE loop has completed, we will have all of our newly starred users identified.  
-
+Once the DO/WHILE loop has completed, we will have all of our newly starred users identified and parsed into a JSON array that Orbit understands for upload.  
 
 ## Additional Transformations
 
 <p align="center"><img src="/content/img/blogassets/orbitworkflow_load.png" alt="Extracting the data from GitHub" width="400" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
-The output of our DO/WHILE look is a JSON array of outputs from all of the tasks. This means that in our example data, we have an array of 6 with outputs from all three tasks.
+The output of our DO/WHILE is a JSON array of outputs from all of the tasks. This means that in our example data, we have an array of 6 with outputs from all three tasks.
 
-The first task after the loop is ```jq_stars_combine```.  This is another JQ transform:
+The first task after the loop is ```jq_stars_combine```.  This is another JQ transform that combines all of the Orbit formatted input into a single JSON array.:
 
 ```json
 {
@@ -229,7 +218,7 @@ the ```bigList``` is the large output from the DO/WHILE list.  the JQ query extr
 
 ##  Uploading the data to Orbit
 
-If the Orbit API allowed us to upload all of the entries at once, we could go ahead and do that with the output of the last task.  But, that is not the case, each activity must be uploaded individually.
+If the Orbit API allowed us to upload all of the entries at once, we could go ahead and do that with the output of the last task.  But that is not the case, each activity must be uploaded individually.
 
 To accomplish this, another DO/WHILE loop ```loop_through_users``` is used to go through all of the entries in ```jq_stars_combine```:
 
@@ -242,7 +231,7 @@ To accomplish this, another DO/WHILE loop ```loop_through_users``` is used to go
 
 For each activity, 2 tasks are run:
 
-1. ```zero_offset_fix```: The DO/WHILE iterator starts at 1, but the JSON array of activities starts at zero.  To avoid an 'off-by-one' error, we subtract one from the iterator, and extract the entry from the counter.
+1. ```zero_offset_fix```: The DO/WHILE iterator starts at 1, but the JSON array of activities starts at index zero.  To avoid an 'off-by-one' error, we subtract one from the iterator, and extract the entry from the counter using an INLINE task and a little bit of JavaScript.
 
 ```json
 {
@@ -282,7 +271,7 @@ For each activity, 2 tasks are run:
     
 ###  Avoiding Rate limiting
 
-The Orbit API has a rate limit of 120 entries/minute, and if the daily upload is over 120 entries, it would be possible that the last task might get rate limited by Orbit. To avoid being rate limited, we can [Extend the task](https://orkes.io/content/docs/how-tos/Tasks/extending-system-tasks). This means that we create a task called ```post_to_orbit```, and add two additional parameters:
+The Orbit API has a rate limit of 120 entries/minute, and if the daily upload is over 120 entries, it would be possible that the last task might get rate limited by Orbit. To avoid being rate limited, we can [Extend the task](https://orkes.io/content/docs/how-tos/Tasks/extending-system-tasks). This means that we create a task in our Conductor instance called ```post_to_orbit``` and add two additional parameters:
 
 ```json
   "rateLimitPerFrequency": 100,
@@ -294,7 +283,7 @@ The Orbit API has a rate limit of 120 entries/minute, and if the daily upload is
 
 ## Scheduling the workflow
 
-In the Orkes Cloud (and in the [Orkes Playground](https://play.orkes.io)), there is a function called the Scheduler (This is coming soon to the Open Source Conductor).  The [Scheduler](https://orkes.io/content/docs/reference-docs/scheduler) gives the power to schedule your workflows on an regular interval.  The interval chosen for the GitHub to Orbit workflow is ```0 0 0 * * ?``` meaning that the workflows runs at 12:00 AM GMT every day.
+In the Orkes Cloud (and in the [Orkes Playground](https://play.orkes.io)), there is a function called the Scheduler (This is coming soon to the Open Source Conductor).  The [Scheduler](https://orkes.io/content/docs/reference-docs/scheduler) gives the power to schedule your workflows on an regular interval.  The interval chosen for the GitHub to Orbit workflow is ```0 0 0 * * ?``` meaning that the workflows will be run every day at 12:00 AM GMT.
 
 With automatic scheduling of the workflow, the Netflix Conductor Star data is uploaded daily from GitHub to Orbit with no human interaction required!
 
