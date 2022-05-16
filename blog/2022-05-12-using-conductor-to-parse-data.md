@@ -1,6 +1,6 @@
 ---
-slug: simple-data-processing-with-conductor
-title: Simple Data Processing with Conductor
+slug: data-processing-with-conductor
+title: Data Processing with Conductor
 authors: doug
 tags: [Netflix Conductor, Orkes, Github, Orbit, JQ, 2022]
 image: https://orkes.io/content/img/blogassets/collaboration.jpg
@@ -79,5 +79,5 @@ By adding additional terms to the input, we can aggregate all of the stars from 
 
 With a Netflix Conductor workflow we are able securely perform an ETL process: Extracting data from GitHub, Transforming the data via JQ transforms and then Loading the data into Orbit.  
 
-In a followup post, we will discuss all of the steps, and discuss the steps of the workflow in detail.
+In a [followup post](https://orkes.io/content/blog/conductor-etl-example), we will discuss all of the steps, and discuss the steps of the workflow in detail.
 
