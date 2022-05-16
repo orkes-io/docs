@@ -4,6 +4,8 @@
 
 "Hello World" is the traditional *first application* that a developer builds in any product that is new to them.  This Hello World demonstration is no different, kicking off the tutorial that outputs those famous two words, but we will also dig deeper into the powerful capabilities of Conductor. We'll extend our Hello World with additional messages.
 
+<iframe width="896" height="504" src="https://www.youtube.com/embed/2Cx-1EXe5y4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 After Part 1, the workflow that is created will look like:
 
 <p align="center"><img src="/content/img/codelab/hw1_diagram.png" alt="version 1 diagram" width="400" style={{paddingBottom: 40, paddingTop: 40}} /></p>
