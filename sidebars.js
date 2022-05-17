@@ -315,6 +315,7 @@ module.exports = {
                         'reference-docs/dynamic-fork-task',
                         'reference-docs/join-task',
                         'reference-docs/wait-task',
+                        'reference-docs/human-task',
                         'reference-docs/dynamic-task',
                         'reference-docs/terminate-task',
                         'reference-docs/set-variable-task',
