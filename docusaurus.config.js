@@ -31,6 +31,7 @@ const config = {
             "docusaurus-plugin-remote-content",
             {
                 // options here
+                noRuntimeDownloads: true,
                 id: "OS_sdks",
                 name: "content", // used by CLI, must be path safe
                 sourceBaseUrl: "https://raw.githubusercontent.com/conductor-sdk", // the base url for the markdown (gets prepended to all of the documents when fetching)

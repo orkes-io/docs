@@ -29,7 +29,7 @@ require (
 )
 ```
 
-Now, create simple worker implentation
+Now, create simple worker implentation as `main.go`
 ```go
 package main
 
@@ -89,8 +89,10 @@ Install dependencies.  This will download all the required dependencies
 go get
 ```
 **Note:**
+
 Replace `KEY` and `SECRET` by obtaining a new key and secret from Orkes Playground as described [Generating Access Keys for Programmatic Access](https://orkes.io/content/docs/getting-started/concepts/access-control#access-keys) 
 
+Also - replace `go_task_example` with the name of your task.
 
 ### Run workers
 Start the workers by running `go run`

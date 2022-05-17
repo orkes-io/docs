@@ -4,30 +4,7 @@ To find out more about Conductor visit: [https://github.com/Netflix/conductor](h
 
 `conductor-python` repository provides the client SDKs to build Task Workers in Python
 
-## Quick Start
-
-- [Netflix Conductor Client SDK](#netflix-conductor-client-sdk)
-  - [Quick Start](#quick-start)
-    - [Virtual Environment Setup](#virtual-environment-setup)
-    - [Local Environment Setup](#local-environment-setup)
-    - [Write worker](#write-worker)
-    - [Run workers](#run-workers)
-    - [Running Conductor server locally in 2-minute](#running-conductor-server-locally-in-2-minute)
-    - [Execute workers](#execute-workers)
-    - [Create your first workflow](#create-your-first-workflow)
-  - [Worker Configurations](#worker-configurations)
-    - [Server Configurations](#server-configurations)
-    - [Metrics](#metrics)
-    - [Authentication](#authentication)
-  - [C/C++ Support](#cc-support)
-    - [1. Export your C++ functions as `extern "C"`:](#1-export-your-c-functions-as-extern-c)
-    - [2. Compile and share its library:](#2-compile-and-share-its-library)
-    - [3. Use the C++ library in your python worker](#3-use-the-c-library-in-your-python-worker)
-  - [Unit Tests](#unit-tests)
-    - [Simple validation](#simple-validation)
-    - [Run with code coverage](#run-with-code-coverage)
-
-### Virtual Environment Setup
+### Setup Virtual Environment
 
 ```shell
 $ virtualenv conductor
@@ -38,100 +15,62 @@ Install `conductor-python` package
 $ python3 -m pip install conductor-python
 ```
 
-### Local Environment Setup
+### Write a simple worker
+```python
+from conductor.client.automator.task_handler import TaskHandler
+from conductor.client.configuration.configuration import Configuration
+from conductor.client.configuration.settings.authentication_settings import AuthenticationSettings
+from conductor.client.http.models import Task, TaskResult
+from conductor.client.http.models.task_result_status import TaskResultStatus
+from conductor.client.worker.worker_interface import WorkerInterface
 
-```shell
-$ git clone https://github.com/conductor-sdk/conductor-python.git
-$ cd conductor-python/
-$ python3 -m pip install .
-$ python3 ./src/example/main/main.py
+
+class SimplePythonWorker(WorkerInterface):
+    def execute(self, task: Task) -> TaskResult:
+        task_result = self.get_task_result_from_task(task)
+        task_result.add_output_data('key1', 'value')
+        task_result.add_output_data('key2', 42)
+        task_result.add_output_data('key3', False)
+        task_result.status = TaskResultStatus.COMPLETED
+        return task_result
+
+    def get_polling_interval_in_seconds(self) -> float:
+        return 1
+
+
+def main():
+    # Point to the Conductor Server
+    configuration = Configuration(
+        base_url='https://play.orkes.io',
+        debug=True,
+        authentication_settings=AuthenticationSettings(  # Optional if you are using a server that requires authentication
+            key_id='KEY',
+            key_secret='SECRET'
+        )
+    )
+
+    # Add three workers
+    workers = [
+        SimplePythonWorker('python_task_example'),        
+    ]
+
+    # Start the worker processes and wait for their completion
+    with TaskHandler(workers, configuration) as task_handler:
+        task_handler.start_processes()
+        task_handler.join_processes()
+
+if __name__ == '__main__':
+    main()
 ```
 
-### Write worker    
-
-Worker examples:
-- [C++](src/example/worker/cpp/)
-- [Python](src/example/worker/python/)
-### Run workers
-
-`main.py` [example](src/example/main/main.py)
-
-### Running Conductor server locally in 2-minute
-More details on how to run Conductor see https://netflix.github.io/conductor/server/ 
-
-Use the script below to download and start the server locally.  The server runs in memory and no data saved upon exit.
-```shell
-export CONDUCTOR_VER=3.5.2
-export REPO_URL=https://repo1.maven.org/maven2/com/netflix/conductor/conductor-server
-curl $REPO_URL/$CONDUCTOR_VER/conductor-server-$CONDUCTOR_VER-boot.jar \
---output conductor-server-$CONDUCTOR_VER-boot.jar; java -jar conductor-server-$CONDUCTOR_VER-boot.jar 
-```
-### Execute workers
-```shell
-python ./main.py
-```
-
-### Create your first workflow
-Now, let's create a new workflow and see your task worker code in execution!
-
-Create a new Task Metadata for the worker you just created
+Start polling for the work
 
 ```shell
-curl -X 'POST' \
-  'http://localhost:8080/api/metadata/taskdefs' \
-  -H 'accept: */*' \
-  -H 'Content-Type: application/json' \
-  -d '[{
-    "name": "python_task_example",
-    "description": "Python task example",
-    "retryCount": 3,
-    "retryLogic": "FIXED",
-    "retryDelaySeconds": 10,
-    "timeoutSeconds": 300,
-    "timeoutPolicy": "TIME_OUT_WF",
-    "responseTimeoutSeconds": 180,
-    "ownerEmail": "example@example.com"
-}]'
+python main.py
 ```
 
-Create a workflow that uses the task
-```shell
-curl -X 'POST' \
-  'http://localhost:8080/api/metadata/workflow' \
-  -H 'accept: */*' \
-  -H 'Content-Type: application/json' \
-  -d '{
-    "name": "workflow_with_python_task_example",
-    "description": "Workflow with Python Task example",
-    "version": 1,
-    "tasks": [
-      {
-        "name": "python_task_example",
-        "taskReferenceName": "python_task_example_ref_1",
-        "inputParameters": {},
-        "type": "SIMPLE"
-      }
-    ],
-    "inputParameters": [],
-    "outputParameters": {
-      "workerOutput": "${python_task_example_ref_1.output}"
-    },
-    "schemaVersion": 2,
-    "restartable": true,
-    "ownerEmail": "example@example.com",
-    "timeoutPolicy": "ALERT_ONLY",
-    "timeoutSeconds": 0
-}'
-```
-
-Start a new workflow execution
-```shell
-curl -X 'POST' \
-  'http://localhost:8080/api/workflow/workflow_with_python_task_example?priority=0' \
-  -H 'accept: text/plain' \
-  -H 'Content-Type: application/json' \
-  -d '{}'
-```
+See [Using Conductor Playground](https://orkes.io/content/docs/getting-started/playground/using-conductor-playground)
+for more details on how to use Playground environment for testing.
 
 
 ## Worker Configurations
@@ -177,7 +116,11 @@ Here is an example how you can do that with Conductor SDK.
         ```
      
 ### 3. Use the C++ library in your python worker
-    
+You can use the Python library to call native code written in C++.  Here is an example that calls native C++ library
+from the Python worker.
+See [simple_cpp_lib.cpp](src/example/worker/cpp/simple_cpp_lib.cpp) 
+and [simple_cpp_worker.py](src/example/worker/cpp/simple_cpp_worker.py) for complete working example.
+
 ```python
 from conductor.client.http.models.task import Task
 from conductor.client.http.models.task_result import TaskResult
@@ -204,29 +147,4 @@ class SimpleCppWorker(WorkerInterface):
         )
         task_result.status = TaskResultStatus.COMPLETED
         return task_result
-```
-
-
-## Unit Tests
-### Simple validation
-
-```shell
-/conductor-python/src$ python3 -m unittest -v
-```
-
-### Run with code coverage
-
-```shell
-/conductor-python/src$ python3 -m coverage run --source=conductor/ -m unittest
-```
-
-Report:
-
-```shell
-/conductor-python/src$ python3 -m coverage report
-```
-
-Visual coverage results:
-```shell
-/conductor-python/src$ python3 -m coverage html
 ```

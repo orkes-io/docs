@@ -21,6 +21,7 @@ Our reference documentation provides detailed information on the System tasks an
 * [Fork](/content/docs/reference-docs/fork-task)
 * [Dynamic Fork](/content/docs/reference-docs/dynamic-fork-task)
 * [Join](/content/docs/reference-docs/join-task)
+* [Human](/content/docs/reference-docs/human-task)
 * [Wait](/content/docs/reference-docs/wait-task)
 * [Dynamic](/content/docs/reference-docs/dynamic-task)
 * [Terminate](/content/docs/reference-docs/terminate-task)
