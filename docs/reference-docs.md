@@ -14,6 +14,7 @@ Our reference documentation provides detailed information on the System tasks an
 * [Event Task](/content/docs/reference-docs/system-tasks/event-task)
 * [Inline Task](/content/docs/reference-docs/system-tasks/inline-task)
 * [Kafka Publish Task](/content/docs/reference-docs/system-tasks/kafka-publish-task)
+* [Business Rule Task](/content/docs/reference-docs/system-tasks/business-rule)
 
 ## Operator Tasks
 * [Switch](/content/docs/reference-docs/switch-task)
