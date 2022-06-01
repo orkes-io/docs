@@ -84,4 +84,4 @@ In practice, monoliths are often unsuitable for today’s applications. Breaking
 
 This article explored the problems with monoliths and looked at how microservice approaches help to address them. You also learned how monolith-like systems can still be effective when microservices aren't suitable. Deciding whether you should break up a monolith comes down to one key question: Is your architecture holding you back, making it harder to implement the changes you need? If the answer is yes, your system's probably outgrown its foundations and would benefit from being split into self-contained functional units.
 
-When you are looking at breaking up your monolith into microservices, look at Conductor as a tool to orchestrate your microservices.
+When you are looking at breaking up your monolith into microservices, look at Conductor as a tool to orchestrate your microservices. Try it for free in the [Orkes Playground!](https://play.orkes.io)
