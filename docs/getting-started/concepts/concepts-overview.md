@@ -4,10 +4,10 @@ sidebar_position: 1
 
 # Overview
 
-There are four primitives, that are used with Conductor.
+There are four primitives that are used with Conductor.
 
 ## [Tasks](tasks-and-workers.md#Conductor-Tasks)
-Tasks are the basic logical unit of work. It has defined inputs and outputs, does a specific activity and returns an execution status of success or failure. 
+Tasks are the basic logical unit of work. They have defined inputs and outputs, do a specific activity and return an execution status of success or failure. 
 
 Conceptually, Conductor is oblivious to the actual work a task does, and similarly the task is oblivious to the state of the execution of the overall application which it expects Conductor to manage and ensure high levels of reliability.
 
