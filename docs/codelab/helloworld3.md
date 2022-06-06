@@ -6,6 +6,8 @@ We've made it to Part 3!  Thanks for keeping at it! What we've covered so far:
 
 [Hello World Part 2](./helloworld2)  We created V2 of Hello World (learning about versioning) and added a HTTP Task to query information about the user's IP address.
 
+<p align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/R8iYQKaD-1M" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
+
 ## Part 3
 
 In Hello World Part 3, we'll introduce the [Fork](/content/docs/reference-docs/fork-task) and [Join](/content/docs/reference-docs/join-task) tasks to break our workflow into parallel tracks that run asynchronously, and then combine back into a single workflow.
