@@ -47,7 +47,7 @@ When you click ```Run Workflow```, the workflow adds a job to the "hello_world" 
 
 ## Running an alternate version in production
 
-What if this ```hello_world``` worker is thrashing the database, or has a memory leak that is impacting performance?  A new version must be created that fixes the problem.  We can use Conductors Task to Domain feature to spin up another version of the task - and run it in the same production workflow (without impacting production traffic!). 
+What if this ```hello_world``` worker is thrashing the database, or has a memory leak that is impacting performance?  A new version must be created that fixes the problem.  We can use Conductor's Task to Domain feature to spin up another version of the task - and run it in the same production workflow (without impacting production traffic!). 
 
 To show an example of how to do this, we'll spin up a second version of ```hellow_world``` on our local computer. We start by cloning [OrkesWorkers](https://github.com/orkes-io/orkesworkers) to our desktop.  Following the instructions in the [codelab](https://orkes.io/content/docs/codelab/helloworld#application-permissions), we set up application permissions:
 
@@ -73,9 +73,9 @@ Before we start the workers and begin polling the server for work, we need to sl
     }
 ```
 
-We created a HashMap ```taskToDomainMap``` that has one entry: mapping the "hello_world" task to the domain "doug".
+In lines 3&4 we created a HashMap ```taskToDomainMap``` that has one entry: mapping the "hello_world" task to the domain "doug".
 
-We then add this to the Configurer ```.withTaskToDomain(taskToDomainMap)```.
+We then add this to the Configurer ```.withTaskToDomain(taskToDomainMap)``` in line .
 
 Now, when we run OrkesWorkersApplication, a new worker will appear in the playground.  Click ```Task Queues``` in the left nav, and search for ```hello_world```.  There will be 2 Workers shown with polling active:
 
@@ -105,7 +105,7 @@ You've just run your production workflow, but bypassed one of the production tas
 
 ## A/B testing of workflows
 
-Task To Domain could also be used to A/B test a workflow.  In the following workflow, the ```hello_worlf_doug``` workflow is called as a [SUBWORKFLOW](https://orkes.io/content/docs/reference-docs/sub-workflow-task).  The [SWITCH](https://orkes.io/content/docs/reference-docs/switch-task) calculates a random number (Math.random()) between 0 and 1, and if the value is over the threshold, the "A" (default) path is taken. If the value is under the threshold, the "B" (test) path is taken.  
+Task To Domain could also be used to A/B test a workflow.  In the following workflow, the ```hello_world_doug``` workflow is called as a [SUBWORKFLOW](https://orkes.io/content/docs/reference-docs/sub-workflow-task).  The [SWITCH](https://orkes.io/content/docs/reference-docs/switch-task) calculates a random number (Math.random()) between 0 and 1, and if the value is over the threshold, the "A" (default) path is taken. If the value is under the threshold, the "B" (test) path is taken.  
 
 <p align="center"><img src="/content/img/tasktodomain_abtest.jpg" alt="ab testing a workflow" width="800" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
