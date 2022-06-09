@@ -5,7 +5,9 @@
 
  In [Part 1](./helloworld) of the Hello World code lab, we created a simple "Hello World" application with a Java worker in the Orkes [Conductor Playground](https://play.orkes.io).
 
-<p align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/gpOGQGaU2HY" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
+
+<p align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/gpOGQGaU2HY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
+
 
 
 <p align="center"><img src="/content/img/codelab/hw_workflow1.png" alt="first workflow" width="400" style={{paddingBottom: 40, paddingTop: 40}} /></p>
