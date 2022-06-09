@@ -105,7 +105,11 @@ You've just run your production workflow, but bypassed one of the production tas
 
 ## A/B testing of workflows
 
-Task To Domain could also be used to A/B test a workflow.  In the following workflow, the ```hello_world_doug``` workflow is called as a [SUBWORKFLOW](https://orkes.io/content/docs/reference-docs/sub-workflow-task).  The [SWITCH](https://orkes.io/content/docs/reference-docs/switch-task) calculates a random number (Math.random()) between 0 and 1, and if the value is over the threshold, the "A" (default) path is taken. If the value is under the threshold, the "B" (test) path is taken.  
+Task To Domain could also be used to A/B test a workflow.  In his section, we'll walk through 2 approaches, with a SWITCH task, and with an INLINE task.
+
+### AB with a SWITCH task
+
+In the following workflow, the ```hello_world_doug``` workflow is called as a [SUBWORKFLOW](https://orkes.io/content/docs/reference-docs/sub-workflow-task).  The [SWITCH](https://orkes.io/content/docs/reference-docs/switch-task) calculates a random number (Math.random()) between 0 and 1, and if the value is over the threshold, the "A" (default) path is taken. If the value is under the threshold, the "B" (test) path is taken.  
 
 <p align="center"><img src="/content/img/tasktodomain_abtest.jpg" alt="ab testing a workflow" width="800" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
@@ -138,3 +142,65 @@ Here's how we call the SUBWORKFLOW with the ```taskToDomain``` parameter:
 
 On each leg of the switch, we also set a variable called ```variant``` (and it is set to either A or B), so that it is easy to determine which version of the SUBWORKFLOW was taken.
 
+### A/B with an INLINE task
+
+The SWITCH task approach is a good entry, as it is easier to track the logic of the workflow.  In the INLINE task, the INLINE JavaScript defines the Task to Domain to apply to the `hello_world` SUBWORKFLOW:
+
+<p align="center"><img src="/content/img/tasktodomain_abtestinline.jpg" alt="ab testing a workflow" width="400" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+
+The INLINE task is a simple JavaScript evaluator:
+
+```json
+  {
+      "name": "AB_calculator",
+      "taskReferenceName": "AB_calculator",
+      "inputParameters": {
+        "evaluatorType": "javascript",
+        "expression": "function e(){var a=\"NO_DOMAIN\";return .25>Math.random()&&(a=\"doug\"),a}e();"
+      },
+      "type": "INLINE",
+      "decisionCases": {},
+      "defaultCase": [],
+      "forkTasks": [],
+      "startDelay": 0,
+      "joinOn": [],
+      "optional": false,
+      "defaultExclusiveJoinTask": [],
+      "asyncComplete": false,
+      "loopOver": []
+    },
+```
+
+The default value for `a` is `NO_DOMAIN`.  This tells Conductor to run the workflow without any task to domain limitations (run it in production).  If Math.random() is less than 0.25, then we change the value of `a` to `doug`, and `hello_world` will run in our local instance.
+
+The Subworkflow looks similar to the SWITCH task version, but now there is only one, and we utilize the output of the AB_calculator inline task for taskToDomain:
+
+```json
+   {
+      "name": "hello_world_subworkflow",
+      "taskReferenceName": "hello_world_subworkflow",
+      "inputParameters": {},
+      "type": "SUB_WORKFLOW",
+      "decisionCases": {},
+      "defaultCase": [],
+      "forkTasks": [],
+      "startDelay": 0,
+      "subWorkflowParam": {
+        "name": "hello_world_doug",
+        "version": 1,
+        "taskToDomain": {
+          "hello_world": "${AB_calculator.output.result}"
+        }
+      },
+      "joinOn": [],
+      "optional": false,
+      "defaultExclusiveJoinTask": [],
+      "asyncComplete": false,
+      "loopOver": []
+    }
+
+```
+
+The task to domain for `hello_world` will be provided by the INLINE task output.
+
+This achieves the same result as the SWITCH version - with only 2 tasks.
