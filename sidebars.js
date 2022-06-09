@@ -159,7 +159,8 @@ module.exports = {
                 {   type: 'doc', 
                             id: 'codelab/orderfulfillment',
                             label:"Order Fulfillment Codelab"},
-                'codelab/sequentialHTTPtasks'
+                'codelab/sequentialHTTPtasks',
+                'codelab/taskToDomain'
                 
             ],
         },
