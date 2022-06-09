@@ -11,9 +11,11 @@ What we've covered so far:
 
 [Hello World Part 3](./helloworld3)  We created V3 of Hello World, and introduced the concept of FORK and JOIN tasks.
 
+<p align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/7d6hTpsVHRQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
+
 ## Part 4
 
-In Part 4 of the codelab, we'll add in an [Inline task](/content/docs/reference-docs/system-tasks/inline-task) to perform some basic logic operations (using JavaScript).  Inline tasks are great because they allow for computations on teh COnductor server as a part of the workflow, without having to standup another task & microservice to complete the computation.
+In Part 4 of the codelab, we'll add in an [Inline task](/content/docs/reference-docs/system-tasks/inline-task) to perform some basic logic operations (using JavaScript).  Inline tasks are great because they allow for computations on the Conductor server as a part of the workflow, without having to standup another task & microservice to complete the computation.
 
 ## Where we stand
 In part 3 of this codelab, our workflow was split into 2 forks, one that creates the "Hello World!" message, and the other fork that grabs the users IP address, and extracts their location:
