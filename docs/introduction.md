@@ -3,15 +3,18 @@ sidebar_position: 1
 ---
 
 # Getting Started
-### What is Conductor?
+
+### What is the Conductor?
+
 Conductor is a microservice and workflow orchestration engine.
-Conductor allows developers to build stateful applications using simple, 
+Conductor allows developers to build stateful applications using simple,
 stateless code without having to manage the state and complexities of building a distributed application.
-Conductor is cloud native and scales seamlessly as your workload grows.
+Conductor is cloud-native and scales seamlessly as your workload grows.
 
 Read our [What is Conductor?](https://orkes.io/what-is-conductor/)npage for even more details on how Conductor works.
 
 ### How to run Conductor?
+
 [Short Tutorial on Running Conductor locally](getting-started/install/running-locally)
 
 ### What use cases can Conductor solve?
@@ -26,22 +29,25 @@ solved by Conductor are:
 4. Financial transactions
 5. Distributed Transactions
 6. Human-centric business process automation
-7. Orchestrating Microservices (HTTP,  background services, etc.)
+7. Orchestrating Microservices (HTTP, background services, etc.)
 8. Orchestrating business logic across various cloud functions (AWS Lambda, GCP functions, etc.)
 9. Infrastructure Provisioning
 10. CICD Pipelines
-11. Long running processes and workflows
+11. Long-running processes and workflows
 12. Monitoring
 13. Distributed Transactions
 14. Localization Pipelines
 15. Content Management and Publishing Workflows
 
 ### What License does Conductor use?
+
 Netflix conductor is available under Apache 2.0 Open Source license.
 
 ### How can I run Conductor in production?
-Conductor can be deployed using various backend (Redis, MySQL, Postgres), 
+
+Conductor can be deployed using various backend (Redis, MySQL, Postgres),
 and can be deployed in data centers as well as various clouds.
-  
+
 ### What about scale?
-Conductor has been battle tested at Netflix at scale and uses Chaos engineering principles to build a robust, highly scalable system.
+
+Conductor has been battle-tested at Netflix at scale and uses Chaos engineering principles to build a robust, highly scalable system.
