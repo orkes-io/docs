@@ -31,7 +31,7 @@ const config = {
             "docusaurus-plugin-remote-content",
             {
                 // options here
-                noRuntimeDownloads: true,
+               // noRuntimeDownloads: true,
                 id: "OS_sdks",
                 name: "content", // used by CLI, must be path safe
                 sourceBaseUrl: "https://raw.githubusercontent.com/conductor-sdk", // the base url for the markdown (gets prepended to all of the documents when fetching)
@@ -58,6 +58,22 @@ const config = {
                             "/java-sdk/src/main/java/com/netflix/conductor/sdk/workflow/def/tasks/SimpleTask.java",
                             "/java-sdk/src/main/java/com/netflix/conductor/sdk/workflow/def/tasks/ForkJoin.java",
                             
+                             ]               // the file names to download
+            },
+            
+        ],
+        [
+            "docusaurus-plugin-remote-content",
+            {
+                // options here
+                id: "usecases",
+                name: "content", // used by CLI, must be path safe
+                sourceBaseUrl: "https://raw.githubusercontent.com/conductor-sdk/conductor-examples/main/", // the base url for the markdown (gets prepended to all of the documents when fetching)
+                outDir: "docs/usecases", // the base directory to output to.
+                documents: ["/image_processing/README.md",
+                            "/video_processing/README.md",
+                            "/US_post_office/README.md",
+                            "/workflow_AB_testing/README.md",
                              ]               // the file names to download
             },
             

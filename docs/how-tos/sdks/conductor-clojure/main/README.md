@@ -20,16 +20,16 @@ https://clojars.org/io.orkes/conductor-clojure
 
 ``` clojure
 (ns some.namespace 
-    (:require [conductor.metadata :as metadata])
+    (:require [io.orkes.metadata :as metadata])
 
     ;; Will Create a task. returns nil
     (metadata/register-tasks options [{
                          :name "cool_clj_task"
                          :description "some description"
-                         :owner-email "somemail@mail.com"
-                         :retry-count 3
-                         :timeout-seconds 300
-                                   :response-timeout-seconds 180 }])
+                         :ownerEmail "somemail@mail.com"
+                         :retryCount 3
+                         :timeoutSeconds 300
+                         :responseTimeoutSeconds 180 }])
 )
 ```
 
@@ -37,7 +37,7 @@ https://clojars.org/io.orkes/conductor-clojure
 
 ``` clojure
 (ns some.namespace 
-    (:require [conductor.metadata :as metadata])
+    (:require [io.orkes.metadata :as metadata])
 
 ;; Will Register a workflow that uses the above task returns nil
 (metadata/register-workflow-def options {
@@ -46,16 +46,16 @@ https://clojars.org/io.orkes/conductor-clojure
                                               :version 1
                                               :tasks [ {
                                                        :name "cool_clj_task"
-                                                       :task-reference-name "cool_clj_task_ref"
-                                                       :input-parameters {}
-                                                       :type :simple
+                                                       :taskReferenceName "cool_clj_task_ref"
+                                                       :inputParameters {}
+                                                       :type "SIMPLE" 
                                                        } ]
-                                              :input-parameters []
-                                              :output-parameters {:message "${clj_prog_task_ref.output.:message}"}
-                                              :schema-version 2
+                                              :inputParameters []
+                                              :outputParameters {:message "${clj_prog_task_ref.output.:message}"}
+                                              :schemaVersion 2
                                               :restartable true
-                                              :owner-email "owner@yahoo.com"
-                                              :timeout-seconds 0
+                                              :ownerEmail "owner@yahoo.com"
+                                              :timeoutSeconds 0
                                          }))
 
 ```
@@ -99,24 +99,24 @@ Takes the option map and a list/vector of tasks to register. on success it will 
 (metadata/register-tasks options [{
                                                   :name "cool_clj_task_b"
                                                   :description "some description"
-                                                  :owner-email "mail@gmail.com"
-                                                  :retry-count 3
-                                                  :timeout-seconds 300
-                                                  :response-timeout-seconds 180 },
+                                                  :ownerEmail "mail@gmail.com"
+                                                  :retryCount 3
+                                                  :timeoutSeconds 300
+                                                  :responseTimeoutSeconds 180 },
                                                  {
                                                   :name "cool_clj_task_z"
                                                   :description "some description"
-                                                  :owner-email "mail@gmail.com"
-                                                  :retry-count 3
-                                                  :timeout-seconds 300
-                                                  :response-timeout-seconds 180 }
+                                                  :ownerEmail "mail@gmail.com"
+                                                  :retryCount 3
+                                                  :timeoutSeconds 300
+                                                  :responseTimeoutSeconds 180 }
                                                  {
                                                   :name "cool_clj_task_x"
                                                   :description "some description"
-                                                  :owner-email "mail@gmail.com"
-                                                  :retry-count 3
-                                                  :timeout-seconds 300
-                                                  :response-timeout-seconds 180 }
+                                                  :ownerEmail "mail@gmail.com"
+                                                  :retryCount 3
+                                                  :timeoutSeconds 300
+                                                  :responseTimeoutSeconds 180 }
                                                  ])
 ```
     
@@ -128,79 +128,55 @@ Takes the option map and a list/vector of tasks to register. on success it will 
                                                         :version 1
                                                         :tasks [ {
                                                                   :name "cool_clj_task_b"
-                                                                  :task-reference-name "cool_clj_task_ref"
-                                                                  :input-parameters {}
-                                                                  :type :simple
+                                                                  :taskReferenceName "cool_clj_task_ref"
+                                                                  :inputParameters {}
+                                                                  :type "SIMPLE"
                                                                   },
                                                                 {
                                                                  :name "someting",
-                                                                 :task-reference-name "other"
-                                                                 :input-parameters {}
-                                                                 :type :fork-join
-                                                                 :fork-tasks [[
+                                                                 :taskReferenceName "other"
+                                                                 :inputParameters {}
+                                                                 :type "FORK_JOIN"
+                                                                 :forkTasks [[
                                                                                {
                                                                                 :name "cool_clj_task_z"
-                                                                                :task-reference-name "cool_clj_task_z_ref"
-                                                                                :input-parameters {}
-                                                                                :type :simple
+                                                                                :taskReferenceName "cool_clj_task_z_ref"
+                                                                                :inputParameters {}
+                                                                                :type "SIMPLE"
                                                                                 }
                                                                                ]
                                                                               [
                                                                                {
                                                                                 :name "cool_clj_task_x"
-                                                                                :task-reference-name "cool_clj_task_x_ref"
-                                                                                :input-parameters {}
-                                                                                :type :simple
+                                                                                :taskReferenceName "cool_clj_task_x_ref"
+                                                                                :inputParameters {}
+                                                                                :type "SIMPLE"
                                                                                 }
                                                                                ]
                                                                               ]
                                                                  }
                                                                 {
                                                                  :name "join"
-                                                                 :type :join
-                                                                 :task-reference-name "join_ref"
-                                                                 :join-on [ "cool_clj_task_z", "cool_clj_task_x"]
+                                                                 :type "JOIN"
+                                                                 :taskReferenceName "join_ref"
+                                                                 :joinOn [ "cool_clj_task_z", "cool_clj_task_x"]
                                                                  }
                                                                 ]
-                                                        :input-parameters []
-                                                        :output-parameters {"message" "${clj_prog_task_ref.output.:message}"}
-                                                        :schema-version 2
+                                                        :inputParameters []
+                                                        :outputParameters {"message" "${clj_prog_task_ref.output.:message}"}
+                                                        :schemaVersion 2
                                                         :restartable true
-                                                        :owner-email "mail@yahoo.com"
-                                                        :timeout-seconds 0
-                                                        :timeout-policy :alert-only
+                                                        :ownerEmail "mail@yahoo.com"
+                                                        :timeoutSeconds 0
+                                                        :timeoutPolicy "ALERT_ONLY"
                                                         })
 ```
 
-Current supported task types :
-
-```clojure
-:simple
-:dynamic
-:fork-join
-:fork-join-dynamic
-:decision 
-:switch 
-:join 
-:do-while 
-:sub-workflow 
-:event 
-:wait 
-:user-defined 
-:http 
-:lambda 
-:inline 
-:exclusive-join 
-:terminate 
-:kafka-publish
-:json-jq-transform
-:set-variable
-```
 
 ## Client namespace
 The client namespace holds the function to start a workflow and running a worker
 
-`[conductor.client :as conductor]`
+`[io.orkes.client :as conductor]`
  
 ``` clojure
 ;; Creates a worker and starts polling for work. will return an instance of Runner which can then be used to shutdown
@@ -220,7 +196,7 @@ The (runner-executor-for-workers) function will take a list of worker implementa
 it will return a TaskRunnerConfigurer instance, which you can shutdown by calling the .shutdown() java method
 
 ## Mapper-Utils namespace
-The  `[conductor.mapper-utils :as mapper-utils]` namespace holds the functions to map to java object which are mostly not necesary.
+The  `[io.orkes.mapper-utils :as mapper-utils]` namespace holds the functions to map to java object which are mostly not necesary.
 
 ### The mapper-utils/java-map->clj-map protocol
 Will map a java map to a clojure map which may come in handy for workers implementation. for example consider a worker that sums two input parameters. For a workflow defined like this :
@@ -230,17 +206,17 @@ Will map a java map to a clojure map which may come in handy for workers impleme
                                          :description "created programatically from clj"
                                          :version 1
                                          :tasks [{:name "simplest_task"
-                                                  :task-reference-name "repl_task_ref"
-                                                  :input-parameters {"firstNumber" "${workflow.input.firstNumber}"
+                                                  :taskReferenceName "repl_task_ref"
+                                                  :inputParameters {"firstNumber" "${workflow.input.firstNumber}"
                                                                      "secondNumber" "${workflow.input.secondNumber}"}
-                                                  :type :simple}]
-                                         :input-parameters ["firstNumber" "secondNumber"]
-                                         :output-parameters {"result" "${repl_task_ref.output.:result}"}
+                                                  :type "SIMPLE"}]
+                                         :inputParameters ["firstNumber" "secondNumber"]
+                                         :outputParameters {"result" "${repl_task_ref.output.:result}"}
                                          :schema-version 2
                                          :restartable true
-                                         :owner-email "mail@yahoo.com"
-                                         :timeout-seconds 0
-                                         :timeout-policy :alert-only})
+                                         :ownerEmail "mail@yahoo.com"
+                                         :timeoutSeconds 0
+                                         :timeoutPolicy "ALERT_ONLY"})
 ```
 
 To be able to use the input params you would need to use the string names like this:

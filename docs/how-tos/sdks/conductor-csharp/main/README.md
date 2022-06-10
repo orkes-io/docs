@@ -1,7 +1,4 @@
-conductor-csharp
 # Netflix Conductor Client SDK
-
-To find out more about Conductor visit: [https://github.com/Netflix/conductor](https://github.com/Netflix/conductor)
 
 `conductor-csharp` repository provides the client SDKs to build Task Workers and Clients in C#
 
@@ -10,11 +7,9 @@ To find out more about Conductor visit: [https://github.com/Netflix/conductor](h
 2. [Write workers](#Write-workers)
 3. [Run workers](#Run-workers)
 4. [Worker Configurations](#Worker-Configurations)
-5. [Starting workflow](#Starting-workflow)
 
-### Get Secrets
-Executing workflow or polling a task from a playground requires keyId and keySecret.
-Please follow [guide](https://orkes.io/content/docs/codelab/helloworld#application-permissions) to provision one for your application.
+### Dependencies
+`conductor-csharp` packages are published to nugget package manager.  You can find the latest releases [here](https://www.nuget.org/packages/conductor-csharp/).
 
 ### Write workers  
 
@@ -52,11 +47,7 @@ Please follow [guide](https://orkes.io/content/docs/codelab/helloworld#applicati
 ```
 
 ### Run workers
-Create main method that does the following:
-1. Search for package called conductor-csharp in microsoft nuget package manager and install it as dependencies. If you are planning to run worker then
-Microsoft.Extensions.Hosting is also required.
-2. Add your workers
-3. Start the workers to poll for work
+
 ```
 using System;
 using System.Threading;
@@ -84,8 +75,8 @@ namespace TestOrkesSDK
                  {
                     // First argument is optional headers which client wasnt to pass.
                      Configuration configuration = new Configuration(new ConcurrentDictionary<string, string>(), 
-                         "keyId",
-                         "keySecret");
+                         "KEY",
+                         "SECRET");
                      services.AddConductorWorker(configuration);
                      services.AddConductorWorkflowTask<MyWorkflowTask>();
                      services.AddHostedService<WorkflowsWorkerService>();
@@ -100,6 +91,29 @@ namespace TestOrkesSDK
         }
     }
 
+    internal class MyWorkflowTask : IWorkflowTask
+    {
+        public MyWorkflowTask() { }
+
+        public string TaskType => "my_ctask";
+        public int? Priority => null;
+
+        public async Task<TaskResult> Execute(Conductor.Client.Models.Task task, CancellationToken token)
+        {
+            Dictionary<string, object> newOutput = new Dictionary<string, object>();
+            newOutput.Add("output", 1);
+            return task.Completed(task.OutputData.MergeValues(newOutput));
+        }
+    }
+}
+```
+
+####Note:
+Replace KEY and SECRET by obtaining a new key and secret from [Orkes Playground](https://play.orkes.io/)
+
+See [Generating Access Keys for Programmatic Access](https://orkes.io/content/docs/getting-started/concepts/access-control#access-keys) for details./
+
+```
     internal class WorkflowsWorkerService : BackgroundService
     {
         private readonly IWorkflowTaskCoordinator workflowTaskCoordinator;
@@ -120,35 +134,23 @@ namespace TestOrkesSDK
             {
                 workflowTaskCoordinator.RegisterWorker(worker);
             }
-            # start all the workers so that it can poll for the tasks
+            // start all the workers so that it can poll for the tasks
             await workflowTaskCoordinator.Start();
         }
     }
-
-    internal class MyWorkflowTask : IWorkflowTask
-    {
-        public MyWorkflowTask() { }
-
-        public string TaskType => "my_ctask";
-        public int? Priority => null;
-
-        public async Task<TaskResult> Execute(Conductor.Client.Models.Task task, CancellationToken token)
-        {
-            Dictionary<string, object> newOutput = new Dictionary<string, object>();
-            newOutput.Add("output", 1);
-            return task.Completed(task.OutputData.MergeValues(newOutput));
-        }
-    }
-}
 ```
-Save above code with workers code in Program.cs and run it using consoleApplication.
-Alternatively it can also be hosted as windows service.
 
 ### Worker Configurations
-Worker configuration is handled via Configuraiton object passed when initializing TaskHandler
+Worker configuration is handled via Configuration object passed when initializing TaskHandler.
+```
+Configuration configuration = 
+    new Configuration(new ConcurrentDictionary<string, string>(), "KEY", "SECRET", "https://play.orkes.io/");
+```
 
-### Starting workflow
-Below is the code snippet in order to register and start the workflow,
+### Registering and starting the workflow using SDK.
+
+Below is the code snippet that shows how to register a simple workflow and start execution:
+
 ```
 IDictionary<string, string> optionalHeaders = new ConcurrentDictionary<string, string>();
 Configuration configuration = new Configuration(optionalHeaders, "keyId", "keySecret");
@@ -182,82 +184,4 @@ Dictionary<string, Object> input = new Dictionary<string, Object>();
 workflowResourceApi.StartWorkflow("test_workflow", input, 1);
 Console.ReadLine();
 ```
-Please go through Conductor.Api package to find out supported apis
-
-
-### Running Conductor server locally in 2-minute
-More details on how to run Conductor see https://netflix.github.io/conductor/server/ 
-
-Use the script below to download and start the server locally.  The server runs in memory and no data saved upon exit.
-```shell
-export CONDUCTOR_VER=3.5.2
-export REPO_URL=https://repo1.maven.org/maven2/com/netflix/conductor/conductor-server
-curl $REPO_URL/$CONDUCTOR_VER/conductor-server-$CONDUCTOR_VER-boot.jar \
---output conductor-server-$CONDUCTOR_VER-boot.jar; java -jar conductor-server-$CONDUCTOR_VER-boot.jar 
-```
-### Execute workers
-```
-Run above program as console app or windows service
-```
-
-### Create your first workflow
-Now, let's create a new workflow and see your task worker code in execution!
-
-Create a new Task Metadata for the worker you just created
-
-```shell
-curl -X 'POST' \
-  'http://localhost:8080/api/metadata/taskdefs' \
-  -H 'accept: */*' \
-  -H 'Content-Type: application/json' \
-  -d '[{
-    "name": "test_ctask",
-    "description": "C# task example",
-    "retryCount": 3,
-    "retryLogic": "FIXED",
-    "retryDelaySeconds": 10,
-    "timeoutSeconds": 300,
-    "timeoutPolicy": "TIME_OUT_WF",
-    "responseTimeoutSeconds": 180,
-    "ownerEmail": "example@example.com"
-}]'
-```
-
-Create a workflow that uses the task
-```shell
-curl -X 'POST' \
-  'http://localhost:8080/api/metadata/workflow' \
-  -H 'accept: */*' \
-  -H 'Content-Type: application/json' \
-  -d '{
-    "name": "workflow_with_csharp_task_example",
-    "description": "Workflow with C# Task example",
-    "version": 1,
-    "tasks": [
-      {
-        "name": "test_ctask",
-        "taskReferenceName": "test_ctask",
-        "inputParameters": {},
-        "type": "SIMPLE"
-      }
-    ],
-    "inputParameters": [],
-    "outputParameters": {
-      "workerOutput": "${test_ctask.output}"
-    },
-    "schemaVersion": 2,
-    "restartable": true,
-    "ownerEmail": "example@example.com",
-    "timeoutPolicy": "ALERT_ONLY",
-    "timeoutSeconds": 0
-}'
-```
-
-Start a new workflow execution
-```shell
-curl -X 'POST' \
-  'http://localhost:8080/api/workflow/workflow_with_csharp_task_example?priority=0' \
-  -H 'accept: text/plain' \
-  -H 'Content-Type: application/json' \
-  -d '{}'
-```
+Please see [Conductor.Api](https://github.com/conductor-sdk/conductor-csharp/tree/main/Api) for the APIs.
