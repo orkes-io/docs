@@ -190,6 +190,8 @@ module.exports = {
                 'usecases/video_processing/README',
                 'usecases/US_post_office/README',
                 'usecases/workflow_AB_testing/README',
+                'usecases/finance/README',
+                'usecases/document_approvals/README'
                 ]
         },
         {

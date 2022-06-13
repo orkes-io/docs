@@ -74,9 +74,11 @@ const config = {
                             "/video_processing/README.md",
                             "/US_post_office/README.md",
                             "/workflow_AB_testing/README.md",
+                            "/finance/README.md",
+                            "/document_approvals/README.md"
                              ]               // the file names to download
             },
-            
+           
         ],
         [
             '@docusaurus/plugin-client-redirects',
