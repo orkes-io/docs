@@ -26,7 +26,7 @@ Terminate task is defined directly inside the workflow with type
   "taskReferenceName": "terminate0",
   "inputParameters": {
       "terminationStatus": "COMPLETED",
-      "workflowOutput": "${task0.output}"
+      "workflowOutput": { "result": "${task0.output}"}
   },
   "type": "TERMINATE",
   "startDelay": 0,
@@ -41,7 +41,9 @@ Terminate task is defined directly inside the workflow with type
 |name|type|description|notes|
 |---|---|---|---|
 |terminationStatus|String|can only accept "COMPLETED" or "FAILED"|task cannot be optional|
+
 |workflowOutput|Any|Expected workflow output||
+|terminationReason|String| For failed tasks, this reason is passed to a failureWorkflow|
 
 ### Output
 
@@ -61,7 +63,7 @@ If the input provided while running workflow does not match with the available
 shipping providers then the workflow will fail and return. If input provided 
 matches then it goes ahead.
 
-Here is a snippet that shows the defalt switch case terminating the workflow:
+Here is a snippet that shows the default switch case terminating the workflow:
 
 ```json
 {
@@ -74,7 +76,8 @@ Here is a snippet that shows the defalt switch case terminating the workflow:
       "taskReferenceName": "terminate",
       "type": "TERMINATE",
       "inputParameters": {
-          "terminationStatus": "FAILED"
+          "terminationStatus": "FAILED",
+          "terminationReason":"Shipping provider not found."
       }      
     }
    ]
