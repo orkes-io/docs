@@ -1,5 +1,11 @@
 # Image Processing Workflows
 
+There are two workflows for image processing described in this article:
+
+1. [Image encoding and resizing](#image-encoding-and-resizing)
+2. [Image Effects](#image-effects)
+
+These workflows require workers that are a part of the [orkesworkers](https://github.com/orkes-io/orkesworkers) GitHub repository (and are running in the Orkes Playground for use).
 
 ## [Image encoding and resizing](https://github.com/conductor-sdk/conductor-examples/blob/main/image_processing/image_multiple_convert_resize.json)
 
@@ -11,7 +17,7 @@
 |---|
 
 
-The image_multiple_convert_resize.json workflow takes the URL of an image and converts it to multiple formats and sizes, hosting the completed images on S3.
+The [image_multiple_convert_resize.json](https://github.com/conductor-sdk/conductor-examples/blob/main/image_processing/image_multiple_convert_resize.json) workflow takes the URL of an image and converts it to multiple formats and sizes, hosting the completed images on S3.
 
 The workflow takes in 3 inputs
 
@@ -125,12 +131,10 @@ watermark
 
 |key | Value type | description |
 |--| -- |---|
-| watermarkFileLocation | String (url) | A logo file that will be applied as a watermaker on top of the file that is specified by the fileLocation parameter. |
-| gravity | String (E.g southeast) | Specifies Where to apply the logo/watermark image. |
+| watermarkFileLocation | String (url) | A logo file that will be applied as a watermark on top of the file that is specified by the fileLocation parameter. |
+| gravity | String (E.g southeast) | Specifies Where to apply the logo/watermark image. Allowed values: NorthWest, North, NorthEast, West, Center, East, SouthWest, South, SouthEast.|
 
-Allowed values are:
 
-NorthWest, North, NorthEast, West, Center, East, SouthWest, South, SouthEast.
 
 ### Workflow Diagram
 

@@ -20,7 +20,7 @@ There is a workaround in Conductor that allows for loops that we feature in the 
 ![review cycle workflow](https://raw.githubusercontent.com/conductor-sdk/conductor-examples/main/document_approvals/images/approval_workflow.png)
 
 1. Document is uploaded
-2. Review 1a & 1b can be run asynchronously. If it passes: Review 2, otherwise, it looks back to being uploaded again.
+2. Review 1a & 1b can be run asynchronously. If it passes: Review 2, otherwise, it loops back to being uploaded again.
 3. Reviewer 2 does their job.  If it passes - the document can either go to completion, to a third review - or like a long snake in "Snakes and Ladders" the document goes back to the start.
 
 

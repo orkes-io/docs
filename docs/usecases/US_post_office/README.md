@@ -12,7 +12,7 @@ The USPS can verify 160M addresses in the USA.  This workflow wither either resp
 |[See it in Orkes Playground](https://play.orkes.io/workflowDef/check_address/1)|
 |---| 
 
-> Note: this workflow requires a USPS username to be run.  Change the name of the workflow - to save in your Playground, and add your USPS Username in the Set_USPS_Name task.
+> Note: This workflow requires a USPS username to be run.  Change the name of the workflow - to save in your Playground, and add your USPS Username in the Set_USPS_Name task. The [API access is free](https://www.usps.com/business/web-tools-apis/).
 
 ![check address workflow](https://raw.githubusercontent.com/conductor-sdk/conductor-examples/main/US_post_office/images/check_address.jpg)
 
@@ -36,7 +36,7 @@ Given a toZip and fromZip, and some dimensions of the box (and the shipping type
 |[See it in Orkes Playground](https://play.orkes.io/workflowDef/postage_rate/1)|
 |---| 
 
-> Note: this workflow requires a USPS username to be run.  Change the name of the workflow - to save in your Playground, and add your USPS Username in the Set_USPS_Name task.
+> Note: This workflow requires a USPS username to be run.  Change the name of the workflow - to save in your Playground, and add your USPS Username in the Set_USPS_Name task. The [API access is free](https://www.usps.com/business/web-tools-apis/).
 
 ![postage rate workflow](https://raw.githubusercontent.com/conductor-sdk/conductor-examples/main/US_post_office/images/postage_rate.jpg)
 

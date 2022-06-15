@@ -16,6 +16,8 @@ The workers that power these workflows can be found in the [orkesworkers](https:
 1. video_recipes_prefork: This worker takes the input parameters provided and creates all of the parameters required for the dynamic forks - how many forks to instantiate and the parameters for each of the forks.
 2. video_recipes: This worker takes the inputs and (in the 2 examples below) either transcodes or adds a watermark to the video. 
 
+> These workers are configured to run in Orkes Playground by default.
+
 ## Video Transcoding
 
 ### Workflow definition

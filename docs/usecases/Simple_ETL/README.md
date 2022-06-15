@@ -1,10 +1,10 @@
-# Extract, Transform Load (ETL) workflow
+# Extract, Transform Load (ETL)
 
 This workflow extracts data from GitHub, transforms the data, and then uploads it to Orbit.
 
 [Link to the JSON file on GitHub](https://github.com/conductor-sdk/Simple_ETL)
 
-|[See it in Orkes Playground](https://play.orkes.io/workflowDef/Github_star_workflow)|
+|[Try it in Orkes Playground](https://play.orkes.io/workflowDef/Github_star_workflow)|
 |---|
 
 > Note: to use this workflow, you need API keys for both GitHub and for Orbit.  
