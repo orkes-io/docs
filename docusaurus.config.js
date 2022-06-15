@@ -75,7 +75,8 @@ const config = {
                             "/US_post_office/README.md",
                             "/workflow_AB_testing/README.md",
                             "/finance/README.md",
-                            "/document_approvals/README.md"
+                            "/document_approvals/README.md",
+                            "/Simple_ETL/README.md"
                              ]               // the file names to download
             },
            

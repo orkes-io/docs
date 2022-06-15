@@ -41,7 +41,6 @@ Terminate task is defined directly inside the workflow with type
 |name|type|description|notes|
 |---|---|---|---|
 |terminationStatus|String|can only accept "COMPLETED" or "FAILED"|task cannot be optional|
-
 |workflowOutput|Any|Expected workflow output||
 |terminationReason|String| For failed tasks, this reason is passed to a failureWorkflow|
 

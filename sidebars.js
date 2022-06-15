@@ -191,7 +191,8 @@ module.exports = {
                 'usecases/US_post_office/README',
                 'usecases/workflow_AB_testing/README',
                 'usecases/finance/README',
-                'usecases/document_approvals/README'
+                'usecases/document_approvals/README',
+                'usecases/Simple_ETL/README'
                 ]
         },
         {

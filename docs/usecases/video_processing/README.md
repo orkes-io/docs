@@ -1,17 +1,17 @@
 # Video Processing Workflow
 
-
-The following workflow has several potential invocations (described below):
-
-* [video_recipes.json](https://github.com/conductor-sdk/conductor-examples/blob/main/video_processing/video_recipes.json)
+The [video_recipes.json](https://github.com/conductor-sdk/conductor-examples/blob/main/video_processing/video_recipes.json) workflow has several potential invocations.
 
 Below, find two example invocations of the workflow that do slightly different tasks: 
 
+1. [Video Transcoding](#video-transcoding):  Take one video and convert into many different formats.
+2. [Watermark a video](#video-watermarking):  Add a watermark to your video, and upload to S3.
 
-1. Video Transcoding:  Take one video and convert into many different formats.
-2. Watermark a video:  Add a watermark to your video, and upload to S3.
+|[Try it in Orkes Playground](https://play.orkes.io/workflowDef/video_recipes/1)|
+|---| 
 
-That workers that power these workflows can be found in the [orkesworkers](https://github.com/orkes-io/orkesworkers) GitHub repository.  There are 2 workers used here:
+## Workers required
+The workers that power these workflows can be found in the [orkesworkers](https://github.com/orkes-io/orkesworkers) GitHub repository.  There are 2 workers used here:
 
 1. video_recipes_prefork: This worker takes the input parameters provided and creates all of the parameters required for the dynamic forks - how many forks to instantiate and the parameters for each of the forks.
 2. video_recipes: This worker takes the inputs and (in the 2 examples below) either transcodes or adds a watermark to the video. 

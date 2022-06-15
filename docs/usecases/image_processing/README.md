@@ -1,11 +1,17 @@
 # Image Processing Workflows
 
-* [Image encoding and resizing](https://github.com/conductor-sdk/conductor-examples/blob/main/image_processing/image_multiple_convert_resize.json)
-* [Image effects](https://github.com/conductor-sdk/conductor-examples/blob/main/image_processing/image_effects.json)
 
-## Image encoding and resizing
+## [Image encoding and resizing](https://github.com/conductor-sdk/conductor-examples/blob/main/image_processing/image_multiple_convert_resize.json)
 
-The [image_multiple_convert_resize.json](https://github.com/conductor-sdk/conductor-examples/blob/main/image_processing/image_multiple_convert_resize.json) workflow (also found in the [Orkes Playground](https://play.orkes.io/workflowDef/image_multiple_convert_resize)) is used to convert a source image to multiple formats and sizes.
+
+|[Run it in Orkes Playground](https://play.orkes.io/workflowDef/image_multiple_convert_resize)|
+|---| 
+
+|[Sample run on Orkes Playground](https://play.orkes.io/execution/ae543c09-0844-48e1-a438-ff0105615dd6)|
+|---|
+
+
+The image_multiple_convert_resize.json workflow takes the URL of an image and converts it to multiple formats and sizes, hosting the completed images on S3.
 
 The workflow takes in 3 inputs
 
@@ -46,10 +52,6 @@ This will result in 9 output images - 3 different sizes with 3 formats each.
 ### Visual representation
 ![image resize workflow](https://raw.githubusercontent.com/conductor-sdk/conductor-examples/main/image_processing/images/resize.jpg)
 
-### Sample Workflow invocation
-
-Here's a sample invocation on the [Orkes Playground](https://play.orkes.io/execution/ae543c09-0844-48e1-a438-ff0105615dd6)
-
 
 ### Output of the workflow
 
@@ -88,11 +90,10 @@ Here's a sample invocation on the [Orkes Playground](https://play.orkes.io/execu
 }
 ```
 
-## Image effects
+## [Image effects](https://github.com/conductor-sdk/conductor-examples/blob/main/image_processing/image_effects.json)
 
 
-The [image_effects.json](https://github.com/conductor-sdk/conductor-examples/blob/main/image_processing/image_effects.json) workflow (try it on [Orkes Playground](https://play.orkes.io/workflowDef/image_effects/1 )) demonstrates how to add effects to images. The following recipes are currently supported:
-
+The [image_effects.json](https://github.com/conductor-sdk/conductor-examples/blob/main/image_processing/image_effects.json) workflow demonstrates how to add effects to images. The following recipes are currently supported:
 
 * Applying Sepia Tone
 * Making a image more Vibrant
