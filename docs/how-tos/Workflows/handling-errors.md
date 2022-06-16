@@ -20,6 +20,8 @@ When there is an issue with your workflow, Conductor will start the failure work
 * workflowId: use this to pull the details of the failed workflow.
 * failureStatus
 
+> The `reason` parameter will, by default, have text similar to `Workflow is FAILED by TERMINATE task: 84eb2dcb-ebfd-11ec-b770-12aa5996f545`. If a workflow fails via a TERMINATE task, the `terminateReason` parameter can be used to override the default text.
+
 ### Example
 
 Here is a sample failure workflow that sends a message to Slack when the workflow fails. It posts the reason and the workflowId into a slack message - to allow for quick debugging:
@@ -58,9 +60,9 @@ Here is a sample failure workflow that sends a message to Slack when the workflo
 }
 ```
 
+### Example Use Case
 
-
-
+The [check_address](/content/docs/usecases/US_post_office) use case has several terminate tasks that run a failure workflow.  The `addfress_error` task overrides the `terminateReason` parameter.
 
 ##  Set ```workfowStatusListenerEnabled``` 
 
