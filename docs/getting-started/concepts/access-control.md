@@ -22,6 +22,8 @@ In the context of Access control, an application grants generates the JWT via ac
 
 Each application can generate one or more sets Access Keys for access control to the application.  An application can grant access to workflows, tasks or both. 
 
+<p align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/0QgnwYMtNj8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
+
 ### Configuring your Application
 
 Create a new application from Orkes Cloud by clicking `Applications`, and then by clicking the `Create Application` button.
@@ -108,6 +110,8 @@ It is possible to add, change and remove workflow/task access from this table.
 > Note: This feature currently only available to Admins of a Conductor instance. 
 
 To access Users and Groups, click Users in the left navigation menu.
+
+<p align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/Aya41OiWn9c" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
 
 ### Users
 
