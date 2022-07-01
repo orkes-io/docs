@@ -11,18 +11,17 @@ locally.
 
 #### https://github.com/orkes-io/orkesworkers
 
-In the previous article, you used an `HTTP` task run your first simple workflow. Now it's time to explore how to run a
+In the first codelab [Running your First Workflow](/content/docs/getting-started/run/running-first-workflow), we created a simple workflow that used a HTTP [System Task](/content/docs/getting-started/concepts/system-tasks) to run our workflow.  System tasks run on the Conductor server - making commonly used functions easy to deploy in your workflow. Now it's time to explore how to run a
 custom worker that you will implement yourself.
 
 After completing the steps in this article, you will:
 
-1. Learn about a SIMPLE worker type which runs your custom code
-2. Learn about how a custom worker task runs from your environment and connects to Conductor
+1. Learn about a SIMPLE worker type which runs your custom code.
+2. Learn about how a custom worker task runs from your environment and connects to Conductor.
 
-Worker tasks are implemented by your application(s) and runs in a separate environment from Conductor. The worker tasks
+Worker tasks are implemented by your application(s) and run in a separate environment from Conductor. The worker tasks
 can be implemented in any language. These tasks talk to Conductor server via REST/gRPC to poll for tasks and update its
-status after execution. In our example we will be implementing a Java based worker by leveraging the official Java
-Client SDK.
+status after execution. In our example we will be implementing a Java based worker by leveraging the official [Java Client SDK](/content/docs/how-tos/sdks/java-sdk/worker_sdk). (A full list of [SDKs](/content/docs/how-tos/SDKs))
 
 Worker tasks are identified by task type `SIMPLE` in the workflow JSON definition.
 
@@ -45,43 +44,47 @@ conductor server to register these tasks.
   }
 ]
 ```
+In the [Running your First Workflow](/content/docs/getting-started/run/running-first-workflow) example, we used the Swagger API UI to make our API calls:
 
-Here is the curl command to do that
+* [Orkes Playground](https://play.orkes.io/swagger-ui/index.html?configUrl=/api-docs/swagger-config)
+
+* [Local Conductor](http://localhost:8080/swagger-ui/index.html?configUrl=/api-docs/swagger-config)
+
+> NOTE: With the Playground, you will need an authentication token.  In the dashboard, click your user icon in the top right, and choose the `copy token` option.  Back on the Swagger page, click the lock to the right of the endpoint, and past the token here.
+
+
+You can also use curl to add a task:
 
 ```shell
 curl 'http://localhost:8080/api/metadata/taskdefs' \
   -H 'accept: */*' \
   -H 'Referer: ' \
   -H 'Content-Type: application/json' \
-  --data-raw '[{"name":"simple_worker","retryCount":3,"retryLogic":"FIXED","retryDelaySeconds":10,"timeoutSeconds":300,"timeoutPolicy":"TIME_OUT_WF","responseTimeoutSeconds":180,"ownerEmail":"example@gmail.com"}]'
+  --data-raw '[{"name":"simple_worker", "retryCount":3,"retryLogic":"FIXED","retryDelaySeconds":10,"timeoutSeconds":300,"timeoutPolicy":"TIME_OUT_WF","responseTimeoutSeconds":180,"ownerEmail":"example@gmail.com"}]'
 ```
 
-You can also use the Conductor Swagger API UI to make this call.
+> For Orkes Playground add an additional header line to your curl command: `-H 'X-Authorization: {YourToken}' \` (and replace `http://localhost:8080` with `https://play.orkes.io`).  Alternatively, the playground also offers [task creation](https://play.orkes.io/newTaskDef) via the dashboard.
+
 
 Here is an overview of the task fields that we just created
 
 1. `"name"` : Name of your worker. This should be unique.
-2. `"retryCount"` : The number of times Conductor should retry your worker task in the event of an unexpected failure
+2. `"retryCount"` : The number of times Conductor should retry your worker task in the event of an unexpected failure.
 3. `"retryLogic"` : `FIXED` - The retry logic - options are `FIXED` and `EXPONENTIAL_BACKOFF`
-4. `"retryDelaySeconds"` : Time to wait before retries
-5. `"timeoutSeconds"` : Time in seconds, after which the task is marked as `TIMED_OUT` if not completed after
-   transitioning to `IN_PROGRESS` status for the first time
-6. `"timeoutPolicy"` : `TIME_OUT_WF` - Task's timeout policy. Options can be
-   found [here](https://netflix.github.io/conductor/configuration/taskdef/#timeout-policy)
-7. `"responseTimeoutSeconds"` : Must be greater than 0 and less than timeoutSeconds. The task is rescheduled if not
-   updated with a status after this time (heartbeat mechanism). Useful when the worker polls for the task but fails to
-   complete due to errors/network failure. Defaults to 3600
-8. `"ownerEmail"` : **Mandatory** metadata to manage who created or owns this worker definition in a shared conductor
-   environment.
+4. `"retryDelaySeconds"` : Time to wait before retry (or time in exponential back off calculation).
+5. `"timeoutSeconds"` : Time in seconds, after which the task is marked as `TIMED_OUT`. (This is optional, and some long running tasks do not need this value.)
+6. `"timeoutPolicy"` : `TIME_OUT_WF` - Task's timeout policy. Options can be found [here](/content/docs/how-tos/Tasks/task-timeouts).
+7. `"responseTimeoutSeconds"` : Must be greater than 0 and less than timeoutSeconds. The task is rescheduled if not updated with a status after this time (heartbeat mechanism). Useful when the worker polls for the task but fails to complete due to errors/network failure. Defaults to 3600.
+8. `"ownerEmail"` : **Mandatory** metadata to manage who created or owns this worker definition in a shared conductor environment.
 
 More details on the fields used and the remaining fields in the task definition can be
-found [here](https://netflix.github.io/conductor/configuration/taskdef/#task-definition).
+found [here](/content/docs/getting-started/concepts/tasks-and-workers#task-definitions).
 
 ### Step 2 - Create a Workflow definition
 
 Creating Workflow definition is similar to creating the task definition. In our workflow, we will use the task we
 defined earlier. Note that same Task definitions can be used in multiple workflows, or for multiple times in same
-Workflow (that's where taskReferenceName is useful).
+Workflow.  Conductor references the task via the `taskReferenceName`, so each invocation of the task in the same workflow a must have a unique value in this parameter.
 
 ```json
 {
@@ -114,7 +117,13 @@ Workflow (that's where taskReferenceName is useful).
 Notice that in the workflow definition, we are using a single worker task using the task worker definition we created
 earlier. The task is of type `SIMPLE`.
 
-To create this workflow in your Conductor server using CURL, use the following:
+We can use Swagger to add the workflow:
+* [Orkes Playground](https://play.orkes.io/swagger-ui/index.html?configUrl=/api-docs/swagger-config#/metadata-resource/create)
+
+* [Local Conductor](http://localhost:8080/swagger-ui/index.html?configUrl=/api-docs/swagger-config#/metadata-resource/create)
+
+
+Here is the curl command to add a workflow to a a local version of Conductor (for Orkes Playground, change the domain, and add the `X-Authenication` header as we did in step 1 when adding a task):
 
 ```shell
 curl 'http://localhost:8080/api/metadata/workflow' \
@@ -126,7 +135,11 @@ curl 'http://localhost:8080/api/metadata/workflow' \
 
 ### Step 3 - Starting the Workflow
 
-This workflow doesn't need any inputs. So we can issue a curl command to start it.
+We've created a task that polls an external workflow, and added the task to a workflow.  When we run the workflow, Conductor adds a job to the task's queue.  Let's do that now:
+
+* Playground: click `run workflow` select the workflow by name, and click `run workflow`
+* In Swagger, the endpoint to start a workflow is `POST /api/workflow/{workflowName}`.
+* Using curl (same modifications for playground as above):
 
 ```shell
 curl 'http://localhost:8080/api/workflow/first_sample_workflow_with_worker' \
@@ -136,84 +149,36 @@ curl 'http://localhost:8080/api/workflow/first_sample_workflow_with_worker' \
   --data-raw '{}' 
 ```
 
-The API path contains the workflow name `first_sample_workflow_with_worker` and in our workflow since we don't need any
-inputs we will specify `{}`
+The API path contains the workflow name `first_sample_workflow_with_worker` and our workflow doesn't need any inputs, so the body of the call is an empty JSON string: `{}`.
 
-Successful POST request should return a workflow id, which you can use to find the execution in the UI by navigating to `http://localhost:5000/execution/<workflowId>`.
+A successful POST request will return a workflowId, a unique identifier for the invocation of the workflow.  Now, we can visualize the execution of the workflow by navigating to `http://localhost:5000/execution/<workflowId>`.
 
-*Note: You can also run this using the Swagger UI instead of curl.*
 
 ### Step 4 - Poll for Worker Task
 
-To get your Worker taskId, you first naviaget to `http://localhost:5000/execution/<workflowId>`. Next, click on the `simple_worker_ref_1` in the UI. This will open a summary pane with the `Task Execution ID`
+Notice that the workflow is running. If you click on `simple_worker_ref_1` in the diagram you can see tha that the task is marked as `SCHEDULED`. Conductor is ready to send this task off for processing, but we have not yet connected our worker to Conductor to do that work.
 
-If you look up the worker using the following URL `http://localhost:8080/api/tasks/{taskId}`, you will notice that the worker is in `SCHEDULED` state. This is
-because we haven't implemented the worker yet. Let's walk through the steps to implement the worker.
+In the next step, we will create the worker that is used to complete our Conductor task. We'll also connect it to our Conductor instance so that the `simple_worker` tasks can be completed, and allow our workflows complete.
 
-#### Prerequisite
+### Step 5 Building the worker
 
-1. Setup a Java project on your local. You can also use an existing Java project if you already have one
+To simplify this tutorial, we have placed the `simple_worker` worker in a [GitHub repository](https://github.com/orkes-io/orkesworkers/blob/main/build.gradle).
 
-#### Adding worker implementation
+Clone this repository to your local machine, and open it in your IDE of choice.  Our worker will poll the conductor server every second to see if there is a task in it's queue.  For that to happen, we need to tell the worker where our Conductor server is.  To do this, we must modify the file `/src/main/resources/application.properties`.  
 
-In your project, add the following dependencies. We are showing here how you will do this in gradle:
+* For a local Conductor installation, change `conductor.server.url` to `http://localhost:5000`.  
 
-```javascript
-implementation("com.netflix.conductor:conductor-client:${versions.conductor}") {
-        exclude group: 'com.github.vmg.protogen', module: 'protogen-annotations'
-    }
+* For Playground, you'll need to [create an application](/content/docs/getting-started/concepts/access-control-applications#configuring-your-application) to create a key/secret that authenticates your worker with the playground, and then add the values of the key and secret to lines 2 and 3 of `application.properties` as indicated.
 
-implementation("com.netflix.conductor:conductor-common:${versions.conductor}") {
-    exclude group: 'com.github.vmg.protogen', module: 'protogen-annotations'
-}
-```
+#### How Workers and Conductor interact
 
-[See full example on GitHub](https://github.com/orkes-io/orkesworkers/blob/main/build.gradle)
+The `OrkesWorkersApplication.java` is the runnable Java application.  * `taskClient` creates an Orkes taskClient, and uses the url (and uses the Java SDK to create an access token from the Key and secret for Orkes Playground).
 
-You can do this for Maven as well, just need to use the appropriate syntax. We will need the following two libraries
-available in maven repo and you can use the latest version if required.
+* `TaskRunnerConfigurer` grabs a list of workers (there are many in the repository), and creates a thread for each one.  These worker threads will poll the Conductor server to find tasks hat require to be run.
 
-1. `com.netflix.conductor:conductor-client:3.0.6`
-2. `com.netflix.conductor:conductor-common:3.0.6`
+### Step 6: Running your worker
 
-Now "simple_worker" task is in `SCHEDULED` state, it is worker's turn to fetch the task, execute it and update Conductor
-with final status of the task.
-
-A class needs to be created which implements Worker and defines its methods.
-
-**Note**: Make sure the method `getTaskDefName` returns string same as the task name we defined in step
-1 (`simple_worker`).
-
-```js reference
-https://github.com/orkes-io/orkesworkers/blob/main/src/main/java/io/orkes/samples/workers/SimpleWorker.java#L11-L30
-```
-
-Awesome, you have implemented your first worker in code! Amazing.
-
-#### Connecting, Polling and Executing your Worker
-
-In your main method or where ever your application starts, you will need to configure a class
-called `TaskRunnerConfigurer` and initialize it. This is the step that makes your code connect to a Conductor server.
-
-Here we have used a SpringBoot based Java application and we are showing you how to create a Bean for this class.
-
-```js reference
-https://github.com/orkes-io/orkesworkers/blob/main/src/main/java/io/orkes/samples/OrkesWorkersApplication.java#L18-L45
-```
-
-This is the place where you define your conductor server URL:
-
-```javascript
-env.getProperty("conductor.server.url")
-```
-
-We have defined this in a property file as shown below. You can also hard code this.
-
-```javascript reference
-https://github.com/orkes-io/orkesworkers/blob/main/src/main/resources/application.properties#L1-L1
-```
-
-That's it. You are all set. Run your Java application to start running your worker.
+Run your Java application to start running your worker.
 
 After running your application, it will be able to poll and run your worker. Let's go back and load up the previously
 created workflow in your UI.
@@ -239,9 +204,5 @@ Concepts we touched on:
 2. Adding Workflow definition with a custom `SIMPLE` task
 3. Running Conductor client using the Java SDK
 
-Thank you for reading, and we hope you found this helpful. Please feel free to reach out to us for any questions and we
-are happy to help in any way we can.
 
-
-
-
+Try out more complex workflows in our other codelabs, or build your own.  We've created a number of workflows that you can edit in our [use cases](/content/docs/usecases/image_processing) section.

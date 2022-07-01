@@ -8,21 +8,21 @@ sidebar_position: 1
 "type" : "HTTP"
 ```
 
-### Introduction
+## Introduction
 
 An HTTP task is useful when you have a requirements such as
 
 1. Making calls to another service that exposes an API via HTTP
 2. Fetch any resource or data present on an endpoint
 
-### Use Cases
+## Use Cases
 
 If we have a scenario where we need to make an HTTP call into another service, we can make use of HTTP tasks. You can
 use the data returned from the HTTP call in your subsequent tasks as inputs. Using HTTP tasks you can avoid having to
 write the code that talks to these services and instead let Conductor manage it directly. This can reduce the code you
 have to maintain and allows for a lot of flexibility.
 
-### Configuration
+## Configuration
 
 HTTP task is defined directly inside the workflow with the task type `HTTP`.
 
@@ -30,7 +30,7 @@ HTTP task is defined directly inside the workflow with the task type `HTTP`.
 |---|---|---|
 | http_request | HttpRequest | JSON object (see below) |
 
-#### Inputs
+### Inputs
 
 |Name|Type|Example|Description|
 |---|---|---|---|
@@ -47,7 +47,7 @@ HTTP task is defined directly inside the workflow with the task type `HTTP`.
 | connectionTimeOut | Integer || Connection Time Out in milliseconds. If set to 0, equivalent to infinity. Default: 100. |
 | readTimeOut | Integer || Read Time Out in milliseconds. If set to 0, equivalent to infinity. Default: 150. |
 
-#### Output
+### Output
 
 |name|type|description|
 |---|---|---|
@@ -56,7 +56,7 @@ HTTP task is defined directly inside the workflow with the task type `HTTP`.
 | statusCode | Integer | [Http Status Code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes) |
 | reasonPhrase | String | Http Status Code's reason phrase |
 
-### Examples
+## Examples
 
 Following is the example of HTTP task with `GET` method.
 
@@ -136,8 +136,14 @@ Following is the example of HTTP task with `DELETE` method.
   "type": "HTTP"
 }
 ```
+### Codelabs with HTTP tasks
+* [Running first workflow](/content/docs/getting-started/run/running-first-workflow) uses HTTP Task to call an API.
+* [Hello World Pt.2](/content/docs/codelab/helloworld2#the-http-task) uses the HTTP task to send an IP Address and receive a location.
+* [Order Fulfillment Pt 4](/content/docs/codelab/orderfulfillment4) calls an API to reorder widgets.
+* [Sequential HTTP Tasks](/content/docs/codelab/sequentialHTTPtasks) Makes 2 HTTP tasks. Data from the first response is used as input in the 2nd task.
 
-### Best Practices
+
+## Best Practices
 
 1. Why are my HTTP tasks not getting picked up?
     1. We might have too many HTTP tasks in the queue. There is a concept called Isolation Groups that you can rely on

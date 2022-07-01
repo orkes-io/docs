@@ -78,6 +78,8 @@ tasks. (dynamicTasks and dynamicTasksInput)
 
 ## Example
 
+>Note: This example is from the [Image Processing Use Case](/content/docs/usecases/image_processing).
+
 Let's say we have a task that resizes an image, and we need to create a workflow that will resize an image into multiple sizes. In this case, a task can be created prior to
 the `FORK_JOIN_DYNAMIC` task that will prepare the input that needs to be passed into the `FORK_JOIN_DYNAMIC` task. These will be:
 
@@ -90,7 +92,7 @@ the `FORK_JOIN_DYNAMIC` task that will prepare the input that needs to be passed
 The ```image_resize``` task works to resize just one image. The `FORK_JOIN_DYNAMIC` and the following `JOIN` will manage the multiple invocations of the single ```image_resize``` task. The responsibilities are clearly broken out, where the individual  ```image_resize```
 tasks do the core job and `FORK_JOIN_DYNAMIC` manages the orchestration and fault tolerance aspects of handling multiple invocations of the task.
 
-## The workflow
+### The workflow
 
 Here is an example of a `FORK_JOIN_DYNAMIC` task followed by a `JOIN` task.  The fork is named and given a taskReferenceName, but all of the input parameters are JSON variables that we will discuss next:
 
@@ -250,3 +252,14 @@ sub-workflow objects and all of the input parameters that these tasks will need 
 ### The Join
 
 The [JOIN](/content/docs/reference-docs/join-task) task will run after all of the dynamic tasks, collecting the output for all of the tasks.
+
+## Additional Examples
+
+* [Order Fulfillment Codelab](/content/docs/codelab/orderfulfillment8): In this Example, JQ Transform System tasks are used to create the JSON inputs required for the Dynamic task to run. The outputs from the JQ transforms are used to create the `dynamicTasks` and the `dynamicTaskInputs`:
+
+```json
+  "inputParameters": {
+    "dynamicTasks": "${jq_create_dynamictasks_ref.output.result}",
+    "dynamicTasksInput": "${jq_create_dynamictasksParams_ref.output.result}"
+  },
+```

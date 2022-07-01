@@ -10,8 +10,7 @@ Workflow executions can be started by using the following API:
 POST /api/workflow/{name}
 ```
 
-`{name}` is the placeholder for workflow name. The POST API body is your workflow input parameters which can be empty if
-there are none.
+`{name}` is the placeholder for workflow name. The POST API body is your workflow input parameters which can be empty if there are none.
 
 ### Using Client SDKs
 
@@ -19,6 +18,9 @@ Conductor offers client SDKs for popular languages which has library methods tha
 Refer to the SDK documentation to configure a client in your selected language to invoke workflow executions.
 
 ### Example using curl
+
+
+This example uses a locally installed version of Conductor:
 
 ```shell
 curl 'https://localhost:8080/api/workflow/sample_workflow' \

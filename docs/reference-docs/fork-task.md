@@ -7,20 +7,20 @@ sidebar_position: 1
 "type" : "FORK_JOIN"
 ```
 
-### Introduction
+## Introduction
 
 A Fork operation in conductor, lets you run a specified list of other tasks or sub workflows in parallel. A fork task is
 followed by a join operation that waits on the forked tasks or sub workflows to finish. The `JOIN`
 task also collects outputs from each of the forked tasks or sub workflows.
 
-### Use Cases
+## Use Cases
 
 `FORK_JOIN` tasks are typically used when a list of tasks can be run in parallel. E.g In a notification workflow, there
 could be multiple ways of sending notifications, i,e e-mail, SMS, HTTP etc.. These notifications are not dependent on
 each other, and so they can be run in parallel. In such cases, you can create 3 sub-lists of forked tasks for each of
 these operations.
 
-### Configuration
+## Configuration
 
 A `FORK_JOIN` task, has a `forkTasks` attribute that expects an array. Each array, is a sub-list of tasks. Each of these
 sub-lists and then invoked in parallel. The tasks defined within each sublist can be sequential or any other way as
@@ -104,7 +104,7 @@ references that were being `joinOn`. The corresponding values are the outputs of
 }
 ```
 
-#### Input Configuration
+### Input Configuration
 
 | Attribute      | Description |
 | ----------- | ----------- |
@@ -114,7 +114,7 @@ references that were being `joinOn`. The corresponding values are the outputs of
 | inputParameters   | The input parameters that will be supplied to this task    |
 | forkTasks   | A list of a list of tasks. Each of the outer list will be invoked in parallel. The inner list can be a graph of other tasks and sub-workflows   |
 
-#### Output Configuration
+### Output Configuration
 
 This is the output configuration of the `JOIN` task that is used in conjunction with the `FORK_JOIN` task. The output of
 the
@@ -129,7 +129,7 @@ are the corresponding outputs of those tasks.
 | task_ref_name_N  | A task reference name that was being `joinOn`. The value is the output of that task     |
 
 
-### Example
+## Example
 
 Imagine a workflow that sends 3 notifications: email, SMS and HTTP. Since none of these steps are dependant on the others, they can be run in parallel with a fork.
 
@@ -215,3 +215,11 @@ references that were being `joinOn`. The corresponding values are the outputs of
 ```
 
 See [JOIN](/content/docs/reference-docs/join-task) for more details on the JOIN aspect of the FORK.
+
+## Codelab Examples
+
+* [Document Approvals](/content/docs/usecases/document_approvals): When multiple approvals can happen at the same time.
+
+* [Hello World](/content/docs/codelab/helloworld3)
+
+* [Order Fulfillment](/content/docs/codelab/orderfulfillment6) Used as a *lead-in* for Dynamic Forks

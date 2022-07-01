@@ -51,24 +51,10 @@ format: short: **D**d**H**h**M**m or full:  **D**days**H**hours**M**minutes
 
 ## Ending a WAIT when there is no time duration specified
 
-To conclude a WAIT task, there are three endpoints that can be used. 
-You'll need the  ```workflowId```, ```taskRefName``` or ```taskId``` and the task status (generally ```COMPLETED``` or ```FAILED```).
+To conclude a WAIT task, there are several endpoints that can be used:
 
-1. POST ```/api/tasks```
-2. POST ```api/queue/update/{workflowId}/{taskRefName}/{status}``` 
-3. POST ```api/queue/update/{workflowId}/task/{taskId}/{status}``` 
+* `api/tasks`: requires `workflowId`, `taskId` and `status`
+* `api/queue/update/{workflowId}/{taskRefName}/{status}` **NOTE**: Requires queuing to be set up for your Conductor instance.  If you are using Orkes Cloud, this will only work with admin access.
+*   `api/queue/update/{workflowId}/task/{taskId}/{status}` **NOTE**: Requires queuing to be set up for your Conductor instance.  If you are using Orkes Cloud, this will only work with admin access.
 
-Any parameter that is sent in the body of the POST message will be repeated as the output of the task.  For example, if we send a COMPLETED message as follows:
 
-```bash
-curl -X "POST" "https://play.orkes.io/api/queue/update/{workflowId}/waiting_around_ref/COMPLETED" -H 'Content-Type: application/json' -d '{"data_key":"somedatatoWait1","data_key2":"somedatatoWAit2"}'
-```
-
-The output of the task will be:
-
-```json
-{
-  "data_key":"somedatatoWait1",
-  "data_key2":"somedatatoWAit2"
-}
-```
