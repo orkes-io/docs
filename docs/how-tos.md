@@ -19,7 +19,7 @@ Popular Topics
 1. [Creating Tasks](./how-tos/Tasks/creating-tasks)
 1. [Dynamic vs Switch Tasks](./how-tos/Tasks/dynamic-vs-switch-tasks)
 
-## Workers
+## Workers (Integration SDKs)
 
 1. [Building a Java Task Worker](./how-tos/Workers/build-a-java-task-worker)
 1. [Building a Python Task worker](./how-tos/Workers/build-a-python-task-worker)
@@ -28,6 +28,11 @@ Popular Topics
 ## Monitoring
 
 1. [Monitoring Task Queues](./how-tos/Tasks/monitoring-task-queues.md)
+
+## Events
+
+1. [Receiving events from AWS SQS message Queues.](content/docs/how-tos/Events/sqs_events)
+
 
 
 *See something that isn't correct? Help us improve by opening a Pull Request or submitting an issue on [GitHub](https://github.com/orkes-io/docs).*

@@ -149,6 +149,8 @@ Once you have added these two tasks, they should appear in your ```Task Definiti
 
 In the open source Conductor, you'd now create your worker, and have it poll the tasks in your Conductor instance.  However, the playground is a multi-tenant server, and security measures must be put in place to ensure that workflows can only interact with the workers that have permission to be run.  To do this, we add a layer of security on all workflows that run in the playground.
 
+Read more about [workflow access control](/content/docs/getting-started/concepts/access-control-applications).
+
 ## Setting up your application
 
 Click ```Applications``` in the left navigation bar.  This will take you to your application list (which is probably empty.)  Click ```Create Application``` and name your application to begin.  

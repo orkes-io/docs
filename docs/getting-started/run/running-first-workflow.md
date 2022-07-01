@@ -4,14 +4,18 @@ sidebar_position: 1
 
 # Running First Workflow
 
-In this article we will explore how we can run a really simple workflow that runs without deploying any new microservice. 
+In this article we will explore how we can run a really simple workflow that runs without deploying a microservice. 
 
-Conductor can orchestrate HTTP services out of the box without implementing any code.  We will use that to create and run the first workflow.
 
-See [System Task](../concepts/system-tasks) for the list of such built-in tasks.
-Using system tasks is a great way to run a lot of our code in production.
+Conductor can orchestrate HTTP services out of the box without implementing any code.  We will use that to create and run our first workflow.
 
-To bring up a local instance of Conductor follow one of the recommended steps:
+> Note: There are a number of [System Task](../concepts/system-tasks) that are built in to Conductor. Using system tasks is a great way to run a lot of our code in production.
+
+## Start Conductor
+
+The quickest way to get started with Conductor is to use the free [Orkes Playground](https://play.orkes.io).  Just enter your email address, and you're ready to get started.
+
+However, if you'd like to create a local instance of Conductor follow one of the recommended steps:
 1. [Running Locally - From Code](../install/running-locally.md)
 2. [Running Locally - Docker Compose](../install/running-locally-docker.md)
 
@@ -89,8 +93,7 @@ Here is a list of fields and what it does:
    workers of the same name in our workflow, but we will need a unique task reference name for each of them. Task
    reference name should be unique across our entire workflow.
 3. `"inputParameters"` : These are the inputs into our worker. We can hard code inputs as we have done here. We can
-   also provide dynamic inputs such as from the workflow input or based on the output of another worker. We can find
-   examples of this in our documentation.
+   also provide dynamic inputs such as from the workflow input or based on the output of another worker. (Our [Beginner Codelab](/content/docs/codelab/beginner#creating-workflow-definition) has an example of this.)
 4. `"type"` : This is what defines what the type of worker is. In our example - this is `HTTP`. There are more task
    types which we can find in the Conductor documentation.
 5. `"http_request"` : This is an input that is required for tasks of type `HTTP`. In our example we have provided a well
@@ -101,16 +104,35 @@ metadata or more advanced concepts which we can learn more in the detailed docum
 
 Ok, now that we have walked through our workflow details, let's run this and see how it works.
 
-To configure the workflow, head over to the swagger API of conductor server and access the metadata workflow create API:
+## Adding the workflow to Conductor
 
-[http://localhost:8080/swagger-ui/index.html?configUrl=/api-docs/swagger-config#/metadata-resource/create](http://localhost:8080/swagger-ui/index.html?configUrl=/api-docs/swagger-config#/metadata-resource/create)
+We have two options to add the Workflow into Conductor, using the UI, or via API.
 
-If the link doesn’t open the right Swagger section, we can navigate to Metadata-Resource
+### Creating a workflow via dashboard
+
+Both Orkes Playground and Open Source Conductor have a Dashboard that allows for the visual creation of Workflows.
+
+* Open Source: Click `Definitions` in the top menu. Click the `New Workflow Definition` button.
+* Orkes Playground: Click `Workflow definitions` in the left navigation. Click the `Define Workflow` button.
+
+This will open workflow editor page where there is a default workflow.  Copy the workflow above, and paste it into the editor, click Save (and then Confirm save), and your workflow diagram will appear next to the definition.
+
+### Creating a workflow via API
+
+To configure the workflow, head over to the Swagger API of conductor server and access the metadata workflow create API:
+
+* [Orkes Playground](https://play.orkes.io/swagger-ui/index.html?configUrl=/api-docs/swagger-config#/metadata-resource/create)
+
+* [Local Conductor](http://localhost:8080/swagger-ui/index.html?configUrl=/api-docs/swagger-config#/metadata-resource/create)
+
+> NOTE: With the Playground, you will need an authentication token.  In the dashboard, click your user icon in the top right, and choose the `copy token` option.  Back on the Swagger page, click the lock to the right of the endpoint, and past the token here.
+
+If the link doesn’t open to the correct Swagger section, we can navigate to `Metadata-Resource`
 → `POST /api/metadata/workflow`
 
 ![Swagger UI - Metadata - Workflow](/img/tutorial/metadataWorkflowPost.png)
 
-Paste the workflow payload into the Swagger API and hit Execute.
+Paste the workflow payload into the Swagger API and hit Execute. You should see a 200 response that the API call was successful.
 
 Now if we head over to the UI, we can see this workflow definition created:
 
@@ -120,11 +142,13 @@ If we click through we can see a visual representation of the workflow:
 
 ![Conductor UI - Workflow Definition - Visual Flow](/img/tutorial/uiWorkflowDefinitionVisual.png)
 
-## 2. Running our First Workflow
+## Running our First Workflow
 
-Let’s run this workflow. To do that we can use the swagger API under the workflow-resources
+Let’s run our workflow. To do that we can use the Swagger API under the workflow-resources.  The endpoint to use is `POST /api/workflow/{name}`:
 
-[http://localhost:8080/swagger-ui/index.html?configUrl=/api-docs/swagger-config#/workflow-resource/startWorkflow_1](http://localhost:8080/swagger-ui/index.html?configUrl=/api-docs/swagger-config#/workflow-resource/startWorkflow_1)
+* Orkes Playground: [https://play.orkes.io/swagger-ui/index.html?configUrl=/api-docs/swagger-config#/workflow-resource/startWorkflow_1](https://play.orkes.io/swagger-ui/index.html?configUrl=/api-docs/swagger-config#/workflow-resource/startWorkflow_1)
+>Note: The playground also has a UI to `Run Workflow` via a button on the left navigation.
+* Local: [http://localhost:8080/swagger-ui/index.html?configUrl=/api-docs/swagger-config#/workflow-resource/startWorkflow_1](http://localhost:8080/swagger-ui/index.html?configUrl=/api-docs/swagger-config#/workflow-resource/startWorkflow_1)
 
 ![Swagger UI - Metadata - Workflow - Run](/img/tutorial/metadataWorkflowRun.png)
 
@@ -136,12 +160,13 @@ Swagger UI.
 
 ![Swagger UI - Metadata - Workflow - Run](/img/tutorial/workflowRunIdCopy.png)
 
-Ok, we should see this running and get completed soon. Let’s go to the UI to see what happened.
 
 To load the workflow directly, use this URL format:
 
 ```
 http://localhost:5000/execution/<WORKFLOW_ID>
+or:
+http://play.orkes.io/execution/<WORKFLOW_ID>
 ```
 
 Replace `<WORKFLOW_ID>` with our workflow id from the previous step. We should see a screen like below. Click on the

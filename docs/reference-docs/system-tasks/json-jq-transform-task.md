@@ -7,7 +7,7 @@ sidebar_position: 1
 ```json
 "type" : "JSON_JQ_TRANSFORM"
 ```
-### Introduction
+###Introduction
 
 The JSON_JQ_TRANSFORM task is a System task that allows processing of JSON data that is supplied to the task, by using the
 popular JQ processing tool’s query expression language.
@@ -15,7 +15,7 @@ popular JQ processing tool’s query expression language.
 Check the [JQ Manual](https://stedolan.github.io/jq/manual/v1.5/), and the
 [JQ Playground](https://jqplay.org/) for more information on JQ
 
-### Use Cases
+## Use Cases
 
 JSON is a popular format of choice for data-interchange. It is widely used in web and server applications, document
 storage, API I/O etc. It’s also used within Conductor to define workflow and task definitions and passing data and state
@@ -23,7 +23,7 @@ between tasks and workflows. This makes a tool like JQ a natural fit for process
 usages within Conductor includes, working with HTTP task, JOIN tasks or standalone tasks that try to transform data from
 the output of one task to the input of another.
 
-### Configuration
+## Configuration
 
 Here is an example of a _`JSON_JQ_TRANSFORM`_ task. The `inputParameters` attribute is expected to have a value object
 that has the following
@@ -88,7 +88,7 @@ attribute along with a string message will be returned if there was an error pro
 }
 ```
 
-#### Input Configuration
+### Input Configuration
 
 | Attribute      | Description |
 | ----------- | ----------- |
@@ -99,7 +99,7 @@ attribute along with a string message will be returned if there was an error pro
 | inputParameters/user-defined-key(s)   | User defined key(s) along with values.          |
 | inputParameters/queryExpression   | A JQ query expression        |
 
-#### Output Configuration
+### Output Configuration
 
 | Attribute      | Description |
 | ----------- | ----------- |
@@ -110,7 +110,9 @@ attribute along with a string message will be returned if there was an error pro
 
 ## Example JQ transforms
 
-### Cleaning up a JSON response
+## Cleaning up a JSON response
+
+This excerpt is from the [Simple ETL Codelab](/content/docs/usecases/Simple_ETL).
 
 A HTTP Task makes an API call to GitHub to request a list of "stargazers" (users who have starred a repository).  The API response (for just one user) looks like:
 
@@ -183,5 +185,6 @@ The JSON is stored in ```starlist```.  The ```queryExpression``` reads in the JS
 
 The entire expression is wrapped in [] to indicate that the response should be an array.
 
+## Creating Dynamic Fork Inputs
 
-
+[Dynamic Forks](/content/docs/reference-docs/dynamic-fork-task) require multiple JSON inputs that are created on demand.  JQ Transforms are ideal for this, and are used in the [Order Fulfillment Codelab](/content/docs/codelab/orderfulfillment7).

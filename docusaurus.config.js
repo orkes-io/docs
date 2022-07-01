@@ -38,9 +38,45 @@ const config = {
                 outDir: "docs/how-tos/sdks", // the base directory to output to.
                 documents: ["/conductor-python/main/README.md",
                             "/conductor-go/main/README.md",
+                            "/conductor-go/main/workers_sdk.md",
+                            "/conductor-go/main/workflow_sdk.md",
+                            "/conductor-go/main/docs/README.md",
+                            "/conductor-go/main/docs/executor.md",
+                            "/conductor-go/main/docs/settings.md",
+                            "/conductor-go/main/docs/workflow.md",
+                            "/conductor-go/main/docs/worker.md",
                             "/conductor-csharp/main/README.md",
                             "conductor-clojure/main/README.md"], // the file names to download
-            },
+                modifyContent(filename) {
+                        if (filename.equals("workers_sdk.md")) {
+                            return {filename : "workers_sdk"
+                        }
+                        }
+                        if(filename.equals("workflow_sdk.md")) {
+                            return {filename : "workflow_sdk"
+                        }
+                        }
+                        if(filename.equals("executor.md")) {
+                            return {filename : "executor"
+                        }
+                        }
+                        if(filename.equals("settings.md")) {
+                            return {filename : "settings"
+                        }
+                        }
+                        if(filename.equals("workflow.md")) {
+                            return {filename : "workflow"
+                        }
+                        }
+                        if(filename.equals("worker.md")) {
+                            return {filename : "worker"
+                        }
+                        }
+                    }
+                         
+            }
+                    
+               
         
         ],
         [

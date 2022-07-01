@@ -2,16 +2,14 @@
 sidebar_position: 1
 ---
 
-# Searching Workflows
+# Searching Workflow Executions
 
 In this article we will learn how to search through workflow executions via the UI.
 
 ### Prerequisites
 
-1. Conductor app and UI installed and running in an environment. If required we can look at the following options to get
-   an environment up and running.
-
-    1. [Build and Run Conductor Locally](/content/docs/getting-started/install/running-locally)
+1. Conductor app and UI installed and running with a database backend.  This is most easily done via Docker compose, or by using the Orkes Playground:
+    1. [Orkes Playground](https://play.orkes.io)
     2. [Running via Docker Compose](/content/docs/getting-started/install/running-locally-docker)
 
 ## UI Workflows View
@@ -25,7 +23,7 @@ The following fields are available for searching for workflows.
 
 |Search Field Name|Description|
 |---|---|
-| Worflow Name | Use this field to filter workflows by the configured name |
+| Workflow Name | Use this field to filter workflows by the configured name |
 | Workflow ID  | Use this field to filter to a specific workflow by its id |
 | Status  | Use this field to filter by status - available options are presented as a multi-select option |
 |Start Time - From| Use this field to filter workflows that started on or after the time specified|

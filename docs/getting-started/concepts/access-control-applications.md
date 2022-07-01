@@ -1,22 +1,27 @@
+---
+sidebar_position: 4
+---
 
 # Access Control: Applications
 
-With [Orkes Cloud](https://orkes.io/cloud), your Conductor server may be running in a different hosted environment than your workers.  The APIs to control/run and edit your workflows are exposed on the internet, so restricting access is is needed.
+With [Orkes Cloud](https://orkes.io/cloud), your Conductor server may be running in a different hosted environment than your workers.  The API endpoints to control/run and edit your workflows, and the task polling queues are exposed on the internet - so restricting access is is required.
 
 To ensure that all workflow executions & worker tasks are only run by authorized users, Orkes has added a layer of Access Control to all parts of the Orchestration workflow lifecycle.
 
-> **EVERY** connection in/out of Orkes Cloud requires an Authentication header with a JWT token.  It will appear as `'X-Authorization:  <JWT Token>'`.
+> **EVERY** connection in/out of Orkes Cloud requires an Authentication header with a JWT token.  This header has the format: `'X-Authorization:  <JWT Token>'`.
+
+IN this document, we will walk through the steps to create application based control of your workflows and tasks, as well as the process to generate JWT tokens for each application.
 
 ## Prototyping
 
-If you are looking for a quick way to obtain a JWT token for your application, click the account button in the upper right corner, and select `Copy Token`.  This token remains valid for your current session in Orkes Cloud.
+If you are looking for a quick way to test on Orkes Cloud without creating an application, you can obtain a JWT token from the Cloud dashboard. Click the account button in the upper right corner, and select `Copy Token`.  This token remains valid for your current session in Orkes Cloud - and has the same access as your user account.
 
 <p align="center"><img src="/content/img/copy_token.jpg" alt="screenshot of user menu in Orkes Cloud" width="400" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
 
 ## Application
 
-In the context of Access control, an application grants generates the JWT via access keys. Using a generated key and secret, the JWT for access is created. 
+In the context of Access control, an application is how you grant access to a workflow or task.  Each application is able to generate one or more sets of a key and secret, and these parameters are used to generate the JWT token. 
 
 Each application can generate one or more sets Access Keys for access control to the application.  An application can grant access to workflows, tasks or both. 
 
@@ -56,7 +61,7 @@ Once a key has been created, the table of Access Keys allows for 2 actions:
 
 Each workflow/task in the application can have different permissions:
 
-* **Read** - User can see the workflow/task, but cannot modify or run. Requires **Metadata API** Role to be on.
+* **Read** - User can see the workflow/task, but cannot modify or run. 
 * **Execute** - Allows the user to run the workflow or task. Requires **Worker** Role to be on.
 * **Update** - Allows the user to update to the workflow/task. Requires **Metadata API** Role to be on.
 * **Delete** = Allows the user to delete to the workflow/task. Requires **Metadata API** Role to be on.
@@ -65,9 +70,9 @@ To add a Workflow/Task permission, click the ```+``` at the top of the  ```Workf
 
 <p align="center"><img src="/content/img/application_permission.png" alt="permission dialog" width="500" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
-Once all of the workflows and tasks have been added, the table will display them all. This application is set for running the [order fulfillment codelab](/content/docs/codelab/orderfulfillment).
+> Note: When adding tasks, you can specify a [domain](http://localhost:3000/content/docs/codelab/taskToDomain). This allows you to direct all traffic to a specific instance of a task - without specifying in the API.
 
-> Note: When adding tasks, you can specify a [domain](http://localhost:3000/content/docs/codelab/taskToDomain).
+Once all of the workflows and tasks have been added, the table will display the selection. The application below is set for running the [order fulfillment codelab](/content/docs/codelab/orderfulfillment).
 
 <p align="center"><img src="/content/img/all_permissions.png" alt="permissions table" width="800" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
@@ -99,3 +104,22 @@ curl -s -X "POST" "https://play.orkes.io/api/workflow/super_weather" \
     -H 'X-Authorization:  <JWT Token>'\
     -d '{"zip": "90210"}'
 ```
+
+
+## Example Application setup
+
+Let's walk through the Application setup for the following example:
+
+We have 2 programs that access 2 Conductor workflows.  These workflows both rely on `task_x` that is performed by a worker application `Worker_x`.
+
+We could create one application with access to Workflow_1, Workflow_2 and task_x, and supply keys/secrets from the one application's access keys to Program_1, Program_2 and Worker_x.  But this violates the principal of least privilege, where applications should only have access to the endpoints they require (e.g. worker_x should not have access to execute the two workflows). 
+
+<p align="center"><img src="/content/img/application_access_example.jpg" alt="Example application" width="500" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+
+To satisfy the principle of least privilege, we'll create 3 Applications.
+
+1. Application `WorkerX` will be given `EXECUTE` permission for task_x. This allows the worker to poll the task queue for work.
+2. Application `Program1` will be given `EXECUTE` permission for Workflow_1 and task_x. so that it can successfully invoke `workflow_1`.
+3. Application `Program2`will be given `EXECUTE` permission for Workflow_2 and task_x, so that it can successfully invoke `workflow_2`.
+
+The worker application has no access to the workflows - since this application only needs to poll the task.  The two applications have the minimum access to execute the workflow and the tasks inside the workflow.

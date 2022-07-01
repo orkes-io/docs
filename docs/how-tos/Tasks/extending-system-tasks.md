@@ -1,6 +1,6 @@
 # Extending System Tasks
 
-[System tasks](/content/docs/reference-docs) allow Conductor to run simple tasks on the server - removing the need to build (and deploy) workers for basic tasks.  This allows for automating more mundane tasks without building specific microservices for them.
+[System tasks](/content/docs/reference-docs) allow Conductor to run commonly run tasks on the Conductor server - removing the need to build (and deploy) workers for these basic tasks.  This allows for automating more mundane tasks without building specific microservices for them.
 
 However, sometimes it might be necessary to add additional parameters to a System Task to gain the behavior that is desired.
 

@@ -83,3 +83,6 @@ Instead, we can call the existing workflow as a ```SUB_WORKFLOW``` task.
 Not only is your workflow more readable, with easier to edit JSON, but it will update with the ```postage_rate``` workflow.
 
 
+## Codelab Examples
+
+* [Order Fulfillment](/content/docs/codelab/orderfulfillment6#subworkflow): Dynamic tasks can have only one task per fork, but a SubWorkflow is allowed allowing for many tasks to be run.
