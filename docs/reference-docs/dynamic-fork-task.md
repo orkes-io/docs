@@ -1,6 +1,8 @@
 ---
 sidebar_position: 1
 ---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 # Dynamic Fork
 ```json
@@ -9,34 +11,14 @@ sidebar_position: 1
 
 ## Introduction
 
-A Fork operation in conductor, lets you run a specified list of other tasks or sub workflows in parallel after the fork
-task. A fork task is followed by a join operation that waits on the forked tasks or sub workflows to finish. The `JOIN`
-task also collects outputs from each of the forked tasks or sub workflows.
+When the number of forks must be determined at run-time, the FORK_JOIN_DYNAMIC task is needed.  (In a regular fork operation -the [FORK_JOIN](/content/docs/reference-docs/fork-task) task- the number of forks are defined during workflow creation.)
 
-In a regular fork operation (`FORK_JOIN` task), the list of tasks or sub workflows that need to be forked and run in
-parallel are already known at the time of workflow definition creation time. However, there are cases when that list can
-only be determined at run-time and that is when the dynamic fork operation (FORK_JOIN_DYNAMIC task) is needed.
+> Note: A `FORK_JOIN_DYNAMIC` can ony have ONE task per fork.  If there is a need for multiple tasks per fork, a SUBWORKFLOW can be utilized.
 
-There are three things that are needed to configure a `FORK_JOIN_DYNAMIC` task.
-
-1. A list of tasks or sub-workflows that needs to be forked and run in parallel.
-2. A list of inputs to each of these forked tasks or sub-workflows
-3. A task prior to the `FORK_JOIN_DYNAMIC` tasks outputs 1 and 2 above that can be wired in as in input to
-   the `FORK_JOIN_DYNAMIC` tasks
-
-## Use Cases
-
-A `FORK_JOIN_DYNAMIC` is useful, when a set of tasks or sub-workflows needs to be executed and the number of tasks or
-sub-workflows are determined at run time. E.g. Let's say we have a task that resizes an image, and we need to create a
-workflow that will resize an image into multiple sizes. In this case, a task can be created prior to
-the `FORK_JOIN_DYNAMIC` task that will prepare the input that needs to be passed into the `FORK_JOIN_DYNAMIC` task. The
-single image resize task does one job. The `FORK_JOIN_DYNAMIC` and the following `JOIN` will manage the multiple
-invokes of the single image resize task. Here, the responsibilities are clearly broken out, where the single image resize
-task does the core job and `FORK_JOIN_DYNAMIC` manages the orchestration and fault tolerance aspects.
 
 ## Configuration
 
-Here is an example of a `FORK_JOIN_DYNAMIC` task followed by a `JOIN` task
+Here is a JSON example of a `FORK_JOIN_DYNAMIC` task followed by a `JOIN` task:
 
 ```json
 {
@@ -48,6 +30,8 @@ Here is an example of a `FORK_JOIN_DYNAMIC` task followed by a `JOIN` task
   "dynamicForkTasksParam": "dynamicTasks",
   "dynamicForkTasksInputParamName": "dynamicTasksInput"
 },
+
+
 {
 "name": "image_multiple_convert_resize_join",
 "taskReferenceName": "image_multiple_convert_resize_join_ref",
@@ -55,15 +39,14 @@ Here is an example of a `FORK_JOIN_DYNAMIC` task followed by a `JOIN` task
 }
 ```
 
-Dissecting into this example above, let's look at the three things that are needed to configured for
-the `FORK_JOIN_DYNAMIC` task
+Let's look at the `inputParameters` for
+the `FORK_JOIN_DYNAMIC` task.
 
-`dynamicForkTasksParam` This is a JSON array of task or sub-workflow objects that specifies the list of tasks or
-sub-workflows that needs to be forked and run in parallel `dynamicForkTasksInputParamName` This is a JSON map of task or
-sub-workflow objects that specifies the list of tasks or sub-workflows that needs to be forked and run in parallel
-fooBarTask This is a task that is defined prior to the FORK_JOIN_DYNAMIC in the workflow definition. This task will need
-to output (outputParameters) 1 and 2 above so that it can be wired into inputParameters of the FORK_JOIN_DYNAMIC
-tasks. (dynamicTasks and dynamicTasksInput)
+* `dynamicForkTasksParam` This is a JSON array that lists the tasks in each fork that is to be created. Each entry corresponds to a separate fork.
+* `dynamicForkTasksInputParamName` This is a JSON array where the keys are the taskReferenceName for each fork, and the values are the `inputParameters` for each task.
+
+
+>NOTE: `fooBarTask` is a task that is defined prior to the FORK_JOIN_DYNAMIC in the workflow definition. This task will create the `dynamicTasks` and `dynamicTasksInput` JSON arrays that are required for the DYNAMIC task.
 
 ## Input Configuration
 
@@ -71,55 +54,18 @@ tasks. (dynamicTasks and dynamicTasksInput)
 | ----------- | ----------- |
 | name      | Task Name. A unique name that is descriptive of the task function      |
 | taskReferenceName   | Task Reference Name. A unique reference to this task. There can be multiple references of a task within the same workflow definition        |
-| type   | Task Type. In this case, `FORK_JOIN_DYNAMIC`        |
+| type   |  `FORK_JOIN_DYNAMIC`        |
 | inputParameters   | The input parameters that will be supplied to this task.         |
-| dynamicForkTasksParam | This is a JSON array of tasks or sub-workflow objects that needs to be forked and run in parallel (Note: This has a different format for ```SUB_WORKFLOW``` compared to ```SIMPLE``` tasks.) |
-| dynamicForkTasksInputParamName | A JSON map, where the keys are task or sub-workflow names, and the values are its corresponding inputParameters | 
+| dynamicForkTasksParam | This is a JSON array listing each of the tasks/sub-workflow objects in each fork. (Note: This has a different format for ```SUB_WORKFLOW``` compared to other tasks.) |
+| dynamicForkTasksInputParamName | A JSON array: keys are task/sub-workflow names for each fork, and the values are the corresponding inputParameters for each task. | 
 
 ## Example
 
->Note: This example is from the [Image Processing Use Case](/content/docs/usecases/image_processing).
+>Note: This example is from the [Image Processing Use Case](/content/docs/usecases/image_processing).  The workers referenced in this use case are a part of the [Orkesworkers Github repo](https://github.com/orkes-io/orkesworkers). Here's the [worker that creates the inputParameters](https://github.com/orkes-io/orkesworkers/blob/main/src/main/java/io/orkes/samples/workers/ImageMultipleConvertResizeWorker.java).
 
-Let's say we have a task that resizes an image, and we need to create a workflow that will resize an image into multiple sizes. In this case, a task can be created prior to
-the `FORK_JOIN_DYNAMIC` task that will prepare the input that needs to be passed into the `FORK_JOIN_DYNAMIC` task. These will be:
+### Preparing the data
 
-* ```dynamicForkTasksParam``` the JSON array of tasks/subworkflows to be run in parallel. Each JSON object will have: 
-  * A unique ```taskReferenceName```.
-  * The name of the Task/Subworkflow to be called (note - the location of this key:value is different for a subworkflow).
-  * The type of the task (This is optional for SIMPLE tasks).
-* ```dynamicForkTasksInputParamName``` a JSON map of input parameters for each task. The keys will be the unique ```taskReferenceName``` defined in the first JSON array, and the values will be the specific input parameters for the task/subworkflow.
-
-The ```image_resize``` task works to resize just one image. The `FORK_JOIN_DYNAMIC` and the following `JOIN` will manage the multiple invocations of the single ```image_resize``` task. The responsibilities are clearly broken out, where the individual  ```image_resize```
-tasks do the core job and `FORK_JOIN_DYNAMIC` manages the orchestration and fault tolerance aspects of handling multiple invocations of the task.
-
-### The workflow
-
-Here is an example of a `FORK_JOIN_DYNAMIC` task followed by a `JOIN` task.  The fork is named and given a taskReferenceName, but all of the input parameters are JSON variables that we will discuss next:
-
-```json
-{      
-  "name": "image_multiple_convert_resize_fork",
-  "taskReferenceName": "image_multiple_convert_resize_fork_ref",
-  "inputParameters": {
-    "dynamicTasks": "${fooBarTask.output.dynamicTasksJSON}",
-    "dynamicTasksInput": "${fooBarTask.output.dynamicTasksInputJSON}"
-  },
-  "type": "FORK_JOIN_DYNAMIC",
-  "dynamicForkTasksParam": "dynamicTasks",
-  "dynamicForkTasksInputParamName": "dynamicTasksInput"
-},
-{
-"name": "image_multiple_convert_resize_join",
-"taskReferenceName": "image_multiple_convert_resize_join_ref",
-"type": "JOIN"
-}
-```
-
-This appears in the UI as follows:
-
-![diagram of dynamic fork](/img/dynamic-task-diagram.png)
-
-Let's assume this data is sent to the workflow:
+Let's assume the workflow input appears as follows:
 
 ```
 {
@@ -136,40 +82,52 @@ Let's assume this data is sent to the workflow:
 }
 ```
 
-With 2 file formats and 2 sizes in the input, we'll be creating 4 images total.  The first task will generate the tasks and the parameters for these tasks:
+Note that the input has two outputFormats (png and Jpg) and two sizes (300x300 and 200x200). With 2 file formats and 2 sizes in the input, we'll be creating 4 images total.  We'll create a task & worker that will take the input data, and convert it into the JSON arrays that the `FORK_JOIN_DYNAMIC` requires. First, let's define what the inputs must look like:
 
-* `dynamicForkTasksParam` This is a JSON array of task or sub-workflow objects that specifies the list of tasks or sub-workflows that needs to be forked and run in parallel. This JSON varies depeding oon the type of task.  
+### ```dynamicForkTasksParam``` 
 
+This is a JSON array of task or sub-workflow objects that specifies the list of tasks or sub-workflows that needs to be forked and run in parallel.  Here we define the four tasks to be run inside the `FORK_JOIN_DYNAMIC`.
 
-### ```dynamicForkTasksParam``` Simple task 
-In this case, our fork is running a SIMPLE task: ```image_convert_resize```:
+The format of this JSON array is different for subworkflows vs. other tasks.  There are two tabs below showing the code for both options:
+
+<Tabs values={[
+        {label: 'Task', value: 'Task'},
+        {label: 'Subworkflow', value: 'Subworkflow'}
+    ]}>
+  
+  <TabItem value="Task">
+
+In this case, our dynamic fork is running a SIMPLE task: ```image_convert_resize```:
 
 ```
 { "dynamicTasks": [
   {
     "name": :"image_convert_resize",
     "taskReferenceName": "image_convert_resize_png_300x300_0",
-    ...
+    "type": "SIMPLE"
   },
   {
     "name": :"image_convert_resize",
     "taskReferenceName": "image_convert_resize_png_200x200_1",
-    ...
+    "type": "SIMPLE"
   },
   {
     "name": :"image_convert_resize",
     "taskReferenceName": "image_convert_resize_jpg_300x300_2",
-    ...
+    "type": "SIMPLE"
   },
   {
     "name": :"image_convert_resize",
     "taskReferenceName": "image_convert_resize_jpg_200x200_3",
-    ...
+    "type": "SIMPLE"
   }
 ]}
 ```
-### ```dynamicForkTasksParam``` SubWorkflow task
-In this case, our Dynamic fork is running a SUB_WORKFLOW task: ```image_convert_resize_subworkflow```
+
+  </TabItem>
+  <TabItem value="Subworkflow" label="Java">
+
+ In this case, our Dynamic fork is running a SUB_WORKFLOW task: ```image_convert_resize_subworkflow```
 
 ```
 { "dynamicTasks": [
@@ -211,51 +169,128 @@ In this case, our Dynamic fork is running a SUB_WORKFLOW task: ```image_convert_
   }
 ]}
 ```
+  
+  </TabItem>
+</Tabs>
 
 
 
-* `dynamicForkTasksInputParamName` This is a JSON map of task or
-sub-workflow objects and all of the input parameters that these tasks will need to run.
+### `dynamicForkTasksInputParamName` 
 
-```
+This is a JSON map of the four `taskReferenceNames` and the `inputParameters` for each task.  
+
+```json
 "dynamicTasksInput":{
-"image_convert_resize_jpg_300x300_2":{
-"outputWidth":300
-"outputHeight":300
-"fileLocation":"https://pbs.twimg.com/media/FJY7ud0XEAYVCS8?format=png&name=900x900"
-"outputFormat":"jpg"
-"maintainAspectRatio":true
-}
-"image_convert_resize_jpg_200x200_3":{
-"outputWidth":200
-"outputHeight":200
-"fileLocation":"https://pbs.twimg.com/media/FJY7ud0XEAYVCS8?format=png&name=900x900"
-"outputFormat":"jpg"
-"maintainAspectRatio":true
-}
+  "image_convert_resize_png_300x300_0":{
+  "outputWidth":300
+  "outputHeight":300
+  "fileLocation":"https://pbs.twimg.com/media/FJY7ud0XEAYVCS8?format=png&name=900x900"
+  "outputFormat":"png"
+  "maintainAspectRatio":true
+},
 "image_convert_resize_png_200x200_1":{
-"outputWidth":200
-"outputHeight":200
-"fileLocation":"https://pbs.twimg.com/media/FJY7ud0XEAYVCS8?format=png&name=900x900"
-"outputFormat":"png"
-"maintainAspectRatio":true
+  "outputWidth":200
+  "outputHeight":200
+  "fileLocation":"https://pbs.twimg.com/media/FJY7ud0XEAYVCS8?format=png&name=900x900"
+  "outputFormat":"png"
+  "maintainAspectRatio":true
+},
+"image_convert_resize_jpg_300x300_2":{
+  "outputWidth":300
+  "outputHeight":300
+  "fileLocation":"https://pbs.twimg.com/media/FJY7ud0XEAYVCS8?format=png&name=900x900"
+  "outputFormat":"jpg"
+  "maintainAspectRatio":true
+},
+"image_convert_resize_jpg_200x200_3":{
+  "outputWidth":200
+  "outputHeight":200
+  "fileLocation":"https://pbs.twimg.com/media/FJY7ud0XEAYVCS8?format=png&name=900x900"
+  "outputFormat":"jpg"
+  "maintainAspectRatio":true
 }
-"image_convert_resize_png_300x300_0":{
-"outputWidth":300
-"outputHeight":300
-"fileLocation":"https://pbs.twimg.com/media/FJY7ud0XEAYVCS8?format=png&name=900x900"
-"outputFormat":"png"
-"maintainAspectRatio":true
+
+
+```
+
+Here's a snip from the [worker](https://github.com/orkes-io/orkesworkers/blob/main/src/main/java/io/orkes/samples/workers/ImageMultipleConvertResizeWorker.java) that we use to create these two JSON files:
+
+
+```java
+            //read in all the inputs
+            String fileLocation = (String) task.getInputData().get("fileLocation");
+            List<String> outputFormats = (List<String>)(task.getInputData().get("outputFormats"));
+            List<Size> outputSizes = (List<Size>) objectMapper.convertValue(task.getInputData().get("outputSizes"), new TypeReference<List<Size>>(){});
+            Boolean maintainAspectRatio = Boolean.valueOf(task.getInputData().get("maintainAspectRatio").toString());
+            //create the two output files
+            List<WorkflowTask> dynamicTasks =  Lists.newArrayList();
+            Map<String, Object> dynamicTasksInput = Maps.newHashMap();
+            //loop through the names, and create JSON files with all of the required entries.
+            int i=0;
+            String dynamicTaskName = "image_convert_resize";
+            for (String outputFormat :
+                    outputFormats) {
+                for (Size size:
+                     outputSizes) {
+                    String taskRefName = String.format("%s_%s_%sx%s_%d",dynamicTaskName, outputFormat, size.width, size.height, i++);
+                    WorkflowTask dynamicTask = new WorkflowTask();
+                    dynamicTask.setName(dynamicTaskName);
+                    dynamicTask.setTaskReferenceName(taskRefName);
+                    dynamicTasks.add(dynamicTask);
+
+                    Map<String, Object> dynamicTaskInput = Maps.newHashMap();
+                    dynamicTaskInput.put("fileLocation", fileLocation);
+                    dynamicTaskInput.put("outputFormat", outputFormat);
+                    dynamicTaskInput.put("outputWidth", size.width);
+                    dynamicTaskInput.put("outputHeight", size.height);
+                    dynamicTaskInput.put("maintainAspectRatio", maintainAspectRatio);
+
+                    dynamicTasksInput.put(taskRefName,dynamicTaskInput );
+                }
+            }
+
+```
+
+>Note: The [Order Fulfillment codelab](/content/docs/reference-docs/dynamic-fork-task#additional-examples) uses the JQ Transform tasks to create these inpus.
+
+### The workflow
+
+Here is the JSON representation of the  `FORK_JOIN_DYNAMIC` task followed by a `JOIN` task.  The fork is named and given a taskReferenceName, but all of the input parameters are JSON variables that we will discuss next:
+
+```json
+{      
+  "name": "image_multiple_convert_resize_fork",
+  "taskReferenceName": "image_multiple_convert_resize_fork_ref",
+  "inputParameters": {
+    "dynamicTasks": "${fooBarTask.output.dynamicTasksJSON}",
+    "dynamicTasksInput": "${fooBarTask.output.dynamicTasksInputJSON}"
+  },
+  "type": "FORK_JOIN_DYNAMIC",
+  "dynamicForkTasksParam": "dynamicTasks",
+  "dynamicForkTasksInputParamName": "dynamicTasksInput"
+},
+{
+"name": "image_multiple_convert_resize_join",
+"taskReferenceName": "image_multiple_convert_resize_join_ref",
+"type": "JOIN"
 }
 ```
+
+Adding in the task that creates the inputs above the FORK creates the following workflow diagram:
+
+<p align="center"><img src="/content/img/dynamic_fork_example.jpg" alt="a dynamic fork diagram" width="400" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+
+
 
 ### The Join
 
 The [JOIN](/content/docs/reference-docs/join-task) task will run after all of the dynamic tasks, collecting the output for all of the tasks.
 
+>Note: For `FORK_JOIN_DYNAMIC`, all tasks must complete before the JOIN will complete the fork.
+
 ## Additional Examples
 
-* [Order Fulfillment Codelab](/content/docs/codelab/orderfulfillment8): In this Example, JQ Transform System tasks are used to create the JSON inputs required for the Dynamic task to run. The outputs from the JQ transforms are used to create the `dynamicTasks` and the `dynamicTaskInputs`:
+* [Order Fulfillment Codelab](/content/docs/codelab/orderfulfillment8): In this Example, several JQ Transform System tasks are used to create the JSON inputs required for the Dynamic task to run. The outputs from the JQ transforms are used to create the `dynamicTasks` and the `dynamicTaskInputs`:
 
 ```json
   "inputParameters": {
