@@ -213,7 +213,7 @@ This is a JSON map of the four `taskReferenceNames` and the `inputParameters` fo
 
 ```
 
-Here's a snip from the [worker](https://github.com/orkes-io/orkesworkers/blob/main/src/main/java/io/orkes/samples/workers/ImageMultipleConvertResizeWorker.java) that we use to create these two JSON files:
+Here's a snip from the [worker](https://github.com/orkes-io/orkesworkers/blob/main/src/main/java/io/orkes/samples/workers/ImageMultipleConvertResizeWorker.java) that we use to create these two JSON files. In this case, we are using a task, not a subworkflow.
 
 
 ```java
@@ -251,7 +251,7 @@ Here's a snip from the [worker](https://github.com/orkes-io/orkesworkers/blob/ma
 
 ```
 
->Note: The [Order Fulfillment codelab](/content/docs/reference-docs/dynamic-fork-task#additional-examples) uses the JQ Transform tasks to create these inpus.
+>Note: The [Order Fulfillment codelab](/content/docs/reference-docs/dynamic-fork-task#additional-examples) uses the JQ Transform tasks to create the JSON inputs.
 
 ### The workflow
 
