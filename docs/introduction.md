@@ -9,7 +9,7 @@ Conductor allows developers to build stateful applications using simple,
 stateless code without having to manage the state and complexities of building a distributed application.
 Conductor is cloud native and scales seamlessly as your workload grows.
 
-Read our [What is Conductor?](https://orkes.io/what-is-conductor/)npage for even more details on how Conductor works.
+Read our [What is Conductor?](https://orkes.io/what-is-conductor/) page for even more details on how Conductor works.
 
 ### How to run Conductor?
 [Short Tutorial on Running Conductor locally](getting-started/install/running-locally)
