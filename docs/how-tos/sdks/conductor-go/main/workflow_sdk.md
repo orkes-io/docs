@@ -1,4 +1,4 @@
-# Authoring Workflows
+# Authoring Workflows with the Go SDK
 
 ## A simple two-step workflow
 

@@ -9,9 +9,12 @@ sidebar_position: 1
 
 ## Introduction
 
-A Fork operation in conductor, lets you run a specified list of other tasks or sub workflows in parallel. A fork task is
+A Fork operation lets you run a specified list of other tasks or sub workflows in parallel. A fork task is
 followed by a join operation that waits on the forked tasks or sub workflows to finish. The `JOIN`
 task also collects outputs from each of the forked tasks or sub workflows.
+
+
+<p align="center"><img src="/content/img/simple_fork.jpg" alt="a simple fork diagram" width="400" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
 ## Use Cases
 
