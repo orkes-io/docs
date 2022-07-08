@@ -28,7 +28,7 @@ Consider an example where we want to publish an event into SQS to notify an exte
 }
 ```
 
-An example where we want to publish a messase to conductor's internal queuing system.
+An example where we want to publish a message to conductor's internal queuing system.
 ```json
 {
     "type": "EVENT",
@@ -59,3 +59,7 @@ Conductor has support for the following external event queueing systems as part 
 3. [AMQP](https://github.com/Netflix/conductor/tree/main/contribs/src/main/java/com/netflix/conductor/contribs/queue/amqp) (prefix: amqp_queue or amqp_exchange)
 4. Internal Conductor (prefix: conductor) 
 To add support for other 
+
+## Example
+
+See the [Sending SQS messages](/content/docs/how-tos/Tasks/SQS-event-task) tutorial for an example EVENT task.

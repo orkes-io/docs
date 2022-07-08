@@ -27,25 +27,25 @@ execution in a reliable & scalable manner.
 
 ## What does a Workflow look like?
 
+Workflows can take on may different appearances, from a simple workflow with one or two tasks, to workflows with thousands of tasks.
+
 Let's start with a basic workflow and understand what are the different aspects of it. In particular, we will talk about
-two stages of a workflow, *defining* a workflow and *executing* a workflow
+two stages of a workflow, *defining* a workflow and *executing* a workflow.
+
+
 
 ### *Simple Workflow Example*
 
 Assume your business logic is to simply to get some shipping information and then do the shipping. You start by
-logically partitioning them into two tasks
+logically partitioning them into two tasks:
 
 * **shipping_info**
 * **shipping_task**
 
-The next step is to [create a workflow in Conductor using JSON](/content/docs/how-tos/Workflows/create-workflow) and
-then [create the associated tasks in Conductor](/content/docs/how-tos/Tasks/creating-tasks) for the above identified ones.
-f
-After that, you add those tasks into the workflow to have **shipping_info**
-called first and then, if it is successful, call **shipping_task**. You now have a *definition* of the workflow in
-Conductor and Conductor will then generate an easy to understand visual representation of this workflow
+The next step is to [create a workflow in Conductor using JSON](/content/docs/how-tos/Workflows/create-workflow) with two tasks. This will generate an easy to understand visual representation of our workflow.
 
 ![Simple Shipping Workflow - Visual Representation](../../../static/img/tutorial/ShippingWorkflow.png)
+
 
 ### *Multiple Paths Workflow Example*
 

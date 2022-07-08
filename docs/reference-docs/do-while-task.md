@@ -16,7 +16,7 @@ Each task output is stored as part of the DO_WHILE task, indexed by the iteratio
 
 The DO_WHILE task is set to `FAILED` as soon as one of the loopTask fails. In such case retry, iteration starts from 1.
 
-### Limitations 
+## Limitations 
 - Domain or isolation group execution is unsupported.
 - Nested DO_WHILE is unsupported. However, DO_WHILE task supports SUB_WORKFLOW as loopOver task, so we can achieve similar functionality.
 - Since loopOver tasks will be executed in loop inside scope of parent do while task, crossing branching outside of DO_WHILE task is not respected. 
@@ -195,3 +195,10 @@ In tasks embedded in the loop, ```${get_all_stars_loop_ref.output.iteration}``` 
 
 ```
 
+## Codelab Examples
+
+* [Order Fulfillment](/content/docs/codelab/orderfulfillment5_5#dowhile-loop):  Loops through each address to create a shipping label.
+
+* [Document Approvals](/content/docs/usecases/document_approvals): Should an approval be rejected, the Do/WHile loops back to the beginning for edits to the doc.
+
+* [Extract, Transform, Load](/content/docs/usecases/Simple_ETL): GitHub extraction is 100 entries per call, so loop for the number of extractions required to get the data.  The Orbit API allows for one activity upload per API call, so the Do/while loop iterates through every upload.

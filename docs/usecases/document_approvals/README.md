@@ -17,7 +17,7 @@ Looking at this flow, a rejection appears to add a loop into the workflow.  Sinc
 
 There is a workaround in Conductor that allows for loops that we feature in the _Review Approval_ workflow. Conductor's [DO/WHILE](https://orkes.io/content/docs/reference-docs/do-while-task) task allows for iteration of the same tasks multiple times (and to ensure the _directed_ nature of the graph, each iteration of the task is numbered with `__x` (where x is the iteration count).  
 
-![review cycle workflow](https://raw.githubusercontent.com/conductor-sdk/conductor-examples/main/document_approvals/images/approval_workflow.png)
+![review cycle workflow](https://raw.githubusercontent.com/conductor-sdk/conductor-examples/main/document_approvals/images/approval_workflow.jpg)
 
 1. Document is uploaded
 2. Review 1a & 1b can be run asynchronously. If it passes: Review 2, otherwise, it loops back to being uploaded again.

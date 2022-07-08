@@ -12,12 +12,11 @@ your workflow execution.
 
 ## Debugging Executions
 
-Open the **Tasks > Diagram** tab to see the diagram of the overall workflow execution
+Open a workflow execution to see the diagram of the workflow.  Successful tasks appear in green.  
 
-If there is a failure, you will them on the view marked as red. In most cases it should be clear what went wrong from
-the view itself. To see details of the failure, you can click on the failed task.
+If a task in the workflow has failed, its color in the diagram will be red. Clicking on the task will give more details as to why the task failed.
 
-The following fields are useful in debugging
+The following fields are useful in debugging:
 
 |Field Name|Description|
 |---|---|
@@ -26,7 +25,7 @@ The following fields are useful in debugging
 | Task Detail > Input | Verify if the task inputs were computed and provided correctly to the task|
 | Task Detail > Output | If output of a previous task is used as an input to your next task, refer here for what was produced|
 | Task Detail > Logs | If your task is supplying logs, we can look at that here|
-| Task Detail > Retried Task - Select an instance | If your task was retried, we can see all the attempts and correponding details here|
+| Task Detail > Retried Task - Select an instance | If your task was retried, we can see all the attempts and corresponding details here|
 
 Note: We can also access the task list from **Tasks > Task List** tab.
 

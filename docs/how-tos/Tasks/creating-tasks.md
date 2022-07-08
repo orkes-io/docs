@@ -21,8 +21,29 @@ curl 'http://localhost:8080/api/metadata/taskdefs' \
   --data-raw '[{"createdBy":"user","name":"sample_task_name_1","description":"This is a sample task for demo","responseTimeoutSeconds":10,"timeoutSeconds":30,"inputKeys":[],"outputKeys":[],"timeoutPolicy":"TIME_OUT_WF","retryCount":3,"retryLogic":"FIXED","retryDelaySeconds":5,"inputTemplate":{},"rateLimitPerFrequency":0,"rateLimitFrequencyInSeconds":1}]'
 ```
 
-### Example using node fetch
+Here's the JSON in the curl body (for better readability):
 
+```json
+{
+  "createdBy":"user",
+  "name":"sample_task_name_1",
+  "description":"This is a sample task for demo","responseTimeoutSeconds":10,
+  "timeoutSeconds":30,
+  "inputKeys":[],
+  "outputKeys":[],
+  "timeoutPolicy":"TIME_OUT_WF",
+  "retryCount":3,
+  "retryLogic":"FIXED",
+  "retryDelaySeconds":5,
+  "inputTemplate":{},
+  "rateLimitPerFrequency":0,
+  "rateLimitFrequencyInSeconds":1
+}
+```
+
+### Example using node fetch
+>Note that all the quotes in the body must be escaped.
+ 
 ```javascript
 fetch("http://localhost:8080/api/metadata/taskdefs", {
     "headers": {

@@ -4,6 +4,12 @@ sidebar_position: 1
 
 # Updating Workflow Definitions
 
+The easiest way to update a workflow is via the Conductor UI. Select a workflow from the workflow definitions list and edit the JSON directly in the browser. Press save when you have completed your edits, and the diagram will update accordingly.
+
+![updating a workflow via the UI](/img/workflow_update.jpg)
+
+## Via API
+
 Workflows can be created or updated using the workflow metadata API
 
 ```html

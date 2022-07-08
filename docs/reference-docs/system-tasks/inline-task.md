@@ -7,7 +7,7 @@ sidebar_position: 11
 ```json
 "type": "INLINE"
 ```
-### Introduction
+## Introduction
 
 Inline Task helps execute necessary logic at Workflow run-time,
 using an evaluator. There are two supported evaluators as of now:
@@ -17,13 +17,13 @@ using an evaluator. There are two supported evaluators as of now:
 | value-param | Use a parameter directly as the value |
 | javascript | Evaluate Javascript expressions and compute value |
 
-### Use Cases
+## Use Cases
 
 Consider a scenario, we have to run simple evaluations in
 Conductor server while creating Workers. Inline task can be used to run these
 evaluations using an evaluator engine.
 
-### Configuration
+## Configuration
 ```json
 {
   "name": "inline_task_example",
@@ -53,3 +53,6 @@ to evaluate.
 The task output can then be referenced in downstream tasks 
 like: `"${inline_test.output.result}"`
 
+## Examples in Codelabs
+
+* [Task to Domain A/B testing](/content/docs/codelab/taskToDomain#ab-with-an-inline-task) - This workflow uses a the JavaScript `Math.random()` to decide an outcome - either send the next task to the main worker, or to the worker named 'Doug.'

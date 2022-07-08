@@ -37,3 +37,6 @@ curl 'http://localhost:8080/api/tasks/queue/polldata?taskType=<TASK_NAME>' \
 ```
 
 > Replace `<TASK_NAME>` with your task name
+
+
+>Note this page will show you all of the [task to domain](task-domains) configured for your tasks.
