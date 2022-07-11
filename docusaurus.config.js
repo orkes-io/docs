@@ -152,6 +152,7 @@ const config = {
                 docs: {
                     sidebarPath: require.resolve('./sidebars.js'),
                     editUrl: 'https://github.com/orkes-io/docs/edit/main/',
+                   // hideable: true
                 },
                 blog: {
                     path: './blog',
@@ -170,6 +171,7 @@ const config = {
     ],
 
     themeConfig:
+
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
         ({
             colorMode: {
@@ -299,6 +301,7 @@ const config = {
                 // Optional: Algolia search parameters
                 // searchParameters: {},
             },
+           
         }),
 };
 
