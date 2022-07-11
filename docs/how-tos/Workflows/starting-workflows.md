@@ -30,7 +30,7 @@ curl 'https://localhost:8080/api/workflow/sample_workflow' \
 ```
 
 In this example we are specifying one input param called `service` with a value of `fedex` and the name of the workflow
-is `sample_workflow`
+is `sample_workflow`.
 
 ### Example using node fetch
 

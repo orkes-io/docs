@@ -152,6 +152,7 @@ const config = {
                 docs: {
                     sidebarPath: require.resolve('./sidebars.js'),
                     editUrl: 'https://github.com/orkes-io/docs/edit/main/',
+                   // hideable: true
                 },
                 blog: {
                     path: './blog',
@@ -170,6 +171,7 @@ const config = {
     ],
 
     themeConfig:
+
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
         ({
             colorMode: {
@@ -193,15 +195,15 @@ const config = {
                         position: 'left',
                         label: 'Getting Started',
                     },
-                    {
+                    /*{
                         type: 'doc',
                         docId: 'how-tos',
                         position: 'left',
                         label: 'How-Tos',
-                    },
+                    },*/
                     {
                         type: 'doc',
-                        docId: 'reference-docs',
+                        docId: 'getting-started/concepts/concepts-overview',
                         position: 'left',
                         label: 'Reference Docs',
                     },
@@ -299,6 +301,7 @@ const config = {
                 // Optional: Algolia search parameters
                 // searchParameters: {},
             },
+           
         }),
 };
 
