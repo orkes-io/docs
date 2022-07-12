@@ -411,7 +411,11 @@
                         label: 'Extending Conductor',
                         collapsed: true,
                         items: [
+<<<<<<< HEAD
                             'Conductor/adding-datadog'
+=======
+                            'conductor/adding-datadog'
+>>>>>>> 589fae707c5d1b4b4fbafc5d45e2e6fbd6ee814b
                         ],
                     },
                     {   type: 'doc', 

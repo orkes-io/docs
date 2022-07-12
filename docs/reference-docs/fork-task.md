@@ -13,6 +13,10 @@ A Fork operation lets you run a specified list of other tasks or sub workflows i
 followed by a join operation that waits on the forked tasks or sub workflows to finish. The `JOIN`
 task also collects outputs from each of the forked tasks or sub workflows.
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 589fae707c5d1b4b4fbafc5d45e2e6fbd6ee814b
 <p align="center"><img src="/content/img/simple_fork.jpg" alt="a simple fork diagram" width="400" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
 ## Use Cases
