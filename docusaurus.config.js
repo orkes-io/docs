@@ -193,15 +193,15 @@ const config = {
                         position: 'left',
                         label: 'Getting Started',
                     },
-                    {
+                   /* {
                         type: 'doc',
                         docId: 'how-tos',
                         position: 'left',
                         label: 'How-Tos',
-                    },
+                    },*/
                     {
                         type: 'doc',
-                        docId: 'reference-docs',
+                        docId: 'getting-started/concepts/concepts-overview',
                         position: 'left',
                         label: 'Reference Docs',
                     },
