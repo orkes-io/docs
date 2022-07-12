@@ -1,4 +1,5 @@
 ---
+displayed_sidebar: mainSidebar
 sidebar_position: 1
 ---
 
