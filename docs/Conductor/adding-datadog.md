@@ -14,7 +14,7 @@ We'll start with the assumption that Conductor is currently running on your syst
 1. First, we will add the metrics dependency to the `server/build.gradle` file.  
 
 ```java
-     implementation 'com.netflix.conductor:conductor-metrics:3.9.0'
+     implementation 'com.netflix.conductor:conductor-metrics:3.10.0'
 ```
 2. Update the `application.properties` file with the datadog parameters.  This can be found in `server/src/main/resources`.  There are already a few Datadog entries here, but let's just fully replace then with the following:
 
