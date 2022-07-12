@@ -179,6 +179,10 @@ pre code {
 
 }
 
+.navbar-sidebar {
+  height:976px;
+}
+
 .navbar__brand {
   font-size: 18px;
   margin-top: 2px;
