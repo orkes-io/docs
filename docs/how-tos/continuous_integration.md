@@ -2,7 +2,7 @@
 sidebar_position: 4
 ---
 
-# Continuous Integration Continuous Deployment
+# CI/CD with Github Actions
 
 Continuous Integration Continuous Deployment (CI/CD) is the concept of frequently updating your code, and pushing the updates into production immediately.
 

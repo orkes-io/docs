@@ -2,9 +2,9 @@
 sidebar_position: 1
 ---
 
-# Debugging Workflows
+# Troubleshooting Workflows
 
-Conductor UI is a tool that we can leverage for debugging issues. Refer to the following articles to search and view
+Conductor UI is a tool that we can leverage for troubleshooting issues with workflows. Refer to the following articles to search and view
 your workflow execution.
 
 1. [Searching Workflows](/content/docs/how-tos/Workflows/searching-workflows)

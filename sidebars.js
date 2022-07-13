@@ -88,48 +88,53 @@
                 }
             ]
         },
-        {
-            type: 'category',
-            label: 'Writing Workers',
-            collapsed: true,
-            items: [   
-                {   type: 'doc', 
-                id: 'how-tos/sdks/java-sdk/worker_sdk',
-                label:"Java Worker SDK"},
-                {   type: 'doc', 
-                id: 'how-tos/sdks/conductor-go/main/docs/worker',
-                label:"Go Worker SDK"},
-                {   type: 'doc', 
-                id: 'how-tos/sdks/conductor-python/main/README',
-                label:"Python Worker SDK"}, 
-            ],
-        },
-        {
-            type: 'category',
-            label: 'Retries, Failures and Rate Limits',
-            collapsed: true,
-            items: [   
-                {   type: 'doc', 
-                id: 'how-tos/sdks/java-sdk/worker_sdk',
-                label:"Java Worker SDK"},
-                {   type: 'doc', 
-                id: 'how-tos/sdks/conductor-go/main/docs/worker',
-                label:"Go Worker SDK"},
-                {   type: 'doc', 
-                id: 'how-tos/sdks/conductor-python/main/README',
-                label:"Python Worker SDK"}, 
-            ],
-        },
+        'how-tos/Workers/why-create-workers',
+        
         'reference-docs/scheduler',
-        {   type: 'doc', 
-             id: 'how-tos/Workflows/debugging-workflows',
-            label:"Troubleshooting Workflows"
-        },
         {   type: 'doc', 
         id: 'getting-started/concepts/access-control',
        label:"Secure with Access Control"
         },
-
+        {   type: 'doc', 
+             id: 'how-tos/Workflows/debugging-workflows',
+            label:"Troubleshooting Workflows"
+        },
+        'how-tos/Workflows/workflow-retries-failures-rate_limits',
+        'how-tos/continuous_integration',
+        {
+                        
+            type: 'category',
+            label: 'SDK list',
+            collapsed: true,
+            items: [
+                {
+                    type:'doc',
+                    id:  'how-tos/SDKs',
+                    label:'SDKs'
+                },
+                {   type: 'doc', 
+                    id: 'how-tos/sdks/java-sdk/workflow_sdk',
+                    label:"Java Workflow SDK"},
+                {   type: 'doc', 
+                    id: 'how-tos/sdks/java-sdk/worker_sdk',
+                    label:"Java Worker SDK"},
+                {   type: 'doc', 
+                    id: 'how-tos/sdks/java-sdk/testing_framework',
+                    label:"Java Unit Testing"},
+                {   type: 'doc', 
+                    id: 'how-tos/sdks/conductor-python/main/README',
+                    label:"Python"},
+                {   type: 'doc', 
+                    id: 'how-tos/sdks/conductor-go/main/README',
+                    label:"Go"},
+                {   type: 'doc', 
+                    id: 'how-tos/sdks/conductor-csharp/main/README',
+                    label:"CSharp"},
+                {   type: 'doc', 
+                    id: 'how-tos/sdks/conductor-clojure/main/README',
+                    label:"Clojure"}
+             ],
+        },
         {
             type: 'category',
             label: 'Code Labs',
