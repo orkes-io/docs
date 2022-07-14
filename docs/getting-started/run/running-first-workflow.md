@@ -132,13 +132,7 @@ If the link doesn’t open to the correct Swagger section, we can navigate to `M
 
 You should see a 200 response that the API call was successful.
 
-
-
-
-
-
-
-  </TabItem>
+</TabItem>
 </Tabs>
 
 We are now ready to run the workflow!
@@ -203,14 +197,6 @@ different tabs to see all inputs and outputs and task list etc. Explore away!
 
 ![Conductor UI - Workflow Run](/img/tutorial/workflowLoaded.png)
 
-## Summary
 
-In this blog post — we learned how to run a sample workflow in our Conductor installation. Concepts we touched on:
 
-1. Workflow creation
-2. System tasks such as HTTP
-3. Running a workflow via API
-
-Thank you for reading, and we hope you found this helpful. Please feel free to reach out to us for any questions and we
-are happy to help in any way we can.
-
+The concludes the tutorial. Feel free to explore the codelabs and other tutorials to try additional features of Conductor.
