@@ -13,8 +13,9 @@
     mainSidebar: [
         {   type: 'doc', 
             id: 'introduction',
-            label:"What is Conductor?"
+            label:"Introduction to Conductor"
         },
+<<<<<<< HEAD
         {
             type: 'category',
             label: 'Use Cases',
@@ -31,28 +32,30 @@
                 ]
         },
         
+=======
+>>>>>>> bdf9e6b5a7d0bf83da199600f9de37533414f63e
         {
             type: 'category',
-            label: 'Quick Start',
+            label: 'Use Cases',
             collapsed: true,
             items: [
-                {
-                    type: 'category',
-                    label: 'Core Concepts',
-                    collapsed: false,
-                    items: [
-                       'getting-started/concepts/workflows',
-                       'getting-started/concepts/tasks-and-workers',
-                       'getting-started/concepts/operators',
-                       
-                    ],
-                },
-                'getting-started/run/running-first-workflow'
-            ],
+                'usecases/image_processing/README',
+                'usecases/video_processing/README',
+                'usecases/US_post_office/README',
+                'usecases/workflow_AB_testing/README',
+                'usecases/finance/README',
+                'usecases/document_approvals/README',
+                'usecases/Simple_ETL/README'
+                ]
+        },
+        {
+            type: 'doc',
+            id: 'getting-started/concepts/workflows',
+            label: 'Workflow Concepts'
         },
         {
             type: 'category',
-            label: 'Installing Conductor',
+            label: 'Quickstart',
             collapsed: true,
             items: [
                'getting-started/playground/using-conductor-playground',
@@ -65,16 +68,23 @@
             collapsed: true,
             items: [
                 {   type: 'doc', 
-                id: 'codelab/sequentialHTTPtasks',
+                id: 'codelab/simple',
                 label:"Simple Two task workflow"
+                },
+                {   type: 'doc',
+                    id: 'codelab/decision',
+                    label:"Workflow with Decision"
+                },
+                {   type: 'doc',
+                    id: 'codelab/advance',
+                    label:"Loops and Parallel Execution"
                 },
                 {
                     type: 'category',
                     label: 'Pre-built System Tasks',
                     collapsed: false,
                     items: [
-                        'getting-started/concepts/system-tasks',
-                        {   type: 'doc', 
+                        {   type: 'doc',
                             id: 'reference-docs/system-tasks/json-jq-transform-task',
                             label:"Process JSON with JQ"
                          },
@@ -104,7 +114,6 @@
             ]
         },
         'how-tos/Workers/why-create-workers',
-        
         'reference-docs/scheduler',
         {   type: 'doc', 
         id: 'getting-started/concepts/access-control',
@@ -169,6 +178,7 @@
                 
             ],
         },
+<<<<<<< HEAD
         
         {
             type: 'category',
@@ -178,16 +188,39 @@
                 
                   // 'getting-started/concepts/concepts-overview',
                    
+=======
+
+    ],
+    orderfulfillment: [
+        {items : [
+            'codelab/orderfulfillment',
+            'codelab/orderfulfillment2',
+            'codelab/orderfulfillment3',
+            'codelab/orderfulfillment4',
+            'codelab/orderfulfillment5',
+            'codelab/orderfulfillment5_5',
+            'codelab/orderfulfillment6',
+            'codelab/orderfulfillment7',
+            'codelab/orderfulfillment8'
+        ]}
+    ],
+
+    reference: [
+        'introduction',
+        {
+            type:'category',
+            label:'Reference Documentation',
+            collapsed:false,
+            items:[
+
+                   'getting-started/concepts/concepts-overview',
+
+>>>>>>> bdf9e6b5a7d0bf83da199600f9de37533414f63e
                    {
                     type: 'category',
                     label: 'Workflows',
                     collapsed: true,
                     items: [
-                        {
-                            type:'doc',
-                            id:'getting-started/concepts/workflows',
-                            label:'Workflow Introduction'
-                        },
                         'how-tos/Workflows/create-workflow',
                         'how-tos/Workflows/updating-workflows',
                         'how-tos/Workflows/versioning-workflows',
@@ -195,79 +228,14 @@
                         'how-tos/Workflows/schedule-workflow',
                         'how-tos/Workflows/view-workflow-executions',
                         'how-tos/Workflows/searching-workflows',
-                        'how-tos/Workflows/debugging-workflows',
                         'how-tos/Workflows/handling-errors',
 
                     ],
                     },
-                   
+
+
                     {
-                        type: 'category',
-                        label: 'Task and Workers',
-                        collapsed: true,
-                        items: [
-                            {
-                                type:'doc',
-                                id:'getting-started/concepts/tasks-and-workers',
-                                label:'Task and Worker Introduction'
-                            },
-                           
-                            {
-                                type:'category',
-                                label:'System Task Reference',
-                                collapsed:true,
-                                items:[
-                                    {
-                                        type:'doc',
-                                        id:   'getting-started/concepts/system-tasks',
-                                        label:'System Task Introduction'
-                                    },
-                                    {
-                                        type: 'autogenerated',
-                                        dirName: 'reference-docs/system-tasks', // generate sidebar from the docs folder (or versioned_docs/<version>)
-                                      },
-                                ],
-                            },
-                            'how-tos/Tasks/extending-system-tasks',
-                            
-                            {
-                                type:'category',
-                                label:'Operator Reference',
-                                collapsed:true,
-                                items:[
-                                    {
-                                        type:'doc',
-                                        id:  'getting-started/concepts/operators',
-                                        label:'Operator Introduction'
-                                    },
-                                    'reference-docs/switch-task',
-                                    'reference-docs/do-while-task',
-                                    'reference-docs/fork-task',
-                                    'reference-docs/dynamic-fork-task',
-                                    'reference-docs/join-task',
-                                    'reference-docs/wait-task',
-                                    'reference-docs/human-task',
-                                    'reference-docs/dynamic-task',
-                                    'reference-docs/terminate-task',
-                                    'reference-docs/set-variable-task',
-                                    'reference-docs/sub-workflow-task',
-                                ],
-                            },
-                            'how-tos/Tasks/creating-tasks',
-                            'how-tos/Tasks/updating-tasks',
-                            'how-tos/Tasks/reusing-tasks',
-                            'how-tos/Tasks/task-configurations',
-                            'how-tos/Tasks/task-inputs',
-                            'how-tos/Tasks/monitoring-task-queues',
-                            'how-tos/Tasks/task-domains',
-                            'how-tos/Tasks/task-lifecycle',
-                            'how-tos/Tasks/dynamic-vs-switch-tasks',
-                            'how-tos/Tasks/SQS-event-task'
-                        ],
-                    },
-                  
-                    {
-                        
+
                         type: 'category',
                         label: 'SDK list',
                         collapsed: true,
@@ -277,31 +245,31 @@
                                 id:  'how-tos/SDKs',
                                 label:'SDKs'
                             },
-                            {   type: 'doc', 
+                            {   type: 'doc',
                                 id: 'how-tos/sdks/java-sdk/workflow_sdk',
                                 label:"Java Workflow SDK"},
-                            {   type: 'doc', 
+                            {   type: 'doc',
                                 id: 'how-tos/sdks/java-sdk/worker_sdk',
                                 label:"Java Worker SDK"},
-                            {   type: 'doc', 
+                            {   type: 'doc',
                                 id: 'how-tos/sdks/java-sdk/testing_framework',
                                 label:"Java Unit Testing"},
-                            {   type: 'doc', 
+                            {   type: 'doc',
                                 id: 'how-tos/sdks/conductor-python/main/README',
                                 label:"Python"},
-                            {   type: 'doc', 
+                            {   type: 'doc',
                                 id: 'how-tos/sdks/conductor-go/main/README',
                                 label:"Go"},
-                            {   type: 'doc', 
+                            {   type: 'doc',
                                 id: 'how-tos/sdks/conductor-csharp/main/README',
                                 label:"CSharp"},
-                            {   type: 'doc', 
+                            {   type: 'doc',
                                 id: 'how-tos/sdks/conductor-clojure/main/README',
                                 label:"Clojure"}
                          ],
                     },
                     {
-                        
+
                         type: 'category',
                         label: 'Events',
                         collapsed: true,
@@ -323,6 +291,7 @@
                                 },
                         ],
                     },
+<<<<<<< HEAD
                //This is redundant     'reference-docs/scheduler',
                     {
                         type: 'category',
@@ -343,12 +312,19 @@
                         ],
                     },
                     {   type: 'doc', 
+=======
+                    {   type: 'doc',
+>>>>>>> bdf9e6b5a7d0bf83da199600f9de37533414f63e
                         id: 'how-tos/continuous_integration',
                         label:'CI/CD'},
-                    
+
                     'reference-docs/directed-acyclic-graph'
+<<<<<<< HEAD
   
           
+=======
+
+>>>>>>> bdf9e6b5a7d0bf83da199600f9de37533414f63e
             ],
         }
 
@@ -368,5 +344,10 @@
         ]}
     ],
 
+<<<<<<< HEAD
  
+=======
+
+        ]
+>>>>>>> bdf9e6b5a7d0bf83da199600f9de37533414f63e
 };
