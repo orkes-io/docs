@@ -14,9 +14,7 @@
         {   type: 'doc', 
             id: 'introduction',
             label:"Introduction to Conductor"
-        },
-
-        
+        },    
         {
             type: 'category',
             label: 'Use Cases',
@@ -40,7 +38,8 @@
                 'getting-started/concepts/workflows',
                 'getting-started/concepts/tasks-and-workers',
                 'getting-started/concepts/operators',
-                'getting-started/run/running-first-workflow'
+                'getting-started/run/running-first-workflow',
+                'faq',
                 
             ],
             
@@ -290,10 +289,10 @@
                             'Conductor/adding-datadog'
                         ],
                     },
-                    {   type: 'doc', 
+               /*     {   type: 'doc', 
                         id: 'how-tos/continuous_integration',
                         label:'CI/CD'},
-
+                */
                     'reference-docs/directed-acyclic-graph'
   
           
