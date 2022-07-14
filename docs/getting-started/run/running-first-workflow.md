@@ -166,7 +166,13 @@ The workflowID will appear. Click this to open the execution diagram of your wor
 
 </TabItem>
 <TabItem value="API">
-The endpoint to run a workflow is `POST /api/workflow/{name}`:
+
+The endpoint to run a workflow is: 
+
+```bash
+POST /api/workflow/<WorkflowName>
+
+```
 
 * Orkes Playground: [https://play.orkes.io/swagger-ui/index.html?configUrl=/api-docs/swagger-config#/workflow-resource/startWorkflow_1](https://play.orkes.io/swagger-ui/index.html?configUrl=/api-docs/swagger-config#/workflow-resource/startWorkflow_1)
 
