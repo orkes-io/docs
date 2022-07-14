@@ -177,7 +177,7 @@
             collapsed: true,
             items:[
                 
-                  // 'getting-started/concepts/concepts-overview',
+                   'reference-docs',
                    
                    {
                     type: 'category',
@@ -195,8 +195,24 @@
 
                     ],
                     },
-
-
+                    {
+                        type: 'category',
+                        label: 'Tasks',
+                        collapsed: true,
+                        items: [
+                            'how-tos/Tasks/creating-tasks',
+                            'how-tos/Tasks/updating-tasks',
+                            'how-tos/Tasks/reusing-tasks',
+                            'how-tos/Tasks/task-domains',
+                            'how-tos/Tasks/task-lifecycle',
+                            'how-tos/Tasks/task-timeouts',
+                            'how-tos/Tasks/extending-system-tasks',
+                            'how-tos/Tasks/task-inputs',
+                            'how-tos/Tasks/monitoring-task-queues',
+                            'how-tos/Tasks/SQS-event-task',
+                        ],
+                        },
+                    /*
                     {
 
                         type: 'category',
@@ -231,6 +247,7 @@
                                 label:"Clojure"}
                          ],
                     },
+                    */
                     {
 
                         type: 'category',

@@ -201,7 +201,7 @@ const config = {
                     },*/
                     {
                         type: 'doc',
-                        docId: 'getting-started/concepts/concepts-overview',
+                        docId: 'reference-docs',
                         position: 'left',
                         label: 'Reference Docs',
                     },

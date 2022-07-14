@@ -3,14 +3,16 @@ sidebar_position: 1
 ---
 # Conductor Playground
 
+## TL;dr
+
+To get started in Orkes Playground, go to [https://play.orkes.io](https://play.orkes.io) and create a free account!
 
 ## What is Conductor Playground?
-[Conductor Playground](https://play.orkes.io) is a free developer environment for developers to try out and learn more about Conductor. It is fully hosted by Orkes and is run as a multi-tenant cluster. Developers should use playground for getting familiarized with what Conductor offers, and is *NOT* intended to run production Conductor workflows.  For running Conductor orchestration & workflows in production one can:
+[Conductor Playground](https://play.orkes.io) is a free developer environment for developers to try out and learn more about Conductor. It is fully hosted by Orkes and is run as a multi-tenant cluster. Developers should use playground for getting familiarized with what Conductor offers, and is *NOT* intended to run production Conductor workflows.  For running Conductor orchestration & workflows in production we recommend:
 
 * Use [Orkes Cloud](https://orkes.io/cloud/) for a fully managed and hosted Conductor cluster deployed to your cloud. It comes with free and paid plans!
 * Install and use the open source [Conductor](../install/running-locally).
 
-The workflows that you create and execute will generally be persisted in the Playground so that when you come back next time, you can continue where you left off. Having said that, Playground doesn't offer any SLA on availability of the service or the data contained in it, and is therefore not suited for production use.
 
 
 ## Logging in to Conductor Playground
