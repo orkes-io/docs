@@ -15,7 +15,6 @@
             id: 'introduction',
             label:"Introduction to Conductor"
         },
-<<<<<<< HEAD
         {
             type: 'category',
             label: 'Use Cases',
@@ -32,8 +31,6 @@
                 ]
         },
         
-=======
->>>>>>> bdf9e6b5a7d0bf83da199600f9de37533414f63e
         {
             type: 'category',
             label: 'Use Cases',
@@ -178,7 +175,6 @@
                 
             ],
         },
-<<<<<<< HEAD
         
         {
             type: 'category',
@@ -188,34 +184,6 @@
                 
                   // 'getting-started/concepts/concepts-overview',
                    
-=======
-
-    ],
-    orderfulfillment: [
-        {items : [
-            'codelab/orderfulfillment',
-            'codelab/orderfulfillment2',
-            'codelab/orderfulfillment3',
-            'codelab/orderfulfillment4',
-            'codelab/orderfulfillment5',
-            'codelab/orderfulfillment5_5',
-            'codelab/orderfulfillment6',
-            'codelab/orderfulfillment7',
-            'codelab/orderfulfillment8'
-        ]}
-    ],
-
-    reference: [
-        'introduction',
-        {
-            type:'category',
-            label:'Reference Documentation',
-            collapsed:false,
-            items:[
-
-                   'getting-started/concepts/concepts-overview',
-
->>>>>>> bdf9e6b5a7d0bf83da199600f9de37533414f63e
                    {
                     type: 'category',
                     label: 'Workflows',
@@ -291,7 +259,6 @@
                                 },
                         ],
                     },
-<<<<<<< HEAD
                //This is redundant     'reference-docs/scheduler',
                     {
                         type: 'category',
@@ -312,19 +279,12 @@
                         ],
                     },
                     {   type: 'doc', 
-=======
-                    {   type: 'doc',
->>>>>>> bdf9e6b5a7d0bf83da199600f9de37533414f63e
                         id: 'how-tos/continuous_integration',
                         label:'CI/CD'},
 
                     'reference-docs/directed-acyclic-graph'
-<<<<<<< HEAD
   
           
-=======
-
->>>>>>> bdf9e6b5a7d0bf83da199600f9de37533414f63e
             ],
         }
 
@@ -344,10 +304,5 @@
         ]}
     ],
 
-<<<<<<< HEAD
  
-=======
-
-        ]
->>>>>>> bdf9e6b5a7d0bf83da199600f9de37533414f63e
 };
