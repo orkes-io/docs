@@ -1,5 +1,5 @@
 ---
-displayed_sidebar: reference
+#displayed_sidebar: reference
 sidebar_position: 1
 ---
 
