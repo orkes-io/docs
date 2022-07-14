@@ -15,21 +15,7 @@
             id: 'introduction',
             label:"Introduction to Conductor"
         },
-        {
-            type: 'category',
-            label: 'Use Cases',
-            collapsed: true,
-            items: [
-                'example_usecases',
-                'usecases/image_processing/README',
-                'usecases/video_processing/README',
-                'usecases/US_post_office/README',
-                'usecases/workflow_AB_testing/README',
-                'usecases/finance/README',
-                'usecases/document_approvals/README',
-                'usecases/Simple_ETL/README'
-                ]
-        },
+
         
         {
             type: 'category',
@@ -45,10 +31,19 @@
                 'usecases/Simple_ETL/README'
                 ]
         },
+    
         {
-            type: 'doc',
-            id: 'getting-started/concepts/workflows',
-            label: 'Workflow Concepts'
+            type: 'category',
+            label: 'Core Concepts',
+            collapsed: false,
+            items: [
+                'getting-started/concepts/workflows',
+                'getting-started/concepts/tasks-and-workers',
+                'getting-started/concepts/operators',
+                'getting-started/run/running-first-workflow'
+                
+            ],
+            
         },
         {
             type: 'category',
