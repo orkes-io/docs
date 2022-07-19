@@ -7,7 +7,7 @@ sidebar_position: 1
 ## Worker
 A worker is responsible for executing a task.  Operator and System tasks are handled by the Conductor server.  User defined tasks need to have a worker running in a different environment.  This worker will poll Conductor's task queue to see if it has any work scheduled by the server.
 
-Workers can be implemented in any language, and Conductor's [SDKs](content/docs/how-tos/SDKs) provide support for worker framework that provides features such as polling threads, metrics and server communication that makes creating workers easy.
+Workers can be implemented in any language, and Conductor's [SDKs](/content/docs/how-tos/SDKs) provide support for worker framework that provides features such as polling threads, metrics and server communication that makes creating workers easy.
 
 Each worker embodies Microservice design pattern and follows certain basic principles:
 
