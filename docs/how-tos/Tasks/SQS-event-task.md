@@ -137,7 +137,7 @@ Both task_1 and task_2 are IN_PROGRESS.
 
 <p align="center"><img src="/content/img/sqs_workflow_task2_complete.jpg" alt="wait task complete sqs task about to fire" width="500" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
-Once the WAIT poll task completes task_2, the SQS task fires, and sends a message to AWS.  Ypu can poll for messages in your SQS queue (in your queue - click "send/receive messages" and there is a "poll for tasks" button), and see the message pass through:
+Once the WAIT poll task completes task_2, the SQS task fires, and sends a message to AWS.  You can poll for messages in your SQS queue (in your queue - click "send/receive messages" and there is a "poll for tasks" button), and see the message pass through:
 
 <p align="center"><img src="/content/img/sqs_workflow_message_queue.jpg" alt="SQS message arriving at AWS on it's way to task_1" width="800" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 

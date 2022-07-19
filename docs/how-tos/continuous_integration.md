@@ -40,6 +40,17 @@ curl -X PUT "https://play.orkes.io/api/taskdefs/workflow?overwrite=true" \
  -d "<your Task JSON>"
 ```
 
+### Updating Workflows/tasks
+
+When a workflow is updated Conductor undertakes the following logic:
+
+<p align="center"><img src="/content/img/cicd_logic.jpg" alt="Conductor's logic on updating a workflow" width="600" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+
+* If the current version is unchanged - nothing happens
+* If there is a change:
+  * If a new version - update
+  * If an existing version - only update if overwrite=true
+
 ## CI/CD with Github Actions
 
 Continuous Integration Continuous Deployment (CI/CD) is the concept of frequently updating your code, and pushing the updates into production immediately.
