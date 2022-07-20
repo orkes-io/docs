@@ -11,6 +11,8 @@ In this example, we will:
 
 In this way, this example follows the path of an SQS message from creation in Conductor to AWS, and then back into Conductor.
 
+<p align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/elWdV6eezlc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
+
 ## Configuring Conductor for SQS
 
 In your instance of Conductor, we will need to edit a few configurations:

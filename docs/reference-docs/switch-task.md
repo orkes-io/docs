@@ -8,6 +8,9 @@ sidebar_position: 1
 "type" : "SWITCH"
 ```
 ## Introduction
+
+<p align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/EpzdGDMSYYA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
+
 A switch task is similar to `case...switch` statement in a programming language. The `switch` expression, is
 a configuration on the `SWITCH` task type. Currently, two evaluators are supported:
 

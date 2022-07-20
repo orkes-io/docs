@@ -15,6 +15,8 @@ An HTTP task is useful when you have a requirements such as
 1. Making calls to another service that exposes an API via HTTP
 2. Fetch any resource or data present on an endpoint
 
+<p align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/ib-L46fwujE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
+
 ## Use Cases
 
 If we have a scenario where we need to make an HTTP call into another service, we can make use of HTTP tasks. You can

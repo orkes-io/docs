@@ -9,6 +9,10 @@ We can use the scheduler for use cases such as:
 * Running a workflow at a cadence between a fixed start date and end date
 * Running the workflow once at a future date
 
+
+<p align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/S5Ya4BP7wRk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
+
+
 ## Creating a Schedule
 
 Conductor offers a configuration UI to create and manage a schedule. Alternatively we can create one via the API.

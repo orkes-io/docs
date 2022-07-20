@@ -11,6 +11,8 @@ sidebar_position: 1
 Set Variable allows us to set workflow variables by creating or updating them
 with new values.
 
+
+<p align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/kR2OI8eHri0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
 ### Use Cases
 
 Variables can be initialized in the workflow definition as well as during
