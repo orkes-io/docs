@@ -192,13 +192,13 @@ const config = {
                         docId: 'introduction',
                         position: 'left',
                         label: 'Getting Started',
-                    },
+                    },/*
                     {
                         type: 'doc',
                         docId: 'how-tos',
                         position: 'left',
                         label: 'How-Tos',
-                    },
+                    },*/
                     {
                         type: 'doc',
                         docId: 'reference-docs',

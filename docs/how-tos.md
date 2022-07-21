@@ -31,7 +31,7 @@ Popular Topics
 
 ## Events
 
-1. [Receiving events from AWS SQS message Queues.](content/docs/how-tos/Events/sqs_events)
+1. [Receiving events from AWS SQS message Queues.](/content/docs/how-tos/Events/sqs_events)
 
 
 

@@ -10,6 +10,8 @@ sidebar_position: 1
 Task that can terminate a workflow with a given status and modify the workflow's output with a given parameter, 
 it can act as a `return` statement for conditions where you simply want to terminate your workflow. 
 
+<p align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/FdH0nSgtc0Q" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
+
 ## Use Cases
 Use it when you want to terminate the workflow without continuing the execution.  
 For example, if you have a decision where the first condition is met, you want to execute some tasks, 

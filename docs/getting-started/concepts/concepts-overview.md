@@ -12,7 +12,7 @@ Tasks are executed by Workers that run outside of the Conductor server deploymen
 
 Workers can run on bare metal, on containers, VMs, or as serverless functions.  
 
-Conductor also provides pre-built workers for most commonly used tasks called [system tasks](/content/docs/getting-started/system-tasks).
+Conductor also provides pre-built workers for most commonly used tasks called [system tasks](/content/docs/getting-started/concepts/system-tasks).
 
 
 ## A sample workflow

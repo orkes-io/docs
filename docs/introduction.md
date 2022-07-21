@@ -1,47 +1,39 @@
 ---
+displayed_sidebar: mainSidebar
 sidebar_position: 1
 ---
 
-# Getting Started
-### What is Conductor?
-Conductor is a microservice and workflow orchestration engine.
+# What is Conductor?
+Conductor is a platform originally developed at Netflix to orchestrate workflows that span across microservices.
+
 Conductor allows developers to build stateful applications using simple, 
 stateless code without having to manage the state and complexities of building a distributed application.
 Conductor is cloud native and scales seamlessly as your workload grows.
 
-Read our [What is Conductor?](https://orkes.io/what-is-conductor/) page for even more details on how Conductor works.
+Conductor is an open-source, **Apache 2.0** licensed workflow orchestration framework. 
+You can use Conductor to easily build highly reliable distributed applications using the language of your choice.
 
-### How to run Conductor?
-[Short Tutorial on Running Conductor locally](getting-started/install/running-locally)
+Conductor removes the complexities of maintaining and propagating the state of the execution while increasing the robustness of the application by natively supporting retries and error handling scenarios. That way you can focus on coding the business logic of your application instead of the complexities of building the distributed ecosystem.
 
-### What use cases can Conductor solve?
+# What use cases can Conductor solve?
 
 Conductor is a general-purpose orchestration engine that is language agnostic and has been adopted widely across
 multiple industries, ranging from Media to security to finance and more. Some of the common use cases that have been
 solved by Conductor are:
 
-1. Media Processing Pipelines (Image Processing, Video Transcoding, etc..)
-2. Security and Threat detection workflows
-3. Order Management workflows
-4. Financial transactions
-5. Distributed Transactions
-6. Human-centric business process automation
-7. Orchestrating Microservices (HTTP,  background services, etc.)
-8. Orchestrating business logic across various cloud functions (AWS Lambda, GCP functions, etc.)
-9. Infrastructure Provisioning
-10. CICD Pipelines
-11. Long running processes and workflows
-12. Monitoring
-13. Distributed Transactions
-14. Localization Pipelines
-15. Content Management and Publishing Workflows
-
-### What License does Conductor use?
-Netflix conductor is available under Apache 2.0 Open Source license.
-
-### How can I run Conductor in production?
-Conductor can be deployed using various backend (Redis, MySQL, Postgres), 
-and can be deployed in data centers as well as various clouds.
-  
-### What about scale?
-Conductor has been battle tested at Netflix at scale and uses Chaos engineering principles to build a robust, highly scalable system.
+1. Supply chain management
+2. Media Processing Pipelines (Image Processing, Video Transcoding, etc..)
+3. Security and Threat detection workflows
+4. Order Management workflows
+5. Financial transactions
+6. Distributed Transactions
+7. Human-centric business process automation
+8. Orchestrating Microservices (HTTP,  background services, etc.)
+9. Orchestrating business logic across various cloud functions (AWS Lambda, GCP functions, etc.)
+10. Infrastructure Provisioning
+11. CICD Pipelines
+12. Long running processes and workflows
+13. Monitoring
+14. Distributed Transactions
+15. Localization Pipelines
+16. Content Management and Publishing Workflows

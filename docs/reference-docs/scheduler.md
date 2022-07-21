@@ -1,4 +1,4 @@
-# Scheduler
+# Scheduling Workflows
 
 Sometimes, we need a workflow to run on a regular cadence. For such use cases we can use the Scheduler functionality that is provided by Conductor. Using a crontab expression, we can configure workflows to be triggered at any cadence as required. 
 
@@ -8,6 +8,10 @@ We can use the scheduler for use cases such as:
 * Running the same workflow at different cadences using different fixed inputs
 * Running a workflow at a cadence between a fixed start date and end date
 * Running the workflow once at a future date
+
+
+<p align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/S5Ya4BP7wRk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
+
 
 ## Creating a Schedule
 

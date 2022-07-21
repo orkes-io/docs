@@ -1,11 +1,11 @@
 ---
+displayed_sidebar: mainSidebar
 sidebar_position: 1
 ---
 
 # Reference Documentation
 
-Our reference documentation provides detailed information on the System tasks and Operators that can be run in Conductor:
-
+See the left navigation for all of the reference documentation for Netflix Conductor.
 
 ## System Tasks
 

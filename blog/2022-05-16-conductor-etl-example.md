@@ -6,7 +6,7 @@ tags: [Netflix Conductor, Orkes, Github, Orbit, JQ, ETL, 2022]
 image: https://orkes.io/content/img/blogassets/collaboration.jpg
 ---
 
-In our previous post on [Using Conductor to Parse Data](https://orkes.io/content/blog/simple-data-processing-with-conductor), we discussed a Netflix Conductor workflow that extracts data from GitHub, transforms it, and then uploads the results to Orbit.  This basically describes an ETL (Extract, Transform, Load) process - automated as a Conductor workflow.  In this post, we'll go in-depth as to how the workflow is constructed - examining what each task does.  This workflow will run daily at midnight GMT, ensuring that the data in our Orbit instance is always up to date with the data on GitHub.
+In our previous post on [Using Conductor to Parse Data](https://orkes.io/content/blog/data-processing-with-conductor), we discussed a Netflix Conductor workflow that extracts data from GitHub, transforms it, and then uploads the results to Orbit.  This basically describes an ETL (Extract, Transform, Load) process - automated as a Conductor workflow.  In this post, we'll go in-depth as to how the workflow is constructed - examining what each task does.  This workflow will run daily at midnight GMT, ensuring that the data in our Orbit instance is always up to date with the data on GitHub.
 
 <!-- truncate -->
 

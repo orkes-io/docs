@@ -2,7 +2,56 @@
 sidebar_position: 4
 ---
 
-# Continuous Integration Continuous Deployment
+# Workflow CI/CD
+
+## Using Conductor APIs For CI/CD
+
+With the COnductor APIs it is possible to utilize Continuous Integration/Continuous Deployment of your Conductor workflows and tasks.  This document will provide a rough outline of the API calls required to enable CI/CD into your Conductor server, and also has a full walkthrough of a CI/CD integration with GitHub Actions.
+
+## API Endpoints
+
+To use the API endpoints in Orkes Cloud, you'll need to first authenticate your [application](/content/docs/getting-started/concepts/access-control-applications).
+
+Once you have generated a token, the endpoints for automatically updating workflows and tasks are
+
+* `/api/metadata/workflow`
+* `/api/metadata/taskdefs`
+
+Assuming that the workflows and tasks already exist in your Conductor instance, the call will be a `PUT` to the endpoint.  The body of the request will be the JSON of your task or workflow.
+
+>NOTE: if you are updating a task, place the JSON for your workflow in an array `[]`.  For task updates, just the JSON is fine. 
+
+Example CURL command to update a workflow:
+
+```bash
+curl -X PUT "https://play.orkes.io/api/metadata/workflow?overwrite=true" \ 
+-H  "accept: */*" \
+-H  "X-Authorization: <token>" \
+-H  "Content-Type: application/json" \
+ -d "[<your Workflow JSON>]"
+```
+Example CURL command to update a Task:
+
+```bash
+curl -X PUT "https://play.orkes.io/api/taskdefs/workflow?overwrite=true" \ 
+-H  "accept: */*" \
+-H  "X-Authorization: <token>" \
+-H  "Content-Type: application/json" \
+ -d "<your Task JSON>"
+```
+
+### Updating Workflows/tasks
+
+When a workflow is updated Conductor undertakes the following logic:
+
+<p align="center"><img src="/content/img/cicd_logic.jpg" alt="Conductor's logic on updating a workflow" width="600" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+
+* If the current version is unchanged - nothing happens
+* If there is a change:
+  * If a new version - update
+  * If an existing version - only update if overwrite=true
+
+## CI/CD with Github Actions
 
 Continuous Integration Continuous Deployment (CI/CD) is the concept of frequently updating your code, and pushing the updates into production immediately.
 
@@ -12,13 +61,13 @@ Our GitHub repo can be found at https://github.com/orkes-io/workflowCICD.  Fork 
 
 <p align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/QN1Aa4bbsX4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
 
-## Creating the workflow
+### Creating the workflow
 
 We begin by manually creating a workflow in [Orkes Playground](https://play.orkes.io).  We choose ```Workflow Definitions```, and press the ```Define Workflow``` button.  We can paste in the contents of the ```suoer_weather_v1.json``` into the form, and save/confirm save the workflow.
 
 We now have a workflow in our Conductor server.  Now, we'll set up the CI/CD to update the workflow from GitHub.
 
-##  Access Control
+###  Access Control
 
 Our Conductor server is the [Orkes Playground](https://play.orkes.io) which has Access Control enabled (this is a feature of Orkes' Cloud, and not in the open source Conductor). If using the Open Source Conductor, skip this section.
 
@@ -36,7 +85,7 @@ Thirdly, we'll add a Workflow permission.  Click the ```+```, then choose workfl
 
 This establishes the Access Control required to update your Workflow.
 
-### GitHub Secrets
+#### GitHub Secrets
 
 The Github Action that updates the workflow will need to authenticate to the Playground.  To do this, we'll have to create Github Secrets.  On the Github page for the repository, Click ```Settings``` from the top menu bar.  Chose ```Secrets``` in the left navigation. Click Actions and create 2 ```New Repository Secrets```:  ```ORKES_WEATHER_KEY``` and ```ORKES_WEATHER_SECRET```.
 
@@ -44,7 +93,7 @@ The Github Action that updates the workflow will need to authenticate to the Pla
 
 Now we're ready to create the GitHub Action.
 
-## GitHub Action Basics
+### GitHub Action Basics
 
 Having never created a Github action, there are a number of templates one can begin with:
 
