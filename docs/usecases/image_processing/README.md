@@ -13,7 +13,7 @@ These workflows require workers that are a part of the [orkesworkers](https://gi
 |[Run it in Orkes Playground](https://play.orkes.io/workflowDef/image_multiple_convert_resize)|
 |---| 
 
-|[Sample run on Orkes Playground](https://play.orkes.io/execution/ae543c09-0844-48e1-a438-ff0105615dd6)|
+|[Sample run on Orkes Playground](https://play.orkes.io/execution/5bf1397e-ebbb-11ec-91f6-06eadc02a96b)|
 |---|
 
 
