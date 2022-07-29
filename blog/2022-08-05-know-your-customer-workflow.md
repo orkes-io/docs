@@ -35,14 +35,14 @@ Based on the feedback from these validations, the workflow decides if the custom
 In the next section, you will build this workflow using Netflix Conductor.
 
 ## Implementing KYC Workflows Using Netflix Conductor
-Before you start to build the workflow, there are a few things you need to do so you can locally test and execute the examples that you will build. Being able to execute and test workflows locally is key to ensuring developer productivity. Later you will implement your workflow for productive use on a server or on a Software as a Service offering like [Orkes](https://play.orkes.io/newWorkflowDef](https://play.orkes.io/newWorkflowDef).
+Before you start to build the workflow, there are a few things you need to do so you can locally test and execute the examples that you will build. Being able to execute and test workflows locally is key to ensuring developer productivity. Later you will implement your workflow for productive use on a server or on a Software as a Service offering like [Orkes](https://play.orkes.io/newWorkflowDef).
 
 These are the prerequisites that you will need for the rest of this article:
 
 - Install [Docker Desktop](https://www.docker.com/products/docker-desktop/) on your PC.
 - Install Java. I advise you to use [Amazon Corretto](https://docs.aws.amazon.com/corretto/index.html), which is an OpenJDK distribution mantained by AWS.
-- Clone this Bitbucket repository: [Netflix/conductor](https://github.com/Netflix/conductor.git).
-- Clone this Bitbucket repository: [Lock128/conductor-playground](https://github.com/Lock128/conductor-playground).
+- Clone this GitHub repository: [Netflix/conductor](https://github.com/Netflix/conductor.git).
+- Clone this GitHub repository: [Lock128/conductor-playground](https://github.com/Lock128/conductor-playground).
 - Install and set up [AWS CLI](https://aws.amazon.com/cli/).
 - Install [AWS CDK](https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html) and the [CDK CLI](https://docs.aws.amazon.com/cdk/v2/guide/cli.html).
 
