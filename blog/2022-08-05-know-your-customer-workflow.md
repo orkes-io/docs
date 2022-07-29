@@ -78,9 +78,9 @@ Now you can create our KYC workflow by following similar steps to creating a tas
 
 ![Create workflow](https://i.imgur.com/qxT0PAf.png)
 
-The content of the workflow definition is in the repository Lock128/conductor-playground: [kycWorkflow](https://github.com/Lock128/conductor-playground/blob/main/conductor-workflows/kycWorkflow).
+The JSON workflow definition is in the repository Lock128/conductor-playground: [kycWorkflow](https://github.com/Lock128/conductor-playground/blob/main/conductor-workflows/kycWorkflow).
 
-The workflow cannot be executed using the built-in [workbench](http://localhost:5000/workbench) in the conductor UI:
+The workflow can be executed using the built-in [workbench](http://localhost:5000/workbench) in the conductor UI:
 
 ![Start workflow in Conductor UI workbench](https://i.imgur.com/FnKBQZY.png)
 
