@@ -403,3 +403,5 @@ Assuming the tasks are available, this workflow could play the 3rd movement from
 Now for the fun sentence of the blog post:
 We've built orchestration inside Netflix Conductor so that it is the conductor of a musical orchestration.
 
+
+Do you want to try this yourself?  The workflow is available on the [Orkes Playground](https://play.orkes.io/workflowDef/minuet_trio), and there are 4 workers polling: minuet_a, minuet_b, trio_c and trio_d.  
