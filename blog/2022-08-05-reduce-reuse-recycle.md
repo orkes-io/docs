@@ -12,7 +12,7 @@ The idea of reduce, reuse and recycle is reverberated around the world as a cons
 
 As developers, we love the idea of reducing, reusing and recycling code.  Just look at the prevalent use of StackOverflow, and the huge use of open source and libraries - if someone else has built it well - why not recycle the code and reuse it?
 
-In this pose, we'll apply the 3 R's of reduce, reuse and recycling to the topic of Conductor workflows - helping us create workflows that are compact, and easier to follow, and complete the desired task.
+In this post, we'll apply the 3 R's of reduce, reuse and recycling to the topic of Conductor workflows - helping us create workflows that are compact, and easier to follow, and complete the desired task.  Through our simplification of the workflow we'll also move from a workflow that is hardcoded to one specific task to a workflow that is more easily adapted to other similar uses - making the workflow more useful to the organization.
 
 
 <!--truncate -->
@@ -21,9 +21,9 @@ In this pose, we'll apply the 3 R's of reduce, reuse and recycling to the topic 
 
 Netflix Conductor is a workflow orchestration engine.  But for our workflow, let's shift gears to a different type of orchestration and conductor.
 
-In the classical period (think Mozart and Haydn), the 3rd movement of symphonies pretty much were all in the style of a "minuet and trio."  If you looked at the musical score (the workflow in this loose analogy), the 3rd movement appears to be short... until you look at the details.
+In the classical period (think Mozart and Haydn), the 3rd movement of symphonies were mostly written in the style of a "minuet and trio."  If you looked at the musical score (the workflow in this loose analogy), the 3rd movement appears to be short... until you look at the details.
 
-A minuet is a dance, and so the lines repeat themselves a lot. Rather than write out the music over and over, the repeat sign is used:
+A minuet is a dance, and so the musical phrases repeat themselves a lot. Rather than write out the music over and over, the repeat sign is used:
 
 <p align="center"><img src="/content/img/repeat.png" alt="a simple fork diagram" width="400" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
@@ -57,7 +57,7 @@ Knowing this, you might create a minuet_trio workflow with the 4 tasks, but with
 
 <p align="center"><img src="/content/img/minuet_v1.jpg" alt="minuet treio - but not efficiently" width="400" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
-Even with re-using tasks, we can make this workflow smaller - I'm exhausted scrolling *past* this workflow.
+Even with re-using tasks, we can make this workflow smaller - I'm exhausted scrolling *past* this workflow. Further, this workflow is pretty much a "one hit wonder" - it is hardcoded for the 4 tasks and that's it.
 
 ## Recycling tasks 
 
@@ -212,7 +212,7 @@ If we imagine creating a similar workflow for the Trio section (to play lines 5-
 
 <p align="center"><img src="/content/img/minuet_trio_v3.jpg" alt="minuet trio workflow with subworkflows" width="400" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
-Let's just *imagine* creating this trio SUBWORKFLOW, because there is one more reduce, reuse and recycle trick up our sleeve: the Dynamic task
+Let's just *imagine* creating this trio SUBWORKFLOW, because there is one more reduce, reuse and recycle trick up our sleeve: the Dynamic task.
 
 ## DYNAMIC Task
 
@@ -220,7 +220,7 @@ The DYNAMIC task is a placeholder that will run whatever task it it given at run
 
 So, rather than having 2 subworkflows, one for the minuet and one for the trio - we can have just one subworkflow.
 
-The DO/WHILE with the `repeats` variable are the same, but inside the loops, we put in a DYNAMIC task, and call in the first phrase and the 2nd phrase.
+The DO/WHILE with the `repeats` variable are the same, but inside the loops, we put in a DYNAMIC task.  The DYNAMIC task calls the tasks that are sent as input to the SUBWORKFLOW `workflow.input.firstPhrase` and then `workflow.input.secondPhrase`.
 
 ```json
 {
@@ -322,7 +322,7 @@ The DO/WHILE with the `repeats` variable are the same, but inside the loops, we 
 }
 
 ```
-The only difference is that instead of directly calling the first and second musical phrases - it can be called via a variable.  
+The only difference is that instead of directly calling the first and second musical phrases - it can be called via a variable. 
 
 We can npw use this subworkflow to call the beginning of the minuet:
 
@@ -354,11 +354,11 @@ We can also call the da capo:
     "repeats:1
 }
 ```
-
+  This one SUBWORKFLOW with DYNAMIC tasks allows us to configure a lot more of the workflow at runtime!
 
 ## One more DO/WHILE
 
-Now that our subworkflow has been optimized to play any part of the minuet trio, we can simplify the entire workflow to play ANY minuet and trio, assuming that we have the tasks available.
+Now that our subworkflow has been optimized to play any part of the minuet/trio, we can simplify the entire workflow to play ANY minuet and trio, assuming that we have the tasks available.
 
 Imagine this input:
 
@@ -387,11 +387,12 @@ Imagine this input:
 
 This is now generalized for any minuet_trio song that might exist.  Just supply the tasks and number of repeats, and the DO/WHILE loop can run the subworkflows for us:
 
+In the DO/WHILE below, we have hard coded the iterations to 3 - to allow for a minuet section, a trio section and the Da Capo at the end:
 
 <p align="center"><img src="/content/img/minuet_trio_final.jpg" alt="minuet trio workflow with subworkflows" width="400" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
-> Why the Inline task?  The inline task is extracting the JSON for each subworkflow from the input JSON array.  Also note that the DO/WHILE counter starts at one, and the JSON array counter starts at zero, so we decrease the counter by one to extract the correct data from the JSON array.
 
+> Why the Inline task?  The inline task is extracting the JSON for each subworkflow from the input JSON array.  Also note that the DO/WHILE counter starts at one, and the JSON array counter starts at zero, so we decrease the counter by one to extract the correct data from the JSON array.  
 
 ## Conclusion
 
@@ -400,7 +401,7 @@ By using loops, subworkflows and dynamic tasks, we have taken what was initially
 Assuming the tasks are available, this workflow could play the 3rd movement from Haydn's [Surprise Symphony](https://www.youtube.com/watch?v=JESXMWrwzVQ), or Mozart's [Haffner Symphony](https://www.youtube.com/watch?v=--6Y9sNOgMI) by inputing the musical phrases and the standard repetitions.
 
 
-Now for the fun sentence of the blog post:
+Now for the fun sentence of the blog post that I have been waiting to write:
 We've built orchestration inside Netflix Conductor so that it is the conductor of a musical orchestration.
 
 
