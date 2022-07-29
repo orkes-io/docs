@@ -4,7 +4,7 @@ import TabItem from '@theme/TabItem';
 
 # Secrets
 
-Many applications require the use of sensitive values that should be protected from exposure.  Items like usernames, passworkds, API keys etc. are all sensitive values that should not be kept in a workflow (that might end up on GitHub or another public site.)
+Many applications require the use of sensitive values that should be protected from exposure.  Items like usernames, passwords, API keys etc. are all sensitive values that should not be kept in a workflow (that might end up on GitHub or another public site.)
 
 Just as GitHub has the concept of `secrets`, so does Orkes Conductor.Now you can define your variables in a secure and safe way, knowing that they will not be exposed in the workflow, or shared with other teammates.
 
