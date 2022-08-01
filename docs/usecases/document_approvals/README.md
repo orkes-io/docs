@@ -21,7 +21,7 @@ There is a workaround in Conductor that allows for loops that we feature in the 
 
 1. Document is uploaded
 2. Review 1a & 1b can be run asynchronously. If it passes: Review 2, otherwise, it loops back to being uploaded again.
-3. Reviewer 2 does their job.  If it passes - the document can either go to completion, to a third review - or like a long snake in "Snakes and Ladders" the document goes back to the start.
+3. Reviewer 2 does their review.  If it passes - the document can either go to completion, to a third review - or like a long snake in "Snakes and Ladders" the document goes back to the start.
 
 
 

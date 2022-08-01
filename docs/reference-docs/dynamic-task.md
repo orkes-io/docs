@@ -6,93 +6,42 @@ sidebar_position: 1
 "type" : "DYNAMIC"
 ```
 
-### Introduction
+## Introduction
 Dynamic Task allows to execute one of the registered Tasks dynamically at run-time.
 It accepts the task name to execute as `taskToExecute` in `inputParameters`.
 
-### Use Cases 
+## Use Cases 
 
-Consider a scenario, when we have to make decision of executing a task dynamically i.e. while the workflow is still
-running. In such cases, Dynamic Task would be useful.
+Consider a scenario when we have to make decision of executing a task dynamically i.e. while the workflow is still running. In such cases, Dynamic Task would be useful.
+fined directly inside the workflow with type `DYNAMIC`.
 
-### Configuration
-
-Dynamic task is defined directly inside the workflow with type `DYNAMIC`.
-
-#### Inputs
+## Inputs
 
 Following are the input parameters :
 
 |name|description|
 |---|---|
-| dynamicTaskNameParam|Name of the parameter from the task input whose value is used to schedule the task.  e.g. if the value of the parameter is ABC, the next task scheduled is of type 'ABC'.|
+| dynamicTaskNameParam| Name of the task to be called during workflow execution. 
 
-#### Output
-
-TODO: Talk about output of the task, what to expect
-
-
-### Examples
-
-Suppose in a workflow, we have to take decision to ship the courier with the shipping
-service providers on the basis of Post Code.
-
-Following task `shipping_info` generates an output on the basis of which decision would be
-taken to run the next task.
-
-```json
-{
-  "name": "shipping_info",
-  "retryCount": 3,
-  "timeoutSeconds": 600,
-  "pollTimeoutSeconds": 1200,
-  "timeoutPolicy": "TIME_OUT_WF",
-  "retryLogic": "FIXED",
-  "retryDelaySeconds": 300,
-  "responseTimeoutSeconds": 300,
-  "concurrentExecLimit": 100,
-  "rateLimitFrequencyInSeconds": 60,
-  "ownerEmail":"abc@example.com",
-  "rateLimitPerFrequency": 1
-}
+### Dynamic SUBWORKFLOW
+If there is a possibility that the task called is a SUBWORKFLOW, you must also add:
+ 
+ ```json
+   "subWorkflowParam": {
+        "name": "workflow_name",
+        "version": <workflow version>
+      },
 ```
 
-Following are the two worker tasks, one among them would execute on the basis of output generated
-by the `shipping_info` task :
+If `subWorkflowParam` are present, and the DYNAMIC workflow calls a task type that is not a SUBWORKFLOW, these parameters will be ignored.
 
-```json
-{
-  "name": "ship_via_fedex",
-  "retryCount": 3,
-  "timeoutSeconds": 600,
-  "pollTimeoutSeconds": 1200,
-  "timeoutPolicy": "TIME_OUT_WF",
-  "retryLogic": "FIXED",
-  "retryDelaySeconds": 300,
-  "responseTimeoutSeconds": 300,
-  "concurrentExecLimit": 100,
-  "rateLimitFrequencyInSeconds": 60,
-  "ownerEmail":"abc@example.com",
-  "rateLimitPerFrequency": 2
-},
-{
-  "name": "ship_via_ups",
-  "retryCount": 3,
-  "timeoutSeconds": 600,
-  "pollTimeoutSeconds": 1200,
-  "timeoutPolicy": "TIME_OUT_WF",
-  "retryLogic": "FIXED",
-  "retryDelaySeconds": 300,
-  "responseTimeoutSeconds": 300,
-  "concurrentExecLimit": 100,
-  "rateLimitFrequencyInSeconds": 60,
-  "ownerEmail":"abc@example.com",
-  "rateLimitPerFrequency": 2
-}
-```
+## Output
 
+During execution, the DYNAMIC task is replaced in the workflow with whatever task is called dynamically.  The output during execution is whatever the output of the called task normally outputs.
 
-We will create the Workflow with the following definition :
+## Examples
+
+Suppose in a workflow, we have to take decision to ship the courier, but the decision is made during execution:
 
 ```json
 {
@@ -111,6 +60,7 @@ We will create the Workflow with the following definition :
       "name": "shipping_task",
       "taskReferenceName": "shipping_task",
       "inputParameters": {
+         // highlight-next-line
         "taskToExecute": "${shipping_info.output.shipping_service}"
       },
       "type": "DYNAMIC",
@@ -125,19 +75,24 @@ We will create the Workflow with the following definition :
 }
 ```
 
-Workflow is the created as shown in the below diagram.
+The `shipping_info` task generates an output that is used to determine which task is run in the `shipping_task` DYNAMIC task.  
+
+The line `"taskToExecute": "${shipping_info.output.shipping_service}"` reads the shipping_service output from `shipping_info`.
+
+In this example, there are two possible outputs`ship_via_fedex` or `ship_via_ups`
+
+
+### Workflow Definition
+
+Here is the workflow with the DYNAMIC task:
 
 
 ![Conductor UI - Workflow Diagram](/img/tutorial/ShippingWorkflow.png)
 
 
-Note : `shipping_task` is a `DYNAMIC` task and the `taskToExecute` parameter can be set
-with input value provided while running the workflow or with the output of previous tasks.
-Here, it is set to the output provided by the previous task i.e.
-`${shipping_info.output.shipping_service}`.
+### Workflow Execution 
 
-If the input value is provided while running the workflow it can be accessed by
-`${workflow.input.shipping_service}`.
+Now, assume a workflow execution, where `shipping_info` outputs:
 
 ```json
 {
@@ -145,20 +100,24 @@ If the input value is provided while running the workflow it can be accessed by
 }
 ```
 
-We can see in the below example that on the basis of Post Code the shipping service is being
-decided.
+The DYNAMIC task `shipping_task` has been replaced with `ship_via_fedex`:
 
-```js reference
-https://github.com/orkes-io/orkesworkers/blob/main/src/main/java/io/orkes/samples/workers/ShippingInfoWorker.java#L10-L36
-```
-
-Based on given set of inputs i.e. Post Code starts with '9' hence, `ship_via_fedex` is executed -
 
 ![Conductor UI - Workflow Run](/img/tutorial/ShippingWorkflowRunning.png)
 
-If the Post Code started with anything other than 9 `ship_via_ups` is executed -
+if the output is:
+
+```json
+{
+  "shipping_service": "ship_via_ups"
+}
+```
+The DYNAMIC task `shipping_task` has been replaced with `ship_via_ups`:
 
 ![Conductor UI - Workflow Run](/img/tutorial/ShippingWorkflowUPS.png)
+
+
+## Common Errors 
 
 If the incorrect task name or the task that doesn't exist is provided then the workflow fails and
 we get the error `"Invalid task specified. Cannot find task by name in the task definitions."`

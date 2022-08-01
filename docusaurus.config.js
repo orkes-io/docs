@@ -280,7 +280,7 @@ const config = {
             prism: {
                 theme: lightCodeTheme,
                 darkTheme: darkCodeTheme,
-                additionalLanguages: ['java'],
+                additionalLanguages: ['java', 'json'],
             },
             algolia: {
                 appId: "F6Z9JYN7SD",
