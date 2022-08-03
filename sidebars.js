@@ -323,7 +323,8 @@
                         items: [
                             'getting-started/concepts/access-control',
                             'getting-started/concepts/access-control-users',
-                            'getting-started/concepts/access-control-applications'
+                            'getting-started/concepts/access-control-applications',
+                            'getting-started/concepts/access-control-tags'
                         ],
                     },
                     {
