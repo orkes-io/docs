@@ -2,7 +2,7 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 
-# Tags
+# Access Control: Tags
 
 
 ## Introduction
