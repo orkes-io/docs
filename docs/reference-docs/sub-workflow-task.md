@@ -46,6 +46,7 @@ Sub Workflow task is defined directly inside the workflow with `"SUB_WORKFLOW"`.
 |---|---|---|
 | subWorkflowId | String | Subworkflow execution Id generated when running the subworkflow |
 
+The output of the workflow is also supplied in the output of the subworkflow.
 
 ### Examples
 

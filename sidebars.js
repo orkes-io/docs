@@ -103,7 +103,7 @@
                    
                     ]
                 },
-                'how-tos/Workers/why-create-workers',
+                'how-tos/Workers/write-workers',
                 'reference-docs/scheduler',
                 {   type: 'doc', 
                     id: 'getting-started/concepts/access-control',
