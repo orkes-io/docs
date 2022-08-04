@@ -39,29 +39,18 @@ Refer to the SDK documentation to configure a client in your selected language t
 ### Example using curl
 
 
-This example uses a locally installed version of Conductor:
+This example uses a runs at the [Orkes Playground](https://play.orkes.io):
 
 ```shell
-curl 'https://localhost:8080/api/workflow/sample_workflow' \
+curl -X POST 'https://play.orkes.io/api/workflow/hello_world?version=2&priority=50' \
+  -H  "X-Authorization: [access_token]']\
   -H 'accept: text/plain' \
   -H 'content-type: application/json' \
-  -d '{"service":"fedex"}'
+  -d '{\"service\":\"fedex\"}'
 ```
 
-In this example we are specifying one input param called `service` with a value of `fedex` and the name of the workflow
-is `sample_workflow`.
+In this example, the name of the workflow is `hello_world`, and we are running version 2 with a priority of 50.  We specify one input param called `service` with a value of `fedex` 
 
-### Example using node fetch
 
-```javascript
-fetch("https://localhost:8080/api/workflow/sample_workflow", {
-    "headers": {
-        "accept": "text/plain",
-        "content-type": "application/json",
-    },
-    "body": "{\"service\":\"fedex\"}",
-    "method": "POST",
-});
-```
 
 
