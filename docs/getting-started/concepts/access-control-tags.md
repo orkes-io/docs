@@ -28,7 +28,7 @@ There are several ways to add a tag to a workflow. In this section, choose betwe
   <TabItem value="Dashboard">
 
   ### Conductor UI
-To add a tag to a workflow via the dasboard, navigate to the `Workflow Definitions` page, and find the workflow you wish to tag.  In the `Actions` Column, click the tag icon.
+To add a tag to a workflow via the Conductor UI, navigate to the `Workflow Definitions` page, and find the workflow you wish to tag.  In the `Actions` Column, click the tag icon.
 
 This will open a dialogue window that allows you to add a new tag. Type the key:value and press enter to add the workflow.  
 
@@ -114,6 +114,109 @@ curl -X DELETE "https://play.orkes.io/api/metadata/workflow/marketing_workflow/t
 
   </TabItem>
 </Tabs>
+
+## Adding a Tag to a Task
+
+There are several ways to add a tag to a task. In this section, choose between using the API or the Conductor UI for detailed instructions on both options.
+
+
+<Tabs groupId="view"
+        values={[
+        {label: 'Conductor UI', value: 'Dashboard'},
+        {label: 'API', value: 'API'}
+        
+    ]}>
+  
+  <TabItem value="Dashboard">
+
+  ### Conductor UI
+To add a tag to a task via the Conductor UI, navigate to the `Task Definitions` page, and find the task you wish to tag.  In the `Actions` Column, click the tag icon.
+
+This will open a dialogue window that allows you to add a new tag. Type the key:value and press enter to add the tag to the task.  
+
+You may also remove tags using the same window by clicking the "X" next to the tag you wish to delete.
+
+<p align="center"><img src="/content/img/edit_tags.jpg" alt="editing tags via the dashboard" width="700" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+
+
+  </TabItem>
+<TabItem value="API">
+
+### API
+
+To add a tag `key:value` to a task, use the endpoint `/api/metadata/task/{taskName}/tags`. Here is the link to the [Playground Swagger](https://play.orkes.io/swagger-ui/index.html?configUrl=/api-docs/swagger-config#/tags-experimental/addTaskTag).
+
+There are two ways to add a tag, using a `POST` or a `PUT`.
+
+* `PUT` **replaces** the existing tags with the tags in the payload:
+
+```bash
+curl -X PUT "https://play.orkes.io/api/metadata/task/marketing_task/tags" \
+-H  "accept: */*" \
+-H  "X-Authorization: <access_token>" \
+-H  "Content-Type: application/json" \
+-d "[{\"type\":\"METADATA\",\"key\":\"org\",\"value\":\"marketing\"}]"
+```
+
+
+* `POST` **appends** the existing tags with the tags in the payload.
+
+```bash
+curl -X PUT "https://play.orkes.io/api/metadata/task/marketing_task/tags" \
+-H  "accept: */*" \
+-H  "X-Authorization: <access_token>" \
+-H  "Content-Type: application/json" \
+-d "[{\"type\":\"METADATA\",\"key\":\"org\",\"value\":\"marketing\"}]"
+```
+
+
+The other operators for this endpoint are:
+
+* `GET`: lists all of the tags assigned to the workflow.
+
+```bash
+curl -X GET "https://play.orkes.io/api/metadata/task/marketing_task/tags" \
+-H  "accept: */*" \
+-H  "X-Authorization: <access_token>" \
+-H  "Content-Type: application/json" \
+```
+gives the response:
+
+```json
+[
+  {
+    "type": "METADATA",
+    "key": "org",
+    "value": "IT"
+  },
+  {
+    "type": "METADATA",
+    "key": "org",
+    "value": "sales"
+  },
+  {
+    "type": "METADATA",
+    "key": "org",
+    "value": "marketing"
+  }
+]
+```
+
+* `DELETE`: removes the specified tag from the workflow.
+
+```bash
+curl -X DELETE "https://play.orkes.io/api/metadata/task/marketing_task/tags" \
+-H  "accept: */*" \
+-H  "X-Authorization: <access_token>" \
+-H  "Content-Type: application/json" \
+-d "[{\"type\":\"METADATA\",\"key\":\"org\",\"value\":\"marketing\"}]"
+```
+
+
+
+  </TabItem>
+</Tabs>
+
 
 ## Adding Access Control to a tag
 
