@@ -15,6 +15,8 @@ To use a secret in a workflow, you must first [create a secret](#creating-a-secr
 
 Let's assume your secret is called `GitHub_Token` To reference that secret, use the variable `${workflow.secrets.GitHub_Token}`.
 
+<p align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/yC4kOEHFfqE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
+
 ## Example
 
 The US Postal Service offers APIs to help automate the shipping process with the post office.  Each API call requires a UserId to be submitted.  This UserId can be used to buy postage, so it needs to be kept secure. WE've created a secret called `post_office_username` that we can now use in all API calls. (This workflow can be found is the [Conductor Examples](https://github.com/conductor-sdk/conductor-examples) github repository.):
