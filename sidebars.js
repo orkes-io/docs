@@ -103,7 +103,7 @@
                    
                     ]
                 },
-                'how-tos/Workers/why-create-workers',
+                'how-tos/Workers/write-workers',
                 'reference-docs/scheduler',
                 {   type: 'doc', 
                     id: 'getting-started/concepts/access-control',
@@ -323,7 +323,8 @@
                         items: [
                             'getting-started/concepts/access-control',
                             'getting-started/concepts/access-control-users',
-                            'getting-started/concepts/access-control-applications'
+                            'getting-started/concepts/access-control-applications',
+                            'getting-started/concepts/access-control-tags'
                         ],
                     },
                     {

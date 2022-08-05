@@ -30,6 +30,7 @@ Sub Workflow task is defined directly inside the workflow with `"SUB_WORKFLOW"`.
 |name|type|description|
 |---|---|---|
 | subWorkflowParam | Map[String, Any] | See below |
+| inputParameters | Map[String, Any] | The task inputParameters become the input parameters for the workflow. |
 
 **subWorkflowParam**
 
@@ -46,6 +47,7 @@ Sub Workflow task is defined directly inside the workflow with `"SUB_WORKFLOW"`.
 |---|---|---|
 | subWorkflowId | String | Subworkflow execution Id generated when running the subworkflow |
 
+The output of the workflow is also supplied in the output of the subworkflow.
 
 ### Examples
 

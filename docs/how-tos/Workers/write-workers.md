@@ -10,10 +10,18 @@ You can create your workers in any language. Our [SDKs](/content/docs/how-tos/SD
 
 ## Why Create Workers
 
+For each custom task that must be performed, a microservice is the smallest possible application that can complete the task.  
+
+Workers poll a Conductor task, and the parameters of each invocation is defined by the task that the worker polls.
+
 ## Worker Features
 
-### Control Poll tome
+### Worker Callbacks
+
+
+
+### Control Poll timing
 ### Long running tasks
 ### adding Execution logs
-### Adding OUtput
+### Adding Output
 ### Failing Tasks

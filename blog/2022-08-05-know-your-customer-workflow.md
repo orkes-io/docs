@@ -3,7 +3,7 @@ slug: rknow-your-customer-workflow-with-netflix-conductor
 title: Know Your Customer- Building KYC Workflows with Netflix Conductor
 authors: JohannesKoch
 tags: [Netflix Conductor, orchestration, usecase, 2022]
-image: https://orkes.io/content/img/recycle_logo.jpeg
+image: https://i.imgur.com/aRs8OcP.png
 ---
 
 # Know Your Customer: Building KYC Workflows with Netflix Conductor
