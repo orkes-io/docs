@@ -45,12 +45,13 @@ We'll walk through a few approaches to create a secret, and then examples of imp
 
 <p align-"center"><iframe width="560" height="315" src="https://www.youtube.com/embed/O_Ngo1Gg2Co" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
 
-
-
 <Tabs groupId="code" values={[
         {label: 'API', value: 'api'},
         {label: 'Orkes Dashboard', value: 'orkes'},
     ]}>
+
+
+
 
 <TabItem value="api">
 
