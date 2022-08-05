@@ -39,9 +39,6 @@ USERID=${workflow.secrets.post_office_username}> \
 ```
 By using `${workflow.secrets.post_office_username}`, we obfuscate this sensitive value, and it never appears in the workflow execution, or in any output files of Conductor, yet we are able to connect with the USPS, and obtain the postage price for our package ($82.10, in case you're wondering).
 
-
-
-
 ## Creating a secret
 
 We'll walk through a few approaches to create a secret, and then examples of implementing a secret.  To create a secret, you can use the API or you can use the Orkes Dashboard.  
