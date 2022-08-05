@@ -18,10 +18,12 @@ Workers poll a Conductor task, and the parameters of each invocation is defined 
 
 ### Worker Callbacks
 
+When a worker picks up a task, it can send a callback to Conductor:
+`callBackAfterSeconds` with a value in seconds.
 
+For example, if a task sends `callBackAfterSeconds=60` to the Conductor server, the queue expects a response from the worker within 60 seconds.
 
-### Control Poll timing
-### Long running tasks
-### adding Execution logs
-### Adding Output
-### Failing Tasks
+If no response is received by the Conductor server within those 60s, the task is placed back into the queue, and can be picked up by another worker.
+
+This has been used by developers as a [heartbeat mechanism](https://github.com/Netflix/conductor/issues/896) for tasks that can run for a long period, but also sometimes crash.
+

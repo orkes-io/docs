@@ -178,6 +178,12 @@ We've now created everything in the Playground that our Worker will need to conn
 
 ## Worker
 
+:::caution
+Workers can be deployed in multiple locations.  This very simple workflow requires that all workers are deployed on the same machine - as the first worker saves the image locally, and the second worker uploads the local file to S3. 
+
+If your workers are distributed, the 2nd worker may not be on the same server, and will be unable to find the local file.
+:::
+
 With your key and secret, we can run the OrkesWorkers application.  In the Orkesworkers repository, ```resources/application.properties``` ensure you have these two lines:
 
 

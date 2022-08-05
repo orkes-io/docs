@@ -2,11 +2,11 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 
-# Secrets
+# Workflow Secrets
 
 Many applications require the use of sensitive values that should be protected from exposure.  Items like usernames, passwords, API keys etc. are all sensitive values that should not be kept in a workflow (that might end up on GitHub or another public site.)
 
-Just as GitHub has the concept of `secrets`, so does Orkes Conductor.Now you can define your variables in a secure and safe way, knowing that they will not be exposed in the workflow, or shared with other teammates.
+Just as programming languages and GitHub have the concept of `secrets`, so does Orkes Conductor. You can define your variables in a secure and safe way knowing that they will not be exposed in the workflow, or shared with other teammates.
 
 ## Creating a secret
 
@@ -59,8 +59,8 @@ This creates the secret key:value pair of ```pinetree:needle```.  The only respo
 <TabItem value="orkes">
 The Orkes Dashboard allows you to create secret key:value pairs via the UI.
 
-1. Login to your Orkes Cloud dashboard
-2. Click "Workflow Definitions."
+1. Login to your Orkes Cloud dashboard.
+2. Click "Workflow Definitions." or "Secrets" in the left navigation. 
 3. Click the "Manage Secrets" button at the top of the page.
 
 Or you can simply navigate to the url `secrets` in your Orkes Cloud dashboard. 
@@ -70,7 +70,7 @@ Or you can simply navigate to the url `secrets` in your Orkes Cloud dashboard.
 The Secrets dashboard lists all of the secrets connected to your account:
 <p align="center"><img src="/content/img/secrets_dashboard.jpg" alt="the Orkes Cloud Secrets dashboard" width="700" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
-Clicking the "eye" icon next the secret will expose the secret's value and also gives you the options to change the secret value, or delete the secret altogether.
+Clicking the "eye" icon next the secret will expose the secret's value and also give you the options to change the secret value, or delete the secret altogether.
 
 To add a secret click the `Add Secret` button at the top.  Add your Key:value and click the `Add` button.  If you receive an error, it is likely because the key is already in use, so simply select a different key.
   
@@ -107,11 +107,28 @@ By using `${workflow.secrets.post_office_username}`, we obfuscate this sensitive
 
 ## Permissions
 
-If the task using the Secret utilizes a worker, we need to add permissions for the worker to access the secret (just as an [application gives access to a workflow or task](/content/docs/getting-started/concepts/access-control-applications)).
+If a workflow uses a Secret, we need to add access control permissions for the application to access the secret (just as an [application gives access to a workflow or task](/content/docs/getting-started/concepts/access-control-applications)).
 
-There is not UI to add a secret permission, but the API does work.  The endpoint is `/api/auth/authorization`.
 
-Using the Playground and Curl, the command looks like 
+There are 3 access parameters used with Secrets:
+
+* `READ`: Allows the application to read (and therefore use) the secret.
+* `UPDATE`: Provides access to share the secret with others.
+* `CREATE`: Create or overwrite an existing secret.
+
+In general, `READ` is the permission to be shared in most cases. 
+
+ 
+<Tabs groupId="code" values={[
+        {label: 'API', value: 'api'},
+        {label: 'Orkes Dashboard', value: 'orkes'},
+    ]}>
+  
+<TabItem value="api">
+
+The endpoint is `/api/auth/authorization`.
+
+Using the Playground and Curl, the command looks like:
 
 ```shell
 curl -X POST "https://play.orkes.io/api/auth/authorization" \
@@ -127,5 +144,17 @@ curl -X POST "https://play.orkes.io/api/auth/authorization" \
     "access":["READ"]}'
 ```
 
-In this call, we are give the application `orkes-workers` `READ` access to our `post_office_username` secret.
+Note that the type is `SECRET_NAME`.
 
+In this call, we are give the application `orkes-workers` `READ` access to our `post_office_username` secret.
+</TabItem>
+<TabItem value="orkes">
+
+The Orkes Dashboard, navigate to the "Applications" menu.  Choose the application you wish to add the secret to, and choose `add permission`: 
+
+<p align="center"><img src="/content/img/add_secret.jpg" alt="adding a secret via UI" width="400" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+
+In the image above, we area adding the secret `GH_KEY` to our application (with `READ` access.). Click the `Add Permission` button, and the secret will be added.
+
+</TabItem>
+</Tabs>
