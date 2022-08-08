@@ -3,7 +3,7 @@ slug: conductor-has-secrets
 title: SHH! Conductor has secrets!
 authors: doug 
 tags: [Netflix Conductor, orchestration, security, 2022]
-image: https://orkes.io/content/img/recycle_logo.jpeg
+image: https://orkes.io/content/img/Top-Secret.jpeg
 ---
 
 
