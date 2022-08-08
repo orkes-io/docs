@@ -191,6 +191,7 @@
                     items: [
                         'how-tos/Workflows/create-workflow',
                         'how-tos/Workflows/updating-workflows',
+                        'how-tos/Workflows/create-secrets',
                         'how-tos/Workflows/versioning-workflows',
                         'how-tos/Workflows/starting-workflows',
                         'how-tos/Workflows/schedule-workflow',
