@@ -45,7 +45,7 @@ Stripe provides a global payment system that can accept over 135 different curre
 
 The following sections explain how to create a payment workflow on Conductor. To get started, you need to have a Stripe account, which you can set up [here](https://dashboard.stripe.com/register).
 
-You can run Conductor [locally](https://orkes.io/content/docs/getting-started/install/running-locally#download-and-run) or use the [Playground](https://play.orkes.io/). In this article, tasks were created on the Orkes Playground, so you need to create an account using your Google account or an email address, after which you will be redirected to the Playground.
+You can run Conductor in the Orkes [Playground](https://play.orkes.io/). In this article, tasks were created on the Orkes Playground, so you need to create an account using your Google account or an email address, after which you will be redirected to the Playground.
 
 ### Payment Workflow
 
