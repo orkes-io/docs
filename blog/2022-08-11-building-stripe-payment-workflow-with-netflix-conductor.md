@@ -72,7 +72,7 @@ If the API call is successful, the response looks like this:
 
 ```json
 {
-  "id": "tok_1LO2vLAOWogJd4PA9Qqwqdsr",
+  "id": "tok_1xxxxxxr",
   "object": "token",
   "card": {
     "id": "card_1LO2vLAOWogJd4PAwf6xyIE3",
@@ -107,7 +107,7 @@ If the API call is successful, the response looks like this:
 ```
 Otherwise, this call raises [an error](https://stripe.com/docs/api/tokens/create_card#errors).
 
-The token contains all the card details necessary to perform a charge transaction. Therefore, whenever you are trying to charge the card user again, you only call for the token id `"id": "tok_1LO2vLAOWogJd4PA9Qqwqdsr"`.
+The token contains all the card details necessary to perform a charge transaction. Therefore, whenever you are trying to charge the card user again, you only call for the token id `"id": "tok_1LO2vxxxxx"`.
 
 You can use the following code to create a task and workflow on the conductor to return a token for future charges:
 
