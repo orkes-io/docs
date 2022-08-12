@@ -1,8 +1,8 @@
 ---
-displayed_sidebar:     orderfulfillment
+displayed_sidebar: orderfulfillment
 ---
 
-# Creating a Workflow and task
+# Creating a Workflow and Task
 
 This codelab will touch on many of the powerful features of Netflix Conductor.  We'll follow the building of a shipping & order fulfillment workflow for Bob's Widgets.
 

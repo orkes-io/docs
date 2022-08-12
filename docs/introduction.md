@@ -2,23 +2,34 @@
 displayed_sidebar: mainSidebar
 sidebar_position: 1
 ---
+# Introduction to Conductor
 
-# What is Conductor?
-Conductor is a platform originally developed at Netflix to orchestrate workflows that span across microservices.
+## What is Conductor?
 
-Conductor allows developers to build stateful applications using simple, 
-stateless code without having to manage the state and complexities of building a distributed application.
-Conductor is cloud native and scales seamlessly as your workload grows.
+Conductor is a platform originally developed at Netflix to orchestrate workflows that span across applications or microservices.
 
-Conductor is an open-source, **Apache 2.0** licensed workflow orchestration framework. 
-You can use Conductor to easily build highly reliable distributed applications using the language of your choice.
+* Orchestration Platform for building stateful applications without the overhead of managing a state machine
+* Enables development of highly resilient and scalable distributed systems with built-in features that empower rapid development of business applications
+* Used for a wide range of use cases such as - business process automations, data pipelines, CI/CD pipelines, order management workflows etc.
+* Run 100s to millions of workflows per day - scales seamlessly for a wide range of applications
+* Conductor is an open-source, **Apache 2.0** licensed workflow orchestration framework
+* Build workflows using many popular languages with SDKs
 
-Conductor removes the complexities of maintaining and propagating the state of the execution while increasing the robustness of the application by natively supporting retries and error handling scenarios. That way you can focus on coding the business logic of your application instead of the complexities of building the distributed ecosystem.
+## Conductor Overview
 
-# What use cases can Conductor solve?
+* With conductor - we create orchestration flows called as [Workflows](getting-started/concepts/workflows)
+* Workflow consists of [tasks](getting-started/concepts/tasks-and-workers) and [operators](getting-started/concepts/operators)
+* Tasks can be System managed (no-code deployment) or your [custom code](how-tos/Workers/write-workers)
+* Tasks are managed by persistent task queues transparent to users
+* Custom code tasks can be written in any language and can connect to a workflow using the [client SDKs](how-tos/SDKs)
+* Tasks can be run like a programming language - [sub workflows](docs/reference-docs/sub-workflow-task), step-by-step, [parallel tasks](reference-docs/fork-task), [conditional tasks](reference-docs/switch-task), [dynamic tasks](reference-docs/dynamic-fork-task) etc. [are supported](reference-docs)
+
+<p style={{textAlign: "center"}}><img src="/content/img/anatomy.png" alt="adding a secret via UI" width="600" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+
+## What use cases can Conductor solve?
 
 Conductor is a general-purpose orchestration engine that is language agnostic and has been adopted widely across
-multiple industries, ranging from Media to security to finance and more. Some of the common use cases that have been
+multiple industries, ranging from Media to security to finance and more. Some common use cases that have been
 solved by Conductor are:
 
 1. Supply chain management
@@ -31,8 +42,8 @@ solved by Conductor are:
 8. Orchestrating Microservices (HTTP,  background services, etc.)
 9. Orchestrating business logic across various cloud functions (AWS Lambda, GCP functions, etc.)
 10. Infrastructure Provisioning
-11. CICD Pipelines
-12. Long running processes and workflows
+11. CI CD Pipelines
+12. Long-running processes and workflows
 13. Monitoring
 14. Distributed Transactions
 15. Localization Pipelines

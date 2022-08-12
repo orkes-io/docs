@@ -11,20 +11,20 @@ sidebar_position: 1
 Set Variable allows us to set workflow variables by creating or updating them
 with new values.
 
-
 <p align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/kR2OI8eHri0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
+
 ### Use Cases
 
 Variables can be initialized in the workflow definition as well as during
 the workflow run. Once a variable was initialized it can be read or
-overwritten with a new value by any other task.
+overwritten with a new value by any other task. Variables can be used to manage a state across all your tasks.
 
 ### Configuration
 
 Set Variable task is defined directly inside the workflow with type
 `SET_VARIABLE`.
 
-## Examples
+### Examples
 
 Suppose in a workflow, we have to store a value in a variable and then later in
 workflow reuse the value stored in the variable just as we do in programming, in such
