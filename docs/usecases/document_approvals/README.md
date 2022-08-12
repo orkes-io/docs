@@ -1,3 +1,4 @@
+
 # Document Approvals
 
 Document approval workflows are a common practice in many industries.  A document is created, and the gets reviewed by several parties before it is released. Ideally, every document moves ahead through the process - but inevitably, a document will be rejected by a reviewer and require editing before the review process can continue. In the diagram below, Review 1a, 2 and 3 can reject the document and send it back for editing:
@@ -8,8 +9,9 @@ Document approval workflows are a common practice in many industries.  A documen
 |[See the workflow in Orkes Playground](https://play.orkes.io/workflowDef/document_approval_test)|
 |---|
 
-(Note: This workflow does not have workers, and thus is for visualization purposes only.)
-
+:::note
+This workflow does not have workers, and thus is for visualization purposes only.
+:::
 
 ![review cycle diagram](https://raw.githubusercontent.com/conductor-sdk/conductor-examples/main/document_approvals/images/review_cycle.png)
 

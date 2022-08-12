@@ -31,53 +31,55 @@ const config = {
             "docusaurus-plugin-remote-content",
             {
                 // options here
-               // noRuntimeDownloads: true,
+                // noRuntimeDownloads: true,
                 id: "OS_sdks",
                 name: "content", // used by CLI, must be path safe
                 sourceBaseUrl: "https://raw.githubusercontent.com/conductor-sdk", // the base url for the markdown (gets prepended to all of the documents when fetching)
                 outDir: "docs/how-tos/sdks", // the base directory to output to.
                 documents: ["/conductor-python/main/README.md",
-                            "/conductor-go/main/README.md",
-                            "/conductor-go/main/workers_sdk.md",
-                            "/conductor-go/main/workflow_sdk.md",
-                            "/conductor-go/main/docs/README.md",
-                            "/conductor-go/main/docs/executor.md",
-                            "/conductor-go/main/docs/settings.md",
-                            "/conductor-go/main/docs/workflow.md",
-                            "/conductor-go/main/docs/worker.md",
-                            "/conductor-csharp/main/README.md",
-                            "conductor-clojure/main/README.md"], // the file names to download
+                    "/conductor-go/main/README.md",
+                    "/conductor-go/main/workers_sdk.md",
+                    "/conductor-go/main/workflow_sdk.md",
+                    "/conductor-go/main/docs/README.md",
+                    "/conductor-go/main/docs/executor.md",
+                    "/conductor-go/main/docs/settings.md",
+                    "/conductor-go/main/docs/workflow.md",
+                    "/conductor-go/main/docs/worker.md",
+                    "/conductor-csharp/main/README.md",
+                    "conductor-clojure/main/README.md"], // the file names to download
                 modifyContent(filename) {
-                        if (filename.equals("workers_sdk.md")) {
-                            return {filename : "workers_sdk"
-                        }
-                        }
-                        if(filename.equals("workflow_sdk.md")) {
-                            return {filename : "workflow_sdk"
-                        }
-                        }
-                        if(filename.equals("executor.md")) {
-                            return {filename : "executor"
-                        }
-                        }
-                        if(filename.equals("settings.md")) {
-                            return {filename : "settings"
-                        }
-                        }
-                        if(filename.equals("workflow.md")) {
-                            return {filename : "workflow"
-                        }
-                        }
-                        if(filename.equals("worker.md")) {
-                            return {filename : "worker"
-                        }
+                    if (filename.equals("workers_sdk.md")) {
+                        return {
+                            filename: "workers_sdk"
                         }
                     }
-                         
+                    if (filename.equals("workflow_sdk.md")) {
+                        return {
+                            filename: "workflow_sdk"
+                        }
+                    }
+                    if (filename.equals("executor.md")) {
+                        return {
+                            filename: "executor"
+                        }
+                    }
+                    if (filename.equals("settings.md")) {
+                        return {
+                            filename: "settings"
+                        }
+                    }
+                    if (filename.equals("workflow.md")) {
+                        return {
+                            filename: "workflow"
+                        }
+                    }
+                    if (filename.equals("worker.md")) {
+                        return {
+                            filename: "worker"
+                        }
+                    }
+                }
             }
-                    
-               
-        
         ],
         [
             "docusaurus-plugin-remote-content",
@@ -88,15 +90,15 @@ const config = {
                 sourceBaseUrl: "https://raw.githubusercontent.com/Netflix/conductor/main/", // the base url for the markdown (gets prepended to all of the documents when fetching)
                 outDir: "docs/how-tos/sdks", // the base directory to output to.
                 documents: ["/java-sdk/workflow_sdk.md",
-                            "/java-sdk/worker_sdk.md",
-                            "/java-sdk/testing_framework.md",
-                            "/java-sdk/src/main/java/com/netflix/conductor/sdk/workflow/def/ConductorWorkflow.java",
-                            "/java-sdk/src/main/java/com/netflix/conductor/sdk/workflow/def/tasks/SimpleTask.java",
-                            "/java-sdk/src/main/java/com/netflix/conductor/sdk/workflow/def/tasks/ForkJoin.java",
-                            
-                             ]               // the file names to download
+                    "/java-sdk/worker_sdk.md",
+                    "/java-sdk/testing_framework.md",
+                    "/java-sdk/src/main/java/com/netflix/conductor/sdk/workflow/def/ConductorWorkflow.java",
+                    "/java-sdk/src/main/java/com/netflix/conductor/sdk/workflow/def/tasks/SimpleTask.java",
+                    "/java-sdk/src/main/java/com/netflix/conductor/sdk/workflow/def/tasks/ForkJoin.java",
+
+                ]               // the file names to download
             },
-            
+
         ],
         [
             "docusaurus-plugin-remote-content",
@@ -107,43 +109,41 @@ const config = {
                 sourceBaseUrl: "https://raw.githubusercontent.com/conductor-sdk/conductor-examples/main/", // the base url for the markdown (gets prepended to all of the documents when fetching)
                 outDir: "docs/usecases", // the base directory to output to.
                 documents: ["/image_processing/README.md",
-                            "/video_processing/README.md",
-                            "/US_post_office/README.md",
-                            "/workflow_AB_testing/README.md",
-                            "/finance/README.md",
-                            "/document_approvals/README.md",
-                            "/Simple_ETL/README.md"
-                             ]               // the file names to download
+                    "/video_processing/README.md",
+                    "/US_post_office/README.md",
+                    "/workflow_AB_testing/README.md",
+                    "/finance/README.md",
+                    "/document_approvals/README.md",
+                    "/Simple_ETL/README.md"
+                ]               // the file names to download
             },
-           
         ],
         [
             '@docusaurus/plugin-client-redirects',
             {
-              redirects: 
-              [
-                // /docs/oldDoc -> /docs/newDoc
-                {
-                  to: '/docs/how-tos/Workflows/starting-workflows',
-                  from: '/docs/how-tos/starting-workflows',
-                },
-                {
-                    to: '/docs/how-tos/Tasks/task-configurations',
-                    from: '/docs/how-tos/task-configurations',
-                },
-              ],
+                redirects:
+                    [
+                        // /docs/oldDoc -> /docs/newDoc
+                        {
+                            to: '/docs/how-tos/Workflows/starting-workflows',
+                            from: '/docs/how-tos/starting-workflows',
+                        },
+                        {
+                            to: '/docs/how-tos/Tasks/task-configurations',
+                            from: '/docs/how-tos/task-configurations',
+                        },
+                    ],
             },
         ],
-        
         [
-        '@docusaurus/plugin-sitemap',
-        {
-        id: 'plugin-sitemap',
-            changefreq: 'hourly',
-            priority: 0.9,
-        },
+            '@docusaurus/plugin-sitemap',
+            {
+                id: 'plugin-sitemap',
+                changefreq: 'hourly',
+                priority: 0.9,
+            },
         ],
-   ],
+    ],
     presets: [
         [
             '@docusaurus/preset-classic',
@@ -166,7 +166,7 @@ const config = {
         ],
     ],
     themes: [
-       // '@saucelabs/theme-github-codeblock'
+        // '@saucelabs/theme-github-codeblock'
     ],
 
     themeConfig:
@@ -183,7 +183,7 @@ const config = {
                     srcDark: 'img/branding/orkes-logo-purple-inverted-4x.png',
                 },
                 items: [
-                     {
+                    {
                         type: "search",
                         position: "right",
                     },
