@@ -199,7 +199,6 @@ module.exports = {
                 },
                 'codelab/sequentialHTTPtasks',
                 'codelab/taskToDomain',
-                'codelab/learningSeries'
             ],
         },
 
