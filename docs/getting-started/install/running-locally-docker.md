@@ -44,3 +44,11 @@ docker run -p 8080:8080 -p 5000:5000 --mount source=redis,target=/redis \
 --mount source=postgres,target=/pgdata orkesio/orkes-conductor-standalone:latest
 ```
 
+###### Access UI
+
+Navigate to [http://localhost:5000](http://localhost:5000)
+
+###### Access APIs
+
+[http://localhost:8080/swagger-ui/index.html?configUrl=/api-docs/swagger-config#/](http://localhost:8080/swagger-ui/index.html?configUrl=/api-docs/swagger-config#/)
+
