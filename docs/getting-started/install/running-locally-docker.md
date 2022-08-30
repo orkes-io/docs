@@ -33,7 +33,7 @@ Login to the Docker Hub using Orkes Access Account. When prompted for the passwo
 
 ```shell
 export orkes_access_key=<ACCESS_KEY_PROVIDED_BY_ORKES>
-echo $orkes_access_key | docker login --username orkesaccess --password-stdin
+echo $orkes_access_key | docker login --username orkesdocker --password-stdin
 
 # Create volumes for persistent stores
 docker volume create postgres
