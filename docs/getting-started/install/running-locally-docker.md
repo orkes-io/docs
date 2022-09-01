@@ -40,15 +40,14 @@ docker volume create postgres
 docker volume create redis
 
 # Download and start the container
-docker run -p 8080:8080 -p 5000:5000 --mount source=redis,target=/redis \
+docker run -i -p 8080:8080 -p 3000:5000 --mount source=redis,target=/redis \
 --mount source=postgres,target=/pgdata orkesio/orkes-conductor-standalone:latest
 ```
 
-###### Access UI
+###### Access Conductor UI
 
-Navigate to [http://localhost:5000](http://localhost:5000)
+Navigate to [http://localhost:3000](http://localhost:3000)
 
-###### Access APIs
+###### Access Swagger API Documentation
 
 [http://localhost:8080/swagger-ui/index.html?configUrl=/api-docs/swagger-config#/](http://localhost:8080/swagger-ui/index.html?configUrl=/api-docs/swagger-config#/)
-
