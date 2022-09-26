@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
 ---
-# Terminate
+# Terminate Task
 
 ```json
 "type" : "TERMINATE"

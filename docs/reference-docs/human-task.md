@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# Human
+# Human Task
 ```json
 "type" : "HUMAN"
 ```

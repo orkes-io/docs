@@ -10,6 +10,63 @@
  */
 module.exports = {
 
+    referenceDocSidebar: [
+        'reference-docs',
+        {
+            type: 'category',
+            label: 'Conductor Tasks',
+            collapsed: false,
+            items: [
+                {
+                    type: 'doc',
+                    id: 'reference-docs/system-tasks/json-jq-transform-task',
+                    label: "JSON JQ Transform Task"
+                },
+                {
+                    type: 'doc',
+                    id: 'reference-docs/system-tasks/http-task',
+                    label: "HTTP Task"
+                },
+                {
+                    type: 'doc',
+                    id: 'reference-docs/system-tasks/kafka-publish-task',
+                    label: "Kafka Publish Task"
+                },
+                {
+                    type: 'doc',
+                    id: 'reference-docs/system-tasks/event-task',
+                    label: "Event Task"
+                },
+                {
+                    type: 'doc',
+                    id: 'reference-docs/system-tasks/inline-task',
+                    label: "Inline Task"
+                },
+                {
+                    type: 'doc',
+                    id: 'reference-docs/wait-task',
+                    label: "Wait Task"
+                }
+            ]
+        },
+        {
+            type: 'category',
+            label: 'Operator Tasks',
+            collapsed: false,
+            items: [
+                'reference-docs/switch-task',
+                'reference-docs/do-while-task',
+                'reference-docs/fork-task',
+                'reference-docs/dynamic-fork-task',
+                'reference-docs/join-task',
+                'reference-docs/human-task',
+                'reference-docs/dynamic-task',
+                'reference-docs/terminate-task',
+                'reference-docs/set-variable-task',
+                'reference-docs/sub-workflow-task',
+            ]
+        }
+    ],
     mainSidebar: [
         {
             type: 'doc',
@@ -24,23 +81,23 @@ module.exports = {
                 {
                     type: 'doc',
                     id: 'usecases/image_processing/README',
-                    label : 'Image Processing Workflows'
+                    label: 'Image Processing Workflows'
                 },
                 {
                     type: 'doc',
                     id: 'usecases/video_processing/README',
-                    label : 'Video Processing Workflows'
+                    label: 'Video Processing Workflows'
                 },
                 {
                     type: 'doc',
                     id: 'usecases/US_post_office/README',
-                    label : 'API Processing Workflows'
+                    label: 'API Processing Workflows'
                 },
                 'usecases/workflow_AB_testing/README',
                 {
                     type: 'doc',
                     id: 'usecases/finance/README',
-                    label : 'Finance Domain Workflows'
+                    label: 'Finance Domain Workflows'
                 },
                 'usecases/document_approvals/README',
                 'usecases/Simple_ETL/README'
@@ -56,7 +113,6 @@ module.exports = {
                 'getting-started/concepts/operators',
                 'faq',
             ],
-
         },
         {
             type: 'category',
@@ -74,44 +130,6 @@ module.exports = {
             label: 'Creating Workflows',
             collapsed: true,
             items: [
-                {
-                    type: 'category',
-                    label: 'Pre-built System Tasks',
-                    collapsed: false,
-                    items: [
-                        {
-                            type: 'doc',
-                            id: 'reference-docs/system-tasks/json-jq-transform-task',
-                            label: "Process JSON with JQ"
-                        },
-                        {
-                            type: 'doc',
-                            id: 'reference-docs/system-tasks/http-task',
-                            label: "Make REST calls with HTTP"
-                        },
-                        {
-                            type: 'doc',
-                            id: 'reference-docs/system-tasks/kafka-publish-task',
-                            label: "Publish Events to Kafka"
-                        },
-                        {
-                            type: 'doc',
-                            id: 'reference-docs/system-tasks/event-task',
-                            label: "Publish Events to SQS"
-                        },
-                        {
-                            type: 'doc',
-                            id: 'reference-docs/system-tasks/inline-task',
-                            label: "Execute Lightweight Javascript code"
-                        },
-                        {
-                            type: 'doc',
-                            id: 'reference-docs/wait-task',
-                            label: "Wait for a time duration"
-                        },
-
-                    ]
-                },
                 'how-tos/Workers/write-workers',
                 'reference-docs/scheduler',
                 {
@@ -199,8 +217,6 @@ module.exports = {
             collapsed: true,
             items: [
 
-                'reference-docs',
-
                 {
                     type: 'category',
                     label: 'Workflows',
@@ -242,29 +258,7 @@ module.exports = {
                                     type: 'doc',
                                     id: 'getting-started/concepts/system-tasks',
                                     label: 'System Task Introduction'
-                                },
-                                {
-                                    type: 'autogenerated',
-                                    dirName: 'reference-docs/system-tasks', // generate sidebar from the docs folder (or versioned_docs/<version>)
-                                },
-                            ],
-                        },
-                        {
-                            type: 'category',
-                            label: 'Operator Reference',
-                            collapsed: true,
-                            items: [
-                                'reference-docs/switch-task',
-                                'reference-docs/do-while-task',
-                                'reference-docs/fork-task',
-                                'reference-docs/dynamic-fork-task',
-                                'reference-docs/join-task',
-                                'reference-docs/wait-task',
-                                'reference-docs/human-task',
-                                'reference-docs/dynamic-task',
-                                'reference-docs/terminate-task',
-                                'reference-docs/set-variable-task',
-                                'reference-docs/sub-workflow-task',
+                                }
                             ],
                         },
                     ],

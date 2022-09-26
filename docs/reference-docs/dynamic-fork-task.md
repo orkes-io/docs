@@ -4,17 +4,19 @@ sidebar_position: 1
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Dynamic Fork
+# Dynamic Fork Task
 ```json
 "type" : "FORK_JOIN_DYNAMIC"
 ```
-<p align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/2VE2ys_85FM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
+
 ## Introduction
 
 When the number of forks must be determined at run-time, the FORK_JOIN_DYNAMIC task is needed.  (In a regular fork operation -the [FORK_JOIN](/content/docs/reference-docs/fork-task) task- the number of forks are defined during workflow creation.)
 
-> Note: A `FORK_JOIN_DYNAMIC` can ony have ONE task per fork.  If there is a need for multiple tasks per fork, a SUBWORKFLOW can be utilized.
+:::tip Note: A `FORK_JOIN_DYNAMIC` can ony have ONE task per fork.  If there is a need for multiple tasks per fork, a SUBWORKFLOW can be utilized.
+:::
 
+<p align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/2VE2ys_85FM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
 
 ## Configuration
 
