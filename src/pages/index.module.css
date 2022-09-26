@@ -37,6 +37,8 @@
   gap:10px;
   padding-top:1rem;
   padding-right: 1rem;
+  font-weight: 400;
+  font-size: 15px;
 }
 
 .spacedUl li::marker {

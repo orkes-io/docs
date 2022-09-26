@@ -49,7 +49,7 @@ When you click ```Run Workflow```, the workflow adds a job to the "hello_world" 
 
 What if this ```hello_world``` worker is thrashing the database, or has a memory leak that is impacting performance?  A new version must be created that fixes the problem.  We can use Conductor's Task to Domain feature to spin up another version of the task - and run it in the same production workflow (without impacting production traffic!). 
 
-To show an example of how to do this, we'll spin up a second version of ```hellow_world``` on our local computer. We start by cloning [OrkesWorkers](https://github.com/orkes-io/orkesworkers) to our desktop.  Following the instructions in the [codelab](https://orkes.io/content/docs/codelab/helloworld#application-permissions), we set up application permissions:
+To show an example of how to do this, we'll spin up a second version of ```hello_world``` on our local computer. We start by cloning [OrkesWorkers](https://github.com/orkes-io/orkesworkers) to our desktop.  Following the instructions in the [codelab](https://orkes.io/content/docs/codelab/helloworld#application-permissions), we set up application permissions:
 
 * Create an application in the playground.
 * Add the hello_world workflow and task to the application

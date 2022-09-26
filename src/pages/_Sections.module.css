@@ -6,6 +6,11 @@
   flex-shrink: 0;
 }
 
+.firstWorkflowFooter {
+  font-size: 15px;
+  font-weight: bold;
+}
+
 .whiteFont {
   color: #fff;
 }

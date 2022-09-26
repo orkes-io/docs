@@ -63,7 +63,7 @@ https://clojars.org/io.orkes/conductor-clojure
 
 ``` clojure
 ;; Creates a worker and starts polling for work. will return an instance of Runner which can then be used to shutdown
-(def instance (runner-executor-for-workers
+(def shutdown-fn (runner-executor-for-workers
                (list {
                       :name "cool_clj_task"
                       :execute (fn [someData]
@@ -72,7 +72,7 @@ https://clojars.org/io.orkes/conductor-clojure
                options ))
 
 ;; Shutsdown the polling for the workers defined above
-(.shutdown instance)
+(shutdown-fn)
                
 ```
 ## Options
@@ -173,74 +173,46 @@ Takes the option map and a list/vector of tasks to register. on success it will 
 ```
 
 
-## Client namespace
-The client namespace holds the function to start a workflow and running a worker
+## TaskRunner namespace
+The taskrunner namespace holds the function to start a workflow and running a worker
 
-`[io.orkes.client :as conductor]`
+`[io.orkes.taskrunner :as conductor]`
  
 ``` clojure
 ;; Creates a worker and starts polling for work. will return an instance of Runner which can then be used to shutdown
-(def instance (runner-executor-for-workers
-               (list {
+(def shutdown-fn (conductor/runner-executor-for-workers
+ options              
+(list {
                       :name "cool_clj_task"
                       :execute (fn [someData]
                                  [:completed {:message "Hi From Clj i was created programatically"}])
                       })
-               options ))
+                ))
 
 ;; Shutsdown the polling for the workers defined above
-(.shutdown instance)
+(shutdown-fn)
                
 ```
 The (runner-executor-for-workers) function will take a list of worker implementations map, and options and start pooling for work
 it will return a TaskRunnerConfigurer instance, which you can shutdown by calling the .shutdown() java method
 
-## Mapper-Utils namespace
-The  `[io.orkes.mapper-utils :as mapper-utils]` namespace holds the functions to map to java object which are mostly not necesary.
+## Utils.
+Treat conductor workflows as simple tree data structures
 
-### The mapper-utils/java-map->clj-map protocol
-Will map a java map to a clojure map which may come in handy for workers implementation. for example consider a worker that sums two input parameters. For a workflow defined like this :
 
+`[io.orkes.utils :as ut]`
+ 
 ``` clojure
-(metadata/register-workflow-def options {:name "simple_wf"
-                                         :description "created programatically from clj"
-                                         :version 1
-                                         :tasks [{:name "simplest_task"
-                                                  :taskReferenceName "repl_task_ref"
-                                                  :inputParameters {"firstNumber" "${workflow.input.firstNumber}"
-                                                                     "secondNumber" "${workflow.input.secondNumber}"}
-                                                  :type "SIMPLE"}]
-                                         :inputParameters ["firstNumber" "secondNumber"]
-                                         :outputParameters {"result" "${repl_task_ref.output.:result}"}
-                                         :schema-version 2
-                                         :restartable true
-                                         :ownerEmail "mail@yahoo.com"
-                                         :timeoutSeconds 0
-                                         :timeoutPolicy "ALERT_ONLY"})
+;; Rename every single task to fakeName. Wil transverce the whole tree and aplly the transformation function.
+
+(ut/map-wf-tasks #(assoc % :name "fakeName")
+                                                  wf-fork-example)
+                                                  
+;; Given a workflow wf-fork-example in this case will return a new workflow without the task with the taskReferenceName "cool_clj_task_ref"
+(ut/filter-wf-tasks
+                           #(not= (:taskReferenceName %) "cool_clj_task_ref")
+                           wf-fork-example)
+               
 ```
-
-To be able to use the input params you would need to use the string names like this:
-
-``` clojure
-(def instance (conductor/runner-executor-for-workers
-               (list {:name "simplest_task"
-                      :execute (fn [someData]
-                                                            
-                                 [:completed {"result" (+ (get someData "firstNumber") (get someData "secondNumber"))}])})
-               options))
-```
-
-A more clojure friendly way would be to convert to clojure our map :
-
-``` clojure
-(def instance (conductor/runner-executor-for-workers
-               (list {:name "simplest_task"
-                      :execute (fn [someData]
-                      (let [convertedToClj (-> someData mapper-utils/java-map->clj-map)]
-                        [:completed {"result" (+ (:firstNumber convertedToClj) (:secondNumber convertedToClj))}]
-                      ))})
-               options))
-```
-
 
 
