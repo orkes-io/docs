@@ -23,6 +23,7 @@ import "github.com/conductor-sdk/conductor-go/sdk/workflow/executor"
   - [func (e *WorkflowExecutor) Pause(workflowId string) error](<#func-workflowexecutor-pause>)
   - [func (e *WorkflowExecutor) ReRun(workflowId string, reRunRequest model.RerunWorkflowRequest) (id string, error error)](<#func-workflowexecutor-rerun>)
   - [func (e *WorkflowExecutor) RegisterWorkflow(overwrite bool, workflow *model.WorkflowDef) error](<#func-workflowexecutor-registerworkflow>)
+  - [func (e *WorkflowExecutor) RemoveWorkflow(workflowId string) error](<#func-workflowexecutor-removeworkflow>)
   - [func (e *WorkflowExecutor) Restart(workflowId string, useLatestDefinition bool) error](<#func-workflowexecutor-restart>)
   - [func (e *WorkflowExecutor) Resume(workflowId string) error](<#func-workflowexecutor-resume>)
   - [func (e *WorkflowExecutor) Retry(workflowId string, resumeSubworkflowTasks bool) error](<#func-workflowexecutor-retry>)
@@ -154,6 +155,14 @@ func (e *WorkflowExecutor) RegisterWorkflow(overwrite bool, workflow *model.Work
 ```
 
 RegisterWorkflow Registers the workflow on the server.  Overwrites if the flag is set.  If the 'overwrite' flag is not set and the workflow definition differs from the one on the server, the call will fail with response code 409
+
+### func \(\*WorkflowExecutor\) [RemoveWorkflow](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/executor/executor.go#L383>)
+
+```go
+func (e *WorkflowExecutor) RemoveWorkflow(workflowId string) error
+```
+
+RemoveWorkflow Remove workflow execution permanently from the system Returns nil if no workflow is found by the id
 
 ### func \(\*WorkflowExecutor\) [Restart](<https://github.com/conductor-sdk/conductor-go/blob/main/sdk/workflow/executor/executor.go#L283>)
 

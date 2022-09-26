@@ -1,4 +1,6 @@
-# Image Processing Workflows
+
+
+# Use Case: Image Processing Workflows
 
 There are two workflows for image processing described in this article:
 
@@ -21,7 +23,7 @@ The [image_multiple_convert_resize.json](https://github.com/conductor-sdk/conduc
 
 The workflow takes in 3 inputs
 
-* fileLocation: A http location to an image files 
+* fileLocation: A http location to an image files
 * outputFormats: An array of image types E.g jpg, png, webp
 * outputSizes: An array of sizes. Each size object has a width and height property
 
@@ -56,8 +58,8 @@ For example:
 This will result in 9 output images - 3 different sizes with 3 formats each.
 
 ### Visual representation
-![image resize workflow](https://raw.githubusercontent.com/conductor-sdk/conductor-examples/main/image_processing/images/resize.jpg)
-
+<img src="https://raw.githubusercontent.com/conductor-sdk/conductor-examples/main/image_processing/images/resize.jpg"
+alt="image resize workflow" width="600" style={{paddingBottom: 20, paddingTop: 10}} />
 
 ### Output of the workflow
 
@@ -109,14 +111,14 @@ The [image_effects.json](https://github.com/conductor-sdk/conductor-examples/blo
 
 The workflow takes in 3 inputs
 
-* fileLocation: A http location to an image files 
+* fileLocation: A http location to an image files
 * recipe: Supported recipes are sepia, vibrant, watermark
 * recipeParameters: A json object of key value pairs that are specific to the recipe. The list of recipe parameters for each recipe
- * sepia
+* sepia
 
 |key | Value type | description |
 |--| -- |---|
-| sepiaIntensityThreshold | Integer (eg. 80 ) |Applies a special effect to the image, similar to the effect achieved in a photo darkroom by sepia toning. Threshold ranges from 0 to QuantumRange and is a measure of the extent of the sepia toning. A threshold of 80 is a good starting point for a 
+| sepiaIntensityThreshold | Integer (eg. 80 ) |Applies a special effect to the image, similar to the effect achieved in a photo darkroom by sepia toning. Threshold ranges from 0 to QuantumRange and is a measure of the extent of the sepia toning. A threshold of 80 is a good starting point for a
 reasonable tone. |
 
 
@@ -137,8 +139,8 @@ watermark
 
 
 ### Workflow Diagram
-
-![Diagram of Workflow](https://raw.githubusercontent.com/conductor-sdk/conductor-examples/main/image_processing/images/image_effects_diagram.jpg)
+<img src="https://raw.githubusercontent.com/conductor-sdk/conductor-examples/main/image_processing/images/image_effects_diagram.jpg"
+alt="Diagram of Workflow" width="400" style={{paddingBottom: 20, paddingTop: 10}} />
 
 ### Example Input
 
@@ -207,17 +209,21 @@ watermark
 
 Original Image
 
-![original image](https://raw.githubusercontent.com/conductor-sdk/conductor-examples/main/image_processing/images/source_image.jpeg)
+<img src="https://raw.githubusercontent.com/conductor-sdk/conductor-examples/main/image_processing/images/source_image.jpeg"
+alt="original image" width="600" style={{paddingBottom: 20}} />
 
 Sepia recipe result
 
-![sepia result](https://raw.githubusercontent.com/conductor-sdk/conductor-examples/main/image_processing/images/sepia_tone.jpeg)
+<img src="https://raw.githubusercontent.com/conductor-sdk/conductor-examples/main/image_processing/images/sepia_tone.jpeg"
+alt="sepia result" width="600" style={{paddingBottom: 20}} />
 
 Vibrant recipe result
 
-![vibrant image](https://raw.githubusercontent.com/conductor-sdk/conductor-examples/main/image_processing/images/vibrant_effect.jpeg)
+<img src="https://raw.githubusercontent.com/conductor-sdk/conductor-examples/main/image_processing/images/vibrant_effect.jpeg"
+alt="vibrant image" width="600" style={{paddingBottom: 20}} />
 
 Watermark effect (adding Orkes logo to bottom right)
 
-![watermarked image](https://raw.githubusercontent.com/conductor-sdk/conductor-examples/main/image_processing/images/watermark_effect.jpeg   )
+<img src="https://raw.githubusercontent.com/conductor-sdk/conductor-examples/main/image_processing/images/watermark_effect.jpeg"
+alt="watermarked image" width="600" style={{paddingBottom: 20}} />
 

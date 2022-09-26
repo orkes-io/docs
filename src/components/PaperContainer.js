@@ -50,7 +50,7 @@ export const InfoPaper = ({
 }) => (
   <PaperContainer className={`container padding--lg`}>
     <div className={`row row--no-gutters ${titleContainerClass}`}>
-      <h4>{title}</h4>
+      <h3>{title}</h3>
     </div>
     <ColumnRenderer columns={[infoColumn1, infoColumn2]} />
     {children}

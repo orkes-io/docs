@@ -15,8 +15,8 @@ The USPS can verify 160M addresses in the USA.  This workflow wither either resp
 This workflow requires a USPS username to be run.  Change the name of the workflow - to save in your Playground, and add your USPS Username in the Set_USPS_Name task. The [API access is free](https://www.usps.com/business/web-tools-apis/).
 :::
 
-<img src="https://raw.githubusercontent.com/conductor-sdk/conductor-examples/main/US_post_office/images/check_address.jpg" 
-    alt="check address workflow" width="400" style={{paddingBottom: 40, paddingTop: 40}} />
+<img src="https://raw.githubusercontent.com/conductor-sdk/conductor-examples/main/US_post_office/images/check_address.jpg"
+alt="check address workflow" width="400" style={{paddingBottom: 40, paddingTop: 40}} />
 
 Sample input:
 
@@ -28,7 +28,7 @@ Sample input:
 }
  ```
 
-## Workflow to Check Postage Rates - [**postage_rate**](https://github.com/conductor-sdk/conductor-examples/blob/main/US_post_office/postage_rate.json) 
+## Workflow to Check Postage Rates - [**postage_rate**](https://github.com/conductor-sdk/conductor-examples/blob/main/US_post_office/postage_rate.json)
 
 Given a `toZip` and `fromZip`, and some dimensions of the box (and the shipping type), this workflow will output the price for that shipping type.
 
@@ -40,7 +40,7 @@ This workflow requires a USPS username to be run.  Change the name of the workfl
 :::
 
 <img src="https://raw.githubusercontent.com/conductor-sdk/conductor-examples/main/US_post_office/images/postage_rate.jpg"
-alt="postage rate workflow" width="400" style={{paddingBottom: 40, paddingTop: 40}} /> 
+alt="postage rate workflow" width="400" style={{paddingBottom: 40, paddingTop: 40}} />
 
 Sample input:
 ```json

@@ -1,8 +1,9 @@
-# Video Processing Workflow
+
+# Use Case: Video Processing Workflow
 
 The [video_recipes.json](https://github.com/conductor-sdk/conductor-examples/blob/main/video_processing/video_recipes.json) workflow has several potential invocations.
 
-Below, find two example invocations of the workflow that do slightly different tasks: 
+Below, find two example invocations of the workflow that do slightly different tasks:
 
 1. [Video Transcoding](#video-transcoding):  Take one video and convert into many different formats.
 2. [Watermark a video](#video-watermarking):  Add a watermark to your video, and upload to S3.
@@ -14,9 +15,11 @@ Below, find two example invocations of the workflow that do slightly different t
 The workers that power these workflows can be found in the [orkesworkers](https://github.com/orkes-io/orkesworkers) GitHub repository.  There are 2 workers used here:
 
 1. video_recipes_prefork: This worker takes the input parameters provided and creates all of the parameters required for the dynamic forks - how many forks to instantiate and the parameters for each of the forks.
-2. video_recipes: This worker takes the inputs and (in the 2 examples below) either transcodes or adds a watermark to the video. 
+2. video_recipes: This worker takes the inputs and (in the 2 examples below) either transcodes or adds a watermark to the video.
 
-> These workers are configured to run in Orkes Playground by default.
+:::note
+These workers are configured to run in Orkes Playground by default.
+:::
 
 ## Video Transcoding
 
@@ -25,7 +28,7 @@ The workers that power these workflows can be found in the [orkesworkers](https:
 The video_recipes.json workflow (see it live on [Orkes Playground](https://play.orkes.io/workflowDef/video_recipes)) is a general purpose workflow designed for doing various recipes around video processing. One of the provided recipes includes ```transcode```.
 
 
-* fileLocation: A http location to a video file 
+* fileLocation: A http location to a video file
 * recipeInfos: An array of recipe names (‘transcode’, ‘watermark’ etc..) and their corresponding parameters recipeParmaters
 * outputSizes: An array of sizes. Each size object has a width and height property
 
@@ -37,55 +40,55 @@ Here is an example of an input payload to transcode a mp4 file into 4 different 
 
 ```json
 {
- "fileLocations": [
-   "https://file-examples.com/storage/fe9e2635216297e77988972/2017/04/file_example_MP4_480_1_5MG.mp4"
+  "fileLocations": [
+    "https://file-examples.com/storage/fe9e2635216297e77988972/2017/04/file_example_MP4_480_1_5MG.mp4"
   ],
- "recipeInfos": [
-   {
-     "recipe": "transcode",
-     "recipeParameters": {
-       "videoEncoder": "h264",
-       "videoBitRate": 971520,
-       "frameRate": 24,
-       "audioEncoder": "aac",
-       "audioBitRate": 27780,
-       "audioSamplingFrequency": 96000,
-       "outputFileFormat": "mp4"
-     }
-   },
-   {
-     "recipe": "transcode",
-     "recipeParameters": {
-       "videoEncoder": "h264",
-       "videoBitRate": 971520,
-       "frameRate": 24,
-       "audioEncoder": "aac",
-       "audioBitRate": 27780,
-       "audioSamplingFrequency": 96000,
-       "outputFileFormat": "mov"
-     }
-   },
-   {
-     "recipe": "transcode",
-     "recipeParameters": {
-       "videoEncoder": "libvpx",
-       "videoBitRate": 971520,
-       "frameRate": 24,
-       "audioEncoder": "libvorbis",
-       "outputFileFormat": "webm"
-     }
-   },
-   {
-     "recipe": "transcode",
-     "recipeParameters": {
-       "frameRate": 24,
-       "audioEncoder": "aac",
-       "audioBitRate": 27780,
-       "audioSamplingFrequency": 96000,
-       "outputFileFormat": "mp4"
-     }
-   }
- ]
+  "recipeInfos": [
+    {
+      "recipe": "transcode",
+      "recipeParameters": {
+        "videoEncoder": "h264",
+        "videoBitRate": 971520,
+        "frameRate": 24,
+        "audioEncoder": "aac",
+        "audioBitRate": 27780,
+        "audioSamplingFrequency": 96000,
+        "outputFileFormat": "mp4"
+      }
+    },
+    {
+      "recipe": "transcode",
+      "recipeParameters": {
+        "videoEncoder": "h264",
+        "videoBitRate": 971520,
+        "frameRate": 24,
+        "audioEncoder": "aac",
+        "audioBitRate": 27780,
+        "audioSamplingFrequency": 96000,
+        "outputFileFormat": "mov"
+      }
+    },
+    {
+      "recipe": "transcode",
+      "recipeParameters": {
+        "videoEncoder": "libvpx",
+        "videoBitRate": 971520,
+        "frameRate": 24,
+        "audioEncoder": "libvorbis",
+        "outputFileFormat": "webm"
+      }
+    },
+    {
+      "recipe": "transcode",
+      "recipeParameters": {
+        "frameRate": 24,
+        "audioEncoder": "aac",
+        "audioBitRate": 27780,
+        "audioSamplingFrequency": 96000,
+        "outputFileFormat": "mp4"
+      }
+    }
+  ]
 }
 ``` 
 
@@ -94,7 +97,7 @@ Here is an example of an input payload to transcode a mp4 file into 4 different 
 
 
 ### Visual Workflow Definition
-https://play.orkes.io/workflowDef/video_recipes 
+https://play.orkes.io/workflowDef/video_recipes
 
 ![screenshot of the workflow](https://raw.githubusercontent.com/conductor-sdk/conductor-examples/main/video_processing/images/video_recipes.jpg)
 
@@ -109,7 +112,7 @@ UI: There is a Run Workflow option in the Conductor UI to invoke a workflow and 
 
 ### Workflow Executions
 
-You can view a specific workflow invocation using the workflow invocation ID that is returned as part of the invocation. E.g https://play.orkes.io/execution/978dc7e7-e238-11ec-a6d8-32508b865be6 
+You can view a specific workflow invocation using the workflow invocation ID that is returned as part of the invocation. E.g https://play.orkes.io/execution/978dc7e7-e238-11ec-a6d8-32508b865be6
 
 You can also find an workflows execution from the workflow search console
 

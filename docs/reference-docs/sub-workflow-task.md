@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
 ---
-# Sub Workflow
+# Sub Workflow Task
 ```json
 "type" : "SUB_WORKFLOW"
 ```

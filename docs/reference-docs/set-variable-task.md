@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# Set Variable
+# Set Variable Task
 
 ```json
 "type" : "SET_VARIABLE"

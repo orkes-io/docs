@@ -4,17 +4,20 @@ sidebar_position: 1
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Dynamic Fork
+# Dynamic Fork Task
 ```json
 "type" : "FORK_JOIN_DYNAMIC"
 ```
-<p align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/2VE2ys_85FM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
+
 ## Introduction
 
 When the number of forks must be determined at run-time, the FORK_JOIN_DYNAMIC task is needed.  (In a regular fork operation -the [FORK_JOIN](/content/docs/reference-docs/fork-task) task- the number of forks are defined during workflow creation.)
 
-> Note: A `FORK_JOIN_DYNAMIC` can ony have ONE task per fork.  If there is a need for multiple tasks per fork, a SUBWORKFLOW can be utilized.
+:::info Note: 
+A `FORK_JOIN_DYNAMIC` can ony have ONE task per fork.  If there is a need for multiple tasks per fork, a SUBWORKFLOW can be utilized.
+:::
 
+<p align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/2VE2ys_85FM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
 
 ## Configuration
 
@@ -99,7 +102,7 @@ The format of this JSON array is different for subworkflows vs. other tasks.  Th
 
 In this case, our dynamic fork is running a SIMPLE task: ```image_convert_resize```:
 
-```
+```json
 { "dynamicTasks": [
   {
     "name": :"image_convert_resize",
@@ -129,7 +132,7 @@ In this case, our dynamic fork is running a SIMPLE task: ```image_convert_resize
 
  In this case, our Dynamic fork is running a SUB_WORKFLOW task: ```image_convert_resize_subworkflow```
 
-```
+```json
 { "dynamicTasks": [
   {
     "subWorkflowParam" : {
@@ -180,37 +183,38 @@ In this case, our dynamic fork is running a SIMPLE task: ```image_convert_resize
 This is a JSON map of the four `taskReferenceNames` and the `inputParameters` for each task.  
 
 ```json
-"dynamicTasksInput":{
-  "image_convert_resize_png_300x300_0":{
-  "outputWidth":300
-  "outputHeight":300
-  "fileLocation":"https://pbs.twimg.com/media/FJY7ud0XEAYVCS8?format=png&name=900x900"
-  "outputFormat":"png"
-  "maintainAspectRatio":true
-},
-"image_convert_resize_png_200x200_1":{
-  "outputWidth":200
-  "outputHeight":200
-  "fileLocation":"https://pbs.twimg.com/media/FJY7ud0XEAYVCS8?format=png&name=900x900"
-  "outputFormat":"png"
-  "maintainAspectRatio":true
-},
-"image_convert_resize_jpg_300x300_2":{
-  "outputWidth":300
-  "outputHeight":300
-  "fileLocation":"https://pbs.twimg.com/media/FJY7ud0XEAYVCS8?format=png&name=900x900"
-  "outputFormat":"jpg"
-  "maintainAspectRatio":true
-},
-"image_convert_resize_jpg_200x200_3":{
-  "outputWidth":200
-  "outputHeight":200
-  "fileLocation":"https://pbs.twimg.com/media/FJY7ud0XEAYVCS8?format=png&name=900x900"
-  "outputFormat":"jpg"
-  "maintainAspectRatio":true
+{
+  "dynamicTasksInput": {
+    "image_convert_resize_png_300x300_0": {
+      "outputWidth": 300,
+      "outputHeight": 300,
+      "fileLocation": "https://pbs.twimg.com/media/FJY7ud0XEAYVCS8?format=png&name=900x900",
+      "outputFormat": "png",
+      "maintainAspectRatio": true
+    },
+    "image_convert_resize_png_200x200_1": {
+      "outputWidth": 200,
+      "outputHeight": 200,
+      "fileLocation": "https://pbs.twimg.com/media/FJY7ud0XEAYVCS8?format=png&name=900x900",
+      "outputFormat": "png",
+      "maintainAspectRatio": true
+    },
+    "image_convert_resize_jpg_300x300_2": {
+      "outputWidth": 300,
+      "outputHeight": 300,
+      "fileLocation": "https://pbs.twimg.com/media/FJY7ud0XEAYVCS8?format=png&name=900x900",
+      "outputFormat": "jpg",
+      "maintainAspectRatio": true
+    },
+    "image_convert_resize_jpg_200x200_3": {
+      "outputWidth": 200,
+      "outputHeight": 200,
+      "fileLocation": "https://pbs.twimg.com/media/FJY7ud0XEAYVCS8?format=png&name=900x900",
+      "outputFormat": "jpg",
+      "maintainAspectRatio": true
+    }
+  }
 }
-
-
 ```
 
 Here's a snip from the [worker](https://github.com/orkes-io/orkesworkers/blob/main/src/main/java/io/orkes/samples/workers/ImageMultipleConvertResizeWorker.java) that we use to create these two JSON files. In this case, we are using a task, not a subworkflow.
@@ -253,7 +257,7 @@ Here's a snip from the [worker](https://github.com/orkes-io/orkesworkers/blob/ma
 
 >Note: The [Order Fulfillment codelab](/content/docs/reference-docs/dynamic-fork-task#additional-examples) uses the JQ Transform tasks to create the JSON inputs.
 
-### The workflow
+### Workflow Definition
 
 Here is the JSON representation of the  `FORK_JOIN_DYNAMIC` task followed by a `JOIN` task.  The fork is named and given a taskReferenceName, but all of the input parameters are JSON variables that we will discuss next:
 
@@ -278,15 +282,16 @@ Here is the JSON representation of the  `FORK_JOIN_DYNAMIC` task followed by a `
 
 Adding in the task that creates the inputs above the FORK creates the following workflow diagram:
 
-<p align="center"><img src="/content/img/dynamic_fork_example.jpg" alt="a dynamic fork diagram" width="400" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+<p align="center"><img src="/content/img/dynamic_fork_example.jpg" alt="a dynamic fork diagram" width="300" style={{paddingBottom: 30, paddingTop: 30}} /></p>
 
 
-
-### The Join
+### Join Definition
 
 The [JOIN](/content/docs/reference-docs/join-task) task will run after all of the dynamic tasks, collecting the output for all of the tasks.
 
->Note: For `FORK_JOIN_DYNAMIC`, all tasks must complete before the JOIN will complete the fork.
+:::note
+Note: For `FORK_JOIN_DYNAMIC`, all tasks must complete before the `JOIN` will complete the fork.
+:::
 
 ## Additional Examples
 

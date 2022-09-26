@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
 ---
-# Dynamic
+# Dynamic Task
 ```json
 "type" : "DYNAMIC"
 ```
