@@ -322,7 +322,6 @@ module.exports = {
                         },
                     ],
                 },
-                //This is redundant     'reference-docs/scheduler',
                 {
                     type: 'category',
                     label: 'Access Control',
@@ -342,13 +341,7 @@ module.exports = {
                         'Conductor/adding-datadog'
                     ],
                 },
-                /*     {   type: 'doc',
-                         id: 'how-tos/continuous_integration',
-                         label:'CI/CD'},
-                 */
                 'reference-docs/directed-acyclic-graph'
-
-
             ],
         }
 
