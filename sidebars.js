@@ -58,6 +58,7 @@ module.exports = {
                 'reference-docs/do-while-task',
                 'reference-docs/fork-task',
                 'reference-docs/dynamic-fork-task',
+                'reference-docs/dynamic-fork-from-array-task',
                 'reference-docs/join-task',
                 'reference-docs/human-task',
                 'reference-docs/dynamic-task',
