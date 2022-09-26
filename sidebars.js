@@ -112,7 +112,7 @@ module.exports = {
                 'getting-started/concepts/workflows',
                 'getting-started/concepts/tasks-and-workers',
                 'getting-started/concepts/operators',
-                'faq',
+                'reference-docs/scheduler',
             ],
         },
         {
@@ -121,23 +121,26 @@ module.exports = {
             collapsed: true,
             items: [
                 'getting-started/playground/using-conductor-playground',
-                'getting-started/install/running-locally-docker',
-                'getting-started/run/running-first-workflow',
-                'getting-started/run/running-first-worker',
+                {
+                    type: 'doc',
+                    id: 'getting-started/install/orkes-conductor-community',
+                    label: 'Orkes Community Container'
+                },
+                {
+                    type: 'doc',
+                    id: 'getting-started/install/running-locally-docker',
+                    label: 'Orkes Enterprise Container'
+                }
             ],
         },
         {
             type: 'category',
-            label: 'Creating Workflows',
+            label: 'Workflow How-Tos',
             collapsed: true,
             items: [
+                'getting-started/run/running-first-workflow',
+                'getting-started/run/running-first-worker',
                 'how-tos/Workers/write-workers',
-                'reference-docs/scheduler',
-                {
-                    type: 'doc',
-                    id: 'getting-started/concepts/access-control',
-                    label: "Secure with Access Control"
-                },
                 {
                     type: 'doc',
                     id: 'how-tos/Workflows/debugging-workflows',
@@ -145,6 +148,37 @@ module.exports = {
                 },
                 'how-tos/retries-failures-rate_limits',
                 'how-tos/continuous_integration',
+                'how-tos/Workflows/create-workflow',
+                'how-tos/Workflows/updating-workflows',
+                'how-tos/Workflows/create-secrets',
+                'how-tos/Workflows/versioning-workflows',
+                'how-tos/Workflows/starting-workflows',
+                'how-tos/Workflows/schedule-workflow',
+                'how-tos/Workflows/view-workflow-executions',
+                'how-tos/Workflows/searching-workflows',
+                'how-tos/Workflows/handling-errors',
+            ]
+        },
+        {
+            type: 'category',
+            label: 'Task How-Tos',
+            collapsed: true,
+            items: [
+                'how-tos/Tasks/creating-tasks',
+                'how-tos/Tasks/updating-tasks',
+                'how-tos/Tasks/reusing-tasks',
+                'how-tos/Tasks/task-domains',
+                'how-tos/Tasks/task-lifecycle',
+                'how-tos/Tasks/task-timeouts',
+                'how-tos/Tasks/extending-system-tasks',
+                'how-tos/Tasks/task-inputs',
+                'how-tos/Tasks/monitoring-task-queues',
+                'how-tos/Tasks/SQS-event-task',
+                {
+                    type: 'doc',
+                    id: 'getting-started/concepts/system-tasks',
+                    label: 'System Task Introduction'
+                }
             ]
         },
         {
@@ -214,92 +248,10 @@ module.exports = {
 
         {
             type: 'category',
-            label: 'Reference Documentation',
+            label: 'Other Topics',
             collapsed: true,
             items: [
-
-                {
-                    type: 'category',
-                    label: 'Workflows',
-                    collapsed: true,
-                    items: [
-                        'how-tos/Workflows/create-workflow',
-                        'how-tos/Workflows/updating-workflows',
-                        'how-tos/Workflows/create-secrets',
-                        'how-tos/Workflows/versioning-workflows',
-                        'how-tos/Workflows/starting-workflows',
-                        'how-tos/Workflows/schedule-workflow',
-                        'how-tos/Workflows/view-workflow-executions',
-                        'how-tos/Workflows/searching-workflows',
-                        'how-tos/Workflows/handling-errors',
-
-                    ],
-                },
-                {
-                    type: 'category',
-                    label: 'Tasks',
-                    collapsed: true,
-                    items: [
-                        'how-tos/Tasks/creating-tasks',
-                        'how-tos/Tasks/updating-tasks',
-                        'how-tos/Tasks/reusing-tasks',
-                        'how-tos/Tasks/task-domains',
-                        'how-tos/Tasks/task-lifecycle',
-                        'how-tos/Tasks/task-timeouts',
-                        'how-tos/Tasks/extending-system-tasks',
-                        'how-tos/Tasks/task-inputs',
-                        'how-tos/Tasks/monitoring-task-queues',
-                        'how-tos/Tasks/SQS-event-task',
-                        {
-                            type: 'category',
-                            label: 'System Tasks',
-                            collapsed: true,
-                            items: [
-                                {
-                                    type: 'doc',
-                                    id: 'getting-started/concepts/system-tasks',
-                                    label: 'System Task Introduction'
-                                }
-                            ],
-                        },
-                    ],
-                },
-                /*
-                {
-
-                    type: 'category',
-                    label: 'SDK list',
-                    collapsed: true,
-                    items: [
-                        {
-                            type:'doc',
-                            id:  'how-tos/SDKs',
-                            label:'SDKs'
-                        },
-                        {   type: 'doc',
-                            id: 'how-tos/sdks/java-sdk/workflow_sdk',
-                            label:"Java Workflow SDK"},
-                        {   type: 'doc',
-                            id: 'how-tos/sdks/java-sdk/worker_sdk',
-                            label:"Java Worker SDK"},
-                        {   type: 'doc',
-                            id: 'how-tos/sdks/java-sdk/testing_framework',
-                            label:"Java Unit Testing"},
-                        {   type: 'doc',
-                            id: 'how-tos/sdks/conductor-python/main/README',
-                            label:"Python"},
-                        {   type: 'doc',
-                            id: 'how-tos/sdks/conductor-go/main/README',
-                            label:"Go"},
-                        {   type: 'doc',
-                            id: 'how-tos/sdks/conductor-csharp/main/README',
-                            label:"CSharp"},
-                        {   type: 'doc',
-                            id: 'how-tos/sdks/conductor-clojure/main/README',
-                            label:"Clojure"}
-                     ],
-                },
-                */
+                'faq',
                 {
 
                     type: 'category',

@@ -188,8 +188,12 @@ Our Action is built on this template, and so we'll just show the steps (there ar
     * The JSON uploaded is ```super_weather_v1.json```, which contains v1 of the workflow.
 3. This is identical to step 2, except we upload v2 of the workflow.
 
-> Note: The PUT command for Conductor expects a JSON array.  If we examine the JSON files, the JSON is encapsulated in ```[]```.
+:::tip 
+The PUT command for Conductor expects a JSON array.  If we examine the JSON files, the JSON is encapsulated in ```[]```.
+:::
 
-> Note: We could have included both V1 and V1 in the same file, but that does impact readability and editing, so in this case we opted to upload 2 distinct files.
+:::note
+We could have included both V1 and V2 versions in the same file, however for readability we opted to upload 2 distinct files.
+:::
 
 

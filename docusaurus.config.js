@@ -101,6 +101,29 @@ const config = {
             "docusaurus-plugin-remote-content",
             {
                 // options here
+                id: "docker",
+                name: "content", // used by CLI, must be path safe
+                sourceBaseUrl: "https://raw.githubusercontent.com/orkes-io/orkes-conductor-community/main/", // the base url for the markdown (gets prepended to all of the documents when fetching)
+                outDir: "docs/getting-started/install", // the base directory to output to.
+                documents: [
+                    "/README.md",
+                ],
+                performCleanup: false,
+                modifyContent(filename) {
+                    console.log(filename)
+                    if (filename === "/README.md") {
+                        return {
+                            filename: "orkes-conductor-community.md"
+                        }
+                    }
+                }
+            },
+
+        ],
+        [
+            "docusaurus-plugin-remote-content",
+            {
+                // options here
                 id: "usecases",
                 name: "content", // used by CLI, must be path safe
                 sourceBaseUrl: "https://raw.githubusercontent.com/conductor-sdk/conductor-examples/main/", // the base url for the markdown (gets prepended to all of the documents when fetching)
