@@ -2,20 +2,23 @@
 sidebar_position: 1
 ---
 
-# Fork
+# Fork Task
 ```json
 "type" : "FORK_JOIN"
 ```
 
 ## Introduction
 
-<p align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/uS1rRhlWYfk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
-
 A Fork operation lets you run a specified list of other tasks or sub workflows in parallel. A fork task is
 followed by a join operation that waits on the forked tasks or sub workflows to finish. The `JOIN`
 task also collects outputs from each of the forked tasks or sub workflows.
 
-<p align="center"><img src="/content/img/simple_fork.jpg" alt="a simple fork diagram" width="400" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+<p style={{textAlign: "center"}}>
+<img src="/content/img/simple_fork.png" alt="a simple fork diagram" width="280" 
+style={{paddingBottom: 30, paddingTop: 30}} />
+</p>
+
+<p align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/uS1rRhlWYfk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
 
 ## Use Cases
 
@@ -102,8 +105,8 @@ references that were being `joinOn`. The corresponding values are the outputs of
     "email_sent_to": "test@example.com"
   },
   "sms_notification_ref": {
-    "smm_sent_at": "2021-11-06T07:37:17+0129",
-    "sms_sen": "+1-425-555-0189"
+    "sms_sent_at": "2021-11-06T07:37:17+0129",
+    "sms_sent_to": "+1-xxx-xxx-xxxx"
   }
 }
 ```
@@ -212,8 +215,8 @@ references that were being `joinOn`. The corresponding values are the outputs of
     "email_sent_to": "test@example.com"
   },
   "sms_notification_ref": {
-    "smm_sent_at": "2021-11-06T07:37:17+0129",
-    "sms_sen": "+1-425-555-0189"
+    "sms_sent_at": "2021-11-06T07:37:17+0129",
+    "sms_sent_to": "+1-xxx-xxx-xxxx"
   }
 }
 ```

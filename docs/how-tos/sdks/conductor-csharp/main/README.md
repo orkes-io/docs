@@ -13,7 +13,7 @@
 
 ### Write workers  
 
-```
+```csharp
  internal class MyWorkflowTask : IWorkflowTask
     {
         public MyWorkflowTask(){}
@@ -48,7 +48,7 @@
 
 ### Run workers
 
-```
+```csharp
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -108,12 +108,14 @@ namespace TestOrkesSDK
 }
 ```
 
-####Note:
-Replace KEY and SECRET by obtaining a new key and secret from [Orkes Playground](https://play.orkes.io/)
+>***Note***
+>
+>Replace KEY and SECRET by obtaining a new key and secret from [Orkes Playground](https://play.orkes.io/)
+>
 
 See [Generating Access Keys for Programmatic Access](https://orkes.io/content/docs/getting-started/concepts/access-control#access-keys) for details./
 
-```
+```csharp
     internal class WorkflowsWorkerService : BackgroundService
     {
         private readonly IWorkflowTaskCoordinator workflowTaskCoordinator;
@@ -142,7 +144,7 @@ See [Generating Access Keys for Programmatic Access](https://orkes.io/content/do
 
 ### Worker Configurations
 Worker configuration is handled via Configuration object passed when initializing TaskHandler.
-```
+```csharp
 Configuration configuration = 
     new Configuration(new ConcurrentDictionary<string, string>(), "KEY", "SECRET", "https://play.orkes.io/");
 ```
@@ -151,7 +153,7 @@ Configuration configuration =
 
 Below is the code snippet that shows how to register a simple workflow and start execution:
 
-```
+```csharp
 IDictionary<string, string> optionalHeaders = new ConcurrentDictionary<string, string>();
 Configuration configuration = new Configuration(optionalHeaders, "keyId", "keySecret");
 
@@ -177,9 +179,11 @@ Dictionary<string, object> request = new Dictionary<string, object>();
 request.Add("http_request", requestParams);
 workflowTask.InputParameters = request;
 workflowDef.Tasks = new List<WorkflowTask>() { workflowTask };
+
 //Run a workflow
 WorkflowResourceApi workflowResourceApi = new WorkflowResourceApi(configuration);
 Dictionary<string, Object> input = new Dictionary<string, Object>();
+
 //Fill the input map which workflow consumes.
 workflowResourceApi.StartWorkflow("test_workflow", input, 1);
 Console.ReadLine();

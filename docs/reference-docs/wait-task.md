@@ -2,10 +2,8 @@
 sidebar_position: 1
 ---
 
-# Wait
+# Wait Task
 ```json
-"name": "waiting_task",
-"taskReferenceName":"waiting_task_ref",
 "type" : "WAIT"
 ```
 ## Introduction

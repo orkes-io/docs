@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# Join
+# Join Task
 ```json
 "type" : "JOIN"
 ```
@@ -23,7 +23,7 @@ to the next step.
 
 ### Configuration
 
-Here is an example of a _`JOIN`_ task. This task will wait for the completion of tasks `my_task_ref_1`
+Here is an example of a `JOIN` task. This task will wait for the completion of tasks `my_task_ref_1`
 and `my_task_ref_2` as specified by the `joinOn` attribute.
 
 ```json
@@ -99,8 +99,8 @@ references that were being `joinOn`. The corresponding values are the outputs of
     "email_sent_to": "test@example.com"
   },
   "sms_notification_ref": {
-    "smm_sent_at": "2021-11-06T07:37:17+0129",
-    "sms_sen": "+1-425-555-0189"
+    "sms_sent_at": "2021-11-06T07:37:17+0129",
+    "sms_sent_to": "+1-xxx-xxx-xxxx"
   }
 }
 
@@ -206,8 +206,8 @@ references that were being `joinOn`. The corresponding values are the outputs of
     "email_sent_to": "test@example.com"
   },
   "sms_notification_ref": {
-    "smm_sent_at": "2021-11-06T07:37:17+0129",
-    "sms_sen": "+1-425-555-0189"
+    "sms_sent_at": "2021-11-06T07:37:17+0129",
+    "sms_sent_to": "+1-xxx-xxx-xxxx"
   }
 }
 

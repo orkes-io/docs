@@ -8,8 +8,9 @@ This workflow extracts data from GitHub, transforms the data, and then uploads i
 |[Try it in Orkes Playground](https://play.orkes.io/workflowDef/Github_star_workflow)|
 |---|
 
-> Note: to use this workflow, you need API keys for both GitHub and for Orbit.  
-
+:::note
+To use this workflow, you need API keys for both GitHub and for Orbit.
+:::
 
 
 ## Visual representation

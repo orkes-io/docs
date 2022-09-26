@@ -48,32 +48,28 @@ const config = {
                     "/conductor-csharp/main/README.md",
                     "conductor-clojure/main/README.md"], // the file names to download
                 modifyContent(filename) {
-                    if (filename.equals("workers_sdk.md")) {
+                    console.log(filename)
+                    if (filename === "workers_sdk.md") {
                         return {
                             filename: "workers_sdk"
                         }
-                    }
-                    if (filename.equals("workflow_sdk.md")) {
+                    } else if (filename === "workflow_sdk.md") {
                         return {
                             filename: "workflow_sdk"
                         }
-                    }
-                    if (filename.equals("executor.md")) {
+                    } else if (filename === "executor.md") {
                         return {
                             filename: "executor"
                         }
-                    }
-                    if (filename.equals("settings.md")) {
+                    } else if (filename === "settings.md") {
                         return {
                             filename: "settings"
                         }
-                    }
-                    if (filename.equals("workflow.md")) {
+                    } else if (filename === "workflow.md") {
                         return {
                             filename: "workflow"
                         }
-                    }
-                    if (filename.equals("worker.md")) {
+                    } else if (filename === "worker.md") {
                         return {
                             filename: "worker"
                         }
@@ -89,14 +85,38 @@ const config = {
                 name: "content", // used by CLI, must be path safe
                 sourceBaseUrl: "https://raw.githubusercontent.com/Netflix/conductor/main/", // the base url for the markdown (gets prepended to all of the documents when fetching)
                 outDir: "docs/how-tos/sdks", // the base directory to output to.
-                documents: ["/java-sdk/workflow_sdk.md",
+                documents: [
+                    "/java-sdk/workflow_sdk.md",
                     "/java-sdk/worker_sdk.md",
                     "/java-sdk/testing_framework.md",
                     "/java-sdk/src/main/java/com/netflix/conductor/sdk/workflow/def/ConductorWorkflow.java",
                     "/java-sdk/src/main/java/com/netflix/conductor/sdk/workflow/def/tasks/SimpleTask.java",
                     "/java-sdk/src/main/java/com/netflix/conductor/sdk/workflow/def/tasks/ForkJoin.java",
+                ],
+                performCleanup: false
+            },
 
-                ]               // the file names to download
+        ],
+        [
+            "docusaurus-plugin-remote-content",
+            {
+                // options here
+                id: "docker",
+                name: "content", // used by CLI, must be path safe
+                sourceBaseUrl: "https://raw.githubusercontent.com/orkes-io/orkes-conductor-community/main/", // the base url for the markdown (gets prepended to all of the documents when fetching)
+                outDir: "docs/getting-started/install", // the base directory to output to.
+                documents: [
+                    "/README.md",
+                ],
+                performCleanup: false,
+                modifyContent(filename) {
+                    console.log(filename)
+                    if (filename === "/README.md") {
+                        return {
+                            filename: "orkes-conductor-community.md"
+                        }
+                    }
+                }
             },
 
         ],

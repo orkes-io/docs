@@ -127,7 +127,7 @@ export const YourfirstWorkflowSection = ({
         </div>
       </div>
       <Text align="center" className={styles.firstWorkflowFooter}>
-        {sectionFooter}
+        Tasks such as these makes up steps in your workflows. Learn more <a href="docs/introduction">here</a>
       </Text>
     </InfoPaper>
   </div>

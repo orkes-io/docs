@@ -1,7 +1,7 @@
 
 # Finance Domain Workflow Samples
 
-##  Deciding a Bank Loan Application - [Loan Decisions](https://github.com/conductor-sdk/conductor-examples/blob/main/finance/loan_banking.json)  
+##  Deciding a Bank Loan Application - [Loan Decisions](https://github.com/conductor-sdk/conductor-examples/blob/main/finance/loan_banking.json)
 
 This sample workflow outlines a decision process for loan origination. It splits the process into 3 classes- for business, education and personal loans.
 

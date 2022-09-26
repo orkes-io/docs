@@ -1,5 +1,5 @@
 ---
-displayed_sidebar: mainSidebar
+displayed_sidebar: referenceDocSidebar
 sidebar_position: 1
 ---
 

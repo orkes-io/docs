@@ -63,50 +63,53 @@ export default function Home() {
                   and workflow orchestration framework
                 </li>
                 <li>
-                  Build highly reliable distributed applications using the
-                  language of choice
+                  Build stateful applications without the overhead of managing a state machine
                 </li>
                 <li>
-                  Lets us focus on coding the business logic of the application
-                  instead of managing complexities of a distributed ecosystem
+                  Enables development of highly resilient and scalable distributed systems with built-in features that empower rapid development of business applications
                 </li>
                 <li>
-                  Cleanly decouple the design of the application flow from the
-                  implementation
+                  Used for a wide range of use cases such as - business process automations, data pipelines, CI/CD pipelines, order management workflows etc.
+                </li>
+                <li>
+                  Run 100s to millions of workflows per day - scales seamlessly for a wide range of applications
+                </li>
+                <li>
+                  Build workflows using many popular languages with SDKs
                 </li>
               </ul>
             }
             videoTitle="Explain Like I'm 5: Docusaurus"
             videoSrc="https://www.youtube.com/embed/du7mls9XMUE"
             videoFooterCaption="
-                  Watch this short video to learn more about conductor
+                  Conductor is the workflow system of choice at Netflix. Learn more in this video
                 "
           />
           <TitleDoubleTextSection
-            title1="Why should you use Conductor?"
+            title1="Why should we use Conductor?"
             firstColumnText={
               <ul className="liClass">
                 <li>
-                  Lets you focus on coding the business logic of the application
+                  Lets us focus on coding the business logic of the application
                   instead of managing the state and complexities of a
                   distributed ecosystem
                 </li>
                 <li>
-                  You can cleanly decouple the design of the application flow
+                  We can cleanly decouple the design of the application flow
                   from the implementation
                 </li>
                 <li>
-                  Your application’s resilience is increased with native support
-                  in Conductor for retries, error handling and rich metrics
+                  Application's resilience is increased with native support
+                  in Conductor for retries, error handling alongside rich metrics
                 </li>
                 <li>
-                  You have a powerful visualizations of your application’s
+                  We have powerful visualizations of your application’s
                   execution paths that can shorten debugging times from hours to
                   minutes
                 </li>
               </ul>
             }
-            title2="What can you build with Conductor?"
+            title2="What can we build with Conductor?"
             secondColumnText={
               <ul className="liClass">
                 <li>
@@ -120,12 +123,12 @@ export default function Home() {
                 </li>
                 <li>
                   Long running workflows that need to wait for days, months or
-                  even years between executions (e.g. monthly subscription
+                  even years between executions (e.g. monthly or yearly subscription
                   billing)
                 </li>
                 <li>
                   Mission critical applications with high reliability
-                  requirements (e.g. financial transactions
+                  requirements (e.g. financial transactions)
                 </li>
               </ul>
             }
@@ -140,9 +143,9 @@ export default function Home() {
               python: <PythonSample />,
               go: <GoSample />,
             }}
-            title="Your First Workflow"
+            title="Your First Workflow Task"
             rightImage={SmallDiagram}
-            sectionFooter="Simple functional code that can run complex flows"
+            sectionFooter=""
           />
           <CommunitySection />
         </main>
