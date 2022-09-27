@@ -1,5 +1,5 @@
 {
-  "index_name": "prod_docs",
+  "index_name": "orkes-content",
   "start_urls": ["https://orkes.io/content/"],
   "selectors": {
     "lvl0": {

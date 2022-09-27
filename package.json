@@ -30,6 +30,7 @@
     "classnames": "^2.3.1",
     "clsx": "^1.1.1",
     "docusaurus-plugin-remote-content": "3.1.0",
+    "docusaurus-theme-search-typesense": "^0.7.0-0",
     "file-loader": "^6.2.0",
     "prism-react-renderer": "^1.2.1",
     "react": "^17.0.1",
