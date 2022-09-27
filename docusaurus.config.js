@@ -186,6 +186,7 @@ const config = {
         ],
     ],
     themes: [
+        'docusaurus-theme-search-typesense'
         // '@saucelabs/theme-github-codeblock'
     ],
 
@@ -302,23 +303,40 @@ const config = {
                 darkTheme: darkCodeTheme,
                 additionalLanguages: ['java', 'json'],
             },
-            algolia: {
-                appId: "F6Z9JYN7SD",
+            typesense:{
+                typesenseCollectionName: 'orkes-content',
+                typesenseServerConfig: {
+                    nodes: [
+                      {
+                        host: 'fdzpgxo5jqkuec0sp-1.a1.typesense.net',
+                        port: 443,
+                        protocol: 'https',
+                      },
+                    ],
+                    apiKey: 'Mv2LnFhyvlKpQHlIYzKtwqrOLYjasQV8',
+                  },
+                  typesenseSearchParameters: {},
 
-                // Public API key: it is safe to commit it
-                apiKey: "4b16b443762534d364363a6dee383487",
-
-                indexName: "prod_docs",
-
-                // Optional: see doc section below
-                contextualSearch: false,
-
-                // Optional: Specify domains where the navigation should occur through window.location instead on history.push. Useful when our Algolia config crawls multiple documentation sites and we want to navigate with window.location.href to them.
-                // externalUrlRegex: "external\\.com|domain\\.com",
-
-                // Optional: Algolia search parameters
-                // searchParameters: {},
-            },
+                  // Optional
+                  contextualSearch: true,
+            }
+            // algolia: {
+            //     appId: "F6Z9JYN7SD",
+            //
+            //     // Public API key: it is safe to commit it
+            //     apiKey: "4b16b443762534d364363a6dee383487",
+            //
+            //     indexName: "prod_docs",
+            //
+            //     // Optional: see doc section below
+            //     contextualSearch: false,
+            //
+            //     // Optional: Specify domains where the navigation should occur through window.location instead on history.push. Useful when our Algolia config crawls multiple documentation sites and we want to navigate with window.location.href to them.
+            //     // externalUrlRegex: "external\\.com|domain\\.com",
+            //
+            //     // Optional: Algolia search parameters
+            //     // searchParameters: {},
+            // },
         }),
 };
 
