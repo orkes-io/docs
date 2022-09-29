@@ -15,6 +15,7 @@ See the left navigation for all of the reference documentation for Netflix Condu
 * [Inline Task](/content/docs/reference-docs/system-tasks/inline-task)
 * [Kafka Publish Task](/content/docs/reference-docs/system-tasks/kafka-publish-task)
 * [Business Rule Task](/content/docs/reference-docs/system-tasks/business-rule)
+* [Terminate Workflow Task](/content/docs/reference-docs/system-tasks/terminate-workflow)
 
 ## Operator Tasks
 * [Switch](/content/docs/reference-docs/switch-task)

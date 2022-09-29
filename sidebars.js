@@ -46,6 +46,11 @@ module.exports = {
                     type: 'doc',
                     id: 'reference-docs/wait-task',
                     label: "Wait Task"
+                },
+                {
+                    type: 'doc',
+                    id: 'reference-docs/system-tasks/terminate-workflow',
+                    label: "Terminate Workflow"
                 }
             ]
         },
