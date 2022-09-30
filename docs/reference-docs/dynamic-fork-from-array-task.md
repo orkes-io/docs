@@ -12,82 +12,208 @@ import TabItem from '@theme/TabItem';
 
 ## Introduction
 
-Dynamic fork is a powerful feature in Conductor that can be used to run parallel executions of the task with dynamism. 
-
-### Creating a workflow with dynamic fork
-
-`FORK_JOIN_DYNAMIC` task is used to create a dynamic fork. Dynamic fork is always added with a `JOIN` task in pairs. 
-Here is an example from a workflow that contains a dynamic fork join.
-
-<p align="center"><img src="/content/img/dynamic_fork.png" alt="a dynamic fork diagram" width="300" style={{paddingBottom: 30, paddingTop: 30}} /></p>
-
-Dynamic fork is a powerful feature with a lot of customization.  In this article, we will focus on a simple use case that is equivalent to a parallel stream processing like the following in java:
+Dynamic fork is a powerful feature in Conductor that can be used to run parallel executions of the task with dynamism. Think of this as Conductor’s equivalent of stream parallel processing in Java:
 
 ```java
-List<String> items  = new ArrayList<>();
-items.stream().parallel().forEach(item -> process(item));
+arrayItems.stream().parallel().forEach(item -> process(item));
 ```
 
-A dynamic fork needs inputs that specify two things:
+Here each item of the array is passed to a method called process.
 
-1. Name of the task to execute in parallel
-2. List of inputs to each of the tasks running in parallel
+Conductor allows you to do the same and covers several types of processes.
 
-We can fork multiple tasks by giving two inputs to the dynamic fork task:
-* `fork_task_name` : Name of the task that is executed in parallel
-* `fork_task_input` : List of inputs - either text, number or a JSON object that are given as input to each of the forked tasks.
-
-<p><img src="/content/img/dynamic_fork_1.png" alt="a dynamic fork diagram" width="800" style={{paddingBottom: 30, paddingTop: 30}} /></p>
-
-The inputs can be complex JSON objects as well:
-
-<p><img src="/content/img/dynamic_fork_2.png" alt="a dynamic fork diagram" width="800" style={{paddingBottom: 30, paddingTop: 30}} /></p>
-
-When we execute this workflow, this is how the tasks are executed:
-
-<p><img src="/content/img/dynamic_fork_3.png" alt="a dynamic fork diagram" width="700" style={{paddingBottom: 30, paddingTop: 30}} /></p>
-
-If we look at the input to the task:
-
-<p><img src="/content/img/dynamic_fork_4.png" alt="a dynamic fork diagram" width="600" style={{paddingBottom: 30, paddingTop: 30}} /></p>
-
-As with the rest of the tasks, the name of the task (send_email) or the inputs can be fully dynamic coming from either the workflow input or another task’s output as well.  To do that, you just replace the static values (either one of both of them) for fork_task_name and fork_task_inputs with variables:
-
-<p><img src="/content/img/dynamic_fork_5.png" alt="a dynamic fork diagram" width="800" style={{paddingBottom: 30, paddingTop: 30}} /></p>
+1. Simple Task - When we need to run a simple custom worker task
+2. [HTTP Task](./system-tasks/http-task) - When we need to run the system HTTP workers
+3. [Sub Workflows](./sub-workflow-task) - Use this when we want to run more than one tasks or a series or steps that can be a full-fledged complex flow
+4. Other Conductor Task Types - This can also be used for other task types such as EVENT, HUMAN etc.
 
 
-### Executing HTTP tasks in parallel
+### Running Simple Tasks using Dynamic Fork 
 
-Use fork_task_type as HTTP that executes a system HTTP task.
+Run a simple task for each of the inputs provided
 
-<p><img src="/content/img/dynamic_fork_6.png" alt="a dynamic fork diagram" width="800" style={{paddingBottom: 30, paddingTop: 30}} /></p>
+| Parameter Name | Description                                                      |
+|----------------|------------------------------------------------------------------|
+| forkTaskName   | Specify name of the simple task to execute                       |
+| forkTaskInputs | Array of inputs - a task will be executed for each of the inputs |
 
-#### HTTP Task Input specification
+In this example, each task will be executed with the following input:
 
-Input to an HTTP task has the following parameters specified as `http_request`:
+```json
+{
+    "inputText" : "value1",
+    "inputNumber" : 1,
+    "index": 0 // Added by the system to represent the array index for the object
+}
+```
 
-<p><img src="/content/img/dynamic_fork_7.png" alt="a dynamic fork diagram" width="400" style={{paddingBottom: 30, paddingTop: 30}} /></p>
+**Example:**
 
-| Parameter Name      | Description                                                                                                                                       |
-| ----------- |---------------------------------------------------------------------------------------------------------------------------------------------------|
-| uri      | HTTP(S) URL                                                                                |
-| method   | GET, PUT, POST or DELETE              |
-| body   | If sending a POST or PUT request. Can be either JSON object or a String             |
-| connectionTimeOut   | Socket timeout to the HTTP server in millis for connection. Useful when connecting to a server with high connect latencies. (eg. across regions)  |
-| readTimeOut | Read timeout for reading the response from connection. Useful for slow connections                                                               |
+```json
+{
+  "name": "dynamic_workflow_array_simple",
+  "description": "Dynamic workflow array - run simple task",
+  "version": 1,
+  "tasks": [
+    {
+      "name": "dynamic_workflow_array_simple",
+      "taskReferenceName": "dynamic_workflow_array_simple_ref",
+      "inputParameters": {
+        "forkTaskName": "update_fruit_list_task",
+        "forkTaskInputs": [
+          {
+            "inputText" : "value1",
+            "inputNumber" : 1
+          },
+          {
+            "inputText" : "value2",
+            "inputNumber" : 2
+          },
+          {
+            "inputText" : "value3",
+            "inputNumber" : 3
+          }
+        ]
+      },
+      "type": "FORK_JOIN_DYNAMIC",
+      "dynamicForkTasksParam": "dynamicTasks",
+      "dynamicForkTasksInputParamName": "dynamicTasksInput"
+    },
+    {
+      "name": "dynamic_workflow_array_simple_join",
+      "taskReferenceName": "dynamic_workflow_array_simple_join_ref",
+      "type": "JOIN"
+    }
+  ],
+  "schemaVersion": 2,
+  "ownerEmail": "boney@orkes.io"
+}
+```
 
+| [Run it in Orkes Playground](https://play.orkes.io/workflowDef/dynamic_workflow_array_simple) |
+|-------------------------------------------------------------------------------------------| 
 
-### Examples
+We can also use simple values or a mix of complex and simple objects.
+```json
+[
+  "apple", "orange", "kiwi"
+]
+```
+When using simple values, it will be passed with the key `input` and also an `index` representing the index of the element in the array
+```json
+{
+  "input" : "apple", // Value
+  "index" : 0 // Index of the element
+}
+```
 
-Give it a try - we have a few workflows created in [Playground](https://play.orkes.io/) that you can take a look at and see for yourself:
+### Running HTTP Tasks using Dynamic Fork
+
+To run HTTP, we will use the same parameters as running SIMPLE tasks as shown above and the value of 
+
+`forkTaskName` will be `HTTP`
+
+and the inputs you provide will be what the HTTP task expects. 
 
 :::tip
-Run the workflows to see the inputs and outputs.
+`method` has a default value of `GET` and need not be specified if the HTTP call is a `GET`
 :::
 
-* [Execute HTTP tasks in parallel](https://play.orkes.io/workflowDef/simple_http_fork)
-* [Execute worker tasks in parallel](https://play.orkes.io/workflowDef/simple_fork_task/1)
-* [Execute sub workflows  in parallel](https://play.orkes.io/workflowDef/simple_subworkflow_fork)
+**Example:**
 
-As usual, if you find this useful don’t forget to give us a ⭐ at
-https://github.com/Netflix/conductor
+```json
+{
+  "name": "dynamic_workflow_array_http",
+  "description": "Dynamic workflow array - run HTTP tasks",
+  "version": 1,
+  "tasks": [
+    {
+      "name": "dynamic_workflow_array_http",
+      "taskReferenceName": "dynamic_workflow_array_http_ref",
+      "inputParameters": {
+        "forkTaskName": "HTTP",
+        "forkTaskInputs": [
+          {
+            "url" : "https://orkes-api-tester.orkesconductor.com/get"
+          },
+          {
+            "url" : "https://orkes-api-tester.orkesconductor.com/get",
+            "method" : "GET"
+          }
+        ]
+      },
+      "type": "FORK_JOIN_DYNAMIC",
+      "dynamicForkTasksParam": "dynamicTasks",
+      "dynamicForkTasksInputParamName": "dynamicTasksInput"
+    },
+    {
+      "name": "dynamic_workflow_array_http_join",
+      "taskReferenceName": "dynamic_workflow_array_http_join_ref",
+      "type": "JOIN"
+    }
+  ],
+  "schemaVersion": 2,
+  "ownerEmail": "boney@orkes.io"
+}
+```
+
+| [Run it in Orkes Playground](https://play.orkes.io/workflowDef/dynamic_workflow_array_http) |
+|-------------------------------------------------------------------------------------------| 
+
+
+
+
+### Running Sub Workflows using Dynamic Fork
+
+Run a sub workflow for each of the inputs provided
+
+| Parameter Name          | Description                                                      |
+|-------------------------|------------------------------------------------------------------|
+| forkTaskWorkflow        | Specify name of the sub workflow to execute                      |
+| forkTaskWorkflowVersion | Optional version of the workflow to run                          |
+| forkTaskInputs          | Array of inputs - a task will be executed for each of the inputs |
+
+:::note
+`forkTaskWorkflow` - when this value is present, Conductor treats this as a dynamic fork that runs sub workflows
+:::
+
+**Example:**
+
+```json
+{
+  "name": "dynamic_workflow_array_sub_workflow",
+  "description": "Dynamic workflow array - run sub workflow tasks",
+  "version": 1,
+  "tasks": [
+    {
+      "name": "dynamic_workflow_array_sub_workflow",
+      "taskReferenceName": "dynamic_workflow_array_sub_workflow_ref",
+      "inputParameters": {
+        "forkTaskWorkflow": "extract_user",
+        "forkTaskInputs": [
+          {
+             "input" : "value1"
+          },
+          {
+             "input" : "value2"
+          }
+        ]
+      },
+      "type": "FORK_JOIN_DYNAMIC",
+      "dynamicForkTasksParam": "dynamicTasks",
+      "dynamicForkTasksInputParamName": "dynamicTasksInput"
+    },
+    {
+      "name": "dynamic_workflow_array_sub_workflow_join",
+      "taskReferenceName": "dynamic_workflow_array_sub_workflow_join_ref",
+      "type": "JOIN"
+    }
+  ],
+  "schemaVersion": 2,
+  "ownerEmail": "boney@orkes.io"
+}
+```
+
+| [Run it in Orkes Playground](https://play.orkes.io/workflowDef/dynamic_workflow_array_sub_workflow) |
+|-------------------------------------------------------------------------------------------| 
+
