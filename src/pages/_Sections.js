@@ -94,7 +94,7 @@ export const TitleDoubleTextSection = ({
 );
 
 export const BuildYourFirstWorkflowLinkButton = ({
-  caption = "Build yoir first Workflow in 2 Minutes",
+  caption = "Build your first Workflow in 2 Minutes",
   to,
 }) => (
   <div className="row row--center">
