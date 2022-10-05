@@ -1,6 +1,9 @@
 name: Index
 
-on: [workflow_dispatch]
+on: 
+ push:
+  branches:
+    - "action-to-index"
 
 jobs:
   build:
