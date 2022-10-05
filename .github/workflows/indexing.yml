@@ -14,7 +14,7 @@ jobs:
 
     - name: Run DocSearch Scrapper
       run: |
-        docker run -it \
+        docker run \
           -e TYPESENSE_API_KEY=${{ secrets.TYPESENSE_API_KEY }} \
           -e TYPESENSE_HOST="fdzpgxo5jqkuec0sp-1.a1.typesense.net" \
           -e TYPESENSE_PORT="443" \
