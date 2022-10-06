@@ -313,7 +313,7 @@ const config = {
                         protocol: 'https',
                       },
                     ],
-                    apiKey: 'Mv2LnFhyvlKpQHlIYzKtwqrOLYjasQV8',
+                    apiKey: 'h4mOfVwxKrvckYlRgJV4XPPrqLxsI7yu',
                   },
                   typesenseSearchParameters: {},
 
