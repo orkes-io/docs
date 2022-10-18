@@ -15,7 +15,8 @@ using an evaluator. There are two supported evaluators as of now:
 |name|description|
 |---|---|
 | value-param | Use a parameter directly as the value |
-| javascript | Evaluate Javascript expressions and compute value |
+| javascript | Evaluate Javascript expressions using nashorn and compute value |
+| graaljs | Evaluate Javascript expressions using graaljs and compute value |
 
 ## Use Cases
 
