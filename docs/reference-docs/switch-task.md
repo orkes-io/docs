@@ -30,7 +30,7 @@ Following are the task configuration parameters :
 
 |name|type|description|
 |---|---|---|
-|evaluatorType|String|Type of the evaluator used. Supported types: `value-param`, `javascript`.|
+|evaluatorType|String|Type of the evaluator used. Supported types: `value-param`, `javascript`, `graaljs`.|
 |expression|String|Expression that depends on the evaluator type. For `value-param` evaluator, expression is input parameter, for `javascript` evaluator, it is the javascript expression.|
 |decisionCases|Map[String, List[task]]|Map where key is possible values that can result from `expression` being evaluated by `evaluatorType` with value being list of tasks to be executed.|
 |defaultCase|List[task]|List of tasks to be executed when no matching value if found in decision case (default condition)|
