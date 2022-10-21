@@ -10,7 +10,7 @@ sidebar_position: 11
 ## Introduction
 
 Inline Task helps execute necessary logic at Workflow run-time,
-using an evaluator. There are two supported evaluators as of now:
+using an evaluator. There are three supported evaluators as of now:
 
 |name|description|
 |---|---|
