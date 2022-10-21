@@ -55,8 +55,8 @@ The Tasks' output is sent as a payload to the external event. In case of SQS, th
 ### Supported Queuing Systems
 Conductor has support for the following external event queueing systems as part of the OSS build
 1. SQS (prefix: sqs)
-2. [NATS](https://github.com/Netflix/conductor/tree/main/contribs/src/main/java/com/netflix/conductor/contribs/queue/nats) (prefix: nats)
-3. [AMQP](https://github.com/Netflix/conductor/tree/main/contribs/src/main/java/com/netflix/conductor/contribs/queue/amqp) (prefix: amqp_queue or amqp_exchange)
+2. [NATS](https://github.com/Netflix/conductor-community/tree/main/event-queue) (prefix: nats)
+3. [AMQP](https://github.com/Netflix/conductor-community/tree/main/event-queue/amqp) (prefix: amqp_queue or amqp_exchange)
 4. Internal Conductor (prefix: conductor) 
 To add support for other 
 
