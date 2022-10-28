@@ -52,7 +52,7 @@ jobs:
       run: |
         docker run \
           -e TYPESENSE_API_KEY=${{ secrets.TYPESENSE_API_KEY }} \
-          -e TYPESENSE_HOST="fdzpgxo5jqkuec0sp-1.a1.typesense.net" \
+          -e TYPESENSE_HOST="7xanmp8g5uyd4rqop.a1.typesense.net" \
           -e TYPESENSE_PORT="443" \
           -e TYPESENSE_PROTOCOL="https" \
           -e CONFIG="$(cat ./search.config.json | jq -r tostring)" \
