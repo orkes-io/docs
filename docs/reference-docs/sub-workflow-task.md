@@ -12,12 +12,11 @@ Sub Workflow task allows for nesting a workflow within another workflow.
 
 ### Use Cases
 
-Suppose we want to include another workflow inside our current workflow. In that
-case, Sub Workflow Task would be used.
+You can leverage sub-workflow tasks in cases where you want to include another workflow within an existing workflow.
 
 **Examples**
-* The ```Do-While``` Task does not allow nested ```Do-While``` tasks.  But  it does permit a subworkflow that can have a ```Do-While``` loop inside it.
-* ```Dynamic Forks ``` can only contain one task. But that one task can be a subworkflow containing many additional tasks.
+* The ```Do-While``` task does not allow nested ```Do-While``` tasks.  But  it does permit a sub-workflow that can have a ```Do-While``` loop inside it.
+* ```Dynamic Forks ``` can only contain one task. But using the sub-workflow concept, this single task can be a sub-workflow that includes additional tasks.
 
 ### Configuration
 
@@ -29,35 +28,35 @@ Sub Workflow task is defined directly inside the workflow with `"SUB_WORKFLOW"`.
 
 |name|type|description|
 |---|---|---|
-| subWorkflowParam | Map[String, Any] | See below |
-| inputParameters | Map[String, Any] | The task inputParameters become the input parameters for the workflow. |
+| subWorkflowParam | Map[String, Any] | It includes the parameters _name_, _version_, _taskToDomain_ & _workflowDefinition_. See the below table for detailed info on this. |
+| inputParameters | Map[String, Any] | The sub workflow’s input can be coupled to the workflow’s input parameters or it can be invoked from the output of the preceding task. For example, if you are taking the sub-workflow’s input parameter from the workflow, then you need to initially add this as an input parameter in the parent workflow (workflow to be called as the sub-workflow). Then you can call the same input parameter inside the sub-workflow definition. |
 
 **subWorkflowParam**
 
 |name|type|description|
 |---|---|---|
-| name | String | Name of the workflow to execute |
-| version | Integer | Version of the workflow to execute |
-| taskToDomain | Map[String, String] | Allows scheduling the sub workflow's tasks per given mappings. See [Task Configurations](/content/docs/how-tos/Tasks/task-configurations) for instructions to configure taskDomains. |
-| workflowDefinition | [WorkflowDefinition](/content/docs/how-tos/Workflows/create-workflow) | Allows starting a subworkflow with a dynamic workflow definition. |
+| name | String | You need to map this field with the name of the workflow you are planning to execute. |
+| version | Integer | Include the version of the workflow to be executed. |
+| taskToDomain | Map[String, String] | Allows scheduling the sub-workflow's tasks per given mappings. See [Task Configurations](/content/docs/how-tos/Tasks/task-configurations) for instructions to configure taskDomains. |
+| workflowDefinition | [WorkflowDefinition](/content/docs/how-tos/Workflows/create-workflow) | Allows starting a sub-workflow with a dynamic workflow definition. |
 
 #### Output
 
 |name|type|description|
 |---|---|---|
-| subWorkflowId | String | Subworkflow execution Id generated when running the subworkflow |
+| subWorkflowId | String | Subworkflow execution ID generated when running the sub-workflow |
 
-The output of the workflow is also supplied in the output of the subworkflow.
+The output of the sub-workflow is also supplied to the output of the workflow.
 
 ### Examples
 
-Imagine that a colleague has created a address verification workflow:
+Imagine that a colleague has created an address verification workflow:
 
 <p align="center"><img src="/content/img/postage_rate_workflow.png" alt="example workflow" width="400" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
-If you wanted to add this functionality to another workflow, it would be possible to copy all 201 lines of JSON and insert it into your workflow.  However, any updates made by your colleague will not be reflected in your workflow - you have a "frozen in time" version of the code.
+If you wanted to add this functionality to another workflow, it would be possible to copy all 201 lines of JSON and insert them into your workflow.  However, any updates made by your colleague will not be reflected in your workflow, i.e; you have a "frozen in time" version of the code.
 
-Instead, we can call the existing workflow as a ```SUB_WORKFLOW``` task.  
+Instead, you can call the existing workflow as a ```SUB_WORKFLOW``` task.  
 
 ```
 {
@@ -84,9 +83,9 @@ Instead, we can call the existing workflow as a ```SUB_WORKFLOW``` task.
 
 <p align="center"><img src="/content/img/subworkflow_in_action.png" alt="example workflow with subworkflow" width="400" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
-Not only is your workflow more readable, with easier to edit JSON, but it will update with the ```postage_rate``` workflow.
+This not only makes your workflow more readable, with easier-to-edit JSON, but it will update with the ```postage_rate``` workflow.
 
 
 ## Codelab Examples
 
-* [Order Fulfillment](/content/docs/codelab/orderfulfillment6#subworkflow): Dynamic tasks can have only one task per fork, but a SubWorkflow is allowed allowing for many tasks to be run.
+Visualize an example workflow [Order Fulfillment](https://orkes.io/content/docs/codelab/orderfulfillment6#subworkflow), where a sub-workflow is being called within a dynamic fork. 
