@@ -73,7 +73,7 @@ curl -i -X "POST" "https://play.orkes.io/api/scheduler/schedules"  \
 }'
 ```
 
-> **Note**: If you are using Orkes Conductor or the Orkes Playground, our API call must be [authenticated](https://orkes.io/content/docs/getting-started/concepts/access-control), and our application must have ‘execute’ permission for the workflow.
+> **Note**: If you are using Orkes Conductor or the Orkes Playground, your API call must be [authenticated](https://orkes.io/content/docs/getting-started/concepts/access-control), and your application must have ‘execute’ permission for the workflow.
 
 ## Cron Expression
 
