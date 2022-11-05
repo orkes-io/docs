@@ -166,7 +166,7 @@ To simplify this tutorial, we have placed the `simple_worker` worker in a [GitHu
 
 Clone this repository to your local machine, and open it in your IDE of choice.  Our worker will poll the conductor server every second to see if there is a task in it's queue.  For that to happen, we need to tell the worker where our Conductor server is.  To do this, we must modify the file `/src/main/resources/application.properties`.  
 
-* For a local Conductor installation, change `conductor.server.url` to `http://localhost:5000`.  
+* For a local Conductor installation, change `conductor.server.url` to `http://localhost:8080/api`.  
 
 * For Playground, you'll need to [create an application](/content/docs/getting-started/concepts/access-control-applications#configuring-your-application) to create a key/secret that authenticates your worker with the playground, and then add the values of the key and secret to lines 2 and 3 of `application.properties` as indicated.
 
