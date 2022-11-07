@@ -27,6 +27,11 @@ module.exports = {
                     id: 'reference-docs/system-tasks/http-task',
                     label: "HTTP Task"
                 },
+{
+                    type: 'doc',
+                    id: 'reference-docs/system-tasks/http-poll-task',
+                    label: "HTTP Poll Task"
+                },
                 {
                     type: 'doc',
                     id: 'reference-docs/system-tasks/kafka-publish-task',
