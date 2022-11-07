@@ -18,3 +18,4 @@ Conductor has the following set of system tasks available.
 |JQ Transform|[JSON JQ Transform task](https://orkes.io/content/docs/reference-docs/system-tasks/json-jq-transform-task)|Allows processing of JSON data using <a href="https://github.com/stedolan/jq">JQ</a> tool’s query expression language.|
 |Kafka Publish|[Kafka Publish task](https://orkes.io/content/docs/reference-docs/system-tasks/kafka-publish-task)|Used to publish messages to other microservices via Kafka.|
 |Business Rules|[Business Rule Task](https://orkes.io/content/docs/reference-docs/system-tasks/business-rule)|Evaluate Business rules from a spreadsheet|
+|HTTP Poll|[HTTP Poll Task](https://orkes.io/content/docs/reference-docs/system-tasks/http-poll-task)|Used to invoke any HTTP API until the specified condition matches.|
