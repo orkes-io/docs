@@ -50,7 +50,7 @@ Let’s see an example workflow:
 
 ```json
 {
-  "name": "your_workflow_name",
+ "name": "your_workflow_name",
  "description": "Sample workflow to get started with HTTP POLL task.",
  "version": 1,
  "tasks": [
@@ -95,7 +95,7 @@ So, here the input parameters for the HTTP_POLL task are defined as follows:
 
 ```json
   "terminationCondition": "1",
-         "pollingInterval": "60",
-         "pollingStrategy": "FIXED"
+  "pollingInterval": "60",
+  "pollingStrategy": "FIXED"
 ```
 The above configuration defines that the conductor will invoke the HTTP API every 60 seconds.
