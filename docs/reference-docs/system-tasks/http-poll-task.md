@@ -23,7 +23,7 @@ The input parameters supported by the HTTP_POLL task are as follows:
 
 | Attribute      | Description |
 | ----------- | ----------- |
-| terminalCondition   | Specifies the condition to be evaluated after every HTTP API invocation. If the condition is evaluated as ‘true’, the task will be marked as completed. On the other hand, if the condition is evaluated as ‘false’, the conductor will schedule the next poll according to the configurations (pollingInterval & pollingStrategy).                                   **Note**: While writing the terminal condition, <ul><li>It can be [parameterized](https://orkes.io/content/docs/how-tos/Tasks/task-inputs).</li><li> In order to use the current http poll as input to the condition, a ‘$’ needs to be prefixed. For example, ‘$.output.status’</li></ul> |
+| terminalCondition   | Specifies the condition to be evaluated after every HTTP API invocation. If the condition is evaluated as `true`, the task will be marked as completed. On the other hand, if the condition is evaluated as `false`, the conductor will schedule the next poll according to the configurations (pollingInterval & pollingStrategy).                                   **Note**: While writing the terminal condition, <ul><li>It can be [parameterized](https://orkes.io/content/docs/how-tos/Tasks/task-inputs).</li><li> In order to use the current http poll as input to the condition, a `$` needs to be prefixed. For example, `$.output.status`</li></ul> |
 | pollingInterval | Specify the time duration in seconds between each HTTP invocation. |
 | pollingStrategy | It can take any of the following values: <ul><li>**FIXED** - The duration between each HTTP API invocation will be fixed.</li><li> **LINEAR_BACKOFF** - The duration between each HTTP API invocation will be calculated by multiplying the poll count with pollingInterval. Note that the poll count is the incremental value based on each invocation.</li><li>**EXPONENTIAL_BACKOFF** - The duration between each HTTP API invocation will be calculated by multiplying poll count with 2 base exponential of pollingInterval.</li></ul>|
 
@@ -38,7 +38,7 @@ Apart from the above parameters, ensure that the following basic parameters for 
 | headers | Indicate a map of additional http headers to be sent along with the request. |
 | body | Indicates the request body. |
 | vipAddress | When using discovery-based service URLs. |
-| asyncComplete | <ul><li>‘false’ to mark status COMPLETED upon execution.</li><li>‘true’ to keep it IN_PROGRESS, wait for an external event (via Conductor or SQS or EventHandler) to complete it.</li></ul> |
+| asyncComplete | <ul><li>`false` to mark status COMPLETED upon execution.</li><li>`true` to keep it IN_PROGRESS, wait for an external event (via Conductor or SQS or EventHandler) to complete it.</li></ul> |
 | oauthConsumerKey  | [OAuth](https://oauth.net/core/1.0/) client consumer key. |
 | oauthConsumerSecret | [OAuth](https://oauth.net/core/1.0/) client consumer secret. |
 | connectionTimeOut | Indicates the connection time out in milliseconds. If set to 0, it is equivalent to infinity. By default, it is set to 100. |
