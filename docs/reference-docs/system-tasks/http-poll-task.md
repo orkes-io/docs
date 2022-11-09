@@ -66,28 +66,13 @@ Let’s see an example workflow:
          "pollingStrategy": "FIXED"
        }
      },
-     "type": "HTTP_POLL",
-     "decisionCases": {},
-     "defaultCase": [],
-     "forkTasks": [],
-     "startDelay": 0,
-     "joinOn": [],
-     "optional": false,
-     "defaultExclusiveJoinTask": [],
-     "asyncComplete": false,
-     "loopOver": []
+     "type": "HTTP_POLL"
    }
  ],
  "inputParameters": [],
  "outputParameters": {},
  "schemaVersion": 2,
- "restartable": true,
- "workflowStatusListenerEnabled": false,
- "ownerEmail": "youremail@example.com",
- "timeoutPolicy": "ALERT_ONLY",
- "timeoutSeconds": 0,
- "variables": {},
- "inputTemplate": {}
+ "ownerEmail": "youremail@example.com"
 }
 ```
 
