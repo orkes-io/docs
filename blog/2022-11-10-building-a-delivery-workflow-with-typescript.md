@@ -1,7 +1,9 @@
 ---
 slug: building-a-delivery-workflow-with-typescript
 title: Building a Delivery Workflow with TypeScript (TS)
-authors: riza 
+authors: 
+- riza
+- james
 tags: [Netflix Conductor, orchestration, delivery workflow]
 ---
 
