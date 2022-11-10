@@ -35,7 +35,7 @@ Since we are creating this workflow as code, instead of using the workflow diagr
 
 First, you need to set up a project:
 1. Create an npm project with ```npm init``` and install the SDK with ```npm i @io-orkes/conductor-javascript```.
-2. You'll need to add jest and typescript support. For this, copy and paste the jest.config.js and tsconfig.json files into your project in the root folder. Then add the following devDependencies as a separate JSON file:
+2. You'll need to add jest and typescript support. For this, copy and paste the **jest.config.js** and **tsconfig.json** files into your project in the root folder. Then add the following devDependencies as a separate JSON file:
 ```json 
 "scripts": {
     "test": "jest"
@@ -62,7 +62,7 @@ So, now you’ve created your project. As we are creating the workflow as code, 
 
 Let’s begin creating our workflow. Initially, we need to calculate the distance between the two points, i.e., the rider and the package to be delivered. We leverage this distance to calculate the shipment cost too. So let's create a workflow that can be reused in both situations.
 
-Let the first workflow be **calculate_distance** that outputs the result of some function. So in our *mydelivery.ts*, let's update the following code:
+Let the first workflow be **calculate_distance** that outputs the result of some function. So in our **mydelivery.ts**, let's update the following code:
 
 ```json
 import {
@@ -343,7 +343,7 @@ export const nearByRiders = generate({
 
 From the task definition here, you can see the mapping of JQ users to the variable output of the HTTP task and then extracting the address. The expected result should have the structure {identity:{id,email}, to:{latitude,longitude}, from:{latitude,longitude}}. 
 
-##  Dot Map method 
+## Dot Map method 
 
 At this point, we have an array with all possible riders and a workflow to calculate the distance between two points. We must aggregate these to calculate the distance between the package and the riders so that the nearby riders can be chosen. While aggregating in javascript or changing the data for every item in the array, we usually leverage the map method, which takes a function that will be applied to every item in the array.
 
