@@ -52,10 +52,15 @@ module.exports = {
                     id: 'reference-docs/wait-task',
                     label: "Wait Task"
                 },
-{
+                {
                     type: 'doc',
                     id: 'reference-docs/system-tasks/webhook-task',
                     label: "Webhook Task"
+                },
+                {
+                    type: 'doc',
+                    id: 'reference-docs/system-tasks/business-rule',
+                    label: "Business Rule Task"
                 },
                 {
                     type: 'doc',
