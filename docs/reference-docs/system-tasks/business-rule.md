@@ -162,9 +162,3 @@ And following workflow definition.
       "ShippingCharges" : "5$"
   }
   ```
-
-### Changing rule file in Production
-
-Currently Conductor server cache the rule file to expedite the rule processing. The period for the cache storage is defined by the parameter ```conductor.workers.business-rule.ttl-in-min```. Currently, it defaults to 60 minutes. 
-  
-In case you need to change the rule file in production and the Conductor needs to pick the new file immediately, then create a new rule file with the changes and update the workflow definition accordingly. This forces the Conductor cache to consume the new file immediately.
