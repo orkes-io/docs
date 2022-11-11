@@ -21,14 +21,17 @@ A sample task definition for the business rule:
 {
 "name": "execute_rule",
 "taskReferenceName": "execute_rule",
-"inputParameters": {
+"inputParameters": 
+ {
     "ruleFileLocation": "https://business-rules.s3.amazonaws.com/rules.xlsx",
     "executionStrategy": "FIRE_FIRST",
-    "inputColumns": {
+    "inputColumns": 
+    {
       "InputDate": "${workflow.input.inputDate}",
       "ProductType": "${workflow.input.productType}"
     },
-    "outputColumns": [
+    "outputColumns": 
+    [
       "Discount"
     ]
   },
@@ -109,22 +112,26 @@ And following workflow definition.
     "name": "TestRule",
     "description": "Test Rule",
     "version": 1,
-    "tasks": [
+    "tasks": 
+    [
      {
       "name": "rule",
       "taskReferenceName": "rule",
-      "inputParameters": {
+      "inputParameters": 
+      {
       "ruleFileLocation": "Product.xlsx",
       "executionStrategy": "FIRE_FIRST",
       "ruleFileStorage" : "LOCAL",
-      "ruleInput": {
+      "ruleInput": 
+      {
         "productType": "${workflow.input.productType}",
         "productCategory": "${workflow.input.productCategory}",
         "price": "${workflow.input.price}",
         "itemCount": "${workflow.input.itemCount}",
         "itemCode": "${workflow.input.itemCode}"
       },
-      "outputColumns": [
+      "outputColumns": 
+      [
         "Discount",
         "ShippingCharges"
       ]
@@ -133,7 +140,8 @@ And following workflow definition.
       }
     ],
     "inputParameters": [],
-    "outputParameters": {
+    "outputParameters": 
+    {
     },
     "schemaVersion": 2,
     "restartable": true,
@@ -143,7 +151,7 @@ And following workflow definition.
     "timeoutSeconds": 0,
     "variables": {},
     "inputTemplate": {}
-  }
+}
   ```
   If the workflow is triggered using input as: 
   ```json
