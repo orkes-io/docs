@@ -958,4 +958,4 @@ And our app is finally ready. Building an app this way resembles the same proces
  
 Following this article along with [Orkes Playground](https://play.orkes.io/), you can seamlessly visualize the building blocks. You can make further improvements to the application by focusing on that particular block without losing the application's perspective as a whole.
  [
-You can test out Conductor for free in [Orkes Playground](https://play.orkes.io/), or if you’re looking for a cloud version, you may have a sneak peek at [Orked Cloud](https://orkes.io/cloud/).
+You can test out Conductor for free in [Orkes Playground](https://play.orkes.io/), or if you’re looking for a cloud version, you may have a sneak peek at [Orkes Cloud](https://orkes.io/cloud/).
