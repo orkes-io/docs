@@ -75,6 +75,37 @@ You can see a sample workflow here. You may have a look at our documentation on 
 
 A webhook workflow type can be identified as ```"type": "WAIT_FOR_WEBHOOK" ```. It is a Conductor task, meaning no worker is required to run the workflow. Also, it is a type of ‘WAIT’ task, where the workflow waits for events from the external systems.
 
+## Writing custom matchers
+In above example we can see that the matchers are described as
+
+```json
+"matches": 
+{
+    "$['event']['type']": "message"
+}
+```
+which means that incoming event payload have JSON Path ```event.type``` and it must be ```message``` in order to match the webhok event with this task.
+We can define any csutom json path based on incoming event payload and write matchers accordingly.
+
+We can add mulitple matchers within the matchers. All matches will be calcualted as **AND** operations withim matchers. For example,
+
+```json
+"matches": 
+{
+    "$['event']['type']": "message",
+    "$['event']['text']": "hello",
+}
+```
+
+will be used to match the webhook event payload where `event.type` is `message` AND `event.text` is `hello`
+
+In order to match all the webhook event the matchers should be kept empty i.e.
+```json
+"matches": 
+{
+}
+```
+
 Now you have created your workflow. Let’s create a Webhook now.
 
 1. Navigate to **Webhooks** from the Conductor server.
