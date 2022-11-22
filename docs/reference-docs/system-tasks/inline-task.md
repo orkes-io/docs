@@ -9,20 +9,16 @@ sidebar_position: 11
 ```
 ## Introduction
 
-Inline Task helps execute necessary logic at Workflow run-time,
-using an evaluator. There are three supported evaluators as of now:
+The inline task helps execute necessary logic at the workflow run-time using an evaluator. There are two supported evaluators as of now:
 
 |name|description|
 |---|---|
-| value-param | Use a parameter directly as the value |
-| javascript | Evaluate Javascript expressions using nashorn and compute value |
-| graaljs | Evaluate Javascript expressions using graaljs and compute value |
+| javascript | Evaluate Javascript expressions using nashorn and compute the value. |
+| graaljs | Evaluate Javascript expressions using graaljs and compute the value. |
 
 ## Use Cases
 
-Consider a scenario, we have to run simple evaluations in
-Conductor server while creating Workers. Inline task can be used to run these
-evaluations using an evaluator engine.
+Consider a scenario we have to run simple evaluations in the Conductor server while creating Workers. An inline task can be used to run these evaluations using an evaluator engine.
 
 ## Configuration
 ```json
@@ -38,22 +34,18 @@ evaluations using an evaluator engine.
 }
 ```
 
-Following are the parameters in the above example :
+Following are the parameters in the above example:
 
-1. `"evaluatorType"` - Type of the evaluator. 
-Supported evaluators: value-param, javascript which evaluates 
-javascript expression.	
+1. `"evaluatorType"` - Type of the evaluator. Supported evaluators: graaljs, javascript, which evaluates the javascript expression.
 
-2. `"expression"` - Expression associated with the type of evaluator. 
-For javascript evaluator, Javascript evaluation engine is used to 
-evaluate expression defined as a string. Must return a value.	
+2. `"expression"` - Expression associated with the type of evaluator. For the javascript evaluator, the Javascript evaluation engine is used to evaluate the expression defined as a string. Must return a value.
 
-Besides expression, any of the properties in the input values is accessible as `$.value` for the expression
-to evaluate. 
+Besides the expression, any of the properties in the input values is accessible as `$.value` for the expression to evaluate.
 
-The task output can then be referenced in downstream tasks 
-like: `"${inline_test.output.result}"`
+The task output can then be referenced in downstream tasks like
+
+`"${inline_test.output.result}"`
 
 ## Examples in Codelabs
 
-* [Task to Domain A/B testing](/content/docs/codelab/taskToDomain#ab-with-an-inline-task) - This workflow uses a the JavaScript `Math.random()` to decide an outcome - either send the next task to the main worker, or to the worker named 'Doug.'
+* [Task to Domain A/B testing](/content/docs/codelab/taskToDomain#ab-with-an-inline-task) - This workflow uses the JavaScript `Math.random()` to decide an outcome - either send the next task to the main worker or to the worker named 'Doug.'
