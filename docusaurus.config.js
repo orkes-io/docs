@@ -134,6 +134,7 @@ const config = {
                     "/workflow_AB_testing/README.md",
                     "/finance/README.md",
                     "/document_approvals/README.md",
+                    "/fraud_dispute/README.md",
                     "/Simple_ETL/README.md"
                 ]               // the file names to download
             },
