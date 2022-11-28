@@ -118,7 +118,12 @@ module.exports = {
                 {
                     type: 'doc',
                     id: 'usecases/finance/README',
-                    label: 'Finance Domain Workflows'
+                    label: 'Loan Origination'
+                },
+                {
+                    type: 'doc',
+                    id: 'usecases/fraud_dispute/README',
+                    label: 'Fraud Dispute Transaction'
                 },
                 'usecases/document_approvals/README',
                 'usecases/Simple_ETL/README'
