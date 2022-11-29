@@ -7,9 +7,9 @@ A number of Software Development Kits (SDKs) help you to build and run workers i
 * [Python](/content/docs/how-tos/sdks/conductor-python/main)
 * [C#](/content/docs/how-tos/sdks/conductor-csharp/main)
 * [Clojure](/content/docs/how-tos/sdks/conductor-clojure/main)
+* [JavaScript/TypeScript](https://github.com/conductor-sdk/conductor-javascript)
 
 Coming soon:
-* [JavaScript/TypeScript](https://github.com/conductor-sdk/conductor-javascript)
 * Rust
 * Ruby
 * Kotlin
