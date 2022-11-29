@@ -1,6 +1,6 @@
 # SDKs
-There are a number of SDKs to help you build and run workers in Conductor:
 
+A number of Software Development Kits (SDKs) help you to build and run workers in Conductor. We currently support the following SDKs:
 
 * Java SDK as a part of the [Netflix Conductor](https://github.com/Netflix/conductor/tree/main/java-sdk) repository.
 * [Golang](/content/docs/how-tos/sdks/conductor-go/main)
@@ -9,7 +9,6 @@ There are a number of SDKs to help you build and run workers in Conductor:
 * [Clojure](/content/docs/how-tos/sdks/conductor-clojure/main)
 
 Coming soon:
-
 * [JavaScript/TypeScript](https://github.com/conductor-sdk/conductor-javascript)
 * Rust
 * Ruby
