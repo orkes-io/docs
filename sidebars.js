@@ -195,7 +195,6 @@ module.exports = {
                 'how-tos/Tasks/task-domains',
                 'how-tos/Tasks/task-lifecycle',
                 'how-tos/Tasks/task-timeouts',
-                'how-tos/Tasks/extending-system-tasks',
                 'how-tos/Tasks/task-inputs',
                 'how-tos/Tasks/monitoring-task-queues',
                 'how-tos/Tasks/SQS-event-task',
