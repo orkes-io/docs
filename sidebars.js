@@ -85,6 +85,7 @@ module.exports = {
                 'reference-docs/terminate-task',
                 'reference-docs/set-variable-task',
                 'reference-docs/sub-workflow-task',
+                'reference-docs/start-workflow',
             ]
         }
     ],
