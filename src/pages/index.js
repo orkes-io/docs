@@ -33,7 +33,7 @@ export default function Home() {
                 title: "Running Conductor",
                 description:
                   "Learn how to run Conductor locally and via Docker",
-                to: "/docs/getting-started/install/running-locally#download-and-run",
+                to: "/docs/getting-started/install/running-locally-docker",
               },
               {
                 title: "Running First Workflow",
