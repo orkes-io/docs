@@ -49,11 +49,6 @@ module.exports = {
                 },
                 {
                     type: 'doc',
-                    id: 'reference-docs/wait-task',
-                    label: "Wait Task"
-                },
-                {
-                    type: 'doc',
                     id: 'reference-docs/system-tasks/webhook-task',
                     label: "Webhook Task"
                 },
@@ -80,6 +75,7 @@ module.exports = {
                 'reference-docs/dynamic-fork-task',
                 'reference-docs/dynamic-fork-from-array-task',
                 'reference-docs/join-task',
+                'reference-docs/wait-task',
                 'reference-docs/human-task',
                 'reference-docs/dynamic-task',
                 'reference-docs/terminate-task',
