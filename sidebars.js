@@ -179,6 +179,11 @@ module.exports = {
                 'how-tos/Workflows/view-workflow-executions',
                 'how-tos/Workflows/searching-workflows',
                 'how-tos/Workflows/handling-errors',
+                {
+                    type: 'doc',
+                    id: 'how-tos/Workflows/migrate-workflows',
+                    label: "Migrate Workflows"
+                },
             ]
         },
         {
