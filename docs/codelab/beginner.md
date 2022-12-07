@@ -12,7 +12,7 @@ Let's create a simple workflow that adds Netflix Idents to videos. We'll be mock
 
 !!!info "What are Netflix Idents?" 
     Netflix Idents are those 4 second videos with Netflix logo, which appears at the beginning and end of shows.
-    Learn more about them [here](https://partnerhelp.netflixstudios.com/hc/en-us/articles/115004750187-Master-QC-Identifying-and-Implementing-the-Netflix-Ident-). You might have also noticed they're different for Animation and several other genres.
+    Learn more about them [here](https://partnerhelp.netflixstudios.com/hc/en-us/articles/1500000260302-Overview-of-the-Netflix-Idents). You might have also noticed they're different for Animation and several other genres.
 
 !!!warning "Disclaimer"
     Obviously, this is not how Netflix adds Idents. Those Workflows are indeed very complex. But, it should give you an idea about how Conductor can be used to implement similar features.
