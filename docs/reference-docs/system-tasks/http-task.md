@@ -149,7 +149,7 @@ Following is the example of HTTP task with `DELETE` method.
 
 1. Why are my HTTP tasks not getting picked up?
     1. We might have too many HTTP tasks in the queue. There is a concept called Isolation Groups that you can rely on
-       for prioritizing certain HTTP tasks over others. Read more here: [Isolation Groups](https://netflix.github.io/conductor/configuration/isolationgroups/)
+       for prioritizing certain HTTP tasks over others. Read more here: [Isolation Groups](https://conductor.netflix.com/configuration/isolationgroups.html)
 2. Why is my HTTP Task timing out with ```Failed to invoke HTTP task due to: java.lang.Exception: I/O error on GET request for "<url>": Read timed out; nested exception is java.net.SocketTimeoutException: Read timed out```?
     1. The default timeout for an HTTP request is 150ms. If your API takes longer than this, you will need to increase the timeout parameters. In your ```inputParameters``` under ```http_request``` add the two following parameters (the timeouts are in milliseconds):
 ```json
@@ -158,10 +158,10 @@ Following is the example of HTTP task with `DELETE` method.
 ```
 
 3. Can I retry my HTTP Tasks?  
-    1. Yes.  See [Extending System Tasks](/content/docs/how-tos/Tasks/extending-system-tasks) to see how to add retries, and retry parameters to your HTTP Task.
+    1. Yes. You can add retries, and retry parameters to your HTTP Task.
 
 4. I'm getting rate limited.  Can I slow down my HTTP Task?
-    1. Yes!  By [Extending System Tasks](/content/docs/how-tos/Tasks/extending-system-tasks), and adding the following parameters:
+    1. Yes!  By extending system tasks and adding the following parameters:
     ```json
       "rateLimitPerFrequency": 100,
       "rateLimitFrequencyInSeconds": 60,
