@@ -124,6 +124,6 @@ Here is an example using the `javascript` evaluator type:
 ```
 
 ### Codelab examples
-* [Hello World codelab](http://localhost:3000/content/docs/codelab/helloworld5) using JavaScript Evaluation
+* [Hello World codelab](/content/docs/codelab/helloworld5) using JavaScript Evaluation
 * [Post office Workflows](/content/docs/usecases/US_post_office) Switch handles success and failure mechanisms via `value-param`.
 * [Document Approval](/content/docs/usecases/document_approvals)
