@@ -96,7 +96,7 @@ The other thing to note is that with an HTTP task, the ```connectionTimeout``` a
 
 Despite the ```connectionTimeout``` and ```readTimeout``` parameters, it can still take over 5 seconds for the heroku instance to spin up (if it has gone dormant).  We can build more error handling into this task to prevent our workflow from failing.
 
-The HTTP Task has the ```retrycount``` built in, but let's [extend the task](/content/docs/how-tos/Tasks/extending-system-tasks) with retry values.
+The HTTP Task has the ```retrycount``` built in, but let's extend the task with retry values.
 
 To do this, we'll define a new task with the same name as our HTTP Task (click "Task Definitions"  and then "Define Task").
 
