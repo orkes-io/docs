@@ -29,7 +29,7 @@ In this codelab, we'll follow your work as you build out a Conductor workflow to
 
 ## What you need to complete this codelab
 
-You'll need a development environment to edit and run your local workers.  To run conductor, we'll use the [Orkes Playground](https://play.orkes.io), which requires an account for use (but it is free!).  You can also use any installation of [Conductor](/content/docs/getting-started/install/running-locally) to build your workflow.
+You'll need a development environment to edit and run your local workers.  To run conductor, we'll use the [Orkes Playground](https://play.orkes.io), which requires an account for use (but it is free!).  You can also use any installation of [Conductor](/content/docs/getting-started/install/running-locally-docker) to build your workflow.
 
 ## A simple order Fulfillment workflow
 

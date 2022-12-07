@@ -93,7 +93,7 @@ The switch case can evaulate the input in several ways (including running JavaSc
 }
 ```
 
-In this workflow, the switch case is at the end of the workflow, so we'll insert 2 [terminate tasks](https://orkes.io/content/docs/reference-docs/terminate-task0): one for the default case, and one for the failure case.
+In this workflow, the switch case is at the end of the workflow, so we'll insert 2 [terminate tasks](https://orkes.io/content/docs/reference-docs/terminate-task): one for the default case, and one for the failure case.
 
 ## Terminate task
 

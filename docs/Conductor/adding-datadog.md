@@ -9,7 +9,7 @@ There is a Datadog integration in the [Conductor Community](https://github.com/N
 
 ## Setting up DataDog
 
-We'll start with the assumption that Conductor is currently running on your system.  If not, clone the GitHub repository and get it [running locally](/content/docs/getting-started/install/running-locally).  
+We'll start with the assumption that Conductor is currently running on your system.  If not, clone the GitHub repository and get it [running locally](/content/docs/getting-started/install/running-locally-docker).  
 
 1. First, we will add the metrics dependency to the `server/build.gradle` file.  
 

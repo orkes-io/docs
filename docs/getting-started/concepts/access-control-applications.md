@@ -70,7 +70,7 @@ To add a Workflow/Task permission, click the ```+``` at the top of the  ```Workf
 
 <p align="center"><img src="/content/img/application_permission.png" alt="permission dialog" width="500" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
-> Note: When adding tasks, you can specify a [domain](http://localhost:3000/content/docs/codelab/taskToDomain). This allows you to direct all traffic to a specific instance of a task - without specifying in the API.
+> Note: When adding tasks, you can specify a [domain](https://orkes.io/content/docs/codelab/taskToDomain). This allows you to direct all traffic to a specific instance of a task - without specifying in the API.
 
 Once all of the workflows and tasks have been added, the table will display the selection. The application below is set for running the [order fulfillment codelab](/content/docs/codelab/orderfulfillment).
 
