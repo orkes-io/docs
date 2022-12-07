@@ -22,7 +22,7 @@ Conductor is a platform originally developed at Netflix to orchestrate workflows
 * Tasks can be system managed (no-code deployment) or your [custom code](how-tos/Workers/write-workers)
 * Tasks are managed by persistent task queues transparent to users
 * Custom code tasks can be written in any language and can connect to a workflow using the [client SDKs](how-tos/SDKs)
-* Tasks can be run like a programming language, i.e., [sub workflows](docs/reference-docs/sub-workflow-task), step-by-step, [parallel tasks](reference-docs/fork-task), [conditional tasks](reference-docs/switch-task), [dynamic tasks](reference-docs/dynamic-fork-task), etc. [are supported](reference-docs)
+* Tasks can be run like a programming language, i.e., [sub workflows](reference-docs/sub-workflow-task), step-by-step, [parallel tasks](reference-docs/fork-task), [conditional tasks](reference-docs/switch-task), [dynamic tasks](reference-docs/dynamic-fork-task), etc. [are supported](reference-docs)
 
 <p style={{textAlign: "center"}}><img src="/content/img/anatomy.png" alt="adding a secret via UI" width="600" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
