@@ -50,7 +50,7 @@ For space, the 2 forkTasks are left out, but imagine reusing the ```widget_shipp
 
 <p align="center"><img src="/content/img/codelab/of4_forkexample.png" alt="version 2 regular fork" width="500" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
-Now, this is really great...but with a FORK, the number of 'tines' in the fork are defined at workflow definition.  Since the number of addresses will change on each order, we need something more flexible, that can be defined at runtime.  Luckily we have that - the [DYNAMIC_FORK](/content/docs/reference-docs/dynamic-fork-task.  Dynamic forks determine the number of 'tines' at workflow runtime - which is exactly what we need to build our dropshipping application.  This will provide the flexibility we need to support dropshipping of Bob's widgets.
+Now, this is really great...but with a FORK, the number of 'tines' in the fork are defined at workflow definition.  Since the number of addresses will change on each order, we need something more flexible, that can be defined at runtime.  Luckily we have that - the [DYNAMIC_FORK](/content/docs/reference-docs/dynamic-fork-task).  Dynamic forks determine the number of 'tines' at workflow runtime - which is exactly what we need to build our dropshipping application.  This will provide the flexibility we need to support dropshipping of Bob's widgets.
 
 But - before we build our dynamic fork, we have a lot of housekeeping to take care of. 
 

@@ -38,4 +38,4 @@ fetch("http://localhost:8080/api/metadata/taskdefs", {
 ## Best Practices
 
 1. You can also use the Conductor Swagger UI to update the tasks 
-2. Task configurations are important attributes that controls the behavior of this task in a Workflow. 
+2. Task configurations are important attributes that controls the behavior of this task in a Workflow. Refer to [Task Configurations](https://orkes.io/content/docs/how-tos/Tasks/task-configurations) for all the options and details'
