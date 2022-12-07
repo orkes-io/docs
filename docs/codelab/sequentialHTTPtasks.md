@@ -174,7 +174,7 @@ The HTTP request system task does not have retry parameters built in by default,
 }
 ```
 
-This tells Conductor to add a ```retryCount: 3```, with a ```"retryDelaySeconds": 5,``` between each attempt.  The retry logic is set to ```"retryLogic": "FIXED",``` (but could also be set to ```EXPONENTIAL_BACKOFF```)  ([Read more on this](/content/docs/how-tos/Tasks/extending-system-tasks)).
+This tells Conductor to add a ```retryCount: 3```, with a ```"retryDelaySeconds": 5,``` between each attempt.  The retry logic is set to ```"retryLogic": "FIXED",``` (but could also be set to ```EXPONENTIAL_BACKOFF```).
 
 
 If the timeout is lowered in the HTTP connection (say to 1500ms), this task is much more likely to fail (due to the slow API response time).  The task will be attempted 4 times (once and then 3 retries), and if none of the attempts succeed, the workflow will fail after 4 tries.
