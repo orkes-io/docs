@@ -35,7 +35,7 @@ To get the API token from the target environment:
 3. Open the created application (You can click on the edit icon near the application).
 4. Grant the Metadata Manager access to it from **Unrestricted Roles > Metadata Manager**.
 5. Create an access key for the application by clicking **Create Access Key**. Ensure to copy the key ID and key secret.
-6. Make a request to POST/api/token with the access key to obtain a token. This token is to be given under the field **Secret Value** mentioned above.
+6. Make a request to POST /api/token with the access key to obtain a token. This token is to be given under the field **Secret Value** mentioned above.
 
 Note: For a quick testing, you can use the user’s personal token, as explained below. However, it may grant too many permissions, and the token expires in a few hours. So, it is recommended to use this method for quick testing purposes only.
 * To copy the token, click on the drop-down option near your profile icon in Environment B.
