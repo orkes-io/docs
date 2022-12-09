@@ -2,7 +2,7 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 
-# Workflow Secrets
+# Using Secrets in a Workflow
 
 Many applications require the use of sensitive values that should be protected from exposure.  Items like usernames, passwords, API keys etc. are all sensitive values that should not be kept in a workflow (that might end up on GitHub or another public site.)
 
