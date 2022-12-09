@@ -78,10 +78,10 @@ module.exports = {
                 'reference-docs/wait-task',
                 'reference-docs/human-task',
                 'reference-docs/dynamic-task',
-                'reference-docs/terminate-task',
                 'reference-docs/set-variable-task',
                 'reference-docs/sub-workflow-task',
                 'reference-docs/start-workflow',
+                'reference-docs/terminate-task',
             ]
         }
     ],
@@ -93,48 +93,17 @@ module.exports = {
         },
         {
             type: 'category',
-            label: 'Use Cases',
-            collapsed: true,
-            items: [
-                {
-                    type: 'doc',
-                    id: 'usecases/image_processing/README',
-                    label: 'Image Processing Workflows'
-                },
-                {
-                    type: 'doc',
-                    id: 'usecases/video_processing/README',
-                    label: 'Video Processing Workflows'
-                },
-                {
-                    type: 'doc',
-                    id: 'usecases/US_post_office/README',
-                    label: 'API Processing Workflows'
-                },
-                'usecases/workflow_AB_testing/README',
-                {
-                    type: 'doc',
-                    id: 'usecases/finance/README',
-                    label: 'Loan Origination'
-                },
-                {
-                    type: 'doc',
-                    id: 'usecases/fraud_dispute/README',
-                    label: 'Fraud Dispute Transaction'
-                },
-                'usecases/document_approvals/README',
-                'usecases/Simple_ETL/README'
-            ]
-        },
-        {
-            type: 'category',
             label: 'Core Concepts',
             collapsed: false,
             items: [
                 'getting-started/concepts/workflows',
                 'getting-started/concepts/tasks-and-workers',
                 'getting-started/concepts/operators',
-                'reference-docs/scheduler',
+                {
+                    type: 'doc',
+                    id: 'getting-started/concepts/system-tasks',
+                    label: 'System Task'
+                },
             ],
         },
         {
@@ -157,54 +126,50 @@ module.exports = {
         },
         {
             type: 'category',
+            label: 'Task How-Tos',
+            collapsed: true,
+            items: [
+                'how-tos/Tasks/creating-tasks',
+                'how-tos/Tasks/task-inputs',
+                'how-tos/Tasks/task-timeouts',
+                'how-tos/Tasks/updating-tasks',
+                'how-tos/Tasks/reusing-tasks',
+                'how-tos/Tasks/task-domains',
+                'how-tos/Tasks/monitoring-task-queues',
+                'how-tos/Tasks/task-lifecycle',
+                'how-tos/Tasks/SQS-event-task',
+            ]
+        },
+        {
+            type: 'category',
             label: 'Workflow How-Tos',
             collapsed: true,
             items: [
+                'how-tos/Workflows/create-workflow',
                 'getting-started/run/running-first-workflow',
-                'getting-started/run/running-first-worker',
                 'how-tos/Workers/write-workers',
+                'getting-started/run/running-first-worker',
+                'how-tos/Workflows/starting-workflows',
+                'how-tos/Workflows/view-workflow-executions',
+                'how-tos/Workflows/searching-workflows',
+                'how-tos/Workflows/schedule-workflow',
+                'reference-docs/scheduler',
+                'how-tos/Workflows/versioning-workflows',
+                'how-tos/Workflows/create-secrets',
+                'how-tos/Workflows/updating-workflows',
+                'how-tos/Workflows/handling-errors',
+                'how-tos/retries-failures-rate_limits',
+                'how-tos/continuous_integration',
                 {
                     type: 'doc',
                     id: 'how-tos/Workflows/debugging-workflows',
                     label: "Troubleshooting Workflows"
                 },
-                'how-tos/retries-failures-rate_limits',
-                'how-tos/continuous_integration',
-                'how-tos/Workflows/create-workflow',
-                'how-tos/Workflows/updating-workflows',
-                'how-tos/Workflows/create-secrets',
-                'how-tos/Workflows/versioning-workflows',
-                'how-tos/Workflows/starting-workflows',
-                'how-tos/Workflows/schedule-workflow',
-                'how-tos/Workflows/view-workflow-executions',
-                'how-tos/Workflows/searching-workflows',
-                'how-tos/Workflows/handling-errors',
                 {
                     type: 'doc',
                     id: 'how-tos/Workflows/migrate-workflows',
                     label: "Migrate Workflows"
                 },
-            ]
-        },
-        {
-            type: 'category',
-            label: 'Task How-Tos',
-            collapsed: true,
-            items: [
-                'how-tos/Tasks/creating-tasks',
-                'how-tos/Tasks/updating-tasks',
-                'how-tos/Tasks/reusing-tasks',
-                'how-tos/Tasks/task-domains',
-                'how-tos/Tasks/task-lifecycle',
-                'how-tos/Tasks/task-timeouts',
-                'how-tos/Tasks/task-inputs',
-                'how-tos/Tasks/monitoring-task-queues',
-                'how-tos/Tasks/SQS-event-task',
-                {
-                    type: 'doc',
-                    id: 'getting-started/concepts/system-tasks',
-                    label: 'System Task Introduction'
-                }
             ]
         },
         {
@@ -257,6 +222,82 @@ module.exports = {
         },
         {
             type: 'category',
+            label: 'Events',
+            collapsed: true,
+            items: [
+                {
+                    type: 'autogenerated',
+                    dirName: 'how-tos/Events', // generate sidebar from the docs folder (or versioned_docs/<version>)
+                },
+            ],
+        },
+        {
+            type: 'category',
+            label: 'Monitoring',
+            collapsed: true,
+            items: [
+                {
+                    type: 'autogenerated',
+                    dirName: 'how-tos/Monitoring', // generate sidebar from the docs folder (or versioned_docs/<version>)
+                },
+            ],
+        },
+        {
+            type: 'category',
+            label: 'Access Control',
+            collapsed: true,
+            items: [
+                'getting-started/concepts/access-control',
+                'getting-started/concepts/access-control-users',
+                'getting-started/concepts/access-control-applications',
+                'getting-started/concepts/access-control-tags'
+            ],
+        },
+        {
+            type: 'category',
+            label: 'Extending Conductor',
+            collapsed: true,
+            items: [
+                'Conductor/adding-datadog'
+            ],
+        },
+        {
+            type: 'category',
+            label: 'Use Cases',
+            collapsed: true,
+            items: [
+                {
+                    type: 'doc',
+                    id: 'usecases/image_processing/README',
+                    label: 'Image Processing Workflows'
+                },
+                {
+                    type: 'doc',
+                    id: 'usecases/video_processing/README',
+                    label: 'Video Processing Workflows'
+                },
+                {
+                    type: 'doc',
+                    id: 'usecases/US_post_office/README',
+                    label: 'API Processing Workflows'
+                },
+                'usecases/workflow_AB_testing/README',
+                {
+                    type: 'doc',
+                    id: 'usecases/finance/README',
+                    label: 'Loan Origination'
+                },
+                {
+                    type: 'doc',
+                    id: 'usecases/fraud_dispute/README',
+                    label: 'Fraud Dispute Transaction'
+                },
+                'usecases/document_approvals/README',
+                'usecases/Simple_ETL/README'
+            ]
+        },
+        {
+            type: 'category',
             label: 'Code Labs',
             collapsed: true,
             items: [
@@ -271,59 +312,15 @@ module.exports = {
                 'codelab/taskToDomain',
             ],
         },
-
         {
             type: 'category',
-            label: 'Other Topics',
+            label: 'FAQs',
             collapsed: true,
             items: [
                 'faq',
-                {
-
-                    type: 'category',
-                    label: 'Events',
-                    collapsed: true,
-                    items: [
-                        {
-                            type: 'autogenerated',
-                            dirName: 'how-tos/Events', // generate sidebar from the docs folder (or versioned_docs/<version>)
-                        },
-                    ],
-                },
-                {
-                    type: 'category',
-                    label: 'Monitoring',
-                    collapsed: true,
-                    items: [
-                        {
-                            type: 'autogenerated',
-                            dirName: 'how-tos/Monitoring', // generate sidebar from the docs folder (or versioned_docs/<version>)
-                        },
-                    ],
-                },
-                {
-                    type: 'category',
-                    label: 'Access Control',
-                    collapsed: true,
-                    items: [
-                        'getting-started/concepts/access-control',
-                        'getting-started/concepts/access-control-users',
-                        'getting-started/concepts/access-control-applications',
-                        'getting-started/concepts/access-control-tags'
-                    ],
-                },
-                {
-                    type: 'category',
-                    label: 'Extending Conductor',
-                    collapsed: true,
-                    items: [
-                        'Conductor/adding-datadog'
-                    ],
-                },
                 'reference-docs/directed-acyclic-graph'
             ],
-        }
-
+        },
     ],
     orderfulfillment: [
         {
@@ -340,7 +337,7 @@ module.exports = {
                 'codelab/orderfulfillment6',
                 'codelab/orderfulfillment7',
                 'codelab/orderfulfillment8'
-            ]
-        }
+            ],
+        },
     ],
 };
