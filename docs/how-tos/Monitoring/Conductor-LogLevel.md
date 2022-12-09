@@ -1,11 +1,11 @@
 # Conductor Log Level
 
-Conductor is based on Spring Boot, so the log levels are set via [Spring Boot properties](https://docs.spring.io/spring-boot/docs/2.1.13.RELEASE/reference/html/boot-features-logging.html):
+Conductor is based on Spring Boot, so the log levels are set via [Spring Boot properties](https://docs.spring.io/spring-boot/docs/2.1.13.RELEASE/reference/html/boot-features-logging.html).
 
 From the Spring Boot Docs:
 
 
-> All the supported logging systems can have the logger levels set in the Spring Environment (for example, in application.properties) by using ```logging.level.<logger-name>=<level>``` where level is one of TRACE, DEBUG, INFO, WARN, ERROR, FATAL, or OFF. The ```root``` logger can be configured by using logging.level.root.
+> All the supported logging systems can have the logger levels set in the Spring Environment (for example, in application.properties) by using ```logging.level.<logger-name>=<level>``` where the level is one of TRACE, DEBUG, INFO, WARN, ERROR, FATAL, or OFF. The ```root``` logger can be configured by using logging.level.root.
 
 > The following example shows potential logging settings in ```application.properties```:
 
