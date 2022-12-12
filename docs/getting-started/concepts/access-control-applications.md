@@ -6,7 +6,7 @@ sidebar_position: 4
 
 With [Orkes Cloud](https://orkes.io/cloud/), your Conductor server may be running in a different hosted environment than your workers. The need to restrict access is required to address the security concerns as the APIs are exposed on the internet. 
 
-OOrkes has added a security layer called Applications to address such concerns. Every connection in/out of Orkes Cloud requires an Authentication header with a JSON Web Token (JWT) token. This header is of the format: `'X-Authorization:  <JWT Token>'`.
+Orkes has added a security layer called Applications to address such concerns. Every connection in/out of Orkes Cloud requires an Authentication header with a JSON Web Token (JWT) token. This header is of the format: `'X-Authorization:  <JWT Token>'`.
 
 In this document, we will walk through the steps to create application-based control of your workflows and tasks and the process to generate JWT tokens for each application.
 
@@ -61,7 +61,7 @@ To add a Workflow/Task permission,
 2. In the pop-up window, choose the **Target Type** as Workflow/Task/Secret/Tag.
 3. Choose the targets. 
 4. Choose the permission for the selected targets. The permissions include Read, Create, Update, Execute and Delete.
-  * **Read** - The user can see the workflow/task but cannot modify or run them.
+  * **Read** - The user can view the workflow/task but cannot modify or run them.
   * **Create** - The user can create the workflow/task.
   * **Update** - Allows the user to update the workflow/task. Requires *Metadata API* role for this.
   * **Execute** - Allows the user to run the workflow or task. Requires *Worker* role for this.
