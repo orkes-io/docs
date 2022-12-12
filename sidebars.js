@@ -93,7 +93,7 @@ module.exports = {
         }, 
         {
             type: 'doc',
-            id: 'what_use_cases_can_conductor_solve',
+            id: 'what-use-cases-can-conductor-solve',
             label: "What use cases can Conductor solve?​"
         },
         {
