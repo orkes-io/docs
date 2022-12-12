@@ -90,6 +90,11 @@ module.exports = {
             type: 'doc',
             id: 'introduction',
             label: "Introduction to Conductor"
+        }, 
+        {
+            type: 'doc',
+            id: 'what_use_cases_can_conductor_solve',
+            label: "What use cases can Conductor solve?​"
         },
         {
             type: 'category',
