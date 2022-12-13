@@ -157,7 +157,6 @@ module.exports = {
                 'how-tos/Workflows/starting-workflows',
                 'how-tos/Workflows/view-workflow-executions',
                 'how-tos/Workflows/searching-workflows',
-                'how-tos/Workflows/schedule-workflow',
                 'reference-docs/scheduler',
                 'how-tos/Workflows/versioning-workflows',
                 'how-tos/Workflows/create-secrets',
