@@ -1,12 +1,12 @@
 # Directed Acyclic Graph (DAG)
 ## What is a Directed Acyclic Graph (DAG)?
-Conductor workflows are directed acyclic graphs (DAGs). But, what exactly is a DAG?
+Conductor workflows are directed acyclic graphs (DAGs). But what exactly is a DAG?
 
 To understand a DAG, we'll walk through each term (but not in order):
 
 ### Graph
 
-A graph is "a collection of vertices (or point) and edges (or lines) that indicate connections between the vertices."  
+A graph is "a collection of vertices (or points) and edges (or lines) that indicate connections between the vertices."  
 
 By this definition, this is a graph - just not exactly correct in the context of DAGs:
 
@@ -28,7 +28,7 @@ Each arrow has a direction, Point "N" can proceed directly to "B", but "B" canno
 
 ### Acyclic
 
-Acyclic means without circular or cyclic paths.  In the directed example above,  A -> B -> D -> A is a cyclic loop.  
+Acyclic means without circular or cyclic paths. The directed example above shows A -> B -> D -> A is a cyclic loop.
 
 So a Directed Acyclic Graph is a set of vertices where the connections are directed without any looping.  DAG charts can only "move forward" and cannot redo a step (or series of steps.)
 
@@ -42,7 +42,7 @@ Yes. For example, Conductor workflows have Do-While loops:
 
 <p align="center"><img src="/content/img/dag_workflow.png" alt="Conductor Dag" width="300" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
-This is still a DAG, because the loop is just shorthand for running the tasks inside the loop over and over again.  For example, if the 2nd loop in the above image is run 3 times, the workflow path will be:
+This is still a DAG because the loop is just shorthand for running the tasks inside the loop over and over again.  For example, if the 2nd loop in the above image is run 3 times, the workflow path will be:
 
 1. zero_offset_fix_1
 2. post_to_orbit_ref_1
