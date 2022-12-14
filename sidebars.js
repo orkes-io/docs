@@ -259,14 +259,6 @@ module.exports = {
         },
         {
             type: 'category',
-            label: 'Extending Conductor',
-            collapsed: true,
-            items: [
-                'Conductor/adding-datadog'
-            ],
-        },
-        {
-            type: 'category',
             label: 'Use Cases',
             collapsed: true,
             items: [
