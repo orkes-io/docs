@@ -87,7 +87,7 @@ We welcome community contributions and PRs to this repository.
 
 ### Get Support 
 Use GitHub issue tracking for filing issues and Discussion Forum for any other questions, ideas or support requests.
-Orkes (http://orkes.io) development team creates and maintains the Orkes-Conductor releases.
+[Orkes](http://orkes.io) development team creates and maintains the Orkes-Conductor releases.
 
 ## License
 Copyright 2022 Orkes, Inc.
