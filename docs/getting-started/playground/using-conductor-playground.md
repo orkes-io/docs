@@ -3,7 +3,7 @@ sidebar_position: 1
 ---
 # Conductor Playground
 
-Get started with Orkes Playground by creating a free account at [https://play.orkes.io](https://play.orkes.io).
+Get started with [Orkes Playground](https://play.orkes.io) by creating a free account.
 
 ## What is Conductor Playground?
 [Conductor Playground](https://play.orkes.io) is a free environment for developers to try out and explore more about Conductor. It is fully hosted by Orkes and is run as a multi-tenant cluster. Developers can use Playground to get familiarized with what Conductor offers and it is NOT intended for running production workflows. For running Conductor orchestration & workflows in production, we recommend the following:
