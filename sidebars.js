@@ -298,6 +298,10 @@ module.exports = {
             collapsed: true,
             items: [
                 'codelab/helloworld',
+                'codelab/helloworld2',
+                'codelab/helloworld3',
+                'codelab/helloworld4',
+                'codelab/helloworld5',
                 'codelab/beginner',
                 {
                     type: 'doc',
