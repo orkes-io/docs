@@ -6,10 +6,8 @@ sidebar_position: 2
 
 In this article we will explore how you can get your first worker task running.
 
-We are hosting the code used in this article in the following location. You can clone and use it as a reference
+We are hosting the code used in this article [here](https://github.com/orkes-io/orkesworkers). You can clone and use it as a reference
 locally.
-
-#### https://github.com/orkes-io/orkesworkers
 
 In the first codelab [Running your First Workflow](/content/docs/getting-started/run/running-first-workflow), we created a simple workflow that used a HTTP [System Task](/content/docs/getting-started/concepts/system-tasks) to run our workflow.  System tasks run on the Conductor server - making commonly used functions easy to deploy in your workflow. Now it's time to explore how to run a
 custom worker that you will implement yourself.
