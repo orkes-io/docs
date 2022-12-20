@@ -178,7 +178,7 @@ const config = {
                     path: './blog',
                     showReadingTime: true,
                     editUrl: 'https://github.com/orkes-io/docs/edit/main/',
-                    blogSidebarCount: 10,
+                    blogSidebarCount: 'ALL',
                 },
                 theme: {
                     customCss: require.resolve('./src/css/custom.css'),
