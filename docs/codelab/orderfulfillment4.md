@@ -33,7 +33,7 @@ So, our new plan is to update the order every time widgets are shipped one for o
 
 You ask for the details of the API, and it turns out it is really simple:
 
-You send a post message to the endpont ```appendorder``` with the items and quantity:
+You send a post message to the endpoint ```appendorder``` with the items and quantity:
 
 ```json
 {"item": "widget", "count": "2"}'

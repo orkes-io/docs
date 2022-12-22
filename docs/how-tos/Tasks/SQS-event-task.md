@@ -5,7 +5,7 @@ Amazon's Simple Queueing Service (SQS) is a handy way to send messages across sy
 In this example, we will:
 
 * Configure Conductor for SQS messaging 
-* Set up an SQS mewssage queue at AWS
+* Set up an SQS message queue at AWS
 * Build a workflow with an EVENT task that sends messages to our SQS queue.
 * Add an EVENT to Conductor that will complete a WAIT event in the same workflow.
 
@@ -54,7 +54,7 @@ export  AWS_REGION = "{the region you are setting up the queue in}"
 
 ## Creating an SQS Queue
 
-In your AWS account, open Amazon SQS (search for it in the search bar), and choose `Create queue`. Create a queue by entering a name, and scrolling to the botttom to `create queue`.  In a minute or so, your new queue will appear in the queue list.
+In your AWS account, open Amazon SQS (search for it in the search bar), and choose `Create queue`. Create a queue by entering a name, and scrolling to the bottom to `create queue`.  In a minute or so, your new queue will appear in the queue list.
 
 <p align="center"><img src="/content/img/sqs_queue_list.jpg" alt="filtered SQS queue list" width="800" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
@@ -68,7 +68,7 @@ This workflow has two forks:
 
 * On the left fork there is just one task `task_1`.  It is a WAIT task, and it is waiting for a message from the SQS server.
 > Note: for the SQS message to COMPLETE the task, we'll need to create a Conductor EVENT.
-* The right fork has two tasks. `task_2` is also a WAIT task, but it just waits for 10s before completing and moving the workflow ahead.  On the completetion of `task_2`, the EVENT task `send_sqs_messsage` fires.
+* The right fork has two tasks. `task_2` is also a WAIT task, but it just waits for 10s before completing and moving the workflow ahead.  On the completion of `task_2`, the EVENT task `send_sqs_messsage` fires.
 
 The reason for the delay in `task_2` to is to ensure that `task_1` is initialized and waiting for the event to come in before the SQS message is sent out.
 

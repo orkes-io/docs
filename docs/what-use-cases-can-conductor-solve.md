@@ -19,7 +19,7 @@ Some common use cases that has been solved by Conductor are:
 8. Orchestrating Microservices (HTTP,  background services, etc.)
 9. Orchestrating Business Logic across various cloud functions (AWS Lambda, GCP functions, etc.)
 10. Infrastructure Provisioning
-11. CI CD Pipelines
+11. CI/CD Pipelines
 12. Long-running Processes and Workflows
 13. Monitoring
 14. Distributed Transactions
