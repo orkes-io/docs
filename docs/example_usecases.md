@@ -17,7 +17,7 @@ Conductor is a general-purpose orchestration engine that is language agnostic an
 7. Orchestrating Microservices ([HTTP](/content/docs/codelab/sequentialHTTPtasks),  background services, etc.)
 8. Orchestrating business logic across various cloud functions (AWS Lambda, GCP functions, etc.)
 9. Infrastructure Provisioning
-10. CICD Pipelines
+10. CI/CD Pipelines
 11. Long running processes and workflows
 12. Monitoring
 13. Distributed Transactions

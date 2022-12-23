@@ -10,7 +10,7 @@ workflows. Once a task is defined, you can re use multiple times in the same wor
 
 When re-using tasks, it's important to think of situations that a multi-tenant system faces. All the work assigned to
 this worker by default goes to the same task scheduling queue. This could result in your worker not being polled quickly
-if there is a noisy neighbour in the ecosystem. One way you can tackle this situation is by re-using the worker code,
+if there is a noisy neighbor in the ecosystem. One way you can tackle this situation is by re-using the worker code,
 but having different task names registered for different use cases. And for each task name, you can run an appropriate
 number of workers based on expected load.
 

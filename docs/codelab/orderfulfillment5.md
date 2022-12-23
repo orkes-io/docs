@@ -65,7 +65,7 @@ We know that a 'good' response from the API reads: ```Success![number] widgets o
 
 A [Switch task](https://orkes.io/content/docs/reference-docs/switch-task) takes in a value, and can choose which case the workflow should follow.  There is a default case (in this workflow, we'll assume that a order will be placed), and then the alternative case is when the output reads "Order Failed".
 
-The switch case can evaulate the input in several ways (including running JavaScript), but in this case, we can use the ``` "evaluatorType": "value-param"``` meaning the decision will be bsaed completely on the data that comes in the ```switchCaseValue``` parameter. The ```switchCaseValue``` reads the output body from the API, and if it says "Order failed." we'll run a different pathway for the workflow.
+The switch case can evaluate the input in several ways (including running JavaScript), but in this case, we can use the ``` "evaluatorType": "value-param"``` meaning the decision will be based completely on the data that comes in the ```switchCaseValue``` parameter. The ```switchCaseValue``` reads the output body from the API, and if it says "Order failed." we'll run a different pathway for the workflow.
 
 
 ```json
@@ -247,7 +247,7 @@ In the definition below, we've hidden the bot token in the url. The message sent
 }
 ```
 
-Now, we have instrumented our Workflow to tell us when there is a failure- in rder to reduce the number of surprises:
+Now, we have instrumented our Workflow to tell us when there is a failure- inorder to reduce the number of surprises:
 
 <p align="center"><img src="/content/img/codelab/of5_failurebot.png" alt="slack message indicating workflow failure" width="400" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
