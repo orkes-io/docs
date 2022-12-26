@@ -60,7 +60,7 @@ The following definition:
             "taskReferenceName": "first_task",
             "inputParameters": {
                 "http_request": {
-                    "uri": "http://localhost:8082",
+                    "url": "http://localhost:8082",
                     "method": "POST"
                 }
             },
@@ -70,7 +70,7 @@ The following definition:
             "taskReferenceName": "second_task",
             "inputParameters": {
                 "http_request": {
-                    "uri": "http://localhost:8082",
+                    "url": "http://localhost:8082",
                     "method": "POST"
                 }
             },
@@ -170,7 +170,7 @@ In tasks embedded in the loop, ```${get_all_stars_loop_ref.output.iteration}``` 
           "inputParameters": {
             "counter": "${get_all_stars_loop_ref.output.iteration}",
             "http_request": {
-              "uri": "https://api.github.com/repos/ntflix/conductor/stargazers?page=${get_all_stars_loop_ref.output.iteration}&per_page=100",
+              "url": "https://api.github.com/repos/ntflix/conductor/stargazers?page=${get_all_stars_loop_ref.output.iteration}&per_page=100",
               "method": "GET",
               "headers": {
                 "Authorization": "token ${workflow.input.gh_token}",
