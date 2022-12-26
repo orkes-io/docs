@@ -11,10 +11,10 @@ There are times when it may be important to send a specific task iteration to a 
 
 ![diagram of using task to domain](/img/task_to_domain_diagram.jpg)
 
-This is where task to domain comes in.
+This is where the task to domain comes in.
 
 ## Domain
-A domain is any arbitrary name given to the worker by the developer. When the workflow is started, input parameters can specify which tasks need to run on which specific domains.  This forces the workflow's tasks to be run on specific workers outside of the general pool of workers.
+A domain is any arbitrary name given to the worker by the developer. When the workflow starts, input parameters can specify which tasks need to run on which domains. This forces the workflow's tasks to be run on specific workers outside of the general pool of workers.
 
 In the example workflow above, we'll modify the domains for Task X. In production, worker X is polling the Task X queue to complete any production jobs that are created. 
 
@@ -27,18 +27,18 @@ We can test the workflow with the test version of worker X.  We add:
   "task_x": "test"
   }
 ```
-when we start the workflow.  This directs conductor to only allow Worker X with domain `test` to pick up this task - and the workflow will complete wit the test version of the worker.
+When we start the workflow, this directs Conductor to only allow Worker X with domain `test` to pick up this task - and the workflow will complete with the test version of the worker.
 
 ## Fallback task to domain
 
-When starting a workflow multiple domains can be specified as a fall backs, for example "domain1,domain2". Conductor keeps track of last polling time for each task, so in this case it checks if the there are any active workers for "domain1" then the task is put in "domain1", if not then the same check is done for the next domain in sequence "domain2" and so on.
+When starting a workflow, multiple domains can be specified as fallbacks; for example, "domain1,domain2". Conductor keeps track of the last polling time for each task, so in this case, it checks if there are any active workers for "domain1" then the task is put in "domain1"; if not, then the same check is done for the next domain in sequence "domain2" and so on.
 
 If no workers are active for the domains provided:
 
-- If `NO_DOMAIN` is provided as last token in list of domains, then no domain is set.
-- Else, task will be added to last inactive domain in list of domains, hoping that workers would soon be available for that domain.
+- If `NO_DOMAIN` is provided as the last token in the list of domains, then no domain is set.
+- Otherwise, the task will be added to the last inactive domain in the list of domains, hoping that workers will soon be available for that domain.
 
-Also, a `*` token can be used to apply domains for all tasks. This can be overridden by providing task specific mappings along with `*`. 
+Also, a `*` token can be used to apply domains for all tasks. This can be overridden by providing task-specific mappings along with `*`. 
 
 ## Example
 
@@ -51,13 +51,10 @@ Also, a `*` token can be used to apply domains for all tasks. This can be overri
 }
 ```
 
-- puts `some_task_x` in default queue (no domain).
-- puts `some_task_y` in `someDomain` domain, if available or in default otherwise.
-- puts `some_task_z` in `someInactiveDomain2`, even though workers are not available yet.
-- and puts all other tasks in `mydomain` (even if workers are not available).
+- Puts `some_task_x` in default queue (no domain).
+- Puts `some_task_y` in `someDomain` domain, if available or in default otherwise.
+- Puts `some_task_z` in `someInactiveDomain2`, even though workers are not available yet.
+- And puts all other tasks in `mydomain` (even if workers are not available).
 
 
-<b>Note</b> that this "fall back" type domain strings can only be used when starting the workflow, when polling from the client only one domain is used. `NO_DOMAIN` token should be used last.
-
-
-
+<b>Note</b> that these "fallback" domain strings can only be used when starting the workflow. When polling from the client, only one domain is used. The `NO_DOMAIN` token should be used last.

@@ -4,16 +4,16 @@ sidebar_position: 1
 
 # Task Timeouts
 
-Tasks can be configured to handle various scenarios of timeouts. Here are some scenarios and the relevance configuration
+Tasks can be configured to handle various scenarios of timeouts. Here are some scenarios and the relevant configuration
 fields.
 
 |Scenario|Configuration|
 |---|---|
-|A task worker picked up the task, but fails to respond back with an update|`responseTimeoutSeconds`|
-|A task worker picked up the task and updates progress, but fails to complete within an expected timeframe|`timeoutSeconds`|
+|A task worker picked up the task but failed to respond back with an update|`responseTimeoutSeconds`|
+|A task worker picks up the task and updates progress but fails to complete it within an expected timeframe|`timeoutSeconds`|
 |A task is stuck in a retry loop with repeated failures beyond an expected timeframe|`timeoutSeconds`|
-|Task doesn't get picked by any workers for a specific amount of time|`pollTimeoutSeconds`|
-|Task isn't completed within a specified amount of time despite being picked up by task workers|`timeoutSeconds`|
+|A task doesn't get picked by any workers for a specific amount of time|`pollTimeoutSeconds`|
+|The task isn't completed within a specified amount of time despite being picked up by task workers|`timeoutSeconds`|
 
 > `timeoutSeconds` should always be greater than `responseTimeoutSeconds`
 
@@ -23,7 +23,7 @@ fields.
 "timeoutSeconds" : 30
 ```
 
-When configured with a value > `0`, the system will wait for this task to complete successfully up until this number of
+When configured with a value > `0`, the system will wait for this task to complete successfully until this number of
 seconds from when the task is first polled. We can use this to fail a workflow when a task breaches the overall SLA for
 completion.
 
