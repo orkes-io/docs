@@ -67,7 +67,7 @@ This Event does exactly what the name says, it will start a workflow run. In the
 
 ### Complete Task
 
-Imagine you have a workflow that requires a person to sign a document at Docusign.  There would be a WAIT task in the IN_PROGRESS state, waiting for an EVENT so that the workflow can move forward. The message is sent to the `conductor_docusign_completed` SQS queue at AWS, which will fire this event:
+Imagine you have a workflow that requires a person to sign a document at DocuSign.  There would be a WAIT task in the IN_PROGRESS state, waiting for an EVENT so that the workflow can move forward. The message is sent to the `conductor_docusign_completed` SQS queue at AWS, which will fire this event:
 
 ```json
 {
@@ -90,7 +90,7 @@ Imagine you have a workflow that requires a person to sign a document at Docusig
 
 ### Fail Task
 
-Imagine you have a workflow that requires a person to sign a document at Docusign.  There would be a WAIT task in the IN_PROGRESS state, waiting for an EVENT so that the workflow can move forward. In this case, the human refused to sign the document, and the message is sent to the `conductor_docusign_failed` SQS queue at AWS, which will fire this event:
+Imagine you have a workflow that requires a person to sign a document at DocuSign.  There would be a WAIT task in the IN_PROGRESS state, waiting for an EVENT so that the workflow can move forward. In this case, the human refused to sign the document, and the message is sent to the `conductor_docusign_failed` SQS queue at AWS, which will fire this event:
 
 ```json
 {
