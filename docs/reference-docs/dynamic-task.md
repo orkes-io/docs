@@ -13,7 +13,7 @@ It accepts the task name to execute as `taskToExecute` in `inputParameters`.
 ## Use Cases 
 
 Consider a scenario when we have to make decision of executing a task dynamically i.e. while the workflow is still running. In such cases, Dynamic Task would be useful.
-fined directly inside the workflow with type `DYNAMIC`.
+Defined directly inside the workflow with type `DYNAMIC`.
 
 ## Inputs
 
