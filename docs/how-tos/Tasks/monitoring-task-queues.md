@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Monitoring Task Queues
 
-Conductor offers an API and UI interface to monitor the task queues. This is useful to see details of the number of
+Conductor offers an API and UI interface to monitor the task queues. This is useful for viewing the details of the number of
 workers polling and monitoring the queue backlog.
 
 ### Using the UI
@@ -15,10 +15,10 @@ workers polling and monitoring the queue backlog.
 
 Access this screen via - Home > Task Queues
 
-On this screen you can select and view the details of the task queue. The following information is shown:
+On this screen, you can select and view the details of the task queue. The following information is shown:
 
 1. Queue Size - The number of tasks waiting to be executed
-2. Workers - The count and list of works and their instance reference who are polling for work for this task
+2. Workers - The count and list of works and their instance reference, which are polling for work for this task
 
 ### Using APIs
 
@@ -39,4 +39,4 @@ curl 'http://localhost:8080/api/tasks/queue/polldata?taskType=<TASK_NAME>' \
 > Replace `<TASK_NAME>` with your task name
 
 
->Note this page will show you all of the [task to domain](task-domains) configured for your tasks.
+>Note that this page will show you all the  [task to domain](task-domains) configured for your tasks.
