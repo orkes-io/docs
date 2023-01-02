@@ -5,7 +5,7 @@ authors: riza
 tags: [Netflix Conductor, orchestration, monthly updates]
 ---
 
-We have wrapped up 2022 - a year full of happenings. This blog post is intended to recap what the Orkes team has been up to in December - the most wonderful time of the year. 
+Finally, we wrapped 2022 - a year full of happenings. This blog post is intended to recap what the Orkes team has been up to in December - the most wonderful time of the year. 
 
 We concluded the year with a few significant developer events. It’s been an incredible year, and thank you for being a part of our community. Let’s keep growing together, and wish you all that 2023 be a year full of exploration, discovery, and growth. 
 
