@@ -6,7 +6,7 @@ import TabItem from '@theme/TabItem';
 
 # Running First Workflow
 
-In this article we will explore how we can run a simple workflow (without deploying a microservice.)
+In this article, we will explore how we can run a simple workflow (without deploying a microservice.)
 
 
 ## Start Conductor
@@ -85,13 +85,13 @@ Here is a list of fields and what it does:
 1. `"name"` : Name of our worker
 2. `"taskReferenceName"` : This is a reference to this worker in this specific workflow implementation. 
 3. `"inputParameters"` : These are the inputs into our worker. We've hardcoded the inputs here, but dynamic inputs are also possible. (Our [Beginner Codelab](/content/docs/codelab/beginner#creating-workflow-definition) has an example of this.)
-4. `"type"` : The task type (in our example - this a `HTTP` task to make a REST API call).
-5. `"http_request"` : The required inputs for a `HTTP` tasks are a URL and the type or request.
+4. `"type"` : The task type (In our example - this an `HTTP` task to make a REST API call).
+5. `"http_request"` : The required inputs for an `HTTP` task are a URL and the type or request.
 
 
 ## Creating the Workflow
 
-We have two options to add the Workflow into Conductor: using the Conductor UI, or via API.
+We have two options to add the Workflow into Conductor: using the Conductor UI or via API.
 
 
 <Tabs values={[
@@ -119,7 +119,7 @@ To configure the workflow via API, we will use the Swagger definition page:
 
 * [Local Conductor](http://localhost:8080/swagger-ui/index.html?configUrl=/api-docs/swagger-config#/metadata-resource/create)
 
->NOTE: If you are using Orkes Playground, you will need an authentication token.  In the dashboard, click your user icon in the top right, and choose the `copy token` option.  Back on the Swagger page, click the lock to the right of the endpoint, and past the token here. ([Here are more details on authentication](/content/docs/getting-started/concepts/access-control-applications#prototyping).)
+>NOTE: If you are using Orkes Playground, you will need an authentication token.  In the dashboard, click your user icon in the top right, and choose the `copy token` option.  Back on the Swagger page, click the lock to the right of the endpoint, and paste the token here. ([Here are more details on authentication](/content/docs/getting-started/concepts/access-control-applications#prototyping).)
 
 If the link doesn’t open to the correct Swagger section, we can navigate to `Metadata-Resource` -> `POST /api/metadata/workflow`
 
@@ -127,7 +127,7 @@ If the link doesn’t open to the correct Swagger section, we can navigate to `M
 
 
 1. Click the `Try it out` button.
-2. Paste the workflow JSON from above into the the Request Body.
+2. Paste the workflow JSON from above into the Request Body.
 3. Press the Execute button. 
 
 You should see a 200 response that the API call was successful.
@@ -140,7 +140,7 @@ We are now ready to run the workflow!
 
 ## Running the Workflow
 
-To run the workflow, we again have the option of running the workflow via the UI or the API.  
+To run the workflow we have the option of running the workflow via the UI or the API. 
 
 <Tabs values={[
         {label: 'Conductor UI', value: 'Conductor', },
@@ -149,7 +149,7 @@ To run the workflow, we again have the option of running the workflow via the UI
   
 <TabItem value="Conductor">
 
-1. To run your workflow via the UI click the following link:
+1. To run your workflow via the UI, click the following link:
 
 * Conductor: `http://localhost:5000/workbench`
 * Playground: `https://play.orkes.io/runWorkflow`
@@ -160,9 +160,9 @@ To run the workflow, we again have the option of running the workflow via the UI
 
 3. Start the workflow. 
 * Conductor: Press the "play" arrow to the right of "Workflow Workbench."
-* Playground: Press "Run Workflow" button.
+* Playground: Press the "Run Workflow" button.
 
-The workflowID will appear. Click this to open the execution diagram of your workflow.
+The workflow ID will appear. Click this to open the execution diagram of your workflow.
 
 </TabItem>
 <TabItem value="API">
@@ -198,11 +198,10 @@ or:
 http://play.orkes.io/execution/<WORKFLOW_ID>
 ```
 
-Replace `<WORKFLOW_ID>` with our workflow id from the previous step. We should see a screen like below. Click on the
-different tabs to see all inputs and outputs and task list etc. Explore away!
+Replace `<WORKFLOW_ID>` with our workflow id from the previous step. We should see a screen like the one below. Click on the different tabs to see all inputs and outputs, task lists, etc. Explore away!
 
 ![Conductor UI - Workflow Run](/img/tutorial/workflowLoaded.png)
 
 
 
-The concludes the tutorial. Feel free to explore the codelabs and other tutorials to try additional features of Conductor.
+This concludes the tutorial. Feel free to explore the codelabs and other tutorials to try additional features of Conductor.
