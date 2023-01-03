@@ -85,7 +85,7 @@ Here is a list of fields and what it does:
 1. `"name"` : Name of our worker
 2. `"taskReferenceName"` : This is a reference to this worker in this specific workflow implementation. 
 3. `"inputParameters"` : These are the inputs into our worker. We've hardcoded the inputs here, but dynamic inputs are also possible. (Our [Beginner Codelab](/content/docs/codelab/beginner#creating-workflow-definition) has an example of this.)
-4. `"type"` : The task type (In our example - this an `HTTP` task to make a REST API call).
+4. `"type"` : The task type (In our example - this is an `HTTP` task to make a REST API call).
 5. `"http_request"` : The required inputs for an `HTTP` task are a URL and the type or request.
 
 
