@@ -45,6 +45,6 @@ shown in green and are easy to follow, like the example below. The alternative p
 
 ![Conductor UI - Workflow Run](/img/tutorial/workflow_execution_view.png)
 
-Errors will be visible on the UI in ref such as the example below
+Errors will be visible in the, UI as below.
 
 ![Conductor UI - Failed Task](/img/tutorial/workflow_task_fail.png)
