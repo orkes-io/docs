@@ -4,9 +4,9 @@ import TabItem from '@theme/TabItem';
 
 # Using Secrets in a Workflow
 
-Many applications require the use of sensitive values that should be protected from exposure.  Items like usernames, passwords, API keys etc. are all sensitive values that should not be kept in a workflow (that might end up on GitHub or another public site.)
+Many applications require the use of sensitive values that should be protected from exposure.  Items like usernames, passwords, API keys, etc., are all sensitive values that should not be kept in a workflow (that might end up on GitHub or another public site.)
 
-Just as programming languages and GitHub have the concept of `secrets`, so does Orkes Conductor. You can define your variables in a secure and safe way knowing that they will not be exposed in the workflow, or shared with other teammates.
+Just as programming languages and GitHub have the concept of `secrets`, so does Orkes Conductor. You can define your variables in a secure and safe way, knowing that they will not be exposed in the workflow or shared with other teammates.
 
 
 ## Using a Secret
@@ -19,7 +19,7 @@ Let's assume your secret is called `GitHub_Token` To reference that secret, use 
 
 ## Example
 
-The US Postal Service offers APIs to help automate the shipping process with the post office.  Each API call requires a UserId to be submitted.  This UserId can be used to buy postage, so it needs to be kept secure. WE've created a secret called `post_office_username` that we can now use in all API calls. (This workflow can be found is the [Conductor Examples](https://github.com/conductor-sdk/conductor-examples) github repository.):
+The US Postal Service offers APIs to help automate the shipping process with the post office.  Each API call requires a UserId to be submitted.  This UserId can be used to buy postage, so it needs to be kept secure. We've created a secret called `post_office_username` that we can now use in all API calls. (This workflow can be found in the [Conductor Examples](https://github.com/conductor-sdk/conductor-examples) Github repository.):
 
 ```shell
 https://production.shippingapis.com/ShippingAPI.dll?API=RateV4&XML=<RateV4Request \
@@ -39,11 +39,11 @@ USERID=${workflow.secrets.post_office_username}> \
 <Machinable>TRUE</Machinable> \
 </Package></RateV4Request>
 ```
-By using `${workflow.secrets.post_office_username}`, we obfuscate this sensitive value, and it never appears in the workflow execution, or in any output files of Conductor, yet we are able to connect with the USPS, and obtain the postage price for our package ($82.10, in case you're wondering).
+By using `${workflow.secrets.post_office_username}`, we obfuscate this sensitive value, and it never appears in the workflow execution, or any output files of Conductor. Yet, we can connect with the USPS and obtain the postage price for our package ($82.10, in case you're wondering).
 
 ## Creating a secret
 
-We'll walk through a few approaches to create a secret, and then examples of implementing a secret.  To create a secret, you can use the API or you can use the Orkes Dashboard.  
+We'll walk through a few approaches to creating a secret, and then examples of implementing a secret.  To create a secret, you can use the API, or you can use the Orkes Dashboard.  
 
 <p align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/O_Ngo1Gg2Co" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
 
@@ -109,9 +109,9 @@ Or you can simply navigate to the url `secrets` in your Orkes Cloud dashboard.
 The Secrets dashboard lists all of the secrets connected to your account:
 <p align="center"><img src="/content/img/secrets_dashboard.jpg" alt="the Orkes Cloud Secrets dashboard" width="700" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
-Clicking the "eye" icon next the secret will expose the secret's value and also give you the options to change the secret value, or delete the secret altogether.
+Clicking the "eye" icon next to the secret will expose the secret's value and also give you the option to change the secret value, or delete the secret altogether.
 
-To add a secret click the `Add Secret` button at the top.  Add your Key:value and click the `Add` button.  If you receive an error, it is likely because the key is already in use, so simply select a different key.
+To add a secret, click the `Add Secret` button at the top.  Add your Key:value and click the `Add` button.  If you receive an error, it is likely because the key is already in use, so simply select a different key.
   
 </TabItem>
 
@@ -159,15 +159,15 @@ curl -X POST "https://play.orkes.io/api/auth/authorization" \
 
 Note that the type is `SECRET_NAME`.
 
-In this call, we are give the application `orkes-workers` `READ` access to our `post_office_username` secret.
+In this call, we give the application `orkes-workers` `READ` access to our `post_office_username` secret.
 </TabItem>
 <TabItem value="orkes">
 
-The Orkes Dashboard, navigate to the "Applications" menu.  Choose the application you wish to add the secret to, and choose `add permission`: 
+In the Orkes Dashboard, navigate to the "Applications" menu.  Choose the application you wish to add the secret to and choose `add permission`: 
 
 <p align="center"><img src="/content/img/add_secret.jpg" alt="adding a secret via UI" width="400" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
-In the image above, we area adding the secret `GH_KEY` to our application (with `READ` access.). Click the `Add Permission` button, and the secret will be added.
+In the image above, we are adding the secret `GH_KEY` to our application (with `READ` access.). Click the `Add Permission` button, and the secret will be added.
 
 </TabItem>
 </Tabs>
