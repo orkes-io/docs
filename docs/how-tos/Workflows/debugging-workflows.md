@@ -20,11 +20,11 @@ The following fields are useful in debugging:
 
 |Field Name|Description|
 |---|---|
-| Task Detail > Summary > Reason for Incompletion | If an exception was thrown by the worker, it will be captured and displayed here|
-| Task Detail > Summary > Worker | The worker instance id where this failure last occurred. Useful to dig for detailed logs if not already captured by Conductor|
+| Task Detail > Summary > Reason for Incompletion | If an exception were thrown by the worker, it would be captured and displayed here|
+| Task Detail > Summary > Worker | The worker instance is where this failure last occurred. Useful to dig for detailed logs if not already captured by Conductor|
 | Task Detail > Input | Verify if the task inputs were computed and provided correctly to the task|
-| Task Detail > Output | If output of a previous task is used as an input to your next task, refer here for what was produced|
-| Task Detail > Logs | If your task is supplying logs, we can look at that here|
+| Task Detail > Output | If the output of a previous task is used as an input to your next task, refer here for what was produced|
+| Task Detail > Logs | If your task is supplying logs, we could look at that here|
 | Task Detail > Retried Task - Select an instance | If your task was retried, we can see all the attempts and corresponding details here|
 
 Note: We can also access the task list from **Tasks > Task List** tab.
@@ -42,8 +42,8 @@ The **Actions** button provides the following options:
 
 |Action Name|Description|
 |---|---|
-| Restart with Current Definitions | Restart this workflow from the beginning using the same version of the workflow definition that originally ran this workflow execution. This is useful if the workflow definition has changed and we want to retain this instance to the original version|
-| Restart with Latest Definitions | Restart this workflow from the beginning using the latest definition of the workflow. If we made changes to definition, we can use this option to re-run this flow with the latest version| 
+| Restart with Current Definitions | Restart this workflow from the beginning using the same version of the workflow definition that originally ran this workflow execution. This is useful if the workflow definition has changed and we want to retain this instance in the original version|
+| Restart with Latest Definitions | Restart this workflow from the beginning using the latest definition of the workflow. If we made changes to the definition, we could use this option to re-run this flow with the latest version| 
 | Retry - From failed task | Retry this workflow from the failed task| 
 
 <br/>
