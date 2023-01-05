@@ -95,7 +95,7 @@ Now we're ready to create the GitHub Action.
 
 ### GitHub Action Basics
 
-Having never created a Github action, there are a number of templates one can begin with:
+Having never created a GitHub action, there are a number of templates one can begin with:
 
 ```yaml
 # This is a basic workflow to help you get started with Actions
