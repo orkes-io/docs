@@ -8,7 +8,7 @@ When a workflow fails, there are 2 ways to handle the exception.
 
 ## ```failureWorkflow```
 
-In your main workflow definition, you can configure a workflow to run upon failure, by adding the following parameter to the workflow:
+In your main workflow definition, you can configure a workflow to run upon failure by adding the following parameter to the workflow:
 
 ```json
 "failureWorkflow": "<name of your failure workflow>",
@@ -16,9 +16,9 @@ In your main workflow definition, you can configure a workflow to run upon failu
 
 When there is an issue with your workflow, Conductor will start the failure workflow.  By default, three parameters are passed:
 
-* reason
-* workflowId: use this to pull the details of the failed workflow.
-* failureStatus
+* *reason*
+* *workflowId*: Use this to pull the details of the failed workflow.
+* *failureStatus*
 
 > The `reason` parameter will, by default, have text similar to `Workflow is FAILED by TERMINATE task: 84eb2dcb-ebfd-11ec-b770-12aa5996f545`. If a workflow fails via a TERMINATE task, the `terminateReason` parameter in the TERMINATE task can be used to override the default `reason` text.
 
