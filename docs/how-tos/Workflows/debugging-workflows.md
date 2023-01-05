@@ -25,7 +25,7 @@ The following fields are useful in debugging:
 | Task Detail > Input | Verify if the task inputs were computed and provided correctly to the task|
 | Task Detail > Output | If the output of a previous task is used as an input to your next task, refer here for what was produced|
 | Task Detail > Logs | If your task is supplying logs, we could look at that here|
-| Task Detail > Retried Task - Select an instance | If your task was retried, we can see all the attempts and corresponding details here|
+| Task Detail > Retried Task - Select an instance | If your task was retried, we could see all the attempts and corresponding details here|
 
 Note: We can also access the task list from **Tasks > Task List** tab.
 
