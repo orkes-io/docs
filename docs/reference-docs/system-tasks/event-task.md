@@ -16,7 +16,7 @@ Conductor supports the following eventing models:
 
 ### Use Cases 
 Consider a use case where at some point in the execution, an event is published to an external eventing system such as SQS.
-Event tasks are useful for creating event based dependencies for workflows and tasks.
+Event tasks are useful for creating event-based dependencies for workflows and tasks.
 
 Consider an example where we want to publish an event into SQS to notify an external system. 
 
@@ -28,7 +28,7 @@ Consider an example where we want to publish an event into SQS to notify an exte
 }
 ```
 
-An example where we want to publish a message to conductor's internal queuing system.
+An example is when we want to publish a message to Conductor's internal queuing system.
 ```json
 {
     "type": "EVENT",
@@ -50,7 +50,7 @@ An example where we want to publish a message to conductor's internal queuing sy
 | sink   | External event queue in the format of `prefix:location`.  The Prefix is either `sqs` or `conductor`, and `location` specifies the actual queue name. e.g. "sqs:send_email_queue" |
 
 #### Output Configuration
-The Tasks' output is sent as a payload to the external event. In case of SQS, the task's output is sent as a payload to the SQS message.
+The Tasks' output is sent as a payload to the external event. In the case of SQS, the task's output is sent as a payload to the SQS message.
 
 ### Supported Queuing Systems
 Conductor has support for the following external event queueing systems as part of the OSS build
