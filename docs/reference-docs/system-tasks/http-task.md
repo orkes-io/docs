@@ -140,7 +140,7 @@ Following is an example of an HTTP task with the `DELETE` method.
 ### Codelabs with HTTP tasks
 * [Running the first workflow](/content/docs/getting-started/run/running-first-workflow) uses HTTP Task to call an API.
 * [Hello World Part 2](/content/docs/codelab/helloworld2#the-http-task) uses the HTTP task to send an IP Address and receive a location.
-* [Order Fulfillment Part4](/content/docs/codelab/orderfulfillment4) calls an API to reorder widgets.
+* [Order Fulfillment Part 4](/content/docs/codelab/orderfulfillment4) calls an API to reorder widgets.
 * [Sequential HTTP Tasks](/content/docs/codelab/sequentialHTTPtasks) makes two HTTP tasks. Data from the first response is used as input in the 2nd task.
 
 
