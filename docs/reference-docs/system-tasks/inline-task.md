@@ -18,7 +18,7 @@ The inline task helps execute necessary logic at the workflow run-time using an 
 
 ## Use Cases
 
-Consider a scenario we have to run simple evaluations in the Conductor server while creating Workers. An inline task can be used to run these evaluations using an evaluator engine.
+Consider a scenario where we have to run simple evaluations in the Conductor server while creating Workers. An inline task can be used to run these evaluations using an evaluator engine.
 
 ## Configuration
 ```json
@@ -34,7 +34,7 @@ Consider a scenario we have to run simple evaluations in the Conductor server wh
 }
 ```
 
-Following are the parameters in the above example:
+The following are the parameters in the above example:
 
 1. `"evaluatorType"` - Type of the evaluator. Supported evaluators: graaljs, javascript, which evaluates the javascript expression.
 
