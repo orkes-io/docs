@@ -10,15 +10,15 @@ import TabItem from '@theme/TabItem';
 ```
 
 :::note Important Note
-This is the legacy method of using a dynamic fork join which requires a preparation task for the inputs. There is a new updated version of this that can operate of an array [Dynamic Fork Join using Arrays](./dynamic-fork-from-array-task) 
+This is the legacy method of using a dynamic fork join which requires a preparation task for the inputs. There is a new updated version of this that can operate on an array [Dynamic Fork Join using Arrays](./dynamic-fork-from-array-task) 
 :::
 
 ## Introduction
 
-When the number of forks must be determined at run-time, the FORK_JOIN_DYNAMIC task is needed.  (In a regular fork operation -the [FORK_JOIN](/content/docs/reference-docs/fork-task) task- the number of forks are defined during workflow creation.)
+When the number of forks must be determined at run-time, the FORK_JOIN_DYNAMIC task is needed.  (In a regular fork operation -the [FORK_JOIN](/content/docs/reference-docs/fork-task) task- the number of forks is defined during workflow creation.)
 
 :::info Note: 
-A `FORK_JOIN_DYNAMIC` can ony have ONE task per fork.  If there is a need for multiple tasks per fork, a SUBWORKFLOW can be utilized.
+A `FORK_JOIN_DYNAMIC` can only have one task per fork.  If there is a need for multiple tasks per fork, a sub-workflow can be utilized.
 :::
 
 <p align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/2VE2ys_85FM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
@@ -89,7 +89,7 @@ Let's assume the workflow input appears as follows:
 }
 ```
 
-Note that the input has two outputFormats (png and Jpg) and two sizes (300x300 and 200x200). With 2 file formats and 2 sizes in the input, we'll be creating 4 images total.  We'll create a task & worker that will take the input data, and convert it into the JSON arrays that the `FORK_JOIN_DYNAMIC` requires. First, let's define what the inputs must look like:
+Note that the input has two outputFormats (png and Jpg) and two sizes (300x300 and 200x200). With two file formats and two sizes in the input, we'll be creating four images in total. We'll create a task & worker that will take the input data, and convert it into the JSON arrays that the `FORK_JOIN_DYNAMIC` requires. First, let's define what the inputs must look like:
 
 ### ```dynamicForkTasksParam``` 
 
@@ -299,7 +299,7 @@ Note: For `FORK_JOIN_DYNAMIC`, all tasks must complete before the `JOIN` will co
 
 ## Additional Examples
 
-* [Order Fulfillment Codelab](/content/docs/codelab/orderfulfillment8): In this Example, several JQ Transform System tasks are used to create the JSON inputs required for the Dynamic task to run. The outputs from the JQ transforms are used to create the `dynamicTasks` and the `dynamicTaskInputs`:
+* [Order Fulfillment Codelab](/content/docs/codelab/orderfulfillment8): In this example, several JQ Transform System tasks are used to create the JSON inputs required for the Dynamic task to run. The outputs from the JQ transforms are used to create the `dynamicTasks` and the `dynamicTaskInputs`:
 
 ```json
   "inputParameters": {
