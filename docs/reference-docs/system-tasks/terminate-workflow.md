@@ -21,10 +21,10 @@ Consider a use case where you want to terminate a long-running workflow (or a se
 | Attribute         | Description                                                                                                                                                                 |
 |-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | workflowId        | Either a workflow ID or a list of workflow IDs.                                                                                                                             |
-| terminationReason | Optional text used to update reason for termination of the workflows being terminated.                                                                                      |
+| terminationReason | Optional text used to update the reason for the workflows being terminated. |
 
 #### Output Configuration
-Task output will contain field "terminatedWorkflows" which is a set of workflow IDs corresponding to the workflows that were terminated.
+Task output will contain the field "terminatedWorkflows", which is a set of workflow IDs corresponding to the workflows that were terminated.
 
 ## Example
 

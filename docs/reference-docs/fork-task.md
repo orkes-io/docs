@@ -9,8 +9,8 @@ sidebar_position: 1
 
 ## Introduction
 
-A Fork operation lets you run a specified list of other tasks or sub workflows in parallel. A fork task is
-followed by a join operation that waits on the forked tasks or sub workflows to finish. The `JOIN`
+A Fork operation lets you run a specified list of other tasks or sub-workflows in parallel. A fork task is
+followed by a join operation that waits on the forked tasks or sub-workflows to finish. The `JOIN`
 task also collects outputs from each of the forked tasks or sub workflows.
 
 <p style={{textAlign: "center"}}>
@@ -22,14 +22,14 @@ style={{paddingBottom: 30, paddingTop: 30}} />
 
 ## Use Cases
 
-`FORK_JOIN` tasks are typically used when a list of tasks can be run in parallel. E.g In a notification workflow, there
-could be multiple ways of sending notifications, i,e e-mail, SMS, HTTP etc.. These notifications are not dependent on
+`FORK_JOIN` tasks are typically used when a list of tasks can be run in parallel. E.g., In a notification workflow, there
+could be multiple ways of sending notifications, i.e., e-mail, SMS, HTTP etc. These notifications are not dependent on
 each other, and so they can be run in parallel. In such cases, you can create 3 sub-lists of forked tasks for each of
 these operations.
 
 ## Configuration
 
-A `FORK_JOIN` task, has a `forkTasks` attribute that expects an array. Each array, is a sub-list of tasks. Each of these
+A `FORK_JOIN` task has a `forkTasks` attribute that expects an array. Each array is a sub-list of tasks. Each of these
 sub-lists and then invoked in parallel. The tasks defined within each sublist can be sequential or any other way as
 desired.
 
@@ -119,13 +119,13 @@ references that were being `joinOn`. The corresponding values are the outputs of
 | taskReferenceName   | Task Reference Name. A unique reference to this task. There can be multiple references of a task within the same workflow definition        |
 | type   | Task Type. In this case, `FORK_JOIN`        |
 | inputParameters   | The input parameters that will be supplied to this task    |
-| forkTasks   | A list of a list of tasks. Each of the outer list will be invoked in parallel. The inner list can be a graph of other tasks and sub-workflows   |
+| forkTasks   | A list of tasks. Each of the outer lists will be invoked in parallel. The inner list can be a graph of other tasks and sub-workflows   |
 
 ### Output Configuration
 
 This is the output configuration of the `JOIN` task that is used in conjunction with the `FORK_JOIN` task. The output of
 the
-`JOIN` task is a map, where the keys are the names of the task reference names where were being `joinOn` and the keys
+`JOIN` task is a map, where the keys are the names of the task reference names that were being `joinOn` and the keys
 are the corresponding outputs of those tasks.
 
 | Attribute      | Description |
@@ -138,7 +138,7 @@ are the corresponding outputs of those tasks.
 
 ## Example
 
-Imagine a workflow that sends 3 notifications: email, SMS and HTTP. Since none of these steps are dependant on the others, they can be run in parallel with a fork.
+Imagine a workflow that sends 3 notifications: email, SMS and HTTP. Since none of these steps are dependent on the others, they can be run in parallel with a fork.
 
 The diagram will appear as:
 
