@@ -11,13 +11,13 @@ sidebar_position: 1
 WAIT is used when the workflow needs to be paused for an external signal to continue.
 
 ## Use Cases
-WAIT is used when the workflow needs to wait and pause for an external signal such as a human intervention 
-(like manual approval) or an event coming from external source such as Kafka, SQS or Conductor's internal queueing mechanism.
+WAIT is used when the workflow needs to wait and pause for an external signal, such as a human intervention 
+(like manual approval) or an event coming from an external source such as Kafka, SQS or Conductor's internal queueing mechanism.
 
-Some use cases where WAIT task is used:
+Some use cases where the WAIT task is used:
 
-1. Wait for a certain amount of time (e.g. 2 minutes) or until a certain date time (e.g. 12/25/2022 00:00)
-2. To wait for and external signal coming from an event queue mechanism supported by Conductor
+1. Wait for a certain amount of time (e.g., 2 minutes) or until a certain date time (e.g., 12/25/2022 00:00)
+2. To wait for an external signal coming from an event queue mechanism supported by Conductor
 
 ## Configuration
 * taskType: WAIT
@@ -32,8 +32,8 @@ format: short: **D**d**H**h**M**m or full:  **D**days**H**hours**M**minutes
   }
 }
 ```
-* Wait until specific date/time
-* e.g. the following Wait task remains blocked until Dec 25, 2022 9am PST
+* Wait until a specific date/time
+* E.g., the following Wait task remains blocked until Dec 25, 2022, 9 am PST
 * The date/time can be supplied in one of the following formats: 
 **yyyy-MM-dd HH:mm**, **yyyy-MM-dd HH:mm**, **yyyy-MM-dd**
 ```json

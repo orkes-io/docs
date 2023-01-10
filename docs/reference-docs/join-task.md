@@ -11,14 +11,14 @@ sidebar_position: 1
 
 A `JOIN` task is used in conjunction with a `FORK_JOIN` or `FORK_JOIN_DYNAMIC` task. When `JOIN` is used along with
 a `FORK_JOIN` task, it waits for a list of zero or more of the forked tasks to be completed. However, when used with
-a `FORK_JOIN_DYNAMIC` task, it implicitly waits for all of the dynamically forked tasks to complete.
+a `FORK_JOIN_DYNAMIC` task, it implicitly waits for all the dynamically forked tasks to complete.
 
 ### Use Cases
 
-FORK_JOIN and FORK_JOIN_DYNAMIC task are used to execute a collection of other tasks or sub workflows in parallel. In
-such cases, there is a need for these forked tasks to complete before moving to the next stage in the workflow. E.g in a
-notification workflow, you could have a FORK_JOIN task that may have an email notification task, a SMS notification task,
-a HTTP notification task. A JOIN task can specify zero or more of these notification tasks to complete before proceeding
+FORK_JOIN and FORK_JOIN_DYNAMIC tasks are used to execute a collection of other tasks or sub-workflows in parallel. In
+such cases, there is a need for these forked tasks to complete before moving to the next stage in the workflow. For example, in a
+notification workflow, you could have a FORK_JOIN task that may have an email notification task, an SMS notification task,
+and an HTTP notification task. A JOIN task can specify zero or more of these notification tasks to complete before proceeding
 to the next step.
 
 ### Configuration
@@ -39,9 +39,9 @@ and `my_task_ref_2` as specified by the `joinOn` attribute.
 ```
 
 Here is an example of a `JOIN` task used in conjunction with a `FORK_JOIN` task. The 'FORK_JOIN' spawns 3 tasks.
-An `email_notification` task, a `sms_notification` task and a  `http_notification` task. Email and SMS are usually best
-effort delivery systems. However, in case of a http based notification you get a return code and you can retry until it
-succeeds or eventually give up. When you setup a notification workflow, you may decide to continue ,if you kicked off an
+An `email_notification` task, a `sms_notification` task and a  `http_notification` task. Email and SMS are usually the best
+effort delivery systems. However, in case of an http-based notification, you get a return code and you can retry until it
+succeeds or eventually give up. When you set up a notification workflow, you may decide to continue ,if you kicked off an
 email and sms notification. In that case, you can decide to `joinOn` those specific tasks. However,
 the `http_notification` task will still continue to execute, but it will not block the rest of the workflow from
 proceeding.
@@ -88,7 +88,7 @@ proceeding.
 ]
 ```
 
-Here is how the output of notification_join will look like. The output is a map, where the keys are the names of task
+Here is what the output of notification_join will look like. The output is a map, where the keys are the names of task
 references that were being `joinOn`. The corresponding values are the outputs of those tasks.
 
 ```json
@@ -113,7 +113,7 @@ references that were being `joinOn`. The corresponding values are the outputs of
 | name      | Task Name. A unique name that is descriptive of the task function      |
 | taskReferenceName   | Task Reference Name. A unique reference to this task. There can be multiple references of a task within the same workflow definition        |
 | type   | Task Type. In this case, `JOIN`        |
-| joinOn   | A list of task reference names, that this `JOIN` task will wait for completion |
+| joinOn   | A list of task reference names that this `JOIN` task will wait for completion |
 
 #### Output Configuration
 
@@ -147,9 +147,9 @@ and `my_task_ref_2` as specified by the `joinOn` attribute.
 #### Example - ignoring one fork
 Here is an example of a `JOIN` task used in conjunction with a `FORK_JOIN` task. The 'FORK_JOIN' spawns 3 tasks.
 An `email_notification` task, a `sms_notification` task and a  `http_notification` task. Email and SMS are usually best
-effort delivery systems. However, in case of a http based notification you get a return code and you can retry until it
-succeeds or eventually give up. When you setup a notification workflow, you may decide to continue ,if you kicked off an
-email and sms notification. Im that case, you can decide to `joinOn` those specific tasks. However,
+effort delivery systems. However, in case of an http-based notification, you get a return code and you can retry until it
+succeeds or eventually give up. When you set up a notification workflow, you may decide to continue if you kicked off an
+email and sms notification. In that case, you can decide to `joinOn` those specific tasks. However,
 the `http_notification` task will still continue to execute, but it will not block the rest of the workflow from
 proceeding.
 
@@ -195,7 +195,7 @@ proceeding.
 ]
 ```
 
-Here is how the output of notification_join will look like. The output is a map, where the keys are the names of task
+Here is what the output of notification_join will look like. The output is a map, where the keys are the names of task
 references that were being `joinOn`. The corresponding values are the outputs of those tasks.
 
 ```json

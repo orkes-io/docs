@@ -8,13 +8,13 @@ sidebar_position: 1
 ```
 ### Introduction
 
-HUMAN is used when the workflow needs to be paused for an external signal by a human to continue.
+The human task is used when the workflow needs to be paused for an external signal by a human to continue.
 
 ### Use Cases
 HUMAN is used when the workflow needs to wait and pause for  human intervention 
-(like manual approval) or an event coming from external source such as Kafka, SQS or Conductor's internal queueing mechanism.
+(like manual approval) or an event coming from an external source such as Kafka, SQS or Conductor's internal queueing mechanism.
 
-Some use cases where HUMAN task is used:
+Some use cases where the Human task is used:
 1. To add a human approval task.  When the task is approved/rejected by HUMAN task is updated using `POST /tasks` API to completion.
 
 Here's a sample API call:

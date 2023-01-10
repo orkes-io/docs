@@ -12,7 +12,7 @@ import TabItem from '@theme/TabItem';
 
 ## Introduction
 
-Dynamic fork is a powerful feature in Conductor that can be used to run parallel executions of the task with dynamism. Think of this as Conductor’s equivalent of stream parallel processing in Java:
+The dynamic fork is a powerful feature in Conductor that can be used to run parallel executions of the task with dynamism. Think of this as Conductor’s equivalent of stream parallel processing in Java:
 
 ```java
 arrayItems.stream().parallel().forEach(item -> process(item));
@@ -24,8 +24,8 @@ Conductor allows you to do the same and covers several types of processes.
 
 1. Simple Task - When we need to run a simple custom worker task
 2. [HTTP Task](./system-tasks/http-task) - When we need to run the system HTTP workers
-3. [Sub Workflows](./sub-workflow-task) - Use this when we want to run more than one tasks or a series or steps that can be a full-fledged complex flow
-4. Other Conductor Task Types - This can also be used for other task types such as EVENT, HUMAN etc.
+3. [Sub Workflows](./sub-workflow-task) - Use this when we want to run more than one task or a series of steps that can be a full-fledged complex flow
+4. Other Conductor Task Types - This can also be used for other task types such as EVENT, HUMAN, etc.
 
 
 ### Running Simple Tasks using Dynamic Fork 
@@ -34,7 +34,7 @@ Run a simple task for each of the inputs provided
 
 | Parameter Name | Description                                                      |
 |----------------|------------------------------------------------------------------|
-| forkTaskName   | Specify name of the simple task to execute                       |
+| forkTaskName   | Specify the name of the simple task to execute                       |
 | forkTaskInputs | Array of inputs - a task will be executed for each of the inputs |
 
 In this example, each task will be executed with the following input:
@@ -99,7 +99,8 @@ We can also use simple values or a mix of complex and simple objects.
   "apple", "orange", "kiwi"
 ]
 ```
-When using simple values, it will be passed with the key `input` and also an `index` representing the index of the element in the array
+When using simple values, it will be passed with the key input and an index representing the element's index in the array.
+
 ```json
 {
   "input" : "apple", // Value
@@ -165,11 +166,11 @@ and the inputs you provide will be what the HTTP task expects.
 
 ### Running Sub Workflows using Dynamic Fork
 
-Run a sub workflow for each of the inputs provided
+Run a sub-workflow for each of the inputs provided
 
 | Parameter Name          | Description                                                      |
 |-------------------------|------------------------------------------------------------------|
-| forkTaskWorkflow        | Specify name of the sub workflow to execute                      |
+| forkTaskWorkflow        | Specify the name of the sub-workflow to execute                      |
 | forkTaskWorkflowVersion | Optional version of the workflow to run                          |
 | forkTaskInputs          | Array of inputs - a task will be executed for each of the inputs |
 
