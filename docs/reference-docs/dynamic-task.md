@@ -7,13 +7,13 @@ sidebar_position: 1
 ```
 
 ## Introduction
-Dynamic Task allows to execute one of the registered Tasks dynamically at run-time.
+Dynamic Task allows to execute one of the registered tasks dynamically at run-time.
 It accepts the task name to execute as `taskToExecute` in `inputParameters`.
 
 ## Use Cases 
 
-Consider a scenario when we have to make decision of executing a task dynamically i.e. while the workflow is still running. In such cases, Dynamic Task would be useful.
-Defined directly inside the workflow with type `DYNAMIC`.
+Consider a scenario when we have to make the decision to execute a task dynamically, i.e.,  while the workflow is still running. In such cases, Dynamic Task would be useful.
+It is defined directly inside the workflow with type `DYNAMIC`.
 
 ## Inputs
 
@@ -33,7 +33,7 @@ If there is a possibility that the task called is a SUBWORKFLOW, you must also a
       },
 ```
 
-If `subWorkflowParam` are present, and the DYNAMIC workflow calls a task type that is not a SUBWORKFLOW, these parameters will be ignored.
+If `subWorkflowParam` is present, and the DYNAMIC workflow calls a task type that is not a SUBWORKFLOW, these parameters will be ignored.
 
 ## Output
 
@@ -41,7 +41,7 @@ During execution, the DYNAMIC task is replaced in the workflow with whatever tas
 
 ## Examples
 
-Suppose in a workflow, we have to take decision to ship the courier, but the decision is made during execution:
+Suppose in a workflow, we have to make the decision to ship the courier, but the decision is made during execution:
 
 ```json
 {
@@ -92,7 +92,7 @@ Here is the workflow with the DYNAMIC task:
 
 ### Workflow Execution 
 
-Now, assume a workflow execution, where `shipping_info` outputs:
+Now, assume a workflow execution where `shipping_info` outputs:
 
 ```json
 {
@@ -105,7 +105,7 @@ The DYNAMIC task `shipping_task` has been replaced with `ship_via_fedex`:
 
 ![Conductor UI - Workflow Run](/img/tutorial/ShippingWorkflowRunning.png)
 
-if the output is:
+If the output is:
 
 ```json
 {
@@ -119,8 +119,8 @@ The DYNAMIC task `shipping_task` has been replaced with `ship_via_ups`:
 
 ## Common Errors 
 
-If the incorrect task name or the task that doesn't exist is provided then the workflow fails and
+If the incorrect task name or the task that doesn't exist is provided, then the workflow fails and
 we get the error `"Invalid task specified. Cannot find task by name in the task definitions."`
 
-If the null reference is provided in the task name then also the workflow fails and we get the
+If the null reference is provided in the task name, then also the workflow fails, and we get the
 error `"Cannot map a dynamic task based on the parameter and input. Parameter= taskToExecute, input= {taskToExecute=null}"`
