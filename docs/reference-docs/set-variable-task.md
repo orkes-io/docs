@@ -16,21 +16,19 @@ with new values.
 ### Use Cases
 
 Variables can be initialized in the workflow definition as well as during
-the workflow run. Once a variable was initialized it can be read or
+the workflow run. Once a variable is initialized, it can be read or
 overwritten with a new value by any other task. Variables can be used to manage a state across all your tasks.
 
 ### Configuration
 
-Set Variable task is defined directly inside the workflow with type
+Set Variable task is defined directly inside the workflow with the type
 `SET_VARIABLE`.
 
 ### Examples
 
-Suppose in a workflow, we have to store a value in a variable and then later in
-workflow reuse the value stored in the variable just as we do in programming, in such
-scenarios `Set Variable` task can be used.
+Suppose in a workflow, we have to store a value in a variable and then, later in the workflow, reuse the value stored in the variable just as we do in programming; in such scenarios, the `Set Variable` task can be used.
 
-Following is the workflow definition with `SET_VARIABLE` task.
+Following is the workflow definition with the `SET_VARIABLE` task.
 
 ```json
 {
@@ -63,5 +61,5 @@ Following is the workflow definition with `SET_VARIABLE` task.
 ```
 
 In the above example, it can be seen that the task `Set_Name` is a Set Variable Task and
-the variable `name` is set to `Orkes` and later in the workflow it is referenced by
+the variable `name` is set to `Orkes`, and later in the workflow, it is referenced by
 `"${workflow.variables.name}"` in another task.
