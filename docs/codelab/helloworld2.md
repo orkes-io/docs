@@ -117,7 +117,7 @@ Clicking the Run Workflow button - now there are two options for the version. Le
 {"ipaddress":"<your IP address>"}
 ```
 
-> To find your IP address: Googling "What's my IP address?"
+> To find your IP address: Google "What's my IP address?"
 
 Click run workflow, and click on the workflowId.  If either of the tasks is blue, click the refresh until they are green:
 
