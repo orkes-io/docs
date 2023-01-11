@@ -54,7 +54,7 @@ Imagine that a colleague has created an address verification workflow:
 
 <p align="center"><img src="/content/img/postage_rate_workflow.png" alt="example workflow" width="400" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
-If you wanted to add this functionality to another workflow, it would be possible to copy all 201 lines of JSON and insert them into your workflow.  However, any updates made by your colleague will not be reflected in your workflow, i.e; you have a "frozen in time" version of the code.
+If you wanted to add this functionality to another workflow, it would be possible to copy all 201 lines of JSON and insert them into your workflow.  However, any updates made by your colleague will not be reflected in your workflow, i.e., you have a "frozen in time" version of the code.
 
 Instead, you can call the existing workflow as a ```SUB_WORKFLOW``` task.  
 
