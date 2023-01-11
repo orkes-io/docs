@@ -7,19 +7,18 @@ sidebar_position: 1
 "type" : "TERMINATE"
 ```
 ## Introduction
-Task that can terminate a workflow with a given status and modify the workflow's output with a given parameter, 
-it can act as a `return` statement for conditions where you simply want to terminate your workflow. 
+The Terminate task is a task that can terminate a workflow with a given status and modify the workflow's output with a given parameter; it can act as a `return` statement for conditions where you simply want to terminate your workflow. 
 
 <p align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/FdH0nSgtc0Q" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
 
 ## Use Cases
 Use it when you want to terminate the workflow without continuing the execution.  
-For example, if you have a decision where the first condition is met, you want to execute some tasks, 
-otherwise you want to finish your workflow.
+For example, if you have a decision where the first condition is met, you want to execute some tasks; 
+otherwise, you want to finish your workflow.
 
 ## Configuration
 
-Terminate task is defined directly inside the workflow with type
+Terminate task is defined directly inside the workflow with the type
 `TERMINATE`.
 
 ```json
@@ -42,7 +41,7 @@ Terminate task is defined directly inside the workflow with type
 
 |name|type|description|notes|
 |---|---|---|---|
-|terminationStatus|String|can only accept "COMPLETED" or "FAILED"|task cannot be optional|
+|terminationStatus|String|Can only accept "COMPLETED" or "FAILED"|The task cannot be optional|
 |workflowOutput|Any|Expected workflow output||
 |terminationReason|String| For failed tasks, this reason is passed to a failureWorkflow|
 
@@ -58,10 +57,10 @@ Terminate task is defined directly inside the workflow with type
 
 Let's consider the same example we had in [Switch Task](/docs/reference-docs/switch-task).
 
-Suppose in a workflow, we have to take decision to ship the courier with the shipping
+Suppose in a workflow, we have to make a decision to ship the courier with the shipping
 service providers on the basis of input provided while running the workflow.
-If the input provided while running workflow does not match with the available
-shipping providers then the workflow will fail and return. If input provided 
+If the input provided while running the workflow does not match with the available
+shipping providers, then the workflow will fail and return. If input provided 
 matches then it goes ahead.
 
 Here is a snippet that shows the default switch case terminating the workflow:
@@ -97,5 +96,5 @@ Workflow gets created as shown in the diagram.
 
 
 ## Best Practices
-1. Include termination reason when terminating the workflow with failure status to make it easy to understand the cause.
-2. Include any additional details (e.g. output of the tasks, switch case etc) that helps understand the path taken to termination.
+1. Include the termination reason when terminating the workflow with failure status to make it easy to understand the cause.
+2. Include any additional details (e.g., the output of the tasks, switch case, etc.) that help understand the path taken to the termination.
