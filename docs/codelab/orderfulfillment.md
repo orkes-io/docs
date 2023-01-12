@@ -137,7 +137,7 @@ To define the task, we need to create a task definition. Click ```Task Definitio
 
 The Task definition is JSON formatted as well, and paste this to create your task (don't forget to update the uniqueId in the name!):
 
-```JSON
+```json
 {
   "name": "widget_shipping_<uniqueId>",
   "retryCount": 3,
