@@ -7,31 +7,31 @@ What we've covered so far:
 
 [Hello World Part 1](./helloworld) We created the Hello World Workflow.
 
-[Hello World Part 2](./helloworld2)  We created V2 of Hello World (Versioning) and added a HTTP Task.
+[Hello World Part 2](./helloworld2)  We created V2 of Hello World (Versioning) and added an HTTP Task.
 
-[Hello World Part 3](./helloworld3)  We created V3 of Hello World, and introduced the concept of FORK and JOIN tasks.
+[Hello World Part 3](./helloworld3)  We created V3 of Hello World and introduced the concept of FORK and JOIN tasks.
 
 <p align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/7d6hTpsVHRQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
 
 ## Part 4
 
-In Part 4 of the codelab, we'll add in an [Inline task](/content/docs/reference-docs/system-tasks/inline-task) to perform some basic logic operations (using JavaScript).  Inline tasks are great because they allow for computations on the Conductor server as a part of the workflow, without having to standup another task & microservice to complete the computation.
+In Part 4 of the codelab, we'll add an [Inline task](/content/docs/reference-docs/system-tasks/inline-task) to perform some basic logic operations (using JavaScript).  Inline tasks are great because they allow for computations on the Conductor server as a part of the workflow, without having to stand up another task & microservice to complete the computation.
 
 ## Where we stand
-In part 3 of this codelab, our workflow was split into 2 forks, one that creates the "Hello World!" message, and the other fork that grabs the users IP address, and extracts their location:
+In part 3 of this codelab, our workflow was split into 2 forks, one that creates the "Hello World!" message, and the other fork that grabs the users' IP address and extracts their location:
 
 
 <p align="center"><img src="/content/img/codelab/hw3_workflow.png" alt="Forked workflow" width="600" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
 
 
-Let's add a second task to the "right fork" (at least in the diagram) that extracts the time of the user, and spits out the local time.  There are two parameters in the ```Get_IP``` output that allow us to do this:  The date header (giving the time in GMT), and the body parameter ```offset```.  ```offset``` is the time (in seconds from GMT at the location of the user.  
+Let's add a second task to the "right fork" (at least in the diagram) that extracts the user's time, and spits out the local time.  There are two parameters in the ```Get_IP``` output that allow us to do this:  The date header (giving the time in GMT) and the body parameter ```offset```.  ```offset``` is the time (in seconds from GMT at the user's location.  
 
 To do this calculation, we will utilize the [Inline Task](/content/docs/reference-docs/system-tasks/inline-task).
 
 ## Inline task
 
-Inline tasks run basic JavaScript calculations.  Since the ```Get_IP``` task outputs both the time in GMT, and the offset from GMT at the local location, we can write a script to calculate the users' current time. In JavaScript, the code to convert the time from GMT to the current time looks like:
+Inline tasks run basic JavaScript calculations.  Since the ```Get_IP``` task outputs both the time in GMT and the offset from GMT at the local location, we can write a script to calculate the users' current time. In JavaScript, the code to convert the time from GMT to the current time looks like this:
 
 > Note: Several members of the Orkes team live in India, where the timezone is 30 minutes offset from traditional timezones.  This code accounts for time zones that have hour fractions in them.
 
@@ -89,7 +89,7 @@ The function returns the hour and the minute at the location of the IP address.
 
 ## Adding the task to the workflow
 
-An Inline Task has ```inputParameters``` for all the values needed in the computation, and for the ```expression``` to be evaluated.  To add our JavaScript expression, we need to [minify the JS](https://www.toptal.com/developers/javascript-minifier/) using an online JS minifier.  
+An Inline Task has ```inputParameters``` for all the values needed in the computation and for the ```expression``` to be evaluated.  To add our JavaScript expression, we need to [minify the JS](https://www.toptal.com/developers/javascript-minifier/) using an online JS minifier.  
 
 ## Version 4 of the workflow
 
@@ -188,7 +188,7 @@ Changes to this version of the workflow:
 
 ```
 
-With these changes to the workflow, version 4 of ```hello_world``` now appears as:  
+With these changes to the workflow, version 4 of ```hello_world``` now appears as follows:  
 
 <p align="center"><img src="/content/img/codelab/hw4_diagram.png" alt="version four workflow diagram" width="600" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
@@ -206,13 +206,13 @@ When we run version 4 of the workflow (there are no changes to the input), the w
 
 This completes part 4 of the Hello World Codelab. To review what we've done:
 
-In [Part 1](helloworld), we created a workflow using the Netflix Conductor in the Orkes Playground
+In [Part 1](helloworld), we created a workflow using the Netflix Conductor in the Orkes Playground.
 
-In [Part 2](helloworld2), we extended the workflow using versioning, and added a HTTP Task.
+In [Part 2](helloworld2), we extended the workflow using versioning and added an HTTP Task.
 
 In [Part 3](helloworld3), we created parallel workflows using the FORK task.
 
-In Part 4, we created an Inline task, and used JavaScript to complete a simple calculation on the Conductor server, and return the results.
+In Part 4, we created an Inline task and used JavaScript to complete a simple calculation on the Conductor server and return the results.
 
 Part 5 will be our last section, and we will use a Switch task and the Set Variable task to complete our Hello World code lab.  Ready to go? [On to Part 5!](helloworld5)
 

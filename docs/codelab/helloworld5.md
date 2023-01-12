@@ -4,9 +4,9 @@ What we've covered so far:
 
 [Hello World Part 1](./helloworld) We created the Hello World Workflow.
 
-[Hello World Part 2](./helloworld2)  We created V2 of Hello World (Versioning) and added a HTTP Task.
+[Hello World Part 2](./helloworld2)  We created V2 of Hello World (Versioning) and added an HTTP Task.
 
-[Hello World Part 3](./helloworld3)  We created V3 of Hello World, and introduced the concept of FORK and JOIN tasks.
+[Hello World Part 3](./helloworld3)  We created V3 of Hello World and introduced the concept of FORK and JOIN tasks.
 
 [Hello World Part 4](./helloworld4)  We created V4 of Hello World, adding an Inline task to calculate a formula in JavaScript.
 
@@ -14,32 +14,32 @@ What we've covered so far:
 
 # Part 5  
 
-In part 5 of the Hello World codelab, we'll wrap up our ```hello_world``` application by adding a [Switch Task](/content/docs/reference-docs/switch-task), and several [Set a Variable Tasks](/content/docs/reference-docs/set-variable-task).
+In part 5 of the Hello World codelab, we'll wrap up our ```hello_world``` application by adding a [Switch Task](/content/docs/reference-docs/switch-task) and several [Set a Variable Tasks](/content/docs/reference-docs/set-variable-task).
 
-In Part 4, we calculated the local time - based on the users IP address, and converting GMT to the local time. In Part 5, we'll wish the user a "Good [time of day]" based on the hour calculation.  
+In Part 4, we calculated the local time - based on the users' IP address and converting GMT to the local time. In Part 5, we'll wish the user a "Good [time of day]" based on the hour calculation.  
 
 > Note: Clearly, this would be much easier to do in the same Inline task with just a couple of more lines of JavaScript, but why not show off the power of Conductor's Switch task?
 
 ## The Switch
 
-A Switch task takes an input value, and then based on the results, will run different workflows based on the result.
+A Switch task takes an input value and then, based on the results, will run different workflows based on the result.
 
 The expression below will return a different time of day based on the hour calculated.
 
-1. Before 6 AM will return "night":
-2. 6-12 AM returns "morning"
-3. 12-18 (12 -6 PM) returns "afternoon"
-4. After 1800 (after 6 PM) returns "evening" 
+1. Before 6 AM, will return "night".
+2. 6-12 AM returns "morning".
+3. 12-18 (12 -6 PM) returns "afternoon".
+4. After 1800 (after 6 PM), returns "evening". 
 
-Based on this data, a different set of tasks will be run.  In this case we'll set a different variable for each time of day.
+Based on this data, a different set of tasks will be run.  In this case, we'll set a different variable for each time of day.
 
 
 ## The Workflow
 
-The workflow is getting very long, so let's just walk through the differences. Here is the basics of the Switch task:
+The workflow is getting very long, so let's just walk through the differences. Here are the basics of the Switch task:
 
 1. The ```hour``` input parameter comes from the calculate_local_time_ref output.
-2. The expressing is a simple if/else statement in JavaScript (and minified).  It defines the periods of the day, and returns the category.
+2. The expression is a simple if/else statement in JavaScript (and minified).  It defines the periods of the day and returns the category.
 3. There are ```decisionCases``` set for each category determined in the switch case.
 
 ```json
@@ -87,7 +87,7 @@ The workflow is getting very long, so let's just walk through the differences. H
 
 In each "case" of the switch, we'll call a [Set variable task](/content/docs/reference-docs/set-variable-task) to set a variable named ```message```.
 
-For example the morning task will be:
+For example, the morning task will be:
 
 ```json
    {
@@ -100,9 +100,9 @@ For example the morning task will be:
     }
 ```
 
-We'll build a similar SET_VARIABLE task for afternoon, evening and night - ensuring that ```message``` has a value in every possible case of the ```SWITCH```.
+We'll build a similar SET_VARIABLE task for the afternoon, evening and night - ensuring that the ```message``` has value in every possible case of the ```SWITCH```.
 
-Putting all of this logic together to create a Switch task with 4 cases, each with one embedded task looks like this:
+Putting all of this logic together to create a Switch task with 4 cases, each with one embedded task, looks like this:
 
 ```json
 {
@@ -166,7 +166,7 @@ Place this task in the JSON inside the FORK, right after the ```calculate_local_
 2. Change the joinOn from ```calculate_local_time_ref``` to ```time_of_day_ref```
 3. add ```"hw_time_of_day": "${workflow.variables.message}"``` to ```outputParameters```.
 
-Now the workflow diagram will look like:  
+Now the workflow diagram will look like this:  
 
 <p align="center"><img src="/content/img/codelab/hw5_workflow.png" alt="version 5 workflow diagram" width="600" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
@@ -190,15 +190,15 @@ The input for version 5 is the same - just the ipaddress.  The result of the wor
 
 ## Conclusion
 
-Congratulations! You have completed the Hello World Codelab.  You've build several iterations of the application, from V1 with just a Java worker, to V5 with the Java Worker, FORK, SWITCH, VARIABLE, HTTP and INLINE tasks.
+Congratulations! You have completed the Hello World Codelab.  You've built several iterations of the application, from V1 with just a Java worker to V5 with the Java Worker, FORK, SWITCH, VARIABLE, HTTP and INLINE tasks.
 
 We've covered a lot of the features in Conductor workflows.  If you'd like to review, here are links to earlier sections of the codelab:
 
 [Hello World Part 1](./helloworld) We created the Hello World Workflow.
 
-[Hello World Part 2](./helloworld2)  We created V2 of Hello World (Versioning) and added a HTTP Task.
+[Hello World Part 2](./helloworld2)  We created V2 of Hello World (Versioning) and added an HTTP Task.
 
-[Hello World Part 3](./helloworld3)  We created V3 of Hello World, and introduced the concept of FORK and JOIN tasks.
+[Hello World Part 3](./helloworld3)  We created V3 of Hello World and introduced the concept of FORK and JOIN tasks.
 
 [Hello World Part 4](./helloworld4)  We created V4 of Hello World, adding an Inline task to calculate a formula in JavaScript.
 

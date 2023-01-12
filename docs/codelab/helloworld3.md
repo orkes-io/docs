@@ -4,32 +4,32 @@ We've made it to Part 3!  Thanks for keeping at it! What we've covered so far:
 
 [Hello World Part 1](./helloworld) We created the Hello World Workflow.
 
-[Hello World Part 2](./helloworld2)  We created V2 of Hello World (learning about versioning) and added a HTTP Task to query information about the user's IP address.
+[Hello World Part 2](./helloworld2)  We created V2 of Hello World (learning about versioning) and added an HTTP Task to query information about the user's IP address.
 
 <p align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/R8iYQKaD-1M" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
 
 ## Part 3
 
-In Hello World Part 3, we'll introduce the [Fork](/content/docs/reference-docs/fork-task) and [Join](/content/docs/reference-docs/join-task) tasks to break our workflow into parallel tracks that run asynchronously, and then combine back into a single workflow.
+In Hello World Part 3, we'll introduce the [Fork](/content/docs/reference-docs/fork-task) and [Join](/content/docs/reference-docs/join-task) tasks to break our workflow into parallel tracks that run asynchronously and then combine back into a single workflow.
 
 ## Where we stand
 
-At the end of Part 2, our workflow appears as:
+At the end of Part 2, our workflow appears as follows:
 
 
 <p align="center"><img src="/content/img/codelab/hw2_workflowdiagram.png" alt="version 2 diagram" width="400" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
 
-Now, these two tasks are very simple, and do not take long to run, but what if each of these workflows took several seconds to complete?  The overall workflow processing time would take the sum of their execution times to complete.
+Now, these two tasks are very simple and do not take long to run, but what if each of these workflows took several seconds to complete?  The overall workflow processing time would take the sum of their execution times to complete.
 
-Neither of these tasks are dependant on one another, and can run independently. In this section, we'll introduce the Fork & Join tasks that allows us to run independent tasks in parallel.
+Neither of these tasks is dependent on one another and can run independently. In this section, we'll introduce the Fork & Join tasks that allows us to run independent tasks in parallel.
 
 
 ## Fork
 
-The Fork ann Join tasks run on the Conductor server, and thus do not require a special task definition (or any unique identifier).
+The Fork and Join tasks run on the Conductor server and thus do not require a special task definition (or any unique identifier).
 
-Each 'tine' of the fork runs independently and concurrently to the other 'tines'.  Each parallel set of tasks is defined as an array attribute inside the Fork task.
+Each 'tine' of the fork runs independently and concurrently with the other 'tines'.  Each parallel set of tasks is defined as an array attribute inside the Fork task.
 
 Since ```hello_world``` and ```get_IP``` are independent, we can place them in separate parallel forks in version 3 of our workflow.
 
@@ -44,7 +44,7 @@ Changes made:
 
 1. Version set to 3.
 2. Fork Task added, and the existing ```hello_world_<uniqueId>``` and ```get_IP``` tasks are placed into arrays.
-3. Join task is added, and the joinOn attributes set.
+3. The join task is added, and the joinOn attributes are set.
 
 ``` json
 {
@@ -123,7 +123,7 @@ When this version of the workflow is submitted, we have a new diagram showing th
 
 ## Running Version 3
 
-We can now run the workflow version 3 with similar input. Since we didn't change the output, the response should be the same.
+We can now run workflow version 3 with similar input. Since we didn't change the output, the response should be the same.
 
 We'll leave running the workflow to the user to complete (but it is identical to part 2 if any issues arise).
 
@@ -131,9 +131,9 @@ We'll leave running the workflow to the user to complete (but it is identical to
 
 We've completed part 3 of the codelab.
 
-In [Part 1](helloworld), we created a workflow using the Netflix Conductor in the Orkes Playground
+In [Part 1](helloworld), we created a workflow using the Netflix Conductor in the Orkes Playground.
 
-In [Part 2](helloworld2), we extended the workflow using versioning, and added a HTTP Task.
+In [Part 2](helloworld2), we extended the workflow using versioning and added an HTTP Task.
 
 In Part 3, we created parallel workflows using the FORK task.
 
