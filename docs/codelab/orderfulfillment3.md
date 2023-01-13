@@ -10,7 +10,7 @@ In part 1 of this codelab, we created our first workflow and task - all built to
 
 In part 2, we got the worker (the microservice) up and running and connected the application with our remote Conductor server.  
 
-In part 3, we'll actually run the worker and see Conductor in action! 
+In part 3, we'll actually run the worker, and see Conductor in action! 
 
 Let's get started by running the workflow!
 
@@ -48,5 +48,5 @@ There is a lot of information about your workflow on this page, and in this shor
 
 ## Initial Workflow complete
 
-Congratulations - your automation has begun.  BBut you still have a lot of things you'd like to automate, so we'll build on this initial workflow in [part 4 by adding an HTTP Task](/content/docs/codelab/orderfulfillment4).
+Congratulations - your automation has begun. But you still have a lot of things you'd like to automate, so we'll build on this initial workflow in [part 4 by adding an HTTP Task](/content/docs/codelab/orderfulfillment4).
 
