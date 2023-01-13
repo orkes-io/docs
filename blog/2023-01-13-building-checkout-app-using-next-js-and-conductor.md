@@ -13,11 +13,11 @@ In the past few years, have you ever had a day without using an application? Mos
 
 ## What you need!
 
-You need to ensure that the device on which the application is being built meets the following requirements.
+You need to ensure that the device on which the application is built meets the following requirements.
 
 - [x] Node.js version should be >= 18
 - [x] TCP port 3456 should be available
-- [x] Setting Up Conductor Server
+- [x] Set Up Conductor Server
 
 ### Setting Up Conductor Server
 
