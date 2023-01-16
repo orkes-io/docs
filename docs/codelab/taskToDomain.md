@@ -1,8 +1,8 @@
 # Using Task to Domain
 
-There may be times where a task that is in production might need tweaking or updating. Perhaps you have a worker that is thrashing your database. maybe it has a memory leak - leading to performance issues.  There's no test environment that has the correct (or complete) setup - making this fix seem impossible.
+There may be times when a task that is in production might need tweaking or updating. Perhaps you have a worker that is thrashing your database. Maybe it has a memory leak - leading to performance issues.  There's no test environment that has the correct (or complete) setup - making this fix seem impossible.
 
-The ```task to domain``` feature in Conductor is built for exactly these circumstances.  It allows you to spin up another version of the worker, and only allow specific traffic to the "test" worker - while production traffic continues running on the existing platform.
+The ```task to domain``` feature in Conductor is built for exactly these circumstances.  It allows you to spin up another version of the worker and only allow specific traffic to the "test" worker - while production traffic continues running on the existing platform.
 
 Let's learn how it works.  First, we'll construct a workflow that "has issues" that we need to fix:
 
@@ -27,7 +27,7 @@ The Hello World worker has the following code:
 ```
 
 
-The worker simply returns "Hello World!"
+The worker simply returns, "Hello World!"
 
 You can test in the Orkes Playground:
 
@@ -47,7 +47,7 @@ When you click ```Run Workflow```, the workflow adds a job to the "hello_world" 
 
 ## Running an alternate version in production
 
-What if this ```hello_world``` worker is thrashing the database, or has a memory leak that is impacting performance?  A new version must be created that fixes the problem.  We can use Conductor's Task to Domain feature to spin up another version of the task - and run it in the same production workflow (without impacting production traffic!). 
+What if this ```hello_world``` worker is thrashing the database or has a memory leak that is impacting performance?  A new version must be created that fixes the problem.  We can use Conductor's Task to Domain feature to spin up another version of the task - and run it in the same production workflow (without impacting production traffic!). 
 
 To show an example of how to do this, we'll spin up a second version of ```hello_world``` on our local computer. We start by cloning [OrkesWorkers](https://github.com/orkes-io/orkesworkers) to our desktop.  Following the instructions in the [codelab](https://orkes.io/content/docs/codelab/helloworld#application-permissions), we set up application permissions:
 
@@ -73,7 +73,7 @@ Before we start the workers and begin polling the server for work, we need to sl
     }
 ```
 
-In lines 3&4 we created a HashMap ```taskToDomainMap``` that has one entry: mapping the "hello_world" task to the domain "doug".
+In lines 3 & 4, we created a HashMap ```taskToDomainMap``` that has one entry: mapping the "hello_world" task to the domain "doug".
 
 We then add this to the Configurer ```.withTaskToDomain(taskToDomainMap)``` in line .
 
@@ -83,7 +83,7 @@ Now, when we run OrkesWorkersApplication, a new worker will appear in the playgr
 
 The orkesworkers is our "production" version, and the Dougs-Air.home (with domain doug) is our "test" worker.
 
-Currently, both of these workers are identical and will have the same output.  To show the difference, we can edit our local version of HelloWorld.java.  In this example, we just change the output to say "Hello World from Doug's computer!" (that's on line 17 of HelloWorld.java).  In reality, you'd be fixing your performance issues, or whatever was driving a change to the task code.
+Currently, both of these workers are identical and will have the same output.  To show the difference, we can edit our local version of HelloWorld.java.  In this example, we just change the output to say "Hello World from Doug's computer!" (that's on line 17 of HelloWorld.java).  In reality, you'd be fixing your performance issues or whatever was driving a change to the task code.
 
 Now, when we run the workflow, if we leave the Task to Domain box empty, the workflow will run in "production", but if we add:
 
@@ -99,7 +99,7 @@ When the taskToDomain is set to ```doug```, the workflow input/output appears as
 
 <p align="center"><img src="/content/img/tasktodomain_output.jpg" alt="2 workers running" width="800" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
-You've just run your production workflow, but bypassed one of the production tasks and run on a test version of the task!
+You've just run your production workflow but bypassed one of the production tasks and ran on a test version of the task!
 
 
 
