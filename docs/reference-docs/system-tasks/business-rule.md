@@ -122,7 +122,7 @@ And following workflow definition.
       "ruleFileLocation": "Product.xlsx",
       "executionStrategy": "FIRE_FIRST",
       "ruleFileStorage" : "LOCAL",
-      "ruleInput": 
+      "inputColumns": 
       {
         "productType": "${workflow.input.productType}",
         "productCategory": "${workflow.input.productCategory}",
