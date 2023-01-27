@@ -43,8 +43,8 @@
 
 .spacedUl li::marker {
   color: var(--orkes-logo-color-1);
-  content: "• ";
-  font-size: 1.2em;
+  content: "> ";
+  font-size: 1.5em;
 }
 
 .spacedUl li:nth-child(2n)::marker {

@@ -4,6 +4,9 @@ import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import styles from "./index.module.css";
 import SmallDiagram from "/img/small_diagram.png";
 import { JavaSample, PythonSample, GoSample } from "./_Languages.js";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart } from '@fortawesome/free-solid-svg-icons'
+
 import {
   BuildYourFirstWorkflowLinkButton,
   StepBoxesSection,
@@ -11,6 +14,7 @@ import {
   WhatIsConductorSection,
   YourfirstWorkflowSection,
   CommunitySection,
+  SDKList,
 } from "./_Sections";
 
 export default function Home() {
@@ -22,131 +26,103 @@ export default function Home() {
         description="Orkes Conductor is a cloud hosted, fully managed version of Netflix Conductor offering full compatibility with the open source version. Use Conductor to hyper charge your application development."
       >
         <main className={`container ${styles.mainContainer}`}>
-          <StepBoxesSection
-            steps={[
-              {
-                title: "Getting Started",
-                description: "Learn about Conductor and its concepts",
-                to: "/docs/introduction",
-              },
-              {
-                title: "Running Conductor",
-                description:
-                  "Learn how to run Conductor locally and via Docker",
-                to: "/docs/getting-started/install/running-locally-docker",
-              },
-              {
-                title: "Running First Workflow",
-                description: "Run a workflow to see Conductor in action",
-                to: "/docs/getting-started/run/running-first-workflow",
-              },
-              {
-                title: "Running First Worker",
-                description:
-                  "Add a customer worker that runs your code as part of a workflow",
-                to: "/docs/getting-started/run/running-first-worker",
-              },
-              {
-                title: "API Docs",
-                description: "Specifications of various components",
-                to: "/docs/reference-docs",
-              },
-            ]}
-          />
           <WhatIsConductorSection
             title="What is Conductor?"
             //   sideImage={SampleWorkflow}
             description={
               <ul className={styles.spacedUl}>
                 <li>
-                  Conductor is an open-source, Apache 2.0 licensed microservices
-                  and workflow orchestration framework
+                  <h3>Built at Netflix &nbsp;<FontAwesomeIcon icon={faHeart} style={{ color: "red", fontSize: 20}}/> by Developers across the world</h3>
+                  <h5>Open source under Apache 2.0 licensed</h5>
                 </li>
                 <li>
-                  Build stateful applications without the overhead of managing a state machine
+                  <h3>Distributed Applications made easy</h3>
+                  <h5>Durable code execution, visualizations and analytics</h5>
                 </li>
                 <li>
-                  Enables development of highly resilient and scalable distributed systems with built-in features that empower rapid development of business applications
-                </li>
-                <li>
-                  Used for a wide range of use cases such as - business process automations, data pipelines, CI/CD pipelines, order management workflows etc.
-                </li>
-                <li>
-                  Run 100s to millions of workflows per day - scales seamlessly for a wide range of applications
-                </li>
-                <li>
-                  Build workflows using many popular languages with SDKs
+                  <h3>Polyglot - Works in your language, with your framework</h3>
+                  <SDKList />
                 </li>
               </ul>
             }
-            videoTitle="Explain Like I'm 5: Docusaurus"
+            videoTitle="Netflix Conductor"
             videoSrc="https://www.youtube.com/embed/du7mls9XMUE"
-            videoFooterCaption="
-                  Conductor is the workflow system of choice at Netflix. Learn more in this video
-                "
+            videoFooterCaption="Conductor is the workflow system of choice at Netflix. Learn more in this video"
           />
-          <TitleDoubleTextSection
-            title1="Why should we use Conductor?"
-            firstColumnText={
-              <ul className="liClass">
-                <li>
-                  Lets us focus on coding the business logic of the application
-                  instead of managing the state and complexities of a
-                  distributed ecosystem
-                </li>
-                <li>
-                  We can cleanly decouple the design of the application flow
-                  from the implementation
-                </li>
-                <li>
-                  Application's resilience is increased with native support
-                  in Conductor for retries, error handling alongside rich metrics
-                </li>
-                <li>
-                  We have powerful visualizations of your application’s
-                  execution paths that can shorten debugging times from hours to
-                  minutes
-                </li>
-              </ul>
-            }
-            title2="What can we build with Conductor?"
-            secondColumnText={
-              <ul className="liClass">
-                <li>
-                  Applications composed of distributed microservices or
-                  serverless functions
-                </li>
-                <li>
-                  Hybrid applications that span across multiple deployment
-                  models (e.g. VM deployed monolith, kubernetes deployed
-                  containers)
-                </li>
-                <li>
-                  Long running workflows that need to wait for days, months or
-                  even years between executions (e.g. monthly or yearly subscription
-                  billing)
-                </li>
-                <li>
-                  Mission critical applications with high reliability
-                  requirements (e.g. financial transactions)
-                </li>
-              </ul>
-            }
+          <StepBoxesSection
+              steps={[
+                {
+                  title: "Build Your First App",
+                  description: "Build your first distributed application using Conductor",
+                  to: "/docs/introduction",
+                },
+                {
+                  title: "Getting Started",
+                  description:
+                    "Learn more about building distributed applications and Conductor",
+                  to: "/docs/getting-started/install/running-locally-docker",
+                },
+                {
+                  title: "API Docs",
+                  description: "Run a workflow to see Conductor in action",
+                  to: "/docs/getting-started/run/running-first-workflow",
+                },
+                {
+                  title: "Conductor SDK",
+                  description:
+                    "Add a customer worker that runs your code as part of a workflow",
+                  to: "/docs/getting-started/run/running-first-worker",
+                },
+              ]}
+            />
+        <StepBoxesSection
+            steps={[
+              {
+                title: "Access Control & Security",
+                description: "Specifications of various components",
+                to: "/docs/reference-docs",
+              },
+              {
+                title: "Workflow Scheduler",
+                description: "Specifications of various components",
+                to: "/docs/reference-docs",
+              },
+              {
+                title: "Eventing & Serverless",
+                description: "Specifications of various components",
+                to: "/docs/reference-docs",
+              },
+              {
+                title: "Observability and Metrics",
+                description: "Specifications of various components",
+                to: "/docs/reference-docs",
+              },
+            ]}
           />
-          <BuildYourFirstWorkflowLinkButton
-            caption="Build your first Workflow in 2 Minutes"
-            to="/docs/getting-started/run/running-first-workflow"
-          />
-          <YourfirstWorkflowSection
-            languageSamples={{
-              java: <JavaSample />,
-              python: <PythonSample />,
-              go: <GoSample />,
-            }}
-            title="Your First Workflow Task"
-            rightImage={SmallDiagram}
-            sectionFooter=""
-          />
+          <StepBoxesSection
+              steps={[
+                {
+                  title: "Unit and Integration Testing",
+                  description: "Specifications of various components",
+                  to: "/docs/reference-docs",
+                },
+                {
+                  title: "Performance Tuning",
+                  description: "Specifications of various components",
+                  to: "/docs/reference-docs",
+                },
+                {
+                  title: "Development & CI/CD",
+                  description: "Specifications of various components",
+                  to: "/docs/reference-docs",
+                },
+                {
+                  title: "Code Labs and Recipes",
+                  description: "Specifications of various components",
+                  to: "/docs/reference-docs",
+                },
+              ]}
+            />
           <CommunitySection />
         </main>
       </Layout>

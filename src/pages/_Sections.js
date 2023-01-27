@@ -17,6 +17,10 @@ import { faLinkedin } from "@fortawesome/free-brands-svg-icons/faLinkedin";
 import { faDiscord } from "@fortawesome/free-brands-svg-icons/faDiscord";
 import { faGithub } from "@fortawesome/free-brands-svg-icons/faGithub";
 import { faSlack } from "@fortawesome/free-brands-svg-icons/faSlack";
+import { faJava } from "@fortawesome/free-brands-svg-icons/faJava";
+import { faGolang } from "@fortawesome/free-brands-svg-icons/faGolang";
+import { faPython } from "@fortawesome/free-brands-svg-icons/faPython";
+import { faJs } from "@fortawesome/free-brands-svg-icons/faJs";
 
 export const StepBoxesSection = ({ steps = [] }) => (
   <div className="row">
@@ -140,11 +144,21 @@ const IconHeader = ({ icon, header }) => (
   </div>
 );
 
+export const SDKList = ({}) => (
+    <div>
+        <FontAwesomeIcon style={{ fontSize: 60, padding:20 }} icon={faJava}/>
+        <FontAwesomeIcon style={{ fontSize: 60, padding:20 }} icon={faGolang} />
+        <FontAwesomeIcon style={{ fontSize: 60, padding:20 }} icon={faPython} />
+        <FontAwesomeIcon style={{ fontSize: 60, padding:20 }} icon={faJs} />
+        <img src="img/csharp.png" style={{ height: 75, width: 75, margin: 5}}/>
+        <h4 style={{ padding:20 }}><a href="https://github.com/conductor-sdk">https://github.com/conductor-sdk</a></h4>
+    </div>
+);
 export const CommunitySection = ({}) => (
   <div className="row">
     <InfoPaper
-      title="Conductor Community"
-      titleContainerClass="padding-bottom--md"
+      title=""
+      titleContainerClass="padding-bottom--sm"
       infoColumn1={
         <>
           <div className={`row ${styles.communityRow}`}>
@@ -156,41 +170,11 @@ export const CommunitySection = ({}) => (
                 }
                 target={"_blank"}
               >
-                <IconHeader icon={faSlack} header="Join Slack Community" />
+                <IconHeader icon={faSlack} header="Slack Community" />
 
-                <p className=" padding-vert--md">
+                <p className=" padding-vert--sm">
                   Use slack for reaching us live. You can also connect with
                   other Conductor users.
-                </p>
-              </a>
-            </div>
-          </div>
-          <div className={`row ${styles.communityRow}`}>
-            <div className="col col--12">
-              <a
-                className={"aClass"}
-                href={"https://discord.com/invite/P6vVt9xKSQ"}
-                target={"_blank"}
-              >
-                <IconHeader icon={faDiscord} header="Join Discord Community" />
-
-                <p className=" padding-vert--md">
-                  Prefer discord? You can connect with us on Discord too.
-                </p>
-              </a>
-            </div>
-          </div>
-          <div className={`row ${styles.communityRow}`}>
-            <div className="col col--12">
-              <a
-                className={"aClass"}
-                href={"https://twitter.com/orkesio"}
-                rel={"noopener"}
-                target={"_blank"}
-              >
-                <IconHeader icon={faTwitter} header="Twitter Community" />
-                <p className=" padding-vert--md">
-                  Follow us on twitter @orkesio to get updates real time
                 </p>
               </a>
             </div>
@@ -203,48 +187,13 @@ export const CommunitySection = ({}) => (
             <div className="col col--12">
               <a
                 className={"aClass"}
-                href={"https://github.com/Netflix/conductor"}
+                href={"https://github.com/Netflix/conductor/discussions"}
                 target={"_blank"}
               >
-                <IconHeader icon={faGithub} header="Github Repository" />
-
-                <p className=" padding-vert--md">
+                <IconHeader icon={faGithub} header="Github Discussions" />
+                <p className=" padding-vert--sm">
                   Give us a star and follow for updates on discussions, releases
                   and other important notifications
-                </p>
-              </a>
-            </div>
-          </div>
-          <div className={`row ${styles.communityRow}`}>
-            <div className="col col--12">
-              <a
-                className={"aClass"}
-                href={"https://www.linkedin.com/company/orkes-inc/"}
-                target={"_blank"}
-              >
-                <IconHeader icon={faLinkedin} header="LinkedIn" />
-
-                <p className=" padding-vert--md">
-                  Follow our company on LinkedIn to receive news around our
-                  hiring, job openings and more.
-                </p>
-              </a>
-            </div>
-          </div>
-          <div className={`row ${styles.communityRow}`}>
-            <div className="col col--12">
-              <a
-                className={"aClass"}
-                href={
-                  "https://www.youtube.com/channel/UCI7sk4DD6F6r9CWg9gHRlVg"
-                }
-                target={"_blank"}
-              >
-                <IconHeader icon={faYoutube} header="Youtube Channel" />
-
-                <p className=" padding-vert--md">
-                  Follow our youtube channel for watching meetup recaps, how to
-                  and learning videos.
                 </p>
               </a>
             </div>

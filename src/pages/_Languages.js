@@ -12,14 +12,9 @@ const CodeBlockWrapper = ({lang,children})=>(
 export const JavaSample = () => (
   <CodeBlockWrapper lang="java">
     {`
-    @Override
-    public TaskResult execute(Task task) {
-        TaskResult result = new TaskResult(task);
-        result.setStatus(TaskResult.Status.COMPLETED);
-        String currentTimeOnServer = Instant.now().toString();
-        result.addOutputData("currentTimeOnServer", currentTimeOnServer);
-        result.addOutputData("message", "Hello World!");
-        return result;
+    @WorkerTask("hello_world")
+    public String hello(@InputParam("name") String name) {
+        return "Hello, " + name;
     }
     `}
   </CodeBlockWrapper>
@@ -38,12 +33,9 @@ function helloWorld() {
 export const PythonSample = () => (
   <CodeBlockWrapper lang="py">
     {`
-class SimplePythonWorker(WorkerInterface):
-    def execute(self, task):
-        task_result = self.get_task_result_from_task(task)
-        task_result.add_output_data('message', 'Hello World')
-        task_result.status = 'COMPLETED'
-        return task_result
+def get_user_info(task: Task) -> UserInfo:
+    userId = task.input_data['userId']
+    return UserInfo(name='User X', id=userId)
     `}
   </CodeBlockWrapper>
 );
@@ -73,15 +65,15 @@ fn task(arg: i32) -> (i32, u32) {
 export const GoSample = () => (
   <CodeBlockWrapper lang="go">
     {`
-func Hello_World_Execute_Function(t *task.Task) (taskResult *task.TaskResult, err error) {
-    taskResult = task.NewTaskResult(t)
-    
-    output := map[string]interface{}{"message":"Hello World"}
-    taskResult.OutputData = output
-    taskResult.Status = "COMPLETED"
-    err = nil
-
-    return taskResult, err
+func GetUserInfo(task *model.Task) (interface{}, error) {
+	userId, err := GetValueFromTaskInputData(task, "userId")
+	if err != nil {
+		return nil, err
+	}
+	userInfo := NewUserInfo("User X", userId)
+	userInfo.Email = fmt.Sprintf("%s@example.com", userId)
+	userInfo.PhoneNumber = "555-555-5555"
+	return userInfo, nil
 }
     `}
   </CodeBlockWrapper>

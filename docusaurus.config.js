@@ -171,6 +171,7 @@ const config = {
             /** @type {import('@docusaurus/preset-classic').Options} */
             ({
                 docs: {
+                    breadcrumbs: true,
                     sidebarPath: require.resolve('./sidebars.js'),
                     editUrl: 'https://github.com/orkes-io/docs/edit/main/',
                 },

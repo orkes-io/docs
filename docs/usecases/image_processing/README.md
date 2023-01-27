@@ -105,7 +105,7 @@ The [image_effects.json](https://github.com/conductor-sdk/conductor-examples/blo
 
 * Applying sepia tone
 * Making an image more vibrant
-* Add a watermark proportional to the size of an image
+* Adding a watermark proportional to the size of an image
 
 ### Workflow Inputs
 
@@ -126,7 +126,7 @@ vibrant
 
 |key | Value type | description |
 |--| -- |---|
-| vibrance | Integer (E.g.4 ) | Positive values make the image more vibrant, whereas negative values makes the image less vibrant
+| vibrance | Integer (E.g. 4 ) | Positive values make the image more vibrant, whereas negative values make the image less vibrant. |
 
 
 watermark
@@ -217,7 +217,7 @@ Image on applying sepia recipe
 <img src="https://raw.githubusercontent.com/conductor-sdk/conductor-examples/main/image_processing/images/sepia_tone.jpeg"
 alt="sepia result" width="600" style={{paddingBottom: 20}} />
 
-Image on applying vibrant recipe
+Image on apllying vibrant recipe
 
 <img src="https://raw.githubusercontent.com/conductor-sdk/conductor-examples/main/image_processing/images/vibrant_effect.jpeg"
 alt="vibrant image" width="600" style={{paddingBottom: 20}} />

@@ -60,7 +60,6 @@ body {
 .navbar {
   margin: 0 auto;
   width: 100%;
-  background: rgba(220,220,220,.75);
   backdrop-filter: blur(10px);
 }
 
@@ -126,26 +125,37 @@ h5 {
 
 p {
 }
+.menu {
+    background-color: #ffffff;
+}
 .menu__link--sublist:after {
-
- /*this hides the arrow drop down*/
-   /* background: none;*/
+   background: none;
 
 }
+
+.menu__link--active:not(.menu__link--sublist) {
+    background: none;
+}
+
 .menu__link--sublist {
     font-weight: bold;
+}
+.menu__link--sublist {
     color: #0481e3;
     background: none;
 }
 [data-theme='dark'] .menu__link--sublist {
-    font-weight: bold;
     color: #e64769;
     background: none;
 }
 
+[data-theme='dark'] .menu {
+    background: none;
+}
+
 .menu__link {
-  line-height: 1.5em;
-  font-size: 15px;
+  line-height: 1.0em;
+  font-size: 1.0em;
 }
 
 aside {

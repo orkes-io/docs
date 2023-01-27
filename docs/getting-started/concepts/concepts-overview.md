@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# Overview
+# Core Concepts
 
 Workflow = {Tasks + Operators}
 

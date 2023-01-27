@@ -94,7 +94,7 @@ module.exports = {
         {
             type: 'doc',
             id: 'what-use-cases-can-conductor-solve',
-            label: "What use cases can Conductor solve?​"
+            label: "What use cases can Conductor solve?"
         },
         {
             type: 'category',
@@ -322,21 +322,69 @@ module.exports = {
             ],
         },
     ],
-    orderfulfillment: [
+    gettingStartedSideBar: [
         {
             type: 'category',
-            label: 'Code Lab: Order Fulfillment',
-            collapsed: true,
+            label: 'Getting Started',
+            collapsed: false,
             items: [
-                'codelab/orderfulfillment',
-                'codelab/orderfulfillment2',
-                'codelab/orderfulfillment3',
-                'codelab/orderfulfillment4',
-                'codelab/orderfulfillment5',
-                'codelab/orderfulfillment5_5',
-                'codelab/orderfulfillment6',
-                'codelab/orderfulfillment7',
-                'codelab/orderfulfillment8'
+                'introduction',
+                'getting-started/concepts/concepts-overview',
+                'getting-started/concepts/distributed-apps',
+                'getting-started/concepts/workflows',
+                'getting-started/concepts/resiliency',
+            ],
+        },
+        {
+            type: 'category',
+            label: 'Building with Conductor',
+            collapsed: false,
+            items: [
+                'conductor/workflow',
+                {
+                    type: 'category',
+                    label: 'Operators',
+                    collapsed: true,
+                    items: [
+                        'conductor/operators/decision',
+                        'conductor/operators/while',
+                        'conductor/operators/forkjoin'
+                    ]
+                },
+                {
+                    type: 'category',
+                    label: 'Built-in Tasks',
+                    collapsed: true,
+                    items: [
+                        'conductor/system-tasks/http',
+                        'conductor/system-tasks/jq_transform',
+                        'conductor/system-tasks/business_rule'
+                    ]
+                },
+                'conductor/kitchensink'
+            ],
+        },
+    ],
+    orderfulfillment: [],
+    apiSidebar: [
+        {
+            type: 'category',
+            label: 'API Documentation',
+            collapsed: false,
+            link: {
+                type: 'doc',
+                id: 'api/api',
+            },
+            items: [
+                {
+                    type: 'category',
+                    label: 'Workflow Management',
+                    collapsed: true,
+                    items: [
+                        'api/workflow/start',
+                        'api/workflow/execute'
+                    ]
+                },
             ],
         },
     ],

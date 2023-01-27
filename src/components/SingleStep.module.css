@@ -1,9 +1,9 @@
 .singleStep {
   position: relative;
   background-color: var(--ifm-color-athens-gray);
-  height: 200px;
+  height: 150px;
   border-radius: 10px;
-  box-shadow: 0 2px 16px rgba(0,0,0,.25);
+  box-shadow: 0 2px 12px rgba(0,0,0,.25);
   color: white;
   transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
@@ -29,7 +29,7 @@
 }
 
 .singleStep:hover {
-  transform: scale(1.1);
+  transform: scale(1.0);
   box-shadow: 0 2px 8px rgba(0,0,0,.25);
 }
 
@@ -54,7 +54,7 @@ html[data-theme="light"] .singleStepContent {
   color: white;
   font-weight: 700;
   text-align: left;
-  height: 3rem;
+  height: 2rem;
   width: 100%;
 }
 
