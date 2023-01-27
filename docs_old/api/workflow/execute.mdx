@@ -1,4 +1,4 @@
-# Start A Workflow
+# Execute Workflow Synchronously
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
@@ -17,21 +17,14 @@ export const Highlight = ({children, color}) => (
 
 <Highlight color="#25c2a0">Docusaurus green</Highlight> and <Highlight color="#1877F2">Facebook blue</Highlight> are my favorite colors.
 
-## Request
+## Start a workflow
 
-<Tabs className="outline-tabs">
+<Tabs>
   <TabItem value="Shell" label="Shell" default>
-
-
-        curl -X POST /api/workflow -d '{}'
-
+    This is an apple 🍎
   </TabItem>
   <TabItem value="Java" label="Java">
-
-        void a() {
-
-        }
-
+    This is an orange 🍊
   </TabItem>
   <TabItem value="Golang" label="Golang">
     This is a banana 🍌
@@ -43,7 +36,3 @@ export const Highlight = ({children, color}) => (
       This is a banana 🍌
   </TabItem>
 </Tabs>
-
-## Response
-
-## Example

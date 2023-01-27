@@ -33,7 +33,7 @@ On the completion of the codelab, the final Hello World workflow looks a lot mor
 
 ## Requirements
 
-This demo will use the Orkes [Conductor playground](https://play.orkes.io) to run the workflow.  Create  an account for free by signing up with an email address or Google account.  Alternatively, the open-source Conductor [installed locally](/docs/getting-started/install/running-locally-docker) can also be used, using the API to add Tasks and Workflows.  The UI in the Playground screenshots will be otherwise similar.
+This demo will use the Orkes [Conductor playground](https://play.orkes.io) to run the workflow.  Create  an account for free by signing up with an email address or Google account.  Alternatively, the open-source Conductor [installed locally](/docs_old/getting-started/install/running-locally-docker) can also be used, using the API to add Tasks and Workflows.  The UI in the Playground screenshots will be otherwise similar.
 
 To run the Java worker, Java must be installed on your local computer.
 
