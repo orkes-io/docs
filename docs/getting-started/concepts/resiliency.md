@@ -1,1 +1,1 @@
-# Building to handle Failures
+# Handling failures in a distributed app

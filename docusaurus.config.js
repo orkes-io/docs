@@ -61,6 +61,7 @@ const config = {
                 docs: {
                     breadcrumbs: true,
                     sidebarPath: require.resolve('./sidebars.js'),
+                    sidebarCollapsible: false,
                     editUrl: 'https://github.com/orkes-io/docs/edit/main/',
                 },
                 blog: {

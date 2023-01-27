@@ -1,37 +1,22 @@
-# Start A Workflow
-
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-export const Highlight = ({children, color}) => (
-<span
-    style={{
-        backgroundColor: color,
-        borderRadius: '2px',
-        color: '#fff',
-        padding: '0.2rem',
-    }}>
-{children}
-</span>
-);
+# Start Workflow
+Starts a workflow and returns the `id` if the started workflow.  The API returns immediately without the waiting for workflow to be completed.
 
-<Highlight color="#25c2a0">Docusaurus green</Highlight> and <Highlight color="#1877F2">Facebook blue</Highlight> are my favorite colors.
-
-## Request
-
-<Tabs className="outline-tabs">
+<Tabs>
   <TabItem value="Shell" label="Shell" default>
 
-
-        curl -X POST /api/workflow -d '{}'
-
+  ```shell
+  curl -X POST /api/workflow -d '{}'
+  ```
   </TabItem>
+
   <TabItem value="Java" label="Java">
 
-        void a() {
-
-        }
-
+  ```java
+    public void a();
+  ```
   </TabItem>
   <TabItem value="Golang" label="Golang">
     This is a banana 🍌
@@ -43,6 +28,14 @@ export const Highlight = ({children, color}) => (
       This is a banana 🍌
   </TabItem>
 </Tabs>
+
+## Request
+Input to the start workflow API is the payload is a JSON map of the input to the workflow.
+```json
+{
+
+}
+```
 
 ## Response
 

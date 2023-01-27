@@ -39,10 +39,6 @@ export default function Home() {
                   <h3>Distributed Applications made easy</h3>
                   <h5>Durable code execution, visualizations and analytics</h5>
                 </li>
-                <li>
-                  <h3>Polyglot - Works in your language, with your framework</h3>
-                  <SDKList />
-                </li>
               </ul>
             }
             videoTitle="Netflix Conductor"
@@ -59,19 +55,19 @@ export default function Home() {
                 {
                   title: "Getting Started",
                   description:
-                    "Learn more about building distributed applications and Conductor",
-                  to: "/docs/getting-started/install/running-locally-docker",
+                    "Concepts and guide to building applications with Conductor",
+                  to: "/docs/getting-started/concepts/overview",
                 },
                 {
                   title: "API Docs",
                   description: "Run a workflow to see Conductor in action",
-                  to: "/docs/getting-started/run/running-first-workflow",
+                  to: "/docs/api",
                 },
                 {
                   title: "Conductor SDK",
                   description:
                     "Add a customer worker that runs your code as part of a workflow",
-                  to: "/docs/getting-started/run/running-first-worker",
+                  to: "/docs/sdk",
                 },
               ]}
             />
@@ -80,46 +76,46 @@ export default function Home() {
               {
                 title: "Access Control & Security",
                 description: "Specifications of various components",
-                to: "/docs/reference-docs",
+                to: "/docs/acl",
               },
               {
                 title: "Workflow Scheduler",
                 description: "Specifications of various components",
-                to: "/docs/reference-docs",
+                to: "/docs/scheduler",
               },
               {
                 title: "Eventing & Serverless",
                 description: "Specifications of various components",
-                to: "/docs/reference-docs",
+                to: "/docs/events",
               },
               {
                 title: "Observability and Metrics",
                 description: "Specifications of various components",
-                to: "/docs/reference-docs",
+                to: "/docs/metrics",
               },
             ]}
           />
           <StepBoxesSection
               steps={[
                 {
-                  title: "Unit and Integration Testing",
+                  title: "Unit & Integration Testing",
                   description: "Specifications of various components",
-                  to: "/docs/reference-docs",
+                  to: "/docs/testing",
                 },
                 {
                   title: "Performance Tuning",
                   description: "Specifications of various components",
-                  to: "/docs/reference-docs",
+                  to: "/docs/performance",
                 },
                 {
                   title: "Development & CI/CD",
                   description: "Specifications of various components",
-                  to: "/docs/reference-docs",
+                  to: "/docs/cicd",
                 },
                 {
-                  title: "Code Labs and Recipes",
+                  title: "Code Labs",
                   description: "Specifications of various components",
-                  to: "/docs/reference-docs",
+                  to: "/docs/codelab",
                 },
               ]}
             />

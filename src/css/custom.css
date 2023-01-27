@@ -144,6 +144,9 @@ p {
     color: #0481e3;
     background: none;
 }
+.menu__caret {
+    display: none;
+}
 [data-theme='dark'] .menu__link--sublist {
     color: #e64769;
     background: none;
@@ -303,11 +306,11 @@ html[data-theme="dark"] .midSectionOdd {
 .row--center {
   justify-content: center;
 }
-.outline-tabs {
+.tabs {
   max-width: 600px;
   gap: 10px;
 }
-.outline-tabs .tabs__item {
+.tabs .tabs__item {
   font-size: 15px;
   line-height: 1px;
   border: 1px solid var(--ifm-color-info);
@@ -316,8 +319,7 @@ html[data-theme="dark"] .midSectionOdd {
   color: var(--ifm-color-info);
   border-radius: 0.2rem;
 }
-
-.outline-tabs .tabs__item--active {
+.tabs .tabs__item--active {
   background-color: var(--ifm-color-info);
   color: #fff;
   /* border-radius: var(--ifm-global-radius); */

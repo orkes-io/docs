@@ -60,21 +60,9 @@ export const WhatIsConductorSection = ({
         </div>
       }
       infoColumn2={
-        <div className="container">
-          <div className="row videoContainer">
-            <iframe
-              src={videoSrc}
-              title={videoTitle}
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen=""
-            ></iframe>
-          </div>
-          <div className="row">
-            <Text align="center" className={styles.videoFooterCaption}>
-              {videoFooterCaption}
-            </Text>
-          </div>
+        <div className="container" style={{ textAlign: "center" }}>
+          <h3>Works in your language, with your framework</h3>
+          <SDKList />
         </div>
       }
     />
