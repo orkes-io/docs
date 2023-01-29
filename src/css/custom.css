@@ -144,6 +144,9 @@ p {
     color: #0481e3;
     background: none;
 }
+.menu__list-item-collapsible {
+    font-weight: bold;
+}
 .menu__caret {
     display: none;
 }
@@ -307,17 +310,17 @@ html[data-theme="dark"] .midSectionOdd {
   justify-content: center;
 }
 .tabs {
-  max-width: 600px;
-  gap: 10px;
+  max-width: 100%;
+  gap: 0px;
 }
 .tabs .tabs__item {
   font-size: 15px;
   line-height: 1px;
-  border: 1px solid var(--ifm-color-info);
+  border: 0px solid var(--ifm-color-info);
   width: 100%;
   justify-content: center;
   color: var(--ifm-color-info);
-  border-radius: 0.2rem;
+  border-radius: 0.0rem;
 }
 .tabs .tabs__item--active {
   background-color: var(--ifm-color-info);
@@ -360,4 +363,8 @@ html[data-theme="dark"] .midSectionOdd {
 
 img[alt="Conductor Architecture"] {
     width: 75%;
+}
+
+.pagination-nav__link {
+    border: none;
 }

@@ -1,0 +1,24 @@
+# Why Conductor
+
+Conductor was built to help Netflix orchestrate microservices based process flows with the following features:
+
+* A fully distributed server - ie no single point of failure achieving very high availability.
+* Decouple workflows from underlying service implementation, resulting in greater re-use and cleaner services implementations.
+* Provide visibility and traceability into these process flows.
+* Full operational control over workflows with the ability to pause, resume, restart, retry and terminate.
+* Language agnostic, a workflow can have tasks written in multiple languages, use what the most suited for the job.
+* Ability to scale to billions of concurrently running process flows.
+* Backed by distributed queuing service abstracted from the clients.
+* Handle common themes around rate limits, failure handling, concurrent execution control etc.
+
+## Why not peer to peer choreography?
+With peer to peer task choreography, we found it was harder to scale with growing business needs and complexities.
+Pub/sub model worked for simplest of the flows, but quickly highlighted some of the issues associated with the approach:
+
+Process flows are *embedded* within the code of multiple application.
+Often, there is tight coupling and assumptions around input/output, SLAs etc, making it harder to adapt to changing needs.
+Almost no way to systematically answer “How much are we done with process X”?
+
+##
+//todo: add more stuff here
+

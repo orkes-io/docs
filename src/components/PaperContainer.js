@@ -57,6 +57,19 @@ export const InfoPaper = ({
   </PaperContainer>
 );
 
+export const InfoPaperNoTitle = ({
+  title,
+  infoColumn1,
+  infoColumn2,
+  children,
+  titleContainerClass = "",
+}) => (
+  <PaperContainer className={`container padding--md`}>
+    <ColumnRenderer columns={[infoColumn1, infoColumn2]} />
+    {children}
+  </PaperContainer>
+);
+
 export const DoubleInfoPaper = ({
   title1,
   title2,

@@ -28,30 +28,25 @@ export default function Home() {
         <main className={`container ${styles.mainContainer}`}>
           <WhatIsConductorSection
             title="What is Conductor?"
-            //   sideImage={SampleWorkflow}
             description={
               <ul className={styles.spacedUl}>
                 <li>
-                  <h3>Built at Netflix &nbsp;<FontAwesomeIcon icon={faHeart} style={{ color: "red", fontSize: 20}}/> by Developers across the world</h3>
-                  <h5>Open source under Apache 2.0 licensed</h5>
+                  <h3>Built at Netflix, &nbsp;<FontAwesomeIcon icon={faHeart} style={{ color: "red", fontSize: 20}}/> by Developers across the world</h3>
+                  <h5></h5>
                 </li>
                 <li>
                   <h3>Distributed Applications made easy</h3>
-                  <h5>Durable code execution, visualizations and analytics</h5>
+                  <h5>Durable code execution, visualizations and analytics.</h5>
+                  <h5>Build your applications 10x faster!</h5>
+                </li>
+                <li>
+                  <h3><a href="/content/docs/introduction">Run your first Conductor App</a></h3>
                 </li>
               </ul>
             }
-            videoTitle="Netflix Conductor"
-            videoSrc="https://www.youtube.com/embed/du7mls9XMUE"
-            videoFooterCaption="Conductor is the workflow system of choice at Netflix. Learn more in this video"
           />
           <StepBoxesSection
               steps={[
-                {
-                  title: "Build Your First App",
-                  description: "Build your first distributed application using Conductor",
-                  to: "/docs/introduction",
-                },
                 {
                   title: "Getting Started",
                   description:
@@ -67,6 +62,12 @@ export default function Home() {
                   title: "Conductor SDK",
                   description:
                     "Add a customer worker that runs your code as part of a workflow",
+                  to: "/docs/sdk",
+                },
+                {
+                  title: "Developer Guide",
+                  description:
+                    "Guide to developing on Conductor, CI/CD, Testing, Metrics, Performance Tuning",
                   to: "/docs/sdk",
                 },
               ]}
@@ -89,36 +90,12 @@ export default function Home() {
                 to: "/docs/events",
               },
               {
-                title: "Observability and Metrics",
+                title: "Code Labs & Recipes",
                 description: "Specifications of various components",
-                to: "/docs/metrics",
+                to: "/docs/events",
               },
             ]}
           />
-          <StepBoxesSection
-              steps={[
-                {
-                  title: "Unit & Integration Testing",
-                  description: "Specifications of various components",
-                  to: "/docs/testing",
-                },
-                {
-                  title: "Performance Tuning",
-                  description: "Specifications of various components",
-                  to: "/docs/performance",
-                },
-                {
-                  title: "Development & CI/CD",
-                  description: "Specifications of various components",
-                  to: "/docs/cicd",
-                },
-                {
-                  title: "Code Labs",
-                  description: "Specifications of various components",
-                  to: "/docs/codelab",
-                },
-              ]}
-            />
           <CommunitySection />
         </main>
       </Layout>
