@@ -172,7 +172,7 @@ aside {
 .table-of-contents__link,
 table {
   letter-spacing: -0.003em;
-  line-height: 28px;
+  line-height: 25px;
   font-size: 15px;
   font-family: var(--ifm-font-family-base);
 }
@@ -356,4 +356,8 @@ html[data-theme="dark"] .midSectionOdd {
   .button--lg {
     --ifm-button-size-multiplier: 1.28;
   }
+}
+
+img[alt="Conductor Architecture"] {
+    width: 75%;
 }
