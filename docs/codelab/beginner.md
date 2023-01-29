@@ -11,8 +11,7 @@ Please feel free to follow along using any of these resources:
 Let's create a simple workflow that adds Netflix Idents to videos. We'll be mocking the adding Idents part and focusing on actually executing this process flow.
 
 !!!info "What are Netflix Idents?" 
-    Netflix Idents are those 4 second videos with Netflix logo, which appears at the beginning and end of shows.
-    Learn more about them [here](https://partnerhelp.netflixstudios.com/hc/en-us/articles/115004750187-Master-QC-Identifying-and-Implementing-the-Netflix-Ident-). You might have also noticed they're different for Animation and several other genres.
+    Netflix Idents are those 4-second videos with the Netflix logo that appear at the shows' beginning and end. Learn more about them [here](https://partnerhelp.netflixstudios.com/hc/en-us/articles/1500000260302-Overview-of-the-Netflix-Idents). You might have also noticed they're different for Animation and several other genres.
 
 !!!warning "Disclaimer"
     Obviously, this is not how Netflix adds Idents. Those Workflows are indeed very complex. But, it should give you an idea about how Conductor can be used to implement similar features.
@@ -24,14 +23,14 @@ The workflow in this lab will look like this:
 This workflow contains the following:
 
 * Worker Task `verify_if_idents_are_added` to verify if Idents are already added.
-* [Switch Task](../reference-docs/switch-task/) that takes output from the previous task, and decides whether to schedule the `add_idents` task.
-* `add_idents` task which is another worker Task.
+* [Switch Task](../reference-docs/switch-task/) that takes the output from the previous task and decides whether to schedule the `add_idents` task.
+* `add_idents` task, which is another worker Task.
 
 ### Creating Task definitions
 
-Let's create the [task definition](/content/docs/getting-started/concepts/tasks-and-workers#task-definitions) for `verify_if_idents_are_added` in JSON. This task will be a *SIMPLE* task which is supposed to be executed by an Idents microservice. We'll be mocking the Idents microservice part.
+Let's create the [task definition](/content/docs/getting-started/concepts/tasks-and-workers#task-definitions) for `verify_if_idents_are_added` in JSON. This task will be a *SIMPLE* task that is supposed to be executed by an Idents microservice. We'll be mocking the Idents microservice part.
 
-**Note** that at this point, we don't have to specify whether it is a System task or Worker task. We are only specifying the required configurations for the task, like number of times it should be retried, timeouts etc. We shall start by using `name` parameter for task name.
+**Note** that at this point, we don't have to specify whether it is a System task or a Worker task. We are only specifying the required configurations for the task, like the number of times it should be retried, timeouts, etc. We shall start by using the `name` parameter for the task name.
 ```json
 {
   "name": "verify_if_idents_are_added"
@@ -50,7 +49,7 @@ We'd like this task to be retried 3 times on failure.
 ```
 
 And to timeout after 300 seconds.  
-i.e. if the task doesn't finish execution within this time limit after transitioning to `IN_PROGRESS` state, the Conductor server cancels this task and schedules a new execution of this task in the queue.
+i.e., suppose the task doesn't finish execution within this time limit after transitioning to the `IN_PROGRESS` state. In that case, the Conductor server cancels this task and schedules a new execution of this task in the queue.
 
 ```json
 {
@@ -77,7 +76,7 @@ And a [responseTimeout](/content/docs/how-tos/Tasks/task-lifecycle/#response-tim
 }
 ```
 
-We can define several other fields defined [here](/content/docs/getting-started/concepts/tasks-and-workers), but this is a good place to start with.
+We can define several other fields [here](/content/docs/getting-started/concepts/tasks-and-workers), but this is a good place to start with.
 
 Similarly, create another task definition: `add_idents`.
 
@@ -96,10 +95,10 @@ Similarly, create another task definition: `add_idents`.
 Send a `POST` request to `/metadata/taskdefs` endpoint to register these tasks. You can use Swagger, Postman, CURL or similar tools.
 
 !!!info "Why is the Switch Task not registered?"
-    System Tasks that are part of control flow do not need to be registered. However, some system tasks where the retries, rate limiting and other mechanisms are required, like `HTTP` Task, are to be registered though.
+    System Tasks that are part of the control flow do not need to be registered. However, some system tasks where retries, rate limiting and other mechanisms are required, like `HTTP` tasks, are to be registered though.
 
 !!! Important
-    Task and Workflow Definition names are unique. The names we use below might have already been registered. For this lab, add a prefix with your username, `{my_username}_verify_if_idents_are_added` for example. This is definitely not recommended for Production usage though.
+    Task and Workflow Definition names are unique. The names we use below might have already been registered. For this lab, add a prefix with your username, `{my_username}_verify_if_idents_are_added`, for example. This is definitely not recommended for Production usage, though.
 
 
 **Example**
@@ -133,7 +132,7 @@ curl -X POST \
 
 ### Creating Workflow Definition
 
-Creating Workflow definition is almost similar. We shall use the Task definitions created above. Note that same Task definitions can be used in multiple workflows, or for multiple times in same Workflow (that's where `taskReferenceName` is useful).
+Creating Workflow definition is almost similar. We shall use the Task definitions created above. Note that the same task definitions can be used in multiple workflows or multiple times in the same Workflow (that's where `taskReferenceName` is useful).
 
 A workflow without any tasks looks like this:
 ```json
@@ -169,8 +168,8 @@ Add the first task that this workflow has to execute. All the tasks must be adde
 
 **Wiring Input/Outputs**
 
-Notice how we were using `${workflow.input.contentId}` to pass inputs to this task. Conductor can wire inputs between workflow and tasks, and between tasks.  
-i.e The task `verify_if_idents_are_added` is wired to accept inputs from the workflow input using JSONPath expression `${workflow.input.param}`.
+Notice how we were using `${workflow.input.contentId}` to pass inputs to this task. Conductor can wire inputs between workflow and tasks and between tasks.  
+i.e., The task `verify_if_idents_are_added` is wired to accept inputs from the workflow input using JSONPath expression `${workflow.input.param}`.
 
 Learn more about wiring inputs and outputs [here](/content/docs/getting-started/concepts/workflows).
 
@@ -178,11 +177,11 @@ Let's define `decisionCases` now.
 
 >Note: in earlier versions of this tutorial, the "decision" task was used. This has been deprecated.
 
-Checkout the Switch task structure [here](/content/docs/reference-docs/switch-task).
+Check out the Switch task structure [here](/content/docs/reference-docs/switch-task).
 
-A Switch task is specified by the `evaulatorType`, `expression` (the expression that defines the Switch) and `decisionCases` which lists all the branches of Switch task.  
+A Switch task is specified by the `evaulatorType`, `expression` (the expression that defines the Switch), and `decisionCases` which list all the branches of the Switch task.  
 
-In this case, we'll use `"evaluatorType": "value-param"`, meaning that we'll just use the value inputted to make the decision.  Alternatively, there is a `"evaluatorType": "JavaScript"` that can be used for more complicated evaluations.
+In this case, we'll use `"evaluatorType": "value-param"`, meaning that we'll just use the value inputted to make the decision.  Alternatively, an `"evaluatorType": "JavaScript"` can be used for more complicated evaluations.
 
 Adding the switch task (without any decision cases):
 ```json
@@ -334,26 +333,26 @@ curl -X POST \
 }'
 ```
 
-Successful POST request should return a workflow Id, which you can use to find the execution in the UI.
+A successful POST request should return a workflow Id, which you can use to find the execution in the UI.
 
 ### Conductor User Interface
 
-Open the UI and navigate to the RUNNING tab, the Workflow should be in the state as below:
+Open the UI and navigate to the RUNNING tab; the Workflow should be in the state below:
 
 ![img](img/bgnr_state_scheduled.png)
 
 Feel free to explore the various functionalities that the UI exposes. To elaborate on a few:
 
-* Workflow Task modals (Opens on clicking any of the tasks in the workflow), which includes task I/O, logs and task JSON.
-* Task Details tab, which shows the sequence of task execution, status, start/end time, and link to worker details which executed the task.
-* Input/Output tab shows workflow input and output.
+* Workflow Task modals ((Opens on clicking any of the workflow tasks), including task I/O, logs, and task JSON.
+* The task Details tab shows the sequence of task execution, status, start/end time, and link to worker details that executed the task.
+* The Input/Output tab shows workflow input and output.
 
 
 ### Poll for Worker task
 
-Now that `verify_if_idents_are_added` task is in `SCHEDULED` state, it is the worker's turn to fetch the task, execute it and update Conductor with final status of the task.
+Now that the `verify_if_idents_are_added` task is in the `SCHEDULED` state, it is the worker's turn to fetch the task, execute it and update Conductor with the final status of the task.
 
-Ideally, the workers implementing the client interface would do this process, executing the tasks on real microservices. But, let's mock this part.
+Ideally, the workers implementing the client interface would do this process, executing the tasks on real microservices. But let's mock this part.
 
 Send a `GET` request to `/poll` endpoint with your task type.
 
@@ -373,7 +372,7 @@ We can respond to Conductor with any of the following states:
 * Task has FAILED.
 * Call back after seconds [Process the task at a later time].
 
-Considering our Ident Service has verified that the Ident's are not yet added to given Content Id, let's return the task status by sending the below `POST` request to `/tasks` endpoint, with payload:
+Considering our Ident Service has verified that the Idents are not yet added to the given Content Id, let's return the task status by sending the below `POST` request to `/tasks` endpoint, with payload:
 
 ```json
 {
@@ -415,18 +414,18 @@ curl -X POST \
 ```
 
 !!! Info "Check logs in UI"
-    You can find the logs we just sent by clicking the `verify_if_idents_are_added`, upon which a modal should open with `Logs` tab.
+    You can find the logs we just sent by clicking the `verify_if_idents_are_added`, upon which a modal should open with the `Logs` tab.
 
-### Why is System task executed, but Worker task is Scheduled.
+### Why is System task executed, but Worker task is Scheduled?
 
-You will notice that Workflow is in the state as below after sending the POST request:
+You will notice that Workflow is in the state below after sending the POST request:
 
 ![img](img/bgnr_systask_state.png)
 
-Conductor has executed `is_idents_added` all through it's lifecycle, without us polling, or returning the status of Task. If it is still unclear, `is_idents_added` is a System task, and System tasks are executed by Conductor Server.
+Conductor has executed `is_idents_added` all through its lifecycle without us polling or returning the status of the task. If it is still unclear, `is_idents_added` is a System task, and System tasks are executed by Conductor Server.
 
-But, `add_idents` is a SIMPLE task. So, the complete lifecyle of this task (Poll, Update) should be handled by a worker to continue with W\workflow execution. When Conductor has finished executing all the tasks in given flow, the workflow will reach Terminal state (COMPLETED, FAILED, TIMED_OUT etc.)
+But `add_idents` is a SIMPLE task. So, the complete lifecycle of this task (Poll, Update) should be handled by a worker to continue with W\workflow execution. When Conductor has finished executing all the tasks in a given flow, the workflow will reach the Terminal state (COMPLETED, FAILED, TIMED_OUT, etc.)
 
 ## Next steps
 
-You can play around this workflow by failing one of the Tasks, restarting or retrying the Workflow, or by tuning the number of retries, timeoutSeconds etc.
+You can play around with this workflow by failing one of the tasks, restarting or retrying the Workflow, or tuning the number of retries, timeoutSeconds, etc.

@@ -5,11 +5,11 @@
 There are two workflows for image processing described in this article:
 
 1. [Image encoding and resizing](#image-encoding-and-resizing)
-2. [Image Effects](#image-effects)
+2. [Image effects](#image-effects)
 
-These workflows require workers that are a part of the [orkesworkers](https://github.com/orkes-io/orkesworkers) GitHub repository (and are running in the Orkes Playground for use).
+These workflows require workers that are part of the [orkesworkers](https://github.com/orkes-io/orkesworkers) GitHub repository (and are running in the Orkes Playground for use).
 
-## [Image encoding and resizing](https://github.com/conductor-sdk/conductor-examples/blob/main/image_processing/image_multiple_convert_resize.json)
+## [Image Encoding and Resizing](https://github.com/conductor-sdk/conductor-examples/blob/main/image_processing/image_multiple_convert_resize.json)
 
 
 |[Run it in Orkes Playground](https://play.orkes.io/workflowDef/image_multiple_convert_resize)|
@@ -21,10 +21,10 @@ These workflows require workers that are a part of the [orkesworkers](https://gi
 
 The [image_multiple_convert_resize.json](https://github.com/conductor-sdk/conductor-examples/blob/main/image_processing/image_multiple_convert_resize.json) workflow takes the URL of an image and converts it to multiple formats and sizes, hosting the completed images on S3.
 
-The workflow takes in 3 inputs
+The workflow takes in 3 inputs:
 
-* fileLocation: A http location to an image files
-* outputFormats: An array of image types E.g jpg, png, webp
+* fileLocation: A http location to an image file
+* outputFormats: An array of image types (E.g. jpg, png, webp)
 * outputSizes: An array of sizes. Each size object has a width and height property
 
 For example:
@@ -55,9 +55,9 @@ For example:
 }
 ```
 
-This will result in 9 output images - 3 different sizes with 3 formats each.
+This will result in 9 output images, i.e; 3 different sizes with 3 formats each.
 
-### Visual representation
+### Visual Representation
 <img src="https://raw.githubusercontent.com/conductor-sdk/conductor-examples/main/image_processing/images/resize.jpg"
 alt="image resize workflow" width="600" style={{paddingBottom: 20, paddingTop: 10}} />
 
@@ -98,35 +98,35 @@ alt="image resize workflow" width="600" style={{paddingBottom: 20, paddingTop: 1
 }
 ```
 
-## [Image effects](https://github.com/conductor-sdk/conductor-examples/blob/main/image_processing/image_effects.json)
+## [Image Effects](https://github.com/conductor-sdk/conductor-examples/blob/main/image_processing/image_effects.json)
 
 
 The [image_effects.json](https://github.com/conductor-sdk/conductor-examples/blob/main/image_processing/image_effects.json) workflow demonstrates how to add effects to images. The following recipes are currently supported:
 
-* Applying Sepia Tone
-* Making a image more Vibrant
+* Applying sepia tone
+* Making an image more vibrant
 * Add a watermark proportional to the size of an image
 
 ### Workflow Inputs
 
-The workflow takes in 3 inputs
+The workflow takes in 3 inputs:
 
-* fileLocation: A http location to an image files
-* recipe: Supported recipes are sepia, vibrant, watermark
+* fileLocation: A http location to an image file
+* recipe: Supported recipes are sepia, vibrant and watermark
 * recipeParameters: A json object of key value pairs that are specific to the recipe. The list of recipe parameters for each recipe
-* sepia
+
+sepia
 
 |key | Value type | description |
 |--| -- |---|
-| sepiaIntensityThreshold | Integer (eg. 80 ) |Applies a special effect to the image, similar to the effect achieved in a photo darkroom by sepia toning. Threshold ranges from 0 to QuantumRange and is a measure of the extent of the sepia toning. A threshold of 80 is a good starting point for a
-reasonable tone. |
+| sepiaIntensityThreshold | Integer (E.g. 80 ) |Applies a special effect to the image, similar to the effect achieved in a photo darkroom by sepia toning. Threshold ranges from 0 to QuantumRange and is a measure of the extent of the sepia toning. A threshold of 80 is a good starting point for a reasonable tone. |
 
 
 vibrant
 
 |key | Value type | description |
 |--| -- |---|
-| vibrance | Integer (eg.4 ) | Positive values makes the image more vibrant, Negative values makes the image less vibrant
+| vibrance | Integer (E.g.4 ) | Positive values make the image more vibrant, whereas negative values makes the image less vibrant
 
 
 watermark
@@ -134,7 +134,7 @@ watermark
 |key | Value type | description |
 |--| -- |---|
 | watermarkFileLocation | String (url) | A logo file that will be applied as a watermark on top of the file that is specified by the fileLocation parameter. |
-| gravity | String (E.g southeast) | Specifies Where to apply the logo/watermark image. Allowed values: NorthWest, North, NorthEast, West, Center, East, SouthWest, South, SouthEast.|
+| gravity | String (E.g southeast) | Specifies the location to apply the logo/watermark image. Allowed values: NorthWest, North, NorthEast, West, Center, East, SouthWest, South & SouthEast.|
 
 
 
@@ -207,22 +207,22 @@ alt="Diagram of Workflow" width="400" style={{paddingBottom: 20, paddingTop: 10}
 
 ### Images from the workflow
 
-Original Image
+Original image
 
 <img src="https://raw.githubusercontent.com/conductor-sdk/conductor-examples/main/image_processing/images/source_image.jpeg"
 alt="original image" width="600" style={{paddingBottom: 20}} />
 
-Sepia recipe result
+Image on applying sepia recipe
 
 <img src="https://raw.githubusercontent.com/conductor-sdk/conductor-examples/main/image_processing/images/sepia_tone.jpeg"
 alt="sepia result" width="600" style={{paddingBottom: 20}} />
 
-Vibrant recipe result
+Image on applying vibrant recipe
 
 <img src="https://raw.githubusercontent.com/conductor-sdk/conductor-examples/main/image_processing/images/vibrant_effect.jpeg"
 alt="vibrant image" width="600" style={{paddingBottom: 20}} />
 
-Watermark effect (adding Orkes logo to bottom right)
+Image on applying watermark recipe (Logo gets added as per the gravity key mentioned in the input)
 
 <img src="https://raw.githubusercontent.com/conductor-sdk/conductor-examples/main/image_processing/images/watermark_effect.jpeg"
 alt="watermarked image" width="600" style={{paddingBottom: 20}} />

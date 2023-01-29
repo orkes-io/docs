@@ -1,78 +1,101 @@
 # Business Rule Task
 
-This task help to evaluate business rules that are compiled in a spreadsheet.
-Currently, csv, xls and xlsx file format are supported.
-
-
-## Sample task definition
-
+```json
+"type" : "BUSINESS_RULE"
 ```
+
+## Introduction
+
+Business rule task helps evaluate business rules compiled in spreadsheets. Conductor currently supports the following formats:
+* CSV
+* XLS
+* XLSX
+
+## Configurations
+
+You can define the business rules in the workflow using the task type ```“BUSINESS_RULE”```.
+
+A sample task definition for the business rule:
+
+```json
 {
 "name": "execute_rule",
 "taskReferenceName": "execute_rule",
-"inputParameters": {
+"inputParameters": 
+ {
     "ruleFileLocation": "https://business-rules.s3.amazonaws.com/rules.xlsx",
     "executionStrategy": "FIRE_FIRST",
-    "inputColumns": {
+    "inputColumns": 
+    {
       "InputDate": "${workflow.input.inputDate}",
       "ProductType": "${workflow.input.productType}"
     },
-    "outputColumns": [
+    "outputColumns": 
+    [
       "Discount"
     ]
   },
 "type": "BUSINESS_RULE"
 }
-
 ```
 
-* ```ruleFileLocation``` is the url location for the rule file. The file can be available on the internet (for example, stored in AWS S3 or Azure Blob) or locally in Conductor server.
-    * On the web:  ```https://example.com/rules.csv```
-    * Sample AWS S3 file location can be ```https://business-rules.s3.amazonaws.com/rules.xlsx``` 
-    * Sample Azure blob file location can be ```https://business-rules.blob.core.windows.net/rules/Date.xlsx``` 
-    * If the file is stored in conductor server then url should be like ```file://opt/rules/Date.xlsx```
+## Input Parameters
 
-* ```executionStrategy``` is the execution strategy needs to be followed. Currently FIRE_ALL and FIRE_FIRST are supported.
-  * FIRE_FIRST means the first rule which gets fired will be used to generate output. <br/>
-  * FIRE_ALL means all the rules that get fired will be used to generate the output.<br/>
+| Attribute | Description |
+| --------- | ----------- |
+| ruleFileLocation | Specify the URL location of the rule file to be evaluated. The rule file can be available on the internet (Stored in AWS S3 or Azure Blob). <br/> Sample URL for each case; <ul><li>On the web:  ```https://example.com/rules.csv```</li><li>AWS S3 - ```https://business-rules.s3.amazonaws.com/rules.xlsx```</li><li>Azure blob - ```https://business-rules.blob.core.windows.net/rules/Date.xlsx```</li></ul> |
+| executionStrategy | Specify the execution strategy to be followed. Currently, Conductor supports the following strategies: <br/><ul><li>**FIRE_FIRST** - The first rule which gets matched will be used to generate the output.</li><li>**FIRE_ALL** - All the rule that matches will be used to generate the output.</li></ul> |
 
+To get an understanding of the execution Strategy, consider the below table: <br/>
 
-To understand the executionStrategy consider a table like below.<br/>
-```
-|   Name    |   Price   |
+| Name | Price |
+| --------- | ----------- |
 |   Phone   |   10$     |
 |   Phone   |   11$     |
-```
-Lets assume the input Name is ```Phone``` <br/>
-If we use FIRE_FIRST executionStrategy then output  Price will be 10$.<br/>
-If we use FIRE_ALL executionStrategy then output Price will be 11$, as the second rule will overwrite the value of Price.<br/><br/>
 
-* ```inputColumns``` is the input to the rule file. The input can be populated using some previous task or workflow input or static input.
- 
-* ```outputColumns``` is the list of columns that will be present in the task output. The columns which are not present in the outputColumns is considered to be the input columns and for all of such columns input values has to be provided.
+Let’s assume the input Name is Phone. If the executionStrategy is **FIRE_FIRST**, then the output price will be $10. On the other hand, if the executionStrategy is **FIRE_ALL**, then the output price will be $11, as the second rule will overwrite the value of the price.
 
-### Operator support.
-Below operators are supported.
-1. Comparison operators for numeric value. ```<=,>=,=,<,>```
-2. String equals/not equals operator. ```productName != Phone```
-3. ```inList``` and ```!=inList``` operator. productName ```inList({"phone","laptop"})``` will match if productName is phone or laptop
-4. createList operator for output. ```createList({"A","B","C"})``` will generate list ```{"A", "B", "C"}``` in output
-5. Date comparison. Currently date formats yyyy-MM-dd, yyyy-MMM-dd and yyyy-MM-dd HH:mm:ss are supported.
+| Attribute | Description |
+| --------- | ----------- |
+| inputColumns | Specifies the input to the rule file. It can be populated using previous task/workflow input/static input. | 
+| outputColumns | Specifies the list of columns that will be present in the task output. The columns that are not present here are considered input columns whose values should be specified. | 
 
-## Configuring worker
+## Supported Operators
+
+Business rule task supports the following operators:
+
+1. Comparison operators for numeric value. ```<=,>=,=,<,>```.
+2. String equals/not equals operator. ```productName != Phone```.
+3. ```inList``` and ```!=inList``` operator. productName ```inList({"phone","laptop"})``` will match if productName is phone or laptop.
+4. createList operator for output. ```createList({"A","B","C"})``` will generate list ```{"A", "B", "C"}``` in output.
+5. Date comparison. Currently supported date formats are ```yyyy-MM-dd```, ```yyyy-MMM-dd``` and ```yyyy-MM-dd HH:mm:ss```.
+
+## Configuring Worker
 
 ### AWS S3 
-Following properties needs to be given in order to pull the rule files from AWS S3.<br/>
-```AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_SESSION_TOKEN and AWS_REGION```<br/>
-The bucket-name and file-name will be populated from the ruleFileLocation. <br/>
+
+In order to pull the rules from AWS S3, the following properties need to be given.
+
+* AWS_ACCESS_KEY_ID
+* AWS_SECRET_ACCESS_KEY
+* AWS_SESSION_TOKEN 
+* AWS_REGION
+
+The bucket-name and file-name will be populated from the ruleFileLocation. 
 
 ### Azure Blob
-Following properties needs to be given in order to pull the rule files from Azure Blob<br/>
-```AZURE_STORAGE_ACCOUNT, AZURE_STORAGE_ACCESS_KEY ```<br/>
+
+In order to pull the rules from Azure Blob, the following properties need to be given.
+
+* AZURE_STORAGE_ACCOUNT
+* AZURE_STORAGE_ACCESS_KEY 
+
 Container-name and file-name will be populated from the ruleFileLocation.
 
-### Examples
-Consider below rule file for the input.
+## Sample Workflow
+
+Consider the below rule file for the input.
+
 ```
 
 productType |   productCategory |   purchaseDate            |   itemCount   |   price   |   Discount    |   ShippingCharges
@@ -82,29 +105,33 @@ beauty      |      powder       |   = 2022-01-01            |       >10     |   
 food        |      pizza        |   < 2022-03-22 12:20:22   |       15      |   >300    |       7%      |       10$
 
 ```
-and following workflow definition.
-```
+And following workflow definition.
+```json
 {
     "updateTime": 1646428577305,
     "name": "TestRule",
     "description": "Test Rule",
     "version": 1,
-    "tasks": [
+    "tasks": 
+    [
      {
       "name": "rule",
       "taskReferenceName": "rule",
-      "inputParameters": {
+      "inputParameters": 
+      {
       "ruleFileLocation": "Product.xlsx",
       "executionStrategy": "FIRE_FIRST",
       "ruleFileStorage" : "LOCAL",
-      "ruleInput": {
+      "inputColumns": 
+      {
         "productType": "${workflow.input.productType}",
         "productCategory": "${workflow.input.productCategory}",
         "price": "${workflow.input.price}",
         "itemCount": "${workflow.input.itemCount}",
         "itemCode": "${workflow.input.itemCode}"
       },
-      "outputColumns": [
+      "outputColumns": 
+      [
         "Discount",
         "ShippingCharges"
       ]
@@ -113,7 +140,8 @@ and following workflow definition.
       }
     ],
     "inputParameters": [],
-    "outputParameters": {
+    "outputParameters": 
+    {
     },
     "schemaVersion": 2,
     "restartable": true,
@@ -123,10 +151,10 @@ and following workflow definition.
     "timeoutSeconds": 0,
     "variables": {},
     "inputTemplate": {}
-  }
+}
   ```
-  if workflow is triggered using input as 
-  ```
+  If the workflow is triggered using input as: 
+  ```json
   {
         "productType": "electronics",
         "productCategory": "cellphone",
@@ -135,17 +163,10 @@ and following workflow definition.
         "purchaseDate": "2022-04-22"
   }
   ```
-  then it will match the first row and geenrate output as
-  ```
+  Then it will match the first row and generate output as: 
+  ```json
   {
       "Discount" : "11%",
       "ShippingCharges" : "5$"
   }
   ```
-
-  ### Changing the rule file in Production
-  Currently conductor server cache the rule file to expedite the rule processing. The period for the cache is defined by the parameter
-  ```conductor.workers.business-rule.ttl-in-min```. It defaults to to 60 minutes currently. In case it is required to change the rule file in production
-  and Conductor needs to pick the new file immediately then create a new rule file and change it and update the workflow definition accordingly. 
-  This forces the Conductor cache to consume the new file immediately. 
-

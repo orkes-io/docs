@@ -7,19 +7,19 @@ sidebar_position: 1
 "type" : "DO_WHILE"
 ```
 ## Introduction
-Sequentially execute a list of task as long as a condition is true. 
+Sequentially execute a list of tasks as long as a condition is true. 
 The list of tasks is executed first, before the condition is checked (even for the first iteration).
 
 When scheduled, each task of this loop will see its `taskReferenceName` concatenated with __i, with i being the iteration number, starting at 1. Warning: taskReferenceName containing arithmetic operators must not be used.
 
-Each task output is stored as part of the DO_WHILE task, indexed by the iteration value (see example below), allowing the condition to reference the output of a task for a specific iteration (eg. $.LoopTask['iteration]['first_task'])
+Each task output is stored as part of the DO_WHILE task, indexed by the iteration value (see example below), allowing the condition to reference the output of a task for a specific iteration (e.g., $.LoopTask['iteration]['first_task'])
 
-The DO_WHILE task is set to `FAILED` as soon as one of the loopTask fails. In such case retry, iteration starts from 1.
+The DO_WHILE task is set to `FAILED` as soon as one of the loopTask fails. In such cases, retry; iteration starts from 1.
 
 ## Limitations 
 - Domain or isolation group execution is unsupported.
-- Nested DO_WHILE is unsupported. However, DO_WHILE task supports SUB_WORKFLOW as loopOver task, so we can achieve similar functionality.
-- Since loopOver tasks will be executed in loop inside scope of parent do while task, crossing branching outside of DO_WHILE task is not respected. 
+- Nested DO_WHILE is unsupported. However, DO_WHILE task supports SUB_WORKFLOW as a loopOver task, so we can achieve similar functionality.
+- Since loopOver tasks will be executed in a loop inside the scope of a parent, do while task, crossing branching outside of DO_WHILE task is not respected. 
 
 Branching inside loopOver task is supported.
 
@@ -31,7 +31,7 @@ Branching inside loopOver task is supported.
 
 |name|type|description|
 |---|---|---|
-|loopCondition|String|Condition to be evaluated after every iteration. This is a Javascript expression, evaluated using the Nashorn engine. If an exception occurs during evaluation, the DO_WHILE task is set to FAILED_WITH_TERMINAL_ERROR.|
+|loopCondition|String|Condition to be evaluated after every iteration. This is a Javascript expression evaluated using the Nashorn engine. If an exception occurs during evaluation, the DO_WHILE task is set to FAILED_WITH_TERMINAL_ERROR.|
 |loopOver|List[Task]|List of tasks that needs to be executed as long as the condition is true.|
 
 ### Output Parameters
@@ -39,8 +39,8 @@ Branching inside loopOver task is supported.
 |name|type|description|
 |---|---|---|
 |iteration|Integer|Iteration number: the current one while executing; the final one once the loop is finished|
-|`i`|Map[String, Any]|Iteration number as a string, mapped to the task references names and their output.|
-|*|Any|Any state can be stored here if the `loopCondition` does so. For example `storage` will exist if `loopCondition` is `if ($.LoopTask['iteration'] <= 10) {$.LoopTask.storage = 3; true } else {false}`|
+|`i`|Map[String, Any]|Iteration number as a string mapped to the task references names and their output.|
+|*|Any|Any state can be stored here if the `loopCondition` does so. For example, `storage` will exist if `loopCondition` is `if ($.LoopTask['iteration'] <= 10) {$.LoopTask.storage = 3; true } else {false}`|
 
 ## Examples
 
@@ -142,7 +142,7 @@ Sometimes, you may want to use the iteration value/counter in the tasks used in 
 
 The Loop ```taskReferenceName``` is "get_all_stars_loop_ref".
 
-In the ```loopCondition``` the term ```$.get_all_stars_loop_ref['iteration']``` is used.
+In the ```loopCondition```, the term ```$.get_all_stars_loop_ref['iteration']``` is used.
 
 In tasks embedded in the loop, ```${get_all_stars_loop_ref.output.iteration}``` is used.  In this case, it is used to define which page of results the API should return.
 
@@ -199,6 +199,6 @@ In tasks embedded in the loop, ```${get_all_stars_loop_ref.output.iteration}``` 
 
 * [Order Fulfillment](/content/docs/codelab/orderfulfillment5_5#dowhile-loop):  Loops through each address to create a shipping label.
 
-* [Document Approvals](/content/docs/usecases/document_approvals): Should an approval be rejected, the Do/WHile loops back to the beginning for edits to the doc.
+* [Document Approvals](/content/docs/usecases/document_approvals): Should approval be rejected, the Do/WHile loops back to the beginning for edits to the doc.
 
 * [Extract, Transform, Load](/content/docs/usecases/Simple_ETL): GitHub extraction is 100 entries per call, so loop for the number of extractions required to get the data.  The Orbit API allows for one activity upload per API call, so the Do/while loop iterates through every upload.

@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-node@v2
@@ -40,3 +40,20 @@ jobs:
         echo "Running Git Push If Needed"
         [ ! "$gitstatustext" == "" ]  && (git add . && git commit -m "Adding website changes ${{ github.run_id }}-${{ github.run_number }}" && git push) || echo "Nothing to push"
 
+
+  index:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repository 
+      uses: actions/checkout@v2
+
+    - name: Run DocSearch Scrapper
+      run: |
+        docker run \
+          -e TYPESENSE_API_KEY=${{ secrets.TYPESENSE_API_KEY }} \
+          -e TYPESENSE_HOST="7xanmp8g5uyd4rqop.a1.typesense.net" \
+          -e TYPESENSE_PORT="443" \
+          -e TYPESENSE_PROTOCOL="https" \
+          -e CONFIG="$(cat ./search.config.json | jq -r tostring)" \
+          typesense/docsearch-scraper

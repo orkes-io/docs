@@ -2,7 +2,7 @@
 
 ## Introduction
 
-On of the primary reasons for microservice/workflow architectures is that services must run in a specific order - as downstream tasks require input from those tasks that are upstream.  In this code lab, we'll build a simple workflow with 2 HTTP tasks to demonstrate this ability.
+One of the primary reasons for microservice/workflow architectures is that services must run in a specific order - as downstream tasks require input from upstream tasks. We'll build a simple workflow with 2 HTTP tasks in this code lab to demonstrate this ability.
 
 This code lab is based on a [Stack Overflow question](https://stackoverflow.com/questions/71370237/java-design-pattern-orchestration-workflow/71385718#71385718) on the same topic.
 
@@ -10,7 +10,7 @@ This code lab is based on a [Stack Overflow question](https://stackoverflow.com/
 
 ### Why HTTP Tasks?
 
-[HTTP Tasks](https://orkes.io/content/docs/reference-docs/system-tasks/http-task) are run locally on the Conductor server, and do not require a separate worker to be run for the workflow to complete.  By using System tasks, this workflow can be completely self contained and run on any instance of Conductor with no coding at all.
+[HTTP Tasks](https://orkes.io/content/docs/reference-docs/system-tasks/http-task) are run locally on the Conductor server and do not require a separate worker to be run for the workflow to complete.  By using System tasks, this workflow can be completely self contained and run on any instance of Conductor with no coding at all.
 
 ## What we are building
 
@@ -19,13 +19,13 @@ There are 2 HTTP Tasks in our code:
 * **get_IP**:  This uses the supplied IP address (from the workflow input) to get details about the IP address.
 * **get_weather**: Uses the zip code provided by the get_IP output to find the current weather locations for the area the IP address is from.
 
-The second task can only run with input provided from the first task.
+The second task can only run with input provided by the first task.
 
 ![workflow diagram](img/http_workflow.png)
 
 ## Codelab Requirements
 
-You'll need a version of Conductor.  The images will be based on the [Conductor Playground](https://play.orkes.io), but a [local Conductor instance](/content/docs/getting-started/install/running-locally) works as well.
+You'll need a version of Conductor.  The images will be based on the [Conductor Playground](https://play.orkes.io), but a [local Conductor instance](/content/docs/getting-started/install/running-locally-docker) works as well.
 
 ## Workflow input
 
@@ -41,7 +41,7 @@ The workflow is given an IP address:
 
 Here is the outline of the workflow.  At the moment, the 2 tasks are not included, but that code will appear as we discuss the tasks (and can be inserted for your testing purposes.)
 
-The workflow is pretty basic - with a name (if using the playground, your workflow will need a unique name). and description.  There are 2 ```outputParameters``` defined - that we'll discuss further in the codelab.
+The workflow is pretty basic - with a name (if using the playground, your workflow will need a unique name). And description.  There are 2 ```outputParameters``` defined - that we'll discuss further in the codelab.
 
 ```json
 {
@@ -67,11 +67,11 @@ The workflow is pretty basic - with a name (if using the playground, your workfl
 }
 ```
 
-Now, lets begin adding the two tasks to the workflow:
+Now, let's begin adding the two tasks to the workflow:
 
 ### get_IP
 
-the get_IP task is a HTTP task (and since it is a System task - it only needs to be defined in the workflow):  The IP address (from the workflow input) is inserted into the URL as ```${workflow.input.ipaddress}```:
+the get_IP task is an HTTP task (and since it is a System task - it only needs to be defined in the workflow):  The IP address (from the workflow input) is inserted into the URL as ```${workflow.input.ipaddress}```:
 
 ```json
 {
@@ -101,11 +101,11 @@ When this task runs, the URI is accessed as a GET request, and the output will b
 
 ```${get_IP_ref.output.response.body.zip}```
 
-We can use this as an input in the second task ```get_weather```.
+We can use this as input in the second task ```get_weather```.
 
 ### get_weather
 
-The ```get_weather``` HTTP task is very similar to the ```get_IP``` in that it calls a 3rd party API to get results.  In this case, the API takes in a zip code *note this may make the workflow US only* and outputs the current weather conditions. We add the Zipcode reference from the ```get_IP``` output in the uri string.  There are 2 new parameters in our HTTP Task ```connectionTimeOut``` and ```readTimeOut```.  We'll discuss that in a moment.
+The ```get_weather``` HTTP task is very similar to the ```get_IP``` in that it calls a 3rd party API to get results.  In this case, the API takes in a zip code. *Note this may make the workflow US only* and outputs the current weather conditions. We add the Zipcode reference from the ```get_IP``` output in the uri string.  There are 2 new parameters in our HTTP Task ```connectionTimeOut``` and ```readTimeOut```.  We'll discuss that in a moment.
 
 ```json
 {
@@ -145,7 +145,7 @@ This API comes back with lots of weather information for the zip code.  We only 
 
 ##  Slow API call
 
-The weather API is a very slow API.  If you look at the ```http_request```, we have added 2 parameters related to timeout.  We have to override the default timeout values to allow this API to respond.  (While slow, it is also free, and also requires no API key, so - tradeoffs).
+The weather API is a very slow API.  If you look at the ```http_request```, we have added 2 parameters related to timeout.  We have to override the default timeout values to allow this API to respond.  (While slow, it is also free and also requires no API key, so - tradeoffs).
 
 ### HTTP_Task retries
 
@@ -174,15 +174,15 @@ The HTTP request system task does not have retry parameters built in by default,
 }
 ```
 
-This tells Conductor to add a ```retryCount: 3```, with a ```"retryDelaySeconds": 5,``` between each attempt.  The retry logic is set to ```"retryLogic": "FIXED",``` (but could also be set to ```EXPONENTIAL_BACKOFF```)  ([Read more on this](/content/docs/how-tos/Tasks/extending-system-tasks)).
+This tells Conductor to add a ```retryCount: 3```, with a ```"retryDelaySeconds": 5,``` between each attempt.  The retry logic is set to ```"retryLogic": "FIXED",``` (but could also be set to ```EXPONENTIAL_BACKOFF```).
 
 
-If the timeout is lowered in the HTTP connection (say to 1500ms), this task is much more likely to fail (due to the slow API response time).  The task will be attempted 4 times (once and then 3 retries), and if none of the attempts succeed, the workflow will fail after 4 tries.
+If the timeout is lowered in the HTTP connection (say to 1500ms), this task is much more likely to fail (due to the slow API response time).  The task will be attempted 4 times (once and then 3 retries) and if none of the attempts succeed, the workflow will fail after 4 tries.
 
 
 ##  Conclusion
 
-In ths codelab, we built a simple Conductor workflow to showcase how downstream tasks can take in data from tasks that have run earlier in the workflow.
+In this codelab, we built a simple Conductor workflow to showcase how downstream tasks can take in data from tasks that have run earlier in the workflow.
 
-We also demonstrated how HTTP tasks work, and even extended a HTTP_Task to add retries and retry timings to ensure success of our workflow.
+We also demonstrated how HTTP tasks work and even extended an HTTP_Task to add retries and retry timings to ensure the success of our workflow.
 

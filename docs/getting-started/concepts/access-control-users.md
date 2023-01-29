@@ -4,60 +4,72 @@ sidebar_position: 5
 
 # Access Control: Users & Groups
 
-With your Conductor server in a remote environment, members of your team will require a login to access the Conductor server.  With our Users & Groups functionality, and admin may perform granular "per user" or broader "per group" access control.
+With your Conductor server in a remote environment, your team members will require a login to access the Conductor server. With our Users & Groups functionality, an admin can perform granular "per user" or broader "per group" access control.
 
-> Note: This feature currently only available to Admins of an Orkes Cloud instance.
-
-To access Users and Groups, click Users in the left navigation menu.
+:::note
+This feature is available only to the Admins of an Orkes Cloud instance.
+:::
 
 <p align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/Aya41OiWn9c" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
 
 ## Users
 
-### Inviting users
-To invite a users to your Orkes Cloud instance, click the `Create User` button. Enter their email address and the access level you wish them to have. On closing the window, an invite will be sent to them.
-
+### Inviting Users
+To invite a user to your Orkes Cloud instance,
+1. From the left navigation menu, choose **ACCESS CONTROL > Users**.
+2. Click **Create User** button.
+3. You need to fill in the following user details:
+    * **Email** - Enter the email address of the user.
+    * **Name** - Provide the user’s name.
+    * **Roles** - Choose the access level you wish the user to have. The available Conductor roles are *Admin*, *User*, *Metadata Manager*, *Workflow Manager*, and *Read Only User*.
+4. Click **Create**, and an email invite will be sent to the user with the instructions to access the Conductor instance.
 
 ### User Roles 
 A user can have the following roles:
-* **Admin** - Full access to the Conductor instance.
-* **User** - Access to user's workflows and tasks (and any shared Applications)
-* **Metadata Manager** - An "admin" for metadata. Can Create/Update/Delete **any** workflow or task.
-* **Workflow Manager** - Can Run/pause/rerun **any** workflow.
+* **Admin** - An admin has full access to the Conductor instance.
+* **User** - Access to user's workflows and tasks (and any shared Applications).
+* **Metadata Manager** - An "admin" for  metadata who can create/update/delete **any** workflow or task.
+* **Workflow Manager** - Has the privilege to run/pause/rerun **any** workflow.
+* **Read Only User** - Has read-only permissions over the workflows and tasks.
 
-To change the access for a specific user, click on the edit button next to the user, and change the role.
+To change the access for a specific user, click on the edit button next to the user, and change the role by clicking the toggle button for the relevant roles.
 
-<p align="center"><img src="/content/img/create_user.png" alt="Create application user" width="500" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+<p align="center"><img src="/content/img/edit-user-roles.png" alt="Editing user roles in Conductor" width="90%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
 ## Groups
 
-Groups are a way to quickly share workflows and tasks amongst your team. Create a new group, and add users with the same permission level for many tasks and workflows.  
+Groups are a way to quickly share workflows and tasks amongst your team.
 
-Each group has 3 tables:
+### Creating Groups
 
-* **Members**: The members of the group can be selected from all of the accounts affiliated with the Conductor instance.
+To create a user group:
+1. From the left menu, navigate to **ACCESS CONTROL > Groups**.
+2. Click **Create Group** and provide the following details:
+    * **Group ID** - Provide a name to identify your group.
+    * **Description** - Provide a suitable description for the group.
+    * **Roles** - Choose the role for the group. The available roles for a group are *Admin*, *User*, *Metadata Manager*, *Workflow Manager*, and *Read Only User*. 
+3. Click **Create**.
+<center><img src="/content/img/creating-groups.png" alt="Creating Groups in Conductor" width="90%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></center>
 
-Once a group of members has been created, two types of access can be given: **Roles** and **Workflow and Task Permissions**.  
+4. Once the group is created, you can add members by clicking **+Add User** from the **Members** section. You can only add users already associated with the Conductor instance. If the user you are looking for has not been added, you can [invite](/content/docs/getting-started/concepts/access-control-users#inviting-users) and then add them to the groups.
 
-> Note: It is possible to only grant one type of access to a Group - meaning that just **Roles** OR just **Workflow and Task Permissions** can be added. 
+**Workflow and Tasks Permissions** is an additional section where you can limit the group members' access to limited workflows and tasks.
 
-### Roles
-Group roles allows you to quickly add/remove permissions to groups of users.  The roles are the same as for an individual user, but is quickly applied to everyone in the group.
+6. Click **+Add Permission**, and you can choose the group to have access to selected Workflows/Tasks/Secrets/Tags. The permissions that can be granted include Read, Create, Update, Execute & Delete. 
+<center><img src="/content/img/workflows-and-tasks-permissions.png" alt="Granting access to specific tasks and workflows" width="90%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></center>
 
-There are four possible roles for members of a group: Admin, User, Metadata Manager, Workflow Manager. 
+:::note
+Even if certain permissions are granted under the section **Workflow and Tasks Permissions**,  the role chosen supersedes these permissions. This means that if both the **Workflow and Tasks Permissions** section is configured and a role is also chosen, then the role always supersedes. 
+:::
 
-If a Role is defined for these members, they will all be given this role for the Conductor instance.  For example, if **Admin** is selected, all members of the group are now admins:
+### Group Roles
+Group roles allow you to quickly add/remove permissions to groups of users. The roles are the same for an individual user but are quickly applied to everyone in the group.
 
-<p align="center"><img src="/content/img/admins.jpg" alt="Create application user" width="800" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+Group members have five possible roles: Admin, User, Metadata Manager, Workflow Manager, and Read Only User.
 
-### Workflow and Task Permissions
+If a role is defined for these members, they will all be given this role for the Conductor instance.  For example, if **Admin** is selected, all the group members are now admins irrespective of their individual roles.
 
-Tasks and workflows to be shared amongst the group. The permission levels are the same as for [Applications](#applications).
+## Example for Workflow Permissions
 
-When Workflows and Tasks are added to the group, every member of the group will be able to execute (or change or delete) these workflows and tasks - allowing easy sharing of processes in the team.
+In the [Orkes Playground](https://play.orkes.io), there are default workflows available for all users to try out. To facilitate sharing of these workflows/tasks, we have included them in the `AllUsers` group. So, every person who signs up for Orkes Playground is added to this group so that they can have access to them.
 
-<p align="center"><img src="/content/img/group_app_task_permissions.jpg" alt="Create application user" width="800" style={{paddingBottom: 40, paddingTop: 40}} /></p>
-
-### Example workflow permissions
-
-In the [Orkes Playground](https://play.orkes.io), there are workflows available for all users to try out.  To share these workflows & tasks, they are shared to the `AllUsers` group.  Every person who signs up for Orkes Playground is added to this group, so they have access to see these workflows.

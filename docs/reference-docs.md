@@ -9,12 +9,16 @@ See the left navigation for all of the reference documentation for Netflix Condu
 
 ## System Tasks
 
-* [HTTP Task](/content/docs/reference-docs/system-tasks/http-task)
 * [JSON JQ Transformation](/content/docs/reference-docs/system-tasks/json-jq-transform-task)
+* [HTTP Task](/content/docs/reference-docs/system-tasks/http-task) 
+* [HTTP Poll Task](https://orkes.io/content/docs/reference-docs/system-tasks/http-poll-task)
+* [Kafka Publish Task](/content/docs/reference-docs/system-tasks/kafka-publish-task)
 * [Event Task](/content/docs/reference-docs/system-tasks/event-task)
 * [Inline Task](/content/docs/reference-docs/system-tasks/inline-task)
-* [Kafka Publish Task](/content/docs/reference-docs/system-tasks/kafka-publish-task)
+* [Webhook Task](/content/docs/reference-docs/system-tasks/webhook-task)
 * [Business Rule Task](/content/docs/reference-docs/system-tasks/business-rule)
+* [Terminate Workflow Task](/content/docs/reference-docs/system-tasks/terminate-workflow)
+
 
 ## Operator Tasks
 * [Switch](/content/docs/reference-docs/switch-task)
@@ -28,3 +32,4 @@ See the left navigation for all of the reference documentation for Netflix Condu
 * [Terminate](/content/docs/reference-docs/terminate-task)
 * [Set Variable](/content/docs/reference-docs/set-variable-task)
 * [Sub Workflow](/content/docs/reference-docs/sub-workflow-task)
+* [Start Workflow](/content/docs/reference-docs/start-workflow)

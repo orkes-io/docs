@@ -10,7 +10,7 @@ sidebar_position: 1
 
 ## Introduction
 
-An HTTP task is useful when you have a requirements such as
+An HTTP task is useful when you have requirements such as
 
 1. Making calls to another service that exposes an API via HTTP
 2. Fetch any resource or data present on an endpoint
@@ -19,10 +19,9 @@ An HTTP task is useful when you have a requirements such as
 
 ## Use Cases
 
-If we have a scenario where we need to make an HTTP call into another service, we can make use of HTTP tasks. You can
-use the data returned from the HTTP call in your subsequent tasks as inputs. Using HTTP tasks you can avoid having to
-write the code that talks to these services and instead let Conductor manage it directly. This can reduce the code you
-have to maintain and allows for a lot of flexibility.
+If we have a scenario where we need to make an HTTP call to another service, we can use HTTP tasks. You can
+use the data returned from the HTTP call in your subsequent tasks as inputs. Using HTTP tasks, you can avoid having to
+write the code that talks to these services and instead let the Conductor manage it directly. This can reduce the code you must maintain and allow for much flexibility.
 
 ## Configuration
 
@@ -36,14 +35,14 @@ HTTP task is defined directly inside the workflow with the task type `HTTP`.
 
 |Name|Type|Example|Description|
 |---|---|---|---|
-| uri | String || URI for the service. Can be a partial when using vipAddress or includes the server address.|
+| uri | String || URI for the service. It can be a partial value when using vipAddress or includes the server address.|
 | method | String || HTTP method. One of the GET, PUT, POST, DELETE, OPTIONS, HEAD|
-| accept | String || Accept header as required by server. Defaults to ```application/json``` |
+| accept | String || Accept header as required by the server. Defaults to ```application/json``` |
 | contentType | String || Content Type - supported types are ```text/plain```, ```text/html```, and ```application/json``` (Default)|
 | headers| Map[String, Any] || A map of additional http headers to be sent along with the request.|
 | body| Map[] || Request body |
-| vipAddress | String || When using discovery based service URLs.|
-| asyncComplete | Boolean |TODO: Link to details| ```false``` to mark status COMPLETED upon execution ; ```true``` to keep it IN_PROGRESS, wait for an external event (via Conductor or SQS or EventHandler) to complete it.
+| vipAddress | String || When using discovery-based service URLs.|
+| asyncComplete | Boolean |TODO: Link to details| ```false``` to mark status COMPLETED upon execution; ```true``` to keep it IN_PROGRESS, wait for an external event (via Conductor or SQS or EventHandler) to complete it.
 | oauthConsumerKey | String || [OAuth](https://oauth.net/core/1.0/) client consumer key  |
 | oauthConsumerSecret | String || [OAuth](https://oauth.net/core/1.0/) client consumer secret |
 | connectionTimeOut | Integer || Connection Time Out in milliseconds. If set to 0, equivalent to infinity. Default: 100. |
@@ -55,14 +54,14 @@ HTTP task is defined directly inside the workflow with the task type `HTTP`.
 |---|---|---|
 | response | Map |  JSON body containing the response if one is present |
 | headers | Map[String, Any] | Response Headers |
-| statusCode | Integer | [Http Status Code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes) |
-| reasonPhrase | String | Http Status Code's reason phrase |
+| statusCode | Integer | [HTTP Status Code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes) |
+| reasonPhrase | String | HTTP Status Code's reason phrase |
 
 ## Examples
 
-Following is the example of HTTP task with `GET` method.
+Following is an example of an HTTP task with the `GET` method.
 
-We can use variables in our URI as show in the example below. For details on how to use inputs, refer to
+We can use variables in our URI, as show in the example below. For details on how to use inputs, refer to
 the [Task Inputs page](/content/docs/how-tos/Tasks/task-inputs).
 
 ```json
@@ -79,7 +78,7 @@ the [Task Inputs page](/content/docs/how-tos/Tasks/task-inputs).
 }
 ```
 
-Following is the example of HTTP task with `POST` method.
+Following is an example of an HTTP task with the `POST` method.
 
 > Here we are using variables for our POST body which happens to be data from a previous task. This is an example of how you can **chain** HTTP calls to make complex flows happen without writing any additional code.
 
@@ -102,7 +101,7 @@ Following is the example of HTTP task with `POST` method.
 }
 ```
 
-Following is the example of HTTP task with `PUT` method.
+Following is an example of an HTTP task with the `PUT` method.
 
 ```json
 {
@@ -123,7 +122,7 @@ Following is the example of HTTP task with `PUT` method.
 }
 ```
 
-Following is the example of HTTP task with `DELETE` method.
+Following is an example of an HTTP task with the `DELETE` method.
 
 ```json
 {
@@ -139,29 +138,29 @@ Following is the example of HTTP task with `DELETE` method.
 }
 ```
 ### Codelabs with HTTP tasks
-* [Running first workflow](/content/docs/getting-started/run/running-first-workflow) uses HTTP Task to call an API.
-* [Hello World Pt.2](/content/docs/codelab/helloworld2#the-http-task) uses the HTTP task to send an IP Address and receive a location.
-* [Order Fulfillment Pt 4](/content/docs/codelab/orderfulfillment4) calls an API to reorder widgets.
-* [Sequential HTTP Tasks](/content/docs/codelab/sequentialHTTPtasks) Makes 2 HTTP tasks. Data from the first response is used as input in the 2nd task.
+* [Running the first workflow](/content/docs/getting-started/run/running-first-workflow) uses HTTP Task to call an API.
+* [Hello World Part 2](/content/docs/codelab/helloworld2#the-http-task) uses the HTTP task to send an IP Address and receive a location.
+* [Order Fulfillment Part 4](/content/docs/codelab/orderfulfillment4) calls an API to reorder widgets.
+* [Sequential HTTP Tasks](/content/docs/codelab/sequentialHTTPtasks) makes two HTTP tasks. Data from the first response is used as input in the 2nd task.
 
 
 ## Best Practices
 
 1. Why are my HTTP tasks not getting picked up?
     1. We might have too many HTTP tasks in the queue. There is a concept called Isolation Groups that you can rely on
-       for prioritizing certain HTTP tasks over others. Read more here: [Isolation Groups](https://netflix.github.io/conductor/configuration/isolationgroups/)
+       for prioritizing certain HTTP tasks over others. Read more here: [Isolation Groups](https://conductor.netflix.com/configuration/isolationgroups.html).
 2. Why is my HTTP Task timing out with ```Failed to invoke HTTP task due to: java.lang.Exception: I/O error on GET request for "<url>": Read timed out; nested exception is java.net.SocketTimeoutException: Read timed out```?
-    1. The default timeout for an HTTP request is 150ms. If your API takes longer than this, you will need to increase the timeout parameters. In your ```inputParameters``` under ```http_request``` add the two following parameters (the timeouts are in milliseconds):
+    1. The default timeout for an HTTP request is 150ms. If your API takes longer than this, you will need to increase the timeout parameters. In your ```inputParameters``` under ```http_request```, add the two following parameters (the timeouts are in milliseconds):
 ```json
           "connectionTimeOut": 1000,
           "readTimeOut": 1000
 ```
 
 3. Can I retry my HTTP Tasks?  
-    1. Yes.  See [Extending System Tasks](/content/docs/how-tos/Tasks/extending-system-tasks) to see how to add retries, and retry parameters to your HTTP Task.
+    1. Yes. You can add retries and retry parameters to your HTTP Task.
 
 4. I'm getting rate limited.  Can I slow down my HTTP Task?
-    1. Yes!  By [Extending System Tasks](/content/docs/how-tos/Tasks/extending-system-tasks), and adding the following parameters:
+    1. Yes!  By extending system tasks and adding the following parameters:
     ```json
       "rateLimitPerFrequency": 100,
       "rateLimitFrequencyInSeconds": 60,

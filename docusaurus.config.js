@@ -134,6 +134,7 @@ const config = {
                     "/workflow_AB_testing/README.md",
                     "/finance/README.md",
                     "/document_approvals/README.md",
+                    "/fraud_dispute/README.md",
                     "/Simple_ETL/README.md"
                 ]               // the file names to download
             },
@@ -177,7 +178,7 @@ const config = {
                     path: './blog',
                     showReadingTime: true,
                     editUrl: 'https://github.com/orkes-io/docs/edit/main/',
-                    blogSidebarCount: 10,
+                    blogSidebarCount: 'ALL',
                 },
                 theme: {
                     customCss: require.resolve('./src/css/custom.css'),
@@ -308,12 +309,12 @@ const config = {
                 typesenseServerConfig: {
                     nodes: [
                       {
-                        host: 'fdzpgxo5jqkuec0sp-1.a1.typesense.net',
+                        host: '7xanmp8g5uyd4rqop.a1.typesense.net',
                         port: 443,
                         protocol: 'https',
                       },
                     ],
-                    apiKey: 'Mv2LnFhyvlKpQHlIYzKtwqrOLYjasQV8',
+                    apiKey: 'vrrNV2jm72Jym1qtGfzgcUpGI8gL7uR9',
                   },
                   typesenseSearchParameters: {},
 

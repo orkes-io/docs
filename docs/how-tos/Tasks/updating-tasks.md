@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Updating Task Definitions
 
-Updates to the task definitions can be made using the following API
+Updates to the task definitions can be made using the following API:
 
 ```http request
 PUT /api/metadata/taskdefs
@@ -37,5 +37,5 @@ fetch("http://localhost:8080/api/metadata/taskdefs", {
 ```
 ## Best Practices
 
-1. You can also use the Conductor Swagger UI to update the tasks 
-2. Task configurations are important attributes that controls the behavior of this task in a Workflow. Refer to [Task Configurations](/content/docs/how-tos/task-configurations) for all the options and details'
+1. You can also use the Conductor Swagger UI to update the tasks.
+2. Task configurations are important attributes that control the behavior of this task in a Workflow. Refer to [Task Configurations](https://orkes.io/content/docs/how-tos/Tasks/task-configurations) for all the options and details.

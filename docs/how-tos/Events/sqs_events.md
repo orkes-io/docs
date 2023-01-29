@@ -1,12 +1,12 @@
 # SQS Events
 
-Amazon's Simple Queueing Service (SQS) is a handy way to send messages across systems.  SQS support is included in Conductor, but requires a few changes to the Conductor instance to work properly.
+Amazon's Simple Queueing Service (SQS) is a handy way to send messages across systems.  SQS support is included in Conductor but requires a few changes to the Conductor instance to work properly.
 
 ## Configuring Conductor for SQS
 
-In your instance of Conductor, we will need to edit a few configurations:
+In your Conductor instance, you will need to edit a few configurations:
 
-1. First edit  `/server/src/main/resources/application.properties` (around line 60).  The default queue type may be set to SQS, but we must enable the queues, and establish which AWS account is to be used:
+1. First edit  `/server/src/main/resources/application.properties` (around line 60).  The default queue type may be set to SQS, but you must enable the queues and establish which AWS account is to be used:
 
 ```java
 # Default event queue type to listen on for wait task
@@ -27,11 +27,11 @@ conductor.event-queues.sqs.authorized-accounts={your AWS account number}
 
 ## Adding an Event
 
-To add an event, use the `POST /api/event/` endpoint.  There are a number of Events that can be added:
+To add an event, use the `POST /api/event/` endpoint.  There are a number of events that can be added:
 
-* Start Workflow: This event will kick off a new invocation of a workflow.
-* Complete Task: If a task is IN_PROGRESS, this will COMPLETE the task, and the workflow will move forward (often used with the human and wait tasks).
-* Fail Task: If a task is IN_PROGRESS, this will FAIL the task, and the workflow will move forward (often used with the human and wait tasks).
+* Start Workflow: This event will kick off a new workflow invocation.
+* Complete Task: If a task is IN_PROGRESS, this will COMPLETE the task, and the workflow will move forward (Often used with the human and the wait tasks).
+* Fail Task: If a task is IN_PROGRESS, this will FAIL the task, and the workflow will move forward (Often used with the human and the wait tasks).
 
 Let's look at some examples:
 
@@ -67,7 +67,7 @@ This Event does exactly what the name says, it will start a workflow run. In the
 
 ### Complete Task
 
-Imagine you have a workflow that requires a person to sign a document at Docusign.  There would be a WAIT task in the IN_PROGRESS state, waiting for an EVENT that the workflow can move forward. The message is sent to the `conductor_docusign_completed` SQS queue at AWS, and that will fire this event:
+Imagine you have a workflow that requires a person to sign a document at DocuSign.  There would be a WAIT task in the IN_PROGRESS state, waiting for an EVENT so that the workflow can move forward. The message is sent to the `conductor_docusign_completed` SQS queue at AWS, which will fire this event:
 
 ```json
 {
@@ -90,7 +90,7 @@ Imagine you have a workflow that requires a person to sign a document at Docusig
 
 ### Fail Task
 
-Imagine you have a workflow that requires a person to sign a document at Docusign.  There would be a WAIT task in the IN_PROGRESS state, waiting for an EVENT that the workflow can move forward. In this case, the human refused to sign the document, and the message is sent to the `conductor_docusign_failed` SQS queue at AWS, and that will fire this event:
+Imagine you have a workflow that requires a person to sign a document at DocuSign.  There would be a WAIT task in the IN_PROGRESS state, waiting for an EVENT so that the workflow can move forward. In this case, the human refused to sign the document, and the message is sent to the `conductor_docusign_failed` SQS queue at AWS, which will fire this event:
 
 ```json
 {
@@ -111,4 +111,4 @@ Imagine you have a workflow that requires a person to sign a document at Docusig
 }
 ```
 
-For a full example incluing the EVENT task, see [Tasks sending and receiving SQS messages](/content/docs/how-tos/Tasks/SQS-event-task) 
+For a complete example, including the event task, refer to [Tasks sending and receiving SQS messages](/content/docs/how-tos/Tasks/SQS-event-task).
