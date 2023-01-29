@@ -28,118 +28,6 @@ const config = {
     ],
     plugins: [
         [
-            "docusaurus-plugin-remote-content",
-            {
-                // options here
-                // noRuntimeDownloads: true,
-                id: "OS_sdks",
-                name: "content", // used by CLI, must be path safe
-                sourceBaseUrl: "https://raw.githubusercontent.com/conductor-sdk", // the base url for the markdown (gets prepended to all of the documents when fetching)
-                outDir: "docs/how-tos/sdks", // the base directory to output to.
-                documents: ["/conductor-python/main/README.md",
-                    "/conductor-go/main/README.md",
-                    "/conductor-go/main/workers_sdk.md",
-                    "/conductor-go/main/workflow_sdk.md",
-                    "/conductor-go/main/docs/README.md",
-                    "/conductor-go/main/docs/executor.md",
-                    "/conductor-go/main/docs/settings.md",
-                    "/conductor-go/main/docs/workflow.md",
-                    "/conductor-go/main/docs/worker.md",
-                    "/conductor-csharp/main/README.md",
-                    "conductor-clojure/main/README.md"], // the file names to download
-                modifyContent(filename) {
-                    console.log(filename)
-                    if (filename === "workers_sdk.md") {
-                        return {
-                            filename: "workers_sdk"
-                        }
-                    } else if (filename === "workflow_sdk.md") {
-                        return {
-                            filename: "workflow_sdk"
-                        }
-                    } else if (filename === "executor.md") {
-                        return {
-                            filename: "executor"
-                        }
-                    } else if (filename === "settings.md") {
-                        return {
-                            filename: "settings"
-                        }
-                    } else if (filename === "workflow.md") {
-                        return {
-                            filename: "workflow"
-                        }
-                    } else if (filename === "worker.md") {
-                        return {
-                            filename: "worker"
-                        }
-                    }
-                }
-            }
-        ],
-        [
-            "docusaurus-plugin-remote-content",
-            {
-                // options here
-                id: "javasdk",
-                name: "content", // used by CLI, must be path safe
-                sourceBaseUrl: "https://raw.githubusercontent.com/Netflix/conductor/main/", // the base url for the markdown (gets prepended to all of the documents when fetching)
-                outDir: "docs/how-tos/sdks", // the base directory to output to.
-                documents: [
-                    "/java-sdk/workflow_sdk.md",
-                    "/java-sdk/worker_sdk.md",
-                    "/java-sdk/testing_framework.md",
-                    "/java-sdk/src/main/java/com/netflix/conductor/sdk/workflow/def/ConductorWorkflow.java",
-                    "/java-sdk/src/main/java/com/netflix/conductor/sdk/workflow/def/tasks/SimpleTask.java",
-                    "/java-sdk/src/main/java/com/netflix/conductor/sdk/workflow/def/tasks/ForkJoin.java",
-                ],
-                performCleanup: false
-            },
-
-        ],
-        [
-            "docusaurus-plugin-remote-content",
-            {
-                // options here
-                id: "docker",
-                name: "content", // used by CLI, must be path safe
-                sourceBaseUrl: "https://raw.githubusercontent.com/orkes-io/orkes-conductor-community/main/", // the base url for the markdown (gets prepended to all of the documents when fetching)
-                outDir: "docs/getting-started/install", // the base directory to output to.
-                documents: [
-                    "/README.md",
-                ],
-                performCleanup: false,
-                modifyContent(filename) {
-                    console.log(filename)
-                    if (filename === "/README.md") {
-                        return {
-                            filename: "orkes-conductor-community.md"
-                        }
-                    }
-                }
-            },
-
-        ],
-        [
-            "docusaurus-plugin-remote-content",
-            {
-                // options here
-                id: "usecases",
-                name: "content", // used by CLI, must be path safe
-                sourceBaseUrl: "https://raw.githubusercontent.com/conductor-sdk/conductor-examples/main/", // the base url for the markdown (gets prepended to all of the documents when fetching)
-                outDir: "docs/usecases", // the base directory to output to.
-                documents: ["/image_processing/README.md",
-                    "/video_processing/README.md",
-                    "/US_post_office/README.md",
-                    "/workflow_AB_testing/README.md",
-                    "/finance/README.md",
-                    "/document_approvals/README.md",
-                    "/fraud_dispute/README.md",
-                    "/Simple_ETL/README.md"
-                ]               // the file names to download
-            },
-        ],
-        [
             '@docusaurus/plugin-client-redirects',
             {
                 redirects:
@@ -171,7 +59,9 @@ const config = {
             /** @type {import('@docusaurus/preset-classic').Options} */
             ({
                 docs: {
+                    breadcrumbs: true,
                     sidebarPath: require.resolve('./sidebars.js'),
+                    sidebarCollapsible: false,
                     editUrl: 'https://github.com/orkes-io/docs/edit/main/',
                 },
                 blog: {
@@ -214,18 +104,12 @@ const config = {
                         docId: 'introduction',
                         position: 'left',
                         label: 'Getting Started',
-                    },/*
+                    },
                     {
                         type: 'doc',
-                        docId: 'how-tos',
+                        docId: 'api/index',
                         position: 'left',
-                        label: 'How-Tos',
-                    },*/
-                    {
-                        type: 'doc',
-                        docId: 'reference-docs',
-                        position: 'left',
-                        label: 'Reference Docs',
+                        label: 'API Docs',
                     },
                     {
                         to: '/blog',

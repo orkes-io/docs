@@ -60,7 +60,6 @@ body {
 .navbar {
   margin: 0 auto;
   width: 100%;
-  background: rgba(220,220,220,.75);
   backdrop-filter: blur(10px);
 }
 
@@ -126,26 +125,40 @@ h5 {
 
 p {
 }
+.menu {
+    background-color: #ffffff;
+}
 .menu__link--sublist:after {
-
- /*this hides the arrow drop down*/
-   /* background: none;*/
+   background: none;
 
 }
+
+.menu__link--active:not(.menu__link--sublist) {
+    background: none;
+}
+
 .menu__link--sublist {
     font-weight: bold;
+}
+.menu__link--sublist {
     color: #0481e3;
     background: none;
 }
+.menu__caret {
+    display: none;
+}
 [data-theme='dark'] .menu__link--sublist {
-    font-weight: bold;
     color: #e64769;
     background: none;
 }
 
+[data-theme='dark'] .menu {
+    background: none;
+}
+
 .menu__link {
-  line-height: 1.5em;
-  font-size: 15px;
+  line-height: 1.0em;
+  font-size: 1.0em;
 }
 
 aside {
@@ -159,7 +172,7 @@ aside {
 .table-of-contents__link,
 table {
   letter-spacing: -0.003em;
-  line-height: 28px;
+  line-height: 25px;
   font-size: 15px;
   font-family: var(--ifm-font-family-base);
 }
@@ -293,11 +306,11 @@ html[data-theme="dark"] .midSectionOdd {
 .row--center {
   justify-content: center;
 }
-.outline-tabs {
+.tabs {
   max-width: 600px;
   gap: 10px;
 }
-.outline-tabs .tabs__item {
+.tabs .tabs__item {
   font-size: 15px;
   line-height: 1px;
   border: 1px solid var(--ifm-color-info);
@@ -306,8 +319,7 @@ html[data-theme="dark"] .midSectionOdd {
   color: var(--ifm-color-info);
   border-radius: 0.2rem;
 }
-
-.outline-tabs .tabs__item--active {
+.tabs .tabs__item--active {
   background-color: var(--ifm-color-info);
   color: #fff;
   /* border-radius: var(--ifm-global-radius); */
@@ -344,4 +356,8 @@ html[data-theme="dark"] .midSectionOdd {
   .button--lg {
     --ifm-button-size-multiplier: 1.28;
   }
+}
+
+img[alt="Conductor Architecture"] {
+    width: 75%;
 }
