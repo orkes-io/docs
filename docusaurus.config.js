@@ -97,7 +97,7 @@ const config = {
                     },
                     {
                         type: 'doc',
-                        docId: 'introduction',
+                        docId: 'codelab/introduction',
                         position: 'left',
                         label: 'Getting Started',
                     },
@@ -134,7 +134,7 @@ const config = {
                         items: [
                             {
                                 label: 'Getting Started',
-                                to: '/docs/introduction',
+                                to: '/docs/codelab/introduction',
                             },
                             {
                                 label: 'SDKs',

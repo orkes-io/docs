@@ -40,7 +40,7 @@ export default function Home() {
                   <h5>Build your applications 10x faster!</h5>
                 </li>
                 <li>
-                  <h3><a href="/content/docs/introduction">Run your first Conductor App</a></h3>
+                  <h3><a href="/content/docs/codelab/introduction">Run your first Conductor App</a></h3>
                 </li>
               </ul>
             }
@@ -48,10 +48,16 @@ export default function Home() {
           <StepBoxesSection
               steps={[
                 {
+                  title: "Core Concepts",
+                  description:
+                    "Core Concepts",
+                  to: "/docs/getting-started",
+                },
+                {
                   title: "Getting Started",
                   description:
                     "Concepts and guide to building applications with Conductor",
-                  to: "/docs/getting-started",
+                  to: "/docs/conductor",
                 },
                 {
                   title: "API and SDK Docs",
@@ -71,7 +77,7 @@ export default function Home() {
               {
                 title: "Workflow Scheduler",
                 description: "Specifications of various components",
-                to: "/docs/running/schedule",
+                to: "/docs/conductor/running/schedule",
               },
               {
                 title: "Eventing & Serverless",
@@ -83,6 +89,11 @@ export default function Home() {
                 description: "Specifications of various components",
                 to: "/docs/acl",
               },
+              {
+                 title: "Use Cases & Recipes",
+                 description:"Conductor Use cases and recipes with fully working examples",
+                 to: "/docs/developer",
+               },
             ]}
           />
           <div className="row row--center">
