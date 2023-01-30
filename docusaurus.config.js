@@ -52,7 +52,7 @@ const config = {
                 docs: {
                     breadcrumbs: true,
                     sidebarPath: require.resolve('./sidebars.js'),
-                    sidebarCollapsible: false,
+                    sidebarCollapsible: true,
                     editUrl: 'https://github.com/orkes-io/docs/edit/main/',
                 },
                 blog: {
@@ -105,7 +105,7 @@ const config = {
                         type: 'doc',
                         docId: 'api/index',
                         position: 'left',
-                        label: 'API Docs',
+                        label: 'API & SDK Docs',
                     },
                     {
                         to: '/blog',
