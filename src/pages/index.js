@@ -55,7 +55,7 @@ export default function Home() {
                 },
                 {
                   title: "API Docs",
-                  description: "Run a workflow to see Conductor in action",
+                  description: "Create and manage task workers and workflows",
                   to: "/docs/api",
                 },
                 {
