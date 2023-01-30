@@ -92,7 +92,6 @@ export const BuildYourFirstWorkflowLinkButton = ({
 
 export const YourfirstWorkflowSection = ({
   title,
-  languageSamples,
   rightImage,
   sectionFooter,
 }) => {
@@ -100,9 +99,6 @@ export const YourfirstWorkflowSection = ({
   <div className="row">
     <InfoPaper title={title}>
       <div className="row">
-        <div className="col col--8">
-          <WorkflowLanguageExamples languageSamples={languageSamples} />
-        </div>
         <div className="col col--4">
           <PaperContainer className={styles.firstWorkflowContainer}>
             <img src={rightImage} alt="Diagram of a workflow."></img>
