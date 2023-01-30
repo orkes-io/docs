@@ -32,15 +32,6 @@ const config = {
             {
                 redirects:
                     [
-                        // /docs/oldDoc -> /docs/newDoc
-                        {
-                            to: '/docs/how-tos/Workflows/starting-workflows',
-                            from: '/docs/how-tos/starting-workflows',
-                        },
-                        {
-                            to: '/docs/how-tos/Tasks/task-configurations',
-                            from: '/docs/how-tos/task-configurations',
-                        },
                     ],
             },
         ],
@@ -61,7 +52,7 @@ const config = {
                 docs: {
                     breadcrumbs: true,
                     sidebarPath: require.resolve('./sidebars.js'),
-                    sidebarCollapsible: false,
+                    sidebarCollapsible: true,
                     editUrl: 'https://github.com/orkes-io/docs/edit/main/',
                 },
                 blog: {
@@ -85,7 +76,12 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
         ({
             colorMode: {
-                defaultMode: 'dark',
+                defaultMode: 'light',
+            },
+            docs: {
+            sidebar: {
+                autoCollapseCategories: true,
+                },
             },
             navbar: {
                 title: 'Conductor Docs',

@@ -3,6 +3,7 @@ import {
   PaperColumnRenderer,
   PaperContainer,
   InfoPaper,
+  InfoPaperNoTitle,
   DoubleInfoPaper,
 } from "../components/PaperContainer";
 import { SingleStep } from "../components/SingleStep";
@@ -43,24 +44,14 @@ export const WhatIsConductorSection = ({
   videoFooterCaption,
 }) => (
   <div className="row">
-    <InfoPaper
-      title={title}
+    <InfoPaperNoTitle
       infoColumn1={
-        <div className="row">
-          {sideImage == null ? (
-            description
-          ) : (
-            <>
-              <div className="col col--6">{description}</div>
-              <div className="col col--6">
-                <img src={sideImage} alt="sample_workflow" width="200px"></img>
-              </div>
-            </>
-          )}
-        </div>
+        <h3>
+           {description}
+        </h3>
       }
       infoColumn2={
-        <div className="container" style={{ textAlign: "center" }}>
+        <div className="row" style={{ textAlign: "left" }}>
           <h3>Works in your language, with your framework</h3>
           <SDKList />
         </div>
@@ -134,12 +125,16 @@ const IconHeader = ({ icon, header }) => (
 
 export const SDKList = ({}) => (
     <div>
-        <FontAwesomeIcon style={{ fontSize: 60, padding:20 }} icon={faJava}/>
-        <FontAwesomeIcon style={{ fontSize: 60, padding:20 }} icon={faGolang} />
-        <FontAwesomeIcon style={{ fontSize: 60, padding:20 }} icon={faPython} />
-        <FontAwesomeIcon style={{ fontSize: 60, padding:20 }} icon={faJs} />
-        <img src="img/csharp.png" style={{ height: 75, width: 75, margin: 5}}/>
-        <h4 style={{ padding:20 }}><a href="https://github.com/conductor-sdk">https://github.com/conductor-sdk</a></h4>
+        <a className={"aClass"} href={"https://github.com/orkes-io/orkes-conductor-client"} target={"_blank"}><FontAwesomeIcon style={{ fontSize: 60, padding:20, paddingLeft:0 }} icon={faJava}/></a>
+        <a className={"aClass"} href={"https://github.com/conductor-sdk/conductor-go"} target={"_blank"}><FontAwesomeIcon style={{ fontSize: 60, padding:20 }} icon={faGolang} /></a>
+        <a className={"aClass"} href={"https://github.com/conductor-sdk/conductor-python"} target={"_blank"}><FontAwesomeIcon style={{ fontSize: 60, padding:20 }} icon={faPython} /></a>
+        <a className={"aClass"} href={"https://github.com/conductor-sdk/conductor-javascript"} target={"_blank"}><FontAwesomeIcon style={{ fontSize: 60, padding:20 }} icon={faJs} /></a>
+        <a className={"aClass"} href={"https://github.com/conductor-sdk/conductor-csharp"} target={"_blank"}><img src="img/csharp.png" style={{ height: 75, width: 75, margin: 5}}/></a>
+        <a className={"aClass"} href={"https://github.com/conductor-sdk/conductor-clojure"} target={"_blank"}><img src="img/clojure.png" style={{ height: 75, width: 75, margin: 5}}/></a>
+        <h3 style={{ paddingTop:0 }}><a href="https://github.com/conductor-sdk">https://github.com/conductor-sdk</a></h3>
+        <a className={"aClass"} href={"https://join.slack.com/t/orkes-conductor/shared_invite/zt-xyxqyseb-YZ3hwwAgHJH97bsrYRnSZg"} target={"_blank"}>
+        <IconHeader icon={faSlack} header="Join us on Slack" />
+        </a>
     </div>
 );
 export const CommunitySection = ({}) => (

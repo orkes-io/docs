@@ -1,0 +1,126 @@
+---
+displayed_sidebar: gettingStartedSideBar
+sidebar_position: 1
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+
+# Build your first App with Conductor
+In this example, we will create a simple 2-step application that has two steps:
+
+```shell
+START → Get User Info → Send Email – END
+```
+
+To see how to build an application that archives a durable state execution, checkout and run the sample application.
+
+:::info
+
+The example application runs against Orkes Playground at https://play.orkes.io/ which is a free hosted version of Conductor.
+
+Playground requires authentication and access keys to make API calls.  Before you run the application, please make sure to
+obtain the access keys and export them as environment variables
+
+:::
+
+## Obtaining Access Keys
+//TODO: CREATE A VIDEO AND EMBED A LINK
+
+Follow the steps below to get access keys:
+1. Login to [https://play.orkes.io/](https://play.orkes.io/)
+2. Navigate to __Applications__ from the left menu
+3. Click __Create Application__ button to create a new application, give it a name
+4. Open the newly created application
+5. Click __Create Access Key__ to create the KEY and SECRET.  A dialog box opens with newly generated Key and Secret.
+6. __Important__: Copy and store the Key and Secret in a safe location.  The secret is NEVER displayed again.
+
+## Setup environment
+```shell
+export KEY=<Your KEY>
+export SECRET=<Your SECRET>
+export CONDUCTOR_SERVER_URL=https://play.orkes.io/api
+```
+
+## Checkout and Run
+<Tabs>
+<TabItem value="Java" label="Java">
+
+```shell
+git clone https://github.com/conductor-sdk/java-sdk-examples
+# Run the main program
+./gradlew run
+
+```
+</TabItem>
+<TabItem value="Golang" label="Golang">
+
+```shell
+git clone https://github.com/conductor-sdk/go-sdk-examples
+# Run the main program
+go run main.go
+```
+</TabItem>
+<TabItem value="Python" label="Python">
+
+```shell
+git clone https://github.com/conductor-sdk/python-sdk-examples
+
+# Create a virtual environment
+python3 -m venv conductor
+# Linux/OSX Activate the environment
+source conductor/bin/activate
+# Windows - Run the below command instead
+# venv\Scripts\activate
+
+# Install dependencies
+python3 -m pip install -r requirements.txt
+
+# Run the main program
+cd examples/
+python3 main.py
+
+```
+</TabItem>
+<TabItem value="Javascript" label="Javascript">
+
+```shell
+git clone https://github.com/conductor-sdk/javascript-sdk-examples
+yarn #To install dependencies.
+yarn test #To run the test examples
+```
+</TabItem>
+<TabItem value="CSharp" label="CSharp">
+
+```shell
+git clone https://github.com/conductor-sdk/csharp-sdk-examples
+# Run the main program
+dotnet run
+```
+</TabItem>
+</Tabs>
+
+You will see the console output with the workflow execution and link to the server to check the execution graph:
+
+```shell
+=======================================================================================
+Async Workflow Execution Completed
+Workflow Id: 38682137-a002-11ed-9147-36bbe4294242
+Workflow Status: COMPLETED
+Workflow Execution Flow UI: https://play.orkes.io/execution/38682137-a002-11ed-9147-36bbe4294242
+=======================================================================================
+
+=======================================================================================
+Sync Workflow Execution Completed
+Workflow Id: 38f2adc1-a002-11ed-89b1-f2f2ca2ac145
+Workflow Execution Flow UI: https://play.orkes.io/execution/38f2adc1-a002-11ed-89b1-f2f2ca2ac145
+=======================================================================================
+
+```
+
+## Next Steps
+Feel free to modify the checkout code and Play around!
+
+For details on how to create a workflow from scratch follow the //TODO: insert link to the workflow creation 101 guide
+
