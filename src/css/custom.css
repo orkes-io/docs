@@ -148,7 +148,9 @@ p {
     font-weight: bold;
 }
 .menu__caret {
-    display: none;
+    /*display: none;*/
+    font-weight: normal;
+    font-size: 0em;
 }
 [data-theme='dark'] .menu__link--sublist {
     color: #e64769;

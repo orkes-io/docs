@@ -51,7 +51,7 @@ export default function Home() {
                   title: "Getting Started",
                   description:
                     "Concepts and guide to building applications with Conductor",
-                  to: "/docs/getting-started/concepts/overview",
+                  to: "/docs/getting-started",
                 },
                 {
                   title: "API and SDK Docs",
@@ -62,7 +62,7 @@ export default function Home() {
                   title: "Developer's Guide",
                   description:
                     "Guide to developing on Conductor, CI/CD, Testing, Metrics, Performance Tuning",
-                  to: "/docs/sdk",
+                  to: "/docs/developer",
                 },
               ]}
             />
@@ -71,12 +71,12 @@ export default function Home() {
               {
                 title: "Workflow Scheduler",
                 description: "Specifications of various components",
-                to: "/docs/scheduler",
+                to: "/docs/running/schedule",
               },
               {
                 title: "Eventing & Serverless",
                 description: "Specifications of various components",
-                to: "/docs/events",
+                to: "/docs/running/events",
               },
               {
                 title: "Access Control & Security",
