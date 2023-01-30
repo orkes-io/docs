@@ -277,7 +277,6 @@ module.exports = {
                     id: 'usecases/US_post_office/README',
                     label: 'API Processing Workflows'
                 },
-                'usecases/workflow_AB_testing/README',
                 {
                     type: 'doc',
                     id: 'usecases/finance/README',
@@ -288,8 +287,7 @@ module.exports = {
                     id: 'usecases/fraud_dispute/README',
                     label: 'Fraud Dispute Transaction'
                 },
-                'usecases/document_approvals/README',
-                'usecases/Simple_ETL/README'
+                'usecases/document_approvals/README'
             ]
         },
         {
