@@ -6,7 +6,7 @@ import SmallDiagram from "/img/small_diagram.png";
 import { JavaSample, PythonSample, GoSample } from "./_Languages.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from '@fortawesome/free-solid-svg-icons'
-
+import Link from "@docusaurus/Link";
 import {
   BuildYourFirstWorkflowLinkButton,
   StepBoxesSection,
@@ -54,18 +54,12 @@ export default function Home() {
                   to: "/docs/getting-started/concepts/overview",
                 },
                 {
-                  title: "API Docs",
-                  description: "Create and manage task workers and workflows",
+                  title: "API and SDK Docs",
+                  description: "Conductor APIs and SDKs for creating workflows and tasks",
                   to: "/docs/api",
                 },
                 {
-                  title: "Conductor SDK",
-                  description:
-                    "Add a customer worker that runs your code as part of a workflow",
-                  to: "/docs/sdk",
-                },
-                {
-                  title: "Developer Guide",
+                  title: "Developer's Guide",
                   description:
                     "Guide to developing on Conductor, CI/CD, Testing, Metrics, Performance Tuning",
                   to: "/docs/sdk",
@@ -74,11 +68,6 @@ export default function Home() {
             />
         <StepBoxesSection
             steps={[
-              {
-                title: "Access Control & Security",
-                description: "Specifications of various components",
-                to: "/docs/acl",
-              },
               {
                 title: "Workflow Scheduler",
                 description: "Specifications of various components",
@@ -90,13 +79,18 @@ export default function Home() {
                 to: "/docs/events",
               },
               {
-                title: "Code Labs & Recipes",
+                title: "Access Control & Security",
                 description: "Specifications of various components",
-                to: "/docs/events",
+                to: "/docs/acl",
               },
             ]}
           />
-          <CommunitySection />
+          <div className="row row--center">
+              <Link className={`button button--info button--lg ${styles.whiteFont}`} to="codelab">
+                Ready to explore more? Checkout Codelabs and Samples
+              </Link>
+            </div>
+
         </main>
       </Layout>
     </div>
