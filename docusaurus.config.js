@@ -131,11 +131,9 @@ const config = {
                 documents: ["/image_processing/README.md",
                     "/video_processing/README.md",
                     "/US_post_office/README.md",
-                    "/workflow_AB_testing/README.md",
                     "/finance/README.md",
                     "/document_approvals/README.md",
-                    "/fraud_dispute/README.md",
-                    "/Simple_ETL/README.md"
+                    "/fraud_dispute/README.md"
                 ]               // the file names to download
             },
         ],
