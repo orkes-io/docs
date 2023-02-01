@@ -24,6 +24,18 @@ Don’t worry if you missed this session; the recording is now available on our 
 
 <p align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/SevjSRLInMM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></p>
 
+## Upcoming Events
+
+### DeveloperWeek 2023
+
+We are delighted to announce that we will be speaking at [DeveloperWeek 2023](https://www.developerweek.com/), which is happening from Feb 15-17 in Oakland, CA. Developer Week is one of the World’s largest developer and engineering expo, and it’s a wonderful platform to discover and gain insights on new languages, technologies, and tools covering API & Microservices, AI & ML, JavaScript, DevOps, Containers, Kubernetes, Quantum Computing, and more. 
+
+Our speaker, Viren Baraiya, CTO of Orkes, will present on “Building & Scaling distributed stateful applications” in the [API and Microservices](https://www.developerweek.com/conference/api-microservices-conference/) session. A reminder to block your calendar slots at 11 AM PST on 16th Feb 2023 at Oakland Convention Center. 
+
+Claim [your tickets](https://www.devnetwork.com/invited-registration/?event=DeveloperWeek%202023&s=Viren%20Baraiya&se=Building%20%26%20scaling%20distributed%20Stateful%20applications&img1=https://sessionize.com/image/07bc-400o400o2-ppHF6XCS2HZVsAXfxHJNfJ.png&utm_source=feathr&utm_medium=speaker&utm_campaign=Viren%20Baraiya&discount=Viren%20Baraiya&type=speaker) now. Don’t miss this opportunity to gain insights and knowledge from Industry experts. See you there!
+
+## Wrapping Up
+
 Overall, January was a productive and successful month for Orkes, and the team looks forward to continuing this momentum for the rest of the year.
 
 We’d always love to hear from you. Reach us on our [Slack](https://app.slack.com/client/T02KG20GJ1Z/C02KJ820XPW) channel and see what our community is up to.
