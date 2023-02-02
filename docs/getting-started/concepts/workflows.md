@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# Workflows
+# Conductor: Core Concepts
 
 Conductor is a workflow orchestration platform that encompasses the flow of your business logic. To begin with Conductor, you must familiarize yourself with certain basic concepts of Conductor. The process of orchestrating Workflows using Conductor revolves around three main concepts; __Tasks__, __Workers__ and __Workflows__.
 
