@@ -49,7 +49,7 @@ The Playground comes pre-installed with many workflows to get to the action righ
 
 ### Sample Workflow Execution in Playground ​
 
-In the **Workflow Definitions** section, you can see a **PopulationMaxMin** workflow. Clicking on the workflow name will show the JSON definition and the visualization of the workflow.
+In the **Workflow Definitions** section, you can see a **PopulationMinMax** workflow. Clicking on the workflow name will show the JSON definition and the visualization of the workflow.
 
 <p align="center"><img src="/content/img/PopMinMax.png" alt="PopulationMaxMin Workflow" width="90%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
@@ -63,7 +63,7 @@ This workflow requires no input from the user. On execution, it will:
 * Rejoin, combine the results and exit.
 
 Test this workflow in real-time:
-1. Click the **Run Workflow** button in the left navigation. Select **PopulationMaxMin** from the dropdown *Workflow Name*, and click **Run Workflow**. 
+1. Click the **Run Workflow** button in the left navigation. Select **PopulationMinMax** from the dropdown *Workflow Name*, and click **Run Workflow**. 
 <p align="center"><img src="/content/img/run-workflow-popminmax.png" alt="Running the PopMaxMin workflow" width="90%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 2. Click on the Workflow ID generated, and you'll see that the workflow has probably been completed. 
 <p align="center"><img src="/content/img/popminmax-workflow-completed.png" alt="PopMaxMin workflow completed" width="90%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
