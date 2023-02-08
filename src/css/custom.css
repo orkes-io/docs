@@ -134,6 +134,7 @@ h5 {
 
 .menu__link--active:not(.menu__link--sublist) {
     background: none;
+    font-weight: bold;
 }
 
 .menu__link--sublist {
@@ -166,6 +167,7 @@ h5 {
 .menu__link {
   line-height: 1.0em;
   font-size: 1.0em;
+  font-weight: normal;
 }
 
 aside {
