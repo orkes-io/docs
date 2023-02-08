@@ -136,6 +136,7 @@ module.exports = {
             items: [
                 'how-tos/Tasks/creating-tasks',
                 'how-tos/Tasks/task-inputs',
+                'how-tos/Tasks/task-configurations',
                 'how-tos/Tasks/task-timeouts',
                 'how-tos/Tasks/updating-tasks',
                 'how-tos/Tasks/reusing-tasks',
