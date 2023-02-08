@@ -51,13 +51,13 @@ export default function Home() {
                   title: "Core Concepts",
                   description:
                     "Core Concepts",
-                  to: "/docs/getting-started",
+                  to: "/docs/concepts",
                 },
                 {
                   title: "Getting Started",
                   description:
                     "Concepts and guide to building applications with Conductor",
-                  to: "/docs/conductor",
+                  to: "/docs/getting-started",
                 },
                 {
                   title: "API and SDK Docs",
@@ -77,12 +77,12 @@ export default function Home() {
               {
                 title: "Workflow Scheduler",
                 description: "Specifications of various components",
-                to: "/docs/conductor/running/schedule",
+                to: "/docs/running/schedule",
               },
               {
                 title: "Eventing & Serverless",
                 description: "Specifications of various components",
-                to: "/docs/running/events",
+                to: "/docs/events",
               },
               {
                 title: "Access Control & Security",
@@ -97,7 +97,7 @@ export default function Home() {
             ]}
           />
           <div className="row row--center">
-              <Link className={`button button--info button--lg ${styles.whiteFont}`} to="codelab">
+              <Link className={`button button--info button--lg ${styles.whiteFont}`} to="docs/codelab">
                 Ready to explore more? Checkout Codelabs and Samples
               </Link>
             </div>

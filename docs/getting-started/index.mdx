@@ -3,16 +3,144 @@ sidebar_position: 1
 ---
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import DocCardList from '@theme/DocCardList';
 
-# Core Concepts
+# Getting Started with Conductor
+Conductor is a runtime platform for building distributed stateful applications using workflows with event driven architecture.
 
-## What is Conductor
-* Conductor is a platform to build stateful distributed applications using Orchestration pattern.
-* Conductor helps you build applications that span across microservices, events such as Kafka, SQS, RabbitMQ, Serverless and Monolithic application code.
-* Conductor is language, framework and cloud agnostic platform.  Applications using Conductor orchestrates the business logic using Workflows.
+## Setup Conductor Server
 
-## Conductor Architecture
-![Conductor Architecture](/img/architecture.png)
+<details><summary>Use Conductor Playground</summary>
+<p>
+https://play.orkes.io is the easiest way to get started and provides fully features enterprise version of Conductor.
 
-## Conductor Applications
-Applications that leverages Conductor to build distributed stateful flows does it by creating Workflows and Tasks.
+Using Playground requires authorization keys which you can generate easily by following the steps below:
+
+1. Login to [https://play.orkes.io/](https://play.orkes.io/)
+2. Navigate to __Applications__ from the left menu
+3. Click __Create Application__ button to create a new application, give it a name
+4. Open the newly created application
+5. Click __Create Access Key__ to create the KEY and SECRET.  A dialog box opens with newly generated Key and Secret.
+6. __Important__: Copy and store the Key and Secret in a safe location.  The secret is NEVER displayed again.
+
+#### Setup environment variables
+```shell
+export KEY=<Your KEY>
+export SECRET=<Your SECRET>
+export CONDUCTOR_SERVER_URL=https://play.orkes.io/api
+```
+</p>
+</details>
+
+<details><summary>Install and Run Locally</summary>
+<p>
+
+#### Pre-requisites: `Docker`
+Run the following command on the Unix, Linux or Mac OSX to download the container and start.
+```shell
+curl https://raw.githubusercontent.com/orkes-io/orkes-conductor-community/main/scripts/run_local.sh | sh
+```
+
+Alternatively, you can also run the container command explicitly:
+```shell
+docker run --init -p 8080:8080 -p 1234:5000 --mount source=redis,target=/redis \
+--mount source=postgres,target=/pgdata orkesio/orkes-conductor-community-standalone:latest
+```
+
+#### Setup environment variables
+```shell
+export CONDUCTOR_SERVER_URL=http://localhost:8080/api
+```
+
+</p>
+</details>
+
+
+## Run your first Conductor Application
+In this section, we will checkout an example application that creates and runs a simple 2-step workflow application.
+
+<Tabs>
+<TabItem value="Java" label="Java">
+
+```shell
+git clone https://github.com/conductor-sdk/java-sdk-examples
+# Run the main program
+./gradlew run
+
+```
+</TabItem>
+<TabItem value="Golang" label="Golang">
+
+```shell
+git clone https://github.com/conductor-sdk/go-sdk-examples
+# Run the main program
+go run main.go
+```
+</TabItem>
+<TabItem value="Python" label="Python">
+
+```shell
+git clone https://github.com/conductor-sdk/python-sdk-examples
+
+# Create a virtual environment
+python3 -m venv conductor
+# Linux/OSX Activate the environment
+source conductor/bin/activate
+# Windows - Run the below command instead
+# venv\Scripts\activate
+
+# Install dependencies
+python3 -m pip install -r requirements.txt
+
+# Run the main program
+cd examples/
+python3 main.py
+
+```
+</TabItem>
+<TabItem value="Javascript" label="Javascript">
+
+```shell
+git clone https://github.com/conductor-sdk/javascript-sdk-examples
+yarn #To install dependencies.
+yarn test #To run the test examples
+```
+</TabItem>
+<TabItem value="CSharp" label="CSharp">
+
+```shell
+git clone https://github.com/conductor-sdk/csharp-sdk-examples
+# Run the main program
+dotnet run
+```
+</TabItem>
+</Tabs>
+
+You will see the console output with the workflow execution and link to the server to check the execution graph:
+
+```shell
+=======================================================================================
+Async Workflow Execution Completed
+Workflow Id: 38682137-a002-11ed-9147-36bbe4294242
+Workflow Status: COMPLETED
+Workflow Execution Flow UI: https://play.orkes.io/execution/38682137-a002-11ed-9147-36bbe4294242
+=======================================================================================
+
+=======================================================================================
+Sync Workflow Execution Completed
+Workflow Id: 38f2adc1-a002-11ed-89b1-f2f2ca2ac145
+Workflow Execution Flow UI: https://play.orkes.io/execution/38f2adc1-a002-11ed-89b1-f2f2ca2ac145
+=======================================================================================
+
+```
+:::info Creating Workflows
+Conductor workflows can be defined using UI drag n' drop, using JSON configuration and in **code**
+using the SDKs in Java, Golang, Python, C#, Typescript and Clojure.
+
+We are constantly adding support for new languages with Rust and Kotlin coming soon.
+:::
+
+## > Next Steps
+
+### Build a distributed application from scratch using Conductor
+<DocCardList />
