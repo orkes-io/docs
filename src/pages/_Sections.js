@@ -129,7 +129,7 @@ export const SDKList = ({}) => (
         <a className={"aClass"} href={"https://github.com/conductor-sdk/conductor-clojure"} target={"_blank"}><img src="img/clojure.png" style={{ height: 75, width: 75, margin: 5}}/></a>
         <h3 style={{ paddingTop:0 }}><a href="https://github.com/conductor-sdk">https://github.com/conductor-sdk</a></h3>
         <a className={"aClass"} href={"https://join.slack.com/t/orkes-conductor/shared_invite/zt-xyxqyseb-YZ3hwwAgHJH97bsrYRnSZg"} target={"_blank"}>
-        <IconHeader icon={faSlack} header="Join us on Slack" />
+        <IconHeader icon={faSlack} header="Join us on Slack for realtime support from Orkes and Community" />
         </a>
     </div>
 );

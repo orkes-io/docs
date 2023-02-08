@@ -1,31 +1,22 @@
-# Execute Workflow Synchronously
-
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-export const Highlight = ({children, color}) => (
-<span
-    style={{
-        backgroundColor: color,
-        borderRadius: '2px',
-        color: '#fff',
-        padding: '0.2rem',
-    }}>
-{children}
-</span>
-);
 
-<Highlight color="#25c2a0">Docusaurus green</Highlight> and <Highlight color="#1877F2">Facebook blue</Highlight> are my favorite colors.
+# Execute Workflow Synchronously
+### API
+    POST /api/workflow/execute/{name}/{version} -d {}
 
-## Start a workflow
+## Client SDK Methods
 
 <Tabs>
-  <TabItem value="Shell" label="Shell" default>
-    This is an apple 🍎
-  </TabItem>
-  <TabItem value="Java" label="Java">
-    This is an orange 🍊
-  </TabItem>
+<TabItem value="Java" label="Java">
+
+```java
+    public abstract CompletableFuture<WorkflowRun>
+        executeWorkflow(StartWorkflowRequest request, String waitUntilTask);
+```
+</TabItem>
+
   <TabItem value="Golang" label="Golang">
     This is a banana 🍌
   </TabItem>
@@ -35,4 +26,7 @@ export const Highlight = ({children, color}) => (
   <TabItem value="CSharp" label="CSharp">
       This is a banana 🍌
   </TabItem>
+  <TabItem value="javascript" label="Javascript">
+        This is a banana 🍌
+    </TabItem>
 </Tabs>

@@ -123,8 +123,7 @@ h5 {
   font-weight: 500;
 }
 
-p {
-}
+
 .menu {
     background-color: #ffffff;
 }
@@ -151,6 +150,9 @@ p {
     /*display: none;*/
     font-weight: normal;
     font-size: 0em;
+}
+.menu__caret:before {
+    height: 1.0rem;
 }
 [data-theme='dark'] .menu__link--sublist {
     color: #e64769;
@@ -369,4 +371,8 @@ img[alt="Conductor Architecture"] {
 
 .pagination-nav__link {
     border: none;
+}
+
+summary {
+    font-weight: bold;
 }
