@@ -313,7 +313,7 @@ The response will be a Workflow ID. If you have ElasticSearch running on your sy
 
 You'll see a page similar to the one below with “completed” in green next to the workflowId:
 
-<p align="center"><img src="/content/img/workflow-completed-image-processing.png" alt="The image processing workflow completed" width="90%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+<p align="center"><img src="/content/img/image-processing-workflow-completed.png" alt="The image processing workflow completed" width="90%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
 
 If you click on the Workflow input/output tab, you'll see the output.fileLocation.
