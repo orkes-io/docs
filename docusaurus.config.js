@@ -75,6 +75,7 @@ const config = {
     themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
         ({
+            metadata: [{name: 'keywords', content: 'microservices,orchestration,event-driven'}],
             colorMode: {
                 defaultMode: 'light',
             },

@@ -91,23 +91,14 @@ HTTP task allows you to make calls to remote services exposed over HTTP(S).
 </p>
 </details>
 
+<details><summary>Rate Limiting HTTP Requests</summary>
+<p>
 
-## FAQs
+description
 
-2. Why is my HTTP Task timing out with ```Failed to invoke HTTP task due to: java.lang.Exception: I/O error on GET request for "<url>": Read timed out; nested exception is java.net.SocketTimeoutException: Read timed out```?
-    1. The default timeout for an HTTP request is 150ms. If your API takes longer than this, you will need to increase the timeout parameters. In your ```inputParameters``` under ```http_request```, add the two following parameters (the timeouts are in milliseconds):
-```json
-          "connectionTimeOut": 1000,
-          "readTimeOut": 1000
-```
+</p>
+</details>
 
-3. Can I retry my HTTP Tasks?  
-    1. Yes. You can add retries and retry parameters to your HTTP Task.
-
-4. I'm getting rate limited.  Can I slow down my HTTP Task?
-    1. Yes!  By extending system tasks and adding the following parameters:
-    ```json
-      "rateLimitPerFrequency": 100,
-      "rateLimitFrequencyInSeconds": 60,
-    ```
-    2. This will allow only 100 calls to the API endpoint in 60 seconds.  Modify the values as required.
+## More...
+##### Configure retries for the task
+##### Configure template for the input
