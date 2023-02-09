@@ -1,0 +1,113 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# HTTP Task
+
+HTTP task allows you to make calls to remote services exposed over HTTP(S).
+## Configuration
+```json
+{
+    "type" : "HTTP",
+    "inputParameters": {
+        "uri": "https://catfact.ninja/fact",
+        "method": "GET",
+        "connectionTimeOut": 3000,
+        "readTimeOut": 3000
+    }
+}
+```
+
+#### Input
+|Name|Type|Description|
+|---|---|---|
+| uri | String | URI for the service. It can be a partial value when using vipAddress or includes the server address.|
+| method | String | HTTP method. One of the GET, PUT, POST, DELETE, OPTIONS, HEAD|
+| accept | String | Accept header as required by the server. Defaults to ```application/json``` |
+| contentType | String | Content Type - supported types are ```text/plain```, ```text/html```, and ```application/json``` (Default)|
+| headers| Map[String, Any] | A map of additional http headers to be sent along with the request.|
+| body| Map[] | Request body |
+| asyncComplete | Boolean |TODO: Link to details| ```false``` to mark status COMPLETED upon execution; ```true``` to keep it IN_PROGRESS, wait for an external event (via Conductor or SQS or EventHandler) to complete it.
+| connectionTimeOut | Integer | Connection Time Out in milliseconds. If set to 0, equivalent to infinity. Default: 100. |
+| readTimeOut | Integer | Read Time Out in milliseconds. If set to 0, equivalent to infinity. Default: 150. |
+
+#### Output
+
+|name|type|description|
+|---|---|---|
+| response | Map |  JSON body containing the response if one is present |
+| headers | Map[String, Any] | Response Headers |
+| statusCode | Integer | [HTTP Status Code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes) |
+| reasonPhrase | String | HTTP Status Code's reason phrase |
+
+## Examples
+<details><summary>Send a POST Request</summary>
+<p>
+
+```json
+{
+  "name": "http_post_example",
+  "taskReferenceName": "post_example",
+  "inputParameters": {
+    "http_request": {
+      "uri": "https://jsonplaceholder.typicode.com/posts/",
+      "method": "POST",
+      "body": {
+        "title": "${get_example.output.response.body.title}",
+        "userId": "${get_example.output.response.body.userId}",
+        "action": "doSomething"
+      }
+    }
+  },
+  "type": "HTTP"
+}
+```
+
+</p>
+</details>
+<details><summary>Set Read and Connect Timeouts for HTTP requests</summary>
+<p>
+
+```json
+{
+  "name": "http_post_example",
+  "taskReferenceName": "post_example",
+  "inputParameters": {
+    "http_request": {
+      "uri": "https://jsonplaceholder.typicode.com/posts/",
+      "method": "POST",
+      "readTimeout": 60000,
+      "connectionTimeout": 60000,
+      "body": {
+        "title": "${get_example.output.response.body.title}",
+        "userId": "${get_example.output.response.body.userId}",
+        "action": "doSomething"
+      }
+    }
+  },
+  "type": "HTTP"
+}
+```
+
+</p>
+</details>
+
+
+## FAQs
+
+2. Why is my HTTP Task timing out with ```Failed to invoke HTTP task due to: java.lang.Exception: I/O error on GET request for "<url>": Read timed out; nested exception is java.net.SocketTimeoutException: Read timed out```?
+    1. The default timeout for an HTTP request is 150ms. If your API takes longer than this, you will need to increase the timeout parameters. In your ```inputParameters``` under ```http_request```, add the two following parameters (the timeouts are in milliseconds):
+```json
+          "connectionTimeOut": 1000,
+          "readTimeOut": 1000
+```
+
+3. Can I retry my HTTP Tasks?  
+    1. Yes. You can add retries and retry parameters to your HTTP Task.
+
+4. I'm getting rate limited.  Can I slow down my HTTP Task?
+    1. Yes!  By extending system tasks and adding the following parameters:
+    ```json
+      "rateLimitPerFrequency": 100,
+      "rateLimitFrequencyInSeconds": 60,
+    ```
+    2. This will allow only 100 calls to the API endpoint in 60 seconds.  Modify the values as required.

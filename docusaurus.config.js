@@ -97,13 +97,13 @@ const config = {
                     },
                     {
                         type: 'doc',
-                        docId: 'codelab/introduction',
+                        docId: 'getting-started/index',
                         position: 'left',
                         label: 'Getting Started',
                     },
                     {
                         type: 'doc',
-                        docId: 'api/index',
+                        docId: 'management/index',
                         position: 'left',
                         label: 'API & SDK Docs',
                     },
