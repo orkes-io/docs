@@ -17,7 +17,6 @@ See the left navigation for all of the reference documentation for Netflix Condu
 * [Inline Task](/content/docs/reference-docs/system-tasks/inline-task)
 * [Webhook Task](/content/docs/reference-docs/system-tasks/webhook-task)
 * [Business Rule Task](/content/docs/reference-docs/system-tasks/business-rule)
-* [Terminate Workflow Task](/content/docs/reference-docs/system-tasks/terminate-workflow)
 
 
 ## Operator Tasks
@@ -30,6 +29,7 @@ See the left navigation for all of the reference documentation for Netflix Condu
 * [Wait](/content/docs/reference-docs/wait-task)
 * [Dynamic](/content/docs/reference-docs/dynamic-task)
 * [Terminate](/content/docs/reference-docs/terminate-task)
+* [Terminate Workflow Task](/content/docs/reference-docs/system-tasks/terminate-workflow)
 * [Set Variable](/content/docs/reference-docs/set-variable-task)
 * [Sub Workflow](/content/docs/reference-docs/sub-workflow-task)
 * [Start Workflow](/content/docs/reference-docs/start-workflow)
