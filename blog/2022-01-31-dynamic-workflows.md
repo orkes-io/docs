@@ -87,8 +87,8 @@ Here's the workflow (you can also find it on [GitHub](https://github.com/orkes-i
 
 As the diagram and JSON above show, we will have 3 tasks: 
 * ```image_multiple_convert_resize_ref``` - This task will read the input and define the dynamic tasks based on the inputs.  It will then send the list of dynamic tasks to the fork:
-* ```image_multiple_convert_resize_fork```  The dynamic fork will take the list of dynamic tasks required and create the task.
-* ```image_convert_resize_<varied>```  This task will run once inside each dynamic task, and the variable at the end will correspond to a specific image being created.
+* ```image_multiple_convert_resize_fork``` - The dynamic fork will take the list of dynamic tasks required and create the task.
+* ```image_convert_resize_<varied>``` - This task will run once inside each dynamic task, and the variable at the end will correspond to a specific image being created.
 
 Let's look at each task in detail:
 
