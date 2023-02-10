@@ -56,11 +56,6 @@ module.exports = {
                     type: 'doc',
                     id: 'reference-docs/system-tasks/business-rule',
                     label: "Business Rule Task"
-                },
-                {
-                    type: 'doc',
-                    id: 'reference-docs/system-tasks/terminate-workflow',
-                    label: "Terminate Workflow"
                 }
             ]
         },
@@ -82,6 +77,7 @@ module.exports = {
                 'reference-docs/sub-workflow-task',
                 'reference-docs/start-workflow',
                 'reference-docs/terminate-task',
+    'reference-docs/system-tasks/terminate-workflow'
             ]
         }
     ],
