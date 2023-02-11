@@ -104,7 +104,7 @@ const config = {
                     },
                     {
                         type: 'doc',
-                        docId: 'management/index',
+                        docId: 'api/index',
                         position: 'left',
                         label: 'API & SDK Docs',
                     },
