@@ -209,7 +209,7 @@ public class Workflow {
 </details>
 
 
-### Write workers
+### 5. Write workers
 :::tip Running Workers
 In this tutorial, we are running all three workers in the same application.  This is NOT required.
 In a typical production environment, you will have the workers running in their own deployments (k8s, vms or as micro-service).
@@ -308,7 +308,7 @@ public class UserInfo {
 </details>
 
 
-### Execute workflow and workers
+### 6. Execute workflow and workers
 
 <details><summary>Main Driver Class</summary>
 <p>
@@ -318,24 +318,25 @@ See <a href="Main.java">Main.java</a> for the complete example:
 ```java title="Main.java"
 
 import com.google.common.util.concurrent.Uninterruptibles;
+import com.netflix.conductor.common.config.ObjectMapperProvider;
 import com.netflix.conductor.common.metadata.workflow.StartWorkflowRequest;
-import com.netflix.conductor.sdk.workflow.def.ConductorWorkflow;
+import com.netflix.conductor.common.metadata.workflow.WorkflowDef;
 import com.netflix.conductor.sdk.workflow.executor.WorkflowExecutor;
 import io.orkes.conductor.client.ApiClient;
 import io.orkes.conductor.client.MetadataClient;
 import io.orkes.conductor.client.OrkesClients;
 import io.orkes.conductor.client.WorkflowClient;
 import io.orkes.samples.quickstart.workers.ConductorWorkers;
-import io.orkes.samples.quickstart.workflow.UserNotificationWorkflow;
-import io.orkes.samples.quickstart.workflow.WorkflowInput;
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
         //ApiClient used to communicate to the Conductor Server
         ApiClient apiClient = getApiClient();
@@ -349,15 +350,34 @@ public class Main {
 
         //Start the workers
         workflowExecutor.initWorkers(ConductorWorkers.class.getPackageName());
+        String workflowName = "user_notification";
+        Integer workflowVersion = 1;
 
-
+        //=================== IMPORTANT ===================//
+        /*TODO: Uncomment the following lines IF you are creating workflow using code */
+        //=================== IMPORTANT ===================//
+        /*
         UserNotificationWorkflow notificationWorkflow = new UserNotificationWorkflow(workflowExecutor);
         ConductorWorkflow<WorkflowInput> conductorWorkflow = notificationWorkflow.createWorkflow();
-        metadataClient.registerWorkflowDef(conductorWorkflow.toWorkflowDef());
+        workflowName = conductorWorkflow.getName();
+        workflowVersion = conductorWorkflow.getVersion();
+        conductorWorkflow.registerWorkflow(true);
+        */
+
+
+        //=================== IMPORTANT ===================//
+        /*TODO: Uncomment the following lines IF you are creating workflow using JSON */
+        //=================== IMPORTANT ===================//
+        /*
+        //Read the workflow definition from the file
+        InputStream is = Main.class.getResourceAsStream("/workflow.json");
+        //Register the workflow on the server
+        metadataClient.registerWorkflowDef(new ObjectMapperProvider().getObjectMapper().readValue(new InputStreamReader(is), WorkflowDef.class));
+        */
 
         StartWorkflowRequest startWorkflowReq = new StartWorkflowRequest()
-                .withName(conductorWorkflow.getName())
-                .withVersion(conductorWorkflow.getVersion())
+                .withName(workflowName)
+                .withVersion(workflowVersion)
                 .withInput(Map.of("userId", "userA"));
 
         String workflowId = workflowClient.startWorkflow(startWorkflowReq);
@@ -408,3 +428,20 @@ public class Main {
 </p>
 </details>
 
+:::tip Creating workflows
+Workflows can be created from UI Designer with drag n' drop, in Code or using JSON, depending upon your development preferences.
+
+Visit https://play.orkes.io/ and checkout the Workflow design and try to create the same workflow using UI!
+:::
+
+#### Executing Workers
+The following line in the code scans the source file for any workers using annotations and autoamtically initializes them.
+```java
+workflowExecutor.initWorkers(ConductorWorkers.class.getPackageName());
+```
+
+#### Worker SDK
+
+Alternatively, you can also create workers using `Worker` interface that gives more control over the worker initialization with control over polling interval, thread count etc.
+
+See [Task Worker SDK](/docs/worker) for more details.
