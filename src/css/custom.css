@@ -181,7 +181,7 @@ aside {
 .table-of-contents__link,
 table {
   letter-spacing: -0.003em;
-  line-height: 25px;
+  line-height: 22px;
   font-size: 15px;
   font-family: var(--ifm-font-family-base);
 }
@@ -377,4 +377,7 @@ img[alt="Conductor Architecture"] {
 
 summary {
     font-weight: bold;
+}
+.markdown p {
+    margin-bottom: 3px;
 }
