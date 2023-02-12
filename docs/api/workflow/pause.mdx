@@ -1,27 +1,12 @@
 ---
-sidebar_position: 0
+sidebar_position: 2
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Start workflow execution
-Starts a workflow and returns the **id** if the started workflow.
-
-The API returns immediately without the waiting for workflow to be completed.
-
-## Inputs
-
-|Parameter|Description|
-|---|---|
-|a|b|
-|a|b|
-
-1. Workflow input as a **Map**
-2. Name and Version of the workflow
-3. Alternatively, entire workflow definition can be passed for ephemeral workflows without registering them.
-4. Correlation Id - user supplied id, which can be used to query workflow executions.
-5. TaskToDomain
+# Pause workflow
+Starts a workflow and returns the **id** if the started workflow.  The API returns immediately without the waiting for workflow to be completed.
 
 <Tabs>
 <TabItem value="Java" label="Java">

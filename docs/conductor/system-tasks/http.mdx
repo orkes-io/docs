@@ -1,12 +1,12 @@
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
-import Summary from '@site/src/components/Summary';
 
-# HTTP Task
+# Call an HTTP Service
+```json
+"taskType": "HTTP"
+```
+HTTP task allows you to make calls to remote services exposed over HTTP/HTTPS.
 
-<Summary title="super duper">Docusaurus green</Summary>
-
-HTTP task allows you to make calls to remote services exposed over HTTP(S).
 ## Configuration
 ```json
 {
@@ -20,27 +20,27 @@ HTTP task allows you to make calls to remote services exposed over HTTP(S).
 }
 ```
 
-#### Input
-|Name|Type|Description|
-|---|---|---|
-| uri | String | URI for the service. It can be a partial value when using vipAddress or includes the server address.|
-| method | String | HTTP method. One of the GET, PUT, POST, DELETE, OPTIONS, HEAD|
-| accept | String | Accept header as required by the server. Defaults to ```application/json``` |
-| contentType | String | Content Type - supported types are ```text/plain```, ```text/html```, and ```application/json``` (Default)|
-| headers| Map[String, Any] | A map of additional http headers to be sent along with the request.|
-| body| Map[] | Request body |
-| asyncComplete | Boolean |TODO: Link to details| ```false``` to mark status COMPLETED upon execution; ```true``` to keep it IN_PROGRESS, wait for an external event (via Conductor or SQS or EventHandler) to complete it.
-| connectionTimeOut | Integer | Connection Time Out in milliseconds. If set to 0, equivalent to infinity. Default: 100. |
-| readTimeOut | Integer | Read Time Out in milliseconds. If set to 0, equivalent to infinity. Default: 150. |
+#### Input Configuration
+|Name|Description|
+|---|---|
+| uri  | URI for the service. It can be a partial value when using vipAddress or includes the server address.|
+| method  | HTTP method. One of the GET, PUT, POST, DELETE, OPTIONS, HEAD|
+| accept | Accept header as required by the server. Defaults to ```application/json``` |
+| contentType | Content Type - supported types are ```text/plain```, ```text/html```, and ```application/json``` (Default)|
+| headers| A map of additional http headers to be sent along with the request.|
+| body| Request body when using `POST` or `PUT`|
+| asyncComplete | If set, then the task remains **IN_PROGRESS** after the execution.  An external event (Task Update API or Event handler) is expected to mark the task as completed.
+| connectionTimeOut | Connection Time Out in milliseconds. If set to 0, equivalent to infinity. Default: 100. |
+| readTimeOut | Read Time Out in milliseconds. If set to 0, equivalent to infinity. Default: 150. |
 
 #### Output
 
-|name|type|description|
-|---|---|---|
-| response | Map |  JSON body containing the response if one is present |
-| headers | Map[String, Any] | Response Headers |
-| statusCode | Integer | [HTTP Status Code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes) |
-| reasonPhrase | String | HTTP Status Code's reason phrase |
+|name|description|
+|---|---|
+| response |  JSON body containing the response if one is present |
+| headers | Response Headers |
+| statusCode | [HTTP Status Code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes) |
+| reasonPhrase | HTTP Status Code's reason phrase |
 
 ## Examples
 <details><summary>Send a POST Request</summary>
