@@ -1,0 +1,105 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Call an HTTP Service
+```json
+"taskType": "HTTP"
+```
+HTTP task allows you to make calls to remote services exposed over HTTP/HTTPS.
+
+## Configuration
+```json
+{
+    "type" : "HTTP",
+    "inputParameters": {
+        "uri": "https://catfact.ninja/fact",
+        "method": "GET",
+        "connectionTimeOut": 3000,
+        "readTimeOut": 3000
+    }
+}
+```
+
+#### Input Configuration
+|Name|Description|
+|---|---|
+| uri  | URI for the service. It can be a partial value when using vipAddress or includes the server address.|
+| method  | HTTP method. One of the GET, PUT, POST, DELETE, OPTIONS, HEAD|
+| accept | Accept header as required by the server. Defaults to ```application/json``` |
+| contentType | Content Type - supported types are ```text/plain```, ```text/html```, and ```application/json``` (Default)|
+| headers| A map of additional http headers to be sent along with the request.|
+| body| Request body when using `POST` or `PUT`|
+| asyncComplete | If set, then the task remains **IN_PROGRESS** after the execution.  An external event (Task Update API or Event handler) is expected to mark the task as completed.
+| connectionTimeOut | Connection Time Out in milliseconds. If set to 0, equivalent to infinity. Default: 100. |
+| readTimeOut | Read Time Out in milliseconds. If set to 0, equivalent to infinity. Default: 150. |
+
+#### Output
+
+|name|description|
+|---|---|
+| response |  JSON body containing the response if one is present |
+| headers | Response Headers |
+| statusCode | [HTTP Status Code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes) |
+| reasonPhrase | HTTP Status Code's reason phrase |
+
+## Examples
+<details><summary>Send a POST Request</summary>
+<p>
+
+```json
+{
+  "name": "http_post_example",
+  "taskReferenceName": "post_example",
+  "inputParameters": {
+    "http_request": {
+      "uri": "https://jsonplaceholder.typicode.com/posts/",
+      "method": "POST",
+      "body": {
+        "title": "${get_example.output.response.body.title}",
+        "userId": "${get_example.output.response.body.userId}",
+        "action": "doSomething"
+      }
+    }
+  },
+  "type": "HTTP"
+}
+```
+
+</p>
+</details>
+<details><summary>Set Read and Connect Timeouts for HTTP requests</summary>
+<p>
+
+```json
+{
+  "name": "http_post_example",
+  "taskReferenceName": "post_example",
+  "inputParameters": {
+    "http_request": {
+      "uri": "https://jsonplaceholder.typicode.com/posts/",
+      "method": "POST",
+      "readTimeout": 60000,
+      "connectionTimeout": 60000,
+      "body": {
+        "title": "${get_example.output.response.body.title}",
+        "userId": "${get_example.output.response.body.userId}",
+        "action": "doSomething"
+      }
+    }
+  },
+  "type": "HTTP"
+}
+```
+
+</p>
+</details>
+
+<details><summary>Rate Limiting HTTP Requests</summary>
+<p>
+description
+</p>
+</details>
+
+## More...
+##### Configure retries for the task
+##### Configure template for the input

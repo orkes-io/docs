@@ -62,7 +62,7 @@ export default function Home() {
                 {
                   title: "API and SDK Docs",
                   description: "Conductor APIs and SDKs for creating workflows and tasks",
-                  to: "/docs/api",
+                  to: "/docs/management",
                 },
                 {
                   title: "Developer's Guide",
@@ -97,7 +97,7 @@ export default function Home() {
             ]}
           />
           <div className="row row--center">
-              <Link className={`button button--info button--lg ${styles.whiteFont}`} to="docs/codelab">
+              <Link className={`button button--info button--lg ${styles.whiteFont}`} to="docs/getting-started">
                 Ready to explore more? Checkout Codelabs and Samples
               </Link>
             </div>

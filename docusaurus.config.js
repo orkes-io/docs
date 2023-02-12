@@ -75,6 +75,7 @@ const config = {
     themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
         ({
+            metadata: [{name: 'keywords', content: 'microservices,orchestration,event-driven'}],
             colorMode: {
                 defaultMode: 'light',
             },
@@ -97,7 +98,7 @@ const config = {
                     },
                     {
                         type: 'doc',
-                        docId: 'codelab/introduction',
+                        docId: 'getting-started/index',
                         position: 'left',
                         label: 'Getting Started',
                     },
