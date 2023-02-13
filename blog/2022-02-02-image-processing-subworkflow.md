@@ -7,16 +7,16 @@ tags: [Netflix Conductor, Orkes, Conductor, orchestration, image processing, for
 
 In our initial image processing workflow using Netflix Conductor, we [initially built a workflow](/content/blog/image-processing-workflow-with-conductor) that takes one image, resizes it and uploads it to S3.
 
-<img src="/content/img/blogassets/Simple-image-workflow.png" width="300" style={{paddingBottom: 40, paddingTop: 0}} />
+<p align="center"><img src="/content/img/workflow-image-processing.png" alt="Image processing workflow diagram" width="40%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
-In our 2nd post, we [utilized a fork to create two images in parallel](/content/blog/image-processing-multiple-images-forks).  When building this workflow, we reused all of the tasks from the first workflow, connecting them in a way that allowing for parallel processing of two images at once.
+In our 2nd post, we [utilized a fork to create two images in parallel](/content/blog/image-processing-multiple-images-forks).  When building this workflow, we reused all of the tasks from the first workflow, connecting them in a way that allows for the parallel processing of two images at once.
 
-<img src="/content/img/blogassets/workflow_fork.png" width="400" style={{paddingBottom: 40, paddingTop: 0}} />
+<p align="center"><img src="/content/img/blogassets/workflow_fork.png" width="400" style={{paddingBottom: 40, paddingTop: 0}} /></p>
 
 
-In both of these workflows, two tasks are reused: ```image_convert_resize``` and ```upload_toS3```.  This is one great advantage of using microservices - we create the service once, and reuse it many times in different ways.
+Two tasks are reused in both workflows: ```image_convert_resize``` and ```upload_toS3```.  This is one great advantage of using microservices - we create the service once and reuse it many times in different ways.
 
-In this post, we'll take that abstraction a step further, and replace the tasks in the two forks with a ```SUB_WORKFLOW```. This allows us to simplify the full workflow by abstracting a frequently used set of tasks into a single task.
+In this post, we'll take that abstraction a step further and replace the tasks in the two forks with a ```SUB_WORKFLOW```. This allows us to simplify the full workflow by abstracting a frequently used set of tasks into a single task.
 
 <!--truncate -->
 
@@ -31,7 +31,7 @@ There are a number of advantages to calling a sub-workflow:
 
 ## Creating our Subworkflow
 
-We want to use the ```image_convert_resize``` workflow already created in our [simple workflow](/content/blog/image-processing-workflow-with-conductor) example.  If you have not yet created this workflow (and the tasks that run under this workflow), you must first create a local Conductor instance, and then define this workflow (the instructions are in the blog post).  It's also a good idea to test this workflow before using as a subworkflow - just to make sure that it is working as expected :D.
+We want to use the ```image_convert_resize``` workflow already created in our [simple workflow](/content/blog/image-processing-workflow-with-conductor) example.  If you have not yet created this workflow (and the tasks that run under this workflow), you must first create a local Conductor instance and then define this workflow (the instructions are in the blog post).  It's also a good idea to test this workflow before using as a subworkflow - just to make sure that it is working as expected :D.
 
 
 ## The (full) workflow
@@ -129,19 +129,20 @@ Now to insert our subworkflow into the full workflow.  Here's the JSON that need
 }
 ```
 
-There's a name, and a taskReferenceName. Next, we have to supply the subworkflow with input parameters - the image location, new size, and (in this case) a hardcoded jpg format.  (This looks very similar to the code in the actual workflow itself.)
+There's a name and a taskReferenceName. Next, we have to supply the subworkflow with input parameters - the image location, new size, and (in this case) a hardcoded jpg format.  (This looks very similar to the code in the actual workflow itself.)
 
-The type of this task is (unsurprisingly, I hope) ```SUB_WORKFLOW```, and the other very important parameter is the ```subWorkFlowParam``` which names the workflow to be run.
+This task type is (unsurprisingly, I hope) ```SUB_WORKFLOW```, and the other very important parameter is the ```subWorkFlowParam``` which names the workflow to be run.
 
 
-The full task can be seen in [Github](https://github.com/orkes-io/orkesworkers/blob/main/data/workflow/image_convert_resize_multipleformat_subworkflow.json).  In this case, there is not really a huge savings in terms of lines of code, but the savings will be realized in more complicated subworkflows.
+The full task can be seen in [Github](https://github.com/orkes-io/orkesworkers/blob/main/data/workflow/image_convert_resize_multipleformat_subworkflow.json). In this case, there are small savings in lines of code, but the savings will be realized in more complicated subworkflows.
 
 #### The Webp subworkflow
 
-Converting the 2 webp tasks to a subworkflow is not included in this post, but by copying the jpg subworkflow (and renaming all jpg references to webp), and replacing ```<task_t_workflow>```, you'll be in business.  Give it a try.
+Converting the 2 webp tasks to a subworkflow is not included in this post. Still, you'll be in business by copying the jpg subworkflow (and renaming all jpg references to webp) and replacing ```<task_t_workflow>```.  Give it a try.
 
 ## Conclusion
 
-Integrating subworkflows can simplify your workflow, allowing you to extract (and reuse) complex steps throughout your workflow.  They also have the added advantage of being easily updated - one change to the workflow will propagate automatically to every location it is referenced in all of your orchestration.
+Integrating subworkflows can simplify your workflow, allowing you to extract (and reuse) complex steps throughout your workflow.  They also have the added advantage of being easily updated - one change to the workflow will propagate automatically to every  location referenced in your orchestration.
+
 
 
