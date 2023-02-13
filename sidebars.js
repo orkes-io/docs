@@ -316,6 +316,14 @@ module.exports = {
                 'reference-docs/directed-acyclic-graph'
             ],
         },
+        {
+            type: 'category',
+            label: 'Troubleshooting',
+            collapsed: true,
+            items: [
+                'troubleshooting'
+            ],
+        },
     ],
     orderfulfillment: [
         {
