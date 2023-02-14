@@ -7,7 +7,7 @@ import TabItem from '@theme/TabItem';
 ```
 HTTP task allows you to make calls to remote services exposed over HTTP/HTTPS.
 
-## Configuration
+## Configurations
 ```json
 {
     "type" : "HTTP",
@@ -20,8 +20,8 @@ HTTP task allows you to make calls to remote services exposed over HTTP/HTTPS.
 }
 ```
 
-#### Input Configuration
-|Name|Description|
+#### Input Configurations
+|Attribute|Description|
 |---|---|
 | uri  | Provide the URI for the service. It can be a partial value when using vipAddress or it can be the server address.|
 | method  | Choose the HTTP method. Conductor supports the methods: GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS & TRACE.|
@@ -33,9 +33,9 @@ HTTP task allows you to make calls to remote services exposed over HTTP/HTTPS.
 | connectionTimeOut | Set the connection timeout in milliseconds.  If set to 0, it is equivalent to infinity. By default, the value is set to 100.|
 | readTimeOut | Set the read timeout in milliseconds.  If set to 0, it is equivalent to infinity. By default, the value is set to 150.|
 
-#### Output Configuration
+#### Output Configurations
 
-|name|description|
+|Attribute|Description|
 |---|---|
 | response |  JSON body containing the response if present. |
 | headers | Response Headers. |
