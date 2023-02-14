@@ -1,11 +1,13 @@
 ---
-slug: automating-long-running-user-subscription-workflows-using-conductor
-title: Automating Long Running User Subscription Workflows Using Conductor
+slug: long-running-workflows
+title: Long Running Workflows
 authors: riza
 tags: [Netflix Conductor, orchestration, subscriptions, orkes, orkes cloud]
 ---
 
 <p align="center"><img src="/content/img/subscription-expiry-mail.jpg" alt="Subscription expiry mail received" width="90%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+
+## Automating Long Running User Subscription Workflows Using Conductor
 
 **Uh-oh, your membership is expiring!**
 
