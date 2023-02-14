@@ -47,7 +47,7 @@ Apart from the above parameters, ensure that the following basic parameters for 
 | connectionTimeOut | Set the connection timeout in milliseconds.  If set to 0, it is equivalent to infinity. By default, the value is set to 100. |
 | readTimeOut | Set the read timeout in milliseconds.  If set to 0, it is equivalent to infinity. By default, the value is set to 150. |
 
-### Output​ Configuration
+### Output​ Parameters
 |Attribute|Description|
 |---|---|
 | response |  JSON body containing the response if present. |

@@ -33,7 +33,7 @@ HTTP task allows you to make calls to remote services exposed over HTTP/HTTPS.
 | connectionTimeOut | Set the connection timeout in milliseconds.  If set to 0, it is equivalent to infinity. By default, the value is set to 100.|
 | readTimeOut | Set the read timeout in milliseconds.  If set to 0, it is equivalent to infinity. By default, the value is set to 150.|
 
-#### Output Configurations
+#### Output Parameters
 
 |Attribute|Description|
 |---|---|
