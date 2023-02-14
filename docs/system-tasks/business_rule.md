@@ -84,7 +84,7 @@ In order to pull the rules from Azure Blob, the following properties need to be 
 
 ```Container-name``` and ```file-name``` will be populated from the ruleFileLocation.
 
-### Examples
+## Examples
 
 <details><summary>Sample Workflow</summary>
 <p>
