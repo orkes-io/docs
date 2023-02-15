@@ -59,9 +59,10 @@ Let’s see an example workflow:
      "taskReferenceName": "example",
      "inputParameters": {
        "http_request": {
-         "uri": "https://jsonplaceholder.typicode.com/posts",
+         "uri": "https://jsonplaceholder.typicode.com/posts/1",
          "method": "GET",
-         "terminationCondition": "1",
+          "terminationCondition": "$.output.body.length > 10 ? true : false;",
+          "uri": "https://jsonplaceholder.typicode.com/posts/1"
          "pollingInterval": "60",
          "pollingStrategy": "FIXED"
        }
@@ -79,8 +80,9 @@ Let’s see an example workflow:
 So, here the input parameters for the HTTP_POLL task are defined as follows:
 
 ```json
-  "terminationCondition": "1",
+  "terminationCondition": "$.output.body.length > 10 ? true : false;",
   "pollingInterval": "60",
   "pollingStrategy": "FIXED"
 ```
-The above configuration defines that the conductor will invoke the HTTP API every 60 seconds.
+The above configuration defines that the conductor will invoke the HTTP API every 60 seconds untill the jsonplaceholder gives the output that is longer then 10 characters.
+Notes:- Current invocation output can be refered using `$.output`. Similarly previous tasks output can also be refered using `$.task_ref_name.output`
