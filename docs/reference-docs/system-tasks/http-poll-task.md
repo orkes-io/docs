@@ -61,8 +61,7 @@ Let’s see an example workflow:
        "http_request": {
          "uri": "https://jsonplaceholder.typicode.com/posts/1",
          "method": "GET",
-          "terminationCondition": "$.output.body.length > 10 ? true : false;",
-          "uri": "https://jsonplaceholder.typicode.com/posts/1"
+         "terminationCondition": "$.output.body.length > 10 ? true : false;",
          "pollingInterval": "60",
          "pollingStrategy": "FIXED"
        }
