@@ -84,4 +84,5 @@ So, here the input parameters for the HTTP_POLL task are defined as follows:
   "pollingStrategy": "FIXED"
 ```
 The above configuration defines that the conductor will invoke the HTTP API every 60 seconds untill the jsonplaceholder gives the output that is longer then 10 characters.
+
 Notes:- Current invocation output can be refered using `$.output`. Similarly previous tasks output can also be refered using `$.task_ref_name.output`
