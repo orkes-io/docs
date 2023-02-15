@@ -7,7 +7,7 @@ import TabItem from '@theme/TabItem';
 ```
 HTTP task allows you to make calls to remote services exposed over HTTP/HTTPS.
 
-## Configuration
+## Configurations
 ```json
 {
     "type" : "HTTP",
@@ -20,27 +20,27 @@ HTTP task allows you to make calls to remote services exposed over HTTP/HTTPS.
 }
 ```
 
-#### Input Configuration
-|Name|Description|
+### Input Configurations
+|Attribute|Description|
 |---|---|
-| uri  | URI for the service. It can be a partial value when using vipAddress or includes the server address.|
-| method  | HTTP method. One of the GET, PUT, POST, DELETE, OPTIONS, HEAD|
-| accept | Accept header as required by the server. Defaults to ```application/json``` |
-| contentType | Content Type - supported types are ```text/plain```, ```text/html```, and ```application/json``` (Default)|
+| uri  | Provide the URI for the service. It can be a partial value when using vipAddress or it can be the server address.|
+| method  | Choose the HTTP method. Conductor supports the methods: GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS & TRACE.|
+| accept | Provide the accept header as required by the server. By default, it is set to ```application/json```. |
+| contentType | Provide the content type for the server. The supported types are ```text/plain```, ```text/html```, and ```application/json```. By default, it is set to ```application/json```.|
 | headers| A map of additional http headers to be sent along with the request.|
-| body| Request body when using `POST` or `PUT`|
-| asyncComplete | If set, then the task remains **IN_PROGRESS** after the execution.  An external event (Task Update API or Event handler) is expected to mark the task as completed.
-| connectionTimeOut | Connection Time Out in milliseconds. If set to 0, equivalent to infinity. Default: 100. |
-| readTimeOut | Read Time Out in milliseconds. If set to 0, equivalent to infinity. Default: 150. |
+| body| Request body when using `POST` or `PUT`.|
+| asyncComplete | If set, the task remains in the **IN_PROGRESS** state even after the execution.  An external event (Task Update API or Event handler) is expected to mark the task as completed.
+| connectionTimeOut | Set the connection timeout in milliseconds.  If set to 0, it is equivalent to infinity. By default, the value is set to 100.|
+| readTimeOut | Set the read timeout in milliseconds.  If set to 0, it is equivalent to infinity. By default, the value is set to 150.|
 
-#### Output
+### Output Parameters
 
-|name|description|
+|Attribute|Description|
 |---|---|
-| response |  JSON body containing the response if one is present |
-| headers | Response Headers |
-| statusCode | [HTTP Status Code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes) |
-| reasonPhrase | HTTP Status Code's reason phrase |
+| response |  JSON body containing the response if present. |
+| headers | Response Headers. |
+| statusCode | [HTTP Status Code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes). |
+| reasonPhrase | HTTP Status Code's reason phrase. |
 
 ## Examples
 <details><summary>Send a POST Request</summary>
@@ -96,10 +96,10 @@ HTTP task allows you to make calls to remote services exposed over HTTP/HTTPS.
 
 <details><summary>Rate Limiting HTTP Requests</summary>
 <p>
-description
+add details
 </p>
 </details>
 
 ## More...
-##### Configure retries for the task
-##### Configure template for the input
+##### Configure retries for the task.
+##### Configure template for the input.
