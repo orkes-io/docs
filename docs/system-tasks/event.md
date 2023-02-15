@@ -5,7 +5,6 @@
 ```
 
 EVENT is a task used to publish an event into one of the supported eventing systems in Conductor. Conductor supports the following eventing models:
-* Conductor internal events (type: conductor)
 * SQL (type: sqs)
 * Kafka (type: kafka)
 
@@ -17,15 +16,6 @@ Configuration for publishing an event into SQS to notify an external system.
 {
    "type": "EVENT",
    "sink": "sqs:sqs_queue_name"
-}
-```
-
-Configuration for publishing a message to Conductor's internal queuing system.
-
-```json
-{
-   "type": "EVENT",
-   "sink": "conductor:internal_event_name"
 }
 ```
 
@@ -42,7 +32,7 @@ Configuration for publishing an event into Kafka to notify an external system.
 
 | Attribute | Description |
 | --------- | ----------- |
-| sink | Provide the event queue in the format of prefix:location. The Prefix is either ```sqs```, ```conductor```, or ```kafka```, and location specifies the actual queue name. e.g., "```sqs:send_email_queue```"
+| sink | Provide the event queue in the format of prefix:location. The Prefix is either ```sqs```, or ```kafka```, and location specifies the actual queue name. e.g., "```sqs:send_email_queue```"
 
 ### Output Parameters
 
@@ -55,7 +45,6 @@ Conductor has support for the following external event queueing systems as part 
 * SQS (prefix: sqs)
 * [NATS](https://github.com/Netflix/conductor-community/tree/main/event-queue) (prefix: nats)
 * [AMQP](https://github.com/Netflix/conductor-community/tree/main/event-queue/amqp) (prefix: amqp_queue or amqp_exchange)
-* Internal Conductor (prefix: conductor)
 
 ## Examples
 
