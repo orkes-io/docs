@@ -26,7 +26,7 @@ The HTTP_POLL is a conductor task used to invoke HTTP API until the specified co
 ```
 
 ### Input Configurations
-|Attribuet|Description|
+|Attribute|Description|
 |---|---|
 | terminalCondition   | Specifies the condition to be evaluated after every HTTP API invocation. If the condition is evaluated as `true`, the task will be marked as completed. On the other hand, if the condition is evaluated as `false`, the conductor will schedule the next poll according to the configurations (pollingInterval & pollingStrategy).<br/>                                   **Note**: While writing the terminal condition, <ul><li>It can be [parameterized](https://orkes.io/content/docs/how-tos/Tasks/task-inputs).</li><li> In order to use the current http poll as input to the condition, a `$` needs to be prefixed. For example, `$.output.status`</li></ul> |
 | pollingInterval | Specify the time duration in seconds between each HTTP invocation. |
@@ -57,30 +57,50 @@ Apart from the above parameters, ensure that the following basic parameters for 
 
 ## Examples
 
-<details><summary>Add Examples</summary>
+<details><summary>Sample Workflow</summary>
 <p>
+
+Let’s see an example workflow:
 
 ```json
 {
-"name": "your_workflow_name",
-"description": "Sample workflow to get started with HTTP POLL task.",
-"version": 1,
-"tasks": [
-  {
-    "name": "example",
-    "taskReferenceName": "example",
-    "inputParameters": {
-      "http_request": {
-        "uri": "https://jsonplaceholder.typicode.com/posts",
-        "method": "GET",
-        "terminationCondition": "1",
-        "pollingInterval": "60",
-        "pollingStrategy": "FIXED"
-      }
-    },
-    "type": "HTTP_POLL"
-  }
-],
+ "name": "your_workflow_name",
+ "description": "Sample workflow to get started with HTTP POLL task.",
+ "version": 1,
+ "tasks": [
+   {
+     "name": "example",
+     "taskReferenceName": "example",
+     "inputParameters": {
+       "http_request": {
+         "uri": "https://jsonplaceholder.typicode.com/posts/1",
+         "method": "GET",
+         "terminationCondition": "$.output.body.length > 10 ? true : false;",
+         "pollingInterval": "60",
+         "pollingStrategy": "FIXED"
+       }
+     },
+     "type": "HTTP_POLL"
+   }
+ ],
+ "inputParameters": [],
+ "outputParameters": {},
+ "schemaVersion": 2,
+ "ownerEmail": "youremail@example.com"
+}
 ```
+
+So, here the input parameters for the HTTP_POLL task are defined as follows:
+```json
+  "terminationCondition": "$.output.body.length > 10 ? true : false;",
+  "pollingInterval": "60",
+  "pollingStrategy": "FIXED"
+```
+
+The above configuration defines that the Conductor will invoke the HTTP API every 60 seconds until the jsonplaceholder gives the output that is longer than 10 characters.
+<br/>
+
+**Note**: Current invocation output can be referred to using ```$.output```. Similarly, previous tasks' output can also be referred to using ```$.task_ref_name.output```.
+
 </p>
 </details>
