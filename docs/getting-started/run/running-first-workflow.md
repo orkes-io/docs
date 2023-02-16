@@ -107,7 +107,7 @@ Both Orkes Playground and Conductor have a Dashboard that allows for the visual 
 * Open Source: Click `Definitions` in the top menu. Click the `New Workflow Definition` button.
 * Orkes Playground: Click `Workflow definitions` in the left navigation. Click the `Define Workflow` button.
 
-2.  Copy the workflow JSON from above, and paste it into the editor. 
+2.  Copy the workflow JSON from above, and paste it into the code editor under the `Code` tab on the right side of the screen . 
 
 3. Click Save (and then Confirm save), and your workflow diagram will appear next to the definition.
 
