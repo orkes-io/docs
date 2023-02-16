@@ -18,7 +18,7 @@ The switch task is used for creating branching logic. It is a representation of 
 * The output of the **expression** is matched with the name of the branch.
 * The expression can be a **javascript** expression of a value parameter which represents the input to the task directly.
 
-The following are the task configuration parameters :
+### Input Parameters
 
 |Attribute|Description|
 |---|---|
@@ -35,7 +35,7 @@ The following are the task configuration parameters :
 | graaljs | Evaluate Javascript expressions and compute the value. Allows you to use ES6 compatible Javascript.  |
 
 
-## Example
+## Examples
 
 Workflow with the switch task definition that uses **value-param** evaluatorType:
 
@@ -74,6 +74,9 @@ This is a banana 🍌
   This is a banana 🍌
 </TabItem>
 <TabItem value="javascript" label="Javascript">
+    This is a banana 🍌
+</TabItem>
+<TabItem value="clojure" label="Clojure">
     This is a banana 🍌
 </TabItem>
 </Tabs>
