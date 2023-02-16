@@ -6,34 +6,33 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 # Switch Task
-Used to create branching logic.
-
-A switch task is a representation of multiple `if...then...else` or `switch...case` statements in programming.
 
 ```json
 "type" : "SWITCH"
 ```
 
-## Configuration
-* A switch task takes and expression as input along with multiple branches that contains a sequence of tasks to be executed and a *default* branch that is executed if no matching branches are found.
+The switch task is used for creating branching logic. It is a representation of multiple `if...then...else` or `switch...case` statements in programming.
+
+## Configurations
+* A switch task takes an expression as input along with multiple branches containing a sequence of tasks to be executed and a *default* branch to be executed if no matching branches are found.
 * The output of the **expression** is matched with the name of the branch.
 * The expression can be a **javascript** expression of a value parameter which represents the input to the task directly.
 
-Following are the task configuration parameters :
+The following are the task configuration parameters :
 
-|name|type|description|
+|Attribute|Description|
 |---|---|
-|evaluatorType|Type of the evaluator used. Supported types: **value-param**, **javascript**, **graaljs**.|
-|expression|The expression that depends on the evaluator type. For the **value-param** evaluator, the expression is the input parameter; for the **javascript** and **graaljs** evaluator, it is the javascript expression.|
-|decisionCases|Map where the key is possible values that can result from the **expression** with the value being the list of tasks to be executed.|
-|defaultCase|List of tasks to be executed when no matching value is found in decision case (default condition)|
+|evaluatorType|Indicates the type of evaluator used. Supported types are **value-param**, **javascript**, and **graaljs**.|
+|expression|The expression depends on the evaluator type. For the **value-param** evaluator, the expression is the input parameter; for the **javascript** and **graaljs** evaluator, it is the javascript expression.|
+|decisionCases|Map where the key is possible values that can result from the **expression**, with the value being the list of tasks to be executed.|
+|defaultCase|List of tasks to be executed when no matching value is found in decision case (default condition).|
 
-#### Types of evaluators
-|name|description|
+#### Types of Evaluators
+|Attribute|Description|
 |---|---|
-| value-param | Use a parameter directly as the value |
+| value-param | Use a parameter directly as the value. |
 | javascript | Evaluate Javascript expressions and compute the value - Legacy.  Deprecated.|
-| graaljs | Evaluate Javascript expressions and compute the value, allows you to use ES6 compatible Javascript  |
+| graaljs | Evaluate Javascript expressions and compute the value. Allows you to use ES6 compatible Javascript.  |
 
 
 ## Example
@@ -84,7 +83,7 @@ This is a banana 🍌
 
 When using **javascript** or **graaljs** as the evaluator type, the expression can be a javascript expression that returns a string.
 
-The input to the tasks are available as the variables inside `$` scope within the script.
+The input to the tasks is available as the variables inside the `$` scope within the script.
 
 ```json
 {
@@ -122,5 +121,5 @@ Switch task can be nested just like nested if...then...else.
 </details>
 
 :::tip Switch task with other operators
-Similar to any programming language, you can have other operators inside a switch case such as nested switch, loops, forks, etc.
+Similar to any programming language, you can have other operators inside a switch case, such as nested switch, loops, forks, etc.
 :::
