@@ -1,3 +1,6 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # Kafka Publish
 ```json
 "type" : "KAFKA_PUBLISH"

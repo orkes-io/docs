@@ -1,3 +1,6 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem'
+
 # HTTP Poll Task
 ```json
 "type" : "HTTP_POLL"

@@ -1,3 +1,6 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # Rules Engine Execution
 
 ```json
@@ -66,7 +69,6 @@ Business rule task supports the following operators:
 5. Date comparison. Currently supported date formats are ```yyyy-MM-dd```, ```yyyy-MMM-dd``` and ```yyyy-MM-dd HH:mm:ss```.
 
 ## Examples
-
  <Tabs>
  <TabItem value="JSON" lable="JSON">
 </TabItem>
