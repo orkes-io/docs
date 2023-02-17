@@ -197,24 +197,3 @@ Here is what the output of notification_join will look like. The output is a map
 ```
 </p>
 </details>
-
-<details><summary>Document Approvals</summary>
-<p>
-
-[Document Approvals](https://orkes.io/content/docs/usecases/document_approvals): When multiple approvals can happen at the same time.
-</p>
-</details>
-
-<details><summary>Hello World</summary>
-<p>
-
-[Hello World Codelab](https://orkes.io/content/docs/codelab/helloworld3)
-</p>
-</details>
-
-<details><summary>Order Fulfillment</summary>
-<p>
-
-[Order Fulfillment Codelab](https://orkes.io/content/docs/codelab/orderfulfillment6)
-</p>
-</details>

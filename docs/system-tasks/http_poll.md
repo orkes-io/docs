@@ -1,6 +1,6 @@
 # HTTP Poll Task
 ```json
-"taskType" : "HTTP_POLL"
+"type" : "HTTP_POLL"
 ```
 
 The HTTP_POLL is a conductor task used to invoke HTTP API until the specified condition matches.
@@ -25,7 +25,7 @@ The HTTP_POLL is a conductor task used to invoke HTTP API until the specified co
 }
 ```
 
-### Input Configurations
+### Input Parameters
 |Attribute|Description|
 |---|---|
 | terminalCondition   | Specifies the condition to be evaluated after every HTTP API invocation. If the condition is evaluated as `true`, the task will be marked as completed. On the other hand, if the condition is evaluated as `false`, the conductor will schedule the next poll according to the configurations (pollingInterval & pollingStrategy).<br/>                                   **Note**: While writing the terminal condition, <ul><li>It can be [parameterized](https://orkes.io/content/docs/how-tos/Tasks/task-inputs).</li><li> In order to use the current http poll as input to the condition, a `$` needs to be prefixed. For example, `$.output.status`</li></ul> |
@@ -56,6 +56,29 @@ Apart from the above parameters, ensure that the following basic parameters for 
 | reasonPhrase | HTTP Status Code's reason phrase. |
 
 ## Examples
+
+<Tabs>
+ <TabItem value="JSON" lable="JSON">
+</TabItem>
+<TabItem value="Java" label="Java">
+This is a banana 🍌
+</TabItem>
+<TabItem value="Golang" label="Golang">
+    This is a banana 🍌
+</TabItem>
+<TabItem value="Python" label="Python">
+  This is a banana 🍌
+</TabItem>
+<TabItem value="CSharp" label="CSharp">
+  This is a banana 🍌
+</TabItem>
+<TabItem value="javascript" label="Javascript">
+    This is a banana 🍌
+</TabItem>
+<TabItem value="clojure" label="Clojure">
+    This is a banana 🍌
+</TabItem>
+</Tabs>
 
 <details><summary>Sample Workflow</summary>
 <p>

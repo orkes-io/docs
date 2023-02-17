@@ -20,7 +20,7 @@ The inline task helps execute necessary logic at the workflow run-time using an 
 }
 ```
 
-### Input Configurations
+### Input Parameters
 
 | Attribute | Desciption |
 | --------- | ---------- |
@@ -30,6 +30,29 @@ The inline task helps execute necessary logic at the workflow run-time using an 
 Besides the expression, any of the properties in the input values is accessible as `$.value` for the expression to evaluate.
 
 ## Examples
+
+<Tabs>
+ <TabItem value="JSON" lable="JSON">
+</TabItem>
+<TabItem value="Java" label="Java">
+This is a banana 🍌
+</TabItem>
+<TabItem value="Golang" label="Golang">
+    This is a banana 🍌
+</TabItem>
+<TabItem value="Python" label="Python">
+  This is a banana 🍌
+</TabItem>
+<TabItem value="CSharp" label="CSharp">
+  This is a banana 🍌
+</TabItem>
+<TabItem value="javascript" label="Javascript">
+    This is a banana 🍌
+</TabItem>
+<TabItem value="clojure" label="Clojure">
+    This is a banana 🍌
+</TabItem>
+</Tabs>
 
 <details><summary>Sample Workflow</summary>
 <p>

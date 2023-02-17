@@ -249,18 +249,3 @@ Sometimes, you may want to use the iteration value/counter in the tasks used in 
 
 </p>
 </details>
-
-<details><summary>Order Fulfillment</summary>
-<p>
-
-[Order Fulfillment](https://orkes.io/content/docs/codelab/orderfulfillment5_5#dowhile-loop): Loops through each address to create a shipping label.
-
-</p>
-</details>
-
-<details><summary>Document Approvals</summary>
-<p>
-
-[Document Approvals](https://orkes.io/content/docs/usecases/document_approvals): Should approval be rejected, the Do/WHile loops back to the beginning for edits to the doc.
-</p>
-</details>
