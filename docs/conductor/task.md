@@ -12,8 +12,6 @@ Tasks are the building blocks of workflow in Conductor. A task can be an operato
 Conductor maintains a registry of worker tasks.  A task MUST be registered before being used in a workflow.
 
 ### Example Configuration
-<Tabs>
-  <TabItem value="JSON" label="JSON" default>
 
 ```json
 {
@@ -30,49 +28,6 @@ Conductor maintains a registry of worker tasks.  A task MUST be registered befor
   "rateLimitPerFrequency": 50,
 }
 ```
-  </TabItem>
-  <TabItem value="Java" label="Java">
-
-```java
-//java code to create the above workflow
-```
-  </TabItem>
-  <TabItem value="Golang" label="Golang">
-
-```golang
-//go code to create the above task
-```
-
-  </TabItem>
-  <TabItem value="Python" label="Python">
-
-```python
-//python code to create the above task
-```
-
-  </TabItem>
-  <TabItem value="CSharp" label="CSharp">
-
-```csharp
-//csharp code to create the above task
-```
-
-  </TabItem>
-  <TabItem value="Javascript" label="Javascript">
-
-```javascript
-//javascript code to create the above task
-```
-
-  </TabItem>
-  <TabItem value="Clojure" label="Clojure">
-
-```clojure
-//clojure code to create the above task
-```
-
-  </TabItem>
-</Tabs>
 
 
 | Field                                              | Description                                                                                                                                                                                                                                     | Notes                                    |

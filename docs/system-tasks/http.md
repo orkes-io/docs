@@ -3,7 +3,7 @@ import TabItem from '@theme/TabItem';
 
 # Call an HTTP Service
 ```json
-"taskType": "HTTP"
+"type": "HTTP"
 ```
 HTTP task allows you to make calls to remote services exposed over HTTP/HTTPS.
 
@@ -20,7 +20,7 @@ HTTP task allows you to make calls to remote services exposed over HTTP/HTTPS.
 }
 ```
 
-### Input Configurations
+### Input Parameters
 |Attribute|Description|
 |---|---|
 | uri  | Provide the URI for the service. It can be a partial value when using vipAddress or it can be the server address.|
@@ -43,6 +43,30 @@ HTTP task allows you to make calls to remote services exposed over HTTP/HTTPS.
 | reasonPhrase | HTTP Status Code's reason phrase. |
 
 ## Examples
+
+<Tabs>
+ <TabItem value="JSON" lable="JSON">
+</TabItem>
+<TabItem value="Java" label="Java">
+This is a banana 🍌
+</TabItem>
+<TabItem value="Golang" label="Golang">
+    This is a banana 🍌
+</TabItem>
+<TabItem value="Python" label="Python">
+  This is a banana 🍌
+</TabItem>
+<TabItem value="CSharp" label="CSharp">
+  This is a banana 🍌
+</TabItem>
+<TabItem value="javascript" label="Javascript">
+    This is a banana 🍌
+</TabItem>
+<TabItem value="clojure" label="Clojure">
+    This is a banana 🍌
+</TabItem>
+</Tabs>
+
 <details><summary>Send a POST Request</summary>
 <p>
 

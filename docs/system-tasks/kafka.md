@@ -25,7 +25,7 @@ A Kafka Publish task is used to push messages to another microservice via Kafka.
   "type": "KAFKA_PUBLISH"
 }
 ```
-### Input Configurations
+### Input Parameters
 
 | Attribute | Description |
 | -- | -- |
@@ -41,6 +41,28 @@ A Kafka Publish task is used to push messages to another microservice via Kafka.
 The producer created in the Kafka task is cached. By default, the cache size is 10, and the expiry time is 120000 ms. To change the defaults following can be modified `kafka.publish.producer.cache.size`, `kafka.publish.producer.cache.time.ms` respectively.
 
 ## Examples
+<Tabs>
+ <TabItem value="JSON" lable="JSON">
+</TabItem>
+<TabItem value="Java" label="Java">
+This is a banana 🍌
+</TabItem>
+<TabItem value="Golang" label="Golang">
+    This is a banana 🍌
+</TabItem>
+<TabItem value="Python" label="Python">
+  This is a banana 🍌
+</TabItem>
+<TabItem value="CSharp" label="CSharp">
+  This is a banana 🍌
+</TabItem>
+<TabItem value="javascript" label="Javascript">
+    This is a banana 🍌
+</TabItem>
+<TabItem value="clojure" label="Clojure">
+    This is a banana 🍌
+</TabItem>
+</Tabs>
 
 <details><summary>Add Examples</summary>
 <p>

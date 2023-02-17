@@ -31,10 +31,6 @@ Conductor adds the durability to the state of your workflows.  This means if the
 
 ##### Workflow implementation
 
-<Tabs>
-  <TabItem value="JSON" label="JSON" default>
-
-
 ```json
 {
   "name": "shipping_workflow",
@@ -68,49 +64,6 @@ Conductor adds the durability to the state of your workflows.  This means if the
   "failureWorkflow": "shipping_issues"
 }
 ```
-  </TabItem>
-  <TabItem value="Java" label="Java">
-
-```java
-//java code to create the above workflow
-```
-  </TabItem>
-  <TabItem value="Golang" label="Golang">
-
-```golang
-//go code to create the above workflow
-```
-
-  </TabItem>
-  <TabItem value="Python" label="Python">
-
-```python
-//python code to create the above workflow
-```
-
-  </TabItem>
-  <TabItem value="CSharp" label="CSharp">
-
-```csharp
-//csharp code to create the above workflow
-```
-
-  </TabItem>
-  <TabItem value="Javascript" label="Javascript">
-
-```javascript
-//javascript code to create the above workflow
-```
-
-  </TabItem>
-  <TabItem value="Clojure" label="Clojure">
-
-```clojure
-//clojure code to create the above workflow
-```
-
-  </TabItem>
-</Tabs>
 
 Upon completion of the 2 tasks, the workflow outputs the tracking number generated in the 2nd task.  If the workflow fails, a second workflow named  __shipping_issues__ is run to handle the failure scenarios.
 

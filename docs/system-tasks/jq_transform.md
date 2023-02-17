@@ -31,7 +31,7 @@ The JSON_JQ_TRANSFORM task is a System task that allows the processing of JSON d
 }
 ```
 
-### Input Configurations
+### Input Parameters
 
 |Attribute | Description |
 |--|--|
@@ -39,7 +39,7 @@ The JSON_JQ_TRANSFORM task is a System task that allows the processing of JSON d
 | inputParameters/user-defined-key(s) |	User-defined key(s) along with values. |
 | inputParameters/queryExpression | A JQ query expression. |
 
-### Output Configurations
+### Output Parameters
 |Attribute | Description |
 |--|--|
 | result |	The first results returned by the JQ expression. |
@@ -47,6 +47,29 @@ The JSON_JQ_TRANSFORM task is a System task that allows the processing of JSON d
 | error |	An optional error message indicating that the JQ query failed to process. |
 
 ## Examples
+
+<Tabs>
+ <TabItem value="JSON" lable="JSON">
+</TabItem>
+<TabItem value="Java" label="Java">
+This is a banana 🍌
+</TabItem>
+<TabItem value="Golang" label="Golang">
+    This is a banana 🍌
+</TabItem>
+<TabItem value="Python" label="Python">
+  This is a banana 🍌
+</TabItem>
+<TabItem value="CSharp" label="CSharp">
+  This is a banana 🍌
+</TabItem>
+<TabItem value="javascript" label="Javascript">
+    This is a banana 🍌
+</TabItem>
+<TabItem value="clojure" label="Clojure">
+    This is a banana 🍌
+</TabItem>
+</Tabs>
 
 <details><summary>Sample Workflow</summary>
 <p>

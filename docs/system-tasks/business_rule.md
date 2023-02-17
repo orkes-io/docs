@@ -1,7 +1,7 @@
 # Rules Engine Execution
 
 ```json
-"taskType" : "BUSINESS_RULE"
+"type" : "BUSINESS_RULE"
 ```
 
 Business rule task helps evaluate business rules compiled in spreadsheets. Conductor currently supports the following formats:
@@ -33,7 +33,7 @@ Business rule task helps evaluate business rules compiled in spreadsheets. Condu
 }
 ```
 
-### Input Configurations
+### Input Parameters
 
 | Attribute | Description |
 | --------- | ----------- |
@@ -66,6 +66,29 @@ Business rule task supports the following operators:
 5. Date comparison. Currently supported date formats are ```yyyy-MM-dd```, ```yyyy-MMM-dd``` and ```yyyy-MM-dd HH:mm:ss```.
 
 ## Examples
+
+ <Tabs>
+ <TabItem value="JSON" lable="JSON">
+</TabItem>
+<TabItem value="Java" label="Java">
+This is a banana 🍌
+</TabItem>
+<TabItem value="Golang" label="Golang">
+    This is a banana 🍌
+</TabItem>
+<TabItem value="Python" label="Python">
+  This is a banana 🍌
+</TabItem>
+<TabItem value="CSharp" label="CSharp">
+  This is a banana 🍌
+</TabItem>
+<TabItem value="javascript" label="Javascript">
+    This is a banana 🍌
+</TabItem>
+<TabItem value="clojure" label="Clojure">
+    This is a banana 🍌
+</TabItem>
+</Tabs>
 
 <details><summary>Sample Workflow</summary>
 <p>

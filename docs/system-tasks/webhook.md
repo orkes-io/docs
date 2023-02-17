@@ -30,7 +30,7 @@ You can leverage the **Custom** option for integrating other than the above-ment
 }
 ```
 
-### Input Configurations
+### Input Parameters
 
 #### Writing Custom Matches​
 
@@ -55,6 +55,28 @@ In order to match all the webhook events, the matches should be kept empty.
 {
 }
 ```
+<Tabs>
+ <TabItem value="JSON" lable="JSON">
+</TabItem>
+<TabItem value="Java" label="Java">
+This is a banana 🍌
+</TabItem>
+<TabItem value="Golang" label="Golang">
+    This is a banana 🍌
+</TabItem>
+<TabItem value="Python" label="Python">
+  This is a banana 🍌
+</TabItem>
+<TabItem value="CSharp" label="CSharp">
+  This is a banana 🍌
+</TabItem>
+<TabItem value="javascript" label="Javascript">
+    This is a banana 🍌
+</TabItem>
+<TabItem value="clojure" label="Clojure">
+    This is a banana 🍌
+</TabItem>
+</Tabs>
 
 ## Supported Webhook Verification Methods by Conductor
 

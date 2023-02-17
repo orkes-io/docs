@@ -1,7 +1,7 @@
 # Event Task
 
 ```json
-"taskType" : "EVENT"
+"type" : "EVENT"
 ```
 
 EVENT is a task used to publish an event into one of the supported eventing systems in Conductor. Conductor supports the following eventing models:
@@ -28,7 +28,7 @@ Configuration for publishing an event into Kafka to notify an external system.
 }
 ```
 
-### Input Configurations
+### Input Parameters
 
 | Attribute | Description |
 | --------- | ----------- |
@@ -47,6 +47,29 @@ Conductor has support for the following external event queueing systems as part 
 * [AMQP](https://github.com/Netflix/conductor-community/tree/main/event-queue/amqp) (prefix: amqp_queue or amqp_exchange)
 
 ## Examples
+
+<Tabs>
+ <TabItem value="JSON" lable="JSON">
+</TabItem>
+<TabItem value="Java" label="Java">
+This is a banana 🍌
+</TabItem>
+<TabItem value="Golang" label="Golang">
+    This is a banana 🍌
+</TabItem>
+<TabItem value="Python" label="Python">
+  This is a banana 🍌
+</TabItem>
+<TabItem value="CSharp" label="CSharp">
+  This is a banana 🍌
+</TabItem>
+<TabItem value="javascript" label="Javascript">
+    This is a banana 🍌
+</TabItem>
+<TabItem value="clojure" label="Clojure">
+    This is a banana 🍌
+</TabItem>
+</Tabs>
 
 <details><summary>Sending SQS messages</summary>
 <p>
