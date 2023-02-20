@@ -90,7 +90,7 @@ Task can be either a worker task or an operator.
 | taskReferenceName | Alias used to refer the task within the workflow.  MUST be unique within workflow.                                                             ||
 | type              | Type of task. SIMPLE for tasks executed by remote workers, or one of the system task types                                                     ||
 | description       | Description of the task                                                                                                                        | optional                                                                |
-| optional          | true or false.  When set to true - workflow continues even if the task fails.  The status of the task is reflected as `COMPLETED_WITH_ERRORS` | Defaults to `false`                                                     |
+| optional          | true or false.  When set to true - workflow continues even if the task fails.  The status of the task is reflected as **COMPLETED_WITH_ERRORS** | Defaults to **false**.                                                     |
 | inputParameters   | JSON template that defines the input given to the task                                                                                         | See [Wiring Inputs and Outputs](#wiring-inputs-and-outputs) for details |
 
 In addition to these parameters, System Tasks have their own parameters. Checkout [System Tasks](/configuration/systask.html) for more information.
@@ -98,13 +98,13 @@ In addition to these parameters, System Tasks have their own parameters. Checkou
 ## Wiring Inputs and Outputs
 
 Workflows are supplied inputs by client when a new execution is triggered.
-Workflow input is a JSON payload that is available via ```${workflow.input...}``` expressions.
+Workflow input is a JSON payload that is available via **${workflow.input...}** expressions.
 
 :::info
 Conductor support [JSONPath](https://www.ietf.org/archive/id/draft-goessner-dispatch-jsonpath-00.html) for field extraction.
 :::
 
-Each task in the workflow is given input based on the ```inputParameters``` template configured in workflow definition.  ```inputParameters``` is a JSON fragment with value containing parameters for mapping values from input or output of a workflow or another task during the execution.
+Each task in the workflow is given input based on the **inputParameters** template configured in workflow definition.  **inputParameters** is a JSON fragment with value containing parameters for mapping values from input or output of a workflow or another task during the execution.
 
 Syntax for mapping the values follows the pattern as:
 
@@ -189,5 +189,5 @@ When scheduling the task, Conductor will merge the values from workflow input an
 ```
 
 :::tip Escaping expressions
-To escape an expression, prefix it with an extra _$_ character (ex.: ```$${workflow.input...}```).
+To escape an expression, prefix it with an extra _$_ character (ex.: **$${workflow.input...}**).
 :::

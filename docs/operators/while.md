@@ -10,8 +10,8 @@ The Do While task sequentially executes a list of tasks as long as a condition i
 
 ## Configurations
 
-* When scheduled, each task of this loop will see its `taskReferenceName` concatenated with **__i**, with **i** being the iteration number, starting at 1. **Warning**: `taskReferenceName` containing arithmetic operators must not be used.
-* Each time the task is performed, the output is saved and indexed by the iteration value. This makes it possible for the condition to check the output of a specific task iteration. (E.g., `$.LoopTask['iteration]['first_task']`).
+* When scheduled, each task of this loop will see its **taskReferenceName** concatenated with **__i**, with **i** being the iteration number, starting at 1. **Warning**: **taskReferenceName** containing arithmetic operators must not be used.
+* Each time the task is performed, the output is saved and indexed by the iteration value. This makes it possible for the condition to check the output of a specific task iteration. (E.g., **$.LoopTask['iteration]['first_task']**).
 * The DO_WHILE task is set to *FAILED* as soon as one of the loopTask fails. In such cases, for the retry, the iteration starts from 1.
 
 ### Input Parameters
@@ -27,7 +27,7 @@ The Do While task sequentially executes a list of tasks as long as a condition i
 | -- | -- | 
 | iteration | Indicates the iteration number, which is the current one while executing, and the final one once the loop is finished. | 
 | i | Iteration number as a string mapped to the task references names and their output. |
-| * | Any state can be stored here if the loopCondition does so. For example, `storage` will exist if loopCondition is `if ($.LoopTask['iteration'] <= 10) {$.LoopTask.storage = 3; true } else {false}`. |
+| * | Any state can be stored here if the loopCondition does so. For example, **storage** will exist if loopCondition is **if ($.LoopTask['iteration'] <= 10) {$.LoopTask.storage = 3; true } else {false}**. |
 
 > **_NOTE:_** 
 * Domain or isolation group execution is unsupported.
@@ -136,7 +136,7 @@ This is a banana 🍌
 }
 ```
 
-The above definition will produce the following execution, assuming three executions occurred (alongside `first_task__1`, `first_task__2`, `first_task__3`, `second_task__1`, `second_task__2`, and `second_task__3`):
+The above definition will produce the following execution, assuming three executions occurred (alongside **first_task__1**, **first_task__2**, **first_task__3**, **second_task__1**, **second_task__2**, and **second_task__3**):
 
 ```json
 {
@@ -243,9 +243,9 @@ Sometimes, you may want to use the iteration value/counter in the tasks used in 
     }
 ```
 
-* The Loop `taskReferenceName` is "get_all_stars_loop_ref".
-* In the `loopCondition`, the term `$.get_all_stars_loop_ref['iteration']` is used.
-* In tasks embedded in the loop, `${get_all_stars_loop_ref.output.iteration}` is used. In this case, it defines which page of results the API should return.
+* The Loop **taskReferenceName** is "get_all_stars_loop_ref".
+* In the **loopCondition**, the term **$.get_all_stars_loop_ref['iteration']** is used.
+* In tasks embedded in the loop, **${get_all_stars_loop_ref.output.iteration}** is used. In this case, it defines which page of results the API should return.
 
 </p>
 </details>

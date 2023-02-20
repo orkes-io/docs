@@ -18,7 +18,7 @@ WAIT is used when the workflow needs to wait and pause for external signals, suc
 
 | Attributes | Description | 
 | -- | -- |
-| Wait type | Indicates the type of wait period. Supported types include **duration**, **until**, and **signal**. <ul><li><b>duration</b> - Specifies the wait duration in the format `“x hours x days x minutes x seconds”`. The accepted units in this field are *days*, *d*, *hrs*, *hours*, *h*, *minutes*, *mins*, *m*, *seconds*, *secs*, and *s*.</li><li><b>until</b> - Used to wait until a specified date & time, including the timezone. The date/time can be supplied in the format: `yyyy-mm-dd HH:mm`. For example, `2023-02-17 03:15 GMT+04:00`.</li><li><b>signal</b> - Can be configured if the workflow needs to wait for an external signal, such as a manual approval or an event from an external source, such as SQS or Kafka.</li></ul> | 
+| Wait type | Indicates the type of wait period. Supported types include **duration**, **until**, and **signal**. <ul><li><b>duration</b> - Specifies the wait duration in the format **x hours x days x minutes x seconds**. The accepted units in this field are *days*, *d*, *hrs*, *hours*, *h*, *minutes*, *mins*, *m*, *seconds*, *secs*, and *s*.</li><li><b>until</b> - Used to wait until a specified date & time, including the timezone. The date/time can be supplied in the format: **yyyy-mm-dd HH:mm**. For example, **2023-02-17 03:15 GMT+04:00**.</li><li><b>signal</b> - Can be configured if the workflow needs to wait for an external signal, such as a manual approval or an event from an external source, such as SQS or Kafka.</li></ul> | 
 
 ## Examples
  <Tabs>

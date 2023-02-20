@@ -12,5 +12,5 @@ As a developer, you do not need to handle any logic to do retries, the Conductor
 
 ## Workflow Failures
 Conductor workflows span across many services, and when a workflow fails sometimes its necessary to reset the state of the underlying system (e.g. revert changes to database, compensate transations etc.).
-(Compensation)[https://en.wikipedia.org/wiki/Compensating_transaction] mechanism in Conductor allows defining a `failureWorkflow` that is executed when a workflow execution fails.
-The `failureWorkflow` can be used to run compensation logic to handle terminal failures in the system.
+(Compensation)[https://en.wikipedia.org/wiki/Compensating_transaction] mechanism in Conductor allows defining a **failureWorkflow** that is executed when a workflow execution fails.
+The **failureWorkflow** can be used to run compensation logic to handle terminal failures in the system.

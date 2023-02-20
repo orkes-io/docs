@@ -11,7 +11,7 @@ import TabItem from '@theme/TabItem';
 "type" : "SWITCH"
 ```
 
-The switch task is used for creating branching logic. It is a representation of multiple `if...then...else` or `switch...case` statements in programming.
+The switch task is used for creating branching logic. It is a representation of multiple **if...then...else** or **switch...case** statements in programming.
 
 ## Configurations
 * A switch task takes an expression as input along with multiple branches containing a sequence of tasks to be executed and a *default* branch to be executed if no matching branches are found.
@@ -86,7 +86,7 @@ This is a banana 🍌
 
 When using **javascript** or **graaljs** as the evaluator type, the expression can be a javascript expression that returns a string.
 
-The input to the tasks is available as the variables inside the `$` scope within the script.
+The input to the tasks is available as the variables inside the **$** scope within the script.
 
 ```json
 {

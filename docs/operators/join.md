@@ -7,11 +7,11 @@ import TabItem from '@theme/TabItem';
 "type" : "JOIN"
 ```
 
-A JOIN task is used in conjunction with a `FORK_JOIN` or `FORK_JOIN_DYNAMIC` task to join all the tasks within the forks. 
+A JOIN task is used in conjunction with a **FORK_JOIN** or **FORK_JOIN_DYNAMIC** task to join all the tasks within the forks. 
 
 ## Configurations
 
-* In the `FORK_JOIN` task, the JOIN task waits for a list of zero or more of the forked tasks to be completed. However, when used with a `FORK_JOIN_DYNAMIC` task, it implicitly waits for all the dynamically forked tasks to complete.
+* In the **FORK_JOIN** task, the JOIN task waits for a list of zero or more of the forked tasks to be completed. However, when used with a **FORK_JOIN_DYNAMIC** task, it implicitly waits for all the dynamically forked tasks to complete.
 
 ### Input Parameters
 
@@ -62,7 +62,8 @@ This is a banana 🍌
 
 <details><summary>Simple Example​</summary>
 <p>
-Here is an example of a JOIN task. This task will wait for the completion of tasks `my_task_ref_1` and `my_task_ref_2` as specified by the joinOn attribute.
+
+Here is an example of a JOIN task. This task will wait for the completion of tasks **my_task_ref_1** and **my_task_ref_2** as specified by the joinOn attribute.
 
 ```json
 {
@@ -81,7 +82,7 @@ Here is an example of a JOIN task. This task will wait for the completion of tas
 <details><summary>Example with Fork/Join Task ignoring one fork​</summary>
 <p>
 
-Here is an example of a JOIN task used in conjunction with a FORK_JOIN task. The 'FORK_JOIN' spawns three tasks. An `email_notification` task, a `sms_notification` task, and a `http_notification` task. Email and SMS are usually the best-effort delivery systems. However, in the case of an HTTP-based notification, you get a return code, and you can retry until it succeeds or eventually give up. When you set up a notification workflow, you may decide to continue if you kicked off an email and sms notification. In that case, you can decide to joinOn those specific tasks only. However, the `http_notification` task will still continue to execute, but it will not block the rest of the workflow from proceeding.
+Here is an example of a JOIN task used in conjunction with a FORK_JOIN task. The 'FORK_JOIN' spawns three tasks. An **email_notification** task, a **sms_notification** task, and a **http_notification** task. Email and SMS are usually the best-effort delivery systems. However, in the case of an HTTP-based notification, you get a return code, and you can retry until it succeeds or eventually give up. When you set up a notification workflow, you may decide to continue if you kicked off an email and sms notification. In that case, you can decide to joinOn those specific tasks only. However, the **http_notification** task will still continue to execute, but it will not block the rest of the workflow from proceeding.
 
 ```json
 [
@@ -125,7 +126,7 @@ Here is an example of a JOIN task used in conjunction with a FORK_JOIN task. The
 ]
 ```
 
-Here is what the output of `notification_join` will look like. The output is a map, where the keys are the names of task references being joined. The corresponding values are the outputs of those tasks.
+Here is what the output of **notification_join** will look like. The output is a map, where the keys are the names of task references being joined. The corresponding values are the outputs of those tasks.
 
 ```json
 {
