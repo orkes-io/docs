@@ -57,7 +57,6 @@ Suppose in a workflow, we have to store a value in a variable and then, later in
 {
   "name": "Set_Variable_Workflow",
   "description": "Set a value to a variable and then reuse it later in the workflow",
-  "version": 1,
   "tasks": [
     {
       "name": "Set_Name",
@@ -76,10 +75,6 @@ Suppose in a workflow, we have to store a value in a variable and then, later in
       "type": "SIMPLE"
     }
   ],
-  "restartable": true,
-  "ownerEmail":"abc@example.com",
-  "workflowStatusListenerEnabled": true,
-  "schemaVersion": 2
 }
 ```
 

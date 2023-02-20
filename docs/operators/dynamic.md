@@ -80,7 +80,6 @@ Suppose in a workflow, we have to decide to ship the courier, but the decision i
 {
   "name": "Shipping_Flow",
   "description": "Ships smartly on the basis of Shipping info",
-  "version": 1,
   "tasks": [
     {
       "name": "shipping_info",
@@ -100,10 +99,6 @@ Suppose in a workflow, we have to decide to ship the courier, but the decision i
     }
 
   ],
-  "restartable": true,
-  "ownerEmail":"abc@example.com",
-  "workflowStatusListenerEnabled": true,
-  "schemaVersion": 2
 }
 ```
 

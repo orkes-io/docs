@@ -92,7 +92,6 @@ Let’s see an example workflow:
 {
  "name": "your_workflow_name",
  "description": "Sample workflow to get started with HTTP POLL task.",
- "version": 1,
  "tasks": [
    {
      "name": "example",
@@ -109,10 +108,6 @@ Let’s see an example workflow:
      "type": "HTTP_POLL"
    }
  ],
- "inputParameters": [],
- "outputParameters": {},
- "schemaVersion": 2,
- "ownerEmail": "youremail@example.com"
 }
 ```
 

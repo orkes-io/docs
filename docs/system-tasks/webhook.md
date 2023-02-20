@@ -51,13 +51,7 @@ This means that the incoming event payload has JSON path **event.type** and it m
 
 For example, the above one will be used to match the webhook event payload where **event.type** is **message** AND **event.text** is **hello**.
 <br/>
-In order to match all the webhook events, the matches should be kept empty.
 
-```json
-"matches": 
-{
-}
-```
 <Tabs>
  <TabItem value="JSON" lable="JSON">
 </TabItem>
@@ -171,7 +165,9 @@ Once the URL is verified, you can run the workflow.
 
 <p align="center"><img src="/content/img/Sample-Webhook-Workflow-in-COMPLETED-status.png" alt="Webhook workflow in COMPLETED status" width="100%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
-**Note**: If you have enabled the option to **Start workflow when webhook event comes**, the event payload will be passed as input to the specified workflow.
+:::note
+If you have enabled the option to **Start workflow when webhook event comes**, the event payload will be passed as input to the specified workflow.
+:::
 
 ## Examples
 
