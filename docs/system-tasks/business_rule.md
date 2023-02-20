@@ -14,7 +14,7 @@ Business rule task helps evaluate business rules compiled in spreadsheets. Condu
 
 ## Configurations
 
-```json
+ ```json
 {
 "name": "execute_rule",
 "taskReferenceName": "execute_rule",
@@ -71,6 +71,28 @@ Business rule task supports the following operators:
 ## Examples
  <Tabs>
  <TabItem value="JSON" lable="JSON">
+
+ ```json
+{
+"name": "execute_rule",
+"taskReferenceName": "execute_rule",
+"inputParameters": 
+ {
+    "ruleFileLocation": "https://business-rules.s3.amazonaws.com/rules.xlsx",
+    "executionStrategy": "FIRE_FIRST",
+    "inputColumns": 
+    {
+      "InputDate": "${workflow.input.inputDate}",
+      "ProductType": "${workflow.input.productType}"
+    },
+    "outputColumns": 
+    [
+      "Discount"
+    ]
+  },
+"type": "BUSINESS_RULE"
+}
+```
 </TabItem>
 <TabItem value="Java" label="Java">
 This is a banana 🍌

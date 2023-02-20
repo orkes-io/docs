@@ -53,6 +53,14 @@ Conductor has support for the following external event queueing systems as part 
 
 <Tabs>
  <TabItem value="JSON" lable="JSON">
+
+ ```json
+{
+   "type": "EVENT",
+   "sink": "sqs:sqs_queue_name"
+}
+```
+
 </TabItem>
 <TabItem value="Java" label="Java">
 This is a banana 🍌

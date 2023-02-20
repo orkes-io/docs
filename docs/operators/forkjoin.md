@@ -11,6 +11,23 @@ A Fork operation lets you run a specified list of tasks or sub-workflows in para
 
 ## Configurations
 
+```json
+{
+      "name": "fork_task",
+      "taskReferenceName": "fork_task_ref",
+      "inputParameters": {},
+      "type": "FORK_JOIN",
+      "forkTasks": [
+        //tasks]
+      ]
+    },
+    {
+      "name": "join_task",
+      "taskReferenceName": "join_task_ref",
+      "type": "JOIN",
+      "joinOn": [//task_reference_names],
+    }
+```
 * A **FORK_JOIN** task has a **forkTasks** attribute that expects an array. Each array is a sub-list of tasks. Each of these sub-lists is then invoked in parallel. The tasks defined within each sublist can be sequential or any other way as desired.
 * A FORK_JOIN task has to be followed by a JOIN operation. The **JOIN** operator specifies which of the forked tasks to **joinOn** (waits for completion) before moving to the next stage in the workflow.
 

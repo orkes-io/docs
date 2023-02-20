@@ -8,7 +8,8 @@ import TabItem from '@theme/TabItem';
 HTTP task allows you to make calls to remote services exposed over HTTP/HTTPS.
 
 ## Configurations
-```json
+
+ ```json
 {
     "type" : "HTTP",
     "inputParameters": {
@@ -46,6 +47,19 @@ HTTP task allows you to make calls to remote services exposed over HTTP/HTTPS.
 
 <Tabs>
  <TabItem value="JSON" lable="JSON">
+
+ ```json
+{
+    "type" : "HTTP",
+    "inputParameters": {
+        "uri": "https://catfact.ninja/fact",
+        "method": "GET",
+        "connectionTimeOut": 3000,
+        "readTimeOut": 3000
+    }
+}
+```
+
 </TabItem>
 <TabItem value="Java" label="Java">
 This is a banana 🍌

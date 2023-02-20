@@ -7,12 +7,21 @@ import TabItem from '@theme/TabItem';
 "type" : "WAIT"
 ```
 
-The Wait task is used when the workflow needs to be paused for an external signal to continue.
+The Wait task is used when the workflow needs to be paused for an external signal to continue. It is used when the workflow needs to wait and pause for external signals, such as a human intervention (like manual approval) or an event coming from an external source, such as Kafka or SQS.
 <br/>
 
 # Configurations
 
-WAIT is used when the workflow needs to wait and pause for external signals, such as a human intervention (like manual approval) or an event coming from an external source, such as Kafka or SQS.
+```json
+{
+      "name": "wait_task",
+      "taskReferenceName": "wait_task_ref",
+      "type": "WAIT",
+      "inputParameters": {
+        "duration": "5 days"
+      }
+    }
+```
 
 ## Input Parameters
 

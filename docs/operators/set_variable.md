@@ -7,6 +7,17 @@ Set Variable allows you to set the workflow variables by creating or updating th
 
 ## Configurations
 
+```json
+{
+      "name": "set_variable",
+      "taskReferenceName": "set_variable_task_ref",
+      "type": "SET_VARIABLE",
+      "inputParameters": {
+        "some keys": "some keys"
+      }
+    }
+```
+
 ### Input Parameters
 
 **Variables** - The variables can be initialized in the workflow definition as well as during the workflow run. Once a variable is initialized, it can be read or overwritten with a new value by any other task. Variables can be used to manage a state across all your tasks.

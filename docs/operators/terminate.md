@@ -11,7 +11,21 @@ The Terminate task is a task that can terminate the workflow with a termination 
 
 ## Configurations
 
-The Terminate task can modify the workflow's output with a given parameter and act as a return statement for conditions where you want to terminate your workflow.
+```json
+{
+      "name": "terminate_task",
+      "taskReferenceName": "terminate_task_ref",
+      "inputParameters": {
+        "terminationStatus": "COMPLETED",
+        "terminationReason": "Task completed successfully.",
+        "workflowOutput": {
+          "Some-Key": "Some-Value"
+        }
+      },
+      "type": "TERMINATE"
+    }
+```
+* The Terminate task can modify the workflow's output with a given parameter and act as a return statement for conditions where you want to terminate your workflow.
 
 ### Input Parameters
 

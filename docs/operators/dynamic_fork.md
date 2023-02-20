@@ -11,6 +11,19 @@ The Dynamic fork task is used when the number of forks is to be determined at th
 
 ## Configurations
 
+```json
+   {
+     "name": "dynamic",
+     "taskReferenceName": "dynamic_ref",
+     "inputParameters": {
+       "dynamicTasks": "",
+       "dynamicTasksInput": ""
+     },
+     "type": "FORK_JOIN_DYNAMIC",
+     "dynamicForkTasksParam": "dynamicTasks",
+     "dynamicForkTasksInputParamName": "dynamicTasksInput"
+   },
+```
 * A FORK_JOIN_DYNAMIC can only have one task per fork. A sub-workflow can be utilized if there is a need for multiple tasks per fork.
 
 ### Input Parameters

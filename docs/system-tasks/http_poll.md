@@ -62,6 +62,26 @@ Apart from the above parameters, ensure that the following basic parameters for 
 
 <Tabs>
  <TabItem value="JSON" lable="JSON">
+
+ ```json
+{
+     "type": "HTTP_POLL",
+     "inputParameters": {
+       "http_request": {
+         "uri": "https://orkes-api-tester.orkesconductor.com/get",
+         "method": "GET",
+         "connectionTimeOut": 3000,
+         "readTimeOut": 3000,
+         "accept": "application/json",
+         "contentType": "application/json",
+  "terminationCondition": "1",
+         "pollingInterval": "60",
+         "pollingStrategy": "FIXED"
+        }
+    }
+}
+```
+
 </TabItem>
 <TabItem value="Java" label="Java">
 This is a banana 🍌
