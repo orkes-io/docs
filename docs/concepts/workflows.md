@@ -101,7 +101,7 @@ A __Task__ represents the business logic execution such as making an HTTP call, 
 ## Task Workers
 
 Workers are used to implement a task.  A worker runs _outside_ of a Conductor server.
-Worker can implemented in any language and framework of your choice.  Here is a sample worker that takes `name` as input and returns `Hello {name}`.
+Worker can implemented in any language and framework of your choice.  Here is a sample worker that takes **name** as input and returns **Hello {name}**.
 
 #### Hello World Worker
 <Tabs>

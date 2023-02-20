@@ -75,7 +75,8 @@ Add the workflow definitions to your project with the json file or Java code.
 
 <details><summary>Workflow JSON - IF using JSON to create workflow</summary>
 <p>
-Create a file named workflow.json inside <code>src/main/resources</code> folder and paste the following:
+
+Create a file named workflow.json inside **src/main/resources** folder and paste the following:
 
 ```json title="workflow.json"
 {
@@ -138,7 +139,8 @@ Create a file named workflow.json inside <code>src/main/resources</code> folder 
 </details>
 <details><summary>Workflow Code - IF using code to create workflow</summary>
 <p>
-Create a new Class <code>Workflow</code> with the following inside a method.
+
+Create a new Class **Workflow** with the following inside a method.
 See <a href="workflow.java">Workflow.java</a> for the complete example:
 
 ```java title="Workflow.java"
@@ -292,7 +294,8 @@ public class UserInfo {
 
 <details><summary>Main Driver Class</summary>
 <p>
-Create a new Class <code>Main</code> with the following inside a method.
+
+Create a new Class **Main** with the following inside a method.
 See <a href="Main.java">Main.java</a> for the complete example:
 
 ```java title="Main.java"

@@ -31,7 +31,7 @@ The HTTP_POLL is a conductor task used to invoke HTTP API until the specified co
 ### Input Parameters
 |Attribute|Description|
 |---|---|
-| terminalCondition   | Specifies the condition to be evaluated after every HTTP API invocation. If the condition is evaluated as `true`, the task will be marked as completed. On the other hand, if the condition is evaluated as `false`, the conductor will schedule the next poll according to the configurations (pollingInterval & pollingStrategy).<br/>                                   **Note**: While writing the terminal condition, <ul><li>It can be [parameterized](https://orkes.io/content/docs/how-tos/Tasks/task-inputs).</li><li> In order to use the current http poll as input to the condition, a `$` needs to be prefixed. For example, `$.output.status`</li></ul> |
+| terminalCondition   | Specifies the condition to be evaluated after every HTTP API invocation. If the condition is evaluated as **true**, the task will be marked as completed. On the other hand, if the condition is evaluated as **false**, the conductor will schedule the next poll according to the configurations (pollingInterval & pollingStrategy).<br/>                                   **Note**: While writing the terminal condition, <ul><li>It can be [parameterized](https://orkes.io/content/docs/how-tos/Tasks/task-inputs).</li><li> In order to use the current http poll as input to the condition, a `$` needs to be prefixed. For example, **$.output.status**</li></ul> |
 | pollingInterval | Specify the time duration in seconds between each HTTP invocation. |
 | pollingStrategy | It can take any of the following values: <ul><li>**FIXED** - The duration between each HTTP API invocation will be fixed.</li><li> **LINEAR_BACKOFF** - The duration between each HTTP API invocation will be calculated by multiplying the poll count with pollingInterval. Note that the poll count is the incremental value based on each invocation.</li><li>**EXPONENTIAL_BACKOFF** - The duration between each HTTP API invocation will be calculated by multiplying poll count with 2 base exponential of pollingInterval.</li></ul>|
 
@@ -42,8 +42,8 @@ Apart from the above parameters, ensure that the following basic parameters for 
 | ----------- | ----------- |
 | uri   | Provide the Uniform Resource Identifier (URI) for the service. It can be partial when using vipAddress or else it indicates the server address. |
 | method | Indicates the required action to be performed on the source. It can be GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS or TRACE. |
-| accept | Provide the accept header as required by the server. By default, it is set to ```application/json```. |
-| contentType | Provide the content type for the server. The supported types are text/plain, text/html, and application/json. By default, it is set to ```application/json```. |
+| accept | Provide the accept header as required by the server. By default, it is set to **application/json**. |
+| contentType | Provide the content type for the server. The supported types are text/plain, text/html, and application/json. By default, it is set to **application/json**. |
 | headers | Indicate a map of additional http headers to be sent along with the request. |
 | body | Indicates the request body. |
 | asyncComplete | If set, the task remains in the IN_PROGRESS state even after the execution. An external event (Task Update API or Event handler) is expected to mark the task as completed. |
@@ -126,7 +126,7 @@ So, here the input parameters for the HTTP_POLL task are defined as follows:
 The above configuration defines that the Conductor will invoke the HTTP API every 60 seconds until the jsonplaceholder gives the output that is longer than 10 characters.
 <br/>
 
-**Note**: Current invocation output can be referred to using ```$.output```. Similarly, previous tasks' output can also be referred to using ```$.task_ref_name.output```.
+**Note**: Current invocation output can be referred to using <b>$.output</b>. Similarly, previous tasks' output can also be referred to using **$.task_ref_name.output**.
 
 </p>
 </details>

@@ -39,7 +39,7 @@ You can leverage the **Custom** option for integrating other than the above-ment
 
 In the above example, you can see that the matches are described as follows:
 
-This means that the incoming event payload has JSON path `event.type` and it must be a `message` in order to match the webhook event with this task. You can define any custom JSON path based on the incoming event payload and write matches accordingly. You can also add multiple matches within the matches. All the matches will be calculated as AND operations within the matches.
+This means that the incoming event payload has JSON path **event.type** and it must be a **message** in order to match the webhook event with this task. You can define any custom JSON path based on the incoming event payload and write matches accordingly. You can also add multiple matches within the matches. All the matches will be calculated as AND operations within the matches.
 
 ```json
 "matches": 
@@ -49,7 +49,7 @@ This means that the incoming event payload has JSON path `event.type` and it mus
 }
 ```
 
-For example, the above one will be used to match the webhook event payload where `event.type` is `message` AND `event.text` is `hello`.
+For example, the above one will be used to match the webhook event payload where **event.type** is **message** AND **event.text** is **hello**.
 <br/>
 In order to match all the webhook events, the matches should be kept empty.
 

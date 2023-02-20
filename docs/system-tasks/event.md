@@ -35,7 +35,7 @@ Configuration for publishing an event into Kafka to notify an external system.
 
 | Attribute | Description |
 | --------- | ----------- |
-| sink | Provide the event queue in the format of prefix:location. The Prefix is either ```sqs```, or ```kafka```, and location specifies the actual queue name. e.g., "```sqs:send_email_queue```"
+| sink | Provide the event queue in the format of prefix:location. The Prefix is either **sqs**, or **kafka**, and location specifies the actual queue name. e.g., **sqs:send_email_queue**.
 
 ### Output Parameters
 

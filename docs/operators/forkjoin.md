@@ -7,12 +7,12 @@ import TabItem from '@theme/TabItem';
 "type" : "FORK_JOIN"
 ```
 
-A Fork operation lets you run a specified list of tasks or sub-workflows in parallel. A fork task is followed by a join operation that waits on the forked tasks or sub-workflows to finish. The `JOIN` task also collects outputs from each of the forked tasks or sub workflows.
+A Fork operation lets you run a specified list of tasks or sub-workflows in parallel. A fork task is followed by a join operation that waits on the forked tasks or sub-workflows to finish. The **JOIN** task also collects outputs from each of the forked tasks or sub workflows.
 
 ## Configurations
 
-* A `FORK_JOIN` task has a `forkTasks` attribute that expects an array. Each array is a sub-list of tasks. Each of these sub-lists is then invoked in parallel. The tasks defined within each sublist can be sequential or any other way as desired.
-* A FORK_JOIN task has to be followed by a JOIN operation. The `JOIN` operator specifies which of the forked tasks to `joinOn` (waits for completion) before moving to the next stage in the workflow.
+* A **FORK_JOIN** task has a **forkTasks** attribute that expects an array. Each array is a sub-list of tasks. Each of these sub-lists is then invoked in parallel. The tasks defined within each sublist can be sequential or any other way as desired.
+* A FORK_JOIN task has to be followed by a JOIN operation. The **JOIN** operator specifies which of the forked tasks to **joinOn** (waits for completion) before moving to the next stage in the workflow.
 
 ### Input Parameters
 
@@ -178,7 +178,7 @@ Here's the JSON definition for the workflow:
 ]
 ```
 >**NOTE:**
-There are three parallel 'tines' to this fork, but only two outputs are required for the JOIN to continue. The diagram does draw an arrow from `http_notification_ref` to the `notification_join`, but it is not required for the workflow to continue.
+There are three parallel 'tines' to this fork, but only two outputs are required for the JOIN to continue. The diagram does draw an arrow from **http_notification_ref** to the **notification_join**, but it is not required for the workflow to continue.
 
 Here is what the output of notification_join will look like. The output is a map, where the keys are the names of task references being joined. The corresponding values are the outputs of those tasks.
 

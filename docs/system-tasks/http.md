@@ -25,10 +25,10 @@ HTTP task allows you to make calls to remote services exposed over HTTP/HTTPS.
 |---|---|
 | uri  | Provide the URI for the service. It can be a partial value when using vipAddress or it can be the server address.|
 | method  | Choose the HTTP method. Conductor supports the methods: GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS & TRACE.|
-| accept | Provide the accept header as required by the server. By default, it is set to ```application/json```. |
-| contentType | Provide the content type for the server. The supported types are ```text/plain```, ```text/html```, and ```application/json```. By default, it is set to ```application/json```.|
+| accept | Provide the accept header as required by the server. By default, it is set to **application/json**. |
+| contentType | Provide the content type for the server. The supported types are **text/plain**, **text/html**, and **application/json**. By default, it is set to **application/json**.|
 | headers| A map of additional http headers to be sent along with the request.|
-| body| Request body when using `POST` or `PUT`.|
+| body| Request body when using **POST** or **PUT**.|
 | asyncComplete | If set, the task remains in the **IN_PROGRESS** state even after the execution.  An external event (Task Update API or Event handler) is expected to mark the task as completed.
 | connectionTimeOut | Set the connection timeout in milliseconds.  If set to 0, it is equivalent to infinity. By default, the value is set to 100.|
 | readTimeOut | Set the read timeout in milliseconds.  If set to 0, it is equivalent to infinity. By default, the value is set to 150.|

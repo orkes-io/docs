@@ -38,7 +38,7 @@ The JSON_JQ_TRANSFORM task is a System task that allows the processing of JSON d
 
 |Attribute | Description |
 |--|--|
-|inputParameters | The input parameters that will be supplied to this task. The parameters will be a JSON object of at least 2 attributes, one of which will be called `queryExpression`. The others are user-named attributes. These attributes will be accessible by the JQ query processor. |
+|inputParameters | The input parameters that will be supplied to this task. The parameters will be a JSON object of at least 2 attributes, one of which will be called **queryExpression**. The others are user-named attributes. These attributes will be accessible by the JQ query processor. |
 | inputParameters/user-defined-key(s) |	User-defined key(s) along with values. |
 | inputParameters/queryExpression | A JQ query expression. |
 
@@ -103,9 +103,9 @@ This is a banana 🍌
 The inputParameters attribute is expected to have a value object with the following:
 
 1. A list of key-value pair objects denoted key1/value1, key2/value2 in the example. Note the key1/value1 are arbitrary names used in this example.
-2. A key with the name `queryExpression`, whose value is a JQ expression. The expression will operate on the value of the `inputParameters attribute`. In this example, the `inputParameters` have two inner objects named by attributes `key1` and `key2`, each of which has an object that is named `value1` and `value2`. They have an associated array of strings as values, `"a"`, `"b"` and `"c"`, `"d"`. The expression `key3: (.key1.value1 + .key2.value2)` concatenates the 2 string arrays into a single array against an attribute named `key3`.
+2. A key with the name **queryExpression**, whose value is a JQ expression. The expression will operate on the value of the **inputParameters attribute**. In this example, the **inputParameters** have two inner objects named by attributes **key1** and **key2**, each of which has an object that is named **value1** and **value2**. They have an associated array of strings as values, **"a"**, **"b"** and **"c"**, **"d"**. The expression **key3: (.key1.value1 + .key2.value2)** concatenates the 2 string arrays into a single array against an attribute named **key3**.
 
-The execution of this example task above will provide the following output. The `resultList` attribute stores the full list of the `queryExpression` result. The `result` attribute stores the first element of the resultList. An optional `error` attribute along with a string message will be returned if there is an error processing the query expression.
+The execution of this example task above will provide the following output. The **resultList** attribute stores the full list of the **queryExpression** result. The **result** attribute stores the first element of the resultList. An optional **error** attribute along with a string message will be returned if there is an error processing the query expression.
 
 ```json
 {
@@ -136,7 +136,7 @@ The execution of this example task above will provide the following output. The 
 <p>
 An HTTP Task makes an API call to GitHub to request a list of "stargazers" (users who have starred a repository). The API response (for just one user) looks like this:
 
-The snippet of `${hundred_stargazers_ref.output}`
+The snippet of **${hundred_stargazers_ref.output}**
 
   ```
 "body":[
@@ -165,7 +165,7 @@ The snippet of `${hundred_stargazers_ref.output}`
 }
 ]
 ```
-We only need the `starred_at` and `login` parameters for users who starred the repository after a given date (provided as an input to the workflow `${workflow.input.cutoff_date}`). We'll use the JQ Transform to simplify the output:
+We only need the **starred_at** and **login** parameters for users who starred the repository after a given date (provided as an input to the workflow **${workflow.input.cutoff_date}**). We'll use the JQ Transform to simplify the output:
 
 ```json
 {
@@ -188,7 +188,7 @@ We only need the `starred_at` and `login` parameters for users who starred the r
         }
 ```
 
-The JSON is stored in `starlist`. The `queryExpression` reads in the JSON, selects only entries where the `starred_at` value meets the date criteria, and generates output JSON of the form:
+The JSON is stored in **starlist**. The **queryExpression** reads in the JSON, selects only entries where the **starred_at** value meets the date criteria, and generates output JSON of the form:
 ```json
 {
   "occurred_at": "date from JSON",

@@ -44,7 +44,7 @@ Business rule task helps evaluate business rules compiled in spreadsheets. Condu
 | executionStrategy | Specify the execution strategy to be followed. Currently, Conductor supports the following strategies: <br/><ul><li>**FIRE_FIRST** - The first rule which gets matched will be used to generate the output.</li><li>**FIRE_ALL** - All the rule that matches will be used to generate the output.</li></ul> |
 
 :::info execution Strategy
-To get an understanding of the ```execution Strategy```, consider the below table: 
+To get an understanding of the **execution Strategy**, consider the below table: 
 
 | Name | Price |
 | --------- | ----------- |
@@ -62,11 +62,11 @@ Let’s assume the input Name is Phone. If the executionStrategy is **FIRE_FIRST
 
 Business rule task supports the following operators:
 
-1. Comparison operators for numeric value. ```<=,>=,=,<,>```.
-2. String equals/not equals operator. ```productName != Phone```.
-3. ```inList``` and ```!=inList``` operator. productName ```inList({"phone","laptop"})``` will match if productName is phone or laptop.
-4. createList operator for output. ```createList({"A","B","C"})``` will generate list ```{"A", "B", "C"}``` in output.
-5. Date comparison. Currently supported date formats are ```yyyy-MM-dd```, ```yyyy-MMM-dd``` and ```yyyy-MM-dd HH:mm:ss```.
+1. Comparison operators for numeric value. **<=,>=,=,<,>**.
+2. String equals/not equals operator. **productName != Phone**.
+3. **inList** and **!=inList** operator. productName **inList({"phone","laptop"})** will match if productName is phone or laptop.
+4. createList operator for output. **createList({"A","B","C"})** will generate list **{"A", "B", "C"}** in output.
+5. Date comparison. Currently supported date formats are **yyyy-MM-dd**, **yyyy-MMM-dd** and **yyyy-MM-dd HH:mm:ss**.
 
 ## Examples
  <Tabs>
