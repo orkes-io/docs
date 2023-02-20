@@ -36,6 +36,20 @@ Besides the expression, any of the properties in the input values is accessible 
 
 <Tabs>
  <TabItem value="JSON" lable="JSON">
+
+ ```json
+{
+  "name": "inline_task_example",
+  "taskReferenceName": "inline_task_example",
+  "type": "INLINE",
+  "inputParameters": {
+      "value": "${workflow.input.value}",
+      "evaluatorType": "javascript",
+      "expression": "function e() { if ($.value == 1){return {\"result\": true}} else { return {\"result\": false}}} e();"
+  }
+}
+```
+
 </TabItem>
 <TabItem value="Java" label="Java">
 This is a banana 🍌

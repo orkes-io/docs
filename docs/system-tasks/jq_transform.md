@@ -53,6 +53,30 @@ The JSON_JQ_TRANSFORM task is a System task that allows the processing of JSON d
 
 <Tabs>
  <TabItem value="JSON" lable="JSON">
+
+ ```json
+{
+  "name": "jq_example_task",
+  "taskReferenceName": "my_jq_example_task",
+  "type": "JSON_JQ_TRANSFORM",
+  "inputParameters": {
+    "key1": {
+      "value1": [
+        "a",
+        "b"
+      ]
+    },
+    "key2": {
+      "value2": [
+        "c",
+        "d"
+      ]
+    },
+    "queryExpression": "{ key3: (.key1.value1 + .key2.value2) }"
+  }
+}
+```
+
 </TabItem>
 <TabItem value="Java" label="Java">
 This is a banana 🍌

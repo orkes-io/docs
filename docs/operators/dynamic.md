@@ -11,6 +11,18 @@ The dynamic task allows you to execute one of the registered tasks dynamically a
 
 ## Configurations
 
+```json
+{
+     "name": "dynamic_task",
+     "taskReferenceName": "dynamic_task_ref",
+     "inputParameters": {
+       "taskToExecute": ""
+     },
+     "type": "DYNAMIC",
+     "dynamicTaskNameParam": "taskToExecute"
+   }
+```
+
 ### Input Parameters
 
 | Attribute | Description | 

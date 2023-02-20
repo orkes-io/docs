@@ -10,6 +10,16 @@ The Do While task sequentially executes a list of tasks as long as a condition i
 
 ## Configurations
 
+```json
+{
+      "name": "do_while_task",
+      "taskReferenceName": "do_while_task_ref",
+      "type": "DO_WHILE",
+      "loopCondition": "",
+      "loopConditionType": "value-param",
+      "loopOver": [//tasks]
+    }
+```
 * When scheduled, each task of this loop will see its **taskReferenceName** concatenated with **__i**, with **i** being the iteration number, starting at 1. **Warning**: **taskReferenceName** containing arithmetic operators must not be used.
 * Each time the task is performed, the output is saved and indexed by the iteration value. This makes it possible for the condition to check the output of a specific task iteration. (E.g., **$.LoopTask['iteration]['first_task']**).
 * The DO_WHILE task is set to *FAILED* as soon as one of the loopTask fails. In such cases, for the retry, the iteration starts from 1.

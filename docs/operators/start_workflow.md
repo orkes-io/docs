@@ -11,7 +11,20 @@ Start Workflow is an operator task used to start another workflow from an existi
 
 ## Configurations​
 
-A start workflow task is considered successful when the requested workflow begins or, more precisely, when the requested workflow is in the *RUNNING* state.
+```json
+{
+      "name": "start_workflow",
+      "taskReferenceName": "start_workflow_task_ref",
+      "inputParameters": {
+        "startWorkflow": {
+          "name": "name_of_the_workflow_to_be_started",
+          "version": 1
+        }
+      },
+      "type": "START_WORKFLOW"
+    }
+```
+* A start workflow task is considered successful when the requested workflow begins or, more precisely, when the requested workflow is in the *RUNNING* state.
 
 ### Input Parameters​
 
@@ -38,10 +51,7 @@ A start workflow task is considered successful when the requested workflow begin
     "inputParameters": {
       "startWorkflow": {
         "name": "your_workflow_name_to_be_started",
-        "version": 3,
-        "input": {
-           "Some-Key-tl4ao": "Some-Value-tl4ao"
-         }
+        "version": 3
       }
 }
 }
