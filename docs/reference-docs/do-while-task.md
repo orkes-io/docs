@@ -155,14 +155,6 @@ In tasks embedded in the loop, ```${get_all_stars_loop_ref.output.iteration}``` 
         "stargazers": "4000"
       },
       "type": "DO_WHILE",
-      "decisionCases": {},
-      "defaultCase": [],
-      "forkTasks": [],
-      "startDelay": 0,
-      "joinOn": [],
-      "optional": false,
-      "defaultExclusiveJoinTask": [],
-      "asyncComplete": false,
       "loopCondition": "if ($.get_all_stars_loop_ref['iteration'] < Math.ceil($.stargazers/100)) { true; } else { false; }",
       "loopOver": [
         {
@@ -179,17 +171,7 @@ In tasks embedded in the loop, ```${get_all_stars_loop_ref.output.iteration}``` 
               }
             }
           },
-          "type": "HTTP",
-          "decisionCases": {},
-          "defaultCase": [],
-          "forkTasks": [],
-          "startDelay": 0,
-          "joinOn": [],
-          "optional": false,
-          "defaultExclusiveJoinTask": [],
-          "asyncComplete": false,
-          "loopOver": [],
-          "retryCount": 3
+          "type": "HTTP"
         }
       ]
     }
