@@ -109,10 +109,7 @@ food        |      pizza        |   < 2022-03-22 12:20:22   |       15      |   
 And following workflow definition.
 ```json
 {
-    "updateTime": 1646428577305,
     "name": "TestRule",
-    "description": "Test Rule",
-    "version": 1,
     "tasks": 
     [
      {
@@ -140,18 +137,8 @@ And following workflow definition.
       "type": "BUSINESS_RULE"
       }
     ],
-    "inputParameters": [],
-    "outputParameters": 
     {
     },
-    "schemaVersion": 2,
-    "restartable": true,
-    "workflowStatusListenerEnabled": false,
-    "ownerEmail": "example@email.com",
-    "timeoutPolicy": "ALERT_ONLY",
-    "timeoutSeconds": 0,
-    "variables": {},
-    "inputTemplate": {}
 }
   ```
   If the workflow is triggered using input as: 

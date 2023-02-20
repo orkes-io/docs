@@ -112,7 +112,6 @@ Example:
 {
   "name": "dynamic_workflow_array_simple",
   "description": "Dynamic workflow array - run simple task",
-  "version": 1,
   "tasks": [
     {
       "name": "dynamic_workflow_array_simple",
@@ -144,8 +143,6 @@ Example:
       "type": "JOIN"
     }
   ],
-  "schemaVersion": 2,
-  "ownerEmail": "boney@orkes.io"
 }
 ```
 We can also use simple values or a mix of complex and simple objects.
@@ -177,7 +174,6 @@ Example:
 {
   "name": "dynamic_workflow_array_http",
   "description": "Dynamic workflow array - run HTTP tasks",
-  "version": 1,
   "tasks": [
     {
       "name": "dynamic_workflow_array_http",
@@ -204,8 +200,6 @@ Example:
       "type": "JOIN"
     }
   ],
-  "schemaVersion": 2,
-  "ownerEmail": "boney@orkes.io"
 }
 ```
 </p>
@@ -221,15 +215,15 @@ Run a sub-workflow for each of the inputs provided
 | forkTaskWorkflowVersion | Optional version of the workflow to run. |
 | forkTaskInputs | Array of inputs - a task will be executed for each input. |
 
->**Note :**
+:::note
 **forkTaskWorkflow** - When this value is present, Conductor treats this as a dynamic fork that runs sub workflows.
+:::
 
 Example:
 ```json
 {
   "name": "dynamic_workflow_array_sub_workflow",
   "description": "Dynamic workflow array - run sub workflow tasks",
-  "version": 1,
   "tasks": [
     {
       "name": "dynamic_workflow_array_sub_workflow",
@@ -255,8 +249,6 @@ Example:
       "type": "JOIN"
     }
   ],
-  "schemaVersion": 2,
-  "ownerEmail": "boney@orkes.io"
 }
 ```
 </p>

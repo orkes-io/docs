@@ -70,7 +70,9 @@ If you have 1000 task executions waiting in the queue, and 1000 workers polling 
 
 ### Task Rate limits
 
-> Note: Rate limiting is only supported for the Redis-persistence module and is not available with other persistence layers.
+:::note
+Rate limiting is only supported for the Redis-persistence module and is not available with other persistence layers.
+:::
 
 * **rateLimitFrequencyInSeconds** and **rateLimitPerFrequency** should be used together.
 * **rateLimitFrequencyInSeconds** sets the "frequency window", i.e the **duration** to be used in **events per duration**. Eg: 1s, 5s, 60s, 300s etc.

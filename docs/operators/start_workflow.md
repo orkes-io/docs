@@ -75,7 +75,6 @@ Let’s see a sample JSON file for the start workflow task:
 {
 "name": "sample_start_workflow",
 "description": "Sample Workflow to start a new workflow.",
-"version": 1,
 "tasks": [
   {
     "name": "start",

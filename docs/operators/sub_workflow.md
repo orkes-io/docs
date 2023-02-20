@@ -8,9 +8,10 @@ import TabItem from '@theme/TabItem';
 ```
 
 ## Configurations
->*Notes* :
+:::note
 * The Do-While task does not allow nested Do-While tasks. But it does permit a sub-workflow that can have a Do-While loop inside it.
 * Dynamic Forks can only contain one task. But using the sub-workflow concept, this single task can be a sub-workflow that includes additional tasks.
+:::
 
 ### Input Parameters
 
@@ -89,11 +90,6 @@ Instead, you can call the existing workflow as a SUB_WORKFLOW task.
        "name": "shipping_rate",
        "version": 1
      },
-     "joinOn": [],
-     "optional": false,
-     "defaultExclusiveJoinTask": [],
-     "asyncComplete": false,
-     "loopOver": []
    }
 
 ```

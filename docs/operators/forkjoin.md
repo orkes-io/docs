@@ -177,9 +177,9 @@ Here's the JSON definition for the workflow:
   }
 ]
 ```
->**NOTE:**
+:::note
 There are three parallel 'tines' to this fork, but only two outputs are required for the JOIN to continue. The diagram does draw an arrow from **http_notification_ref** to the **notification_join**, but it is not required for the workflow to continue.
-
+:::
 Here is what the output of notification_join will look like. The output is a map, where the keys are the names of task references being joined. The corresponding values are the outputs of those tasks.
 
 ```json
