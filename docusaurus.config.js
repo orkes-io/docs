@@ -151,6 +151,10 @@ const config = {
                             to: '/docs/how-tos/Tasks/task-configurations',
                             from: '/docs/how-tos/task-configurations',
                         },
+                        {
+                            to: '/docs/getting-started/playground/using-conductor-playground',
+                            from: '/docs/getting-started/playground/first-playground-application',
+                        },
                     ],
             },
         ],
