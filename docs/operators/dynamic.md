@@ -16,7 +16,7 @@ The dynamic task allows you to execute one of the registered tasks dynamically a
      "name": "dynamic_task",
      "taskReferenceName": "dynamic_task_ref",
      "inputParameters": {
-       "taskToExecute": ""
+       "taskToExecute": "${workflow.input.somevalue}"
      },
      "type": "DYNAMIC",
      "dynamicTaskNameParam": "taskToExecute"

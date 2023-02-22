@@ -18,7 +18,7 @@ The Wait task is used when the workflow needs to be paused for an external signa
       "taskReferenceName": "wait_task_ref",
       "type": "WAIT",
       "inputParameters": {
-        "duration": "5 days"
+        "duration": "x days"
       }
     }
 ```
