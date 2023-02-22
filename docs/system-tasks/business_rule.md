@@ -17,7 +17,7 @@ Business rule task helps evaluate business rules compiled in spreadsheets. Condu
  ```json
 {
 "name": "execute_rule",
-"taskReferenceName": "execute_rule",
+"taskReferenceName": "execute_rule_ref",
 "inputParameters": 
  {
     "ruleFileLocation": "https://business-rules.s3.amazonaws.com/rules.xlsx",
@@ -75,7 +75,7 @@ Business rule task supports the following operators:
  ```json
 {
 "name": "execute_rule",
-"taskReferenceName": "execute_rule",
+"taskReferenceName": "execute_rule_ref",
 "inputParameters": 
  {
     "ruleFileLocation": "https://business-rules.s3.amazonaws.com/rules.xlsx",

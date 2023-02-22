@@ -12,7 +12,7 @@ A Kafka Publish task is used to push messages to another microservice via Kafka.
 ```json
 {
   "name": "call_kafka",
-  "taskReferenceName": "call_kafka",
+  "taskReferenceName": "call_kafka_ref",
   "inputParameters": {
     "kafka_request": {
       "topic": "userTopic",
@@ -50,7 +50,7 @@ The producer created in the Kafka task is cached. By default, the cache size is 
  ```json
 {
   "name": "call_kafka",
-  "taskReferenceName": "call_kafka",
+  "taskReferenceName": "call_kafka_ref",
   "inputParameters": {
     "kafka_request": {
       "topic": "userTopic",

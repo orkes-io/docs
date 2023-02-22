@@ -11,7 +11,9 @@ The HTTP_POLL is a conductor task used to invoke HTTP API until the specified co
 ## Configurations
 ```json
 {
-     "type": "HTTP_POLL",
+     "name": "http_poll_task",
+    "taskReferenceName": "http_poll_task_ref",
+    "type": "HTTP_POLL",
      "inputParameters": {
        "http_request": {
          "uri": "https://orkes-api-tester.orkesconductor.com/get",
@@ -65,6 +67,8 @@ Apart from the above parameters, ensure that the following basic parameters for 
 
  ```json
 {
+    "name": "http_poll_task",
+    "taskReferenceName": "http_poll_task_ref",
      "type": "HTTP_POLL",
      "inputParameters": {
        "http_request": {

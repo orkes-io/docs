@@ -25,12 +25,15 @@ You can leverage the **Custom** option for integrating other than the above-ment
 
 ```json
 {
-     "inputParameters": {
-       "matches": {
-         "$['event']['type']": "message"
-       }
-     }
-}
+      "name": "webhook_task",
+      "taskReferenceName": "webhook_task_ref",
+      "inputParameters": {
+        "matches": {
+          "$['event']['text']": "$.{workflow.input.somevalue}"
+        }
+      },
+      "type": "WAIT_FOR_WEBHOOK"
+    }
 ```
 
 ### Input Parameters
@@ -57,12 +60,15 @@ For example, the above one will be used to match the webhook event payload where
 
  ```json
 {
-     "inputParameters": {
-       "matches": {
-         "$['event']['type']": "message"
-       }
-     }
-}
+      "name": "webhook_task",
+      "taskReferenceName": "webhook_task_ref",
+      "inputParameters": {
+        "matches": {
+          "$['event']['text']": "$.{workflow.input.somevalue}"
+        }
+      },
+      "type": "WAIT_FOR_WEBHOOK"
+    }
 ```
 
 </TabItem>
@@ -110,6 +116,10 @@ Now you have created your workflow. Let’s create a Webhook now.
 | Start workflow when webhook events come | Check this option to start a new workflow based on the data received from the webhook event. Once enabled, you need to choose the workflow to be executed. |
 
 4. Click **Create** button, and the Conductor will generate a Webhook URL, which will be unverified.
+
+:::note
+If you have enabled the option to **Start workflow when webhook event comes**, the event payload will be passed as input to the specified workflow.
+:::
 
 ## Different Types of Webhook
 
@@ -163,26 +173,6 @@ The process of verifying the URL varies with the Webhook type.
 * **Header-based verifiers** - The URL is marked as verified when the first Webhook event comes with all the header keys and values configured.
 * **Challenge-based verifiers** - The URL is marked as verified when the challenge request comes from the system.
 * **Signature-based verifiers** - The URL is marked as verified when the request comes with the header configured and when the request payload hash in the header and the calculated hash on the Conductor side match.
-
-## Run Workflow
-
-Once the URL is verified, you can run the workflow. 
-
-1. From **Conductor**, click on **Run Workflow**.
-2. Choose your workflow under the field **Workflow Name**.
-3. Click **Run Workflow**.
-4. To check the workflow execution status, click on the generated workflow ID. It would be in the **RUNNING** state.
-
-<p align="center"><img src="/content/img/Sample-Webhook-Workflow-in-RUNNING-status.png" alt="Webhook workflow in RUNNING status" width="100%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
-
-5. Complete the requested action from the external system. For example, if the external system is Slack and the action is posting updates to a channel. Open Slack and send the text message to the channel. 
-6. The workflow executes and the status changes to **COMPLETED**.
-
-<p align="center"><img src="/content/img/Sample-Webhook-Workflow-in-COMPLETED-status.png" alt="Webhook workflow in COMPLETED status" width="100%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
-
-:::note
-If you have enabled the option to **Start workflow when webhook event comes**, the event payload will be passed as input to the specified workflow.
-:::
 
 ## Examples
 

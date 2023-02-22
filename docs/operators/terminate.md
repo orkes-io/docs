@@ -49,7 +49,7 @@ The Terminate task is a task that can terminate the workflow with a termination 
 ```json
 {
  "name": "terminate",
- "taskReferenceName": "terminate0",
+ "taskReferenceName": "terminate_ref",
  "inputParameters": {
      "terminationStatus": "COMPLETED",
      "terminationReason": "Some reason",

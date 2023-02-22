@@ -16,18 +16,22 @@ EVENT is a task used to publish an event into one of the supported eventing syst
 Configuration for publishing an event into SQS to notify an external system.
 
 ```json
-{
-   "type": "EVENT",
-   "sink": "sqs:sqs_queue_name"
-}
+  {
+      "name": "event_task",
+      "taskReferenceName": "event_task_ref",
+      "type": "EVENT",
+      "sink": "sqs:sqs_queue_name"
+    }
 ```
 
 Configuration for publishing an event into Kafka to notify an external system.
 
 ```json
 {
-   "type": "EVENT",
-   "sink": "kafka:external_event_name"
+    "name": "event_task",
+    "taskReferenceName": "event_task_ref",
+    "type": "EVENT",
+    "sink": "kafka:external_event_name"
 }
 ```
 
@@ -55,10 +59,12 @@ Conductor has support for the following external event queueing systems as part 
  <TabItem value="JSON" lable="JSON">
 
  ```json
-{
-   "type": "EVENT",
-   "sink": "sqs:sqs_queue_name"
-}
+ {
+      "name": "event_task",
+      "taskReferenceName": "event_task_ref",
+      "type": "EVENT",
+      "sink": "sqs:sqs_queue_name"
+    }
 ```
 
 </TabItem>

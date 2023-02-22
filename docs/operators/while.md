@@ -54,7 +54,7 @@ The Do While task sequentially executes a list of tasks as long as a condition i
 ```json
 {
    "name": "Loop Task",
-   "taskReferenceName": "LoopTask",
+   "taskReferenceName": "LoopTask_ref",
    "type": "DO_WHILE",
    "inputParameters": {
      "value": "${workflow.input.value}"

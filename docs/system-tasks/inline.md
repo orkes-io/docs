@@ -13,7 +13,7 @@ The inline task helps execute necessary logic at the workflow run-time using an 
 ```json
 {
   "name": "inline_task_example",
-  "taskReferenceName": "inline_task_example",
+  "taskReferenceName": "inline_task_example_ref",
   "type": "INLINE",
   "inputParameters": {
       "value": "${workflow.input.value}",
@@ -40,7 +40,7 @@ Besides the expression, any of the properties in the input values is accessible 
  ```json
 {
   "name": "inline_task_example",
-  "taskReferenceName": "inline_task_example",
+  "taskReferenceName": "inline_task_example_ref",
   "type": "INLINE",
   "inputParameters": {
       "value": "${workflow.input.value}",

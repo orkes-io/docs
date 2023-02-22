@@ -11,6 +11,8 @@ HTTP task allows you to make calls to remote services exposed over HTTP/HTTPS.
 
  ```json
 {
+    "name": "http_task",
+    "taskReferenceName": "http_task_ref",
     "type" : "HTTP",
     "inputParameters": {
         "uri": "https://catfact.ninja/fact",
@@ -50,6 +52,8 @@ HTTP task allows you to make calls to remote services exposed over HTTP/HTTPS.
 
  ```json
 {
+    "name": "http_task",
+    "taskReferenceName": "http_task_ref",
     "type" : "HTTP",
     "inputParameters": {
         "uri": "https://catfact.ninja/fact",
