@@ -44,7 +44,7 @@ The Terminate Workflow task is used to terminate other workflows using their wor
 ```json
 {
  "name": "terminate_workflow_example",
- "taskReferenceName": "terminate_wfs_1",
+ "taskReferenceName": "terminate_ref",
  "inputParameters": {
    "workflowId": ["0ea3b193-7268-4886-aa97-d6ed170de854", "${workflow.input.idProvidedFromWorkflowInput}"],
    "terminationReason": "Custom reason for termination"

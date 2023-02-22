@@ -60,12 +60,15 @@ For example, the above one will be used to match the webhook event payload where
 
  ```json
 {
-     "inputParameters": {
-       "matches": {
-         "$['event']['type']": "message"
-       }
-     }
-}
+      "name": "webhook_task",
+      "taskReferenceName": "webhook_task_ref",
+      "inputParameters": {
+        "matches": {
+          "$['event']['text']": "$.{workflow.input.somevalue}"
+        }
+      },
+      "type": "WAIT_FOR_WEBHOOK"
+    }
 ```
 
 </TabItem>

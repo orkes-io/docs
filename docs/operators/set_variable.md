@@ -30,7 +30,7 @@ Set Variable allows you to set the workflow variables by creating or updating th
 ```json
 {
      "name": "Set_Name",
-     "taskReferenceName": "Set_Name",
+     "taskReferenceName": "Set_Name_ref",
      "type": "SET_VARIABLE",
      "inputParameters": {
        "name": "Orkes"

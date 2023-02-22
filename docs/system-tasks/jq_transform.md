@@ -14,7 +14,7 @@ The JSON_JQ_TRANSFORM task is a System task that allows the processing of JSON d
 ```json
 {
   "name": "jq_example_task",
-  "taskReferenceName": "my_jq_example_task",
+  "taskReferenceName": "my_jq_example_task_ref",
   "type": "JSON_JQ_TRANSFORM",
   "inputParameters": {
     "key1": {
@@ -57,7 +57,7 @@ The JSON_JQ_TRANSFORM task is a System task that allows the processing of JSON d
  ```json
 {
   "name": "jq_example_task",
-  "taskReferenceName": "my_jq_example_task",
+  "taskReferenceName": "my_jq_example_task_ref",
   "type": "JSON_JQ_TRANSFORM",
   "inputParameters": {
     "key1": {
@@ -104,7 +104,7 @@ This is a banana 🍌
 ```json
 {
   "name": "jq_example_task",
-  "taskReferenceName": "my_jq_example_task",
+  "taskReferenceName": "my_jq_example_task_ref",
   "type": "JSON_JQ_TRANSFORM",
   "inputParameters": {
     "key1": {

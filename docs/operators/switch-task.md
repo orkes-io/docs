@@ -18,7 +18,7 @@ The switch task is used for creating branching logic. It is a representation of 
 ```json
     {
       "name": "switch_task",
-      "taskReferenceName": "switch_task",
+      "taskReferenceName": "switch_task_ref",
       "inputParameters": {
         "switchCaseValue": "${workflow.input.service}"
       },
@@ -63,7 +63,7 @@ Workflow with the switch task definition that uses **value-param** evaluatorType
 ```json
     {
       "name": "switch_task",
-      "taskReferenceName": "switch_task",
+      "taskReferenceName": "switch_task_ref",
       "inputParameters": {
         "switchCaseValue": "${workflow.input.service}"
       },

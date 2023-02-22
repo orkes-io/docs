@@ -35,11 +35,13 @@ The Wait task is used when the workflow needs to be paused for an external signa
 
  ```json
 {
- "taskType": "WAIT",
- "inputParameters": {
-   "duration": "2 days 3 hours" 
- }
-}
+      "name": "wait_task",
+      "taskReferenceName": "wait_task_ref",
+      "type": "WAIT",
+      "inputParameters": {
+        "duration": "2 days 3 hours"
+      }
+    }
 ```
 </TabItem>
 <TabItem value="Java" label="Java">

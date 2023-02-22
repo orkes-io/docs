@@ -54,10 +54,10 @@ During execution, the DYNAMIC task is replaced in the workflow with whatever tas
 
 ```json
 {
-     "name": "dynamic_task_9mhy9f_ref",
-     "taskReferenceName": "dynamic_task_9mhy9f_ref",
+     "name": "dynamic_task",
+     "taskReferenceName": "dynamic_task_ref",
      "inputParameters": {
-       "taskToExecute": ""
+       "taskToExecute": "${workflow.input.somevalue}"
      },
      "type": "DYNAMIC",
      "dynamicTaskNameParam": "taskToExecute"

@@ -47,8 +47,8 @@ The output of the sub-workflow is also supplied to the output of the workflow.
 
 ```json
     {
-     "name": "sub_workflow_task_2tuqx_ref",
-     "taskReferenceName": "sub_workflow_task_2tuqx_ref",
+     "name": "sub_workflow_task",
+     "taskReferenceName": "sub_workflow_ref",
      "inputParameters": {},
      "type": "SUB_WORKFLOW",
      "subWorkflowParam": {
