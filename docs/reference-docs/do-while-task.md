@@ -33,6 +33,7 @@ Branching inside loopOver task is supported.
 |---|---|---|
 |loopCondition|String|Condition to be evaluated after every iteration. This is a Javascript expression evaluated using the Nashorn engine. If an exception occurs during evaluation, the DO_WHILE task is set to FAILED_WITH_TERMINAL_ERROR.|
 |loopOver|List[Task]|List of tasks that needs to be executed as long as the condition is true.|
+|evaluatorType|Enum|graaljs - Use graaljs as condition evaluator, javascript - Use javascript as condition evaluator, value-param - Use key-value param as condition evalautor|
 
 ### Output Parameters
 
@@ -154,14 +155,6 @@ In tasks embedded in the loop, ```${get_all_stars_loop_ref.output.iteration}``` 
         "stargazers": "4000"
       },
       "type": "DO_WHILE",
-      "decisionCases": {},
-      "defaultCase": [],
-      "forkTasks": [],
-      "startDelay": 0,
-      "joinOn": [],
-      "optional": false,
-      "defaultExclusiveJoinTask": [],
-      "asyncComplete": false,
       "loopCondition": "if ($.get_all_stars_loop_ref['iteration'] < Math.ceil($.stargazers/100)) { true; } else { false; }",
       "loopOver": [
         {
@@ -178,17 +171,7 @@ In tasks embedded in the loop, ```${get_all_stars_loop_ref.output.iteration}``` 
               }
             }
           },
-          "type": "HTTP",
-          "decisionCases": {},
-          "defaultCase": [],
-          "forkTasks": [],
-          "startDelay": 0,
-          "joinOn": [],
-          "optional": false,
-          "defaultExclusiveJoinTask": [],
-          "asyncComplete": false,
-          "loopOver": [],
-          "retryCount": 3
+          "type": "HTTP"
         }
       ]
     }
