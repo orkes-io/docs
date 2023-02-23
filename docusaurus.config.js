@@ -153,7 +153,7 @@ const config = {
                         },
                         {
                             to: '/docs/getting-started/playground/using-conductor-playground',
-                            from: '/docs/getting-started/playground/first-playground-application',
+                            from: '/docs/getting-started/playground/first-playground-application/',
                         },
                     ],
             },
