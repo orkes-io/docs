@@ -15,7 +15,7 @@ const config = {
     favicon: 'https://orkes.io/icons/icon-144x144.png',
     organizationName: 'orkes-io', // Usually your GitHub org/user name.
     projectName: 'docs', // Usually your repo name.
-    trailingSlash: true,
+    trailingSlash: false,
     scripts: [
         'https://www.googletagmanager.com/gtag/js?id=G-4400JPTLRF',
         {
