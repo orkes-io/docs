@@ -261,6 +261,11 @@ module.exports = {
             items: [
                 {
                     type: 'doc',
+                    id: 'usecases/availability-monitoring-for-http-endpoints',
+                    label: 'Availability Monitoring for HTTP Endpoints'
+                },
+                {
+                    type: 'doc',
                     id: 'usecases/image_processing/README',
                     label: 'Image Processing Workflows'
                 },
