@@ -97,7 +97,7 @@ Now that we have the ChatGPT-generated Workers and Workflow ready (Although our 
 We conducted a few more trials on several use cases, and here are the workflow definitions that ChatGPT has defined.
 
 * [Shipping an order](https://play.orkes.io/workflowDef/ship-order-workflow-chatgpt/1)
-* [Telecom subscriber and billing management](https://play.orkes.io/workflowDef/telecom-subscriber-billing-workflow-chatgpt/1)
+* [Telecom subscription and billing management](https://play.orkes.io/workflowDef/telecom-subscriber-billing-workflow-chatgpt/1)
 
 :::note
 We have not tested the above ChatGPT-generated workflows.
