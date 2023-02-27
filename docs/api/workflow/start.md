@@ -54,7 +54,10 @@ workflow_id = workflow_executor.start_workflow(
   <TabItem value="CSharp" label="CSharp">
       This is a banana 🍌
   </TabItem>
-  <TabItem value="javascript" label="Javascript">
+  <TabItem value="Javascript" label="Javascript">
+        This is a banana 🍌
+    </TabItem>
+     <TabItem value="Clojure" label="Clojure">
         This is a banana 🍌
     </TabItem>
 </Tabs>
