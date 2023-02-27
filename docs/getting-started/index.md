@@ -98,6 +98,14 @@ python3 main.py
 
 ```
 </TabItem>
+<TabItem value="CSharp" label="CSharp">
+
+```shell
+git clone https://github.com/conductor-sdk/csharp-sdk-examples
+# Run the main program
+dotnet run
+```
+</TabItem>
 <TabItem value="Javascript" label="Javascript">
 
 ```shell
@@ -106,13 +114,7 @@ yarn #To install dependencies.
 yarn test #To run the test examples
 ```
 </TabItem>
-<TabItem value="CSharp" label="CSharp">
-
-```shell
-git clone https://github.com/conductor-sdk/csharp-sdk-examples
-# Run the main program
-dotnet run
-```
+<TabItem value="Clojure" label="Clojure">
 </TabItem>
 </Tabs>
 

@@ -1,16 +1,12 @@
 ---
-sidebar_position: 1
+sidebar_position: 2
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-
-# Synchronous execution
-### API
-    POST /api/workflow/execute/{name}/{version} -d {}
-
-## Client SDK Methods
+# Re-Run a completed workflow
+Starts a workflow and returns the **id** if the started workflow.  The API returns immediately without the waiting for workflow to be completed.
 
 <Tabs>
 <TabItem value="Java" label="Java">
@@ -30,7 +26,20 @@ import TabItem from '@theme/TabItem';
   <TabItem value="CSharp" label="CSharp">
       This is a banana 🍌
   </TabItem>
-  <TabItem value="javascript" label="Javascript">
+  <TabItem value="Javascript" label="Javascript">
+        This is a banana 🍌
+    </TabItem>
+    <TabItem value="Clojure" label="Clojure">
         This is a banana 🍌
     </TabItem>
 </Tabs>
+
+## Request
+Input to the start workflow API is the payload is a JSON map of the input to the workflow.
+```json
+{
+
+}
+```
+
+## Response

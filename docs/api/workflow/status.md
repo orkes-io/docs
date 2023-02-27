@@ -26,7 +26,10 @@ Starts a workflow and returns the **id** if the started workflow.  The API retur
   <TabItem value="CSharp" label="CSharp">
       This is a banana 🍌
   </TabItem>
-  <TabItem value="javascript" label="Javascript">
+  <TabItem value="Javascript" label="Javascript">
+        This is a banana 🍌
+    </TabItem>
+    <TabItem value="Clojure" label="Clojure">
         This is a banana 🍌
     </TabItem>
 </Tabs>

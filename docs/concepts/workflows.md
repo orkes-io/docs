@@ -5,7 +5,7 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 # Workflows, Tasks and Operators
-Distributed stateful applications that uses Conductor to manage their state and execution graph are built using __Workflows__
+Distributed stateful applications that use Conductor to manage their state and execution graph are built using __Workflows__.
 
 ## Workflows
 
@@ -14,16 +14,16 @@ Workflow = {Tasks + Operators}
 ```
 
 __Workflow__ can be defined as the collection of tasks and operators that specifies the order and execution of the defined tasks.
-This orchestration process takes place in a hybrid ecosystem that encircles serverless functions, microservices and monolithic applications.
+This orchestration process takes place in a hybrid ecosystem that encircles serverless functions, microservices, and monolithic applications.
 Furthermore, as the Conductor is language agnostic, the orchestration can be across any programming language.
 
 ### Creating A Conductor Workflow
-Conductor definitions are like class definitions in OOP paradigm, or templates.
-You define this once, and use for each workflow execution. Definitions to Executions have 1:N relationship.
+Conductor definitions are like class definitions in the OOP paradigm or templates.
+You define this once and use it for each workflow execution. Definitions to Executions have 1:N relationship.
 
 Conductor does not enforce one specific way to define your workflows.  You can create your workflow definitions in multiple ways:
-1. Using Code with SDK support in Java, Golang, Python, C#, Javascript and Clojure.
-2. Using JSON based configuration
+1. Using Code with SDK support in Java, Golang, Python, C#, Javascript, and Clojure.
+2. Using JSON-based configuration
 3. Visually using UI
 
 ### Example workflow
@@ -92,16 +92,20 @@ workflow.add(decision);
   <TabItem value="CSharp" label="CSharp">
       This is a banana 🍌
   </TabItem>
+    <TabItem value="Javascript" label="Javascript">
+      This is a banana 🍌
+  </TabItem>
+    <TabItem value="Clojure" label="Clojure">
+      This is a banana 🍌
+  </TabItem>
 </Tabs>
 
 ## Tasks
-A task is the fundamental building block of a workflow.
-A __Task__ represents the business logic execution such as making an HTTP call, sending an email, or doing work such as processing data files or executing some business logic.
+A task is the fundamental building block of a workflow. A **task** represents the business logic execution, such as making an HTTP call, sending an email, or doing work, such as processing data files or executing some business logic.
 
 ## Task Workers
 
-Workers are used to implement a task.  A worker runs _outside_ of a Conductor server.
-Worker can implemented in any language and framework of your choice.  Here is a sample worker that takes **name** as input and returns **Hello {name}**.
+Workers are used to implement a task. A worker runs outside of a Conductor server. A worker can be implemented in any language and framework of your choice. Here is a sample worker that takes the **name** as input and returns **Hello {name}**.
 
 #### Hello World Worker
 <Tabs>
@@ -137,10 +141,15 @@ public String greetings(@InputParam("name") String name) {
   <TabItem value="CSharp" label="CSharp">
       This is a banana 🍌
   </TabItem>
+   <TabItem value="Javascript" label="Javascript">
+      This is a banana 🍌
+  </TabItem>
+    <TabItem value="Clojure" label="Clojure">
+      This is a banana 🍌
+  </TabItem>
 </Tabs>
 
 Conductor is agnostic to how the workers are deployed and provide lightweight SDKs in all major languages that allow you to expose existing functionality as Conductor Workers. Workers can run on bare metal, containers, VMs, or as serverless functions.
 
 ## Operators
-An __Operator__ in a workflow is your programming language construct such as a switch, loop, fork/join or return statement.
-Operators are used to control the execution flow in the workflow - such as implementing branching, parallel executions, loops etc.
+An **Operator** in a workflow is your programming language construct, such as a switch, loop, fork/join, or return statement. Operators are used to control the execution flow in the workflow - such as implementing branching, parallel executions, loops, etc.

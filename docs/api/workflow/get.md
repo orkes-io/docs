@@ -5,7 +5,7 @@ sidebar_position: 2
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Delete workflow
+# Get workflow by Id
 Starts a workflow and returns the **id** if the started workflow.  The API returns immediately without the waiting for workflow to be completed.
 
 <Tabs>
@@ -26,7 +26,10 @@ Starts a workflow and returns the **id** if the started workflow.  The API retur
   <TabItem value="CSharp" label="CSharp">
       This is a banana 🍌
   </TabItem>
-  <TabItem value="javascript" label="Javascript">
+  <TabItem value="Javascript" label="Javascript">
+        This is a banana 🍌
+    </TabItem>
+    <TabItem value="Clojure" label="Clojure">
         This is a banana 🍌
     </TabItem>
 </Tabs>
