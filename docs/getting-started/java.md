@@ -7,7 +7,7 @@ import Install from '@site/src/components/install.mdx';
 
 
 # Java
-Create a Conductor workflow application in Java from scratch.
+Creating a Conductor workflow application in Java from scratch.
 
 //TODO: Video
 Ensure you have JDK 11 or higher installed on your system.  You will also need access to Conductor server.
@@ -61,7 +61,7 @@ git clone https://github.com/orkes-io/conductor-java-springboot-init
 </Tabs>
 
 ### 4. Create a workflow
-We are going to create a simple workflow for user notification with mock worker code.
+We will create a simple workflow for user notification with mock worker code.
 
 <div style={{width:"30%"}}>
 
@@ -69,9 +69,9 @@ We are going to create a simple workflow for user notification with mock worker 
 
 </div>
 
-The workflow can be created using JSON or code.  We will explore both the options in this tutorial.
+The workflow can be created using JSON or code. We will explore both options in this tutorial. 
 
-Add the workflow definitions to your project with the json file or Java code.
+First you need to add the workflow definitions to your project with the JSON file or Java code.
 
 <details><summary>Workflow JSON - IF using JSON to create workflow</summary>
 <p>
@@ -140,8 +140,7 @@ Create a file named workflow.json inside **src/main/resources** folder and paste
 <details><summary>Workflow Code - IF using code to create workflow</summary>
 <p>
 
-Create a new Class **Workflow** with the following inside a method.
-See <a href="workflow.java">Workflow.java</a> for the complete example:
+Create a new Class **Workflow** with the following inside a method. See <a href="workflow.java">Workflow.java</a> for the complete example:
 
 ```java title="Workflow.java"
 
@@ -193,10 +192,8 @@ public class Workflow {
 
 ### 5. Write workers
 :::tip Running Workers
-In this tutorial, we are running all three workers in the same application.  This is NOT required.
-In a typical production environment, you will have the workers running in their own deployments (k8s, vms or as micro-service).
-
-Deploying workers individually helps scaling them individually depending upon the workload.
+In this tutorial, we are running all three workers in the same application. This is not as required as in a typical production environment, where the workers will run in their own deployments (k8s, VMs, or micro-service).
+Deploying workers individually helps scale them depending on the workload.
 :::
 
 <details><summary>Worker implementation using annotations to convert methods to a Conductor worker</summary>
@@ -412,13 +409,13 @@ public class Main {
 </details>
 
 :::tip Creating workflows
-Workflows can be created from UI Designer with drag n' drop, in Code or using JSON, depending upon your development preferences.
+Workflows can be created from Conductor UI using drag-and-drop method, in Code, or JSON, depending on your development preferences.
 
-Visit https://play.orkes.io/ and checkout the Workflow design and try to create the same workflow using UI!
+Visit [Conductor Playground](https://play.orkes.io/) and check out the workflow design and try to create the same workflow using UI!
 :::
 
 #### Executing Workers
-The following line in the code scans the source file for any workers using annotations and autoamtically initializes them.
+The following line in the code scans the source file for any workers using annotations and automatically initializes them.
 ```java
 workflowExecutor.initWorkers(ConductorWorkers.class.getPackageName());
 ```
