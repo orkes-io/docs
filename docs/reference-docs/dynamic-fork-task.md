@@ -9,10 +9,6 @@ import TabItem from '@theme/TabItem';
 "type" : "FORK_JOIN_DYNAMIC"
 ```
 
-:::note Important Note
-This is the legacy method of using a dynamic fork join which requires a preparation task for the inputs. There is a new updated version of this that can operate on an array [Dynamic Fork Join using Arrays](./dynamic-fork-from-array-task) 
-:::
-
 ## Introduction
 
 When the number of forks must be determined at run-time, the FORK_JOIN_DYNAMIC task is needed.  (In a regular fork operation -the [FORK_JOIN](/content/docs/reference-docs/fork-task) task- the number of forks is defined during workflow creation.)
