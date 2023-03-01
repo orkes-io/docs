@@ -9,14 +9,15 @@ This feature is available only to the Admins of an Orkes Cloud instance.
 
 ## Users​
 ### Inviting Users​
-To invite a user to your Orkes Cloud instance,
+To invite a user to your Orkes Cloud instance,<br/><br/>
+
 1. From your Conductor server, navigate to **ACCESS CONTROL > Users** from your left menu.
 2. Click **Create User** button.
 3. You need to fill in the following user details:<ul><li>**Email** - Enter the email address of the user.</li><li>**Name** - Provide the user’s name.</li><li>**Roles** - Choose the access level you wish the user to have. The available Conductor roles are *Admin*, *User*, *Metadata Manager*, *Workflow Manager*, and *Read Only User*.</li></ul>
 4. Click **Create**, and an email invitation will be sent to the user with the instructions to access the Conductor instance.
 
 ### User Roles​
-A user can have the following roles:
+A user can have the following roles:<br/><br/>
 * **Admin** - An admin has full access to the Conductor instance.
 * **User** - A user can access permitted workflows and tasks and any shared Applications.
 * **Metadata Manager** - An "admin" for metadata who can create/update/delete any workflow or task.
@@ -52,7 +53,7 @@ Even if certain permissions are granted under the **Workflow and Tasks Permissio
 
 ### Group Roles
 Group roles allow you to add/remove permissions to groups of users quickly. The roles are the same for an individual user but are quickly applied to everyone in the group. Group has five possible roles: Admin, User, Metadata Manager, Workflow Manager, and Read Only User.
-
+<br/>
 If a role is defined for these members, they will all be given this role for the Conductor instance. For example, if Admin is selected, all the group members are now admins irrespective of their individual roles.
 
 ### Editing Groups
