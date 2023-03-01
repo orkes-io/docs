@@ -44,7 +44,8 @@ To create a user group:
 4. Once the group is created, you can add members by clicking +Add User from the Members section. You can add only the users that have already been created/invited. If the user you are looking for has not been added, you can [invite](/content/docs/getting-started/concepts/access-control-users#inviting-users) and then add them to the groups.
 
 **Workflow and Tasks Permissions**  is an additional section where you can limit the group members' access to the permitted workflows and tasks.
-6. Click **+Add Permission**, and you can choose the group to have access to selected Workflows/Tasks/Secrets/Tags. Permissions that can be granted include Read, Create, Update, Execute & Delete.
+
+5. Click **+Add Permission**, and you can choose the group to have access to selected Workflows/Tasks/Secrets/Tags. Permissions that can be granted include Read, Create, Update, Execute & Delete.
 <center><img src="/content/img/workflows-and-tasks-permissions.png" alt="Granting access to specific tasks and workflows" width="90%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></center>
 
 :::info
