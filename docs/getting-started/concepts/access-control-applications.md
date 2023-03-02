@@ -71,8 +71,6 @@ In this section, you can provide the application with access to workflows, tasks
 When providing permission for tasks, you can specify a [domain](https://orkes.io/content/docs/how-tos/Tasks/task-domains). This allows you to direct all traffic to a specific task instance without specifying it in the API.
 :::
 
-<p align="center"><img src="/content/img/workflows-and-tasks-permission-list.png" alt="Workflows and Task with the provided permissions" width="80%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
-
 ## Generating Token
 
 The Access Key & Secret created above can be used to create JWT to authenticate the user and allow a connection to the Conductor server. All of the [Conductor SDKs](https://github.com/conductor-sdk/) support this authentication step. When using a Conductor SDK, the Key & Secret is provided to the SDK, and the authentication is handled automatically.
