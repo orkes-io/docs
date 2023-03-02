@@ -4,11 +4,9 @@ sidebar_position: 4
 
 # Access Control: Applications
 
-With [Orkes Cloud](https://orkes.io/cloud/), your Conductor server may be running in a different hosted environment than your workers. The need to restrict access is required to address the security concerns as the APIs are exposed on the internet. 
+Orkes has added a security layer called Applications to address the concerns with the APIs being exposed on the internet. Every connection in/out of Orkes Cloud requires an Authentication header with a JSON Web Token (JWT) token. This header is of the format: `'X-Authorization: <JWT Token>'`.
 
-Orkes has added a security layer called Applications to address such concerns. Every connection in/out of Orkes Cloud requires an Authentication header with a JSON Web Token (JWT) token. This header is of the format: `'X-Authorization:  <JWT Token>'`.
-
-In this document, we will walk through the steps to create application-based control of your workflows and tasks and the process to generate JWT tokens for each application.
+This document will walk you through the steps to create application-based control for your workflows and tasks and the process to generate JWT tokens for each application.
 
 ## Prototyping
 
@@ -16,10 +14,9 @@ If you are looking for a quick way to test on Orkes Cloud without creating an ap
 
 <p align="center"><img src="/content/img/prototyping.jpg" alt="Copying the user token from Conductor instance" width="90%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
-
 ## Application
 
-Each application can generate one or more sets of keys and secrets, and these parameters are used to generate the JWT token. Each application can generate one or more sets of Access Keys for access control to the application. An application can grant access to workflows, tasks, or both.
+Each application can generate one or more sets of keys and secrets, and these parameters are used to generate the JWT token. An application can grant access to workflows, tasks, secrets & tags.
 
 <p align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/0QgnwYMtNj8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
 
@@ -28,21 +25,21 @@ Each application can generate one or more sets of keys and secrets, and these pa
 To create a new application,
 
 1. From the left menu navigation, choose **ACCESS CONTROL > Applications**.
-2. Click **Create Application**.
+2. Click **Create Application** and provide an app name.
 3. Once your application is created, click the edit button next to its name.
 <p align="center"><img src="/content/img/creating-application.png" alt="Creating an application for access control in Conductor" width="90%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
 ### Application Roles
 
-There are several application roles that can be granted to the application.
+The following roles can be granted to the application.
 
-* **Worker**: Poll and update Tasks. This would be chosen by default. It requires EXECUTE permissions on the tasks.
-* **Metadata API**: Create and manage Workflow and Task Definitions. 
+* **Worker**: Poll and update tasks. It requires EXECUTE permissions on the tasks.
+* **Metadata API**: Create and manage workflow and task definitions.
 * **Application API**: Create and manage applications.
 
 ### Access Keys
 
-Once your application's permission levels are chosen, access must be granted to the application. This is done by generating an Access Key. To generate an access key, click **Create Access Key**, which will generate a unique *Key Id* and *Key Secret*. These values are shown only once, so ensure to copy the credentials and store them privately.
+Once your application's permission levels are chosen, access must be granted to the application. This is done by generating an Access Key. Click **Create Access Key** to generate a unique *Key Id* and *Key Secret*. These values are shown only once, so ensure to copy the credentials and store them privately.
 
 <p align="center"><img src="/content/img/create-access-key.jpg" alt="Generating Key Id and Key Secrets" width="50%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
@@ -50,30 +47,29 @@ Once a key has been created, you can perform two actions on the key:
 
 <p align="center"><img src="/content/img/actions-on-the-generated-key.jpg" alt="Generated Key in the Conductor" width="90%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
-* **Pause** - Use the pause button to restrict access to the application temporarily. You can resume this access by un-pausing the button.
+* **Pause** - Use the pause button to restrict access to the application temporarily. You can resume this access by un-pausing.
 * **Delete** - Use the delete button to remove the key permanently. It is a one-time action that cannot be undone.
 
 ### Workflow & Task Permissions
 
-To add a Workflow/Task permission, 
+In this section, you can provide the application with access to workflows, tasks, secrets, or tags. To add the permissions,
 
 1. Click **+Add Permission** at the top of the **Workflow and Task Permissions** table.
-2. In the pop-up window, choose the **Target Type** as Workflow/Task/Secret/Tag.
-3. Choose the targets. 
-4. Choose the permission for the selected targets. The permissions include Read, Create, Update, Execute and Delete.
-  * **Read** - The user can view the workflow/task but cannot modify or run them.
-  * **Create** - The user can create the workflow/task.
-  * **Update** - Allows the user to update the workflow/task. Requires *Metadata API* role for this.
+2. In the pop-up window, choose the required **Target Type** from Workflow/Task/Secret/Tag.
+3. Select all targets that the application needs access to.
+4. Choose the required permissions for the selected targets. 
+  * **Read** - The user can view the workflow/task/secret/tags, but cannot modify or run them.
+  * **Create** - The user can create the workflow/task/secret/tags.
+  * **Update** - Allows the user to update the workflow/task/secret/tags. Requires *Metadata API* role for this.
   * **Execute** - Allows the user to run the workflow or task. Requires *Worker* role for this.
-  * **Delete** - Allows the user to delete the workflow/task. Requires *Metadata API* role for this.
+  * **Delete** - Allows the user to delete the workflow/task/secret/tags. Requires *Metadata API* role for this.
+5. Once all the workflows and tasks have been added, the table will display the selection. It is possible to add, change or remove access from here.
 
 <p align="center"><img src="/content/img/adding-permissions.png" alt="Adding permissions for the tasks/workflows" width="50%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
 :::note
-When adding tasks, you can specify a [domain](https://orkes.io/content/docs/how-tos/Tasks/task-domains). This allows you to direct all traffic to a specific task instance without specifying it in the API.
+When providing permission for tasks, you can specify a [domain](https://orkes.io/content/docs/how-tos/Tasks/task-domains). This allows you to direct all traffic to a specific task instance without specifying it in the API.
 :::
-
-Once all the workflows and tasks have been added, the table will display the selection. It is possible to add, change and remove workflow/task access from here.
 
 <p align="center"><img src="/content/img/workflows-and-tasks-permission-list.png" alt="Workflows and Task with the provided permissions" width="80%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
@@ -91,9 +87,9 @@ curl -s -X "POST" "https://play.orkes.io/api/token" \
   {"token":"<JWT Token>"}
 ```
 
-Sending the Key Id and Secret generates a JWT. This JWT can be used to make calls to the Conductor instance.  The header for authentication is ```X-Authorization:```.
+Sending the Key Id and Secret generates a JWT. This JWT can be used to make calls to the Conductor instance.  The header for authentication is **X-Authorization:**.
 
-For example, this call to the ```super_weather``` workflow uses a JWT token to get the weather in Beverly Hills, CA:
+For example, this call to the **super_weather** workflow uses a JWT token to get the weather in Beverly Hills, CA:
 
 ```bash
 curl -s -X "POST" "https://play.orkes.io/api/workflow/super_weather" \
@@ -106,20 +102,22 @@ curl -s -X "POST" "https://play.orkes.io/api/workflow/super_weather" \
 
 Currently, these generated tokens do not have an expiry, but this is subject to change, and it is expected that in the future, these tokens will expire after a period of time.
 
-## Example Application Setup
+## Example
 
-Let's walk through the Application setup for the following example:
-
-We have 2 programs that have access to Conductor workflows. These workflows both rely on **Task X**, which is performed by a worker application **Worker X**.
-
-We could create one application with access to Workflow 1, Workflow 2, and Task X and supply keys/secrets from the application's access keys to Program 1, Program 2 and Worker X. But this violates the principle of least privilege, where applications should only have access to the endpoints they require (E.g., Worker X should not have access to execute the two workflows).
+<details><summary>Example Application Setup</summary>
+<p>
+Let’s consider that two programs have access to Conductor workflows. Both these workflows rely on a single task, i.e., Task X, which is performed by a worker application Worker X.
+<br/><br/>
+One way to handle this is to create a single application with access to Workflow 1, Workflow 2, and Task X and supply keys/secrets from the application to Program 1, Program 2, and Worker X. But this violates the principle of least privilege, where applications should only have access to the endpoints they require (E.g., Here Worker X should not have access to execute the two workflows).
 
 <p align="center"><img src="/content/img/application_access_example.jpg" alt="Example application" width="500" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
-To satisfy the principle of least privilege, we'll create 3 Applications.
+In order to satisfy the principle of least privilege, we'll create 3 Applications.
+1. Application **Worker X** with the **EXECUTE** permission for **Task X**. This allows the worker to poll the task queue for work.
+2. Application **Program 1** with the **EXECUTE** permission for **Workflow 1** and **Task X** so that it can successfully invoke **Workflow 1**.
+3. Application **Program 2** with the **EXECUTE** permission for **Workflow 2** and **Task X** so that it can successfully invoke **Workflow 2**.
 
-1. Application **Worker X** with the `EXECUTE` permission for **Task X**. This allows the worker to poll the task queue for work.
-2. Application **Program 1** with the `EXECUTE` permission for **Workflow 1** and **Task X** so that it can successfully invoke **Workflow 1**.
-3. Application **Program 2** with the `EXECUTE` permission for **Workflow 2** and **Task X** so that it can successfully invoke **Workflow 2**.
+The worker application has no access to the workflows - since this application only needs to poll the task. The other two applications have only the required access to execute the workflow and the tasks inside the specific workflow.
 
-The worker application has no access to the workflows - since this application only needs to poll the task.  The other two applications have the minimum access to execute the workflow and the tasks inside the workflow.
+</p>
+</details>
