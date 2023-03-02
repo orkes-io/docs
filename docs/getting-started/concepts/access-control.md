@@ -2,7 +2,7 @@
 sidebar_position: 3
 ---
 
-# Access Control
+# Access Control Management
 
 Your Conductor server may run in a different hosted environment than your workers. The APIs to control, run or edit your workflows shouldn’t be exposed on the internet and therefore needs to restrict access.
 
