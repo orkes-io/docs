@@ -11,7 +11,7 @@ We hope that you are enjoying this monthly update series. Do let us know your th
 
 The Orkes team continues its relentless focus on delivering excellent outcomes for our community and customers, and our developers are heads down building new capabilities in Conductor. This month, we also witnessed significant interactions and contributions from our community. 
 
-<p align="center"><img src="/content/img/orkes-newsletter-feb-2023.jpg" alt="COrkes Monthly Newsletter February 2023" width="90%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+<p align="center"><img src="/content/img/orkes-newsletter-feb-2023.jpg" alt="Orkes Monthly Newsletter February 2023" width="90%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
 ## Event Updates
 
