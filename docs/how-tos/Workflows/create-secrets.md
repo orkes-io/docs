@@ -4,58 +4,47 @@ import TabItem from '@theme/TabItem';
 
 # Using Secrets in a Workflow
 
-Many applications require the use of sensitive values that should be protected from exposure.  Items like usernames, passwords, API keys, etc., are all sensitive values that should not be kept in a workflow (that might end up on GitHub or another public site.)
+You may often be required to use sensitive values that shouldn’t be exposed, like usernames, passwords, API keys, authorization tokens, etc. Using such values directly in the workflow can end up with your private keys being opened up to vulnerabilities. 
 
-Just as programming languages and GitHub have the concept of `secrets`, so does Orkes Conductor. You can define your variables in a secure and safe way, knowing that they will not be exposed in the workflow or shared with other teammates.
+With Conductor, you can save these values as Secrets and then use them in your workflow without exposing the actual values. 
 
 
-## Using a Secret
 
-To use a secret in a workflow, you must first [create a secret](#creating-a-secret).  
+## Creating Secrets
 
-Let's assume your secret is called `GitHub_Token` To reference that secret, use the variable `${workflow.secrets.GitHub_Token}`.
-
-<p align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/yC4kOEHFfqE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
-
-## Example
-
-The US Postal Service offers APIs to help automate the shipping process with the post office.  Each API call requires a UserId to be submitted.  This UserId can be used to buy postage, so it needs to be kept secure. We've created a secret called `post_office_username` that we can now use in all API calls. (This workflow can be found in the [Conductor Examples](https://github.com/conductor-sdk/conductor-examples) Github repository.):
-
-```shell
-https://production.shippingapis.com/ShippingAPI.dll?API=RateV4&XML=<RateV4Request \
-// highlight-next-line
-USERID=${workflow.secrets.post_office_username}> \
-<Revision>2</Revision> \
-<Package ID="0"><Service>priority</Service> \
-<ZipOrigination>04046</ZipOrigination> \
-<ZipDestination>98260</ZipDestination> \
-<Pounds>20</Pounds> \
-<Ounces>0</Ounces> \
-<Container>variable</Container> \
-<Width>12</Width> \
-<Length>12</Length> \
-<Height>12</Height> \
-<Girth></Girth> \
-<Machinable>TRUE</Machinable> \
-</Package></RateV4Request>
-```
-By using `${workflow.secrets.post_office_username}`, we obfuscate this sensitive value, and it never appears in the workflow execution, or any output files of Conductor. Yet, we can connect with the USPS and obtain the postage price for our package ($82.10, in case you're wondering).
-
-## Creating a secret
-
-We'll walk through a few approaches to creating a secret, and then examples of implementing a secret.  To create a secret, you can use the API, or you can use the Orkes Dashboard.  
+To create a secret, you can use the API, or you can use the Orkes Dashboard.  
 
 <p align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/O_Ngo1Gg2Co" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
 
 
 <Tabs groupId="code" values={[
-        {label: 'API', value: 'api'},
         {label: 'Orkes Dashboard', value: 'orkes'},
+        {label: 'API', value: 'api'},
     ]}>
 
+<TabItem value="orkes">
 
+Follow the below steps to create and store secrets in Conductor:
 
+1. From your Orkes Console, navigate to the **Secrets** option from the left menu. The **Secrets** page lists all the secrets associated with your account.
 
+<p align="center"><img src="/content/img/secrets_dashboard.jpg" alt="the Orkes Cloud Secrets dashboard" width="700" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+
+2. Click **Add Secrets** and provide the following values:<ul><li>**Secret Name** - Provide a name to store your secret.</li>
+<li><b>Secret Value</b> - Copy and paste the required value to be stored as secret.</li></ul>
+3. Clicking **Add** saves the secret to your Conductor console.
+
+## Viewing/Editing/Deleting Secrets
+* **View** - Once you have created your secret, click on the eye icon next to the secret name to view the secret key. 
+* **Edit** - Click the pencil icon next to the secret name to edit and replace the secret key. 
+* **Delete** - Click the trash icon next to the secret name to delete redundant keys. 
+
+## Using Secrets in Workflow
+Once the secret is created, you can use them in the workflow using the variable `${workflow.secrets.secret_name}`.
+
+<p align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/yC4kOEHFfqE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
+
+</TabItem>
 <TabItem value="api">
 
  Each secret must have a unique key for your Conductor instance.  The first step in creating a secret key:value pair is to ensure that the key is not in use.
@@ -95,46 +84,27 @@ This creates the secret key:value pair of ```pinetree:needle```.  The only respo
 
 
 </TabItem>
-<TabItem value="orkes">
-The Orkes Dashboard allows you to create secret key:value pairs via the UI.
-
-1. Login to your Orkes Cloud dashboard.
-2. Click "Workflow Definitions." or "Secrets" in the left navigation. 
-3. Click the "Manage Secrets" button at the top of the page.
-
-Or you can simply navigate to the url `secrets` in your Orkes Cloud dashboard. 
-
-## Secrets UI
-
-The Secrets dashboard lists all of the secrets connected to your account:
-<p align="center"><img src="/content/img/secrets_dashboard.jpg" alt="the Orkes Cloud Secrets dashboard" width="700" style={{paddingBottom: 40, paddingTop: 40}} /></p>
-
-Clicking the "eye" icon next to the secret will expose the secret's value and also give you the option to change the secret value, or delete the secret altogether.
-
-To add a secret, click the `Add Secret` button at the top.  Add your Key:value and click the `Add` button.  If you receive an error, it is likely because the key is already in use, so simply select a different key.
-  
-</TabItem>
-
 </Tabs>
 
 
-## Permissions
+## Adding Tags to Secrets
+Conductor also provides the provision to add tags to secret keys. This helps in quickly sharing the secret to a group/application.
 
-If a workflow uses a Secret, we need to add access control permissions for the application to access the secret (just as an [application gives access to a workflow or task](/content/docs/getting-started/concepts/access-control-applications)).
+### Enabling Permissions for Secrets via Groups
 
+If a secret is to be shared among a User Group in Conductor, 
 
-There are 3 access parameters used with Secrets:
+1. Add the required tag in the format **key:value** to the secret. 
+2. Navigate to **ACCESS CONTROL** > **Groups** and click the edit icon near your group name.
+3. From the **Workflow and Task Permissions** section, click **+Add Permission**.
+4. Choose the **Target Type** as **Tag**, and choose your tag with the required permissions. You can select from READ, UPDATE, CREATE, EXECUTE & DELETE permissions.
+5. Clicking **Add Permissions** adds the tag to the group, thus enabling permission to all group members.
 
-* `READ`: Allows the application to read (and therefore use) the secret.
-* `UPDATE`: Provides access to share the secret with others.
-* `CREATE`: Create or overwrite an existing secret.
-
-In general, `READ` is the permission to be shared in most cases. 
-
+## Enabling Permissions for Secrets via Applications
  
 <Tabs groupId="code" values={[
-        {label: 'API', value: 'api'},
         {label: 'Orkes Dashboard', value: 'orkes'},
+        {label: 'API', value: 'api'},
     ]}>
   
 <TabItem value="api">
@@ -163,12 +133,38 @@ In this call, we give the application `orkes-workers` `READ` access to our `post
 </TabItem>
 <TabItem value="orkes">
 
-In the Orkes Dashboard, navigate to the "Applications" menu.  Choose the application you wish to add the secret to and choose `add permission`: 
-
-<p align="center"><img src="/content/img/add_secret.jpg" alt="adding a secret via UI" width="400" style={{paddingBottom: 40, paddingTop: 40}} /></p>
-
-In the image above, we are adding the secret `GH_KEY` to our application (with `READ` access.). Click the `Add Permission` button, and the secret will be added.
+If a workflow uses a Secret, we need to add access control permissions for the application to access the secret.
+1. Add the required tag in the format **key:value** to the secret. 
+2. Navigate to **ACCESS CONTROL** > **Applications** and click the edit icon near your app name.
+3. Scroll down to the **Workflow and Task Permissions** section, and click **+Add Permission**.
+4. Choose the **Target Type** as **Tag**, and choose your tag with the required permissions. You can select from READ, UPDATE, CREATE, EXECUTE & DELETE permissions.
+5. Clicking **Add Permissions** adds the tag to the group, thus enabling permission to the application.
 
 </TabItem>
 </Tabs>
+
+## Example
+
+The US Postal Service offers APIs to help automate the shipping process with the post office.  Each API call requires a UserId to be submitted.  This UserId can be used to buy postage, so it needs to be kept secure. We've created a secret called `post_office_username` that we can now use in all API calls. (This workflow can be found in the [Conductor Examples](https://github.com/conductor-sdk/conductor-examples) Github repository.):
+
+```shell
+https://production.shippingapis.com/ShippingAPI.dll?API=RateV4&XML=<RateV4Request \
+// highlight-next-line
+USERID=${workflow.secrets.post_office_username}> \
+<Revision>2</Revision> \
+<Package ID="0"><Service>priority</Service> \
+<ZipOrigination>04046</ZipOrigination> \
+<ZipDestination>98260</ZipDestination> \
+<Pounds>20</Pounds> \
+<Ounces>0</Ounces> \
+<Container>variable</Container> \
+<Width>12</Width> \
+<Length>12</Length> \
+<Height>12</Height> \
+<Girth></Girth> \
+<Machinable>TRUE</Machinable> \
+</Package></RateV4Request>
+```
+By using `${workflow.secrets.post_office_username}`, we obfuscate this sensitive value, and it never appears in the workflow execution, or any output files of Conductor. Yet, we can connect with the USPS and obtain the postage price for our package ($82.10, in case you're wondering).
+
 
