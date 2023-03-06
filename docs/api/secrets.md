@@ -54,7 +54,10 @@ If a workflow uses a Secret, we need to add access control permissions for the a
 4. Choose the **Target Type** as **Tag**, and choose your tag with the required permissions. You can select from READ, UPDATE, CREATE, EXECUTE & DELETE permissions.
 5. Clicking **Add Permissions** adds the tag to the group, thus enabling permission to the application.
 
-## Example​
+## Example 
+
+<details><summary>US Postal Service Workflow</summary>
+<p>
 
 The US Postal Service offers APIs to help automate the shipping process with the post office. Each API call requires a **UserID** to be submitted. This **UserID** can be used to buy postage, so it needs to be kept secure. We've created a secret called **post_office_username** that can be used in all API calls.
 <br/>
@@ -65,3 +68,5 @@ USERID=${workflow.secrets.post_office_username}
 ```
 
 Using **${workflow.secrets.post_office_username}**, the sensitive value is hidden and never appears in the workflow execution or any output files of Conductor. Yet, we can connect with the USPS and obtain the postage price for our package.
+</p>
+</details>
