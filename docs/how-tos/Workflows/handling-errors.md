@@ -16,11 +16,14 @@ In your main workflow definition, you can configure a workflow to run upon failu
 
 When there is an issue with your workflow, Conductor will start the failure workflow.  By default, three parameters are passed:
 
-* *reason*
+* *reason* Reason for the failure.
 * *workflowId*: Use this to pull the details of the failed workflow.
-* *failureStatus*
+* *failureStatus* Status for the workflow
+* *failureTaskId* taskId of the task because of which the workflow failed.
 
 > The `reason` parameter will, by default, have text similar to `Workflow is FAILED by TERMINATE task: 84eb2dcb-ebfd-11ec-b770-12aa5996f545`. If a workflow fails via a TERMINATE task, the `terminateReason` parameter in the TERMINATE task can be used to override the default `reason` text.
+
+> If the worker task is failed. Setting `reasonForIncompletion` in the taskResult from worker will set the reason in the failure workflow input.
 
 ### Example
 
@@ -63,7 +66,3 @@ Here is a sample failure workflow that sends a message to Slack when the workflo
 ### Example Use Case
 
 The [check_address](/content/docs/usecases/US_post_office) use case has several terminate tasks that run a failure workflow.  The `address_error` task overrides the `terminateReason` parameter.
-
-##  Set ```workflowStatusListenerEnabled``` 
-
-When this is enabled, notifications are now possible, and by building a custom implementation of the Workflow Status Listener, a notification can be sent to an external service. [More details.](https://github.com/Netflix/conductor/issues/1017#issuecomment-468869173)
