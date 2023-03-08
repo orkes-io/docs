@@ -12,7 +12,10 @@ import TabItem from '@theme/TabItem';
 * Conductor is a language, framework, and cloud-agnostic platform. Applications using Conductor orchestrate the business logic using Workflows.
 
 ## Conductor Architecture
+<center>
+
 ![Conductor Architecture](/img/architecture.png)
+</center>
 
 ## Conductor Applications
 Applications that leverage Conductor to build distributed stateful flows do it by creating Workflows and Tasks.
