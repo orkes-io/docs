@@ -284,7 +284,8 @@ module.exports = {
                     id: 'usecases/fraud_dispute/README',
                     label: 'Fraud Dispute Transaction'
                 },
-                'usecases/document_approvals/README'
+                'usecases/document_approvals/README',
+                'usecases/video-processing-workflows'
             ]
         },
         {
