@@ -13,17 +13,17 @@ With the latest version of Conductor, you can now seamlessly integrate Conductor
 
 ## Now, what is a Webhook?
 
-Webhook is a callback function based on HTTP that accelerates the connection between the Conductor and other third-party systems. It paves the way to receive data from other applications to Conductor. 
+Webhook is a callback function based on HTTP that accelerates the connection between the Conductor and other third-party systems. It paves the way to receive data from other applications to Conductor.
 
 ## And what does this integration do?
 
 You can leverage Webhook to create integration patterns for Conductor workflows. It can be used to create workflows that act on events occurring outside the Conductor. In addition, we’ve added an option to trigger other workflows based on the events received from Webhook. You can enable this while creating the Webhook so that once the Webhook event comes, this workflow gets triggered automatically, thus helping to streamline more processes.
 
-While creating the workflows, you can identify the Webhook task type as ‘WAIT_FOR_WEBHOOK’. 
+While creating the workflows, you can identify the Webhook task type as ‘WAIT_FOR_WEBHOOK’.
 
-We currently support Webhook integration for GitHub, Slack, Twilio, Stripe, Pagerduty, Zendesk, Twitter, Facebook, and Sendgrid. Apart from that, we’ve included an option called *Custom* that allows you to integrate Conductor with any third-party systems.
+We currently support Webhook integration for GitHub, Slack, Twilio, Stripe, Pagerduty, Zendesk, Twitter, Facebook, and Sendgrid. Apart from that, we’ve included an option called _Custom_ that allows you to integrate Conductor with any third-party systems.
 
-## Here’s how you can configure this in Conductor! 
+## Here’s how you can configure this in Conductor!
 
 1. Create the workflow to receive the Webhook event.
 
@@ -45,7 +45,7 @@ For example, suppose the external system is GitHub, and the requested action is 
 
 Wanna know in detail about the configuration steps? Have a look at our documentation on [Integrating Conductor with other systems using Webhook](https://orkes.io/content/docs/reference-docs/system-tasks/webhook-task).
 
-I can’t wait to see what you build! 
+I can’t wait to see what you build!
 
 Do try out our new add-on, and you can always reach us at our [Slack channel](https://app.slack.com/client/T02KG20GJ1Z/C02KJ820XPW) for any queries! We’re always happy to help.
 

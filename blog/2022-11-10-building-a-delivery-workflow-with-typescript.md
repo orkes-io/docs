@@ -1,34 +1,34 @@
 ---
 slug: building-a-delivery-workflow-with-typescript
 title: Building a Delivery Workflow with TypeScript (TS)
-authors: 
-- riza
-- james
+authors:
+  - riza
+  - james
 tags: [Netflix Conductor, orchestration, delivery workflow]
 ---
 
-What do you do when you’re hungry and there is no way to cook food? Definitely, you rely on a food delivery application. Have you ever wondered how this delivery process works? Well, let me walk you through the process of how Conductor helps in orchestrating the delivery process. 
+What do you do when you’re hungry and there is no way to cook food? Definitely, you rely on a food delivery application. Have you ever wondered how this delivery process works? Well, let me walk you through the process of how Conductor helps in orchestrating the delivery process.
 
 In this article, you will learn how to build a delivery workflow using Conductor, an open-source microservice and workflow orchestration framework. Conductor handles the process as a workflow that divides the delivery process into individual blocks. Let’s see this in action now!
 
 ## Delivery Workflow
 
-Consider that we get a request in the delivery app to send a package from an origin to a destination. The application has the details of both the registered clients and riders. It should connect the best-fitting rider to deliver the package. So, the application gets the registered riders list, picks the nearest riders, and lets them compete to win the ride. 
+Consider that we get a request in the delivery app to send a package from an origin to a destination. The application has the details of both the registered clients and riders. It should connect the best-fitting rider to deliver the package. So, the application gets the registered riders list, picks the nearest riders, and lets them compete to win the ride.
 
 Looks simple? Yeah! Conductor comes into action here! You can simply build your delivery application by connecting small blocks together using Conductor.
 
 ## What you need!
 
-* A list of registered riders.
-* A way to let our riders know they have a possible delivery.
-* A method for our riders to compete or be the first to select the ride.
+- A list of registered riders.
+- A way to let our riders know they have a possible delivery.
+- A method for our riders to compete or be the first to select the ride.
 
 ## Building the application
 
-Let’s begin to bake our delivery app. Initially, we need to get some API calls for processes such as getting the riders list, notifying the riders, etc. We will make use of the [dummy JSON](https://dummyjson.com/) that provides us with fake APIs. 
+Let’s begin to bake our delivery app. Initially, we need to get some API calls for processes such as getting the riders list, notifying the riders, etc. We will make use of the [dummy JSON](https://dummyjson.com/) that provides us with fake APIs.
 
 So, in this case, we will use the user API for pulling our registered riders, and for notifying the rider about a possible ride, we will use the posts API.
- 
+
 Since we are creating this workflow as code, instead of using the workflow diagram, let's try to start with the test and build our workflow app from scratch. For the demonstration purpose, we will be using [Orkes Playground](https://play.orkes.io/), a free Conductor platform. However, the process would be the same for Netflix Conductor.
 
 ## Workflow as Code
@@ -36,9 +36,11 @@ Since we are creating this workflow as code, instead of using the workflow diagr
 ## Project Setup
 
 First, you need to set up a project:
-1. Create an npm project with ```npm init``` and install the SDK with ```npm i @io-orkes/conductor-javascript```.
+
+1. Create an npm project with `npm init` and install the SDK with `npm i @io-orkes/conductor-javascript`.
 2. You'll need to add jest and typescript support. For this, copy and paste the **jest.config.js** and **tsconfig.json** files into your project in the root folder. Then add the following devDependencies as a separate JSON file:
-```json 
+
+```json
 "scripts": {
     "test": "jest"
   },
@@ -56,7 +58,8 @@ First, you need to set up a project:
     "typescript": "^4.6.4"
   },
 ```
-3.  Run ```yarn``` to fetch them.
+
+3.  Run `yarn` to fetch them.
 
 So, now you’ve created your project. As we are creating the workflow as code, next, let's create two files; **mydelivery.ts** and **mydelivery.test.ts**. By writing our code along with the test, you will get instant feedback and know exactly what happens with every step.
 
@@ -96,7 +99,9 @@ export const calculateDistanceWF = generate({
   },
 });
 ```
+
 Now in our test file, create a test that generates the workflow so we can look at it later on the Playground.
+
 ```json
 import {
   orkesConductorClient,
@@ -119,9 +124,10 @@ describe("My Delivery Test", () => {
   });
 });
 ```
-Now, run ```npm test```. 
 
-We have just created our first workflow, which basically prints the output of its task. If you look at the generated JSON, you'll notice that there are some additional attributes apart from the ones we’ve given as inputs. That's because the *generate* function will generate default values, which you can overwrite later. You'll also notice that I’ve called this **"${calculate_distance_ref.output.distance}"** using the generated task reference name. If you don't specify a *taskReferenceName*, it will generate one by adding **_ref** to the specified name. To reference a task output or a given task, we always use the *taskReferenceName*. Another thing to notice is the true value passed as the first argument of the registerWorkflow function. This flag specifies that the workflow will be overwritten, which is required since we will run our tests repeatedly.
+Now, run `npm test`.
+
+We have just created our first workflow, which basically prints the output of its task. If you look at the generated JSON, you'll notice that there are some additional attributes apart from the ones we’ve given as inputs. That's because the _generate_ function will generate default values, which you can overwrite later. You'll also notice that I’ve called this **"${calculate_distance_ref.output.distance}"** using the generated task reference name. If you don't specify a _taskReferenceName_, it will generate one by adding **\_ref** to the specified name. To reference a task output or a given task, we always use the _taskReferenceName_. Another thing to notice is the true value passed as the first argument of the registerWorkflow function. This flag specifies that the workflow will be overwritten, which is required since we will run our tests repeatedly.
 
 Let's create a test to actually run the workflow now. You can add the origin and destination parameters previously known by the workflow definition (Workflow input parameters). We are not using it for now, but it is relevant in the further steps.
 
@@ -157,7 +163,7 @@ test("Should calculate distance", async () => {
 });
 ```
 
-Now, run ```yarn test```, and great, we have our first workflow execution run!
+Now, run `yarn test`, and great, we have our first workflow execution run!
 
 ## Calculating Actual Distance
 
@@ -190,7 +196,7 @@ export const calculateDistanceWF = generate({
             }
             /**
              *
-             * Returns total latitude/longitude distance 
+             * Returns total latitude/longitude distance
              *
              */
             function harvisineManhatam(elem: any) {
@@ -223,19 +229,19 @@ export const calculateDistanceWF = generate({
 });
 ```
 
-If we run the test, it will fail because the result is not 12; i.e., in the workflow **calculate_distance**, the input parameter was defined as 12. 
- 
+If we run the test, it will fail because the result is not 12; i.e., in the workflow **calculate_distance**, the input parameter was defined as 12.
+
 But in accordance with Red-Green-Refactor, we can calculate the distance using Taxicab geometry if we pick the two cardinal points. So this test should pass. So let’s decide the origin and destination points to be the same, so the result is 0. It is actually **.toEqual(0)** since it’s returning an object. So we can fix that in the test.
- 
-**Note**:  Key takeaway from the above case: I’ve used ES5 javascript on my editor and not as a string. However, you can't use closures with the rest of the file’s code, and the returned function has to be written in ES5. Else the tests will fail.
+
+**Note**: Key takeaway from the above case: I’ve used ES5 javascript on my editor and not as a string. However, you can't use closures with the rest of the file’s code, and the returned function has to be written in ES5. Else the tests will fail.
 
 Running the test now registers a new workflow overwriting the old one.
 
 ## Finding Best Rider
 
-Now that we have the **calculate_distance** workflow. We can think of this workflow as a function that can later be invoked into a different project/file. 
+Now that we have the **calculate_distance** workflow. We can think of this workflow as a function that can later be invoked into a different project/file.
 
-And let's create workflow number two, i.e.,**findNearByRiders**, which will hit a microservice that pulls the registered riders list. 
+And let's create workflow number two, i.e.,**findNearByRiders**, which will hit a microservice that pulls the registered riders list.
 
 ## Hitting Microservice
 
@@ -263,7 +269,7 @@ export const nearByRiders = generate({
 });
 ```
 
-Our **findNearByRiders** workflow hits an endpoint and returns the list of all available riders. 
+Our **findNearByRiders** workflow hits an endpoint and returns the list of all available riders.
 
 Let's write the test.
 
@@ -304,11 +310,12 @@ describe("NearbyRiders", () => {
   });
 });
 ```
+
 If we run our test, it should pass since the number of users is around 30. Looking at the printed output, you can see that the whole structure is being returned by the endpoint.
 
 Our workflow is incomplete because it only returns the list of every possible rider. But we need to get the distance between the riders and the packages. For this, we must run our previous workflow **calculate_distance** for every rider on the fetched list. Let’s prepare the data to be passed to the next workflow. Here, we utilize the JQ Transform task, which runs a JQ query over the JSON data.
 
-## JSON_JQ_TRANSFORM Task 
+## JSON_JQ_TRANSFORM Task
 
 Let's add the JQ task.
 
@@ -343,13 +350,13 @@ export const nearByRiders = generate({
 });
 ```
 
-From the task definition here, you can see the mapping of JQ users to the variable output of the HTTP task and then extracting the address. The expected result should have the structure {identity:{id,email}, to:{latitude,longitude}, from:{latitude,longitude}}. 
+From the task definition here, you can see the mapping of JQ users to the variable output of the HTTP task and then extracting the address. The expected result should have the structure {identity:{id,email}, to:{latitude,longitude}, from:{latitude,longitude}}.
 
-## Dot Map method 
+## Dot Map method
 
 At this point, we have an array with all possible riders and a workflow to calculate the distance between two points. We must aggregate these to calculate the distance between the package and the riders so that the nearby riders can be chosen. While aggregating in javascript or changing the data for every item in the array, we usually leverage the map method, which takes a function that will be applied to every item in the array.
 
-Since we extracted the distance calculated, and need to map our riders through a “function”. Let’s create a dot map workflow for this. This workflow takes the array of riders as the input parameters and the workflow ID of the **calculate_distance** to run on each rider. 
+Since we extracted the distance calculated, and need to map our riders through a “function”. Let’s create a dot map workflow for this. This workflow takes the array of riders as the input parameters and the workflow ID of the **calculate_distance** to run on each rider.
 
 Note that this new workflow will work for every array and workflow ID provided and is not limited to the riders and the **calculate_distance** workflow.
 
@@ -474,10 +481,10 @@ export const workflowDotMap = generate({
 });
 ```
 
-* From the above example workflow, we get the number of arrays. 
-* At  "dyn_task_builder", we create a SubWorkflow task template for every item within the array. 
-* At "dyn_input_params_builder", we prepare the parameters to pass on to each SubWorkflow. 
-* Using FORK_JOIN_DYNAMIC, we create each task using our previously created template and pass the corresponding parameters. After the join operation, use a JSON_JQ_TRANSFORM task to extract the results and return an array with the transformations.
+- From the above example workflow, we get the number of arrays.
+- At "dyn_task_builder", we create a SubWorkflow task template for every item within the array.
+- At "dyn_input_params_builder", we prepare the parameters to pass on to each SubWorkflow.
+- Using FORK_JOIN_DYNAMIC, we create each task using our previously created template and pass the corresponding parameters. After the join operation, use a JSON_JQ_TRANSFORM task to extract the results and return an array with the transformations.
 
 ## Calculating distance between package and riders
 
@@ -605,14 +612,14 @@ export const nearByRiders = generate({
   },
 });
 ```
+
 This will give us a list of riders with their distance to the package, sorted by distance from the package.
 
 ## Picking a Rider
 
-Now we have all the required data, such as package origin/destination, riders, and their distance from the package. 
+Now we have all the required data, such as package origin/destination, riders, and their distance from the package.
 
-Next, we’ll pre-select *N* riders, notify them of the possible ride, and ensure that a rider picks the ride. And for this last part, we will create a worker who will randomly select one.
-
+Next, we’ll pre-select _N_ riders, notify them of the possible ride, and ensure that a rider picks the ride. And for this last part, we will create a worker who will randomly select one.
 
 ```json
 export const createRiderRaceDefintion = (client: ConductorClient) =>
@@ -844,13 +851,13 @@ describe("PickRider", () => {
 });
 ```
 
-## Baking Delivery App - Combining blocks 
+## Baking Delivery App - Combining blocks
 
-Finally, we have all our ingredients ready. Now, let’s bake our delivery app together. 
+Finally, we have all our ingredients ready. Now, let’s bake our delivery app together.
 
 In a nutshell, when we have a client with a package request with the origin and destination points, we need to pick the best rider to deliver the package from the origin to the destination. As a bonus, let’s compute the delivery cost and make it less expensive if our client is paying by card instead of cash.
 
-So, we run the **nearbyRiders** workflow passing the origin as an input parameter. This would give a list of possible riders, of which one would be picked based on “who answers first”. Next, we calculate the distance from the origin to the destination to compute the cost. Therefore, the workflow delivers the output with the selected rider and the shipping cost. 
+So, we run the **nearbyRiders** workflow passing the origin as an input parameter. This would give a list of possible riders, of which one would be picked based on “who answers first”. Next, we calculate the distance from the origin to the destination to compute the cost. Therefore, the workflow delivers the output with the selected rider and the shipping cost.
 
 **Workflow**
 
@@ -954,8 +961,8 @@ export const deliveryWorkflow = generate({
 
 ## Wrapping Up
 
-And our app is finally ready. Building an app this way resembles the same process as app building via coding. But here, we put together small building blocks to make a giant workflow. 
- 
+And our app is finally ready. Building an app this way resembles the same process as app building via coding. But here, we put together small building blocks to make a giant workflow.
+
 Following this article along with [Orkes Playground](https://play.orkes.io/), you can seamlessly visualize the building blocks. You can make further improvements to the application by focusing on that particular block without losing the application's perspective as a whole.
- [
+[
 You can test out Conductor for free in [Orkes Playground](https://play.orkes.io/), or if you’re looking for a cloud version, you may have a sneak peek at [Orkes Cloud](https://orkes.io/cloud/).

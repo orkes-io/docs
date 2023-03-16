@@ -31,17 +31,17 @@ We ran a benchmark to test the limits of Conductor’s scalability using a simpl
 
 We measured the peak stable throughput Conductor can achieve on the following parameters:
 
-* Number of workflow start request per second
-* Number of task updates per second — translates to no. of state transitions happening per second
-* Number of workflows completing per second with moderate complexity
-* Amount of data processed per second
+- Number of workflow start request per second
+- Number of task updates per second — translates to no. of state transitions happening per second
+- Number of workflows completing per second with moderate complexity
+- Amount of data processed per second
 
 ### Latency
 
-We measured *p50*, *p95* and *p99* latencies for the critical APIs in Conductor:
+We measured _p50_, _p95_ and _p99_ latencies for the critical APIs in Conductor:
 
-* Workflow Start
-* Task Update
+- Workflow Start
+- Task Update
 
 ## Benchmarking Tools
 
@@ -63,7 +63,7 @@ For the Conductor version, we used Orkes’ build of Conductor that is tuned and
 
 We have a version of this available under open source at [https://github.com/orkes-io/orkes-conductor-community](https://github.com/orkes-io/orkes-conductor-community).
 
-Conductor servers are a *horizontally scalable system*, for this test we ran a single node server — of course your production setup should have at-least 3 nodes in multiple availability zones / racks for higher availability.
+Conductor servers are a _horizontally scalable system_, for this test we ran a single node server — of course your production setup should have at-least 3 nodes in multiple availability zones / racks for higher availability.
 
 ## Hardware
 
@@ -86,7 +86,7 @@ For this experiment, we asked a question:
 
 > If all the tasks in a workflow were instantaneous, how many workflows can we start and complete in a second with a sustained load such that there is minimal backlog of the tasks.
 
-To test this, we used *wrk2* to send a sustained load of 210 workflow execution requests, where each workflow contains a sub workflow and worker tasks.
+To test this, we used _wrk2_ to send a sustained load of 210 workflow execution requests, where each workflow contains a sub workflow and worker tasks.
 
 <p align="center"><img src="/content/img/workflow-execution.png" alt="Workflow Execution Graph" width="100%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
@@ -136,7 +136,7 @@ Redis serves as the backbone for state management and queues used by servers to 
 
 ### Postgres
 
-Postgres is used for indexing of workflow data. Beyond the disk storage requirements, scaling postgres requires two factors 1) *adequate CPU and 2) IOPS required* (especially on cloud environment) to handle the writes under heavy workloads. Writes to postgres are asynchronous done using durable queues (check out [orkes-queues](https://github.com/orkes-io/orkes-queues)) but longer delays means completed workflows remain in Redis for longer periods of time, requiring larger Redis memory.
+Postgres is used for indexing of workflow data. Beyond the disk storage requirements, scaling postgres requires two factors 1) _adequate CPU and 2) IOPS required_ (especially on cloud environment) to handle the writes under heavy workloads. Writes to postgres are asynchronous done using durable queues (check out [orkes-queues](https://github.com/orkes-io/orkes-queues)) but longer delays means completed workflows remain in Redis for longer periods of time, requiring larger Redis memory.
 
 ## Conclusion
 
@@ -146,4 +146,4 @@ We often get asked, can Conductor be scaled to handle **billions** of workflows 
 
 If you are an enterprise and have a use case that you would like to run a PoC, please [reach out to us](https://share.hsforms.com/1TmggEej4TbCm0sTWKFDahwcfl4g).
 
-*Don’t forget to give us a ⭐️ [https://github.com/Netflix/conductor](https://github.com/Netflix/conductor)*
+_Don’t forget to give us a ⭐️ [https://github.com/Netflix/conductor](https://github.com/Netflix/conductor)_

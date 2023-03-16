@@ -10,16 +10,15 @@ Orkes publishes containers to [DockerHub](https://hub.docker.com/) under [orkesi
 
 Available to the users of Orkes Cloud, with all the Orkes cloud features on your local machine. Requires subscription to Orkes Cloud.
 
-Orkes publishes *orkes-conductor-standalone* docker container that can be used for local development and testing.
+Orkes publishes _orkes-conductor-standalone_ docker container that can be used for local development and testing.
 
 The container is self-contained with the full Orkes development stack that contains a persistent store, Orkes server, and system workers.
 
 :::note
 The standalone container is only meant for local development and is not suitable for running any production workload.
 
-*orkes-conductor-standalone* is available to the Orkes Customers and needs an authorization token to download the container.
+_orkes-conductor-standalone_ is available to the Orkes Customers and needs an authorization token to download the container.
 :::
-
 
 ### Obtaining Authorization Token​
 
@@ -29,9 +28,10 @@ Please reach out to your Orkes contact to obtain the token.
 
 Log in to the Docker Hub using Orkes Access Account. When prompted for the password, use the access token provided by the Orkes team.
 :::note
-* If you do not have an access token (or have lost it), please contact support@orkes.io to issue a new one.
-* Standard security measures should be used within the organization when storing and distributing the access token.
-:::
+
+- If you do not have an access token (or have lost it), please contact support@orkes.io to issue a new one.
+- Standard security measures should be used within the organization when storing and distributing the access token.
+  :::
 
 #### Download and Run the Latest Container Build​
 

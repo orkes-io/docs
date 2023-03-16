@@ -3,8 +3,8 @@
 }
 .codeBlock > div {
   height: 100%;
-} 
-.codeBlock > div > pre{
+}
+.codeBlock > div > pre {
   height: 100%;
   overflow-y: hidden;
 }

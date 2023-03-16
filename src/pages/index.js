@@ -63,20 +63,24 @@ export default function Home() {
                   and workflow orchestration framework
                 </li>
                 <li>
-                  Build stateful applications without the overhead of managing a state machine
+                  Build stateful applications without the overhead of managing a
+                  state machine
                 </li>
                 <li>
-                  Enables development of highly resilient and scalable distributed systems with built-in features that empower rapid development of business applications
+                  Enables development of highly resilient and scalable
+                  distributed systems with built-in features that empower rapid
+                  development of business applications
                 </li>
                 <li>
-                  Used for a wide range of use cases such as - business process automations, data pipelines, CI/CD pipelines, order management workflows etc.
+                  Used for a wide range of use cases such as - business process
+                  automations, data pipelines, CI/CD pipelines, order management
+                  workflows etc.
                 </li>
                 <li>
-                  Run 100s to millions of workflows per day - scales seamlessly for a wide range of applications
+                  Run 100s to millions of workflows per day - scales seamlessly
+                  for a wide range of applications
                 </li>
-                <li>
-                  Build workflows using many popular languages with SDKs
-                </li>
+                <li>Build workflows using many popular languages with SDKs</li>
               </ul>
             }
             videoTitle="Explain Like I'm 5: Docusaurus"
@@ -99,8 +103,8 @@ export default function Home() {
                   from the implementation
                 </li>
                 <li>
-                  Application's resilience is increased with native support
-                  in Conductor for retries, error handling alongside rich metrics
+                  Application's resilience is increased with native support in
+                  Conductor for retries, error handling alongside rich metrics
                 </li>
                 <li>
                   We have powerful visualizations of your application’s
@@ -123,8 +127,8 @@ export default function Home() {
                 </li>
                 <li>
                   Long running workflows that need to wait for days, months or
-                  even years between executions (e.g. monthly or yearly subscription
-                  billing)
+                  even years between executions (e.g. monthly or yearly
+                  subscription billing)
                 </li>
                 <li>
                   Mission critical applications with high reliability

@@ -1,13 +1,14 @@
 ---
 sidebar_position: 1
 ---
+
 # Dynamic Task
 
 ## What is a Dynamic Task?
 
 TODO: What is a Dynamic task? How does it work?
 
-## Common Use Cases 
+## Common Use Cases
 
 TODO: List out some common use cases
 
@@ -21,7 +22,6 @@ TODO: Talk about inputs for the task
 
 TODO: Talk about output of the task, what to expect
 
-
 ## Examples
 
 TODO: Example 1
@@ -32,8 +32,9 @@ TODO: Example 2
 
 TODO: Gotchas and other nuances
 
-1. Question 1 
+1. Question 1
+
    1. Answer
 
 1. Question 2
-    1. Answer
+   1. Answer

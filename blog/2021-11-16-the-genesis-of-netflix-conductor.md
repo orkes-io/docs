@@ -1,11 +1,12 @@
 ---
 slug: the-genesis-of-netflix-conductor-orkes
-title: The Genesis of Netflix Conductor 
+title: The Genesis of Netflix Conductor
 authors: jeu
 tags: [Netflix Conductor, Orkes, Conductor, genesis, microservices, 2021]
 ---
 
 <!--truncate-->
+
 # Age of the Monoliths
 
 Rewind the clock back a few years, the early 2000’s. Age of the Monoliths. It was very common to have large companies
@@ -74,7 +75,6 @@ started with kids programming and eventually moved to the mainstream with movies
 time it found its footprint across the entire company, it is now the service of choice for microservice and workflow
 orchestration.
 
-
 <img src="/content/img/blogassets/Netflix-OSS-Logo.png" width="250" style={{paddingBottom: 40, paddingTop: 40}} />
 
 # Open Source and Industry Usage
@@ -101,9 +101,6 @@ it, in the infrastructure space, Orkes is doing the same in the orchestration sp
 build a world-class, highly reliable orchestration service. The founding team of Orkes also comprises the original
 founding team of Netflix Conductor. [Learn more about Orkes](https://orkes.io "Microservices and Workflow Orchestration at scale")
 
-
 [Join the Orkes Conductor Slack community here](https://join.slack.com/t/orkes-conductor/shared_invite/zt-xyxqyseb-YZ3hwwAgHJH97bsrYRnSZg "Join the Conductor Slack Community")
 
-[Want to work at Orkes?](https://jobs.lever.co/Orkes/ "Apply to Jobs at Orkes" )
-
-
+[Want to work at Orkes?](https://jobs.lever.co/Orkes/ "Apply to Jobs at Orkes")

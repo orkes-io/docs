@@ -31,6 +31,7 @@ These values can be referred to as inputs into your task using the following exp
 ```
 
 In this example, the tasks will receive the following inputs after they are evaluated:
+
 ```json
 {
   "taskInput1Key": 1,

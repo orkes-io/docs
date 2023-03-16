@@ -9,7 +9,7 @@ In this article, we will explore how you can get your first worker task running.
 We are hosting the code used in this article [here](https://github.com/orkes-io/orkesworkers). You can clone and use it as a reference
 locally.
 
-In the first codelab [Running your First Workflow](/content/docs/getting-started/run/running-first-workflow), we created a simple workflow that used an HTTP [System Task](/content/docs/getting-started/concepts/system-tasks) to run our workflow.  System tasks run on the Conductor server - making commonly used functions easy to deploy in your workflow. Now it's time to explore how to run a
+In the first codelab [Running your First Workflow](/content/docs/getting-started/run/running-first-workflow), we created a simple workflow that used an HTTP [System Task](/content/docs/getting-started/concepts/system-tasks) to run our workflow. System tasks run on the Conductor server - making commonly used functions easy to deploy in your workflow. Now it's time to explore how to run a
 custom worker that you will implement yourself.
 
 After completing the steps in this article, you will:
@@ -42,14 +42,14 @@ conductor server to register these tasks.
   }
 ]
 ```
+
 In the [Running your First Workflow](/content/docs/getting-started/run/running-first-workflow) example, we used the Swagger API UI to make our API calls:
 
-* [Orkes Playground](https://play.orkes.io/swagger-ui/index.html?configUrl=/api-docs/swagger-config)
+- [Orkes Playground](https://play.orkes.io/swagger-ui/index.html?configUrl=/api-docs/swagger-config)
 
-* [Local Conductor](http://localhost:8080/swagger-ui/index.html?configUrl=/api-docs/swagger-config)
+- [Local Conductor](http://localhost:8080/swagger-ui/index.html?configUrl=/api-docs/swagger-config)
 
-> NOTE: With the Playground, you will need an authentication token.  In the dashboard, click your user icon in the top right, and choose the `copy token` option.  Back on the Swagger page, click the lock to the right of the endpoint, and paste the token here.
-
+> NOTE: With the Playground, you will need an authentication token. In the dashboard, click your user icon in the top right, and choose the `copy token` option. Back on the Swagger page, click the lock to the right of the endpoint, and paste the token here.
 
 You can also use curl to add a task:
 
@@ -61,15 +61,14 @@ curl 'http://localhost:8080/api/metadata/taskdefs' \
   --data-raw '[{"name":"simple_worker", "retryCount":3,"retryLogic":"FIXED","retryDelaySeconds":10,"timeoutSeconds":300,"timeoutPolicy":"TIME_OUT_WF","responseTimeoutSeconds":180,"ownerEmail":"example@gmail.com"}]'
 ```
 
-> For Orkes Playground, add an additional header line to your curl command: `-H 'X-Authorization: {YourToken}' \` (and replace `http://localhost:8080` with `https://play.orkes.io`).  Alternatively, the playground also offers [task creation](https://play.orkes.io/newTaskDef) via the dashboard.
-
+> For Orkes Playground, add an additional header line to your curl command: `-H 'X-Authorization: {YourToken}' \` (and replace `http://localhost:8080` with `https://play.orkes.io`). Alternatively, the playground also offers [task creation](https://play.orkes.io/newTaskDef) via the dashboard.
 
 Here is an overview of the task fields that we just created
 
 1. `"name"` : A unique name for your worker.
 2. `"retryCount"` : The number of times the Conductor should retry your worker task in the event of an unexpected failure.
 3. `"retryLogic"` : `FIXED` - The retry logic - options are `FIXED` and `EXPONENTIAL_BACKOFF`
-4. `"retryDelaySeconds"` : Time to wait before  retrying (Or the time in the exponential back-off calculation).
+4. `"retryDelaySeconds"` : Time to wait before retrying (Or the time in the exponential back-off calculation).
 5. `"timeoutSeconds"` : Time in seconds, after which the task is marked as `TIMED_OUT`. (This is optional, and some long running tasks do not need this value.)
 6. `"timeoutPolicy"` : `TIME_OUT_WF` - Task's timeout policy. Options can be found [here](/content/docs/how-tos/Tasks/task-timeouts).
 7. `"responseTimeoutSeconds"` : Must be greater than 0 and less than timeoutSeconds. The task is rescheduled if not updated with a status after this time (heartbeat mechanism). Useful when the worker polls for the task but fails to complete it due to errors/network failure. Defaults to 3600.
@@ -82,7 +81,7 @@ found [here](/content/docs/getting-started/concepts/tasks-and-workers#task-defin
 
 Creating a Workflow definition is similar to creating a task definition. In our workflow, we will use the task we
 defined earlier. Note that the same Task definitions can be used in multiple workflows, or for multiple times in the same
-Workflow.  Conductor references the task via the `taskReferenceName`, so each task invocation in the same workflow must have a unique value in this parameter.
+Workflow. Conductor references the task via the `taskReferenceName`, so each task invocation in the same workflow must have a unique value in this parameter.
 
 ```json
 {
@@ -116,10 +115,10 @@ Notice that in the workflow definition, we are using a single-worker task using 
 earlier. The task is of type `SIMPLE`.
 
 We can use Swagger to add the workflow:
-* [Orkes Playground](https://play.orkes.io/swagger-ui/index.html?configUrl=/api-docs/swagger-config#/metadata-resource/create)
 
-* [Local Conductor](http://localhost:8080/swagger-ui/index.html?configUrl=/api-docs/swagger-config#/metadata-resource/create)
+- [Orkes Playground](https://play.orkes.io/swagger-ui/index.html?configUrl=/api-docs/swagger-config#/metadata-resource/create)
 
+- [Local Conductor](http://localhost:8080/swagger-ui/index.html?configUrl=/api-docs/swagger-config#/metadata-resource/create)
 
 Here is the curl command to add a workflow to a local version of Conductor (for Orkes Playground, change the domain, and add the `X-Authentication` header as we did in step 1 when adding a task):
 
@@ -133,24 +132,23 @@ curl 'http://localhost:8080/api/metadata/workflow' \
 
 ### Step 3 - Starting the Workflow
 
-We've created a task that polls an external workflow and added the task to a workflow.  When we run the workflow, Conductor adds a job to the task's queue.  Let's do that now:
+We've created a task that polls an external workflow and added the task to a workflow. When we run the workflow, Conductor adds a job to the task's queue. Let's do that now:
 
-* Playground: Click `run workflow`, select the workflow by name, and click `run workflow`
-* In Swagger, the endpoint to start a workflow is `POST /api/workflow/{workflowName}`.
-* Using curl (Same modifications for the playground as above):
+- Playground: Click `run workflow`, select the workflow by name, and click `run workflow`
+- In Swagger, the endpoint to start a workflow is `POST /api/workflow/{workflowName}`.
+- Using curl (Same modifications for the playground as above):
 
 ```shell
 curl 'http://localhost:8080/api/workflow/first_sample_workflow_with_worker' \
   -H 'accept: text/plain' \
   -H 'Referer: ' \
   -H 'Content-Type: application/json' \
-  --data-raw '{}' 
+  --data-raw '{}'
 ```
 
 The API path contains the workflow name `first_sample_workflow_with_worker` and our workflow doesn't need any inputs, so the body of the call is an empty JSON string: `{}`.
 
-A successful POST request will return a workflow Id, a unique identifier for the invocation of the workflow.  Now, we can visualize the execution of the workflow by navigating to `http://localhost:5000/execution/<workflowId>`.
-
+A successful POST request will return a workflow Id, a unique identifier for the invocation of the workflow. Now, we can visualize the execution of the workflow by navigating to `http://localhost:5000/execution/<workflowId>`.
 
 ### Step 4 - Poll for Worker Task
 
@@ -162,17 +160,17 @@ In the next step, we will create the worker that is used to complete our Conduct
 
 To simplify this tutorial, we have placed the `simple_worker` worker in a [GitHub repository](https://github.com/orkes-io/orkesworkers/blob/main/build.gradle).
 
-Clone this repository to your local machine, and open it in your IDE of choice.  Our worker will poll the conductor server every second to see if there is a task in its queue.  For that to happen, we need to tell the worker where our Conductor server is.  To do this, we must modify the file `/src/main/resources/application.properties`.  
+Clone this repository to your local machine, and open it in your IDE of choice. Our worker will poll the conductor server every second to see if there is a task in its queue. For that to happen, we need to tell the worker where our Conductor server is. To do this, we must modify the file `/src/main/resources/application.properties`.
 
-* For a local Conductor installation, change `conductor.server.url` to `http://localhost:8080/api`.  
+- For a local Conductor installation, change `conductor.server.url` to `http://localhost:8080/api`.
 
-* For Playground, you'll need to [create an application](/content/docs/getting-started/concepts/access-control-applications#configuring-your-application) to create a key/secret that authenticates your worker with the playground, and then add the values of the key and secret to lines 2 and 3 of `application.properties` as indicated.
+- For Playground, you'll need to [create an application](/content/docs/getting-started/concepts/access-control-applications#configuring-your-application) to create a key/secret that authenticates your worker with the playground, and then add the values of the key and secret to lines 2 and 3 of `application.properties` as indicated.
 
 #### How Workers and Conductor interact
 
-The `OrkesWorkersApplication.java` is the runnable Java application.  * `taskClient` creates an Orkes taskClient, and uses the url (and the Java SDK to create an access token from the Key and secret for Orkes Playground).
+The `OrkesWorkersApplication.java` is the runnable Java application. \* `taskClient` creates an Orkes taskClient, and uses the url (and the Java SDK to create an access token from the Key and secret for Orkes Playground).
 
-* `TaskRunnerConfigurer` grabs a list of workers (there are many in the repository), and creates a thread for each one.  These worker threads will poll the Conductor server to find tasks that must be run.
+- `TaskRunnerConfigurer` grabs a list of workers (there are many in the repository), and creates a thread for each one. These worker threads will poll the Conductor server to find tasks that must be run.
 
 ### Step 6: Running your worker
 
@@ -186,7 +184,7 @@ created workflow in your UI.
 In your worker, you had this implementation:
 
 ```js
-     result.addOutputData("currentTimeOnServer", currentTimeOnServer);
+result.addOutputData("currentTimeOnServer", currentTimeOnServer);
 result.addOutputData("message", "Hello World!");
 ```
 
@@ -201,5 +199,4 @@ Concepts we touched on:
 2. Adding Workflow definition with a custom `SIMPLE` task
 3. Running Conductor client using the Java SDK
 
-
-Try out more complex workflows in our other codelabs, or build your own.  We've created a number of workflows that you can edit in our [use cases](/content/docs/usecases/image_processing) section.
+Try out more complex workflows in our other codelabs, or build your own. We've created a number of workflows that you can edit in our [use cases](/content/docs/usecases/image_processing) section.

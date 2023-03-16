@@ -1,6 +1,6 @@
 # Orkes Troubleshooting Guide
 
-This document is a quick reference for the common issues you may encounter while using Conductor with their possible solutions. 
+This document is a quick reference for the common issues you may encounter while using Conductor with their possible solutions.
 
 ## Troubleshooting Issues with Workflow Definitions
 

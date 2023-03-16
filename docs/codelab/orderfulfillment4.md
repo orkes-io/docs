@@ -1,10 +1,12 @@
 ---
-displayed_sidebar:     orderfulfillment
+displayed_sidebar: orderfulfillment
 ---
+
 # Adding a REST API Task
+
 # Order Fulfillment Codelab part 4
 
-You're running order fulfillment at Bob's Widgets, and when you started, it was 100% manual.  In parts 1-3 of the codelab, we built the initial version of our order fulfillment workflow up and running, but there's still a lot of room for improvement.
+You're running order fulfillment at Bob's Widgets, and when you started, it was 100% manual. In parts 1-3 of the codelab, we built the initial version of our order fulfillment workflow up and running, but there's still a lot of room for improvement.
 
 ## Keeping up the inventory
 
@@ -18,36 +20,35 @@ You: Hey Bob - what's this?
 
 Bob: Oh. We mark the count of orders each week, and then at the end of the week, we call up our supplier to order more widgets.
 
-Bob: It's *very, very* important that we order the right number of widgets each week.  If we miss a few ticks each week - we end up running out of widgets, and our customers get mad.
+Bob: It's _very, very_ important that we order the right number of widgets each week. If we miss a few ticks each week - we end up running out of widgets, and our customers get mad.
 
 ...clearly, there's room for more automation.
-
 
 <p align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/vFpBDmId8KU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
 
 ## Reordering API
 
-You talk to your widget supplier, and they have an API for re-ordering widgets.  In fact, their API lets you append your order as often as you'd like.  You set a day for shipment, and they'll box up your order and send it out.  
+You talk to your widget supplier, and they have an API for re-ordering widgets. In fact, their API lets you append your order as often as you'd like. You set a day for shipment, and they'll box up your order and send it out.
 
-So, our new plan is to update the order every time widgets are shipped one for one.  Then the supplier will ship out the total widget order every Friday morning.
+So, our new plan is to update the order every time widgets are shipped one for one. Then the supplier will ship out the total widget order every Friday morning.
 
 You ask for the details of the API, and it turns out it is really simple:
 
-You send a post message to the endpoint ```appendorder``` with the items and quantity:
+You send a post message to the endpoint `appendorder` with the items and quantity:
 
 ```json
 {"item": "widget", "count": "2"}'
 ```
 
-And the supplier will automatically append your order.  At the weekend, they'll pack up a bunch of widgets, and you'll have your resupply in the warehouse on Monday.
+And the supplier will automatically append your order. At the weekend, they'll pack up a bunch of widgets, and you'll have your resupply in the warehouse on Monday.
 
 ## Automating the API call
 
-With Conductor, adding a REST API into your workflow is easy. Conductor has a built-in System Task that can make HTTP calls for you.  
+With Conductor, adding a REST API into your workflow is easy. Conductor has a built-in System Task that can make HTTP calls for you.
 
 > A system task runs on the Conductor server - so there is no task deployment required - you just need to define the parameters in your workflow.
 
-### [HTTP task](https://orkes.io/content/docs/reference-docs/system-tasks/http-task) 
+### [HTTP task](https://orkes.io/content/docs/reference-docs/system-tasks/http-task)
 
 We can add the HTTP task to the workflow. In this case, the order of the tasks doesn't really matter; we'll place the reorder after the shipping label is produced.
 
@@ -80,25 +81,26 @@ We can add the HTTP task to the workflow. In this case, the order of the tasks d
       "retryCount": 3
     }
 ```
+
 Let's walk through the parameters of the HTTP Task:
 
-* ```Name```: The name of your task.
-* ```inputParameters```: This is the meat of the HTTP Task.
-  * ```uri```: The uri that the task will ping.  This is a heroku app, and the endpoint is ```appendorder```.
-  * ```method```: In this case, it is a POST, but all the major methods of HTTP requests are supported.
-  * ```body```: POST methods have a JSON body with the attributes needed for the 3rd party API.  In this case, we are sending the ```item``` we wish to reorder, and the ```count``` says how many to order.
+- `Name`: The name of your task.
+- `inputParameters`: This is the meat of the HTTP Task.
+  - `uri`: The uri that the task will ping. This is a heroku app, and the endpoint is `appendorder`.
+  - `method`: In this case, it is a POST, but all the major methods of HTTP requests are supported.
+  - `body`: POST methods have a JSON body with the attributes needed for the 3rd party API. In this case, we are sending the `item` we wish to reorder, and the `count` says how many to order.
 
-We have hardcoded the item ("widget") - since we only sell one thing.  We also hardwired the count to one, as our order form only allows for one widget to be purchased at a time (We will be fixing this later in the codelab.)
+We have hardcoded the item ("widget") - since we only sell one thing. We also hardwired the count to one, as our order form only allows for one widget to be purchased at a time (We will be fixing this later in the codelab.)
 
-The other thing to note is that with an HTTP task, the ```connectionTimeout``` and ```readTimeout``` can be set. Since the ```appendorder``` is located on a free Heroku instance, it sometimes needs to restart before it is available, so we give the API a full 5 seconds to reply.
+The other thing to note is that with an HTTP task, the `connectionTimeout` and `readTimeout` can be set. Since the `appendorder` is located on a free Heroku instance, it sometimes needs to restart before it is available, so we give the API a full 5 seconds to reply.
 
 ## Error handling
 
-Despite the ```connectionTimeout``` and ```readTimeout``` parameters, it can still take over 5 seconds for the heroku instance to spin up (if it has gone dormant).  We can build more error handling into this task to prevent our workflow from failing.
+Despite the `connectionTimeout` and `readTimeout` parameters, it can still take over 5 seconds for the heroku instance to spin up (if it has gone dormant). We can build more error handling into this task to prevent our workflow from failing.
 
-The HTTP Task has the ```retrycount``` built in, but let's extend the task with retry values.
+The HTTP Task has the `retrycount` built in, but let's extend the task with retry values.
 
-To do this, we'll define a new task with the same name as our HTTP Task (click "Task Definitions"  and then "Define Task").
+To do this, we'll define a new task with the same name as our HTTP Task (click "Task Definitions" and then "Define Task").
 
 ```JSON
 {
@@ -122,11 +124,10 @@ To do this, we'll define a new task with the same name as our HTTP Task (click "
 }
 ```
 
-Adding ```retryLogic``` and ```retryDelaySeconds``` tells the Conductor to retry 3 times, with e fixed delay of 5s between tries. That way, if we get a time-out on the first connection, the Heroku instance has enough time to restart and can reply to a subsequent attempt. The workflow will continue to work, even though the API endpoint is a bit flaky.
+Adding `retryLogic` and `retryDelaySeconds` tells the Conductor to retry 3 times, with e fixed delay of 5s between tries. That way, if we get a time-out on the first connection, the Heroku instance has enough time to restart and can reply to a subsequent attempt. The workflow will continue to work, even though the API endpoint is a bit flaky.
 
 ## No more tickmarks
 
-The shipping bay no longer has scraps of paper marking each widget that's gone out.  The inventory is updated automatically with our HTTP task sent to our supplier.
+The shipping bay no longer has scraps of paper marking each widget that's gone out. The inventory is updated automatically with our HTTP task sent to our supplier.
 
 Things are looking up, but there's still a lot of automation ahead!
-

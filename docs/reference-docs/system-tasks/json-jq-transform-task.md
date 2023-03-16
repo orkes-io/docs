@@ -7,6 +7,7 @@ sidebar_position: 1
 ```json
 "type" : "JSON_JQ_TRANSFORM"
 ```
+
 ## Introduction
 
 The JSON_JQ_TRANSFORM task is a System task that allows the processing of JSON data that is supplied to the task by using the
@@ -44,16 +45,10 @@ with the following.
   "type": "JSON_JQ_TRANSFORM",
   "inputParameters": {
     "key1": {
-      "value1": [
-        "a",
-        "b"
-      ]
+      "value1": ["a", "b"]
     },
     "key2": {
-      "value2": [
-        "c",
-        "d"
-      ]
+      "value2": ["c", "d"]
     },
     "queryExpression": "{ key3: (.key1.value1 + .key2.value2) }"
   }
@@ -68,21 +63,11 @@ attribute along with a string message will be returned if there is an error proc
 ```json
 {
   "result": {
-    "key3": [
-      "a",
-      "b",
-      "c",
-      "d"
-    ]
+    "key3": ["a", "b", "c", "d"]
   },
   "resultList": [
     {
-      "key3": [
-        "a",
-        "b",
-        "c",
-        "d"
-      ]
+      "key3": ["a", "b", "c", "d"]
     }
   ]
 }
@@ -90,23 +75,22 @@ attribute along with a string message will be returned if there is an error proc
 
 ### Input Configuration
 
-| Attribute      | Description |
-| ----------- | ----------- |
-| name      | Task Name. A unique name that is descriptive of the task function      |
-| taskReferenceName   | Task Reference Name. A unique reference to this task. There can be multiple references of a task within the same workflow definition        |
-| type   | Task Type. In this case, JSON_JQ_TRANSFORM        |
-| inputParameters   | The input parameters that will be supplied to this task. The parameters will be a JSON object of at least 2 attributes, one of which will be called queryExpression. The others are user-named attributes. These attributes will be accessible by the JQ query processor        |
-| inputParameters/user-defined-key(s)   | User-defined key(s) along with values.          |
-| inputParameters/queryExpression   | A JQ query expression        |
+| Attribute                           | Description                                                                                                                                                                                                                                                              |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| name                                | Task Name. A unique name that is descriptive of the task function                                                                                                                                                                                                        |
+| taskReferenceName                   | Task Reference Name. A unique reference to this task. There can be multiple references of a task within the same workflow definition                                                                                                                                     |
+| type                                | Task Type. In this case, JSON_JQ_TRANSFORM                                                                                                                                                                                                                               |
+| inputParameters                     | The input parameters that will be supplied to this task. The parameters will be a JSON object of at least 2 attributes, one of which will be called queryExpression. The others are user-named attributes. These attributes will be accessible by the JQ query processor |
+| inputParameters/user-defined-key(s) | User-defined key(s) along with values.                                                                                                                                                                                                                                   |
+| inputParameters/queryExpression     | A JQ query expression                                                                                                                                                                                                                                                    |
 
 ### Output Configuration
 
-| Attribute      | Description |
-| ----------- | ----------- |
-| result   | The first results returned by the JQ expression     |
-| resultList   | A List of results returned by the JQ expression        |
-| error | An optional error message indicating that the JQ query failed to process |
-
+| Attribute  | Description                                                              |
+| ---------- | ------------------------------------------------------------------------ |
+| result     | The first results returned by the JQ expression                          |
+| resultList | A List of results returned by the JQ expression                          |
+| error      | An optional error message indicating that the JQ query failed to process |
 
 ## Example JQ transforms
 
@@ -114,13 +98,12 @@ attribute along with a string message will be returned if there is an error proc
 
 This excerpt is from the [Simple ETL Codelab](/content/docs/usecases/Simple_ETL).
 
-An HTTP Task makes an API call to GitHub to request a list of "stargazers" (users who have starred a repository).  The API response (for just one user) looks like this:
+An HTTP Task makes an API call to GitHub to request a list of "stargazers" (users who have starred a repository). The API response (for just one user) looks like this:
 
+The snippet of `${hundred_stargazers_ref.output}`
 
-The snippet of ```${hundred_stargazers_ref.output}```
+```JSON
 
-``` JSON 
-  
 "body":[
   {
   "starred_at":"2016-12-14T19:55:46Z",
@@ -149,7 +132,7 @@ The snippet of ```${hundred_stargazers_ref.output}```
 
 ```
 
-We only need the ```starred_at``` and ```login``` parameters for users who starred the repository after a given date (provided as an input to the workflow ```${workflow.input.cutoff_date}```).  We'll use the JQ Transform to simplify the output:
+We only need the `starred_at` and `login` parameters for users who starred the repository after a given date (provided as an input to the workflow `${workflow.input.cutoff_date}`). We'll use the JQ Transform to simplify the output:
 
 ```JSON
 {
@@ -172,7 +155,7 @@ We only need the ```starred_at``` and ```login``` parameters for users who starr
         }
 ```
 
-The JSON is stored in ```starlist```.  The ```queryExpression``` reads in the JSON, selects only entries where the ```starred_at``` value meets the date criteria, and generates output JSON of the form:
+The JSON is stored in `starlist`. The `queryExpression` reads in the JSON, selects only entries where the `starred_at` value meets the date criteria, and generates output JSON of the form:
 
 ```JSON
 {
@@ -187,4 +170,4 @@ The entire expression is wrapped in [] to indicate that the response should be a
 
 ## Creating Dynamic Fork Inputs
 
-[Dynamic Forks](/content/docs/reference-docs/dynamic-fork-task) require multiple JSON inputs that are created on demand.  JQ Transforms are ideal for this and are used in the [Order Fulfillment Codelab](/content/docs/codelab/orderfulfillment7).
+[Dynamic Forks](/content/docs/reference-docs/dynamic-fork-task) require multiple JSON inputs that are created on demand. JQ Transforms are ideal for this and are used in the [Order Fulfillment Codelab](/content/docs/codelab/orderfulfillment7).

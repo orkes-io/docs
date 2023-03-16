@@ -5,7 +5,6 @@ authors: JamesWalker
 tags: [Netflix Conductor, microservices, monolith, workflows, 2022]
 ---
 
-
 # Breaking up Monolith Architectures Part One
 
 ![Architecture diagram comparing monoliths and microservices](https://imgur.com/gfIW09C.jpg)
@@ -38,7 +37,7 @@ If you're experiencing any of the above, it might be time to start breaking up y
 
 Monoliths aren't without their benefits. Here are a few good reasons to use a monolith that help to explain why the strategy remains so pervasive:
 
-- **Reduced overhead:** Not having to juggle multiple projects and manage the lifecycles of individual components does have advantages. You can focus more on functionality and get to work on each new feature straight away, without needing to set up a new service component. Please note that the simplicity of the monolith *strategy* is being considered here, not its impact on understanding the system you're encapsulating. As we've already seen, monoliths can make it harder to reason about characteristics of your system because everything is coupled together.
+- **Reduced overhead:** Not having to juggle multiple projects and manage the lifecycles of individual components does have advantages. You can focus more on functionality and get to work on each new feature straight away, without needing to set up a new service component. Please note that the simplicity of the monolith _strategy_ is being considered here, not its impact on understanding the system you're encapsulating. As we've already seen, monoliths can make it harder to reason about characteristics of your system because everything is coupled together.
 
 - **Easier to debug:** When problems occur in a monolith, you know they can only derive from one source. As your whole system is a single unit, log aggregation is simple, and you can quickly jump between different areas to inspect complex problem chains. Determining the root cause of issues can be trickier when using microservices because faults may ultimately lie outside the service that sent the error report.
 
@@ -46,7 +45,7 @@ Monoliths aren't without their benefits. Here are a few good reasons to use a mo
 
 Though monoliths aren't all bad, it's important to recognize where things fall apart. Trouble often stems from teams not realizing they’re dealing with a monolith. This speaks to a disorganized development approach fixated on code, new features, and forward motion at the expense of longevity and developer experience.
 
-Despite these pitfalls, monoliths can still be effectively used by *intentionally* adopting a similar structure. The [Monorepo approach](https://en.wikipedia.org/wiki/Monorepo), for example, uses one source control repository to encapsulate multiple logical components. You still break your system into loosely coupled units, but they can sit alongside each other in a single overarching project. This approach forces you to be deliberate in your design while offering some of the benefits of both monoliths and microservices. Many large organizations opt for a monolith-like approach, including [Google](https://research.google/pubs/pub45424) and [Microsoft](https://devblogs.microsoft.com/bharry/scaling-git-and-some-back-story).
+Despite these pitfalls, monoliths can still be effectively used by _intentionally_ adopting a similar structure. The [Monorepo approach](https://en.wikipedia.org/wiki/Monorepo), for example, uses one source control repository to encapsulate multiple logical components. You still break your system into loosely coupled units, but they can sit alongside each other in a single overarching project. This approach forces you to be deliberate in your design while offering some of the benefits of both monoliths and microservices. Many large organizations opt for a monolith-like approach, including [Google](https://research.google/pubs/pub45424) and [Microsoft](https://devblogs.microsoft.com/bharry/scaling-git-and-some-back-story).
 
 ## Why Should You Break up a Monolith?
 

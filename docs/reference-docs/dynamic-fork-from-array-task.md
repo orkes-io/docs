@@ -1,6 +1,7 @@
 ---
 sidebar_position: 1
 ---
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -27,23 +28,22 @@ Conductor allows you to do the same and covers several types of processes.
 3. [Sub Workflows](./sub-workflow-task) - Use this when we want to run more than one task or a series of steps that can be a full-fledged complex flow
 4. Other Conductor Task Types - This can also be used for other task types such as EVENT, HUMAN, etc.
 
-
-### Running Simple Tasks using Dynamic Fork 
+### Running Simple Tasks using Dynamic Fork
 
 Run a simple task for each of the inputs provided
 
 | Parameter Name | Description                                                      |
-|----------------|------------------------------------------------------------------|
-| forkTaskName   | Specify the name of the simple task to execute                       |
+| -------------- | ---------------------------------------------------------------- |
+| forkTaskName   | Specify the name of the simple task to execute                   |
 | forkTaskInputs | Array of inputs - a task will be executed for each of the inputs |
 
 In this example, each task will be executed with the following input:
 
 ```json
 {
-    "inputText" : "value1",
-    "inputNumber" : 1,
-    "index": 0 // Added by the system to represent the array index for the object
+  "inputText": "value1",
+  "inputNumber": 1,
+  "index": 0 // Added by the system to represent the array index for the object
 }
 ```
 
@@ -62,16 +62,16 @@ In this example, each task will be executed with the following input:
         "forkTaskName": "update_fruit_list_task",
         "forkTaskInputs": [
           {
-            "inputText" : "value1",
-            "inputNumber" : 1
+            "inputText": "value1",
+            "inputNumber": 1
           },
           {
-            "inputText" : "value2",
-            "inputNumber" : 2
+            "inputText": "value2",
+            "inputNumber": 2
           },
           {
-            "inputText" : "value3",
-            "inputNumber" : 3
+            "inputText": "value3",
+            "inputNumber": 3
           }
         ]
       },
@@ -91,30 +91,30 @@ In this example, each task will be executed with the following input:
 ```
 
 | [Run it in Orkes Playground](https://play.orkes.io/workflowDef/dynamic_workflow_array_simple) |
-|-------------------------------------------------------------------------------------------| 
+| --------------------------------------------------------------------------------------------- |
 
 We can also use simple values or a mix of complex and simple objects.
+
 ```json
-[
-  "apple", "orange", "kiwi"
-]
+["apple", "orange", "kiwi"]
 ```
+
 When using simple values, it will be passed with the key input and an index representing the element's index in the array.
 
 ```json
 {
-  "input" : "apple", // Value
-  "index" : 0 // Index of the element
+  "input": "apple", // Value
+  "index": 0 // Index of the element
 }
 ```
 
 ### Running HTTP Tasks using Dynamic Fork
 
-To run HTTP, we will use the same parameters as running SIMPLE tasks as shown above and the value of 
+To run HTTP, we will use the same parameters as running SIMPLE tasks as shown above and the value of
 
 `forkTaskName` will be `HTTP`
 
-and the inputs you provide will be what the HTTP task expects. 
+and the inputs you provide will be what the HTTP task expects.
 
 :::tip
 `method` has a default value of `GET` and need not be specified if the HTTP call is a `GET`
@@ -135,11 +135,11 @@ and the inputs you provide will be what the HTTP task expects.
         "forkTaskName": "HTTP",
         "forkTaskInputs": [
           {
-            "url" : "https://orkes-api-tester.orkesconductor.com/get"
+            "url": "https://orkes-api-tester.orkesconductor.com/get"
           },
           {
-            "url" : "https://orkes-api-tester.orkesconductor.com/get",
-            "method" : "GET"
+            "url": "https://orkes-api-tester.orkesconductor.com/get",
+            "method": "GET"
           }
         ]
       },
@@ -159,18 +159,15 @@ and the inputs you provide will be what the HTTP task expects.
 ```
 
 | [Run it in Orkes Playground](https://play.orkes.io/workflowDef/dynamic_workflow_array_http) |
-|-------------------------------------------------------------------------------------------| 
-
-
-
+| ------------------------------------------------------------------------------------------- |
 
 ### Running Sub Workflows using Dynamic Fork
 
 Run a sub-workflow for each of the inputs provided
 
 | Parameter Name          | Description                                                      |
-|-------------------------|------------------------------------------------------------------|
-| forkTaskWorkflow        | Specify the name of the sub-workflow to execute                      |
+| ----------------------- | ---------------------------------------------------------------- |
+| forkTaskWorkflow        | Specify the name of the sub-workflow to execute                  |
 | forkTaskWorkflowVersion | Optional version of the workflow to run                          |
 | forkTaskInputs          | Array of inputs - a task will be executed for each of the inputs |
 
@@ -193,10 +190,10 @@ Run a sub-workflow for each of the inputs provided
         "forkTaskWorkflow": "extract_user",
         "forkTaskInputs": [
           {
-             "input" : "value1"
+            "input": "value1"
           },
           {
-             "input" : "value2"
+            "input": "value2"
           }
         ]
       },
@@ -216,5 +213,4 @@ Run a sub-workflow for each of the inputs provided
 ```
 
 | [Run it in Orkes Playground](https://play.orkes.io/workflowDef/dynamic_workflow_array_sub_workflow) |
-|-------------------------------------------------------------------------------------------| 
-
+| --------------------------------------------------------------------------------------------------- |

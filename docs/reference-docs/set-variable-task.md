@@ -7,7 +7,9 @@ sidebar_position: 1
 ```json
 "type" : "SET_VARIABLE"
 ```
+
 ### Introduction
+
 Set Variable allows us to set workflow variables by creating or updating them
 with new values.
 
@@ -48,13 +50,13 @@ Following is the workflow definition with the `SET_VARIABLE` task.
       "name": "Read_Name",
       "taskReferenceName": "Read_Name",
       "inputParameters": {
-        "var_name" : "${workflow.variables.name}"
+        "var_name": "${workflow.variables.name}"
       },
       "type": "SIMPLE"
     }
   ],
   "restartable": true,
-  "ownerEmail":"abc@example.com",
+  "ownerEmail": "abc@example.com",
   "workflowStatusListenerEnabled": true,
   "schemaVersion": 2
 }

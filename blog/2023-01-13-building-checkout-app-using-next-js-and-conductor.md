@@ -5,7 +5,7 @@ authors: riza
 tags: [Netflix Conductor, orchestration, app building, nextjs]
 ---
 
-In the past few years, have you ever had a day without using an application? Most probably, your answer would be ‘**No**’. In today’s world, we rely on mobile applications for everything, right from getting a cab, booking travel tickets, paying bills, purchasing things, and much more. And the process of purchasing/ordering things online definitely goes through a checkout process.  
+In the past few years, have you ever had a day without using an application? Most probably, your answer would be ‘**No**’. In today’s world, we rely on mobile applications for everything, right from getting a cab, booking travel tickets, paying bills, purchasing things, and much more. And the process of purchasing/ordering things online definitely goes through a checkout process.
 
 <p align="center"><img src="/content/img/checkout-app-blog-image.png" alt="Checkout App with Next.js and Conductor" width="70%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
@@ -21,9 +21,9 @@ You need to ensure that the device on which the application is built meets the f
 
 ### Setting Up Conductor Server
 
-The Conductor server can be set up [locally](https://orkes.io/content/docs/getting-started/install/running-locally-docker) on your device, or you can set up the [Orkes Cloud](https://orkes.io/cloud/) version or even test out the Conductor in [Playground](https://orkes.io/content/docs/getting-started/playground/using-conductor-playground), a free tool from Orkes for testing your application in real-time. 
+The Conductor server can be set up [locally](https://orkes.io/content/docs/getting-started/install/running-locally-docker) on your device, or you can set up the [Orkes Cloud](https://orkes.io/cloud/) version or even test out the Conductor in [Playground](https://orkes.io/content/docs/getting-started/playground/using-conductor-playground), a free tool from Orkes for testing your application in real-time.
 
-In order to run your application against a server, you need to extract the access keys from your Conductor server. The access key includes two parts; Key ID and Key Secret. 
+In order to run your application against a server, you need to extract the access keys from your Conductor server. The access key includes two parts; Key ID and Key Secret.
 
 **So, let’s obtain the Access Keys from the Conductor Server.**
 
@@ -45,7 +45,7 @@ Once you have verified this, let’s move on to the next step in building your N
 
 ## Run the Application
 
-```Checkout the application code from:``` 
+`Checkout the application code from:`
 
 [https://github.com/orkes-io/conductor-nextjs-example](https://github.com/orkes-io/conductor-nextjs-example)
 
@@ -72,7 +72,7 @@ You can choose the products and add them to the cart. Once the cart is ready and
 
 ## Where is Conductor used in your Checkout application?
 
-When you put your orders in the cart and proceed to the checkout, the application needs to calculate the total credit with the available credit and check whether the user has a credit. To do this, you can make use of a workflow in Conductor. 
+When you put your orders in the cart and proceed to the checkout, the application needs to calculate the total credit with the available credit and check whether the user has a credit. To do this, you can make use of a workflow in Conductor.
 
 Let’s consider a simple workflow of a Checkout Application. The applications are built using Workflows in Conductor. Workflows are a combination of several building blocks known as tasks. These tasks orchestrate in a specified order to complete the workflow and provide durability across the flow, so even if the system goes down or there are temporary failures, the process is guaranteed to be complete - without having to write any extra code or logic!
 
@@ -80,9 +80,9 @@ Let’s consider a simple workflow of a Checkout Application. The applications a
 
 1. When started, we have a **WAIT** task that waits for 30 seconds, which allows users to cancel the order from the UI - this is useful for the demo but may not be needed in the production environment.
 2. After that, we have a **check_credit** task that checks if the user has sufficient balance to place the order - this is implemented as INLINE javascript since it's a quick check.
-3. Next up, we have a decision task **switch_has_credit**, that takes the output of **check_credit** and either completes the process successfully or terminates with an insufficient balance error.  
+3. Next up, we have a decision task **switch_has_credit**, that takes the output of **check_credit** and either completes the process successfully or terminates with an insufficient balance error.
 
-As you move the system into production, these three tasks can be implemented to run real production code or mocked up when running tests, all without changing your NextJS application code.   
+As you move the system into production, these three tasks can be implemented to run real production code or mocked up when running tests, all without changing your NextJS application code.
 
 Not only that, for the folks who are monitoring the checkout application in production (think operations/customer support), they know exactly what is going on with each order.
 
@@ -139,8 +139,8 @@ In situations where your application is stuck, you can visualize them and troubl
 
 ## Wrapping Up
 
-And that’s it! Your application is now ready. 
+And that’s it! Your application is now ready.
 
 > Why don’t you build an app on your own and share your app development stories with us? <br/>We are waiting to hear from you!
 
-Our team at Orkes is always here to help if you have any queries. Do reach out to us on our [Slack channel](https://app.slack.com/client/T02KG20GJ1Z/C02KJ820XPW) for any help. If you are an enterprise looking to leverage Conductor for app-building processes, you can [reach out to us](https://share.hsforms.com/1TmggEej4TbCm0sTWKFDahwcfl4g).  
+Our team at Orkes is always here to help if you have any queries. Do reach out to us on our [Slack channel](https://app.slack.com/client/T02KG20GJ1Z/C02KJ820XPW) for any help. If you are an enterprise looking to leverage Conductor for app-building processes, you can [reach out to us](https://share.hsforms.com/1TmggEej4TbCm0sTWKFDahwcfl4g).

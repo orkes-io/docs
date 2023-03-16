@@ -3,6 +3,7 @@ sidebar_position: 1
 ---
 
 # Fork Task
+
 ```json
 "type" : "FORK_JOIN"
 ```
@@ -86,10 +87,7 @@ before moving to the next stage in the workflow.
     "name": "notification_join",
     "taskReferenceName": "notification_join_ref",
     "type": "JOIN",
-    "joinOn": [
-      "email_notification_ref",
-      "sms_notification_ref"
-    ]
+    "joinOn": ["email_notification_ref", "sms_notification_ref"]
   }
 ]
 ```
@@ -98,7 +96,6 @@ Here is how the output of notification_join will look like. The output is a map,
 references that were being `joinOn`. The corresponding values are the outputs of those tasks.
 
 ```json
-
 {
   "email_notification_ref": {
     "email_sent_at": "2021-11-06T07:37:17+0000",
@@ -113,13 +110,13 @@ references that were being `joinOn`. The corresponding values are the outputs of
 
 ### Input Configuration
 
-| Attribute      | Description |
-| ----------- | ----------- |
-| name      | Task Name. A unique name that is descriptive of the task function      |
-| taskReferenceName   | Task Reference Name. A unique reference to this task. There can be multiple references of a task within the same workflow definition        |
-| type   | Task Type. In this case, `FORK_JOIN`        |
-| inputParameters   | The input parameters that will be supplied to this task    |
-| forkTasks   | A list of tasks. Each of the outer lists will be invoked in parallel. The inner list can be a graph of other tasks and sub-workflows   |
+| Attribute         | Description                                                                                                                          |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| name              | Task Name. A unique name that is descriptive of the task function                                                                    |
+| taskReferenceName | Task Reference Name. A unique reference to this task. There can be multiple references of a task within the same workflow definition |
+| type              | Task Type. In this case, `FORK_JOIN`                                                                                                 |
+| inputParameters   | The input parameters that will be supplied to this task                                                                              |
+| forkTasks         | A list of tasks. Each of the outer lists will be invoked in parallel. The inner list can be a graph of other tasks and sub-workflows |
 
 ### Output Configuration
 
@@ -128,13 +125,12 @@ the
 `JOIN` task is a map, where the keys are the names of the task reference names that were being `joinOn` and the keys
 are the corresponding outputs of those tasks.
 
-| Attribute      | Description |
-| ----------- | ----------- |
-| task_ref_name_1  | A task reference name that was being `joinOn`. The value is the output of that task     |
-| task_ref_name_2  | A task reference name that was being `joinOn`. The value is the output of that task     |
-| ...   | ...     |
-| task_ref_name_N  | A task reference name that was being `joinOn`. The value is the output of that task     |
-
+| Attribute       | Description                                                                         |
+| --------------- | ----------------------------------------------------------------------------------- |
+| task_ref_name_1 | A task reference name that was being `joinOn`. The value is the output of that task |
+| task_ref_name_2 | A task reference name that was being `joinOn`. The value is the output of that task |
+| ...             | ...                                                                                 |
+| task_ref_name_N | A task reference name that was being `joinOn`. The value is the output of that task |
 
 ## Example
 
@@ -195,20 +191,17 @@ Here's the JSON definition for the workflow:
     "name": "notification_join",
     "taskReferenceName": "notification_join_ref",
     "type": "JOIN",
-    "joinOn": [
-      "email_notification_ref",
-      "sms_notification_ref"
-    ]
+    "joinOn": ["email_notification_ref", "sms_notification_ref"]
   }
 ]
 ```
-> Note: There are three parallel 'tines' to this fork, but only two of the outputs are required for the JOIN to continue. The diagram *does* draw an arrow from ```http_notification_ref``` to the ```notification_join```, but it is not required for the workflow to continue. 
+
+> Note: There are three parallel 'tines' to this fork, but only two of the outputs are required for the JOIN to continue. The diagram _does_ draw an arrow from `http_notification_ref` to the `notification_join`, but it is not required for the workflow to continue.
 
 Here is how the output of notification_join will look like. The output is a map, where the keys are the names of task
 references that were being `joinOn`. The corresponding values are the outputs of those tasks.
 
 ```json
-
 {
   "email_notification_ref": {
     "email_sent_at": "2021-11-06T07:37:17+0000",
@@ -225,8 +218,8 @@ See [JOIN](/content/docs/reference-docs/join-task) for more details on the JOIN 
 
 ## Codelab Examples
 
-* [Document Approvals](/content/docs/usecases/document_approvals): When multiple approvals can happen at the same time.
+- [Document Approvals](/content/docs/usecases/document_approvals): When multiple approvals can happen at the same time.
 
-* [Hello World](/content/docs/codelab/helloworld3)
+- [Hello World](/content/docs/codelab/helloworld3)
 
-* [Order Fulfillment](/content/docs/codelab/orderfulfillment6) Used as a *lead-in* for Dynamic Forks
+- [Order Fulfillment](/content/docs/codelab/orderfulfillment6) Used as a _lead-in_ for Dynamic Forks

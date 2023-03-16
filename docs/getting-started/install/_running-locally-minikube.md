@@ -18,5 +18,3 @@ link above to see if there are any updates. You can also help us by editing this
    [https://minikube.sigs.k8s.io/docs/start/](https://minikube.sigs.k8s.io/docs/start/)
 
 ### Steps
-
-

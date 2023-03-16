@@ -10,7 +10,7 @@ image: https://i.imgur.com/xLpMrqW.jpg
 
 A 2020 survey by the research and advisory firm Gartner has highlighted the rapid pace of innovation in [cloud computing](https://www.gartner.com/smarterwithgartner/gartner-predicts-the-future-of-cloud-and-edge-infrastructure). According to the research, forty percent of enterprise solutions will host their applications on cloud infrastructure by 2023. This shifting trend will cause an increased demand for cloud services, as well as for hybrid cloud architecture.
 
-The [hybrid cloud](https://en.wikipedia.org/wiki/Cloud_computing#Hybrid_cloud) is gaining popularity as enterprise IT leaders seek flexible, scalable options that increase cost efficiency while maintaining control over enterprise data and information. Many organizations combine on-premise infrastructure with private/public cloud resources to meet these needs. 
+The [hybrid cloud](https://en.wikipedia.org/wiki/Cloud_computing#Hybrid_cloud) is gaining popularity as enterprise IT leaders seek flexible, scalable options that increase cost efficiency while maintaining control over enterprise data and information. Many organizations combine on-premise infrastructure with private/public cloud resources to meet these needs.
 
 But without the right strategy, hybrid clouds can pose a number of challenges. Through a hypothetical case study, this article will help you learn about the strengths and limitations of hybrid cloud architecture.
 
@@ -30,11 +30,11 @@ The company is undergoing a cloud transformation process. Let's first look at th
 
 The shipping company’s on-premise setup includes an application that allows them to manage shipments and makes sure that deliveries can be made on time. The on-premise application also stores customer-related data and is GDPR compliant.
 
-You can see that users interact with the on-premise application for shipment tracking and managing and also accessing customer-related data. 
+You can see that users interact with the on-premise application for shipment tracking and managing and also accessing customer-related data.
 
 ![On-premise application](https://i.imgur.com/jQPiXTc.png)
 
-As the company wants to extend the infrastructure and add capabilities, it has to upgrade to a bigger infrastructure and maintain it, and also hire more engineers. Doing so will have associated cost implications. The downside of carrying out this expansion without using cloud infrastructure, is that it lacks flexibility and scalability and is highly cost intensive. 
+As the company wants to extend the infrastructure and add capabilities, it has to upgrade to a bigger infrastructure and maintain it, and also hire more engineers. Doing so will have associated cost implications. The downside of carrying out this expansion without using cloud infrastructure, is that it lacks flexibility and scalability and is highly cost intensive.
 
 ### Moving to Cloud Infrastructure
 
@@ -46,7 +46,7 @@ Consequently, the company opts for a hybrid cloud setup. It chooses to continue 
 
 ![Hybrid cloud architecture](https://i.imgur.com/gGgdSyU.png)
 
-You can see in the diagram above that the public cloud has a mobile app through which the users interact to get shipment tracking information. With a public cloud offering, Get My Shipment also has a chat bot integration that handles customer queries related to issues like shipments and invoicing. 
+You can see in the diagram above that the public cloud has a mobile app through which the users interact to get shipment tracking information. With a public cloud offering, Get My Shipment also has a chat bot integration that handles customer queries related to issues like shipments and invoicing.
 
 ### How Does Hybrid Cloud Infrastructure Help Get My Shipment?
 
@@ -76,13 +76,13 @@ However, the flexibility, scalability, and cost savings offered by cloud infrast
 
 ### What Are the Challenges of Hybrid Cloud Infrastructure for Get My Shipment?
 
-While hybrid cloud infrastructure comes with several advantages, Get My Shipment should also consider the challenges of this type of infrastructure and how to mitigate them. 
+While hybrid cloud infrastructure comes with several advantages, Get My Shipment should also consider the challenges of this type of infrastructure and how to mitigate them.
 
 #### Barriers in the Migration Process
 
 Cloud infrastructure can provide a virtual environment for Get My Shipment. With their code running on a virtual environment, migrating from one provider to another should be easy. Portability is the key advantage of cloud, as it reduces dependency on the underlying hardware, platform, and tools.
 
-That said, Get My Shipment’s IT infrastructure is an independent entity, so setting up on the cloud is not guaranteed to be easy. Every provider has a set of rules/ways in which their infrastructure is set up, like auto-scaling groups, threshold configurations, connection settings, and so on. 
+That said, Get My Shipment’s IT infrastructure is an independent entity, so setting up on the cloud is not guaranteed to be easy. Every provider has a set of rules/ways in which their infrastructure is set up, like auto-scaling groups, threshold configurations, connection settings, and so on.
 
 The reality is that migrating from one cloud provider to another could be more challenging than anticipated, and Get My Shipment, like most companies, faces the prospect of vendor lock-in.
 
@@ -92,10 +92,9 @@ Vendor lock-in describes a situation in which Get My Shipment may become constra
 
 For example, Get My Shipment—a heavily data-reliant company—may choose its cloud provider based on its provision of database management. Over time, they may realize that there are some flaws in this feature, and consequently want to switch to another vendor. However, if moving a complete application to a new cloud environment proves time and cost-intensive, Get My Shipment might be discouraged from doing so, despite better and cheaper providers being available.
 
-With hybrid cloud architecture, however, the company has the flexibility to integrate with different providers, and design and build the applications that could support different providers if need be. 
+With hybrid cloud architecture, however, the company has the flexibility to integrate with different providers, and design and build the applications that could support different providers if need be.
 
-Hybrid cloud architecture allows for the distribution of applications/data/services on-premise and across private or public cloud or using a combination of public cloud providers. Ideally, Get My Shipment can utilize Microservice Orchestration to integrate with different cloud providers. An orchestrator reduces complexities of managing multiple cloud providers as it can communicate with multiple cloud providers at same time. This flexibility allows deployments of some of the services on *CloudA* while others are deployed on *CloudB*. It helps in visualizing cost metrics as well. For example, microservice A is memory intensive and the instances with large memory size are available with CloudA in which case you would want to use CloudA for microservice A deployment. Similarly, microservice B requires high end computing and thus needs large computing instances which are available with CloudB at an affordable price and so you would want to use CloudB for microservice B. With an orchestrator in place you can manage these multiple cloud providers, and thus avoid vendor lock-in.
-
+Hybrid cloud architecture allows for the distribution of applications/data/services on-premise and across private or public cloud or using a combination of public cloud providers. Ideally, Get My Shipment can utilize Microservice Orchestration to integrate with different cloud providers. An orchestrator reduces complexities of managing multiple cloud providers as it can communicate with multiple cloud providers at same time. This flexibility allows deployments of some of the services on _CloudA_ while others are deployed on _CloudB_. It helps in visualizing cost metrics as well. For example, microservice A is memory intensive and the instances with large memory size are available with CloudA in which case you would want to use CloudA for microservice A deployment. Similarly, microservice B requires high end computing and thus needs large computing instances which are available with CloudB at an affordable price and so you would want to use CloudB for microservice B. With an orchestrator in place you can manage these multiple cloud providers, and thus avoid vendor lock-in.
 
 There are multiple cloud providers to choose from and [microservice architecture](https://en.wikipedia.org/wiki/Microservices) makes it efficient to interact with different applications hosted on different platforms. It also makes applications compatible for hosting on different cloud platforms.
 
@@ -119,9 +118,9 @@ To get the best out of microservices in a cloud environment, microservice orches
 
 Although an orchestra involves many musicians independently playing instruments, it’s not an orchestra without the guiding force of a conductor, or orchestrator.
 
-This is how microservice orchestration works. In simple terms, you need to have a central service that orchestrates and calls all the services directly. The service acting as an orchestrator gives you a high-level view of all your business processes and their execution. 
+This is how microservice orchestration works. In simple terms, you need to have a central service that orchestrates and calls all the services directly. The service acting as an orchestrator gives you a high-level view of all your business processes and their execution.
 
-With a loosely coupled architecture, it becomes very difficult to pinpoint what is failing or visualize how the workflow is progressing. But with a microservice orchestration pattern, you should be able to track the failure quickly, fix it, and see the execution of the workflow in the cloud console, giving you a complete picture. 
+With a loosely coupled architecture, it becomes very difficult to pinpoint what is failing or visualize how the workflow is progressing. But with a microservice orchestration pattern, you should be able to track the failure quickly, fix it, and see the execution of the workflow in the cloud console, giving you a complete picture.
 
 Designating a microservice as an orchestrator with the sole purpose of orchestrating other microservices is the best way forward to microservice orchestration.
 
@@ -129,11 +128,11 @@ Designating a microservice as an orchestrator with the sole purpose of orchestra
 
 Visualization of your system’s behavior, scale, and needs is an important part of designing a hybrid cloud architecture. You can only design an optimum architecture with sufficient supporting data. In aid of this, microservice orchestration can pave a path of visualizing integration points and workflow progression, giving you an advantage in designing robust hybrid cloud architecture for your system.
 
-Going back to our fictional Get My Shipment company, let’s see how they would make use of microservice orchestration. The orchestration framework designates a service as the orchestrator, which accepts tasks and hands them over to the microservices to process them. 
+Going back to our fictional Get My Shipment company, let’s see how they would make use of microservice orchestration. The orchestration framework designates a service as the orchestrator, which accepts tasks and hands them over to the microservices to process them.
 
-Whenever a shipment request is created at Get My Shipment, the orchestrator creates a task queue and the microservices will pick these tasks and work on them, communicating on the status of the tasks with the orchestrator. As our orchestrator is a centralized service, it stores its own data so that, if the process is halted or fails, it can resume from the same point. 
+Whenever a shipment request is created at Get My Shipment, the orchestrator creates a task queue and the microservices will pick these tasks and work on them, communicating on the status of the tasks with the orchestrator. As our orchestrator is a centralized service, it stores its own data so that, if the process is halted or fails, it can resume from the same point.
 
-You can visualize the workflow of shipments, the delays at different stages and the infrastructure requirements. For instance, if delays in sending text updates to customers are because the SMS service is running on a smaller instance, Get My Shipment can quickly bump up the instance specs to rectify it. 
+You can visualize the workflow of shipments, the delays at different stages and the infrastructure requirements. For instance, if delays in sending text updates to customers are because the SMS service is running on a smaller instance, Get My Shipment can quickly bump up the instance specs to rectify it.
 
 This is how Get My Shipment, or anyone else migrating to a hybrid approach, can use the benefits provided by microservice orchestration to design and build optimum, scalable hybrid cloud architecture.
 
@@ -143,7 +142,7 @@ The following are some key benefits that microservice orchestration offers which
 
 The core strength provided by microservice orchestration is the level of abstraction where each layer exposes an interface to connect with. This creates a multi-layered hierarchical stack where each microservice is very well confined in its boundaries. This hierarchy offers different opportunities that developers can leverage to build robust hybrid cloud architectures:
 
-- The hierarchy offers an opportunity to have intentional design for your systems. That is, it provides architectural readability. With this in place, developers can look at the workflows and identify which infrastructure is best, not only in terms of process efficiency but also in terms of suitability in achieving business objectives. 
+- The hierarchy offers an opportunity to have intentional design for your systems. That is, it provides architectural readability. With this in place, developers can look at the workflows and identify which infrastructure is best, not only in terms of process efficiency but also in terms of suitability in achieving business objectives.
 
 - With the intensive tracking provided by the orchestration, you can visualize the problems and where they are occurring. Your business can then take informed decisions on which infrastructure is best suitable to resolve the issues.
 
@@ -151,7 +150,7 @@ The core strength provided by microservice orchestration is the level of abstrac
 
 #### Why Choose Orkes for Microservice Orchestration?
 
-[Orkes](https://orkes.io) offers a orchestration engine that handles microservice orchestration and also provides the benefits listed above to quickly gear up your hybrid cloud setup. 
+[Orkes](https://orkes.io) offers a orchestration engine that handles microservice orchestration and also provides the benefits listed above to quickly gear up your hybrid cloud setup.
 
 [Orkes Conductor](https://orkes.io/what-is-conductor/) is a managed workflow orchestration tool best suited for microservices. It has been adopted widely across industries, from media to finance (supporting financial and distributed transactions). It uses a domain-specific language (DSL) to define the process flow, and is a well-established high-performance tool (as tested for high volumes at Netflix for concurrent processing). It uses [chaos engineering principles](https://en.wikipedia.org/wiki/Chaos_engineering) to build robust and highly scalable systems.
 
@@ -159,6 +158,6 @@ The core strength provided by microservice orchestration is the level of abstrac
 
 This article illustrated the key benefits of moving from on-premise to hybrid cloud architecture using the hypothetical case of the Get My Shipment company. In short, hybrid cloud architecture can provide the best of both worlds, allowing you to build on the efficiency and leverage the flexibility and scalability of cloud architecture, as well as modernize your monolithic applications, without moving completely away from your on-premise infrastructure.
 
-In this context, microservice orchestration is important to strengthen your application and utilize the flexibility and scalability offered by hybrid cloud architectures. Orkes is a cloud-based, enterprise-grade, fully managed version of [Netflix Conductor](https://netflix.github.io/conductor/) built on a task-based approach to coordinate and execute process flows, and offers full compatibility with the open source version. 
+In this context, microservice orchestration is important to strengthen your application and utilize the flexibility and scalability offered by hybrid cloud architectures. Orkes is a cloud-based, enterprise-grade, fully managed version of [Netflix Conductor](https://netflix.github.io/conductor/) built on a task-based approach to coordinate and execute process flows, and offers full compatibility with the open source version.
 
 If you want to get the most out of your hybrid cloud architecture and microservices, then get ahead of competition with microservice orchestration offerings provided by [Orkes](https://orkes.io/).

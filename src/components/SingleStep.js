@@ -5,9 +5,19 @@ import { PaperContainer } from "./PaperContainer";
 import classNames from "classnames";
 
 export const SingleStep = ({ title, description, to, index }) => (
-  <PaperContainer className={classNames(styles.singleStep, styles[`singleStep-step-${index}`])}>
+  <PaperContainer
+    className={classNames(
+      styles.singleStep,
+      styles[`singleStep-step-${index}`]
+    )}
+  >
     <Link to={to} className="noStyleLink">
-      <div className={classNames(styles.singleStepContent, `container padding--md`)}>
+      <div
+        className={classNames(
+          styles.singleStepContent,
+          `container padding--md`
+        )}
+      >
         <div className="row padding-horiz--md">
           <h3 className={styles.title}>{title}</h3>
         </div>

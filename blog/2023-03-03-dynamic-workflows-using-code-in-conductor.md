@@ -16,6 +16,7 @@ Before diving into how to create workflows using Conductor, let’s first define
 <center>
 
 **Workflow = {Tasks + Operators}**
+
 </center>
 
 **Tasks** are services encapsulating the business logic that runs outside the Conductor server and are implemented as a Microservice, Lambda, or Worker. Workers run outside the Conductor server and can be implemented in any supported language. A workflow can contain multiple workers written in different languages.
@@ -24,7 +25,7 @@ Before diving into how to create workflows using Conductor, let’s first define
 
 ## Separation of Workflows from Re-usable Services
 
-Conductor promotes clear separation between application workflow and services that are used as building blocks of the workflow as ‘Tasks’. This separation ensures that the tasks follow the single responsibility principle and are generally stateless in nature. 
+Conductor promotes clear separation between application workflow and services that are used as building blocks of the workflow as ‘Tasks’. This separation ensures that the tasks follow the single responsibility principle and are generally stateless in nature.
 
 This model ensures two things:
 
@@ -32,11 +33,13 @@ This model ensures two things:
 2. Stateless Task Workers can quickly scale up/down based on the volume while maintaining the state only at the Conductor server.
 
 ## Workflow definition – JSON or Code?
+
 <b>Why not both?</b>
 <br/>
 Conductor server stores the workflow definitions as JSON on the server side. However, this does not restrict users from expressing their workflows as JSON alone. Conductor supports creating workflows using Code and executing both pre-registered as well as dynamic workflows expressed using code.
 
-### Simple Example 
+### Simple Example
+
 Let’s take an example of a simple two-task workflow:
 
 <p align="center"><img src="/content/img/simple-two-task-workflow.png" alt="Two-Task workflow in Conductor" width="40%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
@@ -117,7 +120,7 @@ workflow = workflow >> task1 >> task2
 workflow.start_workflow(#input)
 ```
 
-Creating workflows using code opens up use cases where it might be impossible to define workflows using static definitions — this could be when the number of tasks and their flow depends on the data that is dependent on the other factors. 
+Creating workflows using code opens up use cases where it might be impossible to define workflows using static definitions — this could be when the number of tasks and their flow depends on the data that is dependent on the other factors.
 
 ### Complex Example
 
@@ -155,7 +158,7 @@ CompletableFuture executionFuture = workflow.execute(new HashMap<>());
 String workflowId = workflowClient.startWorkflow(new StartWorkflowRequest().withWorkflowDef(workflow.toWorkflowDef()));
 ```
 
-In the above example, we load up the user list from a backend store, and for each user, create a task to send sms or email. A workflow is created by adding appropriate notification tasks for each user here and is then executed. 
+In the above example, we load up the user list from a backend store, and for each user, create a task to send sms or email. A workflow is created by adding appropriate notification tasks for each user here and is then executed.
 
 Depending on how long the workflow takes to complete, Conductor provides a way to wait for the workflow completion using ‘Futures’ or kick off a workflow that returns the workflow execution id that can be used by workflowClient to monitor the execution. (or can be searched and viewed in the UI)
 
@@ -171,7 +174,7 @@ The ability to dynamically create workflows using code allows developers to addr
 
 Netflix Conductor is a powerful platform that lets you create the most complex workflows while making it very easy to handle runtime scenarios with powerful debugging and visualization tools, reducing the mean time to detect and resolve issues in the production environment.
 
-Be sure to check out [Netflix Conductor](https://github.com/Netflix/conductor) on GitHub. Our Orkes team do provide [Conductor Playground —  a free version of Conductor](https://play.orkes.io/). 
+Be sure to check out [Netflix Conductor](https://github.com/Netflix/conductor) on GitHub. Our Orkes team do provide [Conductor Playground —  a free version of Conductor](https://play.orkes.io/).
 
-|[Join our Slack community](https://join.slack.com/t/orkes-conductor/shared_invite/zt-xyxqyseb-YZ3hwwAgHJH97bsrYRnSZg)|
-|---|
+| [Join our Slack community](https://join.slack.com/t/orkes-conductor/shared_invite/zt-xyxqyseb-YZ3hwwAgHJH97bsrYRnSZg) |
+| --------------------------------------------------------------------------------------------------------------------- |

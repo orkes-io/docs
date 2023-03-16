@@ -14,16 +14,18 @@ To find out more about Conductor visit: [https://github.com/Netflix/conductor](h
 
 ### Virtual Environment Setup
 
- ```shell
-  $ virtualenv conductor
-  $ source conductor/bin/activate
+```shell
+ $ virtualenv conductor
+ $ source conductor/bin/activate
 ```
+
 Install conductor-python package
+
 ```shell
 python3 -m pip install conductor-python
 ```
 
-### Write worker    
+### Write worker
 
 ```python
 from conductor.client.http.models.task import Task
@@ -35,17 +37,20 @@ from conductor.client.worker.worker_interface import WorkerInterface
 class SimplePythonWorker(WorkerInterface):
     def execute(self, task: Task) -> TaskResult:
         task_result = self.get_task_result_from_task(task)
-        
+
         # Add any outputs that the task should produce as part of the execution
         task_result.add_output_data('key', 'value')
         task_result.add_output_data('temperature', 32)
-        
+
         # Mark the task status as COMPLETED
         task_result.status = TaskResultStatus.COMPLETED
         return task_result
 ```
+
 ### Run workers
+
 Create main method that does the following:
+
 1. Adds configurations such as metrics, authentication, thread count, Conductor server URL
 2. Add your workers
 3. Start the workers to poll for work
@@ -131,21 +136,26 @@ if __name__ == '__main__':
 Save this as `main.py`
 
 ### Running Conductor server locally in 2-minute
-More details on how to run Conductor see https://netflix.github.io/conductor/server/ 
 
-Use the script below to download and start the server locally.  The server runs in memory and no data saved upon exit.
+More details on how to run Conductor see https://netflix.github.io/conductor/server/
+
+Use the script below to download and start the server locally. The server runs in memory and no data saved upon exit.
+
 ```shell
 export CONDUCTOR_VER=3.5.2
 export REPO_URL=https://repo1.maven.org/maven2/com/netflix/conductor/conductor-server
 curl $REPO_URL/$CONDUCTOR_VER/conductor-server-$CONDUCTOR_VER-boot.jar \
---output conductor-server-$CONDUCTOR_VER-boot.jar; java -jar conductor-server-$CONDUCTOR_VER-boot.jar 
+--output conductor-server-$CONDUCTOR_VER-boot.jar; java -jar conductor-server-$CONDUCTOR_VER-boot.jar
 ```
+
 ### Execute workers
+
 ```shell
 python ./main.py
 ```
 
 ### Create your first workflow
+
 Now, let's create a new workflow and see your task worker code in execution!
 
 Create a new Task Metadata for the worker you just created
@@ -169,6 +179,7 @@ curl -X 'POST' \
 ```
 
 Create a workflow that uses the task
+
 ```shell
 curl -X 'POST' \
   'http://localhost:8080/api/metadata/workflow' \
@@ -199,6 +210,7 @@ curl -X 'POST' \
 ```
 
 Start a new workflow execution
+
 ```shell
 curl -X 'POST' \
   'http://localhost:8080/api/workflow/workflow_with_python_task_example?priority=0' \
@@ -207,51 +219,60 @@ curl -X 'POST' \
   -d '{}'
 ```
 
-
 ## Worker Configurations
+
 Worker configuration is handled via `Configuraiton` object passed when initializing `TaskHandler`
 
 ### Server Configurations
-* base_url : Conductor server address.  e.g. `http://localhost:8000` if running locally 
-* debug: `true` for verbose logging `false` to display only the errors
-* authentication_settings: see below
-* metrics_settings: see below
+
+- base_url : Conductor server address. e.g. `http://localhost:8000` if running locally
+- debug: `true` for verbose logging `false` to display only the errors
+- authentication_settings: see below
+- metrics_settings: see below
 
 ### Metrics
+
 Conductor uses [Prometheus](https://prometheus.io/) to collect metrics.
 
-* directory: Directory where to store the metrics 
-* file_name: File where the metrics are colleted. e.g. `metrics.log`
-* update_interval: Time interval in seconds at which to collect metrics into the file
+- directory: Directory where to store the metrics
+- file_name: File where the metrics are colleted. e.g. `metrics.log`
+- update_interval: Time interval in seconds at which to collect metrics into the file
 
 ### Authentication
+
 Use if your conductor server requires authentication
-* key_id: Key
-* key_secret: Secret for the Key 
+
+- key_id: Key
+- key_secret: Secret for the Key
 
 ## C/C++ Support
-Python is great, but at times you need to call into native C/C++ code. 
+
+Python is great, but at times you need to call into native C/C++ code.
 Here is an example how you can do that with Conductor SDK.
 
-### 1.  Export your C++ functions as `extern "C"`:
-   * C++ function example (sum two integers)
-        ```cpp
-        #include <iostream>
+### 1. Export your C++ functions as `extern "C"`:
 
-        extern "C" int32_t get_sum(const int32_t A, const int32_t B) {
-            return A + B; 
-        }
-        ```
+- C++ function example (sum two integers)
+
+  ```cpp
+  #include <iostream>
+
+  extern "C" int32_t get_sum(const int32_t A, const int32_t B) {
+      return A + B;
+  }
+  ```
+
 ### 2. Compile and share its library:
-   * C++ file name: `simple_cpp_lib.cpp`
-   * Library output name goal: `lib.so`
-        ```bash
-        $ g++ -c -fPIC simple_cpp_lib.cpp -o simple_cpp_lib.o
-        $ g++ -shared -Wl,-install_name,lib.so -o lib.so simple_cpp_lib.o
-        ```
-     
+
+- C++ file name: `simple_cpp_lib.cpp`
+- Library output name goal: `lib.so`
+  ```bash
+  $ g++ -c -fPIC simple_cpp_lib.cpp -o simple_cpp_lib.o
+  $ g++ -shared -Wl,-install_name,lib.so -o lib.so simple_cpp_lib.o
+  ```
+
 ### 3. Use the C++ library in your python worker
-    
+
 ```python
 from conductor.client.http.models.task import Task
 from conductor.client.http.models.task_result import TaskResult
@@ -280,8 +301,8 @@ class SimpleCppWorker(WorkerInterface):
         return task_result
 ```
 
-
 ## Unit Tests
+
 ### Simple validation
 
 ```shell
@@ -301,6 +322,7 @@ Report:
 ```
 
 Visual coverage results:
+
 ```shell
 /conductor-python/src$ python3 -m coverage html
 ```

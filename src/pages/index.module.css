@@ -31,11 +31,11 @@
   margin-bottom: 1rem;
 }
 
-.spacedUl{
+.spacedUl {
   display: flex;
   flex-direction: column;
-  gap:10px;
-  padding-top:1rem;
+  gap: 10px;
+  padding-top: 1rem;
   padding-right: 1rem;
   font-weight: 400;
   font-size: 15px;
@@ -54,4 +54,3 @@
 .spacedUl li:nth-child(3n)::marker {
   color: var(--orkes-logo-color-3);
 }
-

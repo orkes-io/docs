@@ -1,25 +1,25 @@
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-
 # Managing Tags in Conductor
 
 The tags are metadata applied to tasks, workflows, schedulers, or secrets in Conductor. The tags in Conductor are of the format **key:value**. Tags can be utilized in situations where you can easily share permissions with a group of users.
 
-You can either add tags directly to individual workflows/tasks/secrets. Or you can also add tags to user groups. 
+You can either add tags directly to individual workflows/tasks/secrets. Or you can also add tags to user groups.
 
 ## Adding Tags to Workflow​s
 
 <Tabs groupId="view"
-        values={[
-        {label: 'Conductor UI', value: 'Dashboard'},
-        {label: 'API', value: 'API'}
-        
+values={[
+{label: 'Conductor UI', value: 'Dashboard'},
+{label: 'API', value: 'API'}
+
     ]}>
-  
+
   <TabItem value="Dashboard">
 
-  ### Conductor UI
+### Conductor UI
+
 To add a tag to a workflow,
 
 1. From the left menu, navigate to **WORKFLOWS > Definitions** and find the workflow you wish to tag.
@@ -40,7 +40,7 @@ To add a tag of the format `key:value` to a workflow using API, use the endpoint
 
 There are two ways to add a tag: a `POST` or a `PUT`.
 
-* `PUT` **replaces** the existing tags with the tags in the payload.
+- `PUT` **replaces** the existing tags with the tags in the payload.
 
 ```bash
 curl -X PUT "https://play.orkes.io/api/metadata/workflow/marketing_workflow/tags" \
@@ -50,8 +50,7 @@ curl -X PUT "https://play.orkes.io/api/metadata/workflow/marketing_workflow/tags
 -d "[{\"type\":\"METADATA\",\"key\":\"org\",\"value\":\"marketing\"}]"
 ```
 
-
-* `POST` **appends** the existing tags with the tags in the payload.
+- `POST` **appends** the existing tags with the tags in the payload.
 
 ```bash
 curl -X PUT "https://play.orkes.io/api/metadata/workflow/marketing_workflow/tags" \
@@ -60,11 +59,10 @@ curl -X PUT "https://play.orkes.io/api/metadata/workflow/marketing_workflow/tags
 -H  "Content-Type: application/json" \
 -d "[{\"type\":\"METADATA\",\"key\":\"org\",\"value\":\"marketing\"}]"
 ```
-
 
 The other operators for this endpoint are:
 
-* `GET`: Lists all tags assigned to the workflow.
+- `GET`: Lists all tags assigned to the workflow.
 
 ```bash
 curl -X GET "https://play.orkes.io/api/metadata/workflow/marketing_workflow/tags" \
@@ -72,6 +70,7 @@ curl -X GET "https://play.orkes.io/api/metadata/workflow/marketing_workflow/tags
 -H  "X-Authorization: <access_token>" \
 -H  "Content-Type: application/json" \
 ```
+
 gives the response:
 
 ```json
@@ -94,7 +93,7 @@ gives the response:
 ]
 ```
 
-* `DELETE`: Removes the specified tag from the workflow.
+- `DELETE`: Removes the specified tag from the workflow.
 
 ```bash
 curl -X DELETE "https://play.orkes.io/api/metadata/workflow/marketing_workflow/tags" \
@@ -104,24 +103,24 @@ curl -X DELETE "https://play.orkes.io/api/metadata/workflow/marketing_workflow/t
 -d "[{\"type\":\"METADATA\",\"key\":\"org\",\"value\":\"marketing\"}]"
 ```
 
-
-
   </TabItem>
 </Tabs>
 
 ## Adding Tags to Task​s
 
 <Tabs groupId="view"
-        values={[
-        {label: 'Conductor UI', value: 'Dashboard'},
-        {label: 'API', value: 'API'}
-        
+values={[
+{label: 'Conductor UI', value: 'Dashboard'},
+{label: 'API', value: 'API'}
+
     ]}>
-  
+
   <TabItem value="Dashboard">
 
-  ### Conductor UI
+### Conductor UI
+
 To add a tag to a task,
+
 1. From the left menu, navigate to the **TASKS > Definitions** and find the task you wish to tag.
 2. In the **Actions** column, click the tag icon.
 
@@ -136,7 +135,7 @@ To add a tag in the format `key:value` to a task using the API, use the endpoint
 
 There are two ways to add a tag: a `POST` or a `PUT`.
 
-* `PUT` **replaces** the existing tags with the tags in the payload.
+- `PUT` **replaces** the existing tags with the tags in the payload.
 
 ```bash
 curl -X PUT "https://play.orkes.io/api/metadata/task/marketing_task/tags" \
@@ -146,8 +145,7 @@ curl -X PUT "https://play.orkes.io/api/metadata/task/marketing_task/tags" \
 -d "[{\"type\":\"METADATA\",\"key\":\"org\",\"value\":\"marketing\"}]"
 ```
 
-
-* `POST` **appends** the existing tags with the tags in the payload.
+- `POST` **appends** the existing tags with the tags in the payload.
 
 ```bash
 curl -X PUT "https://play.orkes.io/api/metadata/task/marketing_task/tags" \
@@ -156,11 +154,10 @@ curl -X PUT "https://play.orkes.io/api/metadata/task/marketing_task/tags" \
 -H  "Content-Type: application/json" \
 -d "[{\"type\":\"METADATA\",\"key\":\"org\",\"value\":\"marketing\"}]"
 ```
-
 
 The other operators for this endpoint are:
 
-* `GET`: Lists all tags assigned to the workflow.
+- `GET`: Lists all tags assigned to the workflow.
 
 ```bash
 curl -X GET "https://play.orkes.io/api/metadata/task/marketing_task/tags" \
@@ -168,6 +165,7 @@ curl -X GET "https://play.orkes.io/api/metadata/task/marketing_task/tags" \
 -H  "X-Authorization: <access_token>" \
 -H  "Content-Type: application/json" \
 ```
+
 gives the response:
 
 ```json
@@ -190,7 +188,7 @@ gives the response:
 ]
 ```
 
-* `DELETE`: Removes the specified tag from the workflow.
+- `DELETE`: Removes the specified tag from the workflow.
 
 ```bash
 curl -X DELETE "https://play.orkes.io/api/metadata/task/marketing_task/tags" \
@@ -200,14 +198,13 @@ curl -X DELETE "https://play.orkes.io/api/metadata/task/marketing_task/tags" \
 -d "[{\"type\":\"METADATA\",\"key\":\"org\",\"value\":\"marketing\"}]"
 ```
 
-
-
   </TabItem>
 </Tabs>
 
 ## Adding Tags to Scheduler
 
 To add a tag to a scheduler,
+
 1. From the left menu, navigate to **SCHEDULER > Definitions** and find the scheduler you wish to tag.
 2. In the **Actions** column, click the **tag** icon.
 
@@ -216,6 +213,7 @@ This will open a pop-up window that allows you to add a new tag. Type a tag name
 ## Adding Tags to Secrets
 
 To add a tag to a secret,
+
 1. From the left menu, navigate to **Secrets** and find the secret you wish to tag.
 2. In the **Actions** column, click the **tag** icon.
 
@@ -223,13 +221,14 @@ This will open a pop-up window that allows you to add a new tag. Type a tag name
 
 ## Using Tags for Permission Sharing in Bulk
 
-The above steps mention adding tags to individual tasks/workflows/schedulers/secrets. However, you can also add tags to a user group that helps in sharing permissions in bulk. 
+The above steps mention adding tags to individual tasks/workflows/schedulers/secrets. However, you can also add tags to a user group that helps in sharing permissions in bulk.
 
 ### Using User Groups
 
-Suppose you have a group of users from the accounts team and want to share the workflow execution permission for all users in the group. 
+Suppose you have a group of users from the accounts team and want to share the workflow execution permission for all users in the group.
 
 To add permissions to the group,
+
 1. Ensure that the workflow is tagged with the tag **team:accounts**. (If the permission is to be shared for tasks/secrets, you need to add the tags to the corresponding items.)
 2. Navigate to **ACCESS CONTROL > Groups** and click the edit icon near your group name.
 3. From the **Workflow and Task Permissions** section, click **+Add Permission**.

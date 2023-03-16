@@ -26,7 +26,7 @@ To see the size of the task queue via API:
 
 ```shell
 curl 'http://localhost:8080/api/tasks/queue/sizes?taskType=<TASK_NAME>' \
-  -H 'accept: */*' 
+  -H 'accept: */*'
 ```
 
 To see the worker poll information of the task queue via API:
@@ -38,5 +38,4 @@ curl 'http://localhost:8080/api/tasks/queue/polldata?taskType=<TASK_NAME>' \
 
 > Replace `<TASK_NAME>` with your task name
 
-
->Note that this page will show you all the  [task to domain](task-domains) configured for your tasks.
+> Note that this page will show you all the [task to domain](task-domains) configured for your tasks.

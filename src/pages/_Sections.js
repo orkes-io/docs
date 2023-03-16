@@ -24,7 +24,11 @@ export const StepBoxesSection = ({ steps = [] }) => (
       spaceEvenly
       colClassName={styles.mobileSpaced}
       columns={steps.map((singleStepJson, index) => (
-        <SingleStep {...singleStepJson} index={index} key={singleStepJson.title} />
+        <SingleStep
+          {...singleStepJson}
+          index={index}
+          key={singleStepJson.title}
+        />
       ))}
     />
   </div>
@@ -114,24 +118,26 @@ export const YourfirstWorkflowSection = ({
   sectionFooter,
 }) => {
   return (
-  <div className="row">
-    <InfoPaper title={title}>
-      <div className="row">
-        <div className="col col--8">
-          <WorkflowLanguageExamples languageSamples={languageSamples} />
+    <div className="row">
+      <InfoPaper title={title}>
+        <div className="row">
+          <div className="col col--8">
+            <WorkflowLanguageExamples languageSamples={languageSamples} />
+          </div>
+          <div className="col col--4">
+            <PaperContainer className={styles.firstWorkflowContainer}>
+              <img src={rightImage} alt="Diagram of a workflow."></img>
+            </PaperContainer>
+          </div>
         </div>
-        <div className="col col--4">
-          <PaperContainer className={styles.firstWorkflowContainer}>
-            <img src={rightImage} alt="Diagram of a workflow."></img>
-          </PaperContainer>
-        </div>
-      </div>
-      <Text align="center" className={styles.firstWorkflowFooter}>
-        Tasks such as these makes up steps in your workflows. Learn more <a href="docs/introduction">here</a>
-      </Text>
-    </InfoPaper>
-  </div>
-)};
+        <Text align="center" className={styles.firstWorkflowFooter}>
+          Tasks such as these makes up steps in your workflows. Learn more{" "}
+          <a href="docs/introduction">here</a>
+        </Text>
+      </InfoPaper>
+    </div>
+  );
+};
 
 const IconHeader = ({ icon, header }) => (
   <div className={styles.iconHeader}>

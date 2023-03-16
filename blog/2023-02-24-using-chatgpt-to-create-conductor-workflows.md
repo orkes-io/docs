@@ -1,11 +1,11 @@
 ---
 slug: using-chatgpt-to-create-conductor-workflows
-title: Using ChatGPT to create Conductor Workflows 
+title: Using ChatGPT to create Conductor Workflows
 authors: riza
 tags: [Netflix Conductor, orchestration, chatgpt]
 ---
 
-ChatGPT from OpenAI has been an internet sensation for the past few months. ChatGPT is an AI-based chatbot that can generate human-like outputs based on its trained data. 
+ChatGPT from OpenAI has been an internet sensation for the past few months. ChatGPT is an AI-based chatbot that can generate human-like outputs based on its trained data.
 
 <p align="center"><img src="/content/img/chatgpt-trial.jpg" alt="ChatGPT for creating Conductor Workflows" width="90%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
@@ -13,7 +13,7 @@ By now, most of you might have already tried ChatGPT for your personal or busine
 
 Let’s take a look at how our trial progressed!
 
-## Conductor Workflows using ChatGPT 
+## Conductor Workflows using ChatGPT
 
 We gave an initial shot at creating a Conductor Workflow to calculate the sum of two numbers and return the value. Here’s our first attempt result:
 
@@ -35,14 +35,14 @@ It looks like those two errors were fixed, and one of the existing parameters, �
 
 <p align="center"><img src="/content/img/resolving-issues-with-workflow-version.jpg" alt="Resolving the encountered issue with the workflow version" width="60%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
-So now the workflow was almost accurate with the input parameters to the workflow, **num1**, and **num2** not defined in the workflow input. However, this is an optional thing to be added to the workflow definition, but you do need to pass it while running the workflow. 
+So now the workflow was almost accurate with the input parameters to the workflow, **num1**, and **num2** not defined in the workflow input. However, this is an optional thing to be added to the workflow definition, but you do need to pass it while running the workflow.
 
-So, I stopped my trial workflow at this point and manually added the missing input parameters to the workflow. 
+So, I stopped my trial workflow at this point and manually added the missing input parameters to the workflow.
 
-|[sum_workflow - View in Playground](https://play.orkes.io/workflowDef/sum_workflow_chatgpt/1)|
-|---|
+| [sum_workflow - View in Playground](https://play.orkes.io/workflowDef/sum_workflow_chatgpt/1) |
+| --------------------------------------------------------------------------------------------- |
 
-Ta-da🥳! The workflow is ready now! 
+Ta-da🥳! The workflow is ready now!
 
 The next step is to set up the worker for this. Let’s take Java worker as an example and see what ChatGPT offers for the worker setup.
 
@@ -64,7 +64,7 @@ public class SumWorker implements Worker {
 
 
    private static final String TASK_DEF_NAME = "sum_task";
-  
+
    @Override
    public String getTaskDefName() {
        return TASK_DEF_NAME;
@@ -78,11 +78,11 @@ public class SumWorker implements Worker {
        int num1 = Integer.parseInt(task.getInputData().get("num1").toString());
        int num2 = Integer.parseInt(task.getInputData().get("num2").toString());
        int result = num1 + num2;
-      
+
        TaskResult taskResult = new TaskResult(task);
        taskResult.setStatus(Status.COMPLETED);
        taskResult.getOutputData().put("result", result);
-      
+
        return taskResult;
    }
 }
@@ -96,8 +96,8 @@ Now that we have the ChatGPT-generated Workers and Workflow ready (Although our 
 
 We conducted a few more trials on several use cases, and here are the workflow definitions that ChatGPT has defined.
 
-* [Shipping an order](https://play.orkes.io/workflowDef/ship-order-workflow-chatgpt/1)
-* [Telecom subscription and billing management](https://play.orkes.io/workflowDef/telecom-subscriber-billing-workflow-chatgpt/1)
+- [Shipping an order](https://play.orkes.io/workflowDef/ship-order-workflow-chatgpt/1)
+- [Telecom subscription and billing management](https://play.orkes.io/workflowDef/telecom-subscriber-billing-workflow-chatgpt/1)
 
 :::note
 We have not tested the above ChatGPT-generated workflows.

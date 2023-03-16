@@ -1,6 +1,6 @@
 # A simple 2-step workflow
 
-Here's a simple 2 step Workflow.  For more details on how this works, see the [sequential HTTP tasks](/content/docs/codelab/sequentialHTTPtasks) codelab.
+Here's a simple 2 step Workflow. For more details on how this works, see the [sequential HTTP tasks](/content/docs/codelab/sequentialHTTPtasks) codelab.
 
 ## Workflow definition
 
@@ -73,4 +73,4 @@ Here's a simple 2 step Workflow.  For more details on how this works, see the [s
 
 ## Create the workflow
 
-In [Orkes Playground](https://play.orkes.io), click `Workflow Definition`, and then `Define Workflow`.  Paste in the JSON above. (you'll need a unique workflow name.)
+In [Orkes Playground](https://play.orkes.io), click `Workflow Definition`, and then `Define Workflow`. Paste in the JSON above. (you'll need a unique workflow name.)

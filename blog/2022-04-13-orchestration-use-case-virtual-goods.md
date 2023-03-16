@@ -13,10 +13,12 @@ Microservice architecture is an architecture where an application is split into 
 Microservice architecture is often recommended for larger applications because it allows services to be managed by dedicated teams. Testing and deployment also become easier, as they can be carried out independently for each service without affecting the overall application.
 
 In this article, you'll learn what a microservice architecture is and when to use it, and about workflow orchestration, its benefits, and how it can be utilized in a microservice architecture. You'll also look at an example use case of microservice architecture so you can better understand the benefits, strengths, and weaknesses of this style of architecture.
+
 <!--truncate -->
+
 ## Why Use Microservice Architecture?
 
-Small applications are usually built in the monolith architectural style, where the application components or services are tightly coupled together in a unified system. They all share a database, and because the services are so interdependent, a change in one service requires a redeployment of the entire application. When the application starts to scale, this can become difficult to manage. That's where microservice architecture comes in. 
+Small applications are usually built in the monolith architectural style, where the application components or services are tightly coupled together in a unified system. They all share a database, and because the services are so interdependent, a change in one service requires a redeployment of the entire application. When the application starts to scale, this can become difficult to manage. That's where microservice architecture comes in.
 
 In a microservice architecture, the application gets split into stand-alone services. Each service has its own database, and is loosely coupled with other services. A change in one service doesn't necessarily affect all other services, and each service can be managed, tested, and deployed separately. With this architecture, separation of concerns is enforced by default, as different teams are assigned to different services.
 
@@ -58,7 +60,7 @@ This service will be responsible for passing information such as offers, new alb
 
 #### Authentication and Authorization Service
 
-This service will handle all authentication and authorization requests made by the user. It will facilitate user actions like payment transactions from the payments service and login from the users service. 
+This service will handle all authentication and authorization requests made by the user. It will facilitate user actions like payment transactions from the payments service and login from the users service.
 
 #### Search Service
 
@@ -82,7 +84,7 @@ This service logs data such as user and transaction details from services like t
 
 #### Analytics Service
 
-This service stores application data for analysis. It may include things like users’ ages, locations, device types, and usage of the application. The data provided by this service can help improve the business, such as by helping the marketing team target audiences. 
+This service stores application data for analysis. It may include things like users’ ages, locations, device types, and usage of the application. The data provided by this service can help improve the business, such as by helping the marketing team target audiences.
 
 ### Strengths Of Microservice Architecture
 
@@ -90,7 +92,7 @@ As noted previously, a microservice architecture can offer some substantial bene
 
 - There’s the separation of concerns, as each service is isolated and handles only one major function.
 - A failure in one service doesn't affect other services, since they're loosely coupled. For example, if the search service fails, the user cannot search for songs, but they can still stream music from a playlist and make subscription payments.
-- Testing and deployment are simpler as they can be done independently. For example, the analytics service can be tested and deployed at a different time from the notification service. 
+- Testing and deployment are simpler as they can be done independently. For example, the analytics service can be tested and deployed at a different time from the notification service.
 - Services can be scaled independently. For example, the payments service can be scaled up, and even sold to other platforms that wish to run payment transactions.
 
 ### Weaknesses Of Microservice Architecture
@@ -131,7 +133,6 @@ You can employ the saga pattern, which is a failure-management pattern that coor
 
 ## Conclusion
 
-In this article, you learned what microservice architecture is, why and when it should be used, how it works, and the benefits that it can offer. You also learned how an application can be split into various services and looked at how these services are structured and how they communicate with each other. 
+In this article, you learned what microservice architecture is, why and when it should be used, how it works, and the benefits that it can offer. You also learned how an application can be split into various services and looked at how these services are structured and how they communicate with each other.
 
-[Orkes Cloud](https://orkes.io/content/docs/getting-started/playground/using-conductor-playground) is a fully managed, cloud-hosted platform built on Netflix Conductor OSS, which is a workflow orchestration engine used for distributed systems. Orkes offers you security, CI/CD (continuous integration/continuous deployment) pipeline orchestrations, cloud infrastructure, and more, and frees you up to focus on your service—not on managing your application. 
-
+[Orkes Cloud](https://orkes.io/content/docs/getting-started/playground/using-conductor-playground) is a fully managed, cloud-hosted platform built on Netflix Conductor OSS, which is a workflow orchestration engine used for distributed systems. Orkes offers you security, CI/CD (continuous integration/continuous deployment) pipeline orchestrations, cloud infrastructure, and more, and frees you up to focus on your service—not on managing your application.

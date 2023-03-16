@@ -2,10 +2,11 @@
 displayed_sidebar: mainSidebar
 sidebar_position: 1
 ---
+
 # What use cases can Conductor solve?
 
 Conductor is a general-purpose orchestration engine that is language agnostic and has been adopted widely across
-multiple industries, ranging from media to security to finance and more. 
+multiple industries, ranging from media to security to finance and more.
 
 Some common use cases that has been solved by Conductor are:
 
@@ -16,7 +17,7 @@ Some common use cases that has been solved by Conductor are:
 5. Financial Transactions
 6. Distributed Transactions
 7. Human-centric Business Process Automation
-8. Orchestrating Microservices (HTTP,  background services, etc.)
+8. Orchestrating Microservices (HTTP, background services, etc.)
 9. Orchestrating Business Logic across various cloud functions (AWS Lambda, GCP functions, etc.)
 10. Infrastructure Provisioning
 11. CI/CD Pipelines

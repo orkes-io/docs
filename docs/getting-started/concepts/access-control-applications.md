@@ -10,7 +10,7 @@ This document will walk you through the steps to create application-based contro
 
 ## Prototyping
 
-If you are looking for a quick way to test on Orkes Cloud without creating an application, you can obtain a JWT token from the Cloud dashboard. Click the account button in the upper right corner, and select **Copy Token**.  This token remains valid for your current session in Orkes Cloud and has the same access as your user account.
+If you are looking for a quick way to test on Orkes Cloud without creating an application, you can obtain a JWT token from the Cloud dashboard. Click the account button in the upper right corner, and select **Copy Token**. This token remains valid for your current session in Orkes Cloud and has the same access as your user account.
 
 <p align="center"><img src="/content/img/prototyping.jpg" alt="Copying the user token from Conductor instance" width="90%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
@@ -33,13 +33,13 @@ To create a new application,
 
 The following roles can be granted to the application.
 
-* **Worker**: Poll and update tasks. It requires EXECUTE permissions on the tasks.
-* **Metadata API**: Create and manage workflow and task definitions.
-* **Application API**: Create and manage applications.
+- **Worker**: Poll and update tasks. It requires EXECUTE permissions on the tasks.
+- **Metadata API**: Create and manage workflow and task definitions.
+- **Application API**: Create and manage applications.
 
 ### Access Keys
 
-Once your application's permission levels are chosen, access must be granted to the application. This is done by generating an Access Key. Click **Create Access Key** to generate a unique *Key Id* and *Key Secret*. These values are shown only once, so ensure to copy the credentials and store them privately.
+Once your application's permission levels are chosen, access must be granted to the application. This is done by generating an Access Key. Click **Create Access Key** to generate a unique _Key Id_ and _Key Secret_. These values are shown only once, so ensure to copy the credentials and store them privately.
 
 <p align="center"><img src="/content/img/create-access-key.jpg" alt="Generating Key Id and Key Secrets" width="50%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
@@ -47,8 +47,8 @@ Once a key has been created, you can perform two actions on the key:
 
 <p align="center"><img src="/content/img/actions-on-the-generated-key.jpg" alt="Generated Key in the Conductor" width="90%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
-* **Pause** - Use the pause button to restrict access to the application temporarily. You can resume this access by un-pausing.
-* **Delete** - Use the delete button to remove the key permanently. It is a one-time action that cannot be undone.
+- **Pause** - Use the pause button to restrict access to the application temporarily. You can resume this access by un-pausing.
+- **Delete** - Use the delete button to remove the key permanently. It is a one-time action that cannot be undone.
 
 ### Workflow & Task Permissions
 
@@ -57,12 +57,14 @@ In this section, you can provide the application with access to workflows, tasks
 1. Click **+Add Permission** at the top of the **Workflow and Task Permissions** table.
 2. In the pop-up window, choose the required **Target Type** from Workflow/Task/Secret/Tag.
 3. Select all targets that the application needs access to.
-4. Choose the required permissions for the selected targets. 
-  * **Read** - The user can view the workflow/task/secret/tags, but cannot modify or run them.
-  * **Create** - The user can create the workflow/task/secret/tags.
-  * **Update** - Allows the user to update the workflow/task/secret/tags. Requires *Metadata API* role for this.
-  * **Execute** - Allows the user to run the workflow or task. Requires *Worker* role for this.
-  * **Delete** - Allows the user to delete the workflow/task/secret/tags. Requires *Metadata API* role for this.
+4. Choose the required permissions for the selected targets.
+
+- **Read** - The user can view the workflow/task/secret/tags, but cannot modify or run them.
+- **Create** - The user can create the workflow/task/secret/tags.
+- **Update** - Allows the user to update the workflow/task/secret/tags. Requires _Metadata API_ role for this.
+- **Execute** - Allows the user to run the workflow or task. Requires _Worker_ role for this.
+- **Delete** - Allows the user to delete the workflow/task/secret/tags. Requires _Metadata API_ role for this.
+
 5. Once all the workflows and tasks have been added, the table will display the selection. It is possible to add, change or remove access from here.
 
 <p align="center"><img src="/content/img/adding-permissions.png" alt="Adding permissions for the tasks/workflows" width="50%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
@@ -85,7 +87,7 @@ curl -s -X "POST" "https://play.orkes.io/api/token" \
   {"token":"<JWT Token>"}
 ```
 
-Sending the Key Id and Secret generates a JWT. This JWT can be used to make calls to the Conductor instance.  The header for authentication is **X-Authorization:**.
+Sending the Key Id and Secret generates a JWT. This JWT can be used to make calls to the Conductor instance. The header for authentication is **X-Authorization:**.
 
 For example, this call to the **super_weather** workflow uses a JWT token to get the weather in Beverly Hills, CA:
 
@@ -111,6 +113,7 @@ One way to handle this is to create a single application with access to Workflow
 <p align="center"><img src="/content/img/application_access_example.jpg" alt="Example application" width="500" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
 In order to satisfy the principle of least privilege, we'll create 3 Applications.
+
 1. Application **Worker X** with the **EXECUTE** permission for **Task X**. This allows the worker to poll the task queue for work.
 2. Application **Program 1** with the **EXECUTE** permission for **Workflow 1** and **Task X** so that it can successfully invoke **Workflow 1**.
 3. Application **Program 2** with the **EXECUTE** permission for **Workflow 2** and **Task X** so that it can successfully invoke **Workflow 2**.

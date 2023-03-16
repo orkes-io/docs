@@ -6,7 +6,6 @@ sidebar_position: 1
 
 In this article, we will learn how to view workflow executions via the UI.
 
-
 ## Viewing a Workflow Execution
 
 Refer to [Searching Workflows](/content/docs/how-tos/Workflows/searching-workflows) to filter and find an execution you want to
@@ -14,29 +13,29 @@ view. Click on the workflow id hyperlink to open the Workflow Execution Details 
 
 The following sub-tabs are available to view the details of the Workflow Execution.
 
-|Tab Name|Description|
-|---|---|
-| Tasks | Shows a view with the sub tabs **Diagram**, **Task List** and **Timeline**|
-| Tasks > Diagram | A visual view of the workflow and its tasks.|
-| Tasks > Task List | Tabular view of the task executions under this workflow. If there were failures, we will be able to see that here|
-| Tasks > Timeline | Shows the time each of the tasks took for execution in a timeline view |
-| Summary | Summary view of the workflow execution|
-| Workflow Input/Output | Shows the input and output payloads of the workflow. Enable copy mode to copy all or parts of the payload|
-| JSON | Full JSON payload of the workflow, including all tasks, inputs and outputs. Useful for detailed debugging.|
+| Tab Name              | Description                                                                                                       |
+| --------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| Tasks                 | Shows a view with the sub tabs **Diagram**, **Task List** and **Timeline**                                        |
+| Tasks > Diagram       | A visual view of the workflow and its tasks.                                                                      |
+| Tasks > Task List     | Tabular view of the task executions under this workflow. If there were failures, we will be able to see that here |
+| Tasks > Timeline      | Shows the time each of the tasks took for execution in a timeline view                                            |
+| Summary               | Summary view of the workflow execution                                                                            |
+| Workflow Input/Output | Shows the input and output payloads of the workflow. Enable copy mode to copy all or parts of the payload         |
+| JSON                  | Full JSON payload of the workflow, including all tasks, inputs and outputs. Useful for detailed debugging.        |
 
 ## Viewing a Workflow Task Detail
 
 From both the **Tasks > Diagram** and **Tasks > Task List** views, we can click to see a task execution detail. This
 opens a flyout panel from the side and contains the following tabs.
 
-|Tab Name|Description|
-|---|---|
-| Summary | Summary info of the task execution|
-| Input | Task input payload - refer to this tab to see computed inputs passed into the task. Enable copy mode to copy all or parts of the payload|
-| Output | Shows the output payload produced by the executed task. Enable copy mode to copy all or parts of the payload|
-| Log | Any log messages logged by the task worked will show up here|
-| JSON | Complete JSON payload for debugging issues|
-| Definition | Task definition used when executing this task|
+| Tab Name   | Description                                                                                                                              |
+| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| Summary    | Summary info of the task execution                                                                                                       |
+| Input      | Task input payload - refer to this tab to see computed inputs passed into the task. Enable copy mode to copy all or parts of the payload |
+| Output     | Shows the output payload produced by the executed task. Enable copy mode to copy all or parts of the payload                             |
+| Log        | Any log messages logged by the task worked will show up here                                                                             |
+| JSON       | Complete JSON payload for debugging issues                                                                                               |
+| Definition | Task definition used when executing this task                                                                                            |
 
 ## Execution Path
 

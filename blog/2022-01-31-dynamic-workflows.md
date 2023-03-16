@@ -2,26 +2,37 @@
 slug: image-processing-multiple-images-dynamic
 title: Dynamic forks- scaling your system at runtime - an image processing example
 authors: doug
-tags: [Netflix Conductor, Orkes, Conductor, orchestration, image processing, fork, dynamic fork, tutorial, 2022]
+tags:
+  [
+    Netflix Conductor,
+    Orkes,
+    Conductor,
+    orchestration,
+    image processing,
+    fork,
+    dynamic fork,
+    tutorial,
+    2022,
+  ]
 ---
 
-In recent posts, we have built several image processing workflows with Conductor.  In our first post, we created an [image processing workflow for one image](/content/blog/image-processing-workflow-with-conductor) - where we provide an image along with the desired output dimensions and format.  The workflow output is a link on Amazon S3 to the desired file.
+In recent posts, we have built several image processing workflows with Conductor. In our first post, we created an [image processing workflow for one image](/content/blog/image-processing-workflow-with-conductor) - where we provide an image along with the desired output dimensions and format. The workflow output is a link on Amazon S3 to the desired file.
 
-In the 2nd example, we used the FORK System task to create [multiple images](/content/blog/image-processing-multiple-images-forks) in parallel.  The number of images was hardcoded in the workflow - as FORK generates exactly as many paths as are coded into the workflow.
+In the 2nd example, we used the FORK System task to create [multiple images](/content/blog/image-processing-multiple-images-forks) in parallel. The number of images was hardcoded in the workflow - as FORK generates exactly as many paths as are coded into the workflow.
 
-Several images are hardcoded in the workflow, but only 2 images are created.  When it comes to image generation, there is often a need for more images (as new formats become popular) or sizes - as more screens are supported.
+Several images are hardcoded in the workflow, but only 2 images are created. When it comes to image generation, there is often a need for more images (as new formats become popular) or sizes - as more screens are supported.
 
-Luckily, Conductor supports this flexibility and has a feature to specify the number of tasks to be created at runtime.  In this post, we'll demonstrate the use of [dynamic forks](/content/docs/reference-docs/dynamic-fork-task), where the workflow splitting is done at runtime.
+Luckily, Conductor supports this flexibility and has a feature to specify the number of tasks to be created at runtime. In this post, we'll demonstrate the use of [dynamic forks](/content/docs/reference-docs/dynamic-fork-task), where the workflow splitting is done at runtime.
 
 Learn how to create a dynamic fork workflow in this post!
 
 ![](./assets/dynamic-workflow.png)
-<!-- truncate -->
 
+<!-- truncate -->
 
 ## Workflows with Dynamic forks
 
-In our use case, the number of parallel processes will be determined at runtime, so we'll use the [FORK_JOIN_DYNAMIC](https://orkes.io/content/docs/reference-docs/dynamic-fork-task) to create the parallel tasks on the spot.  When the tasks are completed, the workflow will join back and continue.
+In our use case, the number of parallel processes will be determined at runtime, so we'll use the [FORK_JOIN_DYNAMIC](https://orkes.io/content/docs/reference-docs/dynamic-fork-task) to create the parallel tasks on the spot. When the tasks are completed, the workflow will join back and continue.
 
 Here's the workflow (you can also find it on [GitHub](https://github.com/orkes-io/orkesworkers/blob/main/data/workflow/image_multiple_convert_resize.json)):
 
@@ -82,13 +93,13 @@ Here's the workflow (you can also find it on [GitHub](https://github.com/orkes-i
 }
 ```
 
-
 ### Task definition
 
-As the diagram and JSON above show, we will have 3 tasks: 
-* ```image_multiple_convert_resize_ref``` - This task will read the input and define the dynamic tasks based on the inputs.  It will then send the list of dynamic tasks to the fork:
-* ```image_multiple_convert_resize_fork``` - The dynamic fork will take the list of dynamic tasks required and create the task.
-* ```image_convert_resize_<varied>``` - This task will run once inside each dynamic task, and the variable at the end will correspond to a specific image being created.
+As the diagram and JSON above show, we will have 3 tasks:
+
+- `image_multiple_convert_resize_ref` - This task will read the input and define the dynamic tasks based on the inputs. It will then send the list of dynamic tasks to the fork:
+- `image_multiple_convert_resize_fork` - The dynamic fork will take the list of dynamic tasks required and create the task.
+- `image_convert_resize_<varied>` - This task will run once inside each dynamic task, and the variable at the end will correspond to a specific image being created.
 
 Let's look at each task in detail:
 
@@ -157,23 +168,23 @@ for (String outputFormat :
 
 ### Resize dynamic fork
 
-The Dynamic fork reads in all the ```dynamicTasks``` and ```dynamicTasksInput``` from the first task and spawns out all the tasks to be run.
+The Dynamic fork reads in all the `dynamicTasks` and `dynamicTasksInput` from the first task and spawns out all the tasks to be run.
 
 ### image_convert_resize
 
 The image conversion task does not actually appear in the workflow. It is called in the Java application as the dynamicTaskName:
 
-```String dynamicTaskName = "image_convert_resize";```
+`String dynamicTaskName = "image_convert_resize";`
 
 Each of the tasks is given a unique reference at the end, appending the format, height, width and a counter to each task:
 
-```String taskRefName = String.format("%s_%s_%sx%s_%d",dynamicTaskName, outputFormat, size.width, size.height, i++);```
+`String taskRefName = String.format("%s_%s_%sx%s_%d",dynamicTaskName, outputFormat, size.width, size.height, i++);`
 
 This task is also present in the [GitHub repository](https://github.com/orkes-io/orkesworkers/blob/main/data/task/image_convert_resize.json).
 
 ## Creating the workflow in Conductor
 
-We will need to create 2 tasks (and for simplicity, we can just copy the files from GitHub):  ```image_multiple_convert_resize.json``` and ```image_convert_resize.json```.  
+We will need to create 2 tasks (and for simplicity, we can just copy the files from GitHub): `image_multiple_convert_resize.json` and `image_convert_resize.json`.
 
 You can add these definitions using curl:
 
@@ -199,7 +210,7 @@ curl -X 'POST' \
 
 ## Running our workflow
 
-Now that the workflow is defined, we are ready to run it.  Let's create 3 different formats, each with 3 different-sized images:
+Now that the workflow is defined, we are ready to run it. Let's create 3 different formats, each with 3 different-sized images:
 
 ```
 {
@@ -228,9 +239,8 @@ This will spawn 9 different processes and create 9 images.
 
 ### Not quite the same
 
-In this workflow, our dynamic task creates the resized and reformatted images.  In the earlier workflows, there is a second task that uploads the videos to S3.  A Dynamic task will only run one task, so in this case, we are just generating the image.
+In this workflow, our dynamic task creates the resized and reformatted images. In the earlier workflows, there is a second task that uploads the videos to S3. A Dynamic task will only run one task, so in this case, we are just generating the image.
 
 To run several tasks per dynamic task, we'll need to create a [subworkflow](https://orkes.io/content/docs/reference-docs/sub-workflow-task) inside the dynamic task.
 
 For simplicity, we've introduced the dynamic task here, and in our next post, we will combine the dynamic task with a subworkflow to create the images AND upload them to S3.
-

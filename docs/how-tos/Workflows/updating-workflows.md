@@ -16,7 +16,7 @@ Workflows can be created or updated using the workflow metadata API
 PUT /api/metadata/workflow
 ```
 
-### Example using curl 
+### Example using curl
 
 ```shell
 curl 'http://localhost:8080/api/metadata/workflow' \
@@ -30,16 +30,16 @@ curl 'http://localhost:8080/api/metadata/workflow' \
 
 ```javascript
 fetch("http://localhost:8080/api/metadata/workflow", {
-  "headers": {
-    "accept": "*/*",
-    "content-type": "application/json"
+  headers: {
+    accept: "*/*",
+    "content-type": "application/json",
   },
-  "body": "[{\"name\":\"sample_workflow\",\"version\":1,\"tasks\":[{\"name\":\"ship_via_fedex\",\"taskReferenceName\":\"ship_via_fedex\",\"type\":\"SIMPLE\"}],\"schemaVersion\":2}]",
-  "method": "PUT"
+  body: '[{"name":"sample_workflow","version":1,"tasks":[{"name":"ship_via_fedex","taskReferenceName":"ship_via_fedex","type":"SIMPLE"}],"schemaVersion":2}]',
+  method: "PUT",
 });
 ```
+
 ## Best Practices
 
 1. If you are updating the workflow with new tasks, remember to register the task definitions first
-2. You can also use the Conductor Swagger UI to update the workflows 
-
+2. You can also use the Conductor Swagger UI to update the workflows

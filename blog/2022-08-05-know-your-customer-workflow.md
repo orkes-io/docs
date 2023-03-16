@@ -22,7 +22,7 @@ KYC workflows are all of the steps required for successfully onboarding a new pe
 
 Consider the example of setting up a bank account. In this case, the bank implements many different KYC workflows, and most banks get hundreds of new customers every day. [KYC](https://www.msg-compliance.de/en/glossary#k), in this context, requires the bank to gather a lot of information about you to assign the appropriate customer class. The captured information is also used to prevent money laundering, terrorist financing, corruption, and other illegal activities.
 
-During the initial KYC workflow, banks are asked by the FATF to follow a [risk-based approach](https://www.msg-compliance.de/en/glossary#r). In order to do that, they gather extensive details about you, which they also use to tailor offers of additional services or stock investments that match your [risk appetite](https://csrc.nist.gov/glossary/term/risk_appetite). It’s all about knowing who *you* are as a person. These KYC processes also help reduce fraud once you are an established customer. For example, if the bank knows that you live in Germany, it could identify credit card activity in the USA as a fraud transaction within minutes after activity in Germany and block it.
+During the initial KYC workflow, banks are asked by the FATF to follow a [risk-based approach](https://www.msg-compliance.de/en/glossary#r). In order to do that, they gather extensive details about you, which they also use to tailor offers of additional services or stock investments that match your [risk appetite](https://csrc.nist.gov/glossary/term/risk_appetite). It’s all about knowing who _you_ are as a person. These KYC processes also help reduce fraud once you are an established customer. For example, if the bank knows that you live in Germany, it could identify credit card activity in the USA as a fraud transaction within minutes after activity in Germany and block it.
 
 The KYC workflow of a bank or a financial service needs to cover many different steps, and the following is a simplified view of a workflow:
 
@@ -35,6 +35,7 @@ Based on the feedback from these validations, the workflow decides if the custom
 In the next section, you will build this workflow using Netflix Conductor.
 
 ## Implementing KYC Workflows Using Netflix Conductor
+
 Before you start to build the workflow, there are a few things you need to do so you can locally test and execute the examples that you will build. Being able to execute and test workflows locally is key to ensuring developer productivity. Later you will implement your workflow for productive use on a server or on a Software as a Service offering like [Orkes](https://play.orkes.io/newWorkflowDef).
 
 These are the prerequisites that you will need for the rest of this article:
@@ -58,7 +59,7 @@ You are now going to bring up a local instance of Conductor as described on [the
 
 You are now running a complete version of the workflow orchestration tool Conductor on your local PC! This includes the user interface, the backend server, and an Elasticsearch container for storing the workflow and task data.
 
-*Note:* This is a transient data store, so every time you stop or start the container, your workflows or tasks created on this instance will be deleted.
+_Note:_ This is a transient data store, so every time you stop or start the container, your workflows or tasks created on this instance will be deleted.
 
 ### Creating a Workflow Task
 
@@ -70,7 +71,7 @@ Create one task for each of the tasks in the folder “conductor-workflows/tasks
 
 ![Create task](https://i.imgur.com/Yc1Nctu.png)
 
-The creation of these tasks can also be done using a [simple API](https://conductor.netflix.com/how-tos/Tasks/creating-tasks.html). However,  for simplicity and because you only need to create a small number of tasks, you are going to do this manually as part of the tutorial.
+The creation of these tasks can also be done using a [simple API](https://conductor.netflix.com/how-tos/Tasks/creating-tasks.html). However, for simplicity and because you only need to create a small number of tasks, you are going to do this manually as part of the tutorial.
 
 ### Creating a KYC Workflow
 

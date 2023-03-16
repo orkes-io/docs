@@ -10,7 +10,7 @@ boney:
   url: https://github.com/boney9
   image_url: /content/img/authors/boney.png
 
-dilip: 
+dilip:
   name: Dilip Lukose
   title: CPO
   url: https://www.linkedin.com/in/diliplukose/
@@ -70,13 +70,11 @@ Shweta:
   url: https://portal.draft.dev/writers/rec007aCqnMYrzMdD
   image_url: https://dl.airtable.com/.attachments/e7947774cf075063f8c1b67a985124ab/6c97d2ae/20210731105430_IMG_2140.jpg?userId=usrLQ2kaNUqxOmv9c
 
-
 JamesWalker:
   name: James Walker
   title: Guest Author
   url: https://portal.draft.dev/writers/recdueDghXBkpM6Qj
   image_url: https://dl.airtable.com/.attachments/6df3dd81195d6b2e4d3ce8a626ae4296/079491b3/james.jpg?userId=usrLQ2kaNUqxOmv9c
-
 
 MohammedOsman:
   name: Mohammed Osman
@@ -84,13 +82,11 @@ MohammedOsman:
   url: https://portal.draft.dev/writers/recvOT7Hsq96gfwnR
   image_url: https://dl.airtable.com/.attachments/212f5fd8175d487f1642512a99e85d9c/b8be0e84/osman2.jpg?userId=usrLQ2kaNUqxOmv9c
 
-
 CameronPavey:
   name: Cameron Pavey
   title: Guest Author
   url: https://portal.draft.dev/writers/rec4Io5U8JlZaFFy2
   image_url: https://dl.airtable.com/.attachments/017425ef582dbc2348989069830ae1d5/9695c6e0/dp_current.jpg?userId=usrLQ2kaNUqxOmv9c
-
 
 JohannesKoch:
   name: Johannes Koch
@@ -99,19 +95,19 @@ JohannesKoch:
   image_url: https://dl.airtable.com/.attachments/8e95296ae00f1c501d7adbf5df3b2989/ea31ef65/johannes_round.png?userId=usrLQ2kaNUqxOmv9c
 
 AyodeleAransiola:
- name: Ayodele Aransiola
- title: Guest Author
- url: https://portal.draft.dev/writers/rec2hTGbxNzwgQITY
- image_url: https://dl.airtable.com/.attachments/302d16d41fd62507b8237e0740a8fa55/bd184326/YorubaDemon-875.png?userId=usrLQ2kaNUqxOmv9c
+  name: Ayodele Aransiola
+  title: Guest Author
+  url: https://portal.draft.dev/writers/rec2hTGbxNzwgQITY
+  image_url: https://dl.airtable.com/.attachments/302d16d41fd62507b8237e0740a8fa55/bd184326/YorubaDemon-875.png?userId=usrLQ2kaNUqxOmv9c
 
 riza:
- name: Riza Farheen
- title: Developer Advocate
- url: https://www.linkedin.com/in/riza-farheen-89022b146/
- image_url: /content/img/authors/riza.png
+  name: Riza Farheen
+  title: Developer Advocate
+  url: https://www.linkedin.com/in/riza-farheen-89022b146/
+  image_url: /content/img/authors/riza.png
 
 viren:
- name: Viren Baraiya
- title: CTO
- url: https://www.linkedin.com/in/virenb/
- image_url: /content/img/authors/viren.png
+  name: Viren Baraiya
+  title: CTO
+  url: https://www.linkedin.com/in/virenb/
+  image_url: /content/img/authors/viren.png

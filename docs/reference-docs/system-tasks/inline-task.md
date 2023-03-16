@@ -7,29 +7,31 @@ sidebar_position: 11
 ```json
 "type": "INLINE"
 ```
+
 ## Introduction
 
 The inline task helps execute necessary logic at the workflow run-time using an evaluator. There are two supported evaluators as of now:
 
-|name|description|
-|---|---|
+| name       | description                                                          |
+| ---------- | -------------------------------------------------------------------- |
 | javascript | Evaluate Javascript expressions using nashorn and compute the value. |
-| graaljs | Evaluate Javascript expressions using graaljs and compute the value. |
+| graaljs    | Evaluate Javascript expressions using graaljs and compute the value. |
 
 ## Use Cases
 
 Consider a scenario where we have to run simple evaluations in the Conductor server while creating Workers. An inline task can be used to run these evaluations using an evaluator engine.
 
 ## Configuration
+
 ```json
 {
   "name": "inline_task_example",
   "taskReferenceName": "inline_task_example",
   "type": "INLINE",
   "inputParameters": {
-      "value": "${workflow.input.value}",
-      "evaluatorType": "javascript",
-      "expression": "function e() { if ($.value == 1){return {\"result\": true}} else { return {\"result\": false}}} e();"
+    "value": "${workflow.input.value}",
+    "evaluatorType": "javascript",
+    "expression": "function e() { if ($.value == 1){return {\"result\": true}} else { return {\"result\": false}}} e();"
   }
 }
 ```
@@ -48,4 +50,4 @@ The task output can then be referenced in downstream tasks like
 
 ## Examples in Codelabs
 
-* [Task to Domain A/B testing](/content/docs/codelab/taskToDomain#ab-with-an-inline-task) - This workflow uses the JavaScript `Math.random()` to decide an outcome - either send the next task to the main worker or to the worker named 'Doug.'
+- [Task to Domain A/B testing](/content/docs/codelab/taskToDomain#ab-with-an-inline-task) - This workflow uses the JavaScript `Math.random()` to decide an outcome - either send the next task to the main worker or to the worker named 'Doug.'

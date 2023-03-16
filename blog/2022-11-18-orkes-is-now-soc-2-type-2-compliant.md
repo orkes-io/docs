@@ -13,7 +13,7 @@ At Orkes, it is our core tenet to have world-class security embedded in everythi
 
 ## How does SOC2 Type 2 compliance help customers?
 
-Service Organization Control (SOC), developed by the American Institute of Certified Public Accountants (AICPA), defines how a company handles sensitive data. SOC 2 is designed for service providers who store customer data in the cloud. This rigorous, independent assessment of our internal security controls verifies our adherence to the highest standards across all aspects of our technology and business. 
+Service Organization Control (SOC), developed by the American Institute of Certified Public Accountants (AICPA), defines how a company handles sensitive data. SOC 2 is designed for service providers who store customer data in the cloud. This rigorous, independent assessment of our internal security controls verifies our adherence to the highest standards across all aspects of our technology and business.
 
 If you are an Orkes customer or considering being one, rest assured that your workloads and data will be in a cloud ecosystem that is fully compliant with SOC 2 Type 2 standards. This also means that if you require SOC 2 Type 2 compliance for yourselves, using Orkes Cloud for your microservices and workflow orchestration use cases ensures you will be able to achieve and maintain that compliance.
 

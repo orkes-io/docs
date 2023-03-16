@@ -1,37 +1,38 @@
 # Task to Domain
 
-The Task to Domain is the concept of limiting the task execution only to a specific worker via domain mapping. The domain name can be arbitrary. 
+The Task to Domain is the concept of limiting the task execution only to a specific worker via domain mapping. The domain name can be arbitrary.
 
 Once a task is created, Conductor creates a queue for each task. When a workflow is run, the specific task execution is dropped into the queue and picked up by a worker. By default, any worker can pick up any task in the queue, which means that there is **NO_DOMAIN** limitation.
 
 The task to domain functionality comes into use in situations where a specific task execution is to be done by a specific worker. For example:
 
-* Debugging a worker - In cases like debugging a worker, you may want your test runs to hit only the test worker and the production traffic to hit only the production worker.
-* Rolling out a new worker - Allocating a percentage of the task queue to the new worker in order to test it under load.
+- Debugging a worker - In cases like debugging a worker, you may want your test runs to hit only the test worker and the production traffic to hit only the production worker.
+- Rolling out a new worker - Allocating a percentage of the task queue to the new worker in order to test it under load.
 
-Situations like these can be tackled with a proper task to domain mapping. 
+Situations like these can be tackled with a proper task to domain mapping.
 
 ## Using Task to Domain
 
-The domain is to be provided both in the worker and while running the workflow. 
+The domain is to be provided both in the worker and while running the workflow.
 
 ### Specifying Domain while Invoking Workflow
 
-A domain name is an arbitrary name given by the user. When you start/run a workflow, you can specify which tasks must run on which domains. 
+A domain name is an arbitrary name given by the user. When you start/run a workflow, you can specify which tasks must run on which domains.
 
 ![diagram of using task to domain](/img/task_to_domain_diagram.jpg)
 
-In the example workflow, the black line indicates the normal production environment, where Task X is polled by Worker X, where there is no domain set. 
+In the example workflow, the black line indicates the normal production environment, where Task X is polled by Worker X, where there is no domain set.
 
-Now, let’s push a modified test version of Worker X on a different server. Here, we have given a domain **test** to Worker X. This ensures that this test worker will not pick the production tasks. 
+Now, let’s push a modified test version of Worker X on a different server. Here, we have given a domain **test** to Worker X. This ensures that this test worker will not pick the production tasks.
 
-To test the workflow with the test version of worker X, we add the following while invoking the workflow. 
+To test the workflow with the test version of worker X, we add the following while invoking the workflow.
 
 ```json
 "taskToDomain: {
   "task_x": "test"
   }
 ```
+
 So when we start/run the workflow, Conductor allows only the worker with the domain **test** to pick up **task x**. The workflow gets completed with the test version of the worker without affecting the production environment.
 
 ## Specifying Domain in Worker
@@ -49,7 +50,7 @@ If no workers are active for the domains provided:
 - If **NO_DOMAIN** is provided as the last token in the list of domains, then no domain is set for the tasks.
 - Otherwise, the task will be added to the last inactive domain in the list of domains, hoping that workers will soon be available for that domain.
 
-Also, a `*` token can be used to apply domains for all tasks. This can be overridden by providing task-specific mappings along with `*`. 
+Also, a `*` token can be used to apply domains for all tasks. This can be overridden by providing task-specific mappings along with `*`.
 
 ### Example
 
@@ -68,6 +69,7 @@ Also, a `*` token can be used to apply domains for all tasks. This can be overri
 - And puts all other tasks in **mydomain** (even if workers are not available).
 
 :::note
-* The "fallback" domain strings can only be used when starting the workflow. When polling from the client, only one domain is used. 
-* The **NO_DOMAIN** token should be used last.
-:::
+
+- The "fallback" domain strings can only be used when starting the workflow. When polling from the client, only one domain is used.
+- The **NO_DOMAIN** token should be used last.
+  :::

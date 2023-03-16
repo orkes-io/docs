@@ -1,5 +1,5 @@
+# Learning Conductor
 
-# Learning Conductor 
 ## Part 1: Configure and execute your first multi-step business process
 
 In this article, we will learn how to implement a sample business use case as a Conductor Workflow.
@@ -13,17 +13,17 @@ To test this we will assume the following (these are mock but working APIs for t
 3. SMS API: https://orkes-api-tester.orkesconductor.com/post
 4. Email API: https://orkes-api-tester.orkesconductor.com/post
 
-This is a multistep workflow that includes a condition (age check). The defined workflow can be accessed here: [Conductor playground](https://play.orkes.io). Please note that you will only have read-only access. If we would like to edit this, we would have to make a copy. 
+This is a multistep workflow that includes a condition (age check). The defined workflow can be accessed here: [Conductor playground](https://play.orkes.io). Please note that you will only have read-only access. If we would like to edit this, we would have to make a copy.
 
->Video
+> Video
 
-:::tip 
+:::tip
 As we can see by using tasks such as HTTP, we can run a sequence of tasks to handle business use cases.
 :::
 
 Now let's add the age related condition. You can find the updated definition here: [Conductor playground](https://play.orkes.io). We can run this workflow to see how everything works. As these are HTTP API calls, its possible the server will fail to respond. In spite of this, executions won't be impacted as Conductor is capable of running our workflows resiliently with in built retries. In this video we show how to update the definition, run and see results.
 
->Video
+> Video
 
 ### Summary
 

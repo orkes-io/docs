@@ -6,7 +6,7 @@ sidebar_position: 1
 
 When a workflow fails, there are 2 ways to handle the exception.
 
-## ```failureWorkflow```
+## `failureWorkflow`
 
 In your main workflow definition, you can configure a workflow to run upon failure by adding the following parameter to the workflow:
 
@@ -14,12 +14,12 @@ In your main workflow definition, you can configure a workflow to run upon failu
 "failureWorkflow": "<name of your failure workflow>",
 ```
 
-When there is an issue with your workflow, Conductor will start the failure workflow.  By default, three parameters are passed:
+When there is an issue with your workflow, Conductor will start the failure workflow. By default, three parameters are passed:
 
-* *reason* Reason for the failure.
-* *workflowId*: Use this to pull the details of the failed workflow.
-* *failureStatus* Status for the workflow
-* *failureTaskId* taskId of the task because of which the workflow failed.
+- _reason_ Reason for the failure.
+- _workflowId_: Use this to pull the details of the failed workflow.
+- _failureStatus_ Status for the workflow
+- _failureTaskId_ taskId of the task because of which the workflow failed.
 
 > The `reason` parameter will, by default, have text similar to `Workflow is FAILED by TERMINATE task: 84eb2dcb-ebfd-11ec-b770-12aa5996f545`. If a workflow fails via a TERMINATE task, the `terminateReason` parameter in the TERMINATE task can be used to override the default `reason` text.
 
@@ -65,4 +65,4 @@ Here is a sample failure workflow that sends a message to Slack when the workflo
 
 ### Example Use Case
 
-The [check_address](/content/docs/usecases/US_post_office) use case has several terminate tasks that run a failure workflow.  The `address_error` task overrides the `terminateReason` parameter.
+The [check_address](/content/docs/usecases/US_post_office) use case has several terminate tasks that run a failure workflow. The `address_error` task overrides the `terminateReason` parameter.

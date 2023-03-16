@@ -60,12 +60,12 @@ body {
 .navbar {
   margin: 0 auto;
   width: 100%;
-  background: rgba(220,220,220,.75);
+  background: rgba(220, 220, 220, 0.75);
   backdrop-filter: blur(10px);
 }
 
 html[data-theme="dark"] .navbar {
-  background: rgba(35,35,35,.65);
+  background: rgba(35, 35, 35, 0.65);
 }
 
 /*
@@ -74,10 +74,10 @@ html[data-theme="dark"] .navbar {
  */
 @-moz-document url-prefix() {
   .navbar {
-    background: rgba(220,220,220,.95);
+    background: rgba(220, 220, 220, 0.95);
   }
   html[data-theme="dark"] .navbar {
-    background: rgba(35,35,35,.95);
+    background: rgba(35, 35, 35, 0.95);
   }
 }
 
@@ -127,20 +127,18 @@ h5 {
 p {
 }
 .menu__link--sublist:after {
-
- /*this hides the arrow drop down*/
-   /* background: none;*/
-
+  /*this hides the arrow drop down*/
+  /* background: none;*/
 }
 .menu__link--sublist {
-    font-weight: bold;
-    color: #0481e3;
-    background: none;
+  font-weight: bold;
+  color: #0481e3;
+  background: none;
 }
-[data-theme='dark'] .menu__link--sublist {
-    font-weight: bold;
-    color: #e64769;
-    background: none;
+[data-theme="dark"] .menu__link--sublist {
+  font-weight: bold;
+  color: #e64769;
+  background: none;
 }
 
 .menu__link {
@@ -176,11 +174,10 @@ pre code {
 }
 
 .navbar {
-
 }
 
 .navbar-sidebar {
-  height:100vh;
+  height: 100vh;
 }
 
 .navbar__brand {

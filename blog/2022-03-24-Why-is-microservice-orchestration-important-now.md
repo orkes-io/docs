@@ -6,7 +6,6 @@ tags: [Netflix Conductor, Orkes, microservices, 2022]
 image: https://imgur.com/LDAaT9m.jpg
 ---
 
-
 # Why Is Microservice Orchestration Important Now?
 
 Microservices are a common and popular approach to building modular, scalable software with autonomous services. Large complex products are broken down into individual services responsible for a specific business function, such as user authentication or store checkout.
@@ -62,7 +61,7 @@ In the choreography architecture above:
 ## Why is Microservice Orchestration Important?
 
 Microservice architecture involves decomposing your application into a set of services to
-improve agility and allow teams to scale. One of the main purposes of this architectural pattern is to have each service as an independently deployable component with well-defined interfaces; in this way, the scope of implemented changes can be limited to a single service. 
+improve agility and allow teams to scale. One of the main purposes of this architectural pattern is to have each service as an independently deployable component with well-defined interfaces; in this way, the scope of implemented changes can be limited to a single service.
 
 However, you must coordinate the execution of multiple microservices to deliver the outcomes that users want, and this is why microservice orchestration is important. Orchestration allows you to put a service in charge of the other services. The service in charge is aware of the entire flow that is required and is responsible for putting the other services to work to achieve those aims.
 
@@ -74,13 +73,13 @@ Later, [Netflix switched to an orchestration workflow](https://netflixtechblog.c
 
 ### Why Are So Many Developers Adopting This Architectural Paradigm?
 
-As mentioned, there are two major techniques you can use if you need to execute many services to get your desired result. Orchestration, in which a central orchestrator component serves as the coordinator and is in charge of activating each service, and choreography, in which the services perform independently and are only loosely connected. 
+As mentioned, there are two major techniques you can use if you need to execute many services to get your desired result. Orchestration, in which a central orchestrator component serves as the coordinator and is in charge of activating each service, and choreography, in which the services perform independently and are only loosely connected.
 
-Developers are increasingly adopting orchestration because it has significant benefits that can make development and management easier for individual microservices without compromising the big picture. However, it should be noted that microservice orchestration is not without its limitations. 
+Developers are increasingly adopting orchestration because it has significant benefits that can make development and management easier for individual microservices without compromising the big picture. However, it should be noted that microservice orchestration is not without its limitations.
 
 ## Benefits and Limitations of Microservice Orchestration
 
-There are several benefits and challenges associated with the implementation of an orchestration workflow, many of which are related to how microservices interact with one another to achieve a business outcome. 
+There are several benefits and challenges associated with the implementation of an orchestration workflow, many of which are related to how microservices interact with one another to achieve a business outcome.
 
 ### Benefits of Microservice Orchestration
 
@@ -102,7 +101,7 @@ Furthermore, as the orchestrator needs to communicate with each service and get 
 
 With microservices gradually becoming the default pattern for managing business logics, a strong architecture is needed for their coordination. Adopting an orchestration workflow could improve the seamless interaction between these services.
 
-Many businesses still implement service-oriented architectures (SOAs) orchestrated by an enterprise service bus (ESB). However, as business needs grow, adding more business logics and microservices to the system can be challenging; the entire flow is not immediately visible, making it harder to alter a service without the risk of disrupting another. 
+Many businesses still implement service-oriented architectures (SOAs) orchestrated by an enterprise service bus (ESB). However, as business needs grow, adding more business logics and microservices to the system can be challenging; the entire flow is not immediately visible, making it harder to alter a service without the risk of disrupting another.
 
 Microservice orchestration offers a solution here, as it helps you visualize the end-to-end processes across your microservices, so you know what services would be affected by your updates, allowing you to easily address your increasing business needs.
 
@@ -122,8 +121,8 @@ More concretely, an orchestration workflow might be ideal for you if one or more
 
 ## Conclusion
 
-In this article, you learned about the importance of keeping your microservices autonomous and flexible. You also learned about the use of microservice orchestration to effectively communicate, visualize, identify, and resolve the challenges of managing microservices. 
+In this article, you learned about the importance of keeping your microservices autonomous and flexible. You also learned about the use of microservice orchestration to effectively communicate, visualize, identify, and resolve the challenges of managing microservices.
 
-The downside of the process of building an orchestration system that implements all of the features your business requires is that it’s rather complex and time consuming. A purpose-built framework offering scalable and low-overhead orchestration— like [Netflix’s Conductor](https://netflix.github.io/conductor/), is an open source tool that fits this purpose. 
+The downside of the process of building an orchestration system that implements all of the features your business requires is that it’s rather complex and time consuming. A purpose-built framework offering scalable and low-overhead orchestration— like [Netflix’s Conductor](https://netflix.github.io/conductor/), is an open source tool that fits this purpose.
 
 [Orkes](https://orkes.io/) is a platform that offers a fully managed, cloud-hosted version of Conductor with tiered support. Orkes builds on top of Netflix Conductor to abstract out installation, tuning, patching, and managing high-performing Conductor clusters. Learn more about Orkes and get started for free within minutes [here](https://orkes.io/cloud/).

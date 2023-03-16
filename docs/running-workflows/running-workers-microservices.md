@@ -35,7 +35,7 @@ workflow that has three steps.
 Here is an example workflow - that contains the tasks as described above.
 
 ```json
- {
+{
   "name": "sample_workflow_with_multiple_workers",
   "description": "Sample Workflow With Multiple Workers",
   "version": 1,
@@ -104,10 +104,10 @@ curl 'http://localhost:8080/api/metadata/workflow' \
 **Some things to note:**
 
 1. We don't have to define our workers in different services, we can have them in the same service
-    1. This is helpful when we want to create modular simple workers that we can use to assemble complex flows
+   1. This is helpful when we want to create modular simple workers that we can use to assemble complex flows
 2. We can define our workers in any language - in our article we have chosen `Java` to demonstrate the functionality
-    1. This **language agnostic workers** for our workflow is another important feature of Conductor. We no longer have
-       to work within the constraints of a single language.
+   1. This **language agnostic workers** for our workflow is another important feature of Conductor. We no longer have
+      to work within the constraints of a single language.
 3. Conductor provides system tasks that can do quite a bit of the common transformations which means we don't have to
    manually implement the workers for some tasks used in this example. For the purpose of demo, we are implementing
 4. In this demo, we are also learning how to read data from one worker and use it in another worker. This is what makes
@@ -123,7 +123,7 @@ curl 'http://localhost:8080/api/workflow/sample_workflow_with_multiple_workers' 
   -H 'accept: text/plain' \
   -H 'Referer: ' \
   -H 'Content-Type: application/json' \
-  --data-raw '{}' 
+  --data-raw '{}'
 ```
 
 Once we run this and check the status on the UI, we will notice that the first worker has completed its part and now the
@@ -163,4 +163,3 @@ touched on:
 
 Thank you for reading, and we hope you found this helpful. Please feel free to reach out to us for any questions and we
 are happy to help in any way we can.
-

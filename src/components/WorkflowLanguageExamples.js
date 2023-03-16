@@ -17,7 +17,9 @@ export const WorkflowLanguageExamples = ({ languageSamples }) => {
         }),
         tabs: acc.tabs.concat(
           <TabItem value={tabName} label={label} key={tabName}>
-            <PaperContainer className={`${styles.codeContainer}` }>{languageSamples[tabName]}</PaperContainer>
+            <PaperContainer className={`${styles.codeContainer}`}>
+              {languageSamples[tabName]}
+            </PaperContainer>
           </TabItem>
         ),
       };

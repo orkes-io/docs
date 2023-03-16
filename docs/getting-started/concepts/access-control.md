@@ -10,6 +10,6 @@ In order to ensure that all workflow executions & worker tasks are run only by a
 
 The security aspect of this feature can be mainly categorized into the following three categories:
 
-* [Applications](https://orkes.io/content/docs/getting-started/concepts/access-control-applications)
-* [Users and Groups](https://orkes.io/content/docs/getting-started/concepts/access-control-users)
-* [Tags](https://orkes.io/content/docs/getting-started/concepts/access-control-tags)
+- [Applications](https://orkes.io/content/docs/getting-started/concepts/access-control-applications)
+- [Users and Groups](https://orkes.io/content/docs/getting-started/concepts/access-control-users)
+- [Tags](https://orkes.io/content/docs/getting-started/concepts/access-control-tags)

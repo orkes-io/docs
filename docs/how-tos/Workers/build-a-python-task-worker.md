@@ -3,7 +3,9 @@ sidebar_position: 1
 ---
 
 # Build a Python Task Worker
+
 ## Install the python client
+
 ```shell script
    virtualenv conductorclient
    source conductorclient/bin/activate
@@ -12,7 +14,8 @@ sidebar_position: 1
 ```
 
 ## Implement a Task Worker
-[ConductorWorker](https://github.com/Netflix/conductor/blob/main/polyglot-clients/python/conductor/ConductorWorker.py#L36) 
+
+[ConductorWorker](https://github.com/Netflix/conductor/blob/main/polyglot-clients/python/conductor/ConductorWorker.py#L36)
 class is used to implement task workers.
 The following script shows how to bring up two task workers named `book_flight` and `book_car`:
 
@@ -35,7 +38,9 @@ def main():
 if __name__ == '__main__':
     main()
 ```
+
 ### `ConductorWorker` parameters
+
 ```python
 server_url: str
     The url to the server hosting the conductor api.
@@ -54,7 +59,9 @@ worker_id: str, optional
     task. For further details, refer to the documentation
     By default, it is set to hostname of the machine
 ```
+
 ### `start` method parameters
+
 ```pythhon
 taskType: str
     The name of the task that the worker is looking to execute
@@ -81,6 +88,6 @@ domain: str, optional
     By default, it is set to None
 ```
 
-See 
+See
 [https://github.com/Netflix/conductor/tree/main/polyglot-clients/python](https://github.com/Netflix/conductor/tree/main/polyglot-clients/python)
 for the source code.

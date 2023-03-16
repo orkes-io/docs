@@ -2,12 +2,11 @@ import React from "react";
 import CodeBlock from "@theme/CodeBlock";
 import styles from "./_Languages.module.css";
 
-
-const CodeBlockWrapper = ({lang,children})=>(
+const CodeBlockWrapper = ({ lang, children }) => (
   <CodeBlock className={`language-${lang} ${styles.codeBlock}`}>
     {children}
   </CodeBlock>
-)
+);
 
 export const JavaSample = () => (
   <CodeBlockWrapper lang="java">
@@ -86,4 +85,3 @@ func Hello_World_Execute_Function(t *task.Task) (taskResult *task.TaskResult, er
     `}
   </CodeBlockWrapper>
 );
-

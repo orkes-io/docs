@@ -6,7 +6,6 @@ tags: [Netflix Conductor, microservices, monolith, cloud, workflows, 2022]
 image: https://imgur.com/dLuGoby.png
 ---
 
-
 # Moving Your Microservices to the Cloud—Part 2
 
 Businesses must be able to provide high-quality, innovative services to clients quickly in order to meet market demand. That can be difficult if an organization’s internal architecture doesn’t offer the needed agility and speed. The tightly coupled nature of [monolithic architecture](https://www.talend.com/resources/monolithic-architecture/) can block an IT team’s ability to make changes, separate team responsibilities, and perform frequent deployments. Microservices can provide a better alternative.
@@ -88,7 +87,7 @@ Say you analyzed the monolith and found a checkout and payment module and an e-c
 
 #### Step 2: Split the Code
 
-Split the code of the checkout and payment module into two different modules. The code split will span API controllers, domain objects, common infrastructure logic, and business logic. 
+Split the code of the checkout and payment module into two different modules. The code split will span API controllers, domain objects, common infrastructure logic, and business logic.
 
 Your architecture should look like the image below. The checkout and payment module will be split into a checkout module and a payment module:
 
