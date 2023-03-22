@@ -20,6 +20,7 @@ import {
     LanguagesSection,
     VideoSection,
     UseCasesSection,
+    AccordionSection,
 } from "./_Sections";
 
 export default function Home() {
@@ -30,10 +31,12 @@ export default function Home() {
                 title={`${siteConfig.title}`}
                 description="Orkes Conductor is a cloud hosted, fully managed version of Netflix Conductor offering full compatibility with the open source version. Use Conductor to hyper charge your application development."
             >
-                <main className={`container ${styles.mainContainer}`}>
+                <main
+                    className={`container ${styles.mainContainer} padding-vert--md`}
+                >
                     <FirstSection content="Orkes Conductor: the battle-tested, open-source based application orchestration platform for developers." />
                     <FirstSection content="Build composable workflows visually or with code, orchestrate executions across any language and deployment model, and scale your applications with high reliability and observability." />
-                    <br />
+
                     <StepBoxesSection
                         steps={[
                             {
@@ -56,7 +59,7 @@ export default function Home() {
                             },
                         ]}
                     />
-                    <br />
+
                     <NewToConductorSection
                         title="New to Conductor?"
                         description={
@@ -65,18 +68,15 @@ export default function Home() {
                                 - build microservices, hybrid apps, long-running
                                 workflows, and mission-critical applications
                                 with high reliability.
-                                <br />
-                                Learn the key concepts, set up your cluster, and
-                                build your first workflow with our getting
-                                started guide.
+                                <br /> Learn the key concepts, set up your
+                                cluster, and build your first workflow with our
+                                getting started guide.
                             </div>
                         }
                     />
-                    <br />
                     <LanguagesSection />
-                    <br />
+                    <AccordionSection />
                     <UseCasesSection />
-                    <br />
                     <VideoSection />
                 </main>
             </Layout>

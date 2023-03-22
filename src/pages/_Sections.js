@@ -22,6 +22,7 @@ import { faJava } from "@fortawesome/free-brands-svg-icons/faJava";
 import { faGolang } from "@fortawesome/free-brands-svg-icons/faGolang";
 import { faPython } from "@fortawesome/free-brands-svg-icons/faPython";
 import { faJs } from "@fortawesome/free-brands-svg-icons/faJs";
+import AccordionWithImg from "../components/AccordionWithImg";
 
 const videoSource = [
     {
@@ -71,8 +72,53 @@ const useCases = [
         image: "img/usecases/events.svg",
     },
 ];
+
+const accordionData = [
+    {
+        title: "Title1",
+        description:
+            "Orkes Conductor allows you to execute tasks in parallel using either static or dynamic forks.",
+        image: "",
+    },
+    {
+        title: "Title2",
+        description:
+            "Orkes Conductor allows you to execute tasks in parallel using either static or dynamic forks.",
+        image: "",
+    },
+    {
+        title: "Title3",
+        description:
+            "Orkes Conductor allows you to execute tasks in parallel using either static or dynamic forks.",
+        image: "",
+    },
+    {
+        title: "Title4",
+        description:
+            "Orkes Conductor allows you to execute tasks in parallel using either static or dynamic forks.",
+        image: "",
+    },
+    {
+        title: "Title5",
+        description:
+            "Orkes Conductor allows you to execute tasks in parallel using either static or dynamic forks.",
+        image: "",
+    },
+    {
+        title: "Title6",
+        description:
+            "Orkes Conductor allows you to execute tasks in parallel using either static or dynamic forks.",
+        image: "",
+    },
+    {
+        title: "Title7",
+        description:
+            "Orkes Conductor allows you to execute tasks in parallel using either static or dynamic forks.",
+        image: "",
+    },
+];
 export const StepBoxesSection = ({ steps = [] }) => (
-    <div className="row">
+    <div className="row padding-vert--md">
         <PaperColumnRenderer
             spaceEvenly
             colClassName={styles.mobileSpaced}
@@ -303,7 +349,7 @@ export const FirstSection = ({ content }) => (
     <div className={styles.firstSection}>{content}</div>
 );
 export const NewToConductorSection = ({ title, description }) => (
-    <div className={"row"}>
+    <div className={"row padding-vert--md"}>
         <div className="col">
             <h2>{title}</h2>
             <div>{description}</div>
@@ -312,7 +358,7 @@ export const NewToConductorSection = ({ title, description }) => (
 );
 
 export const LanguagesSection = ({}) => (
-    <div className="row">
+    <div className="row padding-vert--md">
         <InfoPaperNoTitle
             children={
                 <div>
@@ -325,7 +371,7 @@ export const LanguagesSection = ({}) => (
 );
 
 export const VideoSection = ({}) => (
-    <div className="">
+    <div className="padding-vert--md">
         <h2>Video Library</h2>
         <div className={styles.videoSection}>
             {videoSource &&
@@ -347,7 +393,7 @@ export const VideoSection = ({}) => (
 );
 
 export const UseCasesSection = ({}) => (
-    <div>
+    <div className="padding-vert--md">
         <h2>Use Cases</h2>
         <div className={styles.useCasesSection}>
             {useCases &&
@@ -358,5 +404,18 @@ export const UseCasesSection = ({}) => (
                     </div>
                 ))}
         </div>
+    </div>
+);
+
+export const AccordionSection = ({}) => (
+    <div className="padding-vert--md">
+        <h2>What can conductor do</h2>
+        <div>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non
+            libero sagittis, pretium massa vel, ullamcorper dui. Fusce sed
+            volutpat est. Morbi porttitor luctus porttitor. Fusce neque dui,
+            scelerisque eget erat nec, ornare vehicula mi.
+        </div>
+        <AccordionWithImg data={accordionData} />
     </div>
 );

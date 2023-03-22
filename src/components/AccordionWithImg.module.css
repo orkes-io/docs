@@ -1,0 +1,33 @@
+.imageCol {
+    border: 1px solid #c8c8c8;
+    border-radius: 16px;
+    min-height: 200px;
+    height: 100%;
+}
+.singleAccordion {
+    border-top: 1.5px solid #d9d9d9;
+    padding: 12px 5px;
+    cursor: pointer;
+}
+.singleAccordion:last-child {
+    border-bottom: 1.5px solid #d9d9d9;
+}
+.header {
+    display: flex;
+    align-items: center;
+}
+.titleActive {
+    color: #6c37bd;
+    font-size: 20px;
+    font-weight: 800;
+}
+.arrowIcon {
+    padding-right: 15px;
+    margin-left: auto;
+    cursor: pointer;
+}
+@media screen and (max-width: 966px) {
+    .imageCol {
+        margin-top: 20px;
+    }
+}
