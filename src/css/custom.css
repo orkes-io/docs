@@ -8,63 +8,63 @@
 
 /* You can override the default Infima variables here. */
 :root {
-    --ifm-color-primary: #1f96ff;
-    --ifm-color-primary-dark: rgb(33, 175, 144);
-    --ifm-color-primary-darker: rgb(31, 165, 136);
-    --ifm-color-primary-darkest: rgb(26, 136, 112);
-    --ifm-color-primary-light: rgb(70, 203, 174);
-    --ifm-color-primary-lighter: rgb(102, 212, 189);
-    --ifm-color-primary-lightest: rgb(146, 224, 208);
-    --ifm-color-athens-gray: rgb(248, 249, 251);
-    --ifm-color-info: #6458f5;
-    --ifm-color-info-lightest: #bbb6fb;
-    --ifm-color-info-lighter: #9087f8;
-    --ifm-color-info-light: #8177f7;
-    --ifm-color-info-dark: #4739f3;
-    --ifm-color-info-darker: #3829f2;
-    --ifm-color-info-darkest: #1d0ddc;
-    --ifm-code-font-size: 95%;
-    --ifm-link-decoration: none;
-    --ifm-blockquote-padding-vertical: 20px;
-    --ifm-blockquote-border-left-width: 4px;
-    --ifm-blockquote-font-size: 16px;
-    --ifm-font-family-base: "Gothic A1", system-ui, -apple-system,
-        BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif,
-        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    --orkes-logo-color-1: #1ad8fc;
-    --orkes-logo-color-2: #f9698c;
-    --orkes-logo-color-3: #aa85ee;
+  --ifm-color-primary: #1f96ff;
+  --ifm-color-primary-dark: rgb(33, 175, 144);
+  --ifm-color-primary-darker: rgb(31, 165, 136);
+  --ifm-color-primary-darkest: rgb(26, 136, 112);
+  --ifm-color-primary-light: rgb(70, 203, 174);
+  --ifm-color-primary-lighter: rgb(102, 212, 189);
+  --ifm-color-primary-lightest: rgb(146, 224, 208);
+  --ifm-color-athens-gray: rgb(248, 249, 251);
+  --ifm-color-info: #6458f5;
+  --ifm-color-info-lightest: #bbb6fb;
+  --ifm-color-info-lighter: #9087f8;
+  --ifm-color-info-light: #8177f7;
+  --ifm-color-info-dark: #4739f3;
+  --ifm-color-info-darker: #3829f2;
+  --ifm-color-info-darkest: #1d0ddc;
+  --ifm-code-font-size: 95%;
+  --ifm-link-decoration: none;
+  --ifm-blockquote-padding-vertical: 20px;
+  --ifm-blockquote-border-left-width: 4px;
+  --ifm-blockquote-font-size: 16px;
+  --ifm-font-family-base: "Gothic A1", system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  --orkes-logo-color-1: #1ad8fc;
+  --orkes-logo-color-2: #f9698c;
+  --orkes-logo-color-3: #aa85ee;
 }
 
 [data-theme="dark"] {
-    --ifm-color-athens-gray: #333;
+  --ifm-color-athens-gray: #333;
 }
 
 .docusaurus-highlight-code-line {
-    background-color: rgba(0, 0, 0, 0.1);
-    display: block;
-    margin: 0 calc(-1 * var(--ifm-pre-padding));
-    padding: 0 var(--ifm-pre-padding);
+  background-color: rgba(0, 0, 0, 0.1);
+  display: block;
+  margin: 0 calc(-1 * var(--ifm-pre-padding));
+  padding: 0 var(--ifm-pre-padding);
 }
 
 html[data-theme="dark"] .docusaurus-highlight-code-line {
-    background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.3);
 }
 
 body {
-    font-family: "Gothic A1", sans-serif;
-    font-weight: 400;
-    font-size: 0.9em;
+  font-family: "Gothic A1", sans-serif;
+  font-weight: 400;
+  font-size: 0.9em;
 }
 
 .navbar {
-    margin: 0 auto;
-    width: 100%;
-    backdrop-filter: blur(10px);
+  margin: 0 auto;
+  width: 100%;
+  backdrop-filter: blur(10px);
 }
 
 html[data-theme="dark"] .navbar {
-    background: rgba(35, 35, 35, 0.65);
+  background: rgba(35, 35, 35, 0.65);
 }
 
 /*
@@ -72,104 +72,104 @@ html[data-theme="dark"] .navbar {
  * https://caniuse.com/css-backdrop-filter
  */
 @-moz-document url-prefix() {
-    .navbar {
-        background: rgba(220, 220, 220, 0.95);
-    }
-    html[data-theme="dark"] .navbar {
-        background: rgba(35, 35, 35, 0.95);
-    }
+  .navbar {
+    background: rgba(220, 220, 220, 0.95);
+  }
+  html[data-theme="dark"] .navbar {
+    background: rgba(35, 35, 35, 0.95);
+  }
 }
 
 .homePage .navbar__inner {
-    width: var(--ifm-container-width-xl);
-    margin: auto;
+  width: var(--ifm-container-width-xl);
+  margin: auto;
 }
 
 .navbar__brand {
-    font-size: 24px;
-    font-family: "Gothic A1", sans-serif;
-    font-weight: 700;
+  font-size: 24px;
+  font-family: "Gothic A1", sans-serif;
+  font-weight: 700;
 }
 
 .navbar__item {
-    font-size: 16px;
-    font-family: "Gothic A1", sans-serif;
-    font-weight: 500;
+  font-size: 16px;
+  font-family: "Gothic A1", sans-serif;
+  font-weight: 500;
 }
 
 h1 {
-    font-size: 28px;
-    font-family: "Gothic A1", sans-serif;
-    font-weight: 700;
+  font-size: 28px;
+  font-family: "Gothic A1", sans-serif;
+  font-weight: 700;
 }
 h2 {
-    font-size: 22px;
-    font-family: "Gothic A1", sans-serif;
-    font-weight: 700;
+  font-size: 22px;
+  font-family: "Gothic A1", sans-serif;
+  font-weight: 700;
 }
 h3 {
-    font-size: 20px;
-    font-family: "Gothic A1", sans-serif;
-    font-weight: 700;
+  font-size: 20px;
+  font-family: "Gothic A1", sans-serif;
+  font-weight: 700;
 }
 h4 {
-    font-size: 18px;
-    font-family: "Gothic A1", sans-serif;
-    font-weight: 600;
+  font-size: 18px;
+  font-family: "Gothic A1", sans-serif;
+  font-weight: 600;
 }
 h5 {
-    font-size: 16px;
-    font-family: "Gothic A1", sans-serif;
-    font-weight: 500;
+  font-size: 16px;
+  font-family: "Gothic A1", sans-serif;
+  font-weight: 500;
 }
 
 .menu {
-    background-color: #ffffff;
+  background-color: #ffffff;
 }
 .menu__link--sublist:after {
-    background: none;
+  background: none;
 }
 
 .menu__link--active:not(.menu__link--sublist) {
-    background: none;
-    font-weight: bold;
+  background: none;
+  font-weight: bold;
 }
 
 .menu__link--sublist {
-    font-weight: bold;
+  font-weight: bold;
 }
 .menu__link--sublist {
-    color: #0481e3;
-    background: none;
+  color: #0481e3;
+  background: none;
 }
 .menu__list-item-collapsible {
-    font-weight: bold;
+  font-weight: bold;
 }
 .menu__caret {
-    /*display: none;*/
-    font-weight: normal;
-    font-size: 0em;
+  /*display: none;*/
+  font-weight: normal;
+  font-size: 0em;
 }
 .menu__caret:before {
-    height: 1rem;
+  height: 1rem;
 }
 [data-theme="dark"] .menu__link--sublist {
-    color: #e64769;
-    background: none;
+  color: #e64769;
+  background: none;
 }
 
 [data-theme="dark"] .menu {
-    background: none;
+  background: none;
 }
 
 .menu__link {
-    line-height: 1em;
-    font-size: 1em;
-    font-weight: normal;
+  line-height: 1em;
+  font-size: 1em;
+  font-weight: normal;
 }
 
 aside {
-    border-right: none;
+  border-right: none;
 }
 
 .markdown > p,
@@ -178,158 +178,168 @@ aside {
 .markdown li,
 .table-of-contents__link,
 table {
-    letter-spacing: -0.003em;
-    line-height: 22px;
-    font-size: 15px;
-    font-family: var(--ifm-font-family-base);
+  letter-spacing: -0.003em;
+  line-height: 22px;
+  font-size: 15px;
+  font-family: var(--ifm-font-family-base);
 }
 
 pre code {
-    letter-spacing: -0.003em;
-    line-height: 28px;
-    font-size: 17px;
+  letter-spacing: -0.003em;
+  line-height: 28px;
+  font-size: 17px;
 }
 
 .navbar__logo {
-    height: 45px;
-    margin-top: -5px;
+  height: 45px;
+  margin-top: -5px;
 }
 
 .navbar {
-    background-color: #eff0f0;
+  background-color: #eff0f0;
 }
 
 .navbar-sidebar {
-    height: 100vh;
+  height: 100vh;
 }
 
 .navbar__brand {
-    font-size: 18px;
-    margin-top: 2px;
+  font-size: 18px;
+  margin-top: 2px;
 }
 
 .navbar__item {
-    font-size: 16px;
+  font-size: 16px;
 }
 
 .bottomSection {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    padding-bottom: 100px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding-bottom: 100px;
 }
 
 .liClass li {
-    margin-top: 12px;
+  margin-top: 12px;
 }
 
 .liClass li::marker {
-    color: var(--orkes-logo-color-1);
-    content: "• ";
-    font-size: 1.2em;
+  color: var(--orkes-logo-color-1);
+  content: "• ";
+  font-size: 1.2em;
 }
 
 .liClass li:nth-child(2n)::marker {
-    color: var(--orkes-logo-color-2);
+  color: var(--orkes-logo-color-2);
 }
 
 .liClass li:nth-child(3n)::marker {
-    color: var(--orkes-logo-color-3);
+  color: var(--orkes-logo-color-3);
 }
 
 .communityClassWrapper {
-    width: 50%;
-    padding: 20px 20px 5px 5px;
-    margin-bottom: 20px;
-    min-width: 350px;
+  width: 50%;
+  padding: 20px 20px 5px 5px;
+  margin-bottom: 20px;
+  min-width: 350px;
 }
 
 .communityClass {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .communityClass h4 {
-    font-family: "Gothic A1", serif;
-    font-weight: 700;
-    font-size: 16px;
+  font-family: "Gothic A1", serif;
+  font-weight: 700;
+  font-size: 16px;
 }
 
 .communityClassHeader {
-    display: flex;
-    justify-content: left;
-    align-items: center;
-    align-content: center;
-    padding-bottom: 10px;
-    padding-top: 10px;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  align-content: center;
+  padding-bottom: 10px;
+  padding-top: 10px;
 }
 
 .communityClassHeader h4 {
-    margin: 0 0 0 10px;
+  margin: 0 0 0 10px;
 }
 
 .aClass {
-    text-decoration: none;
-    color: #555;
+  text-decoration: none;
+  color: #555;
 }
 
 .aClass:hover {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 html[data-theme="dark"] .aClass {
-    color: #ddd;
+  color: #ddd;
 }
 
 html[data-theme="dark"] .aClass:hover {
-    color: #b696ff;
+  color: #b696ff;
 }
 
 .midSectionOdd {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    background-color: ghostwhite;
-    padding-bottom: 70px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  background-color: ghostwhite;
+  padding-bottom: 70px;
 }
 
 .homeHeader {
-    background-color: #fff;
-    display: flex;
-    align-content: center;
-    align-items: center;
-    justify-content: center;
+  background-color: #fff;
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
 }
 
 html[data-theme="dark"] .homeHeader {
-    background-color: transparent;
+  background-color: transparent;
 }
 
 html[data-theme="dark"] .midSectionOdd {
-    background-color: #131314;
+  background-color: #131314;
 }
 
 .row--center {
-    justify-content: center;
+  justify-content: center;
+}
+.tabs-container {
+  border: 1px solid #dadce0;
+  border-radius: 8px;
 }
 .tabs {
-    max-width: 100%;
-    gap: 0px;
+  max-width: 100%;
+  gap: 0px;
+  padding-top: 10px;
+  border-bottom: 1px solid #dadce0;
 }
 .tabs .tabs__item {
-    font-size: 15px;
-    line-height: 1px;
-    border: 0px solid var(--ifm-color-info);
-    width: 100%;
-    justify-content: center;
-    color: var(--ifm-color-info);
-    border-radius: 0rem;
+  font-size: 15px;
+  line-height: 1px;
+  width: 100%;
+  justify-content: center;
+  color: #5f6368;
+  border-radius: 0rem;
+  margin: 0 24px;
 }
 .tabs .tabs__item--active {
-    background-color: var(--ifm-color-info);
-    color: #fff;
-    /* border-radius: var(--ifm-global-radius); */
+  color: var(--ifm-color-info);
+  /* border-radius: var(--ifm-global-radius); */
+  border-bottom: 2px solid var(--ifm-color-info);
+}
+.tabs .tabs__item:hover {
+  border-bottom: 2px solid #5f6368;
+  background-color: #fff;
 }
 
 .noStyleLink,
@@ -337,52 +347,52 @@ html[data-theme="dark"] .midSectionOdd {
 .noStyleLink:visited,
 .noStyleLink:focus,
 .noStyleLink:active {
-    text-decoration: none;
-    color: inherit;
-    /* outline: 0; */
+  text-decoration: none;
+  color: inherit;
+  /* outline: 0; */
 }
 
 .videoContainer {
-    height: 0;
-    overflow: hidden;
-    padding-bottom: 56.25%;
-    padding-top: 30px;
-    position: relative;
+  height: 0;
+  overflow: hidden;
+  padding-bottom: 56.25%;
+  padding-top: 30px;
+  position: relative;
 }
 .videoContainer iframe,
 .videoContainer object,
 .videoContainer embed {
-    height: 100%;
-    left: 0;
-    position: absolute;
-    top: 0;
-    width: 100%;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
 }
 
 @media screen and (max-width: 966px) {
-    .button--lg {
-        --ifm-button-size-multiplier: 1.28;
-    }
+  .button--lg {
+    --ifm-button-size-multiplier: 1.28;
+  }
 }
 
 img[alt="Conductor Architecture"] {
-    width: 75%;
+  width: 75%;
 }
 
 .pagination-nav__link {
-    border: none;
+  border: none;
 }
 
 summary {
-    font-weight: bold;
+  font-weight: bold;
 }
 .markdown p {
-    margin-bottom: 3px;
+  margin-bottom: 3px;
 }
 
 .footer {
-    background: #252528;
+  background: #252528;
 }
 .footer__title {
-    font-size: 24px;
+  font-size: 24px;
 }
