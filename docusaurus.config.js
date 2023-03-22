@@ -30,9 +30,7 @@ const config = {
         [
             '@docusaurus/plugin-client-redirects',
             {
-                redirects:
-                    [
-                    ],
+                redirects: [],
             },
         ],
         [
@@ -68,20 +66,25 @@ const config = {
         ],
     ],
     themes: [
-        'docusaurus-theme-search-typesense'
+        'docusaurus-theme-search-typesense',
         // '@saucelabs/theme-github-codeblock'
     ],
 
     themeConfig:
-    /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
+        /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
         ({
-            metadata: [{name: 'keywords', content: 'microservices,orchestration,event-driven'}],
+            metadata: [
+                {
+                    name: 'keywords',
+                    content: 'microservices,orchestration,event-driven',
+                },
+            ],
             colorMode: {
                 defaultMode: 'light',
             },
             docs: {
-            sidebar: {
-                autoCollapseCategories: true,
+                sidebar: {
+                    autoCollapseCategories: true,
                 },
             },
             navbar: {
@@ -92,10 +95,6 @@ const config = {
                     srcDark: 'img/branding/orkes-logo-purple-inverted-4x.png',
                 },
                 items: [
-                    {
-                        type: "search",
-                        position: "right",
-                    },
                     {
                         type: 'doc',
                         docId: 'getting-started/index',
@@ -111,13 +110,13 @@ const config = {
                     {
                         to: '/blog',
                         label: 'Blog',
-                        position: 'left'
+                        position: 'left',
                     },
                     {
                         href: 'https://orkes.io',
                         label: 'orkes.io',
                         target: '_orkes_io',
-                        position: 'left'
+                        position: 'left',
                     },
                     {
                         href: 'https://github.com/Netflix/conductor',
@@ -125,10 +124,21 @@ const config = {
                         target: '_orkes_io',
                         position: 'right',
                     },
+                    {
+                        type: 'search',
+                        position: 'right',
+                    },
                 ],
             },
             footer: {
                 style: 'dark',
+                logo: {
+                    alt: 'Orkes Logo',
+                    src: 'img/branding/orkes-logo-purple-inverted-2x.png',
+                    href: 'https://orkes.io',
+                    width: 160,
+                    height: 51,
+                },
                 links: [
                     {
                         title: 'Docs',
@@ -185,23 +195,23 @@ const config = {
                 darkTheme: darkCodeTheme,
                 additionalLanguages: ['java', 'json'],
             },
-            typesense:{
+            typesense: {
                 typesenseCollectionName: 'orkes-content',
                 typesenseServerConfig: {
                     nodes: [
-                      {
-                        host: '7xanmp8g5uyd4rqop.a1.typesense.net',
-                        port: 443,
-                        protocol: 'https',
-                      },
+                        {
+                            host: '7xanmp8g5uyd4rqop.a1.typesense.net',
+                            port: 443,
+                            protocol: 'https',
+                        },
                     ],
                     apiKey: 'vrrNV2jm72Jym1qtGfzgcUpGI8gL7uR9',
-                  },
-                  typesenseSearchParameters: {},
+                },
+                typesenseSearchParameters: {},
 
-                  // Optional
-                  contextualSearch: true,
-            }
+                // Optional
+                contextualSearch: true,
+            },
             // algolia: {
             //     appId: "F6Z9JYN7SD",
             //

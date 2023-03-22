@@ -4,54 +4,53 @@
  */
 
 .heroBanner {
-  padding: 4rem 0;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
+    padding: 4rem 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
 }
 
 @media screen and (max-width: 966px) {
-  .heroBanner {
-    padding: 2rem;
-  }
+    .heroBanner {
+        padding: 2rem;
+    }
 }
 
 .buttons {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .mainContainer {
-  padding-top: 1rem;
+    padding-top: 1rem;
 }
 
 .mainContainer > div {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
 }
 
-.spacedUl{
-  display: flex;
-  flex-direction: column;
-  gap:10px;
-  padding-top:0rem;
-  padding-right: 1rem;
-  font-weight: 400;
-  font-size: 15px;
+.spacedUl {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 0rem;
+    padding-right: 1rem;
+    font-weight: 400;
+    font-size: 15px;
 }
 
 .spacedUl li::marker {
-  color: var(--orkes-logo-color-1);
-  content: "> ";
-  font-size: 1.5em;
+    color: var(--orkes-logo-color-1);
+    content: "> ";
+    font-size: 1.5em;
 }
 
 .spacedUl li:nth-child(2n)::marker {
-  color: var(--orkes-logo-color-2);
+    color: var(--orkes-logo-color-2);
 }
 
 .spacedUl li:nth-child(3n)::marker {
-  color: var(--orkes-logo-color-3);
+    color: var(--orkes-logo-color-3);
 }
-
