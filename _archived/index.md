@@ -1,11 +1,11 @@
 ---
-sidebar_position: 1
+sidebar_position: 2
 ---
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import DocCardList from '@theme/DocCardList';
 
-# Getting Started with Conductor
+# Getting Started
 Conductor is a runtime platform for building distributed stateful applications using workflows with event-driven architecture.
 
 ## Setup Conductor Server
