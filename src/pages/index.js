@@ -2,24 +2,13 @@ import React from "react";
 import Layout from "@theme/Layout";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import styles from "./index.module.css";
-import SmallDiagram from "/img/small_diagram.png";
-import { JavaSample, PythonSample, GoSample } from "./_Languages.js";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
-import Link from "@docusaurus/Link";
 import {
-    BuildYourFirstWorkflowLinkButton,
-    StepBoxesSection,
-    TitleDoubleTextSection,
-    WhatIsConductorSection,
-    YourfirstWorkflowSection,
-    CommunitySection,
-    SDKList,
     FirstSection,
-    NewToConductorSection,
     LanguagesSection,
-    VideoSection,
+    NewToConductorSection,
+    StepBoxesSection,
     UseCasesSection,
+    VideoSection,
 } from "./_Sections";
 
 export default function Home() {

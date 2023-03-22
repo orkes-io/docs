@@ -7,7 +7,7 @@ const baseUrlName = '/content';
 /** @type {import('@docusaurus/types').Config} */
 const config = {
     title: 'Orkes Conductor Documentation',
-    tagline: 'Making Stateful Serverless Easy',
+    tagline: 'Platform for building scalable reliable distributed systems',
     url: 'https://orkes.io',
     baseUrl: baseUrlName + '/',
     onBrokenLinks: 'warn',
@@ -76,7 +76,7 @@ const config = {
             metadata: [
                 {
                     name: 'keywords',
-                    content: 'microservices,orchestration,event-driven',
+                    content: 'microservices,orchestration,event-driven,workflow,automation,bpmn',
                 },
             ],
             colorMode: {
@@ -100,17 +100,6 @@ const config = {
                         docId: 'getting-started/index',
                         position: 'left',
                         label: 'Getting Started',
-                    },
-                    {
-                        type: 'doc',
-                        docId: 'api/index',
-                        position: 'left',
-                        label: 'API & SDK Docs',
-                    },
-                    {
-                        to: '/blog',
-                        label: 'Blog',
-                        position: 'left',
                     },
                     {
                         href: 'https://orkes.io',
@@ -212,23 +201,6 @@ const config = {
                 // Optional
                 contextualSearch: true,
             },
-            // algolia: {
-            //     appId: "F6Z9JYN7SD",
-            //
-            //     // Public API key: it is safe to commit it
-            //     apiKey: "4b16b443762534d364363a6dee383487",
-            //
-            //     indexName: "prod_docs",
-            //
-            //     // Optional: see doc section below
-            //     contextualSearch: false,
-            //
-            //     // Optional: Specify domains where the navigation should occur through window.location instead on history.push. Useful when our Algolia config crawls multiple documentation sites and we want to navigate with window.location.href to them.
-            //     // externalUrlRegex: "external\\.com|domain\\.com",
-            //
-            //     // Optional: Algolia search parameters
-            //     // searchParameters: {},
-            // },
         }),
 };
 
