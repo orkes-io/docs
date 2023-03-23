@@ -61,7 +61,7 @@ const sidebars = {
                 'guides/scaling-workers',
             ],
             collapsible: true,
-            collapsed: true,
+            collapsed: false,
             className: 'leftMenuHeader',
         },
         {
