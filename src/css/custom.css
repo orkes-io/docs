@@ -28,12 +28,15 @@
   --ifm-blockquote-padding-vertical: 20px;
   --ifm-blockquote-border-left-width: 4px;
   --ifm-blockquote-font-size: 16px;
+  /*--ifm-toc-border-color: red;*/
   --ifm-font-family-base: "Gothic A1", system-ui, -apple-system,
     BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   --orkes-logo-color-1: #1ad8fc;
   --orkes-logo-color-2: #f9698c;
   --orkes-logo-color-3: #aa85ee;
+  --doc-sidebar-width: 320px !important;
+  --doc-sidebar-hidden-width: 30px;
 }
 
 [data-theme="dark"] {
@@ -395,4 +398,31 @@ summary {
 }
 .footer__title {
   font-size: 24px;
+}
+
+.leftMenuHeader {
+  padding-bottom: 5px;
+}
+
+.leftMenuHeader > a {
+  font-size: 16px;
+  font-weight: 400;
+  /*color: var(--ifm-menu-color)!important;*/
+}
+
+.leftMenuHeader > div > a {
+  font-size: 16px;
+  font-weight: 400;
+  padding-bottom: 10px;
+  /*color: var(--ifm-menu-color)!important;*/
+}
+
+.leftMenuHeader .menu__link--sublist {
+  color: var(--ifm-menu-color)!important;
+}
+
+aside > div {
+  margin-top: 20px;
+  margin-bottom: 30px;
+  border-right: 1px solid var(--ifm-toc-border-color);
 }
