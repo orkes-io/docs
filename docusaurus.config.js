@@ -42,19 +42,25 @@ const config = {
             },
         ],
     ],
+    i18n: {
+        defaultLocale: 'en',
+        locales: ['en'],
+    },
+
     presets: [
         [
-            '@docusaurus/preset-classic',
+            'classic',
             /** @type {import('@docusaurus/preset-classic').Options} */
             ({
                 docs: {
+                    routeBasePath: '/',
                     breadcrumbs: true,
                     sidebarPath: require.resolve('./sidebars.js'),
                     sidebarCollapsible: true,
                     editUrl: 'https://github.com/orkes-io/docs/edit/main/',
                 },
                 blog: {
-                    path: './blog',
+                    // path: './blog',
                     showReadingTime: true,
                     editUrl: 'https://github.com/orkes-io/docs/edit/main/',
                     blogSidebarCount: 'ALL',
@@ -71,7 +77,7 @@ const config = {
     ],
 
     themeConfig:
-        /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
+    /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
         ({
             metadata: [
                 {
@@ -97,7 +103,7 @@ const config = {
                 items: [
                     {
                         type: 'doc',
-                        docId: 'getting-started/index',
+                        docId: 'getting-started/step1',
                         position: 'left',
                         label: 'Getting Started',
                     },

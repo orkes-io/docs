@@ -8,7 +8,11 @@
 
  Create as many sidebars as you want.
  */
-module.exports = {
+
+// @ts-check
+
+/** @type {import('@docusaurus/plugin-content-docs').SidebarsConfig} */
+const sidebars = {
     docs: [
         {
             type: 'doc',
@@ -144,5 +148,7 @@ module.exports = {
             collapsed: true,
             className: 'leftMenuHeader',
         },
-    ],
+    ]
 };
+
+module.exports = sidebars;

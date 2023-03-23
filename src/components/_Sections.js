@@ -1,27 +1,12 @@
-import React, { useState, useEffect, useRef } from "react";
-import {
-  PaperColumnRenderer,
-  PaperContainer,
-  InfoPaper,
-  InfoPaperNoTitle,
-  DoubleInfoPaper,
-} from "../components/PaperContainer";
-import { SingleStep } from "../components/SingleStep";
+import React from "react";
+import {DoubleInfoPaper, InfoPaper, InfoPaperNoTitle, PaperColumnRenderer, PaperContainer,} from "./PaperContainer";
+import {SingleStep} from "./SingleStep";
 import Link from "@docusaurus/Link";
 import styles from "./_Sections.module.css";
-import { Text } from "../components/Text";
-import { WorkflowLanguageExamples } from "../components/WorkflowLanguageExamples";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTwitter } from "@fortawesome/free-brands-svg-icons/faTwitter";
-import { faYoutube } from "@fortawesome/free-brands-svg-icons/faYoutube";
-import { faLinkedin } from "@fortawesome/free-brands-svg-icons/faLinkedin";
-import { faDiscord } from "@fortawesome/free-brands-svg-icons/faDiscord";
-import { faGithub } from "@fortawesome/free-brands-svg-icons/faGithub";
-import { faSlack } from "@fortawesome/free-brands-svg-icons/faSlack";
-import { faJava } from "@fortawesome/free-brands-svg-icons/faJava";
-import { faGolang } from "@fortawesome/free-brands-svg-icons/faGolang";
-import { faPython } from "@fortawesome/free-brands-svg-icons/faPython";
-import { faJs } from "@fortawesome/free-brands-svg-icons/faJs";
+import {Text} from "./Text";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faGithub} from "@fortawesome/free-brands-svg-icons/faGithub";
+import {faSlack} from "@fortawesome/free-brands-svg-icons/faSlack";
 import AccordionWithImg from "../components/AccordionWithImg";
 
 const videoSource = [

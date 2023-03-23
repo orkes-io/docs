@@ -2,25 +2,21 @@
 sidebar_position: 0
 slug: /
 ---
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-import Layout from "@theme/Layout";
-import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
-import styles from "../src/pages/index.module.css";
+
+
 import {
+    AccordionSection,
     FirstSection,
     LanguagesSection,
     NewToConductorSection,
     StepBoxesSection,
     UseCasesSection,
-    AccordionSection,
     VideoSection,
-} from "../src/pages/_Sections";
+} from "../src/components/_Sections";
 
 # What is Orkes Conductor?
 
-[//]: # (const { siteConfig } = useDocusaurusContext&#40;&#41;;)
-<main className={`container ${styles.mainContainer} padding-vert--md`}>
+<main className={`container mainContainer padding-vert--md`}>
     <FirstSection content="Orkes Conductor: the battle-tested, open-source based application orchestration platform for developers." />
     <FirstSection content="Build composable workflows visually or with code, orchestrate executions across any language and deployment model, and scale your applications with high reliability and observability." />
     <StepBoxesSection

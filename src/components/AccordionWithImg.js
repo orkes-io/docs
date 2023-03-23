@@ -11,10 +11,6 @@ function getRandomInt(max) {
 function AccordionWithImg({ data }) {
   const [currentDropdown, setCurrentDropdown] = useState(data[getRandomInt(data.length)]);
   const handleDropdown = (item) => {
-    // if (currentDropdown && currentDropdown.title === item.title) {
-    //   setCurrentDropdown(null);
-    //   return;
-    // }
     setCurrentDropdown(item);
   };
   return (

@@ -421,8 +421,17 @@ summary {
   color: var(--ifm-menu-color)!important;
 }
 
-aside > div {
+aside > div > div > nav {
   margin-top: 20px;
   margin-bottom: 30px;
   border-right: 1px solid var(--ifm-toc-border-color);
+}
+
+.mainContainer {
+  padding-top: 1rem;
+}
+
+.mainContainer > div {
+  /*margin-top: 1rem;*/
+  margin-bottom: 1rem;
 }
