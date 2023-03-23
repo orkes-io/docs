@@ -1,7 +1,7 @@
-import React, {useState} from "react";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faAngleUp} from "@fortawesome/free-solid-svg-icons/faAngleUp";
-import {faAngleDown} from "@fortawesome/free-solid-svg-icons/faAngleDown";
+import React, { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleUp } from "@fortawesome/free-solid-svg-icons/faAngleUp";
+import { faAngleDown } from "@fortawesome/free-solid-svg-icons/faAngleDown";
 import styles from "./AccordionWithImg.module.css";
 
 function getRandomInt(max) {
@@ -9,7 +9,9 @@ function getRandomInt(max) {
 }
 
 function AccordionWithImg({ data }) {
-  const [currentDropdown, setCurrentDropdown] = useState(data[getRandomInt(data.length)]);
+  const [currentDropdown, setCurrentDropdown] = useState(
+    data[getRandomInt(data.length - 1)]
+  );
   const handleDropdown = (item) => {
     setCurrentDropdown(item);
   };
