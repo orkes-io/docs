@@ -61,12 +61,25 @@ const sidebars = {
                 'guides/scaling-workers',
             ],
             collapsible: true,
-            collapsed: false,
+            collapsed: true,
             className: 'leftMenuHeader',
         },
         {
-            type: 'doc',
-            id: 'access-control-security',
+            type: 'category',
+            label: 'Access Control and Security',
+            link: {
+                type: 'generated-index',
+                title: 'Access Control and Security',
+                slug: '/category/access-control-security',
+                keywords: ['access control', 'security']
+            },
+            items: [
+                'access-control-security/applications',
+                'access-control-security/users-and-groups',
+                'access-control-security/tags',
+            ],
+            collapsible: true,
+            collapsed: true,
             className: 'leftMenuHeader',
         },
         {
@@ -77,6 +90,22 @@ const sidebars = {
         {
             type: 'doc',
             id: 'metrics-and-observability',
+            className: 'leftMenuHeader',
+        },
+        {
+            type: 'category',
+            label: 'Templates',
+            link: {
+                type: 'generated-index',
+                title: 'Templates',
+                slug: '/category/templates'
+            },
+            items: [
+                'templates/availability-monitoring-for-http-endpoints',
+                'templates/video-processing-workflows'
+            ],
+            collapsible: true,
+            collapsed: true,
             className: 'leftMenuHeader',
         },
         {
