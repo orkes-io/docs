@@ -3,11 +3,11 @@
 
 const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
-const baseUrlName = '/content';
+const baseUrlName = '/docs';
 /** @type {import('@docusaurus/types').Config} */
 const config = {
     title: 'Orkes Conductor Documentation',
-    tagline: 'Making Stateful Serverless Easy',
+    tagline: 'Platform for building scalable reliable distributed systems',
     url: 'https://orkes.io',
     baseUrl: baseUrlName + '/',
     onBrokenLinks: 'warn',
@@ -30,9 +30,7 @@ const config = {
         [
             '@docusaurus/plugin-client-redirects',
             {
-                redirects:
-                    [
-                    ],
+                redirects: [],
             },
         ],
         [
@@ -44,19 +42,25 @@ const config = {
             },
         ],
     ],
+    i18n: {
+        defaultLocale: 'en',
+        locales: ['en'],
+    },
+
     presets: [
         [
-            '@docusaurus/preset-classic',
+            'classic',
             /** @type {import('@docusaurus/preset-classic').Options} */
             ({
                 docs: {
+                    routeBasePath: '/',
                     breadcrumbs: true,
                     sidebarPath: require.resolve('./sidebars.js'),
                     sidebarCollapsible: true,
                     editUrl: 'https://github.com/orkes-io/docs/edit/main/',
                 },
                 blog: {
-                    path: './blog',
+                    // path: './blog',
                     showReadingTime: true,
                     editUrl: 'https://github.com/orkes-io/docs/edit/main/',
                     blogSidebarCount: 'ALL',
@@ -68,20 +72,25 @@ const config = {
         ],
     ],
     themes: [
-        'docusaurus-theme-search-typesense'
+        'docusaurus-theme-search-typesense',
         // '@saucelabs/theme-github-codeblock'
     ],
 
     themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
         ({
-            metadata: [{name: 'keywords', content: 'microservices,orchestration,event-driven'}],
+            metadata: [
+                {
+                    name: 'keywords',
+                    content: 'microservices,orchestration,event-driven,workflow,automation,bpmn',
+                },
+            ],
             colorMode: {
                 defaultMode: 'light',
             },
             docs: {
-            sidebar: {
-                autoCollapseCategories: true,
+                sidebar: {
+                    autoCollapseCategories: false,
                 },
             },
             navbar: {
@@ -93,31 +102,16 @@ const config = {
                 },
                 items: [
                     {
-                        type: "search",
-                        position: "right",
-                    },
-                    {
                         type: 'doc',
-                        docId: 'getting-started/index',
+                        docId: 'getting-started/step1',
                         position: 'left',
                         label: 'Getting Started',
-                    },
-                    {
-                        type: 'doc',
-                        docId: 'api/index',
-                        position: 'left',
-                        label: 'API & SDK Docs',
-                    },
-                    {
-                        to: '/blog',
-                        label: 'Blog',
-                        position: 'left'
                     },
                     {
                         href: 'https://orkes.io',
                         label: 'orkes.io',
                         target: '_orkes_io',
-                        position: 'left'
+                        position: 'left',
                     },
                     {
                         href: 'https://github.com/Netflix/conductor',
@@ -125,10 +119,21 @@ const config = {
                         target: '_orkes_io',
                         position: 'right',
                     },
+                    {
+                        type: 'search',
+                        position: 'right',
+                    },
                 ],
             },
             footer: {
                 style: 'dark',
+                logo: {
+                    alt: 'Orkes Logo',
+                    src: 'img/branding/orkes-logo-purple-inverted-2x.png',
+                    href: 'https://orkes.io',
+                    width: 160,
+                    height: 51,
+                },
                 links: [
                     {
                         title: 'Docs',
@@ -185,40 +190,23 @@ const config = {
                 darkTheme: darkCodeTheme,
                 additionalLanguages: ['java', 'json'],
             },
-            typesense:{
+            typesense: {
                 typesenseCollectionName: 'orkes-content',
                 typesenseServerConfig: {
                     nodes: [
-                      {
-                        host: '7xanmp8g5uyd4rqop.a1.typesense.net',
-                        port: 443,
-                        protocol: 'https',
-                      },
+                        {
+                            host: '7xanmp8g5uyd4rqop.a1.typesense.net',
+                            port: 443,
+                            protocol: 'https',
+                        },
                     ],
                     apiKey: 'vrrNV2jm72Jym1qtGfzgcUpGI8gL7uR9',
-                  },
-                  typesenseSearchParameters: {},
+                },
+                typesenseSearchParameters: {},
 
-                  // Optional
-                  contextualSearch: true,
-            }
-            // algolia: {
-            //     appId: "F6Z9JYN7SD",
-            //
-            //     // Public API key: it is safe to commit it
-            //     apiKey: "4b16b443762534d364363a6dee383487",
-            //
-            //     indexName: "prod_docs",
-            //
-            //     // Optional: see doc section below
-            //     contextualSearch: false,
-            //
-            //     // Optional: Specify domains where the navigation should occur through window.location instead on history.push. Useful when our Algolia config crawls multiple documentation sites and we want to navigate with window.location.href to them.
-            //     // externalUrlRegex: "external\\.com|domain\\.com",
-            //
-            //     // Optional: Algolia search parameters
-            //     // searchParameters: {},
-            // },
+                // Optional
+                contextualSearch: true,
+            },
         }),
 };
 

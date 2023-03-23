@@ -28,12 +28,15 @@
   --ifm-blockquote-padding-vertical: 20px;
   --ifm-blockquote-border-left-width: 4px;
   --ifm-blockquote-font-size: 16px;
+  /*--ifm-toc-border-color: red;*/
   --ifm-font-family-base: "Gothic A1", system-ui, -apple-system,
     BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   --orkes-logo-color-1: #1ad8fc;
   --orkes-logo-color-2: #f9698c;
   --orkes-logo-color-3: #aa85ee;
+  --doc-sidebar-width: 320px !important;
+  --doc-sidebar-hidden-width: 30px;
 }
 
 [data-theme="dark"] {
@@ -64,7 +67,7 @@ body {
 }
 
 html[data-theme="dark"] .navbar {
-  background: rgba(35,35,35,.65);
+  background: rgba(35, 35, 35, 0.65);
 }
 
 /*
@@ -73,10 +76,10 @@ html[data-theme="dark"] .navbar {
  */
 @-moz-document url-prefix() {
   .navbar {
-    background: rgba(220,220,220,.95);
+    background: rgba(220, 220, 220, 0.95);
   }
   html[data-theme="dark"] .navbar {
-    background: rgba(35,35,35,.95);
+    background: rgba(35, 35, 35, 0.95);
   }
 }
 
@@ -123,50 +126,48 @@ h5 {
   font-weight: 500;
 }
 
-
 .menu {
-    background-color: #ffffff;
+  background-color: #ffffff;
 }
 .menu__link--sublist:after {
-   background: none;
-
+  background: none;
 }
 
 .menu__link--active:not(.menu__link--sublist) {
-    background: none;
-    font-weight: bold;
+  background: none;
+  font-weight: bold;
 }
 
 .menu__link--sublist {
-    font-weight: bold;
+  font-weight: bold;
 }
 .menu__link--sublist {
-    color: #0481e3;
-    background: none;
+  color: #0481e3;
+  background: none;
 }
 .menu__list-item-collapsible {
-    font-weight: bold;
+  font-weight: bold;
 }
 .menu__caret {
-    /*display: none;*/
-    font-weight: normal;
-    font-size: 0em;
+  /*display: none;*/
+  font-weight: normal;
+  font-size: 0em;
 }
 .menu__caret:before {
-    height: 1.0rem;
+  height: 1rem;
 }
-[data-theme='dark'] .menu__link--sublist {
-    color: #e64769;
-    background: none;
+[data-theme="dark"] .menu__link--sublist {
+  color: #e64769;
+  background: none;
 }
 
-[data-theme='dark'] .menu {
-    background: none;
+[data-theme="dark"] .menu {
+  background: none;
 }
 
 .menu__link {
-  line-height: 1.0em;
-  font-size: 1.0em;
+  line-height: 1em;
+  font-size: 1em;
   font-weight: normal;
 }
 
@@ -198,11 +199,11 @@ pre code {
 }
 
 .navbar {
-
+  background-color: #eff0f0;
 }
 
 .navbar-sidebar {
-  height:100vh;
+  height: 100vh;
 }
 
 .navbar__brand {
@@ -315,23 +316,33 @@ html[data-theme="dark"] .midSectionOdd {
 .row--center {
   justify-content: center;
 }
+.tabs-container {
+  border: 1px solid #dadce0;
+  border-radius: 8px;
+}
 .tabs {
   max-width: 100%;
   gap: 0px;
+  padding-top: 10px;
+  border-bottom: 1px solid #dadce0;
 }
 .tabs .tabs__item {
   font-size: 15px;
   line-height: 1px;
-  border: 0px solid var(--ifm-color-info);
   width: 100%;
   justify-content: center;
-  color: var(--ifm-color-info);
-  border-radius: 0.0rem;
+  color: #5f6368;
+  border-radius: 0rem;
+  margin: 0 24px;
 }
 .tabs .tabs__item--active {
-  background-color: var(--ifm-color-info);
-  color: #fff;
+  color: var(--ifm-color-info);
   /* border-radius: var(--ifm-global-radius); */
+  border-bottom: 2px solid var(--ifm-color-info);
+}
+.tabs .tabs__item:hover {
+  border-bottom: 2px solid #5f6368;
+  background-color: #fff;
 }
 
 .noStyleLink,
@@ -368,16 +379,59 @@ html[data-theme="dark"] .midSectionOdd {
 }
 
 img[alt="Conductor Architecture"] {
-    width: 75%;
+  width: 75%;
 }
 
 .pagination-nav__link {
-    border: none;
+  border: none;
 }
 
 summary {
-    font-weight: bold;
+  font-weight: bold;
 }
 .markdown p {
-    margin-bottom: 3px;
+  margin-bottom: 3px;
+}
+
+.footer {
+  background: #252528;
+}
+.footer__title {
+  font-size: 24px;
+}
+
+.leftMenuHeader {
+  padding-bottom: 5px;
+}
+
+.leftMenuHeader > a {
+  font-size: 16px;
+  font-weight: 400;
+  /*color: var(--ifm-menu-color)!important;*/
+}
+
+.leftMenuHeader > div > a {
+  font-size: 16px;
+  font-weight: 400;
+  padding-bottom: 10px;
+  /*color: var(--ifm-menu-color)!important;*/
+}
+
+.leftMenuHeader .menu__link--sublist {
+  color: var(--ifm-menu-color)!important;
+}
+
+aside > div > div > nav {
+  margin-top: 20px;
+  margin-bottom: 30px;
+  border-right: 1px solid var(--ifm-toc-border-color);
+}
+
+.mainContainer {
+  padding-top: 1rem;
+}
+
+.mainContainer > div {
+  /*margin-top: 1rem;*/
+  margin-bottom: 1rem;
 }
