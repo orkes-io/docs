@@ -29,10 +29,10 @@ export default function Home() {
                     <StepBoxesSection
                         steps={[
                             {
-                                title: "Developer Guide",
+                                title: "Getting Started",
                                 description:
                                     "Learn how to build workflows, discover key concepts, and explore powerful features.",
-                                to: "/docs/getting-started",
+                                to: "/docs/category/getting-started",
                             },
                             {
                                 title: "Examples",

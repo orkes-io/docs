@@ -1,16 +1,20 @@
-import React, { useState } from "react";
-import classNames from "classnames";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleUp } from "@fortawesome/free-solid-svg-icons/faAngleUp";
-import { faAngleDown } from "@fortawesome/free-solid-svg-icons/faAngleDown";
+import React, {useState} from "react";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faAngleUp} from "@fortawesome/free-solid-svg-icons/faAngleUp";
+import {faAngleDown} from "@fortawesome/free-solid-svg-icons/faAngleDown";
 import styles from "./AccordionWithImg.module.css";
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
+
 function AccordionWithImg({ data }) {
-  const [currentDropdown, setCurrentDropdown] = useState(null);
+  const [currentDropdown, setCurrentDropdown] = useState(data[getRandomInt(data.length)]);
   const handleDropdown = (item) => {
-    if (currentDropdown && currentDropdown.title == item.title) {
-      setCurrentDropdown(null);
-      return;
-    }
+    // if (currentDropdown && currentDropdown.title === item.title) {
+    //   setCurrentDropdown(null);
+    //   return;
+    // }
     setCurrentDropdown(item);
   };
   return (

@@ -400,12 +400,7 @@ export const UseCasesSection = ({}) => (
 export const AccordionSection = ({}) => (
   <div className="padding-vert--md">
     <h2>What can conductor do</h2>
-    <div>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non libero
-      sagittis, pretium massa vel, ullamcorper dui. Fusce sed volutpat est.
-      Morbi porttitor luctus porttitor. Fusce neque dui, scelerisque eget erat
-      nec, ornare vehicula mi.
-    </div>
+    <h5>Here are some of the key features we can do with Orkes Conductor platform:</h5>
     <AccordionWithImg data={accordionData} />
   </div>
 );

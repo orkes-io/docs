@@ -3,7 +3,7 @@
 
 const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
-const baseUrlName = '/content';
+const baseUrlName = '/docs';
 /** @type {import('@docusaurus/types').Config} */
 const config = {
     title: 'Orkes Conductor Documentation',
@@ -85,7 +85,6 @@ const config = {
             docs: {
                 sidebar: {
                     autoCollapseCategories: false,
-                    className: 'someClass'
                 },
             },
             navbar: {
