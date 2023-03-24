@@ -1,23 +1,12 @@
 ---
-sidebar_position: 2
+sidebar_position: 10
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Get workflow by Id
-## Properties
+# Workflow Scheduler
 
-## API
-  
-
-## Client SDK Methods
-## Properties
-
-## API
-  
-
-## Client SDK Methods
 ## Properties
 
 ## API
@@ -28,11 +17,6 @@ import TabItem from '@theme/TabItem';
 <Tabs>
 <TabItem value="Java" label="Java">
 This is a banana 🍌
-
-```java
-
-```
-
 </TabItem>
   <TabItem value="Golang" label="Golang">
     This is a banana 🍌
@@ -49,39 +33,4 @@ This is a banana 🍌
     <TabItem value="Clojure" label="Clojure">
         This is a banana 🍌
     </TabItem>
-<TabItem value="Golang" label="Golang">
-
-```go
-func (e *WorkflowExecutor) GetWorkflow(workflowId string, includeTasks bool) (*model.Workflow, error)
-```
-
-</TabItem>
-<TabItem value="Python" label="Python">
-
-```python
-
-```
-
-</TabItem>
-<TabItem value="CSharp" label="CSharp">
-
-```csharp
-
-```
-
-</TabItem>
-<TabItem value="Javascript" label="Javascript">
-
-```javascript
-
-```
-
-</TabItem>
-<TabItem value="Clojure" label="Clojure">
-
-```clojure
-
-```
-
-</TabItem>
 </Tabs>

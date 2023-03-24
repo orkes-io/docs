@@ -6,40 +6,60 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 # Terminate workflow
-Starts a workflow and returns the **id** if the started workflow.  The API returns immediately without the waiting for workflow to be completed.
+## Properties
+
+## API
+  
+
+## Client SDK Methods
+## Properties
+
+## API
+  
+
+## Client SDK Methods
 
 <Tabs>
 <TabItem value="Java" label="Java">
 
 ```java
-    public abstract CompletableFuture<WorkflowRun>
-        executeWorkflow(StartWorkflowRequest request, String waitUntilTask);
+
 ```
+
 </TabItem>
+<TabItem value="Golang" label="Golang">
 
-  <TabItem value="Golang" label="Golang">
-    This is a banana 🍌
-  </TabItem>
-  <TabItem value="Python" label="Python">
-      This is a banana 🍌
-  </TabItem>
-  <TabItem value="CSharp" label="CSharp">
-      This is a banana 🍌
-  </TabItem>
-  <TabItem value="Javascript" label="Javascript">
-        This is a banana 🍌
-    </TabItem>
-    <TabItem value="Clojure" label="Clojure">
-        This is a banana 🍌
-    </TabItem>
-</Tabs>
-
-## Request
-Input to the start workflow API is the payload is a JSON map of the input to the workflow.
-```json
-{
-
-}
+```go
+func (e *WorkflowExecutor) Terminate(workflowId string, reason string) error
 ```
 
-## Response
+</TabItem>
+<TabItem value="Python" label="Python">
+
+```python
+
+```
+
+</TabItem>
+<TabItem value="CSharp" label="CSharp">
+
+```csharp
+
+```
+
+</TabItem>
+<TabItem value="Javascript" label="Javascript">
+
+```javascript
+
+```
+
+</TabItem>
+<TabItem value="Clojure" label="Clojure">
+
+```clojure
+
+```
+
+</TabItem>
+</Tabs>

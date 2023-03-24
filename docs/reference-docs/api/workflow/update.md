@@ -5,21 +5,8 @@ sidebar_position: 2
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Delete workflow
-
-## Properties
-
-## API
-  
-
-## Client SDK Methods
-
-## Properties
-
-## API
-  
-
-## Client SDK Methods
+# Update workflow task
+Update the execution status and output of the task.
 
 <Tabs>
 <TabItem value="Java" label="Java">
@@ -32,7 +19,7 @@ import TabItem from '@theme/TabItem';
 <TabItem value="Golang" label="Golang">
 
 ```go
-func (e *WorkflowExecutor) RemoveWorkflow(workflowId string) error
+func (e *WorkflowExecutor) UpdateTaskByRefName(taskRefName string, workflowInstanceId string, status model.TaskResultStatus, output interface{}) error
 ```
 
 </TabItem>

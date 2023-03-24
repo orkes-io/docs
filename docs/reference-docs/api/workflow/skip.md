@@ -5,21 +5,9 @@ sidebar_position: 2
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Delete workflow
-
-## Properties
-
-## API
-  
-
-## Client SDK Methods
-
-## Properties
-
-## API
-  
-
-## Client SDK Methods
+# Skip task from workflow execution
+SkipTasksFromWorkflow Skips a given task execution from a current running workflow.
+When skipped the task's input and outputs are updated  from skipTaskRequest parameter.
 
 <Tabs>
 <TabItem value="Java" label="Java">
@@ -32,7 +20,7 @@ import TabItem from '@theme/TabItem';
 <TabItem value="Golang" label="Golang">
 
 ```go
-func (e *WorkflowExecutor) RemoveWorkflow(workflowId string) error
+func (e *WorkflowExecutor) SkipTasksFromWorkflow(workflowId string, taskReferenceName string, skipTaskRequest model.SkipTaskRequest) error
 ```
 
 </TabItem>

@@ -5,21 +5,9 @@ sidebar_position: 2
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Delete workflow
-
-## Properties
-
-## API
-  
-
-## Client SDK Methods
-
-## Properties
-
-## API
-  
-
-## Client SDK Methods
+# Restart workflow execution
+Restart a workflow execution from the beginning with the same input.
+When called on a workflow that is not in a terminal status, this operation has no effect.
 
 <Tabs>
 <TabItem value="Java" label="Java">
@@ -32,7 +20,7 @@ import TabItem from '@theme/TabItem';
 <TabItem value="Golang" label="Golang">
 
 ```go
-func (e *WorkflowExecutor) RemoveWorkflow(workflowId string) error
+func (e *WorkflowExecutor) Restart(workflowId string, useLatestDefinition bool) error
 ```
 
 </TabItem>

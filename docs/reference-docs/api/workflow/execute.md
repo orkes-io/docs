@@ -7,7 +7,9 @@ import TabItem from '@theme/TabItem';
 
 
 # Synchronous execution
-### API
+
+## Properties
+## API
     POST /api/workflow/execute/{name}/{version} -d {}
 
 ## Client SDK Methods
@@ -16,24 +18,43 @@ import TabItem from '@theme/TabItem';
 <TabItem value="Java" label="Java">
 
 ```java
-    public abstract CompletableFuture<WorkflowRun>
-        executeWorkflow(StartWorkflowRequest request, String waitUntilTask);
-```
-</TabItem>
 
-  <TabItem value="Golang" label="Golang">
-    This is a banana 🍌
-  </TabItem>
-  <TabItem value="Python" label="Python">
-      This is a banana 🍌
-  </TabItem>
-  <TabItem value="CSharp" label="CSharp">
-      This is a banana 🍌
-  </TabItem>
-  <TabItem value="Javascript" label="Javascript">
-        This is a banana 🍌
-    </TabItem>
-    <TabItem value="Clojure" label="Clojure">
-        This is a banana 🍌
-    </TabItem>
+```
+
+</TabItem>
+<TabItem value="Golang" label="Golang">
+
+```go
+func (e *WorkflowExecutor) ExecuteWorkflow(startWorkflowRequest *model.StartWorkflowRequest, waitUntilTask string) (run *model.WorkflowRun, err error)
+```
+
+</TabItem>
+<TabItem value="Python" label="Python">
+
+```python
+
+```
+
+</TabItem>
+<TabItem value="CSharp" label="CSharp">
+
+```csharp
+
+```
+
+</TabItem>
+<TabItem value="Javascript" label="Javascript">
+
+```javascript
+
+```
+
+</TabItem>
+<TabItem value="Clojure" label="Clojure">
+
+```clojure
+
+```
+
+</TabItem>
 </Tabs>
