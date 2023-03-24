@@ -7,17 +7,15 @@ import TabItem from '@theme/TabItem';
 
 # Delete workflow
 
-## Properties
-
-## API
-  
-
-## Client SDK Methods
+Remove workflow execution permanently from the system
 
 ## Properties
 
+Returns nil if no workflow is found by the id
+
 ## API
-  
+
+DELETE /workflow/{workflowId}/remove
 
 ## Client SDK Methods
 
