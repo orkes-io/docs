@@ -8,9 +8,12 @@ import TabItem from '@theme/TabItem';
 
 # Synchronous execution
 
+Starts a workflow and wait until the workflow completes or the waitUntilTask completes
+
 ## Properties
+
 ## API
-    POST /api/workflow/execute/{name}/{version} -d {}
+POST /api/workflow/execute/{name}/{version}
 
 ## Client SDK Methods
 
