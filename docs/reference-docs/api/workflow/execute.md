@@ -12,6 +12,8 @@ Starts a workflow and wait until the workflow completes or the waitUntilTask com
 
 ## Properties
 
+Returns the output of the workflow
+
 ## API
 POST /api/workflow/execute/{name}/{version}
 
