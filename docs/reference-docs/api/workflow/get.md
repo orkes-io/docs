@@ -34,7 +34,7 @@ func (e *WorkflowExecutor) GetWorkflow(workflowId string, includeTasks bool) (*m
 <TabItem value="Python" label="Python">
 
 ```python
-
+WorkflowResourceApi.get_execution_status(self, workflow_id, **kwargs)
 ```
 
 </TabItem>

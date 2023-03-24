@@ -34,7 +34,7 @@ func (e *WorkflowExecutor) Resume(workflowId string) error
 <TabItem value="Python" label="Python">
 
 ```python
-
+WorkflowResourceApi.resume_workflow1(self, workflow_id, **kwargs)
 ```
 
 </TabItem>

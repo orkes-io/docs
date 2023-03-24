@@ -34,7 +34,7 @@ func (e *WorkflowExecutor) Terminate(workflowId string, reason string) error
 <TabItem value="Python" label="Python">
 
 ```python
-
+WorkflowResourceApi.terminate1(self, workflow_id, **kwargs)
 ```
 
 </TabItem>

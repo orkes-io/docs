@@ -37,7 +37,7 @@ func (e *WorkflowExecutor) ExecuteWorkflow(startWorkflowRequest *model.StartWork
 <TabItem value="Python" label="Python">
 
 ```python
-
+WorkflowResourceApi.execute_workflow(self, body, request_id, name, version, **kwargs)
 ```
 
 </TabItem>

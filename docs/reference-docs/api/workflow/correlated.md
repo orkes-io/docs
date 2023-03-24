@@ -37,7 +37,7 @@ func (e *WorkflowExecutor) GetByCorrelationIds(workflowName string, includeClose
 <TabItem value="Python" label="Python">
 
 ```python
-
+WorkflowResourceApi.get_workflows(self, body, name, **kwargs)
 ```
 
 </TabItem>

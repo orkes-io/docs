@@ -37,7 +37,7 @@ func (e *WorkflowExecutor) Search(start int32, size int32, query string, freeTex
 <TabItem value="Python" label="Python">
 
 ```python
-
+WorkflowResourceApi.search(self, **kwargs)
 ```
 
 </TabItem>

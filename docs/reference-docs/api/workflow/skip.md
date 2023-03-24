@@ -34,7 +34,7 @@ func (e *WorkflowExecutor) SkipTasksFromWorkflow(workflowId string, taskReferenc
 <TabItem value="Python" label="Python">
 
 ```python
-
+WorkflowResourceApi.skip_task_from_workflow(self, workflow_id, task_reference_name, **kwargs)
 ```
 
 </TabItem>

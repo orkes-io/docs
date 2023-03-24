@@ -37,7 +37,7 @@ func (e *WorkflowExecutor) RemoveWorkflow(workflowId string) error
 <TabItem value="Python" label="Python">
 
 ```python
-
+WorkflowResourceApi.delete(self, workflow_id, **kwargs)
 ```
 
 </TabItem>

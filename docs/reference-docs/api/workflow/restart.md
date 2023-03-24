@@ -35,7 +35,7 @@ func (e *WorkflowExecutor) Restart(workflowId string, useLatestDefinition bool) 
 <TabItem value="Python" label="Python">
 
 ```python
-
+WorkflowResourceApi.restart1(self, workflow_id, **kwargs)
 ```
 
 </TabItem>

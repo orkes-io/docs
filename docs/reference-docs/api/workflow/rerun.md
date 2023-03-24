@@ -34,7 +34,7 @@ func (e *WorkflowExecutor) ReRun(workflowId string, reRunRequest model.RerunWork
 <TabItem value="Python" label="Python">
 
 ```python
-
+WorkflowResourceApi.rerun(self, body, workflow_id, **kwargs)
 ```
 
 </TabItem>

@@ -34,7 +34,7 @@ func (e *WorkflowExecutor) Pause(workflowId string) error
 <TabItem value="Python" label="Python">
 
 ```python
-
+WorkflowResourceApi.pause_workflow1(self, workflow_id, **kwargs)
 ```
 
 </TabItem>

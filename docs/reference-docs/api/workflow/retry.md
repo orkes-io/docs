@@ -34,7 +34,7 @@ func (e *WorkflowExecutor) Retry(workflowId string, resumeSubworkflowTasks bool)
 <TabItem value="Python" label="Python">
 
 ```python
-
+WorkflowResourceApi.retry1(self, workflow_id, **kwargs)
 ```
 
 </TabItem>
