@@ -6,49 +6,23 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 # Get workflow by Id
+Get workflow execution by workflow Id.  If includeTasks is set, also fetches all the task details.
+
 ## Properties
 
 ## API
-  
-
-## Client SDK Methods
-## Properties
-
-## API
-  
-
-## Client SDK Methods
-## Properties
-
-## API
-  
+GET /workflow/{name}
 
 ## Client SDK Methods
 
 <Tabs>
 <TabItem value="Java" label="Java">
-This is a banana 🍌
 
 ```java
 
 ```
 
 </TabItem>
-  <TabItem value="Golang" label="Golang">
-    This is a banana 🍌
-  </TabItem>
-  <TabItem value="Python" label="Python">
-      This is a banana 🍌
-  </TabItem>
-  <TabItem value="CSharp" label="CSharp">
-      This is a banana 🍌
-  </TabItem>
-  <TabItem value="Javascript" label="Javascript">
-        This is a banana 🍌
-    </TabItem>
-    <TabItem value="Clojure" label="Clojure">
-        This is a banana 🍌
-    </TabItem>
 <TabItem value="Golang" label="Golang">
 
 ```go
