@@ -183,12 +183,6 @@ h5 {
 [data-theme="dark"] .menu__link {
   color: #ffffff;
 }
-.menu__link::before {
-  content: "• ";
-}
-.menu__link--sublist::before {
-  content: "";
-}
 
 aside {
   border-right: none;
@@ -201,7 +195,7 @@ aside {
 .table-of-contents__link,
 table {
   letter-spacing: -0.003em;
-  line-height: 22px;
+  line-height: 28px;
   font-size: 15px;
   font-family: var(--ifm-font-family-base);
 }
@@ -409,7 +403,7 @@ summary {
   font-weight: bold;
 }
 .markdown p {
-  margin-bottom: 3px;
+  margin-bottom: 1.25rem;
 }
 
 .footer {
@@ -424,13 +418,11 @@ summary {
 }
 
 .leftMenuHeader > a {
-  font-size: 16px;
   font-weight: 400;
   /*color: var(--ifm-menu-color)!important;*/
 }
 
 .leftMenuHeader > div > a {
-  font-size: 20px;
   font-weight: 600;
   padding-bottom: 10px;
   color: #212121 !important;
