@@ -6,16 +6,13 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 # Terminate workflow
+Terminate a running workflow.
+
 ## Properties
+Reason must be provided that is captured as the termination resaon for the workflow
 
 ## API
-  
-
-## Client SDK Methods
-## Properties
-
-## API
-  
+DELETE /workflow/{workflowId}
 
 ## Client SDK Methods
 

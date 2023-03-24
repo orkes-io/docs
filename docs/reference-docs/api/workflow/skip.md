@@ -6,8 +6,15 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 # Skip task from workflow execution
-SkipTasksFromWorkflow Skips a given task execution from a current running workflow.
+Skips a given task execution from a current running workflow.
+
+## Properties
 When skipped the task's input and outputs are updated  from skipTaskRequest parameter.
+
+## API
+PUT /workflow/{workflowId}/skiptask/{taskReferenceName}
+
+## Client SDK Methods
 
 <Tabs>
 <TabItem value="Java" label="Java">

@@ -8,6 +8,14 @@ import TabItem from '@theme/TabItem';
 # Update workflow task
 Update the execution status and output of the task.
 
+## Properties
+Reason must be provided that is captured as the termination reason for the workflow
+
+## API
+POST /tasks/{workflowId}/{taskRefName}/{status}
+
+## Client SDK Methods
+
 <Tabs>
 <TabItem value="Java" label="Java">
 
