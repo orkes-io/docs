@@ -44,7 +44,7 @@ WorkflowResourceApi.get_workflows(self, body, name, **kwargs)
 <TabItem value="CSharp" label="CSharp">
 
 ```csharp
-
+string WorkflowResourceApi.StartWorkflow(StartWorkflowRequest body)
 ```
 
 </TabItem>

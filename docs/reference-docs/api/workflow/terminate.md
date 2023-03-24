@@ -41,7 +41,7 @@ WorkflowResourceApi.terminate1(self, workflow_id, **kwargs)
 <TabItem value="CSharp" label="CSharp">
 
 ```csharp
-
+void WorkflowResourceApi.Terminate(string workflowId, string reason = null, bool? triggerFailureWorkflow = null)
 ```
 
 </TabItem>

@@ -41,7 +41,7 @@ WorkflowResourceApi.pause_workflow1(self, workflow_id, **kwargs)
 <TabItem value="CSharp" label="CSharp">
 
 ```csharp
-
+void WorkflowResourceApi.PauseWorkflow(string workflowId)
 ```
 
 </TabItem>

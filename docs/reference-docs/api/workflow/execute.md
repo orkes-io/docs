@@ -44,7 +44,7 @@ WorkflowResourceApi.execute_workflow(self, body, request_id, name, version, **kw
 <TabItem value="CSharp" label="CSharp">
 
 ```csharp
-
+WorkflowRun WorkflowResourceApi.ExecuteWorkflow(StartWorkflowRequest body, string requestId, string name, int? version, string waitUntilTaskRef = null)
 ```
 
 </TabItem>

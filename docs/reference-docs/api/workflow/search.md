@@ -44,7 +44,7 @@ WorkflowResourceApi.search(self, **kwargs)
 <TabItem value="CSharp" label="CSharp">
 
 ```csharp
-
+ScrollableSearchResultWorkflowSummary WorkflowResourceApi.Search(string queryId = null, int? start = null, int? size = null, string sort = null, string freeText = null, string query = null, bool? skipCache = null)
 ```
 
 </TabItem>

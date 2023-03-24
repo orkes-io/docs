@@ -41,7 +41,7 @@ WorkflowResourceApi.retry1(self, workflow_id, **kwargs)
 <TabItem value="CSharp" label="CSharp">
 
 ```csharp
-
+void WorkflowResourceApi.Retry(string workflowId, bool? resumeSubworkflowTasks = null)
 ```
 
 </TabItem>

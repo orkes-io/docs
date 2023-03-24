@@ -41,7 +41,7 @@ WorkflowResourceApi.rerun(self, body, workflow_id, **kwargs)
 <TabItem value="CSharp" label="CSharp">
 
 ```csharp
-
+string WorkflowResourceApi.Rerun(RerunWorkflowRequest body, string workflowId)
 ```
 
 </TabItem>

@@ -42,7 +42,7 @@ WorkflowResourceApi.restart1(self, workflow_id, **kwargs)
 <TabItem value="CSharp" label="CSharp">
 
 ```csharp
-
+void WorkflowResourceApi.Restart(string workflowId, bool? useLatestDefinitions = null)
 ```
 
 </TabItem>

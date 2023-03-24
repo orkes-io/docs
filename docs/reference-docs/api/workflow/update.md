@@ -41,7 +41,7 @@ TaskResourceApi.update_task1(self, body, workflow_id, task_ref_name, status, **k
 <TabItem value="CSharp" label="CSharp">
 
 ```csharp
-
+string TaskResourceApi.UpdateTask(Dictionary<string, Object> body, string workflowId, string taskRefName, string status, string workerid = null)
 ```
 
 </TabItem>

@@ -51,7 +51,7 @@ WorkflowResourceApi.start_workflow(self, body, **kwargs)
 <TabItem value="CSharp" label="CSharp">
 
 ```csharp
-
+string WorkflowResourceApi.StartWorkflow(StartWorkflowRequest body)
 ```
 
 </TabItem>

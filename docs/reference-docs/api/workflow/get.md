@@ -41,7 +41,7 @@ WorkflowResourceApi.get_execution_status(self, workflow_id, **kwargs)
 <TabItem value="CSharp" label="CSharp">
 
 ```csharp
-
+WorkflowStatus WorkflowResourceApi.GetWorkflowStatusSummary(string workflowId, bool? includeOutput = null, bool? includeVariables = null)
 ```
 
 </TabItem>

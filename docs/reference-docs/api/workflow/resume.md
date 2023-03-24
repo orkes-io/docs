@@ -41,7 +41,7 @@ WorkflowResourceApi.resume_workflow1(self, workflow_id, **kwargs)
 <TabItem value="CSharp" label="CSharp">
 
 ```csharp
-
+void WorkflowResourceApi.ResumeWorkflow(string workflowId)
 ```
 
 </TabItem>

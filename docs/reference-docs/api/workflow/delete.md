@@ -44,7 +44,7 @@ WorkflowResourceApi.delete(self, workflow_id, **kwargs)
 <TabItem value="CSharp" label="CSharp">
 
 ```csharp
-
+void WorkflowResourceApi.Delete(string workflowId, bool? archiveWorkflow = null)
 ```
 
 </TabItem>

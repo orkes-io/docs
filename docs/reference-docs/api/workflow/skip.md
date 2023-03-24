@@ -41,7 +41,7 @@ WorkflowResourceApi.skip_task_from_workflow(self, workflow_id, task_reference_na
 <TabItem value="CSharp" label="CSharp">
 
 ```csharp
-
+void WorkflowResourceApi.SkipTaskFromWorkflow(string workflowId, string taskReferenceName, SkipTaskRequest skipTaskRequest)
 ```
 
 </TabItem>
