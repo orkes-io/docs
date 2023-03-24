@@ -7,17 +7,13 @@ import TabItem from '@theme/TabItem';
 
 # Get workflows by correlation Id
 
-## Properties
-
-## API
-  
-
-## Client SDK Methods
+Given the list of correlation ids, find and return workflows
 
 ## Properties
 
 ## API
-  
+
+POST /workflow/{name}/correlated
 
 ## Client SDK Methods
 
