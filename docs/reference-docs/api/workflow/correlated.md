@@ -11,6 +11,8 @@ Given the list of correlation ids, find and return workflows
 
 ## Properties
 
+Returns a map with key as correlationId and value as a list of Workflows. When IncludeClosed is set to true, the return value also includes workflows that are completed otherwise only running workflows are returned
+
 ## API
 
 POST /workflow/{name}/correlated
