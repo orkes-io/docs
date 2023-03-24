@@ -6,16 +6,13 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 # Re-Run a completed workflow
+ReRun a completed workflow from a specific task (ReRunFromTaskId) and optionally change the input
+Also update the completed tasks with new input (ReRunFromTaskId) if required
+
 ## Properties
 
 ## API
-  
-
-## Client SDK Methods
-## Properties
-
-## API
-  
+POST /workflow/{workflowId}/rerun
 
 ## Client SDK Methods
 
