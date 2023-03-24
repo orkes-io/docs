@@ -332,12 +332,15 @@ html[data-theme="dark"] .midSectionOdd {
 .tabs-container {
   border: 1px solid #dadce0;
   border-radius: 8px;
+  background-color: rgba(0, 0, 0, 0.04);
 }
 .tabs {
   max-width: 100%;
   gap: 0px;
   padding-top: 10px;
+  border-radius: 8px 8px 0px 0px;
   border-bottom: 1px solid #dadce0;
+  background-color: #ffffff;
 }
 .tabs .tabs__item {
   font-size: 15px;
@@ -347,6 +350,7 @@ html[data-theme="dark"] .midSectionOdd {
   color: #5f6368;
   border-radius: 0rem;
   margin: 0 24px;
+  max-width: fit-content;
 }
 .tabs .tabs__item--active {
   color: var(--ifm-color-info);
