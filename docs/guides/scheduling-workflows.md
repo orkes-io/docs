@@ -1,4 +1,9 @@
-# Workflow Scheduler
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import Install from '@site/src/components/install.mdx';
+
+
+# Scheduling Workflows
 
 You can use the Scheduler functionality when you need to run a workflow at a regular cadence. The workflows can be configured to be triggered at any cadence as required using the crontab expression.
 <br/>
@@ -80,3 +85,4 @@ Macros are also supported when setting a schedule.
 }
 ```
 :::
+

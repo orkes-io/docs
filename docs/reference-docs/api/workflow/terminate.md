@@ -6,17 +6,17 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 # Terminate workflow
-Starts a workflow and returns the **id** if the started workflow.  The API returns immediately without the waiting for workflow to be completed.
+## Properties
+
+## API
+  
+
+## Client SDK Methods
 
 <Tabs>
 <TabItem value="Java" label="Java">
-
-```java
-    public abstract CompletableFuture<WorkflowRun>
-        executeWorkflow(StartWorkflowRequest request, String waitUntilTask);
-```
+This is a banana 🍌
 </TabItem>
-
   <TabItem value="Golang" label="Golang">
     This is a banana 🍌
   </TabItem>
@@ -33,13 +33,3 @@ Starts a workflow and returns the **id** if the started workflow.  The API retur
         This is a banana 🍌
     </TabItem>
 </Tabs>
-
-## Request
-Input to the start workflow API is the payload is a JSON map of the input to the workflow.
-```json
-{
-
-}
-```
-
-## Response

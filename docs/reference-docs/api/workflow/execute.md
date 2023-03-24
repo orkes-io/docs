@@ -7,7 +7,9 @@ import TabItem from '@theme/TabItem';
 
 
 # Synchronous execution
-### API
+
+## Properties
+## API
     POST /api/workflow/execute/{name}/{version} -d {}
 
 ## Client SDK Methods
