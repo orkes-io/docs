@@ -8,6 +8,14 @@ import TabItem from '@theme/TabItem';
 # Restart workflow execution
 Restart a workflow execution from the beginning with the same input.
 When called on a workflow that is not in a terminal status, this operation has no effect.
+If useLatestDefinition is set, the restarted workflow fetches the latest definition from the metadata store
+
+## Properties
+
+## API
+POST /workflow/{workflowId}/restart
+
+## Client SDK Methods
 
 <Tabs>
 <TabItem value="Java" label="Java">
