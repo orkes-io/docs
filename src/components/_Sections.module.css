@@ -1,95 +1,95 @@
 .firstWorkflowContainer {
-    display: flex;
-    justify-content: center;
-    height: 100%;
-    padding: 10px 0;
-    flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  padding: 10px 0;
+  flex-shrink: 0;
 }
 
 .firstWorkflowFooter {
-    font-size: 15px;
-    font-weight: bold;
+  font-size: 15px;
+  font-weight: bold;
 }
 
 .whiteFont {
-    color: #fff;
+  color: #fff;
 }
 
 .videoFooterCaption {
-    line-height: 20px;
-    width: 100%;
-    padding-top: 0.5rem;
+  line-height: 20px;
+  width: 100%;
+  padding-top: 0.5rem;
 }
 
 .iconHeader {
-    display: inline-flex;
+  display: inline-flex;
 }
 
 .iconHeader h5 {
-    margin: auto;
+  margin: auto;
 }
 .communityRow {
-    min-height: 130px;
+  min-height: 130px;
 }
 .firstSection {
-    line-height: 24px;
+  line-height: 24px;
 }
 .sdklist {
-    padding-top: 15px;
-    display: flex;
-    justify-content: space-around;
+  padding-top: 15px;
+  display: flex;
+  justify-content: space-around;
 }
 .videoSection {
-    display: flex;
-    flex-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
 }
 .videoColumn {
-    flex: 1 1 33%;
-    padding: 10px 35px 25px 0px;
+  flex: 1 1 33%;
+  padding: 10px 35px 25px 0px;
 }
 .customIframe {
-    border-radius: 20px;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  border-radius: 20px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 .useCasesSection {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 .useCase {
-    width: 168px;
-    height: 176px;
-    border: 1px solid #c8c8c8;
-    border-radius: 16px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    text-align: center;
-    margin: 10px;
+  width: 168px;
+  height: 176px;
+  border: 1px solid #c8c8c8;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  text-align: center;
+  margin: 10px;
 }
 .useCase img {
-    width: 70px;
-    height: 70px;
-    object-fit: contain;
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
 }
 .useCaseTitle {
-    padding-top: 10px;
-    font-weight: 600;
+  padding-top: 10px;
+  font-weight: 600;
 }
 
-@media screen and (max-width: 966px) {
-    .mobileSpaced {
-        margin-top: 1rem;
-    }
-    .videoSection {
-        flex-wrap: wrap;
-    }
-    .videoColumn {
-        flex: 1 1 100%;
-    }
-    .useCasesSection {
-        flex-wrap: wrap;
-        justify-content: space-around;
-    }
+@media screen and (max-width: 996px) {
+  .mobileSpaced {
+    margin-top: 1rem;
+  }
+  .videoSection {
+    flex-wrap: wrap;
+  }
+  .videoColumn {
+    flex: 1 1 100%;
+  }
+  .useCasesSection {
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
 }

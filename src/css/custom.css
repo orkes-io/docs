@@ -129,15 +129,22 @@ h5 {
 .menu {
   background-color: #ffffff;
 }
+
 .menu__link--sublist:after {
   background: none;
 }
 
 .menu__link--active:not(.menu__link--sublist) {
-  background: none;
+  background: #efefef;
   font-weight: bold;
+  color: #212121;
 }
-
+[data-theme="dark"] .menu__link--active {
+  background: #efefef59;
+}
+.menu__link:hover {
+  color: #212121;
+}
 .menu__link--sublist {
   font-weight: bold;
 }
@@ -169,6 +176,18 @@ h5 {
   line-height: 1em;
   font-size: 1em;
   font-weight: normal;
+  padding: 10px;
+  display: list-item;
+  color: #212121;
+}
+[data-theme="dark"] .menu__link {
+  color: #ffffff;
+}
+.menu__link::before {
+  content: "• ";
+}
+.menu__link--sublist::before {
+  content: "";
 }
 
 aside {
@@ -411,14 +430,19 @@ summary {
 }
 
 .leftMenuHeader > div > a {
-  font-size: 16px;
-  font-weight: 400;
+  font-size: 20px;
+  font-weight: 600;
   padding-bottom: 10px;
+  color: #212121 !important;
   /*color: var(--ifm-menu-color)!important;*/
 }
 
+[data-theme="dark"] .leftMenuHeader > div > a {
+  color: #ffffff !important;
+}
+
 .leftMenuHeader .menu__link--sublist {
-  color: var(--ifm-menu-color)!important;
+  color: var(--ifm-menu-color);
 }
 
 aside > div > div > nav {
