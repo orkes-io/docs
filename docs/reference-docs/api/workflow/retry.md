@@ -6,16 +6,13 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 # Retry failed workflow
+Retry a failed workflow from the last task that failed.
+
 ## Properties
+When called the task in the failed state is scheduled again and workflow moves to RUNNING status. If resumeSubworkflowTasks is set and the last failed task was a sub-workflow the server restarts the subworkflow from the failed task.  If set to false, the sub-workflow is re-executed.
 
 ## API
-  
-
-## Client SDK Methods
-## Properties
-
-## API
-  
+POST /workflow/{workflowId}/retry
 
 ## Client SDK Methods
 
