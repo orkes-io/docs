@@ -6,18 +6,13 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 # Pause workflow
+Pause the execution of a running workflow
 
 ## Properties
+Any tasks that are currently running will finish but no new tasks are scheduled until the workflow is resumed
 
 ## API
-  
-
-## Client SDK Methods
-
-## Properties
-
-## API
-  
+PUT /workflow/{workflowId}/pause
 
 ## Client SDK Methods
 
