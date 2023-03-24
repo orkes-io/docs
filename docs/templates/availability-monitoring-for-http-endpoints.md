@@ -1,1 +1,1 @@
-# Availability Monitoring for HTTP Endpoints
+# Availability Monitoring for Endpoints

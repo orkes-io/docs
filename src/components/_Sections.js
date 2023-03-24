@@ -1,12 +1,18 @@
 import React from "react";
-import {DoubleInfoPaper, InfoPaper, InfoPaperNoTitle, PaperColumnRenderer, PaperContainer,} from "./PaperContainer";
-import {SingleStep} from "./SingleStep";
+import {
+  DoubleInfoPaper,
+  InfoPaper,
+  InfoPaperNoTitle,
+  PaperColumnRenderer,
+  PaperContainer,
+} from "./PaperContainer";
+import { SingleStep } from "./SingleStep";
 import Link from "@docusaurus/Link";
 import styles from "./_Sections.module.css";
-import {Text} from "./Text";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faGithub} from "@fortawesome/free-brands-svg-icons/faGithub";
-import {faSlack} from "@fortawesome/free-brands-svg-icons/faSlack";
+import { Text } from "./Text";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGithub } from "@fortawesome/free-brands-svg-icons/faGithub";
+import { faSlack } from "@fortawesome/free-brands-svg-icons/faSlack";
 import AccordionWithImg from "../components/AccordionWithImg";
 
 const videoSource = [
@@ -68,7 +74,7 @@ const accordionData = [
   {
     title: "Branch Your Flows",
     description: "Use switch-case operator to make branching decisions.",
-    image: "img/what-conductor-can-do/2_Branch-your-Flows.png",
+    image: "img/what-conductor-can-do/2_Branch-Your-Flows.png",
   },
   {
     title: "Run Loops",
@@ -233,7 +239,7 @@ export const SDKList = ({}) => (
       target={"_blank"}
     >
       <img
-        src="img/python_logo.svg"
+        src="img/Python_logo.svg"
         style={{ height: 75, width: 75, margin: 5 }}
       />
     </a>
@@ -385,7 +391,9 @@ export const UseCasesSection = ({}) => (
 export const AccordionSection = ({}) => (
   <div className="padding-vert--md">
     <h2>What can conductor do</h2>
-    <h5>Here are some of the key features we can do with Orkes Conductor platform:</h5>
+    <h5>
+      Here are some of the key features we can do with Orkes Conductor platform:
+    </h5>
     <AccordionWithImg data={accordionData} />
   </div>
 );
