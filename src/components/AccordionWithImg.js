@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleUp } from "@fortawesome/free-solid-svg-icons/faAngleUp";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons/faAngleDown";
@@ -9,12 +9,14 @@ function getRandomInt(max) {
 }
 
 function AccordionWithImg({ data }) {
-  const [currentDropdown, setCurrentDropdown] = useState(
-    data[getRandomInt(data.length - 1)]
-  );
+  const [currentDropdown, setCurrentDropdown] = useState({});
   const handleDropdown = (item) => {
     setCurrentDropdown(item);
   };
+
+  useEffect(() => {
+    setCurrentDropdown(data[getRandomInt(data.length)]);
+  }, []);
   return (
     <div>
       <div className={`row margin-vert--lg`}>

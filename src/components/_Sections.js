@@ -74,7 +74,7 @@ const accordionData = [
   {
     title: "Branch Your Flows",
     description: "Use switch-case operator to make branching decisions.",
-    image: "img/what-conductor-can-do/2_Branch-your-Flows.png",
+    image: "img/what-conductor-can-do/2_Branch-Your-Flows.png",
   },
   {
     title: "Run Loops",
