@@ -20,7 +20,7 @@ POST /workflow/{workflowId}/rerun
 <TabItem value="Java" label="Java">
 
 ```java
-
+String rerunWorkflow(String workflowId, RerunWorkflowRequest rerunWorkflowRequest)
 ```
 
 </TabItem>

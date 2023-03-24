@@ -20,7 +20,7 @@ PUT /workflow/{workflowId}/resume
 <TabItem value="Java" label="Java">
 
 ```java
-
+BulkResponse resumeWorkflow(List<String> workflowIds) throws ApiException
 ```
 
 </TabItem>

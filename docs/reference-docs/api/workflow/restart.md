@@ -21,7 +21,7 @@ POST /workflow/{workflowId}/restart
 <TabItem value="Java" label="Java">
 
 ```java
-
+BulkResponse restartWorkflow(List<String> workflowIds, Boolean useLatestDefinitions) throws ApiException
 ```
 
 </TabItem>

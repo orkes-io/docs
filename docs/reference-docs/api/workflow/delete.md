@@ -23,7 +23,7 @@ DELETE /workflow/{workflowId}/remove
 <TabItem value="Java" label="Java">
 
 ```java
-
+void deleteWorkflow(String workflowId, boolean archiveWorkflow)
 ```
 
 </TabItem>

@@ -30,7 +30,7 @@ A string representing the id of the workflow execution.
 <TabItem value="Java" label="Java">
 
 ```java
-
+String startWorkflow(StartWorkflowRequest startWorkflowRequest)
 ```
 
 </TabItem>

@@ -23,14 +23,14 @@ GET /workflow/search
 <TabItem value="Java" label="Java">
 
 ```java
-
+UnsupportedOperationException
 ```
 
 </TabItem>
 <TabItem value="Golang" label="Golang">
 
 ```go
-
+func (e *WorkflowExecutor) Search(start int32, size int32, query string, freeText string) ([]model.WorkflowSummary, error)
 ```
 
 </TabItem>

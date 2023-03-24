@@ -20,7 +20,7 @@ GET /workflow/{name}
 <TabItem value="Java" label="Java">
 
 ```java
-
+WorkflowStatus getWorkflowStatusSummary(String workflowId, Boolean includeOutput, Boolean includeVariables)
 ```
 
 </TabItem>

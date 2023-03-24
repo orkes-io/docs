@@ -23,7 +23,7 @@ POST /api/workflow/execute/{name}/{version}
 <TabItem value="Java" label="Java">
 
 ```java
-
+CompletableFuture<WorkflowRun> executeWorkflow(StartWorkflowRequest request, String waitUntilTask)
 ```
 
 </TabItem>

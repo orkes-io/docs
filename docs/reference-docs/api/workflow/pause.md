@@ -20,7 +20,7 @@ PUT /workflow/{workflowId}/pause
 <TabItem value="Java" label="Java">
 
 ```java
-
+BulkResponse pauseWorkflow(List<String> workflowIds) throws ApiException
 ```
 
 </TabItem>

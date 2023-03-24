@@ -20,7 +20,7 @@ POST /workflow/{workflowId}/retry
 <TabItem value="Java" label="Java">
 
 ```java
-
+BulkResponse retryWorkflow(List<String> workflowIds) throws ApiException
 ```
 
 </TabItem>

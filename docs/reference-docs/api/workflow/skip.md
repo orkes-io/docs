@@ -20,7 +20,7 @@ PUT /workflow/{workflowId}/skiptask/{taskReferenceName}
 <TabItem value="Java" label="Java">
 
 ```java
-
+void skipTaskFromWorkflow(String workflowId, String taskReferenceName)
 ```
 
 </TabItem>

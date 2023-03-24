@@ -23,7 +23,7 @@ POST /workflow/{name}/correlated
 <TabItem value="Java" label="Java">
 
 ```java
-
+Map<String, List<Workflow>> getWorkflowsByNamesAndCorrelationIds(List<String> correlationIds, List<String> workflowNames, Boolean includeClosed, Boolean includeTasks)
 ```
 
 </TabItem>
