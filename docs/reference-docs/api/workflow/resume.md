@@ -6,16 +6,13 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 # Resume workflow
+Resume the execution of a workflow that is paused
+
 ## Properties
+If the workflow is not paused, this method has no effect
 
 ## API
-  
-
-## Client SDK Methods
-## Properties
-
-## API
-  
+PUT /workflow/{workflowId}/resume  
 
 ## Client SDK Methods
 
