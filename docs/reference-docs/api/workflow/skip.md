@@ -48,7 +48,11 @@ void WorkflowResourceApi.SkipTaskFromWorkflow(string workflowId, string taskRefe
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
-
+WorkflowResourceService.skipTaskFromWorkflow(
+    workflowId: string,
+    taskReferenceName: string,
+    requestBody?: SkipTaskRequest,
+): CancelablePromise<any>
 ```
 
 </TabItem>

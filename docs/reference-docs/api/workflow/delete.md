@@ -51,7 +51,10 @@ void WorkflowResourceApi.Delete(string workflowId, bool? archiveWorkflow = null)
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
-
+WorkflowResourceService.delete(
+    workflowId: string,
+    archiveWorkflow: boolean = true,
+): CancelablePromise<any>
 ```
 
 </TabItem>

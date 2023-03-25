@@ -48,7 +48,9 @@ void WorkflowResourceApi.ResumeWorkflow(string workflowId)
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
-
+resumeWorkflow(
+    workflowId: string,
+): CancelablePromise<any>
 ```
 
 </TabItem>

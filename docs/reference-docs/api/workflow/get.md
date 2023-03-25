@@ -48,7 +48,11 @@ WorkflowStatus WorkflowResourceApi.GetWorkflowStatusSummary(string workflowId, b
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
-
+WorkflowResourceService.getWorkflowStatusSummary(
+    workflowId: string,
+    includeOutput: boolean = false,
+    includeVariables: boolean = false,
+): CancelablePromise<WorkflowStatus>
 ```
 
 </TabItem>

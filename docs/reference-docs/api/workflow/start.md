@@ -58,7 +58,13 @@ string WorkflowResourceApi.StartWorkflow(StartWorkflowRequest body)
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
-
+WorkflowResourceService.startWorkflow1(
+    name: string,
+    requestBody: Record<string, any>,
+    version?: number,
+    correlationId?: string,
+    priority?: number,
+): CancelablePromise<string>
 ```
 
 </TabItem>

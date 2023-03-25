@@ -48,7 +48,10 @@ void WorkflowResourceApi.Retry(string workflowId, bool? resumeSubworkflowTasks =
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
-
+retry1(
+    workflowId: string,
+    resumeSubworkflowTasks: boolean = false,
+): CancelablePromise<void>
 ```
 
 </TabItem>

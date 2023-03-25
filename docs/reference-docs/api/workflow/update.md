@@ -48,7 +48,12 @@ string TaskResourceApi.UpdateTask(Dictionary<string, Object> body, string workfl
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
-
+WorkflowResourceService.updateTask(
+    workflowId: string,
+    taskRefName: string,
+    status: 'IN_PROGRESS' | 'FAILED' | 'FAILED_WITH_TERMINAL_ERROR' | 'COMPLETED',
+    requestBody: Record<string, any>,
+): CancelablePromise<string>
 ```
 
 </TabItem>

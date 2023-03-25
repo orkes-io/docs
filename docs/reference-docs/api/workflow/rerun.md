@@ -48,7 +48,10 @@ string WorkflowResourceApi.Rerun(RerunWorkflowRequest body, string workflowId)
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
-
+WorkflowResourceService.rerun(
+    workflowId: string,
+    requestBody: RerunWorkflowRequest,
+): CancelablePromise<string>
 ```
 
 </TabItem>

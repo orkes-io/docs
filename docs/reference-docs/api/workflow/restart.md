@@ -49,7 +49,10 @@ void WorkflowResourceApi.Restart(string workflowId, bool? useLatestDefinitions =
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
-
+WorkflowResourceService.restart1(
+    workflowId: string,
+    useLatestDefinitions: boolean = false,
+): CancelablePromise<void>
 ```
 
 </TabItem>
