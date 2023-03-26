@@ -60,7 +60,7 @@ WorkflowResourceService.updateTask(
 <TabItem value="Clojure" label="Clojure">
 
 ```clojure
-
+(task-resource/update-task-by-reference-name [options workflow-id task-reference-name status update-req])
 ```
 
 </TabItem>

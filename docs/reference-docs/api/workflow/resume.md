@@ -57,7 +57,7 @@ resumeWorkflow(
 <TabItem value="Clojure" label="Clojure">
 
 ```clojure
-
+(workflow-resource/resume-workflow [options workflow-id])
 ```
 
 </TabItem>

@@ -59,7 +59,7 @@ WorkflowResourceService.restart1(
 <TabItem value="Clojure" label="Clojure">
 
 ```clojure
-
+(workflow-resource/restart-workflow [options workflow-id])
 ```
 
 </TabItem>

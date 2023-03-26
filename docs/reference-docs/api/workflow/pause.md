@@ -57,7 +57,7 @@ pauseWorkflow(
 <TabItem value="Clojure" label="Clojure">
 
 ```clojure
-
+(workflow-resource/pause-workflow [options workflow-id])
 ```
 
 </TabItem>

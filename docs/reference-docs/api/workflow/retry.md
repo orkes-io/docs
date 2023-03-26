@@ -58,7 +58,7 @@ retry1(
 <TabItem value="Clojure" label="Clojure">
 
 ```clojure
-
+(workflow-resource/retry-last-failed-task [options workflow-id resume-subworkflow-tasks])
 ```
 
 </TabItem>

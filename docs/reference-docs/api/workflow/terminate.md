@@ -58,7 +58,7 @@ WorkflowResourceService.terminate1(
 <TabItem value="Clojure" label="Clojure">
 
 ```clojure
-
+(workflow-resource/terminate-workflow [options workflow-id & args])
 ```
 
 </TabItem>

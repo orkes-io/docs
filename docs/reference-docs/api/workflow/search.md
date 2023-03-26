@@ -64,7 +64,7 @@ WorkflowResourceService.searchWorkflowsByTasks(
 <TabItem value="Clojure" label="Clojure">
 
 ```clojure
-
+(workflow-resource/search [options query])
 ```
 
 </TabItem>

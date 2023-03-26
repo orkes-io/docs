@@ -59,7 +59,7 @@ WorkflowResourceService.skipTaskFromWorkflow(
 <TabItem value="Clojure" label="Clojure">
 
 ```clojure
-
+(workflow-resource/skip-task-from-workflow [options workflow-id task-reference-name])
 ```
 
 </TabItem>

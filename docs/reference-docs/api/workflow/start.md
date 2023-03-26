@@ -71,7 +71,7 @@ WorkflowResourceService.startWorkflow1(
 <TabItem value="Clojure" label="Clojure">
 
 ```clojure
-
+(workflow-resource/start-workflow [options start-workflow-request])
 ```
 
 </TabItem>

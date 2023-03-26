@@ -58,7 +58,7 @@ WorkflowResourceService.rerun(
 <TabItem value="Clojure" label="Clojure">
 
 ```clojure
-
+(workflow-resource/rerun-workflow [options workflow-id rerun-wf-request])
 ```
 
 </TabItem>

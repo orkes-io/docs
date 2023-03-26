@@ -61,7 +61,7 @@ WorkflowResourceService.delete(
 <TabItem value="Clojure" label="Clojure">
 
 ```clojure
-
+(workflow-resource/delete-workflow [options workflow-id archive-workflow])
 ```
 
 </TabItem>

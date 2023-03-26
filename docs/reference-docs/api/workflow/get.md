@@ -59,7 +59,7 @@ WorkflowResourceService.getWorkflowStatusSummary(
 <TabItem value="Clojure" label="Clojure">
 
 ```clojure
-
+(workflow-resource/delete-workflow [options workflow-id & {:keys [includeTasks], :or {includeTasks true}}])
 ```
 
 </TabItem>

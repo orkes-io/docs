@@ -63,7 +63,7 @@ WorkflowResourceService.getWorkflows(
 <TabItem value="Clojure" label="Clojure">
 
 ```clojure
-
+(workflow-resource/get-workflows [options wf-name correlation-id o-options])
 ```
 
 </TabItem>
