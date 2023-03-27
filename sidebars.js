@@ -54,7 +54,11 @@ const sidebars = {
                 'guides/unit-tests',
                 'guides/integration-with-cicd',
                 'guides/scheduling-workflows',
-                'guides/webhooks',
+                {
+                    type: 'doc',
+                    id: 'guides/webhooks',
+                    label: "Webhook Integration"
+                },
                 'guides/conductor-clients',
                 'guides/write-as-code',
                 'guides/debugging',
