@@ -5,11 +5,8 @@ sidebar_position: 2
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Resume workflow
-Resume the execution of a workflow that is paused
-
-## Properties
-If the workflow is not paused, this method has no effect
+# Resume Workflow
+Resume the execution of a workflow that is paused. If the workflow is not paused, this method has no effect
 
 ## API
 PUT /workflow/{workflowId}/resume  

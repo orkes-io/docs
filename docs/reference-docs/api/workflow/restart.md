@@ -5,12 +5,9 @@ sidebar_position: 2
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Restart workflow execution
-Restart a workflow execution from the beginning with the same input.
-When called on a workflow that is not in a terminal status, this operation has no effect.
-If useLatestDefinition is set, the restarted workflow fetches the latest definition from the metadata store
+# Restart Workflow Execution
 
-## Properties
+Restart a workflow execution from the beginning with the same input. This operation has no effect when called on a workflow that is not in a terminal status. If **useLatestDefinition** is set, the restarted workflow fetches the latest definition from the metadata store.
 
 ## API
 POST /workflow/{workflowId}/restart

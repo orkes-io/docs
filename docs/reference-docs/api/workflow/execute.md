@@ -6,16 +6,16 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 
-# Synchronous execution
+# Synchronous Execution
 
-Starts a workflow and wait until the workflow completes or the waitUntilTask completes
+Starts a workflow and waits until the workflow completes or the **waitUntilTask** completes.
 
-## Properties
 
-Returns the output of the workflow
 
 ## API
 POST /api/workflow/execute/{name}/{version}
+
+Returns the output of the workflow.
 
 ## Client SDK Methods
 

@@ -5,17 +5,15 @@ sidebar_position: 2
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Get workflows by correlation Id
+# Get Workflows by Correlation ID
 
-Given the list of correlation ids, find and return workflows
-
-## Properties
-
-Returns a map with key as correlationId and value as a list of Workflows. When IncludeClosed is set to true, the return value also includes workflows that are completed otherwise only running workflows are returned
+With the list of correlation IDs, this API helps in finding and returning workflows.
 
 ## API
 
 POST /workflow/{name}/correlated
+
+Returns a map with **key** as *correlationId* and **value** as a *list of Workflows*. When **IncludeClosed** is set to true, the return value also includes workflows that are completed; otherwise, only running workflows are returned,
 
 ## Client SDK Methods
 

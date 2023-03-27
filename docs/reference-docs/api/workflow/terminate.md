@@ -5,11 +5,9 @@ sidebar_position: 2
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Terminate workflow
-Terminate a running workflow.
+# Terminate Workflow
 
-## Properties
-Reason must be provided that is captured as the termination resaon for the workflow
+Terminates a running workflow. A reason must be provided that is captured as the termination reason for the workflow.
 
 ## API
 DELETE /workflow/{workflowId}

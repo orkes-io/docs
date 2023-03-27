@@ -5,17 +5,15 @@ sidebar_position: 2
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Delete workflow
+# Delete Workflow
 
-Remove workflow execution permanently from the system
-
-## Properties
-
-Returns nil if no workflow is found by the id
+Remove workflow execution permanently from the system.
 
 ## API
 
 DELETE /workflow/{workflowId}/remove
+
+Returns nil if no workflow is found by the id.
 
 ## Client SDK Methods
 

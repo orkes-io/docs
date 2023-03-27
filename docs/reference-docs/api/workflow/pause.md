@@ -5,11 +5,9 @@ sidebar_position: 2
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Pause workflow
-Pause the execution of a running workflow
+# Pause Workflow
 
-## Properties
-Any tasks that are currently running will finish but no new tasks are scheduled until the workflow is resumed
+This API pause the execution of a running workflow. Any currently running tasks will finish, but no new tasks are scheduled until the workflow is resumed.
 
 ## API
 PUT /workflow/{workflowId}/pause

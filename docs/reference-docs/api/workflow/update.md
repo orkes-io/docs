@@ -5,11 +5,9 @@ sidebar_position: 2
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Update workflow task
-Update the execution status and output of the task.
+# Update Workflow Task
 
-## Properties
-Reason must be provided that is captured as the termination reason for the workflow
+Update the execution status and output of the task.
 
 ## API
 POST /tasks/{workflowId}/{taskRefName}/{status}

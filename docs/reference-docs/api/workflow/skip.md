@@ -5,14 +5,14 @@ sidebar_position: 2
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Skip task from workflow execution
-Skips a given task execution from a current running workflow.
+# Skip Task from Workflow Execution
 
-## Properties
-When skipped the task's input and outputs are updated  from skipTaskRequest parameter.
+Skips a given task execution from a current running workflow.
 
 ## API
 PUT /workflow/{workflowId}/skiptask/{taskReferenceName}
+
+When skipped the task's input and outputs are updated from **skipTaskRequest** parameter.
 
 ## Client SDK Methods
 

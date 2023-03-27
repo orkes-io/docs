@@ -6,20 +6,20 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 # Start workflow execution
-Starts a workflow and returns the **ID** if the started workflow.
 
-The API returns immediately without the waiting for workflow to be completed.
+Starts a workflow and returns the ID of the workflow. The API returns immediately without waiting for the workflow to be completed.
+
 ## Input Request
 
 | Parameter     | Description                                                                                                                      |
 | ------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| name          | Name of the workflow                                                                                                             |
-| version       | Workflow version. **optional**                                                                                                   |
-| input         | Map of Key and Value given as the input to the workflow                                                                          |
-| correlationId | User supplied correlation id which can be used to query the workflow execution later                                             |
-| priority      | Priority of the workflow.  0 is the default priority, which executes workflows in FIFO.  Valid values are between 0-99 inclusive |
-| taskToDomain  | See **Using Task Domains** for more information. **optional**                                                                    |
-| workflowDef   | Entire workflow definition.  Used for executing ephemeral workflow definitions.  **optional**                                    |
+| name          | Name of the workflow.                                                                                                             |
+| version       | Choose the Workflow version.                                                                                                 |
+| input         | Map of Key and Value given as the input to the workflow.                                                                          |
+| correlationId | User-supplied correlation id, which can be used to query the workflow execution later.                                             |
+| priority      | Priority of the workflow. 0 is the default priority, which executes workflows in FIFO. Valid values are from 0-99.|
+| taskToDomain  | Task to Domain limits the workflow execution to the specified domain only.                                                                 |
+| workflowDef   | Provide the entire workflow definition. Used for executing ephemeral workflow definitions.                                |
 
 ## Response
 A string representing the id of the workflow execution.

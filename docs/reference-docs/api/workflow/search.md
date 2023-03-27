@@ -5,14 +5,18 @@ sidebar_position: 2
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Search for workflow executions
-Searches for workflows
+# Search for Workflow Executions
+
+Searches for the workflow executions.
 
 ## Properties
-- Start: Start index - used for pagination
-- Size:  Number of results to return
-- Query: Query expression.  In the format FIELD = 'VALUE' or FIELD IN (value1, value2) Only AND operations are supported.  e.g. workflowId IN ('a', 'b', 'c') ADN workflowType ='test_workflow' AND startTime BETWEEN 1000 and 2000 Supported fields for Query are:workflowId,workflowType,status,startTime
-- FreeText: Full text search.  All the workflow input, output and task outputs upto certain limit (check with your admins to find the size limit) are full text indexed and can be used to search
+
+|Attribute | Description |
+| -- | -- | 
+| Start | Indicates the start index, which is used for pagination. | 
+| Size | Indicates the number of results to return. | 
+| Query | The query expression in the format FIELD = 'VALUE' or FIELD IN (value1, value2). Only **AND** operations are supported. E.g., workflowId IN ('a', 'b', 'c') AND workflowType ='test_workflow' AND startTime BETWEEN 1000 and 2000. Supported fields for Query are: **workflowId**,**workflowType**,**status**,and **startTime**. |
+| FreeText | All the workflow input, output and task outputs upto certain limit (check with your admins to find the size limit) are full text indexed and can be used to search. |
 
 ## API
 GET /workflow/search

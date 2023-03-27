@@ -11,22 +11,22 @@ import TabItem from '@theme/TabItem';
 <details open><summary>Use Conductor Playground</summary>
 <p>
 
-[https://play.orkes.io/](https://play.orkes.io/) is the easiest way to get started on Orkes Conductor
+[Playground](https://play.orkes.io/) is the easiest way to get started on Orkes Conductor.
 
 <br/>
 
-Using Playground requires __authorization__ keys which you can generate easily by following the steps below:
+Using Playground requires __authorization__ keys which you can generate quickly by following the steps below:
 
 <br/>
 
-1. Login to [https://play.orkes.io/](https://play.orkes.io/) - you can bookmark this URL for easy access
-2. Navigate to __Applications__ from the left menu
-3. Click __Create Application__ button to create a new application, give it a name
-4. Open the newly created application and enable Worker, Metadata API and Application API permissions
-5. Click __Create Access Key__ to create the KEY and SECRET.  A dialog box opens with newly generated Key and Secret.
-6. __Important__: Copy and store the Key and Secret in a safe location.  The secret is NEVER displayed again.
+1. Login to [https://play.orkes.io/](https://play.orkes.io/) - you can bookmark this URL for easy access.
+2. Navigate to __Applications__ from the left menu.
+3. Click __Create Application__ button to create a new application and provide a name.
+4. Open the newly created application and enable Worker, Metadata API, and Application API permissions.
+5. Click __Create Access Key__ to create the KEY and SECRET.  A dialog box opens with the newly generated Key and Secret. 
 
-<br/>
+__Important__: Copy and store the Key and Secret in a safe location, as it is never displayed again.
+
 
 #### Setup environment variables
 ```shell
@@ -35,7 +35,7 @@ export SECRET=<Your SECRET>
 export CONDUCTOR_SERVER_URL=https://play.orkes.io/api
 ```
 
-If you lose access to your key/secret pair, you can generate another pair for your testing.
+You can generate another pair for your testing if you lose access to your key/secret pair.
 
 </p>
 </details>
@@ -43,7 +43,7 @@ If you lose access to your key/secret pair, you can generate another pair for yo
 <details><summary>Install and Run Locally</summary>
 <p>
 
-##### Pre-requisites: `Docker` should be installed
+##### Pre-requisites: `Docker` should be installed.
 Run the following command on the Unix, Linux or Mac OSX to download the container and start.
 ```shell
 curl https://raw.githubusercontent.com/orkes-io/orkes-conductor-community/main/scripts/run_local.sh | sh

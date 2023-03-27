@@ -5,14 +5,13 @@ sidebar_position: 2
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Get workflow by Id
-Get workflow execution by workflow Id.  If includeTasks is set, also fetches all the task details.
-
-## Properties
-Returns nil if no workflow is found by the id
+# Get Workflow by ID
+Get workflow execution by workflow ID. If **includeTasks** is set, it also fetches all the task details.
 
 ## API
 GET /workflow/{name}
+
+Returns nil if no workflow is found by the id.
 
 ## Client SDK Methods
 

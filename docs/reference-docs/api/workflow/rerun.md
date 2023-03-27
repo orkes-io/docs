@@ -5,11 +5,9 @@ sidebar_position: 2
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Re-Run a completed workflow
-ReRun a completed workflow from a specific task (ReRunFromTaskId) and optionally change the input
-Also update the completed tasks with new input (ReRunFromTaskId) if required
+# Rerun a Completed Workflow
 
-## Properties
+Reruns a completed workflow from a specific task (ReRunFromTaskId) and optionally change the input. It also updates the completed tasks with new input (ReRunFromTaskId) if required.
 
 ## API
 POST /workflow/{workflowId}/rerun
