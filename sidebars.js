@@ -50,6 +50,7 @@ const sidebars = {
                 keywords: ['guides', 'features', 'developer-guides']
             },
             items: [
+                'guides/core-concepts',
                 'guides/passing-data-task-to-task',
                 'guides/unit-tests',
                 'guides/integration-with-cicd',
