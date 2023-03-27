@@ -7,30 +7,62 @@ import TabItem from '@theme/TabItem';
 
 # Delete workflow
 
+Remove workflow execution permanently from the system
+
 ## Properties
 
+Returns nil if no workflow is found by the id
+
 ## API
-  
+
+DELETE /workflow/{workflowId}/remove
 
 ## Client SDK Methods
 
 <Tabs>
 <TabItem value="Java" label="Java">
-This is a banana 🍌
+
+```java
+void deleteWorkflow(String workflowId, boolean archiveWorkflow)
+```
+
 </TabItem>
-  <TabItem value="Golang" label="Golang">
-    This is a banana 🍌
-  </TabItem>
-  <TabItem value="Python" label="Python">
-      This is a banana 🍌
-  </TabItem>
-  <TabItem value="CSharp" label="CSharp">
-      This is a banana 🍌
-  </TabItem>
-  <TabItem value="Javascript" label="Javascript">
-        This is a banana 🍌
-    </TabItem>
-    <TabItem value="Clojure" label="Clojure">
-        This is a banana 🍌
-    </TabItem>
+<TabItem value="Golang" label="Golang">
+
+```go
+func (e *WorkflowExecutor) RemoveWorkflow(workflowId string) error
+```
+
+</TabItem>
+<TabItem value="Python" label="Python">
+
+```python
+WorkflowResourceApi.delete(self, workflow_id, **kwargs)
+```
+
+</TabItem>
+<TabItem value="CSharp" label="CSharp">
+
+```csharp
+void WorkflowResourceApi.Delete(string workflowId, bool? archiveWorkflow = null)
+```
+
+</TabItem>
+<TabItem value="Javascript" label="Javascript">
+
+```javascript
+WorkflowResourceService.delete(
+    workflowId: string,
+    archiveWorkflow: boolean = true,
+): CancelablePromise<any>
+```
+
+</TabItem>
+<TabItem value="Clojure" label="Clojure">
+
+```clojure
+(workflow-resource/delete-workflow [options workflow-id archive-workflow])
+```
+
+</TabItem>
 </Tabs>

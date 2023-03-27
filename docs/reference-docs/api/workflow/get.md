@@ -6,30 +6,61 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 # Get workflow by Id
+Get workflow execution by workflow Id.  If includeTasks is set, also fetches all the task details.
+
 ## Properties
+Returns nil if no workflow is found by the id
 
 ## API
-  
+GET /workflow/{name}
 
 ## Client SDK Methods
 
 <Tabs>
 <TabItem value="Java" label="Java">
-This is a banana 🍌
+
+```java
+WorkflowStatus getWorkflowStatusSummary(String workflowId, Boolean includeOutput, Boolean includeVariables)
+```
+
 </TabItem>
-  <TabItem value="Golang" label="Golang">
-    This is a banana 🍌
-  </TabItem>
-  <TabItem value="Python" label="Python">
-      This is a banana 🍌
-  </TabItem>
-  <TabItem value="CSharp" label="CSharp">
-      This is a banana 🍌
-  </TabItem>
-  <TabItem value="Javascript" label="Javascript">
-        This is a banana 🍌
-    </TabItem>
-    <TabItem value="Clojure" label="Clojure">
-        This is a banana 🍌
-    </TabItem>
+<TabItem value="Golang" label="Golang">
+
+```go
+func (e *WorkflowExecutor) GetWorkflow(workflowId string, includeTasks bool) (*model.Workflow, error)
+```
+
+</TabItem>
+<TabItem value="Python" label="Python">
+
+```python
+WorkflowResourceApi.get_execution_status(self, workflow_id, **kwargs)
+```
+
+</TabItem>
+<TabItem value="CSharp" label="CSharp">
+
+```csharp
+WorkflowStatus WorkflowResourceApi.GetWorkflowStatusSummary(string workflowId, bool? includeOutput = null, bool? includeVariables = null)
+```
+
+</TabItem>
+<TabItem value="Javascript" label="Javascript">
+
+```javascript
+WorkflowResourceService.getWorkflowStatusSummary(
+    workflowId: string,
+    includeOutput: boolean = false,
+    includeVariables: boolean = false,
+): CancelablePromise<WorkflowStatus>
+```
+
+</TabItem>
+<TabItem value="Clojure" label="Clojure">
+
+```clojure
+(workflow-resource/delete-workflow [options workflow-id & {:keys [includeTasks], :or {includeTasks true}}])
+```
+
+</TabItem>
 </Tabs>
