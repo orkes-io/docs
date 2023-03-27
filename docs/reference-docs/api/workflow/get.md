@@ -9,7 +9,9 @@ import TabItem from '@theme/TabItem';
 Get workflow execution by workflow ID. If **includeTasks** is set, it also fetches all the task details.
 
 ## API
+```
 GET /workflow/{name}
+```
 
 Returns nil if no workflow is found by the id.
 

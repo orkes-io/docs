@@ -10,7 +10,9 @@ import TabItem from '@theme/TabItem';
 Update the execution status and output of the task.
 
 ## API
+```
 POST /tasks/{workflowId}/{taskRefName}/{status}
+```
 
 ## Client SDK Methods
 

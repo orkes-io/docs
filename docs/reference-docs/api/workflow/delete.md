@@ -10,8 +10,9 @@ import TabItem from '@theme/TabItem';
 Remove workflow execution permanently from the system.
 
 ## API
-
+```
 DELETE /workflow/{workflowId}/remove
+```
 
 Returns nil if no workflow is found by the id.
 

@@ -10,7 +10,9 @@ import TabItem from '@theme/TabItem';
 Terminates a running workflow. A reason must be provided that is captured as the termination reason for the workflow.
 
 ## API
+```
 DELETE /workflow/{workflowId}
+```
 
 ## Client SDK Methods
 

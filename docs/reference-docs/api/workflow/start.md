@@ -5,7 +5,7 @@ sidebar_position: 0
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Start workflow execution
+# Start Workflow Execution
 
 Starts a workflow and returns the ID of the workflow. The API returns immediately without waiting for the workflow to be completed.
 

@@ -11,7 +11,9 @@ With the list of correlation IDs, this API helps in finding and returning workfl
 
 ## API
 
+```
 POST /workflow/{name}/correlated
+```
 
 Returns a map with **key** as *correlationId* and **value** as a *list of Workflows*. When **IncludeClosed** is set to true, the return value also includes workflows that are completed; otherwise, only running workflows are returned,
 

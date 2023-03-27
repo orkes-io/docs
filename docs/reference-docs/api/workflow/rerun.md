@@ -10,7 +10,9 @@ import TabItem from '@theme/TabItem';
 Reruns a completed workflow from a specific task (ReRunFromTaskId) and optionally change the input. It also updates the completed tasks with new input (ReRunFromTaskId) if required.
 
 ## API
+```
 POST /workflow/{workflowId}/rerun
+```
 
 ## Client SDK Methods
 

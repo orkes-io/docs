@@ -19,7 +19,9 @@ Searches for the workflow executions.
 | FreeText | All the workflow input, output and task outputs upto certain limit (check with your admins to find the size limit) are full text indexed and can be used to search. |
 
 ## API
+```
 GET /workflow/search
+```
 
 ## Client SDK Methods
 

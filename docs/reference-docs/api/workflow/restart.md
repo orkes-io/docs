@@ -10,7 +10,9 @@ import TabItem from '@theme/TabItem';
 Restart a workflow execution from the beginning with the same input. This operation has no effect when called on a workflow that is not in a terminal status. If **useLatestDefinition** is set, the restarted workflow fetches the latest definition from the metadata store.
 
 ## API
+```
 POST /workflow/{workflowId}/restart
+```
 
 ## Client SDK Methods
 
