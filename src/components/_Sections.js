@@ -128,7 +128,7 @@ const accordionData = [
   },
 ];
 export const StepBoxesSection = ({ steps = [] }) => (
-  <div className="row padding-vert--md">
+  <div className="row">
     <PaperColumnRenderer
       spaceEvenly
       colClassName={styles.mobileSpaced}
@@ -332,7 +332,7 @@ export const FirstSection = ({ content }) => (
   <div className={styles.firstSection}>{content}</div>
 );
 export const NewToConductorSection = ({ title, description }) => (
-  <div className={"row padding-vert--md"}>
+  <div className={"row"}>
     <div className="col">
       <h2>{title}</h2>
       <div>{description}</div>
@@ -390,7 +390,7 @@ export const UseCasesSection = ({}) => (
 
 export const AccordionSection = ({}) => (
   <div className="padding-vert--md">
-    <h2>What can conductor do</h2>
+    <h2>What can conductor do?</h2>
     <h5>
       Here are some of the key features we can do with Orkes Conductor platform:
     </h5>
