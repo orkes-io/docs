@@ -35,7 +35,7 @@ func (a *TaskResourceApiService) Log(ctx context.Context, body string, taskId st
 <TabItem value="Python" label="Python">
 
 ```python
-
+TaskResourceApi.log(body, task_id, **kwargs)
 ```
 
 </TabItem>

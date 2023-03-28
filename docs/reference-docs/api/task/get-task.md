@@ -35,7 +35,7 @@ func (a *TaskResourceApiService) GetTask(ctx context.Context, taskId string) (mo
 <TabItem value="Python" label="Python">
 
 ```python
-
+TaskResourceApi.get_task(task_id, **kwargs)
 ```
 
 </TabItem>

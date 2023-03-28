@@ -34,7 +34,7 @@ func (e *WorkflowExecutor) UpdateTaskByRefName(taskRefName string, workflowInsta
 <TabItem value="Python" label="Python">
 
 ```python
-TaskResourceApi.update_task1(self, body, workflow_id, task_ref_name, status, **kwargs)
+TaskResourceApi.update_task1(body, workflow_id, task_ref_name, status, **kwargs)
 ```
 
 </TabItem>
