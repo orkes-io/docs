@@ -19,13 +19,26 @@ Conductor supports many ways to implement the steps, such as HTTP endpoints, wor
 ### Create Your Workflow
 
 <Tabs>
-<TabItem value="UI" label="UI">
+<TabItem value="UI" label="UI" className="ui-instructions">
+<div className="ui-panels">
+<div className="ui-panel-left">
 
 1. Navigate to **Workflows > Definitions**.
 2. Click the **Define Workflow** button at the top right corner. 
 3. Create a workflow by adding 3 [HTTP](https://orkes.cloud/content/reference-docs/system-tasks/http) tasks. 
 4. Click the **Run Workflow** option from the left menu, and choose your workflow.
 
+</div>
+<div className="ui-panel-right">
+<div className="embed-loom-video">
+<iframe
+  className={"customIframe"}
+  width="100%"
+  height="230px"
+  src={"https://www.youtube.com/embed/0BaiLdGu7Lo"}
+></iframe></div>
+</div>
+</div>
 </TabItem>
 </Tabs>
 You can run this workflow to see how it executes. If there are failures, Conductor will retry them automatically and ensure that the workflow is completed. 
