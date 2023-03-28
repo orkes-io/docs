@@ -28,7 +28,7 @@ Task OrkesTaskClient.getTaskDetails(String taskId) throws ApiException
 <TabItem value="Golang" label="Golang">
 
 ```go
-func (a *TaskResourceApiService) GetTask(ctx context.Context, taskId string) (model.Task, *http.Response, error)
+func (*TaskResourceApiService) GetTask(ctx context.Context, taskId string) (model.Task, *http.Response, error)
 ```
 
 </TabItem>
@@ -56,7 +56,7 @@ TaskResourceService.getTask(taskId: string): CancelablePromise<Task>
 <TabItem value="Clojure" label="Clojure">
 
 ```clojure
-
+(task-resource/get-task-details [options task-ex-id])
 ```
 
 </TabItem>

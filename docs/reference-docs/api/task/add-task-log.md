@@ -28,7 +28,7 @@ void OrkesTaskClient.log(String body, String taskId) throws ApiException
 <TabItem value="Golang" label="Golang">
 
 ```go
-func (a *TaskResourceApiService) Log(ctx context.Context, body string, taskId string) (*http.Response, error)
+func (*TaskResourceApiService) Log(ctx context.Context, body string, taskId string) (*http.Response, error)
 ```
 
 </TabItem>
@@ -56,7 +56,7 @@ TaskResourceService.getTaskLogs(taskId: string): CancelablePromise<Array<TaskExe
 <TabItem value="Clojure" label="Clojure">
 
 ```clojure
-
+(task-resource/log-task-execution-details [options task-ex-id log-message])
 ```
 
 </TabItem>

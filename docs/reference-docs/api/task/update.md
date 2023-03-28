@@ -27,7 +27,7 @@ String OrkesTaskClient.updateTask1(Map<String, Object> body, String workflowId, 
 <TabItem value="Golang" label="Golang">
 
 ```go
-func (e *WorkflowExecutor) UpdateTaskByRefName(taskRefName string, workflowInstanceId string, status model.TaskResultStatus, output interface{}) error
+func (*WorkflowExecutor) UpdateTaskByRefName(taskRefName string, workflowInstanceId string, status model.TaskResultStatus, output interface{}) error
 ```
 
 </TabItem>
