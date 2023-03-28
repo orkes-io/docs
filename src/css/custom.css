@@ -1,5 +1,5 @@
 /*@import url("https://fonts.googleapis.com/css2?family=Gothic+A1:wght@400;500;600;700;800&display=swap");*/
-@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700;800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700;800&display=swap");
 
 /**
  * Any CSS included here will be global. The classic template
@@ -490,9 +490,5 @@ summary {
 }
 
 .embed-loom-video {
-  position: relative; padding-bottom: 66.99751861042184%; height: 0;
-}
-
-.embed-loom-video iframe {
-  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  margin: 10px;
 }
