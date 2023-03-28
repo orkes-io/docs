@@ -98,7 +98,7 @@ MetadataResourceService.update(requestBody: Array<WorkflowDef>, overwrite: boole
 <TabItem value="Clojure" label="Clojure">
 
 ```clojure
-(task-resource/log-task-execution-details [options task-ex-id log-message])
+(metadata-resource/register-workflow-def [options workflow])
 ```
 
 </TabItem>
