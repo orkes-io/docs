@@ -20,21 +20,21 @@ POST /tasks/{workflowId}/{taskRefName}/{status}
 <TabItem value="Java" label="Java">
 
 ```java
-String updateTask1(Map<String, Object> body, String workflowId, String taskRefName, String status) throws ApiException
+String OrkesTaskClient.updateTask1(Map<String, Object> body, String workflowId, String taskRefName, String status) throws ApiException
 ```
 
 </TabItem>
 <TabItem value="Golang" label="Golang">
 
 ```go
-func (e *WorkflowExecutor) UpdateTaskByRefName(taskRefName string, workflowInstanceId string, status model.TaskResultStatus, output interface{}) error
+func (*WorkflowExecutor) UpdateTaskByRefName(taskRefName string, workflowInstanceId string, status model.TaskResultStatus, output interface{}) error
 ```
 
 </TabItem>
 <TabItem value="Python" label="Python">
 
 ```python
-TaskResourceApi.update_task1(self, body, workflow_id, task_ref_name, status, **kwargs)
+TaskResourceApi.update_task1(body, workflow_id, task_ref_name, status, **kwargs)
 ```
 
 </TabItem>
@@ -48,7 +48,7 @@ string TaskResourceApi.UpdateTask(Dictionary<string, Object> body, string workfl
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
-WorkflowResourceService.updateTask(
+TaskResourceService.updateTask(
     workflowId: string,
     taskRefName: string,
     status: 'IN_PROGRESS' | 'FAILED' | 'FAILED_WITH_TERMINAL_ERROR' | 'COMPLETED',
