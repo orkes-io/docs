@@ -42,16 +42,17 @@ Groups are a way to share workflows and tasks among your team quickly.
 ### Creating Groups​​
 To create a user group:
 1. From the left menu, navigate to **ACCESS CONTROL > Groups**.
-2. Click **Create Group** and provide the following details:<ul><li>**Group ID** - Provide a name to identify your group.</li><li>**Description** - Provide a suitable description for the group.</li><li>**Roles** - Choose the role for the group. The available roles for a group are *Admin*, *User*, *Metadata Manager*, *Workflow Manager*, and *Read Only User*.</li></ul>
+2. Click **Create Group** and provide the following details:<ul><li>**Group ID** - Provide a name to identify your group.</li><li>**Description** - Provide a suitable description for the group.</li></ul>
 3. Click **Create**.
 
 <p align="center"><img src="/content/img/creating-groups.png" alt="Creating Groups in Conductor" width="90%" height="auto"></img></p>
 
-4. Once the group is created, you can add members by clicking **+Add User** from the **Members** section. You can add only the users that have already been created/invited. If the user you are looking for has not been added, you can invite and then add them to the groups.
+4. Once the group is created, you can assign role to the group. The Group can take the roles *Admin*, *User*, *Metadata Manager*, *Workflow Manager* or *Read Only User*. 
+5. You can add members by clicking **+Add User** from the **Members** section. You can add only the users that have already been created/invited. If the user you are looking for has not been added, you can invite and then add them to the groups.
 
 **Workflow and Tasks Permissions** is an additional section where you can limit the group members' access to the permitted workflows and tasks.
 
-5. Click **+Add Permission**, and you can choose the group to have access to selected Workflows/Tasks/Secrets/Tags. Permissions that can be granted include Read, Create, Update, Execute & Delete.
+6. Click **+Add Permission**, and you can choose the group to have access to selected Workflows/Tasks/Secrets/Tags. Permissions that can be granted include Read, Create, Update, Execute & Delete.
 
 <p align="center"><img src="/content/img/workflows-and-tasks-permissions.png" alt="Granting access to specific tasks and workflows" width="90%" height="auto"></img></p>
 
