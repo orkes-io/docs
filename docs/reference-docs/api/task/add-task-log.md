@@ -7,7 +7,7 @@ import TabItem from '@theme/TabItem';
 
 # Add Task Execution Log
 
-Adds a log into a task (if found by given taskId) with the execution details.
+Log Task Execution Details
 
 ## API
 
@@ -21,7 +21,7 @@ POST /tasks/{taskId}/log
 <TabItem value="Java" label="Java">
 
 ```java
-
+void OrkesTaskClient.log(String body, String taskId) throws ApiException
 ```
 
 </TabItem>

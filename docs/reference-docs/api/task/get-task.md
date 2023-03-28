@@ -21,7 +21,7 @@ GET /tasks/{taskId}
 <TabItem value="Java" label="Java">
 
 ```java
-
+Task OrkesTaskClient.getTaskDetails(String taskId) throws ApiException
 ```
 
 </TabItem>
