@@ -82,7 +82,7 @@ void OrkesMetadataClient.registerTaskDefs(List<TaskDef> taskDefs) throws ApiExce
 <TabItem value="Golang" label="Golang">
 
 ```go
-func (*TaskResourceApiService) Log(ctx context.Context, body string, taskId string) (*http.Response, error)
+func (*MetadataResourceApiService) RegisterTaskDef(ctx context.Context, body []model.TaskDef) (*http.Response, error)
 ```
 
 </TabItem>
