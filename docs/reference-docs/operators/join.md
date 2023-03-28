@@ -56,18 +56,18 @@ The output is a map, where the keys are the names of task references being joine
 ```
 
 </TabItem>
+<TabItem value="Golang" label="Golang">
+
+```go
+
+```
+</TabItem>
 <TabItem value="Python" label="Python">
 
 ```python
 
 ```
 
-</TabItem>
-<TabItem value="Golang" label="Golang">
-
-```go
-
-```
 </TabItem>
 <TabItem value="CSharp" label="CSharp">
 

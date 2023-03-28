@@ -52,18 +52,18 @@ The Wait task is used when the workflow needs to be paused for an external signa
 ```
 
 </TabItem>
+<TabItem value="Golang" label="Golang">
+
+```go
+
+```
+</TabItem>
 <TabItem value="Python" label="Python">
 
 ```python
 
 ```
 
-</TabItem>
-<TabItem value="Golang" label="Golang">
-
-```go
-
-```
 </TabItem>
 <TabItem value="CSharp" label="CSharp">
 

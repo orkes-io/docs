@@ -66,18 +66,18 @@ The output of the sub-workflow is also supplied to the output of the workflow.
 ```
 
 </TabItem>
+<TabItem value="Golang" label="Golang">
+
+```go
+
+```
+</TabItem>
 <TabItem value="Python" label="Python">
 
 ```python
 
 ```
 
-</TabItem>
-<TabItem value="Golang" label="Golang">
-
-```go
-
-```
 </TabItem>
 <TabItem value="CSharp" label="CSharp">
 

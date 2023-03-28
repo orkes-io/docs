@@ -57,18 +57,18 @@ A Simple task is a Worker task that requires an external worker for polling. The
 ```
 
 </TabItem>
+<TabItem value="Golang" label="Golang">
+
+```go
+
+```
+</TabItem>
 <TabItem value="Python" label="Python">
 
 ```python
 
 ```
 
-</TabItem>
-<TabItem value="Golang" label="Golang">
-
-```go
-
-```
 </TabItem>
 <TabItem value="CSharp" label="CSharp">
 

@@ -65,18 +65,18 @@ Start Workflow is an operator task used to start another workflow from an existi
 ```
 
 </TabItem>
+<TabItem value="Golang" label="Golang">
+
+```go
+
+```
+</TabItem>
 <TabItem value="Python" label="Python">
 
 ```python
 
 ```
 
-</TabItem>
-<TabItem value="Golang" label="Golang">
-
-```go
-
-```
 </TabItem>
 <TabItem value="CSharp" label="CSharp">
 
