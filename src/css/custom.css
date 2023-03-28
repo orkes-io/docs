@@ -444,8 +444,7 @@ summary {
 }
 
 aside > div > div > nav {
-  margin-top: 20px;
-  margin-bottom: 30px;
+  padding: 20px 10px !important;
   border-right: 1px solid var(--ifm-toc-border-color);
 }
 
