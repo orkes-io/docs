@@ -91,7 +91,7 @@ Object MetadataResourceApi.Create(WorkflowDef body, bool? overwrite = null)
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
-TaskResourceService.getTaskLogs(taskId: string): CancelablePromise<Array<TaskExecLog>>
+MetadataResourceService.update(requestBody: Array<WorkflowDef>, overwrite: boolean = true): CancelablePromise<any>
 ```
 
 </TabItem>

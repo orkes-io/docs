@@ -103,7 +103,7 @@ Object MetadataResourceApi.RegisterTaskDef(List<TaskDef> body)
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
-TaskResourceService.getTaskLogs(taskId: string): CancelablePromise<Array<TaskExecLog>>
+MetadataResourceService.registerTaskDef(requestBody: Array<TaskDef>): CancelablePromise<any>
 ```
 
 </TabItem>
