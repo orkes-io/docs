@@ -16,6 +16,7 @@ const sidebars = {
     docs: [
         {
             type: 'doc',
+            label: 'Conductor Documentation',
             id: 'what-is-orkes-conductor',
             className: 'leftMenuHeader',
         },

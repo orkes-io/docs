@@ -6,18 +6,13 @@ import TabItem from '@theme/TabItem';
 
 # Get/Install Orkes Conductor
 
-<base target="_blank" />
-
 <details open><summary>Use Conductor Playground</summary>
 <p>
 
 [Playground](https://play.orkes.io/) is the easiest way to get started on Orkes Conductor.
 
-<br/>
 
 Using Playground requires __authorization__ keys which you can generate quickly by following the steps below:
-
-<br/>
 
 1. Login to [https://play.orkes.io/](https://play.orkes.io/) - you can bookmark this URL for easy access.
 2. Navigate to __Applications__ from the left menu.

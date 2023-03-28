@@ -6,7 +6,7 @@ import TabItem from '@theme/TabItem';
 import Install from '@site/src/components/install.mdx';
 
 
-# Step 1: Your first Workflow Application
+# Step 1: First Workflow Application
 
 Let’s build a workflow for the sample banking use case - deposit funds into a customer account and notify them via email and SMS about the status.
 
@@ -16,7 +16,7 @@ This workflow has three steps: record the deposit, send an email, and send sms. 
 Conductor supports many ways to implement the steps, such as HTTP endpoints, workers, inline code, and serverless functions. You can mix and match these too!
 :::
 
-## Create Your Workflow
+### Create Your Workflow
 
 <Tabs>
 <TabItem value="UI" label="UI">
@@ -30,7 +30,7 @@ Conductor supports many ways to implement the steps, such as HTTP endpoints, wor
 </Tabs>
 You can run this workflow to see how it executes. If there are failures, Conductor will retry them automatically and ensure that the workflow is completed. 
 
-**Let’s send SMS and Email in parallel instead of sequentially.**
+#### Let’s send SMS and Email in parallel instead of sequentially
 
 <Tabs>
 <TabItem value="UI" label="UI">
@@ -43,19 +43,7 @@ You can run this workflow to see how it executes. If there are failures, Conduct
 </TabItem>
 </Tabs>
 
-**What if we want to send the SMS only after 10 mins?**
-
-<Tabs>
-<TabItem value="UI" label="UI">
-
-1. In your current workflow, add a [wait](https://orkes.cloud/content/reference-docs/operators/wait) task before the SMS task.
-2. You can configure the wait task parameters to wait for 10 mins.
-3. Run workflow directly from the UI using the Run Workflow button.
-
-</TabItem>
-</Tabs>
-
-## Looking Ahead /  Explore Further / What's Next?
+### Looking Ahead /  Explore Further / What's Next?
 
 * Passing [inputs into workflow for tasks](https://orkes.cloud/content/guides/passing-data-task-to-task).
 * Passing the [output of one task to the input](https://orkes.cloud/content/guides/passing-data-task-to-task) of another
