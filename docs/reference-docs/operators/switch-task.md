@@ -38,19 +38,19 @@ The switch task is used for creating branching logic. It is a representation of 
 
 ### Input Parameters
 
-|Attribute|Description|
-|---|---|
-|evaluatorType|Indicates the type of evaluator used. Supported types are **value-param**, **javascript**, and **graaljs**.|
-|expression|The expression depends on the evaluator type. For the **value-param** evaluator, the expression is the input parameter; for the **javascript** and **graaljs** evaluator, it is the javascript expression.|
-|decisionCases|Map where the key is possible values that can result from the **expression**, with the value being the list of tasks to be executed.|
-|defaultCase|List of tasks to be executed when no matching value is found in decision case (default condition).|
+| Attribute     | Description                                                                                                                                                                                                |
+| ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| evaluatorType | Indicates the type of evaluator used. Supported types are **value-param**, **javascript**, and **graaljs**.                                                                                                |
+| expression    | The expression depends on the evaluator type. For the **value-param** evaluator, the expression is the input parameter; for the **javascript** and **graaljs** evaluator, it is the javascript expression. |
+| decisionCases | Map where the key is possible values that can result from the **expression**, with the value being the list of tasks to be executed.                                                                       |
+| defaultCase   | List of tasks to be executed when no matching value is found in decision case (default condition).                                                                                                         |
 
 #### Types of Evaluators
-|Attribute|Description|
-|---|---|
-| value-param | Use a parameter directly as the value. |
-| javascript | Evaluate Javascript expressions and compute the value - Legacy.  Deprecated.|
-| graaljs | Evaluate Javascript expressions and compute the value. Allows you to use ES6 compatible Javascript.  |
+| Attribute   | Description                                                                                         |
+| ----------- | --------------------------------------------------------------------------------------------------- |
+| value-param | Use a parameter directly as the value.                                                              |
+| javascript  | Evaluate Javascript expressions and compute the value - Legacy.  Deprecated.                        |
+| graaljs     | Evaluate Javascript expressions and compute the value. Allows you to use ES6 compatible Javascript. |
 
 
 ## Examples
@@ -77,24 +77,47 @@ Workflow with the switch task definition that uses **value-param** evaluatorType
       }
     }
 ```
+
 </TabItem>
 <TabItem value="Java" label="Java">
-This is a banana 🍌
+
+```java
+
+```
+
 </TabItem>
 <TabItem value="Python" label="Python">
-  This is a banana 🍌
+
+```python
+
+```
+
 </TabItem>
 <TabItem value="Golang" label="Golang">
-    This is a banana 🍌
+
+```go
+
+```
 </TabItem>
 <TabItem value="CSharp" label="CSharp">
-  This is a banana 🍌
-</TabItem>
-<TabItem value="clojure" label="Clojure">
-    This is a banana 🍌
+
+```csharp
+
+```
 </TabItem>
 <TabItem value="Javascript" label="Javascript">
-    This is a banana 🍌
+
+```javascript
+
+```
+</TabItem>
+
+<TabItem value="clojure" label="Clojure">
+
+```clojure
+
+```
+
 </TabItem>
 </Tabs>
 

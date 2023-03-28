@@ -23,9 +23,9 @@ A JOIN task is used in conjunction with a **FORK_JOIN** or **FORK_JOIN_DYNAMIC**
 
 ### Input Parameters
 
-| Attribute | Description | 
-| -- | -- |
-| joinOn | A list of task reference names that this JOIN task will wait for completion. |
+| Attribute | Description                                                                  |
+| --------- | ---------------------------------------------------------------------------- |
+| joinOn    | A list of task reference names that this JOIN task will wait for completion. |
 
 ### Output Parameters
 
@@ -47,24 +47,47 @@ The output is a map, where the keys are the names of task references being joine
  ]
 }
 ```
+
 </TabItem>
 <TabItem value="Java" label="Java">
-This is a banana 🍌
+
+```java
+
+```
+
 </TabItem>
 <TabItem value="Python" label="Python">
-  This is a banana 🍌
+
+```python
+
+```
+
 </TabItem>
 <TabItem value="Golang" label="Golang">
-    This is a banana 🍌
+
+```go
+
+```
 </TabItem>
 <TabItem value="CSharp" label="CSharp">
-  This is a banana 🍌
-</TabItem>
-<TabItem value="clojure" label="Clojure">
-    This is a banana 🍌
+
+```csharp
+
+```
 </TabItem>
 <TabItem value="Javascript" label="Javascript">
-    This is a banana 🍌
+
+```javascript
+
+```
+</TabItem>
+
+<TabItem value="clojure" label="Clojure">
+
+```clojure
+
+```
+
 </TabItem>
 </Tabs>
 

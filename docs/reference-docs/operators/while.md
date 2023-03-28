@@ -26,18 +26,18 @@ The Do While task sequentially executes a list of tasks as long as a condition i
 
 ### Input Parameters
 
-| Attributes | Description |
-| -- | -- | 
+| Attributes    | Description                                                                                                                                                                                                                    |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | loopCondition | Indicates the condition to be evaluated after every iteration. Supported types are **value-param**, **javascript**, and **graaljs**.  If an exception occurs during evaluation, the task is set to FAILED_WITH_TERMINAL_ERROR. |
-| loopOver | Includes the list of tasks to be executed as long as the condition is true. | 
+| loopOver      | Includes the list of tasks to be executed as long as the condition is true.                                                                                                                                                    |
 
 ### Output Parameters​
 
-| Attributes | Description |
-| -- | -- | 
-| iteration | Indicates the iteration number, which is the current one while executing, and the final one once the loop is finished. | 
-| i | Iteration number as a string mapped to the task references names and their output. |
-| * | Any state can be stored here if the loopCondition does so. For example, **storage** will exist if loopCondition is **if ($.LoopTask['iteration'] <= 10) {$.LoopTask.storage = 3; true } else {false}**. |
+| Attributes | Description                                                                                                                                                                                             |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| iteration  | Indicates the iteration number, which is the current one while executing, and the final one once the loop is finished.                                                                                  |
+| i          | Iteration number as a string mapped to the task references names and their output.                                                                                                                      |
+| *          | Any state can be stored here if the loopCondition does so. For example, **storage** will exist if loopCondition is **if ($.LoopTask['iteration'] <= 10) {$.LoopTask.storage = 3; true } else {false}**. |
 
 :::note
 * Domain or isolation group execution is unsupported.
@@ -88,22 +88,44 @@ The Do While task sequentially executes a list of tasks as long as a condition i
 </TabItem>
 
 <TabItem value="Java" label="Java">
-This is a banana 🍌
+
+```java
+
+```
+
 </TabItem>
 <TabItem value="Python" label="Python">
-  This is a banana 🍌
+
+```python
+
+```
+
 </TabItem>
 <TabItem value="Golang" label="Golang">
-    This is a banana 🍌
+
+```go
+
+```
 </TabItem>
 <TabItem value="CSharp" label="CSharp">
-  This is a banana 🍌
-</TabItem>
-<TabItem value="clojure" label="Clojure">
-    This is a banana 🍌
+
+```csharp
+
+```
 </TabItem>
 <TabItem value="Javascript" label="Javascript">
-    This is a banana 🍌
+
+```javascript
+
+```
+</TabItem>
+
+<TabItem value="clojure" label="Clojure">
+
+```clojure
+
+```
+
 </TabItem>
 </Tabs>
 

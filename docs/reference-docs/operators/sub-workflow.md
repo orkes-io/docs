@@ -27,16 +27,16 @@ import TabItem from '@theme/TabItem';
 
 ### Input Parameters
 
-|Attribute|Description|
-|---|---|
-| subWorkflowParam | It includes the parameters name, version, & taskToDomain. <ul><li>**name** - You need to map this field with the name of the workflow you are planning to execute.</li><li>**version** - Include the version of the workflow to be executed.</li><li>**[taskToDomain](https://orkes.io/content/docs/how-tos/Tasks/task-domains)** - Allows scheduling the sub-workflow tasks per given mappings.</li></ul>|
-| inputParameters | The sub-workflow’s input can be coupled to the workflow’s input parameters, or it can be invoked from the output of the preceding task. For example, if you are taking the sub-workflow’s input parameter from the workflow, then you need to initially add this as an input parameter in the parent workflow (workflow to be called as the sub-workflow). Then you can call the same input parameter inside the sub-workflow definition. |
+| Attribute        | Description                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| subWorkflowParam | It includes the parameters name, version, & taskToDomain. <ul><li>**name** - You need to map this field with the name of the workflow you are planning to execute.</li><li>**version** - Include the version of the workflow to be executed.</li><li>**[taskToDomain](https://orkes.io/content/docs/how-tos/Tasks/task-domains)** - Allows scheduling the sub-workflow tasks per given mappings.</li></ul>                                |
+| inputParameters  | The sub-workflow’s input can be coupled to the workflow’s input parameters, or it can be invoked from the output of the preceding task. For example, if you are taking the sub-workflow’s input parameter from the workflow, then you need to initially add this as an input parameter in the parent workflow (workflow to be called as the sub-workflow). Then you can call the same input parameter inside the sub-workflow definition. |
 
 ### Output Parameters
 
-|Attribute|Description|
-|---|---|
-| subWorkflowId | Subworkflow execution ID generated when running the sub-workflow. | 
+| Attribute     | Description                                                       |
+| ------------- | ----------------------------------------------------------------- |
+| subWorkflowId | Subworkflow execution ID generated when running the sub-workflow. |
 
 The output of the sub-workflow is also supplied to the output of the workflow.
 
@@ -57,24 +57,47 @@ The output of the sub-workflow is also supplied to the output of the workflow.
      }
    }
 ```
+
 </TabItem>
 <TabItem value="Java" label="Java">
-This is a banana 🍌
+
+```java
+
+```
+
 </TabItem>
 <TabItem value="Python" label="Python">
-  This is a banana 🍌
+
+```python
+
+```
+
 </TabItem>
 <TabItem value="Golang" label="Golang">
-    This is a banana 🍌
+
+```go
+
+```
 </TabItem>
 <TabItem value="CSharp" label="CSharp">
-  This is a banana 🍌
-</TabItem>
-<TabItem value="clojure" label="Clojure">
-    This is a banana 🍌
+
+```csharp
+
+```
 </TabItem>
 <TabItem value="Javascript" label="Javascript">
-    This is a banana 🍌
+
+```javascript
+
+```
+</TabItem>
+
+<TabItem value="clojure" label="Clojure">
+
+```clojure
+
+```
+
 </TabItem>
 </Tabs>
 

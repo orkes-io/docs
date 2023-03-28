@@ -33,15 +33,15 @@ A Fork operation lets you run a specified list of tasks or sub-workflows in para
 
 ### Input Parameters
 
-| Attribute |  Description |
-| -- | -- |
+| Attribute | Description                                                                                                                           |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------------- |
 | forkTasks | A list of tasks. Each of the outer lists will be invoked in parallel. The inner list can be a graph of other tasks and sub-workflows. |
 
 ### Output Parameters
 
-| Attribute |  Description |
-| -- | -- |
-| joinOn | This is the output configuration of the JOIN task used in conjunction with the FORK_JOIN task. The output of the JOIN task is a map, where the keys are task reference names of the tasks being joined, and the keys are the corresponding outputs of those tasks. | 
+| Attribute | Description                                                                                                                                                                                                                                                        |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| joinOn    | This is the output configuration of the JOIN task used in conjunction with the FORK_JOIN task. The output of the JOIN task is a map, where the keys are task reference names of the tasks being joined, and the keys are the corresponding outputs of those tasks. |
 
 :::info Join Task
 Check [JOIN](https://orkes.io/content/docs/reference-docs/join-task) for more details on the JOIN aspect of the FORK.
@@ -108,24 +108,47 @@ Check [JOIN](https://orkes.io/content/docs/reference-docs/join-task) for more de
   }
 ]
 ```
+
 </TabItem>
 <TabItem value="Java" label="Java">
-This is a banana 🍌
+
+```java
+
+```
+
 </TabItem>
 <TabItem value="Python" label="Python">
-  This is a banana 🍌
+
+```python
+
+```
+
 </TabItem>
 <TabItem value="Golang" label="Golang">
-    This is a banana 🍌
+
+```go
+
+```
 </TabItem>
 <TabItem value="CSharp" label="CSharp">
-  This is a banana 🍌
-</TabItem>
-<TabItem value="clojure" label="Clojure">
-    This is a banana 🍌
+
+```csharp
+
+```
 </TabItem>
 <TabItem value="Javascript" label="Javascript">
-    This is a banana 🍌
+
+```javascript
+
+```
+</TabItem>
+
+<TabItem value="clojure" label="Clojure">
+
+```clojure
+
+```
+
 </TabItem>
 </Tabs>
 

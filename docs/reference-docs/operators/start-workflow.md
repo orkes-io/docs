@@ -28,16 +28,16 @@ Start Workflow is an operator task used to start another workflow from an existi
 
 ### Input Parameters​
 
-| Attribute | Description | 
-| -- | -- |
-| startWorkflow | Provide the workflow name to be started. | 
-| version | If the workflow has different versions, you can provide the version to be started here. If not specified, the latest version runs. |
+| Attribute     | Description                                                                                                                        |
+| ------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| startWorkflow | Provide the workflow name to be started.                                                                                           |
+| version       | If the workflow has different versions, you can provide the version to be started here. If not specified, the latest version runs. |
 
 ### Output Parameters​
 
-| Attribute | Description | 
-| -- | -- |
-| workflowId | Displays the ID of the started workflow. | 
+| Attribute  | Description                              |
+| ---------- | ---------------------------------------- |
+| workflowId | Displays the ID of the started workflow. |
 
 ## Examples
 
@@ -56,24 +56,47 @@ Start Workflow is an operator task used to start another workflow from an existi
 }
 }
 ```
+
 </TabItem>
 <TabItem value="Java" label="Java">
-This is a banana 🍌
+
+```java
+
+```
+
 </TabItem>
 <TabItem value="Python" label="Python">
-  This is a banana 🍌
+
+```python
+
+```
+
 </TabItem>
 <TabItem value="Golang" label="Golang">
-    This is a banana 🍌
+
+```go
+
+```
 </TabItem>
 <TabItem value="CSharp" label="CSharp">
-  This is a banana 🍌
-</TabItem>
-<TabItem value="clojure" label="Clojure">
-    This is a banana 🍌
+
+```csharp
+
+```
 </TabItem>
 <TabItem value="Javascript" label="Javascript">
-    This is a banana 🍌
+
+```javascript
+
+```
+</TabItem>
+
+<TabItem value="clojure" label="Clojure">
+
+```clojure
+
+```
+
 </TabItem>
 </Tabs>
 
