@@ -1,6 +1,9 @@
 ---
 sidebar_position: 2
 ---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # Creating Workflow Definitions
 
 Workflow can be defined as the collection of tasks and operators that specifies the order and execution of the defined tasks. 
