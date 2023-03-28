@@ -1,7 +1,7 @@
 # Managing Tags in Conductor
 
 The tags are metadata applied to tasks, workflows, schedulers, or secrets in Conductor. The tags in Conductor are of the format **key:value**. Tags can be utilized in situations where you can easily share permissions with a group of users.
-<br/>
+
 You can either add tags directly to individual workflows/tasks/secrets/schedulers. Or you can also add tags to user groups.
 
 ## Adding Tags to Workflow​s​
@@ -47,7 +47,6 @@ The above steps mention adding tags to individual tasks/workflows/schedulers/sec
 ### Using User Groups​
 
 Suppose you have a group of users from the accounts team and want to share the workflow execution permission for all users in the group.
-<br/>
 
 To add permissions to the group,
 1. Ensure that the workflow is tagged with the tag **team:accounts**. (If permission is to be shared for tasks/secrets, you need to add the tags to the corresponding items.)

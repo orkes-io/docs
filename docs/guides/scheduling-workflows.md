@@ -6,9 +6,8 @@ import Install from '@site/src/components/install.mdx';
 # Scheduling Workflows
 
 You can use the Scheduler functionality when you need to run a workflow at a regular cadence. The workflows can be configured to be triggered at any cadence as required using the crontab expression.
-<br/>
+
 You can use the scheduler for use cases such as:
-<br/>
 
 * Running a workflow in a fixed cadence, such as every hour.
 * Running the same workflow at different cadences using different fixed inputs.
@@ -18,31 +17,37 @@ You can use the scheduler for use cases such as:
 ## Creating Schedule
 
 For creating a schedule,
-<br/>
 
 1. From your Conductor server, navigate to **SCHEDULER** > **Definitions**. This page displays a list of all the defined schedules.
 2. Click the **Define Schedule** button in the top right corner.
 
 You need to configure the following parameters:
-<br/>
 
-* **Schedule Name**: Provide a unique name for the schedule. Ensure that the schedule name contains no spaces or special characters.
-* **Cron Expression**: The cron expression is the schedule that the workflow will run on. You can either input the cron expression or choose from the available templates. See the section [Cron Expression](/content/docs/api/scheduler#cron-expression) below for detailed information regarding this.
-* **Workflow Name**: Provide the name of the workflow to be run. The author of the scheduler should have execution permission for the workflow. Else the workflow would get terminated quoting the reason that the author has no permission over the workflow.
-* **Workflow Version**: The Workflow created may have different versions. You can choose the version to be scheduled here. If left blank, it will run the latest version.
-* **Input Parameters**: Provide fixed input values for the workflow as a JSON object. This field is optional.
-* **Correlation Id**: Correlation Id is a user-supplied ID to identify the workflows.
-* **Schedule Start**: Choose the date & time for the scheduler to start running. It should be in the format **yyyy-mm-dd hh:mm (a|p)m**. This field is optional.
-* **Schedule End**: Choose the date & time for the scheduler to stop running. It should be in the format **yyyy-mm-dd hh:mm (a|p)m**. This field is optional.
-* **Task to Domain Mapping**: You can use the task to domain mapping to limit the workflow execution to specific domains. This field is optional.
-* **Start Schedule Paused?**: If selected, the schedule will be paused (so it will not run) upon creation. It is helpful when you don’t want to run the workflow scheduler, such as during maintenance. So to re-run the scheduler, you need to edit the scheduler and disable this option.
+| Attribute | Description |
+| -- | -- | 
+| Schedule Name | Provide a unique name for the schedule. Ensure that the schedule name contains no spaces or special characters. |
+| Cron Expression | The cron expression is the schedule that the workflow will run on. You can either input the cron expression or choose from the available templates. See the section [Cron Expression](/content/docs/api/scheduler#cron-expression) below for detailed information regarding this. |
+| Workflow Name | Provide the name of the workflow to be run. The author of the scheduler should have execution permission for the workflow. Else the workflow would get terminated quoting the reason that the author has no permission over the workflow. |
+| Workflow Version | The Workflow created may have different versions. You can choose the version to be scheduled here. If left blank, it will run the latest version. |
+| Input Parameters | Provide fixed input values for the workflow as a JSON object. This field is optional. |
+| Correlation Id | Correlation Id is a user-supplied ID to identify the workflows. |
+| Schedule Start | Choose the date & time for the scheduler to start running. It should be in the format **yyyy-mm-dd hh:mm (a|p)m**. This field is optional. |
+| Schedule End | Choose the date & time for the scheduler to stop running. It should be in the format **yyyy-mm-dd hh:mm (a|p)m**. This field is optional. |
+| Task to Domain Mapping | You can use the task to domain mapping to limit the workflow execution to specific domains. This field is optional. |
+| Start Schedule Paused? | If selected, the schedule will be paused (so it will not run) upon creation. It is helpful when you don’t want to run the workflow scheduler, such as during maintenance. So to re-run the scheduler, you need to edit the scheduler and disable this option. |
 
 3. Click **Save Schedule**.
 
 ## Cron Expression
 
+:::note
+You can use the standard cron expression for scheduling the workflows.
+:::
+
+<details><summary>Cron Expression</summary>
+
 The UI has a *Cron Expression Helper* to describe the options of the Cron expression. You can also test the expression after entering it, and the UI will automatically calculate the next few runs of the schedule.
-<br/>
+
 The CRON expression has six terms; you can denote a blank entry with an asterisk.
 
 ```
@@ -86,3 +91,4 @@ Macros are also supported when setting a schedule.
 ```
 :::
 
+</details>

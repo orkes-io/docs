@@ -36,7 +36,7 @@ In addition to triggering from code, we can also run them from:
 1. [UI - using the Run Workflow feature](https://orkes.cloud/content/getting-started/step1).
 2. [Upon receiving an Event](https://orkes.cloud/content/reference-docs/system-tasks/event).
 3. [Upon receiving a Webhook](https://orkes.cloud/content/reference-docs/system-tasks/webhook).
-4. [At a Schedule - using the Scheduler](https://orkes.cloud/content/reference-docs/api/scheduler).
+4. [At a Schedule - using the Scheduler](https://orkes.cloud/content/guides/scheduling-workflows).
 
 ## Looking Ahead
 

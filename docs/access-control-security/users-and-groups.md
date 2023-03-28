@@ -30,7 +30,7 @@ A user can have the following roles:
 ### Editing Users​
 
 To change the access for a specific user, click on the edit button next to the user, and change the role by clicking the toggle button for the relevant roles.
-<br/>
+
 <p align="center"><img src="/content/img/edit-user-roles.png" alt="Editing user roles in Conductor" width="90%" height="auto"></img></p>
 
 ### Deleting Users​
@@ -50,7 +50,6 @@ To create a user group:
 4. Once the group is created, you can add members by clicking **+Add User** from the **Members** section. You can add only the users that have already been created/invited. If the user you are looking for has not been added, you can invite and then add them to the groups.
 
 **Workflow and Tasks Permissions** is an additional section where you can limit the group members' access to the permitted workflows and tasks.
-<br/>
 
 5. Click **+Add Permission**, and you can choose the group to have access to selected Workflows/Tasks/Secrets/Tags. Permissions that can be granted include Read, Create, Update, Execute & Delete.
 
@@ -62,7 +61,7 @@ Even if certain permissions are granted under the **Workflow and Tasks Permissio
 
 ### Group Roles​
 Group roles allow you to add/remove permissions to groups of users quickly. The roles are the same for an individual user but are quickly applied to everyone in the group. Group has five possible roles: Admin, User, Metadata Manager, Workflow Manager, and Read Only User.
-<br/>
+
 If a role is defined for these members, they will all be given this role for the Conductor instance. For example, if Admin is selected, all the group members are now admins irrespective of their individual roles.
 
 ### Editing Groups​
