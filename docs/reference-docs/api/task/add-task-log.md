@@ -42,7 +42,7 @@ TaskResourceApi.log(body, task_id, **kwargs)
 <TabItem value="CSharp" label="CSharp">
 
 ```csharp
-
+void TaskResourceApi.Log(string body, string taskId)
 ```
 
 </TabItem>

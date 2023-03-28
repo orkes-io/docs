@@ -42,7 +42,7 @@ TaskResourceApi.get_task(task_id, **kwargs)
 <TabItem value="CSharp" label="CSharp">
 
 ```csharp
-
+Task TaskResourceApi.GetTask(string taskId)
 ```
 
 </TabItem>
