@@ -49,7 +49,7 @@ void TaskResourceApi.Log(string body, string taskId)
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
-
+TaskResourceService.getTaskLogs(taskId: string): CancelablePromise<Array<TaskExecLog>>
 ```
 
 </TabItem>

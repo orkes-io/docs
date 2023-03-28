@@ -49,7 +49,7 @@ Task TaskResourceApi.GetTask(string taskId)
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
-
+TaskResourceService.getTask(taskId: string): CancelablePromise<Task>
 ```
 
 </TabItem>
