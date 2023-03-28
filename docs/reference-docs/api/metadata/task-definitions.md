@@ -96,7 +96,7 @@ MetadataResourceApi.register_task_def(body, **kwargs)
 <TabItem value="CSharp" label="CSharp">
 
 ```csharp
-void TaskResourceApi.Log(string body, string taskId)
+Object MetadataResourceApi.RegisterTaskDef(List<TaskDef> body)
 ```
 
 </TabItem>

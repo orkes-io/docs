@@ -84,7 +84,7 @@ MetadataResourceApi.create(body, **kwargs)
 <TabItem value="CSharp" label="CSharp">
 
 ```csharp
-void TaskResourceApi.Log(string body, string taskId)
+Object MetadataResourceApi.Create(WorkflowDef body, bool? overwrite = null)
 ```
 
 </TabItem>
