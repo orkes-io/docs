@@ -28,7 +28,7 @@ GET /tasks/{taskId}
 <TabItem value="Golang" label="Golang">
 
 ```go
-
+func (a *TaskResourceApiService) GetTask(ctx context.Context, taskId string) (model.Task, *http.Response, error)
 ```
 
 </TabItem>

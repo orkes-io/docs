@@ -28,7 +28,7 @@ POST /tasks/{taskId}/log
 <TabItem value="Golang" label="Golang">
 
 ```go
-
+func (a *TaskResourceApiService) Log(ctx context.Context, body string, taskId string) (*http.Response, error)
 ```
 
 </TabItem>
