@@ -1,5 +1,8 @@
 # Task To Domain
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 The Task to Domain is the concept of limiting the task execution only to a specific worker via domain mapping. The domain name can be arbitrary.
 
 Once a task is created, the Conductor creates a queue for each task. When a workflow is run, the specific task execution is dropped into the queue and picked up by a worker. By default, any worker can pick up any task in the queue, meaning no domain limitation exists.
@@ -36,7 +39,26 @@ To test the workflow with the test version of worker X, we add the following whi
 
  ### Specifying Domain in Worker​
 
- The workflow invocation is specified with the domain **test**. Next, you need to use the same domain while configuring the worker. On your worker project, you need to edit the **OrkesWorkersApplication** file to change the **TaskRunner** configuration such that **task x** is given the domain **test**. On configuring this, the worker would only pick the tasks in a workflow executed with the same domain **test**.
+ The workflow invocation is specified with the domain **test**. Next, you need to use the same domain while configuring the worker. 
+ <Tabs>
+ <TabItem value="Java" lable="Java">
+
+ <ul><li>
+ 
+ On your worker project, you need to edit the <b>OrkesWorkersApplication</b> file to change the <b>TaskRunner</b> configuration such that <b>task x</b>  is given the domain <b>test</b>.</li><li> Create a HashMap <b>taskToDomainMap</b> with the entry: mapping the <b>task x</b> to the domain <b>test</b>. This is added to the Configurer <b>.withTaskToDomain(taskToDomainMap).</b></li><li> On configuring this, the worker would only pick the tasks in a workflow executed with the same domain <b>test</b>.</li></ul>
+
+</TabItem>
+<TabItem value="Python" label="Python">
+</TabItem>
+<TabItem value="Go" label="Go">
+</TabItem>
+<TabItem value="CSharp" label="CSharp">
+</TabItem>
+<TabItem value="Clojure" label="Clojure">
+</TabItem>
+<TabItem value="Javascript" label="Javascript">
+</TabItem>
+</Tabs>
 
  ## Fallback Task to Domain​​
 
