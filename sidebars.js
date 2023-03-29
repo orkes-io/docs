@@ -64,6 +64,8 @@ const sidebars = {
                 'guides/conductor-clients',
                 'guides/write-as-code',
                 'guides/debugging',
+                'guides/task-to-domain',
+                'guides/error-handling',
                 'guides/scaling-workers',
             ],
             collapsible: true,
