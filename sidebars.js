@@ -100,27 +100,6 @@ const sidebars = {
         },
         {
             type: 'category',
-            label: 'Templates',
-            link: {
-                type: 'generated-index',
-                title: 'Templates',
-                slug: '/category/templates'
-            },
-            items: [
-                'templates/availability-monitoring-for-http-endpoints',
-                'templates/video-processing-workflows'
-            ],
-            collapsible: true,
-            collapsed: true,
-            className: 'leftMenuHeader',
-        },
-        {
-            type: 'doc',
-            id: 'system-integrations',
-            className: 'leftMenuHeader',
-        },
-        {
-            type: 'category',
             label: 'Reference Docs',
             link: {
                 type: 'generated-index',
@@ -181,6 +160,27 @@ const sidebars = {
             ],
             collapsible: true,
             collapsed: true,
+            className: 'leftMenuHeader',
+        },
+        {
+            type: 'category',
+            label: 'Templates',
+            link: {
+                type: 'generated-index',
+                title: 'Templates',
+                slug: '/category/templates'
+            },
+            items: [
+                'templates/availability-monitoring-for-http-endpoints',
+                'templates/video-processing-workflows'
+            ],
+            collapsible: true,
+            collapsed: true,
+            className: 'leftMenuHeader',
+        },
+        {
+            type: 'doc',
+            id: 'system-integrations',
             className: 'leftMenuHeader',
         },
     ]
