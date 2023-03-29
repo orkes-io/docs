@@ -43,7 +43,7 @@ Conductor supports many ways to implement the steps, such as HTTP endpoints, wor
 </Tabs>
 You can run this workflow to see how it executes. If there are failures, Conductor will retry them automatically and ensure that the workflow is completed.
 
-### Let’s send SMS and Email in parallel instead of sequentially
+#### Let’s send SMS and Email in parallel instead of sequentially
 
 <Tabs>
 <TabItem value="UI" label="UI">

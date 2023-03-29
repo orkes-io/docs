@@ -12,7 +12,7 @@ The wait task in Conductor is used if the workflow is to be paused for external 
 
 Let’s learn how you can pause your workflows using wait tasks. 
 
-### In your current workflow, what if you want to send the SMS only after 10 mins?
+#### In your current workflow, what if you want to send the SMS only after 10 mins?
 
 <Tabs>
 <TabItem value="UI" label="UI">
