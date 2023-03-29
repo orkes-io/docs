@@ -72,6 +72,7 @@ The Terminate task is a task that can terminate the workflow with a termination 
 ```go
 
 ```
+
 </TabItem>
 <TabItem value="Python" label="Python">
 
@@ -85,15 +86,17 @@ The Terminate task is a task that can terminate the workflow with a termination 
 ```csharp
 
 ```
+
 </TabItem>
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
 
 ```
+
 </TabItem>
 
-<TabItem value="clojure" label="Clojure">
+<TabItem value="Clojure" label="Clojure">
 
 ```clojure
 

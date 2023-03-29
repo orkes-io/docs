@@ -60,8 +60,9 @@ A Simple task is a Worker task that requires an external worker for polling. The
 <TabItem value="Golang" label="Golang">
 
 ```go
-
+workflow.NewSimpleTask("task_name", "task_name_ref")
 ```
+
 </TabItem>
 <TabItem value="Python" label="Python">
 
@@ -75,15 +76,17 @@ A Simple task is a Worker task that requires an external worker for polling. The
 ```csharp
 
 ```
+
 </TabItem>
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
 
 ```
+
 </TabItem>
 
-<TabItem value="clojure" label="Clojure">
+<TabItem value="Clojure" label="Clojure">
 
 ```clojure
 
@@ -155,9 +158,9 @@ In this section, you must replace “simple_worker” with the task name you cre
 
 ```java
 @Override
-    public String getTaskDefName() {
-        return "task_name";
-    }  
+public String getTaskDefName() {
+    return "task_name";
+}  
 ```
 
 * Next, you need to create an application in your Conductor server and provide the authentication details. If you take the [Playground](https://play.orkes.io/) as an example, you can [create an application](https://orkes.io/content/docs/getting-started/concepts/access-control-applications#configuring-application) and [generate the access keys](https://orkes.io/content/docs/getting-started/concepts/access-control-applications#access-keys). 

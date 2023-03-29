@@ -9,13 +9,13 @@ Set Variable allows you to set the workflow variables by creating or updating th
 
 ```json
 {
-      "name": "set_variable",
-      "taskReferenceName": "set_variable_task_ref",
-      "type": "SET_VARIABLE",
-      "inputParameters": {
-        "some keys": "some keys"
-      }
-    }
+  "name": "set_variable",
+  "taskReferenceName": "set_variable_task_ref",
+  "type": "SET_VARIABLE",
+  "inputParameters": {
+    "some keys": "some keys"
+  }
+}
 ```
 
 ### Input Parameters
@@ -29,13 +29,13 @@ Set Variable allows you to set the workflow variables by creating or updating th
 
 ```json
 {
-     "name": "Set_Name",
-     "taskReferenceName": "Set_Name_ref",
-     "type": "SET_VARIABLE",
-     "inputParameters": {
-       "name": "Orkes"
-     }
-   },
+  "name": "Set_Name",
+  "taskReferenceName": "Set_Name_ref",
+  "type": "SET_VARIABLE",
+  "inputParameters": {
+    "name": "Orkes"
+  }
+}
 ```
 
 </TabItem>
@@ -49,8 +49,9 @@ Set Variable allows you to set the workflow variables by creating or updating th
 <TabItem value="Golang" label="Golang">
 
 ```go
-
+workflow.NewSetVariableTask("set_variable").Input("name", "Orkes")
 ```
+
 </TabItem>
 <TabItem value="Python" label="Python">
 
@@ -64,15 +65,17 @@ Set Variable allows you to set the workflow variables by creating or updating th
 ```csharp
 
 ```
+
 </TabItem>
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
 
 ```
+
 </TabItem>
 
-<TabItem value="clojure" label="Clojure">
+<TabItem value="Clojure" label="Clojure">
 
 ```clojure
 

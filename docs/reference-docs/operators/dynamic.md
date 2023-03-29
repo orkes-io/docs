@@ -72,16 +72,19 @@ During execution, the DYNAMIC task is replaced in the workflow with whatever tas
 ```
 
 </TabItem>
-<TabItem value="Python" label="Python">
-
-```python
-
-```
-
-</TabItem>
 <TabItem value="Golang" label="Golang">
 
 ```go
+workflow.NewDynamicTask(
+  taskRefName string, 
+  taskNameParameter string,
+) *DynamicTask
+```
+
+</TabItem>
+<TabItem value="Python" label="Python">
+
+```python
 
 ```
 
@@ -91,15 +94,17 @@ During execution, the DYNAMIC task is replaced in the workflow with whatever tas
 ```csharp
 
 ```
+
 </TabItem>
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
 
 ```
+
 </TabItem>
 
-<TabItem value="clojure" label="Clojure">
+<TabItem value="Clojure" label="Clojure">
 
 ```clojure
 

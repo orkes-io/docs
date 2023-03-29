@@ -66,6 +66,7 @@ The Terminate Workflow task is used to terminate other workflows using their wor
 ```go
 
 ```
+
 </TabItem>
 <TabItem value="Python" label="Python">
 
@@ -79,15 +80,17 @@ The Terminate Workflow task is used to terminate other workflows using their wor
 ```csharp
 
 ```
+
 </TabItem>
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
 
 ```
+
 </TabItem>
 
-<TabItem value="clojure" label="Clojure">
+<TabItem value="Clojure" label="Clojure">
 
 ```clojure
 

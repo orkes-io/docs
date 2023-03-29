@@ -61,6 +61,7 @@ The output is a map, where the keys are the names of task references being joine
 ```go
 
 ```
+
 </TabItem>
 <TabItem value="Python" label="Python">
 
@@ -74,15 +75,17 @@ The output is a map, where the keys are the names of task references being joine
 ```csharp
 
 ```
+
 </TabItem>
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
 
 ```
+
 </TabItem>
 
-<TabItem value="clojure" label="Clojure">
+<TabItem value="Clojure" label="Clojure">
 
 ```clojure
 

@@ -91,6 +91,7 @@ Workflow with the switch task definition that uses **value-param** evaluatorType
 ```go
 
 ```
+
 </TabItem>
 <TabItem value="Python" label="Python">
 
@@ -104,15 +105,17 @@ Workflow with the switch task definition that uses **value-param** evaluatorType
 ```csharp
 
 ```
+
 </TabItem>
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
 
 ```
+
 </TabItem>
 
-<TabItem value="clojure" label="Clojure">
+<TabItem value="Clojure" label="Clojure">
 
 ```clojure
 

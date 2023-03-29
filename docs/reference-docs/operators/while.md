@@ -85,11 +85,19 @@ The Do While task sequentially executes a list of tasks as long as a condition i
    ]
 }
 ```
+
 </TabItem>
 
 <TabItem value="Java" label="Java">
 
 ```java
+
+```
+
+</TabItem>
+<TabItem value="Golang" label="Golang">
+
+```go
 
 ```
 
@@ -101,26 +109,22 @@ The Do While task sequentially executes a list of tasks as long as a condition i
 ```
 
 </TabItem>
-<TabItem value="Golang" label="Golang">
-
-```go
-
-```
-</TabItem>
 <TabItem value="CSharp" label="CSharp">
 
 ```csharp
 
 ```
+
 </TabItem>
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
 
 ```
+
 </TabItem>
 
-<TabItem value="clojure" label="Clojure">
+<TabItem value="Clojure" label="Clojure">
 
 ```clojure
 

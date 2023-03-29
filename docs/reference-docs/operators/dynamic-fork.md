@@ -47,17 +47,17 @@ The [JOIN](https://orkes.io/content/docs/reference-docs/join-task) task will run
 <TabItem value="JSON" label="JSON">
 
 ```json
-   {
-     "name": "dynamic",
-     "taskReferenceName": "dynamic_ref",
-     "inputParameters": {
-       "dynamicTasks": "",
-       "dynamicTasksInput": ""
-     },
-     "type": "FORK_JOIN_DYNAMIC",
-     "dynamicForkTasksParam": "dynamicTasks",
-     "dynamicForkTasksInputParamName": "dynamicTasksInput"
-   },
+{
+  "name": "dynamic",
+  "taskReferenceName": "dynamic_ref",
+  "inputParameters": {
+    "dynamicTasks": "",
+    "dynamicTasksInput": ""
+  },
+  "type": "FORK_JOIN_DYNAMIC",
+  "dynamicForkTasksParam": "dynamicTasks",
+  "dynamicForkTasksInputParamName": "dynamicTasksInput"
+}
 ```
 
 </TabItem>
@@ -71,8 +71,12 @@ The [JOIN](https://orkes.io/content/docs/reference-docs/join-task) task will run
 <TabItem value="Golang" label="Golang">
 
 ```go
-
+workflow.NewDynamicForkTask(
+  taskRefName string, 
+  forkPrepareTask TaskInterface,
+) *DynamicForkTask
 ```
+
 </TabItem>
 <TabItem value="Python" label="Python">
 
@@ -86,15 +90,17 @@ The [JOIN](https://orkes.io/content/docs/reference-docs/join-task) task will run
 ```csharp
 
 ```
+
 </TabItem>
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
 
 ```
+
 </TabItem>
 
-<TabItem value="clojure" label="Clojure">
+<TabItem value="Clojure" label="Clojure">
 
 ```clojure
 
@@ -136,9 +142,9 @@ In this example, each task will be executed with the following input:
  
 ```json
 {
-   "inputText" : "value1",
-   "inputNumber" : 1,
-   "index": 0 // Added by the system to represent the array index for the object
+  "inputText" : "value1",
+  "inputNumber" : 1,
+  "index": 0 // Added by the system to represent the array index for the object
 }
 ```
 
@@ -184,14 +190,14 @@ Example:
 We can also use simple values or a mix of complex and simple objects.
 ```json
 [
- "apple", "orange", "kiwi"
+  "apple", "orange", "kiwi"
 ]
 ```
 When using simple values, it will be passed with the key input and an index representing the element's index in the array.
 ```json
 {
- "input" : "apple", // Value
- "index" : 0 // Index of the element
+  "input" : "apple", // Value
+  "index" : 0 // Index of the element
 }
 ```
 </p>
@@ -284,7 +290,7 @@ Example:
       "taskReferenceName": "dynamic_workflow_array_sub_workflow_join_ref",
       "type": "JOIN"
     }
-  ],
+  ]
 }
 ```
 </p>

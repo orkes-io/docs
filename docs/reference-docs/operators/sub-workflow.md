@@ -71,6 +71,7 @@ The output of the sub-workflow is also supplied to the output of the workflow.
 ```go
 
 ```
+
 </TabItem>
 <TabItem value="Python" label="Python">
 
@@ -84,15 +85,17 @@ The output of the sub-workflow is also supplied to the output of the workflow.
 ```csharp
 
 ```
+
 </TabItem>
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
 
 ```
+
 </TabItem>
 
-<TabItem value="clojure" label="Clojure">
+<TabItem value="Clojure" label="Clojure">
 
 ```clojure
 

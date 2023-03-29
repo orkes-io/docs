@@ -68,8 +68,14 @@ Start Workflow is an operator task used to start another workflow from an existi
 <TabItem value="Golang" label="Golang">
 
 ```go
-
+workflow.NewStartWorkflowTask(
+  taskRefName string, 
+  workflowName string, 
+  version *int32, 
+  startWorkflowRequest *model.StartWorkflowRequest,
+) *StartWorkflowTask
 ```
+
 </TabItem>
 <TabItem value="Python" label="Python">
 
@@ -83,15 +89,17 @@ Start Workflow is an operator task used to start another workflow from an existi
 ```csharp
 
 ```
+
 </TabItem>
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
 
 ```
+
 </TabItem>
 
-<TabItem value="clojure" label="Clojure">
+<TabItem value="Clojure" label="Clojure">
 
 ```clojure
 

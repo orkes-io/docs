@@ -57,6 +57,7 @@ The Wait task is used when the workflow needs to be paused for an external signa
 ```go
 
 ```
+
 </TabItem>
 <TabItem value="Python" label="Python">
 
@@ -70,15 +71,17 @@ The Wait task is used when the workflow needs to be paused for an external signa
 ```csharp
 
 ```
+
 </TabItem>
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
 
 ```
+
 </TabItem>
 
-<TabItem value="clojure" label="Clojure">
+<TabItem value="Clojure" label="Clojure">
 
 ```clojure
 
