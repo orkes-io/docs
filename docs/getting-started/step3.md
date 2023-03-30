@@ -68,7 +68,7 @@ def check_for_fraud(task: Task):
   return f'Deposit of {amount} has been processed successfully'
 
 fraud_worker = Worker(
-  task_definition_name='task_name',
+  task_definition_name="<name of your task>",
   execute_function=check_for_fraud,
 )
 ```
@@ -96,7 +96,7 @@ public class CheckForFraud : IWorkflowTask
   public string TaskType { get; }
   public WorkflowTaskExecutorConfiguration WorkerSettings { get; }
 
-  public CheckForFraud(string taskType = "taskName")
+  public CheckForFraud(string taskType = "<name of your task>")
   {
     TaskType = taskType;
     WorkerSettings = new WorkflowTaskExecutorConfiguration();
@@ -140,9 +140,21 @@ const checkForFraud = (inputData) => {
 </TabItem>
 <TabItem value="Clojure" label="Clojure">
 
-<!-- @TODO:Gustavo -->
 ```clojure
+(defn check-for-fraud
+  [d]
+  (let [amount (get d "amount")])
+  (let [account-id (get d "accountId")])
+  (let task-result [:completed {"message"
+    (str "Deposit of " amount " has been processed successfully")}])
+  (if (fraud-service/is-fraudulent [account-id, amount])
+    (let task-result (assoc task-result :completed {"message" "This transaction cannot be processed as its flagged for review."})))
+  (task-result)
+)
 
+(def fraud-worker
+  {:name "<name of your task>",
+   :execute check-for-fraud})
 ```
 
 </TabItem>
