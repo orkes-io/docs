@@ -12,13 +12,13 @@ The Do While task sequentially executes a list of tasks as long as a condition i
 
 ```json
 {
-      "name": "do_while_task",
-      "taskReferenceName": "do_while_task_ref",
-      "type": "DO_WHILE",
-      "loopCondition": "",
-      "loopConditionType": "value-param",
-      "loopOver": [//tasks]
-    }
+    "name": "do_while_task",
+    "taskReferenceName": "do_while_task_ref",
+    "type": "DO_WHILE",
+    "loopCondition": "",
+    "loopConditionType": "value-param",
+    "loopOver": [//tasks]
+}
 ```
 * When scheduled, each task of this loop will see its **taskReferenceName** concatenated with **__i**, with **i** being the iteration number, starting at 1. **Warning**: **taskReferenceName** containing arithmetic operators must not be used.
 * Each time the task is performed, the output is saved and indexed by the iteration value. This makes it possible for the condition to check the output of a specific task iteration. (E.g., **$.LoopTask['iteration]['first_task']**).
@@ -26,18 +26,18 @@ The Do While task sequentially executes a list of tasks as long as a condition i
 
 ### Input Parameters
 
-| Attributes | Description |
-| -- | -- | 
+| Attributes    | Description                                                                                                                                                                                                                    |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | loopCondition | Indicates the condition to be evaluated after every iteration. Supported types are **value-param**, **javascript**, and **graaljs**.  If an exception occurs during evaluation, the task is set to FAILED_WITH_TERMINAL_ERROR. |
-| loopOver | Includes the list of tasks to be executed as long as the condition is true. | 
+| loopOver      | Includes the list of tasks to be executed as long as the condition is true.                                                                                                                                                    |
 
 ### Output Parameters​
 
-| Attributes | Description |
-| -- | -- | 
-| iteration | Indicates the iteration number, which is the current one while executing, and the final one once the loop is finished. | 
-| i | Iteration number as a string mapped to the task references names and their output. |
-| * | Any state can be stored here if the loopCondition does so. For example, **storage** will exist if loopCondition is **if ($.LoopTask['iteration'] <= 10) {$.LoopTask.storage = 3; true } else {false}**. |
+| Attributes | Description                                                                                                                                                                                             |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| iteration  | Indicates the iteration number, which is the current one while executing, and the final one once the loop is finished.                                                                                  |
+| i          | Iteration number as a string mapped to the task references names and their output.                                                                                                                      |
+| *          | Any state can be stored here if the loopCondition does so. For example, **storage** will exist if loopCondition is **if ($.LoopTask['iteration'] <= 10) {$.LoopTask.storage = 3; true } else {false}**. |
 
 :::note
 * Domain or isolation group execution is unsupported.
@@ -53,57 +53,104 @@ The Do While task sequentially executes a list of tasks as long as a condition i
 
 ```json
 {
-   "name": "Loop Task",
-   "taskReferenceName": "LoopTask_ref",
-   "type": "DO_WHILE",
-   "inputParameters": {
-     "value": "${workflow.input.value}"
-   },
-   "loopCondition": "if ( ($.LoopTask['iteration'] < $.value ) || ( $.first_task['response']['body'] > 10)) { false; } else { true; }",
-   "loopOver": [
-       {
-           "name": "first task",
-           "taskReferenceName": "first_task",
-           "inputParameters": {
-               "http_request": {
-                   "uri": "http://localhost:8082",
-                   "method": "POST"
-               }
-           },
-           "type": "HTTP"
-       },{
-           "name": "second task",
-           "taskReferenceName": "second_task",
-           "inputParameters": {
-               "http_request": {
-                   "uri": "http://localhost:8082",
-                   "method": "POST"
-               }
-           },
-           "type": "HTTP"
-       }
-   ]
+    "name": "Loop Task",
+    "taskReferenceName": "LoopTask_ref",
+    "type": "DO_WHILE",
+    "inputParameters": {
+        "value": "${workflow.input.value}"
+    },
+    "loopCondition": "if ( ($.LoopTask['iteration'] < $.value ) || ( $.first_task['response']['body'] > 10)) { false; } else { true; }",
+    "loopOver": [
+        {
+            "name": "first task",
+            "taskReferenceName": "first_task",
+            "inputParameters": {
+                "http_request": {
+                    "uri": "http://localhost:8082",
+                    "method": "POST"
+                }
+            },
+            "type": "HTTP"
+        },
+        {
+            "name": "second task",
+            "taskReferenceName": "second_task",
+            "inputParameters": {
+                "http_request": {
+                    "uri": "http://localhost:8082",
+                    "method": "POST"
+                }
+            },
+            "type": "HTTP"
+        }
+    ]
 }
 ```
+
 </TabItem>
 
 <TabItem value="Java" label="Java">
-This is a banana 🍌
-</TabItem>
-<TabItem value="Python" label="Python">
-  This is a banana 🍌
+
+```java
+new DoWhile(
+    String taskReferenceName, 
+    String condition, 
+    Task<?>... tasks
+)
+```
+
 </TabItem>
 <TabItem value="Golang" label="Golang">
-    This is a banana 🍌
+
+```go
+workflow.NewDoWhileTask(
+    taskRefName string, 
+    terminationCondition string, 
+    tasks ...TaskInterface,
+) *DoWhileTask
+```
+
+</TabItem>
+<TabItem value="Python" label="Python">
+
+```python
+conductor.client.workflow.task.DoWhileTask(
+    task_ref_name: str, 
+    termination_condition: str, 
+    tasks: List[TaskInterface]
+)
+```
+
 </TabItem>
 <TabItem value="CSharp" label="CSharp">
-  This is a banana 🍌
-</TabItem>
-<TabItem value="clojure" label="Clojure">
-    This is a banana 🍌
+
+```csharp
+Conductor.Definition.TaskType.DoWhileTask(
+    string taskReferenceName, 
+    string loopCondition, 
+    params WorkflowTask[] loopOver
+)
+```
+
 </TabItem>
 <TabItem value="Javascript" label="Javascript">
-    This is a banana 🍌
+
+```javascript
+doWhileTask = (
+  taskRefName: string,
+  terminationCondition: string,
+  tasks: TaskDefTypes[]
+): DoWhileTaskDef
+```
+
+</TabItem>
+<TabItem value="Clojure" label="Clojure">
+
+<!-- Todo: @gardusig -->
+```clojure
+
+```
+
 </TabItem>
 </Tabs>
 
@@ -112,36 +159,37 @@ This is a banana 🍌
 
 ```json
 {
-   "name": "Loop Task",
-   "taskReferenceName": "LoopTask",
-   "type": "DO_WHILE",
-   "inputParameters": {
-     "value": "${workflow.input.value}"
-   },
-   "loopCondition": "if ( ($.LoopTask['iteration'] < $.value ) || ( $.first_task['response']['body'] > 10)) { false; } else { true; }",
-   "loopOver": [
-       {
-           "name": "first task",
-           "taskReferenceName": "first_task",
-           "inputParameters": {
-               "http_request": {
-                   "uri": "http://localhost:8082",
-                   "method": "POST"
-               }
-           },
-           "type": "HTTP"
-       },{
-           "name": "second task",
-           "taskReferenceName": "second_task",
-           "inputParameters": {
-               "http_request": {
-                   "uri": "http://localhost:8082",
-                   "method": "POST"
-               }
-           },
-           "type": "HTTP"
-       }
-   ],
+    "name": "Loop Task",
+    "taskReferenceName": "LoopTask",
+    "type": "DO_WHILE",
+    "inputParameters": {
+        "value": "${workflow.input.value}"
+    },
+    "loopCondition": "if ( ($.LoopTask['iteration'] < $.value ) || ( $.first_task['response']['body'] > 10)) { false; } else { true; }",
+    "loopOver": [
+        {
+            "name": "first task",
+            "taskReferenceName": "first_task",
+            "inputParameters": {
+                "http_request": {
+                    "uri": "http://localhost:8082",
+                    "method": "POST"
+                }
+            },
+            "type": "HTTP"
+        },
+        {
+            "name": "second task",
+            "taskReferenceName": "second_task",
+            "inputParameters": {
+                "http_request": {
+                    "uri": "http://localhost:8082",
+                    "method": "POST"
+                }
+            },
+            "type": "HTTP"
+        }
+    ]
 }
 ```
 
@@ -206,32 +254,32 @@ Sometimes, you may want to use the iteration value/counter in the tasks used in 
 
 ```json
 {
-      "name": "get_all_stars",
-      "taskReferenceName": "get_all_stars_loop_ref",
-      "inputParameters": {
-        "stargazers": "4000"
-      },
-      "type": "DO_WHILE",
-      "loopCondition": "if ($.get_all_stars_loop_ref['iteration'] < Math.ceil($.stargazers/100)) { true; } else { false; }",
-      "loopOver": [
+    "name": "get_all_stars",
+    "taskReferenceName": "get_all_stars_loop_ref",
+    "inputParameters": {
+    "stargazers": "4000"
+    },
+    "type": "DO_WHILE",
+    "loopCondition": "if ($.get_all_stars_loop_ref['iteration'] < Math.ceil($.stargazers/100)) { true; } else { false; }",
+    "loopOver": [
         {
-          "name": "100_stargazers",
-          "taskReferenceName": "hundred_stargazers_ref",
-          "inputParameters": {
-            "counter": "${get_all_stars_loop_ref.output.iteration}",
-            "http_request": {
-              "uri": "https://api.github.com/repos/ntflix/conductor/stargazers?page=${get_all_stars_loop_ref.output.iteration}&per_page=100",
-              "method": "GET",
-              "headers": {
-                "Authorization": "token ${workflow.input.gh_token}",
-                "Accept": "application/vnd.github.v3.star+json"
-              }
-            }
-          },
-          "type": "HTTP",
+            "name": "100_stargazers",
+            "taskReferenceName": "hundred_stargazers_ref",
+            "inputParameters": {
+                "counter": "${get_all_stars_loop_ref.output.iteration}",
+                "http_request": {
+                    "uri": "https://api.github.com/repos/ntflix/conductor/stargazers?page=${get_all_stars_loop_ref.output.iteration}&per_page=100",
+                    "method": "GET",
+                    "headers": {
+                        "Authorization": "token ${workflow.input.gh_token}",
+                        "Accept": "application/vnd.github.v3.star+json"
+                    }
+                }
+            },
+            "type": "HTTP",
         }
-      ]
-    }
+    ]
+}
 ```
 
 * The Loop **taskReferenceName** is "get_all_stars_loop_ref".

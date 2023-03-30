@@ -13,31 +13,31 @@ The dynamic task allows you to execute one of the registered tasks dynamically a
 
 ```json
 {
-     "name": "dynamic_task",
-     "taskReferenceName": "dynamic_task_ref",
-     "inputParameters": {
-       "taskToExecute": "${workflow.input.somevalue}"
-     },
-     "type": "DYNAMIC",
-     "dynamicTaskNameParam": "taskToExecute"
-   }
+  "name": "dynamic_task",
+  "taskReferenceName": "dynamic_task_ref",
+  "inputParameters": {
+    "taskToExecute": "${workflow.input.somevalue}"
+  },
+  "type": "DYNAMIC",
+  "dynamicTaskNameParam": "taskToExecute"
+}
 ```
 
 ### Input Parameters
 
-| Attribute | Description | 
-| -- | -- |
-| taskToExecute | Accepts the task name to execute. |
-| dynamicTaskNameParam | Indicates the name of the task to be called during workflow execution. | 
+| Attribute            | Description                                                            |
+| -------------------- | ---------------------------------------------------------------------- |
+| taskToExecute        | Accepts the task name to execute.                                      |
+| dynamicTaskNameParam | Indicates the name of the task to be called during workflow execution. |
 
 :::tip Dynamic SUBWORKFLOW​
 If there is a possibility that the task called is a SUBWORKFLOW, you must also add:
 
 ```json
- "subWorkflowParam": {
-      "name": "workflow_name",
-      "version": <workflow version>
-    },
+"subWorkflowParam": {
+  "name": "workflow_name",
+  "version": <workflow version>
+},
 ```
 
 If **subWorkflowParam** is present, and the DYNAMIC workflow calls a task type that is not a SUBWORKFLOW, these parameters will be ignored.
@@ -54,33 +54,68 @@ During execution, the DYNAMIC task is replaced in the workflow with whatever tas
 
 ```json
 {
-     "name": "dynamic_task",
-     "taskReferenceName": "dynamic_task_ref",
-     "inputParameters": {
-       "taskToExecute": "${workflow.input.somevalue}"
-     },
-     "type": "DYNAMIC",
-     "dynamicTaskNameParam": "taskToExecute"
-   }
+  "name": "dynamic_task",
+  "taskReferenceName": "dynamic_task_ref",
+  "inputParameters": {
+    "taskToExecute": "${workflow.input.somevalue}"
+  },
+  "type": "DYNAMIC",
+  "dynamicTaskNameParam": "taskToExecute"
+}
 ```
+
 </TabItem>
 <TabItem value="Java" label="Java">
-This is a banana 🍌
-</TabItem>
-<TabItem value="Python" label="Python">
-  This is a banana 🍌
+
+```java
+new Dynamic(
+  String taskReferenceName, 
+  String dynamicTaskNameValue
+)
+```
+
 </TabItem>
 <TabItem value="Golang" label="Golang">
-    This is a banana 🍌
+
+```go
+workflow.NewDynamicTask(
+  taskRefName string, 
+  taskNameParameter string,
+) *DynamicTask
+```
+
+</TabItem>
+<TabItem value="Python" label="Python">
+
+<!-- Todo: @gardusig -->
+```python
+
+```
+
 </TabItem>
 <TabItem value="CSharp" label="CSharp">
-  This is a banana 🍌
-</TabItem>
-<TabItem value="clojure" label="Clojure">
-    This is a banana 🍌
+
+<!-- Todo: @gardusig -->
+```csharp
+
+```
+
 </TabItem>
 <TabItem value="Javascript" label="Javascript">
-    This is a banana 🍌
+
+<!-- Todo: @gardusig -->
+```javascript
+
+```
+
+</TabItem>
+<TabItem value="Clojure" label="Clojure">
+
+<!-- Todo: @gardusig -->
+```clojure
+
+```
+
 </TabItem>
 </Tabs>
 
@@ -109,8 +144,7 @@ Suppose in a workflow, we have to decide to ship the courier, but the decision i
       "type": "DYNAMIC",
       "dynamicTaskNameParam": "taskToExecute"
     }
-
-  ],
+  ]
 }
 ```
 

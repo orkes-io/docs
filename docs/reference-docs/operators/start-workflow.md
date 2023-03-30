@@ -28,16 +28,16 @@ Start Workflow is an operator task used to start another workflow from an existi
 
 ### Input Parameters​
 
-| Attribute | Description | 
-| -- | -- |
-| startWorkflow | Provide the workflow name to be started. | 
-| version | If the workflow has different versions, you can provide the version to be started here. If not specified, the latest version runs. |
+| Attribute     | Description                                                                                                                        |
+| ------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| startWorkflow | Provide the workflow name to be started.                                                                                           |
+| version       | If the workflow has different versions, you can provide the version to be started here. If not specified, the latest version runs. |
 
 ### Output Parameters​
 
-| Attribute | Description | 
-| -- | -- |
-| workflowId | Displays the ID of the started workflow. | 
+| Attribute  | Description                              |
+| ---------- | ---------------------------------------- |
+| workflowId | Displays the ID of the started workflow. |
 
 ## Examples
 
@@ -56,24 +56,63 @@ Start Workflow is an operator task used to start another workflow from an existi
 }
 }
 ```
+
 </TabItem>
 <TabItem value="Java" label="Java">
-This is a banana 🍌
-</TabItem>
-<TabItem value="Python" label="Python">
-  This is a banana 🍌
+
+<!-- Todo: @gardusig -->
+```java
+
+```
+
 </TabItem>
 <TabItem value="Golang" label="Golang">
-    This is a banana 🍌
+
+```go
+workflow.NewStartWorkflowTask(
+  taskRefName string, 
+  workflowName string, 
+  version *int32, 
+  startWorkflowRequest *model.StartWorkflowRequest,
+) *StartWorkflowTask
+```
+
+</TabItem>
+<TabItem value="Python" label="Python">
+
+```python
+conductor.client.workflow.task.StartWorkflowTask(
+  task_ref_name: str, 
+  workflow_name: str, 
+  start_workflow_request: StartWorkflowRequest, 
+  version: int = None
+)
+```
+
 </TabItem>
 <TabItem value="CSharp" label="CSharp">
-  This is a banana 🍌
-</TabItem>
-<TabItem value="clojure" label="Clojure">
-    This is a banana 🍌
+
+<!-- Todo: @gardusig -->
+```csharp
+
+```
+
 </TabItem>
 <TabItem value="Javascript" label="Javascript">
-    This is a banana 🍌
+
+<!-- Todo: @gardusig -->
+```javascript
+
+```
+
+</TabItem>
+<TabItem value="Clojure" label="Clojure">
+
+<!-- Todo: @gardusig -->
+```clojure
+
+```
+
 </TabItem>
 </Tabs>
 
@@ -86,19 +125,19 @@ Let’s see a sample JSON file for the start workflow task:
 "name": "sample_start_workflow",
 "description": "Sample Workflow to start a new workflow.",
 "tasks": [
-  {
-    "name": "start",
-    "taskReferenceName": "start_ref",
-    "inputParameters": {
-      "startWorkflow": {
-        "name": "your_workflow_name_to_be_started",
-        "version": 3,
-        "input": {}
-      }
-    },
-    "type": "START_WORKFLOW",
-  }
-     ],
+    {
+      "name": "start",
+      "taskReferenceName": "start_ref",
+      "inputParameters": {
+        "startWorkflow": {
+          "name": "your_workflow_name_to_be_started",
+          "version": 3,
+          "input": {}
+        }
+      },
+      "type": "START_WORKFLOW",
+    }
+  ]
 }
 ```
 
@@ -106,10 +145,10 @@ Here the input parameters are defined as:
 
 ```json
 "inputParameters": {
-      "startWorkflow": {
-       "name": "your_workflow_name_to_be_started",
-       "version": 3
-      }
+  "startWorkflow": {
+    "name": "your_workflow_name_to_be_started",
+    "version": 3
+  }
 },
 ```
 

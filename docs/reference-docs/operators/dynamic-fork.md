@@ -12,34 +12,34 @@ The Dynamic fork task is used when the number of forks is to be determined at th
 ## Configurations
 
 ```json
-   {
-     "name": "dynamic",
-     "taskReferenceName": "dynamic_ref",
-     "inputParameters": {
-       "dynamicTasks": "",
-       "dynamicTasksInput": ""
-     },
-     "type": "FORK_JOIN_DYNAMIC",
-     "dynamicForkTasksParam": "dynamicTasks",
-     "dynamicForkTasksInputParamName": "dynamicTasksInput"
-   },
+{
+  "name": "dynamic",
+  "taskReferenceName": "dynamic_ref",
+  "inputParameters": {
+    "dynamicTasks": "",
+    "dynamicTasksInput": ""
+  },
+  "type": "FORK_JOIN_DYNAMIC",
+  "dynamicForkTasksParam": "dynamicTasks",
+  "dynamicForkTasksInputParamName": "dynamicTasksInput"
+}
 ```
 * A FORK_JOIN_DYNAMIC can only have one task per fork. A sub-workflow can be utilized if there is a need for multiple tasks per fork.
 
 ### Input Parameters
 
-|Attribute|Description|
-|---|---|
-| dynamicForkTasksParam | This JSON array lists the tasks in each fork that is to be created. Each entry corresponds to a separate fork. |
-| dynamicForkTasksInputParamName | This is a JSON array where the keys are the taskReferenceName for each fork, and the values are the inputParameters for each task. | 
+| Attribute                      | Description                                                                                                                        |
+| ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------- |
+| dynamicForkTasksParam          | This JSON array lists the tasks in each fork that is to be created. Each entry corresponds to a separate fork.                     |
+| dynamicForkTasksInputParamName | This is a JSON array where the keys are the taskReferenceName for each fork, and the values are the inputParameters for each task. |
 
 The [JOIN](https://orkes.io/content/docs/reference-docs/join-task) task will run after all the dynamic tasks, collecting the output for all tasks. All the tasks must be completed before the JOIN completes the fork.
 
 ### Output Parameters
 
-|Attribute|Description|
-|---|---|
-|joinOn | This is the output configuration of the JOIN task used in conjunction with the DYNAMIC_FORK_JOIN task. The output of the JOIN task is a map, where the keys are task reference names of the tasks being joined, and the keys are the corresponding outputs of those tasks. |
+| Attribute | Description                                                                                                                                                                                                                                                                |
+| --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| joinOn    | This is the output configuration of the JOIN task used in conjunction with the DYNAMIC_FORK_JOIN task. The output of the JOIN task is a map, where the keys are task reference names of the tasks being joined, and the keys are the corresponding outputs of those tasks. |
 
 ## Examples
 
@@ -47,36 +47,80 @@ The [JOIN](https://orkes.io/content/docs/reference-docs/join-task) task will run
 <TabItem value="JSON" label="JSON">
 
 ```json
-   {
-     "name": "dynamic",
-     "taskReferenceName": "dynamic_ref",
-     "inputParameters": {
-       "dynamicTasks": "",
-       "dynamicTasksInput": ""
-     },
-     "type": "FORK_JOIN_DYNAMIC",
-     "dynamicForkTasksParam": "dynamicTasks",
-     "dynamicForkTasksInputParamName": "dynamicTasksInput"
-   },
+{
+  "name": "dynamic",
+  "taskReferenceName": "dynamic_ref",
+  "inputParameters": {
+    "dynamicTasks": "",
+    "dynamicTasksInput": ""
+  },
+  "type": "FORK_JOIN_DYNAMIC",
+  "dynamicForkTasksParam": "dynamicTasks",
+  "dynamicForkTasksInputParamName": "dynamicTasksInput"
+}
 ```
+
 </TabItem>
 <TabItem value="Java" label="Java">
-This is a banana 🍌
-</TabItem>
-<TabItem value="Python" label="Python">
-  This is a banana 🍌
+
+```java
+new DynamicFork(
+  String taskReferenceName, 
+  SimpleTask forkPrepareTask
+)
+```
+
 </TabItem>
 <TabItem value="Golang" label="Golang">
-    This is a banana 🍌
+
+```go
+workflow.NewDynamicForkTask(
+  taskRefName string, 
+  forkPrepareTask TaskInterface,
+) *DynamicForkTask
+```
+
+</TabItem>
+<TabItem value="Python" label="Python">
+
+```python
+conductor.client.workflow.task.DynamicForkTask(
+  task_ref_name: str, 
+  pre_fork_task: TaskInterface, 
+  join_task: JoinTask = None,
+)
+```
+
 </TabItem>
 <TabItem value="CSharp" label="CSharp">
-  This is a banana 🍌
-</TabItem>
-<TabItem value="clojure" label="Clojure">
-    This is a banana 🍌
+
+```csharp
+new Conductor.Definition.TaskType.DoWhileTask(
+  string taskReferenceName, 
+  string loopCondition, 
+  params WorkflowTask[] loopOver
+)
+```
+
 </TabItem>
 <TabItem value="Javascript" label="Javascript">
-    This is a banana 🍌
+
+```javascript
+dynamicForkTask = (
+  taskReferenceName: string,
+  preForkTasks: TaskDefTypes[] = [],
+  dynamicTasksInput: string = ""
+): ForkJoinDynamicDef
+```
+
+</TabItem>
+<TabItem value="Clojure" label="Clojure">
+
+<!-- Todo: @gardusig -->
+```clojure
+
+```
+
 </TabItem>
 </Tabs>
 
@@ -104,18 +148,18 @@ Here each item of the array is passed to a method called process. Conductor allo
 <p>
 Run a simple task for each of the inputs provided.
 
-|Attribute|Description|
-|---|---|
-| forkTaskName | Specify the name of the simple task to execute. |
+| Attribute      | Description                                               |
+| -------------- | --------------------------------------------------------- |
+| forkTaskName   | Specify the name of the simple task to execute.           |
 | forkTaskInputs | Array of inputs - a task will be executed for each input. |
 
 In this example, each task will be executed with the following input:
  
 ```json
 {
-   "inputText" : "value1",
-   "inputNumber" : 1,
-   "index": 0 // Added by the system to represent the array index for the object
+  "inputText" : "value1",
+  "inputNumber" : 1,
+  "index": 0 // Added by the system to represent the array index for the object
 }
 ```
 
@@ -155,20 +199,20 @@ Example:
       "taskReferenceName": "dynamic_workflow_array_simple_join_ref",
       "type": "JOIN"
     }
-  ],
+  ]
 }
 ```
 We can also use simple values or a mix of complex and simple objects.
 ```json
 [
- "apple", "orange", "kiwi"
+  "apple", "orange", "kiwi"
 ]
 ```
 When using simple values, it will be passed with the key input and an index representing the element's index in the array.
 ```json
 {
- "input" : "apple", // Value
- "index" : 0 // Index of the element
+  "input" : "apple", // Value
+  "index" : 0 // Index of the element
 }
 ```
 </p>
@@ -222,11 +266,11 @@ Example:
 <p>
 Run a sub-workflow for each of the inputs provided
 
-|Attribute|Description|
-|---|---|
-| forkTaskWorkflow | Specify the name of the sub-workflow to be executed. |
-| forkTaskWorkflowVersion | Optional version of the workflow to run. |
-| forkTaskInputs | Array of inputs - a task will be executed for each input. |
+| Attribute               | Description                                               |
+| ----------------------- | --------------------------------------------------------- |
+| forkTaskWorkflow        | Specify the name of the sub-workflow to be executed.      |
+| forkTaskWorkflowVersion | Optional version of the workflow to run.                  |
+| forkTaskInputs          | Array of inputs - a task will be executed for each input. |
 
 :::note
 **forkTaskWorkflow** - When this value is present, Conductor treats this as a dynamic fork that runs sub workflows.
@@ -261,7 +305,7 @@ Example:
       "taskReferenceName": "dynamic_workflow_array_sub_workflow_join_ref",
       "type": "JOIN"
     }
-  ],
+  ]
 }
 ```
 </p>

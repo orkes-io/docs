@@ -9,13 +9,13 @@ Set Variable allows you to set the workflow variables by creating or updating th
 
 ```json
 {
-      "name": "set_variable",
-      "taskReferenceName": "set_variable_task_ref",
-      "type": "SET_VARIABLE",
-      "inputParameters": {
-        "some keys": "some keys"
-      }
-    }
+  "name": "set_variable",
+  "taskReferenceName": "set_variable_task_ref",
+  "type": "SET_VARIABLE",
+  "inputParameters": {
+    "some keys": "some keys"
+  }
+}
 ```
 
 ### Input Parameters
@@ -29,32 +29,69 @@ Set Variable allows you to set the workflow variables by creating or updating th
 
 ```json
 {
-     "name": "Set_Name",
-     "taskReferenceName": "Set_Name_ref",
-     "type": "SET_VARIABLE",
-     "inputParameters": {
-       "name": "Orkes"
-     }
-   },
+  "name": "Set_Name",
+  "taskReferenceName": "Set_Name_ref",
+  "type": "SET_VARIABLE",
+  "inputParameters": {
+    "name": "Orkes"
+  }
+}
 ```
+
 </TabItem>
 <TabItem value="Java" label="Java">
-This is a banana 🍌
-</TabItem>
-<TabItem value="Python" label="Python">
-  This is a banana 🍌
+
+```java
+new SetVariable(
+  String taskReferenceName
+)
+```
+
 </TabItem>
 <TabItem value="Golang" label="Golang">
-    This is a banana 🍌
+
+```go
+workflow.NewSetVariableTask(
+  taskRefName string,
+) *SetVariableTask
+```
+
+</TabItem>
+<TabItem value="Python" label="Python">
+
+```python
+conductor.client.workflow.task.SetVariableTask(
+  task_ref_name: str
+)
+```
+
 </TabItem>
 <TabItem value="CSharp" label="CSharp">
-  This is a banana 🍌
-</TabItem>
-<TabItem value="clojure" label="Clojure">
-    This is a banana 🍌
+
+```csharp
+Conductor.Definition.TaskType.SetVariableTask(
+  string taskReferenceName
+)
+```
+
 </TabItem>
 <TabItem value="Javascript" label="Javascript">
-    This is a banana 🍌
+
+```javascript
+setVariableTask = (
+  taskReferenceName: string,
+  inputParameters: Record<string, unknown>
+): SetVariableTaskDef
+```
+
+</TabItem>
+<TabItem value="Clojure" label="Clojure">
+
+<!-- Todo: @gardusig -->
+```clojure
+
+```
+
 </TabItem>
 </Tabs>
 
@@ -85,7 +122,7 @@ Suppose in a workflow, we have to store a value in a variable and then, later in
       },
       "type": "SIMPLE"
     }
-  ],
+  ]
 }
 ```
 

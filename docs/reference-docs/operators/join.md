@@ -13,19 +13,19 @@ A JOIN task is used in conjunction with a **FORK_JOIN** or **FORK_JOIN_DYNAMIC**
 
 ```json
 {
-      "name": "join_task",
-      "taskReferenceName": "join_task_ref",
-      "type": "JOIN",
-      "joinOn": [//task_reference_names]
-    }
+  "name": "join_task",
+  "taskReferenceName": "join_task_ref",
+  "type": "JOIN",
+  "joinOn": [//tasks]
+}
 ```
 * In the **FORK_JOIN** task, the JOIN task waits for a list of zero or more of the forked tasks to be completed. However, when used with a **FORK_JOIN_DYNAMIC** task, it implicitly waits for all the dynamically forked tasks to complete.
 
 ### Input Parameters
 
-| Attribute | Description | 
-| -- | -- |
-| joinOn | A list of task reference names that this JOIN task will wait for completion. |
+| Attribute | Description                                                                  |
+| --------- | ---------------------------------------------------------------------------- |
+| joinOn    | A list of task reference names that this JOIN task will wait for completion. |
 
 ### Output Parameters
 
@@ -47,24 +47,65 @@ The output is a map, where the keys are the names of task references being joine
  ]
 }
 ```
+
 </TabItem>
 <TabItem value="Java" label="Java">
-This is a banana 🍌
-</TabItem>
-<TabItem value="Python" label="Python">
-  This is a banana 🍌
+
+```java
+new Join(
+  String taskReferenceName, 
+  String... joinOn
+)
+```
+
 </TabItem>
 <TabItem value="Golang" label="Golang">
-    This is a banana 🍌
+
+```go
+workflow.NewJoinTask(
+  taskRefName string, 
+  joinOn ...string,
+) *JoinTask
+```
+
+</TabItem>
+<TabItem value="Python" label="Python">
+
+```python
+conductor.client.workflow.task.JoinTask(
+  task_ref_name: str, 
+  join_on: List[str] = None
+)
+```
+
 </TabItem>
 <TabItem value="CSharp" label="CSharp">
-  This is a banana 🍌
-</TabItem>
-<TabItem value="clojure" label="Clojure">
-    This is a banana 🍌
+
+```csharp
+Conductor.Definition.TaskType.JoinTask(
+  string taskReferenceName, 
+  params WorkflowTask[] joinOn
+)
+```
+
 </TabItem>
 <TabItem value="Javascript" label="Javascript">
-    This is a banana 🍌
+
+```javascript
+joinTask = (
+  taskReferenceName: string,
+  joinOn: string[]
+): JoinTaskDef
+```
+
+</TabItem>
+<TabItem value="Clojure" label="Clojure">
+
+<!-- Todo: @gardusig -->
+```clojure
+
+```
+
 </TabItem>
 </Tabs>
 

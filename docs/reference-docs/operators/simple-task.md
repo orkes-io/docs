@@ -48,24 +48,66 @@ A Simple task is a Worker task that requires an external worker for polling. The
  ]
 }
 ```
+
 </TabItem>
 <TabItem value="Java" label="Java">
-This is a banana 🍌
-</TabItem>
-<TabItem value="Python" label="Python">
-  This is a banana 🍌
+
+```java
+new SimpleTask(
+  String taskDefName, 
+  String taskReferenceName
+)
+```
+
 </TabItem>
 <TabItem value="Golang" label="Golang">
-    This is a banana 🍌
+
+```go
+workflow.NewSimpleTask(
+  taskType string, 
+  taskRefName string,
+) *SimpleTask
+```
+
+</TabItem>
+<TabItem value="Python" label="Python">
+
+```python
+conductor.client.workflow.task.SimpleTask(
+  task_def_name: str, 
+  task_reference_name: str
+)
+```
+
 </TabItem>
 <TabItem value="CSharp" label="CSharp">
-  This is a banana 🍌
-</TabItem>
-<TabItem value="clojure" label="Clojure">
-    This is a banana 🍌
+
+```csharp
+Conductor.Definition.TaskType.SimpleTask(
+  string taskName, 
+  string taskReferenceName
+)
+```
+
 </TabItem>
 <TabItem value="Javascript" label="Javascript">
-    This is a banana 🍌
+
+```javascript
+simpleTask = (
+  taskReferenceName: string,
+  name: string,
+  inputParameters:Record<string,unknown>
+): SimpleTaskDef
+```
+
+</TabItem>
+<TabItem value="Clojure" label="Clojure">
+
+<!-- Todo: @gardusig -->
+```clojure
+
+```
+
 </TabItem>
 </Tabs>
 
@@ -132,9 +174,9 @@ In this section, you must replace “simple_worker” with the task name you cre
 
 ```java
 @Override
-    public String getTaskDefName() {
-        return "task_name";
-    }  
+public String getTaskDefName() {
+    return "task_name";
+}  
 ```
 
 * Next, you need to create an application in your Conductor server and provide the authentication details. If you take the [Playground](https://play.orkes.io/) as an example, you can [create an application](https://orkes.io/content/docs/getting-started/concepts/access-control-applications#configuring-application) and [generate the access keys](https://orkes.io/content/docs/getting-started/concepts/access-control-applications#access-keys). 

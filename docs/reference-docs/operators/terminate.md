@@ -13,33 +13,33 @@ The Terminate task is a task that can terminate the workflow with a termination 
 
 ```json
 {
-      "name": "terminate_task",
-      "taskReferenceName": "terminate_task_ref",
-      "inputParameters": {
-        "terminationStatus": "COMPLETED",
-        "terminationReason": "Task completed successfully.",
-        "workflowOutput": {
-          "Some-Key": "Some-Value"
-        }
-      },
-      "type": "TERMINATE"
+  "name": "terminate_task",
+  "taskReferenceName": "terminate_task_ref",
+  "inputParameters": {
+    "terminationStatus": "COMPLETED",
+    "terminationReason": "Task completed successfully.",
+    "workflowOutput": {
+      "Some-Key": "Some-Value"
     }
+  },
+  "type": "TERMINATE"
+}
 ```
 * The Terminate task can modify the workflow's output with a given parameter and act as a return statement for conditions where you want to terminate your workflow.
 
 ### Input Parameters
 
-| Attribute | Description |
-| -- | -- |
-| terminationStatus | Indicates the termination status. It can take values **COMPLETED**, **FAILED**, or **TERMINATED**. | 
-| workflowOutput | Provide the expected workflow output. | 
-| terminationReason | Provide a reason to give a clear understanding of the termination status. |
+| Attribute         | Description                                                                                        |
+| ----------------- | -------------------------------------------------------------------------------------------------- |
+| terminationStatus | Indicates the termination status. It can take values **COMPLETED**, **FAILED**, or **TERMINATED**. |
+| workflowOutput    | Provide the expected workflow output.                                                              |
+| terminationReason | Provide a reason to give a clear understanding of the termination status.                          |
 
 ### Output Parameters
 
-| Attribute | Description |
-| -- | -- |
-| output | The content of **workflowOutput** from the inputParameters. An empty object if **workflowOutput** is not set. | 
+| Attribute | Description                                                                                                   |
+| --------- | ------------------------------------------------------------------------------------------------------------- |
+| output    | The content of **workflowOutput** from the inputParameters. An empty object if **workflowOutput** is not set. |
 
 ## Examples
 
@@ -58,24 +58,71 @@ The Terminate task is a task that can terminate the workflow with a termination 
  "type": "TERMINATE"
 }
 ```
+
 </TabItem>
 <TabItem value="Java" label="Java">
-This is a banana 🍌
-</TabItem>
-<TabItem value="Python" label="Python">
-  This is a banana 🍌
+
+```java
+new Terminate(
+  String taskReferenceName, 
+  Workflow.WorkflowStatus terminationStatus, 
+  String reason
+)
+```
+
 </TabItem>
 <TabItem value="Golang" label="Golang">
-    This is a banana 🍌
+
+```go
+workflow.NewTerminateTask(
+  taskRefName string, 
+  status model.WorkflowStatus, 
+  terminationReason string,
+) *TerminateTask
+```
+
+</TabItem>
+<TabItem value="Python" label="Python">
+
+```python
+conductor.client.workflow.task.TerminateTask(
+  task_ref_name: str, 
+  status: WorkflowStatus, 
+  termination_reason: str
+)
+```
+
 </TabItem>
 <TabItem value="CSharp" label="CSharp">
-  This is a banana 🍌
-</TabItem>
-<TabItem value="clojure" label="Clojure">
-    This is a banana 🍌
+
+```csharp
+TerminateTask(
+  string taskReferenceName, 
+  WorkflowStatus.StatusEnum terminationStatus = WorkflowStatus.StatusEnum.FAILED, 
+  string workflowId = null, 
+  string terminationReason = null
+)
+```
+
 </TabItem>
 <TabItem value="Javascript" label="Javascript">
-    This is a banana 🍌
+
+```javascript
+terminateTask = (
+  taskReferenceName: string,
+  status: "COMPLETED" | "FAILED",
+  terminationReason?: string
+): TerminateTaskDef
+```
+
+</TabItem>
+<TabItem value="Clojure" label="Clojure">
+
+<!-- Todo: @gardusig -->
+```clojure
+
+```
+
 </TabItem>
 </Tabs>
 
