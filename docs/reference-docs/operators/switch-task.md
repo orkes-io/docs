@@ -82,7 +82,10 @@ Workflow with the switch task definition that uses **value-param** evaluatorType
 <TabItem value="Java" label="Java">
 
 ```java
-
+new Switch(
+  String taskReferenceName, 
+  String caseExpression
+)
 ```
 
 </TabItem>

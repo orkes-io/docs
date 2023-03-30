@@ -42,7 +42,9 @@ Set Variable allows you to set the workflow variables by creating or updating th
 <TabItem value="Java" label="Java">
 
 ```java
-
+new SetVariable(
+  String taskReferenceName
+)
 ```
 
 </TabItem>

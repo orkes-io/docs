@@ -53,7 +53,10 @@ A Simple task is a Worker task that requires an external worker for polling. The
 <TabItem value="Java" label="Java">
 
 ```java
-
+new SimpleTask(
+  String taskDefName, 
+  String taskReferenceName
+)
 ```
 
 </TabItem>

@@ -68,7 +68,10 @@ During execution, the DYNAMIC task is replaced in the workflow with whatever tas
 <TabItem value="Java" label="Java">
 
 ```java
-
+new Dynamic(
+  String taskReferenceName, 
+  String dynamicTaskNameValue
+)
 ```
 
 </TabItem>

@@ -64,7 +64,10 @@ The [JOIN](https://orkes.io/content/docs/reference-docs/join-task) task will run
 <TabItem value="Java" label="Java">
 
 ```java
-
+new DynamicFork(
+  String taskReferenceName, 
+  SimpleTask forkPrepareTask
+)
 ```
 
 </TabItem>

@@ -63,7 +63,11 @@ The Terminate task is a task that can terminate the workflow with a termination 
 <TabItem value="Java" label="Java">
 
 ```java
-
+new Terminate(
+  String taskReferenceName, 
+  Workflow.WorkflowStatus terminationStatus, 
+  String reason
+)
 ```
 
 </TabItem>

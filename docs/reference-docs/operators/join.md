@@ -52,7 +52,10 @@ The output is a map, where the keys are the names of task references being joine
 <TabItem value="Java" label="Java">
 
 ```java
-
+new Join(
+  String taskReferenceName, 
+  String... joinOn
+)
 ```
 
 </TabItem>

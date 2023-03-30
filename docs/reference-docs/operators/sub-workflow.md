@@ -62,7 +62,11 @@ The output of the sub-workflow is also supplied to the output of the workflow.
 <TabItem value="Java" label="Java">
 
 ```java
-
+new SubWorkflow(
+  String taskReferenceName, 
+  String workflowName, 
+  Integer workflowVersion
+)
 ```
 
 </TabItem>

@@ -113,7 +113,10 @@ Check [JOIN](https://orkes.io/content/docs/reference-docs/join-task) for more de
 <TabItem value="Java" label="Java">
 
 ```java
-
+new ForkJoin(
+  String taskReferenceName, 
+  Task<?>[]... forkedTasks
+)
 ```
 
 </TabItem>

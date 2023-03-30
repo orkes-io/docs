@@ -48,7 +48,10 @@ The Wait task is used when the workflow needs to be paused for an external signa
 <TabItem value="Java" label="Java">
 
 ```java
-
+new Wait(
+  String taskReferenceName, 
+  Duration waitFor
+)
 ```
 
 </TabItem>

@@ -92,7 +92,11 @@ The Do While task sequentially executes a list of tasks as long as a condition i
 <TabItem value="Java" label="Java">
 
 ```java
-
+new DoWhile(
+    String taskReferenceName, 
+    String condition, 
+    Task<?>... tasks
+)
 ```
 
 </TabItem>
