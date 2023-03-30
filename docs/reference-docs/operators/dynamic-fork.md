@@ -95,7 +95,11 @@ conductor.client.workflow.task.DynamicForkTask(
 <TabItem value="CSharp" label="CSharp">
 
 ```csharp
-
+new Conductor.Definition.TaskType.DoWhileTask(
+  string taskReferenceName, 
+  string loopCondition, 
+  params WorkflowTask[] loopOver
+)
 ```
 
 </TabItem>

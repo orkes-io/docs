@@ -96,7 +96,10 @@ conductor.client.workflow.task.SubWorkflowTask(
 <TabItem value="CSharp" label="CSharp">
 
 ```csharp
-
+Conductor.Definition.TaskType.SubWorkflowTask(
+  string taskReferenceName, 
+  SubWorkflowParams subWorkflowParams
+)
 ```
 
 </TabItem>

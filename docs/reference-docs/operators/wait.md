@@ -76,7 +76,10 @@ conductor.client.workflow.task.WaitTask(
 <TabItem value="CSharp" label="CSharp">
 
 ```csharp
-
+Conductor.Definition.TaskType.WaitTask(
+  string taskReferenceName, 
+  TimeSpan duration
+)
 ```
 
 </TabItem>

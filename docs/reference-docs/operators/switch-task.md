@@ -113,7 +113,11 @@ conductor.client.workflow.task.SwitchTask(
 <TabItem value="CSharp" label="CSharp">
 
 ```csharp
-
+Conductor.Definition.TaskType.SwitchTask(
+  string taskReferenceName, 
+  string caseExpression, 
+  bool useJavascript = false
+)
 ```
 
 </TabItem>

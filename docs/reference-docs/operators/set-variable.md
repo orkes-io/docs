@@ -69,7 +69,9 @@ conductor.client.workflow.task.SetVariableTask(
 <TabItem value="CSharp" label="CSharp">
 
 ```csharp
-
+Conductor.Definition.TaskType.SetVariableTask(
+  string taskReferenceName
+)
 ```
 
 </TabItem>

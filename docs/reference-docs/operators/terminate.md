@@ -96,7 +96,12 @@ conductor.client.workflow.task.TerminateTask(
 <TabItem value="CSharp" label="CSharp">
 
 ```csharp
-
+TerminateTask(
+  string taskReferenceName, 
+  WorkflowStatus.StatusEnum terminationStatus = WorkflowStatus.StatusEnum.FAILED, 
+  string workflowId = null, 
+  string terminationReason = null
+)
 ```
 
 </TabItem>

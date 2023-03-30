@@ -82,7 +82,10 @@ conductor.client.workflow.task.JoinTask(
 <TabItem value="CSharp" label="CSharp">
 
 ```csharp
-
+Conductor.Definition.TaskType.JoinTask(
+  string taskReferenceName, 
+  params WorkflowTask[] joinOn
+)
 ```
 
 </TabItem>

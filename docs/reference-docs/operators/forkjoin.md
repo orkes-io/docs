@@ -143,7 +143,10 @@ conductor.client.workflow.task.ForkTask(
 <TabItem value="CSharp" label="CSharp">
 
 ```csharp
-
+Conductor.Definition.TaskType.ForkJoinTask(
+  string taskReferenceName, 
+  params WorkflowTask[][] forkTasks,
+)
 ```
 
 </TabItem>

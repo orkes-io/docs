@@ -125,7 +125,11 @@ conductor.client.workflow.task.DoWhileTask(
 <TabItem value="CSharp" label="CSharp">
 
 ```csharp
-
+Conductor.Definition.TaskType.DoWhileTask(
+    string taskReferenceName, 
+    string loopCondition, 
+    params WorkflowTask[] loopOver
+)
 ```
 
 </TabItem>

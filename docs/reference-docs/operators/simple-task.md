@@ -83,7 +83,10 @@ conductor.client.workflow.task.SimpleTask(
 <TabItem value="CSharp" label="CSharp">
 
 ```csharp
-
+Conductor.Definition.TaskType.SimpleTask(
+  string taskName, 
+  string taskReferenceName
+)
 ```
 
 </TabItem>
