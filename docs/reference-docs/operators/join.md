@@ -92,7 +92,10 @@ Conductor.Definition.TaskType.JoinTask(
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
-
+joinTask = (
+  taskReferenceName: string,
+  joinOn: string[]
+): JoinTaskDef
 ```
 
 </TabItem>

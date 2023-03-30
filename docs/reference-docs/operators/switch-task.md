@@ -124,7 +124,12 @@ Conductor.Definition.TaskType.SwitchTask(
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
-
+switchTask = (
+  taskReferenceName: string,
+  expression: string,
+  decisionCases: Record<string, TaskDefTypes[]> = {},
+  defaultCase: TaskDefTypes[] = []
+): SwitchTaskDef
 ```
 
 </TabItem>

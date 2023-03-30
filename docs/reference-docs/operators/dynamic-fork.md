@@ -106,7 +106,11 @@ new Conductor.Definition.TaskType.DoWhileTask(
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
-
+dynamicForkTask = (
+  taskReferenceName: string,
+  preForkTasks: TaskDefTypes[] = [],
+  dynamicTasksInput: string = ""
+): ForkJoinDynamicDef
 ```
 
 </TabItem>

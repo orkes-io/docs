@@ -136,7 +136,11 @@ Conductor.Definition.TaskType.DoWhileTask(
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
-
+doWhileTask = (
+  taskRefName: string,
+  terminationCondition: string,
+  tasks: TaskDefTypes[]
+): DoWhileTaskDef
 ```
 
 </TabItem>

@@ -106,7 +106,11 @@ Conductor.Definition.TaskType.SubWorkflowTask(
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
-
+subWorkflowTask = (
+  taskReferenceName: string,
+  workflowName: string,
+  version?: number 
+): SubWorkflowTaskDef
 ```
 
 </TabItem>

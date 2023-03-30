@@ -86,7 +86,10 @@ Conductor.Definition.TaskType.WaitTask(
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
-
+waitTaskDuration = (
+  taskReferenceName:string,
+  duration:string
+): WaitTaskDef
 ```
 
 </TabItem>

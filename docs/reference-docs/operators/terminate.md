@@ -108,7 +108,11 @@ TerminateTask(
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
-
+terminateTask = (
+  taskReferenceName: string,
+  status: "COMPLETED" | "FAILED",
+  terminationReason?: string
+): TerminateTaskDef
 ```
 
 </TabItem>

@@ -153,7 +153,10 @@ Conductor.Definition.TaskType.ForkJoinTask(
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
-
+forkTask = (
+  taskReferenceName: string,
+  forkTasks: TaskDefTypes[]
+): ForkJoinTaskDef
 ```
 
 </TabItem>

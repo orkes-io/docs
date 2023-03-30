@@ -93,7 +93,11 @@ Conductor.Definition.TaskType.SimpleTask(
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
-
+simpleTask = (
+  taskReferenceName: string,
+  name: string,
+  inputParameters:Record<string,unknown>
+): SimpleTaskDef
 ```
 
 </TabItem>

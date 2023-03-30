@@ -78,7 +78,10 @@ Conductor.Definition.TaskType.SetVariableTask(
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
-
+setVariableTask = (
+  taskReferenceName: string,
+  inputParameters: Record<string, unknown>
+): SetVariableTaskDef
 ```
 
 </TabItem>
