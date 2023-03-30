@@ -46,94 +46,53 @@ Click [here](./conductor-clients) to browse the client SDK list and how to impor
 <TabItem value="Java" label="Java">
 
 ```java
-    @WorkerTask("fraud-check")
-    public String checkForFraud(@InputParam("amount") BigDecimal amount, @InputParam("accountId") String accountId) {
-        boolean isFraud = fraudService.isFraudulentTxn(accountId, amount);
-        if(isFraud) {
-            return "This transaction cannot be processed as its flagged for review.";
-        }
-        return "Deposit of " + amount + " has processed successfully";
+@WorkerTask("fraud-check")
+public String checkForFraud(@InputParam("amount") BigDecimal amount, @InputParam("accountId") String accountId) {
+    boolean isFraud = fraudService.isFraudulentTxn(accountId, amount);
+    if (isFraud) {
+        return "This transaction cannot be processed as its flagged for review.";
     }
-
+    return "Deposit of " + amount + " has processed successfully";
+}
 ```
 
 </TabItem>
 <TabItem value="Python" label="Python">
 
-```java
-    // @TODO:Gustavo
-    @WorkerTask("fraud-check")
-    public String checkForFraud(@InputParam("amount") BigDecimal amount, @InputParam("accountId") String accountId) {
-        boolean isFraud = fraudService.isFraudulentTxn(accountId, amount);
-        if(isFraud) {
-            return "This transaction cannot be processed as its flagged for review.";
-        }
-        return "Deposit of " + amount + " has processed successfully";
-    }
+<!-- @TODO:Gustavo -->
+```python
 
 ```
 
 </TabItem>
 <TabItem value="Golang" label="Golang">
 
-```java
-    // @TODO:Gustavo
-    @WorkerTask("fraud-check")
-    public String checkForFraud(@InputParam("amount") BigDecimal amount, @InputParam("accountId") String accountId) {
-        boolean isFraud = fraudService.isFraudulentTxn(accountId, amount);
-        if(isFraud) {
-            return "This transaction cannot be processed as its flagged for review.";
-        }
-        return "Deposit of " + amount + " has processed successfully";
-    }
-
-```
-
-</TabItem>
-<TabItem value="Clojure" label="Clojure">
-
-```java
-    // @TODO:Gustavo
-    @WorkerTask("fraud-check")
-    public String checkForFraud(@InputParam("amount") BigDecimal amount, @InputParam("accountId") String accountId) {
-        boolean isFraud = fraudService.isFraudulentTxn(accountId, amount);
-        if(isFraud) {
-            return "This transaction cannot be processed as its flagged for review.";
-        }
-        return "Deposit of " + amount + " has processed successfully";
-    }
+<!-- @TODO:Gustavo -->
+```go
 
 ```
 
 </TabItem>
 <TabItem value="CSharp" label="CSharp">
 
-```java
-    // @TODO:Gustavo
-    @WorkerTask("fraud-check")
-    public String checkForFraud(@InputParam("amount") BigDecimal amount, @InputParam("accountId") String accountId) {
-        boolean isFraud = fraudService.isFraudulentTxn(accountId, amount);
-        if(isFraud) {
-            return "This transaction cannot be processed as its flagged for review.";
-        }
-        return "Deposit of " + amount + " has processed successfully";
-    }
+<!-- @TODO:Gustavo -->
+```csharp
 
 ```
 
 </TabItem>
 <TabItem value="Javascript" label="Javascript">
 
-```java
-    // @TODO:Gustavo
-    @WorkerTask("fraud-check")
-    public String checkForFraud(@InputParam("amount") BigDecimal amount, @InputParam("accountId") String accountId) {
-        boolean isFraud = fraudService.isFraudulentTxn(accountId, amount);
-        if(isFraud) {
-            return "This transaction cannot be processed as its flagged for review.";
-        }
-        return "Deposit of " + amount + " has processed successfully";
-    }
+<!-- @TODO:Gustavo -->
+```javascript
+
+```
+
+</TabItem>
+<TabItem value="Clojure" label="Clojure">
+
+<!-- @TODO:Gustavo -->
+```clojure
 
 ```
 
