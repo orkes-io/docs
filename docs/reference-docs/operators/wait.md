@@ -55,7 +55,9 @@ The Wait task is used when the workflow needs to be paused for an external signa
 <TabItem value="Golang" label="Golang">
 
 ```go
-
+workflow.NewWaitTask(
+  taskRefName string,
+) *WaitTask
 ```
 
 </TabItem>
@@ -80,7 +82,6 @@ The Wait task is used when the workflow needs to be paused for an external signa
 ```
 
 </TabItem>
-
 <TabItem value="Clojure" label="Clojure">
 
 ```clojure

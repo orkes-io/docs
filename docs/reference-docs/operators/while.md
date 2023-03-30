@@ -99,7 +99,11 @@ The Do While task sequentially executes a list of tasks as long as a condition i
 <TabItem value="Golang" label="Golang">
 
 ```go
-
+workflow.NewDoWhileTask(
+    taskRefName string, 
+    terminationCondition string, 
+    tasks ...TaskInterface,
+) *DoWhileTask
 ```
 
 </TabItem>
@@ -124,7 +128,6 @@ The Do While task sequentially executes a list of tasks as long as a condition i
 ```
 
 </TabItem>
-
 <TabItem value="Clojure" label="Clojure">
 
 ```clojure

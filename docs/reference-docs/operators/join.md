@@ -59,7 +59,10 @@ The output is a map, where the keys are the names of task references being joine
 <TabItem value="Golang" label="Golang">
 
 ```go
-
+workflow.NewJoinTask(
+  taskRefName string, 
+  joinOn ...string,
+) *JoinTask
 ```
 
 </TabItem>
@@ -84,7 +87,6 @@ The output is a map, where the keys are the names of task references being joine
 ```
 
 </TabItem>
-
 <TabItem value="Clojure" label="Clojure">
 
 ```clojure

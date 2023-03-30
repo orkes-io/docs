@@ -120,7 +120,10 @@ Check [JOIN](https://orkes.io/content/docs/reference-docs/join-task) for more de
 <TabItem value="Golang" label="Golang">
 
 ```go
-workflow.NewForkTask
+workflow.NewForkTask(
+  taskRefName string, 
+  forkedTask ...[]TaskInterface,
+) *ForkTask
 ```
 
 </TabItem>
@@ -145,7 +148,6 @@ workflow.NewForkTask
 ```
 
 </TabItem>
-
 <TabItem value="Clojure" label="Clojure">
 
 ```clojure

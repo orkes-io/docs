@@ -60,7 +60,10 @@ A Simple task is a Worker task that requires an external worker for polling. The
 <TabItem value="Golang" label="Golang">
 
 ```go
-workflow.NewSimpleTask("task_name", "task_name_ref")
+workflow.NewSimpleTask(
+  taskType string, 
+  taskRefName string,
+) *SimpleTask
 ```
 
 </TabItem>
@@ -85,7 +88,6 @@ workflow.NewSimpleTask("task_name", "task_name_ref")
 ```
 
 </TabItem>
-
 <TabItem value="Clojure" label="Clojure">
 
 ```clojure

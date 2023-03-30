@@ -103,7 +103,6 @@ workflow.NewDynamicTask(
 ```
 
 </TabItem>
-
 <TabItem value="Clojure" label="Clojure">
 
 ```clojure

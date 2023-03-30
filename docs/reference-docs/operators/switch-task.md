@@ -89,7 +89,10 @@ Workflow with the switch task definition that uses **value-param** evaluatorType
 <TabItem value="Golang" label="Golang">
 
 ```go
-
+workflow.NewSwitchTask(
+  taskRefName string, 
+  caseExpression string,
+) *SwitchTask
 ```
 
 </TabItem>
@@ -114,7 +117,6 @@ Workflow with the switch task definition that uses **value-param** evaluatorType
 ```
 
 </TabItem>
-
 <TabItem value="Clojure" label="Clojure">
 
 ```clojure
@@ -149,17 +151,19 @@ Switch task can be nested just like nested if...then...else.
 
 ```json
 {
-    "decisionCases": {
-        "fedex": [//tasks],
-        "ups": [{
-            "taskType": "SWITCH",
-            "expression": "$.deliveryType == 'same-day' ? 'same_day' : 'regular'",
-            "decisionCases": {
-                "same_day": [],
-                "regular": [],
-            }
-        }]
-    }
+  "decisionCases": {
+    "fedex": [//tasks],
+    "ups": [
+      {
+        "taskType": "SWITCH",
+        "expression": "$.deliveryType == 'same-day' ? 'same_day' : 'regular'",
+        "decisionCases": {
+            "same_day": [],
+            "regular": [],
+        }
+      }
+    ]
+  }
 }
 
 ```

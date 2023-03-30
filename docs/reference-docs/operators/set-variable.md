@@ -49,7 +49,9 @@ Set Variable allows you to set the workflow variables by creating or updating th
 <TabItem value="Golang" label="Golang">
 
 ```go
-workflow.NewSetVariableTask("set_variable").Input("name", "Orkes")
+workflow.NewSetVariableTask(
+  taskRefName string,
+) *SetVariableTask
 ```
 
 </TabItem>
@@ -74,7 +76,6 @@ workflow.NewSetVariableTask("set_variable").Input("name", "Orkes")
 ```
 
 </TabItem>
-
 <TabItem value="Clojure" label="Clojure">
 
 ```clojure

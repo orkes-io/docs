@@ -98,7 +98,6 @@ workflow.NewStartWorkflowTask(
 ```
 
 </TabItem>
-
 <TabItem value="Clojure" label="Clojure">
 
 ```clojure

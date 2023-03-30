@@ -56,6 +56,7 @@ The Terminate Workflow task is used to terminate other workflows using their wor
 </TabItem>
 <TabItem value="Java" label="Java">
 
+<!-- TODO Gustavo -->
 ```java
 
 ```
@@ -63,6 +64,7 @@ The Terminate Workflow task is used to terminate other workflows using their wor
 </TabItem>
 <TabItem value="Golang" label="Golang">
 
+<!-- TODO Gustavo -->
 ```go
 
 ```
@@ -70,6 +72,7 @@ The Terminate Workflow task is used to terminate other workflows using their wor
 </TabItem>
 <TabItem value="Python" label="Python">
 
+<!-- TODO Gustavo -->
 ```python
 
 ```
@@ -77,6 +80,7 @@ The Terminate Workflow task is used to terminate other workflows using their wor
 </TabItem>
 <TabItem value="CSharp" label="CSharp">
 
+<!-- TODO Gustavo -->
 ```csharp
 
 ```
@@ -84,14 +88,15 @@ The Terminate Workflow task is used to terminate other workflows using their wor
 </TabItem>
 <TabItem value="Javascript" label="Javascript">
 
+<!-- TODO Gustavo -->
 ```javascript
 
 ```
 
 </TabItem>
-
 <TabItem value="Clojure" label="Clojure">
 
+<!-- TODO Gustavo -->
 ```clojure
 
 ```

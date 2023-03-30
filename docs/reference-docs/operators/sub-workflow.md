@@ -69,7 +69,11 @@ The output of the sub-workflow is also supplied to the output of the workflow.
 <TabItem value="Golang" label="Golang">
 
 ```go
-
+workflow.NewSubWorkflowTask(
+  taskRefName string, 
+  workflowName string, 
+  version int32,
+) *SubWorkflowTask
 ```
 
 </TabItem>
@@ -94,7 +98,6 @@ The output of the sub-workflow is also supplied to the output of the workflow.
 ```
 
 </TabItem>
-
 <TabItem value="Clojure" label="Clojure">
 
 ```clojure

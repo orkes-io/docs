@@ -70,7 +70,11 @@ The Terminate task is a task that can terminate the workflow with a termination 
 <TabItem value="Golang" label="Golang">
 
 ```go
-
+workflow.NewTerminateTask(
+  taskRefName string, 
+  status model.WorkflowStatus, 
+  terminationReason string,
+) *TerminateTask
 ```
 
 </TabItem>
@@ -95,7 +99,6 @@ The Terminate task is a task that can terminate the workflow with a termination 
 ```
 
 </TabItem>
-
 <TabItem value="Clojure" label="Clojure">
 
 ```clojure

@@ -99,7 +99,6 @@ workflow.NewDynamicForkTask(
 ```
 
 </TabItem>
-
 <TabItem value="Clojure" label="Clojure">
 
 ```clojure
