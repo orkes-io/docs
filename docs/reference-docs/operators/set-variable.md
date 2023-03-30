@@ -111,7 +111,7 @@ Suppose in a workflow, we have to store a value in a variable and then, later in
       },
       "type": "SIMPLE"
     }
-  ],
+  ]
 }
 ```
 

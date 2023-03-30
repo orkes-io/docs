@@ -16,21 +16,21 @@ The switch task is used for creating branching logic. It is a representation of 
 ## Configurations
 
 ```json
-    {
-      "name": "switch_task",
-      "taskReferenceName": "switch_task_ref",
-      "inputParameters": {
-        "switchCaseValue": "${workflow.input.service}"
-      },
-      "type": "SWITCH",
-      "evaluatorType": "value-param",
-      "expression": "switchCaseValue",
-      "defaultCase": [//tasks],
-      "decisionCases": {
-        "fedex": [//tasks],
-        "ups": [//tasks]
-      }
-    }
+{
+  "name": "switch_task",
+  "taskReferenceName": "switch_task_ref",
+  "inputParameters": {
+    "switchCaseValue": "${workflow.input.service}"
+  },
+  "type": "SWITCH",
+  "evaluatorType": "value-param",
+  "expression": "switchCaseValue",
+  "defaultCase": [//tasks],
+  "decisionCases": {
+    "fedex": [//tasks],
+    "ups": [//tasks]
+  }
+}
 ```
 * A switch task takes an expression as input along with multiple branches containing a sequence of tasks to be executed and a *default* branch to be executed if no matching branches are found.
 * The output of the **expression** is matched with the name of the branch.
@@ -61,21 +61,21 @@ Workflow with the switch task definition that uses **value-param** evaluatorType
 <TabItem value="JSON" label="JSON">
 
 ```json
-    {
-      "name": "switch_task",
-      "taskReferenceName": "switch_task_ref",
-      "inputParameters": {
-        "switchCaseValue": "${workflow.input.service}"
-      },
-      "type": "SWITCH",
-      "evaluatorType": "value-param",
-      "expression": "switchCaseValue",
-      "defaultCase": [//tasks],
-      "decisionCases": {
-        "fedex": [//tasks],
-        "ups": [//tasks]
-      }
-    }
+{
+  "name": "switch_task",
+  "taskReferenceName": "switch_task_ref",
+  "inputParameters": {
+    "switchCaseValue": "${workflow.input.service}"
+  },
+  "type": "SWITCH",
+  "evaluatorType": "value-param",
+  "expression": "switchCaseValue",
+  "defaultCase": [//tasks],
+  "decisionCases": {
+    "fedex": [//tasks],
+    "ups": [//tasks]
+  }
+}
 ```
 
 </TabItem>
@@ -133,10 +133,10 @@ The input to the tasks is available as the variables inside the **$** scope with
 
 ```json
 {
-    "inputParameters": {
-        "service": "${workflow.input.service}"
-    },
-    "expression": "$.service == 'fedex' ? 'fedex' : 'ups'",
+  "inputParameters": {
+      "service": "${workflow.input.service}"
+  },
+  "expression": "$.service == 'fedex' ? 'fedex' : 'ups'",
 }
 
 ```

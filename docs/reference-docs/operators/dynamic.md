@@ -138,8 +138,7 @@ Suppose in a workflow, we have to decide to ship the courier, but the decision i
       "type": "DYNAMIC",
       "dynamicTaskNameParam": "taskToExecute"
     }
-
-  ],
+  ]
 }
 ```
 

@@ -10,15 +10,15 @@ import TabItem from '@theme/TabItem';
 ## Configurations
 
 ```json
-    {
-     "name": "sub_workflow",
-     "taskReferenceName": "sub_workflow_task_ref",
-     "type": "SUB_WORKFLOW",
-     "subWorkflowParam": {
-       "name": "sub-workflow-name",
-       "version": 11
-     }
-   }
+{
+  "name": "sub_workflow",
+  "taskReferenceName": "sub_workflow_task_ref",
+  "type": "SUB_WORKFLOW",
+  "subWorkflowParam": {
+    "name": "sub-workflow-name",
+    "version": 11
+  }
+}
 ```
 :::note
 * The Do-While task does not allow nested Do-While tasks. But it does permit a sub-workflow that can have a Do-While loop inside it.
@@ -46,16 +46,16 @@ The output of the sub-workflow is also supplied to the output of the workflow.
 <TabItem value="JSON" label="JSON">
 
 ```json
-    {
-     "name": "sub_workflow_task",
-     "taskReferenceName": "sub_workflow_ref",
-     "inputParameters": {},
-     "type": "SUB_WORKFLOW",
-     "subWorkflowParam": {
-       "name": "sub-workflow-name",
-       "version": 11
-     }
-   }
+{
+  "name": "sub_workflow_task",
+  "taskReferenceName": "sub_workflow_ref",
+  "inputParameters": {},
+  "type": "SUB_WORKFLOW",
+  "subWorkflowParam": {
+    "name": "sub-workflow-name",
+    "version": 11
+  }
+}
 ```
 
 </TabItem>
@@ -115,20 +115,19 @@ Instead, you can call the existing workflow as a SUB_WORKFLOW task.
 
 ```json
 {
-     "name": "postage_rate_subworkflow",
-     "taskReferenceName": "postage_rate_subworkflow_ref",
-     "inputParameters": {},
-     "type": "SUB_WORKFLOW",
-     "decisionCases": {},
-     "defaultCase": [],
-     "forkTasks": [],
-     "startDelay": 0,
-     "subWorkflowParam": {
-       "name": "shipping_rate",
-       "version": 1
-     },
-   }
-
+  "name": "postage_rate_subworkflow",
+  "taskReferenceName": "postage_rate_subworkflow_ref",
+  "inputParameters": {},
+  "type": "SUB_WORKFLOW",
+  "decisionCases": {},
+  "defaultCase": [],
+  "forkTasks": [],
+  "startDelay": 0,
+  "subWorkflowParam": {
+    "name": "shipping_rate",
+    "version": 1
+  },
+}
 ```
 
 <p align="center"><img src="/content/img/subworkflow_in_action.png" alt="example workflow with subworkflow" width="400" style={{paddingBottom: 40, paddingTop: 40}} /></p>

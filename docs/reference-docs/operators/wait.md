@@ -14,13 +14,13 @@ The Wait task is used when the workflow needs to be paused for an external signa
 
 ```json
 {
-      "name": "wait_task",
-      "taskReferenceName": "wait_task_ref",
-      "type": "WAIT",
-      "inputParameters": {
-        "duration": "x days"
-      }
-    }
+  "name": "wait_task",
+  "taskReferenceName": "wait_task_ref",
+  "type": "WAIT",
+  "inputParameters": {
+    "duration": "x days"
+  }
+}
 ```
 
 ## Input Parameters
@@ -35,13 +35,13 @@ The Wait task is used when the workflow needs to be paused for an external signa
 
  ```json
 {
-      "name": "wait_task",
-      "taskReferenceName": "wait_task_ref",
-      "type": "WAIT",
-      "inputParameters": {
-        "duration": "2 days 3 hours"
-      }
-    }
+  "name": "wait_task",
+  "taskReferenceName": "wait_task_ref",
+  "type": "WAIT",
+  "inputParameters": {
+    "duration": "2 days 3 hours"
+  }
+}
 ```
 
 </TabItem>
@@ -96,12 +96,12 @@ The following wait task remains blocked until Dec 25, 2023, 9 am PST.
 
 ```json
 {
- "name":"wait_until_date",
- "taskReferenceName":"wait_until_date_ref",
- "taskType": "WAIT",
- "inputParameters": {
-   "until": "2023-12-25 09:00 PST"
- }
+  "name":"wait_until_date",
+  "taskReferenceName":"wait_until_date_ref",
+  "taskType": "WAIT",
+  "inputParameters": {
+    "until": "2023-12-25 09:00 PST"
+  }
 }
 ```
 </p>

@@ -117,19 +117,19 @@ Let’s see a sample JSON file for the start workflow task:
 "name": "sample_start_workflow",
 "description": "Sample Workflow to start a new workflow.",
 "tasks": [
-  {
-    "name": "start",
-    "taskReferenceName": "start_ref",
-    "inputParameters": {
-      "startWorkflow": {
-        "name": "your_workflow_name_to_be_started",
-        "version": 3,
-        "input": {}
-      }
-    },
-    "type": "START_WORKFLOW",
-  }
-     ],
+    {
+      "name": "start",
+      "taskReferenceName": "start_ref",
+      "inputParameters": {
+        "startWorkflow": {
+          "name": "your_workflow_name_to_be_started",
+          "version": 3,
+          "input": {}
+        }
+      },
+      "type": "START_WORKFLOW",
+    }
+  ]
 }
 ```
 
@@ -137,10 +137,10 @@ Here the input parameters are defined as:
 
 ```json
 "inputParameters": {
-      "startWorkflow": {
-       "name": "your_workflow_name_to_be_started",
-       "version": 3
-      }
+  "startWorkflow": {
+    "name": "your_workflow_name_to_be_started",
+    "version": 3
+  }
 },
 ```
 

@@ -13,11 +13,11 @@ A JOIN task is used in conjunction with a **FORK_JOIN** or **FORK_JOIN_DYNAMIC**
 
 ```json
 {
-      "name": "join_task",
-      "taskReferenceName": "join_task_ref",
-      "type": "JOIN",
-      "joinOn": [//task_reference_names]
-    }
+  "name": "join_task",
+  "taskReferenceName": "join_task_ref",
+  "type": "JOIN",
+  "joinOn": [//tasks]
+}
 ```
 * In the **FORK_JOIN** task, the JOIN task waits for a list of zero or more of the forked tasks to be completed. However, when used with a **FORK_JOIN_DYNAMIC** task, it implicitly waits for all the dynamically forked tasks to complete.
 
