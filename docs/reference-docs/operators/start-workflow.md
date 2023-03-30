@@ -60,7 +60,7 @@ Start Workflow is an operator task used to start another workflow from an existi
 </TabItem>
 <TabItem value="Java" label="Java">
 
-<!-- TODO Gustavo -->
+<!-- Todo: @gardusig -->
 ```java
 
 ```
@@ -92,7 +92,7 @@ conductor.client.workflow.task.StartWorkflowTask(
 </TabItem>
 <TabItem value="CSharp" label="CSharp">
 
-<!-- TODO Gustavo -->
+<!-- Todo: @gardusig -->
 ```csharp
 
 ```
@@ -100,7 +100,7 @@ conductor.client.workflow.task.StartWorkflowTask(
 </TabItem>
 <TabItem value="Javascript" label="Javascript">
 
-<!-- TODO Gustavo -->
+<!-- Todo: @gardusig -->
 ```javascript
 
 ```
@@ -108,6 +108,7 @@ conductor.client.workflow.task.StartWorkflowTask(
 </TabItem>
 <TabItem value="Clojure" label="Clojure">
 
+<!-- Todo: @gardusig -->
 ```clojure
 
 ```

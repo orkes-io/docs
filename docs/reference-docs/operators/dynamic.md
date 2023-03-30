@@ -87,7 +87,7 @@ workflow.NewDynamicTask(
 </TabItem>
 <TabItem value="Python" label="Python">
 
-<!-- TODO Gustavo -->
+<!-- Todo: @gardusig -->
 ```python
 
 ```
@@ -95,7 +95,7 @@ workflow.NewDynamicTask(
 </TabItem>
 <TabItem value="CSharp" label="CSharp">
 
-<!-- TODO Gustavo -->
+<!-- Todo: @gardusig -->
 ```csharp
 
 ```
@@ -103,6 +103,7 @@ workflow.NewDynamicTask(
 </TabItem>
 <TabItem value="Javascript" label="Javascript">
 
+<!-- Todo: @gardusig -->
 ```javascript
 
 ```
@@ -110,6 +111,7 @@ workflow.NewDynamicTask(
 </TabItem>
 <TabItem value="Clojure" label="Clojure">
 
+<!-- Todo: @gardusig -->
 ```clojure
 
 ```
