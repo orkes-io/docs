@@ -67,9 +67,15 @@ public String checkForFraud(@InputParam("amount") BigDecimal amount, @InputParam
 </TabItem>
 <TabItem value="Golang" label="Golang">
 
-<!-- @TODO:Gustavo -->
 ```go
-
+func CheckForFraud(t *model.Task) (interface{}, error) {
+	amount := t.InputData["amount"]
+	accountId := t.InputData["accountId"]
+	if fraudService.isFraudulentTxn(accountId, amount) {
+		return "This transaction cannot be processed as its flagged for review.", nil
+	}
+	return fmt.Sprintf("Deposit of %s has processed successfully", amount), nil
+}
 ```
 
 </TabItem>
