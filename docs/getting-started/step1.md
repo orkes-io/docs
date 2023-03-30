@@ -12,7 +12,7 @@ Let’s build a workflow for the sample banking use case - deposit funds into a 
 This workflow has three steps: __record the deposit__, __send an email__, and __send an sms__. For this example, let's assume there are REST 
 (HTTP) endpoints you can invoke to run these functions.
 
-:::note
+:::tip
 Conductor supports many ways to implement the steps, such as HTTP endpoints, workers, inline code, and serverless functions. We can mix and match these too!
 :::
 

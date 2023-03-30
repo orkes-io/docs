@@ -27,7 +27,7 @@ const sidebars = {
         },
         {
             type: 'doc',
-            id: 'guides/core-concepts',
+            id: 'core-concepts',
             className: 'leftMenuHeader',
         },
         {
@@ -70,8 +70,8 @@ const sidebars = {
                 'guides/task-to-domain',
                 'guides/error-handling',
                 'guides/scaling-workers',
-                'orchestrating-human-tasks',
-                'metrics-and-observability'
+                'guides/orchestrating-human-tasks',
+                'guides/metrics-and-observability'
             ],
             collapsible: true,
             collapsed: true,
