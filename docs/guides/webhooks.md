@@ -38,4 +38,4 @@ The Webhook, once created in Orkes Conductor, would generate a Webhook URL that 
 * Signature Verification
 * Challenge Verification
 
-To have a detailed look at the Webhook APIs and the configuration steps, refer [WAIT FOR WEBHOOK](https://orkes.cloud/content/reference-docs/system-tasks/webhook) task.
+To have a detailed look at the Webhook APIs and the configuration steps, refer [WAIT FOR WEBHOOK](/content/reference-docs/system-tasks/webhook) task.

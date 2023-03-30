@@ -123,9 +123,9 @@ Now, what if this worker is thrashing the database or has a memory leak that imp
 Here, we can use the task-to-domain functionality to spin up another version of the worker and run it in the same production workflow, without affecting the production traffic. 
 
 1. Let’s clone the [OrkesWorkers](https://github.com/orkes-io/orkesworkers) repo on your local machine. As a best practice, removing all other worker files except [HelloWorld.java](https://github.com/orkes-io/orkesworkers/blob/main/src/main/java/io/orkes/samples/workers/HelloWorld.java) is recommended for a smooth, error-free running of the worker. 
-2. [Create an application](https://orkes.cloud/content/access-control-security/applications#configuring-application) in your Conductor server.
-3. Generate the [key & secret](https://orkes.cloud/content/access-control-security/applications#generating-access-keys).
-4. [Add permissions](https://orkes.cloud/content/access-control-security/applications#adding-permissions) for the application to the hello_world task and workflow. 
+2. [Create an application](/content/access-control-security/applications#configuring-application) in your Conductor server.
+3. Generate the [key & secret](/content/access-control-security/applications#generating-access-keys).
+4. [Add permissions](/content/access-control-security/applications#adding-permissions) for the application to the hello_world task and workflow. 
 
 Now, open your java worker and slightly modify the **OrkesWorkersApplication.java**. Change **TaskRunnerConfigurer** as follows: 
 

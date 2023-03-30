@@ -45,7 +45,7 @@ When a task has failed to execute due to any factors, the status of the task wil
 
 The workflow can fail due to any reason, and it can be handled in two ways:
 
-* Using **failure workflow** - While creating the workflow definition, you can set the parameter [**failureWorkflow**](https://orkes.cloud/content/reference-docs/api/metadata/workflow-definitions#:~:text=Provide%20the%20workflow%20name%20to%20be%20triggered%20upon%20a%20failure%20of%20the%20execution%20of%20this%20workflow.) that will run the specified workflow on the failure of your current workflow.
+* Using **failure workflow** - While creating the workflow definition, you can set the parameter [**failureWorkflow**](/content/reference-docs/api/metadata/workflow-definitions#:~:text=Provide%20the%20workflow%20name%20to%20be%20triggered%20upon%20a%20failure%20of%20the%20execution%20of%20this%20workflow.) that will run the specified workflow on the failure of your current workflow.
 * Using **workflow status listener** - Create a custom implementation of the Workflow Status Listener, and add **setWorkflowStatusListenerEnabled** to your workflow. 
 
 ## Rate Limiting Workflow​

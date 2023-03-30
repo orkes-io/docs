@@ -13,9 +13,9 @@ Conductor lets you run any number of tasks in parallel. Let’s learn how to do 
 <Tabs>
 <TabItem value="UI" label="UI">
 
-1. Add [HTTP](https://orkes.cloud/content/reference-docs/system-tasks/http) worker to retrieve stock tickers.
-2. Add [Dynamic Fork](https://orkes.cloud/content/reference-docs/operators/dynamic_fork) based on the output of the HTTP worker.
-3. Create the [Subworkflow](https://orkes.cloud/content/reference-docs/operators/sub_workflow). Include the following tasks in the subworkflow.<ul><li>Retrieve the previous day’s closing price and volume.</li><li>Retrieve today's opening price.</li><li>Run a trade execution.</li></ul>
+1. Add [HTTP](/content/reference-docs/system-tasks/http) worker to retrieve stock tickers.
+2. Add [Dynamic Fork](/content/reference-docs/operators/dynamic_fork) based on the output of the HTTP worker.
+3. Create the [Subworkflow](/content/reference-docs/operators/sub_workflow). Include the following tasks in the subworkflow.<ul><li>Retrieve the previous day’s closing price and volume.</li><li>Retrieve today's opening price.</li><li>Run a trade execution.</li></ul>
 4. Run Workflow.
 
 </TabItem>

@@ -8,7 +8,7 @@ This documentation gives you a basic overview of the core concepts of Conductor.
 
 A Task represents the business logic execution, such as making an HTTP call, sending an email, processing data files or executing some logic. A task is the fundamental building block of a workflow that can be further classified into Operators, System tasks, or custom code workers written in any programming language.
 
-An [Operator](https://orkes.cloud/content/category/ref-docs/operators) in a workflow is your programming language construct, such as a switch, loop, fork/join or return statement, whereas a [System task](https://orkes.cloud/content/category/ref-docs/system-tasks) is a pre-built task used for most common operators, such as an event task, HTTP task, and more.
+An [Operator](/content/category/ref-docs/operators) in a workflow is your programming language construct, such as a switch, loop, fork/join or return statement, whereas a [System task](/content/category/ref-docs/system-tasks) is a pre-built task used for most common operators, such as an event task, HTTP task, and more.
 
 ## Workers
 

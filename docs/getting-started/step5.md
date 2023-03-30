@@ -17,7 +17,7 @@ Let’s learn how you can pause your workflows using wait tasks.
 <Tabs>
 <TabItem value="UI" label="UI">
 
-1. In your current workflow, add a [wait](https://orkes.cloud/content/reference-docs/operators/wait) task before the SMS task.
+1. In your current workflow, add a [wait](/content/reference-docs/operators/wait) task before the SMS task.
 2. You can configure the wait task parameters to wait for 10 mins.
 3. Run workflow directly from the UI using the Run Workflow button.
 

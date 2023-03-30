@@ -139,7 +139,10 @@ h5 {
 .menu__link--active:not(.menu__link--sublist) {
   background: #efefef;
   font-weight: bold;
-  color: #212121;
+  color: var(--ifm-menu-color-active);
+}
+.menu__link--active:not(.menu__link--sublist):hover {
+  color: var(--ifm-menu-color-active);
 }
 [data-theme="dark"] .menu__link--active {
   background: #efefef59;
@@ -424,7 +427,7 @@ summary {
 }
 
 .leftMenuHeader > a {
-  font-weight: 400;
+  font-weight: 600;
   /*color: var(--ifm-menu-color)!important;*/
 }
 

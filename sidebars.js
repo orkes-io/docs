@@ -26,6 +26,11 @@ const sidebars = {
             className: 'leftMenuHeader',
         },
         {
+            type: 'doc',
+            id: 'guides/core-concepts',
+            className: 'leftMenuHeader',
+        },
+        {
             type: 'category',
             label: 'Getting Started',
             link: {
@@ -51,7 +56,6 @@ const sidebars = {
                 keywords: ['guides', 'features', 'developer-guides']
             },
             items: [
-                'guides/core-concepts',
                 'guides/passing-data-task-to-task',
                 'guides/unit-tests',
                 'guides/integration-with-cicd',
@@ -61,15 +65,21 @@ const sidebars = {
                     id: 'guides/webhooks',
                     label: "Webhook Integration"
                 },
-                'guides/conductor-clients',
                 'guides/write-as-code',
                 'guides/debugging',
                 'guides/task-to-domain',
                 'guides/error-handling',
                 'guides/scaling-workers',
+                'orchestrating-human-tasks',
+                'metrics-and-observability'
             ],
             collapsible: true,
-            collapsed: false,
+            collapsed: true,
+            className: 'leftMenuHeader',
+        },
+        {
+            type: 'doc',
+            id: 'conductor-clients',
             className: 'leftMenuHeader',
         },
         {
@@ -88,16 +98,6 @@ const sidebars = {
             ],
             collapsible: true,
             collapsed: true,
-            className: 'leftMenuHeader',
-        },
-        {
-            type: 'doc',
-            id: 'orchestrating-human-tasks',
-            className: 'leftMenuHeader',
-        },
-        {
-            type: 'doc',
-            id: 'metrics-and-observability',
             className: 'leftMenuHeader',
         },
         {
@@ -159,6 +159,21 @@ const sidebars = {
                             dirName: 'reference-docs/api',
                         }]
                 },
+            ],
+            collapsible: true,
+            collapsed: true,
+            className: 'leftMenuHeader',
+        },
+        {
+            type: 'category',
+            label: 'Videos',
+            link: {
+                type: 'generated-index',
+                title: 'Videos',
+                slug: '/category/videos'
+            },
+            items: [
+                'videos/run-workflow'
             ],
             collapsible: true,
             collapsed: true,
