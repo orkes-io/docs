@@ -14,87 +14,97 @@ Now that we know how to compose workflows. Let’s learn how to integrate these 
 <TabItem value="Java" label="Java">
 
 ```java 
-    StartWorkflowRequest request = new StartWorkflowRequest();
-    request.setName("<name of your workflow>");
-    request.setInput(Map.of("amount", 100, "account", "account-id"));
+StartWorkflowRequest request = new StartWorkflowRequest();
+request.setName("<name of your workflow>");
+request.setInput(Map.of("amount", 100, "account", "account-id"));
     
-    String workflowId = workflowClient.startWorkflow(request);
-    log.info("Workflow id: {}", workflowId);
-    
+String workflowId = workflowClient.startWorkflow(request);
+log.info("Workflow id: {}", workflowId);
 ```
-
 
 </TabItem>
 <TabItem value="Python" label="Python">
 
-```javascript
-    // @TODO:Gustavo
-    StartWorkflowRequest request = new StartWorkflowRequest();
-    request.setName("<name of your workflow>");
-    request.setInput(Map.of("amount", 100, "account", "account-id"));
-
-    String workflowId = workflowClient.StartWorkflow(request);
-    log.info("Workflow id: {}", workflowId);
-
+```python
+request = StartWorkflowRequest(
+    name="<name of your workflow>", 
+    input={
+        "amount": 100, 
+        "account": "<account-id>"
+    },
+)
+workflow_id = workflow_client.start_workflow(
+    body=start_workflow_request,
+)
+print(f'Workflow id: {workflow_id}')
 ```
 
 </TabItem>
 <TabItem value="Golang" label="Golang">
 
-```golang
-    // @TODO:Gustavo
-    StartWorkflowRequest request = new StartWorkflowRequest();
-    request.setName("<name of your workflow>");
-    request.setInput(Map.of("amount", 100, "account", "account-id"));
+```go
+request := model.NewStartWorkflowRequest(
+    "<name of your workflow>",
+    1,
+    "",
+    map[string]interface{}{
+        "amount": 100, 
+        "account": "<account-id>"
+    }
+)
+workflowId, err := workflowExecutor.StartWorkflow(
+    request,
+)
+log.info("Workflow id: ", workflowId)
+```
 
-    String workflowId = workflowClient.StartWorkflow(request);
-    log.info("Workflow id: {}", workflowId);
+</TabItem>
+<TabItem value="CSharp" label="CSharp">
 
+```csharp
+var request = new StartWorkflowRequest(
+    name: "<name of your workflow>",
+    version: 1
+);
+request.Input = new Dictionary<string, object>()
+{
+    {"amount", 100},
+    {"account", "account-id"}
+};
+var workflowId = workflowClient.StartWorkflow(
+    startWorkflowRequest
+);
+log.info($"Workflow id: {workflowId}");
+```
+
+</TabItem>
+<TabItem value="Javascript" label="Javascript">
+
+```javascript
+const request: StartWorkflowRequest = {
+  name: "<name of your workflow>",
+  version: 1,
+  input: {
+    "amount": 100,
+    "account": "account-id"
+  }
+}
+const workflowId = client.workflowResource.startWorkflow(
+    request
+)
+console.log("Workflow id: {}", workflowId)
 ```
 
 </TabItem>
 <TabItem value="Clojure" label="Clojure">
 
 ```clojure
-    // @TODO:Gustavo
-    StartWorkflowRequest request = new StartWorkflowRequest();
-    request.setName("<name of your workflow>");
-    request.setInput(Map.of("amount", 100, "account", "account-id"));
-
-    String workflowId = workflowClient.StartWorkflow(request);
-    log.info("Workflow id: {}", workflowId);
-
+(def request {:name "<name of your workflow>"
+              :input {:amount: 100
+                      :account: "account-id"}})
+(def workflow-id workflow-resource/start-workflow [options, request])
+(log/info "Workflow id:" workflow-id)
 ```
-
-</TabItem>
-<TabItem value="CSharp" label="CSharp">
-
-```java
-    // @TODO:Gustavo
-    StartWorkflowRequest request = new StartWorkflowRequest();
-    request.setName("<name of your workflow>");
-    request.setInput(Map.of("amount", 100, "account", "account-id"));
-
-    String workflowId = workflowClient.StartWorkflow(request);
-    log.info("Workflow id: {}", workflowId);
-
-```
-
-
-</TabItem>
-<TabItem value="Javascript" label="Javascript">
-
-```javascript
-    // @TODO:Gustavo
-    StartWorkflowRequest request = new StartWorkflowRequest();
-    request.setName("<name of your workflow>");
-    request.setInput(Map.of("amount", 100, "account", "account-id"));
-
-    String workflowId = workflowClient.StartWorkflow(request);
-    log.info("Workflow id: {}", workflowId);
-
-```
-
 
 </TabItem>
 </Tabs>
