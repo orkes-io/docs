@@ -98,9 +98,21 @@ func CheckForFraud(t *model.Task) (interface{}, error) {
 </TabItem>
 <TabItem value="Javascript" label="Javascript">
 
-<!-- @TODO:Gustavo -->
 ```javascript
-
+const checkForFraud = (inputData) => {
+  const amount = inputData.amount
+  const accountId = inputData.accountId
+  taskResult = {
+    outputData: {
+      "message": `Deposit of ${amount} has been processed successfully`
+    },
+    status: "COMPLETED"
+  }
+  if (fraudService.isFraudulent(accountId, amount)) {
+    taskResult.outputData.message = 'This transaction cannot be processed as its flagged for review.'
+  }
+  return taskResult
+};
 ```
 
 </TabItem>
