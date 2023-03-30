@@ -52,16 +52,25 @@ public String checkForFraud(@InputParam("amount") BigDecimal amount, @InputParam
     if (isFraud) {
         return "This transaction cannot be processed as its flagged for review.";
     }
-    return "Deposit of " + amount + " has processed successfully";
+    return "Deposit of " + amount + " has been processed successfully";
 }
 ```
 
 </TabItem>
 <TabItem value="Python" label="Python">
 
-<!-- @TODO:Gustavo -->
 ```python
+def check_for_fraud(task: Task):
+  amount = task.input_data["amount"]
+  account_id = task.input_data["accountId"]
+  if fraud_service.is_fraudulent_txn(account_id, amount):
+    return 'This transaction cannot be processed as its flagged for review.'
+  return f'Deposit of {amount} has been processed successfully'
 
+fraud_worker = Worker(
+  task_definition_name='task_name',
+  execute_function=check_for_fraud,
+)
 ```
 
 </TabItem>
@@ -74,7 +83,7 @@ func CheckForFraud(t *model.Task) (interface{}, error) {
 	if fraudService.isFraudulentTxn(accountId, amount) {
 		return "This transaction cannot be processed as its flagged for review.", nil
 	}
-	return fmt.Sprintf("Deposit of %s has processed successfully", amount), nil
+	return fmt.Sprintf("Deposit of %s has been processed successfully", amount), nil
 }
 ```
 
