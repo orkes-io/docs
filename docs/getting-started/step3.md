@@ -90,9 +90,31 @@ func CheckForFraud(t *model.Task) (interface{}, error) {
 </TabItem>
 <TabItem value="CSharp" label="CSharp">
 
-<!-- @TODO:Gustavo -->
 ```csharp
+public class CheckForFraud : IWorkflowTask
+{
+  public string TaskType { get; }
+  public WorkflowTaskExecutorConfiguration WorkerSettings { get; }
 
+  public CheckForFraud(string taskType = "taskName")
+  {
+    TaskType = taskType;
+    WorkerSettings = new WorkflowTaskExecutorConfiguration();
+  }
+
+  public TaskResult Execute(Task task)
+  {
+    var amount = (Decimal)task.InputData["amount"];
+    var accountId = task.InputData["accountId"].ToString();
+    var taskResult = task.Completed();
+    taskResult.OutputData["message"] = $"Deposit of {amount} has been processed successfully";
+    if (_fraudService.IsFraudulentTxn(accountId, amount))
+    {
+      taskResult.OutputData["message"] = "This transaction cannot be processed as its flagged for review.";
+    }
+    return taskResult;
+  }
+}
 ```
 
 </TabItem>
