@@ -102,7 +102,11 @@ workflow.NewSwitchTask(
 <TabItem value="Python" label="Python">
 
 ```python
-
+conductor.client.workflow.task.SwitchTask(
+  task_ref_name: str, 
+  case_expression: str, 
+  use_javascript: bool = False
+)
 ```
 
 </TabItem>

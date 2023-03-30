@@ -72,7 +72,10 @@ workflow.NewJoinTask(
 <TabItem value="Python" label="Python">
 
 ```python
-
+conductor.client.workflow.task.JoinTask(
+  task_ref_name: str, 
+  join_on: List[str] = None
+)
 ```
 
 </TabItem>

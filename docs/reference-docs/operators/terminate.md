@@ -85,7 +85,11 @@ workflow.NewTerminateTask(
 <TabItem value="Python" label="Python">
 
 ```python
-
+conductor.client.workflow.task.TerminateTask(
+  task_ref_name: str, 
+  status: WorkflowStatus, 
+  termination_reason: str
+)
 ```
 
 </TabItem>

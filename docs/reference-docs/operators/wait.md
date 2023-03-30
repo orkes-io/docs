@@ -67,7 +67,9 @@ workflow.NewWaitTask(
 <TabItem value="Python" label="Python">
 
 ```python
-
+conductor.client.workflow.task.WaitTask(
+  task_ref_name: str
+)
 ```
 
 </TabItem>

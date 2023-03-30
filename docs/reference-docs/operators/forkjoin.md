@@ -133,7 +133,10 @@ workflow.NewForkTask(
 <TabItem value="Python" label="Python">
 
 ```python
-
+conductor.client.workflow.task.ForkTask(
+  task_ref_name: str, 
+  forked_tasks: List[List[TaskInterface]]
+)
 ```
 
 </TabItem>

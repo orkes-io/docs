@@ -60,7 +60,9 @@ workflow.NewSetVariableTask(
 <TabItem value="Python" label="Python">
 
 ```python
-
+conductor.client.workflow.task.SetVariableTask(
+  task_ref_name: str
+)
 ```
 
 </TabItem>

@@ -84,7 +84,11 @@ workflow.NewDynamicForkTask(
 <TabItem value="Python" label="Python">
 
 ```python
-
+conductor.client.workflow.task.DynamicForkTask(
+  task_ref_name: str, 
+  pre_fork_task: TaskInterface, 
+  join_task: JoinTask = None,
+)
 ```
 
 </TabItem>

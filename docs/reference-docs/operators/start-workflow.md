@@ -81,7 +81,12 @@ workflow.NewStartWorkflowTask(
 <TabItem value="Python" label="Python">
 
 ```python
-
+conductor.client.workflow.task.StartWorkflowTask(
+  task_ref_name: str, 
+  workflow_name: str, 
+  start_workflow_request: StartWorkflowRequest, 
+  version: int = None
+)
 ```
 
 </TabItem>

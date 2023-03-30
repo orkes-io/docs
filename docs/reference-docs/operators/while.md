@@ -114,7 +114,11 @@ workflow.NewDoWhileTask(
 <TabItem value="Python" label="Python">
 
 ```python
-
+conductor.client.workflow.task.DoWhileTask(
+    task_ref_name: str, 
+    termination_condition: str, 
+    tasks: List[TaskInterface]
+)
 ```
 
 </TabItem>

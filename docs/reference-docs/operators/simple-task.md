@@ -73,7 +73,10 @@ workflow.NewSimpleTask(
 <TabItem value="Python" label="Python">
 
 ```python
-
+conductor.client.workflow.task.SimpleTask(
+  task_def_name: str, 
+  task_reference_name: str
+)
 ```
 
 </TabItem>

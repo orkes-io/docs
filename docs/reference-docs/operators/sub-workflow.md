@@ -84,7 +84,12 @@ workflow.NewSubWorkflowTask(
 <TabItem value="Python" label="Python">
 
 ```python
-
+conductor.client.workflow.task.SubWorkflowTask(
+  task_ref_name: str, 
+  workflow_name: str, 
+  version: int = None, 
+  task_to_domain_map: Dict[str, str] = None
+)
 ```
 
 </TabItem>
