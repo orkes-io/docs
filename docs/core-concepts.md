@@ -1,18 +1,17 @@
 # Core Concepts
 
-Conductor is a workflow orchestration platform that encompasses the flow of your business logic. To begin with Conductor, you must familiarize yourself with certain basic concepts of Conductor. The process of orchestrating Workflows using Conductor revolves around three main concepts: Tasks, Workers and Workflows.
-
-This documentation gives you a basic overview of the core concepts of Conductor.
+Orkes Conductor is a platform for building distributed systems. Fundamentally it takes care of orchestrating your flows reliably through various pieces in your applications such as code, functions, APIs and more. The process of orchestrating using Conductor revolves around three main concepts: Tasks, Workers and Workflows.
 
 ## Tasks
 
-A Task represents the business logic execution, such as making an HTTP call, sending an email, processing data files or executing some logic. A task is the fundamental building block of a workflow that can be further classified into Operators, System tasks, or custom code workers written in any programming language.
+A Task represents a unit of work or a step in your flow, such as making an HTTP call, sending an email, processing data files or executing some logic. A task is the basic building block of a workflow that can be further classified into Operators, System tasks, or custom code workers.
 
-An [Operator](/content/category/ref-docs/operators) in a workflow is your programming language construct, such as a switch, loop, fork/join or return statement, whereas a [System task](/content/category/ref-docs/system-tasks) is a pre-built task used for most common operators, such as an event task, HTTP task, and more.
+An [Operator](/content/category/ref-docs/operators) in a workflow is your programming language construct, such as a switch, loop, fork/join or return statement, whereas a [System task](/content/category/ref-docs/system-tasks) is a pre-built task used for most common operators, such as an event task, HTTP task, polling an endpoint, and many more.
 
 ## Workers
 
-A worker is responsible for executing a task. Operators and System tasks are handled by the Conductor server, whereas the user-defined tasks need a worker running in a different environment. This worker will poll the Conductor's task queue to see if the server has scheduled any work. If there is a scheduled task, the worker executes the task and produces the output, provided input is specified. The worker’s output is sent back to the workflow, and the process continues as per the defined workflow.
+A worker is responsible for executing a task. Operators and System tasks are handled by the Conductor server, whereas the user-defined tasks is managed by applications implementing them. This worker will poll Conductor server to receive and execute any scheduled any work. 
+Conductor passes the inputs to the task worker for execution and collects the output back and the process continues to the next step as per the workflow definition.
 
 Conductor is agnostic to how the workers are deployed and provides lightweight SDKs in all major languages that allow you to expose existing functionality as Conductor Workers. Workers can run on bare metal, containers, VMs, or as serverless functions.
 
@@ -23,3 +22,11 @@ Workflow can be defined as the collection of tasks and operators that specifies 
 ```c
 Workflow = {Tasks + Workers}
 ```
+
+## Related Topics
+
+* [Use cases and Templates](/content/category/templates)
+* [Operators](/content/category/ref-docs/operators)
+* [System Tasks](/content/category/ref-docs/system-tasks)
+* [Custom Worker](/content/getting-started/step3)
+* [Clients and SDKs](/content/conductor-clients)
