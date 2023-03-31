@@ -30,8 +30,23 @@ We can refer to these values as inputs to the task using the following expressio
  "taskInput2Key": "${workflow.input.worfklowInputJsonExample.nestedKey}"
 }
 ```
+The expression syntax starts with a **$** sign, followed by the bracket that encapsulates the expression to be evaluated. 
 
-So, here the task will receive the following inputs from the workflow:
+```json
+"taskInput1Key": "${workflow.input.worfklowInputNumberExample}"
+```
+
+Let’s break it down:
+
+* **taskInput1Key** - A key that refers to the specific task input parameter.
+* **${workflow.input.** - A syntax used to reference the input parameters from the workflow input. 
+* **"${workflow.input.worfklowInputNumberExample}"**- In this case, the input parameter of the workflow is expected to be *workflowInputNumberExample*.
+
+Finally, the task input here, “taskInput1Key,” refers to the workflow input “workflowInputNumberExample”. In the workflow input, the value of "worfklowInputNumberExample" is 1, so the value of "taskInput1Key" in this example is also 1.
+
+Similarly, evaluating this expression **"taskInput2Key": "${workflow.input.worfklowInputJsonExample.nestedKey}"** would result in **"taskInput2Key": "nestedValue"**.
+
+So, the input to the task referred from the workflow input looks like this:
 
 ```json
 {
@@ -62,7 +77,7 @@ We can refer to these values as inputs to our new task using the following expre
 }
 ```
 
-So, here the task will receive the following inputs from the previous task:
+The above expression can be evaluated using the same mechanism explained above, and finally, the task will receive the following inputs from the previous task output:
 
 ```json
 {
