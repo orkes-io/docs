@@ -141,7 +141,3 @@ This is a banana 🍌
 add details
 </p>
 </details>
-
-## More...
-##### Configure retries for the task.
-##### Configure template for the input.

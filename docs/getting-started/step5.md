@@ -22,9 +22,9 @@ Orkes Conductor doesn't limit your wait conditions. We can wait for __mins__, __
 <div className="row">
 <div className="col col--4">
 
-1. In your current workflow, add a [wait](/content/reference-docs/operators/wait) task before the SMS task
-2. You can configure the wait task parameters to wait for 10 mins
-3. Run workflow directly from the UI using the Run Workflow button
+1. In your current workflow, add a [Wait](/content/reference-docs/operators/wait) task before the SMS task.
+2. You can configure the wait task parameters to wait for 10 mins.
+3. Run workflow directly from the UI using the Run Workflow button.
 
 </div>
 <div className="col">
@@ -43,7 +43,7 @@ Orkes Conductor doesn't limit your wait conditions. We can wait for __mins__, __
 Since you have configured the wait task to wait for 10 mins, once the workflow execution reaches this task, it waits for 10 mins and then proceeds to the next task; sending an SMS.
 
 
-## Looking Ahead
+## Related Topics
 
 * [API Reference for Wait](/content/reference-docs/operators/wait)
 * [Scheduling workflows](/content/guides/scheduling-workflows) 

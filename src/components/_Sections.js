@@ -17,8 +17,8 @@ import AccordionWithImg from "../components/AccordionWithImg";
 
 const videoSource = [
   {
-    src: "https://www.youtube.com/embed/du7mls9XMUE",
-    title: "Orkes Conductor Core Concepts",
+    src: "https://www.youtube.com/embed/VV036Ljs2ns",
+    title: "Introduction to Orkes Conductor",
   },
   {
     src: "https://www.youtube.com/embed/du7mls9XMUE",

@@ -6,8 +6,8 @@ Error Handling is one of the critical aspects of software development, especiall
 
 Task rate limits are mechanisms by which the rate of task execution is limited within a workflow. In certain situations, there may be a requirement to limit the task execution to prevent overloading. A rate limit for the task can be set with the following two parameters:
 
-* **rateLimitFrequencyInSeconds**: Sets the frequency window, which specifies the rate limit duration in seconds. 
-* **rateLimitPerFrequency**: Specifies the volume of requests that can be completed over the timeframe.
+* **rateLimitFrequencyInSeconds**: Sets the frequency window, which specifies the rate limit duration in seconds
+* **rateLimitPerFrequency**: Specifies the volume of requests that can be completed over the timeframe
 
 For example, the below configuration will only allow the task to be run 100 times in a minute.
 
@@ -22,9 +22,9 @@ The tasks can be set to timeout after certain seconds. This can be set with the 
 
 When the task times out, the **timeoutPolicy** can be used to define what should happen next to the task. The **timeoutPolicy** parameters are:
 
-* **RETRY**: Retries the task again.
-* **TIME_OUT_WF**: The task status is marked as TIMED_OUT, and the task is terminated.
-* **ALERT_ONLY**: Registers a counter and sends an alert.
+* **RETRY**: Retries the task again
+* **TIME_OUT_WF**: The task status is marked as TIMED_OUT, and the task is terminated
+* **ALERT_ONLY**: Registers a counter and sends an alert
 
 ## Task Retries​
 
@@ -32,8 +32,8 @@ When a task fails, it can automatically be set to retry using specific parameter
 
 The retry mechanism for the failed tasks can be set using the **retryLogic** parameter. It consists of 2 options: 
 
-* **FIXED** - Every retry occurs as per the time set under *retryDelaySeconds*.
-* **EXPONENTIAL_BACKOFF** - Every retry occurs as per *retryDelaySeconds*2^(retryCount)*.
+* **FIXED** - Every retry occurs as per the time set under **retryDelaySeconds**
+* **EXPONENTIAL_BACKOFF** - Every retry occurs as per **retryDelaySeconds*2^(retryCount)**
 
 The task will fail if the task does not successfully complete after the set number of retries.
 

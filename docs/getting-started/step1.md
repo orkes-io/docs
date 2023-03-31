@@ -54,7 +54,7 @@ You can run this workflow to see how it executes. If there are failures, Conduct
 <div className="col col--4">
 
 
-1. In your current workflow, add a [fork-join](/content/reference-docs/operators/forkjoin) task after the deposit task.
+1. In your current workflow, add a [Fork Join](/content/reference-docs/operators/forkjoin) task after the deposit task.
 2. Add the SMS and email tasks as fork tasks.
 3. Join the two fork tasks using the join operation.
 4. Run workflow.
@@ -73,11 +73,11 @@ You can run this workflow to see how it executes. If there are failures, Conduct
 </TabItem>
 </Tabs>
 
-## Looking Ahead / Explore Further / What's Next?
+## Related Topics
 
-- Passing [inputs into workflow for tasks](/content/guides/passing-data-task-to-task).
-- Passing the [output of one task to the input](/content/guides/passing-data-task-to-task) of another
-- Running custom worker code (instead of HTTP endpoints)
-- Conditional task executions
-- Running a dynamic set of tasks in parallel
-- Configuring retries for your task
+- Passing [inputs into workflow for tasks](/content/guides/passing-data-task-to-task#task-inputs-referred-from-workflow-inputs).
+- Passing the [output of one task to the input](/content/guides/passing-data-task-to-task#task-inputs-referred-from-other-task-outputs) of another
+- Running [custom worker code](/content/getting-started/step3) (instead of HTTP endpoints)
+- [Conditional task executions](/content/reference-docs/operators/switch-task)
+- Running a [dynamic set of tasks in parallel](/content/reference-docs/operators/dynamic-fork)
+- Configuring [retries for your task](/content/guides/error-handling#task-retries)

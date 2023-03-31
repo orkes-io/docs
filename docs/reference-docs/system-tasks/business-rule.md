@@ -58,7 +58,7 @@ Let’s assume the input Name is Phone. If the executionStrategy is **FIRE_FIRST
 | inputColumns | Specifies the input to the rule file. It can be populated using previous task/workflow input/static input. | 
 | outputColumns | Specifies the list of columns that will be present in the task output. The columns that are not present here are considered input columns whose values should be specified. | 
 
-## Supported Operators
+### Supported Operators
 
 Business rule task supports the following operators:
 

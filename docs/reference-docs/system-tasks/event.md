@@ -45,7 +45,7 @@ Configuration for publishing an event into Kafka to notify an external system.
 
 The tasks' output is sent as a payload to the external event. In the case of SQS, the task's output is sent as a payload to the SQS message.
 
-## Supported Queuing Systems​
+### Supported Queuing Systems​
 
 Conductor has support for the following external event queueing systems as part of the OSS build.
 
@@ -90,6 +90,9 @@ This is a banana 🍌
 
 <details><summary>Sending SQS messages</summary>
 <p>
+Todo
+
+Update the example here itself.
 
 See [Sending SQS messages](https://orkes.io/content/docs/how-tos/Tasks/SQS-event-task) tutorial for an example EVENT task.
 </p>

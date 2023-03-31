@@ -26,7 +26,7 @@ You need to configure the following parameters:
 | Attribute | Description |
 | -- | -- | 
 | Schedule Name | Provide a unique name for the schedule. Ensure that the schedule name contains no spaces or special characters. |
-| Cron Expression | The cron expression is the schedule that the workflow will run on. You can either input the cron expression or choose from the available templates. See the section [Cron Expression](/content/docs/api/scheduler#cron-expression) below for detailed information regarding this. |
+| Cron Expression | The cron expression is the schedule that the workflow will run on. You can either input the cron expression or choose from the available templates. See the section [Cron Expression](/content/guides/scheduling-workflows#cron-expression) below for detailed information regarding this. |
 | Workflow Name | Provide the name of the workflow to be run. The author of the scheduler should have execution permission for the workflow. Else the workflow would get terminated quoting the reason that the author has no permission over the workflow. |
 | Workflow Version | The Workflow created may have different versions. You can choose the version to be scheduled here. If left blank, it will run the latest version. |
 | Input Parameters | Provide fixed input values for the workflow as a JSON object. This field is optional. |
@@ -59,9 +59,9 @@ The terms, in the order from left to right, define the timings:
 * **Second**: Allowed values: 0-59
 * **Minute**: Allowed values: 0-59
 * **Hour**: Allowed values: 0-23
-* **Day of Month**: Allowed values: 1-31.
-* **Month**: Allowed values are 1-12 or JAN-DEC.
-* **Day of Week**: Allowed values are 0-7 or MON-SUN, where 0 & 7 is Sunday.
+* **Day of Month**: Allowed values: 1-31
+* **Month**: Allowed values are 1-12 or JAN-DEC
+* **Day of Week**: Allowed values are 0-7 or MON-SUN, where 0 & 7 is Sunday
 
 Macros are also supported when setting a schedule.
 

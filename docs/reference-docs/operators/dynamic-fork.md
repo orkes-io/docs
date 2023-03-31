@@ -33,7 +33,7 @@ The Dynamic fork task is used when the number of forks is to be determined at th
 | dynamicForkTasksParam          | This JSON array lists the tasks in each fork that is to be created. Each entry corresponds to a separate fork.                     |
 | dynamicForkTasksInputParamName | This is a JSON array where the keys are the taskReferenceName for each fork, and the values are the inputParameters for each task. |
 
-The [JOIN](https://orkes.io/content/docs/reference-docs/join-task) task will run after all the dynamic tasks, collecting the output for all tasks. All the tasks must be completed before the JOIN completes the fork.
+The [JOIN](/content/reference-docs/operators/join) task will run after all the dynamic tasks, collecting the output for all tasks. All the tasks must be completed before the JOIN completes the fork.
 
 ### Output Parameters
 

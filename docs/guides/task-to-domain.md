@@ -44,19 +44,23 @@ To test the workflow with the test version of worker X, we add the following whi
  <TabItem value="Java" lable="Java">
 
  <ul><li>
- 
  On your worker project, you need to edit the <b>OrkesWorkersApplication</b> file to change the <b>TaskRunner</b> configuration such that <b>task x</b>  is given the domain <b>test</b>.</li><li> Create a HashMap <b>taskToDomainMap</b> with the entry: mapping the <b>task x</b> to the domain <b>test</b>. This is added to the Configurer <b>.withTaskToDomain(taskToDomainMap).</b></li><li> On configuring this, the worker would only pick the tasks in a workflow executed with the same domain <b>test</b>.</li></ul>
 
 </TabItem>
 <TabItem value="Python" label="Python">
+TO-DO @Gustavo
 </TabItem>
 <TabItem value="Go" label="Go">
+TO-DO @Gustavo
 </TabItem>
 <TabItem value="CSharp" label="CSharp">
+TO-DO @Gustavo
 </TabItem>
 <TabItem value="Clojure" label="Clojure">
+TO-DO @Gustavo
 </TabItem>
 <TabItem value="Javascript" label="Javascript">
+TO-DO @Gustavo
 </TabItem>
 </Tabs>
 

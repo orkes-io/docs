@@ -109,7 +109,7 @@ console.log("Workflow id: {}", workflowId)
 </TabItem>
 </Tabs>
 
-Click [here](./conductor-clients) to browse the client SDK list and how to import the required dependencies in our applications.
+View our documentation on [client SDK](/content/conductor-clients) list and how to import the required dependencies in our applications.
 
 In addition to triggering from code, we can also run them from:
 
@@ -118,7 +118,6 @@ In addition to triggering from code, we can also run them from:
 3. [Upon receiving a Webhook](/content/reference-docs/system-tasks/webhook)
 4. [At a Schedule - using the Scheduler](/content/guides/scheduling-workflows)
 
-## Looking Ahead
+## Related Topics
 
-* - Passing the [output of one task to the input](/content/guides/passing-data-task-to-task) of another
-* 
+* Passing the [output of one task to the input](/content/guides/passing-data-task-to-task#task-inputs-referred-from-other-task-outputs) of another

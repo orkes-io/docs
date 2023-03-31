@@ -9,11 +9,11 @@ import Install from '@site/src/components/install.mdx';
 
 Conductor workflows can be unit-tested using **POST /workflow/test endpoint**. The approach is similar to how you unit test using mock objects in Java or similar languages.
 
-#### Why Unit Test Workflows?
+### Why Unit Test Workflows?
 Unit tests allow you to test for the correctness of the workflow definition, ensuring:
-1. Given a specific input, workflow reaches the terminal state in a COMPLETED or FAILED state
-2. Given a specific input, the workflow executes a specific set of tasks. This is useful for testing branching and dynamic forks
-3. Task inputs are wired correctly - e.g., if a task receives its input from the output of another task, this can be verified using the unit test
+1. Given a specific input, workflow reaches the terminal state in a COMPLETED or FAILED state.
+2. Given a specific input, the workflow executes a specific set of tasks. This is useful for testing branching and dynamic forks.
+3. Task inputs are wired correctly - e.g., if a task receives its input from the output of another task, this can be verified using the unit test.
 
 ## Unit Testing Workflows
 

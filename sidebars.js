@@ -166,10 +166,10 @@ const sidebars = {
         },
         {
             type: 'category',
-            label: 'Videos',
+            label: 'How To Videos',
             link: {
                 type: 'generated-index',
-                title: 'Videos',
+                title: 'How To Videos',
                 slug: '/category/videos'
             },
             items: [

@@ -179,8 +179,8 @@ public String getTaskDefName() {
 }  
 ```
 
-* Next, you need to create an application in your Conductor server and provide the authentication details. If you take the [Playground](https://play.orkes.io/) as an example, you can [create an application](https://orkes.io/content/docs/getting-started/concepts/access-control-applications#configuring-application) and [generate the access keys](https://orkes.io/content/docs/getting-started/concepts/access-control-applications#access-keys). 
-* Ensure to [provide access](https://orkes.io/content/docs/getting-started/concepts/access-control-applications#workflow--task-permissions) to the task & workflows while creating the application.
+* Next, you need to create an application in your Conductor server and provide the authentication details. If you take the [Playground](https://play.orkes.io/) as an example, you can [create an application](/content/access-control-security/applications#configuring-application) and [generate the access keys](/content/access-control-security/applications#generating-access-keys). 
+* Ensure to [provide access](/content/access-control-security/applications#adding-permissions) to the task & workflows while creating the application.
 * Under the **application.properties** in your worker, replace the key ID and secret with that of the copied values from the Playground.
 
 ```json

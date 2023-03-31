@@ -44,7 +44,7 @@ A Fork operation lets you run a specified list of tasks or sub-workflows in para
 | joinOn    | This is the output configuration of the JOIN task used in conjunction with the FORK_JOIN task. The output of the JOIN task is a map, where the keys are task reference names of the tasks being joined, and the keys are the corresponding outputs of those tasks. |
 
 :::info Join Task
-Check [JOIN](https://orkes.io/content/docs/reference-docs/join-task) for more details on the JOIN aspect of the FORK.
+Check [JOIN](/content/reference-docs/operators/join) for more details on the JOIN aspect of the FORK.
 :::
 
 ## Examples

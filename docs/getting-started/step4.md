@@ -17,8 +17,8 @@ Conductor lets us run any number of tasks in parallel. Let’s learn how to do t
 <div className="col col--4">
 
 1. Add [HTTP](/content/reference-docs/system-tasks/http) worker to retrieve stock tickers.
-2. Add [Dynamic Fork](/content/reference-docs/operators/dynamic_fork) based on the output of the HTTP worker.
-3. Create the [Subworkflow](/content/reference-docs/operators/sub_workflow). Include the following tasks in the subworkflow.<ul><li>Retrieve the previous day’s closing price and volume.</li><li>Retrieve today's opening price.</li><li>Run a trade execution.</li></ul>
+2. Add [Dynamic Fork](/content/reference-docs/operators/dynamic-fork) based on the output of the HTTP worker.
+3. Create the [Subworkflow](/content/reference-docs/operators/sub-workflow). Include the following tasks in the subworkflow.<ul><li>Retrieve the previous day’s closing price and volume</li><li>Retrieve today's opening price</li><li>Run a trade execution</li></ul>
 4. Run Workflow.
 
 </div>
@@ -39,8 +39,8 @@ As we can see, this workflow triggers a sub-workflow for each ticker from the ou
 
 The mock APIs used in this example are available here on this repo:  
 
-## Looking Ahead
+## Related Topics
 
-- Passing [inputs into workflow for tasks](/content/guides/passing-data-task-to-task).
-- Passing the [output of one task to the input](/content/guides/passing-data-task-to-task) of another
+- Passing [inputs into workflow for tasks](/content/guides/passing-data-task-to-task#task-inputs-referred-from-workflow-inputs)
+- Passing the [output of one task to the input](/content/guides/passing-data-task-to-task#task-inputs-referred-from-other-task-outputs) of another
 - [Client SDKs](/content/conductor-clients)
