@@ -159,9 +159,12 @@ In this example, each task will be executed with the following input:
 {
   "inputText" : "value1",
   "inputNumber" : 1,
-  "index": 0 // Added by the system to represent the array index for the object
+  "index": 0 
 }
 ```
+:::note
+In the task, there will be a value called **index**, which is inserted by the system to represent the array index for the object.
+:::
 
 Example:
 
