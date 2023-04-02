@@ -82,12 +82,12 @@ log.info($"Workflow id: {workflowId}");
 
 ```javascript
 const request: StartWorkflowRequest = {
-  name: "<name of your workflow>",
-  version: 1,
-  input: {
-    "amount": 100,
-    "account": "account-id"
-  }
+    name: "<name of your workflow>",
+    version: 1,
+    input: {
+        "amount": 100,
+        "account": "account-id"
+    }
 }
 const workflowId = client.workflowResource.startWorkflow(
     request
