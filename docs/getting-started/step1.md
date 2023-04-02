@@ -23,7 +23,9 @@ We can create workflows using multiple methods, such as UI, Code etc. We will st
 <Tabs>
 <TabItem value="UI" label="UI" className="ui-instructions">
 <div className="row">
-<div className="col col--4">
+<div className="col col--4 ui-instructions-padding">
+
+Watch this video and follow the steps below: 
 
 1. Login and Navigate to **Workflows > Definitions**.
 2. Click the **Define Workflow** button at the top right corner.
@@ -31,7 +33,7 @@ We can create workflows using multiple methods, such as UI, Code etc. We will st
 4. Click the **Run Workflow** [[Guide]](../videos/run-workflow) option from the left menu, and choose your workflow.
 
 </div>
-<div className="col">
+<div className="col ui-instructions-padding">
 <div className="embed-loom-video">
 <iframe
   width="100%"

@@ -2,9 +2,11 @@
 
 Orkes Conductor is a platform for building distributed systems. Fundamentally it takes care of orchestrating your flows reliably through various pieces in your applications such as code, functions, APIs and more. The process of orchestrating using Conductor revolves around three main concepts: Tasks, Workers and Workflows.
 
+<p style={{textAlign: "center"}}><img src="/content/img/anatomy.png" alt="adding a secret via UI" width="500" style={{paddingBottom: 20, paddingTop: 20}} /></p>
+
 ## Tasks
 
-A Task represents a unit of work or a step in your flow, such as making an HTTP call, sending an email, processing data files or executing some logic. A task is the basic building block of a workflow that can be further classified into Operators, System tasks, or custom code workers.
+A Task represents a unit of work or a step in your flow, such as making an HTTP call, sending an email, processing data files or executing some logic. A task is the basic building block of a workflow that can be further classified into __operators__, __system__ tasks, or __custom__ code workers.
 
 An [Operator](/content/category/ref-docs/operators) in a workflow is your programming language construct, such as a switch, loop, fork/join or return statement, whereas a [System task](/content/category/ref-docs/system-tasks) is a pre-built task used for most common operators, such as an event task, HTTP task, polling an endpoint, and many more.
 

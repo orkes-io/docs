@@ -17,7 +17,7 @@ import AccordionWithImg from "../components/AccordionWithImg";
 
 const videoSource = [
   {
-    src: "https://www.youtube.com/embed/VV036Ljs2ns",
+    src: "https://player.vimeo.com/video/813914842?h=cb0d0ecf6b&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479",
     title: "Introduction to Orkes Conductor",
   },
   {

@@ -173,7 +173,8 @@ const sidebars = {
                 slug: '/category/videos'
             },
             items: [
-                'videos/run-workflow'
+                'videos/run-workflow',
+                'videos/playground-access',
             ],
             collapsible: true,
             collapsed: true,

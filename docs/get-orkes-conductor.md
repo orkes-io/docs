@@ -62,3 +62,7 @@ export CONDUCTOR_SERVER_URL=http://localhost:8080/api
 </p>
 </details>
 
+### Video Guides
+
+- [Working on Orkes Playground](/content/videos/playground-access).
+

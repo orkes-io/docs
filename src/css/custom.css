@@ -491,6 +491,10 @@ summary {
   padding-bottom: 10px;
 }
 
+.ui-instructions-padding {
+  min-width: 280px;
+  padding-left: 25px;
+}
 .embed-loom-video {
   margin: 10px;
 }
