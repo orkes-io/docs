@@ -39,7 +39,7 @@ Watch this video and follow the steps below:
   width="100%"
   height="300px"
   allow="fullscreen;"
-  src={"https://www.youtube.com/embed/0BaiLdGu7Lo"}
+  src={"https://player.vimeo.com/video/813938430?h=547c5edf56"}
 ></iframe></div>
 </div>
 </div>
