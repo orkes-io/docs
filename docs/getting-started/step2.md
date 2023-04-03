@@ -8,7 +8,13 @@ import Install from '@site/src/components/install.mdx';
 
 # Step 2: Running Workflows from Code
 
-Now that we know how to compose workflows. Let’s learn how to integrate these with our applications. We can trigger workflows from our code using Conductor SDKs.
+So far, we have seen how to compose basic workflows and run them from the UI. However more commonly we will be running the workflows
+from an application or service. Let’s learn how to do this from our applications. Orkes Conductor platform offers various SDKs in different languages
+for integration with applications or services. 
+
+View our documentation on [Conductor Clients & SDKs](/content/conductor-clients) to learn how to import the required dependencies in our applications.
+
+Let's look at some code examples of how to trigger a workflow by it's name.
 
 <Tabs>
 <TabItem value="Java" label="Java">
@@ -109,7 +115,7 @@ console.log("Workflow id: {}", workflowId)
 </TabItem>
 </Tabs>
 
-View our documentation on [client SDK](/content/conductor-clients) list and how to import the required dependencies in our applications.
+
 
 In addition to triggering from code, we can also run them from:
 
