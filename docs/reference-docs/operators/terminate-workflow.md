@@ -104,7 +104,41 @@ The Terminate Workflow task is used to terminate other workflows using their wor
 </TabItem>
 </Tabs>
 
-<details><summary>Add Examples</summary>
+<details><summary>Sample Workflow</summary>
 <p>
+
+Suppose another running workflow is to be terminated; you can create a workflow with the workflow IDs to be terminated.
+
+A sample workflow may look like this:
+```json
+{
+ "name": "terminate_workflow",
+ "description": "Edit or extend this sample workflow. Set the workflow name to get started",
+ "version": 1,
+ "tasks": [
+   {
+     "name": "terminate_hello_world",
+     "taskReferenceName": "terminate_hello_world",
+     "inputParameters": {
+       "workflowId": "ff2c8cdc-d20e-11ed-b1a7-ce4d7ef052ad"
+     },
+     "type": "TERMINATE_WORKFLOW",
+   }
+ ],
+ "schemaVersion": 2,
+ "ownerEmail": "riza.farheen@orkes.io",
+ "timeoutPolicy": "ALERT_ONLY",
+}
+```
+If you run this workflow, the workflow with the mentioned workflowId gets terminated, and you can get the terminatedWorkflowIds from the execution page.
+
+<p align="center"><img src="/content/img/terminate-workflow.png" alt="Terminate Workflow - Successful execution" width="90%" height="auto"></img></p>
+
+You can copy and paste this ID into the workflow execution URL to view the terminated workflow.
+
+<p align="center"><img src="/content/img/terminated-workflow.png" alt="View of the terminated workflow" width="90%" height="auto"></img></p>
+
+A warning message is displayed indicating that the workflow was terminated.
+
 </p>
 </details>
