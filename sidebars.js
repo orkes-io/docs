@@ -78,8 +78,48 @@ const sidebars = {
             className: 'leftMenuHeader',
         },
         {
-            type: 'doc',
-            id: 'conductor-clients',
+            type: 'category',
+            label: 'Conductor Clients & SDKs',
+            link: {
+                type: 'generated-index',
+                title: 'Conductor Clients & SDKs',
+                slug: '/category/sdks',
+                keywords: ['SDK', 'client', 'java', 'python', 'clojure', 'golang', 'csharp']
+            },
+            items: [
+                {
+                    type: 'doc',
+                    id: 'sdks/java',
+                    label: 'Java',
+                },
+                {
+                    type: 'doc',
+                    id: 'sdks/python',
+                    label: 'Python',
+                },
+                {
+                    type: 'doc',
+                    id: 'sdks/golang',
+                    label: 'Golang',
+                },
+                {
+                    type: 'doc',
+                    id: 'sdks/javascript',
+                    label: 'Javascript',
+                },
+                {
+                    type: 'doc',
+                    id: 'sdks/clojure',
+                    label: 'Clojure',
+                },
+                {
+                    type: 'doc',
+                    id: 'sdks/csharp',
+                    label: 'CSharp',
+                }
+            ],
+            collapsible: true,
+            collapsed: true,
             className: 'leftMenuHeader',
         },
         {
@@ -173,8 +213,13 @@ const sidebars = {
                 slug: '/category/videos'
             },
             items: [
+                'videos/login-from-ui',
                 'videos/run-workflow',
-                'videos/playground-access',
+                {
+                    type: 'doc',
+                    id: 'videos/access-key-secret',
+                    label: 'Access Key & Secret',
+                },
             ],
             collapsible: true,
             collapsed: true,

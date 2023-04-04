@@ -1,0 +1,66 @@
+
+# Orkes Conductor Golang SDK
+
+Orkes Conductor Golang SDK is maintained here: https://github.com/conductor-sdk/conductor-go
+
+## Get Conductor Go SDK
+
+```shell
+go get github.com/conductor-sdk/conductor-go
+```
+
+## Initialization
+
+Everything related to server settings should be done within the `client.NewAPIClient` class by setting the required parameters (when initializing an object) like this:
+
+```go
+
+    apiClient := client.NewAPIClient(
+        nil,
+        settings.NewHttpSettings(
+            "https://play.orkes.io",
+        ),
+    )
+
+```
+
+### Authentication Settings (optional)
+
+See [Security via Applications](/content/access-control-security/applications#generating-access-keys) or this [video](/content/videos/access-key-secret) for details on how to get an access key and secret.
+
+Once we have a key and secret, we can configure in the app from properties or environment variables as shown in this example:
+
+```go
+
+    apiClient := client.NewAPIClient(
+        settings.NewAuthenticationSettings(
+            KEY,
+            SECRET,
+        ),
+        settings.NewHttpSettings(
+            "https://play.orkes.io",
+        ),
+    )
+
+```
+
+Remember to protect your app secrets like any other secrets or passwords.
+
+### Setup Logging
+SDK uses [logrus](https://github.com/sirupsen/logrus) for logging.
+
+```go
+func init() {
+	log.SetFormatter(&log.TextFormatter{})
+	log.SetOutput(os.Stdout)
+	log.SetLevel(log.DebugLevel)
+}
+```
+
+
+
+## Related Topics
+
+- Video Guide on [Getting Access Key and Secret](/content/videos/access-key-secret)
+- [Access Control & Security](/content/category/access-control-security)
+
