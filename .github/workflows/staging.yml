@@ -17,8 +17,8 @@ jobs:
       with:
         node-version: '16'
         cache: 'npm'
-    - run: npm install
-    - run: npm run build
+    - run: yarn
+    - run: yarn build
 #          https://github.com/orkes-io/orkesio-site.git
 #         "https://$USER_NAME:$API_TOKEN_GITHUB@$GITHUB_SERVER/$DESTINATION_REPOSITORY_USERNAME/$DESTINATION_REPOSITORY_NAME.git"
     - run: ls -larth
