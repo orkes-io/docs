@@ -59,7 +59,9 @@ We have an exciting in-person event coming up for folks in India. The Microservi
 
 ### Microsoft Build - May 2023
 
-Yet another exciting announcement we have on our plate for May is [Microsoft Build](https://build.microsoft.com/en-US/home). The Orkes team will speak at Microsoft Build, which will be live in Seattle from May 23-25, 2023. With live sessions, demos, and expert meetups, Microsoft Build is a one-stop event for all aspiring techies around the globe.
+Yet another exciting announcement we have for May is [Microsoft Build](https://build.microsoft.com/en-US/home). The Orkes team will speak at Microsoft Build, which will be live in Seattle, WA from May 23-25, 2023. With live sessions, demos, and expert meetups, Microsoft Build is a one-stop event for all aspiring techies around the globe.
+
+[Let us know](https://share.hsforms.com/1_9vRrlY3T4OAkT5gs6swrwcfl4g) if you are attending and want to meet us there!
 
 |[Register](https://build.microsoft.com/en-US/home)|
 |--|
