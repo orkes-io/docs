@@ -228,15 +228,13 @@ export const SDKList = ({}) => (
   <div className={styles.sdklist}>
     <a
       className={"aClass"}
-      href={"https://github.com/orkes-io/orkes-conductor-client"}
-      target={"_blank"}
+      href={"/content/sdks/java"}
     >
       <img src="img/java.svg" style={{ height: 75, width: 75, margin: 5 }} />
     </a>
     <a
       className={"aClass"}
-      href={"https://github.com/conductor-sdk/conductor-python"}
-      target={"_blank"}
+      href={"/content/sdks/python"}
     >
       <img
         src="img/Python_logo.svg"
@@ -245,15 +243,13 @@ export const SDKList = ({}) => (
     </a>
     <a
       className={"aClass"}
-      href={"https://github.com/conductor-sdk/conductor-csharp"}
-      target={"_blank"}
+      href={"/content/sdks/csharp"}
     >
       <img src="img/csharp.png" style={{ height: 75, width: 75, margin: 5 }} />
     </a>
     <a
       className={"aClass"}
-      href={"https://github.com/conductor-sdk/conductor-javascript"}
-      target={"_blank"}
+      href={"/content/sdks/javascript"}
     >
       <img
         src="img/JavaScript_logo_2.svg"
@@ -262,8 +258,7 @@ export const SDKList = ({}) => (
     </a>
     <a
       className={"aClass"}
-      href={"https://github.com/conductor-sdk/conductor-go"}
-      target={"_blank"}
+      href={"/content/sdks/golang"}
     >
       <img
         src="img/Go_Logo_Blue.svg"
@@ -272,8 +267,7 @@ export const SDKList = ({}) => (
     </a>
     <a
       className={"aClass"}
-      href={"https://github.com/conductor-sdk/conductor-csharp"}
-      target={"_blank"}
+      href={"/content/sdks/csharp"}
     >
       <img src="img/csharp.png" style={{ height: 75, width: 75, margin: 5 }} />
     </a>
