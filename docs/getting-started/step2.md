@@ -4,6 +4,9 @@ sidebar_position: 1
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import Install from '@site/src/components/install.mdx';
+import {
+    SDKList,
+} from "../../src/components/_Sections";
 
 
 # Step 2: Running Workflows from Code
@@ -12,9 +15,12 @@ So far, we have seen how to compose basic workflows and run them from the UI. Ho
 from an application or service. Let’s learn how to do this from our applications. Orkes Conductor platform offers various SDKs in different languages
 for integration with applications or services. 
 
-View our documentation on [Conductor Clients & SDKs](/content/conductor-clients) to learn how to import the required dependencies in our applications.
+View our documentation on [Conductor Clients & SDKs](/content/category/sdks) to learn how to import the required dependencies in our applications.
+<SDKList />
 
-Let's look at some code examples of how to trigger a workflow by it's name.
+<br/>
+
+Let's look at some __code examples__ of how to trigger a workflow by it's name.
 
 <Tabs>
 <TabItem value="Java" label="Java">
@@ -67,7 +73,7 @@ log.info("Workflow id: ", workflowId)
 </TabItem>
 <TabItem value="CSharp" label="CSharp">
 
-```csharp
+```java
 var request = new StartWorkflowRequest(
     name: "<name of your workflow>",
     version: 1
@@ -104,7 +110,7 @@ console.log("Workflow id: {}", workflowId)
 </TabItem>
 <TabItem value="Clojure" label="Clojure">
 
-```clojure
+```java
 (def request {:name "<name of your workflow>"
               :input {:amount: 100
                       :account: "account-id"}})

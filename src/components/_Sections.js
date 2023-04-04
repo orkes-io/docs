@@ -230,14 +230,14 @@ export const SDKList = ({}) => (
       className={"aClass"}
       href={"/content/sdks/java"}
     >
-      <img src="img/java.svg" style={{ height: 75, width: 75, margin: 5 }} />
+      <img src="/content/img/java.svg" style={{ height: 75, width: 75, margin: 5 }} />
     </a>
     <a
       className={"aClass"}
       href={"/content/sdks/python"}
     >
       <img
-        src="img/Python_logo.svg"
+        src="/content/img/Python_logo.svg"
         style={{ height: 75, width: 75, margin: 5 }}
       />
     </a>
@@ -245,14 +245,14 @@ export const SDKList = ({}) => (
       className={"aClass"}
       href={"/content/sdks/csharp"}
     >
-      <img src="img/csharp.png" style={{ height: 75, width: 75, margin: 5 }} />
+      <img src="/content/img/csharp.png" style={{ height: 75, width: 75, margin: 5 }} />
     </a>
     <a
       className={"aClass"}
       href={"/content/sdks/javascript"}
     >
       <img
-        src="img/JavaScript_logo_2.svg"
+        src="/content/img/JavaScript_logo_2.svg"
         style={{ height: 75, width: 75, margin: 5 }}
       />
     </a>
@@ -261,7 +261,7 @@ export const SDKList = ({}) => (
       href={"/content/sdks/golang"}
     >
       <img
-        src="img/Go_Logo_Blue.svg"
+        src="/content/img/Go_Logo_Blue.svg"
         style={{ height: 75, width: 75, margin: 5 }}
       />
     </a>
@@ -269,7 +269,7 @@ export const SDKList = ({}) => (
       className={"aClass"}
       href={"/content/sdks/csharp"}
     >
-      <img src="img/csharp.png" style={{ height: 75, width: 75, margin: 5 }} />
+      <img src="/content/img/csharp.png" style={{ height: 75, width: 75, margin: 5 }} />
     </a>
   </div>
 );
