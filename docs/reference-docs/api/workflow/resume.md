@@ -8,7 +8,9 @@ import TabItem from '@theme/TabItem';
 # Resume Workflow
 Resume the execution of a workflow that is paused. If the workflow is not paused, this method has no effect
 
-## API
+## Input Payload
+
+## API Endpoint
 ```
 PUT /workflow/{workflowId}/resume  
 ```

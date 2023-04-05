@@ -2,13 +2,10 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem'
 
 # HTTP Poll Task
-```json
-"type" : "HTTP_POLL"
-```
 
 The HTTP_POLL is a conductor task used to invoke HTTP API until the specified condition matches.
 
-## Configurations
+## Definitions
 ```json
 {
      "name": "http_poll_task",

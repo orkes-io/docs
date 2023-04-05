@@ -9,7 +9,9 @@ import TabItem from '@theme/TabItem';
 
 Log Task Execution Details
 
-## API
+## Input Payload
+
+## API Endpoint
 
 ```
 POST /tasks/{taskId}/log

@@ -3,13 +3,9 @@ import TabItem from '@theme/TabItem';
 
 # Terminate Task
 
- ```json
- "type" : "TERMINATE"
- ```
-
 The Terminate task is a task that can terminate the workflow with a termination status and reason.
 
-## Configurations
+## Definitions
 
 ```json
 {

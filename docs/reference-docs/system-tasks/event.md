@@ -3,15 +3,11 @@ import TabItem from '@theme/TabItem';
 
 # Event Task
 
-```json
-"type" : "EVENT"
-```
-
 EVENT is a task used to publish an event into one of the supported eventing systems in Conductor. Conductor supports the following eventing models:
 * SQL (type: sqs)
 * Kafka (type: kafka)
 
-## Configurations
+## Definitions
 
 Configuration for publishing an event into SQS to notify an external system.
 

@@ -3,13 +3,9 @@ import TabItem from '@theme/TabItem';
 
 # Fork/Join Task
 
-```json
-"type" : "FORK_JOIN"
-```
-
 A Fork operation lets you run a specified list of tasks or sub-workflows in parallel. A fork task is followed by a join operation that waits on the forked tasks or sub-workflows to finish. The **JOIN** task also collects outputs from each of the forked tasks or sub workflows.
 
-## Configurations
+## Definitions
 
 ```json
 {

@@ -9,7 +9,7 @@ import TabItem from '@theme/TabItem';
 
 Searches for the workflow executions.
 
-## Properties
+## Input Payload
 
 |Attribute | Description |
 | -- | -- | 
@@ -18,7 +18,7 @@ Searches for the workflow executions.
 | Query | The query expression in the format FIELD = 'VALUE' or FIELD IN (value1, value2). Only **AND** operations are supported. E.g., workflowId IN ('a', 'b', 'c') AND workflowType ='test_workflow' AND startTime BETWEEN 1000 and 2000. Supported fields for Query are: **workflowId**,**workflowType**,**status**,and **startTime**. |
 | FreeText | All the workflow input, output and task outputs upto certain limit (check with your admins to find the size limit) are full text indexed and can be used to search. |
 
-## API
+## API Endpoint
 ```
 GET /workflow/search
 ```

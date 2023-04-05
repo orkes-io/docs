@@ -3,13 +3,9 @@ import TabItem from '@theme/TabItem';
 
 # Dynamic Fork
 
-```json
-"type" : "FORK_JOIN_DYNAMIC"
-```
-
 The Dynamic fork task is used when the number of forks is to be determined at the run-time. Whereas in a regular fork-join task, the number of forks is defined during the workflow creation.
 
-## Configurations
+## Definitions
 
 ```json
 {

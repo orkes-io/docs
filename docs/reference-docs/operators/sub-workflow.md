@@ -3,11 +3,7 @@ import TabItem from '@theme/TabItem';
 
 # Sub Workflow
 
-```json
-"type" : "SUB_WORKFLOW"
-```
-
-## Configurations
+## Definitions
 
 ```json
 {

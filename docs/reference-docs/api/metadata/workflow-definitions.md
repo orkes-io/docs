@@ -8,7 +8,7 @@ import TabItem from '@theme/TabItem';
 
 Workflow can be defined as the collection of tasks and operators that specifies the order and execution of the defined tasks. 
 
-## Configurations
+## Input Payload
 
 You can configure workflow definitions directly via UI and using API. The workflow definitions includes the following parameters:
 
@@ -28,33 +28,8 @@ You can configure workflow definitions directly via UI and using API. The workfl
 | timeoutPolicy                 | Indicates the condition at which the workflow should time out. It can take any of the following values:<ul><li>**TIME_OUT_WF** - The workflow status is marked as TIMEOUT and is terminated.</li><li>**ALERT_ONLY** - Registers a counter.</li></ul>   |
 | failureWorkflow               | Provide the workflow name to be triggered upon a failure of the execution of this workflow.                                                                                                                                                            |
 
-<details><summary>Steps to configure via UI</summary>
 
-1. Navigate to **WORKFLOWS > Definitions** from the left menu.
-2. Create a new task by clicking on the **Define Workflow** button.
-3. Provide the workflow definition in JSON format:
-```json
-{
- "name": "Sample_Workflow",
- "description": "Edit or extend this sample workflow. Set the workflow name to get started",
- "version": 1,
- "tasks": [],
- "inputParameters": [],
- "outputParameters": {},
- "schemaVersion": 2,
- "restartable": true,
- "workflowStatusListenerEnabled": false,
- "ownerEmail": "name@example.com",
- "timeoutPolicy": "ALERT_ONLY",
- "timeoutSeconds": 0,
- "failureWorkflow": ""
-}
-```
-4. Once the fields are populated with appropriate values, click **Save** and then **Confirm**.
-
-</details>
-
-## API
+## API Endpoint
 
 ```
 POST /api/metadata/workflow

@@ -2,13 +2,10 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 # Kafka Publish
-```json
-"type" : "KAFKA_PUBLISH"
-```
 
 A Kafka Publish task is used to push messages to another microservice via Kafka.
 
-## Configurations
+## Definitions
 ```json
 {
   "name": "call_kafka",

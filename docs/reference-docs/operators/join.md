@@ -3,13 +3,9 @@ import TabItem from '@theme/TabItem';
 
 # Join Task
 
-```json
-"type" : "JOIN"
-```
-
 A JOIN task is used in conjunction with a **FORK_JOIN** or **FORK_JOIN_DYNAMIC** task to join all the tasks within the forks. 
 
-## Configurations
+## Definitions
 
 ```json
 {

@@ -9,7 +9,7 @@ import TabItem from '@theme/TabItem';
 
 Starts a workflow and returns the ID of the workflow. The API returns immediately without waiting for the workflow to be completed.
 
-## Input Request
+## Input Payload
 
 | Parameter     | Description                                                                                                                      |
 | ------------- | -------------------------------------------------------------------------------------------------------------------------------- |
@@ -23,6 +23,8 @@ Starts a workflow and returns the ID of the workflow. The API returns immediatel
 
 ## Response
 A string representing the id of the workflow execution.
+
+## API Endpoint
 
 ## SDK Methods
 

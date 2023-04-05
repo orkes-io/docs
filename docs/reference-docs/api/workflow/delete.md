@@ -9,7 +9,9 @@ import TabItem from '@theme/TabItem';
 
 Remove workflow execution permanently from the system.
 
-## API
+## Input Payload
+
+## API Endpoint
 ```
 DELETE /workflow/{workflowId}/remove
 ```

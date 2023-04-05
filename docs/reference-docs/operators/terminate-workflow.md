@@ -3,13 +3,9 @@ import TabItem from '@theme/TabItem';
 
 # Terminate Workflow Task
 
-```json
-"type" : "TERMINATE_WORKFLOW"
-```
-
 The Terminate Workflow task is used to terminate other workflows using their workflow IDs.
 
-## Configurations
+## Definitions
 
 ```json
 {

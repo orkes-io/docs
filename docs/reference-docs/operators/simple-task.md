@@ -3,13 +3,9 @@ import TabItem from '@theme/TabItem';
 
 # Worker Task (Simple Task)
 
-```json
-"type" : "SIMPLE"
-```
-
 A Simple task is a Worker task that requires an external worker for polling. The Workers can be implemented in any language, and the Conductor provides additional features such as metrics, server communication, and polling threads that make the worker creation process easier.
 
-## Configurations​
+## Definitions
 
 ```json
 {

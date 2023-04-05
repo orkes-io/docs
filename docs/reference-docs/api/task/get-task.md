@@ -9,7 +9,9 @@ import TabItem from '@theme/TabItem';
 
 Returns a task given an id
 
-## API
+## Input Payload
+
+## API Endpoint
 
 ```
 GET /tasks/{taskId}

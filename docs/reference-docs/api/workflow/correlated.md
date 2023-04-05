@@ -9,7 +9,9 @@ import TabItem from '@theme/TabItem';
 
 With the list of correlation IDs, this API helps in finding and returning workflows.
 
-## API
+## Input Payload
+
+## API Endpoint
 
 ```
 POST /workflow/{name}/correlated

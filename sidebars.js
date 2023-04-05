@@ -68,6 +68,7 @@ const sidebars = {
                 'guides/write-as-code',
                 'guides/debugging',
                 'guides/task-to-domain',
+                'guides/secrets',
                 'guides/error-handling',
                 'guides/scaling-workers',
                 'guides/orchestrating-human-tasks',

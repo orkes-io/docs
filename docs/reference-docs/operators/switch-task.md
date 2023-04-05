@@ -7,13 +7,9 @@ import TabItem from '@theme/TabItem';
 
 # Switch Task
 
-```json
-"type" : "SWITCH"
-```
-
 The switch task is used for creating branching logic. It is a representation of multiple **if...then...else** or **switch...case** statements in programming.
 
-## Configurations
+## Definitions
 
 ```json
 {

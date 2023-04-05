@@ -3,13 +3,9 @@ import TabItem from '@theme/TabItem';
 
 # Inline Task
 
-```json
-"type": "INLINE"
-```
-
 The inline task helps execute necessary logic at the workflow run-time using an evaluator. The two supported evaluator types are javascript and graaljs.
 
-## Configurations
+## Definitions
 ```json
 {
   "name": "inline_task_example",

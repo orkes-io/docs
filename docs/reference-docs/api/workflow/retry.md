@@ -9,7 +9,9 @@ import TabItem from '@theme/TabItem';
 
 This API retries a failed workflow from the last failed task.
 
-## API
+## Input Payload
+
+## API Endpoint
 ```
 POST /workflow/{workflowId}/retry
 ```

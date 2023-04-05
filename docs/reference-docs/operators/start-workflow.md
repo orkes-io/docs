@@ -3,13 +3,9 @@ import TabItem from '@theme/TabItem';
 
 # Start Workflow
 
-```json
-"type" : "START_WORKFLOW"
-```
-
 Start Workflow is an operator task used to start another workflow from an existing workflow. Unlike a sub-workflow task, a start workflow task doesn’t create a relationship between the current workflow and the newly started workflow. That means it doesn’t wait for the started workflow to get completed.
 
-## Configurations​
+## Definitions
 
 ```json
 {

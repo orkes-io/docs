@@ -5,7 +5,7 @@ import TabItem from '@theme/TabItem';
 
 Set Variable allows you to set the workflow variables by creating or updating them with new values.
 
-## Configurations
+## Definitions
 
 ```json
 {

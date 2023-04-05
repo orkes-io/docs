@@ -2,12 +2,10 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 # Call an HTTP Service
-```json
-"type": "HTTP"
-```
+
 HTTP task allows you to make calls to remote services exposed over HTTP/HTTPS.
 
-## Configurations
+## Definitions
 
  ```json
 {

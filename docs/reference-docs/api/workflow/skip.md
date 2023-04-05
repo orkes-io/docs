@@ -9,7 +9,9 @@ import TabItem from '@theme/TabItem';
 
 Skips a given task execution from a current running workflow.
 
-## API
+## Input Payload
+
+## API Endpoint
 ```
 PUT /workflow/{workflowId}/skiptask/{taskReferenceName}
 ```

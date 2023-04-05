@@ -4,13 +4,13 @@ sidebar_position: 6
 # Using Secrets in Conductor
 
 You may often be required to use sensitive values that shouldn’t be exposed, like usernames, passwords, API keys, authorization tokens, etc. Using such values directly in the workflow can end up with your private keys being opened up to vulnerabilities. 
-<br/>
+
 With Conductor, you can save these values as Secrets and then use them in your workflow without exposing the actual values. 
 
 ## Creating Secrets
 
 Follow the below steps to create and store secrets in Conductor:
-<br/>
+
 
 1. From your Orkes Console, navigate to the **Secrets** option from the left menu. The *Secrets* page lists all the secrets associated with your account.
 2. Click **Add Secrets** and provide the following values:<ul><li>**Secret Name** - Provide a name to store your secret.</li><li>**Secret Value** - Copy and paste the required value to be stored as secret.</li></ul>
@@ -35,7 +35,7 @@ Conductor also provides the provision to add tags to secret keys. This helps in 
 ### Enabling Permissions for Secrets via Groups
 
 If a secret is to be shared among a User Group in Conductor, 
-<br/>
+
 
 1. Add the required tag in the format **key:value** to the secret. 
 2. Navigate to **ACCESS CONTROL** > **Groups** and click the edit icon near your group name.
@@ -46,7 +46,6 @@ If a secret is to be shared among a User Group in Conductor,
 ### Enabling Permissions for Secrets via Applications
 
 If a workflow uses a Secret, we need to add access control permissions for the application to access the secret.
-<br/>
 
 1. Add the required tag in the format **key:value** to the secret. 
 2. Navigate to **ACCESS CONTROL > Applications** and click the edit icon near your app name.
@@ -60,7 +59,7 @@ If a workflow uses a Secret, we need to add access control permissions for the a
 <p>
 
 The US Postal Service offers APIs to help automate the shipping process with the post office. Each API call requires a **UserID** to be submitted. This **UserID** can be used to buy postage, so it needs to be kept secure. We've created a secret called **post_office_username** that can be used in all API calls.
-<br/>
+
 Here’s a snippet from the workflow that references this secret:
 
 ```json

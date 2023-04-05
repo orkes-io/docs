@@ -3,13 +3,9 @@ import TabItem from '@theme/TabItem';
 
 # Dynamic Task
 
-```json
-"type" : "DYNAMIC"
-```
-
 The dynamic task allows you to execute one of the registered tasks dynamically at run-time.
 
-## Configurations
+## Definitions
 
 ```json
 {

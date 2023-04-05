@@ -8,7 +8,9 @@ import TabItem from '@theme/TabItem';
 # Get Workflow by ID
 Get workflow execution by workflow ID. If **includeTasks** is set, it also fetches all the task details.
 
-## API
+## Input Payload
+
+## API Endpoint
 ```
 GET /workflow/{name}
 ```

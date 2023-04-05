@@ -3,13 +3,9 @@ import TabItem from '@theme/TabItem';
 
 # Transformation using JQ
 
-```json
-"type" : "JSON_JQ_TRANSFORM"
-```
-
 The JSON_JQ_TRANSFORM task is a System task that allows the processing of JSON data that is supplied to the task by using the popular JQ processing tool’s query expression language.
 
-## Configurations
+## Definitions
 
 ```json
 {

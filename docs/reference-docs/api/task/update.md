@@ -9,7 +9,9 @@ import TabItem from '@theme/TabItem';
 
 Update the execution status and output of the task.
 
-## API
+## Input Payload
+
+## API Endpoint
 ```
 POST /tasks/{workflowId}/{taskRefName}/{status}
 ```

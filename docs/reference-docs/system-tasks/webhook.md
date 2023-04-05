@@ -3,10 +3,6 @@ import TabItem from '@theme/TabItem';
 
 # Wait For Webhook Task
 
-```json
-"type" : "WAIT_FOR_WEBHOOK"
-```
-
 Webhook is an HTTP-based callback function that facilitates the communication between the Conductor and other third-party systems. It can be used to receive data from other applications to the Conductor. Conductor currently supports Webhook integration with the following third-party systems only:
 
 * GitHub
@@ -21,7 +17,7 @@ Webhook is an HTTP-based callback function that facilitates the communication be
 
 You can leverage the **Custom** option for integrating other than the above-mentioned third-party systems.
 
-## Configurations
+## Definitions
 
 ```json
 {

@@ -9,7 +9,9 @@ import TabItem from '@theme/TabItem';
 
 This API pause the execution of a running workflow. Any currently running tasks will finish, but no new tasks are scheduled until the workflow is resumed.
 
-## API
+## Input Payload
+
+## API Endpoint
 ```
 PUT /workflow/{workflowId}/pause
 ```

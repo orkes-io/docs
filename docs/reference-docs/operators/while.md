@@ -1,14 +1,11 @@
 # While Loop
 
-```json
-"type" : "DO_WHILE"
-```
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 The Do While task sequentially executes a list of tasks as long as a condition is true. The list of tasks is executed first, before the condition is checked, even for the first iteration.
 
-## Configurations
+## Definitions
 
 ```json
 {
