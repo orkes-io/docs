@@ -40,7 +40,7 @@ const sidebars = {
                 slug: '/category/getting-started',
                 keywords: ['getting-started', 'installation']
             },
-            items: ['getting-started/step1', 'getting-started/step2', 'getting-started/step3', 'getting-started/step4', 'getting-started/step5'],
+            items: ['getting-started/step1', 'getting-started/step2', 'getting-started/step3', 'getting-started/step4', 'getting-started/step5', 'getting-started/step6'],
             collapsible: true,
             collapsed: false,
             className: 'leftMenuHeader',

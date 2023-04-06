@@ -16,9 +16,6 @@ from an application or service. Let’s learn how to do this from our applicatio
 for integration with applications or services. 
 
 View our documentation on [Conductor Clients & SDKs](/content/category/sdks) to learn how to import the required dependencies in our applications.
-<SDKList />
-
-<br/>
 
 Let's look at some __code examples__ of how to trigger a workflow by it's name.
 

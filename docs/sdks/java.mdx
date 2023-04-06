@@ -40,10 +40,6 @@ Once we have a key and secret, we can configure in the app from properties or en
     String key = System.getenv("KEY");
     String secret = System.getenv("SECRET");
     String conductorServer = System.getenv("CONDUCTOR_SERVER_URL");
-    if (conductorServer == null) {
-        conductorServer = CONDUCTOR_SERVER_URL;
-    }
-
     ApiClient apiClient = new ApiClient(conductorServer, key, secret);
 ```
 

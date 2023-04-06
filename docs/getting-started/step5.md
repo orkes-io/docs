@@ -6,15 +6,10 @@ import TabItem from '@theme/TabItem';
 import Install from '@site/src/components/install.mdx';
 
 
-# Step 5: Adding Wait Conditions
+# Step 5: Running an inline function
 
-The wait task in Conductor is used if the workflow is to be paused for external signals. The signals can be human manual interventions or an event from external sources such as Kafka, SQS, etc. Let’s learn how you can pause your workflows using wait tasks. 
-
-#### In your current workflow, what if you want to send the SMS only after 10 mins?
-
-:::tip
-Orkes Conductor doesn't limit your wait conditions. We can wait for __mins__, __days__, __months__ or even __years__! It can also wait for external signals like manual approval or events from messaging systems such as __Kafka/SQS__.
-:::
+Occasionally we will need to write some logic, such as a complex predicate or a basic transform. In such cases we can use 
+the INLINE task feature.
 
 <Tabs>
 <TabItem value="UI" label="UI">
@@ -22,9 +17,10 @@ Orkes Conductor doesn't limit your wait conditions. We can wait for __mins__, __
 <div className="row">
 <div className="col col--4">
 
-1. In your current workflow, add a [Wait](/content/reference-docs/operators/wait) task before the SMS task.
-2. You can configure the wait task parameters to wait for 10 mins.
-3. Run workflow directly from the UI using the Run Workflow button.
+1. Add [HTTP](/content/reference-docs/system-tasks/http) worker to retrieve stock tickers.
+2. Add [Dynamic Fork](/content/reference-docs/operators/dynamic-fork) based on the output of the HTTP worker.
+3. Create the [Subworkflow](/content/reference-docs/operators/sub-workflow). Include the following tasks in the subworkflow.<ul><li>Retrieve the previous day’s closing price and volume</li><li>Retrieve today's opening price</li><li>Run a trade execution</li></ul>
+4. Run Workflow.
 
 </div>
 <div className="col">
@@ -40,10 +36,12 @@ Orkes Conductor doesn't limit your wait conditions. We can wait for __mins__, __
 </TabItem>
 </Tabs>
 
-Since you have configured the wait task to wait for 10 mins, once the workflow execution reaches this task, it waits for 10 mins and then proceeds to the next task; sending an SMS.
+As we can see, this workflow triggers a sub-workflow for each ticker from the output of the previous step. Let’s try running this with 100 tickers. In this test, the API limits the tickers to 100. Still, we can run several thousand tasks in parallel, all without worrying about the state of the execution or where it's being executed. When all the forks are complete, the workflow resumes the next step enabling us to do more advanced tasks with minimal effort.
 
+The mock APIs used in this example are available here on this repo:  
 
 ## Related Topics
 
-* [API Reference for Wait](/content/reference-docs/operators/wait)
-* [Scheduling workflows](/content/guides/scheduling-workflows) 
+- Passing [inputs into workflow for tasks](/content/guides/passing-data-task-to-task#task-inputs-referred-from-workflow-inputs)
+- Passing the [output of one task to the input](/content/guides/passing-data-task-to-task#task-inputs-referred-from-other-task-outputs) of another
+- [Client SDKs](/content/conductor-clients)

@@ -135,8 +135,8 @@ Once the workflow is set, you must set up the worker to poll the worker.
 **Setting Up a Sample Worker**
 
 Suppose the worker is to be set up in Java; you need to clone the [Orkesworkers Java](https://github.com/orkes-io/orkesworkers) repo in the IDE of your choice.
-:::note Best Practice
-As a best practice, under the [workers’](https://github.com/orkes-io/orkesworkers/tree/main/src/main/java/io/orkes/samples/workers) folder, you can keep only the **SimpleWorker.java** file and trash the rest for an error-free running of the application.
+:::tip Best Practice
+As a best practice, under the [workers](https://github.com/orkes-io/orkesworkers/tree/main/src/main/java/io/orkes/samples/workers) folder, you can keep only the **SimpleWorker.java** file and trash the rest for an error-free running of the application.
 :::
 
 The code for the [SimpleWorker](https://github.com/orkes-io/orkesworkers/blob/main/src/main/java/io/orkes/samples/workers/SimpleWorker.java) looks like this:
