@@ -46,6 +46,11 @@ const sidebars = {
             className: 'leftMenuHeader',
         },
         {
+            type: 'doc',
+            id: 'error-handling',
+            className: 'leftMenuHeader',
+        },
+        {
             type: 'category',
             label: 'Developer Guides',
             link: {
@@ -69,7 +74,6 @@ const sidebars = {
                 'guides/debugging',
                 'guides/task-to-domain',
                 'guides/secrets',
-                'guides/error-handling',
                 'guides/scaling-workers',
                 'guides/orchestrating-human-tasks',
                 'guides/metrics-and-observability'
