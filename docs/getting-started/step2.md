@@ -3,6 +3,7 @@ sidebar_position: 1
 ---
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import CodeBlock from '@theme/CodeBlock';
 import Install from '@site/src/components/install.mdx';
 import {
     SDKList,
@@ -22,9 +23,9 @@ Let's look at some __code examples__ of how to trigger a workflow by it's name.
 <Tabs>
 <TabItem value="Java" label="Java">
 
-```java 
+```java  dynamic https://raw.githubusercontent.com/conductor-sdk/orkes-java-springboot2-example/main/src/main/java/io/orkes/example/banking/service/WorkflowService.java section=1
 StartWorkflowRequest request = new StartWorkflowRequest();
-request.setName("<name of your workflow>");
+request.setName("deposit-cash");
 request.setInput(Map.of("amount", 100, "account", "account-id"));
     
 String workflowId = workflowClient.startWorkflow(request);
@@ -34,19 +35,20 @@ log.info("Workflow id: {}", workflowId);
 </TabItem>
 <TabItem value="Python" label="Python">
 
-```python
-request = StartWorkflowRequest(
-    name="<name of your workflow>", 
-    input={
-        "amount": 100, 
-        "account": "<account-id>"
-    },
+<CodeBlock language="python" title="/src/components/HelloCodeTitle.js"
+showLineNumbers>
+{`request = StartWorkflowRequest(
+name="<name of your workflow>",
+input={
+"amount": 100,
+"account": "<account-id>"
+},
 )
 workflow_id = workflow_client.start_workflow(
-    body=start_workflow_request,
+body=start_workflow_request,
 )
-print(f'Workflow id: {workflow_id}')
-```
+print(f'Workflow id: {workflow_id}')`}
+</CodeBlock>
 
 </TabItem>
 <TabItem value="Golang" label="Golang">

@@ -58,6 +58,9 @@ const config = {
                     sidebarPath: require.resolve('./sidebars.js'),
                     sidebarCollapsible: true,
                     editUrl: 'https://github.com/orkes-io/docs/edit/main/',
+                    remarkPlugins: [
+                        [require('./plugin/'), {sync: true}],
+                    ],
                 },
                 blog: {
                     // path: './blog',
