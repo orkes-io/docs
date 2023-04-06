@@ -3,6 +3,7 @@ sidebar_position: 1
 ---
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import CodeBlock from '@theme/CodeBlock';
 import Install from '@site/src/components/install.mdx';
 import {
     SDKList,
@@ -21,16 +22,13 @@ Let's look at some __code examples__ of how to trigger a workflow by it's name.
 
 <Tabs>
 <TabItem value="Java" label="Java">
-
-```java 
-StartWorkflowRequest request = new StartWorkflowRequest();
-request.setName("<name of your workflow>");
+<CodeBlock language="java" type="pull" source="" section="1" title="/src/components/HelloCodeTitle.java" showLineNumbers>
+{`StartWorkflowRequest request = new StartWorkflowRequest();
+request.setName("blah");
 request.setInput(Map.of("amount", 100, "account", "account-id"));
-    
 String workflowId = workflowClient.startWorkflow(request);
-log.info("Workflow id: {}", workflowId);
-```
-
+log.info("Workflow id: {}", workflowId);`}
+</CodeBlock>
 </TabItem>
 <TabItem value="Python" label="Python">
 
