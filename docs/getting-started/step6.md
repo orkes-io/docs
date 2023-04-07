@@ -6,7 +6,7 @@ import TabItem from '@theme/TabItem';
 import Install from '@site/src/components/install.mdx';
 
 
-# Step 5: Adding Wait Conditions
+# Step 6: Executing tasks parallely
 
 The wait task in Conductor is used if the workflow is to be paused for external signals. The signals can be human manual interventions or an event from external sources such as Kafka, SQS, etc. Let’s learn how you can pause your workflows using wait tasks. 
 
