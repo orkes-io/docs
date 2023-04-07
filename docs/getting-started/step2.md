@@ -23,7 +23,7 @@ Let's look at some __code examples__ of how to trigger a workflow by it's name.
 <Tabs>
 <TabItem value="Java" label="Java">
 
-```java  dynamic https://raw.githubusercontent.com/conductor-sdk/orkes-java-springboot2-example/main/src/main/java/io/orkes/example/banking/service/WorkflowService.java section=1
+```java dynamic https://github.com/conductor-sdk/orkes-java-springboot2-example/blob/main/src/main/java/io/orkes/example/banking/service/WorkflowService.java section=1 .../service/WorkflowService.java
 StartWorkflowRequest request = new StartWorkflowRequest();
 request.setName("deposit-cash");
 request.setInput(Map.of("amount", 100, "account", "account-id"));

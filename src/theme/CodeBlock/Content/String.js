@@ -22,9 +22,8 @@ export default function CodeBlockString({
                                             title: titleProp,
                                             showLineNumbers: showLineNumbersProp,
                                             language: languageProp,
-                                            source: source,
-                                            section: section,
-                                            type: type,
+                                            titleType: titleType,
+                                            titleLabel: titleLabel,
                                         }) {
     const {
         prism: {defaultLanguage, magicComments},
@@ -34,14 +33,20 @@ export default function CodeBlockString({
     const prismTheme = usePrismTheme();
     const wordWrap = useCodeWordWrap();
 
-    if(typeof (type) === 'string' && type === 'pull') {
-        console.log("Source: ", source, type, section);
-    }
+
 
     // We still parse the metastring in case we want to support more syntax in the
     // future. Note that MDX doesn't strip quotes when parsing metastring:
     // "title=\"xyz\"" => title: "\"xyz\""
     const title = parseCodeBlockTitle(metastring) || titleProp;
+    let titleUrl;
+    let titleText;
+    if(typeof (titleType) === 'string' && titleType === 'url') {
+        console.log("titleType: ", titleType);
+        titleUrl = <a href={title} target={"_blank"}>{titleLabel}</a>;
+    } else {
+        titleText = title;
+    }
     const {lineClassNames, code} = parseLines(children, {
         metastring,
         language,
@@ -59,7 +64,8 @@ export default function CodeBlockString({
                 !blockClassName.includes(`language-${language}`) &&
                 `language-${language}`,
             )}>
-            {title && <div className={styles.codeBlockTitle}><a href={title} target={"_blank"}>{title}</a></div>}
+            {titleUrl && <div className={styles.codeBlockTitle}>{titleUrl}</div>}
+            {titleText && <div className={styles.codeBlockTitle}>{titleText}</div>}
             <div className={styles.codeBlockContent}>
                 <Highlight
                     {...defaultProps}
