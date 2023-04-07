@@ -184,4 +184,3 @@ In tasks embedded in the loop, ```${get_all_stars_loop_ref.output.iteration}``` 
 
 * [Document Approvals](/content/docs/usecases/document_approvals): Should approval be rejected, the Do/WHile loops back to the beginning for edits to the doc.
 
-* [Extract, Transform, Load](/content/docs/usecases/Simple_ETL): GitHub extraction is 100 entries per call, so loop for the number of extractions required to get the data.  The Orbit API allows for one activity upload per API call, so the Do/while loop iterates through every upload.
