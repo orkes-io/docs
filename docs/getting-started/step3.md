@@ -4,7 +4,7 @@ sidebar_position: 1
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import Install from '@site/src/components/install.mdx';
-
+import CodeBlock from '@theme/CodeBlock';
 
 # Step 3: Adding Custom Code Worker
 
@@ -38,24 +38,14 @@ Continuing the use case from the previous step, we now have a requirement to add
 We can see that when we run this workflow for amounts > $50,000, it runs a fraud check. If we named the task `fraud-check`, we'd notice that it actually executed (in playground env), but how? 
 That's because there is a pre-defined task that is polling and running all the tasks named `fraud-check`. 
 
-So how can we implement this task? First let's rename the task to a new unique name for ourselves - for ex: `fraud-check-<replace-with-your-name>`. And now let’s see how this custom fraud check can be implemented:
+So how can we implement this task for ourselves? First let's rename the task to a new unique name for ourselves - for ex: `fraud-check-<replace-with-your-name>`. And now let’s see how this custom fraud check can be implemented:
 
 View our documentation on [Conductor Clients & SDKs](/content/category/sdks)  list and how to import the required dependencies in our applications.
 
 <Tabs>
 <TabItem value="Java" label="Java">
 
-```java
-
-    @WorkerTask("fraud-check-<replace-with-your-name>")
-    public String checkForFraud(@InputParam("amount") BigDecimal amount, @InputParam("accountId") String accountId) {
-        boolean isFraud = fraudService.isFraudulentTxn(accountId, amount); 
-        if(isFraud) {
-            return "This transaction cannot be processed as its flagged for review.";
-        }
-        return "Deposit of " + amount + " has processed successfully";
-    }
-
+```java dynamic https://github.com/conductor-sdk/orkes-java-springboot2-example/blob/main/src/main/java/io/orkes/example/banking/workers/ConductorWorkers.java section=1 ../workers/ConductorWorkers.java
 ```
 
 </TabItem>

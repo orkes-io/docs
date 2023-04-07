@@ -1,46 +1,87 @@
 const fs = require('fs');
 const path = require('path');
 const axios = require('axios');
+const {exec} = require("child_process");
 
 const startMarker = 'docs-marker-start-';
 const endMarker = 'docs-marker-end-';
 
-function extractContent(rawUrl, section) {
+function extractContentFromFile(file, repo, section) {
     return new Promise((resolve, reject) => {
+        console.log('file ', file, repo)
         const result = [];
         const startMarkerSec = `${startMarker}${section}`;
         const endMarkerSec = `${endMarker}${section}`;
-
-        axios.get(rawUrl).then((response) => {
-            const lines = response.data.split('\n');
-            let foundStartMarker = false;
-            let lineStart = 0;
-            let lineEnd = 0;
-            let index = 0;
-            lines.forEach((line) => {
-                index++;
-                if (line.includes(endMarkerSec)) {
-                    foundStartMarker = false;
-                    lineEnd = index - 1;
+        const repoFolder = `./gitrepos/${repo}/${file}`
+        try {
+            fs.readFile(repoFolder, "utf8", (error, data) => {
+                if (error) {
+                    console.error(error.message);
+                    return;
                 }
+                const lines = data.split('\n');
+                let foundStartMarker = false;
+                let lineStart = 0;
+                let lineEnd = 0;
+                let index = 0;
+                lines.forEach((line) => {
+                    index++;
+                    if (line.includes(endMarkerSec)) {
+                        foundStartMarker = false;
+                        lineEnd = index - 1;
+                    }
 
-                if (foundStartMarker) {
-                    // result.push(line.replaceAll('>', '&gt;').replaceAll('<', '&lt;'));
-                    result.push(line);
-                }
+                    if (foundStartMarker) {
+                        result.push(line);
+                    }
 
-                if (line.includes(startMarkerSec)) {
-                    foundStartMarker = true;
-                    lineStart = index + 1;
-                }
+                    if (line.includes(startMarkerSec)) {
+                        foundStartMarker = true;
+                        lineStart = index + 1;
+                    }
+                });
+                resolve([result, lineStart, lineEnd]);
             });
-            resolve([result, lineStart, lineEnd]);
-        }).catch((error) => {
+        } catch (error) {
             console.error(error);
             reject(error);
-        });
+        }
     });
 }
+
+const getGitUrl = (url) => {
+    const rawUrl = url.substring(0, url.indexOf(`/blob/`));
+    return `${rawUrl}.git`;
+}
+
+const cloneRepoIfNeeded = (gitUrl) => {
+    return new Promise((resolve, reject) => {
+        const gitFolder = gitUrl.substring(gitUrl.lastIndexOf('/'), gitUrl.indexOf('.git'));
+        const destFolder = `./gitrepos/${gitFolder}`;
+        let command;
+        if (fs.existsSync(destFolder)) {
+            command = `git -C ${destFolder} pull`;
+        } else {
+            command = `git clone ${gitUrl} ${destFolder}`;
+        }
+        try {
+            exec(command, (error, stdout, stderr) => {
+                if (error) {
+                    console.error(`Error executing command: ${command}`);
+                    console.error(error.message);
+                    return;
+                }
+                console.log(stdout);
+                console.error(stderr);
+                console.log(command, "successful")
+                resolve(true);
+            });
+        } catch (e) {
+            console.error(e);
+            reject(e);
+        }
+    });
+};
 
 const searchDirectory = async (dirPath, codeBlocks) => {
     const files = fs.readdirSync(dirPath);
@@ -59,12 +100,18 @@ const searchDirectory = async (dirPath, codeBlocks) => {
                     if (line.startsWith('```') && line.indexOf(' dynamic ') > 0) {
                         const lineContent = line.split(' ');
                         const originalUrl = lineContent[2];
-                        const rawUrl = originalUrl.replace("github.com", "raw.githubusercontent.com").replace("/blob/", "/");
-                        const section = lineContent[3].split('=')[1];
-                        const [extractedContent, lineStart, lineEnd] = await extractContent(rawUrl, section);
-                        console.log(`Found code block with url ${rawUrl} and section ${section} and content`, extractedContent);
-                        codeBlocks[`${originalUrl}---${section}`] = `{\`${extractedContent.join('\n')}\`}`;
-                        codeBlocks[`${originalUrl}---${section}-lines`] = `#L${lineStart}-L${lineEnd}`;
+                        const gitUrl = getGitUrl(originalUrl);
+                        await cloneRepoIfNeeded(gitUrl).then(async () => {
+                            console.log("Repo clone/update successful")
+                            const section = lineContent[3].split('=')[1];
+                            const rawUrl = originalUrl.substring(originalUrl.indexOf('/blob/main/') + 10);
+                            let l = originalUrl.substring(0, originalUrl.indexOf('/blob/main/'));
+                            const repo = l.substring(l.lastIndexOf('/') + 1)
+                            const [extractedContent, lineStart, lineEnd] = await extractContentFromFile(rawUrl, repo, section);
+                            console.log(`Found code block with url ${rawUrl} and section ${section} and content`, extractedContent);
+                            codeBlocks[`${originalUrl}---${section}`] = `{\`${extractedContent.join('\n')}\`}`;
+                            codeBlocks[`${originalUrl}---${section}-lines`] = `#L${lineStart}-L${lineEnd}`;
+                        });
                     }
                 }
             }

@@ -12,8 +12,12 @@ function plugin(options = {}) {
     return function transformer(tree) {
         let includesImportCodeBlock = false;
         let hasCodeBlock = false;
-
+        let totalCount = 1;
         visit(tree, ["code", "import"], (node, index, parent) => {
+            totalCount++;
+            if (totalCount > 10000) {
+                return;
+            }
             if (is(node, "import") && node.value.includes("@theme/CodeBlock")) {
                 includesImportCodeBlock = true;
                 return;
@@ -27,8 +31,8 @@ function plugin(options = {}) {
                 let key = `${url}---${section}`
                 let linesKey = `${url}---${section}-lines`
                 let urlLabel = metaSplit[3];
-                let language = 'java';
-                tree.children.splice(7, 1, {
+                let language = 'java'; // TODO Fix
+                tree.children.splice(index, 1, {
                         type: "jsx",
                         value: `<CodeBlock language="${language}" title="${url}${codeblocks[linesKey]}" titleType="url" titleLabel="${urlLabel}">${codeblocks[key]}`,
                     },
