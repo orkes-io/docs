@@ -18,7 +18,8 @@ for integration with applications or services.
 
 View our documentation on [Conductor Clients & SDKs](/content/category/sdks) to learn how to import the required dependencies in our applications.
 
-Let's look at some __code examples__ of how to trigger a workflow by it's name.
+Let's look at some __code examples__ of how to trigger a workflow by it's name. We have also linked the repository where this code sample is hosted. To test these ourselves
+we can also clone them to local and try it out.  
 
 <Tabs>
 <TabItem value="Java" label="Java">
@@ -114,6 +115,11 @@ console.log("Workflow id: {}", workflowId)
 </TabItem>
 </Tabs>
 
+
+As an example, we might invoke this method when an endpoint is called such as this API call in Java
+
+```java dynamic https://github.com/conductor-sdk/orkes-java-springboot2-example/blob/main/src/main/java/io/orkes/example/banking/controller/BankingApiController.java section=1 .../controller/BankingApiController.java
+```
 
 
 In addition to triggering from code, we can also run them from:

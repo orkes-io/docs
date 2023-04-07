@@ -6,15 +6,11 @@ import TabItem from '@theme/TabItem';
 import Install from '@site/src/components/install.mdx';
 
 
-# Step 4: Adding Wait Conditions
+# Step 4: Running an inline function
 
-The wait task in Conductor is used if the workflow is to be paused for external signals. The signals can be human manual interventions or an event from external sources such as Kafka, SQS, etc. Let’s learn how you can pause your workflows using wait tasks. 
+So far, we haven't done anything here even if the fraud check fails. How can we handle the case where the fraud check returned a fail and we want to skip
+processing the deposit transaction, but we can add another inline task that can check for the outcome of fraud check and sends a different message to our users via SMS or Email.
 
-#### In your current workflow, what if you want to send the SMS only after 10 mins?
-
-:::tip
-Orkes Conductor doesn't limit your wait conditions. We can wait for __mins__, __days__, __months__ or even __years__! It can also wait for external signals like manual approval or events from messaging systems such as __Kafka/SQS__.
-:::
 
 <Tabs>
 <TabItem value="UI" label="UI">
@@ -22,9 +18,11 @@ Orkes Conductor doesn't limit your wait conditions. We can wait for __mins__, __
 <div className="row">
 <div className="col col--4">
 
-1. In your current workflow, add a [Wait](/content/reference-docs/operators/wait) task before the SMS task.
-2. You can configure the wait task parameters to wait for 10 mins.
-3. Run workflow directly from the UI using the Run Workflow button.
+1. In your current workflow, add a [Inline](/content/reference-docs/system-tasks/inline) task after the switch case
+2. Add another switch case to process the deposit only if the fraud check passes
+3. Add an inline to compose the correct message for users
+4. Pass the message as inputs to the send-message tasks
+5. Run workflow
 
 </div>
 <div className="col">
@@ -33,17 +31,32 @@ Orkes Conductor doesn't limit your wait conditions. We can wait for __mins__, __
   width="100%"
   height="300px"
   allow="fullscreen;"
-  src={"https://www.youtube.com/embed/J0TDfs6nJhg"}
+  src={"https://player.vimeo.com/video/814101164?h=e8e6172101"}
 ></iframe></div>
 </div>
 </div>
 </TabItem>
 </Tabs>
 
-Since you have configured the wait task to wait for 10 mins, once the workflow execution reaches this task, it waits for 10 mins and then proceeds to the next task; sending an SMS.
+:::tip
+INLINE task is a great tool for writing basic logic, such as a predicate condition or object data transforms. With Javascript, you can
+write complex actions that will be executed by Conductor without having to find a place to host and run this worker.
+:::
 
+INLINE tasks can be scripted from the following template
+```javascript
+(function() { 
+   // Your code here
+   // Variables for this function needs to be explicitly added as inputs and once added you can 
+   // refer to them using the $.<variable-name> notation.
+   return $.amount > 10000; 
+})();
+```
+
+Read more on INLINE tasks [here](/content/reference-docs/system-tasks/inline)
 
 ## Related Topics
 
-* [API Reference for Wait](/content/reference-docs/operators/wait)
-* [Scheduling workflows](/content/guides/scheduling-workflows) 
+- Passing [inputs into workflow for tasks](/content/guides/passing-data-task-to-task#task-inputs-referred-from-workflow-inputs)
+- Passing the [output of one task to the input](/content/guides/passing-data-task-to-task#task-inputs-referred-from-other-task-outputs) of another
+- [Client SDKs](/content/conductor-clients)
