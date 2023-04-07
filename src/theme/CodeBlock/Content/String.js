@@ -64,7 +64,7 @@ export default function CodeBlockString({
                 !blockClassName.includes(`language-${language}`) &&
                 `language-${language}`,
             )}>
-            {titleUrl && <div className={styles.codeBlockTitle}>{titleUrl}</div>}
+            {titleUrl && <div className={styles.codeBlockTitle}><i>Complete source file on Github:</i> {titleUrl}</div>}
             {titleText && <div className={styles.codeBlockTitle}>{titleText}</div>}
             <div className={styles.codeBlockContent}>
                 <Highlight
