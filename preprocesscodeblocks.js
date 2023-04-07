@@ -32,7 +32,7 @@ function extractContentFromFile(file, repo, section) {
                     }
 
                     if (foundStartMarker) {
-                        result.push(line);
+                        result.push(line.replace(/`/g, '\\`'));
                     }
 
                     if (line.includes(startMarkerSec)) {
