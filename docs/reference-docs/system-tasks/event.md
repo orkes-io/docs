@@ -149,7 +149,7 @@ In your AWS account, open Amazon SQS (search for it in the search bar) and choos
 
 Now we will build a workflow to send and receive the SQS messages.  You can find the JSON on the [Orkes Playground](https://play.orkes.io/WorkflowDef/event_testing).
 
-<p align="center"><img src="/content/img/sqs_workflow.jpg" alt="workflow sending and receiving tasks" width="50%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+<p align="center"><img src="/content/img/sqs-workflow.png" alt="workflow sending and receiving tasks" width="50%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
 This workflow has two forks: 
 
@@ -218,11 +218,11 @@ We have named the event `complete_task_event` and the event is a message from ou
 
 When we invoke the workflow:
 
-<p align="center"><img src="/content/img/sqs_workflow_start.jpg" alt="startung the SQS workflow" width="500" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+<p align="center"><img src="/content/img/sqs-workflow-start.png" alt="startung the SQS workflow" width="500" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
 Both task_1 and task_2 are IN_PROGRESS.  
 
-<p align="center"><img src="/content/img/sqs_workflow_task2_complete.jpg" alt="wait task complete sqs task about to fire" width="500" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+<p align="center"><img src="/content/img/sqs-workflow-task2-complete.png" alt="wait task complete sqs task about to fire" width="500" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
 Once the WAIT poll task completes task_2, the SQS task fires and sends a message to AWS.  You can poll for messages in your SQS queue (in your queue - click "send/receive messages" and there is a "poll for tasks" button) and see the message pass through:
 
@@ -230,7 +230,7 @@ Once the WAIT poll task completes task_2, the SQS task fires and sends a message
 
 This message triggers our EVENT, and the event COMPLETES `task_1`.
 
-<p align="center"><img src="/content/img/sqs_workflow_complete.jpg" alt="completed workflow upon arrival of the SQS message to the event" width="500" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+<p align="center"><img src="/content/img/sqs-workflow-complete.png" alt="completed workflow upon arrival of the SQS message to the event" width="500" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
 There we have it.  We have configured Conductor to send and receive SQS messages to our AWS instance. We built an EVENT task to send the messages and created an event listener to receive events from AWS and perform actions in our workflow (In this case, sending a COMPLETED status to a WAIT task.)
 
