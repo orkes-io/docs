@@ -11,6 +11,10 @@ Terminates a running workflow. A reason must be provided that is captured as the
 
 ## Input Payload
 
+| Attribute | Description | 
+| --------- | ----------- | 
+| workflowId | The unique identifier of the workflow to be terminated. | 
+
 ## API Endpoint
 ```
 DELETE /workflow/{workflowId}

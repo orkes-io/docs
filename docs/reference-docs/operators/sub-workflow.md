@@ -3,6 +3,8 @@ import TabItem from '@theme/TabItem';
 
 # Sub Workflow
 
+Sub Workflow allows nesting another workflow within your current workflow. 
+
 ## Definitions
 
 ```json
@@ -16,10 +18,8 @@ import TabItem from '@theme/TabItem';
   }
 }
 ```
-:::note
 * The Do-While task does not allow nested Do-While tasks. But it does permit a sub-workflow that can have a Do-While loop inside it.
 * Dynamic Forks can only contain one task. But using the sub-workflow concept, this single task can be a sub-workflow that includes additional tasks.
-:::
 
 ### Input Parameters
 
@@ -39,6 +39,8 @@ The output of the sub-workflow is also supplied to the output of the workflow.
 ## Examples​
 
 <Tabs>
+<TabItem value="UI" label="UI">
+</TabItem>
 <TabItem value="JSON" label="JSON">
 
 ```json

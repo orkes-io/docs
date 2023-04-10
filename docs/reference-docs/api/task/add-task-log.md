@@ -7,9 +7,13 @@ import TabItem from '@theme/TabItem';
 
 # Add Task Execution Log
 
-Log Task Execution Details
+Used to log messages associated with a specific task.
 
 ## Input Payload
+
+| Attribute | Description |
+| --------- | -------------- | 
+| taskId | The *taskId* of the task for which you want to log the message. | 
 
 ## API Endpoint
 

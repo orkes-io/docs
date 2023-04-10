@@ -14,17 +14,20 @@ Starts a workflow and returns the ID of the workflow. The API returns immediatel
 | Parameter     | Description                                                                                                                      |
 | ------------- | -------------------------------------------------------------------------------------------------------------------------------- |
 | name          | Name of the workflow.                                                                                                             |
-| version       | Choose the Workflow version.                                                                                                 |
+| version       | Choose the workflow version.                                                                                                 |
 | input         | Map of Key and Value given as the input to the workflow.                                                                          |
 | correlationId | User-supplied correlation id, which can be used to query the workflow execution later.                                             |
 | priority      | Priority of the workflow. 0 is the default priority, which executes workflows in FIFO. Valid values are from 0-99.|
-| taskToDomain  | Task to Domain limits the workflow execution to the specified domain only.                                                                 |
+| taskToDomain  | [Task to Domain](/content/guides/task-to-domain) limits the workflow execution to the specified domain only.                                                                 |
 | workflowDef   | Provide the entire workflow definition. Used for executing ephemeral workflow definitions.                                |
 
 ## Response
 A string representing the id of the workflow execution.
 
 ## API Endpoint
+```
+POST /api/workflow/{name}
+```
 
 ## SDK Methods
 

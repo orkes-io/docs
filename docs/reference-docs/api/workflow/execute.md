@@ -13,6 +13,11 @@ Starts a workflow and waits until the workflow completes or the **waitUntilTask*
 
 ## Input Payload
 
+| Attribute | Description | 
+| ------------ | ------------- |
+| name | Name of the workflow to be executed. |
+| version  | Choose the required version of the workflow. |
+
 ## API Endpoint
 ```
 POST /api/workflow/execute/{name}/{version}

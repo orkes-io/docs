@@ -11,6 +11,10 @@ Restart a workflow execution from the beginning with the same input. This operat
 
 ## Input Payload
 
+| Attribute | Description | 
+| --------- | ----------- | 
+| workflowId | The unique identifier of the workflow to be restarted. | 
+
 ## API Endpoint
 ```
 POST /workflow/{workflowId}/restart

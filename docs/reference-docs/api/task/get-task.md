@@ -7,9 +7,13 @@ import TabItem from '@theme/TabItem';
 
 # Get task
 
-Returns a task given an id
+Used to retrieve the current state and details of the specific task.
 
 ## Input Payload
+
+| Attribute | Description |
+| --------- | -------------- | 
+| taskId | The *taskId* of the task for which you want to log the message. | 
 
 ## API Endpoint
 

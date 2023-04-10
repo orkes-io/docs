@@ -30,7 +30,7 @@ The switch task is used for creating branching logic. It is a representation of 
 ```
 * A switch task takes an expression as input along with multiple branches containing a sequence of tasks to be executed and a *default* branch to be executed if no matching branches are found.
 * The output of the **expression** is matched with the name of the branch.
-* The expression can be a **javascript** expression of a value parameter which represents the input to the task directly.
+* The expression can be a **javascript** expression or a value parameter which represents the input to the task directly.
 
 ### Input Parameters
 
@@ -54,6 +54,9 @@ The switch task is used for creating branching logic. It is a representation of 
 Workflow with the switch task definition that uses **value-param** evaluatorType:
 
 <Tabs>
+<TabItem value="UI" label="UI">
+ToDo - Video
+</TabItem>
 <TabItem value="JSON" label="JSON">
 
 ```json

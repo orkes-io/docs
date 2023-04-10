@@ -27,6 +27,8 @@ A Simple task is a Worker task that requires an external worker for polling. The
 ## Examples
 
 <Tabs>
+<TabItem value="UI" label="UI">
+</TabItem>
 <TabItem value="JSON" label="JSON">
 
 ```json

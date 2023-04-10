@@ -36,16 +36,16 @@ The Do While task sequentially executes a list of tasks as long as a condition i
 | i          | Iteration number as a string mapped to the task references names and their output.                                                                                                                      |
 | *          | Any state can be stored here if the loopCondition does so. For example, **storage** will exist if loopCondition is **if ($.LoopTask['iteration'] <= 10) {$.LoopTask.storage = 3; true } else {false}**. |
 
-:::note
 * Domain or isolation group execution is unsupported.
 * Nested DO_WHILE is unsupported. However, we can achieve a similar functionality as the DO_WHILE task supports SUB_WORKFLOW as a loopOver task.
 * Since loopOver tasks will be executed in a loop inside the scope of a parent, the do-while task may not work as expected if it includes branching that crosses outside the DO_WHILE task.
 * Branching inside the loopOver task is supported.
-:::
 
 ## Examples
 
 <Tabs>
+<TabItem value="UI" label="UI">
+</TabItem>
 <TabItem value="JSON" label="JSON">
 
 ```json

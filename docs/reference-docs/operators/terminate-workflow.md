@@ -35,6 +35,8 @@ The Terminate Workflow task is used to terminate other workflows using their wor
 ## Examples
 
 <Tabs>
+<TabItem value="UI" label="UI">
+</TabItem>
 <TabItem value="JSON" label="JSON">
 
 ```json

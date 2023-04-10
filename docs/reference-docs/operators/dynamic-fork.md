@@ -40,6 +40,8 @@ The [JOIN](/content/reference-docs/operators/join) task will run after all the d
 ## Examples
 
 <Tabs>
+<TabItem value="UI" label="UI">
+</TabItem>
 <TabItem value="JSON" label="JSON">
 
 ```json

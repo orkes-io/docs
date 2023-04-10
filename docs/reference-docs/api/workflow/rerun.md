@@ -11,6 +11,10 @@ Reruns a completed workflow from a specific task (ReRunFromTaskId) and optionall
 
 ## Input Payload
 
+| Attribute | Description | 
+| --------- | ----------- | 
+| workflowId | The unique identifier of the workflow to be rerun. | 
+
 ## API Endpoint
 ```
 POST /workflow/{workflowId}/rerun

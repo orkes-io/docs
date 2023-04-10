@@ -48,6 +48,8 @@ The JSON_JQ_TRANSFORM task is a System task that allows the processing of JSON d
 ## Examples
 
 <Tabs>
+<TabItem value="UI" label="UI">
+</TabItem>
  <TabItem value="JSON" lable="JSON">
 
  ```json

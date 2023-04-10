@@ -52,6 +52,8 @@ For example, the above one will be used to match the webhook event payload where
 <br/>
 
 <Tabs>
+<TabItem value="UI" label="UI">
+</TabItem>
  <TabItem value="JSON" lable="JSON">
 
  ```json

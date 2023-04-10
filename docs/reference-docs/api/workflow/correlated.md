@@ -11,6 +11,10 @@ With the list of correlation IDs, this API helps in finding and returning workfl
 
 ## Input Payload
 
+| Attribute | Description |
+| --------- | ----------- | 
+| name | The name of the workflow for which the correlated workflow is to be fetched. | 
+
 ## API Endpoint
 
 ```

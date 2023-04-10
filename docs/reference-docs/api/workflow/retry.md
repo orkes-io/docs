@@ -11,6 +11,10 @@ This API retries a failed workflow from the last failed task.
 
 ## Input Payload
 
+| Attribute | Description | 
+| --------- | ----------- | 
+| workflowId | The unique identifier of the failed workflow to be retried. | 
+
 ## API Endpoint
 ```
 POST /workflow/{workflowId}/retry

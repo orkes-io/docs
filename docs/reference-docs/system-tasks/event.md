@@ -52,6 +52,8 @@ Conductor has support for the following external event queueing systems as part 
 ## Examples
 
 <Tabs>
+<TabItem value="UI" label="UI">
+</TabItem>
  <TabItem value="JSON" lable="JSON">
 
  ```json

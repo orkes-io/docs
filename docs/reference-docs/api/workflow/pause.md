@@ -11,6 +11,10 @@ This API pause the execution of a running workflow. Any currently running tasks 
 
 ## Input Payload
 
+| Attribute | Description | 
+| --------- | ----------- | 
+| workflowId | The unique identifier of the workflow to be paused. | 
+
 ## API Endpoint
 ```
 PUT /workflow/{workflowId}/pause

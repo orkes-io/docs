@@ -46,6 +46,8 @@ Check [JOIN](/content/reference-docs/operators/join) for more details on the JOI
 ## Examples
 
 <Tabs>
+<TabItem value="UI" label="UI">
+</TabItem>
 <TabItem value="JSON" label="JSON">
 
 ```json

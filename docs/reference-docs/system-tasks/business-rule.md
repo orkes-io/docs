@@ -63,6 +63,8 @@ Business rule task supports the following operators:
 
 ## Examples
  <Tabs>
+ <TabItem value="UI" label="UI">
+</TabItem>
  <TabItem value="JSON" lable="JSON">
 
  ```json

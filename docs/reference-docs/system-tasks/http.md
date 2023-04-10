@@ -46,6 +46,8 @@ HTTP task allows you to make calls to remote services exposed over HTTP/HTTPS.
 ## Examples
 
 <Tabs>
+<TabItem value="UI" label="UI">
+</TabItem>
  <TabItem value="JSON" lable="JSON">
 
  ```json
@@ -134,8 +136,3 @@ This is a banana 🍌
 </p>
 </details>
 
-<details><summary>Rate Limiting HTTP Requests</summary>
-<p>
-add details
-</p>
-</details>

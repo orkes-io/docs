@@ -38,6 +38,8 @@ Start Workflow is an operator task used to start another workflow from an existi
 ## Examples
 
 <Tabs>
+<TabItem value="UI" label="UI">
+</TabItem>
 <TabItem value="JSON" label="JSON">
 
 ```json

@@ -26,6 +26,8 @@ The Wait task is used when the workflow needs to be paused for an external signa
 
 ## Examples
  <Tabs>
+ <TabItem value="UI" label="UI">
+</TabItem>
  <TabItem value="JSON" lable="JSON">
 
  ```json
@@ -112,10 +114,5 @@ The following wait task remains blocked until Dec 25, 2023, 9 am PST.
   }
 }
 ```
-</p>
-</details>
-
-<details><summary>Add More</summary>
-<p>
 </p>
 </details>

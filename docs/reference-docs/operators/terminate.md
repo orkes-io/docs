@@ -40,6 +40,8 @@ The Terminate task is a task that can terminate the workflow with a termination 
 ## Examples
 
 <Tabs>
+<TabItem value="UI" label="UI">
+</TabItem>
 <TabItem value="JSON"  lable="JSON">
 
 ```json

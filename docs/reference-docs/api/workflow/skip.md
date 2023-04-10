@@ -11,6 +11,11 @@ Skips a given task execution from a current running workflow.
 
 ## Input Payload
 
+| Attribute | Description | 
+| --------- | ----------- | 
+| workflowId | The unique identifier of the running workflow that contains the task to be skipped. | 
+| taskReferenceName | The reference name of the task to be skipped. |
+
 ## API Endpoint
 ```
 PUT /workflow/{workflowId}/skiptask/{taskReferenceName}

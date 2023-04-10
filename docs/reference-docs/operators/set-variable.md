@@ -25,6 +25,8 @@ Set Variable allows you to set the workflow variables by creating or updating th
 ## Examples​
 
 <Tabs>
+<TabItem value="UI" label="UI">
+</TabItem>
 <TabItem value="JSON" label="JSON">
 
 ```json

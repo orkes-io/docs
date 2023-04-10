@@ -30,6 +30,8 @@ The output is a map, where the keys are the names of task references being joine
 ## Examples
 
 <Tabs>
+<TabItem value="UI" label="UI">
+</TabItem>
 <TabItem value="JSON" label="JSON">
 
 ```json

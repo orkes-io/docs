@@ -10,6 +10,10 @@ Resume the execution of a workflow that is paused. If the workflow is not paused
 
 ## Input Payload
 
+| Attribute | Description | 
+| --------- | ----------- | 
+| workflowId | The unique identifier of the paused workflow to be resumed. | 
+
 ## API Endpoint
 ```
 PUT /workflow/{workflowId}/resume  

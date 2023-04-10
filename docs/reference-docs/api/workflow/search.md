@@ -7,7 +7,7 @@ import TabItem from '@theme/TabItem';
 
 # Search for Workflow Executions
 
-Searches for the workflow executions.
+Used to search for the workflow executions.
 
 ## Input Payload
 

@@ -42,6 +42,8 @@ The producer created in the Kafka task is cached. By default, the cache size is 
 
 ## Examples
 <Tabs>
+<TabItem value="UI" label="UI">
+</TabItem>
  <TabItem value="JSON" lable="JSON">
 
  ```json

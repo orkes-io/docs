@@ -46,6 +46,8 @@ During execution, the DYNAMIC task is replaced in the workflow with whatever tas
 ## Examples
 
 <Tabs>
+<TabItem value="UI" label="UI">
+</TabItem>
 <TabItem value="JSON" label="JSON">
 
 ```json

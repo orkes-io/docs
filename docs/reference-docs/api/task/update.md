@@ -5,11 +5,17 @@ sidebar_position: 2
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Update Workflow Task
+# Update Task Status within Workflow
 
-Update the execution status and output of the task.
+Used tp update the execution status of the task within a workflow instance.
 
 ## Input Payload
+
+| Attribute | Description |
+| -- | -- |
+| workflowId | The uniquie identifier of the workflow to which the task belongs. | 
+| taskRefName | The reference name of the task whose status is being updated. |
+| status | Provide the new status to be set for the task. It can take values: **IN_PROGRESS**, **COMPLETED**, or **FAILED**. |
 
 ## API Endpoint
 ```
