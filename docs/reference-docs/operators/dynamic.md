@@ -150,7 +150,7 @@ The **shipping_info** task generates an output that is used to determine which t
 
 Here is the workflow with the DYNAMIC task:
 
-![Conductor UI - Workflow Diagram](/img/tutorial/ShippingWorkflow.png)
+<p align="center"><img src="/content/img/dynamic-task-example.png" alt="Dynamic Task Example" width="50%" height="auto"></img></p>
 
 Now, assume a workflow execution where **shipping_info** outputs:
 
@@ -163,7 +163,7 @@ Now, assume a workflow execution where **shipping_info** outputs:
 The DYNAMIC task **shipping_task** has been replaced with **ship_via_fedex**:
 
 
-![Conductor UI - Workflow Run](/img/tutorial/ShippingWorkflowRunning.png)
+<p align="center"><img src="/content/img/ship-via-fedex.jpg" alt="Ship Via Fedex" width="50%" height="auto"></img></p>
 
 If the output is:
 
@@ -174,6 +174,6 @@ If the output is:
 ```
 The DYNAMIC task **shipping_task** has been replaced with **ship_via_ups**:
 
-![Conductor UI - Workflow Run](/img/tutorial/ShippingWorkflowUPS.png)
+<p align="center"><img src="/content/img/ship-via-ups.jpg" alt="Ship Via UPS" width="50%" height="auto"></img></p>
 </p>
 </details>

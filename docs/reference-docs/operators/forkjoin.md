@@ -172,8 +172,7 @@ forkTask = (
 <p>
 Imagine a workflow that sends three notifications: email, SMS, and HTTP. Since none of these steps depend on the others, they can be run in parallel with a fork.
 The diagram will appear as follows:
-
-![fork diagram](/img/fork-task-diagram.png)
+<p align="center"><img src="/content/img/fork-join-example.png" alt="Fork Join Example" width="90%" height="auto"></img></p>
 
 Here's the JSON definition for the workflow:
 
