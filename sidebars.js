@@ -40,7 +40,7 @@ const sidebars = {
                 slug: '/category/getting-started',
                 keywords: ['getting-started', 'installation']
             },
-            items: ['getting-started/step1', 'getting-started/step2', 'getting-started/step3', 'getting-started/step4', 'getting-started/step5', 'getting-started/step6'],
+            items: ['getting-started/first-workflow-application', 'getting-started/running-workflows-from-code', 'getting-started/adding-custom-code-worker', 'getting-started/running-an-inline-function', 'getting-started/adding-wait-conditions', 'getting-started/executing-tasks-in-parallel'],
             collapsible: true,
             collapsed: false,
             className: 'leftMenuHeader',
@@ -61,22 +61,22 @@ const sidebars = {
                 keywords: ['guides', 'features', 'developer-guides']
             },
             items: [
-                'guides/passing-data-task-to-task',
-                'guides/unit-tests',
-                'guides/integration-with-cicd',
-                'guides/scheduling-workflows',
+                'developer-guides/passing-data-in-conductor',
+                'developer-guides/unit-and-regression-tests',
+                'developer-guides/integration-with-cicd',
+                'developer-guides/scheduling-workflows',
                 {
                     type: 'doc',
-                    id: 'guides/webhooks',
+                    id: 'developer-guides/webhook-integration',
                     label: "Webhook Integration"
                 },
-                'guides/write-as-code',
-                'guides/debugging',
-                'guides/task-to-domain',
-                'guides/secrets',
-                'guides/scaling-workers',
-                'guides/orchestrating-human-tasks',
-                'guides/metrics-and-observability'
+                'developer-guides/write-workflows-using-code',
+                'developer-guides/debugging-workflows',
+                'developer-guides/task-to-domain',
+                'developer-guides/secrets-in-conductor',
+                'developer-guides/scaling-workers',
+                'developer-guides/orchestrating-human-tasks',
+                'developer-guides/metrics-and-observability'
             ],
             collapsible: true,
             collapsed: true,
@@ -133,13 +133,13 @@ const sidebars = {
             link: {
                 type: 'generated-index',
                 title: 'Access Control and Security',
-                slug: '/category/access-control-security',
+                slug: '/category/access-control-and-security',
                 keywords: ['access control', 'security']
             },
             items: [
-                'access-control-security/applications',
-                'access-control-security/users-and-groups',
-                'access-control-security/tags',
+                'access-control-and-security/applications',
+                'access-control-and-security/users-and-groups',
+                'access-control-and-security/tags',
             ],
             collapsible: true,
             collapsed: true,
@@ -152,7 +152,7 @@ const sidebars = {
                 type: 'generated-index',
                 title: 'Reference Docs',
                 description: 'Reference documentation for Orkes Conductor',
-                slug: '/category/ref-docs',
+                slug: '/category/reference-docs',
                 keywords: ['reference', 'apis', 'operators', 'api', 'tasks', 'system', 'system-tasks']
             },
             items: [
@@ -163,7 +163,7 @@ const sidebars = {
                         type: 'generated-index',
                         title: 'Operators',
                         description: 'Reference documentation for Orkes Conductor - Operators',
-                        slug: '/category/ref-docs/operators',
+                        slug: '/category/reference-docs/operators',
                         keywords: ['reference', 'apis', 'operators', 'api', 'tasks', 'system', 'system-tasks']
                     },
                     items: [
@@ -179,7 +179,7 @@ const sidebars = {
                         type: 'generated-index',
                         title: 'System Tasks',
                         description: 'Reference documentation for Orkes Conductor - System Tasks',
-                        slug: '/category/ref-docs/system-tasks',
+                        slug: '/category/reference-docs/system-tasks',
                         keywords: ['reference', 'apis', 'operators', 'api', 'tasks', 'system', 'system-tasks']
                     },
                     items: [
@@ -215,16 +215,21 @@ const sidebars = {
             link: {
                 type: 'generated-index',
                 title: 'How To Videos',
-                slug: '/category/videos'
+                slug: '/category/how-to-videos'
             },
             items: [
-                'videos/login-from-ui',
-                'videos/run-workflow',
+                'how-to-videos/login-to-playground',
+                'how-to-videos/run-workflow',
                 {
                     type: 'doc',
-                    id: 'videos/access-key-secret',
+                    id: 'how-to-videos/access-key-and-secret',
                     label: 'Access Key & Secret',
                 },
+                'how-to-videos/user-management',
+                'how-to-videos/group-management',
+                'how-to-videos/app-management',
+                'how-to-videos/tags',
+                'how-to-videos/secrets',
             ],
             collapsible: true,
             collapsed: true,
@@ -239,8 +244,7 @@ const sidebars = {
                 slug: '/category/templates'
             },
             items: [
-                'templates/availability-monitoring-for-http-endpoints',
-                'templates/video-processing-workflows'
+                'templates/template1',
             ],
             collapsible: true,
             collapsed: true,

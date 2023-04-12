@@ -8,7 +8,7 @@ Orkes Conductor is a platform for building distributed systems. Fundamentally it
 
 A Task represents a unit of work or a step in your flow, such as making an HTTP call, sending an email, processing data files or executing some logic. A task is the basic building block of a workflow that can be further classified into __operators__, __system__ tasks, or __custom__ code workers.
 
-An [Operator](/content/category/ref-docs/operators) in a workflow is your programming language construct, such as a switch, loop, fork/join or return statement, whereas a [System task](/content/category/ref-docs/system-tasks) is a pre-built task used for most common operators, such as an event task, HTTP task, polling an endpoint, and many more.
+An [Operator](/content/category/reference-docs/operators) in a workflow is your programming language construct, such as a switch, loop, fork/join or return statement, whereas a [System task](/content/category/reference-docs/system-tasks) is a pre-built task used for most common operators, such as an event task, HTTP task, polling an endpoint, and many more.
 
 ## Workers
 
@@ -28,7 +28,7 @@ Workflow = {Tasks + Workers}
 ## Related Topics
 
 * [Use cases and Templates](/content/category/templates)
-* [Operators](/content/category/ref-docs/operators)
-* [System Tasks](/content/category/ref-docs/system-tasks)
-* [Custom Worker](/content/getting-started/step3)
-* [Clients and SDKs](/content/conductor-clients)
+* [Operators](/content/category/reference-docs/operators)
+* [System Tasks](/content/category/reference-docs/system-tasks)
+* [Custom Worker](/content/getting-started/adding-custom-code-worker)
+* [Clients and SDKs](/content/category/sdks)

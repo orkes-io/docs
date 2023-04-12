@@ -106,7 +106,7 @@ const config = {
                 items: [
                     {
                         type: 'doc',
-                        docId: 'getting-started/step1',
+                        docId: 'getting-started/first-workflow-application',
                         position: 'left',
                         label: 'Getting Started',
                     },

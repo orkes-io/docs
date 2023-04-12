@@ -1,7 +1,7 @@
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Terminate Workflow Task
+# Terminate Workflow 
 
 The Terminate Workflow task is used to terminate other workflows using their workflow IDs.
 

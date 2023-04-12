@@ -1,8 +1,7 @@
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Terminate Task
-
+# Terminate 
 The Terminate task is a task that can terminate the workflow with a termination status and reason.
 
 ## Definitions

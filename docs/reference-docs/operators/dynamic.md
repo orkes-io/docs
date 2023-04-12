@@ -1,7 +1,7 @@
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Dynamic Task
+# Dynamic 
 
 The dynamic task allows you to execute one of the registered tasks dynamically at run-time.
 
@@ -26,7 +26,6 @@ The dynamic task allows you to execute one of the registered tasks dynamically a
 | taskToExecute        | Accepts the task name to execute.                                      |
 | dynamicTaskNameParam | Indicates the name of the task to be called during workflow execution. |
 
-:::tip Dynamic SUBWORKFLOW​
 If there is a possibility that the task called is a SUBWORKFLOW, you must also add:
 
 ```json
@@ -37,7 +36,6 @@ If there is a possibility that the task called is a SUBWORKFLOW, you must also a
 ```
 
 If **subWorkflowParam** is present, and the DYNAMIC workflow calls a task type that is not a SUBWORKFLOW, these parameters will be ignored.
-:::
 
 ### Output Parameters
 

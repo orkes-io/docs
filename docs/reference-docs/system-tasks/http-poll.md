@@ -1,7 +1,7 @@
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem'
 
-# HTTP Poll Task
+# HTTP Poll 
 
 The HTTP_POLL is a conductor task used to invoke HTTP API until the specified condition matches.
 
@@ -30,7 +30,7 @@ The HTTP_POLL is a conductor task used to invoke HTTP API until the specified co
 ### Input Parameters
 |Attribute|Description|
 |---|---|
-| terminalCondition   | Specifies the condition to be evaluated after every HTTP API invocation. If the condition is evaluated as **true**, the task will be marked as completed. On the other hand, if the condition is evaluated as **false**, the conductor will schedule the next poll according to the configurations (pollingInterval & pollingStrategy). By default, this value is set to `true`.<br/>                                   **Note**: While writing the terminal condition, <ul><li>It can be [parameterized](/content/guides/passing-data-task-to-task).</li><li> In order to use the current http poll as input to the condition, a `$` needs to be prefixed. For example, **$.output.status**</li></ul> |
+| terminalCondition   | Specifies the condition to be evaluated after every HTTP API invocation. If the condition is evaluated as **true**, the task will be marked as completed. On the other hand, if the condition is evaluated as **false**, the conductor will schedule the next poll according to the configurations (pollingInterval & pollingStrategy). By default, this value is set to `true`.<br/>                                   **Note**: While writing the terminal condition, <ul><li>It can be [parameterized](/content/developer-guides/passing-data-in-conductor).</li><li> In order to use the current http poll as input to the condition, a `$` needs to be prefixed. For example, **$.output.status**</li></ul> |
 | pollingInterval | Specify the time duration in seconds between each HTTP invocation. |
 | pollingStrategy | It can take any of the following values: <ul><li>**FIXED** - The duration between each HTTP API invocation will be fixed.</li><li> **LINEAR_BACKOFF** - The duration between each HTTP API invocation will be calculated by multiplying the poll count with pollingInterval. Note that the poll count is the incremental value based on each invocation.</li><li>**EXPONENTIAL_BACKOFF** - The duration between each HTTP API invocation will be calculated by multiplying poll count with 2 base exponential of pollingInterval.</li></ul>|
 

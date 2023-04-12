@@ -1,1 +1,0 @@
-# Availability Monitoring for Endpoints

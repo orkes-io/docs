@@ -5,7 +5,7 @@ sidebar_position: 2
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Get task
+# Get Task
 
 Used to retrieve the current state and details of the specific task.
 

@@ -1,7 +1,7 @@
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Event Task
+# Event 
 
 EVENT is a task used to publish an event into one of the supported eventing systems in Conductor. Conductor supports the following eventing models:
 * SQL (type: sqs)

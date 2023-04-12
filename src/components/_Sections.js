@@ -17,15 +17,15 @@ import AccordionWithImg from "../components/AccordionWithImg";
 
 const videoSource = [
   {
-    src: "https://player.vimeo.com/video/813914842?h=cb0d0ecf6b&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479",
+    src: "https://www.youtube.com/embed/VV036Ljs2ns",
     title: "Introduction to Orkes Conductor",
   },
   {
-    src: "https://www.youtube.com/embed/du7mls9XMUE",
-    title: "Orkes Conductor: Selected Use Cases",
+    src: "https://www.youtube.com/embed/tVUaDtoKNgE",
+    title: "How to Login to Orkes Conductor Playground",
   },
   {
-    src: "https://www.youtube.com/embed/du7mls9XMUE",
+    src: "https://www.youtube.com/embed/f1b5vZRKn2Q",
     title: "Get Started with Orkes Conductor",
   },
   {
@@ -267,9 +267,9 @@ export const SDKList = ({}) => (
     </a>
     <a
       className={"aClass"}
-      href={"/content/sdks/csharp"}
+      href={"/content/sdks/clojure"}
     >
-      <img src="/content/img/csharp.png" style={{ height: 75, width: 75, margin: 5 }} />
+      <img src="/content/img/clojure.png" style={{ height: 75, width: 75, margin: 5 }} />
     </a>
   </div>
 );
@@ -384,7 +384,7 @@ export const UseCasesSection = ({}) => (
 
 export const AccordionSection = ({}) => (
   <div className="padding-vert--md">
-    <h2>What can conductor do?</h2>
+    <h2>What can Conductor do?</h2>
     <h5>
       Here are some of the key features we can do with Orkes Conductor platform:
     </h5>

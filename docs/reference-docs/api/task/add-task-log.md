@@ -5,7 +5,7 @@ sidebar_position: 2
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Add Task Execution Log
+# Add Task Log
 
 Used to log messages associated with a specific task.
 
