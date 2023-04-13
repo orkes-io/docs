@@ -55,7 +55,10 @@ If you are around Pune on Apr 16, 2023, don’t forget to join us at GDSC WOW Pu
 
 ### Microservices and Orchestration Meetup Bengaluru
 
-We have an exciting in-person event coming up for folks in India. The Microservices and Orchestration Meetup is scheduled for Apr 29, 2023, from 10.30 AM to 2:30 PM IST in Bengaluru, India. The meetup will be an excellent opportunity to attend workshops from Conductor Specialists and Industry Experts. We are yet to confirm the venue; meanwhile, you can [register](https://forms.gle/bLUdUQZczQp82FUw6) for the event and block your seats. Feel free to ping us on our [Slack community](https://app.slack.com/client/T02KG20GJ1Z/C02K1B5PM0X) channel if you want to learn more about the meetup.
+We have an exciting in-person event coming up for folks in India. The Microservices and Orchestration Meetup is scheduled for Apr 30, 2023, from 10.30 AM to 2:30 PM IST at Google RMZ Infinity, Bengaluru, India. The meetup will be an excellent opportunity to attend workshops from Conductor Specialists and Industry Experts. Feel free to ping us on our [Slack community](https://app.slack.com/client/T02KG20GJ1Z/C02K1B5PM0X) channel if you want to learn more about the meetup.
+
+|[Register](https://forms.gle/bLUdUQZczQp82FUw6)|
+|--|
 
 ### Microsoft Build - May 2023
 
