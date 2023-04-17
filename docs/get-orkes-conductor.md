@@ -65,5 +65,5 @@ export CONDUCTOR_SERVER_URL=http://localhost:8080/api
 ### Video Guides
 
 - [Getting Access Key & Secret](/content/how-to-videos/access-key-and-secret).
-- - [Working on Orkes Playground](/content/how-to-videos/login-to-playground).
+- [Working on Orkes Playground](/content/how-to-videos/login-to-playground).
 
