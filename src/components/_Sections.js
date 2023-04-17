@@ -26,7 +26,7 @@ const videoSource = [
   },
   {
     src: "https://www.youtube.com/embed/f1b5vZRKn2Q",
-    title: "Get Started with Orkes Conductor",
+    title: "How to get an Access Key & Secret",
   },
   {
     src: "https://www.youtube.com/embed/du7mls9XMUE",
