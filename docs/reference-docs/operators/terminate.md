@@ -125,7 +125,7 @@ terminateTask = (
 
 <details><summary>Sample Example</summary>
 <p>
-Suppose in a workflow, we have to make a decision to ship the courier with the shipping service providers based on input provided while running the workflow. If the input provided while running the workflow does not match with the available shipping providers, then the workflow will fail and return. If the input provided matches, then it goes ahead.
+Suppose in a workflow; we have to make a decision to ship the courier with the shipping service providers based on input provided while running the workflow. If the input provided while running the workflow does not match with the available shipping providers, then the workflow will fail and return. If the input provided matches, then it goes ahead.
 <br/>
 Here is a snippet that shows the default switch case terminating the workflow:
 

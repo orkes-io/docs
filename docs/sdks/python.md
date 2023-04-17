@@ -20,7 +20,7 @@ configuration = Configuration(
 )
 ```
 
-* server_api_url : Conductor server address. If you are running the server locally on port `8080`, this would be `http://localhost:8080/api`
+* server_api_url: Conductor server address. If you are running the server locally on port `8080`, this would be `http://localhost:8080/api`
 * debug: `true` for verbose logging `false` to display only the errors
 
 ### Authentication Settings (optional)

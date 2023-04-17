@@ -1,6 +1,6 @@
 # Login to Playground
 
-Watch how we can login to Orkes Conductor Playground UI
+Watch how we can login to Orkes Conductor Playground UI.
 
 <div className="embed-loom-video">
     <iframe

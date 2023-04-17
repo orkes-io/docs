@@ -1,6 +1,6 @@
 # Run Workflow
 
-Watch how we can run a workflow from UI
+Watch how we can run a workflow from UI.
 
 <div className="embed-loom-video">
     <iframe

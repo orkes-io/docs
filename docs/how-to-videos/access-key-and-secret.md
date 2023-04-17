@@ -1,6 +1,6 @@
 # Getting Access Key and Secret for SDKs
 
-Watch how we can get an access key and secret to use with our SDKs or direct API calls
+Watch how we can get an access key and secret to use with our SDKs or direct API calls.
 
 <div className="embed-loom-video">
     <iframe

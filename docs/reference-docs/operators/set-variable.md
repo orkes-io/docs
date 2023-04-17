@@ -99,9 +99,10 @@ setVariableTask = (
 
 <details><summary>Sample Workflow</summary>
 <p>
-Suppose in a workflow, we have to store a value in a variable and then, later in the workflow, reuse the value stored in the variable just as we do in programming; in such scenarios, the <i><b>Set Variable</b></i> task can be used<br/>
+Suppose in a workflow, we have to store a value in a variable and then, later in the workflow, reuse the value stored in the variable just as we do in programming; in such scenarios, the <i><b>Set Variable</b></i> task can be used.
+<br/><br/>
 
-<br/>Following is the workflow definition with the SET_VARIABLE task.
+Following is the workflow definition with the SET_VARIABLE task.
 
 ```json
 {

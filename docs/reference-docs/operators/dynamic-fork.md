@@ -135,7 +135,7 @@ The dynamic fork is used to run parallel executions of the task with dynamism. T
 arrayItems.stream().parallel().forEach(item -> process(item));
 ```
 
-Here each item of the array is passed to a method called process. Conductor allows you to do the same and covers several types of processes.
+Here, each array item is passed to a method called process. Conductor allows you to do the same and covers several types of processes.
 
 1. Simple Task - When we need to run a simple custom worker task.
 2. [HTTP Task](/content/reference-docs/system-tasks/http) - When we need to run the system HTTP workers.

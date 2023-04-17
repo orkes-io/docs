@@ -9,7 +9,7 @@ import Install from '@site/src/components/install.mdx';
 # Step 1: First Workflow Application
 
 Let’s build a workflow for the sample banking use case - deposit funds into a customer account and notify them via email and SMS about the status. 
-This workflow has three steps: __record the deposit__, __send an email__, and __send an sms__. For this example, let's assume there are REST 
+This workflow has three steps: __record the deposit__, __send an email__, and __send sms__. For this example, let's assume there are REST 
 (HTTP) endpoints you can invoke to run these functions.
 
 :::tip
@@ -18,7 +18,7 @@ Conductor supports many ways to implement the steps, such as HTTP endpoints, wor
 
 ## Create Workflow
 
-We can create workflows using multiple methods, such as UI, Code etc. We will start with the UI.
+We can create workflows using multiple methods, such as UI, Code, etc. We will start with the UI.
 
 <Tabs>
 <TabItem value="UI" label="UI" className="ui-instructions">

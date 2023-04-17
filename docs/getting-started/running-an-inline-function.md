@@ -8,8 +8,7 @@ import Install from '@site/src/components/install.mdx';
 
 # Step 4: Running an Inline Function
 
-So far, we haven't done anything here even if the fraud check fails. How can we handle the case where the fraud check returned a fail and we want to skip
-processing the deposit transaction, but we can add another inline task that can check for the outcome of fraud check and sends a different message to our users via SMS or Email.
+So far, we haven't done anything here, even if the fraud check fails. How can we handle the case where the fraud check returned a fail, and we want to skip processing the deposit transaction? We can add another inline task that can check for the outcome of a fraud check and sends a different message to our users via SMS or Email.
 
 
 <Tabs>
@@ -18,10 +17,10 @@ processing the deposit transaction, but we can add another inline task that can 
 <div className="row">
 <div className="col col--4">
 
-1. In your current workflow, add a [Inline](/content/reference-docs/system-tasks/inline) task after the switch case
+1. In your current workflow, add an [Inline](/content/reference-docs/system-tasks/inline) task after the switch case
 2. Add another switch case to process the deposit only if the fraud check passes
 3. Add an inline to compose the correct message for users
-4. Pass the message as inputs to the send-message tasks
+4. Pass the message as input to the send-message tasks
 5. Run workflow
 
 </div>
@@ -53,7 +52,7 @@ INLINE tasks can be scripted from the following template
 })();
 ```
 
-Read more on INLINE tasks [here](/content/reference-docs/system-tasks/inline)
+Read more on INLINE tasks [here](/content/reference-docs/system-tasks/inline).
 
 ## Related Topics
 

@@ -38,7 +38,7 @@ Continuing the use case from the previous step, we now have a requirement to add
 We can see that when we run this workflow for amounts >= $10,000, it runs a fraud check. If we named the task `fraud-check`, we'd notice that it actually executed (in playground env), but how? 
 That's because there is a pre-defined task that is polling and running all the tasks named `fraud-check`. We also have the required permissions in the playground for this task.
 
-So how can we implement this task for ourselves? First let's rename the task to a new unique name for ourselves - for ex: `fraud-check-<replace-with-a-unique-value>`. And now let’s see how this custom fraud check can be implemented:
+So how can we implement this task for ourselves? First, let's rename the task to a new unique name for ourselves - for ex: `fraud-check-<replace-with-a-unique-value>`. And now, let’s see how this custom fraud check can be implemented:
 
 View our documentation on [Conductor Clients & SDKs](/content/category/sdks) list and how to import the required dependencies in our applications. Refer to the linked repositories in the code samples below to see how to implement the worker.
 
@@ -132,18 +132,18 @@ View our documentation on [Conductor Clients & SDKs](/content/category/sdks) lis
 </Tabs>
 
 
-Once we have cloned the repo or copied required elements to our local machines, we can run this locally by connecting to playground server. 
-To do this we also have give our application the required permissions. 
+Once we have cloned the repo or copied the required elements to our local machines, we can run this locally by connecting to the playground server. 
+To do this, we also have to give our application the required permissions. 
 Refer to this [video](/content/how-to-videos/access-key-and-secret) to add permission to execute the custom worker we just created above (`fraud-check-<replace-with-a-unique-value>`).
 After providing the permissions, we can change the definition to run our worker (`fraud-check-<replace-with-a-unique-value>`) and start the application.
 We can see that now our worker is picking up the task. 
 
-This is the __first example__ of how a distributed worker is executed in Conductor, __without__ exposing an endpoint 
-or creating any sort of inbound connectivity, we were able to execute the a task directly from our local machine pointing to the playground server.
+This is the __first example__ of how a distributed worker is executed in Conductor; __without__ exposing an endpoint 
+or creating any sort of inbound connectivity, we were able to execute the task directly from our local machine pointing to the playground server.
 
 :::tip Distributed workers in Conductor
-We can run similar workflows in production too, workers could live in __any applications__ or even __third party services__ and we can connect them all together using
-Conductor. All of this without having to worry about creating inbound connections or exposing unwanted API endpoints.
+We can run similar workflows in production, too, workers could live in __any applications__ or even __third-party services__ and we can connect them all together using
+Conductor. All of this without worrying about creating inbound connections or exposing unwanted API endpoints.
 :::
 
 ## Related Topics

@@ -12,7 +12,7 @@ Get workflow execution by workflow ID. If **includeTasks** is set, it also fetch
 
 | Attribute | Description | 
 | --------- | ----------- | 
-| name | The name of the workflow whose details is to be fetched. |
+| name | The name of the workflow whose details are to be fetched. |
 
 ## API Endpoint
 ```

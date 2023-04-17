@@ -40,7 +40,7 @@ Orkes Conductor doesn't limit your wait conditions. We can wait for __mins__, __
 </TabItem>
 </Tabs>
 
-Since you have configured the wait task to wait for 10 mins, once the workflow execution reaches this task, it waits for 10 mins and then proceeds to the next task; sending an SMS.
+Since you have configured the wait task to wait for 10 mins, once the workflow execution reaches this task, it waits for 10 mins and then proceeds to the next task, sending an SMS.
 
 
 ## Related Topics

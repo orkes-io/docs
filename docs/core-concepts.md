@@ -1,8 +1,8 @@
 # Core Concepts
 
-Orkes Conductor is a platform for building distributed systems. Fundamentally it takes care of orchestrating your flows reliably through various pieces in your applications such as code, functions, APIs and more. The process of orchestrating using Conductor revolves around three main concepts: Tasks, Workers and Workflows.
+Orkes Conductor is a platform for building distributed systems. Fundamentally it takes care of orchestrating your flows reliably through various pieces in your applications, such as code, functions, APIs, and more. The process of orchestrating using Conductor revolves around three main concepts: Tasks, Workers, and Workflows.
 
-<p style={{textAlign: "center"}}><img src="/content/img/anatomy.png" alt="adding a secret via UI" width="500" style={{paddingBottom: 20, paddingTop: 20}} /></p>
+<p style={{textAlign: "center"}}><img src="/content/img/anatomy.png" alt="adding a secret via UI" width="80%" height="auto" style={{paddingBottom: 20, paddingTop: 20}} /></p>
 
 ## Tasks
 
@@ -12,10 +12,10 @@ An [Operator](/content/category/reference-docs/operators) in a workflow is your 
 
 ## Workers
 
-A worker is responsible for executing a task. Operators and System tasks are handled by the Conductor server, whereas the user-defined tasks is managed by applications implementing them. This worker will poll Conductor server to receive and execute any scheduled any work. 
+A worker is responsible for executing a task. Operators and System tasks are handled by the Conductor server, whereas the user-defined tasks are managed by applications implementing them. This worker will poll Conductor server to receive and execute any scheduled work. 
 Conductor passes the inputs to the task worker for execution and collects the output back and the process continues to the next step as per the workflow definition.
 
-Conductor is agnostic to how the workers are deployed and provides lightweight SDKs in all major languages that allow you to expose existing functionality as Conductor Workers. Workers can run on bare metal, containers, VMs, or as serverless functions.
+Conductor is agnostic to how the workers are deployed and provide lightweight SDKs in all major languages that allow you to expose existing functionality as Conductor Workers. Workers can run on bare metal, containers, VMs, or as serverless functions.
 
 ## Workflows
 

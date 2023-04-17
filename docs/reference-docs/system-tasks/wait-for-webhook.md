@@ -176,7 +176,7 @@ The process of verifying the URL varies with the Webhook type.
 
 <details><summary>Sending messages in a Slack channel</summary>
 <p>
-Integrating Conductor with other systems using Webhook can be leveraged to cases like creating chatbots, employee onboarding processes, automated scrum updates, automated issue creation on support channel messages, etc. Now, let’s visualize a sample case where you need to send a message in a Slack channel.
+Integrating Conductor with other systems using Webhook can be leveraged for cases like creating chatbots, employee onboarding processes, automated scrum updates, automated issue creation on support channel messages, etc. Now, let’s visualize a sample case where you need to send a message in a Slack channel.
 <br/>
 
 1. Create workflows to send a message in a Slack channel.

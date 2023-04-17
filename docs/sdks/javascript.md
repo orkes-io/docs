@@ -40,7 +40,7 @@ npm install --save @io-orkes/conductor-javascript
 
 See [Security via Applications](/content/access-control-and-security/applications#generating-access-keys) or this [video](/content/how-to-videos/access-key-and-secret) for details on how to get an access key and secret.
 
-Once we have a key and secret, we can configure in the app from properties or environment variables as shown in this example:
+Once we have a key and secret, we can configure the app from properties or environment variables, as shown in this example:
 
 ```javascript
 

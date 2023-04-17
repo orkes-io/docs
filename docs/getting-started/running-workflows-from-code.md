@@ -12,14 +12,12 @@ import {
 
 # Step 2: Running Workflows from Code
 
-So far, we have seen how to compose basic workflows and run them from the UI. However more commonly we will be running the workflows
-from an application or service. Let’s learn how to do this from our applications. Orkes Conductor platform offers various SDKs in different languages
+So far, we have seen how to compose and run basic workflows from the UI. However, more commonly, we will be running the workflows from an application or service. Let’s learn how to do this from our applications. Orkes Conductor platform offers various SDKs in different languages
 for integration with applications or services. 
 
 View our documentation on [Conductor Clients & SDKs](/content/category/sdks) to learn how to import the required dependencies in our applications.
 
-Let's look at some __code examples__ of how to trigger a workflow by it's name. We have also linked the repository where this code sample is hosted. To test these ourselves
-we can also clone them to local and try it out.  
+Let's look at some __code examples__ of how to trigger a workflow by its name. We have also linked the repository where this code sample is hosted. To test these ourselves, we can also clone them locally and try them out.
 
 <Tabs>
 <TabItem value="Java" label="Java">
@@ -116,7 +114,7 @@ console.log("Workflow id: {}", workflowId)
 </Tabs>
 
 
-As an example, we might invoke this method when an endpoint is called such as this API call in Java
+As an example, we might invoke this method when an endpoint is called, such as this API call in Java.
 
 ```java dynamic https://github.com/conductor-sdk/orkes-java-springboot2-example/blob/main/src/main/java/io/orkes/example/banking/controller/BankingApiController.java section=1 .../controller/BankingApiController.java
 ```

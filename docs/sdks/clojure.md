@@ -9,7 +9,7 @@ Orkes Conductor Clojure SDK is maintained here: https://github.com/conductor-sdk
 
 ## Usage
 
-Refer to this [link](https://github.com/conductor-sdk/conductor-clojure#quick-guide) on details and samples on how to use the Clojure SDK
+Refer to this [link](https://github.com/conductor-sdk/conductor-clojure#quick-guide) for details and samples on how to use the Clojure SDK.
 
 ## Related Topics
 

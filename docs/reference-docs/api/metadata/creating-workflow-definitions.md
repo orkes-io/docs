@@ -10,7 +10,7 @@ Workflow can be defined as the collection of tasks and operators that specifies 
 
 ## Input Payload
 
-You can configure workflow definitions directly via UI and using API. The workflow definitions includes the following parameters:
+You can configure workflow definitions directly via UI and using API. The workflow definitions include the following parameters:
 
 | Attribute                     | Description                                                                                                                                                                                                                                            |
 | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -24,7 +24,7 @@ You can configure workflow definitions directly via UI and using API. The workfl
 | restartable                   | Set this value to **true** to restart a completed workflow. If restarting a completed workflow can impact the functioning, set this value to **false**.                                                                                                |
 | workflowStatusListenerEnabled | Setting this value to **true**, archive the workflow when completed. This would remove the workflow definition from the Redis persistence module. To unarchive, set the value to **false**.                                                            |
 | ownerEmail                    | This field will be auto-populated with the user’s email address.                                                                                                                                                                                       |
-| timeoutSeconds                | Time (in seconds) after which the workflow is marked as TIMED_OUT if not completed after transitioning to IN_PROGRESS status for the first time. No timeout occurs if the value is set to 0.                                                           |
+| timeoutSeconds                | Time (in seconds), after which the workflow is marked as TIMED_OUT if not completed after transitioning to IN_PROGRESS status for the first time. No timeout occurs if the value is set to 0.                                                           |
 | timeoutPolicy                 | Indicates the condition at which the workflow should time out. It can take any of the following values:<ul><li>**TIME_OUT_WF** - The workflow status is marked as TIMEOUT and is terminated.</li><li>**ALERT_ONLY** - Registers a counter.</li></ul>   |
 | failureWorkflow               | Provide the workflow name to be triggered upon a failure of the execution of this workflow.                                                                                                                                                            |
 

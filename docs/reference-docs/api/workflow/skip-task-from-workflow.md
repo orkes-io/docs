@@ -7,7 +7,7 @@ import TabItem from '@theme/TabItem';
 
 # Skip Task from Workflow Execution
 
-Skips a given task execution from a current running workflow.
+Skips a given task execution from a currently running workflow.
 
 ## Input Payload
 
@@ -21,7 +21,7 @@ Skips a given task execution from a current running workflow.
 PUT /workflow/{workflowId}/skiptask/{taskReferenceName}
 ```
 
-When skipped the task's input and outputs are updated from **skipTaskRequest** parameter.
+When skipped, the task's input and outputs are updated from **skipTaskRequest** parameter.
 
 ## Client SDK Methods
 

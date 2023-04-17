@@ -30,7 +30,7 @@ The switch task is used for creating branching logic. It is a representation of 
 ```
 * A switch task takes an expression as input along with multiple branches containing a sequence of tasks to be executed and a *default* branch to be executed if no matching branches are found.
 * The output of the **expression** is matched with the name of the branch.
-* The expression can be a **javascript** expression or a value parameter which represents the input to the task directly.
+* The expression can be a **javascript** expression or a value parameter that represents the input to the task directly.
 
 ### Input Parameters
 
@@ -39,14 +39,14 @@ The switch task is used for creating branching logic. It is a representation of 
 | evaluatorType | Indicates the type of evaluator used. Supported types are **value-param**, **javascript**, and **graaljs**.                                                                                                |
 | expression    | The expression depends on the evaluator type. For the **value-param** evaluator, the expression is the input parameter; for the **javascript** and **graaljs** evaluator, it is the javascript expression. |
 | decisionCases | Map where the key is possible values that can result from the **expression**, with the value being the list of tasks to be executed.                                                                       |
-| defaultCase   | List of tasks to be executed when no matching value is found in decision case (default condition).                                                                                                         |
+| defaultCase   | List of tasks to be executed when no matching value is found in the decision case (default condition).                                                                                                         |
 
 #### Types of Evaluators
 | Attribute   | Description                                                                                         |
 | ----------- | --------------------------------------------------------------------------------------------------- |
 | value-param | Use a parameter directly as the value.                                                              |
 | javascript  | Evaluate Javascript expressions and compute the value - Legacy.  Deprecated.                        |
-| graaljs     | Evaluate Javascript expressions and compute the value. Allows you to use ES6 compatible Javascript. |
+| graaljs     | Evaluate Javascript expressions and compute the value. Allows you to use ES6-compatible Javascript. |
 
 
 ## Examples
@@ -186,6 +186,6 @@ Switch task can be nested just like nested if...then...else.
 </p>
 </details>
 
-:::tip Switch task with other operators
-Similar to any programming language, you can have other operators inside a switch case, such as nested switch, loops, forks, etc.
+:::tip
+Similar to any programming language, you can have other operators inside a switch case, such as nested switches, loops, forks, etc.
 :::
