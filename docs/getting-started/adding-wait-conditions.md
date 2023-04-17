@@ -8,9 +8,9 @@ import Install from '@site/src/components/install.mdx';
 
 # Step 5: Adding Wait Conditions
 
-The wait task in Conductor is used if the workflow is to be paused for external signals. The signals can be human manual interventions or an event from external sources such as Kafka, SQS, etc. Let’s learn how you can pause your workflows using wait tasks. 
+The wait task in Conductor is used if the workflow is to be paused for external signals. The signals can be human manual interventions or an event from external sources such as Kafka, SQS, etc. Let’s learn how to pause your workflows using wait tasks. 
 
-#### In your current workflow, what if you want to send the SMS only after 10 mins?
+#### Use case: What if we want to send the SMS only after a fixed time?
 
 :::tip
 Orkes Conductor doesn't limit your wait conditions. We can wait for __mins__, __days__, __months__ or even __years__! It can also wait for external signals like manual approval or events from messaging systems such as __Kafka/SQS__.
@@ -22,9 +22,9 @@ Orkes Conductor doesn't limit your wait conditions. We can wait for __mins__, __
 <div className="row">
 <div className="col col--4">
 
-1. In your current workflow, add a [Wait](/content/reference-docs/operators/wait) task before the SMS task.
-2. You can configure the wait task parameters to wait for 10 mins.
-3. Run workflow directly from the UI using the Run Workflow button.
+1. In the same workflow from before, add a [Wait](/content/reference-docs/operators/wait) task before the SMS task
+2. We can configure the wait task parameters to wait for 30 seconds
+3. Run workflow directly from the UI using the Run Workflow button
 
 </div>
 <div className="col">
@@ -40,8 +40,11 @@ Orkes Conductor doesn't limit your wait conditions. We can wait for __mins__, __
 </TabItem>
 </Tabs>
 
-Since you have configured the wait task to wait for 10 mins, once the workflow execution reaches this task, it waits for 10 mins and then proceeds to the next task, sending an SMS.
+Since you have configured the wait task to wait for 30 seconds, once the workflow execution reaches this task, it waits for 30 seconds and then proceeds to the next task; sending an SMS.
 
+:::note Try out a longer wait
+Try to configure a wait for longer - perhaps 2 days, set a reminder to check back after two days to see if that task is executed. Magic!
+:::
 
 ## Related Topics
 

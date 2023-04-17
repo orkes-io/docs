@@ -134,7 +134,7 @@ View our documentation on [Conductor Clients & SDKs](/content/category/sdks) lis
 
 Once we have cloned the repo or copied the required elements to our local machines, we can run this locally by connecting to the playground server. 
 To do this, we also have to give our application the required permissions. 
-Refer to this [video](/content/how-to-videos/access-key-and-secret) to add permission to execute the custom worker we just created above (`fraud-check-<replace-with-a-unique-value>`).
+Refer to this [video TODO](/content/how-to-videos/access-key-and-secret) to add permission to execute the custom worker we just created above (`fraud-check-<replace-with-a-unique-value>`).
 After providing the permissions, we can change the definition to run our worker (`fraud-check-<replace-with-a-unique-value>`) and start the application.
 We can see that now our worker is picking up the task. 
 
