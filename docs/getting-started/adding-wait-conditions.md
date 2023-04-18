@@ -23,7 +23,7 @@ Orkes Conductor doesn't limit your wait conditions. We can wait for __mins__, __
 <div className="col col--4">
 
 1. In the same workflow from before, add a [Wait](/content/reference-docs/operators/wait) task before the SMS task
-2. We can configure the wait task parameters to wait for 30 seconds
+2. We can configure the wait task parameters to wait for 10 seconds
 3. Run workflow directly from the UI using the Run Workflow button
 
 </div>
@@ -33,14 +33,14 @@ Orkes Conductor doesn't limit your wait conditions. We can wait for __mins__, __
   width="100%"
   height="300px"
   allow="fullscreen;"
-  src={"https://www.youtube.com/embed/J0TDfs6nJhg"}
+  src={"https://player.vimeo.com/video/818640654?h=39143b38aa"}
 ></iframe></div>
 </div>
 </div>
 </TabItem>
 </Tabs>
 
-Since you have configured the wait task to wait for 30 seconds, once the workflow execution reaches this task, it waits for 30 seconds and then proceeds to the next task; sending an SMS.
+Since you have configured the wait task to wait for 10 seconds, once the workflow execution reaches this task, it waits for 10 seconds and then proceeds to the next task; sending an SMS.
 
 :::note Try out a longer wait
 Try to configure a wait for longer - perhaps 2 days, set a reminder to check back after two days to see if that task is executed. Magic!
