@@ -96,7 +96,7 @@ The task will produce the payload it sent as the output.
 <div className="col">
 <div className="embed-loom-video">
 
-<p><img src="/content/img/ui-guide-event-task.png" alt="Adding event task" width="350" height="auto"></img></p>
+<p><img src="/content/img/ui-guide-event-task.png" alt="Adding event task" width="350" height="auto"/></p>
 
 </div>
 </div>
