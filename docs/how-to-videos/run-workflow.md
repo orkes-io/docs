@@ -7,7 +7,7 @@ Watch how we can run a workflow from UI.
         width="890px"
         height="500px"
         allow="fullscreen;"
-        src={"https://www.youtube.com/embed/0BaiLdGu7Lo"}
+        src={"https://player.vimeo.com/video/819025462?h=1d60e95a22"}
     ></iframe>
 </div>
 
