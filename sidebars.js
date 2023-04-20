@@ -75,7 +75,6 @@ const sidebars = {
                 'developer-guides/task-to-domain',
                 'developer-guides/secrets-in-conductor',
                 'developer-guides/scaling-workers',
-                'developer-guides/orchestrating-human-tasks',
                 'developer-guides/metrics-and-observability'
             ],
             collapsible: true,
