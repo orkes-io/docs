@@ -498,3 +498,17 @@ summary {
 .embed-loom-video {
   margin: 10px;
 }
+
+.passingDataReference {
+  border: 1px solid lightgrey;
+  border-radius: 10px;
+  font-family: monospace;
+  font-size: 20px;
+  padding: 30px 20px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.paddedContent {
+  padding: 10px 25px 20px;
+}
