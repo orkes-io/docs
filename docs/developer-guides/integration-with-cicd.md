@@ -44,26 +44,10 @@ The following script cycles through all the workflow definitions in the current 
 ```
 
 
-### Worker implementation
-Workers are your application-specific code and should be maintained, tested, and released as any other code released to production.
+### CI/CD for workers
+Workers are application specific code and should be maintained, tested, and released as any other code released to production.
 
-Intro
-Diagram of
-Dev -> UAT -> Prod
-How to maintain workflows and task definitions in a version control system such as Git?
-How to create a pipeline to promote from Dev -> UAT?
-How to test before promoting?
-Sample Project
-FAQ:
-How to get the key and secret?
-What permissions does my application for CI need?
-How to manage env specific variables in your definition?
-Not supported at this time
-Github action example?
-TODO
-Bamboo example?
-Partially available
-Bitbucket example?
-TODO
-
-
+#### Best practices for maintaining workers
+1. Keep worker deployments and maintenance separate from the workflows
+2. Unit test workers based on the expected inputs and outputs similar to any other application code. 
+3. Workers are the unit of scale for your workflows.  Either deploy each worker in an independent container or group set of workers that typically needs to be scaled up/down together.
