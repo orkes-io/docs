@@ -4,7 +4,7 @@ sidebar_position: 1
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import Install from '@site/src/components/install.mdx';
-
+import CodeBlock from '@theme/CodeBlock';
 
 # Step 6: Executing Tasks in Parallel
 
@@ -42,6 +42,11 @@ Orkes Conductor runs 1000s of parallel executions, limited only by the worker ca
 
 If we named the task `retrieve-deposit-batch`, we'd notice that it actually executed (in playground env), but how?
 That's because there is a pre-defined task that is polling and running all the tasks named `retrieve-deposit-batch`. We also have the required permissions in the playground for this task.
+
+Here is the code reference for this worker:
+
+```java dynamic https://github.com/conductor-sdk/orkes-java-springboot2-example/blob/main/src/main/java/io/orkes/example/banking/workers/ConductorWorkers.java section=2 .../workers/ConductorWorkers.java
+```
 
 By default, it would return a random value between __5-10 tasks__. If we supply an input called __`batchCount`__ - we can retrieve up to 100 transactions. This is a limitation of playground. In a dedicated
 cluster you can run parallel tasks into the thousands or tens of thousands depending on the capacity of the cluster.

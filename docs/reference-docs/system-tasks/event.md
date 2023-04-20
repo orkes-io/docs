@@ -4,90 +4,127 @@ import TabItem from '@theme/TabItem';
 # Event 
 
 EVENT is a task used to publish an event into one of the supported eventing systems in Conductor. Conductor supports the following eventing models:
-* SQL (type: sqs)
+* AWS SQS (type: sqs)
+* Azure Service Bus (type: azure)
 * Kafka (type: kafka)
+
+All of these requires additional configuration to enable connectivity.
 
 ## Definitions
 
-Configuration for publishing an event into SQS to notify an external system.
+Configuration for publishing an event into AWS SQS to notify an external system.
 
 ```json
-  {
+    {
       "name": "event_task",
       "taskReferenceName": "event_task_ref",
       "type": "EVENT",
-      "sink": "sqs:sqs_queue_name"
+      "sink": "sqs:sqs_queue_name",
+      "inputParameters" : {
+        // payload
+      }
     }
 ```
 
-Configuration for publishing an event into Kafka to notify an external system.
+Use the sink prefix depending on the type of sink you are using - ex: `azure:` for Azure Service Bus
+
+
+## Input Parameters
+
+| Attribute       | Description                                                                                                                                                                             |
+|-----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| sink            | Provide the event queue in the format of prefix:location. The Prefix is either **sqs**, or **kafka**, and the location specifies the actual queue name. e.g., **sqs:send_email_queue**. |
+| inputParameters | All of the input params to this task execution will be sent as the payload to the event sink                                                                                            |
+
+### Additional System Inputs to Payload
+
+Conductor will add the following parameters to the payload, so it is important to ensure that these fields are not present in the original payload as they will be overwritten during execution
+
+* __workflowInstanceId__ - workflow id from where this event was sent
+* __workflowType__ - Name of the workflow definition
+* __workflowVersion__ - Version of the workflow definition
+* __correlationId__ - Correlation id of the workflow execution
+
+For example, for the definition below, 
 
 ```json
-{
-    "name": "event_task",
-    "taskReferenceName": "event_task_ref",
-    "type": "EVENT",
-    "sink": "kafka:external_event_name"
-}
+    {
+      "name": "event_task",
+      "taskReferenceName": "event_task_ref",
+      "type": "EVENT",
+      "sink": "kafka:external_event_name",
+      "inputParameters": {
+        "myKey": "myValue",
+        "myNumber": 100
+      }
+    }
+```
+when executed will produce the following output
+```json name=Output
+    {
+      "myKey": "myValue",
+      "myNumber": 100,
+      "workflowInstanceId" : "967b19ae-10d1-4b23-b0e7-ae324524dac0",
+      "workflowType" : "my-workflow-name",
+      "workflowVersion" : "1",
+      "correlationId" : "fbdcafd2-69c7-4b75-8dd1-653e33d48746",
+    }
 ```
 
-### Input Parameters
+## Output Parameters
 
-| Attribute | Description |
-| --------- | ----------- |
-| sink | Provide the event queue in the format of prefix:location. The Prefix is either **sqs**, or **kafka**, and the location specifies the actual queue name. e.g., **sqs:send_email_queue**.
+The task will produce the payload it sent as the output.
 
-### Output Parameters
-
-The tasks' output is sent as a payload to the external event. In the case of SQS, the task's output is sent as a payload to the SQS message.
-
-### Supported Queuing Systems​
-
-Conductor has support for the following external event queueing systems as part of the OSS build.
-
-* SQS (prefix: sqs)
-* [NATS](https://github.com/Netflix/conductor-community/tree/main/event-queue) (prefix: nats)
-* [AMQP](https://github.com/Netflix/conductor-community/tree/main/event-queue/amqp) (prefix: amqp_queue or amqp_exchange)
 
 ## Examples
 
 <Tabs>
-<TabItem value="UI" label="UI">
-</TabItem>
- <TabItem value="JSON" lable="JSON">
+<TabItem value="UI" label="UI" className="paddedContent">
 
- ```json
- {
+<div className="row">
+<div className="col col--4">
+
+<br/>
+<br/>
+
+1. Add task type EVENT
+2. Select the sink type
+3. Add the sink name
+4. Add input parameters
+
+</div>
+<div className="col">
+<div className="embed-loom-video">
+
+<p><img src="/content/img/ui-guide-event-task.png" alt="Adding event task" width="350" height="auto"></img></p>
+
+</div>
+</div>
+</div>
+
+
+
+</TabItem>
+ <TabItem value="JSON" label="JSON Example">
+
+```json
+    {
       "name": "event_task",
       "taskReferenceName": "event_task_ref",
       "type": "EVENT",
-      "sink": "sqs:sqs_queue_name"
+      "sink": "kafka:external_event_name",
+      "inputParameters": {
+        "myKey": "myValue",
+        "myNumber": 100
+      }
     }
 ```
 
 </TabItem>
-<TabItem value="Java" label="Java">
-This is a banana 🍌
-</TabItem>
-<TabItem value="Python" label="Python">
-  This is a banana 🍌
-</TabItem>
-<TabItem value="Golang" label="Golang">
-    This is a banana 🍌
-</TabItem>
-<TabItem value="CSharp" label="CSharp">
-  This is a banana 🍌
-</TabItem>
-<TabItem value="clojure" label="Clojure">
-    This is a banana 🍌
-</TabItem>
-<TabItem value="Javascript" label="Javascript">
-    This is a banana 🍌
-</TabItem>
 </Tabs>
 
 
-<details><summary>Tasks sending and receiving SQS messages</summary>
+<details><summary>Tasks sending and receiving SQS messages in OSS</summary>
 
 Amazon's Simple Queueing Service (SQS) is a handy way to send messages across systems.  SQS support is included in Conductor but requires a few changes to the Conductor instance to work properly.
 
