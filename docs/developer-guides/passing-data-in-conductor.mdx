@@ -35,8 +35,8 @@ Let’s break down this __expression__:
 
 ## Sample Expressions
 
-<Tabs>
-<TabItem value="From Workflow Inputs" label="From Workflow Inputs" className={"paddedContent"}>
+<Tabs className={"headerFix"}>
+<TabItem value="Workflow Inputs" label="Workflow Inputs" className={"paddedContent"}>
 
 If the task inputs are taken from workflow inputs,
 
@@ -47,7 +47,7 @@ If the task inputs are taken from workflow inputs,
 This expression defines a property called **key**, with a value derived from the input parameter __somekey__ provided to the current workflow
 
 </TabItem>
-<TabItem value="From Task Outputs" label="From Task Outputs"  className={"paddedContent"}>
+<TabItem value="Task Outputs" label="Task Outputs"  className={"paddedContent"}>
 If the task inputs are taken from the preceding task output,
 
 ```json
@@ -61,7 +61,7 @@ This value can be run under the following situations
 * Task didn't produce this output value
 
 </TabItem>
-<TabItem value="From Secrets" label="From Secrets"  className={"paddedContent"}>
+<TabItem value="Secrets" label="Secrets"  className={"paddedContent"}>
 If the task inputs are taken from a secret,
 
 ```json
@@ -74,7 +74,7 @@ This value can be run under the following situations
 
 During execution, if the workflow doesn't have the permission to read the secret it will fail with an error saying so.
 </TabItem>
-<TabItem value="From Workflow Variables" label="From Workflow Variables"  className={"paddedContent"}>
+<TabItem value="Workflow Variables" label="Workflow Variables"  className={"paddedContent"}>
 If the task inputs are taken from variables,
 
 ```json

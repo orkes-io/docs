@@ -18,11 +18,11 @@ For details on how to unit test workflows, see [Unit and Regression Testing Work
 
 #### Steps to publish your workflows as part of the ci/cd
 :::note Notes
-See [Generating Tokens](/access-control-and-security/applications#generating-token) on how to generate an access token for the API requests below.
+See [Generating Tokens](/access-control-and-security/applications#generating-token) ([Video](/content/how-to-videos/access-key-and-secret)) on how to generate an access token for the API requests below.
 :::
 
 #### Downloading workflows from Conductor server to check into your version control
-1. Download the JSON from the Conductor UI (Download option from the UI)
+1. Download the JSON from the Conductor UI (Use the download button in the definition page)
 2. (Alternatively) Use the API to download JSON for the workflow
     ```shell
     # Get the workflow definition given name and version
