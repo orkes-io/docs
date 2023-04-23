@@ -5,19 +5,21 @@ import Install from '@site/src/components/install.mdx';
 
 # Debugging Workflows
 
-Orkes Conductor provides a visual representation of workflows that aids in quickly troubleshooting issues. Conductor UI provides you with the ability to look into workflow executions which helps in quickly spotting and resolving issues.
+Orkes Conductor provides a visual representation of workflows that aids in quickly troubleshooting issues. Conductor UI provides us with the ability to look into workflow executions which helps in quickly spotting and resolving issues.
 
 ## Searching/Viewing Workflow Executions
 
-You can view all your workflow executions from the **WORKFLOWS > Executions** page.
+All recent workflow executions are listed in the **WORKFLOWS > Executions** page. This view is filtered by the permissions of the user by default - only workflows with permissions to the viewer is displayed.
 
-<p align="center"><img src="/content/img/workflow-executions.png" alt="Workflow Executions page" width="90%" height="auto"></img></p>
+<p align="center"><img src="/content/img/workflow-executions.png" alt="Workflow Executions page" width="90%"
+                       height="auto"/></p>
 
-You can filter this page by searching through workflow name, ID, status, time period, and past days’ executions. Click on the required execution to view the individual execution of a workflow. 
+Data on this page can be filtered by searching through workflow name, ID, status, time period, and past days’ executions. Click on the required execution to view the individual execution of a workflow. 
 
 A sample execution looks like this:
 
-<p align="center"><img src="/content/img/sample-workflow-executions.png" alt="Sample Workflow Executions page" width="90%" height="auto"></img></p>
+<p align="center"><img src="/content/img/sample-workflow-execution.png" alt="Sample Workflow Executions page"
+                       width="90%" height="auto"/></p>
 
 The page consists of the following sub-tabs:
 
@@ -34,11 +36,12 @@ Each of these tabs gives the details that can help debug workflow issues.
 
 The diagram tab on the workflow execution page shows the workflow diagram. All the successful tasks appear in green, failed ones appear in red, and the ones completed with errors appear in orange.
 
-:::note
-The orange issue with the status “Completed with Errors” occurs rarely. A sample situation when such errors happen is while defining a task definition; if you give **“optional”: true**, this error can occur. By default, this option is set to false. 
+:::tip
+A task ends up with the status “Completed with Errors” only when its marked as __optional__ in the workflow definition. The default value of this setting is false, so it needs to be explicitly set to continue the workflow even when there are errors. 
 :::
 
-<p align="center"><img src="/content/img/types-of-errors.png" alt="Different types of errors in a failed workflow" width="80%" height="auto"></img></p>
+<p align="center"><img src="/content/img/types-of-errors.png" alt="Different types of errors in a failed workflow"
+                       width="80%" height="auto"/></p>
 
 Clicking on the failed task gives the failure details. The following fields are helpful in debugging:
 
@@ -46,10 +49,10 @@ Clicking on the failed task gives the failure details. The following fields are 
 | -- | -- |
 | Summary > Reason for Incompletion | This field displays the reason for task incompletion. It can capture details such as exceptions thrown by the worker, task-related exceptions such as failed to invoke HTTP endpoints, etc. |
 | Summary > Worker | This field shows the worker instance that polled the task. It can help dig logs if not captured by the Conductor. |
-| Input | You can verify if the task inputs were computed and provided correctly. |
-| Output | You can verify the task’s output details here. If the task’s output is supplied as the next task’s input, such details can be verified from here. | 
-| Logs | You can get the logs from this tab if the task supplies logs. |
-| Attempt | If your task was retried, you can see all the attempts and corresponding details here. |
+| Input | We can verify if the task inputs were computed and provided correctly. |
+| Output | We can verify the task’s output details here. If the task’s output is supplied as the next task’s input, such details can be verified from here. | 
+| Logs | We can get the logs from this tab if the task supplies logs. |
+| Attempt | If your task was retried, we can see all the attempts and corresponding details here. |
 
 Here is a screen grab of the fields referred above.
 
@@ -57,18 +60,18 @@ Here is a screen grab of the fields referred above.
 
 ## Recovering From Failures​
 
-Once the issues are resolved for the workflow execution failure, you might want to retry the failed workflows. The **Actions** button towards the top-right corner of the execution page provides the following options:
+Once the issues are resolved for the workflow execution failure, we might want to retry the failed workflows. The **Actions** button towards the top-right corner of the execution page provides the following options:
 
 <p align="center"><img src="/content/img/workflow-recovery.png" alt="Workflow Recovery Options" width="80%" height="auto"></img></p>
 
-| Action | Description |
-| -- | -- |
-| Terminate | Terminates the workflow and changes the workflow status to **TERMINATED**. |
-| Restart with Current Definitions | Restart the workflow from the beginning using the same version of the workflow definition that originally ran this execution. This is useful if the workflow definition has changed and we want to retain this instance in the original version. |
-| Restart with Latest Definitions | Restart this workflow from the beginning using the latest definition of the workflow. If you’ve made changes to the definition, you could use this option to re-run the flow with the latest version. |
-| Retry - From failed task | Retries the workflow from the failed task. |
-| Re-run Workflow | Clicking on this takes you to the **Run Workflow** page, where you can rerun the workflow. While running, you can change the workflow input parameters and task to domain mapping.
+| Action | Description                                                                                                                                                                                                                                                     |
+| ------ |-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Terminate | Terminates the workflow and changes the workflow status to **TERMINATED**.                                                                                                                                                                                      |
+| Restart with Current Definitions | Restart the workflow from the beginning using the same version of the workflow definition that originally ran this execution. This is useful if the workflow definition has changed and we want to retain this instance in the original version.                |
+| Restart with Latest Definitions | Restart this workflow from the beginning using the latest definition of the workflow. If we’ve made changes to the definition, we could use this option to re-run the flow with the latest version.                                                             |
+| Retry - From failed task | Retries the workflow from the failed task.                                                                                                                                                                                                                      |
+| Re-run Workflow | Clicking on this takes we to the **Run Workflow** page, where we can rerun the workflow. While running, we can change the workflow input parameters and task to domain mapping.                     |                                      
 
-:::note
-Orkes Conductor has native retry capabilities, allowing your task to be retried automatically for transient failures. 
+:::tip
+Orkes Conductor has native retry and error handling capabilities, allowing your task to be retried automatically for transient failures. 
 :::
