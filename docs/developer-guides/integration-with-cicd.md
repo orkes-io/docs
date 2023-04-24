@@ -14,7 +14,7 @@ Workflows have two main components:
 ### Workflows
 Workflow definitions should be maintained as an independent unit that can be unit and integration tested before releasing to the production environment.
 
-For details on how to unit test workflows, see [Unit and Regression Testing Workflows](/content/developer-guides/unit-and-regression-tests)
+For details on how to unit test workflows, see [Unit and Regression Testing Workflows](/content/developer-guides/unit-and-regression-tests).
 
 #### Steps to publish your workflows as part of the ci/cd
 :::note Notes
@@ -22,8 +22,8 @@ See [Generating Tokens](/access-control-and-security/applications#generating-tok
 :::
 
 #### Downloading workflows from Conductor server to check into your version control
-1. Download the JSON from the Conductor UI (Use the download button in the definition page)
-2. (Alternatively) Use the API to download JSON for the workflow
+1. Download the JSON from the Conductor UI (Use the download button on the definition page).
+2. (Alternatively) Use the API to download JSON for the workflow.
     ```shell
     # Get the workflow definition given name and version
     GET -H "X-Authorization:<TOKEN>" /api/metadata/workflow/{name}?version=<version>
@@ -45,9 +45,9 @@ The following script cycles through all the workflow definitions in the current 
 
 
 ### CI/CD for workers
-Workers are application specific code and should be maintained, tested, and released as any other code released to production.
+Workers are application-specific code and should be maintained, tested, and released as any other code released to production.
 
 #### Best practices for maintaining workers
-1. Keep worker deployments and maintenance separate from the workflows
+1. Keep worker deployments and maintenance separate from the workflows.
 2. Unit test workers based on the expected inputs and outputs similar to any other application code. 
-3. Workers are the unit of scale for your workflows.  Either deploy each worker in an independent container or group set of workers that typically needs to be scaled up/down together.
+3. Workers are the unit of scale for your workflows.  Either deploy each worker in an independent container or group set of workers that typically need to be scaled up/down together.
