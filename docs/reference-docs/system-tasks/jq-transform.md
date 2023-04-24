@@ -59,8 +59,8 @@ The JSON_JQ_TRANSFORM task is a System task that allows the processing of JSON d
 <br/>
 <br/>
 
-1. Add task type `JQ`
-2. Configure the JQ script and the input
+1. Add task type `JSON JQ TRANSFORM`.
+2. Configure the JQ script and the input.
 
 </div>
 <div className="col">

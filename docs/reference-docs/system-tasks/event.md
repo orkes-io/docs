@@ -12,7 +12,7 @@ EVENT is a task used to publish an event into one of the supported eventing syst
 * Azure Service Bus (type: azure)
 * Kafka (type: kafka)
 
-All of these requires additional configuration to enable connectivity.
+All of these require additional configuration to enable connectivity.
 
 ## Definitions
 
@@ -30,7 +30,7 @@ Configuration for publishing an event into AWS SQS to notify an external system.
     }
 ```
 
-Use the sink prefix depending on the type of sink you are using - ex: `azure:` for Azure Service Bus
+Use the sink prefix depending on the type of sink you are using - ex: `azure:` for Azure Service Bus.
 
 
 ## Input Parameters
@@ -38,16 +38,16 @@ Use the sink prefix depending on the type of sink you are using - ex: `azure:` f
 | Attribute       | Description                                                                                                                                                                             |
 |-----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | sink            | Provide the event queue in the format of prefix:location. The Prefix is either **sqs**, or **kafka**, and the location specifies the actual queue name. e.g., **sqs:send_email_queue**. |
-| inputParameters | All of the input params to this task execution will be sent as the payload to the event sink                                                                                            |
+| inputParameters | All of the input params to this task execution will be sent as the payload to the event sink.                                                                                          |
 
 ### Additional System Inputs to Payload
 
 Conductor will add the following parameters to the payload, so it is important to ensure that these fields are not present in the original payload as they will be overwritten during execution
 
-* __workflowInstanceId__ - workflow id from where this event was sent
-* __workflowType__ - Name of the workflow definition
-* __workflowVersion__ - Version of the workflow definition
-* __correlationId__ - Correlation id of the workflow execution
+* __workflowInstanceId__ - Workflow id from where this event was sent.
+* __workflowType__ - Name of the workflow definition.
+* __workflowVersion__ - Version of the workflow definition.
+* __correlationId__ - Correlation id of the workflow execution.
 
 For example, for the definition below, 
 
@@ -63,7 +63,7 @@ For example, for the definition below,
       }
     }
 ```
-when executed will produce the following output
+when executed will produce the following output.
 ```json name=Output
     {
       "myKey": "myValue",
@@ -91,10 +91,10 @@ The task will produce the payload it sent as the output.
 <br/>
 <br/>
 
-1. Add task type EVENT
-2. Select the sink type
-3. Add the sink name
-4. Add input parameters
+1. Add task type `EVENT`.
+2. Select the sink type.
+3. Add the sink name.
+4. Add input parameters.
 
 </div>
 <div className="col">

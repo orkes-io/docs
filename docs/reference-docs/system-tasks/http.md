@@ -29,7 +29,7 @@ HTTP task allows you to make calls to remote services exposed over HTTP/HTTPS.
 | Attribute         | Description                                                                                                                                                                      |
 |-------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | uri               | Provide the URI for the service. It can be a partial value when using vipAddress or it can be the server address.                                                                |
-| method            | Choose the HTTP method. Conductor supports the methods: GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS                                                                             |
+| method            | Choose the HTTP method. Conductor supports the methods: GET, HEAD, POST, PUT, PATCH, DELETE, and OPTIONS                                                                             |
 | accept            | Provide the accept header as required by the server. By default, it is set to **application/json**.                                                                              |
 | contentType       | Provide the content type for the server. The supported types are **text/plain**, **text/html**, and **application/json**. By default, it is set to **application/json**.         |
 | headers           | A map of additional http headers to be sent along with the request.                                                                                                              |
@@ -59,7 +59,7 @@ HTTP task allows you to make calls to remote services exposed over HTTP/HTTPS.
 <br/>
 <br/>
 
-1. Add task type `HTTP`
+1. Add task type `HTTP`.
 2. Configure the API by choosing method, endpoint, headers etc.
 
 </div>

@@ -34,7 +34,7 @@ The HTTP_POLL is a conductor task used to invoke HTTP API until the specified co
 ### Input Parameters
 | Attribute         | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 |-------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| terminalCondition | Specifies the condition to be evaluated after every HTTP API invocation. If the condition is evaluated as **true**, the task will be marked as completed. On the other hand, if the condition is evaluated as **false**, the conductor will schedule the next poll according to the configurations (pollingInterval & pollingStrategy). By default, this value is set to `true`.<br/>                                   **Note**: While writing the terminal condition, <ul><li>It can be [parameterized](/content/developer-guides/passing-data-in-conductor).</li><li> In order to use the current http poll as input to the condition, a `$` needs to be prefixed. For example, **$.output.status**</li></ul> |
+| terminalCondition | Specifies the condition to be evaluated after every HTTP API invocation. If the condition is evaluated as **true**, the task will be marked as completed. On the other hand, if the condition is evaluated as **false**, the conductor will schedule the next poll according to the configurations (pollingInterval & pollingStrategy). By default, this value is set to `true`.<br/>                                   **Note**: While writing the terminal condition, <ul><li>It can be [parameterized](/content/developer-guides/passing-inputs-to-task-in-conductor).</li><li> In order to use the current http poll as input to the condition, a `$` needs to be prefixed. For example, **$.output.status**</li></ul> |
 | pollingInterval   | Specify the time duration in seconds between each HTTP invocation.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
 | pollingStrategy   | It can take any of the following values: <ul><li>**FIXED** - The duration between each HTTP API invocation will be fixed.</li><li> **LINEAR_BACKOFF** - The duration between each HTTP API invocation will be calculated by multiplying the poll count with pollingInterval. Note that the poll count is the incremental value based on each invocation.</li><li>**EXPONENTIAL_BACKOFF** - The duration between each HTTP API invocation will be calculated by multiplying poll count with 2 base exponential of pollingInterval.</li></ul>                                                                                                                                                                      |
 
@@ -73,9 +73,9 @@ Apart from the above parameters, ensure that the following basic parameters for 
 <br/>
 <br/>
 
-1. Add task type `HTTP Poll`
-2. Configure the Polling endpoint
-3. Configure the interval
+1. Add task type `HTTP Poll`.
+2. Configure the Polling endpoint.
+3. Configure the interval.
 
 </div>
 <div className="col">
@@ -156,7 +156,10 @@ So, here the input parameters for the HTTP_POLL task are defined as follows:
 The above configuration defines that the Conductor will invoke the HTTP API every 60 seconds until the jsonplaceholder gives the output that is longer than 10 characters.
 <br/>
 
-**Note**: Current invocation output can be referred to using <b>$.output</b>. Similarly, previous tasks' output can also be referred to using **$.task_ref_name.output**.
+:::note
+
+Current invocation output can be referred to using <b>$.output</b>. Similarly, previous tasks' output can also be referred to using **$.task_ref_name.output**.
+:::
 
 </p>
 </details>

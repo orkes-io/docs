@@ -45,8 +45,8 @@ Besides the expression, any of the properties in the input values is accessible 
 <br/>
 <br/>
 
-1. Add task type `Inline`
-2. Write the inline script using Javascript
+1. Add task type `Inline`.
+2. Write the inline script using Javascript.
 
 </div>
 <div className="col">
@@ -81,5 +81,5 @@ Besides the expression, any of the properties in the input values is accessible 
 </Tabs>
 
 :::tip
-The JSON definition shows a string format of the script, however on the UI, it will retain the formatting we used and is more readable.
+The JSON definition shows a string format of the script; however, on the UI, it will retain the formatting we used and is more readable.
 :::

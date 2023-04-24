@@ -73,9 +73,9 @@ Business rule task supports the following operators:
 <br/>
 <br/>
 
-1. Add task type `Business Rule`
-2. Configure the task with rules input file
-3. Input and output columns
+1. Add task type `Business Rule`.
+2. Configure the task with rules input file.
+3. Input and output columns.
 
 </div>
 <div className="col">

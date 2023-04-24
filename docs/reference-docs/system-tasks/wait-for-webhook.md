@@ -38,6 +38,13 @@ You can leverage the **Custom** option for integrating other than the above-ment
 
 In the above example, you can see that the matches are described as follows:
 
+```json
+"matches": 
+{
+    "$['event']['type']": "message"
+}
+```
+
 This means that the incoming event payload has JSON path **event.type** and it must be a **message** in order to match the webhook event with this task. You can define any custom JSON path based on the incoming event payload and write matches accordingly. You can also add multiple matches within the matches. All the matches will be calculated as AND operations within the matches.
 
 ```json
