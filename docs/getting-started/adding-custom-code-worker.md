@@ -8,7 +8,7 @@ import CodeBlock from '@theme/CodeBlock';
 
 # Step 3: Adding Custom Code Worker
 
-Continuing the use case from the previous step, we now have a requirement to add a fraud check for all deposit transactions >= $10,000
+Continuing the use case from the previous step, we now have a requirement to add a fraud check for all deposit transactions >= $10,000.
 
 <Tabs>
 <TabItem value="UI" label="UI">
@@ -17,9 +17,9 @@ Continuing the use case from the previous step, we now have a requirement to add
 <div className="col col--4">
 
 
-1. In your current definition, add a [Switch](/content/reference-docs/operators/switch) task before the deposit task
-2. Add a switch case for checking amounts >= 10000, and add a [Worker](/content/reference-docs/operators/worker-task) task for the case with the name `fraud-check`
-3. Run workflow.
+1. In your current definition, add a [Switch](/content/reference-docs/operators/switch) task before the deposit task.
+2. Add a switch case for checking amounts >= 10000, and add a [Worker](/content/reference-docs/operators/worker-task) task for the case with the name `fraud-check`.
+3. [Run workflow](/content/how-to-videos/run-workflow).
 
 </div>
 <div className="col">
@@ -35,7 +35,7 @@ Continuing the use case from the previous step, we now have a requirement to add
 </TabItem>
 </Tabs>
 
-We can see that when we run this workflow for amounts >= $10,000, it runs a fraud check. If we named the task `fraud-check`, we'd notice that it actually executed (in playground env), but how? 
+We can see that when we run this workflow for amounts >= $10,000, it runs a fraud check. If we named the task `fraud-check`, we'd notice that it is actually executed (in playground env), but how? 
 That's because there is a pre-defined task that is polling and running all the tasks named `fraud-check`. We also have the required permissions in the playground for this task.
 
 So how can we implement this task for ourselves? First, let's rename the task to a new unique name for ourselves - for ex: `fraud-check-<replace-with-a-unique-value>`. And now, let’s see how this custom fraud check can be implemented:
@@ -133,8 +133,8 @@ View our documentation on [Conductor Clients & SDKs](/content/category/sdks) lis
 
 
 Once we have cloned the repo or copied the required elements to our local machines, we can run this locally by connecting to the playground server. 
-To do this, we also have to give our application the required permissions. 
-Refer to this [video TODO](/content/how-to-videos/access-key-and-secret) to add permission to execute the custom worker we just created above (`fraud-check-<replace-with-a-unique-value>`).
+To do this, we must give the required permissions to our application.
+Refer to this [video](/content/how-to-videos/app-management) to add permission to execute the custom worker we just created above (`fraud-check-<replace-with-a-unique-value>`).
 After providing the permissions, we can change the definition to run our worker (`fraud-check-<replace-with-a-unique-value>`) and start the application.
 We can see that now our worker is picking up the task. 
 
@@ -148,6 +148,6 @@ Conductor. All of this without worrying about creating inbound connections or ex
 
 ## Related Topics
 
-- Passing [inputs into workflow for tasks](/content/developer-guides/passing-data-in-conductor)
-- Passing the [output of one task to the input of another](/content/developer-guides/passing-data-in-conductor)
+- Passing [inputs into workflow for tasks](/content/developer-guides/passing-inputs-to-task-in-conductor)
+- Passing the [output of one task to the input of another](/content/developer-guides/passing-inputs-to-task-in-conductor)
 - [Client SDKs](/content/category/sdks)

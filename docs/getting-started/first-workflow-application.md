@@ -77,9 +77,9 @@ You can run this workflow to see how it executes. If there are failures, Conduct
 
 ## Related Topics
 
-- Passing [inputs into workflow for tasks](/content/developer-guides/passing-data-in-conductor).
-- Passing the [output of one task to the input of another](/content/developer-guides/passing-data-in-conductor).
+- Passing [inputs into workflow for tasks](/content/developer-guides/passing-inputs-to-task-in-conductor).
+- Passing the [output of one task to the input of another](/content/developer-guides/passing-inputs-to-task-in-conductor).
 - Running [custom worker code](/content/getting-started/adding-custom-code-worker) (instead of HTTP endpoints)
 - [Conditional task executions](/content/reference-docs/operators/switch)
 - Running a [dynamic set of tasks in parallel](/content/reference-docs/operators/dynamic-fork)
-- Configuring [retries for your task](/content/error-handling#task-retries)
+- Configuring [retries for your task](/content/error-handling)

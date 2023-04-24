@@ -29,16 +29,16 @@ const videoSource = [
     title: "How to get an Access Key & Secret",
   },
   {
-    src: "https://www.youtube.com/embed/du7mls9XMUE",
-    title: "Running a Complex Workflow with Orkes Conductor",
+    src: "https://www.youtube.com/embed/_cy9lIYJwmo",
+    title: "How to run Workflows",
   },
   {
-    src: "https://www.youtube.com/embed/du7mls9XMUE",
-    title: "Creating External Workers with Orkes Conductor",
+    src: "https://www.youtube.com/embed/PY34TcVzof0",
+    title: "How to configure and manage Applications",
   },
   {
-    src: "https://www.youtube.com/embed/du7mls9XMUE",
-    title: "Access Control and Security with Orkes Conductor",
+    src: "https://www.youtube.com/embed/O9lj4TAqldc",
+    title: "How to configure and manage Users",
   },
 ];
 const useCases = [
@@ -51,15 +51,15 @@ const useCases = [
     image: "img/usecases/api.svg",
   },
   {
-    title: "Data pipeline orchestration",
+    title: "Data Pipeline Orchestration",
     image: "img/usecases/cicd.svg",
   },
   {
-    title: "Orchestrate human flows",
+    title: "Orchestrate Human Flows",
     image: "img/usecases/humanflows.svg",
   },
   {
-    title: "Event driven orchestration",
+    title: "Event Driven Orchestration",
     image: "img/usecases/events.svg",
   },
 ];

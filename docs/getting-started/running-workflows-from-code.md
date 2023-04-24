@@ -129,4 +129,4 @@ In addition to triggering from code, we can also run them from:
 
 ## Related Topics
 
-* Passing the [output of one task to the input](/content/developer-guides/passing-data-in-conductor) of another
+* Passing the [output of one task to the input](/content/developer-guides/passing-inputs-to-task-in-conductor) of another

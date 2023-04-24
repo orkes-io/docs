@@ -61,7 +61,7 @@ const sidebars = {
                 keywords: ['guides', 'features', 'developer-guides']
             },
             items: [
-                'developer-guides/passing-data-in-conductor',
+                'developer-guides/passing-inputs-to-task-in-conductor',
                 'developer-guides/unit-and-regression-tests',
                 'developer-guides/integration-with-cicd',
                 'developer-guides/scheduling-workflows',
@@ -243,7 +243,7 @@ const sidebars = {
                 slug: '/category/templates'
             },
             items: [
-                'templates/template1',
+                'templates/availability-monitoring-for-http-endpoints',
             ],
             collapsible: true,
             collapsed: true,

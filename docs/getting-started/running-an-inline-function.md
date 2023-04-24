@@ -8,8 +8,7 @@ import Install from '@site/src/components/install.mdx';
 
 # Step 4: Running an Inline Function
 
-So far, we haven't done anything here, even if the fraud check fails. How can we handle the case where the fraud check returned a fail, and we want to skip processing the deposit transaction? We can add another inline task that can check for the outcome of a fraud check and sends a different message to our users via SMS or Email.
-
+So far, we haven't done anything here, even if the fraud check fails. How can we handle the case where the fraud check returned a fail, and we want to skip processing the deposit transaction? We can add another inline task that can check for the outcome of the fraud check and send a different message to our users via SMS or Email.
 
 <Tabs>
 <TabItem value="UI" label="UI">
@@ -17,11 +16,11 @@ So far, we haven't done anything here, even if the fraud check fails. How can we
 <div className="row">
 <div className="col col--4">
 
-1. In your current workflow, add an [Inline](/content/reference-docs/system-tasks/inline) task after the switch case
-2. Add another switch case to process the deposit only if the fraud check passes
-3. Add an inline to compose the correct message for users
-4. Pass the message as input to the send-message tasks
-5. Run workflow
+1. In your current workflow, add an [Inline](/content/reference-docs/system-tasks/inline) task after the switch case.
+2. Add another switch case to process the deposit only if the fraud check passes.
+3. Add an inline to compose the correct message for users.
+4. Pass the message as input to the send-message tasks.
+5. [Run workflow](/content/how-to-videos/run-workflow).
 
 </div>
 <div className="col">
@@ -42,7 +41,7 @@ INLINE task is a great tool for writing basic logic, such as a predicate conditi
 write complex actions that will be executed by Conductor without having to find a place to host and run this worker.
 :::
 
-INLINE tasks can be scripted from the following template
+INLINE tasks can be scripted from the following template:
 ```javascript
 (function() { 
    // Your code here
@@ -52,10 +51,10 @@ INLINE tasks can be scripted from the following template
 })();
 ```
 
-Read more on INLINE tasks [here](/content/reference-docs/system-tasks/inline).
+Read more on [INLINE tasks here](/content/reference-docs/system-tasks/inline).
 
 ## Related Topics
 
-- Passing [inputs into workflow for tasks](/content/developer-guides/passing-data-in-conductor)
-- Passing the [output of one task to the input of another](/content/developer-guides/passing-data-in-conductor)
+- Passing [inputs into workflow for tasks](/content/developer-guides/passing-inputs-to-task-in-conductor)
+- Passing the [output of one task to the input of another](/content/developer-guides/passing-inputs-to-task-in-conductor)
 - [Client SDKs](/content/category/sdks)
