@@ -1,3 +1,7 @@
+---
+sidebar_position: 5
+---
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -11,25 +15,22 @@ Business rule task helps evaluate business rules compiled in spreadsheets. Condu
 ## Definitions
 
  ```json
-{
-"name": "execute_rule",
-"taskReferenceName": "execute_rule_ref",
-"inputParameters": 
- {
-    "ruleFileLocation": "https://business-rules.s3.amazonaws.com/rules.xlsx",
-    "executionStrategy": "FIRE_FIRST",
-    "inputColumns": 
     {
-      "InputDate": "${workflow.input.inputDate}",
-      "ProductType": "${workflow.input.productType}"
-    },
-    "outputColumns": 
-    [
-      "Discount"
-    ]
-  },
-"type": "BUSINESS_RULE"
-}
+      "name": "execute_rule",
+      "taskReferenceName": "execute_rule_ref",
+      "inputParameters": {
+        "ruleFileLocation": "https://business-rules.s3.amazonaws.com/rules.xlsx",
+        "executionStrategy": "FIRE_FIRST",
+        "inputColumns": {
+          "InputDate": "${workflow.input.inputDate}",
+          "ProductType": "${workflow.input.productType}"
+        },
+        "outputColumns": [
+          "Discount"
+        ]
+      },
+      "type": "BUSINESS_RULE"
+    }
 ```
 
 ### Input Parameters
@@ -62,52 +63,57 @@ Business rule task supports the following operators:
 5. Date comparison. Currently supported date formats are **yyyy-MM-dd**, **yyyy-MMM-dd** and **yyyy-MM-dd HH:mm:ss**.
 
 ## Examples
- <Tabs>
- <TabItem value="UI" label="UI">
-</TabItem>
- <TabItem value="JSON" lable="JSON">
 
- ```json
-{
-"name": "execute_rule",
-"taskReferenceName": "execute_rule_ref",
-"inputParameters": 
- {
-    "ruleFileLocation": "https://business-rules.s3.amazonaws.com/rules.xlsx",
-    "executionStrategy": "FIRE_FIRST",
-    "inputColumns": 
+<Tabs>
+<TabItem value="UI" label="UI" className="paddedContent">
+
+<div className="row">
+<div className="col col--4">
+
+<br/>
+<br/>
+
+1. Add task type `Business Rule`
+2. Configure the task with rules input file
+3. Input and output columns
+
+</div>
+<div className="col">
+<div className="embed-loom-video">
+
+<p><img src="/content/img/ui-guide-business-rule-task.png" alt="Adding Business Rule" width="500" height="auto"/></p>
+
+</div>
+</div>
+</div>
+
+
+
+</TabItem>
+ <TabItem value="JSON" label="JSON Example">
+
+```json
     {
-      "InputDate": "${workflow.input.inputDate}",
-      "ProductType": "${workflow.input.productType}"
-    },
-    "outputColumns": 
-    [
-      "Discount"
-    ]
-  },
-"type": "BUSINESS_RULE"
-}
+      "name": "execute_rule",
+      "taskReferenceName": "execute_rule_ref",
+      "inputParameters": {
+        "ruleFileLocation": "https://business-rules.s3.amazonaws.com/rules.xlsx",
+        "executionStrategy": "FIRE_FIRST",
+        "inputColumns": {
+          "InputDate": "${workflow.input.inputDate}",
+          "ProductType": "${workflow.input.productType}"
+        },
+        "outputColumns": [
+          "Discount"
+        ]
+      },
+      "type": "BUSINESS_RULE"
+    }
 ```
-</TabItem>
-<TabItem value="Java" label="Java">
-This is a banana 🍌
-</TabItem>
-<TabItem value="Python" label="Python">
-  This is a banana 🍌
-</TabItem>
-<TabItem value="Golang" label="Golang">
-    This is a banana 🍌
-</TabItem>
-<TabItem value="CSharp" label="CSharp">
-  This is a banana 🍌
-</TabItem>
-<TabItem value="clojure" label="Clojure">
-    This is a banana 🍌
-</TabItem>
-<TabItem value="Javascript" label="Javascript">
-    This is a banana 🍌
+
 </TabItem>
 </Tabs>
+
 
 <details><summary>Sample Workflow</summary>
 <p>
@@ -125,55 +131,50 @@ food        |      pizza        |   < 2022-03-22 12:20:22   |       15      |   
 ```
 And following workflow definition.
 ```json
-{
-    "name": "TestRule",
-    "tasks": 
-    [
-     {
-      "name": "rule",
-      "taskReferenceName": "rule",
-      "inputParameters": 
-      {
-      "ruleFileLocation": "Product.xlsx",
-      "executionStrategy": "FIRE_FIRST",
-      "ruleFileStorage" : "LOCAL",
-      "inputColumns": 
-      {
-        "productType": "${workflow.input.productType}",
-        "productCategory": "${workflow.input.productCategory}",
-        "price": "${workflow.input.price}",
-        "itemCount": "${workflow.input.itemCount}",
-        "itemCode": "${workflow.input.itemCode}"
-      },
-      "outputColumns": 
-      [
-        "Discount",
-        "ShippingCharges"
-      ]
-      },
-      "type": "BUSINESS_RULE"
-      }
-    ],
     {
-    },
-}
-  ```
-  If the workflow is triggered using input as: 
-  ```json
-  {
+      "name": "TestRule",
+      "tasks": [
+        {
+          "name": "rule",
+          "taskReferenceName": "rule",
+          "inputParameters": {
+            "ruleFileLocation": "Product.xlsx",
+            "executionStrategy": "FIRE_FIRST",
+            "ruleFileStorage": "LOCAL",
+            "inputColumns": {
+              "productType": "${workflow.input.productType}",
+              "productCategory": "${workflow.input.productCategory}",
+              "price": "${workflow.input.price}",
+              "itemCount": "${workflow.input.itemCount}",
+              "itemCode": "${workflow.input.itemCode}"
+            },
+            "outputColumns": [
+              "Discount",
+              "ShippingCharges"
+            ]
+          },
+          "type": "BUSINESS_RULE"
+        }
+      ]
+    }
+```
+
+If the workflow is triggered using input as: 
+```json
+    {
         "productType": "electronics",
         "productCategory": "cellphone",
         "price": "5",
         "itemCount": "8",
         "purchaseDate": "2022-04-22"
-  }
-  ```
-  Then it will match the first row and generate output as: 
-  ```json
-  {
+    }
+```
+Then it will match the first row and generate output as: 
+```json
+    {
       "Discount" : "11%",
       "ShippingCharges" : "5$"
-  }
-  ```
+    }
+```
 </p>
 </details>

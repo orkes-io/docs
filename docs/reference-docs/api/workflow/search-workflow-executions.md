@@ -11,12 +11,12 @@ Used to search for workflow executions.
 
 ## Input Payload
 
-|Attribute | Description |
-| -- | -- | 
-| Start | Indicates the start index, which is used for pagination. | 
-| Size | Indicates the number of results to return. | 
-| Query | The query expression in the format FIELD = 'VALUE' or FIELD IN (value1, value2). Only **AND** operations are supported. E.g., workflowId IN ('a', 'b', 'c') AND workflowType ='test_workflow' AND startTime BETWEEN 1000 and 2000. Supported fields for Query are: **workflowId**,**workflowType**,**status**,and **startTime**. |
-| FreeText | All the workflow input, output, and task outputs up to a certain limit (check with your admins to find the size limit) are full-text indexed and can be used to search. |
+| Attribute  | Description                                                                                                                                                                                                                                                                                                                      |
+|------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------| 
+| Start      | Indicates the start index, which is used for pagination.                                                                                                                                                                                                                                                                         | 
+| Size       | Indicates the number of results to return.                                                                                                                                                                                                                                                                                       | 
+| Query      | The query expression in the format FIELD = 'VALUE' or FIELD IN (value1, value2). Only **AND** operations are supported. E.g., workflowId IN ('a', 'b', 'c') AND workflowType ='test_workflow' AND startTime BETWEEN 1000 and 2000. Supported fields for Query are: **workflowId**,**workflowType**,**status**,and **startTime**. |
+| FreeText   | All the workflow input, output, and task outputs up to a certain limit (check with your admins to find the size limit) are full-text indexed and can be used to search.                                                                                                                                                          |
 
 ## API Endpoint
 ```
@@ -29,7 +29,9 @@ GET /workflow/search
 <TabItem value="Java" label="Java">
 
 ```java
-UnsupportedOperationException
+
+// (TODO : Coming soon)
+
 ```
 
 </TabItem>
