@@ -5,10 +5,7 @@ import Install from '@site/src/components/install.mdx';
 
 # Passing Inputs to Tasks in Conductor
 
-When you start a Conductor workflow, you can pass inputs to the workflow - which can be used for parameters to various steps in the workflow.
-As the tasks progress in a workflow - each task will create its own outputs.
-So how can this data from previous tasks be used in the steps suceeding it.
-In Conductor, data can be passed to a task in different ways, such as from workflow inputs/outputs, prior task inputs/outputs, variables, and secrets.
+When you start a Conductor workflow, you can pass inputs to the workflow - which can be used as parameters for various steps in the workflow. As the tasks progress in a workflow - each task will create its own outputs. So how can this data from previous tasks be used in the steps succeeding it? In Conductor, data can be passed to a task in different ways, such as from workflow inputs/outputs, prior task inputs/outputs, variables, and secrets.
 
 Let’s take a look at how to define this.
 
@@ -25,12 +22,12 @@ export const text = `"variableName" : "\${type.subtype.jsonpath}"`;
 
 Let’s break down this __expression__:
 
-| Part | Description |
+| Attribute | Description |
 | -- | -- |
-|**variableName**|A string that represents the variable name you want to assign this expression output|
-|**${...}**|A notation that indicates the variable that would be dynamically replaced at run time|
-|**type**|One of the following options<table><tr><td>__workflow__ : Refers to the workflow instance</td></tr><tr><td>__task_reference_name__ : Refers to a task in a workflow by its reference name</td></tr></table>|
-|**subtype**|One of the following options<table><tr><td>__input__ : Refers to the input of the `type` = (`workflow` or `task-ref`)</td></tr><tr><td>__output__ : Refers to the output of the `type` = (`workflow` or `task-ref`)</td></tr><tr><td>__secrets__ : Refers to secrets in the system, accessed with `type` = `workflow`</td></tr><tr><td>__variables__ : Refers to variables of the workflow, accessed with `type` = `workflow`</td></tr></table>|
+|**variableName**|A string that represents the variable name you want to assign this expression output.|
+|**${...}**|A notation that indicates the variable that would be dynamically replaced at run time.|
+|**type**|One of the following options:<table><tr><td>__workflow__ : Refers to the workflow instance</td></tr><tr><td>__task_reference_name__ : Refers to a task in a workflow by its reference name</td></tr></table>|
+|**subtype**|One of the following options:<table><tr><td>__input__ : Refers to the input of the `type` = (`workflow` or `task-ref`)</td></tr><tr><td>__output__ : Refers to the output of the `type` = (`workflow` or `task-ref`)</td></tr><tr><td>__secrets__ : Refers to secrets in the system, accessed with `type` = `workflow`</td></tr><tr><td>__variables__ : Refers to variables of the workflow, accessed with `type` = `workflow`</td></tr></table>|
 |**jsonpath**|[JSONPath](https://goessner.net/articles/JsonPath/) expression (look for examples below). If we are referring to variables/secrets, this will be the variable/secret name.|
 
 ## Sample Expressions
@@ -44,7 +41,7 @@ If the task inputs are taken from workflow inputs,
 "key": "${workflow.input.somekey}"
 ```
 
-This expression defines a property called **key**, with a value derived from the input parameter __somekey__ provided to the current workflow
+This expression defines a property called **key**, with a value derived from the input parameter __somekey__ provided to the current workflow.
 
 </TabItem>
 <TabItem value="Task Outputs" label="Task Outputs"  className={"paddedContent"}>
@@ -55,7 +52,7 @@ If the task inputs are taken from the preceding task output,
 ```
 
 In summary, this expression defines a property called **key**, with a value derived from the output parameter __somekey__ from a task with reference __task_reference_name__.
-This value can be run under the following situations
+This value cannot be run under the following situations:
 * Task with the reference specified doesn't exist
 * Task has not executed when this reference was looked up
 * Task didn't produce this output value
@@ -68,11 +65,10 @@ If the task inputs are taken from a secret,
 "key": "${workflow.secrets.your_secret_name_stored_in_conductor}"
 ```
 
-In summary, this expression defines a property called **key**, with a value that is replaced dynamically with the secret value for name __your_secret_name_stored_in_conductor__
-This value can be run under the following situations
+In summary, this expression defines a property called **key**, with a value that is replaced dynamically with the secret value for name __your_secret_name_stored_in_conductor__. This value cannot be run under the following situations
 * Secret does not exist
 
-During execution, if the workflow doesn't have the permission to read the secret it will fail with an error saying so.
+During execution, if the workflow doesn't have permission to read the secret, it will fail with an error saying so.
 </TabItem>
 <TabItem value="Workflow Variables" label="Workflow Variables"  className={"paddedContent"}>
 If the task inputs are taken from variables,
@@ -81,8 +77,7 @@ If the task inputs are taken from variables,
 "key": "${workflow.variables.variable_name}"
 ```
 
-In summary, this expression defines a property called **key**, with a value that is replaced dynamically with the variable name __variable_name__
-This value can be run under the following situations
+In summary, this expression defines a property called **key**, with a value that is replaced dynamically with the variable name __variable_name__. This value cannot be run under the following situations:
 * Variable does not exist
 
 </TabItem>
@@ -189,7 +184,7 @@ Referring to task inputs using the secret functionality ensures that your secret
 
 <details><summary>Task Inputs referred from Variables​</summary>
 
-If the variable name is stored via the Set Variable task, the JSON looks like this:
+If the variable name is stored via the [Set Variable](/content/reference-docs/operators/set-variable) task, the JSON looks like this:
 
 ```json
      "name": "set_variable_task_anmz4_ref",
