@@ -10,7 +10,7 @@ In our [previous post](/content/blog/image-processing-workflow-with-conductor) o
 
 With today's varied screen sizes, and varied browser support, it is a common requirement that the image processing pipeline must create multiple images with different sizes and formats of each image.
 
-To do this with a Conductor workflow, we'll utilize the [FORK](/content/docs/reference-docs/fork-task) operation to create parallel processes to generate multiple versions of the same image.  The FORK task creates multiple parallel processes, so each image will be created asynchronously - ensuring a fast and efficient process.
+To do this with a Conductor workflow, we'll utilize the [FORK](/content/reference-docs/operators/fork-join) operation to create parallel processes to generate multiple versions of the same image.  The FORK task creates multiple parallel processes, so each image will be created asynchronously - ensuring a fast and efficient process.
 
 In this post, our workflow will create 2 versions of the same image - a jpg and webp.
 
@@ -20,7 +20,7 @@ In this post, our workflow will create 2 versions of the same image - a jpg and 
 
 ## Getting Started
 
-In this demonstration, we'll be running Conductor locally. Once you have followed the steps for [setting up a local Conductor instance](/content/docs/getting-started/install/running-locally), you'll be ready to go.
+In this demonstration, we'll be running Conductor locally. Once you have followed the steps for [setting up a local Conductor instance](/content/get-orkes-conductor), you'll be ready to go.
 
 Since we are doing image processing, you'll also want to have ImageMagick [installed on your machine](https://imagemagick.org/script/download.php).
 

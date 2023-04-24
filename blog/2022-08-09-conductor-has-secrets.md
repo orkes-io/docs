@@ -100,7 +100,7 @@ When this workflow is run, other variables are replaced, but the value of the se
 
 Secrets have been one of the most requested features for Netflix Conductor when we speak to developers, and for that reason we're excited to announce this launch.  We cannot wait to hear about how this release is making workflow development more secure and opening new avenues of development - now that these values can be securely stored.
 
-We've written up everything you need to know about [secrets](/content/docs/how-tos/Workflows/create-secrets) in our docs, and have a couple of YouTube tutorials to further walk you through how Secrets work:
+We've written up everything you need to know about [secrets](/content/developer-guides/secrets-in-conductor) in our docs, and have a couple of YouTube tutorials to further walk you through how Secrets work:
 
 <p align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/videoseries?list=PLa2RlPLMYyBXRPtTLfVAULeI26jscbhu-" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
 

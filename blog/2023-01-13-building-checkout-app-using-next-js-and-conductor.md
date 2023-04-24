@@ -21,7 +21,7 @@ You need to ensure that the device on which the application is built meets the f
 
 ### Setting Up Conductor Server
 
-The Conductor server can be set up [locally](https://orkes.io/content/docs/getting-started/install/running-locally-docker) on your device, or you can set up the [Orkes Cloud](https://orkes.io/cloud/) version or even test out the Conductor in [Playground](https://orkes.io/content/docs/getting-started/playground/using-conductor-playground), a free tool from Orkes for testing your application in real-time. 
+The Conductor server can be set up [locally](/content/get-orkes-conductor) on your device, or you can set up the [Orkes Cloud](https://orkes.io/cloud/) version or even test out the Conductor in [Playground](https://orkes.io/content/docs/getting-started/playground/using-conductor-playground), a free tool from Orkes for testing your application in real-time. 
 
 In order to run your application against a server, you need to extract the access keys from your Conductor server. The access key includes two parts; Key ID and Key Secret. 
 

@@ -41,7 +41,7 @@ A developer’s most challenging phase is debugging the code rather than buildin
 
 ### 4. Visualize your App as Workflow
 
-You can visualize your workflows as several building blocks, which makes them less cluttered when compared to code snippets. The concepts like [sub-workflow](https://orkes.io/content/docs/reference-docs/sub-workflow-task) can be utilized where another workflow is called into your existing workflow, which makes your workflow less cluttered and easier for debugging.
+You can visualize your workflows as several building blocks, which makes them less cluttered when compared to code snippets. The concepts like [sub-workflow](/content/reference-docs/operators/sub-workflow) can be utilized where another workflow is called into your existing workflow, which makes your workflow less cluttered and easier for debugging.
 
 ### 5. Language Agnostic
 

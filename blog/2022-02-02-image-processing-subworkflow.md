@@ -22,7 +22,7 @@ In this post, we'll take that abstraction a step further, and replace the tasks 
 
 ## Subworkflow
 
-A [subworkflow](/content/docs/reference-docs/sub-workflow-task) is exactly what it sounds like: a fully functional workflow called inside a larger workflow.
+A [subworkflow](/content/reference-docs/operators/sub-workflow) is exactly what it sounds like: a fully functional workflow called inside a larger workflow.
 
 There are a number of advantages to calling a sub-workflow:
 

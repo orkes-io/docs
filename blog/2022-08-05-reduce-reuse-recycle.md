@@ -51,7 +51,7 @@ If you were attempting to build a `minuet_and_trio` workflow in Conductor, you c
 * trio_c
 * trio_d
 
-[Reusing tasks](/content/docs/how-tos/Tasks/reusing-tasks) is a common use case in Conductor. As long as the taskReferenceName is different, you can reuse tasks as often as you desire.
+[Reusing tasks](/content/reference-docs/operators/worker-task) is a common use case in Conductor. As long as the taskReferenceName is different, you can reuse tasks as often as you desire.
 
 Knowing this, you might create a minuet_trio workflow with the 4 tasks, but with 10 `taskReferenceNames`:
 

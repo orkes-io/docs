@@ -153,16 +153,24 @@ const config = {
                         title: 'Docs',
                         items: [
                             {
+                                label: 'Core Concepts',
+                                to: '/content/core-concepts',
+                            },
+                            {
                                 label: 'Getting Started',
-                                to: '/docs/codelab/introduction',
+                                to: '/content/getting-started/first-workflow-application',
                             },
                             {
                                 label: 'SDKs',
-                                to: '/docs/how-tos/SDKs',
+                                to: '/content/category/sdks',
                             },
                             {
-                                label: 'Code Labs',
-                                to: '/docs/codelab/helloworld',
+                                label: 'Access Control & Security',
+                                to: '/content/category/access-control-and-security',
+                            },
+                            {
+                                label: 'Developer Guide',
+                                to: '/content/category/developer-guides',
                             },
                         ],
                     },

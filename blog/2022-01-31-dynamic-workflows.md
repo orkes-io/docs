@@ -11,7 +11,7 @@ In the 2nd example, we used the FORK System task to create [multiple images](/co
 
 As number of images is hardcoded in the workflow - only 2 images are created.  When it comes to image generation, there is often a need for more images (as new formats become popular) or sizes - as more screens are supported.
 
-Luckily, Conductor supports this flexibility, and has a feature to specify the number of tasks to be created at runtime.  In this post, we'll demonstrate the use of [dynamic forks](/content/docs/reference-docs/dynamic-fork-task), where the workflow splitting is done at runtime.
+Luckily, Conductor supports this flexibility, and has a feature to specify the number of tasks to be created at runtime.  In this post, we'll demonstrate the use of [dynamic forks](/content/reference-docs/operators/dynamic-fork), where the workflow splitting is done at runtime.
 
 Learn how to create a dynamic fork workflow in this post!
 
@@ -21,7 +21,7 @@ Learn how to create a dynamic fork workflow in this post!
 
 ## Workflows with Dynamic forks
 
-In our use case, the number of parallel processes will be determined at runtime, so we'll use the [FORK_JOIN_DYNAMIC](https://orkes.io/content/docs/reference-docs/dynamic-fork-task) to create the parallel tasks on the spot.  When the tasks are completed, the workflow will join back, and continue.
+In our use case, the number of parallel processes will be determined at runtime, so we'll use the [FORK_JOIN_DYNAMIC](/content/reference-docs/operators/dynamic-fork) to create the parallel tasks on the spot.  When the tasks are completed, the workflow will join back, and continue.
 
 Here's the workflow (you can also find it on [GitHub](https://github.com/orkes-io/orkesworkers/blob/main/data/workflow/image_multiple_convert_resize.json)):
 
@@ -230,7 +230,7 @@ This will spawn 9 different processes and create 9 images.
 
 In this workflow, our dynamic task creates the resized and reformatted images.  In the earlier workflows, there is a second task that uploads the videos to S3.  A Dynamic task will only run one task, so in this case, we are just generating the image.
 
-To run several tasks per dynamic task, we'll need to create a [subworkflow](https://orkes.io/content/docs/reference-docs/sub-workflow-task) inside the dynamic task.
+To run several tasks per dynamic task, we'll need to create a [subworkflow](/content/reference-docs/operators/sub-workflow) inside the dynamic task.
 
 For simplicity, we've introduced the dynamic task here, and in our next post, we will combine the dynamic task with a subworkflow to create the images AND upload them to S3.
 

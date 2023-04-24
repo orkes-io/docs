@@ -66,7 +66,7 @@ The new [Scheduler](https://orkes.io/content/docs/reference-docs/scheduler) tool
 
 ## Extending the workflow to other repositories
 
-There are several other open source workflow orchestration platforms, and we wanted to do some analysis on who has starred more that one of these competing platforms.  Using this workflow as a [Subworkflow](https://orkes.io/content/docs/reference-docs/sub-workflow-task) we can query multiple repositories at once:
+There are several other open source workflow orchestration platforms, and we wanted to do some analysis on who has starred more that one of these competing platforms.  Using this workflow as a [Subworkflow](/content/reference-docs/operators/sub-workflow) we can query multiple repositories at once:
 
 
 <p align="center"><img src="/content/img/blogassets/github_subworkflow.png" alt="orbit workflow" width="400" style={{paddingBottom: 40, paddingTop: 40}} /></p>

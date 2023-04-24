@@ -57,7 +57,7 @@ Each task is run by a microservice, so making changes and adding tasks is easy t
 
 Let's remove the PB dependency from the jelly spreading - as the order of PB vs. jelly does not matter.
 
-We can do this in Conductor with a [FORK](https://orkes.io/content/docs/reference-docs/fork-task).  A fork splits your workflow into 2 asynchronous tasks, and then a [JOIN](https://orkes.io/content/docs/reference-docs/join-task) reconnects the the workflow into a single path.
+We can do this in Conductor with a [FORK](/content/reference-docs/operators/fork-join).  A fork splits your workflow into 2 asynchronous tasks, and then a [JOIN](https://orkes.io/content/docs/reference-docs/join-task) reconnects the the workflow into a single path.
 
 We can now apply a fork to apply PB, and a second fork to apply the jelly:
 
