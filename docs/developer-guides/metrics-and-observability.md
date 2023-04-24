@@ -11,7 +11,7 @@ The following metrics are published by the server. You can use these metrics to 
 | ------------- |:-------------| -----|
 | workflow_completed_seconds_count | Counter for failing workflows|workflowName, status|
 | workflow_start_request_seconds_count | Counter for no. of workflows started | workflowName|
-| workflow_completed_seconds | Timer for Workflow completion times | workflowName, quantile, status |
+| workflow_completed_seconds | Timer for Workflow completion | workflowName, quantile, status |
 | workflow_running | Gauge for no. of running workflows | workflowName |
 | task_queue_wait | Time spent by a task in queue | taskType|
 | task_completed_seconds | Time taken to execute a task | taskType, quantile, status |
