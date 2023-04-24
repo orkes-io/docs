@@ -512,3 +512,10 @@ summary {
 .paddedContent {
   padding: 10px 25px 20px;
 }
+
+.headerFix > li {
+  margin: 5px!important;
+  margin-top: 0!important;
+  margin-bottom: 0!important;
+  line-height: 15px!important;
+}
