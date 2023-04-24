@@ -9,7 +9,7 @@ The following metrics are published by the server. You can use these metrics to 
 
 | Name        | Purpose           | Tags  |
 | ------------- |:-------------| -----|
-| workflow_completed_seconds_count{status="FAILED|TIMED_OUT|TERMINATED"} | Counter for failing workflows|workflowName, status|
+| workflow_completed_seconds_count | Counter for failing workflows|workflowName, status|
 | workflow_start_request_seconds_count | Counter for no. of workflows started | workflowName|
 | workflow_completed_seconds | Timer for Workflow completion times | workflowName, quantile, status |
 | workflow_running | Gauge for no. of running workflows | workflowName |
