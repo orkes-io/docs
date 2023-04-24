@@ -29,8 +29,7 @@ GET /workflow/search
 <TabItem value="Java" label="Java">
 
 ```java
-
-// (TODO : Coming soon)
+SearchResult<WorkflowSummary> search(Integer start, Integer size, String sort, String freeText, String query)
 
 ```
 
