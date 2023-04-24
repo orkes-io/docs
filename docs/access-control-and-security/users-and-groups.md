@@ -47,10 +47,10 @@ To create a user group:
 
 <p align="center"><img src="/content/img/creating-groups.png" alt="Creating Groups in Conductor" width="90%" height="auto"></img></p>
 
-4. Once the group is created, you can assign role to the group. The Group can take the roles *Admin*, *User*, *Metadata Manager*, *Workflow Manager* or *Read Only User*. 
+4. Once the group is created, you can assign a role to the group. The Group can take the roles *Admin*, *User*, *Metadata Manager*, *Workflow Manager* or *Read Only User*. 
 5. You can add members by clicking **+Add User** from the **Members** section. You can add only the users that have already been created/invited. If the user you are looking for has not been added, you can invite and then add them to the groups.
 
-**Workflow and Tasks Permissions** is an additional section where you can limit the group members' access to the permitted workflows and tasks.
+**Workflow and Tasks Permissions** is an additional section where you can limit the group members' access to the permitted workflows, tasks, secrets & tags.
 
 6. Click **+Add Permission**, and you can choose the group to have access to selected Workflows/Tasks/Secrets/Tags. Permissions that can be granted include Read, Create, Update, Execute & Delete.
 

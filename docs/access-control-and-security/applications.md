@@ -15,7 +15,7 @@ Each application can generate one or more sets of keys and secrets, and these pa
 ### Configuring Application​
 
 To create a new application,
-1. From the left menu navigation, choose **ACCESS CONTROL > Applications**.
+1. From the left menu navigation, navigate to **ACCESS CONTROL > Applications**.
 2. Click **Create Application** and provide an app name.
 3. Once your application is created, click the edit button next to its name.
 
@@ -40,7 +40,6 @@ In this section, you can provide the application with access to workflows, tasks
 1. Click **+Add Permission** from the **Workflow and Task Permissions** section.
 2. In the pop-up window, choose the required **Target Type** from Workflow/Task/Secret/Tag.
 3. Select all targets that the application needs access to.
-
 4. Choose the required permissions for the selected targets.
 * **Read** - The user can view the workflow/task/secret/tags, but cannot modify or run them.
 * **Create** - The user can create the workflow/task/secret/tags.
