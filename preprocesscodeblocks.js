@@ -131,3 +131,28 @@ searchDirectory('./docs', codeBlocks).then(() => {
         console.log('File saved successfully.');
     });
 });
+
+async function fetchAndWriteConductorClientVersions() {
+    await axios.get('https://orkes-api-tester.orkesconductor.com/latestJarVerson?type=orkes-java-client', {})
+        .then(response => {
+            // handle the response
+            console.log("VERSION", response.data);
+            const filePath = './codeblocks/versions.json';
+            const versions = {
+                "conductorJarVersion" : response.data
+            }
+            fs.writeFile(filePath, JSON.stringify(versions), (err) => {
+                if (err) {
+                    console.error(err);
+                    return;
+                }
+                console.log('File saved successfully.');
+            });
+        })
+        .catch(error => {
+            // handle the error
+            console.error(error);
+        });
+}
+
+fetchAndWriteConductorClientVersions();

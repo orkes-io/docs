@@ -1,3 +1,7 @@
+---
+sidebar_position: 3
+---
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -7,21 +11,23 @@ A Fork operation lets you run a specified list of tasks or sub-workflows in para
 ## Definitions
 
 ```json
-{
-  "name": "fork_task",
-  "taskReferenceName": "fork_task_ref",
-  "inputParameters": {},
-  "type": "FORK_JOIN",
-  "forkTasks": [
-    //tasks]
-  ]
-},
-{
-  "name": "join_task",
-  "taskReferenceName": "join_task_ref",
-  "type": "JOIN",
-  "joinOn": [//task_reference_names],
-}
+    {
+      "name": "fork_task",
+      "taskReferenceName": "fork_task_ref",
+      "inputParameters": {},
+      "type": "FORK_JOIN",
+      "forkTasks": [
+        // Array of tasks per fork
+      ]
+    },
+    {
+      "name": "join_task",
+      "taskReferenceName": "join_task_ref",
+      "type": "JOIN",
+      "joinOn": [
+        // Forked task reference names that this parallel processing should wait for
+      ],
+    }
 ```
 * A **FORK_JOIN** task has a **forkTasks** attribute that expects an array. Each array is a sub-list of tasks. Each of these sub-lists is then invoked in parallel. The tasks defined within each sublist can be sequential or any other way as desired.
 * A FORK_JOIN task has to be followed by a JOIN operation. The **JOIN** operator specifies which of the forked tasks to **joinOn** (waits for completion) before moving to the next stage in the workflow.
@@ -38,7 +44,7 @@ A Fork operation lets you run a specified list of tasks or sub-workflows in para
 | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | joinOn    | This is the output configuration of the JOIN task used in conjunction with the FORK_JOIN task. The output of the JOIN task is a map, where the keys are task reference names of the tasks being joined, and the keys are the corresponding outputs of those tasks. |
 
-:::info Join Task
+:::tip Join Task
 Check [JOIN](/content/reference-docs/operators/join) for more details on the JOIN aspect of the FORK.
 :::
 
@@ -46,6 +52,29 @@ Check [JOIN](/content/reference-docs/operators/join) for more details on the JOI
 
 <Tabs>
 <TabItem value="UI" label="UI">
+
+
+<div className="row">
+<div className="col col--4">
+
+<br/>
+<br/>
+
+1. Add task type `Fork/Join`
+2. Add as many forks as required
+3. Add tasks to each fork path
+4. Select the tasks to wait for in the Join task
+
+</div>
+<div className="col">
+<div className="embed-loom-video">
+
+<p><img src="/content/img/ui-guide-fork-join.png" alt="Adding Fork Join" width="560" height="auto"/></p>
+
+</div>
+</div>
+</div>
+
 </TabItem>
 <TabItem value="JSON" label="JSON">
 
@@ -104,64 +133,6 @@ Check [JOIN](/content/reference-docs/operators/join) for more details on the JOI
     ]
   }
 ]
-```
-
-</TabItem>
-<TabItem value="Java" label="Java">
-
-```java
-new ForkJoin(
-  String taskReferenceName, 
-  Task<?>[]... forkedTasks
-)
-```
-
-</TabItem>
-<TabItem value="Golang" label="Golang">
-
-```go
-workflow.NewForkTask(
-  taskRefName string, 
-  forkedTask ...[]TaskInterface,
-) *ForkTask
-```
-
-</TabItem>
-<TabItem value="Python" label="Python">
-
-```python
-conductor.client.workflow.task.ForkTask(
-  task_ref_name: str, 
-  forked_tasks: List[List[TaskInterface]]
-)
-```
-
-</TabItem>
-<TabItem value="CSharp" label="CSharp">
-
-```csharp
-Conductor.Definition.TaskType.ForkJoinTask(
-  string taskReferenceName, 
-  params WorkflowTask[][] forkTasks,
-)
-```
-
-</TabItem>
-<TabItem value="Javascript" label="Javascript">
-
-```javascript
-forkTask = (
-  taskReferenceName: string,
-  forkTasks: TaskDefTypes[]
-): ForkJoinTaskDef
-```
-
-</TabItem>
-<TabItem value="Clojure" label="Clojure">
-
-<!-- Todo: @gardusig -->
-```clojure
-
 ```
 
 </TabItem>

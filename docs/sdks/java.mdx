@@ -1,3 +1,5 @@
+import versions from '../../codeblocks/versions.json'
+import CodeBlock from '@theme/CodeBlock';
 
 # Orkes Conductor Java SDK
 
@@ -8,17 +10,21 @@ Orkes Conductor Java SDK is maintained here: https://github.com/orkes-io/orkes-c
 Add `orkes-conductor-client` dependency to your project.
 
 ### Gradle
-```
-implementation 'io.orkes.conductor:orkes-conductor-client:1.1.14'
-```
+
+<pre><code>{`implementation 'io.orkes.conductor:orkes-conductor-client:${versions.conductorJarVersion}'
+`}
+</code></pre>
+
 ### Maven
-```
-<dependency>
+
+<pre><code>
+{`<dependency>
   <groupId>io.orkes.conductor</groupId>
   <artifactId>orkes-conductor-client</artifactId>
-  <version>1.1.14</version>
+  <version>${versions.conductorJarVersion}</version>
 </dependency>
-```
+`}
+</code></pre>
 
 ## Initialization
 
