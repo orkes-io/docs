@@ -7,7 +7,7 @@ sidebar_position: 13
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-The Do While task sequentially executes a list of tasks as long as a condition is __true__. The list of tasks is executed first before the condition is checked, even for the first iteration just like a regular do .. while task in programming languages.
+The Do While task sequentially executes a list of tasks as long as a condition is __true__. The list of tasks is executed first before the condition is checked, even for the first iteration, just like a regular do .. while task in programming languages.
 
 ## Definitions
 
@@ -23,9 +23,9 @@ The Do While task sequentially executes a list of tasks as long as a condition i
       ]
     }
 ```
-* When scheduled, each task of this loop will see its **taskReferenceName** concatenated with **__i**, with **i** being the iteration number, starting at 1. **Warning**: **taskReferenceName** containing arithmetic operators must not be used
-* Each time the task is performed, the output is saved and indexed by the iteration value. This makes it possible for the condition to check the output of a specific task iteration. (E.g., **$.taskReferenceName['iteration]['first_task']**)
-* The DO_WHILE task is set to *FAILED* as soon as one of the loopTask fails. In such cases, for the retry, the iteration starts from 1
+* When scheduled, each task of this loop will see its **taskReferenceName** concatenated with **__i**, with **i** being the iteration number, starting at 1. **Warning**: **taskReferenceName** containing arithmetic operators must not be used.
+* Each time the task is performed, the output is saved and indexed by the iteration value. This makes it possible for the condition to check the output of a specific task iteration. (E.g., **$.taskReferenceName['iteration]['first_task']**).
+* The DO_WHILE task is set to *FAILED* as soon as one of the loopTask fails. In such cases, for the retry, the iteration starts from 1.
 
 ### Input Parameters
 
@@ -43,12 +43,11 @@ The Do While task sequentially executes a list of tasks as long as a condition i
 | *          | Any state can be stored here if the loopCondition does so. For example, **storage** will exist if loopCondition is **if ($.LoopTask['iteration'] <= 10) {$.LoopTask.storage = 3; true } else {false}**. |
 
 :::note
-* Domain or isolation group execution is unsupported
-* Nested DO_WHILE is unsupported. However, we can achieve a similar functionality as the DO_WHILE task supports SUB_WORKFLOW as a loopOver task
-* Since loopOver tasks will be executed in a loop inside the scope of a parent, the do-while task may not work as expected if it includes branching that crosses outside the DO_WHILE task
-* Branching inside the loopOver task is supported
+* Domain or isolation group execution is unsupported.
+* Nested DO_WHILE is unsupported. However, we can achieve a similar functionality as the DO_WHILE task supports SUB_WORKFLOW as a loopOver task.
+* Since loopOver tasks will be executed in a loop inside the scope of a parent, the do-while task may not work as expected if it includes branching that crosses outside the DO_WHILE task.
+* Branching inside the loopOver task is supported.
 :::
-* 
 ## Examples
 
 <Tabs>
@@ -60,10 +59,10 @@ The Do While task sequentially executes a list of tasks as long as a condition i
 <br/>
 <br/>
 
-1. Add task type `Do While`
-2. Select the loop condition type
-3. Add the condition
-4. Add the list of tasks in the loop
+1. Add task type `Do While`.
+2. Select the loop condition type.
+3. Add the condition.
+4. Add the list of tasks in the loop.
 
 </div>
 <div className="col">

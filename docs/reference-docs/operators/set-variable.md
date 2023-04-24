@@ -8,7 +8,7 @@ import TabItem from '@theme/TabItem';
 
 # Set Variable
 
-Set Variable allows us to set the workflow variables by creating or updating them with new values. Think of these as temporary state, which you can set in any step and refer back in any steps that executes after setting the value.
+Set Variable allows us to set the workflow variables by creating or updating them with new values. Think of these as a temporary state, which you can set in any step and refer back to any steps that execute after setting the value.
 
 ## Definitions
 
@@ -39,8 +39,8 @@ Set Variable allows us to set the workflow variables by creating or updating the
 <br/>
 <br/>
 
-1. Add task type `Set Variable`
-2. Add the parameters to initialize or replace with values
+1. Add task type `Set Variable`.
+2. Add the parameters to initialize or replace with values.
 
 </div>
 <div className="col">

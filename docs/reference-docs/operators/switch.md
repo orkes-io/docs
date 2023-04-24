@@ -45,7 +45,7 @@ The switch task is used for creating branching logic. It is a representation of 
 | Attribute   | Description                                                                                           |
 | ----------- |-------------------------------------------------------------------------------------------------------|
 | value-param | Use a parameter directly as the value.                                                                |
-| javascript  | Evaluate Javascript expressions and compute the value - Legacy.  __Deprecated__ - use graaljs instead |
+| javascript  | Evaluate Javascript expressions and compute the value - Legacy.  __Deprecated__ - use graaljs instead. |
 | graaljs     | Evaluate Javascript expressions and compute the value. Allows you to use ES6-compatible Javascript.   |
 
 
@@ -60,18 +60,18 @@ The switch task is used for creating branching logic. It is a representation of 
 <br/>
 <br/>
 
-1. Add task type `Switch`
-2. Click on the (+) icon to add switch cases
-3. Add the value parameter to evaluate for switch
-4. Label the cases with values to match 
-5. Add one more tasks to cases
-6. Add tasks to default case if applicable
+1. Add task type `Switch`.
+2. Click on the (+) icon to add switch cases.
+3. Add the value parameter to evaluate for switch.
+4. Label the cases with values to match.
+5. Add one more task to the cases.
+6. Add tasks to default case if applicable.
 
 </div>
 <div className="col">
 <div className="embed-loom-video">
 
-<p><img src="/content/img/ui-guide-switch-task.png" alt="Adding event task" width="560" height="auto"/></p>
+<p><img src="/content/img/ui-guide-switch-task.png" alt="Adding event task" width="720" height="auto"/></p>
 
 </div>
 </div>
@@ -111,7 +111,7 @@ The switch task is used for creating branching logic. It is a representation of 
 
 ## Access Switch Case Output
 We can access the output of the switch case in subsequent tasks by referring to the output value `selectedCase`. 
-For example if the switch case reference was `switch_example_1` we can access the output value by:
+For example, if the switch case reference was `switch_example_1` we can access the output value by:
 
 ```json
 ${switch_example_1.output.selectedCase}

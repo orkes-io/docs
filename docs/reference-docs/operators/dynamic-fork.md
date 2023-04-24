@@ -11,9 +11,9 @@ The Dynamic fork task is used when the number of forks is to be determined at th
 
 The tasks to be executed can be defined in two ways:
 
-1. Define using an array to run a simple task OR HTTP task OR a sub workflow
-    1. Sub Workflows can be used when running more than one task in the fork per array item
-2. Define using input parameters
+1. Using an array to run a simple task OR HTTP task OR a sub workflow.
+    1. Sub Workflows can be used when running more than one task in the fork per array item.
+2. Using input parameters.
 
 ## Definitions - Using Arrays
 
@@ -109,7 +109,7 @@ When using simple values, it will be passed with the key input and an index repr
 
 <details><summary>Running HTTP Tasks using Dynamic Fork</summary>
 <p>
-To run HTTP, we will use the same parameters as running SIMPLE tasks; as shown above, the value of forkTaskName will be HTTP, and the inputs us provide will be what the HTTP task expects.
+To run HTTP, we will use the same parameters as running SIMPLE tasks; as shown above, the value of forkTaskName will be HTTP, and the inputs we provide will be what the HTTP task expects.
 
 :::tip
 **method** has a default value of GET and need not be specified if the HTTP call is GET.
@@ -153,7 +153,7 @@ Example:
 
 <details><summary>Running Sub Workflows using Dynamic Fork</summary>
 <p>
-Run a sub-workflow for each of the inputs provided
+Run a sub-workflow for each of the inputs provided.
 
 | Attribute               | Description                                               |
 | ----------------------- | --------------------------------------------------------- |
@@ -230,7 +230,7 @@ The [JOIN](/content/reference-docs/operators/join) task will run after all the d
 
 | Attribute | Description                                                                                                                                                                                                                                                                |
 | --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| joinOn    | This is the output configuration of the JOIN task used in conjunction with the DYNAMIC_FORK_JOIN task. The output of the JOIN task is a map, where the keys are task reference names of the tasks being joined, and the keys are the corresponding outputs of those tasks. |
+| joinOn    | This is the output configuration of the JOIN task used in conjunction with the DYNAMIC_FORK_JOIN task. The output of the JOIN task is a map, where the keys are task reference names of the tasks being joined, and the corresponding outputs of those tasks. |
 
 ## Examples
 

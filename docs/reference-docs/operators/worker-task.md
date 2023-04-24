@@ -8,7 +8,7 @@ import TabItem from '@theme/TabItem';
 
 # Worker Task (Simple Task)
 
-A Simple task is a Worker task that requires an external worker for polling. The Workers can be implemented in any language, and Conductor SDKs provides additional features such as metrics, server communication, and polling threads that make the worker creation process easier.
+A Simple task is a Worker task that requires an external worker for polling. The Workers can be implemented in any language, and Conductor SDKs provide additional features such as metrics, server communication, and polling threads that make the worker creation process easier.
 
 ## Definitions
 
@@ -35,4 +35,4 @@ In our getting started guide - there is a complete [example](/content/getting-st
 
 ## Worker Task Definition
 
-Refer to this [api](/content/reference-docs/api/metadata/creating-task-definitions) for the metadata of a task definition
+Refer to this [api](/content/reference-docs/api/metadata/creating-task-definitions) for the metadata of a task definition.

@@ -52,10 +52,10 @@ A start workflow task is considered successful when the requested workflow begin
 <br/>
 <br/>
 
-1. Add task type `Start Workflow Task`
-2. Select the workflow to start
-3. Select version if required
-4. Add the input params to the workflow
+1. Add task type `Start Workflow Task`.
+2. Select the workflow to start.
+3. Select version if required.
+4. Add the input params to the workflow.
 
 </div>
 <div className="col">

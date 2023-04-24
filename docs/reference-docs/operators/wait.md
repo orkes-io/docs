@@ -40,8 +40,8 @@ The Wait task is used when the workflow needs to be paused for an external signa
 <br/>
 <br/>
 
-1. Add task type `Wait`
-2. Select the type of wait and its configuration
+1. Add task type `Wait`.
+2. Select the type of wait and its configuration.
 
 </div>
 <div className="col">

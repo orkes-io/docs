@@ -48,8 +48,8 @@ The Terminate Workflow task is used to terminate other workflows using their wor
 <br/>
 <br/>
 
-1. Add task type `Terminate Workflow`
-2. Add the parameter for workflow ids to terminate
+1. Add task type `Terminate Workflow`.
+2. Add the parameter for workflow IDs to terminate.
 
 </div>
 <div className="col">
@@ -111,7 +111,7 @@ If we run this workflow, the workflow with the mentioned workflowId gets termina
 
 <p align="center"><img src="/content/img/terminate-workflow.png" alt="Terminate Workflow - Successful execution" width="90%" height="auto"></img></p>
 
-we can copy and paste this ID into the workflow execution URL to view the terminated workflow.
+We can copy and paste this ID into the workflow execution URL to view the terminated workflow.
 
 <p align="center"><img src="/content/img/terminated-workflow.png" alt="View of the terminated workflow" width="90%" height="auto"></img></p>
 

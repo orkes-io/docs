@@ -55,9 +55,9 @@ The Terminate task can modify the workflow's output with a given parameter and a
 <br/>
 <br/>
 
-1. Add task type `Terminate`
-2. Select the state
-3. Add the reason
+1. Add task type `Terminate`.
+2. Select the state.
+3. Add the reason.
 
 </div>
 <div className="col">

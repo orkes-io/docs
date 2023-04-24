@@ -42,7 +42,7 @@ A Fork operation lets you run a specified list of tasks or sub-workflows in para
 
 | Attribute | Description                                                                                                                                                                                                                                                        |
 | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| joinOn    | This is the output configuration of the JOIN task used in conjunction with the FORK_JOIN task. The output of the JOIN task is a map, where the keys are task reference names of the tasks being joined, and the keys are the corresponding outputs of those tasks. |
+| joinOn    | This is the output configuration of the JOIN task used in conjunction with the FORK_JOIN task. The output of the JOIN task is a map, where the keys are task reference names of the tasks being joined, and the corresponding outputs of those tasks. |
 
 :::tip Join Task
 Check [JOIN](/content/reference-docs/operators/join) for more details on the JOIN aspect of the FORK.
@@ -60,10 +60,10 @@ Check [JOIN](/content/reference-docs/operators/join) for more details on the JOI
 <br/>
 <br/>
 
-1. Add task type `Fork/Join`
-2. Add as many forks as required
-3. Add tasks to each fork path
-4. Select the tasks to wait for in the Join task
+1. Add task type `Fork/Join`.
+2. Add as many forks as required.
+3. Add tasks to each fork path.
+4. Select the tasks to wait for in the Join task.
 
 </div>
 <div className="col">

@@ -48,9 +48,9 @@ The output is a map, where the keys are the names of task references being joine
 <br/>
 <br/>
 
-1. Add task type `Fork Join`
-2. Add the forks
-3. Select the paired Join task and select joinOn params
+1. Add task type `Fork Join`.
+2. Add the forks.
+3. Select the paired Join task and select joinOn params.
 
 </div>
 <div className="col">

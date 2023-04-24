@@ -24,8 +24,8 @@ Sub Workflow allows executing another workflow from within the current workflow.
 ```
 
 :::tip
-* The Do-While task does not allow nested Do-While tasks. But it does permit a sub-workflow that can have a Do-While loop inside it
-* Dynamic Forks can only contain one task. But using the sub-workflow concept, this single task can be a sub-workflow that includes additional tasks
+* The Do-While task does not allow nested Do-While tasks. But it does permit a sub-workflow that can have a Do-While loop inside it.
+* Dynamic Forks can only contain one task. But using the sub-workflow concept, this single task can be a sub-workflow that includes additional tasks.
 :::
 
 ### Input Parameters
@@ -54,10 +54,10 @@ The output of the sub-workflow is also supplied to the output of the workflow.
 <br/>
 <br/>
 
-1. Add task type `Sub Workflow`
-2. Select the workflow and version
-3. Add input parameters
-4. Add task to domain if applicable
+1. Add task type `Sub Workflow`.
+2. Select the workflow and version.
+3. Add input parameters.
+4. Add task to domain if applicable.
 
 </div>
 <div className="col">
