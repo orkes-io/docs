@@ -1,6 +1,6 @@
 # User Management
 
-Watch how we can configure and manage Users from the UI
+Watch how we can configure and manage Users from the UI.
 
 <div className="embed-loom-video">
     <iframe
@@ -11,8 +11,3 @@ Watch how we can configure and manage Users from the UI
     ></iframe>
 </div>
 
-
-## Related Topics
-
-* Running workflows from SDKs
-* Running workflows based on events

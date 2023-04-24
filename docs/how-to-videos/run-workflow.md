@@ -11,8 +11,3 @@ Watch how we can run a workflow from UI.
     ></iframe>
 </div>
 
-
-## Related Topics
-
-* Running workflows from SDKs
-* Running workflows based on events
