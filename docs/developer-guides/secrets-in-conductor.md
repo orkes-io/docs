@@ -3,69 +3,72 @@ sidebar_position: 6
 ---
 # Using Secrets in Conductor
 
-You may often be required to use sensitive values that shouldn’t be exposed, like usernames, passwords, API keys, authorization tokens, etc. Using such values directly in the workflow can end up with your private keys being opened up to vulnerabilities. 
-
-With Conductor, you can save these values as Secrets and then use them in your workflow without exposing the actual values. 
+Often times we have requirements where sensitive values are used in workflows. In such situations **secrets** can be 
+used to hide these sensitive values on the UI. Examples of these values are usernames, passwords, API keys, authorization tokens, etc.
 
 ## Creating Secrets
 
 Follow the below steps to create and store secrets in Conductor:
 
-
-1. From your Orkes Console, navigate to the **Secrets** option from the left menu. The *Secrets* page lists all the secrets associated with your account.
-2. Click **Add Secrets** and provide the following values:<ul><li>**Secret Name** - Provide a name to store your secret.</li><li>**Secret Value** - Copy and paste the required value to be stored as secret.</li></ul>
-3. Clicking **Add** saves the secret to your Conductor console.
+1. From your Orkes Conductor Console, navigate to the **Secrets** option from the left menu. The *Secrets* page lists all the secrets associated with your account that you have access to
+2. Click **Add Secrets** and provide the following values:<ul><li>**Secret Name** - Reference name for your secret.</li><li>**Secret Value**</li></ul>
+3. Clicking **Add** saves the secret
 
 ## Using Secrets in Workflow
 
-Once the secret is created, you can use them in the workflow using the variable **${workflow.secrets.secret_name}**.
+Once the secret is created, we can use them in the workflow using the variable **${workflow.secrets.secret_name}**.
+Refer to this [article](/content/developer-guides/passing-data-in-conductor) on how to pass values to tasks and sub workflows
 
-## Viewing Secrets
-Once you have created your secret, click on the eye icon next to the secret name to view the secret key. 
+## Managing Secrets
 
-## Editing Secrets
-Click the pencil icon next to the secret name to edit and replace the secret key. 
-
-## Deleting Secrets
-Click the trash icon next to the secret name to delete redundant keys. 
+We can manage secrets on the UI as we as using the APIs.  
 
 ## Adding Tags to Secrets
-Conductor also provides the provision to add tags to secret keys. This helps in quickly sharing the secret to a group/application.
 
-### Enabling Permissions for Secrets via Groups
+Conductor also provides the provision to add tags to secret keys. This helps in granting permissions to the secret to an entity with tag based access.
+Read more about using tags for permissions [here](/content/access-control-and-security/tags)
 
-If a secret is to be shared among a User Group in Conductor, 
+## Additional Use Cases
 
+In addition to using secrets for sensitive values, we can also use it when we need to use a variable that is specific to an environment.
+For example - `${workflow.secrets.env-variable-1}` - here `env-variable-1` is not necessarily a secret but a value that could be configured 
+differently in each environment such as UAT vs Production.
 
-1. Add the required tag in the format **key:value** to the secret. 
-2. Navigate to **ACCESS CONTROL** > **Groups** and click the edit icon near your group name.
-3. From the **Workflow and Task Permissions** section, click **+Add Permission**.
-4. Choose the **Target Type** as **Tag**, and choose your tag with the required permissions. You can select from READ, UPDATE, CREATE, EXECUTE & DELETE permissions.
-5. Clicking **Add Permissions** adds the tag to the group, thus enabling permission to all group members.
+## Example
 
-### Enabling Permissions for Secrets via Applications
-
-If a workflow uses a Secret, we need to add access control permissions for the application to access the secret.
-
-1. Add the required tag in the format **key:value** to the secret. 
-2. Navigate to **ACCESS CONTROL > Applications** and click the edit icon near your app name.
-3. Scroll down to the **Workflow and Task Permissions** section, and click **+Add Permission**.
-4. Choose the **Target Type** as **Tag**, and choose your tag with the required permissions. You can select from READ, UPDATE, CREATE, EXECUTE & DELETE permissions.
-5. Clicking **Add Permissions** adds the tag to the group, thus enabling permission to the application.
-
-## Example 
-
-<details><summary>US Postal Service Workflow</summary>
-<p>
-
-The US Postal Service offers APIs to help automate the shipping process with the post office. Each API call requires a **UserID** to be submitted. This **UserID** can be used to buy postage, so it needs to be kept secure. We've created a secret called **post_office_username** that can be used in all API calls.
-
-Here’s a snippet from the workflow that references this secret:
+Here is a simple workflow definition that uses a secret in one of the tasks:
 
 ```json
-USERID=${workflow.secrets.post_office_username}
+{
+  "name": "workflow-with-a-secret",
+  "version": 1,
+  "tasks": [
+    {
+      "name": "sample_task_http",
+      "taskReferenceName": "sample_task_http",
+      "inputParameters": {
+        "http_request": {
+          "uri": "https://orkes-api-tester.orkesconductor.com/api",
+          "method": "GET",
+          "connectionTimeOut": 3000,
+          "readTimeOut": "3000",
+          "accept": "application/json",
+          "contentType": "application/json",
+          "headers": {
+            "Authorization": "Bearer: ${workflow.secrets.sampletask-api-token}"
+          }
+        }
+      },
+      "type": "HTTP"
+    }
+  ],
+  "schemaVersion": 2
+}
 ```
 
-Using **${workflow.secrets.post_office_username}**, the sensitive value is hidden and never appears in the workflow execution or any output files of Conductor. Yet, we can connect with the USPS and obtain the postage price for our package.
-</p>
-</details>
+When we run this workflow, as long as the permissions exist, the value 
+
+`${workflow.secrets.sampletask-api-token}`
+
+will be replaced with the value stored in the secrets repository.
+

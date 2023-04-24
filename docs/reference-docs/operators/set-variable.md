@@ -1,103 +1,82 @@
+---
+sidebar_position: 2
+---
+
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 # Set Variable
 
-Set Variable allows you to set the workflow variables by creating or updating them with new values.
+Set Variable allows us to set the workflow variables by creating or updating them with new values. Think of these as temporary state, which you can set in any step and refer back in any steps that executes after setting the value.
 
 ## Definitions
 
 ```json
-{
-  "name": "set_variable",
-  "taskReferenceName": "set_variable_task_ref",
-  "type": "SET_VARIABLE",
-  "inputParameters": {
-    "some keys": "some keys"
-  }
-}
+    {
+      "name": "set_variable",
+      "taskReferenceName": "set_variable_task_ref",
+      "type": "SET_VARIABLE",
+      "inputParameters": {
+        "variableName": "value"
+      }
+    }
 ```
 
 ### Input Parameters
 
 **Variables** - The variables can be initialized in the workflow definition as well as during the workflow run. Once a variable is initialized, it can be read or overwritten with a new value by any other task. Variables can be used to manage a state across all your tasks.
 
-## Examples​
+## Examples
+
 
 <Tabs>
-<TabItem value="UI" label="UI">
+<TabItem value="UI" label="UI" className="paddedContent">
+
+<div className="row">
+<div className="col col--4">
+
+<br/>
+<br/>
+
+1. Add task type `Set Variable`
+2. Add the parameters to initialize or replace with values
+
+</div>
+<div className="col">
+<div className="embed-loom-video">
+
+<p><img src="/content/img/ui-guide-set-variable.png" alt="Adding set variable" width="560" height="auto"/></p>
+
+</div>
+</div>
+</div>
+
+
+
 </TabItem>
-<TabItem value="JSON" label="JSON">
+ <TabItem value="JSON" label="JSON Example">
 
 ```json
-{
-  "name": "Set_Name",
-  "taskReferenceName": "Set_Name_ref",
-  "type": "SET_VARIABLE",
-  "inputParameters": {
-    "name": "Orkes"
-  }
-}
-```
-
-</TabItem>
-<TabItem value="Java" label="Java">
-
-```java
-new SetVariable(
-  String taskReferenceName
-)
-```
-
-</TabItem>
-<TabItem value="Golang" label="Golang">
-
-```go
-workflow.NewSetVariableTask(
-  taskRefName string,
-) *SetVariableTask
-```
-
-</TabItem>
-<TabItem value="Python" label="Python">
-
-```python
-conductor.client.workflow.task.SetVariableTask(
-  task_ref_name: str
-)
-```
-
-</TabItem>
-<TabItem value="CSharp" label="CSharp">
-
-```csharp
-Conductor.Definition.TaskType.SetVariableTask(
-  string taskReferenceName
-)
-```
-
-</TabItem>
-<TabItem value="Javascript" label="Javascript">
-
-```javascript
-setVariableTask = (
-  taskReferenceName: string,
-  inputParameters: Record<string, unknown>
-): SetVariableTaskDef
-```
-
-</TabItem>
-<TabItem value="Clojure" label="Clojure">
-
-<!-- Todo: @gardusig -->
-```clojure
-
+    {
+      "name": "set_variable_example",
+      "taskReferenceName": "set_variable_example_ref_1",
+      "inputParameters": {
+        "organizationName": "${workflow.input.name}",
+        "anotherValue": "Hard Coded",
+        "objectValue": {
+          "sampleKey": "sampleValue"
+        }
+      },
+      "type": "SET_VARIABLE"
+    }
 ```
 
 </TabItem>
 </Tabs>
 
-<details><summary>Sample Workflow</summary>
+
+<details><summary>Sample Workflow - Set and Read Variables</summary>
 <p>
 Suppose in a workflow, we have to store a value in a variable and then, later in the workflow, reuse the value stored in the variable just as we do in programming; in such scenarios, the <i><b>Set Variable</b></i> task can be used.
 <br/><br/>
@@ -129,6 +108,6 @@ Following is the workflow definition with the SET_VARIABLE task.
 }
 ```
 
-The above example shows that the task **Set_Nam**e is a Set Variable Task, and the variable name is set to **Orkes**. Later in the workflow, it is referenced by **${workflow.variables.name}** in another task.
+The above example shows that the task **Set_Name** is a Set Variable Task, and the variable name is set to **Orkes**. Later in the workflow, it is referenced by **${workflow.variables.name}** in another task.
 </p>
 </details>

@@ -42,124 +42,104 @@ The switch task is used for creating branching logic. It is a representation of 
 | defaultCase   | List of tasks to be executed when no matching value is found in the decision case (default condition).                                                                                                         |
 
 #### Types of Evaluators
-| Attribute   | Description                                                                                         |
-| ----------- | --------------------------------------------------------------------------------------------------- |
-| value-param | Use a parameter directly as the value.                                                              |
-| javascript  | Evaluate Javascript expressions and compute the value - Legacy.  Deprecated.                        |
-| graaljs     | Evaluate Javascript expressions and compute the value. Allows you to use ES6-compatible Javascript. |
+| Attribute   | Description                                                                                           |
+| ----------- |-------------------------------------------------------------------------------------------------------|
+| value-param | Use a parameter directly as the value.                                                                |
+| javascript  | Evaluate Javascript expressions and compute the value - Legacy.  __Deprecated__ - use graaljs instead |
+| graaljs     | Evaluate Javascript expressions and compute the value. Allows you to use ES6-compatible Javascript.   |
 
 
 ## Examples
 
-Workflow with the switch task definition that uses **value-param** evaluatorType:
-
 <Tabs>
-<TabItem value="UI" label="UI">
-ToDo - Video
+<TabItem value="UI" label="UI" className="paddedContent">
+
+<div className="row">
+<div className="col col--4">
+
+<br/>
+<br/>
+
+1. Add task type `Switch`
+2. Click on the (+) icon to add switch cases
+3. Add the value parameter to evaluate for switch
+4. Label the cases with values to match 
+5. Add one more tasks to cases
+6. Add tasks to default case if applicable
+
+</div>
+<div className="col">
+<div className="embed-loom-video">
+
+<p><img src="/content/img/ui-guide-switch-task.png" alt="Adding event task" width="560" height="auto"/></p>
+
+</div>
+</div>
+</div>
+
+
+
 </TabItem>
-<TabItem value="JSON" label="JSON">
+ <TabItem value="JSON" label="JSON Example">
 
 ```json
-{
-  "name": "switch_task",
-  "taskReferenceName": "switch_task_ref",
-  "inputParameters": {
-    "switchCaseValue": "${workflow.input.service}"
-  },
-  "type": "SWITCH",
-  "evaluatorType": "value-param",
-  "expression": "switchCaseValue",
-  "defaultCase": [//tasks],
-  "decisionCases": {
-    "fedex": [//tasks],
-    "ups": [//tasks]
-  }
-}
-```
-
-</TabItem>
-<TabItem value="Java" label="Java">
-
-```java
-new Switch(
-  String taskReferenceName, 
-  String caseExpression
-)
-```
-
-</TabItem>
-<TabItem value="Golang" label="Golang">
-
-```go
-workflow.NewSwitchTask(
-  taskRefName string, 
-  caseExpression string,
-) *SwitchTask
-```
-
-</TabItem>
-<TabItem value="Python" label="Python">
-
-```python
-conductor.client.workflow.task.SwitchTask(
-  task_ref_name: str, 
-  case_expression: str, 
-  use_javascript: bool = False
-)
-```
-
-</TabItem>
-<TabItem value="CSharp" label="CSharp">
-
-```csharp
-Conductor.Definition.TaskType.SwitchTask(
-  string taskReferenceName, 
-  string caseExpression, 
-  bool useJavascript = false
-)
-```
-
-</TabItem>
-<TabItem value="Javascript" label="Javascript">
-
-```javascript
-switchTask = (
-  taskReferenceName: string,
-  expression: string,
-  decisionCases: Record<string, TaskDefTypes[]> = {},
-  defaultCase: TaskDefTypes[] = []
-): SwitchTaskDef
-```
-
-</TabItem>
-<TabItem value="Clojure" label="Clojure">
-
-<!-- Todo: @gardusig -->
-```clojure
-
+    {
+      "name": "switch_example",
+      "taskReferenceName": "switch_example_1",
+      "inputParameters": {
+        "switchCaseValue": "${workflow.input.inputKey1}"
+      },
+      "type": "SWITCH",
+      "decisionCases": {
+        "CASE1": [
+          // task list for inputKey1 == CASE1
+        ],
+        "CASE2": [
+          // task list for inputKey1 == CASE2
+        ]
+      },
+      "defaultCase": [
+        // default task list when inputKey1 does not match any case
+      ],
+      "evaluatorType": "value-param",
+      "expression": "switchCaseValue"
+    }
 ```
 
 </TabItem>
 </Tabs>
 
-<details><summary>Using Javascript expressions</summary>
-<p>
+## Access Switch Case Output
+We can access the output of the switch case in subsequent tasks by referring to the output value `selectedCase`. 
+For example if the switch case reference was `switch_example_1` we can access the output value by:
+
+```json
+${switch_example_1.output.selectedCase}
+```
+
+
+## Using Javascript Expressions
 
 When using **javascript** or **graaljs** as the evaluator type, the expression can be a javascript expression that returns a string.
 
 The input to the tasks is available as the variables inside the **$** scope within the script.
 
 ```json
-{
-  "inputParameters": {
-      "service": "${workflow.input.service}"
-  },
-  "expression": "$.service == 'fedex' ? 'fedex' : 'ups'",
-}
+    "inputParameters" : {
+      "shippingType": "${workflow.input.shippingType}"
+    }
+```
+
+```javascript
+
+    (function () {
+      if ($.shippingType == 'EXPRESS') {
+        return "FEDEX";
+      }
+      return "USPS";
+    })();
 
 ```
-</p>
-</details>
 
 <details><summary>Nested Switch case</summary>
 <p>
