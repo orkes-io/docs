@@ -9,7 +9,7 @@ Orkes Conductor provides a visual representation of workflows that aids in quick
 
 ## Searching/Viewing Workflow Executions
 
-All recent workflow executions are listed in the **WORKFLOWS > Executions** page. This view is filtered by the permissions of the user by default - only workflows with permissions to the viewer is displayed.
+All recent workflow executions are listed on the **WORKFLOWS > Executions** page. This view is filtered by the permissions of the user by default, i.e., users can view the execution of only the permitted workflows.
 
 <p align="center"><img src="/content/img/workflow-executions.png" alt="Workflow Executions page" width="90%"
                        height="auto"/></p>
@@ -37,7 +37,7 @@ Each of these tabs gives the details that can help debug workflow issues.
 The diagram tab on the workflow execution page shows the workflow diagram. All the successful tasks appear in green, failed ones appear in red, and the ones completed with errors appear in orange.
 
 :::tip
-A task ends up with the status “Completed with Errors” only when its marked as __optional__ in the workflow definition. The default value of this setting is false, so it needs to be explicitly set to continue the workflow even when there are errors. 
+A task ends up with the status “Completed with Errors” only when it is marked as __optional:true__ in the workflow definition. The default value of this setting is false, so it needs to be explicitly set to continue the workflow even when there are errors.
 :::
 
 <p align="center"><img src="/content/img/types-of-errors.png" alt="Different types of errors in a failed workflow"
@@ -70,7 +70,7 @@ Once the issues are resolved for the workflow execution failure, we might want t
 | Restart with Current Definitions | Restart the workflow from the beginning using the same version of the workflow definition that originally ran this execution. This is useful if the workflow definition has changed and we want to retain this instance in the original version.                |
 | Restart with Latest Definitions | Restart this workflow from the beginning using the latest definition of the workflow. If we’ve made changes to the definition, we could use this option to re-run the flow with the latest version.                                                             |
 | Retry - From failed task | Retries the workflow from the failed task.                                                                                                                                                                                                                      |
-| Re-run Workflow | Clicking on this takes we to the **Run Workflow** page, where we can rerun the workflow. While running, we can change the workflow input parameters and task to domain mapping.                     |                                      
+| Re-run Workflow | Clicking on this takes us to the **Run Workflow** page, where we can rerun the workflow. While running, we can change the workflow input parameters and task to domain mapping.                     |                                      
 
 :::tip
 Orkes Conductor has native retry and error handling capabilities, allowing your task to be retried automatically for transient failures. 

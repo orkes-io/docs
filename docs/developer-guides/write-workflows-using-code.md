@@ -3,13 +3,12 @@ import TabItem from '@theme/TabItem';
 import Install from '@site/src/components/install.mdx';
 
 # Write Workflows Using Code
-Workflows can be written in code allowing creation of dynamic workflows that can't be pre-defined.
-Support for defining workflows using code is part of all the supported SDK.
+Workflows can be written in code, allowing the creation of dynamic workflows that can't be pre-defined. Support for defining workflows using code is part of all the supported SDKs.
 
 
 ## Creating workflows in code
-Here is the workflow that we are going to create using various language specific SDKs in code:
-<p style={{textAlign: "center"}}><img src="/content/img/user_notification_workflow.png" alt="user notification workflow" width="50%" height="auto" style={{paddingBottom: 20, paddingTop: 20}} /></p>
+Here is the workflow that we are going to create using various language-specific SDKs in code:
+<p style={{textAlign: "center"}}><img src="/content/img/user_notification_workflow.png" alt="user notification workflow" width="60%" height="auto" style={{paddingBottom: 20, paddingTop: 20}} /></p>
 <Tabs>
 <TabItem value="Java" label="Java">
 
