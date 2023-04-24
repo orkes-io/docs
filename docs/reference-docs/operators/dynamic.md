@@ -1,22 +1,28 @@
+---
+sidebar_position: 8
+---
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 # Dynamic 
 
-The dynamic task allows you to execute one of the registered tasks dynamically at run-time.
+The dynamic task allows us to execute one of the registered tasks dynamically at run-time. This means you can run a task 
+which need not be fixed at the time of workflow definition. The task name could even be supplied as part of workflow input and 
+can be mapped to the dynamic task input.
 
 ## Definitions
 
 ```json
-{
-  "name": "dynamic_task",
-  "taskReferenceName": "dynamic_task_ref",
-  "inputParameters": {
-    "taskToExecute": "${workflow.input.somevalue}"
-  },
-  "type": "DYNAMIC",
-  "dynamicTaskNameParam": "taskToExecute"
-}
+    {
+      "name": "dynamic_task",
+      "taskReferenceName": "dynamic_task_ref",
+      "inputParameters": {
+        "taskToExecute": "${workflow.input.somevalue}" // Name of the task to execute
+      },
+      "type": "DYNAMIC",
+      "dynamicTaskNameParam": "taskToExecute" // Name of the input parameter holding the task name to execute
+    }
 ```
 
 ### Input Parameters
@@ -29,13 +35,15 @@ The dynamic task allows you to execute one of the registered tasks dynamically a
 If there is a possibility that the task called is a SUBWORKFLOW, you must also add:
 
 ```json
-"subWorkflowParam": {
-  "name": "workflow_name",
-  "version": <workflow version>
-},
+    "subWorkflowParam": {
+      "name": "workflow_name",
+      "version": <workflow version>
+    },
 ```
 
+:::note
 If **subWorkflowParam** is present, and the DYNAMIC workflow calls a task type that is not a SUBWORKFLOW, these parameters will be ignored.
+:::
 
 ### Output Parameters
 
@@ -43,77 +51,49 @@ During execution, the DYNAMIC task is replaced in the workflow with whatever tas
 
 ## Examples
 
+
 <Tabs>
-<TabItem value="UI" label="UI">
+<TabItem value="UI" label="UI" className="paddedContent">
+
+<div className="row">
+<div className="col col--4">
+
+<br/>
+<br/>
+
+1. Add task type `Dynamic Task`
+2. Add the task to run by mapping it to a variable representing task name
+
+</div>
+<div className="col">
+<div className="embed-loom-video">
+
+<p><img src="/content/img/ui-guide-dynamic-task.png" alt="Adding wait task" width="500" height="auto"/></p>
+
+</div>
+</div>
+</div>
+
+
+
 </TabItem>
-<TabItem value="JSON" label="JSON">
+ <TabItem value="JSON" label="JSON Example">
 
 ```json
-{
-  "name": "dynamic_task",
-  "taskReferenceName": "dynamic_task_ref",
-  "inputParameters": {
-    "taskToExecute": "${workflow.input.somevalue}"
-  },
-  "type": "DYNAMIC",
-  "dynamicTaskNameParam": "taskToExecute"
-}
-```
-
-</TabItem>
-<TabItem value="Java" label="Java">
-
-```java
-new Dynamic(
-  String taskReferenceName, 
-  String dynamicTaskNameValue
-)
-```
-
-</TabItem>
-<TabItem value="Golang" label="Golang">
-
-```go
-workflow.NewDynamicTask(
-  taskRefName string, 
-  taskNameParameter string,
-) *DynamicTask
-```
-
-</TabItem>
-<TabItem value="Python" label="Python">
-
-<!-- Todo: @gardusig -->
-```python
-
-```
-
-</TabItem>
-<TabItem value="CSharp" label="CSharp">
-
-<!-- Todo: @gardusig -->
-```csharp
-
-```
-
-</TabItem>
-<TabItem value="Javascript" label="Javascript">
-
-<!-- Todo: @gardusig -->
-```javascript
-
-```
-
-</TabItem>
-<TabItem value="Clojure" label="Clojure">
-
-<!-- Todo: @gardusig -->
-```clojure
-
+    {
+      "name": "dynamic_task",
+      "taskReferenceName": "dynamic_task_ref",
+      "inputParameters": {
+        "taskToExecute": "${workflow.input.somevalue}"
+      },
+      "type": "DYNAMIC",
+      "dynamicTaskNameParam": "taskToExecute"
+    }
 ```
 
 </TabItem>
 </Tabs>
+
 
 <details><summary>Shipping Courier</summary>
 <p>
