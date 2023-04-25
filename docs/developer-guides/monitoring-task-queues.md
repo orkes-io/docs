@@ -19,20 +19,3 @@ To view the worker details polling for the task, select the required task queue,
 
 <p align="center"><img src="/content/img/worker-details-in-task-queue-monitor.jpg" alt="Worker details in task queue monitor" width="100%" height="auto"></img></p>
 
-## API
-
-To view the size of the task queue:
-
-```shell
-curl 'http://localhost:8080/api/tasks/queue/sizes?taskType=<TASK_NAME>' \
- -H 'accept: */*'
- ```
-
- To view the worker poll information of the task queue:
-
- ```shell
- curl 'http://localhost:8080/api/tasks/queue/polldata?taskType=<TASK_NAME>' \
- -H 'accept: */*'
- ```
-
- Replace **<TASK_NAME>** with your task name.
