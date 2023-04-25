@@ -266,6 +266,7 @@ const sidebars = {
                 'faqs/conductor-log-level',
                 'faqs/reuse-tasks',
                 'faqs/directed-acyclic-graph',
+                'faqs/workflow-versioning',
             ],
             collapsible: true,
             collapsed: true,
