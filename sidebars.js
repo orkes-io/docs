@@ -254,6 +254,23 @@ const sidebars = {
             id: 'system-integrations',
             className: 'leftMenuHeader',
         },
+        {
+            type: 'category',
+            label: 'FAQs',
+            link: {
+                type: 'generated-index',
+                title: 'FAQs',
+                slug: '/category/faqs'
+            },
+            items: [
+                'faqs/conductor-log-level',
+                'faqs/reuse-tasks',
+                'faqs/directed-acyclic-graph',
+            ],
+            collapsible: true,
+            collapsed: true,
+            className: 'leftMenuHeader',
+        },
     ]
 };
 
