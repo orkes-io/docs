@@ -77,6 +77,13 @@ Failure policies are defined with `retry*` parameters:
 * **LINEAR_BACKOFF**: Reschedule after *retryDelaySeconds * backoffRate * attemptNumber*
 
 ### Workflow Failures
+
 Workflow can fail if one of the tasks fails even after retry attempts if terminated by a signal or using a terminate API call. Failed workflow transactions can be compensated using compensating workflows.
 
 With Conductor, you can specify a name for a failure workflow within your workflow definition, which will be triggered if the main workflow fails. This failure workflow receives the failed workflow's ID and tasks as input, enabling you to implement compensating logic to handle the failure.
+
+In your workflow definition, you can add the workflow name to be run on the failure of your current workflow:
+
+```json
+"failureWorkflow": "<name of the workflow to be run on failure>",
+```
