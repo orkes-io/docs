@@ -55,7 +55,7 @@ worker_id: str, optional
     By default, it is set to hostname of the machine
 ```
 ### `start` method parameters
-```pythhon
+```python
 taskType: str
     The name of the task that the worker is looking to execute
 

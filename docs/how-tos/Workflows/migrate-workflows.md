@@ -78,7 +78,7 @@ The next step is creating a migration request.
 Once your migration request is successfully completed in Environment A, you can verify the incoming migration request in Environment B.
 
 1. In Environment B, navigate to **WORKFLOWS > Executions**. You can view your incoming migration request workflow on the executions page. Click on the workflow ID to view the workflow. 
-2.  Once the incoming migration request is successfull, go to **WORKFLOWS > Definitions** in Environment B and verify that your migrated workflow has been listed here. 
+2.  Once the incoming migration request is successful, go to **WORKFLOWS > Definitions** in Environment B and verify that your migrated workflow has been listed here. 
 
 <center><img src="/content/img/migrated-workflow-in-new-environment.jpg" alt="Migrated Workflow in the new environment" width="90%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></center>
 

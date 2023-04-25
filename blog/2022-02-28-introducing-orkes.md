@@ -2,7 +2,7 @@
 slug: Introducing-Orkes-funding-announcement
 title: Introducing Orkes Cloud and our new funding 
 authors: jeu
-tags: [Orkes, funding, annoucement ,2022]
+tags: [Orkes, funding, announcement ,2022]
 image: https://user-images.githubusercontent.com/1514288/155636237-caa91ec9-e19f-4ab0-aa65-106e09b381b0.png
 ---
 

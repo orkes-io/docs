@@ -40,7 +40,7 @@ Before you start to build the workflow, there are a few things you need to do so
 These are the prerequisites that you will need for the rest of this article:
 
 - Install [Docker Desktop](https://www.docker.com/products/docker-desktop/) on your PC.
-- Install Java. I advise you to use [Amazon Corretto](https://docs.aws.amazon.com/corretto/index.html), which is an OpenJDK distribution mantained by AWS.
+- Install Java. I advise you to use [Amazon Corretto](https://docs.aws.amazon.com/corretto/index.html), which is an OpenJDK distribution maintained by AWS.
 - Clone this GitHub repository: [Netflix/conductor](https://github.com/Netflix/conductor.git).
 - Clone this GitHub repository: [Lock128/conductor-playground](https://github.com/Lock128/conductor-playground).
 - Install and set up [AWS CLI](https://aws.amazon.com/cli/).

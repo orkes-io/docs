@@ -33,7 +33,7 @@ Branching inside loopOver task is supported.
 |---|---|---|
 |loopCondition|String|Condition to be evaluated after every iteration. This is a Javascript expression evaluated using the Nashorn engine. If an exception occurs during evaluation, the DO_WHILE task is set to FAILED_WITH_TERMINAL_ERROR.|
 |loopOver|List[Task]|List of tasks that needs to be executed as long as the condition is true.|
-|evaluatorType|Enum|graaljs - Use graaljs as condition evaluator, javascript - Use javascript as condition evaluator, value-param - Use key-value param as condition evalautor|
+|evaluatorType|Enum|graaljs - Use graaljs as condition evaluator, javascript - Use javascript as condition evaluator, value-param - Use key-value param as condition evaluator|
 
 ### Output Parameters
 

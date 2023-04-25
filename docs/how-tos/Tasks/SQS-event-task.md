@@ -133,7 +133,7 @@ We have named the event `complete_task_event` and the event is a message from ou
 
 When we invoke the workflow:
 
-<p align="center"><img src="/content/img/sqs_workflow_start.jpg" alt="startung the SQS workflow" width="500" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+<p align="center"><img src="/content/img/sqs_workflow_start.jpg" alt="starting the SQS workflow" width="500" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
 Both task_1 and task_2 are IN_PROGRESS.  
 

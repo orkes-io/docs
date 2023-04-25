@@ -82,7 +82,7 @@ orchestration.
 While the focus of the company was to build the best streaming service in the world, it also led to the birth of several
 great pieces of software. Netflix used a lot of open source software for its needs and also decided to contribute
 towards it. Netflix OSS initiative was a part of this effort. Conductor was built as a general purpose orchestration
-engine. It helped Netflix solve critical problems in the microsservices space and it became a natural fit for Netflix
+engine. It helped Netflix solve critical problems in the microservices space and it became a natural fit for Netflix
 OSS.
 
 Open Sourcing Conductor enabled several large and popular companies like Tesla, GitHub, Redfin and many more, to not
