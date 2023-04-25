@@ -22,7 +22,7 @@ In the [`order fulfillment` codelab](https://orkes.io/content/docs/codelab/order
 
 Slack caught this:
 
-<p align="center"><img src="/content/img/slack_oops.jpg" alt="aaccidently shared a hardcoded slack token" width="600" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+<p align="center"><img src="/content/img/slack_oops.jpg" alt="accidentally shared a hardcoded slack token" width="600" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
 Super embarrassing, but no serious consequences (in this instance).
 

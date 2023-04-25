@@ -615,7 +615,7 @@ Next, we’ll pre-select *N* riders, notify them of the possible ride, and ensur
 
 
 ```json
-export const createRiderRaceDefintion = (client: ConductorClient) =>
+export const createRiderRaceDefinition = (client: ConductorClient) =>
   client.metadataResource.registerTaskDef([
     {
       name: "rider_race",

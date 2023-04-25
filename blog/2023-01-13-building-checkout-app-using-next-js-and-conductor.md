@@ -118,7 +118,7 @@ const createCheckoutWorkflow = () =>
       ],
       hasCredit: [
         terminateTask(
-          "termination_successfull",
+          "termination_successful",
           "COMPLETED",
           "User completed checkout successfully"
         ),

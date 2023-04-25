@@ -59,7 +59,7 @@ For example, the above one will be used to match the webhook event payload where
 <br/>
 
 <Tabs>
- <TabItem value="JSON" lable="JSON Example">
+ <TabItem value="JSON" label="JSON Example">
 
  ```json
     {
