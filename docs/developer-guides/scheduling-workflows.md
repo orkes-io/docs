@@ -99,3 +99,11 @@ Macros are also supported when setting a schedule.
 :::
 
 </details>
+
+## Viewing Executions
+
+Once the schedulers are defined, you can view the executions from the **Scheduler > Executions** page. 
+
+<p align="center"><img src="/content/img/scheduler-executions.jpg" alt="Scheduler Executions View" width="100%" height="auto"></img></p>
+
+The execution page lists the details of all the scheduler executions. It includes the details such as scheduled time, execution time, execution ID, workflow ID, state, reason for failure, and error details. You can view the workflow execution by directly clicking on the workflow ID. You can also filter further information using the available options.
