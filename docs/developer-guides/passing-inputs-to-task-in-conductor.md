@@ -238,5 +238,6 @@ export const faqs = [
     question:
       'When should I use Set Variables (Global Variables)?',
     answer: 'Set Variable can be used when you need to store a variable and use it later across different tasks & workflows.',
-  },
+  },{}
 ];
+
