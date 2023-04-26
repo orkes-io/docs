@@ -204,28 +204,39 @@ So, here the variable `name` is set to `Orkes`.  We can refer to this variable i
 This results in **"variable_name": "Orkes"**.
 </details>
 
-## FAQs
+<FAQStructuredData faqs={faqs} />
 
-**1. Why do I get JSONPath error messages?**
+import FAQStructuredData from '../../src/theme/FAQStructuredData';
 
-JSONPath error messages occur when there is an issue with the JSON expression due to incorrect syntax or an invalid path.
-
-**2. What happens when an incorrect task reference name is provided in the JSON expression?**
-
-The task reference names should be unique in a workflow. You may get errors while executing the workflow if you have provided an incorrect task reference name.
-
-**3. What happens if my JSONPath expression is incorrect?**
-
-Incorrect JSONPath expressions may result in a null value instead of the expected output.
-
-**4. How can I check if the data was passed correctly?**
-
-You can verify if the data was passed correctly by checking the input/output fields of the task.
-
-**5. Can I hard code inputs?**
-
-Yes, you can provide hard-coded inputs. This becomes useful when you have a reusable task with configurable options that can be applied in different workflow contexts.
-
-**6. When should I use Set Variables (Global Variables)?**
-
-Set Variable can be used when you need to store a variable and use it later across different tasks & workflows. 
+export const faqs = [
+  {
+    question: 'Why do I get JSONPath error messages?',
+    answer:
+      "JSONPath error messages occur when there is an issue with the JSON expression due to incorrect syntax or an invalid path.",
+  },
+  {
+    question: 'What happens when an incorrect task reference name is provided in the JSON expression?',
+    answer:
+      'The task reference names should be unique in a workflow. You may get errors while executing the workflow if you have provided an incorrect task reference name.',
+  },
+  {
+    question:
+      'What happens if my JSONPath expression is incorrect?',
+    answer: 'Incorrect JSONPath expressions may result in a null value instead of the expected output.',
+  },
+  {
+    question:
+      'How can I check if the data was passed correctly?',
+    answer: 'You can verify if the data was passed correctly by checking the input/output fields of the task.',
+  },
+  {
+    question:
+      'Can I hard code inputs?',
+    answer: 'Yes, you can provide hard-coded inputs. This becomes useful when you have a reusable task with configurable options that can be applied in different workflow contexts.',
+  },
+  {
+    question:
+      'When should I use Set Variables (Global Variables)?',
+    answer: 'Set Variable can be used when you need to store a variable and use it later across different tasks & workflows.',
+  },
+];
