@@ -398,7 +398,7 @@ In the DO/WHILE below, we have hard coded the iterations to 3 - to allow for a m
 
 By using loops, subworkflows and dynamic tasks, we have taken what was initially a workflow hardcoded for one `minuet_trio` and abstracted it so that it could be used for **any** minuet and trio, as long as the tasks are available to play the different musical phrases.
 
-Assuming the tasks are available, this workflow could play the 3rd movement from Haydn's [Surprise Symphony](https://www.youtube.com/watch?v=JESXMWrwzVQ), or Mozart's [Haffner Symphony](https://www.youtube.com/watch?v=--6Y9sNOgMI) by inputing the musical phrases and the standard repetitions.
+Assuming the tasks are available, this workflow could play the 3rd movement from Haydn's [Surprise Symphony](https://www.youtube.com/watch?v=JESXMWrwzVQ), or Mozart's [Haffner Symphony](https://www.youtube.com/watch?v=--6Y9sNOgMI) by inputting the musical phrases and the standard repetitions.
 
 
 Now for the fun sentence of the blog post that I have been waiting to write:
