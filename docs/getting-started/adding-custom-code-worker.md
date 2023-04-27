@@ -150,5 +150,4 @@ Conductor. All of this without worrying about creating inbound connections or ex
 
 - Passing [inputs into workflow for tasks](/content/developer-guides/passing-inputs-to-task-in-conductor)
 - Passing the [output of one task to the input of another](/content/developer-guides/passing-inputs-to-task-in-conductor)
-- Passing the [output of one task to the input of another](/content/developer-guides/passing-inputs-to-task-in-conductor)
 - [Client SDKs](/content/category/sdks)
