@@ -1,5 +1,5 @@
 ---
-slug: workflows-as-a-distributed-transacional-backend
+slug: workflows-as-a-distributed-transactional-backend
 title: Workflows as a Distributed Transactional Backend
 authors: viren
 tags: [Netflix Conductor, workflow, distributed system, database, app development]
