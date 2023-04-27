@@ -40,7 +40,7 @@ const sidebars = {
                 slug: '/category/getting-started',
                 keywords: ['getting-started', 'installation']
             },
-            items: ['getting-started/first-workflow-application', 'getting-started/running-workflows-from-code', 'getting-started/adding-conditions', 'getting-started/running-an-inline-function', 'getting-started/adding-wait-conditions', 'getting-started/executing-tasks-in-parallel', 'getting-started/run-it-from-your-application'],
+            items: ['getting-started/first-workflow-application', 'getting-started/running-workflows-from-code', 'getting-started/adding-custom-code-worker', 'getting-started/running-an-inline-function', 'getting-started/adding-wait-conditions', 'getting-started/executing-tasks-in-parallel'],
             collapsible: true,
             collapsed: false,
             className: 'leftMenuHeader',

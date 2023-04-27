@@ -36,7 +36,8 @@
     "unist-util-visit": "^2.0.0"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "^2.4.0"
+    "@docusaurus/module-type-aliases": "^2.4.0",
+    "docusaurus": "^1.14.7"
   },
   "browserslist": {
     "production": [
