@@ -83,7 +83,6 @@ Macros are also supported when setting a schedule.
 :::note Notes
 
 * The schedules are all based on the **UTC** timezone. However, you can view the corresponding local browser time.
-* The scheduler supports up to a second granularity - however, this is on a best-effort basis. A minimum of a 30 seconds gap is recommended as the cadence for workflow scheduling.
 * A workflow can be invoked by any number of schedules.
 * Execution history is maintained up to a configured maximum limit (Default of 1000 executions per schedule).
 * When there are a large number of schedules, you must adjust the server capacity to manage the load.
@@ -107,3 +106,60 @@ Once the schedulers are defined, you can view the executions from the **Schedule
 <p align="center"><img src="/content/img/scheduler-executions.jpg" alt="Scheduler Executions View" width="100%" height="auto"></img></p>
 
 The execution page lists the details of all the scheduler executions. It includes the details such as scheduled time, execution time, execution ID, workflow ID, state, reason for failure, and error details. You can view the workflow execution by directly clicking on the workflow ID. You can also filter further information using the available options.
+
+<FAQStructuredData faqs={faqs} />
+
+import FAQStructuredData from '../../src/theme/FAQStructuredData';
+
+export const faqs = [
+  {
+    question: 'How do I set up a crontab to schedule a workflow every 15 minutes?',
+    answer:
+      "You can create a scheduler with the crontab expression (0 */15 * ? * *) to run your workflow every 15 minutes.",
+  },
+  {
+    question: 'How do I set up a crontab to schedule a workflow every 90 minutes?',
+    answer:
+      "You cannot directly set up a scheduler to run every 90 minutes, as the minute field in the crontab expression supports only the values between 0-59. However, you can set up multiple schedulers to achieve the same. You'll have to define two separate schedulers with the following crontab expressions. (0 0-21/3 * * ? *) & (30 1-22/3 * * ? *)",
+  },
+  {
+    question: 'Is there a limitation to how many schedules you can set up at the same scheduler?',
+    answer:
+      "No, there is no limitation on the number of schedules you can set up for the same scheduler.",
+  },
+  {
+    question: 'Is there a limitation to how many schedules you can set up for the same user?',
+    answer:
+      "No, there is no limitation on the number of schedules you can set up for the same user.",
+  },
+  {
+    question: 'Is there a limitation to how many schedules you can set up on the same cluster?',
+    answer:
+      "No, there is no limitation on the number of schedules you can set up for the same cluster.",
+  },
+  {
+    question: 'What is the smallest granularity to set up a schedule?',
+    answer:
+      "The scheduler supports up to a second granularity - however, this is on a best-effort basis. A minimum of a 30 seconds gap is recommended as the cadence for workflow scheduling.",
+  },
+  {
+    question: 'How do I debug a cron schedule?',
+    answer:
+      "You can debug the scheduler from the Scheduler > Executions page. The execution page gives details such as scheduled time, execution time, execution ID, workflow ID, etc. You can view your execution state and find the reasons for failure along with the error details.",
+  },
+  {
+    question: 'How do I search for past executions of a specific schedule?',
+    answer:
+      "Navigate to Scheduler > Executions page. Under the field Schedule Name, provide your scheduler name and click Search. This would list all the past executions of the specific scheduler.",
+  },
+  {
+    question: 'Can I get a summary view of all the schedules that ran in a given time span, like last month, last week, etc.?',
+    answer:
+      "Yes. From the Scheduler > Executions page, you can leverage the filter options Start Time - From & Start Time - To. You can provide the start & end date to view the schedules that ran within the stipulated time period. In addition, there is a field, namely, Lookback (days), where you can provide the number of past days to view the scheduled run over this period.",
+  },
+  {
+    question: 'A scheduler is created for a workflow for version 1. The workflow definition for that version changed later and now has new or updated input parameters. The schedule should not be missing passing in a desired input parameter. Is there a way to find this?',
+    answer:
+      "While creating a scheduler, you have the option to choose the workflow version. If you have selected any workflow version, the scheduler will run only that version. On the other hand, if a version is not chosen, then the latest version runs by default. In this case, if the version were not chosen while creating the scheduler, the scheduler would run the updated workflow version. And If a particular version was selected during the scheduler creation, then you may have to update the scheduler with the latest version. If the input is to be updated, you can edit them too.",
+  },{},
+];
