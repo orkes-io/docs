@@ -5,11 +5,11 @@ authors: doug
 tags: [Netflix Conductor, Orkes, Conductor, orchestration, image processing, fork, dynamic fork, tutorial, 2022]
 ---
 
-In recent posts, we have built several image processing workflows with Conductor.  In our first post, we created an [image processing workflow for one image](/content/blog/image-processing-workflow-with-conductor) - where we provide an image along with the desired output dimensions and format.  The workflow output a link on Amazon S3 to the desired file.
+In recent posts, we have built several image processing workflows with Conductor.  In our first post, we created an [image processing workflow for one image](/content/blog/image-processing-workflow-with-conductor) - where we provide an image along with the desired output dimensions and format.  The workflow output is a link on Amazon S3 to the desired file.
 
 In the 2nd example, we used the FORK System task to create [multiple images](/content/blog/image-processing-multiple-images-forks) in parallel.  The number of images was hardcoded in the workflow - as FORK generates exactly as many paths as are coded into the workflow.
 
-As number of images is hardcoded in the workflow - only 2 images are created.  When it comes to image generation, there is often a need for more images (as new formats become popular) or sizes - as more screens are supported.
+Several images are hardcoded in the workflow, but only 2 images are created.  When it comes to image generation, there is often a need for more images (as new formats become popular) or sizes - as more screens are supported.
 
 Luckily, Conductor supports this flexibility, and has a feature to specify the number of tasks to be created at runtime.  In this post, we'll demonstrate the use of [dynamic forks](/content/reference-docs/operators/dynamic-fork), where the workflow splitting is done at runtime.
 
@@ -21,7 +21,7 @@ Learn how to create a dynamic fork workflow in this post!
 
 ## Workflows with Dynamic forks
 
-In our use case, the number of parallel processes will be determined at runtime, so we'll use the [FORK_JOIN_DYNAMIC](/content/reference-docs/operators/dynamic-fork) to create the parallel tasks on the spot.  When the tasks are completed, the workflow will join back, and continue.
+In our use case, the number of parallel processes will be determined at runtime, so we'll use the [FORK_JOIN_DYNAMIC](/content/reference-docs/operators/dynamic-fork) to create the parallel tasks on the spot.  When the tasks are completed, the workflow will join back and continue.
 
 Here's the workflow (you can also find it on [GitHub](https://github.com/orkes-io/orkesworkers/blob/main/data/workflow/image_multiple_convert_resize.json)):
 
@@ -86,15 +86,15 @@ Here's the workflow (you can also find it on [GitHub](https://github.com/orkes-i
 ### Task definition
 
 As the diagram and JSON above show, we will have 3 tasks: 
-* ```image_multiple_convert_resize_ref```  This task will read the input and based on the inputs - define the dynamic tasks.  It will then send the list of dynamic tasks to the fork:
-* ```image_multiple_convert_resize_fork```  The dynamic fork will take the list of dynamic tasks required, and create the task.
-* ```image_convert_resize_<varied>```  This task will run once inside each dynamic task, and the variable at the end will correspond to a specific image being created.
+* ```image_multiple_convert_resize_ref``` - This task will read the input and define the dynamic tasks based on the inputs.  It will then send the list of dynamic tasks to the fork:
+* ```image_multiple_convert_resize_fork``` - The dynamic fork will take the list of dynamic tasks required and create the task.
+* ```image_convert_resize_<varied>``` - This task will run once inside each dynamic task, and the variable at the end will correspond to a specific image being created.
 
 Let's look at each task in detail:
 
 ### Multiple convert resize task
 
-This task reads in all of the parameters (the image location, and the output formats and sizes), and outputs dynamic tasks and the inputs for each dynamic task.
+This task reads in all the parameters (the image location and the output formats and sizes) and outputs dynamic tasks and the inputs for each dynamic task.
 
 ```
 {
@@ -157,7 +157,7 @@ for (String outputFormat :
 
 ### Resize dynamic fork
 
-The Dynamic fork reads in all of the ```dynamicTasks``` and ```dynamicTasksInput``` from the first task, and spawns out all of the tasks to be run.
+The Dynamic fork reads in all the ```dynamicTasks``` and ```dynamicTasksInput``` from the first task and spawns out all the tasks to be run.
 
 ### image_convert_resize
 
@@ -169,11 +169,11 @@ Each of the tasks is given a unique reference at the end, appending the format, 
 
 ```String taskRefName = String.format("%s_%s_%sx%s_%d",dynamicTaskName, outputFormat, size.width, size.height, i++);```
 
-This task is also present in the [Github repository](https://github.com/orkes-io/orkesworkers/blob/main/data/task/image_convert_resize.json)
+This task is also present in the [GitHub repository](https://github.com/orkes-io/orkesworkers/blob/main/data/task/image_convert_resize.json).
 
 ## Creating the workflow in Conductor
 
-We will need to create 2 tasks (and for simplicity, we can just copy the files from Github):  ```image_multiple_convert_resize.json``` and ```image_convert_resize.json```.  
+We will need to create 2 tasks (and for simplicity, we can just copy the files from GitHub):  ```image_multiple_convert_resize.json``` and ```image_convert_resize.json```.  
 
 You can add these definitions using curl:
 
@@ -187,7 +187,7 @@ curl -X 'POST' \
      ]'
 ```
 
-Nex, we'll create the workflow - again, copying the JSON from Github, and using curl:
+Next, we'll create the workflow - again, copying the JSON from GitHub, and using curl:
 
 ```
 curl -X 'POST' \
@@ -199,7 +199,7 @@ curl -X 'POST' \
 
 ## Running our workflow
 
-Now that the workflow is defined, we are ready to run it.  Let's create 3 different formats, each with 3 different sized images:
+Now that the workflow is defined, we are ready to run it.  Let's create 3 different formats, each with 3 different-sized images:
 
 ```
 {

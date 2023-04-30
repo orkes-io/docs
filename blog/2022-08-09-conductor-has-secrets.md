@@ -7,18 +7,16 @@ image: https://orkes.io/content/img/Top-Secret.jpeg
 ---
 
 
-We are really excited to announce the latest feature to Orkes' cloud hosted version of Netflix Conductor.  It is now no longer a secret - we support the use of secrets in your workflow definitions! Now you can be certain that your secret keys, tokens and values that you use in your workflows are secure!
+We are really excited to announce the latest feature to Orkes' cloud hosted version of Netflix Conductor.  It is now no longer a secret - we support using secrets in your workflow definitions! Now you can be certain that your secret keys, tokens, and values that you use in your workflows are secure!
 
-
-<!--truncate-->
 
 ## What do you mean by secrets?
 
-In many of applications today, interaction with third party applications is common. Typically this will require some form of authentication to gain access.  When you are coding, there is a concept of a local secure store where sensitive values are kept (and thus not shared to GitHub etc.)  This prevents accidental disclosure of your secrets when posting code to GitHub or when sharing your code to other teams.
+In many applications today, interaction with third-party services is common. Typically this will require some form of authentication to gain access.  When you are coding, there is a concept of a local secure store where sensitive values are kept (and thus not shared to GitHub, etc.)  This prevents accidental disclosure of your secrets when posting code to GitHub or when sharing your code with other teams.
 
-Until now, there has been no way to securely use any sensitive value in a Conductor workflow.  Just about every developer has a story of accidentally posting a sensitive value on GitHub. Here's my story of accidentally sharing a sensitive value with a COnductor workflow:
+Until now, there has been no way to use any sensitive value in a Conductor workflow securely. Just like every developer has a story of accidentally posting a sensitive value on GitHub, here's my story of accidentally sharing a sensitive value with a Conductor workflow.
 
-In the [`order fulfillment` codelab](https://orkes.io/content/docs/codelab/orderfulfillment5#adding-a-error-flow), the failure workflow has a Slack token that is unique, and if publicly accessible could be used to SPAM a Slack channel.  When writing the tutorial, I shared the task definition in the docs - *with* the Slack token.
+In the [`order fulfillment` codelab](https://orkes.io/content/docs/codelab/orderfulfillment5#adding-a-error-flow), the failure workflow has a unique Slack token that, if publicly accessible, could be used to spam a Slack channel. When writing the tutorial, I shared the task definition in the docs - *with* the Slack token.
 
 Slack caught this:
 
@@ -28,23 +26,23 @@ Super embarrassing, but no serious consequences (in this instance).
 
 ## Don't let this happen to you!
 
-In Orkes hosted instances of Netflix Conductor, we now feature secrets.  You can save your secret on the Conductor server, and Conductor will *use* the value when required, but will not expose the value in any outputs from the workflow.
+In Orkes-hosted instances of Netflix Conductor, we now feature secrets.  You can save your secret on the Conductor server, and Conductor will *use* the value when required but will not expose the value in any outputs from the workflow.
 
-It is a very easy setup - simply login to your instance of Netflix Conductor at Orkes (or try our [Playground](https://play.orkes.io) for free!).  In the left navigation, click `Secrets`.  This will lead to a table of your secrets (which is probably empty). 
+It is a very easy setup - simply log in to your instance of Netflix Conductor at Orkes (or try our [Playground](https://play.orkes.io) for free!).  In the left navigation, click `Secrets`.  This will lead to a table of your secrets (which is probably empty). 
 
 <p align="center"><img src="/content/img/secrets_dashboard.jpg" alt="the Orkes Cloud Secrets dashboard" width="700" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
-Click `Add Secret`, give it a name, paste in your value, and press save. That's all there is to it.
+Click `Add Secret`, give it a name, paste your value, and press save. That's all there is to it.
 
 ## Using your secret
 
-In Conductor workflows, secrets use a similar format to other variables.  For example, to reference an input variable called `address` you'd use `${workflow.input.address}`.
+In Conductor workflows, secrets use a similar format to other variables. For example, you'd use `${workflow.input.address}` to reference an input variable called `address`.
 
-If you had a secret called `Stripe_api_key`, you reference this value with the variable `${workflow.secrets.Stripe_api_key}`.
+If you had a secret called `Stripe_api_key`, you would reference this value with the variable `${workflow.secrets.Stripe_api_key}`.
 
 ## An example
 
-Accessing GitHubs APIs requires an API token.  In the following HTTP task, I call a GitHub API, and can reference the secret `Doug_github` for the authorization header.
+Accessing GitHub APIs requires an API token.  In the following HTTP task, I call a GitHub API and can reference the secret `Doug_github` for the authorization header.
 
 ```json
 {
@@ -98,10 +96,10 @@ When this workflow is run, other variables are replaced, but the value of the se
 
 ## Conclusion
 
-Secrets have been one of the most requested features for Netflix Conductor when we speak to developers, and for that reason we're excited to announce this launch.  We cannot wait to hear about how this release is making workflow development more secure and opening new avenues of development - now that these values can be securely stored.
+Secrets have been one of the most requested features for Netflix Conductor when we speak to developers, and for that reason, we're excited to announce this launch.  We cannot wait to hear how this release is making workflow development more secure and opening new avenues of development - now that these values can be securely stored.
 
-We've written up everything you need to know about [secrets](/content/developer-guides/secrets-in-conductor) in our docs, and have a couple of YouTube tutorials to further walk you through how Secrets work:
+We've written up everything you need to know about [secrets](/content/developer-guides/secrets-in-conductor) in our docs and have a couple of YouTube tutorials to further walk you through how secrets work.
 
 <p align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/videoseries?list=PLa2RlPLMYyBXRPtTLfVAULeI26jscbhu-" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
 
-Give them a try in the [Orkes Playground](https://play.orkes.io), and we w ould love to hear what you think in our [Slack](https://join.slack.com/t/orkes-conductor/shared_invite/zt-xyxqyseb-YZ3hwwAgHJH97bsrYRnSZg) or [Discord](https://discord.com/invite/P6vVt9xKSQ) communities
+Give them a try in the [Orkes Playground](https://play.orkes.io), and we would love to hear what you think in our [Slack](https://join.slack.com/t/orkes-conductor/shared_invite/zt-xyxqyseb-YZ3hwwAgHJH97bsrYRnSZg) or [Discord](https://discord.com/invite/P6vVt9xKSQ) communities.
