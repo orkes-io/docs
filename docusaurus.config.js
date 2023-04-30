@@ -63,12 +63,6 @@ const config = {
                         [require('./plugin/'), {sync: true}],
                     ],
                 },
-                blog: {
-                    // path: './blog',
-                    showReadingTime: true,
-                    editUrl: 'https://github.com/orkes-io/docs/edit/main/',
-                    blogSidebarCount: 'ALL',
-                },
                 theme: {
                     customCss: require.resolve('./src/css/custom.css'),
                 },
