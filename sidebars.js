@@ -245,6 +245,51 @@ const sidebars = {
             },
             items: [
                 'templates/availability-monitoring-for-http-endpoints',
+                {
+                    type: 'category',
+                    label: 'Other Examples',
+                    link: {
+                        type: 'generated-index',
+                        title: 'Other Examples',
+                        slug: '/category/templates/examples'
+                    },
+                    items: [
+                        {
+                            type: 'doc',
+                            id: 'templates/examples/api-processing-usps-example',
+                            label: 'API Processing',
+                        },
+                        'templates/examples/document-approvals',
+                        {
+                            type: 'doc',
+                            id: 'templates/examples/finance',
+                            label: 'Loan Origination',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'templates/examples/fraud-dispute',
+                            label: 'Handling Fraud Disputes',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'templates/examples/image-processing',
+                            label: 'Image Processing Workflows',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'templates/examples/video-processing',
+                            label: 'Video Processing Workflows',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'templates/examples/sequential-http-tasks',
+                            label: 'Sequential HTTP Tasks',
+                        },
+                    ],
+                    collapsible: true,
+                    collapsed: true,
+                    className: 'leftMenuHeader',
+                },
             ],
             collapsible: true,
             collapsed: true,
@@ -268,6 +313,7 @@ const sidebars = {
                 'faqs/reuse-tasks',
                 'faqs/directed-acyclic-graph',
                 'faqs/workflow-versioning',
+                'faqs/task-lifecycle',
             ],
             collapsible: true,
             collapsed: true,
