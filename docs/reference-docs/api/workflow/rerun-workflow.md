@@ -16,8 +16,17 @@ Reruns a completed workflow from a specific task (ReRunFromTaskId) and optionall
 | workflowId | The unique identifier of the workflow to be rerun. | 
 
 ## API Endpoint
-```
+```json
 POST /workflow/{workflowId}/rerun
+{
+    "reRunFromTaskId": "TASK_ID_TO_REREUN_FROM",
+    "taskInput": {
+        //Extra inputs to the task 
+    },
+    "workflowInput": {
+        //Changes to workflow inputs as part of re-run 
+    }
+}
 ```
 
 ## Client SDK Methods
