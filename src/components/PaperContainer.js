@@ -26,7 +26,7 @@ export const PaperColumnRenderer = ({
   colClassName = "",
 }) => {
   return (
-    <PaperContainer className={`container padding--lg`}>
+    <PaperContainer className={`container`}>
       <div className={`row ${spaceEvenly ? styles.spaceEvenly : ""}`}>
         {columns.map((elem, idx) => (
           <div
@@ -48,10 +48,23 @@ export const InfoPaper = ({
   children,
   titleContainerClass = "",
 }) => (
-  <PaperContainer className={`container padding--lg`}>
+  <PaperContainer className={`container padding--md`}>
     <div className={`row row--no-gutters ${titleContainerClass}`}>
-      <h3>{title}</h3>
+      <h1>{title}</h1>
     </div>
+    <ColumnRenderer columns={[infoColumn1, infoColumn2]} />
+    {children}
+  </PaperContainer>
+);
+
+export const InfoPaperNoTitle = ({
+  title,
+  infoColumn1,
+  infoColumn2,
+  children,
+  titleContainerClass = "",
+}) => (
+  <PaperContainer className={`container padding--md`}>
     <ColumnRenderer columns={[infoColumn1, infoColumn2]} />
     {children}
   </PaperContainer>
@@ -69,7 +82,7 @@ export const DoubleInfoPaper = ({
         <div className="col col--6">
           <div className="container">
             <div className="row padding-left--md">
-              <h4>{title1}</h4>
+              <h1>{title1}</h1>
             </div>
             <div className="row">{infoColumn1}</div>
           </div>
@@ -78,7 +91,7 @@ export const DoubleInfoPaper = ({
         <div className="col col--6">
           <div className="container">
             <div className="row padding-left--md">
-              <h4>{title2}</h4>
+              <h1>{title2}</h1>
             </div>
             <div className="row">{infoColumn2}</div>
           </div>

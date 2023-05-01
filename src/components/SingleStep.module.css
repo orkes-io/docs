@@ -1,36 +1,49 @@
 .singleStep {
   position: relative;
-  background-color: var(--ifm-color-athens-gray);
-  height: 200px;
-  border-radius: 10px;
-  box-shadow: 0 2px 16px rgba(0,0,0,.25);
+  /* background-color: var(--ifm-color-athens-gray); */
+  min-height: 218px;
+  min-width: 155px;
+  margin: 5px;
+  /* overflow: hidden; */
+  border: 2px solid #f4a2ab;
+  border-radius: 12px;
+  /* box-shadow: 0 2px 12px rgba(0,0,0,.25); */
+  padding: 10px;
   color: white;
   transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .singleStep-step-0 {
-  background: linear-gradient(135deg, rgba(131,58,180,1) 0%, rgba(163,60,60,1) 100%);
+  border: 2px solid #baaeff;
 }
 
 .singleStep-step-1 {
-  background: linear-gradient(135deg, rgba(58,130,180,1) 0%, rgba(163,60,162,1) 100%);
+  border: 2px solid #f4a2ab;
 }
 
 .singleStep-step-2 {
-  background: linear-gradient(135deg, rgb(18, 174, 81) 0%, rgb(78, 136, 181) 100%);
+  border: 2px solid #8fd9f9;
 }
 
 .singleStep-step-3 {
-  background: linear-gradient(135deg, rgb(198, 169, 55) 0%, rgb(203, 78, 11) 100%);
+  background: linear-gradient(
+    135deg,
+    rgb(198, 169, 55) 0%,
+    rgb(203, 78, 11) 100%
+  );
 }
 
 .singleStep-step-4 {
-  background: linear-gradient(135deg, rgb(198, 103, 230) 0%, rgb(172, 17, 115) 100%);
+  background: linear-gradient(
+    135deg,
+    rgb(198, 103, 230) 0%,
+    rgb(172, 17, 115) 100%
+  );
 }
 
 .singleStep:hover {
-  transform: scale(1.1);
-  box-shadow: 0 2px 8px rgba(0,0,0,.25);
+  transform: scale(1);
+  box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
 }
 
 .singleStepContent {
@@ -54,11 +67,28 @@ html[data-theme="light"] .singleStepContent {
   color: white;
   font-weight: 700;
   text-align: left;
-  height: 3rem;
+  height: 2rem;
   width: 100%;
 }
 
 html[data-theme="light"] .title,
 html[data-theme="light"] .singleStepContent {
   color: var(--ifm-heading-color, black);
+}
+
+@media screen and (max-width: 996px) {
+  .singleStep {
+    min-height: 150px;
+  }
+}
+
+@media screen and (max-width: 1160px) {
+  h2 {
+    font-size: 20px;
+  }
+
+  .singleStep h2 {
+    font-size: 20px;
+    white-space: nowrap;
+  }
 }

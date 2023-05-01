@@ -8,339 +8,318 @@
 
  Create as many sidebars as you want.
  */
-module.exports = {
 
-    referenceDocSidebar: [
-        'reference-docs',
-        {
-            type: 'category',
-            label: 'Conductor Tasks',
-            collapsed: false,
-            items: [
-                {
-                    type: 'doc',
-                    id: 'reference-docs/system-tasks/json-jq-transform-task',
-                    label: "JSON JQ Transform Task"
-                },
-                {
-                    type: 'doc',
-                    id: 'reference-docs/system-tasks/http-task',
-                    label: "HTTP Task"
-                },
-{
-                    type: 'doc',
-                    id: 'reference-docs/system-tasks/http-poll-task',
-                    label: "HTTP Poll Task"
-                },
-                {
-                    type: 'doc',
-                    id: 'reference-docs/system-tasks/kafka-publish-task',
-                    label: "Kafka Publish Task"
-                },
-                {
-                    type: 'doc',
-                    id: 'reference-docs/system-tasks/event-task',
-                    label: "Event Task"
-                },
-                {
-                    type: 'doc',
-                    id: 'reference-docs/system-tasks/inline-task',
-                    label: "Inline Task"
-                },
-                {
-                    type: 'doc',
-                    id: 'reference-docs/system-tasks/webhook-task',
-                    label: "Webhook Task"
-                },
-                {
-                    type: 'doc',
-                    id: 'reference-docs/system-tasks/business-rule',
-                    label: "Business Rule Task"
-                }
-            ]
-        },
-        {
-            type: 'category',
-            label: 'Operator Tasks',
-            collapsed: false,
-            items: [
-                'reference-docs/switch-task',
-                'reference-docs/do-while-task',
-                'reference-docs/fork-task',
-                'reference-docs/dynamic-fork-task',
-                'reference-docs/dynamic-fork-from-array-task',
-                'reference-docs/join-task',
-                'reference-docs/wait-task',
-                'reference-docs/human-task',
-                'reference-docs/dynamic-task',
-                'reference-docs/set-variable-task',
-                'reference-docs/sub-workflow-task',
-                'reference-docs/start-workflow',
-                'reference-docs/terminate-task',
-    'reference-docs/system-tasks/terminate-workflow'
-            ]
-        }
-    ],
-    mainSidebar: [
+// @ts-check
+
+/** @type {import('@docusaurus/plugin-content-docs').SidebarsConfig} */
+const sidebars = {
+    docs: [
         {
             type: 'doc',
-            id: 'introduction',
-            label: "Introduction to Conductor"
-        }, 
+            label: 'Conductor Documentation',
+            id: 'what-is-orkes-conductor',
+            className: 'leftMenuHeader',
+        },
         {
             type: 'doc',
-            id: 'what-use-cases-can-conductor-solve',
-            label: "What use cases can Conductor solve?​"
+            id: 'get-orkes-conductor',
+            className: 'leftMenuHeader',
+        },
+        {
+            type: 'doc',
+            id: 'core-concepts',
+            className: 'leftMenuHeader',
         },
         {
             type: 'category',
-            label: 'Core Concepts',
+            label: 'Getting Started',
+            link: {
+                type: 'generated-index',
+                title: 'Getting Started',
+                description: 'Learn about the most important Orkes Conductor concepts!',
+                slug: '/category/getting-started',
+                keywords: ['getting-started', 'installation']
+            },
+            items: ['getting-started/first-workflow-application', 'getting-started/running-workflows-from-code', 'getting-started/adding-custom-code-worker', 'getting-started/running-an-inline-function', 'getting-started/adding-wait-conditions', 'getting-started/executing-tasks-in-parallel'],
+            collapsible: true,
             collapsed: false,
-            items: [
-                'getting-started/concepts/workflows',
-                'getting-started/concepts/tasks-and-workers',
-                'getting-started/concepts/operators',
-                {
-                    type: 'doc',
-                    id: 'getting-started/concepts/system-tasks',
-                    label: 'System Task'
-                },
-            ],
+            className: 'leftMenuHeader',
+        },
+        {
+            type: 'doc',
+            id: 'error-handling',
+            className: 'leftMenuHeader',
         },
         {
             type: 'category',
-            label: 'Quickstart',
-            collapsed: true,
+            label: 'Developer Guides',
+            link: {
+                type: 'generated-index',
+                title: 'Developer Guides',
+                description: 'Guides for important Orkes Conductor features!',
+                slug: '/category/developer-guides',
+                keywords: ['guides', 'features', 'developer-guides']
+            },
             items: [
-                'getting-started/playground/using-conductor-playground',
+                'developer-guides/passing-inputs-to-task-in-conductor',
+                'developer-guides/unit-and-regression-tests',
+                'developer-guides/integration-with-cicd',
+                'developer-guides/scheduling-workflows',
                 {
                     type: 'doc',
-                    id: 'getting-started/install/orkes-conductor-community',
-                    label: 'Orkes Community Container'
+                    id: 'developer-guides/webhook-integration',
+                    label: "Webhook Integration"
+                },
+                'developer-guides/write-workflows-using-code',
+                'developer-guides/debugging-workflows',
+                'developer-guides/task-to-domain',
+                'developer-guides/secrets-in-conductor',
+                'developer-guides/scaling-workers',
+                'developer-guides/metrics-and-observability',
+                'developer-guides/monitoring-task-queues',
+            ],
+            collapsible: true,
+            collapsed: true,
+            className: 'leftMenuHeader',
+        },
+        {
+            type: 'category',
+            label: 'Conductor Clients & SDKs',
+            link: {
+                type: 'generated-index',
+                title: 'Conductor Clients & SDKs',
+                slug: '/category/sdks',
+                keywords: ['SDK', 'client', 'java', 'python', 'clojure', 'golang', 'csharp']
+            },
+            items: [
+                {
+                    type: 'doc',
+                    id: 'sdks/java',
+                    label: 'Java',
                 },
                 {
                     type: 'doc',
-                    id: 'getting-started/install/running-locally-docker',
-                    label: 'Orkes Enterprise Container'
+                    id: 'sdks/python',
+                    label: 'Python',
+                },
+                {
+                    type: 'doc',
+                    id: 'sdks/golang',
+                    label: 'Golang',
+                },
+                {
+                    type: 'doc',
+                    id: 'sdks/javascript',
+                    label: 'Javascript',
+                },
+                {
+                    type: 'doc',
+                    id: 'sdks/clojure',
+                    label: 'Clojure',
+                },
+                {
+                    type: 'doc',
+                    id: 'sdks/csharp',
+                    label: 'CSharp',
                 }
             ],
+            collapsible: true,
+            collapsed: true,
+            className: 'leftMenuHeader',
         },
         {
             type: 'category',
-            label: 'Task How-Tos',
-            collapsed: true,
+            label: 'Access Control and Security',
+            link: {
+                type: 'generated-index',
+                title: 'Access Control and Security',
+                slug: '/category/access-control-and-security',
+                keywords: ['access control', 'security']
+            },
             items: [
-                'how-tos/Tasks/creating-tasks',
-                'how-tos/Tasks/task-inputs',
-                'how-tos/Tasks/task-configurations',
-                'how-tos/Tasks/task-timeouts',
-                'how-tos/Tasks/updating-tasks',
-                'how-tos/Tasks/reusing-tasks',
-                'how-tos/Tasks/task-domains',
-                'how-tos/Tasks/monitoring-task-queues',
-                'how-tos/Tasks/task-lifecycle',
-                'how-tos/Tasks/SQS-event-task',
-            ]
-        },
-        {
-            type: 'category',
-            label: 'Workflow How-Tos',
-            collapsed: true,
-            items: [
-                'how-tos/Workflows/create-workflow',
-                'getting-started/run/running-first-workflow',
-                'how-tos/Workers/write-workers',
-                'getting-started/run/running-first-worker',
-                'how-tos/Workflows/starting-workflows',
-                'how-tos/Workflows/view-workflow-executions',
-                'how-tos/Workflows/searching-workflows',
-                'reference-docs/scheduler',
-                'how-tos/Workflows/versioning-workflows',
-                'how-tos/Workflows/create-secrets',
-                'how-tos/Workflows/updating-workflows',
-                'how-tos/Workflows/handling-errors',
-                'how-tos/retries-failures-rate_limits',
-                'how-tos/continuous_integration',
-                {
-                    type: 'doc',
-                    id: 'how-tos/Workflows/debugging-workflows',
-                    label: "Troubleshooting Workflows"
-                },
-                {
-                    type: 'doc',
-                    id: 'how-tos/Workflows/migrate-workflows',
-                    label: "Migrate Workflows"
-                },
-            ]
-        },
-        {
-
-            type: 'category',
-            label: 'SDK list',
-            collapsed: true,
-            items: [
-                {
-                    type: 'doc',
-                    id: 'how-tos/SDKs',
-                    label: 'SDKs'
-                },
-                {
-                    type: 'doc',
-                    id: 'how-tos/sdks/java-sdk/workflow_sdk',
-                    label: "Java Workflow SDK"
-                },
-                {
-                    type: 'doc',
-                    id: 'how-tos/sdks/java-sdk/worker_sdk',
-                    label: "Java Worker SDK"
-                },
-                {
-                    type: 'doc',
-                    id: 'how-tos/sdks/java-sdk/testing_framework',
-                    label: "Java Unit Testing"
-                },
-                {
-                    type: 'doc',
-                    id: 'how-tos/sdks/conductor-python/main/README',
-                    label: "Python"
-                },
-                {
-                    type: 'doc',
-                    id: 'how-tos/sdks/conductor-go/main/README',
-                    label: "Go"
-                },
-                {
-                    type: 'doc',
-                    id: 'how-tos/sdks/conductor-csharp/main/README',
-                    label: "CSharp"
-                },
-                {
-                    type: 'doc',
-                    id: 'how-tos/sdks/conductor-clojure/main/README',
-                    label: "Clojure"
-                }
+                'access-control-and-security/applications',
+                'access-control-and-security/users-and-groups',
+                'access-control-and-security/tags',
             ],
+            collapsible: true,
+            collapsed: true,
+            className: 'leftMenuHeader',
         },
         {
             type: 'category',
-            label: 'Events',
-            collapsed: true,
+            label: 'Reference Docs',
+            link: {
+                type: 'generated-index',
+                title: 'Reference Docs',
+                description: 'Reference documentation for Orkes Conductor',
+                slug: '/category/reference-docs',
+                keywords: ['reference', 'apis', 'operators', 'api', 'tasks', 'system', 'system-tasks']
+            },
             items: [
                 {
-                    type: 'autogenerated',
-                    dirName: 'how-tos/Events', // generate sidebar from the docs folder (or versioned_docs/<version>)
+                    type: 'category',
+                    label: 'Operators',
+                    link: {
+                        type: 'generated-index',
+                        title: 'Operators',
+                        description: 'Reference documentation for Orkes Conductor - Operators',
+                        slug: '/category/reference-docs/operators',
+                        keywords: ['reference', 'apis', 'operators', 'api', 'tasks', 'system', 'system-tasks']
+                    },
+                    items: [
+                        {
+                            type: 'autogenerated',
+                            dirName: 'reference-docs/operators',
+                        }]
+                },
+                {
+                    type: 'category',
+                    label: 'System Tasks',
+                    link: {
+                        type: 'generated-index',
+                        title: 'System Tasks',
+                        description: 'Reference documentation for Orkes Conductor - System Tasks',
+                        slug: '/category/reference-docs/system-tasks',
+                        keywords: ['reference', 'apis', 'operators', 'api', 'tasks', 'system', 'system-tasks']
+                    },
+                    items: [
+                        {
+                            type: 'autogenerated',
+                            dirName: 'reference-docs/system-tasks',
+                        }]
+                },
+                {
+                    type: 'category',
+                    label: 'API Reference',
+                    link: {
+                        type: 'generated-index',
+                        title: 'API Reference',
+                        description: 'Reference documentation for Orkes Conductor - APIs',
+                        slug: '/category/ref-docs/api',
+                        keywords: ['reference', 'apis', 'operators', 'api', 'tasks', 'system', 'system-tasks']
+                    },
+                    items: [
+                        {
+                            type: 'autogenerated',
+                            dirName: 'reference-docs/api',
+                        }]
                 },
             ],
+            collapsible: true,
+            collapsed: true,
+            className: 'leftMenuHeader',
         },
         {
             type: 'category',
-            label: 'Monitoring',
-            collapsed: true,
+            label: 'How To Videos',
+            link: {
+                type: 'generated-index',
+                title: 'How To Videos',
+                slug: '/category/how-to-videos'
+            },
             items: [
+                'how-to-videos/login-to-playground',
+                'how-to-videos/run-workflow',
                 {
-                    type: 'autogenerated',
-                    dirName: 'how-tos/Monitoring', // generate sidebar from the docs folder (or versioned_docs/<version>)
+                    type: 'doc',
+                    id: 'how-to-videos/access-key-and-secret',
+                    label: 'Access Key & Secret',
+                },
+                'how-to-videos/user-management',
+                'how-to-videos/group-management',
+                'how-to-videos/app-management',
+                'how-to-videos/tags',
+                'how-to-videos/secrets',
+            ],
+            collapsible: true,
+            collapsed: true,
+            className: 'leftMenuHeader',
+        },
+        {
+            type: 'category',
+            label: 'Templates',
+            link: {
+                type: 'generated-index',
+                title: 'Templates',
+                slug: '/category/templates'
+            },
+            items: [
+                'templates/availability-monitoring-for-http-endpoints',
+                {
+                    type: 'category',
+                    label: 'Other Examples',
+                    link: {
+                        type: 'generated-index',
+                        title: 'Other Examples',
+                        slug: '/category/templates/examples'
+                    },
+                    items: [
+                        {
+                            type: 'doc',
+                            id: 'templates/examples/api-processing-usps-example',
+                            label: 'API Processing',
+                        },
+                        'templates/examples/document-approvals',
+                        {
+                            type: 'doc',
+                            id: 'templates/examples/finance',
+                            label: 'Loan Origination',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'templates/examples/fraud-dispute',
+                            label: 'Handling Fraud Disputes',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'templates/examples/image-processing',
+                            label: 'Image Processing Workflows',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'templates/examples/video-processing',
+                            label: 'Video Processing Workflows',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'templates/examples/sequential-http-tasks',
+                            label: 'Sequential HTTP Tasks',
+                        },
+                    ],
+                    collapsible: true,
+                    collapsed: true,
+                    className: 'leftMenuHeader',
                 },
             ],
+            collapsible: true,
+            collapsed: true,
+            className: 'leftMenuHeader',
         },
         {
-            type: 'category',
-            label: 'Access Control',
-            collapsed: true,
-            items: [
-                'getting-started/concepts/access-control',
-                'getting-started/concepts/access-control-users',
-                'getting-started/concepts/access-control-applications',
-                'getting-started/concepts/access-control-tags'
-            ],
-        },
-        {
-            type: 'category',
-            label: 'Use Cases',
-            collapsed: true,
-            items: [
-                {
-                    type: 'doc',
-                    id: 'usecases/image_processing/README',
-                    label: 'Image Processing Workflows'
-                },
-                {
-                    type: 'doc',
-                    id: 'usecases/video_processing/README',
-                    label: 'Video Processing Workflows'
-                },
-                {
-                    type: 'doc',
-                    id: 'usecases/US_post_office/README',
-                    label: 'API Processing Workflows'
-                },
-                {
-                    type: 'doc',
-                    id: 'usecases/finance/README',
-                    label: 'Loan Origination'
-                },
-                {
-                    type: 'doc',
-                    id: 'usecases/fraud_dispute/README',
-                    label: 'Fraud Dispute Transaction'
-                },
-                'usecases/document_approvals/README'
-            ]
-        },
-        {
-            type: 'category',
-            label: 'Code Labs',
-            collapsed: true,
-            items: [
-                'codelab/helloworld',
-                'codelab/helloworld2',
-                'codelab/helloworld3',
-                'codelab/helloworld4',
-                'codelab/helloworld5',
-                'codelab/beginner',
-                {
-                    type: 'doc',
-                    id: 'codelab/orderfulfillment',
-                    label: "Order Fulfillment Codelab"
-                },
-                'codelab/sequentialHTTPtasks',
-                'codelab/taskToDomain',
-            ],
+            type: 'doc',
+            id: 'system-integrations',
+            className: 'leftMenuHeader',
         },
         {
             type: 'category',
             label: 'FAQs',
-            collapsed: true,
+            link: {
+                type: 'generated-index',
+                title: 'FAQs',
+                slug: '/category/faqs'
+            },
             items: [
-                'faq',
-                'reference-docs/directed-acyclic-graph'
+                'faqs/conductor-log-level',
+                'faqs/reuse-tasks',
+                'faqs/directed-acyclic-graph',
+                'faqs/workflow-versioning',
+                'faqs/task-lifecycle',
             ],
-        },
-        {
-            type: 'category',
-            label: 'Troubleshooting',
+            collapsible: true,
             collapsed: true,
-            items: [
-                'troubleshooting'
-            ],
+            className: 'leftMenuHeader',
         },
-    ],
-    orderfulfillment: [
-        {
-            type: 'category',
-            label: 'Code Lab: Order Fulfillment',
-            collapsed: true,
-            items: [
-                'codelab/orderfulfillment',
-                'codelab/orderfulfillment2',
-                'codelab/orderfulfillment3',
-                'codelab/orderfulfillment4',
-                'codelab/orderfulfillment5',
-                'codelab/orderfulfillment5_5',
-                'codelab/orderfulfillment6',
-                'codelab/orderfulfillment7',
-                'codelab/orderfulfillment8'
-            ],
-        },
-    ],
+    ]
 };
+
+module.exports = sidebars;
