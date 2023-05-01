@@ -6,7 +6,6 @@ One of the primary reasons for microservice/workflow architectures is that servi
 
 This code lab is based on a [Stack Overflow question](https://stackoverflow.com/questions/71370237/java-design-pattern-orchestration-workflow/71385718#71385718) on the same topic.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/zUIWC6Cj8GQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ### Why HTTP Tasks?
 
@@ -71,7 +70,7 @@ Now, let's begin adding the two tasks to the workflow:
 
 ### get_IP
 
-the get_IP task is an HTTP task (and since it is a System task - it only needs to be defined in the workflow):  The IP address (from the workflow input) is inserted into the URL as ```${workflow.input.ipaddress}```:
+The get_IP task is an HTTP task (and since it is a System task - it only needs to be defined in the workflow):  The IP address (from the workflow input) is inserted into the URL as ```${workflow.input.ipaddress}```:
 
 ```json
 {
@@ -101,7 +100,7 @@ When this task runs, the URI is accessed as a GET request, and the output will b
 
 ```${get_IP_ref.output.response.body.zip}```
 
-We can use this as input in the second task ```get_weather```.
+We can use this as input in the second task, ```get_weather```.
 
 ### get_weather
 
@@ -145,7 +144,7 @@ This API comes back with lots of weather information for the zip code.  We only 
 
 ##  Slow API call
 
-The weather API is a very slow API.  If you look at the ```http_request```, we have added 2 parameters related to timeout.  We have to override the default timeout values to allow this API to respond.  (While slow, it is also free and also requires no API key, so - tradeoffs).
+The weather API is a very slow API.  If you look at the ```http_request```, we have added 2 parameters related to timeout.  We have to override the default timeout values to allow this API to respond.  (While slow, it is free and also requires no API key, so - tradeoffs).
 
 ### HTTP_Task retries
 

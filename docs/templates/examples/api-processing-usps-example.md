@@ -5,7 +5,7 @@ The US Post Office has several APIs to simplify shipping. Let's look at how you 
 
 ## Workflow to Check Address - [check_address](https://github.com/conductor-sdk/conductor-examples/blob/main/US_post_office/check_address.json)
 
-The USPS can verify 160M addresses in the USA.  This workflow either respond with the USPS version of the address (often in all CAPS), or with an error that the address was not found.
+The USPS can verify 160M addresses in the USA.  This workflow either responds with the USPS version of the address (often in all CAPS), or with an error that the address was not found.
 
 
 | [See it in Orkes Playground](https://play.orkes.io/workflowDef/check_address/1) |
@@ -57,4 +57,4 @@ Sample input:
 }
 ```
 
-Run this workflow multiple times inside a fork to obtain mailing rates for different services (E.g. compare ground vs. priority vs. express by calling this workflow asynchronously 3 times).
+Run this workflow multiple times inside a fork to obtain mailing rates for different services (E.g., compare ground vs. priority vs. express by calling this workflow asynchronously 3 times).

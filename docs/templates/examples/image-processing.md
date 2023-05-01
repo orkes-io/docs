@@ -23,8 +23,8 @@ The [image_multiple_convert_resize.json](https://github.com/conductor-sdk/conduc
 
 The workflow takes in 3 inputs:
 
-* fileLocation: A http location to an image file
-* outputFormats: An array of image types (E.g. jpg, png, webp)
+* fileLocation: A HTTP location to an image file
+* outputFormats: An array of image types (E.g., jpg, png, & webp)
 * outputSizes: An array of sizes. Each size object has a width and height property
 
 For example:
@@ -55,7 +55,7 @@ For example:
 }
 ```
 
-This will result in 9 output images, i.e; 3 different sizes with 3 formats each.
+This will result in 9 output images, i.e., three different sizes with three formats each.
 
 ### Visual Representation
 <img src="https://raw.githubusercontent.com/conductor-sdk/conductor-examples/main/image_processing/images/resize.jpg"
@@ -119,14 +119,14 @@ sepia
 
 | Key                     | Value type         | Description                                                                                                                                                                                                                                                              |
 |-------------------------|--------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| sepiaIntensityThreshold | Integer (E.g. 80 ) | Applies a special effect to the image, similar to the effect achieved in a photo darkroom by sepia toning. Threshold ranges from 0 to QuantumRange and is a measure of the extent of the sepia toning. A threshold of 80 is a good starting point for a reasonable tone. |
+| sepiaIntensityThreshold | Integer (E.g., 80 ) | Applies a special effect to the image, similar to the effect achieved in a photo darkroom by sepia toning. Threshold ranges from 0 to QuantumRange and is a measure of the extent of the sepia toning. A threshold of 80 is a good starting point for a reasonable tone. |
 
 
 vibrant
 
 | Key      | Value type        | Description                                                                                       |
 |----------|-------------------|---------------------------------------------------------------------------------------------------|
-| vibrance | Integer (E.g. 4 ) | Positive values make the image more vibrant, whereas negative values make the image less vibrant. |
+| vibrance | Integer (E.g., 4 ) | Positive values make the image more vibrant, whereas negative values make the image less vibrant. |
 
 
 watermark
@@ -134,7 +134,7 @@ watermark
 | Key                   |Value type             | Description                                                                                                                                              |
 |-----------------------|-----------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------|
 | watermarkFileLocation | String (url)          | A logo file that will be applied as a watermark on top of the file that is specified by the fileLocation parameter.                                      |
-| gravity               | String (E.g southeast) | Specifies the location to apply the logo/watermark image. Allowed values: NorthWest, North, NorthEast, West, Center, East, SouthWest, South & SouthEast. |
+| gravity               | String (E.g., southeast) | Specifies the location to apply the logo/watermark image. Allowed values: NorthWest, North, NorthEast, West, Center, East, SouthWest, South & SouthEast. |
 
 
 
@@ -217,7 +217,7 @@ Image on applying sepia recipe
 <img src="https://raw.githubusercontent.com/conductor-sdk/conductor-examples/main/image_processing/images/sepia_tone.jpeg"
 alt="sepia result" width="600" style={{paddingBottom: 20}} />
 
-Image on apllying vibrant recipe
+Image on applying vibrant recipe
 
 <img src="https://raw.githubusercontent.com/conductor-sdk/conductor-examples/main/image_processing/images/vibrant_effect.jpeg"
 alt="vibrant image" width="600" style={{paddingBottom: 20}} />

@@ -1,4 +1,4 @@
-# What is the Task lifecycle?
+# What is Task lifecycle?
 
 ## Task state transitions
 The figure below depicts the state transitions that a task can go through within a workflow execution.

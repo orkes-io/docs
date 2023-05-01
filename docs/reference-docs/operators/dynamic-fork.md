@@ -25,7 +25,7 @@ arrayItems.stream().parallel().forEach(item -> process(item));
 
 Here, each array item is passed to a method called process. Conductor allows us to do the same and covers several types of processes.
 
-1. Simple Task - When we need to run a simple custom worker task.
+1. [Simple Task](/content/reference-docs/operators/worker-task) - When we need to run a simple custom worker task.
 2. [HTTP Task](/content/reference-docs/system-tasks/http) - When we need to run the system HTTP workers.
 3. [Sub Workflows](./sub-workflow) - Use this when we want to run more than one task or a series of steps that can be a full-fledged complex flow.
 4. Other Conductor Task Types - This can also be used for other task types such as EVENT, WAIT, etc.

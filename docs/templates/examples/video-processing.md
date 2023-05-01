@@ -14,7 +14,7 @@ You can find two example invocations of the workflow that do slightly different 
 ## Setting up Workers
 The workers that power these workflows can be found in the [orkesworkers](https://github.com/orkes-io/orkesworkers) GitHub repository.  There are 2 workers used here:
 
-1. video_recipes_prefork: This worker takes the input parameters and creates all the parameters required for the dynamic forks, i.e; the number of forks to be created and the parameters for each of the forks.
+1. video_recipes_prefork: This worker takes the input parameters and creates all the parameters required for the dynamic forks, i.e., the number of forks to be created and the parameters for each of the forks.
 2. video_recipes: This worker takes the inputs and (in the 2 examples below) either transcodes or adds a watermark to the video.
 
 :::note
@@ -30,7 +30,7 @@ The video_recipes.json workflow (see it live on [Orkes Playground](https://play.
 You need to provide the following input parameters:
 
 * fileLocation: A http location to a video file
-* recipeInfos: An array of recipe names (‘transcode’, ‘watermark’ etc..) and their corresponding parameters, i.e; recipeParmaters
+* recipeInfos: An array of recipe names (‘transcode’, ‘watermark’ etc..) and their corresponding parameters, i.e., recipeParmaters
 * outputSizes: An array of sizes. Each size object has a width and height property
 
 Here is an example of an input payload to transcode an mp4 file into 4 different formats and encodes
