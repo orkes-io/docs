@@ -77,6 +77,7 @@ const sidebars = {
                 'developer-guides/scaling-workers',
                 'developer-guides/metrics-and-observability',
                 'developer-guides/monitoring-task-queues',
+                'developer-guides/task-and-workflow-status-in-conductor',
             ],
             collapsible: true,
             collapsed: true,
