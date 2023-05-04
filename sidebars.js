@@ -314,6 +314,7 @@ const sidebars = {
                 'faqs/directed-acyclic-graph',
                 'faqs/workflow-versioning',
                 'faqs/task-lifecycle',
+                'faqs/connecting-to-azure-service-bus',
             ],
             collapsible: true,
             collapsed: true,
