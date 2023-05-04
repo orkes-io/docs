@@ -246,6 +246,7 @@ const sidebars = {
             },
             items: [
                 'templates/availability-monitoring-for-http-endpoints',
+                'templates/video-processing-workflows',
                 {
                     type: 'category',
                     label: 'Other Examples',
