@@ -78,6 +78,7 @@ const sidebars = {
                 'developer-guides/metrics-and-observability',
                 'developer-guides/monitoring-task-queues',
                 'developer-guides/task-and-workflow-status-in-conductor',
+                'developer-guides/pausing-for-external-signals',
             ],
             collapsible: true,
             collapsed: true,
