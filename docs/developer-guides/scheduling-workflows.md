@@ -161,5 +161,5 @@ export const faqs = [
     question: 'A scheduler is created for a workflow for version 1. The workflow definition for that version changed later and now has new or updated input parameters. The schedule should not be missing passing in a desired input parameter. Is there a way to find this?',
     answer:
       "While creating a scheduler, you have the option to choose the workflow version. If you have selected any workflow version, the scheduler will run only that version. On the other hand, if a version is not chosen, then the latest version runs by default. In this case, if the version were not chosen while creating the scheduler, the scheduler would run the updated workflow version. And If a particular version was selected during the scheduler creation, then you may have to update the scheduler with the latest version. If the input is to be updated, you can edit them too.",
-  },{},
+  },
 ];
