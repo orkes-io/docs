@@ -78,9 +78,6 @@ curl -s -X "POST" "https://play.orkes.io/api/workflow/super_weather" \
    -d '{"zip": "90210"}'
    ```
 
-### Token Expiry​
-Currently, these generated tokens do not have an expiry, but this is subject to change, and it is expected that in the future, these tokens will expire after a period of time.
-
 ## Example
 
 <details><summary>Example Application Setup</summary>
