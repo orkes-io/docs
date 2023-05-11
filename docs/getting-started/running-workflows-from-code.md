@@ -65,20 +65,7 @@ log.info("Workflow id: ", workflowId)
 </TabItem>
 <TabItem value="CSharp" label="CSharp">
 
-```java
-var request = new StartWorkflowRequest(
-    name: "<name of your workflow>",
-    version: 1
-);
-request.Input = new Dictionary<string, object>()
-{
-    {"amount", 100},
-    {"account", "account-id"}
-};
-var workflowId = workflowClient.StartWorkflow(
-    startWorkflowRequest
-);
-log.info($"Workflow id: {workflowId}");
+```csharp dynamic https://github.com/conductor-sdk/csharp-sdk-examples/blob/main/Examples/Service/WorkflowService.cs section=1 ../Service/WorkflowService.cs
 ```
 
 </TabItem>

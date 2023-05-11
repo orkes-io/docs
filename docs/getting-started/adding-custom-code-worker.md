@@ -99,7 +99,7 @@ View our documentation on [Conductor Clients & SDKs](/content/category/sdks) lis
 </TabItem>
 <TabItem value="CSharp" label="CSharp">
 
-```csharp dynamic https://github.com/conductor-sdk/csharp-sdk-examples/blob/clean-examples/Examples/Worker/Workers.cs section=1 ../Worker/Workers.cs
+```csharp dynamic https://github.com/conductor-sdk/csharp-sdk-examples/blob/main/Examples/Worker/Workers.cs section=1 ../Worker/Workers.cs
 ```
 
 </TabItem>
