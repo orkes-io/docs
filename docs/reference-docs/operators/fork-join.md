@@ -222,3 +222,16 @@ Here is what the output of notification_join will look like. The output is a map
 ```
 </p>
 </details>
+
+
+<FAQStructuredData faqs={faqs} />
+
+import FAQStructuredData from '@site/src/theme/FAQStructuredData';
+
+export const faqs = [
+  {
+    question: 'How can we handle the failure of a sub-workflow within a fork-join task so that it does not cause the remaining sub-workflows to fail?',
+    answer:
+      'You can achieve this by marking all the sub-workflows within the fork as “optional: true”. By default, this attribute is set to "false" during workflow creation, and you need to manually modify it for all sub-workflows prior to execution.',
+  },
+];
