@@ -99,17 +99,7 @@ View our documentation on [Conductor Clients & SDKs](/content/category/sdks) lis
 </TabItem>
 <TabItem value="CSharp" label="CSharp">
 
-```java
-    // @TODO:Gustavo
-    @WorkerTask("fraud-check")
-    public String checkForFraud(@InputParam("amount") BigDecimal amount, @InputParam("accountId") String accountId) {
-        boolean isFraud = fraudService.isFraudulentTxn(accountId, amount);
-        if(isFraud) {
-            return "This transaction cannot be processed as its flagged for review.";
-        }
-        return "Deposit of " + amount + " has processed successfully";
-    }
-
+```csharp dynamic https://github.com/conductor-sdk/csharp-sdk-examples/blob/main/Examples/Worker/Workers.cs section=1 ../Worker/Workers.cs
 ```
 
 </TabItem>
