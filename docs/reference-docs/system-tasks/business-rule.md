@@ -124,9 +124,10 @@ Consider the below rule file for the input.
 
 productType |   productCategory |   purchaseDate            |   itemCount   |   price   |   Discount    |   ShippingCharges
 electronics |       cellphone   |   <=2022-04-22            |       8       |   != 100  |       11%     |       5$
-electronics |      laptop       |   > 2022-mar-12           |       >4      |   <1000.2 |       5%      |       4$
-beauty      |      powder       |   = 2022-01-01            |       >10     |   >=10.3  |       15%     |       2$
-food        |      pizza        |   < 2022-03-22 12:20:22   |       15      |   >300    |       7%      |       10$
+electronics |       cellphone   |   <=2022-04-22            |       8       |   < 100   |       13%     |       15$
+electronics |      laptop       |   > 2022-mar-12           |       >10     |   <10.2   |       5%      |       4$
+beauty      |      powder       |   = 2022-01-01            |       >15     |   >=10.3  |       15%     |       2$
+food        |      pizza        |   < 2022-03-22 12:20:22   |       25      |   >300    |       7%      |       10$
 
 ```
 And following workflow definition.
@@ -178,3 +179,40 @@ Then it will match the first row and generate output as:
 ```
 </p>
 </details>
+ 
+ ## More Examples
+ If the workflow is triggered using input as: 
+```json
+    {
+        "productType": "electronics",
+        "productCategory": "laptop",
+        "price": "10.0",
+        "itemCount": "12",
+        "purchaseDate": "2022-04-22"
+    }
+```
+ # In order to compare double values we should put suffix **.0** if it is not there. 
+Then it will match the third row and generate output as: 
+```json
+    {
+      "Discount" : "5%",
+      "ShippingCharges" : "4$"
+    }
+```
+ When we use **FIRE_ALL** as **executionStrategy**, with the workflow input as:
+ ```json
+    {
+        "productType": "electronics",
+        "productCategory": "cellphone",
+        "price": "5",
+        "itemCount": "8",
+        "purchaseDate": "2022-04-22"
+    }
+```
+Then it will match the second row since it also matches the criteria and generate output as: 
+```json
+    {
+      "Discount" : "13%",
+      "ShippingCharges" : "5$"
+    }
+``` 
