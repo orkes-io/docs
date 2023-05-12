@@ -71,6 +71,7 @@ const sidebars = {
                     label: "Webhook Integration"
                 },
                 'developer-guides/write-workflows-using-code',
+                'developer-guides/orchestrating-human-tasks',
                 'developer-guides/debugging-workflows',
                 'developer-guides/task-to-domain',
                 'developer-guides/secrets-in-conductor',
