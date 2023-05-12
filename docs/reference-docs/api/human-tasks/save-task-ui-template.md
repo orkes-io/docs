@@ -1,28 +1,24 @@
 ---
-sidebar_position: 13
+sidebar_position: 14
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Delete Human Task Template
+# Save Human Task Template
 
-Used to delete a human task template by id. Use this API to delete a task template specification stored in Conductor
-
-:::danger Deleting Templates
-If the template is used by a workflow, it would fail to render
-:::
+Used to save human task templates stored in Conductor.
 
 ## Input Payload
 
-| Attribute | Description                                                   |
-|-----------|---------------------------------------------------------------| 
-| id        | The *id* of the human task template which you want to delete. | 
+| Attribute       | Description         |
+|-----------------|---------------------| 
+| Request Payload | UI template payload | 
 
 ## API Endpoint 
 
 ```
-DELETE human/template/{id}
+POST human/template
 ```
 
 ## Client SDK Methods
