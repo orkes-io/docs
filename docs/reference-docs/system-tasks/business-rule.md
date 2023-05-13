@@ -15,6 +15,7 @@ Business rule task helps evaluate business rules compiled in spreadsheets. Condu
 ## Definitions
 
  ```json
+
     {
       "name": "execute_rule",
       "taskReferenceName": "execute_rule_ref",
@@ -31,24 +32,25 @@ Business rule task helps evaluate business rules compiled in spreadsheets. Condu
       },
       "type": "BUSINESS_RULE"
     }
+
 ```
 
 ### Input Parameters
 
-| Attribute | Description |
-| --------- | ----------- |
-| ruleFileLocation | Specify the URL location of the rule file to be evaluated. The rule file can be available on the internet (Stored in AWS S3 or Azure Blob). <br/> Sample URL for each case; <ul><li>On the web:  ```https://example.com/rules.csv```</li><li>AWS S3 - ```https://business-rules.s3.amazonaws.com/rules.xlsx```</li><li>Azure blob - ```https://business-rules.blob.core.windows.net/rules/Date.xlsx```</li></ul> |
-| executionStrategy | Specify the execution strategy to be followed. Currently, Conductor supports the following strategies: <br/><ul><li>**FIRE_FIRST** - The first rule which gets matched will be used to generate the output.</li><li>**FIRE_ALL** - All the rule that matches will be used to generate the output.</li></ul> |
-| inputColumns | Specifies the input to the rule file. It can be populated using previous task/workflow input/static input. | 
-| outputColumns | Specifies the list of columns that will be present in the task output. The columns that are not present here are considered input columns whose values should be specified. | 
+| Attribute         | Description                                                                                                                                                                                                                                                                                                                                                                                                      |
+|-------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ruleFileLocation  | Specify the URL location of the rule file to be evaluated. The rule file can be available on the internet (Stored in AWS S3 or Azure Blob). <br/> Sample URL for each case; <ul><li>On the web:  ```https://example.com/rules.csv```</li><li>AWS S3 - ```https://business-rules.s3.amazonaws.com/rules.xlsx```</li><li>Azure blob - ```https://business-rules.blob.core.windows.net/rules/Date.xlsx```</li></ul> |
+| executionStrategy | Specify the execution strategy to be followed. Currently, Conductor supports the following strategies: <br/><ul><li>**FIRE_FIRST** - The first rule which gets matched will be used to generate the output.</li><li>**FIRE_ALL** - All the rule that matches will be used to generate the output.</li></ul>                                                                                                      |
+| inputColumns      | Specifies the input to the rule file. It can be populated using previous task/workflow input/static input.                                                                                                                                                                                                                                                                                                       | 
+| outputColumns     | Specifies the list of columns that will be present in the task output. The columns that are not present here are considered input columns whose values should be specified.                                                                                                                                                                                                                                      | 
 
 #### Execution Strategy
 To get an understanding of the **execution Strategy**, consider the below table: 
 
-| Name | Price |
-| --------- | ----------- |
-|   Phone   |   10$     |
-|   Phone   |   11$     |
+| Name       | Price        |
+|------------|--------------|
+| Phone      | 10$          |
+| Phone      | 11$          |
 
 Let’s assume the input Name is Phone. If the executionStrategy is **FIRE_FIRST**, then the output price will be $10. On the other hand, if the executionStrategy is **FIRE_ALL**, then the output price will be $11, as the second rule will overwrite the value of the price.
 
@@ -93,6 +95,7 @@ Business rule task supports the following operators:
  <TabItem value="JSON" label="JSON Example">
 
 ```json
+
     {
       "name": "execute_rule",
       "taskReferenceName": "execute_rule_ref",
@@ -109,6 +112,7 @@ Business rule task supports the following operators:
       },
       "type": "BUSINESS_RULE"
     }
+
 ```
 
 </TabItem>
@@ -130,8 +134,11 @@ beauty      |      powder       |   = 2022-01-01            |       >15     |   
 food        |      pizza        |   < 2022-03-22 12:20:22   |       25      |   >300    |       7%      |       10$
 
 ```
+
 And following workflow definition.
+
 ```json
+
     {
       "name": "TestRule",
       "tasks": [
@@ -158,10 +165,13 @@ And following workflow definition.
         }
       ]
     }
+
 ```
 
 If the workflow is triggered using input as: 
+
 ```json
+
     {
         "productType": "electronics",
         "productCategory": "cellphone",
@@ -169,20 +179,28 @@ If the workflow is triggered using input as:
         "itemCount": "8",
         "purchaseDate": "2022-04-22"
     }
+
 ```
+
 Then it will match the first row and generate output as: 
+
 ```json
+
     {
       "Discount" : "11%",
       "ShippingCharges" : "5$"
     }
+
 ```
+
 </p>
 </details>
  
  ## More Examples
  If the workflow is triggered using input as: 
+
 ```json
+
     {
         "productType": "electronics",
         "productCategory": "laptop",
@@ -190,7 +208,9 @@ Then it will match the first row and generate output as:
         "itemCount": "12",
         "purchaseDate": "2022-04-22"
     }
+
 ```
+
  # In order to compare double values we should put suffix **.0** if it is not there. 
 Then it will match the third row and generate output as: 
 ```json
