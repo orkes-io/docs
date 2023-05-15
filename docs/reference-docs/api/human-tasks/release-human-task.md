@@ -10,8 +10,7 @@ Used for releasing a previously claimed task. If the user is unable to complete 
 release the task so that a new claimant can claim this task.
 
 :::note 
-The invoking user should be a task owner or an ADMIN or a claimant to the task. 
-When using application credentials, the application should be an owner of the task in the workflow definition.
+The invoking user should be a task owner, an ADMIN, or a claimant to the task. When using application credentials, the application should be the owner of the task in the workflow definition.
 :::
 
 ## Input Payload

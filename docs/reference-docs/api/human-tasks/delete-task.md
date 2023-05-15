@@ -12,7 +12,7 @@ normal conditions, this API wouldn't have to be used.
 
 :::note
 The invoking user should be a task owner or an ADMIN to the task. When using application credentials, 
-the application should be an owner of the task in the workflow definition.
+the application should be the owner of the task in the workflow definition.
 :::
 
 :::warning Note

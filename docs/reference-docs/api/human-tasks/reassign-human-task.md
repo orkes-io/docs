@@ -11,7 +11,7 @@ longer valid and the task needs to be reassigned so that it can proceed further.
 
 :::note 
 The invoking user should be a task owner or an ADMIN to the task. When using application credentials, the
-application should be an owner of the task in the workflow definition.
+application should be the owner of the task in the workflow definition.
 :::
 
 ## Input Payload
@@ -19,7 +19,7 @@ application should be an owner of the task in the workflow definition.
 | Attribute    | Description                                                                                                                  |
 |--------------|------------------------------------------------------------------------------------------------------------------------------| 
 | taskId       | The *taskId* of the human task which you want to retrieve.                                                                   | 
-| Request Body | New assignment policy with corresponding values. Supported policies are `free_for_all`, `least_busy_group_member`, `fixed`   | 
+| Request Body | New assignment policy with corresponding values. Supported policies are `free_for_all`, `least_busy_group_member`, and `fixed`   | 
 
 ## API Endpoint
 
