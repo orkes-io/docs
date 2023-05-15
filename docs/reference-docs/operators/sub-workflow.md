@@ -119,30 +119,3 @@ If you wanted to add this functionality to another workflow, it would be possibl
 This makes our workflow more maintainable and will reflect all future changes to the **postage_rate** workflow.
 </p>
 </details>
-
-<FAQStructuredData faqs={faqs} />
-
-import FAQStructuredData from '@site/src/theme/FAQStructuredData';
-
-export const faqs = [
-  {
-    question: 'How do we retry a sub-workflow from a specific task?',
-    answer: (
-      <div>
-        <p>
-          You can use the following API to retry a sub-workflow from a specific task. From the Conductor UI, you check the task level start time to verify that the preceding tasks are not re-run. Additionally, you can insert a WAIT task before the desired re-run starting point and confirm that it does not transition to the state of that WAIT task.
-        </p>
-        <pre>
-          <code>
-            {`curl -X POST 'https://<conductor_server_dns>/api/workflow/<workflow_id>/rerun' \\
-  -H 'Content-Type: application/json' \\
-  -d '{
-    "reRunFromTaskId": "<task_execution_id>"
-  }' \\
-  -H 'x-authorization: <auth_token>'`}
-          </code>
-        </pre>
-      </div>
-    ),
-  },
-];
