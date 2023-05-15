@@ -7,11 +7,10 @@ import TabItem from '@theme/TabItem';
 
 # Search Human Tasks
 
-Used to retrieve a list of human tasks by search criteria. This API is similar to [List Human Tasks](/content/reference-docs/api/human-tasks/get-task-list).
+Used to retrieve a list of human tasks by search criteria. This API is similar to the API [List Human Tasks](/content/reference-docs/api/human-tasks/get-task-list).
 
 :::note
-The invoking user should be a task owner or an ADMIN or an assignee to the tasks returned. 
-When using application credentials, the application should be an owner of the task in the workflow definition.
+The invoking user should be a task owner, an ADMIN, or an assignee to the tasks returned. When using application credentials, the application should be the owner of the task in the workflow definition.
 :::
 
 ## Input Payload
@@ -20,7 +19,7 @@ When using application credentials, the application should be an owner of the ta
 |--------------------|----------------------------------------------------------------------------------------------------| 
 | queryId            | Not used/supported at this time                                                                    |
 | start              | Marks the start of the records list                                                                |
-| size               | Marks the number of the records from the start that should be returned                             |
+| size               | Marks the number of records from the beginning that should be returned                             |
 | freeText           | Additional criteria of a free text - this can include input/output values and other indexed fields |
 | query              | Query for searching the tasks                                                                      |
 | jsonQuery          | JSON query for searching the tasks                                                                 |

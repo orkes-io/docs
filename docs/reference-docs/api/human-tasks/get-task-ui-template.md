@@ -7,7 +7,7 @@ import TabItem from '@theme/TabItem';
 
 # Get Human Task Template
 
-Used to retrieve a human task template by id. Use this API to retrieve a task template specification stored in Conductor
+Used to retrieve a human task template by id. Use this API to retrieve a task template specification stored in Conductor.
 
 ## Input Payload
 

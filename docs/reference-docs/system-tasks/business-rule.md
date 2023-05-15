@@ -120,7 +120,6 @@ Business rule task supports the following operators:
 
 
 <details><summary>Sample Workflow</summary>
-<p>
 
 Consider the below rule file for the input.
 
@@ -192,11 +191,8 @@ Then it will match the first row and generate output as:
     }
 
 ```
+**Another Case**
 
-</p>
-</details>
- 
- ## More Examples
  If the workflow is triggered using input as: 
 
 ```json
@@ -211,8 +207,8 @@ Then it will match the first row and generate output as:
 
 ```
 
- # In order to compare double values we should put suffix **.0** if it is not there. 
-Then it will match the third row and generate output as: 
+In order to compare double values, we should put the suffix **.0**. If it is not there, then it will match the third row and generate output as: 
+
 ```json
     {
       "Discount" : "5%",
@@ -229,10 +225,11 @@ Then it will match the third row and generate output as:
         "purchaseDate": "2022-04-22"
     }
 ```
-Then it will match the second row since it also matches the criteria and generate output as: 
+Then it will match the second row since it also matches the criteria and generates output as: 
 ```json
     {
       "Discount" : "13%",
       "ShippingCharges" : "5$"
     }
 ``` 
+</details>
