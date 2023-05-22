@@ -204,6 +204,50 @@ So, here the variable `name` is set to `Orkes`.  We can refer to this variable i
 This results in **"variable_name": "Orkes"**.
 </details>
 
+## Through Task Input Templates
+
+While creating task definitions, you can define the task input templates. These values will be supplied to each execution of the task and can be overridden within the workflow. It means that the parameters are included in the task definition, and whenever the task is used in a workflow, these parameters would be included by default in the workflow.
+
+While [creating a task definition](/content/reference-docs/api/metadata/creating-task-definitions), you can define the task input template as follows:
+
+Using UI forms:
+
+<p align="center"><img src="/content/img/task-input-template-in-task-definition.png" alt="Task input template in task definition" width="70%"
+                       height="auto"/></p>
+
+Using JSON code:
+
+```json
+{
+ "name": "test-task",
+ "description": "Edit or extend this sample task. Set the task name to get started",
+ "retryCount": 3,
+ "timeoutSeconds": 3600,
+ "inputKeys": [],
+ "outputKeys": [],
+ "inputTemplate": {
+   "key": "value"
+ },
+ "ownerEmail": "name@example.com"
+}
+```
+
+Adding this task to the workflow definition would already include the parameters supplied via the input task template.
+
+<p align="center"><img src="/content/img/workflow-definition-with-task-input-template.png" alt="Workflow definition with task input template supplied already" width="90%"
+                       height="auto"/></p>
+
+These values can also be overridden by supplying input parameters to the task in the workflow definition.
+
+<p align="center"><img src="/content/img/overriding-values.png" alt="Overriding task input template parameters from Workflow definition" width="90%"
+                       height="auto"/></p>
+
+Here, initially, some **“key”** were supplied through input templates. Now, when the same **“key”** was provided as input parameters in the workflow definition, the values got overridden. 
+
+:::note
+You cannot view the input templates in the workflow definition JSON code as they are part of only task definitions. But, on clicking the task, you can view the input templates supplied from the UI. 
+:::
+
 <FAQStructuredData faqs={faqs} />
 
 import FAQStructuredData from '../../src/theme/FAQStructuredData';
