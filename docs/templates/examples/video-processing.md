@@ -99,8 +99,7 @@ Here is an example of an input payload to transcode an mp4 file into 4 different
 
 You can view the [video_recipes](https://play.orkes.io/workflowDef/video_recipes) workflow in Playground.
 
-![screenshot of the workflow](https://raw.githubusercontent.com/conductor-sdk/conductor-examples/main/video_processing/images/video_recipes.jpg)
-
+<p align="center"><img src="/content/img/video-processing-example.png" alt="Video Processing Workflow" width="40%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
 ### Invoking a Workflow
 
@@ -108,7 +107,7 @@ The workflow can be invoked using the following ways:
 
 UI: There is a _Run Workflow_ option in the Conductor UI to invoke a workflow and see the results.
 
-![run workflow screenshot](https://raw.githubusercontent.com/conductor-sdk/conductor-examples/main/video_processing/images/run_video_recipes.jpg)
+<p align="center"><img src="/content/img/run-workflow-from-ui-video-recipes.png" alt="Run Workflow" width="70%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
 ### Workflow Executions
 
@@ -116,7 +115,7 @@ You can view a specific workflow invocation using the workflow invocation ID tha
 
 You can also view a workflow's execution from the workflow execution console. In the execution view, you have multiple tabs showing the workflow name, workflow ID, start/end time, status of the workflow, etc.
 
-![screenshot of workflow search](https://raw.githubusercontent.com/conductor-sdk/conductor-examples/main/video_processing/images/workflow_execution.jpg)
+<p align="center"><img src="/content/img/workflow-execution-page.png" alt="Workflow Execution Search" width="100%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
 
 ### Invocation path
