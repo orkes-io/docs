@@ -20,7 +20,8 @@ There are 2 HTTP Tasks in our code:
 
 The second task can only run with input provided by the first task.
 
-![workflow diagram](img/http_workflow.png)
+<p align="center"><img src="/content/img/sequential-http-workflow.png" alt="Sequential HTTP Workflow" width="40%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+
 
 ## Codelab Requirements
 
