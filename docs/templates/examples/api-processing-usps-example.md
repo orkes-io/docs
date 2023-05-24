@@ -15,8 +15,7 @@ The USPS can verify 160M addresses in the USA.  This workflow either responds wi
 This workflow requires a USPS username to be run.  Change the name of the workflow - to save it in your Playground, and add your USPS Username in the Set_USPS_Name task. The [API access is free](https://www.usps.com/business/web-tools-apis/).
 :::
 
-<img src="https://raw.githubusercontent.com/conductor-sdk/conductor-examples/main/US_post_office/images/check_address.jpg"
-alt="check address workflow" width="400" style={{paddingBottom: 40, paddingTop: 40}} />
+<p align="center"><img src="/content/img/check-address.jpg" alt="Document Approval Workflow" width="90%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
 Sample input:
 
@@ -39,8 +38,7 @@ Given a `toZip` and `fromZip`, and some dimensions of the box (and the shipping 
 This workflow requires a USPS username to be run.  Change the name of the workflow - to save it in your Playground, and add your USPS Username in the Set_USPS_Name task. The [API access is free](https://www.usps.com/business/web-tools-apis/).
 :::
 
-<img src="https://raw.githubusercontent.com/conductor-sdk/conductor-examples/main/US_post_office/images/postage_rate.jpg"
-alt="postage rate workflow" width="400" style={{paddingBottom: 40, paddingTop: 40}} />
+<p align="center"><img src="/content/img/postage-rate.jpg" alt="Document Approval Workflow" width="60%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
 Sample input:
 ```json

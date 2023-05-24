@@ -27,7 +27,7 @@ This workflow does not have workers and is for visualization purposes only.
 
 In this workflow, Review 1.a, Review 2 & Review 3 can reject the document and send it back for editing. Each rejection appears to add a loop into the workflow. Since all Conductor workflows are [Directed Acyclic Graphs](https://orkes.io/content/docs/reference-docs/directed-acyclic-graph), it seems this might violate the basic nature of a Conductor workflow. However, Conductor has a workaround that allows for loops that we feature in the _Review Approval_ workflow. Conductor's [DO/WHILE](https://orkes.io/content/docs/reference-docs/do-while-task) task allows for iteration of the same tasks multiple times (and to ensure the _directed_ nature of the graph, each iteration of the task is appended with `__x` (where x is the iteration count).
 
-![review cycle workflow](https://raw.githubusercontent.com/conductor-sdk/conductor-examples/main/document_approvals/images/approval_workflow.jpg)
+<p align="center"><img src="/content/img/document-approval-workflow.jpg" alt="Document Approval Workflow" width="100%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
 1. The workflow starts with uploading the document. The upload process is done using the task **upload_schema**.
 2. Next is the Review1 process, split into two forks, **Review 1.a** & **Review 1.b**, using the **fork_join** task. Both these forks can run asynchronously and get joined using the join task **review_join**.
