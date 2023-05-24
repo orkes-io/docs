@@ -96,26 +96,23 @@ The output of the sub-workflow is also supplied to the output of the workflow.
 
 <details><summary>Complete Example</summary>
 <p>
-Imagine that we have this address verification workflow:
 
-<p align="center"><img src="/content/img/postage-rate.png" alt="Postage Rate Example" width="50%" height="auto"></img></p>
+Let’s say you have a very long workflow, **“payment_for_subscription”**, which handles the payment for subscriptions as shown below:
 
-If you wanted to add this functionality to another workflow, it would be possible to copy the list of tasks into our workflow. However, a better way would be to use a sub workflow so that any future updates made to this workflow automatically reflects in all workflows that uses it.
+<p align="center"><img src="/content/img/payment-sub-workflow-example.jpg" alt="Payment sub workflow" width="100%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
-```json
-    {
-      "name": "postage_rate_subworkflow",
-      "taskReferenceName": "postage_rate_subworkflow_ref",
-      "type": "SUB_WORKFLOW",
-      "subWorkflowParam": {
-        "name": "shipping_rate",
-        "version": 1
-      }
-    }
-```
+If you want to add this workflow to another workflow, copying the list of tasks to the required workflow would be possible. However, whenever this workflow is updated, it won’t be reflected in the workflow where you have added this. A better way to handle this is to call this workflow as a sub-workflow in your original workflow so that any updates to this workflow get reflected in all the workflows where it is called.
 
-<p align="center"><img src="/content/img/sub-workflow-replaced.jpg" alt="Sub Workflow Replaced" width="30%" height="auto"></img></p>
+So, you can add this as a sub-workflow in your required workflow whenever a payment flow is to be implemented:
 
-This makes our workflow more maintainable and will reflect all future changes to the **postage_rate** workflow.
+<p align="center"><img src="/content/img/payment-sub-workflow-in-main-workflow.png" alt="Payment workflow as sub-workflow in a subscription flow" width="50%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+
+This is a subscription workflow with multiple instances where payment flow is to be implemented. Here the previously created payment workflow is added as sub-workflows.
+
+The above image is a simplified version of the subscription workflow. You can view the entire version in Playground here.
+
+| [View in Orkes Playground](https://play.orkes.io/workflowDef/Subscription/) |
+|--------------------------------------------------------------------------------------------------|
+
 </p>
 </details>
