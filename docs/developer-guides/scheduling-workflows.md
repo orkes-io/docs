@@ -5,7 +5,7 @@ import Install from '@site/src/components/install.mdx';
 
 # Scheduling Workflows
 
-Often times we want to trigger a workflow at a specific schedule. Orkes Conductor platform supports this natively. The workflows can be configured to be triggered at any cadence as required using the crontab expression.
+Often we want to trigger a workflow at a specific schedule. Orkes Conductor platform supports this natively. The workflows can be configured to be triggered at any cadence as required using the crontab expression.
 
 The Scheduler can be used for use cases such as:
 
@@ -44,6 +44,10 @@ The following parameters can be used to configure the schedule:
 | Start Schedule Paused? | If selected, the schedule will be paused (so it will not run) upon creation. It is helpful when you don’t want to run the workflow scheduler, such as during maintenance. To resume the scheduled executions, this needs to be unpaused. |
 
 3. Click **Save Schedule**.
+
+:::note
+Non-admin users can create a schedule only if they have "execute" permission over the workflow to be scheduled. You must also provide “read” permission to list the workflows in the scheduler or workflow definitions.
+:::
 
 ## Cron Expression
 
@@ -106,6 +110,16 @@ Once the schedulers are defined, you can view the executions from the **Schedule
 <p align="center"><img src="/content/img/scheduler-executions.jpg" alt="Scheduler Executions View" width="100%" height="auto"></img></p>
 
 The execution page lists the details of all the scheduler executions. It includes the details such as scheduled time, execution time, execution ID, workflow ID, state, reason for failure, and error details. You can view the workflow execution by directly clicking on the workflow ID. You can also filter further information using the available options.
+
+:::note
+For non-admin users to work with schedules created by an admin, they need to be provided access to the required schedules and workflows. This can be granted through a user group. 
+Here’s how you can achieve this:
+<ul><li>
+
+Add the required tag to the scheduler and workflow to which non-admins may need access. Let’s add the tag __“team:execute”__. Create a user group with required members and [provide execute & read access](https://orkes.io/content/access-control-and-security/tags#using-user-groups) to the tag __“team:execute”__.    
+</li></ul>
+This ensures that the group members will have "execute" & “read” permission over the scheduler and workflows you’ve tagged with the tag “team:execute”.
+:::
 
 <FAQStructuredData faqs={faqs} />
 
