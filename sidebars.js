@@ -312,6 +312,7 @@ const sidebars = {
                 slug: '/category/faqs'
             },
             items: [
+                'faqs/general-faqs',
                 'faqs/conductor-log-level',
                 'faqs/reuse-tasks',
                 'faqs/directed-acyclic-graph',
