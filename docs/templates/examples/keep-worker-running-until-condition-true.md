@@ -1,0 +1,35 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import Install from '@site/src/components/install.mdx';
+import CodeBlock from '@theme/CodeBlock';
+
+# Running a worker until condition is met
+
+## Introduction - Custom Poll Worker
+
+We can use a worker and keep it running until a condition is met. This is similar to the [HTTP Poll](/content/reference-docs/system-tasks/http-poll) task where
+you can poll an HTTP endpoint until a specific condition is met. Having a worker do the same is useful
+when you don't have an endpoint to call directly from Conductor
+
+## Code Sample
+
+
+```java dynamic https://github.com/conductor-sdk/orkes-java-springboot2-example/blob/main/src/main/java/io/orkes/example/banking/workers/PollUntilConditionMeetsWorker.java section=1 ../workers/PollUntilConditionMeetsWorker.java
+```
+
+In this example worker, we are using the `callbackAfterSeconds` attribute to keep the worker in progress
+until a condition is met. This can be any arbitrary condition that our code defines.
+
+Specifically this example waits for the poll count to reach the input parameter `pollCounter`.
+
+When you return a task as `IN_PROGRESS` with a `callbackAfterSeconds` value set, conductor
+will schedule the same task instance to be polled exactly after the `callbackAfterSeconds` value.
+
+We are leveraging the output data to hold the context across polls and once it reaches the desired state, we exit `IN_PROGRESS`
+and mark the task as `COMPLETED`
+
+Go ahead and try [this worker](https://play.orkes.io/workflowDef/poll-until-condition-workflow) in a workflow in our playground environment. We have already configured this in our sandbox, so it should run when you test.
+
+:::tip Language agnostic
+Such workers can be implemented in any of the languages.
+:::

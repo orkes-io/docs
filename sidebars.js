@@ -257,6 +257,7 @@ const sidebars = {
                         slug: '/category/templates/examples'
                     },
                     items: [
+                        'templates/examples/keep-worker-running-until-condition-true',
                         {
                             type: 'doc',
                             id: 'templates/examples/api-processing-usps-example',
