@@ -28,7 +28,7 @@ When you return a task as `IN_PROGRESS` with a `callbackAfterSeconds` value set,
 will schedule the same task instance to be polled exactly after the `callbackAfterSeconds` value.
 
 We are leveraging the output data to hold the context across polls, and once it reaches the desired state, we exit `IN_PROGRESS`
-and mark the task as `COMPLETED`
+and mark the task as `COMPLETED`.
 
 Go ahead and try [this worker](https://play.orkes.io/workflowDef/poll-until-condition-workflow) in a workflow in our playground environment. We have already configured this in our sandbox, so it should run when you test.
 
