@@ -257,6 +257,11 @@ const sidebars = {
                         slug: '/category/templates/examples'
                     },
                     items: [
+                        {
+                            type: 'doc',
+                            id: 'templates/examples/custom-conductor-webhook-using-curl',
+                            label: 'Custom Conductor Webhook using cURL',
+                        },
                         'templates/examples/keep-worker-running-until-condition-true',
                         {
                             type: 'doc',
