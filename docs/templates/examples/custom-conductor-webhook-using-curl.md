@@ -1,8 +1,8 @@
-# Incoming Custom Conductor Webhook using cURL
+# Incoming Conductor Webhook using cURL
 
 Conductor-Webhook integration can be leveraged to implement most of your business flows. Webhooks can be integrated with Conductor to facilitate communication with other third-party systems such as Slack, Pagerduty, Zendesk, etc.
 
-In this article, let’s look at creating a custom webhook in Conductor and passing an incoming request to the webhook using cURL commands.
+In this article, let’s look at creating a webhook in Conductor and passing an incoming request to the webhook using cURL commands.
 
 ## Creating a Workflow to receive Webhook event
 
@@ -60,9 +60,9 @@ The JSON code for the above workflow is as follows:
 }
 ```
 
-## Creating a Custom Webhook in Conductor
+## Creating a Webhook in Conductor
 
-Next, you need to create a custom webhook.
+Next, you need to create a webhook.
 
 1. From your Conductor server, navigate to **Webhooks** from the left menu.
 2. Click the **New Webhook** button and create the webhook with the following configurations.

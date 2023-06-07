@@ -124,7 +124,7 @@ For this type of Webhook, each request must contain all the headers with the key
 
 So here, the URL is marked as verified when the first Webhook event comes with all the header keys and values configured.
 
-#### [Sample custom webhook receiving incoming webhook using cURL](/content/templates/examples/custom-conductor-webhook-using-curl)
+#### [Sample webhook receiving incoming webhook using cURL](/content/templates/examples/custom-conductor-webhook-using-curl)
 
 ### 2. Challenge-based Verifier Webhook
 
