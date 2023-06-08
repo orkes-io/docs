@@ -204,7 +204,7 @@ So, here the variable `name` is set to `Orkes`.  We can refer to this variable i
 This results in **"variable_name": "Orkes"**.
 </details>
 
-## Through Task Input Templates
+## Task Input Templates
 
 While creating task definitions, you can define the task input templates. These values will be supplied to each execution of the task and can be overridden within the workflow. It means that the parameters are included in the task definition, and whenever the task is used in a workflow, these parameters would be included by default in the workflow.
 
