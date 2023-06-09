@@ -71,7 +71,7 @@ In the **FORK_JOIN** task, the JOIN task waits for a list of zero or more of the
 The script will have access to a variable called **$.joinOn**, which is an array of task references mapped to this join, and the output data of each joined task, such as **$[‘task-reference-name’]**.
 
 </p>
-<p>You can define the script so that the task status can be checked, and if any pending joins are found, you can configure it to change the task status to IN_PROGESS until it's completed. If not, you can also proceed with the required task status and complete it as needed. The script can be modified to suit your use case.</p>
+<p>You can define the script so that the task status can be checked, and if any pending joins are found, you can configure it to change the task status to IN_PROGESS until it's completed. If not, you can also proceed with the required task status and complete it as needed. It can also return the join task result as composed by the script. The script can be modified to suit your use case.</p>
 </td>
 </tr>
 </table>
