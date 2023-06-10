@@ -44,23 +44,23 @@ const videoSource = [
 const useCases = [
   {
     title: "Microservices Orchestration",
-    image: "img/usecases/microservices.svg",
+    image: "./img/usecases/microservices.svg",
   },
   {
     title: "API Orchestration",
-    image: "img/usecases/api.svg",
+    image: "./img/usecases/api.svg",
   },
   {
     title: "Data Pipeline Orchestration",
-    image: "img/usecases/cicd.svg",
+    image: "./img/usecases/cicd.svg",
   },
   {
     title: "Orchestrate Human Flows",
-    image: "img/usecases/humanflows.svg",
+    image: "./img/usecases/humanflows.svg",
   },
   {
     title: "Event Driven Orchestration",
-    image: "img/usecases/events.svg",
+    image: "./img/usecases/events.svg",
   },
 ];
 
@@ -69,62 +69,62 @@ const accordionData = [
     title: "Create Workflows",
     description:
       "Define workflows consisting of multiple tasks that are executed in a specific order.",
-    image: "img/what-conductor-can-do/1_Create-Workflows.png",
+    image: "./img/what-conductor-can-do/1_Create-Workflows.png",
   },
   {
     title: "Branch Your Flows",
     description: "Use switch-case operator to make branching decisions.",
-    image: "img/what-conductor-can-do/2_Branch-Your-Flows.png",
+    image: "./img/what-conductor-can-do/2_Branch-Your-Flows.png",
   },
   {
     title: "Run Loops",
     description:
       "Use the Do-While loop operator to iterate through a set of tasks.",
-    image: "img/what-conductor-can-do/3_Run-Loops.png",
+    image: "./img/what-conductor-can-do/3_Run-Loops.png",
   },
   {
     title: "Parallelize Your Tasks",
     description:
       "Execute tasks in parallel using either static or dynamic forks.",
-    image: "img/what-conductor-can-do/4_Parallelize-Your-Tasks.png",
+    image: "./img/what-conductor-can-do/4_Parallelize-Your-Tasks.png",
   },
   {
     title: "Run Your Tasks Externally",
     description:
       "Implement tasks using external workers in microservices, serverless functions, or applications.",
-    image: "img/what-conductor-can-do/5_Run-Your-Tasks-Externally.png",
+    image: "./img/what-conductor-can-do/5_Run-Your-Tasks-Externally.png",
   },
   {
     title: "Use Built In Tasks",
     description:
       "Use built-in tasks for common actions such as calling HTTP endpoints, writing to event queues etc.",
-    image: "img/what-conductor-can-do/6_Use-Built-In-Tasks.png",
+    image: "./img/what-conductor-can-do/6_Use-Built-In-Tasks.png",
   },
   {
     title: "Handle Errors & Failures",
     description: "Set timeouts, auto retries and failure handlers for tasks.",
-    image: "img/what-conductor-can-do/7_Handle-Errors-Failures.png",
+    image: "./img/what-conductor-can-do/7_Handle-Errors-Failures.png",
   },
   {
     title: "Integrate With Applications",
     description: "Integrate the workflows into your application using SDKs.",
-    image: "img/what-conductor-can-do/8_Integrate-With-Applications.png",
+    image: "./img/what-conductor-can-do/8_Integrate-With-Applications.png",
   },
   {
     title: "Debug Visually",
     description: "Identify and debug failing workflows in the UI.",
-    image: "img/what-conductor-can-do/9_Debug-Visually.png",
+    image: "./img/what-conductor-can-do/9_Debug-Visually.png",
   },
   {
     title: "Collaborate Securely",
     description: "Use role based access controls to share workflows and tasks.",
-    image: "img/what-conductor-can-do/10_Collaborate-Securely.png",
+    image: "./img/what-conductor-can-do/10_Collaborate-Securely.png",
   },
   {
     title: "Run In The Cloud",
     description:
       "Orkes Cloud provides SLA backed, enterprise grade and fully managed Conductor clusters.",
-    image: "img/what-conductor-can-do/11_Run-In-The-Cloud.png",
+    image: "./img/what-conductor-can-do/11_Run-In-The-Cloud.png",
   },
 ];
 export const StepBoxesSection = ({ steps = [] }) => (
