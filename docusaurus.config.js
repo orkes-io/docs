@@ -190,7 +190,7 @@ const config = {
                         items: [
                             {
                                 label: 'Blog',
-                                to: '/content/blog',
+                                to: 'https://orkes.io/blog/',
                             },
                             {
                                 label: 'GitHub',
