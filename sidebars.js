@@ -78,6 +78,7 @@ const sidebars = {
                 'developer-guides/scaling-workers',
                 'developer-guides/metrics-and-observability',
                 'developer-guides/monitoring-task-queues',
+                'developer-guides/workflow-version-behavior-on-execution',
                 'developer-guides/task-and-workflow-status-in-conductor',
                 'developer-guides/pausing-for-external-signals',
             ],
