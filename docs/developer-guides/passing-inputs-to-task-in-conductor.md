@@ -83,9 +83,24 @@ In summary, this expression defines a property called **key**, with a value that
 </TabItem>
 </Tabs>
 
-:::note
-Refer to the documentation for complete [workflow attributes that can be used for passing data in Conductor workflows](https://orkes.io/content/developer-guides/workflow-attributes-in-conductor-workflows).
-:::
+Depending on the context from where the data is being passed, the expression can take the following variants:
+
+| Workflow Attribute | Description |
+| ------------------ | ----------- |
+| input | **${workflow.input.somevalue}** <br/>If the workflow has an input parameter “**_somevalue_**”, then the same parameter can be referred to using this expression.|
+| output | **${workflow.output.somevalue}** <br/>If the workflow has an output parameter “**_somevalue_**”, then the same parameter can be referred to using this expression.|
+| status | **${workflow.status}** <br/>This expression can be used when you want to check the workflow status and proceed. The possible values the expression can return are _RUNNING, PAUSED, TIMED_OUT, TERMINATED, FAILED,_ or _COMPLETED_.|
+| workflowId | **${workflow.workflowId}** <br/>This expression can be used when you need to retrieve the workflowId of the current workflow.|
+| parentWorkflowId | **${workflow.parentWorkflowId}** <br/>This expression can be used in the sub-workflows to retrieve the workflowId of the parent workflow.|
+| parentWorkflowTaskId | **${workflow.parentWorkflowTaskId}** <br/>This expression can be used in the sub-workflows to retrieve the subworkflow’s task execution Id in the parent workflow.|
+| workflowType | **${workflow.workflowType}** <br/>This expression can be used to retrieve the workflow name.|
+| version | **${workflow.version}** <br/>This expression can be used when you need to retrieve the version of the current workflow.|
+| correlationId | **${workflow.correlationId}** <br/>This expression can be used when you need to retrieve the correlationId provided to the current workflow instance.|
+| schemaVersion | **${workflow.schemaVersion}** <br/>This expression can be used to retrieve the schema version of the current workflow.|
+| variables | **${workflow.variables.variable_name}** <br/>This expression is used when a variable name is already stored in the workflow definition, and you need to retrieve the variable name in the preceding tasks.|
+| createTime | **${workflow.createTime}** <br/>This expression can be used to retrieve the workflow execution time.|
+| secrets | **${workflow.secrets.secret_name}** <br/>This expression can be used to retrieve the secret values without exposing them directly in the workflow definitions. Referring using this expression ensures that it takes the value dynamically while executing the workflow.|
+| taskToDomain | **${workflow.taskToDomain.domain_name}** <br/>This expression can be used to retrieve the domain name used while invoking the workflow.|
 
 ## Detailed Examples
 
