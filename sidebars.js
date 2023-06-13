@@ -83,11 +83,6 @@ const sidebars = {
                 'developer-guides/metrics-and-observability',
                 'developer-guides/monitoring-task-queues',
                 'developer-guides/workflow-version-behavior-on-execution',
-                {
-                    type: 'doc',
-                    id: 'developer-guides/workflow-attributes-in-conductor-workflows',
-                    label: "Workflow Attributes"
-                },
                 'developer-guides/task-and-workflow-status-in-conductor',
                 'developer-guides/pausing-for-external-signals',
             ],
