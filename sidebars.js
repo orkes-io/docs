@@ -71,7 +71,11 @@ const sidebars = {
                     label: "Webhook Integration"
                 },
                 'developer-guides/write-workflows-using-code',
-                'developer-guides/orchestrating-human-tasks',
+                {
+                    type: 'doc',
+                    id: 'developer-guides/orchestrating-human-tasks',
+                    label: "Human Task"
+                },
                 'developer-guides/debugging-workflows',
                 'developer-guides/task-to-domain',
                 'developer-guides/secrets-in-conductor',
@@ -79,6 +83,11 @@ const sidebars = {
                 'developer-guides/metrics-and-observability',
                 'developer-guides/monitoring-task-queues',
                 'developer-guides/workflow-version-behavior-on-execution',
+                {
+                    type: 'doc',
+                    id: 'developer-guides/workflow-attributes-in-conductor-workflows',
+                    label: "Workflow Attributes"
+                },
                 'developer-guides/task-and-workflow-status-in-conductor',
                 'developer-guides/pausing-for-external-signals',
             ],
