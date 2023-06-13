@@ -83,6 +83,10 @@ In summary, this expression defines a property called **key**, with a value that
 </TabItem>
 </Tabs>
 
+:::note
+Refer to the documentation for complete [workflow attributes that can be used for passing data in Conductor workflows](https://orkes.io/content/developer-guides/workflow-attributes-in-conductor-workflows).
+:::
+
 ## Detailed Examples
 
 <details><summary>Task Inputs referred from Workflow Inputs​​</summary>
