@@ -169,3 +169,27 @@ Switch task can be nested just like nested if...then...else.
 :::tip
 Similar to any programming language, you can have other operators inside a switch case, such as nested switches, loops, forks, etc.
 :::
+
+## FAQs
+
+### How can I create a JavaScript switch case statement that evaluates whether a given datetime string is older than one month?
+
+You can use the following script:
+
+```javascript
+((
+  function () {
+    const date = new Date($.timestamp);
+    const currentDate = new Date();
+
+    // Subtract one month from the current date
+    currentDate.setMonth(currentDate.getMonth() - 1);
+    if (date < currentDate) {
+      return "OLDER";
+    }
+    return "NEWER"
+  }
+))();
+```
+
+It returns “OLDER” or “NEWER” depending on the input date. Check out the [sample workflow execution that runs this switch case](https://play.orkes.io/execution/9be8fb4d-e991-11ed-bb41-9e017806b678) in our playground.
