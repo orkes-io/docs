@@ -104,22 +104,7 @@ View our documentation on [Conductor Clients & SDKs](/content/category/sdks) lis
 </TabItem>
 <TabItem value="Javascript" label="Javascript">
 
-```javascript
-export const checkForFraud = () => {
-  return {
-    taskDefName: "fraud-check",
-    execute: async ({ inputData }) => {
-      const {amount, accountId} = inputData;
-      const isFraud = fraudService.isFraudulentTxn(accountId,amount);
-      return {
-        outputData: {
-            message: isFraud ? "This transaction cannot be processed as its flagged for review.":`Deposit of ${amount} has processed successfully`,
-        },
-        status: "COMPLETED",
-     };
-    },
-  };
-};
+```javascript dynamic https://github.com/conductor-sdk/javascript-sdk-examples/blob/main/src/banking/workers/workers.js section=1 .../workers/workers.js
 ```
 
 </TabItem>
