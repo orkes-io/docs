@@ -116,3 +116,18 @@ The above image is a simplified version of the subscription workflow. You can vi
 
 </p>
 </details>
+
+## FAQs
+
+### How do we retry a sub-workflow from a specific task?
+
+You can use the following API to retry a sub-workflow from a specific task. From the Conductor UI, you check the task level start time to verify that the preceding tasks are not re-run. Additionally, you can insert a WAIT task before the desired re-run starting point and confirm that it does not transition to the state of that WAIT task.
+
+```shell
+ curl -X POST 'https://<conductor_server_dns>/api/workflow/<workflow_id>/rerun' \
+   -H 'Content-Type: application/json' \
+   -d '{
+    "reRunFromTaskId": "<task_execution_id>"
+  }' \
+   -H 'x-authorization: <auth_token>'
+```
