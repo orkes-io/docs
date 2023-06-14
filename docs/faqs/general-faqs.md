@@ -29,3 +29,18 @@ Yes, it’s possible to pull data from multiple endpoints simultaneously. Have a
 ### Can we start a workflow not from the start but from any steps within the workflow? 
 
 The Conductor workflow always starts from step 1 and follows the sequence. However, once the workflow is executed, you can [skip a particular task from execution](https://orkes.io/content/reference-docs/api/workflow/skip-task-from-workflow). Alternatively, you can create the workflow definitions programmatically with only the required steps. 
+
+### What is the difference between restarting and rerunning a workflow?
+
+Once you run a workflow and it starts the execution, and for any reason, if the workflow fails/or is manually terminated, you can restart or re-run it.
+
+<p align="center"><img src="/content/img/rerun-and-restart.png" alt="Rerun Vs Restart" width="100%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+
+1. Restart Workflow
+
+- **Restart with Current Definitions** - Instantly restarts the same execution with the existing workflow definition.
+- **Restart with Latest Definitions** - Restarts the workflow, but if there have been any changes to the workflow definition, it will run the latest definition.
+
+2. Re-run Workflow
+
+Re-run Workflow takes you to the run workflow screen, where you can trigger a brand new instance of the workflow. You can also change the input parameters, correlation ID, or task to domain mapping before triggering the new execution.
