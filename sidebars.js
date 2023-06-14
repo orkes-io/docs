@@ -267,6 +267,7 @@ const sidebars = {
                             id: 'templates/examples/custom-conductor-webhook-using-curl',
                             label: 'Conductor Webhook using cURL',
                         },
+                        'templates/examples/incoming-webhook-using-postman',
                         'templates/examples/keep-worker-running-until-condition-true',
                         {
                             type: 'doc',
