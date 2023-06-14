@@ -1,10 +1,21 @@
 # Incoming Webhook using Postman
 
+Webhooks can be integrated with Conductor to facilitate communication with other third-party systems such as Slack, Pagerduty, Zendesk, etc.
+
+In this article, let’s look at creating a webhook in Conductor and passing an incoming request to the webhook using Postman.
+
+## Creating Workflow
+
 Consider the following workflow that waits for a webhook event from Postman:
 
 <p align="center"><img src="/content/img/wait-for-webhook-workflow.png" alt="Workflow with webhook task" width="40%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
-Here the input matches are defined as:
+To create a workflow:
+
+1. Navigate to **Workflows > Definitions** from the left menu.
+2. Click **Define Workflow** and create a workflow including a [WAIT_FOR_WEBHOOK](https://orkes.io/content/reference-docs/system-tasks/wait-for-webhook) task.
+
+For the WAIT_FOR_WEBHOOK task, the input matches are defined as:
 
 ```json
 "inputParameters": {
@@ -57,7 +68,12 @@ The complete workflow JSON looks like this:
 }
 ```
 
-Next, create a webhook to invoke this workflow:
+Next, create a webhook to invoke this workflow.
+
+## Creating Webhook in Conductor
+
+1. From your Conductor server, navigate to **Webhooks** from the left menu.
+2. Click the **New Webhook** button and create the webhook with the following configurations.
 
 <p align="center"><img src="/content/img/sample-webhook.png" alt="Webhook example" width="70%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
@@ -71,13 +87,21 @@ On saving the webhook, an unverified URL will be generated, as shown below:
 
 Since this is a header-based verifier, the URL will be verified once the first Webhook event comes with all the header keys and values configured. 
 
-Once the above workflow is run, and when the execution reaches the “WAIT_FOR_WEBHOOK” task, it waits for the event to come from Postman.
+## Run Workflow
+
+Next, you must run the workflow by clicking the **Run Workflow** button from the left menu.
+
+When the execution reaches the “WAIT_FOR_WEBHOOK” task, it waits for the event to come from Postman.
 
 <p align="center"><img src="/content/img/webhook-workflow-execution.png" alt="Workflow execution waiting for webhook event" width="40%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
-Now, open [Postman](https://www.postman.com/), create a new request with your webhook URL and change the method to POST. 
+Now, open [Postman](https://www.postman.com/), create a new request with your webhook URL, and change the method to POST. 
 
-Provide the header key and value, and the input matches in JSON format. Click **Send**, and it should return a 200 OK.
+Provide the header key and value, and the input matches in JSON format. 
+
+<p align="center"><img src="/content/img/configuring-headers-in-postman-request.jpg" alt="Configuring headers in Postman request" width="80%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+
+Click **Send**, and it should return a 200 OK.
 
 <p align="center"><img src="/content/img/send-request-postman.png" alt="Sending POST request from Postman" width="80%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
