@@ -85,6 +85,11 @@ const sidebars = {
                 'developer-guides/workflow-version-behavior-on-execution',
                 'developer-guides/task-and-workflow-status-in-conductor',
                 'developer-guides/pausing-for-external-signals',
+                {
+                    type: 'doc',
+                    id: 'developer-guides/task-and-workflow-event-streaming-with-orkes-conductor-and-azure-event-hub',
+                    label: "Event Streaming with Azure Event Hub"
+                },
             ],
             collapsible: true,
             collapsed: true,
