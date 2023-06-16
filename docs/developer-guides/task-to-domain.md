@@ -66,16 +66,81 @@ TODO: Coming soon
 TODO: Coming soon
 
 </TabItem>
+
 <TabItem value="Clojure" label="Clojure">
 
-TODO: Coming soon
+```clojure
+(runner-executer-for-workers options [worker] 1 {:domain 'some-domain'})
+```
 
 </TabItem>
 <TabItem value="Javascript" label="Javascript">
 
-TODO: Coming soon
+```javascript
+// You can specify on the worker
+export const userInfoWorker = () => {
+  return {
+    domain: "myDomain",
+    taskDefName: GET_USER_INFO,
+    execute: async ({ inputData }) => {
+      const userId = inputData?.userId;
+      return {
+        outputData: {
+          email: `${userId}@email.com`,
+          phoneNumber: "555-555-5555",
+        },
+        status: "COMPLETED",
+      };
+    },
+  };
+};
+// or on the Poller Option
+new TaskManager(
+    client,
+    workers,
+    {
+      logger: console,
+      options: { concurrency: 5, pollInterval: 100, domain: "domain" },
+    }
+  );
+// *Note* worker domain has precedence over the domain passed in the poller 
+```
 
 </TabItem>
+<TabItem value="typescript" label="Typescript">
+
+```typescript
+// You can specify on the worker
+export const userInfoWorker = (): ConductorWorker => {
+  return {
+    domain:"myDomain",
+    taskDefName: GET_USER_INFO,
+    execute: async ({ inputData }) => {
+      const userId = inputData?.userId;
+      return {
+        outputData: {
+          email: `${userId}@email.com`,
+          phoneNumber: "555-555-5555",
+        },
+        status: "COMPLETED",
+      };
+    },
+  };
+}
+
+// or on the Poller Option
+new TaskManager(
+    client,
+    workers,
+    {
+      logger: console,
+      options: { concurrency: 5, pollInterval: 100, domain: "domain" },
+    }
+  )
+// *Note* worker domain has precedence over the domain passed in the poller 
+```
+</TabItem>
+
 </Tabs>
 
 

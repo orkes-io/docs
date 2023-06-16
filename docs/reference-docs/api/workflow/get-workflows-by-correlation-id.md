@@ -57,9 +57,21 @@ string WorkflowResourceApi.StartWorkflow(StartWorkflowRequest body)
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
-WorkflowResourceService.getWorkflows(
+WorkflowResourceService.getWorkflow1(
     name: string,
-    requestBody: Array<string>,
+    correlationId: string,
+    includeClosed: boolean = false,
+    includeTasks: boolean = false,
+): CancelablePromise<Record<string, Array<Workflow>>>
+```
+
+</TabItem>
+<TabItem value="Typescript" label="Typescript">
+
+```typescript
+WorkflowResourceService.getWorkflow1(
+    name: string,
+    correlationId: string,
     includeClosed: boolean = false,
     includeTasks: boolean = false,
 ): CancelablePromise<Record<string, Array<Workflow>>>

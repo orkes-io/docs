@@ -58,7 +58,16 @@ void WorkflowResourceApi.PauseWorkflow(string workflowId)
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
-pauseWorkflow(
+WorkflowExecutor.pauseWorkflow(
+    workflowId: string,
+): CancelablePromise<any>
+```
+
+</TabItem>
+<TabItem value="Typescript" label="Typescript">
+
+```typescript
+WorkflowExecutor.pauseWorkflow(
     workflowId: string,
 ): CancelablePromise<any>
 ```

@@ -59,10 +59,17 @@ TaskResourceService.getTask(taskId: string): CancelablePromise<Task>
 ```
 
 </TabItem>
+<TabItem value="Typescript" label="Typescript">
+
+```typescript
+TaskResourceService.getTask(taskId: string): CancelablePromise<Task>
+```
+
+</TabItem>
 <TabItem value="Clojure" label="Clojure">
 
 ```clojure
-(task-resource/get-task-details [options task-ex-id])
+(task-resource/get-task-details options task-ex-id)
 ```
 
 </TabItem>

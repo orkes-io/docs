@@ -50,10 +50,20 @@ void WorkflowResourceApi.ResumeWorkflow(string workflowId)
 ```
 
 </TabItem>
+
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
-resumeWorkflow(
+WorkflowExecutor.resume(
+    workflowId: string,
+): CancelablePromise<any>
+```
+
+</TabItem>
+<TabItem value="Typescript" label="Typescript">
+
+```typescript
+WorkflowExecutor.resume(
     workflowId: string,
 ): CancelablePromise<any>
 ```
