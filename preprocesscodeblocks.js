@@ -57,8 +57,6 @@ const cloneRepoIfNeeded = (gitUrl, branchOrCommit) => {
     return new Promise((resolve, reject) => {
         const gitFolder = gitUrl.substring(gitUrl.lastIndexOf('/') + 1, gitUrl.indexOf('.git'));
         const destFolder = `./gitrepos/${gitFolder}`;
-        console.log('git folder:', gitFolder)
-        console.log('dest folder:', destFolder)
         let command;
         if (!fs.existsSync(path.join(destFolder, '.git'))) {
             command = `git clone --single-branch --branch ${branchOrCommit} ${gitUrl} ${destFolder}`;
@@ -108,11 +106,6 @@ const searchDirectory = async (dirPath, codeBlocks) => {
                             return null
                         }
                         const { username, repository, branchOrCommit, file } = urlInfo;
-                        console.log('username:', username)
-                        console.log('repository:', repository)
-                        console.log('branchOrCommit:', branchOrCommit)
-                        console.log('file:', file)
-                        console.log('section:', section)
                         await cloneRepoIfNeeded(gitUrl, branchOrCommit).then(async () => {
                             console.log("Repo clone/update successful")
                             const [extractedContent, lineStart, lineEnd] = await extractContentFromFile(repository, file, section);
