@@ -73,11 +73,14 @@ TODO: Coming soon to the SDKs
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
-TODO: Coming
-soon
-to
-the
-SDKs
+HumanExecutor.claimTaskAsExternalUser(taskId: string, assignee: string)
+```
+
+</TabItem>
+<TabItem value="Typescript" label="Typescript">
+
+```typescript
+HumanExecutor.claimTaskAsExternalUser(taskId: string, assignee: string)
 ```
 
 </TabItem>

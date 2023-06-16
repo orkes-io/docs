@@ -59,7 +59,14 @@ TODO: Coming soon to the SDKs
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
-TODO: Coming soon to the SDKs
+HumanExecutor.claimTaskAsConductorUser(taskId: string);
+```
+
+</TabItem>
+<TabItem value="Typescript" label="Typescript">
+
+```typescript
+HumanExecutor.claimTaskAsConductorUser(taskId: string);
 ```
 
 </TabItem>

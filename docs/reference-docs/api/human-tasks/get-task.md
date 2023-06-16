@@ -59,7 +59,14 @@ TODO: Coming soon to the SDKs
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
-TODO: Coming soon to the SDKs
+HumanExecutor.getTaskById(taskId: string): Promise<HumanTaskEntry>
+```
+
+</TabItem>
+<TabItem value="Typescript" label="Typescript">
+
+```typescript
+HumanExecutor.getTaskById(taskId: string): Promise<HumanTaskEntry>
 ```
 
 </TabItem>

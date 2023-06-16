@@ -65,7 +65,38 @@ TODO: Coming soon to the SDKs
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
-TODO: Coming soon to the SDKs
+HumanExecutor.getTasksByFilter(
+    state: "PENDING" | "ASSIGNED" | "IN_PROGRESS" | "COMPLETED" | "TIMED_OUT",
+    assignee?: string,
+    assigneeType?:
+      | "EXTERNAL_USER"
+      | "EXTERNAL_GROUP"
+      | "CONDUCTOR_USER"
+      | "CONDUCTOR_GROUP",
+    claimedBy?: string,
+    taskName?: string,
+    freeText?: string,
+    includeInputOutput: boolean = false
+  ): Promise<HumanTaskEntry[]>
+```
+
+</TabItem>
+<TabItem value="Typescript" label="Typescript">
+
+```typescript
+HumanExecutor.getTasksByFilter(
+    state: "PENDING" | "ASSIGNED" | "IN_PROGRESS" | "COMPLETED" | "TIMED_OUT",
+    assignee?: string,
+    assigneeType?:
+      | "EXTERNAL_USER"
+      | "EXTERNAL_GROUP"
+      | "CONDUCTOR_USER"
+      | "CONDUCTOR_GROUP",
+    claimedBy?: string,
+    taskName?: string,
+    freeText?: string,
+    includeInputOutput: boolean = false
+  ): Promise<HumanTaskEntry[]>
 ```
 
 </TabItem>
