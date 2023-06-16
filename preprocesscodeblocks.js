@@ -1,18 +1,17 @@
 const fs = require('fs');
 const path = require('path');
 const axios = require('axios');
-const {exec} = require("child_process");
+const { exec } = require("child_process");
 
 const startMarker = 'docs-marker-start-';
 const endMarker = 'docs-marker-end-';
 
-function extractContentFromFile(file, repo, section) {
+function extractContentFromFile(repository, file, section) {
     return new Promise((resolve, reject) => {
-        console.log('file ', file, repo)
         const result = [];
         const startMarkerSec = `${startMarker}${section}`;
         const endMarkerSec = `${endMarker}${section}`;
-        const repoFolder = `./gitrepos/${repo}/${file}`
+        const repoFolder = `./gitrepos/${repository}/${file}`
         try {
             fs.readFile(repoFolder, "utf8", (error, data) => {
                 if (error) {
@@ -54,15 +53,17 @@ const getGitUrl = (url) => {
     return `${rawUrl}.git`;
 }
 
-const cloneRepoIfNeeded = (gitUrl) => {
+const cloneRepoIfNeeded = (gitUrl, branchOrCommit) => {
     return new Promise((resolve, reject) => {
-        const gitFolder = gitUrl.substring(gitUrl.lastIndexOf('/'), gitUrl.indexOf('.git'));
+        const gitFolder = gitUrl.substring(gitUrl.lastIndexOf('/') + 1, gitUrl.indexOf('.git'));
         const destFolder = `./gitrepos/${gitFolder}`;
+        console.log('git folder:', gitFolder)
+        console.log('dest folder:', destFolder)
         let command;
-        if (fs.existsSync(destFolder)) {
-            command = `git -C ${destFolder} pull`;
+        if (!fs.existsSync(path.join(destFolder, '.git'))) {
+            command = `git clone --single-branch --branch ${branchOrCommit} ${gitUrl} ${destFolder}`;
         } else {
-            command = `git clone ${gitUrl} ${destFolder}`;
+            command = `git -C ${destFolder} fetch && git -C ${destFolder} checkout ${branchOrCommit}`;
         }
         try {
             exec(command, (error, stdout, stderr) => {
@@ -99,26 +100,47 @@ const searchDirectory = async (dirPath, codeBlocks) => {
                     const line = lines[i];
                     if (line.startsWith('```') && line.indexOf(' dynamic ') > 0) {
                         const lineContent = line.split(' ');
-                        const originalUrl = lineContent[2];
-                        const gitUrl = getGitUrl(originalUrl);
-                        await cloneRepoIfNeeded(gitUrl).then(async () => {
+                        const url = lineContent[2];
+                        const gitUrl = getGitUrl(url);
+                        const urlInfo = extractGitHubUrlInfo(url);
+                        const section = lineContent[3].split('=')[1];
+                        if (urlInfo == null) {
+                            return null
+                        }
+                        const { username, repository, branchOrCommit, file } = urlInfo;
+                        console.log('username:', username)
+                        console.log('repository:', repository)
+                        console.log('branchOrCommit:', branchOrCommit)
+                        console.log('file:', file)
+                        console.log('section:', section)
+                        await cloneRepoIfNeeded(gitUrl, branchOrCommit).then(async () => {
                             console.log("Repo clone/update successful")
-                            const section = lineContent[3].split('=')[1];
-                            const rawUrl = originalUrl.substring(originalUrl.indexOf('/blob/main/') + 10);
-                            let l = originalUrl.substring(0, originalUrl.indexOf('/blob/main/'));
-                            const repo = l.substring(l.lastIndexOf('/') + 1)
-                            const [extractedContent, lineStart, lineEnd] = await extractContentFromFile(rawUrl, repo, section);
-                            console.log(`Found code block with url ${rawUrl} and section ${section} and content`, extractedContent);
-                            codeBlocks[`${originalUrl}---${section}`] = `{\`${extractedContent.join('\n')}\`}`;
-                            codeBlocks[`${originalUrl}---${section}-lines`] = `#L${lineStart}-L${lineEnd}`;
+                            const [extractedContent, lineStart, lineEnd] = await extractContentFromFile(repository, file, section);
+                            console.log(`Found code block with url ${url} and section ${section} and content`, extractedContent);
+                            codeBlocks[`${url}---${section}`] = `{\`${extractedContent.join('\n')}\`}`;
+                            codeBlocks[`${url}---${section}-lines`] = `#L${lineStart}-L${lineEnd}`;
                         });
                     }
                 }
             }
         }
     }
-
 };
+
+function extractGitHubUrlInfo(url) {
+    const regex = /^(?:https?:\/\/)?(?:www\.)?github\.com\/([^/]+)\/([^/]+)\/(?:blob|tree)\/([^/]+)\/(.+)/;
+    const match = url.match(regex);
+    if (!match) {
+        return null
+    }
+    const [, username, repository, branchOrCommit, file] = match;
+    return {
+        username,
+        repository,
+        branchOrCommit,
+        file
+    };
+}
 
 const codeBlocks = {};
 searchDirectory('./docs', codeBlocks).then(() => {
@@ -139,7 +161,7 @@ async function fetchAndWriteConductorClientVersions() {
             console.log("VERSION", response.data);
             const filePath = './codeblocks/versions.json';
             const versions = {
-                "conductorJarVersion" : response.data
+                "conductorJarVersion": response.data
             }
             fs.writeFile(filePath, JSON.stringify(versions), (err) => {
                 if (err) {
