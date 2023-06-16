@@ -69,6 +69,10 @@ Another method to update the task status is directly from the UI.
 
 ### Method 2 - From Conductor UI
 
+:::tip
+**The UI method is intended only for testing/debugging purposes and not for the production environment.**
+:::
+
 From the workflow execution page, click on the task and then update the status manually to “COMPLETED”.
 
 <p align="center"><img src="/content/img/workflow-status-update-from-ui.png" alt="Updating workflow status from Conductor UI" width="100%" height="auto"></img></p>
@@ -79,7 +83,6 @@ So, using the above methods, you can asynchronously complete your workflow. This
 **AsyncComplete** is currently supported for the following task types only:
 - [Event](https://orkes.io/content/reference-docs/system-tasks/event)
 - [HTTP](https://orkes.io/content/reference-docs/system-tasks/http)
-- [HTTP Poll](https://orkes.io/content/reference-docs/system-tasks/http-poll)
 - Kafka Publish
 :::
 
@@ -97,7 +100,7 @@ Check out our documentation on the [Wait task](https://orkes.io/content/referenc
 
 The above methods can be used to pause your workflow to wait for an external signal. 
 
-:::note
+:::tip
 We do have the option to pause your workflow directly from the UI or using the [pause workflow](https://orkes.io/content/reference-docs/api/workflow/pause-worflow) API. However, it is recommended only when debugging your running workflows.
 
 We recommend using the methods mentioned in this document to pause your workflows in live environments for specific use cases.
