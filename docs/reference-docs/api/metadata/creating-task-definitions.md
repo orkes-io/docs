@@ -75,10 +75,17 @@ MetadataResourceService.registerTaskDef(requestBody: Array<TaskDef>): Cancelable
 ```
 
 </TabItem>
+<TabItem value="Typescript" label="Typescript">
+
+```javascript
+MetadataResourceService.registerTaskDef(requestBody: Array<TaskDef>): CancelablePromise<any>
+```
+
+</TabItem>
 <TabItem value="Clojure" label="Clojure">
 
 ```clojure
-(metadata-resource/register-tasks [options tasks])
+(metadata-resource/register-tasks options [tasks])
 ```
 
 </TabItem>

@@ -63,6 +63,16 @@ string WorkflowResourceApi.Rerun(RerunWorkflowRequest body, string workflowId)
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
+WorkflowExecutor.rerun(
+    workflowId: string,
+    requestBody: RerunWorkflowRequest,
+): CancelablePromise<string>
+```
+
+</TabItem>
+<TabItem value="Typescript" label="Typescript">
+
+```typescript
 WorkflowResourceService.rerun(
     workflowId: string,
     requestBody: RerunWorkflowRequest,

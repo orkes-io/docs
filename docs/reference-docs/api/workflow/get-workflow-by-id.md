@@ -55,10 +55,21 @@ WorkflowStatus WorkflowResourceApi.GetWorkflowStatusSummary(string workflowId, b
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
-WorkflowResourceService.getWorkflowStatusSummary(
+WorkflowExecutor.getWorkflowStatusSummary(
     workflowId: string,
-    includeOutput: boolean = false,
-    includeVariables: boolean = false,
+    includeOutput: boolean
+    includeVariables: boolean,
+): CancelablePromise<WorkflowStatus>
+```
+
+</TabItem>
+<TabItem value="Typescript" label="Typescript">
+
+```javascript
+WorkflowExecutor.getWorkflowStatusSummary(
+    workflowId: string,
+    includeOutput: boolean
+    includeVariables: boolean,
 ): CancelablePromise<WorkflowStatus>
 ```
 
@@ -66,7 +77,7 @@ WorkflowResourceService.getWorkflowStatusSummary(
 <TabItem value="Clojure" label="Clojure">
 
 ```clojure
-(workflow-resource/delete-workflow [options workflow-id & {:keys [includeTasks], :or {includeTasks true}}])
+(workflow-resource/get-workflow [options workflow-id & {:keys [includeTasks], :or {includeTasks true}}])
 ```
 
 </TabItem>

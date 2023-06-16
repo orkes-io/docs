@@ -58,7 +58,20 @@ ScrollableSearchResultWorkflowSummary WorkflowResourceApi.Search(string queryId 
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
-WorkflowResourceService.searchWorkflowsByTasks(
+WorkflowResourceService.search(
+    start?: number,
+    size: number = 100,
+    sort?: string,
+    freeText: string = '*',
+    query?: string,
+): CancelablePromise<SearchResultWorkflowSummary>
+```
+
+</TabItem>
+<TabItem value="Typescript" label="Typescript">
+
+```typescript
+WorkflowExecutor.search(
     start?: number,
     size: number = 100,
     sort?: string,

@@ -63,6 +63,16 @@ WorkflowResourceService.delete(
 ```
 
 </TabItem>
+<TabItem value="Typescript" label="Typescript">
+
+```typescript
+WorkflowResourceService.delete(
+    workflowId: string,
+    archiveWorkflow: boolean = true,
+): CancelablePromise<any>
+```
+
+</TabItem>
 <TabItem value="Clojure" label="Clojure">
 
 ```clojure

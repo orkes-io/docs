@@ -54,9 +54,19 @@ void WorkflowResourceApi.Terminate(string workflowId, string reason = null, bool
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
-WorkflowResourceService.terminate1(
+WorkflowExecutor.terminate(
     workflowId: string,
-    reason?: string,
+    reason: string,
+): CancelablePromise<any>
+```
+
+</TabItem>
+<TabItem value="Typescript" label="Typescript">
+
+```typescript
+WorkflowExecutor.terminate(
+    workflowId: string,
+    reason: string,
 ): CancelablePromise<any>
 ```
 

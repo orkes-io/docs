@@ -69,14 +69,21 @@ Object MetadataResourceApi.Create(WorkflowDef body, bool? overwrite = null)
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
-MetadataResourceService.update(requestBody: Array<WorkflowDef>, overwrite: boolean = true): CancelablePromise<any>
+WorkflowExecutor.registerWorkflow(override: boolean, workflow: WorkflowDef)
+```
+
+</TabItem>
+<TabItem value="Typescript" label="Typescript">
+
+```typescript
+WorkflowExecutor.registerWorkflow(override: boolean, workflow: WorkflowDef)
 ```
 
 </TabItem>
 <TabItem value="Clojure" label="Clojure">
 
 ```clojure
-(metadata-resource/register-workflow-def [options workflow])
+(metadata-resource/register-workflow-def options workflow true)
 ```
 
 </TabItem>

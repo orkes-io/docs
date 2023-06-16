@@ -65,10 +65,22 @@ TaskResourceService.updateTask(
 ```
 
 </TabItem>
+<TabItem value="Typescript" label="Typescript">
+
+```typescript
+TaskResourceService.updateTask(
+    workflowId: string,
+    taskRefName: string,
+    status: 'IN_PROGRESS' | 'FAILED' | 'FAILED_WITH_TERMINAL_ERROR' | 'COMPLETED',
+    requestBody: Record<string, any>,
+): CancelablePromise<string>
+```
+
+</TabItem>
 <TabItem value="Clojure" label="Clojure">
 
 ```clojure
-(task-resource/update-task-by-reference-name [options workflow-id task-reference-name status update-req])
+(task-resource/update-task-by-reference-name options workflow-id task-reference-name status update-req)
 ```
 
 </TabItem>
