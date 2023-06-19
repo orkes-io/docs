@@ -42,14 +42,14 @@ func (*WorkflowExecutor) UpdateTaskByRefName(taskRefName string, workflowInstanc
 <TabItem value="Python" label="Python">
 
 ```python
-TaskResourceApi.update_task1(body, workflow_id, task_ref_name, status, **kwargs)
+TaskResourceApi.update_task1(taskOutput, workflow_id, task_ref_name, status, **kwargs)
 ```
 
 </TabItem>
 <TabItem value="CSharp" label="CSharp">
 
 ```csharp
-string TaskResourceApi.UpdateTask(Dictionary<string, Object> body, string workflowId, string taskRefName, string status, string workerid = null)
+string TaskResourceApi.UpdateTask(Dictionary<string, Object> taskOutput, string workflowId, string taskRefName, string status, string workerid = null)
 ```
 
 </TabItem>
@@ -60,7 +60,7 @@ TaskResourceService.updateTask(
     workflowId: string,
     taskRefName: string,
     status: 'IN_PROGRESS' | 'FAILED' | 'FAILED_WITH_TERMINAL_ERROR' | 'COMPLETED',
-    requestBody: Record<string, any>,
+    taskOutput: Record<string, any>,
 ): CancelablePromise<string>
 ```
 
@@ -72,7 +72,7 @@ TaskResourceService.updateTask(
     workflowId: string,
     taskRefName: string,
     status: 'IN_PROGRESS' | 'FAILED' | 'FAILED_WITH_TERMINAL_ERROR' | 'COMPLETED',
-    requestBody: Record<string, any>,
+    taskOutput: Record<string, any>,
 ): CancelablePromise<string>
 ```
 
