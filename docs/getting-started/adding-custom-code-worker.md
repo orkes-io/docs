@@ -51,17 +51,7 @@ View our documentation on [Conductor Clients & SDKs](/content/category/sdks) lis
 </TabItem>
 <TabItem value="Python" label="Python">
 
-```java
-    // @TODO:Gustavo
-    @WorkerTask("fraud-check")
-    public String checkForFraud(@InputParam("amount") BigDecimal amount, @InputParam("accountId") String accountId) {
-        boolean isFraud = fraudService.isFraudulentTxn(accountId, amount);
-        if(isFraud) {
-            return "This transaction cannot be processed as its flagged for review.";
-        }
-        return "Deposit of " + amount + " has processed successfully";
-    }
-
+```python dynamic https://github.com/conductor-sdk/python-sdk-examples/blob/upgrade-sdk-version-1.0.66/examples/worker/workers.py section=1 ../worker/workers.py
 ```
 
 </TabItem>
