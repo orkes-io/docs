@@ -38,7 +38,10 @@ Once a key has been created, you can perform two actions on the key:
 ### Adding Permissions​
 In this section, you can provide the application with access to workflows, tasks, secrets, or tags. To add the permissions,
 1. Click **+Add Permission** from the **Workflow and Task Permissions** section.
-2. In the pop-up window, choose the required **Target Type** from Workflow/Task/Secret/Tag.
+2. Choose the required Workflow/Task/Secret/Tag/Domain in the pop-up window.
+<ul>
+<li><b>Domain</b> - This can be used if you have set up an external worker with a task to domain mapping. You need to provide permission for the domain for the entire application to poll and update the tasks. </li>
+</ul>
 3. Select all targets that the application needs access to.
 4. Choose the required permissions for the selected targets.
 * **Read** - The user can view the workflow/task/secret/tags, but cannot modify or run them.
