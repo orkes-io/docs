@@ -52,9 +52,9 @@ To create a user group:
 
 **Workflow and Tasks Permissions** is an additional section where you can limit the group members' access to the permitted workflows, tasks, secrets & tags.
 
-6. Click **+Add Permission**, and you can choose the group to have access to selected Workflows/Tasks/Secrets/Tags. Permissions that can be granted include Read, Create, Update, Execute & Delete.
+6. Click **+Add Permission**, and you can choose the group to have access to selected Workflows/Tasks/Secrets/Tags/Domains. Permissions that can be granted include Read, Create, Update, Execute & Delete.
 
-<p align="center"><img src="/content/img/workflows-and-tasks-permissions.png" alt="Granting access to specific tasks and workflows" width="90%" height="auto"></img></p>
+<p align="center"><img src="/content/img/adding-permissions-for-applications.png" alt="Granting access to specific tasks and workflows" width="90%" height="auto"></img></p>
 
 :::note
 Even if certain permissions are granted under the **Workflow and Tasks Permissions** section, the chosen role supersedes these permissions. This means that if both the **Workflow and Tasks Permissions** section is configured and a role is selected, the role always supersedes the other.

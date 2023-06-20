@@ -52,7 +52,7 @@ To add permissions to the group,
 1. Ensure that the workflow is tagged with the tag **team:accounts**. (If permission is to be shared for tasks/secrets, you need to add the tags to the corresponding items.)
 2. Navigate to **ACCESS CONTROL > Groups** and click the edit icon near your group name.
 3. From the **Workflow and Task Permissions** section, click **+Add Permission**.
-4. Choose the **Target Type** as **Tag**, choose **team:accounts** tag, and provide EXECUTE permission. You must also provide READ permission to list the workflows/tasks/schedulers/secrets in your Conductor console.
+4. Click on the **Tag** section, choose **team:accounts** tag, and provide EXECUTE permission. You must also provide READ permission to list the workflows/tasks/schedulers/secrets in your Conductor console.
 5. Clicking **Add Permission** adds the tag to the Group.
 
 <p align="center"><img src="/content/img/adding-tags-to-a-user-group-in-conductor.png" alt="Adding tags to a user group" width="100%" height="auto"></img></p>
@@ -68,7 +68,7 @@ Suppose you want to provide access to the tag “**team:accounts**” for your a
 1. Ensure that the workflow/task/secret/scheduler is tagged with the tag **team:accounts**.
 2. Then, navigate to **ACCESS CONTROL > Applications** and click the edit icon near your app name.
 3. From the **Workflow and Task Permissions** section, click **+Add Permission**.
-4. Choose the **Target Type** as **Tag**, choose **team:accounts** tag, and provide the required permission.
+4. Click on the **Tag** section, choose **team:accounts** tag, and provide the required permission.
 5. Clicking **Add Permission** adds the tag to the application.
 
 <p align="center"><img src="/content/img/adding-tags-to-application-in-orkes-conductor.png" alt="Adding tags to application in Conductor" width="100%" height="auto"></img></p>
