@@ -202,6 +202,11 @@ const sidebars = {
                         }]
                 },
                 {
+                    type: 'doc',
+                    id: 'reference-docs/worker-task',
+                    className: 'leftMenuHeader',
+                },
+                {
                     type: 'category',
                     label: 'API Reference',
                     link: {

@@ -51,17 +51,7 @@ View our documentation on [Conductor Clients & SDKs](/content/category/sdks) lis
 </TabItem>
 <TabItem value="Python" label="Python">
 
-```java
-    // @TODO:Gustavo
-    @WorkerTask("fraud-check")
-    public String checkForFraud(@InputParam("amount") BigDecimal amount, @InputParam("accountId") String accountId) {
-        boolean isFraud = fraudService.isFraudulentTxn(accountId, amount);
-        if(isFraud) {
-            return "This transaction cannot be processed as its flagged for review.";
-        }
-        return "Deposit of " + amount + " has processed successfully";
-    }
-
+```python dynamic https://github.com/conductor-sdk/python-sdk-examples/blob/upgrade-sdk-version-1.0.66/examples/worker/workers.py section=1 ../worker/workers.py
 ```
 
 </TabItem>
@@ -119,12 +109,11 @@ View our documentation on [Conductor Clients & SDKs](/content/category/sdks) lis
 
 Once we have cloned the repo or copied the required elements to our local machines, we can run this locally by connecting to the playground server. 
 To do this, we must give the required permissions to our application.
-Refer to thi__[video](/cont__t/how-to-videos/app-management) to add permission to ex__ute the__ustom worker we just  created above (`fraud-check-<replace-with-a-unique-value>`).
+Refer to this [video](/content/how-to-videos/app-management) to add permission to execute the custom worker we just created above (`fraud-check-<replace-with-a-unique-value>`).
 After providing the permissions, we can change the definition to run our worker (`fraud-check-<replace-with-a-unique-value>`) and start the application.
 We can see that now our worker is picking up the task. 
 
-This is the **first example** of how a distributed worker is executed i__Conductor; **wit__ut** expo__ng an endpoint__
-or creating any sort of inbound connectivity, we were able to execute the task directly from our local machine pointing to the playground server.
+This is the **first example** of how a distributed worker is executed in Conductor; **without** exposinng an endpoint or creating any sort of inbound connectivity, we were able to execute the task directly from our local machine pointing to the playground server.
 
 :::tip Distributed workers in Conductor
 We can run similar workflows in production, too, workers could live in **any applications** or even **third-party services** and we can connect them all together using
