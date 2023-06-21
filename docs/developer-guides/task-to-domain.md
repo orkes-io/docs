@@ -48,15 +48,23 @@ Let's configure the workers with a domain label called `test`.
 <Tabs>
 <TabItem value="Java" lable="Java">
 
-1. System property by **taskName**: `conductor.worker.${TASK_NAME}.domain`
+- System property by **taskName**: `conductor.worker.${TASK_NAME}.domain`
    - Example: `conductor.worker.exampleTaskName.domain=test`
      - Every worker polling for `exampleTaskName` will use `test` as domain
-2. System property for **all** workers: `conductor.worker.all.domain`
+- System property for **all** workers: `conductor.worker.all.domain`
    - Example: `conductor.worker.all.domain=test`
      - All workers without a previously defined domain will use `test` as domain
-3. `TaskRunner` constructor param: `Map<String, String> taskToDomain`, specifying a default domain by each given taskName
+- `TaskRunner` constructor param: `Map<String, String> taskToDomain`, specifying a default domain by each given taskName
    - Example: `{"exampleTaskName": "test"}`
      - Every worker polling for `exampleTaskName` will use `test` as domain
+
+```java dynamic https://github.com/orkes-io/orkes-conductor-client/blob/3903a87320a4bb0907d55f1a6c0996be91bb7f73/src/test/java/io/orkes/conductor/client/worker/TaskToDomainTests.java section=1 ../worker/TaskToDomainTests.java
+```
+
+- `@WorkerTask` constructor param: `@WorkerTask(domain="test")`
+
+```java dynamic https://github.com/conductor-sdk/orkes-java-springboot2-example/blob/main/src/main/java/io/orkes/example/banking/workers/ConductorWorkers.java section=3 ../workers/ConductorWorkers.java
+```
 
 
 </TabItem>
