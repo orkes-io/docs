@@ -18,7 +18,7 @@ Continuing the use case from the previous step, we now have a requirement to add
 
 
 1. In your current definition, add a [Switch](/content/reference-docs/operators/switch) task before the deposit task.
-2. Add a switch case for checking amounts >= 10000, and add a [Worker](/content/reference-docs/operators/worker-task) task for the case with the name `fraud-check`.
+2. Add a switch case for checking amounts >= 10000, and add a [Worker](/content/reference-docs/worker-task) task for the case with the name `fraud-check`.
 3. [Run workflow](/content/how-to-videos/run-workflow).
 
 </div>
