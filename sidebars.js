@@ -203,7 +203,7 @@ const sidebars = {
                 },
                 {
                     type: 'doc',
-                    id: 'reference-docs/system-tasks/worker-task',
+                    id: 'reference-docs/worker-task',
                     className: 'leftMenuHeader',
                 },
                 {
