@@ -43,22 +43,27 @@ To successfully route a task by domain:
 
 ### Configuring Workers with Domain 
 
-Let's configure the workers with a domain label called `test`.
+Let's configure the workers with a domain label called `test`. Every worker polling for `taskName` will use `test` as domain.
 
 <Tabs>
 <TabItem value="Java" lable="Java">
 
-| Type                                                                     | Description                                                                                                                 |
-| ------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------- |
-| System property by **taskName**:`conductor.worker.${TASK_NAME}.domain`   | `conductor.worker.exampleTaskName.domain=test`: Every worker polling for `exampleTaskName` will use `test` as domain        |
-| System property for **all** workers: `conductor.worker.all.domain`       | `conductor.worker.all.domain=test`: All workers without a previously defined domain will use `test` as domain               |
-| Class `TaskRunner` constructor param: `Map<String, String> taskToDomain` | `{"exampleTaskName": "test"}`: Every worker polling for `exampleTaskName` will use `test` as domain                         |
-| Annotation `@WorkerTask` constructor param: `domain`                     | `@WorkerTask(value="exampleTaskName", domain="test")`: Every worker polling for `exampleTaskName` will use `test` as domain |
+| Description                                | PropertyName                           | Example                                        |
+| ------------------------------------------ | -------------------------------------- | ---------------------------------------------- |
+| System property by **taskName**            | `conductor.worker.${TASK_NAME}.domain` | `conductor.worker.taskName.domain=test`        |
+| System property for **all** workers        | `conductor.worker.all.domain`          | `conductor.worker.all.domain=test`             |
+| Class `TaskRunner` constructor param       | `taskToDomain`                         | `taskToDomain=Map.of("taskName", "test")`      |
+| Annotation `@WorkerTask` constructor param | `domain`                               | `@WorkerTask(value="taskName", domain="test")` |
+| Environment variable                       | `CONDUCTOR_WORKER_(.*?)_DOMAIN`        | `CONDUCTOR_WORKER_taskName_DOMAIN=test`        |
 
-```java dynamic https://github.com/conductor-sdk/orkes-java-springboot2-example/blob/add-worker-domain/src/main/java/io/orkes/example/banking/workers/ConductorWorkers.java section=3 ../workers/ConductorWorkers.java
+Code example for `TaskRunner`:
+```java dynamic https://github.com/orkes-io/orkes-conductor-client/blob/3903a87320a4bb0907d55f1a6c0996be91bb7f73/src/test/java/io/orkes/conductor/client/worker/TaskToDomainTests.java section=1 ../worker/TaskToDomainTests.java
 ```
 
-```java dynamic https://github.com/orkes-io/orkes-conductor-client/blob/3903a87320a4bb0907d55f1a6c0996be91bb7f73/src/test/java/io/orkes/conductor/client/worker/TaskToDomainTests.java section=1 ../worker/TaskToDomainTests.java
+<br></br>
+
+Code example for `@WorkerTask`:
+```java dynamic https://github.com/conductor-sdk/orkes-java-springboot2-example/blob/add-worker-domain/src/main/java/io/orkes/example/banking/workers/ConductorWorkers.java section=3 ../workers/ConductorWorkers.java
 ```
 
 </TabItem>
