@@ -28,7 +28,7 @@ POST /tasks/{workflowId}/{taskRefName}/{status}
 <TabItem value="Java" label="Java">
 
 ```java
-String OrkesTaskClient.updateTask1(Map<String, Object> body, String workflowId, String taskRefName, String status) throws ApiException
+String OrkesTaskClient.updateTaskByRefName(Map<String, Object> output, String workflowId, String taskRefName, String status) throws ApiException
 ```
 
 </TabItem>
