@@ -58,28 +58,28 @@ Let's configure the workers with a domain label called `test`. Every worker poll
 Code example for `TaskRunner`:
 ```java
 private static void startTaskRunnerWorkers(TaskClient taskClient) {
-      List<Worker> workers = Arrays.asList(new TaskWorker());
-      TaskRunnerConfigurer.Builder builder = new TaskRunnerConfigurer.Builder(taskClient, workers);
+    List<Worker> workers = Arrays.asList(new TaskWorker());
+    TaskRunnerConfigurer.Builder builder = new TaskRunnerConfigurer.Builder(taskClient, workers);
 
-      Map<String, String> taskToDomains = new HashMap<>();
-      taskToDomains.put("task-domain-runner-simple-task", "test");
-      Map<String, Integer> taskThreadCount = new HashMap<>();
+    Map<String, String> taskToDomains = new HashMap<>();
+    taskToDomains.put("task-domain-runner-simple-task", "test");
+    Map<String, Integer> taskThreadCount = new HashMap<>();
 
-      TaskRunnerConfigurer taskRunner =
-              builder.withThreadCount(2)
-                      .withTaskToDomain(taskToDomains)
-                      .withTaskThreadCount(taskThreadCount)
-                      .withSleepWhenRetry(500)
-                      .withWorkerNamePrefix("task-domain")
-                      .withUpdateRetryCount(3)
-                      .build();
+    TaskRunnerConfigurer taskRunner =
+            builder.withThreadCount(2)
+                    .withTaskToDomain(taskToDomains)
+                    .withTaskThreadCount(taskThreadCount)
+                    .withSleepWhenRetry(500)
+                    .withWorkerNamePrefix("task-domain")
+                    .withUpdateRetryCount(3)
+                    .build();
 
-      // Start Polling for tasks and execute them
-      taskRunner.init();
+    // Start Polling for tasks and execute them
+    taskRunner.init();
 
-      // Optionally, use the shutdown method to stop polling
-      taskRunner.shutdown();
-  }
+    // Optionally, use the shutdown method to stop polling
+    taskRunner.shutdown();
+}
 
 private static class TaskWorker implements Worker {
 
