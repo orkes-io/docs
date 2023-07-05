@@ -41,12 +41,15 @@ To successfully route a task by domain:
 1. Configure your workers to start polling for work that is tagged by the domain
 2. When triggering the workflow, ensure the __taskToDomain__ map is set to the right mapping values
 
-### Configuring Workers with Domain 
+### Configuring Workers with Domain
 
 Let's configure the workers with a domain label called `test`. Every worker polling for `taskName` will use `test` as domain.
 
 <Tabs>
-<TabItem value="Java" lable="Java">
+<TabItem value="Java" label="Java">
+The following table shows the order of precedence when initializing the task domain for a worker. If a system property is set according to the table below, it takes priority over the initialization of the taskToDomain map or passing the domain as an argument when using annotations. If ${TASK_NAME} is replaced by all in the system property name, then all workers will pickup that task domain.
+
+<br></br>
 
 | Description                                | PropertyName                           | Example                                        |
 | ------------------------------------------ | -------------------------------------- | ---------------------------------------------- |
@@ -57,61 +60,23 @@ Let's configure the workers with a domain label called `test`. Every worker poll
 
 Code example for `TaskRunner`:
 ```java
-private static void startTaskRunnerWorkers(TaskClient taskClient) {
-    List<Worker> workers = Arrays.asList(new TaskWorker());
-    TaskRunnerConfigurer.Builder builder = new TaskRunnerConfigurer.Builder(taskClient, workers);
+Map<String, String> taskToDomains = new HashMap<>();
+taskToDomains.put("taskName", "test");
+Map<String, Integer> taskThreadCount = new HashMap<>();
 
-    Map<String, String> taskToDomains = new HashMap<>();
-    taskToDomains.put("task-domain-runner-simple-task", "test");
-    Map<String, Integer> taskThreadCount = new HashMap<>();
+TaskRunnerConfigurer.Builder builder = new TaskRunnerConfigurer.Builder(taskClient, workers);
+TaskRunnerConfigurer taskRunner = builder.withTaskToDomain(taskToDomains).build();
 
-    TaskRunnerConfigurer taskRunner =
-            builder.withThreadCount(2)
-                    .withTaskToDomain(taskToDomains)
-                    .withTaskThreadCount(taskThreadCount)
-                    .withSleepWhenRetry(500)
-                    .withWorkerNamePrefix("task-domain")
-                    .withUpdateRetryCount(3)
-                    .build();
-
-    // Start Polling for tasks and execute them
-    taskRunner.init();
-
-    // Optionally, use the shutdown method to stop polling
-    taskRunner.shutdown();
-}
-
-private static class TaskWorker implements Worker {
-
-    @Override
-    public String getTaskDefName() {
-        return "task-domain-runner-simple-task";
-    }
-
-    public TaskResult execute(Task task) {
-        TaskResult result = new TaskResult(task);
-
-        result.getOutputData().put("key2", "value2");
-        result.getOutputData().put("amount", 145);
-        result.setStatus(TaskResult.Status.COMPLETED);
-
-        return result;
-    }
-}
 ```
 
 <br></br>
 
 Code example for `@WorkerTask`:
 ```java
-@WorkerTask(value="task-domain-annotated-simple-task", domain="test")
+@WorkerTask(value="taskName", domain="test")
 public TaskResult sendAnnotatedTaskDomain(Task task) {
     TaskResult result = new TaskResult(task);
-
-    result.getOutputData().put("key", "value");
-    result.getOutputData().put("amount", 123.45);
-    result.setStatus(TaskResult.Status.COMPLETED);
-
+    // Populate result here
     return result;
 }
 
