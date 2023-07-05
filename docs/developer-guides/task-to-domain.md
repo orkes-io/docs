@@ -54,16 +54,15 @@ Let's configure the workers with a domain label called `test`. Every worker poll
 | System property for **all** workers        | `conductor.worker.all.domain`          | `conductor.worker.all.domain=test`             |
 | Class `TaskRunner` constructor param       | `taskToDomain`                         | `taskToDomain=Map.of("taskName", "test")`      |
 | Annotation `@WorkerTask` constructor param | `domain`                               | `@WorkerTask(value="taskName", domain="test")` |
-| Environment variable                       | `CONDUCTOR_WORKER_(.*?)_DOMAIN`        | `CONDUCTOR_WORKER_taskName_DOMAIN=test`        |
 
 Code example for `TaskRunner`:
-```java dynamic https://github.com/orkes-io/orkes-conductor-client/blob/3903a87320a4bb0907d55f1a6c0996be91bb7f73/src/test/java/io/orkes/conductor/client/worker/TaskToDomainTests.java section=1 ../worker/TaskToDomainTests.java
+```java dynamic https://github.com/orkes-io/orkes-conductor-client/blob/main/example/java/io/orkes/conductor/sdk/examples/TaskDomainWorker.java#L111-L153 section=1 ../examples/TaskDomainWorker.java
 ```
 
 <br></br>
 
 Code example for `@WorkerTask`:
-```java dynamic https://github.com/conductor-sdk/orkes-java-springboot2-example/blob/add-worker-domain/src/main/java/io/orkes/example/banking/workers/ConductorWorkers.java section=3 ../workers/ConductorWorkers.java
+```java dynamic https://github.com/orkes-io/orkes-conductor-client/blob/main/example/java/io/orkes/conductor/sdk/examples/TaskDomainWorker.java#L98-L109 section=3 ../examples/TaskDomainWorker.java
 ```
 
 </TabItem>
