@@ -56,14 +56,68 @@ Let's configure the workers with a domain label called `test`. Every worker poll
 | Annotation `@WorkerTask` constructor param | `domain`                               | `@WorkerTask(value="taskName", domain="test")` |
 
 Code example for `TaskRunner`:
-```java dynamic https://github.com/orkes-io/orkes-conductor-client/blob/main/example/java/io/orkes/conductor/sdk/examples/TaskDomainWorker.java#L111-L153 section=1 ../examples/TaskDomainWorker.java
+```java
+private static void startTaskRunnerWorkers(TaskClient taskClient) {
+      List<Worker> workers = Arrays.asList(new TaskWorker());
+      TaskRunnerConfigurer.Builder builder = new TaskRunnerConfigurer.Builder(taskClient, workers);
+
+      Map<String, String> taskToDomains = new HashMap<>();
+      taskToDomains.put("task-domain-runner-simple-task", "test");
+      Map<String, Integer> taskThreadCount = new HashMap<>();
+
+      TaskRunnerConfigurer taskRunner =
+              builder.withThreadCount(2)
+                      .withTaskToDomain(taskToDomains)
+                      .withTaskThreadCount(taskThreadCount)
+                      .withSleepWhenRetry(500)
+                      .withWorkerNamePrefix("task-domain")
+                      .withUpdateRetryCount(3)
+                      .build();
+
+      // Start Polling for tasks and execute them
+      taskRunner.init();
+
+      // Optionally, use the shutdown method to stop polling
+      taskRunner.shutdown();
+  }
+
+private static class TaskWorker implements Worker {
+
+    @Override
+    public String getTaskDefName() {
+        return "task-domain-runner-simple-task";
+    }
+
+    public TaskResult execute(Task task) {
+        TaskResult result = new TaskResult(task);
+
+        result.getOutputData().put("key2", "value2");
+        result.getOutputData().put("amount", 145);
+        result.setStatus(TaskResult.Status.COMPLETED);
+
+        return result;
+    }
+}
 ```
 
 <br></br>
 
 Code example for `@WorkerTask`:
-```java dynamic https://github.com/orkes-io/orkes-conductor-client/blob/main/example/java/io/orkes/conductor/sdk/examples/TaskDomainWorker.java#L98-L109 section=3 ../examples/TaskDomainWorker.java
+```java
+@WorkerTask(value="task-domain-annotated-simple-task", domain="test")
+public TaskResult sendAnnotatedTaskDomain(Task task) {
+    TaskResult result = new TaskResult(task);
+
+    result.getOutputData().put("key", "value");
+    result.getOutputData().put("amount", 123.45);
+    result.setStatus(TaskResult.Status.COMPLETED);
+
+    return result;
+}
+
 ```
+
+View the [complete code here](https://github.com/orkes-io/orkes-conductor-client/blob/main/example/java/io/orkes/conductor/sdk/examples/TaskDomainWorker.java).
 
 </TabItem>
 <TabItem value="Python" label="Python">
