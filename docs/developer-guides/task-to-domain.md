@@ -43,12 +43,27 @@ To successfully route a task by domain:
 
 ### Configuring Workers with Domain 
 
-Let's configure the workers with a domain label called `test`.
+Let's configure the workers with a domain label called `test`. Every worker polling for `taskName` will use `test` as domain.
 
 <Tabs>
 <TabItem value="Java" lable="Java">
 
-TODO: Coming soon
+| Description                                | PropertyName                           | Example                                        |
+| ------------------------------------------ | -------------------------------------- | ---------------------------------------------- |
+| System property by **taskName**            | `conductor.worker.${TASK_NAME}.domain` | `conductor.worker.taskName.domain=test`        |
+| System property for **all** workers        | `conductor.worker.all.domain`          | `conductor.worker.all.domain=test`             |
+| Class `TaskRunner` constructor param       | `taskToDomain`                         | `taskToDomain=Map.of("taskName", "test")`      |
+| Annotation `@WorkerTask` constructor param | `domain`                               | `@WorkerTask(value="taskName", domain="test")` |
+
+Code example for `TaskRunner`:
+```java dynamic https://github.com/orkes-io/orkes-conductor-client/blob/main/example/java/io/orkes/conductor/sdk/examples/TaskDomainWorker.java#L111-L153 section=1 ../examples/TaskDomainWorker.java
+```
+
+<br></br>
+
+Code example for `@WorkerTask`:
+```java dynamic https://github.com/orkes-io/orkes-conductor-client/blob/main/example/java/io/orkes/conductor/sdk/examples/TaskDomainWorker.java#L98-L109 section=3 ../examples/TaskDomainWorker.java
+```
 
 </TabItem>
 <TabItem value="Python" label="Python">
