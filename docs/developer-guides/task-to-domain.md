@@ -47,7 +47,7 @@ Let's configure the workers with a domain label called `test`. Every worker poll
 
 <Tabs>
 <TabItem value="Java" label="Java">
-The following table shows the order of precedence when initializing the task domain for a worker. If a system property is set according to the table below, it takes priority over the initialization of the taskToDomain map or passing the domain as an argument when using annotations. If ${TASK_NAME} is replaced by all in the system property name, then all workers will pickup that task domain.
+The following table shows the order of precedence when initializing the task domain for a worker. If a system property is set according to the table below, it takes priority over the initialization of the taskToDomain map or passing the domain as an argument when using annotations. If <b>&#36;&#123;TASK_NAME&#125;</b> is replaced by all in the system property name, then all workers will pickup that task domain.
 
 <br></br>
 
