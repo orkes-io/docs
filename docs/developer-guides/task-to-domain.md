@@ -87,7 +87,57 @@ View the [complete code here](https://github.com/orkes-io/orkes-conductor-client
 </TabItem>
 <TabItem value="Python" label="Python">
 
-TODO: Coming soon
+```python
+# Function Worker
+def execute(task: Task) -> TaskResult:
+    task_result = TaskResult(
+        task_id=task.task_id,
+        workflow_instance_id=task.workflow_instance_id,
+        worker_id='your_custom_id'
+    )
+    task_result.add_output_data('worker_style', 'function')
+    task_result.status = TaskResultStatus.COMPLETED
+    return task_result
+
+
+# Class Worker
+class SimpleWorker(WorkerInterface):
+    def execute(self, task: Task) -> TaskResult:
+        task_result = self.get_task_result_from_task(task)
+        task_result.add_output_data('worker_style', 'class')
+        task_result.status = TaskResultStatus.COMPLETED
+        return task_result
+
+    def get_polling_interval_in_seconds(self) -> float:
+        return 0.4
+
+    # Overriding it for specifying the DOMAIN of class workers
+    def get_domain(self) -> str:
+        return "test"
+
+
+def startTaskRunnerWorkers():
+    configuration = Configuration(
+        authentication_settings=AuthenticationSettings(
+            key_id='key',
+            key_secret='secret'
+        ),
+        server_api_url='https://play.orkes.io/api',
+        debug=True
+    )
+
+    workers = [
+        Worker(
+            task_definition_name='task_1',
+            execute_function=execute,
+            poll_interval=0.25,
+            domain="test" # specifying DOMAIN for function workers
+        ),
+        SimpleWorker(task_definition_name="task_2")
+    ]
+```
+
+[View More Details](https://github.com/conductor-sdk/conductor-python/tree/main/docs/worker)
 
 </TabItem>
 <TabItem value="Go" label="Go">
