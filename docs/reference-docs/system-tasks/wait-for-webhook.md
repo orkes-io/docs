@@ -135,6 +135,8 @@ So here, the URL is marked as verified when the first Webhook event comes with a
 
 <p align="center"><img src="/content/img/Creating-a-challenge-based-verifier-Webhook-in-Conductor.png" alt="Challenge-based verifier webhook" width="100%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
+#### [Slack Example - Standup Bot using Orkes Conductor](https://orkes.io/blog/create-standup-bot-using-conductor-slack-integration/)
+
 ### 3. Signature-based Verifier Webhook
 
 This type of Webhook is configured using the token from the source platform. This token is used to verify the signature of the request. The systems that support the signature-based verifiers are GitHub, Twilio, Stripe, Pagerduty, Zendesk & Twitter.
@@ -151,29 +153,3 @@ This type of Webhook is configured using the token from the source platform. Thi
 <p align="center"><img src="/content/img/Creating-a-signature-based-verifier-Webhook-in-Conductor.png" alt="Signature-based verifier webhook" width="100%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
 Here the URL is marked as verified when the request comes with the header configured and when the request payload hash in the header and the calculated hash on the Conductor side match.
-
-## Examples
-
-<details><summary>Sending messages in a Slack channel</summary>
-<p>
-Integrating Conductor with other systems using Webhook can be leveraged for cases like creating chatbots, employee onboarding processes, automated scrum updates, automated issue creation on support channel messages, etc. Now, let’s visualize a sample case where you need to send a message in a Slack channel.
-<br/>
-
-1. Create workflows to send a message in a Slack channel.
-2. Create a Slack app that has permission to post to the Slack channel. Then, navigate to **Features > Incoming Webhooks**, and turn on **Activate Incoming Webhooks**.
-
-<p align="center"><img src="/content/img/Activate-incoming-webhooks-for-Slack-app.png" alt="Activating incoming webhooks for Slack app to enable permission to post in channels" width="100%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
-
-3. Create a webhook that listens for events from Slack. Check the above-mentioned example for creating Webhook.
-4. Once the unverified URL is generated, you can use this URL in the Slack app. Under **Features > Event Subscriptions**, turn on the toggle button **Enable Events**. Provide the unverified URL of the Webhook under the field **Request URL**.
-
-<p align="center"><img src="/content/img/Enabling-events-for-Slack-app.png" alt="Enabling events for connecting webhook with Slack app" width="100%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
-
-5. The URL would now be verified in both the Slack app and the Conductor side.
-6. Save the Webhook.
-7. Run the workflow. The current status of the workflow will be RUNNING. 
-8. Open the Slack app and send the text message to the channel.
-9. The Workflow is completed now.
-
-</p>
-</details>
