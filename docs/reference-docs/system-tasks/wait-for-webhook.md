@@ -100,11 +100,11 @@ If you have enabled the option to **Start workflow when webhook event comes**, t
 
 The generated URL is to be copied to the platform from which the Webhook will be invoked. The URL status will be **Unverified** now.
 
-<p align="center"><img src="/content/img/Webhook-with-an-unverified-URL-in-Conductor.png" alt="Webhook with an unverified URL" width="100%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+<p align="center"><img src="/content/img/Webhook-with-an-unverified-URL-in-Conductor.png" alt="Webhook with an unverified URL" width="100%" height="auto"/></p>
 
 Once the URL is verified based on the verification method, this is what a Webhook with a verified URL looks like.
 
-<p align="center"><img src="/content/img/Webhook-with-a-verified-URL-in-Conductor.png" alt="Webhook with a verified URL" width="100%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+<p align="center"><img src="/content/img/Webhook-with-a-verified-URL-in-Conductor.png" alt="Webhook with a verified URL" width="100%" height="auto"/></p>
 
 ## Supported Webhook Verification Methods by Conductor
 
@@ -120,7 +120,7 @@ Conductor supports the incoming Webhooks over HTTPS with the following verificat
 
 For this type of Webhook, each request must contain all the headers with the keys and values specified. The request will be ignored if the keys and values are not specified.
 
-<p align="center"><img src="/content/img/Creating-a-header-based-verifier-Webhook-in-Conductor.png" alt="Header-based verifier webhook" width="100%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+<p align="center"><img src="/content/img/Creating-a-header-based-verifier-Webhook-in-Conductor.png" alt="Header-based verifier webhook" width="100%" height="auto" /></p>
 
 So here, the URL is marked as verified when the first Webhook event comes with all the header keys and values configured.
 
@@ -133,7 +133,7 @@ So here, the URL is marked as verified when the first Webhook event comes with a
 * For this type of Webhook, the initial invocation must have a challenge parameter, and the same will be returned. This way, the Conductor marks the URL as verified. The Conductor would automatically accept the subsequent requests.
 * The URL is marked as verified when the challenge request comes from the system. If the URL is not verified, then all the requests will be ignored until the URL verification is completed via the challenge mechanism. The systems that support the challenge-based verifiers are Slack and Facebook.
 
-<p align="center"><img src="/content/img/Creating-a-challenge-based-verifier-Webhook-in-Conductor.png" alt="Challenge-based verifier webhook" width="100%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+<p align="center"><img src="/content/img/Creating-a-challenge-based-verifier-Webhook-in-Conductor.png" alt="Challenge-based verifier webhook" width="100%" height="auto"/></p>
 
 #### [Slack Example - Standup Bot using Orkes Conductor](https://orkes.io/blog/create-standup-bot-using-conductor-slack-integration/)
 
@@ -150,6 +150,6 @@ This type of Webhook is configured using the token from the source platform. Thi
 | Zendesk       | <ul><li>Header **X-Zendesk-Webhook-Signature** will be used to request verification.</li><li>**[SIGNING_SECRET](https://developer.zendesk.com/documentation/event-connectors/webhooks/verifying/#retrieving-a-webhooks-signing-secret-key)** - Provide your Zendesk’s signing secret for Webhook.</li></ul>                                                                                         |
 | Twitter       | <ul><li>Header **x-twitter-webhooks-signature** will be used to request verification.</li><li>**[TWITTER_CONSUMER_SECRET](https://developer.twitter.com/en/docs/twitter-api/enterprise/account-activity-api/guides/securing-webhooks)** - Provide your Twitter app’s consumer secret.</li></ul>                                                                                                     |
 
-<p align="center"><img src="/content/img/Creating-a-signature-based-verifier-Webhook-in-Conductor.png" alt="Signature-based verifier webhook" width="100%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+<p align="center"><img src="/content/img/Creating-a-signature-based-verifier-Webhook-in-Conductor.png" alt="Signature-based verifier webhook" width="100%" height="auto"/></p>
 
 Here the URL is marked as verified when the request comes with the header configured and when the request payload hash in the header and the calculated hash on the Conductor side match.
