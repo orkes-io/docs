@@ -35,6 +35,8 @@ You can configure workflow definitions directly via UI and using API. The workfl
 POST /api/metadata/workflow
 ```
 
+When a workflow definition is updated via API, it automatically increments the workflow version to the latest.
+
 ## Client SDK Methods
 
 <Tabs>

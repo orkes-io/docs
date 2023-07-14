@@ -56,8 +56,9 @@ The output of the sub-workflow is also supplied to the output of the workflow.
 
 1. Add task type `Sub Workflow`.
 2. Select the workflow and version.
-3. Add input parameters.
-4. Add task to domain if applicable.
+3. Check the option “Expand” if you need to expand the sub-workflow in the UI. This comes into use in cases where too many sub-workflows are added as forks in a fork-join task & you need to make the workflow diagram look crisp.
+4. Add input parameters.
+5. Add task to domain if applicable.
 
 </div>
 <div className="col">

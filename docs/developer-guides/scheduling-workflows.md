@@ -121,6 +121,17 @@ Add the required tag to the scheduler and workflow to which non-admins may need 
 This ensures that the group members will have "execute" & “read” permission over the scheduler and workflows you’ve tagged with the tag “team:execute”.
 :::
 
+## Scheduling Workflows from Completed Executions
+
+ To schedule a workflow from a completed execution page,
+
+ 1. Navigate to the workflow execution page.
+2. From **Actions**, choose **Create Schedule**.
+
+<p align="center"><img src="/content/img/schedule-from-executions.png" alt="Workflow scheduling from executions" width="100%" height="auto"></img></p>
+
+3. This pre-fills a Scheduler Definition with the workflow name, version, input parameters, and task-to-domain mapping. You only need to provide a name for the scheduler and choose the schedule time. 
+
 <FAQStructuredData faqs={faqs} />
 
 import FAQStructuredData from '../../src/theme/FAQStructuredData';

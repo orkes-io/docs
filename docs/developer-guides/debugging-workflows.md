@@ -16,6 +16,12 @@ All recent workflow executions are listed on the **WORKFLOWS > Executions** page
 
 Data on this page can be filtered by searching through workflow name, ID, status, time period, and past days’ executions. Click on the required execution to view the individual execution of a workflow. 
 
+:::note
+You can also search for workflow names by inputting partial values with wildcards (*) support. For example, if you want to search for workflow names containing “test”, then search for **test***, and it will display all the workflow definitions with **‘test’** in their name.
+<p align="center"><img src="/content/img/workflow-partial-search.png" alt="Workflow search with wildcard support"
+                       width="90%" height="auto"/></p>
+:::
+
 A sample execution looks like this:
 
 <p align="center"><img src="/content/img/sample-workflow-execution.png" alt="Sample Workflow Executions page"
