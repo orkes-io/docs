@@ -1,8 +1,8 @@
-# Pausing for External Signals
+# Sending Signals to Workflows
 
-You may encounter situations where you need to pause your workflows for external signals. There are different ways through which you can achieve this. 
+You may encounter situations where you need to send signals to workflows for cases like pausing workflows. There are different ways through which you can achieve this. 
 
-In this document, let’s look at the two different ways to pause a workflow for an external signal in your production environment.
+In this document, let’s look at the different ways to send signals to your workflows in a production environment.
 
 1. Using Async Complete
 2. Using Wait Task
