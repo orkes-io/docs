@@ -25,7 +25,7 @@ If the workflow definition is updated but with the same version V1:
 If the workflow version is changed to V2:
 - On rerunning the workflow (say at T2), it runs based on the latest version V2. 
 
-## Changing a running version - A workaround
+## Changing a running version 
 
 Any changes to the definition won’t impact if the execution is already running. However, if you want to run the latest version, you can terminate the currently running execution and then use the option to restart with the latest definition. 
 
