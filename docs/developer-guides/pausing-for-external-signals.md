@@ -7,28 +7,162 @@ In certain scenarios, there might arise a need to transmit signals to workflows 
 
 In this document, let’s look at the different ways to send signals to your workflows in a production environment.
 
-1. Pausing using Wait Task
+1. Pause Workflow
+2. Resume Workflow
 3. Terminate Workflow
 4. Restart Workflow
 5. Rerun/Retry Workflow
 
-## Pausing using Wait Task
+## Pause Workflow
 
-Wait task ensures that your workflow is paused for a certain period based on the configured parameters. You can configure it in such a way that the task can wait for a certain duration or until a specific date & time, or you can configure the wait type as “Signal”, which waits for some manual intervention to get completed.
+You can pause the workflows to wait for external signals. It can be achieved in 2 ways.
 
-If you have configured the wait type as “Signal” and run the workflow, you can see that the task is in progress, waiting for an external signal to continue. You can manually update the task status to “Completed” directly from the UI, as shown below.
+### Using API
 
-<p align="center"><img src="/content/img/wait-task-example-for-pausing-workflow.png" alt="Pausing workflow using wait task" width="100%" height="auto"></img></p>
+Once the workflow is run, the **workflowId** will be generated. You can get the workflowId below the workflow name on the execution page. Use the following API with the workflow id to pause your workflow:
 
-Check out our documentation on the [Wait task](https://orkes.io/content/reference-docs/operators/wait) for more details.
+```
+PUT /workflow/{workflowId}/pause
+```
+### SDKs
 
-The above methods can be used to pause your workflow to wait for an external signal. 
+<Tabs>
+<TabItem value="Java" label="Java">
 
-:::tip
-We can pause/resume your workflow directly from the UI or using the [pause](https://orkes.io/content/reference-docs/api/workflow/pause-worflow)/[resume](https://orkes.io/content/reference-docs/api/workflow/resume-workflow) workflow API. However, it is recommended only when debugging your running workflows.
+```java
+BulkResponse pauseWorkflow(List<String> workflowIds) throws ApiException
+```
 
-We recommend using the methods mentioned in this document to pause your workflows in live environments for specific use cases.
-:::
+</TabItem>
+<TabItem value="Golang" label="Golang">
+
+```go
+func (e *WorkflowExecutor) Pause(workflowId string) error
+```
+
+</TabItem>
+<TabItem value="Python" label="Python">
+
+```python
+WorkflowResourceApi.pause_workflow1(self, workflow_id, **kwargs)
+```
+
+</TabItem>
+<TabItem value="CSharp" label="CSharp">
+
+```csharp
+void WorkflowResourceApi.PauseWorkflow(string workflowId)
+```
+
+</TabItem>
+<TabItem value="Javascript" label="Javascript">
+
+```javascript
+WorkflowExecutor.pauseWorkflow(
+    workflowId: string,
+): CancelablePromise<any>
+```
+
+</TabItem>
+<TabItem value="Typescript" label="Typescript">
+
+```typescript
+WorkflowExecutor.pauseWorkflow(
+    workflowId: string,
+): CancelablePromise<any>
+```
+
+</TabItem>
+<TabItem value="Clojure" label="Clojure">
+
+```clojure
+(workflow-resource/pause-workflow [options workflow-id])
+```
+
+</TabItem>
+</Tabs>
+
+### From Conductor UI
+
+From the workflow executions page, click **Actions**, and choose **Pause**.
+
+<p align="center"><img src="/content/img/pause-workflow-from-ui.png" alt="Pausing workflows from UI" width="100%" height="auto"></img></p>
+
+## Resume Workflow
+
+You can resume the paused workflows to wait for external signals. It can be achieved in 2 ways.
+
+### Using API
+
+Once the workflow is run, the **workflowId** will be generated. You can get the workflowId below the workflow name on the execution page. Use the following API with the workflow id to resume your paused workflow:
+
+```
+PUT /workflow/{workflowId}/resume  
+```
+### SDKs
+
+<Tabs>
+<TabItem value="Java" label="Java">
+
+```java
+BulkResponse resumeWorkflow(List<String> workflowIds) throws ApiException
+```
+
+</TabItem>
+<TabItem value="Golang" label="Golang">
+
+```go
+func (e *WorkflowExecutor) Resume(workflowId string) error
+```
+
+</TabItem>
+<TabItem value="Python" label="Python">
+
+```python
+WorkflowResourceApi.resume_workflow1(self, workflow_id, **kwargs)
+```
+
+</TabItem>
+<TabItem value="CSharp" label="CSharp">
+
+```csharp
+void WorkflowResourceApi.ResumeWorkflow(string workflowId)
+```
+
+</TabItem>
+
+<TabItem value="Javascript" label="Javascript">
+
+```javascript
+WorkflowExecutor.resume(
+    workflowId: string,
+): CancelablePromise<any>
+```
+
+</TabItem>
+<TabItem value="Typescript" label="Typescript">
+
+```typescript
+WorkflowExecutor.resume(
+    workflowId: string,
+): CancelablePromise<any>
+```
+
+</TabItem>
+<TabItem value="Clojure" label="Clojure">
+
+```clojure
+(workflow-resource/resume-workflow [options workflow-id])
+```
+
+</TabItem>
+</Tabs>
+
+### From Conductor UI
+
+From the workflow executions page, click **Actions**, and choose **Resume**.
+
+<p align="center"><img src="/content/img/resume-workflow-from-ui.png" alt="Resuming workflows from UI" width="100%" height="auto"></img></p>
 
 ## Terminate Workflow
 
