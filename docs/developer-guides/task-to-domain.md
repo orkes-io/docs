@@ -10,15 +10,14 @@ workers connected to the server, as shown in this diagram:
 <p align="center"><img src="/content/img/task-routing.png" alt="Task to domain example workflow" width="90%"
                        height="auto"/></p>
 
-Conductor supports a feature where the same task can be routed to a different set of workers based on a concept called as
-__Task to Domain__. This is a value that is supplied to the workflow when it is triggered, and if present, it routes the tasks in a different way than usual. This is illustrated as shown below.
+Conductor supports a feature where the same task can be routed to a different set of workers based on a concept called as **Task to Domain**. This value is supplied to the workflow when triggered, and if present, it routes the tasks in a different way than usual. This is illustrated as shown below.
 
 <p align="center"><img src="/content/img/task-routing-domains.png" alt="Task to domain example workflow" width="90%"
                        height="auto"/></p>
 
 
 
-Here - task type __send_email__ has two additional sets of worker instances that are listening to specific domain-based tasks. Domains are nothing but a label that connects the task work to the worker instance. For example, all the tasks with domain `dedicated_for_app_x` are sent to the workers configured with domain `dedicated_for_app_x`.
+Here - task type __send_email__ has two additional sets of worker instances listening to specific domain-based tasks. Domains are nothing but a label that connects the task work to the worker instance. For example, all the tasks with domain `dedicated_for_app_x` are sent to the workers configured with domain `dedicated_for_app_x`.
 
 :::tip
 The Task to Domain is the concept of limiting the task execution only to a specific worker via domain mapping. The domain name can be an arbitrary string.
@@ -31,15 +30,15 @@ This feature can be really useful in the following scenarios:
 * Implementing unique behaviors by domain
 * Debugging a task with a worker deployed on a local machine or a worker running a different version of the code than the regular one
 
-All of these cases can also be done by using a unique task name, and the domain is just an alternative way to do that. Instead of creating new tasks, we can use the same task name and still have custom routing based on the domain.
+All of these cases can also be done using a unique task name, and the domain is just an alternative way. Instead of creating new tasks, we can use the same task name and still have custom routing based on the domain.
 
 
 ## Using Task to Domain
 
 To successfully route a task by domain:
 
-1. Configure your workers to start polling for work that is tagged by the domain
-2. When triggering the workflow, ensure the __taskToDomain__ map is set to the right mapping values
+1. Configure your workers to start polling for work that is tagged by the domain.
+2. When triggering the workflow, ensure the __taskToDomain__ map is set to the right mapping values.
 
 ### Configuring Workers with Domain
 
@@ -238,6 +237,10 @@ When we start/run a workflow, we can specify which tasks must run on which domai
 }
 ```
 
+While running the workflow, you can provide the task to mapping as shown in the following image:
+
+<p align="center"><img src="/content/img/task-to-domain.png" alt="Task To Domain mapping while invoking workflows" width="100%" height="auto"></img></p>
+
 ## Fallback Task to Domain
 
 Another feature of domains is that you can specify a fallback domain. The concept is simple as follows:
@@ -270,12 +273,12 @@ In this example,
 }
 ```
 
-* Task **task-a** is put in the default queue (no domain)
-* Task **task-b** is put in the **abc** domain, if available, or in default otherwise
-* Task **task-c** is put in **someInactiveDomain2**, even though workers are unavailable
-* All other tasks in this workflow are put in **mydomain**
+* Task **task-a** is put in the default queue (no domain).
+* Task **task-b** is put in the **abc** domain, if available, or in default otherwise.
+* Task **task-c** is put in **someInactiveDomain2**, even though workers are unavailable.
+* All other tasks in this workflow are put in **mydomain**.
 
 :::note
-* The "fallback" domain strings can only be used when starting the workflow. When polling from the client, only one domain is used
-* The **NO_DOMAIN** token should be used last
+* The "fallback" domain strings can only be used when starting the workflow. When polling from the client, only one domain is used.
+* The **NO_DOMAIN** token should be used last.
 :::
