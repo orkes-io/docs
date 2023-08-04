@@ -5,9 +5,9 @@ sidebar_position: 2
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Rerun Completed Workflow
+# Rerun Workflow
 
-Reruns a completed workflow from a specific task (ReRunFromTaskId) and optionally change the input. It also updates the completed tasks with new input (ReRunFromTaskId) if required.
+Reruns a workflow from a specific task (ReRunFromTaskId) and optionally change the input. If required, it also updates the completed tasks with new input (ReRunFromTaskId).
 
 ## Input Payload
 
