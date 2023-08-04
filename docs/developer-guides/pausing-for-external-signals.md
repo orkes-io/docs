@@ -337,9 +337,9 @@ The restart option restarts the workflow with either the current or latest defin
 
 You can achieve this using 2 methods: using API & Conductor UI.
 
-### Using API for rerunning a completed workflow from a specific task
+### Using API for rerunning a workflow from a specific task
 
-Once you have the **workflowId**, you can rerun the completed workflow from a specific task using the following API. Get the task execution ID from the UI and include it in the API. 
+Once you have the **workflowId**, you can rerun the workflow from a specific task using the following API. Get the task execution ID from the UI and include it in the API. 
 
 <p align="center"><img src="/content/img/task-execution-id.png" alt="Task Execution ID from Conductor UI" width="100%" height="auto"></img></p>
 
