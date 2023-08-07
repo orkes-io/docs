@@ -6,7 +6,12 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 # Fork/Join 
-A Fork operation lets you run a specified list of tasks or sub-workflows in parallel. A fork task is followed by a join operation that waits on the forked tasks or sub-workflows to finish. The **JOIN** task also collects outputs from each of the forked tasks or sub workflows.
+
+A Fork/Join task can be used when you need to run tasks in parallel. It contains two components, the **fork**, and the **join** part. A fork operation lets you run a specified list of tasks in parallel. A fork task is followed by a join operation that waits on the forked tasks to finish. The JOIN task also collects outputs from each of the forked tasks.
+
+:::note
+You can also add [Sub Workflows](https://orkes.io/content/reference-docs/operators/sub-workflow) as forks.
+:::
 
 ## Definitions
 
@@ -29,8 +34,8 @@ A Fork operation lets you run a specified list of tasks or sub-workflows in para
       ],
     }
 ```
-* A **FORK_JOIN** task has a **forkTasks** attribute that expects an array. Each array is a sub-list of tasks. Each of these sub-lists is then invoked in parallel. The tasks defined within each sublist can be sequential or any other way as desired.
-* A FORK_JOIN task has to be followed by a JOIN operation. The **JOIN** operator specifies which of the forked tasks to **joinOn** (waits for completion) before moving to the next stage in the workflow.
+* A Fork-Join task has an attribute called **forkTasks**, an array containing the task list. Each of these tasks is invoked in parallel. The tasks defined within each sublist can be sequential or any other way as desired..
+* The forks are followed by a Join task, which specifies which forks should be joined before moving to the next stage in the workflow. 
 
 ### Input Parameters
 
@@ -144,7 +149,7 @@ Imagine a workflow that sends three notifications: email, SMS, and HTTP. Since n
 The diagram will appear as follows:
 <p align="center"><img src="/content/img/fork-join-example.png" alt="Fork Join Example" width="90%" height="auto"></img></p>
 
-Here's the JSON definition for the workflow:
+Here each of the forks (email/SMS/HTTP) runs in parallel, meaning that they are run independently. Here's the JSON definition for the workflow:
 
 ```json
 [
@@ -202,10 +207,11 @@ Here's the JSON definition for the workflow:
   }
 ]
 ```
-:::note
-There are three parallel 'tines' to this fork, but only two outputs are required for the JOIN to continue. The diagram does draw an arrow from **http_notification_ref** to the **notification_join**, but it is not required for the workflow to continue.
-:::
-Here is what the output of notification_join will look like. The output is a map, where the keys are the names of task references being joined. The corresponding values are the outputs of those tasks.
+In this example, although we have 3 forks running in parallel, we require only 2 outputs to continue with the workflow. The parameter **joinOn** is defined so that only email and SMS tasks are to be joined, omitting HTTP tasks as optional for completion.
+
+This workflow is completed when the email and SMS notifications are sent and does not depend on the HTTP notification status.
+
+Here is what the output of **notification_join** will look like. The output is a map, where the keys are the names of task references being joined. The corresponding values are the outputs of those tasks.
 
 ```json
 
