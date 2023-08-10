@@ -64,12 +64,12 @@ You can run this workflow to see how it executes. If there are failures, Conduct
 </div>
 <div className="col">
 <div className="embed-loom-video">
-<iframe
-  width="100%"
-  height="300px"
-  allow="fullscreen;"
-  src={"https://player.vimeo.com/video/814101164?h=e8e6172101"}
-></iframe></div>
+<div style={{ "padding": "63.53% 0 0 0", "position" : "relative" }}>
+<iframe src="https://player.vimeo.com/video/813938430?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" 
+frameborder="0" allow="autoplay; fullscreen; picture-in-picture" 
+style={{ "position" : "absolute", "top": 0, "left" :0, "width" : "100%", "height" : "100%"}} title="Getting started on Orkes Conductor: Define and run your first workflow"></iframe>
+</div>
+</div>
 </div>
 </div>
 </TabItem>
