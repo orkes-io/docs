@@ -25,6 +25,9 @@ const config = {
         {
             src: baseUrlName + '/js/cookie-consent.js',
         },
+        {
+            src: 'https://player.vimeo.com/api/player.js',
+        },
     ],
     plugins: [
         [
