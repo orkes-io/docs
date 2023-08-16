@@ -5,9 +5,9 @@ sidebar_position: 11
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Get Workflow Definition
+# Remove the Workflow Definition
 
-Used to retrieve a workflow definition.
+Remove the workflow defintion
 
 ## Input Payload
 
@@ -15,12 +15,11 @@ Used to retrieve a workflow definition.
 | --------- | -------------- |
 | name      | The *name* of the workflow you want to retrieve definition of |
 | version   | Choose the workflow version |
-| metadata  | Get with metadata |
 
 ## API Endpoint
 
 ```
-GET /api/metadata/workflow/{name}?version=<version>&metadata=false
+DELETE /api/metadata/workflow/{name}/{version}
 ```
 
 ## Client SDK Methods
@@ -29,8 +28,7 @@ GET /api/metadata/workflow/{name}?version=<version>&metadata=false
 <TabItem value="Java" label="Java">
 
 ```java
-WorkflowDef OrkesMetadataClient.getWorkflowDef(String name, Integer version)
-WorkflowDef OrkesMetadataClient.getWorkflowDefWithMetadata(String name, Integer version) 
+WorkflowDef OrkesMetadataClient.unregisterWorkflowDef(String name, Integer version) throws ApiException
 ```
 
 </TabItem>

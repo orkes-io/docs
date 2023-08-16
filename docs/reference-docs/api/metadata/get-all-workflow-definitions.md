@@ -5,22 +5,14 @@ sidebar_position: 10
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Get Workflow Definition
+# Get All Workflow Definitions
 
-Used to retrieve a workflow definition.
-
-## Input Payload
-
-| Attribute | Description |
-| --------- | -------------- |
-| name      | The *name* of the workflow you want to retrieve definition of |
-| version   | Choose the workflow version |
-| metadata  | Get with metadata |
+Get all workflow definitions
 
 ## API Endpoint
 
 ```
-GET /api/metadata/workflow/{name}?version=<version>&metadata=false
+GET /api/metadata/workflow
 ```
 
 ## Client SDK Methods
@@ -29,8 +21,7 @@ GET /api/metadata/workflow/{name}?version=<version>&metadata=false
 <TabItem value="Java" label="Java">
 
 ```java
-WorkflowDef OrkesMetadataClient.getWorkflowDef(String name, Integer version)
-WorkflowDef OrkesMetadataClient.getWorkflowDefWithMetadata(String name, Integer version) 
+WorkflowDef OrkesMetadataClient.getAllWorkflowDefs()
 ```
 
 </TabItem>

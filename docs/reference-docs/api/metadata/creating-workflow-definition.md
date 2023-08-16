@@ -4,13 +4,13 @@ sidebar_position: 7
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Creating Workflow Definitions
+# Creating Workflow Definition
 
 Workflow can be defined as the collection of tasks and operators that specifies the order and execution of the defined tasks.
 
 ## Input Payload
 
-You can configure workflow definitions directly via UI and using API. The workflow definitions include the following parameters:
+You can configure workflow definition directly via UI and using API. The workflow definition include the following parameters:
 
 | Attribute                     | Description                                                                                                                                                                                                                                            |
 | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
