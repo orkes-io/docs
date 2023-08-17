@@ -41,7 +41,7 @@ metadata_client.get_task_defs(body, **kwargs)
 <TabItem value="CSharp" label="CSharp">
 
 ```csharp
-Object MetadataResourceApi.RegisterTaskDef(List<TaskDef> body)
+List<TaskDef> MetadataResourceApi.GetTaskDefs(string access = null, bool? metadata = null, string tagKey = null, string tagValue = null)
 ```
 
 </TabItem>

@@ -50,7 +50,7 @@ metadata_client.unregister_workflow_def(name, version, **kwargs)
 <TabItem value="CSharp" label="CSharp">
 
 ```csharp
-WorkflowDef MetadataResourceApi.Get(string name, int? version = null, bool? metadata = null);
+void MetadataResourceApi.UnregisterWorkflowDef(string name, int? version)
 ```
 
 </TabItem>

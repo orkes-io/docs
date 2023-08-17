@@ -65,7 +65,7 @@ metadata_client.update_task_def(body, **kwargs)
 <TabItem value="CSharp" label="CSharp">
 
 ```csharp
-Object MetadataResourceApi.RegisterTaskDef(List<TaskDef> body)
+Object MetadataResourceApi.UpdateTaskDef(TaskDef body)
 ```
 
 </TabItem>

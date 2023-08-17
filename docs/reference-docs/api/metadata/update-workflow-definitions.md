@@ -66,7 +66,7 @@ metadata_client.update1(body, **kwargs)
 <TabItem value="CSharp" label="CSharp">
 
 ```csharp
-Object MetadataResourceApi.Create(WorkflowDef body, bool? overwrite = null)
+Object MetadataResourceApi.UpdateWorkflowDefinitions(List<WorkflowDef> body, bool? overwrite = null)
 ```
 
 </TabItem>

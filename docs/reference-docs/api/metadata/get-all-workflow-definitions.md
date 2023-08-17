@@ -43,7 +43,7 @@ metadata_client.get_all_workflows(**kwargs)
 <TabItem value="CSharp" label="CSharp">
 
 ```csharp
-WorkflowDef MetadataResourceApi.Get(string name, int? version = null, bool? metadata = null);
+List<WorkflowDef> MetadataResourceApi.GetAllWorkflows(string access = null, bool? metadata = null, string tagKey = null, string tagValue = null, bool? _short = null)
 ```
 
 </TabItem>

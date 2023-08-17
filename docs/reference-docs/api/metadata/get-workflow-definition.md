@@ -30,7 +30,7 @@ GET /api/metadata/workflow/{name}?version=<version>&metadata=false
 
 ```java
 WorkflowDef OrkesMetadataClient.getWorkflowDef(String name, Integer version)
-WorkflowDef OrkesMetadataClient.getWorkflowDefWithMetadata(String name, Integer version) 
+WorkflowDef OrkesMetadataClient.getWorkflowDefWithMetadata(String name, Integer version)
 ```
 
 </TabItem>
@@ -52,7 +52,7 @@ metadata_client.get(name, **kwargs)
 <TabItem value="CSharp" label="CSharp">
 
 ```csharp
-WorkflowDef MetadataResourceApi.Get(string name, int? version = null, bool? metadata = null);
+WorkflowDef MetadataResourceApi.Get(string name, int? version = null, bool? metadata = null)
 ```
 
 </TabItem>

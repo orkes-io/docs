@@ -46,7 +46,7 @@ metadata_client.unregister_task_def(tasktype, **kwargs)
 <TabItem value="CSharp" label="CSharp">
 
 ```csharp
-Object MetadataResourceApi.RegisterTaskDef(List<TaskDef> body)
+void MetadataResourceApi.UnregisterTaskDef(string tasktype)
 ```
 
 </TabItem>
