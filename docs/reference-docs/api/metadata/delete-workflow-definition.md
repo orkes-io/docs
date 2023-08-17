@@ -35,7 +35,7 @@ WorkflowDef OrkesMetadataClient.unregisterWorkflowDef(String name, Integer versi
 <TabItem value="Golang" label="Golang">
 
 ```go
-func (*MetadataResourceApiService) Get(ctx context.Context, name string, localVarOptionals *MetadataResourceApiGetOpts) (model.WorkflowDef, *http.Response, error)
+func (a *MetadataResourceApiService) UnregisterWorkflowDef(ctx context.Context, name string, version int32) (*http.Response, error)
 ```
 
 </TabItem>

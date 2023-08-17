@@ -31,7 +31,7 @@ void OrkesMetadataClient.unregisterTaskDef(String taskType) throws ApiException
 <TabItem value="Golang" label="Golang">
 
 ```go
-func (*MetadataResourceApiService) RegisterTaskDef(ctx context.Context, body []model.TaskDef) (*http.Response, error)
+func (a *MetadataResourceApiService) UnregisterTaskDef(ctx context.Context, tasktype string) (*http.Response, error)
 ```
 
 </TabItem>
