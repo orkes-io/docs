@@ -58,7 +58,8 @@ func (*MetadataResourceApiService) RegisterWorkflowDef(ctx context.Context, over
 <TabItem value="Python" label="Python">
 
 ```python
-MetadataResourceApi.create(body, **kwargs)
+metadata_client = MetadataResourceApi(api_client)
+metadata_client.update1(body, **kwargs)
 ```
 
 </TabItem>

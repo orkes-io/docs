@@ -35,7 +35,8 @@ func (*MetadataResourceApiService) Get(ctx context.Context, name string, localVa
 <TabItem value="Python" label="Python">
 
 ```python
-MetadataResourceApi.get(name, **kwargs)
+metadata_client = MetadataResourceApi(api_client)
+metadata_client.get_all_workflows(**kwargs)
 ```
 
 </TabItem>
