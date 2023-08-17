@@ -35,8 +35,7 @@ func (a *MetadataResourceApiService) GetAll(ctx context.Context) ([]model.Workfl
 <TabItem value="Python" label="Python">
 
 ```python
-metadata_client = MetadataResourceApi(api_client)
-metadata_client.get_all_workflows(**kwargs)
+MetadataResourceApi.get_all_workflows(**kwargs)
 ```
 
 </TabItem>

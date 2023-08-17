@@ -38,8 +38,7 @@ func (a *MetadataResourceApiService) UnregisterTaskDef(ctx context.Context, task
 <TabItem value="Python" label="Python">
 
 ```python
-metadata_client = MetadataResourceApi(api_client)
-metadata_client.unregister_task_def(tasktype, **kwargs)
+MetadataResourceApi.unregister_task_def(tasktype, **kwargs)
 ```
 
 </TabItem>

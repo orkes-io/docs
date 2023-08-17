@@ -38,8 +38,7 @@ func (a *MetadataResourceApiService) GetTaskDef(ctx context.Context, tasktype st
 <TabItem value="Python" label="Python">
 
 ```python
-metadata_client = MetadataResourceApi(api_client)
-metadata_client.get_task_def(tasktype, **kwargs)
+MetadataResourceApi.get_task_def(tasktype, **kwargs)
 ```
 
 </TabItem>

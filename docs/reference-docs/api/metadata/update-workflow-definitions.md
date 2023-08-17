@@ -58,8 +58,7 @@ func (a *MetadataResourceApiService) Update(ctx context.Context, body []model.Wo
 <TabItem value="Python" label="Python">
 
 ```python
-metadata_client = MetadataResourceApi(api_client)
-metadata_client.update1(body, **kwargs)
+MetadataResourceApi.update1(body, **kwargs)
 ```
 
 </TabItem>

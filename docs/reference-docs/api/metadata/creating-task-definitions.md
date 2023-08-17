@@ -57,8 +57,7 @@ func (a *MetadataResourceApiService) RegisterTaskDef(ctx context.Context, body [
 <TabItem value="Python" label="Python">
 
 ```python
-metadata_client = MetadataResourceApi(api_client)
-metadata_client.register_task_def(body, **kwargs)
+MetadataResourceApi.register_task_def(body, **kwargs)
 ```
 
 </TabItem>

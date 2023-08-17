@@ -44,8 +44,7 @@ func (a *MetadataResourceApiService) Get(ctx context.Context, name string, local
 <TabItem value="Python" label="Python">
 
 ```python
-metadata_client = MetadataResourceApi(api_client)
-metadata_client.get(name, **kwargs)
+MetadataResourceApi.get(name, **kwargs)
 ```
 
 </TabItem>

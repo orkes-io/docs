@@ -34,7 +34,7 @@ You can configure task definitions directly via UI and using API. The task defin
 
 ## API Endpoint
 ```
-POST /api/metadata/taskdefs
+PUT /api/metadata/taskdefs
 ```
 
 ## Client SDK Methods
@@ -43,7 +43,7 @@ POST /api/metadata/taskdefs
 <TabItem value="Java" label="Java">
 
 ```java
-void OrkesMetadataClient.registerTaskDefs(List<TaskDef> taskDefs) throws ApiException
+void OrkesMetadataClient.updateTaskDef(TaskDef taskDef)
 ```
 
 </TabItem>
@@ -57,8 +57,7 @@ func (a *MetadataResourceApiService) UpdateTaskDef(ctx context.Context, body mod
 <TabItem value="Python" label="Python">
 
 ```python
-metadata_client = MetadataResourceApi(api_client)
-metadata_client.update_task_def(body, **kwargs)
+MetadataResourceApi.update_task_def(body, **kwargs)
 ```
 
 </TabItem>

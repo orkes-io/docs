@@ -42,8 +42,7 @@ func (a *MetadataResourceApiService) UnregisterWorkflowDef(ctx context.Context, 
 <TabItem value="Python" label="Python">
 
 ```python
-metadata_client = MetadataResourceApi(api_client)
-metadata_client.unregister_workflow_def(name, version, **kwargs)
+MetadataResourceApi.unregister_workflow_def(name, version, **kwargs)
 ```
 
 </TabItem>
