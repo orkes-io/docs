@@ -4,7 +4,7 @@ sidebar_position: 7
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Create/Update Workflow Definitions
+# Update Workflow Definitions
 
 Workflow can be defined as the collection of tasks and operators that specifies the order and execution of the defined tasks.
 
@@ -73,14 +73,20 @@ Object MetadataResourceApi.UpdateWorkflowDefinitions(List<WorkflowDef> body, boo
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
-WorkflowExecutor.registerWorkflow(override: boolean, workflow: WorkflowDef)
+MetadataResourceService.update(
+    requestBody: Array<WorkflowDef>,
+    overwrite: boolean = true,
+  ): CancelablePromise<any>
 ```
 
 </TabItem>
 <TabItem value="Typescript" label="Typescript">
 
 ```typescript
-WorkflowExecutor.registerWorkflow(override: boolean, workflow: WorkflowDef)
+MetadataResourceService.update(
+    requestBody: Array<WorkflowDef>,
+    overwrite: boolean = true,
+  ): CancelablePromise<any>
 ```
 
 </TabItem>

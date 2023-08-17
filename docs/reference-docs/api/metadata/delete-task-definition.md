@@ -53,14 +53,14 @@ void MetadataResourceApi.UnregisterTaskDef(string tasktype)
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
-MetadataResourceService.registerTaskDef(requestBody: Array<TaskDef>): CancelablePromise<any>
+MetadataResourceService.unregisterTaskDef(tasktype: string): CancelablePromise<any>
 ```
 
 </TabItem>
 <TabItem value="Typescript" label="Typescript">
 
-```javascript
-MetadataResourceService.registerTaskDef(requestBody: Array<TaskDef>): CancelablePromise<any>
+```typescript
+MetadataResourceService.unregisterTaskDef(tasktype: string): CancelablePromise<any>
 ```
 
 </TabItem>

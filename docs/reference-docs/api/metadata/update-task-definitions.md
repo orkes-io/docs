@@ -4,7 +4,7 @@ sidebar_position: 3
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Creating Task Definitions
+# Updating Task Definitions
 
 Tasks are the building blocks of workflow in Conductor. A task can be an operator, system task or custom code written in any programming language.
 
@@ -72,14 +72,14 @@ Object MetadataResourceApi.UpdateTaskDef(TaskDef body)
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
-MetadataResourceService.registerTaskDef(requestBody: Array<TaskDef>): CancelablePromise<any>
+MetadataResourceService.updateTaskDef(requestBody: TaskDef): CancelablePromise<any>
 ```
 
 </TabItem>
 <TabItem value="Typescript" label="Typescript">
 
-```javascript
-MetadataResourceService.registerTaskDef(requestBody: Array<TaskDef>): CancelablePromise<any>
+```typescript
+MetadataResourceService.updateTaskDef(requestBody: TaskDef): CancelablePromise<any>
 ```
 
 </TabItem>

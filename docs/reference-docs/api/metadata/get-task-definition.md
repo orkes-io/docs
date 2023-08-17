@@ -53,14 +53,24 @@ TaskDef MetadataResourceApi.GetTaskDef(string tasktype, bool? metadata = null)
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
-MetadataResourceService.registerTaskDef(requestBody: Array<TaskDef>): CancelablePromise<any>
+MetadataResourceService.getTaskDefs(
+    access: string = 'READ',
+    metadata: boolean = false,
+    tagKey?: string,
+    tagValue?: string,
+  ): CancelablePromise<Array<TaskDef>>
 ```
 
 </TabItem>
 <TabItem value="Typescript" label="Typescript">
 
-```javascript
-MetadataResourceService.registerTaskDef(requestBody: Array<TaskDef>): CancelablePromise<any>
+```typescript
+MetadataResourceService.getTaskDefs(
+    access: string = 'READ',
+    metadata: boolean = false,
+    tagKey?: string,
+    tagValue?: string,
+  ): CancelablePromise<Array<TaskDef>>
 ```
 
 </TabItem>

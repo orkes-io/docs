@@ -1,5 +1,5 @@
 ---
-sidebar_position: 10
+sidebar_position: 8
 ---
 
 import Tabs from '@theme/Tabs';
@@ -50,22 +50,24 @@ List<WorkflowDef> MetadataResourceApi.GetAllWorkflows(string access = null, bool
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
-MatadataResourceService.get(
-    name: string,
-    version?: number,
+MatadataResourceService.getAllWorkflows(
+    access: string = 'READ',
     metadata: boolean = false,
-  ): CancelablePromise<WorkflowDef>
+    tagKey?: string,
+    tagValue?: string,
+  ): CancelablePromise<Array<WorkflowDef>>
 ```
 
 </TabItem>
 <TabItem value="Typescript" label="Typescript">
 
 ```typescript
-MatadataResourceService.get(
-    name: string,
-    version?: number,
+MatadataResourceService.getAllWorkflows(
+    access: string = 'READ',
     metadata: boolean = false,
-  ): CancelablePromise<WorkflowDef>
+    tagKey?: string,
+    tagValue?: string,
+  ): CancelablePromise<Array<WorkflowDef>>
 ```
 
 </TabItem>

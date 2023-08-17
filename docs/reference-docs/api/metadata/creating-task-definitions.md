@@ -78,7 +78,7 @@ MetadataResourceService.registerTaskDef(requestBody: Array<TaskDef>): Cancelable
 </TabItem>
 <TabItem value="Typescript" label="Typescript">
 
-```javascript
+```typescript
 MetadataResourceService.registerTaskDef(requestBody: Array<TaskDef>): CancelablePromise<any>
 ```
 
