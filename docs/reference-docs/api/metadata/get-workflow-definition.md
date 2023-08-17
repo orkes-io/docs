@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 9
 ---
 
 import Tabs from '@theme/Tabs';
@@ -30,14 +30,14 @@ GET /api/metadata/workflow/{name}?version=<version>&metadata=false
 
 ```java
 WorkflowDef OrkesMetadataClient.getWorkflowDef(String name, Integer version)
-WorkflowDef OrkesMetadataClient.getWorkflowDefWithMetadata(String name, Integer version) 
+WorkflowDef OrkesMetadataClient.getWorkflowDefWithMetadata(String name, Integer version)
 ```
 
 </TabItem>
 <TabItem value="Golang" label="Golang">
 
 ```go
-func (*MetadataResourceApiService) Get(ctx context.Context, name string, localVarOptionals *MetadataResourceApiGetOpts) (model.WorkflowDef, *http.Response, error)
+func (a *MetadataResourceApiService) Get(ctx context.Context, name string, localVarOptionals *MetadataResourceApiGetOpts) (model.WorkflowDef, *http.Response, error)
 ```
 
 </TabItem>
@@ -51,7 +51,7 @@ MetadataResourceApi.get(name, **kwargs)
 <TabItem value="CSharp" label="CSharp">
 
 ```csharp
-WorkflowDef MetadataResourceApi.Get(string name, int? version = null, bool? metadata = null);
+WorkflowDef MetadataResourceApi.Get(string name, int? version = null, bool? metadata = null)
 ```
 
 </TabItem>
@@ -80,7 +80,7 @@ MatadataResourceService.get(
 <TabItem value="Clojure" label="Clojure">
 
 ```clojure
-(metadata/get options name version)
+(metadata/get-workflow-def options name version)
 ```
 
 </TabItem>

@@ -1,10 +1,10 @@
 ---
-sidebar_position: 2
+sidebar_position: 3
 ---
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Creating Task Definitions
+# Updating Task Definitions
 
 Tasks are the building blocks of workflow in Conductor. A task can be an operator, system task or custom code written in any programming language.
 
@@ -34,7 +34,7 @@ You can configure task definitions directly via UI and using API. The task defin
 
 ## API Endpoint
 ```
-POST /api/metadata/taskdefs
+PUT /api/metadata/taskdefs
 ```
 
 ## Client SDK Methods
@@ -43,49 +43,49 @@ POST /api/metadata/taskdefs
 <TabItem value="Java" label="Java">
 
 ```java
-void OrkesMetadataClient.registerTaskDefs(List<TaskDef> taskDefs) throws ApiException
+void OrkesMetadataClient.updateTaskDef(TaskDef taskDef)
 ```
 
 </TabItem>
 <TabItem value="Golang" label="Golang">
 
 ```go
-func (a *MetadataResourceApiService) RegisterTaskDef(ctx context.Context, body []model.TaskDef) (*http.Response, error)
+func (a *MetadataResourceApiService) UpdateTaskDef(ctx context.Context, body model.TaskDef) (*http.Response, error)
 ```
 
 </TabItem>
 <TabItem value="Python" label="Python">
 
 ```python
-MetadataResourceApi.register_task_def(body, **kwargs)
+MetadataResourceApi.update_task_def(body, **kwargs)
 ```
 
 </TabItem>
 <TabItem value="CSharp" label="CSharp">
 
 ```csharp
-Object MetadataResourceApi.RegisterTaskDef(List<TaskDef> body)
+Object MetadataResourceApi.UpdateTaskDef(TaskDef body)
 ```
 
 </TabItem>
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
-MetadataResourceService.registerTaskDef(requestBody: Array<TaskDef>): CancelablePromise<any>
+MetadataResourceService.updateTaskDef(requestBody: TaskDef): CancelablePromise<any>
 ```
 
 </TabItem>
 <TabItem value="Typescript" label="Typescript">
 
 ```typescript
-MetadataResourceService.registerTaskDef(requestBody: Array<TaskDef>): CancelablePromise<any>
+MetadataResourceService.updateTaskDef(requestBody: TaskDef): CancelablePromise<any>
 ```
 
 </TabItem>
 <TabItem value="Clojure" label="Clojure">
 
 ```clojure
-(metadata/register-tasks options [tasks])
+(metadata/update-task-definition options task-definition)
 ```
 
 </TabItem>
