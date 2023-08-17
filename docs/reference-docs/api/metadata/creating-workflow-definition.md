@@ -86,7 +86,7 @@ WorkflowExecutor.registerWorkflow(override: boolean, workflow: WorkflowDef)
 <TabItem value="Clojure" label="Clojure">
 
 ```clojure
-(metadata-resource/register-workflow-def options workflow true)
+(metadata/register-workflow-def options workflow true)
 ```
 
 </TabItem>

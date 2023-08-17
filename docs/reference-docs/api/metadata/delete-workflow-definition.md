@@ -71,7 +71,7 @@ MatadataResourceService.unregisterWorkflowDef(name: string, version: number): Ca
 <TabItem value="Clojure" label="Clojure">
 
 ```clojure
-(metadata/get options name version)
+(metadata/nregister-workflow-def options name version)
 ```
 
 </TabItem>

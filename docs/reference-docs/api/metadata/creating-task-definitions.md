@@ -86,7 +86,7 @@ MetadataResourceService.registerTaskDef(requestBody: Array<TaskDef>): Cancelable
 <TabItem value="Clojure" label="Clojure">
 
 ```clojure
-(metadata-resource/register-tasks options [tasks])
+(metadata/register-tasks options [tasks])
 ```
 
 </TabItem>

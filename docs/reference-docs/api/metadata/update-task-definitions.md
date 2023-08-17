@@ -86,7 +86,7 @@ MetadataResourceService.updateTaskDef(requestBody: TaskDef): CancelablePromise<a
 <TabItem value="Clojure" label="Clojure">
 
 ```clojure
-(metadata-resource/register-tasks options [tasks])
+(metadata/update-task-definition options task-definition)
 ```
 
 </TabItem>

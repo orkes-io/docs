@@ -67,7 +67,7 @@ MetadataResourceService.unregisterTaskDef(tasktype: string): CancelablePromise<a
 <TabItem value="Clojure" label="Clojure">
 
 ```clojure
-(metadata-resource/register-tasks options [tasks])
+(metadata/unregister-task options task-ref)
 ```
 
 </TabItem>

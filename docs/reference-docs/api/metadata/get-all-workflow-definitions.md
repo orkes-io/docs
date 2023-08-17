@@ -71,11 +71,4 @@ MatadataResourceService.getAllWorkflows(
 ```
 
 </TabItem>
-<TabItem value="Clojure" label="Clojure">
-
-```clojure
-(metadata/get options name version)
-```
-
-</TabItem>
 </Tabs>

@@ -77,7 +77,7 @@ MetadataResourceService.getTaskDefs(
 <TabItem value="Clojure" label="Clojure">
 
 ```clojure
-(metadata-resource/register-tasks options [tasks])
+(metadata/get-task-def options task-def)
 ```
 
 </TabItem>

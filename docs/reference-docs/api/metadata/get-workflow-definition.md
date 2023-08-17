@@ -81,7 +81,7 @@ MatadataResourceService.get(
 <TabItem value="Clojure" label="Clojure">
 
 ```clojure
-(metadata/get options name version)
+(metadata/get-workflow-def options name version)
 ```
 
 </TabItem>

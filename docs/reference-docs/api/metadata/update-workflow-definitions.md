@@ -93,7 +93,7 @@ MetadataResourceService.update(
 <TabItem value="Clojure" label="Clojure">
 
 ```clojure
-(metadata-resource/register-workflow-def options workflow true)
+(metadata/update-workflows-def options workflows)
 ```
 
 </TabItem>
