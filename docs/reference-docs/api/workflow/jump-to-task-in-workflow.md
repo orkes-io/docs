@@ -7,7 +7,7 @@ import TabItem from '@theme/TabItem';
 
 # Jump to Task in a Workflow
 
-Workflow execution will be jumped to the task given.
+Workflow execution will go to the task given.
 
 ## Input Payload
 
