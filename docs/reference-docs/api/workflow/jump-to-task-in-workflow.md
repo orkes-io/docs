@@ -53,14 +53,12 @@ void jumpToTask(String workflowId, String taskReferenceName, Map<String, Object>
 <TabItem value="Golang" label="Golang">
 
 ```go
-func (e *WorkflowExecutor) RemoveWorkflow(workflowId string) error
 ```
 
 </TabItem>
 <TabItem value="Python" label="Python">
 
 ```python
-WorkflowResourceApi.delete(self, workflow_id, **kwargs)
 ```
 
 </TabItem>
@@ -74,27 +72,18 @@ void JumpToTask(string workflowId, Dictionary<string, Object> input, string task
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
-WorkflowResourceService.delete(
-    workflowId: string,
-    archiveWorkflow: boolean = true,
-): CancelablePromise<any>
 ```
 
 </TabItem>
 <TabItem value="Typescript" label="Typescript">
 
 ```typescript
-WorkflowResourceService.delete(
-    workflowId: string,
-    archiveWorkflow: boolean = true,
-): CancelablePromise<any>
 ```
 
 </TabItem>
 <TabItem value="Clojure" label="Clojure">
 
 ```clojure
-(workflow-resource/delete-workflow [options workflow-id archive-workflow])
 ```
 
 </TabItem>
