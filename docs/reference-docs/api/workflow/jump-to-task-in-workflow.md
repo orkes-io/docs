@@ -34,7 +34,7 @@ Consider a workflow has tasks,
 
 1. Jumping from simple_task_1 to either fork_task or simple_task_6 is suported.
 2. Jumping back from simple_task_6 to simple_task_1 or fork_task is supported.
-3. Jumping from simple_task_1 to any task under fork_tas is not supported.
+3. Jumping from simple_task_1 to any task under fork_task is not supported.
 4. Jumping back from any task under fork_task to simple_task_1, simple_task_6 or fork_task is supported.
 
 This holds true for switch, decision, do_while, dynamic_fork also.
