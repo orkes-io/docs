@@ -30,4 +30,4 @@ Workflow execution will go to the task given.
 | task_ref_name     | Reference name of the task. |
 
 Workflow execution will be jumped to the given task. Input of jump_workflow_task will be given to my_simple_task
-For more information please check jump_task[/content/reference-docs/workflow/jump-to-task-in-workflow]
+For more information please check [jump_task](/content/reference-docs/workflow/jump-to-task-in-workflow)
