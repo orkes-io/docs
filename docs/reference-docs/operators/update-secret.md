@@ -35,5 +35,6 @@ Update Secret is used to update value of any secret given the user has permissio
 **Notes**
 1. User must have update permission over the secretKey otherwise workflow will be terminated with 403 error.
 2. If the secret does not exist by the secretKey, it will be created and the value will be as per the secretValue
+3. Only one secret can be updated at a time.
 
 
