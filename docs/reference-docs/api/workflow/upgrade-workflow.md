@@ -98,12 +98,12 @@ Now, we want to update the workflow to the newer definition with 2 more tasks as
 Let's call the upgrade API with the following **UpgradeWorkflowRequest**:
 ```java
 UpgradeWorkflowRequest upgradeWorkflowRequest = new UpgradeWorkflowRequest();
-        Map<String, Object> output = Map.of("updatedBy" , "upgrade");
-        upgradeWorkflowRequest.setTaskOutput(Map.of("simple_task3", output,"simple_task1",output));
-        upgradeWorkflowRequest.setWorkflowInput(Map.of("name", "orkes"));
+Map<String, Object> output = Map.of("updatedBy" , "upgrade");
+upgradeWorkflowRequest.setTaskOutput(Map.of("simple_task3", output,"simple_task1",output));
+upgradeWorkflowRequest.setWorkflowInput(Map.of("name", "orkes"));
 
-        upgradeWorkflowRequest.setVersion(2);
-        upgradeWorkflowRequest.setName(workflowName);
+upgradeWorkflowRequest.setVersion(2);
+upgradeWorkflowRequest.setName(workflowName);
 ```
 
 Now, the workflow gets upgraded to the latest version as shown below:
