@@ -25,12 +25,7 @@ So far, we haven't done anything here, even if the fraud check fails. How can we
 </div>
 <div className="col">
 <div className="embed-loom-video">
-<iframe
-  width="100%"
-  height="300px"
-  allow="fullscreen;"
-  src={"https://player.vimeo.com/video/818627450?h=976c2277e5"}
-></iframe></div>
+<iframe width="500" height="315" src="https://www.youtube.com/embed/y66AKuKLf2s?si=yaYNEazXWoh1tExU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
 </div>
 </div>
 </TabItem>
