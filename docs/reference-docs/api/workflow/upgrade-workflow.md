@@ -31,12 +31,12 @@ POST /workflow/{workflowId}/upgrade
 ## Examples
 
 Consider a workflow definition as per below,
-<p align="center"><img src="/content/img/upgrade-workflow-old-definition.png" alt="Upgrade workflow old definition" width="40%" height="40%"></img></p>
+<p align="center"><img src="/content/img/upgrade-workflow-old-definition.png" alt="Upgrade workflow old definition" width="33%" height="20%"></img></p>
 and the new definition of the workflow is,
-<p align="center"><img src="/content/img/upgrade-workflow-new-definition.png" alt="Upgrade workflow new definition" width="40%" height="40%"></img></p>
+<p align="center"><img src="/content/img/upgrade-workflow-new-definition.png" alt="Upgrade workflow new definition" width="33%" height="20%"></img></p>
 
 Now the workflow with version 1 is triggered and currently task_2 is completed but task_4 is in running state,
-<p align="center"><img src="/content/img/upgrade-workflow-old-running.png" alt="Upgrade workflow old instance running" width="40%" height="40%"></img></p>
+<p align="center"><img src="/content/img/upgrade-workflow-old-running.png" alt="Upgrade workflow old instance running" width="33%" height="20%"></img></p>
 
 Now when we call upgrade api with following UpgradeWorkflowRequest,
 ```java
@@ -49,7 +49,7 @@ UpgradeWorkflowRequest upgradeWorkflowRequest = new UpgradeWorkflowRequest();
         upgradeWorkflowRequest.setName(workflowName);
 ```
 The workflow state will be changed as below,
-<p align="center"><img src="/content/img/upgrade-workflow-new-running.png" alt="Upgrade workflow new instance running" width="40%" height="40%"></img></p>
+<p align="center"><img src="/content/img/upgrade-workflow-new-running.png" alt="Upgrade workflow new instance running" width="33%" height="20%"></img></p>
 Also the task that are skipped i.e. simple_task_1 and simple_task_3 will have output as per the map output above.
 The workflow input will also get changed as per the workflowInput map.
 
