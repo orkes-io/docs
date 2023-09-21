@@ -35,12 +35,7 @@ Watch this video and follow the steps below:
 </div>
 <div className="col ui-instructions-padding">
 <div className="embed-loom-video">
-<iframe
-  width="100%"
-  height="300px"
-  allow="fullscreen;"
-  src={"https://player.vimeo.com/video/813938430?h=547c5edf56"}
-></iframe></div>
+<iframe width="500" height="315" src="https://www.youtube.com/embed/ViN4iORqg_w?si=HabdCRhkDyyp_3E3" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
 </div>
 </div>
 </TabItem>
@@ -64,11 +59,7 @@ You can run this workflow to see how it executes. If there are failures, Conduct
 </div>
 <div className="col">
 <div className="embed-loom-video">
-<div style={{ "padding": "63.53% 0 0 0", "position" : "relative" }}>
-<iframe src="https://player.vimeo.com/video/813938430?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" 
-frameborder="0" allow="autoplay; fullscreen; picture-in-picture" 
-style={{ "position" : "absolute", "top": 0, "left" :0, "width" : "100%", "height" : "100%"}} title="Getting started on Orkes Conductor: Define and run your first workflow"></iframe>
-</div>
+<iframe width="500" height="315" src="https://www.youtube.com/embed/b8-0FDIZDp4?si=Hb2I9-iewyTJ-H2R" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 </div>
 </div>
 </div>
