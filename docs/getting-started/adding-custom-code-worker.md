@@ -46,7 +46,81 @@ View our documentation on [Conductor Clients & SDKs](/content/category/sdks) lis
 </TabItem>
 <TabItem value="Python" label="Python">
 
-```python dynamic https://github.com/conductor-sdk/python-sdk-examples/blob/upgrade-sdk-version-1.0.66/examples/worker/workers.py section=1 ../worker/workers.py
+```python
+from conductor.client.http.models import Task, TaskResult
+from conductor.client.http.models.task_result_status import TaskResultStatus
+from conductor.client.worker.worker_interface import WorkerInterface
+from conductor.client.configuration.configuration import Configuration
+from conductor.client.configuration.settings.authentication_settings import AuthenticationSettings
+from conductor.client.automator.task_handler import TaskHandler
+from conductor.client.worker.worker import Worker
+from conductor.client.worker.worker_task import WorkerTask
+
+### Add these lines if not running on unix###
+from multiprocessing import set_start_method
+set_start_method("fork")
+#############################################
+
+SERVER_API_URL = 'https://play.orkes.io/api'
+KEY_ID = '<KEY_ID>'
+KEY_SECRET = '<KEY_SECRET>'
+
+# Create worker using a class implemented by WorkerInterface
+class SimplePythonWorker(WorkerInterface):
+    def execute(self, task: Task) -> TaskResult:
+        task_result = self.get_task_result_from_task(task)
+        task_result.add_output_data('worker_style', 'class')
+        task_result.add_output_data('secret_number', 1234)
+        task_result.add_output_data('is_it_true', False)
+        task_result.status = TaskResultStatus.COMPLETED
+        return task_result
+
+    def get_polling_interval_in_seconds(self) -> float:
+        # poll every 500ms
+        return 0.5
+
+# Create worker using a function
+def execute(task: Task) -> TaskResult:
+    task_result = TaskResult(
+        task_id=task.task_id,
+        workflow_instance_id=task.workflow_instance_id,
+        worker_id='your_custom_id'
+    )
+    task_result.add_output_data('worker_style', 'function')
+    task_result.status = TaskResultStatus.COMPLETED
+    return task_result
+
+# Create worker using a WorkerTask decorator
+@WorkerTask(task_definition_name='python_annotated_task', domain='cool', worker_id='decorated', poll_interval_seconds=1.0)
+def python_annotated_task(input) -> object:
+    return {'message': 'python is so cool :)'}
+
+configuration = Configuration(
+    server_api_url=SERVER_API_URL,
+    debug=True,
+    authentication_settings=AuthenticationSettings(
+        key_id=KEY_ID,
+        key_secret=KEY_SECRET
+    ),
+)
+
+workers = [
+    SimplePythonWorker(
+        task_definition_name='python_task_example'
+    ),
+    Worker(
+        task_definition_name='python_execute_example',
+        execute_function=execute,
+        poll_interval=0.25,
+    )
+]
+
+# If there are decorated workers in your application, scan_for_annotated_workers should be set
+# default value of scan_for_annotated_workers is False
+with TaskHandler(workers, configuration, scan_for_annotated_workers=True) as task_handler:
+    task_handler.start_processes()
+    task_handler.join_processes()
+
 ```
 
 </TabItem>
