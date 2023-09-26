@@ -21,12 +21,49 @@ Refer to this [article](/content/developer-guides/passing-inputs-to-task-in-cond
 
 ## Managing Secrets
 
-We can manage secrets on the UI as well as using the APIs.  
+We can manage secrets using the following ways. In each of these methods, the previous value is replaced with the new value and the operation cannot be rolled back.
+
+### Using UI 
+
+Users with access to the secret can update the secret on the UI. Access left menu "Secrets". 
+
+### Using APIs
+
+The following API endpoints can be invoked with credentials that has permissions to update the secret value. 
+
+### Using a Worker
+
+A common use case is when a secret managed by Conductor is an access token with an expiry. 
+Tokens that expire requires a period refresh and this can be easily achieved using a system worker task that can update the secret. 
+This system worker does the same function as a custom worker updating a secret.
+
+Refer to this link for the documentation on how to use this worker: [Update Secret](/content/reference-docs/system-tasks/update-secret)
+
+Refer to this link for the documentation on how to use a workflow to rotate secrets: [Rotating Secrets that Expire](/content/templates/examples/rotating-secrets-that-expire)
 
 ## Adding Tags to Secrets
 
 Conductor also provides the provision to add tags to secret keys. This helps in granting permissions to the secret to an entity with tag-based access.
 Read more about using tags for permissions [here](/content/access-control-and-security/tags).
+
+## Secrets as Outputs of Tasks
+
+Often times we might want to use a secret value as an output of a task. This is the case when we want to use the value as an input to a subsequent task. 
+In such cases we can use the following convention to ensure that output value is managed as a secret. 
+
+All values stored in the output object with key name: `_secrets` will be treated as secrets.
+
+```json
+{
+  "_secrets" : {
+    "my-secret-key" : "my-secret-value"
+  }
+}
+```
+
+:::Note Secrets Management
+The users with the execute ability to the task will be able to read the task and will be able to see the inputs and outputs.
+:::
 
 ## Additional Use Cases
 
