@@ -11,8 +11,8 @@ Remove workflow execution permanently from the system.
 
 ## Input Payload
 
-| Attribute | Description | 
-| --------- | ----------- | 
+| Attribute  | Description                                          | 
+|------------|------------------------------------------------------| 
 | workflowId | The unique identifier of the workflow to be removed. |
 
 ## API Endpoint
