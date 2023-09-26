@@ -280,6 +280,7 @@ const sidebars = {
                         'templates/examples/incoming-webhook-using-postman',
                         'templates/examples/keep-worker-running-until-condition-true',
                         'templates/examples/rotating-secrets-that-expire',
+                        'templates/examples/scanning-an-endpoint-and-triggering-pagerduty-alert',
                         {
                             type: 'doc',
                             id: 'templates/examples/api-processing-usps-example',
