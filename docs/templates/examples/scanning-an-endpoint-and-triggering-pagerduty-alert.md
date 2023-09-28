@@ -7,23 +7,18 @@ import CodeBlock from '@theme/CodeBlock';
 
 As we know, Netflix Conductor (a.k.a Orkes Conductor) is a powerful orchestration engine.
 
-In this article we are looking at implementing a use case:
+In this article, we are looking at implementing a use case:
 
 1. Scan or poll and endpoint periodically
-2. Depending on the endpoint response, fire an alert on system like PagerDuty or OpsGenie
+2. Depending on the endpoint response, fire an alert on the system like PagerDuty or OpsGenie
 
 ## Requirements
 
-Let's say we have an endpoint that lets us search for data. And assume this endpoint supports a timestamp-based search
-by specifying a time window. As part of monitoring the application, we need to poll this endpoint periodically and
-whenever the endpoint call returns any records, we have to call our support engineers via
-an alerting tool like PagerDuty.
+Let's say we have an endpoint that lets us search for data. Assume this endpoint supports a timestamp-based search by specifying a time window. As part of monitoring the application, we need to poll this endpoint periodically. Whenever the endpoint call returns any records, we have to call our support engineers via an alerting tool like PagerDuty.
 
-PagerDuty is a 3rd party system that can help with alerting users and supports features
-such as on-call schedules, escalations, etc.
+PagerDuty is a 3rd party system that can help with alerting users and supports features such as on-call schedules, escalations, etc.
 
-In this example, we are using PagerDuty, but we can connect to any system that offers an API based
-integration, often called Webhooks. Similar alerting systems are OpsGenie, Squadcast, Datadog, etc.
+In this example, we are using PagerDuty, but we can connect to any system that offers an API-based integration, often called Webhooks. Similar alerting systems are OpsGenie, Squadcast, Datadog, etc.
 
 ## Alert Design
 
@@ -131,7 +126,7 @@ how the above logic is implemented.
 In this example, we are looking to find failure instances of the workflow **sample_tracker_workflow** on the playground
 environment of Orkes Conductor in a 10-minute window.
 
-An example payload for pagerduty integration could look like:
+An example payload for Pagerduty integration could look like:
 
 Endpoint: `POST https://events.pagerduty.com/v2/enqueue`
 
@@ -165,8 +160,7 @@ Endpoint: `POST https://events.pagerduty.com/v2/enqueue`
 
 :::tip
 We are using a JavaScript task called [INLINE](https://orkes.io/content/reference-docs/system-tasks/inline) to compute
-the start and end times for making the API query to Conductor. We can have any custom logic in here to customize for our
-alerting requirements.
+the start and end times for making the API query to Conductor. We can have any custom logic here to customize our alerting requirements.
 :::
 
 A switch task with Javascript condition checks if the situation warrants an alert, and if yes, makes a webhook call to
@@ -190,20 +184,25 @@ we can maintain that token by periodically refreshing it.
 ### Scheduling Alerts
 
 For scheduling the alerts, you can leverage the Workflow Scheduler feature in Orkes Conductor. This lets the workflow at
-the chosen cadence thus automating the alerting process.
+the chosen cadence, thus automating the alerting process.
 
 1. Navigate to **Definitions > Scheduler** on your Orkes Conductor console.
 2. Click **Define schedule**.
 3. [Create a scheduler](/content/developer-guides/scheduling-workflows#creating-schedule) using the following cron
    expression and choose the alert workflow you’ve created:
 
-### Managing API secrets
-
-Similar to how we maintain API tokens, we can maintain the API keys / secrets for 3rd party systems as a secret, and it
-can be referred in your workflows.
-
 ```
 0 * * ? * *
 ```
 
-This lets the workflow run every minute and the alerts would be triggered and sent every minute.
+This lets the workflow run every minute, and the alerts would be triggered and sent every minute.
+
+### Managing API Secrets
+
+Similar to how we maintain API tokens, we can maintain the API keys / secrets for 3rd party systems as a [secret](/content/developer-guides/secrets-in-conductor), and it can be referred in your workflows.
+
+## Video Guide
+
+<center>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/bg3c14gMkQ8?si=P8WlVXLAkqM445lw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</center>
