@@ -30,14 +30,14 @@ This system task is designed to do queries against various systems that can be u
 #### Sample Input
 ```json
   "workflowNames": [
-    "TestFailedWorkflow", "TestTimedOutWorkflow"
+    "TestFailedWorkflow", "TestTerminatedWorkflow"
   ],
   "startTimeFrom": 15,
   "startTimeTo": 0,
   "correlationIds": null,
   "freeText": null,
   "statuses": [
-    "FAILED", "TIMED_OUT"
+    "FAILED", "TERMINATED"
   ],
 ```
 In the above example we are trying to query for FAILED or TIMED_OUT workflows of types TestFailedWorkflow and TestTimedOutWorkflow that started in the last 15 minutes.
@@ -49,7 +49,7 @@ We can also pass correlationIds and freeText just like we would on the Orkes wor
 {
   "result": {
     "count": 1,
-    "workflowsUrl": "https://play.orkes.io?rowsPerPage=200&startFrom=1696447143843&startTo=1696448043843&status=FAILED&workflowType=TestFailedWorkflow",
+    "workflowsUrl": "https://play.orkes.io?rowsPerPage=200&startFrom=1696447143843&startTo=1696448043843&status=FAILED&status=TERMINATED&workflowType=TestFailedWorkflow&workflowType=TestTerminatedWorkflow",
     "workflows": [
       {
         "updateTime": "2023-10-04T19:30:39.105Z",
