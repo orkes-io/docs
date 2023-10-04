@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 5
 ---
 
 import Tabs from '@theme/Tabs';
@@ -8,6 +8,10 @@ import TabItem from '@theme/TabItem';
 # Pause Workflow
 
 This API pauses the execution of a running workflow. Any currently running tasks will finish, but no new tasks will be scheduled until the workflow is resumed.
+
+:::note
+This method is intended for pausing your workflow for debugging purposes. For handling your use cases in a live environment, refer to our documentation [pausing workflows for external signals](https://orkes.io/content/developer-guides/pausing-for-external-signals).
+:::
 
 ## Input Payload
 
@@ -54,7 +58,16 @@ void WorkflowResourceApi.PauseWorkflow(string workflowId)
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
-pauseWorkflow(
+WorkflowExecutor.pauseWorkflow(
+    workflowId: string,
+): CancelablePromise<any>
+```
+
+</TabItem>
+<TabItem value="Typescript" label="Typescript">
+
+```typescript
+WorkflowExecutor.pauseWorkflow(
     workflowId: string,
 ): CancelablePromise<any>
 ```

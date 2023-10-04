@@ -1,13 +1,13 @@
 ---
-sidebar_position: 2
+sidebar_position: 6
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Rerun Completed Workflow
+# Rerun Workflow
 
-Reruns a completed workflow from a specific task (ReRunFromTaskId) and optionally change the input. It also updates the completed tasks with new input (ReRunFromTaskId) if required.
+Reruns a workflow from a specific task (ReRunFromTaskId) and optionally change the input. If required, it also updates the completed tasks with new input (ReRunFromTaskId).
 
 ## Input Payload
 
@@ -63,6 +63,16 @@ string WorkflowResourceApi.Rerun(RerunWorkflowRequest body, string workflowId)
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
+WorkflowExecutor.rerun(
+    workflowId: string,
+    requestBody: RerunWorkflowRequest,
+): CancelablePromise<string>
+```
+
+</TabItem>
+<TabItem value="Typescript" label="Typescript">
+
+```typescript
 WorkflowResourceService.rerun(
     workflowId: string,
     requestBody: RerunWorkflowRequest,

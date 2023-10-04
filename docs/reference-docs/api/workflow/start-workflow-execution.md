@@ -1,5 +1,5 @@
 ---
-sidebar_position: 0
+sidebar_position: 12
 ---
 
 import Tabs from '@theme/Tabs';
@@ -63,13 +63,15 @@ string WorkflowResourceApi.StartWorkflow(StartWorkflowRequest body)
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
-WorkflowResourceService.startWorkflow1(
-    name: string,
-    requestBody: Record<string, any>,
-    version?: number,
-    correlationId?: string,
-    priority?: number,
-): CancelablePromise<string>
+WorkflowExecutor.startWorkflow(workflowRequest: StartWorkflowRequest): Promise<string>
+
+```
+
+</TabItem>
+<TabItem value="Typescript" label="Typescript">
+
+```typescript
+WorkflowExecutor.startWorkflow(workflowRequest: StartWorkflowRequest): Promise<string>
 ```
 
 </TabItem>

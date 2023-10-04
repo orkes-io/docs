@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 11
 ---
 
 import Tabs from '@theme/Tabs';
@@ -57,10 +57,21 @@ void WorkflowResourceApi.SkipTaskFromWorkflow(string workflowId, string taskRefe
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
-WorkflowResourceService.skipTaskFromWorkflow(
+WorkflowExecutor.skipTaskFromWorkflow(
     workflowId: string,
     taskReferenceName: string,
-    requestBody?: SkipTaskRequest,
+    requestBody: Partial<SkipTaskRequest>,
+): CancelablePromise<any>
+```
+
+</TabItem>
+<TabItem value="Typescript" label="Typescript">
+
+```typescript
+WorkflowExecutor.skipTaskFromWorkflow(
+    workflowId: string,
+    taskReferenceName: string,
+    requestBody: Partial<SkipTaskRequest>,
 ): CancelablePromise<any>
 ```
 

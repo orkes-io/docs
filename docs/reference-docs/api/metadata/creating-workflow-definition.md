@@ -1,16 +1,16 @@
 ---
-sidebar_position: 2
+sidebar_position: 7
 ---
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Creating Workflow Definitions
+# Creating Workflow Definition
 
-Workflow can be defined as the collection of tasks and operators that specifies the order and execution of the defined tasks. 
+Workflow can be defined as the collection of tasks and operators that specifies the order and execution of the defined tasks.
 
 ## Input Payload
 
-You can configure workflow definitions directly via UI and using API. The workflow definitions include the following parameters:
+You can configure workflow definition directly via UI and using API. The workflow definition include the following parameters:
 
 | Attribute                     | Description                                                                                                                                                                                                                                            |
 | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -35,6 +35,8 @@ You can configure workflow definitions directly via UI and using API. The workfl
 POST /api/metadata/workflow
 ```
 
+When a workflow definition is updated via API, it automatically increments the workflow version to the latest.
+
 ## Client SDK Methods
 
 <Tabs>
@@ -48,14 +50,14 @@ void OrkesMetadataClient.registerWorkflowDef(WorkflowDef workflowDef) throws Api
 <TabItem value="Golang" label="Golang">
 
 ```go
-func (*MetadataResourceApiService) RegisterWorkflowDef(ctx context.Context, overwrite bool, body model.WorkflowDef) (*http.Response, error)
+func (a *MetadataResourceApiService) RegisterWorkflowDef(ctx context.Context, overwrite bool, body model.WorkflowDef) (*http.Response, error)
 ```
 
 </TabItem>
 <TabItem value="Python" label="Python">
 
 ```python
-MetadataResourceApi.create(body, **kwargs)
+MetadataResourceApi.metadata_client.create(body, **kwargs)
 ```
 
 </TabItem>
@@ -69,14 +71,21 @@ Object MetadataResourceApi.Create(WorkflowDef body, bool? overwrite = null)
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
-MetadataResourceService.update(requestBody: Array<WorkflowDef>, overwrite: boolean = true): CancelablePromise<any>
+WorkflowExecutor.registerWorkflow(override: boolean, workflow: WorkflowDef)
+```
+
+</TabItem>
+<TabItem value="Typescript" label="Typescript">
+
+```typescript
+WorkflowExecutor.registerWorkflow(override: boolean, workflow: WorkflowDef)
 ```
 
 </TabItem>
 <TabItem value="Clojure" label="Clojure">
 
 ```clojure
-(metadata-resource/register-workflow-def [options workflow])
+(metadata/register-workflow-def options workflow true)
 ```
 
 </TabItem>

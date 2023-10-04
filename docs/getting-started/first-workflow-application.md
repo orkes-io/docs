@@ -35,12 +35,7 @@ Watch this video and follow the steps below:
 </div>
 <div className="col ui-instructions-padding">
 <div className="embed-loom-video">
-<iframe
-  width="100%"
-  height="300px"
-  allow="fullscreen;"
-  src={"https://player.vimeo.com/video/813938430?h=547c5edf56"}
-></iframe></div>
+<iframe width="500" height="315" src="https://www.youtube.com/embed/ViN4iORqg_w?si=HabdCRhkDyyp_3E3" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
 </div>
 </div>
 </TabItem>
@@ -64,12 +59,8 @@ You can run this workflow to see how it executes. If there are failures, Conduct
 </div>
 <div className="col">
 <div className="embed-loom-video">
-<iframe
-  width="100%"
-  height="300px"
-  allow="fullscreen;"
-  src={"https://player.vimeo.com/video/814101164?h=e8e6172101"}
-></iframe></div>
+<iframe width="500" height="315" src="https://www.youtube.com/embed/b8-0FDIZDp4?si=Hb2I9-iewyTJ-H2R" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div>
 </div>
 </div>
 </TabItem>

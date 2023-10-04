@@ -25,6 +25,9 @@ const config = {
         {
             src: baseUrlName + '/js/cookie-consent.js',
         },
+        {
+            src: 'https://player.vimeo.com/api/player.js',
+        },
     ],
     plugins: [
         [
@@ -190,7 +193,7 @@ const config = {
                         items: [
                             {
                                 label: 'Blog',
-                                to: '/content/blog',
+                                to: 'https://orkes.io/blog/',
                             },
                             {
                                 label: 'GitHub',

@@ -1,5 +1,5 @@
 ---
-sidebar_position: 1
+sidebar_position: 13
 ---
 
 import Tabs from '@theme/Tabs';
@@ -59,14 +59,33 @@ WorkflowRun WorkflowResourceApi.ExecuteWorkflow(StartWorkflowRequest body, strin
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
-N/A
+WorkflowExecutor.executeWorkflow(
+    workflowRequest: StartWorkflowRequest,
+    name: string,
+    version: number,
+    requestId: string,
+    waitUntilTaskRef: string = '',
+  ): Promise<WorkflowRun>
+```
+
+</TabItem>
+<TabItem value="Typescript" label="Typescript">
+
+```typescript
+WorkflowExecutor.executeWorkflow(
+    workflowRequest: StartWorkflowRequest,
+    name: string,
+    version: number,
+    requestId: string,
+    waitUntilTaskRef: string = '',
+  ): Promise<WorkflowRun>
 ```
 
 </TabItem>
 <TabItem value="Clojure" label="Clojure">
 
 ```clojure
-N/A
+(run-workflow-sync [options name version requestId {}])
 ```
 
 </TabItem>

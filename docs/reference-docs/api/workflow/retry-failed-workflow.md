@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 9
 ---
 
 import Tabs from '@theme/Tabs';
@@ -57,9 +57,19 @@ void WorkflowResourceApi.Retry(string workflowId, bool? resumeSubworkflowTasks =
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
-retry1(
+WorkflowExecutor.retry(
     workflowId: string,
-    resumeSubworkflowTasks: boolean = false,
+    resumeSubworkflowTasks: boolean,
+): CancelablePromise<void>
+```
+
+</TabItem>
+<TabItem value="Typescript" label="Typescript">
+
+```typescript
+WorkflowExecutor.retry(
+    workflowId: string,
+    resumeSubworkflowTasks: boolean,
 ): CancelablePromise<void>
 ```
 

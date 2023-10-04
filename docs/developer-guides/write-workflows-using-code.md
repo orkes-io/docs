@@ -3,18 +3,19 @@ import TabItem from '@theme/TabItem';
 import Install from '@site/src/components/install.mdx';
 
 # Write Workflows Using Code
+
 Workflows can be written in code, allowing the creation of dynamic workflows that can't be pre-defined. Support for defining workflows using code is part of all the supported SDKs.
 
-
 ## Creating workflows in code
+
 Here is the workflow that we are going to create using various language-specific SDKs in code:
+
 <p style={{textAlign: "center"}}><img src="/content/img/user_notification_workflow.png" alt="user notification workflow" width="60%" height="auto" style={{paddingBottom: 20, paddingTop: 20}} /></p>
 <Tabs>
 <TabItem value="Java" label="Java">
 
-
 ```java
-        
+
         ConductorWorkflow<WorkflowInput> workflow = new ConductorWorkflow<>(executor);
         workflow.setName("user_notification");
         workflow.setVersion(1);
@@ -50,7 +51,7 @@ Here is the workflow that we are going to create using various language-specific
 <TabItem value="Python" label="Python">
 
 ```python
-    
+
     workflow = ConductorWorkflow(
         executor=workflow_executor,
         name='user_notification',
@@ -58,18 +59,18 @@ Here is the workflow that we are going to create using various language-specific
     )
     workflow.input_parameters = ['userId', 'notificationPref']
     get_user_info = SimpleTask('get_user_info', 'get_user_info').input('userId', '${workflow.input.userId}')
-    
+
     decision_task = SwitchTask('emailorsms', '${workflow.input.notificationPref}')
     send_email = SimpleTask('send_email', 'send_email').input('email', '${get_user_info.output.email}')
     send_sms = SimpleTask('send_sms', 'send_sms').input('phoneNumber', '${get_user_info.output.phoneNumber}')
-    
+
     decision_task.switch_case(NotificationPreference.EMAIL,send_email)
     decision_task.switch_case(NotificationPreference.SMS, send_sms)
-    
+
     workflow >> get_user_info >> decision_task
 
     workflow.register(overwrite=True)  # register the workflow with the server
-    
+
     workflow_run = workflow_executor.workflow_client.execute_workflow(
         body=StartWorkflowRequest(name=workflow.name,version=workflow.version),
         request_id=str(uuid.uuid4()),
@@ -85,7 +86,7 @@ Here is the workflow that we are going to create using various language-specific
 <TabItem value="Golang" label="Golang">
 
 ```go
-    
+
     getUserInfo := workflow.NewSimpleTask("get_user_info", "get_user_info").
 		Input("userId", "${workflow.input.userId}")
 	sendEmail := workflow.NewSimpleTask("send_email", "send_email").
@@ -148,18 +149,87 @@ Here is the workflow that we are going to create using various language-specific
 </TabItem>
 <TabItem value="Javascript" label="Javascript">
 
-```java
-    // @TODO:Gustavo
-    @WorkerTask("fraud-check")
-    public String checkForFraud(@InputParam("amount") BigDecimal amount, @InputParam("accountId") String accountId) {
-        boolean isFraud = fraudService.isFraudulentTxn(accountId, amount);
-        if(isFraud) {
-            return "This transaction cannot be processed as its flagged for review.";
-        }
-        return "Deposit of " + amount + " has processed successfully";
-    }
+```javascript
+const getUserDetailsTask = simpleTask(GET_USER_INFO, GET_USER_INFO, {
+    userId: "${workflow.input.userId}",
+  });
+  const emailOrSmsTask = switchTask("emailorsms", "${workflow.input.notificationPref}", {
+    emai: [
+      simpleTask(SEND_EMAIL, SEND_EMAIL, {
+        email: "${get_user_info.output.email}",
+      }),
+    ],
+    sms:[
+      simpleTask(SEND_SMS, SEND_SMS, {
+        phoneNumber: "${get_user_info.output.phoneNumber}",
+      }),
+    ],
+  });
+  
+  const wf = workflow(COMPLEX_WORKFLOW_NAME, [
+    getUserDetailsTask,
+    emailOrSmsTask,
+  ]);
+  wf.inputParameters = ['userId', 'notificationPref']
+  
+  const client = await clientPromise;
+  client.metadataResource.create(wf, true);
 
+return wf;
 ```
 
+</TabItem>
+<TabItem value="Typescript" label="Typescript">
+
+```typescript 
+const getUserDetailsTask = simpleTask(GET_USER_INFO, GET_USER_INFO, {
+    userId: "${workflow.input.userId}",
+  });
+  const emailOrSmsTask = switchTask(
+    "emailorsms",
+    "${workflow.input.notificationPref}",
+    {
+      email: [
+        simpleTask(SEND_EMAIL, SEND_EMAIL, {
+          email: "${get_user_info.output.email}",
+        }),
+      ],
+      sms: [
+        simpleTask(SEND_SMS, SEND_SMS, {
+          phoneNumber: "${get_user_info.output.phoneNumber}",
+        }),
+      ],
+    }
+  );
+
+  const wf = workflow(COMPLEX_WORKFLOW_NAME, [
+    getUserDetailsTask,
+    emailOrSmsTask,
+  ]);
+  wf.inputParameters = ["userId", "notificationPref"];
+  
+  const client = await clientPromise;
+  client.metadataResource.create(wf, true);
+
+return wf;
+```
+</TabItem>
+<TabItem value="Clojure" label="Clojure">
+
+```clojure
+
+(defn create-tasks
+  "Returns workflow tasks"
+  []
+  (vector (sdk/simple-task (:get-user-info constants) (:get-user-info constants) {:userId "${workflow.input.userId}"})
+          (sdk/switch-task "emailorsms" "${workflow.input.notificationPref}" {"email" [(sdk/simple-task (:send-email constants) (:send-email constants) {"email" "${get_user_info.output.email}"})]
+                                                                              "sms" [(sdk/simple-task (:send-sms constants) (:send-sms constants) {"phoneNumber" "${get_user_info.output.phoneNumber}"})]} [])))
+
+(defn create-workflow
+  "Returns a workflow with tasks"
+  [tasks]
+  (merge (sdk/workflow (:workflow-name constants) tasks) {:inputParameters ["userId" "notificationPref"]}))
+
+```
 </TabItem>
 </Tabs>

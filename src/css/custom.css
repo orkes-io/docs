@@ -519,3 +519,7 @@ summary {
   margin-bottom: 0!important;
   line-height: 15px!important;
 }
+
+.markdown > *:last-child {
+  margin-bottom: 20px !important;
+}

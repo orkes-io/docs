@@ -28,9 +28,53 @@ In the **FORK_JOIN** task, the JOIN task waits for a list of zero or more of the
 
 ### Input Parameters
 
-| Attribute | Description                                                                  |
-| --------- | ---------------------------------------------------------------------------- |
-| joinOn    | A list of task reference names that this JOIN task will wait for completion. |
+<table>
+<tr>
+<td><b> Attribute </b></td> <td><b> Description </b></td>
+</tr>
+<tr>
+<td>joinOn</td>
+<td>A list of task reference names that this JOIN task will wait for completion.</td>
+</tr>
+<tr>
+<td>Join Script</td>
+<td> This is an optional field. When checked, you must provide a script to control how the join task completes. <p>A sample script looks like this:</p>
+
+```javascript
+(function(){
+ let results = {};
+ let pendingJoinsFound = false;
+ if($.joinOn){
+   $.joinOn.forEach((element)=>{
+     if($[element] && $[element].status !== 'COMPLETED'){
+       results[element] = $[element].status;
+       pendingJoinsFound = true;
+     }
+   });
+   if(pendingJoinsFound){
+     return {
+       "status":"IN_PROGRESS",
+       "reasonForIncompletion":"Pending",
+       "outputData":{
+         "scriptResults": results
+       }
+     };
+   }
+   // To complete the Join - return true OR an object with status = 'COMPLETED' like above.
+   return true;
+ }
+})();
+```
+
+<p>
+
+The script will have access to a variable called **$.joinOn**, which is an array of task references mapped to this join, and the output data of each joined task, such as **$[‘task-reference-name’]**.
+
+</p>
+<p>You can define the script so that the task status can be checked, and if any pending joins are found, you can configure it to change the task status to IN_PROGESS until it's completed. If not, you can also proceed with the required task status and complete it as needed. It can also return the join task result as composed by the script. The script can be modified to suit your use case.</p>
+</td>
+</tr>
+</table>
 
 ### Output Parameters
 
@@ -165,4 +209,56 @@ Here is what the output of **notification_join** will look like. The output is a
     }
 ```
 </p>
+</details>
+
+<details><summary>Example with Join Script</summary>
+
+Consider a fork-join task having 2 forks, of which both of them are sub-workflows. While defining a task, there is a field called “optional”, which is set to false by default. You must enable this option, which is the precondition for the join script to work well.
+
+<p align="center"><img src="/content/img/join-task-example-using-script.png" alt="Join task example" width="70%"
+                       height="auto"/></p>
+
+In this case, both fork tasks should be marked as optional. 
+
+And the join task is joined using the following join script.
+
+```javascript
+(function(){
+ let results = {};
+ let pendingJoinsFound = false;
+ if($.joinOn){
+   $.joinOn.forEach((element)=>{
+     if($[element] && $[element].status !== 'COMPLETED'){
+       results[element] = $[element].status;
+       pendingJoinsFound = true;
+     }
+   });
+   if(pendingJoinsFound){
+     return {
+       "status":"IN_PROGRESS",
+       "reasonForIncompletion":"Pending",
+       "outputData":{
+         "scriptResults": results
+       }
+     };
+   }
+   // To complete the Join - return true OR an object with status = 'COMPLETED' like above.
+   return true;
+ }
+})();
+```
+This ensures the join task completes only if all the forks are completed. If any pending joins are found, the script will return the join task status to IN_PROGRESS and will get completed only on completing the fork tasks. 
+
+If we run the workflow, you can see that the join has not been completed and is waiting for the second fork to complete. As per the script, this returns the join task to an in-progress state and remains until the pending joins are completed.
+
+<p align="center"><img src="/content/img/join-task-in-progress-state.png" alt="Join task not completed and returned to in progress state" width="80%"
+                       height="auto"/></p>
+
+The join task gets completed after fixing the issue with the second fork task.
+
+<p align="center"><img src="/content/img/join-task-completed-state.png" alt="Join task completed" width="60%"
+                       height="auto"/></p>
+
+So this ensures that the workflow gets completed only on completing all the pending joins as per the script.
+
 </details>

@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 1
 ---
 
 import Tabs from '@theme/Tabs';
@@ -11,8 +11,8 @@ Remove workflow execution permanently from the system.
 
 ## Input Payload
 
-| Attribute | Description | 
-| --------- | ----------- | 
+| Attribute  | Description                                          | 
+|------------|------------------------------------------------------| 
 | workflowId | The unique identifier of the workflow to be removed. |
 
 ## API Endpoint
@@ -56,6 +56,16 @@ void WorkflowResourceApi.Delete(string workflowId, bool? archiveWorkflow = null)
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
+WorkflowResourceService.delete(
+    workflowId: string,
+    archiveWorkflow: boolean = true,
+): CancelablePromise<any>
+```
+
+</TabItem>
+<TabItem value="Typescript" label="Typescript">
+
+```typescript
 WorkflowResourceService.delete(
     workflowId: string,
     archiveWorkflow: boolean = true,

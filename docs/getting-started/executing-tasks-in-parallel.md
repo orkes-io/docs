@@ -22,19 +22,14 @@ Orkes Conductor runs 1000s of parallel executions, limited only by the worker ca
 <div className="row">
 <div className="col col--4">
 
-1. In your current workflow, add a new workflow called `batch-process-payments-<unique-id>` and add a [Worker](/content/reference-docs/operators/worker-task) task for the case with the name `retrieve-deposit-batch`.
+1. In your current workflow, add a new workflow called `batch-process-payments-<unique-id>` and add a [Worker](/content/reference-docs/worker-task) task for the case with the name `retrieve-deposit-batch`.
 2. Add a [Dynamic Fork](/content/reference-docs/operators/dynamic-fork) task - and  configure it to run a sub-workflow based on the output of `retrieve-deposit-batch` task.
 3. [Run workflow directly from the UI](/content/how-to-videos/run-workflow) using the Run Workflow button.
 
 </div>
-<div className="col">
-<div className="embed-loom-video">
-<iframe
-  width="100%"
-  height="300px"
-  allow="fullscreen;"
-  src={"https://player.vimeo.com/video/819327252?h=8caed39ed7"}
-></iframe></div>
+<div className="col col--4">
+<div className="embed-youtube-video">
+<iframe width="500" height="315" src="https://www.youtube.com/embed/xkRHjAgff0I?si=3N7kE0dmnvj6v_5J" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
 </div>
 </div>
 </TabItem>

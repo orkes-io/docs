@@ -57,9 +57,6 @@ For example:
 
 This will result in 9 output images, i.e., three different sizes with three formats each.
 
-### Visual Representation
-<img src="https://raw.githubusercontent.com/conductor-sdk/conductor-examples/main/image_processing/images/resize.jpg"
-alt="image resize workflow" width="600" style={{paddingBottom: 20, paddingTop: 10}} />
 
 ### Output of the workflow
 
@@ -139,8 +136,8 @@ watermark
 
 
 ### Workflow Diagram
-<img src="https://raw.githubusercontent.com/conductor-sdk/conductor-examples/main/image_processing/images/image_effects_diagram.jpg"
-alt="Diagram of Workflow" width="400" style={{paddingBottom: 20, paddingTop: 10}} />
+
+<p align="center"><img src="/content/img/image-processing-workflow-diagram.png" alt="Run Workflow" width="40%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
 ### Example Input
 

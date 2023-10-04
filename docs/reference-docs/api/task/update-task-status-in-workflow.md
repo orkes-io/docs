@@ -28,7 +28,7 @@ POST /tasks/{workflowId}/{taskRefName}/{status}
 <TabItem value="Java" label="Java">
 
 ```java
-String OrkesTaskClient.updateTask1(Map<String, Object> body, String workflowId, String taskRefName, String status) throws ApiException
+String OrkesTaskClient.updateTaskByRefName(Map<String, Object> output, String workflowId, String taskRefName, String status) throws ApiException
 ```
 
 </TabItem>
@@ -42,14 +42,14 @@ func (*WorkflowExecutor) UpdateTaskByRefName(taskRefName string, workflowInstanc
 <TabItem value="Python" label="Python">
 
 ```python
-TaskResourceApi.update_task1(body, workflow_id, task_ref_name, status, **kwargs)
+TaskResourceApi.update_task1(taskOutput, workflow_id, task_ref_name, status, **kwargs)
 ```
 
 </TabItem>
 <TabItem value="CSharp" label="CSharp">
 
 ```csharp
-string TaskResourceApi.UpdateTask(Dictionary<string, Object> body, string workflowId, string taskRefName, string status, string workerid = null)
+string TaskResourceApi.UpdateTask(Dictionary<string, Object> taskOutput, string workflowId, string taskRefName, string status, string workerid = null)
 ```
 
 </TabItem>
@@ -60,7 +60,19 @@ TaskResourceService.updateTask(
     workflowId: string,
     taskRefName: string,
     status: 'IN_PROGRESS' | 'FAILED' | 'FAILED_WITH_TERMINAL_ERROR' | 'COMPLETED',
-    requestBody: Record<string, any>,
+    taskOutput: Record<string, any>,
+): CancelablePromise<string>
+```
+
+</TabItem>
+<TabItem value="Typescript" label="Typescript">
+
+```typescript
+TaskResourceService.updateTask(
+    workflowId: string,
+    taskRefName: string,
+    status: 'IN_PROGRESS' | 'FAILED' | 'FAILED_WITH_TERMINAL_ERROR' | 'COMPLETED',
+    taskOutput: Record<string, any>,
 ): CancelablePromise<string>
 ```
 
@@ -68,7 +80,7 @@ TaskResourceService.updateTask(
 <TabItem value="Clojure" label="Clojure">
 
 ```clojure
-(task-resource/update-task-by-reference-name [options workflow-id task-reference-name status update-req])
+(task-resource/update-task-by-reference-name options workflow-id task-reference-name status update-req)
 ```
 
 </TabItem>

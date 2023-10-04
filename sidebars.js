@@ -71,13 +71,25 @@ const sidebars = {
                     label: "Webhook Integration"
                 },
                 'developer-guides/write-workflows-using-code',
+                {
+                    type: 'doc',
+                    id: 'developer-guides/orchestrating-human-tasks',
+                    label: "Human Task"
+                },
                 'developer-guides/debugging-workflows',
                 'developer-guides/task-to-domain',
                 'developer-guides/secrets-in-conductor',
                 'developer-guides/scaling-workers',
                 'developer-guides/metrics-and-observability',
                 'developer-guides/monitoring-task-queues',
+                'developer-guides/workflow-version-behavior-on-execution',
                 'developer-guides/task-and-workflow-status-in-conductor',
+                'developer-guides/pausing-for-external-signals',
+                {
+                    type: 'doc',
+                    id: 'developer-guides/task-and-workflow-event-streaming-with-orkes-conductor-and-azure-event-hub',
+                    label: "Event Streaming with Azure Event Hub"
+                },
             ],
             collapsible: true,
             collapsed: true,
@@ -190,6 +202,11 @@ const sidebars = {
                         }]
                 },
                 {
+                    type: 'doc',
+                    id: 'reference-docs/worker-task',
+                    className: 'leftMenuHeader',
+                },
+                {
                     type: 'category',
                     label: 'API Reference',
                     link: {
@@ -258,6 +275,15 @@ const sidebars = {
                     items: [
                         {
                             type: 'doc',
+                            id: 'templates/examples/custom-conductor-webhook-using-curl',
+                            label: 'Conductor Webhook using cURL',
+                        },
+                        'templates/examples/incoming-webhook-using-postman',
+                        'templates/examples/keep-worker-running-until-condition-true',
+                        'templates/examples/rotating-secrets-that-expire',
+                        'templates/examples/scanning-an-endpoint-and-triggering-pagerduty-alert',
+                        {
+                            type: 'doc',
                             id: 'templates/examples/api-processing-usps-example',
                             label: 'API Processing',
                         },
@@ -311,6 +337,7 @@ const sidebars = {
                 slug: '/category/faqs'
             },
             items: [
+                'faqs/general-faqs',
                 'faqs/conductor-log-level',
                 'faqs/reuse-tasks',
                 'faqs/directed-acyclic-graph',

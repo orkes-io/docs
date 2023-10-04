@@ -55,14 +55,22 @@ void TaskResourceApi.Log(string body, string taskId)
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
-TaskResourceService.getTaskLogs(taskId: string): CancelablePromise<Array<TaskExecLog>>
+TaskResourceService.log(taskId: string, logMessage:string): CancelablePromise<Array<TaskExecLog>>
+```
+
+</TabItem>
+<TabItem value="Typescript" label="Typescript">
+
+```typescript
+TaskResourceService.log(taskId: string,logMessage:string): CancelablePromise<Array<TaskExecLog>>
 ```
 
 </TabItem>
 <TabItem value="Clojure" label="Clojure">
 
 ```clojure
-(task-resource/log-task-execution-details [options task-ex-id log-message])
+(task-resource/log-task-execution-details options task-ex-id log-message);
+
 ```
 
 </TabItem>

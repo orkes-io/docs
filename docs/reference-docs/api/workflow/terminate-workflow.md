@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 14
 ---
 
 import Tabs from '@theme/Tabs';
@@ -54,9 +54,19 @@ void WorkflowResourceApi.Terminate(string workflowId, string reason = null, bool
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
-WorkflowResourceService.terminate1(
+WorkflowExecutor.terminate(
     workflowId: string,
-    reason?: string,
+    reason: string,
+): CancelablePromise<any>
+```
+
+</TabItem>
+<TabItem value="Typescript" label="Typescript">
+
+```typescript
+WorkflowExecutor.terminate(
+    workflowId: string,
+    reason: string,
 ): CancelablePromise<any>
 ```
 

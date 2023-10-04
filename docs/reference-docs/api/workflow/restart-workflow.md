@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 7
 ---
 
 import Tabs from '@theme/Tabs';
@@ -54,9 +54,19 @@ void WorkflowResourceApi.Restart(string workflowId, bool? useLatestDefinitions =
 <TabItem value="Javascript" label="Javascript">
 
 ```javascript
-WorkflowResourceService.restart1(
+WorkflowExecutor.restart(
     workflowId: string,
-    useLatestDefinitions: boolean = false,
+    useLatestDefinitions: boolean,
+): CancelablePromise<void>
+```
+
+</TabItem>
+<TabItem value="Typescript" label="Typescript">
+
+```typescript
+WorkflowExecutor.restart(
+    workflowId: string,
+    useLatestDefinitions: boolean,
 ): CancelablePromise<void>
 ```
 

@@ -83,6 +83,25 @@ In summary, this expression defines a property called **key**, with a value that
 </TabItem>
 </Tabs>
 
+Depending on the context from where the data is being passed, the expression can take the following variants:
+
+| Workflow Attribute | Description |
+| ------------------ | ----------- |
+| input | **${workflow.input.somevalue}** <br/>If the workflow has an input parameter “**_somevalue_**”, then the same parameter can be referred to using this expression.|
+| output | **${workflow.output.somevalue}** <br/>If the workflow has an output parameter “**_somevalue_**”, then the same parameter can be referred to using this expression.|
+| status | **${workflow.status}** <br/>This expression can be used when you want to check the workflow status and proceed. The possible values the expression can return are _RUNNING, PAUSED, TIMED_OUT, TERMINATED, FAILED,_ or _COMPLETED_.|
+| workflowId | **${workflow.workflowId}** <br/>This expression can be used when you need to retrieve the workflowId of the current workflow.|
+| parentWorkflowId | **${workflow.parentWorkflowId}** <br/>This expression can be used in the sub-workflows to retrieve the workflowId of the parent workflow.|
+| parentWorkflowTaskId | **${workflow.parentWorkflowTaskId}** <br/>This expression can be used in the sub-workflows to retrieve the subworkflow’s task execution Id in the parent workflow.|
+| workflowType | **${workflow.workflowType}** <br/>This expression can be used to retrieve the workflow name.|
+| version | **${workflow.version}** <br/>This expression can be used when you need to retrieve the version of the current workflow.|
+| correlationId | **${workflow.correlationId}** <br/>This expression can be used when you need to retrieve the correlationId provided to the current workflow instance.|
+| schemaVersion | **${workflow.schemaVersion}** <br/>This expression can be used to retrieve the schema version of the current workflow.|
+| variables | **${workflow.variables.variable_name}** <br/>This expression is used when a variable name is already stored in the workflow definition, and you need to retrieve the variable name in the preceding tasks.|
+| createTime | **${workflow.createTime}** <br/>This expression can be used to retrieve the workflow execution time.|
+| secrets | **${workflow.secrets.secret_name}** <br/>This expression can be used to retrieve the secret values without exposing them directly in the workflow definitions. Referring using this expression ensures that it takes the value dynamically while executing the workflow.|
+| taskToDomain | **${workflow.taskToDomain.domain_name}** <br/>This expression can be used to retrieve the domain name used while invoking the workflow.|
+
 ## Detailed Examples
 
 <details><summary>Task Inputs referred from Workflow Inputs​​</summary>
@@ -204,6 +223,50 @@ So, here the variable `name` is set to `Orkes`.  We can refer to this variable i
 This results in **"variable_name": "Orkes"**.
 </details>
 
+## Task Input Templates
+
+While creating task definitions, you can define the task input templates. These values will be supplied to each execution of the task and can be overridden within the workflow. It means that the parameters are included in the task definition, and whenever the task is used in a workflow, these parameters would be included by default in the workflow.
+
+While [creating a task definition](/content/reference-docs/api/metadata/creating-task-definitions), you can define the task input template as follows:
+
+Using UI forms:
+
+<p align="center"><img src="/content/img/task-input-template-in-task-definition.png" alt="Task input template in task definition" width="70%"
+                       height="auto"/></p>
+
+Using JSON code:
+
+```json
+{
+ "name": "test-task",
+ "description": "Edit or extend this sample task. Set the task name to get started",
+ "retryCount": 3,
+ "timeoutSeconds": 3600,
+ "inputKeys": [],
+ "outputKeys": [],
+ "inputTemplate": {
+   "key": "value"
+ },
+ "ownerEmail": "name@example.com"
+}
+```
+
+Adding this task to the workflow definition would already include the parameters supplied via the input task template.
+
+<p align="center"><img src="/content/img/workflow-definition-with-task-input-template.png" alt="Workflow definition with task input template supplied already" width="90%"
+                       height="auto"/></p>
+
+These values can also be overridden by supplying input parameters to the task in the workflow definition.
+
+<p align="center"><img src="/content/img/overriding-values.png" alt="Overriding task input template parameters from Workflow definition" width="90%"
+                       height="auto"/></p>
+
+Here, initially, some **“key”** were supplied through input templates. Now, when the same **“key”** was provided as input parameters in the workflow definition, the values got overridden. 
+
+:::note
+You cannot view the input templates in the workflow definition JSON code as they are part of only task definitions. But, on clicking the task, you can view the input templates supplied from the UI. 
+:::
+
 <FAQStructuredData faqs={faqs} />
 
 import FAQStructuredData from '../../src/theme/FAQStructuredData';
@@ -238,6 +301,6 @@ export const faqs = [
     question:
       'When should I use Set Variables (Global Variables)?',
     answer: 'Set Variable can be used when you need to store a variable and use it later across different tasks & workflows.',
-  },{}
+  },
 ];
 
