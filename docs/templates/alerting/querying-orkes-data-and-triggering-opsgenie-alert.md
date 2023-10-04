@@ -235,7 +235,8 @@ This system task is used to send the alert to OpsGenie by using the API integrat
 Of course, we are not done yet, as we also need to figure out a bunch of pending things:
 
 1. Scheduling the alert workflow to run at the per-minute interval
-2. Managing API secrets for OpsGenie
+2. Setting up OpsGenie Integration
+3. Managing API secrets for OpsGenie
 
 ### Scheduling Alerts
 
@@ -253,9 +254,15 @@ the chosen cadence, thus automating the alerting process.
 
 This lets the workflow run every minute, and the alerts would be triggered and sent every minute.
 
+### Setting up OpsGenie Integration
+1. Navigate to the integrations page for your team dashboard - https://orkesio.app.opsgenie.com/teams/dashboard/<team_uuid>/integrations/list
+2. Click on API - It will take you to https://orkesio.app.opsgenie.com/teams/dashboard/<team_uuid>/integrations/create/api
+3. Type Integraton name and hit save
+4. You will see a freshly generated API Key, save it for the next step
+
 ### Managing API Secrets
 
 Similar to how we maintain API tokens, we can maintain the API keys / secrets for 3rd party systems as a [secret](/content/developer-guides/secrets-in-conductor), and it can be referred in your workflows.
 
-In this case we populate a secret called OPS_GENIE_TOKEN and resolve it in the OPS_GENIE system task input by doing this: 
+In this case we populate a secret called OPS_GENIE_TOKEN which will store the API Key generated above. We resolve it in the OPS_GENIE system task input by doing this: 
 ```"token": "${workflow.secrets.OPS_GENIE_TOKEN}"```
