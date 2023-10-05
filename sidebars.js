@@ -266,6 +266,30 @@ const sidebars = {
                 'templates/video-processing-workflows',
                 {
                     type: 'category',
+                    label: 'Application Level Alerting',
+                    link: {
+                        type: 'generated-index',
+                        title: 'Application Level Alerting',
+                        slug: '/category/templates/alerting'
+                    },
+                    items: [
+                        {
+                            type: 'doc',
+                            id: 'templates/alerting/scanning-an-endpoint-and-triggering-pagerduty-alert',
+                            label: 'PagerDuty',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'templates/alerting/querying-orkes-data-and-triggering-opsgenie-alert',
+                            label: 'OpsGenie',
+                        }
+                    ],
+                    collapsible: true,
+                    collapsed: true,
+                    className: 'leftMenuHeader',
+                },
+                {
+                    type: 'category',
                     label: 'Other Examples',
                     link: {
                         type: 'generated-index',
@@ -281,7 +305,6 @@ const sidebars = {
                         'templates/examples/incoming-webhook-using-postman',
                         'templates/examples/keep-worker-running-until-condition-true',
                         'templates/examples/rotating-secrets-that-expire',
-                        'templates/examples/scanning-an-endpoint-and-triggering-pagerduty-alert',
                         {
                             type: 'doc',
                             id: 'templates/examples/api-processing-usps-example',
