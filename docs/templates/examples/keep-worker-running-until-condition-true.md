@@ -17,7 +17,11 @@ when you don't have an endpoint to call directly from Conductor.
 ```java dynamic https://github.com/conductor-sdk/orkes-java-springboot2-example/blob/main/src/main/java/io/orkes/example/banking/workers/PollUntilConditionMeetsWorker.java section=1 ../workers/PollUntilConditionMeetsWorker.java
 ```
 
-<center><iframe width="560" height="315" src="https://www.youtube.com/embed/nI8IcSpzBLQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></center>
+<center><iframe width="560" height="315" src="https://www.youtube.com/embed/nI8IcSpzBLQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="allowfullscreen"
+mozallowfullscreen="mozallowfullscreen"
+msallowfullscreen="msallowfullscreen"
+oallowfullscreen="oallowfullscreen"
+webkitallowfullscreen="webkitallowfullscreen"></iframe></center>
 
 In this example worker, we use the `callbackAfterSeconds` attribute to keep the worker in progress
 until a condition is met. This can be any arbitrary condition that our code defines.
