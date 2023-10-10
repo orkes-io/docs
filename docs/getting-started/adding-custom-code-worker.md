@@ -24,7 +24,11 @@ Continuing the use case from the previous step, we now have a requirement to add
 </div>
 <div className="col">
 <div className="embed-loom-video">
-<iframe width="500" height="315" src="https://www.youtube.com/embed/-jx9XuKaL0I?si=1iK2Jb_yRtE_Jvqm" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+<iframe width="500" height="315" src="https://www.youtube.com/embed/-jx9XuKaL0I?si=1iK2Jb_yRtE_Jvqm" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="allowfullscreen"
+mozallowfullscreen="mozallowfullscreen"
+msallowfullscreen="msallowfullscreen"
+oallowfullscreen="oallowfullscreen"
+webkitallowfullscreen="webkitallowfullscreen"></iframe></div>
 </div>
 </div>
 </TabItem>

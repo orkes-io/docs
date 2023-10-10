@@ -35,7 +35,11 @@ Watch this video and follow the steps below:
 </div>
 <div className="col ui-instructions-padding">
 <div className="embed-loom-video">
-<iframe width="500" height="315" src="https://www.youtube.com/embed/ViN4iORqg_w?si=HabdCRhkDyyp_3E3" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+<iframe width="500" height="315" src="https://www.youtube.com/embed/ViN4iORqg_w?si=HabdCRhkDyyp_3E3" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="allowfullscreen"
+        mozallowfullscreen="mozallowfullscreen"
+        msallowfullscreen="msallowfullscreen"
+        oallowfullscreen="oallowfullscreen"
+        webkitallowfullscreen="webkitallowfullscreen"></iframe></div>
 </div>
 </div>
 </TabItem>
@@ -59,7 +63,12 @@ You can run this workflow to see how it executes. If there are failures, Conduct
 </div>
 <div className="col">
 <div className="embed-loom-video">
-<iframe width="500" height="315" src="https://www.youtube.com/embed/b8-0FDIZDp4?si=Hb2I9-iewyTJ-H2R" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<iframe width="500" height="315" src="https://www.youtube.com/embed/b8-0FDIZDp4?si=Hb2I9-iewyTJ-H2R" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+allowfullscreen="allowfullscreen"
+mozallowfullscreen="mozallowfullscreen"
+msallowfullscreen="msallowfullscreen"
+oallowfullscreen="oallowfullscreen"
+webkitallowfullscreen="webkitallowfullscreen"></iframe>
 </div>
 </div>
 </div>

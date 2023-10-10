@@ -359,6 +359,11 @@ export const VideoSection = ({}) => (
               width="100%"
               height="230px"
               src={item.src}
+              allowfullscreen="allowfullscreen"
+              mozallowfullscreen="mozallowfullscreen"
+              msallowfullscreen="msallowfullscreen"
+              oallowfullscreen="oallowfullscreen"
+              webkitallowfullscreen="webkitallowfullscreen"
             ></iframe>
             <h4 className="padding-top--sm padding-left--sm">{item.title}</h4>
           </div>

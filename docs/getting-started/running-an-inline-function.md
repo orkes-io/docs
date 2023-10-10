@@ -25,7 +25,11 @@ So far, we haven't done anything here, even if the fraud check fails. How can we
 </div>
 <div className="col">
 <div className="embed-loom-video">
-<iframe width="500" height="315" src="https://www.youtube.com/embed/y66AKuKLf2s?si=yaYNEazXWoh1tExU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+<iframe width="500" height="315" src="https://www.youtube.com/embed/y66AKuKLf2s?si=yaYNEazXWoh1tExU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="allowfullscreen"
+mozallowfullscreen="mozallowfullscreen"
+msallowfullscreen="msallowfullscreen"
+oallowfullscreen="oallowfullscreen"
+webkitallowfullscreen="webkitallowfullscreen"></iframe></div>
 </div>
 </div>
 </TabItem>

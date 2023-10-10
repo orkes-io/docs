@@ -29,7 +29,11 @@ Orkes Conductor runs 1000s of parallel executions, limited only by the worker ca
 </div>
 <div className="col col--4">
 <div className="embed-youtube-video">
-<iframe width="500" height="315" src="https://www.youtube.com/embed/xkRHjAgff0I?si=3N7kE0dmnvj6v_5J" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+<iframe width="500" height="315" src="https://www.youtube.com/embed/xkRHjAgff0I?si=3N7kE0dmnvj6v_5J" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="allowfullscreen"
+mozallowfullscreen="mozallowfullscreen"
+msallowfullscreen="msallowfullscreen"
+oallowfullscreen="oallowfullscreen"
+webkitallowfullscreen="webkitallowfullscreen"></iframe></div>
 </div>
 </div>
 </TabItem>
