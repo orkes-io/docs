@@ -186,7 +186,7 @@ Refer to this [video](/content/how-to-videos/app-management) to add permission t
 After providing the permissions, we can change the definition to run our worker (`fraud-check-<replace-with-a-unique-value>`) and start the application.
 We can see that now our worker is picking up the task. 
 
-This is the **first example** of how a distributed worker is executed in Conductor; **without** exposinng an endpoint or creating any sort of inbound connectivity, we were able to execute the task directly from our local machine pointing to the playground server.
+This is the **first example** of how a distributed worker is executed in Conductor; **without** exposing an endpoint or creating any sort of inbound connectivity, we were able to execute the task directly from our local machine pointing to the playground server.
 
 :::tip Distributed workers in Conductor
 We can run similar workflows in production, too, workers could live in **any applications** or even **third-party services** and we can connect them all together using
