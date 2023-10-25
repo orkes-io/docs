@@ -62,6 +62,9 @@ const sidebars = {
             },
             items: [
                 'developer-guides/passing-inputs-to-task-in-conductor',
+                'developer-guides/using-llms-in-your-orkes-conductor-workflows',
+                'developer-guides/using-vector-databases-in-your-orkes-conductor-workflows',
+                'developer-guides/creating-and-managing-gen-ai-prompt-templates',
                 'developer-guides/unit-and-regression-tests',
                 'developer-guides/integration-with-cicd',
                 'developer-guides/scheduling-workflows',
@@ -347,8 +350,70 @@ const sidebars = {
             className: 'leftMenuHeader',
         },
         {
-            type: 'doc',
-            id: 'system-integrations',
+            type: 'category',
+            label: 'Integrations',
+            link: {
+                type: 'generated-index',
+                title: 'Integrations',
+                slug: '/category/integrations'
+            },
+            items: [
+                {
+                    type: 'category',
+                    label: 'AI / LLM',
+                    link: {
+                        type: 'generated-index',
+                        title: 'AI / LLM',
+                        slug: '/category/integrations/ai-llm'
+                    },
+                    items: [
+                        {
+                            type: 'doc',
+                            id: 'integrations/ai-llm/open-ai',
+                            label: 'Open AI',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'integrations/ai-llm/azure-open-ai',
+                            label: 'Azure Open AI',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'integrations/ai-llm/vertex-ai',
+                            label: 'Vertex AI',
+                        },
+                    ],
+                    collapsible: true,
+                    collapsed: true,
+                    className: 'leftMenuHeader',
+                },
+                {
+                    type: 'category',
+                    label: 'Vector Databases',
+                    link: {
+                        type: 'generated-index',
+                        title: 'Vector Databases',
+                        slug: '/category/integrations/vector-databases'
+                    },
+                    items: [
+                        {
+                            type: 'doc',
+                            id: 'integrations/vector-databases/pinecone',
+                            label: 'Pinecone',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'integrations/vector-databases/weaviate',
+                            label: 'Weaviate',
+                        },
+                    ],
+                    collapsible: true,
+                    collapsed: true,
+                    className: 'leftMenuHeader',
+                },
+            ],
+            collapsible: true,
+            collapsed: true,
             className: 'leftMenuHeader',
         },
         {
