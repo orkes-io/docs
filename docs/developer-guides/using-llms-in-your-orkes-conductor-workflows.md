@@ -151,7 +151,7 @@ Similarly, you can also provide permissions to [applications](https://orkes.io/c
 
 ## Using AI Prompts in LLM Tasks in Orkes Conductor
 
-The AI Prompts and models integrated earlier are now ready to be used in your workflows in Orkes Conductor. To do that, you need to add a system task [LLM Text Complete](/content/reference-docs/system-tasks/ai-tasks/llm-search-index) while creating workflows in Orkes Conductor. 
+The AI Prompts and models integrated earlier are now ready to be used in your workflows in Orkes Conductor. To do that, you need to add a system task [LLM Text Complete](/content/reference-docs/ai-tasks/llm-search-index) while creating workflows in Orkes Conductor. 
 
 ### Creating Workflow with LLM Text Complete Task
 
