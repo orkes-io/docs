@@ -288,6 +288,7 @@ const sidebars = {
                     id: 'templates/document-classifier',
                     label: 'Document Classification',
                 },
+                'templates/image-effects',
                 {
                     type: 'category',
                     label: 'Application Level Alerting',
@@ -344,16 +345,6 @@ const sidebars = {
                             type: 'doc',
                             id: 'templates/examples/fraud-dispute',
                             label: 'Handling Fraud Disputes',
-                        },
-                        {
-                            type: 'doc',
-                            id: 'templates/examples/image-processing',
-                            label: 'Image Processing Workflows',
-                        },
-                        {
-                            type: 'doc',
-                            id: 'templates/examples/video-processing',
-                            label: 'Video Processing Workflows',
                         },
                         {
                             type: 'doc',
