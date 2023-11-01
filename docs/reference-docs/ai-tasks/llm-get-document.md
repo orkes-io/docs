@@ -6,7 +6,7 @@ import TabItem from '@theme/TabItem';
 
 # LLM Get Document
 
-A system task to retrieve a specific document from a vector database that has been previously indexed, making it easily searchable and accessible for subsequent retrieval.
+A system task to retrieve the content of the document provided and use it for further data processing using AI tasks.
 
 ## Definitions
 
