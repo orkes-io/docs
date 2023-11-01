@@ -284,6 +284,11 @@ const sidebars = {
                 'templates/availability-monitoring-for-http-endpoints',
                 'templates/video-processing-workflows',
                 {
+                    type: 'doc',
+                    id: 'templates/document-classifier',
+                    label: 'Document Classification',
+                },
+                {
                     type: 'category',
                     label: 'Application Level Alerting',
                     link: {
