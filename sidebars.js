@@ -394,6 +394,11 @@ const sidebars = {
                             id: 'integrations/ai-llm/vertex-ai',
                             label: 'Vertex AI',
                         },
+                        {
+                            type: 'doc',
+                            id: 'integrations/ai-llm/hugging-face',
+                            label: 'Hugging Face',
+                        },
                     ],
                     collapsible: true,
                     collapsed: true,

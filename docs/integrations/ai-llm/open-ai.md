@@ -79,7 +79,7 @@ To provide explicit permission to Groups:
 
 1. Navigate to **Access Control > Groups** from the left menu on your Orkes Conductor console.
 2. Create a new group or choose an existing group.
-3. Under the **Workflows and tasks permissions** section, click **+Add Permission**.
+3. Under the **Permissions** section, click **+Add Permission**.
 4. Under the **Integrations** tab, select the required integrations with the required permissions. 
 
 <p align="center"><img src="/content/img/add-integration-permission-for-azure-open-ai.png" alt="Add Permissions for Azure OpenAI Integration" width="60%" height="auto"></img></p>
