@@ -289,6 +289,7 @@ const sidebars = {
                     label: 'Document Classification',
                 },
                 'templates/image-effects',
+                'templates/visual-image-search',
                 {
                     type: 'category',
                     label: 'Application Level Alerting',
