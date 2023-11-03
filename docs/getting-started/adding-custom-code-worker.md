@@ -91,9 +91,14 @@ def execute(task: Task) -> TaskResult:
     return task_result
 
 # Create worker using a WorkerTask decorator
-@WorkerTask(task_definition_name='python_annotated_task', domain='cool', worker_id='decorated', poll_interval_seconds=1.0)
+@WorkerTask(task_definition_name='python_annotated_task', worker_id='decorated')
 def python_annotated_task(input) -> object:
-    return {'message': 'python is so cool :)'}
+    return {'message': 'python is so great :)'}
+
+# Create worker with domain using a WorkerTask decorator 
+@WorkerTask(task_definition_name='python_annotated_task', worker_id='decorated_domain', domain='cool')
+def python_annotated_task_with_domain(input) -> object:
+    return {'message': 'python is so great and cool :)'}
 
 configuration = Configuration(
     server_api_url=SERVER_API_URL,
