@@ -290,6 +290,7 @@ const sidebars = {
                 },
                 'templates/image-effects',
                 'templates/visual-image-search',
+                'templates/automatic-subtitle-generator',
                 {
                     type: 'category',
                     label: 'Application Level Alerting',
