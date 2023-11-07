@@ -87,6 +87,11 @@ const sidebars = {
                 'developer-guides/monitoring-task-queues',
                 'developer-guides/workflow-version-behavior-on-execution',
                 'developer-guides/task-and-workflow-status-in-conductor',
+                {
+                    type: 'doc',
+                    id: 'developer-guides/getting-started-with-orkes-template-explorer',
+                    label: "Orkes Template Explorer"
+                },
                 'developer-guides/pausing-for-external-signals',
                 {
                     type: 'doc',
