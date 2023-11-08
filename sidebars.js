@@ -92,7 +92,7 @@ const sidebars = {
                     id: 'developer-guides/getting-started-with-orkes-template-explorer',
                     label: "Orkes Template Explorer"
                 },
-                'developer-guides/pausing-for-external-signals',
+                'developer-guides/sending-signals-to-workflows',
                 {
                     type: 'doc',
                     id: 'developer-guides/task-and-workflow-event-streaming-with-orkes-conductor-and-azure-event-hub',
