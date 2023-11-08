@@ -4,7 +4,7 @@ The task queues are the collection of tasks waiting to be executed. It is useful
 
 ## Viewing Task Queues
 
-You can monitor your task queues by navigating to **Tasks > Queue Monitor**.
+You can monitor your task queues by navigating to **Executions > Queue Monitor**.
 
 <p align="center"><img src="/content/img/task-queue-monitor-view.png" alt="Monitoring Task Queues in Conductor" width="100%" height="auto"></img></p>
 

@@ -7,7 +7,7 @@ You can either add tags directly to individual workflows/tasks/secrets/scheduler
 ## Adding Tags to Workflow​s​
 
 To add a tag to a workflow,
-1. From the left menu, navigate to **WORKFLOWS > Definitions** and find the workflow you wish to tag.
+1. From the left menu, navigate to **Definitions > Workflow** and find the workflow you wish to tag.
 2. In the **Actions** column, click the tag icon.
 
 <p align="center"><img src="/content/img/adding-tags-to-workflow.png" alt="Adding a tag to an already created workflow" width="90%" height="auto"></img></p>
@@ -19,15 +19,17 @@ This will open a pop-up window that allows you to add a new tag. Type a tag name
 ## Adding Tags to Task​s​
 
 To add a tag to a task,
-1. From the left menu, navigate to the **TASKS > Definitions** and find the task you wish to tag.
+1. From the left menu, navigate to the **Definitions > Task** and find the task you wish to tag.
 2. In the **Actions** column, click the tag icon.
+
+<p align="center"><img src="/content/img/adding-tag-to-task.png" alt="Adding a tag to an already created task" width="90%" height="auto"></img></p>
 
 This will open a pop-up window that allows you to add a new tag. Type a tag name in the format **key:value** and press enter to create new tags. You may also remove tags from the same window by clicking the "X" next to the tag you wish to delete.
 
 ## Adding Tags to Scheduler​
 
 To add a tag to a scheduler,
-1. From the left menu, navigate to **SCHEDULER > Definitions** and find the scheduler you wish to tag.
+1. From the left menu, navigate to **Definitions > Scheduler** and find the scheduler you wish to tag.
 2. In the **Actions** column, click the tag icon.
 
 This will open a pop-up window that allows you to add a new tag. Type a tag name in the format **key:value** and press enter to create new tags. You may also remove tags from the same window by clicking the "X" next to the tag you wish to delete.
@@ -35,7 +37,7 @@ This will open a pop-up window that allows you to add a new tag. Type a tag name
 ## Adding Tags to Secrets​
 
 To add a tag to a secret,
-1. From the left menu, navigate to **Secrets** and find the secret you wish to tag.
+1. From the left menu, navigate to **Definitions > Secrets** and find the secret you wish to tag.
 2. In the **Actions** column, click the tag icon.
 
 This will open a pop-up window that allows you to add a new tag. Type a tag name in the format **key:value** and press enter to create new tags. You may also remove tags from the same window by clicking the "X" next to the tag you wish to delete.
@@ -50,8 +52,8 @@ Suppose you have a group of users from the accounts team and want to share the w
 
 To add permissions to the group,
 1. Ensure that the workflow is tagged with the tag **team:accounts**. (If permission is to be shared for tasks/secrets, you need to add the tags to the corresponding items.)
-2. Navigate to **ACCESS CONTROL > Groups** and click the edit icon near your group name.
-3. From the **Workflow and Task Permissions** section, click **+Add Permission**.
+2. Navigate to **Access Control > Groups** and click the edit icon near your group name.
+3. From the **Permissions** section, click **+Add Permission**.
 4. Click on the **Tag** section, choose **team:accounts** tag, and provide EXECUTE permission. You must also provide READ permission to list the workflows/tasks/schedulers/secrets in your Conductor console.
 5. Clicking **Add Permission** adds the tag to the Group.
 
@@ -66,7 +68,7 @@ You can also allow the applications created to have explicit permissions over th
 Suppose you want to provide access to the tag “**team:accounts**” for your application;
 
 1. Ensure that the workflow/task/secret/scheduler is tagged with the tag **team:accounts**.
-2. Then, navigate to **ACCESS CONTROL > Applications** and click the edit icon near your app name.
+2. Then, navigate to **Access Control > Applications** and click the edit icon near your app name.
 3. From the **Workflow and Task Permissions** section, click **+Add Permission**.
 4. Click on the **Tag** section, choose **team:accounts** tag, and provide the required permission.
 5. Clicking **Add Permission** adds the tag to the application.

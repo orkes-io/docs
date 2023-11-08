@@ -39,6 +39,10 @@ Any changes to the definition won’t impact if the execution is already running
 
 In this case, to be consistent with your business flow, you can leverage the [skip task API](https://orkes.io/content/reference-docs/api/workflow/skip-task-from-workflow) to skip the task execution that was already completed.
 
+### API Method
+
+You can use the [workflow upgrade API](/content/reference-docs/api/workflow/upgrade-workflow) to upgrade the running workflow to another version.
+
 ### SDKs 
 
 #### C#

@@ -15,8 +15,8 @@ Each application can generate one or more sets of keys and secrets, and these pa
 ### Configuring Application​
 
 To create a new application,
-1. From the left menu navigation, navigate to **ACCESS CONTROL > Applications**.
-2. Click **Create Application** and provide an app name.
+1. From the left menu navigation, navigate to **Access Control > Applications**.
+2. Click **Create application** and provide an app name.
 3. Once your application is created, click the edit button next to its name.
 
 
@@ -26,7 +26,7 @@ The following roles can be granted to the application.
 * **Application API**: Create and manage applications.
 
 ### Generating Access Keys​
-Once your application's permission levels are chosen, access must be granted to the application. This is done by generating an Access Key. Click **Create Access Key** to generate a unique **Key Id** and **Key Secret**. These values are shown only once, so ensure to copy the credentials and store them privately.
+Once your application's permission levels are chosen, access must be granted to the application. This is done by generating an Access Key. Click **Create access key** to generate a unique **Key Id** and **Key Secret**. These values are shown only once, so ensure to copy the credentials and store them privately.
 
 Once a key has been created, you can perform two actions on the key:
 
@@ -38,7 +38,7 @@ Once a key has been created, you can perform two actions on the key:
 ### Adding Permissions​
 In this section, you can provide the application with access to workflows, tasks, secrets, or tags. To add the permissions,
 1. Click **+Add Permission** from the **Workflow and Task Permissions** section.
-2. Choose the required Workflow/Task/Secret/Tag/Domain in the pop-up window.
+2. Choose the required Workflow/Task/Secret/Tag/Domain/Integration/Prompt in the pop-up window.
 <ul>
 <li><b>Domain</b> - This can be used if you have set up an external worker with a task to domain mapping. You need to provide permission for the domain for the entire application to poll and update the tasks. </li>
 </ul>
