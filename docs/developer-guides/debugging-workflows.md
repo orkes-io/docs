@@ -9,7 +9,7 @@ Orkes Conductor provides a visual representation of workflows that aids in quick
 
 ## Searching/Viewing Workflow Executions
 
-All recent workflow executions are listed on the **WORKFLOWS > Executions** page. This view is filtered by the permissions of the user by default, i.e., users can view the execution of only the permitted workflows.
+All recent workflow executions are listed on the **Executions > Workflow** page. This view is filtered by the permissions of the user by default, i.e., users can view the execution of only the permitted workflows.
 
 <p align="center"><img src="/content/img/workflow-executions.png" alt="Workflow Executions page" width="90%"
                        height="auto"/></p>
