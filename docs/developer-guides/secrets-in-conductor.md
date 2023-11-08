@@ -10,7 +10,7 @@ used to hide these sensitive values on the UI. These values include usernames, p
 
 Follow the below steps to create and store secrets in Conductor:
 
-1. From your Orkes Conductor Console, navigate to the **Secrets** option from the left menu. The *Secrets* page lists all the secrets associated with your account that you have access to.
+1. From your Orkes Conductor Console, navigate to the **Definitions > Secrets** option from the left menu. The *Secrets* page lists all the secrets associated with your account that you have access to.
 2. Click **Add Secrets** and provide the following values:<ul><li>**Secret Name** - Reference name for your secret.</li><li>**Secret Value** - Provide the value to be stored.</li></ul>
 3. Clicking **Add** saves the secret.
 
@@ -25,13 +25,13 @@ We can manage secrets using the following ways. In each of these methods, the pr
 
 ### Using UI 
 
-Users with access to the secret can update the secret on the UI. Access the left menu "Secrets". 
+Users with access to the secret can update the secret on the UI. Access the left menu "Definitions > Secrets". 
 
 ### Using APIs
 
 The following API endpoints can be invoked with credentials that have permission to update the secret value.
 
-### Using a Worker
+#### Using a Worker
 
 A common use case is when a secret managed by Conductor is an access token with an expiry. Tokens that expire require a periodic refresh, and this can be easily achieved using a system worker task that can update the secret. This system worker does the same function as a custom worker updating a secret.
 
