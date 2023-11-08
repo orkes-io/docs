@@ -25,23 +25,23 @@ Examples could be:
 
 For creating a schedule,
 
-1. From your Conductor server, navigate to **SCHEDULER** > **Definitions**. This page displays a list of all the defined schedules.
+1. From your Conductor server, navigate to **Definitions > Scheduler**. This page displays a list of all the defined schedules.
 2. Click the **Define Schedule** button in the top right corner.
 
 The following parameters can be used to configure the schedule:
 
 | Attribute | Description |
 | ------------------------------------- | ------------------------------------ | 
-| Schedule Name | Unique name for the schedule. Ensure that the schedule name contains no spaces or special characters. |
+| Name | Unique name for the schedule. Ensure that the schedule name contains no spaces or special characters. |
 | Cron Expression | The cron expression is the schedule that the workflow will run on. You can either input the cron expression or choose from the available templates. See the section [Cron Expression](/content/developer-guides/scheduling-workflows#cron-expression) below for detailed information regarding this. |
-| Workflow Name | Name of the workflow to be run. The author of the scheduler should have execution permission for the workflow.|
-| Workflow Version | Selected Workflow may have different versions. Choose the version to be used in this schedule. If left blank, the latest version would be run. |    
-| Input Parameters | Provide fixed input values for the workflow as a JSON object. This field is optional. |
-| Correlation Id | User-supplied ID to correlate or search the scheduled workflows. |
-| Schedule Start | Choose the date & time for the scheduler to start running. It should be in the format **yyyy-mm-dd hh:mm (a/p)m**. This field is optional. |
-| Schedule End | Choose the date & time for the scheduler to stop running. It should be in the format **yyyy-mm-dd hh:mm (a/p)m**. This field is optional. |
-| Task to Domain Mapping | You can use the task to domain mapping to limit the workflow execution to specific domains. This field is optional. |
-| Start Schedule Paused? | If selected, the schedule will be paused (so it will not run) upon creation. It is helpful when you don’t want to run the workflow scheduler, such as during maintenance. To resume the scheduled executions, this needs to be unpaused. |
+| Workflow name | Name of the workflow to be run. The author of the scheduler should have execution permission for the workflow.|
+| Workflow version | Selected Workflow may have different versions. Choose the version to be used in this schedule. If left blank, the latest version would be run. |    
+| Input params | Provide fixed input values for the workflow as a JSON object. This field is optional. |
+| Correlation id | User-supplied ID to correlate or search the scheduled workflows. |
+| Schedule start | Choose the date & time for the scheduler to start running. It should be in the format **yyyy-mm-dd hh:mm (a/p)m**. This field is optional. |
+| Schedule end | Choose the date & time for the scheduler to stop running. It should be in the format **yyyy-mm-dd hh:mm (a/p)m**. This field is optional. |
+| Task to domain mapping | You can use the task to domain mapping to limit the workflow execution to specific domains. This field is optional. |
+| Start schedule paused? | If selected, the schedule will be paused (so it will not run) upon creation. It is helpful when you don’t want to run the workflow scheduler, such as during maintenance. To resume the scheduled executions, this needs to be unpaused. |
 
 3. Click **Save Schedule**.
 
@@ -105,7 +105,7 @@ Macros are also supported when setting a schedule.
 
 ## Viewing Executions
 
-Once the schedulers are defined, you can view the executions from the **Scheduler > Executions** page. 
+Once the schedulers are defined, you can view the executions from the **Executions > Scheduler** page. 
 
 <p align="center"><img src="/content/img/scheduler-executions.jpg" alt="Scheduler Executions View" width="100%" height="auto"></img></p>
 
