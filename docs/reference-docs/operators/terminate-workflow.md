@@ -89,23 +89,21 @@ Suppose another running workflow is to be terminated; we can create a workflow w
 A sample workflow may look like this:
 ```json
     {
-      "name": "terminate_workflow",
-      "description": "Edit or extend this sample workflow. Set the workflow name to get started",
-      "version": 1,
-      "tasks": [
-        {
-          "name": "terminate_hello_world",
-          "taskReferenceName": "terminate_hello_world",
-          "inputParameters": {
-            "workflowId": "ff2c8cdc-d20e-11ed-b1a7-ce4d7ef052ad"
-          },
-          "type": "TERMINATE_WORKFLOW"
-        }
-      ],
-      "schemaVersion": 2,
-      "ownerEmail": "user@orkes.io",
-      "timeoutPolicy": "ALERT_ONLY"
+  "name": "terminate_workflow",
+  "description": "Edit or extend this sample workflow. Set the workflow name to get started",
+  "version": 1,
+  "tasks": [
+    {
+      "name": "terminate_hello_world",
+      "taskReferenceName": "terminate_hello_world",
+      "inputParameters": {
+        "workflowId": "a8776d48-7ec9-11ee-8f81-26c6bd51258d"
+      },
+      "type": "TERMINATE_WORKFLOW"
     }
+  ],
+  "ownerEmail": "riza.farheen@orkes.io"
+}
 ```
 If we run this workflow, the workflow with the mentioned workflowId gets terminated, and we can get the terminatedWorkflowIds from the execution page.
 
