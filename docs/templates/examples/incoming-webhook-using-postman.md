@@ -12,7 +12,7 @@ Consider the following workflow that waits for a webhook event from Postman:
 
 To create a workflow:
 
-1. Navigate to **Workflows > Definitions** from the left menu.
+1. Navigate to **Definitions > Workflows** from the left menu.
 2. Click **Define Workflow** and create a workflow including a [WAIT_FOR_WEBHOOK](https://orkes.io/content/reference-docs/system-tasks/wait-for-webhook) task.
 
 For the WAIT_FOR_WEBHOOK task, the input matches are defined as:
@@ -72,7 +72,7 @@ Next, create a webhook to invoke this workflow.
 
 ## Creating Webhook in Conductor
 
-1. From your Conductor server, navigate to **Webhooks** from the left menu.
+1. From your Conductor server, navigate to **Definitions > Webhooks** from the left menu.
 2. Click the **New Webhook** button and create the webhook with the following configurations.
 
 <p align="center"><img src="/content/img/sample-webhook.png" alt="Webhook example" width="70%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
