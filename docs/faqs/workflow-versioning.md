@@ -26,7 +26,7 @@ To create a new version of a workflow, you can make changes to your existing wor
 
 You can view previous versions of a workflow from the Workflow Definitions page. 
 
-1. Navigate to **Workflow > Definitions**.
+1. Navigate to **Definitions > Workflow**.
 2. Click the required workflow.
 3. You can choose the workflow version to view your definition.
 
