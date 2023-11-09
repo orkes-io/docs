@@ -14,7 +14,7 @@ In this example, let’s create a sample workflow like this:
 
 To create a workflow,
 
-1. From your Conductor server, navigate to **Workflows > Definitions** from the left menu.
+1. From your Conductor server, navigate to **Definitions > Workflows** from the left menu.
 2. Click **Define Workflow** and create the workflow to implement your business solution. Include the *[WAIT_FOR_WEBHOOK](https://orkes.io/content/reference-docs/system-tasks/wait-for-webhook)* task where you need to receive the signal to the webhook. 
 
 The JSON code for the above workflow is as follows:
@@ -64,7 +64,7 @@ The JSON code for the above workflow is as follows:
 
 Next, you need to create a webhook.
 
-1. From your Conductor server, navigate to **Webhooks** from the left menu.
+1. From your Conductor server, navigate to **Definitions > Webhooks** from the left menu.
 2. Click the **New Webhook** button and create the webhook with the following configurations.
 
 <p align="center"><img src="/content/img/sample-webhook-using-curl.png" alt="Webhook created in Conductor" width="70%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>

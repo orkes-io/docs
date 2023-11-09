@@ -81,15 +81,15 @@ For example, the above one will match the webhook event payload where the **even
 
 Let’s create a Webhook now.
 
-1. Navigate to **Webhooks** from the Conductor server.
+1. Navigate to **Definitions > Webhooks** from the left menu of your Conductor console.
 2. Click **New Webhook**.
 3. You need to fill in the following details:
 
 | Field                                   | Description                                                                                                                                                                                                                                                                     |
 |-----------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Webhook Name                            | Provide a unique name for your Webhook.                                                                                                                                                                                                                                         |
-| Workflow To Receive Webhook Event       | Provide the workflow name that is supposed to receive this webhook event.                                                                                                                                                                                                       |
-| Source Platform                         | Choose the platform from which this webhook event is going to be invoked. The currently supported platforms are GitHub, Slack, Twilio, Stripe, Pagerduty, Zendesk, Twitter, Facebook, Sendgrid & Custom. <br/> **Note**: You can use the option custom for unsupported systems. |
+| Webhook name                            | Provide a unique name for your Webhook.                                                                                                                                                                                                                                         |
+| Workflow to receive webhook event       | Provide the workflow name that is supposed to receive this webhook event.                                                                                                                                                                                                       |
+| Source platform                         | Choose the platform from which this webhook event is going to be invoked. The currently supported platforms are GitHub, Slack, Twilio, Stripe, Pagerduty, Zendesk, Twitter, Facebook, Sendgrid & Custom. <br/> **Note**: You can use the option custom for unsupported systems. |
 | Start workflow when webhook events come | Check this option to start a new workflow based on the data received from the webhook event. Once enabled, you need to choose the workflow to be executed.                                                                                                                      |
 
 4. Click the **Create** button, and the Conductor will generate a Webhook URL, which will be unverified.
