@@ -214,12 +214,12 @@ const config = {
                 typesenseServerConfig: {
                     nodes: [
                         {
-                            host: '7xanmp8g5uyd4rqop.a1.typesense.net',
+                            host: 'uo5hblry7wamtzg0p-1.a1.typesense.net',
                             port: 443,
                             protocol: 'https',
                         },
                     ],
-                    apiKey: 'vrrNV2jm72Jym1qtGfzgcUpGI8gL7uR9',
+                    apiKey: 'cEkYaeSxkAG9QLqD1CtmRiTuUvMZ59Uz',
                 },
                 typesenseSearchParameters: {},
 
