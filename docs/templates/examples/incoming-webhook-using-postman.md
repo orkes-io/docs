@@ -81,11 +81,7 @@ Under the field “Workflows to Receive Webhook Event”, choose the workflow th
 
 Provider a header key and value. Let’s also configure to start the workflow **“start-http-task”** when the webhook event comes from Postman.
 
-On saving the webhook, an unverified URL will be generated, as shown below:
-
-<p align="center"><img src="/content/img/sample-webhook-unverified.png" alt="Webhook with unverified URL" width="70%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
-
-Since this is a header-based verifier, the URL will be verified once the first Webhook event comes with all the header keys and values configured. 
+On saving the webhook, an unverified URL will be generated. Since this is a header-based verifier, the URL will be verified once the first Webhook event comes with all the header keys and values configured. 
 
 ## Run Workflow
 
@@ -101,9 +97,9 @@ Provide the header key and value, and the input matches in JSON format.
 
 <p align="center"><img src="/content/img/configuring-headers-in-postman-request.jpg" alt="Configuring headers in Postman request" width="80%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
-Click **Send**, and it should return a 200 OK.
-
 <p align="center"><img src="/content/img/send-request-postman.png" alt="Sending POST request from Postman" width="80%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+
+Click **Send**, and it should return a 200 OK.
 
 Now, if we return to the webhook, you can see that the event has been received. This triggered the workflow in which the webhook task was added.
 
@@ -113,6 +109,6 @@ You can see that the webhook URL has been verified now. And if you check the pre
 
 <p align="center"><img src="/content/img/workflow-completed.png" alt="Sample webhook workflow completed" width="40%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
-We have also configured to start the workflow **“start_http_task”** on receiving this webhook event. You can verify the same from the **Workflow > Executions** page.
+We have also configured to start the workflow **“start_http_task”** on receiving this webhook event. You can verify the same from the **Executions > Workflow** page.
 
 <p align="center"><img src="/content/img/workflow-started-when-request-came.png" alt="Workflow triggered when request came from Postman" width="100%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
