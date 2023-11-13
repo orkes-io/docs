@@ -130,3 +130,5 @@ If the query type is chosen as METRICS, then the task definition is as follows:
 
 </TabItem>
 </Tabs>
+
+Have a look at the [workflow alerting example with OpsGenie](https://orkes.io/content/templates/alerting/querying-orkes-data-and-triggering-opsgenie-alert) for a detailed example of leveraging this task.
