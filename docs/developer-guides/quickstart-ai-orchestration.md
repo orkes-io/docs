@@ -1,6 +1,6 @@
 # Quickstart - AI Orchestration
 
-Orkes Conductor provides you the ability to build applications that leverage generative AI models and vector databases easily. In this quickstart guide we will show you how you can build such an application and we will demonstrate how you can do it using command line or with the UI that comes with Orkes Conductor.
+Orkes Conductor provides you the ability to build applications that leverage generative AI models and vector databases easily. In this quickstart guide we will show you how you can build such an application and we will demonstrate how you can do it using command line or with the UI that comes with Orkes Conductor. For more information about the AI Orchestration capabilities in Orkes Conductor, please refer to the [announcement blog](https://orkes.io/blog/introducing-ai-orchestration-and-human-task-in-orkes-conductor/).
 
 The example we will be using is to build a document classifier that identifies the type of document passed (e.g. a driver’s license, a W2 form, a mortgage application etc). The associated workflow in Conductor takes in as the input parameter a document file, checks that it is a pdf document, extracts the content from it, sends that information alongside a prompt to a LLM and obtains the classification result from the LLM. 
 
