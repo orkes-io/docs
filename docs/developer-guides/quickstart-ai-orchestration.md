@@ -17,6 +17,10 @@ This workflow is available as a [template in the Template Explorer](https://orke
     - export OPEN_AI_KEY=(Your OPENAI API KEY)
 4. Run the shell script below to create your document classifier application, execute it and view the output:
 
+:::info
+*Please note: This script uses jq. If you do not have it installed, please follow instructions [here](https://jqlang.github.io/jq/download/)*.
+:::
+
 ```shell
 curl -s https://raw.githubusercontent.com/orkes-io/orkes-templates/main/document-classifier/shell/create_document_classifier.sh | bash
 ```
