@@ -61,6 +61,7 @@ const sidebars = {
                 keywords: ['guides', 'features', 'developer-guides']
             },
             items: [
+                'developer-guides/quickstart-ai-orchestration',
                 'developer-guides/passing-inputs-to-task-in-conductor',
                 'developer-guides/using-llms-in-your-orkes-conductor-workflows',
                 'developer-guides/using-vector-databases-in-your-orkes-conductor-workflows',
