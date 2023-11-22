@@ -6,11 +6,11 @@ import TabItem from '@theme/TabItem';
 
 # Update Workflow Definitions
 
-Workflow can be defined as the collection of tasks and operators that specifies the order and execution of the defined tasks.
+The API to update an existing workflow definition.
 
 ## Input Payload
 
-You can configure workflow definitions directly via UI and using API. The workflow definition include the following parameters:
+You can update the workflow definitions directly via UI and using API. The workflow definition include the following parameters:
 
 | Attribute                     | Description                                                                                                                                                                                                                                            |
 | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -35,7 +35,7 @@ You can configure workflow definitions directly via UI and using API. The workfl
 PUT /api/metadata/workflow
 ```
 
-When overwrite is passed to true it will overwrite the existing workflow definitions.
+When overwrite is passed to **true** it will overwrite the existing workflow definitions.
 
 ## Client SDK Methods
 

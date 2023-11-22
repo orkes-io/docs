@@ -1,5 +1,5 @@
 ---
-sidebar_position: 9
+sidebar_position: 10
 ---
 
 import Tabs from '@theme/Tabs';
@@ -7,15 +7,15 @@ import TabItem from '@theme/TabItem';
 
 # Get Workflow Definition
 
-Used to retrieve a workflow definition.
+The API to retrieve a partticular workflow definition.
 
 ## Input Payload
 
 | Attribute | Description |
 | --------- | -------------- |
-| name      | The *name* of the workflow you want to retrieve definition of |
-| version   | Choose the workflow version |
-| metadata  | Get with metadata |
+| name      | The *name* of the workflow you want to retrieve definition of. |
+| version   | Provide the workflow version. |
+| metadata  | Provide the metadata details. |
 
 ## API Endpoint
 
