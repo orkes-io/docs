@@ -33,8 +33,8 @@ A system task to update the value of any secret, given the user has permission t
 | secretValue | Value of the secret key. |
 
 :::note Notes
-1. The user must have update permission over the secretKey; otherwise, the workflow will be terminated with a 403 error.
-2. If the secret does not exist by the secretKey, it will be created, and the value will be as per the secretValue.
+1. The user must have update permission over the **secretKey**; otherwise, the workflow will be terminated with a 403 error.
+2. If the secret does not exist, it will be created, and the value will be the **secretValue** provided as the input parameter to the task.
 3. Only one secret can be updated at a time.
 :::
 

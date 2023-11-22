@@ -1,12 +1,12 @@
 ---
-sidebar_position: 7
+sidebar_position: 6
 ---
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 # Creating Workflow Definition
 
-Workflow can be defined as the collection of tasks and operators that specifies the order and execution of the defined tasks.
+Workflow can be defined as the collection of tasks and operators that specifies the order and execution of the defined tasks. This API is used to create workflow definitions in Orkes Conductor.
 
 ## Input Payload
 

@@ -6,13 +6,14 @@ import TabItem from '@theme/TabItem';
 
 # Get Task Definition
 
-Get the task definition for the task type
+The API to get all the task definitions.
+
 ## Input Payload
 
 
 | Attribute  | Description                                    |
 | ---------- |------------------------------------------------|
-| taskType   | TaskType for which task definition has to get. | 
+| taskType   | The name of the task for which the task definition is to be retrieved. | 
 ## API Endpoint
 ```
 GET /api/metadata/taskdefs/{taskType}

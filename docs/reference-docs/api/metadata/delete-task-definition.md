@@ -1,17 +1,18 @@
 ---
-sidebar_position: 4
+sidebar_position: 3
 ---
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 # Delete Task Definitions
 
+The API to delete the task definitions. 
 
-## Request Paramater
+## Input Parameters
 
 | Attribute  | Description                                           |
 |------------|-------------------------------------------------------|
-| taskType   | Task name for which task definition has to be deleted |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| taskType   | The name of the task which is to be deleted. |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
 
 ## API Endpoint
 ```

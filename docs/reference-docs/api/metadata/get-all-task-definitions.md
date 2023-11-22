@@ -1,12 +1,12 @@
 ---
-sidebar_position: 1
+sidebar_position: 4
 ---
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 # Get All Task Definitions
 
-Get all the task definitions.
+The API to get all the task definitions.
 
 ## API Endpoint
 ```

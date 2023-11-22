@@ -1,12 +1,12 @@
 ---
-sidebar_position: 2
+sidebar_position: 1
 ---
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 # Creating Task Definitions
 
-Tasks are the building blocks of workflow in Conductor. A task can be an operator, system task or custom code written in any programming language.
+Tasks are the building blocks of workflow in Conductor. A task can be an operator, system task or custom code written in any programming language. This API is used to create task definitions in Orkes Conductor.
 
 ## Input Payload
 

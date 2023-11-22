@@ -1,5 +1,5 @@
 ---
-sidebar_position: 10
+sidebar_position: 8
 ---
 
 import Tabs from '@theme/Tabs';
@@ -7,14 +7,14 @@ import TabItem from '@theme/TabItem';
 
 # Remove the Workflow Definition
 
-Remove the workflow defintion
+The API to remove/delete the workflow definition.
 
 ## Input Payload
 
 | Attribute | Description |
 | --------- | -------------- |
-| name      | The *name* of the workflow you want to retrieve definition of |
-| version   | Choose the workflow version |
+| name      | The *name* of the workflow you want to delete.|
+| version   | The version of the workflow to be deleted. |
 
 ## API Endpoint
 
