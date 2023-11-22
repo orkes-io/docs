@@ -31,7 +31,7 @@ The Do While task sequentially executes a list of tasks as long as a condition i
 
 | Attributes    | Description                                                                                                                                                                                                                    |
 | ------------- |--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| loopCondition | Indicates the condition to be evaluated after every iteration. Supported types are **value-param**, **javascript**, and **graaljs**.  If an exception occurs during evaluation, the task is set to FAILED_WITH_TERMINAL_ERROR. |
+| loopCondition | Indicates the condition to be evaluated after every iteration. Supported types are **value-param**, and **ECMASCRIPT**.  If an exception occurs during evaluation, the task is set to FAILED_WITH_TERMINAL_ERROR. |
 | loopOver      | Includes the list of tasks to be executed as long as the condition is evaluated to `true`.                                                                                                                                       |
 
 ### Output Parameters
@@ -41,6 +41,7 @@ The Do While task sequentially executes a list of tasks as long as a condition i
 | iteration  | Indicates the iteration number, which is the current one while executing, and the final one once the loop is finished.                                                                                  |
 | i          | Iteration number as a string mapped to the task references names and their output.                                                                                                                      |
 | *          | Any state can be stored here if the loopCondition does so. For example, **storage** will exist if loopCondition is **if ($.LoopTask['iteration'] <= 10) {$.LoopTask.storage = 3; true } else {false}**. |
+| keepLastN (No of iterations to keep) | Specify the number of required iterations. On enabling this option, this value is set to 2 by default. You can also choose the option “No limits” based on your preference. |
 
 :::note
 * Domain or isolation group execution is unsupported.
