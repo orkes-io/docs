@@ -49,6 +49,15 @@ The following parameters can be used to configure the schedule:
 Non-admin users can create a schedule only if they have "execute" permission over the workflow to be scheduled. You must also provide “read” permission to list the workflows in the scheduler or workflow definitions.
 :::
 
+Once the schedule is created, you can carry out the following actions on the created schedule:
+
+<p align="center"><img src="/content/img/actions-on-scheduler.png" alt="Actions that can carried on a Schedule" width="100%" height="auto"></img></p>
+
+- **Pause**: Use this option to pause your schedule during situations such as maintenance. You can resume the schedule once you're done.
+- **Clone**: Use this option to duplicate your schedule, making it easier to reuse your existing schedule settings.
+- **Add/Edit Tags**: Use this option to add a new tag to the scheduler or edit an existing tag in the scheduler.
+- **Delete**: Use this option to permanently remove the schedule from the Conductor console. This is a one-time action that cannot be undone.
+
 ## Cron Expression
 
 :::tip
