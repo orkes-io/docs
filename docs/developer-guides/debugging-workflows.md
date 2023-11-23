@@ -14,7 +14,17 @@ All recent workflow executions are listed on the **Executions > Workflow** page.
 <p align="center"><img src="/content/img/workflow-executions.png" alt="Workflow Executions page" width="90%"
                        height="auto"/></p>
 
-Data on this page can be filtered by searching through workflow name, ID, status, time period, and past days’ executions. Click on the required execution to view the individual execution of a workflow. 
+Data on this page can be filtered by searching through workflow name, workflow ID, correlation ID, status, time period, and past days’ executions. Click on the required execution to view the individual execution of a workflow.
+
+In addition, you can also view the workflow execution as code directly from the UI. For this, click on the arrow in the Search button, and choose “**Show as code**”.
+
+<p align="center"><img src="/content/img/show-as-code-in-workflow-search.png" alt="Show as code option in Workflow Search" width="90%"
+                       height="auto"/></p>
+
+This would show the workflow search data in different codes. Currently, you can get them in cURL and Javascript. 
+
+<p align="center"><img src="/content/img/workflow-search-in-code.png" alt="Workflow search data in code" width="90%"
+                       height="auto"/></p>
 
 :::note
 You can also search for workflow names by inputting partial values with wildcards (*) support. For example, if you want to search for workflow names containing “test”, then search for **test***, and it will display all the workflow definitions with **‘test’** in their name.
