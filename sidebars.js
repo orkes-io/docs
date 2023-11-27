@@ -84,6 +84,7 @@ const sidebars = {
                 'developer-guides/task-to-domain',
                 'developer-guides/secrets-in-conductor',
                 'developer-guides/scaling-workers',
+                'developer-guides/azure-service-bus-integration',
                 'developer-guides/metrics-and-observability',
                 'developer-guides/monitoring-task-queues',
                 'developer-guides/workflow-version-behavior-on-execution',
