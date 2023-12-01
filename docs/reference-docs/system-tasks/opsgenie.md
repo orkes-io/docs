@@ -4,9 +4,9 @@ sidebar_position: 9
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# OpsGenie 
+# Opsgenie 
 
-A system task to send alerts to OpsGenie in the event of workflow failures. This task can be used in conjunction with the [Query Processor](/content/reference-docs/system-tasks/query-processor) task, which fetches metadata details to trigger alerts to OpsGenie as required.
+A system task to send alerts to Opsgenie in the event of workflow failures. This task can be used in conjunction with the [Query Processor](/content/reference-docs/system-tasks/query-processor) task, which fetches metadata details to trigger alerts to Opsgenie as required.
 
 ## Definitions
 
@@ -35,19 +35,20 @@ A system task to send alerts to OpsGenie in the event of workflow failures. This
 
 | Attributes  | Description             |
 |-------------|-------------------------|
-| alias | Specify the user-defined alias that will be created in OpsGenie when alerts are triggered. Alias are user-defined identifiers for alerts, limited to a maximum of 512 characters in OpsGenie. |
-| description | Specify the description related to the alert. The description is limited to 15,000 characters in OpsGenie. |
-| visibleTo | Specify the users in OpsGenie who can view the alerts. | 
+| alias | Specify the user-defined alias that will be created in Opsgenie when alerts are triggered. Alias are user-defined identifiers for alerts, limited to a maximum of 512 characters in Opsgenie. |
+| description | Specify the description related to the alert. The description is limited to 15,000 characters in Opsgenie. |
+| visibleTo | Specify the users in Opsgenie who can view the alerts. | 
 | responders | Specify the names of the responders to be notified on creating this alert. |
-| message | Specify the message to be displayed in the OpsGenie. This field can be leveraged to quickly give an overview of the alert. |
+| message | Specify the message to be displayed in the Opsgenie. This field can be leveraged to quickly give an overview of the alert. |
 | priority | Set the priority of the alert. | 
 | entity | Specify the domain the alert is related to, such as the server's name or application. |
-| tags | Specify the tags to be added for the alerts in OpsGenie. |
-| actions | Specify the OpsGenie actions to be executed on the alert. |
-| token | Specify the API token to integrate with your OpsGenie account. Refer to the official [OpsGenie documentation to get the API keys](https://support.atlassian.com/opsgenie/docs/create-a-default-api-integration/). |
+| tags | Specify the tags to be added for the alerts in Opsgenie. |
+| actions | Specify the Opsgenie actions to be executed on the alert. |
+| token | Specify the API token to integrate with your Opsgenie account. Refer to the official [Opsgenie documentation to get the API keys](https://support.atlassian.com/opsgenie/docs/create-a-default-api-integration/). |
+| cacheConfig | Enabling this option allows saving the cache output of the task. On enabling you can provide the following parameters:<ul><li>**TTL (in seconds)** - Provide the time to live in seconds.You can also pass this parameter as variables.</li><li>**Cache Key** - Provide the cache key, which is a string with parameter substitution based on the task input. You can also pass this parameter as variables.</li></ul>|
 
 :::info
-Refer to the official [OpsGenie documentation for more information on the alert fields](https://support.atlassian.com/opsgenie/docs/alert-fields/). 
+Refer to the official [Opsgenie documentation for more information on the alert fields](https://support.atlassian.com/opsgenie/docs/alert-fields/). 
 :::
 
 ## Examples
@@ -61,7 +62,7 @@ Refer to the official [OpsGenie documentation for more information on the alert 
 <br/>
 <br/>
 
-1. Add task type **OpsGenie**.
+1. Add task type **Opsgenie**.
 2. Configure the query parameters.
 
 </div>
@@ -103,4 +104,4 @@ Refer to the official [OpsGenie documentation for more information on the alert 
 </TabItem>
 </Tabs>
 
-Have a look at the [workflow alerting example with OpsGenie](https://orkes.io/content/templates/alerting/querying-orkes-data-and-triggering-opsgenie-alert) for a detailed example of leveraging this task.
+Have a look at the [workflow alerting example with Opsgenie](https://orkes.io/content/templates/alerting/querying-orkes-data-and-triggering-opsgenie-alert) for a detailed example of leveraging this task.
