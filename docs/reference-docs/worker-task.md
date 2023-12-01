@@ -29,6 +29,8 @@ A Simple task is a Worker task that requires an external worker for polling. The
 
 ```
 
+- cacheConfig  - Enabling this option allows saving the cache output of the task. On enabling you can provide the following parameters:<ul><li>**TTL (in seconds)** - Provide the time to live in seconds.You can also pass this parameter as variables.</li><li>**Cache Key** - Provide the cache key, which is a string with parameter substitution based on the task input. You can also pass this parameter as variables.</li></ul>
+
 ## Examples
 
 In our getting started guide - there is a complete [example](/content/getting-started/adding-custom-code-worker) of how to add and run a custom worker task.
