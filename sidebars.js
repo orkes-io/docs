@@ -459,6 +459,7 @@ const sidebars = {
                 'faqs/workflow-versioning',
                 'faqs/task-lifecycle',
                 'faqs/connecting-to-azure-service-bus',
+                'faqs/task-cache-output',
             ],
             collapsible: true,
             collapsed: true,
