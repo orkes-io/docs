@@ -231,4 +231,4 @@ This action will mark a running task as failed. Example payload:
 | ---------------- | -------- |
 | taskRefName | The task reference name of the task to be failed. |
 | workflowId | The workflow ID that contains the task. | 
-| taskId | If this field is present, this takes precedence and will fail a task running with this id.<p>**Example: "taskId": "${event.payload.taskId}"**</p> | 
+| taskId | If this field is present, this takes precedence and will fail a task running with this id.<p>**Example: "taskId": "${taskId}"**</p> | 
