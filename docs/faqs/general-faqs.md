@@ -44,3 +44,13 @@ Once you run a workflow and it starts the execution, and for any reason, if the 
 2. Re-run Workflow
 
 Re-run Workflow takes you to the run workflow screen, where you can trigger a brand new instance of the workflow. You can also change the input parameters, correlation ID, or task to domain mapping before triggering the new execution.
+
+### How do you clone a workflow?
+
+You can clone a workflow by navigating to **Definitions > Workflows** and clicking on the "Clone" button towards the right end of the workflow name.
+
+<p align="center"><img src="/content/img/clone-workflow.jpg" alt="Clone Workflow" width="100%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+
+You’ll get a confirmation window with the workflow name appended with numerical 1, where you can also rename the workflow and choose the required version if needed.
+
+<p align="center"><img src="/content/img/clone-workflow-confirmation.jpg" alt="Clone Workflow Confirmation" width="50%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
