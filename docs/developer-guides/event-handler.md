@@ -64,6 +64,10 @@ The following expressions can be used in condition with the indicated results:
 | $.version > 10 | false |
 | $.metadata.length == 300 | true |
 
+:::note
+In order to pass complete payload, `${$}` has to be used as value
+:::
+
 ## Actions - Start Workflow
 
 This action will start a new instance of a workflow that is defined in the system. Example payload:
@@ -81,8 +85,9 @@ This action will start a new instance of a workflow that is defined in the syste
         "version": "",
         "correlationId": "",
         "input": {
-          "payload": "${event.payload}",
-          "additionalVariable": "something" 
+          "metadata": "${metadata}",
+          "additionalVariable": "something" ,
+          "payload" : "${$}"
         }
       },
       "expandInlineJSON": false
@@ -111,7 +116,7 @@ This action will update the variables of a running workflow. Useful to control t
         "workflowId": "${targetWorkflowId}",
         "appendArray": true,
         "variables": {
-          "Some-Key-aqxep": "${event.payload.workflowId}",
+          "Some-Key-aqxep": "${workflowId}",
           "Some-Key-b08ll": "Some-Value-b08ll"
         }
       }
@@ -142,7 +147,7 @@ This action will terminate a running workflow. Example payload:
       "action": "terminate_workflow",
       "expandInlineJSON": false,
       "terminate_workflow": {
-        "workflowId": "${event.payload.workflowId}",
+        "workflowId": "${workflowId}",
         "terminationReason": "Testing termination from an event"
       }
     }
@@ -172,8 +177,8 @@ This action will mark a running task as completed. Example payload:
       "action": "complete_task",
       "expandInlineJSON": false,
       "complete_task": {
-        "workflowId": "${event.payload.workflowId}",
-        "taskRefName": "${event.payload.taskReferenceName}",
+        "workflowId": "${workflowId}",
+        "taskRefName": "${taskReferenceName}",
         "output": {
           "Some-Key-a8gvu": "Some-Value-a8gvu",
           "Some-Key-moua4": "Some-Value-moua4"
@@ -207,8 +212,8 @@ This action will mark a running task as failed. Example payload:
       "action": "fail_task",
       "expandInlineJSON": false,
       "fail_task": {
-        "workflowId": "${event.payload.workflowId}",
-        "taskRefName": "${event.payload.taskReferenceName}",
+        "workflowId": "${workflowId}",
+        "taskRefName": "${taskReferenceName}",
         "output": {
           "Some-Key-5u0xj": "Some-Value-5u0xj",
           "Some-Key-r3pja": "Some-Value-r3pja"
