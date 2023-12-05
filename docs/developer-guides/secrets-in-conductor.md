@@ -62,6 +62,18 @@ All values stored in the output object with key name: `_secrets` will be treated
 The users with the execute ability to the task will be able to read the task and will be able to see the inputs and outputs.
 :::
 
+Let’s take an example, where you want to hide sensitive data when passing information from one task's output to the input of the next task in a workflow. So, you need to ensure that the input parameters of the subsequent task within the workflow definition are structured in the following manner:
+
+```json
+{
+"_secrets":
+   { "parameter":"${previousTask.output._secrets.someOutputParameter}"
+  }
+}
+```
+
+This structure mandates that any input parameter to be hidden must be nested within the **_secrets** object. This approach ensures that sensitive data is properly masked during the workflow's execution, within the designated **_secrets** section of the input parameters.
+
 ## Additional Use Cases
 
 In addition to using secrets for sensitive values, we can use them when we need to use a variable specific to an environment. For example -  `${workflow.secrets.env-variable-1}` - here, `env-variable-1` is not necessarily a secret but a value that could be configured differently in each environment, such as UAT vs. Production.
