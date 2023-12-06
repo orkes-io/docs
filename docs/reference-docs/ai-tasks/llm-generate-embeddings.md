@@ -34,7 +34,6 @@ A system task to generate embeddings from the input data provided. Embeddings ar
 | llmProvider | Choose the required LLM provider. You can only choose providers to which you have access for at least one model from that provider.<br/><br/>**Note**:If you haven’t configured your AI / LLM provider on your Orkes console, navigate to the **Integrations** tab and configure your required provider. Refer to this doc on [how to integrate the LLM providers with Orkes console and provide access to required groups](/content/category/integrations/ai-llm).| 
 | model | Choose from the available language model for the chosen LLM provider. You can only choose models for which you have access.<br/><br/>For example, If your LLM provider is Azure Open AI & you’ve configured *text-davinci-003* as the language model, you can choose it under this field. |
 | text | Provide the text to be converted and stored as a vector. The text can also be [passed as parameters to the workflow](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor).|
-| cacheConfig | Enabling this option allows saving the cache output of the task. On enabling you can provide the following parameters:<ul><li>**TTL (in seconds)** - Provide the time to live in seconds.You can also pass this parameter as variables.</li><li>**Cache Key** - Provide the cache key, which is a string with parameter substitution based on the task input. You can also pass this parameter as variables.</li></ul>|
 
 ## Output Parameters
 

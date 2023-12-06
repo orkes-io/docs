@@ -28,7 +28,6 @@ A system task to retrieve the content of the document provided and use it for fu
 | --------- | ----------- |
 | url | Provide the URL of the document to be retrieved.<br/><br/>Check out our documentation on [how to pass parameters to tasks](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor). |
 | mediaType | Select the media type of the file to be retrieved. Currently, supported media types include:<ul><li>application/pdf</li><li>text/html</li><li>text/plain</li><li>json</li></ul> | 
-| cacheConfig | Enabling this option allows saving the cache output of the task. On enabling you can provide the following parameters:<ul><li>**TTL (in seconds)** - Provide the time to live in seconds.You can also pass this parameter as variables.</li><li>**Cache Key** - Provide the cache key, which is a string with parameter substitution based on the task input. You can also pass this parameter as variables.</li></ul>|
 
 ## Examples
 

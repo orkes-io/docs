@@ -42,7 +42,6 @@ A system task to index the provided document into a vector database that can be 
 | mediaType | Select the media type of the file to be indexed. Currently, supported media types include:<ul><li>application/pdf</li><li>text/html</li><li>text/plain</li><li>json</li></ul> | 
 | chunkSize | Specifies how long each segment of the input text should be when it’s divided for processing by the LLM.<br/><br/>For example, if your article contains 2000 words and you specify the chunk size of 500, then the document would be divided into four chunks for processing. |
 | chunkOverlap | Specifies the overlap quantity between the adjacent chunks.<br/><br/>For example, if the chunk overlap is specified as 100, then the first 100 words of each chunk would overlap with the last 100 words of the previous chunk. | 
-| cacheConfig | Enabling this option allows saving the cache output of the task. On enabling you can provide the following parameters:<ul><li>**TTL (in seconds)** - Provide the time to live in seconds.You can also pass this parameter as variables.</li><li>**Cache Key** - Provide the cache key, which is a string with parameter substitution based on the task input. You can also pass this parameter as variables.</li></ul>|
 
 ## Examples
 
