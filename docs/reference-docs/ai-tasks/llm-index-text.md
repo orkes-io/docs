@@ -38,7 +38,6 @@ A system task to index the provided text into a vector space that can be efficie
 | embeddingModel | Choose from the available language model for the chosen LLM provider. |
 | text | Provide the text to be indexed. |
 | docId | Provide the ID of the document where you need to store the indexed text. |
-| cacheConfig | Enabling this option allows saving the cache output of the task. On enabling you can provide the following parameters:<ul><li>**TTL (in seconds)** - Provide the time to live in seconds.You can also pass this parameter as variables.</li><li>**Cache Key** - Provide the cache key, which is a string with parameter substitution based on the task input. You can also pass this parameter as variables.</li></ul>|
 
 ## Examples
 
