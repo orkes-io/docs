@@ -19,11 +19,24 @@ To create a new application,
 2. Click **Create application** and provide an app name.
 3. Once your application is created, click the edit button next to its name.
 
+Depending upon your role, you can see two different role sections that can be granted to the application.
 
-The following roles can be granted to the application.
+<p align="center"><img src="/content/img/app-roles.png" alt="App roles" width="100%" height="auto"></img></p>
+
+The general application roles that can be granted include:
+
 * **Worker**: Poll and update tasks. It requires EXECUTE permissions on the tasks.
 * **Metadata API**: Create and manage workflow and task definitions.
 * **Application API**: Create and manage applications.
+
+The application behavior depends entirely on the app role chosen. Ensure that you select the role based on your requirements. 
+
+In addition, if you are an Admin in the Orkes Conductor console, then you can see an additional set of following unrestricted roles that are to be granted carefully as they provide full access to different APIs:
+
+- **Unrestricted Worker** - Poll, execute updates, maintain logs, and handle any task without any constraints
+- **Metadata Manager** - Create, update, delete, and administer Workflow or Task definitions permissions.
+- **Workflow Manager** - Responsible for managing the lifecycle of workflows within the system. Initiate, pause, resume, rerun, delete, and oversee any Workflow operation.
+- **Application Manager** - Handles the creation, modification, and deletion of applications within the system.
 
 ### Generating Access Keys​
 Once your application's permission levels are chosen, access must be granted to the application. This is done by generating an Access Key. Click **Create access key** to generate a unique **Key Id** and **Key Secret**. These values are shown only once, so ensure to copy the credentials and store them privately.
