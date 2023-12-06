@@ -14,16 +14,12 @@ Before beginning to integrate with OpenAI, you need to generate the API key from
 
 1. Navigate to the [OpenAI platform](https://platform.openai.com/).
 2. Create an account or sign up with your existing account.
-3. Click on your account name from the top-right corner, and click **View API keys**.
-
-<p align="center"><img src="/content/img/view-api-keys.png" alt="View API Keys in OpenAI API platform" width="100%" height="auto"></img></p>
-
-4. Click **+Create new secret key**.
+3. From the left menu, click **[API keys](https://platform.openai.com/api-keys)** and then click **+Create new secret key**.
 
 <p align="center"><img src="/content/img/create-new-api-key.png" alt="Create new API Keys in OpenAI API platform" width="100%" height="auto"></img></p>
 
-5. Provide a name for your secret and click **Create secret key**.
-6. Copy and keep your generated key safely, as they would be shown only once.
+4. Provide a name for your secret and click **Create secret key**.
+5. Copy and keep your generated key safely, as they would be shown only once.
 
 ## Integrating with OpenAI as a model provider
 
