@@ -101,6 +101,7 @@ const sidebars = {
                     id: 'developer-guides/task-and-workflow-event-streaming-with-orkes-conductor-and-azure-event-hub',
                     label: "Event Streaming with Azure Event Hub"
                 },
+                'developer-guides/sqs-integration',
             ],
             collapsible: true,
             collapsed: true,
