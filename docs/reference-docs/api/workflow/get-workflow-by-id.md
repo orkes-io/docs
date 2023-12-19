@@ -42,7 +42,13 @@ func (e *WorkflowExecutor) GetWorkflow(workflowId string, includeTasks bool) (*m
 <TabItem value="Python" label="Python">
 
 ```python
-WorkflowResourceApi.get_execution_status(self, workflow_id, **kwargs)
+## Get workflow including tasks
+
+workflow = workflow_client.getWorkflow(workflow_id, True)
+
+## Get workflow excluding tasks
+
+workflow = workflow_client.getWorkflow(workflow_id, False)
 ```
 
 </TabItem>
