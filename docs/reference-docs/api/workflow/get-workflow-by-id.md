@@ -6,17 +6,18 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 # Get Workflow by ID
-Get workflow execution by workflow ID. If **includeTasks** is set, it also fetches all the task details.
+Get workflow execution by workflow ID. 
 
 ## Input Payload
 
 | Attribute | Description | 
 | --------- | ----------- | 
-| name | The name of the workflow whose details are to be fetched. |
+| workflowId | The ID of the workflow whose details are to be fetched. |
+| includeTasks | If set to true, it fetches all the task details. |
 
 ## API Endpoint
 ```
-GET /workflow/{name}
+GET /workflow/{workflowId}
 ```
 
 Returns nil if no workflow is found by the id.
