@@ -44,35 +44,61 @@ Refer to this link for the documentation on how to use a workflow to rotate secr
 Conductor also provides the provision to add tags to secret keys. This helps in granting permissions to the secret to an entity with tag-based access.
 Read more about using tags for permissions [here](/content/access-control-and-security/tags).
 
-## Secrets as Outputs of Tasks
+## Masking/Hiding Secret Values
 
-Often, we might want to use a secret value as an output of a task. This is the case when we want to use the value as an input to a subsequent task. In such cases, we can use the following convention to ensure that output value is managed as a secret.
+Often, we might want to use a secret value as a workflow input/output or task input/output. 
 
-All values stored in the output object with key name: `_secrets` will be treated as secrets.
+Suppose you want to use the secret value as an output of a task. This is when we want to pass this value as input to a subsequent task. In such cases, we can use the following convention to ensure that output value is managed as a secret. This can be achieved in 2 ways: either using **_secrets** or using **_masked**.
+
+All values stored in the output object with key name: **_secrets** will be hidden.
 
 ```json
 {
-  "_secrets" : {
-    "my-secret-key" : "my-secret-value"
-  }
+ "_secrets" : {
+   "my-secret-key" : "my-secret-value"
+ }
 }
 ```
 
-:::note Secrets Management
+:::info
 The users with the execute ability to the task will be able to read the task and will be able to see the inputs and outputs.
 :::
 
-Let’s take an example, where you want to hide sensitive data when passing information from one task's output to the input of the next task in a workflow. So, you need to ensure that the input parameters of the subsequent task within the workflow definition are structured in the following manner:
+Let’s take an example where you want to hide sensitive data when passing information from one task's output to the input of the next task in a workflow. So, you need to ensure that the input parameters of the subsequent task within the workflow definition are structured in the following manner:
 
 ```json
 {
 "_secrets":
-   { "parameter":"${previousTask.output._secrets.someOutputParameter}"
-  }
+  { "parameter":"${previousTask.output._secrets.someOutputParameter}"
+ }
 }
 ```
 
 This structure mandates that any input parameter to be hidden must be nested within the **_secrets** object. This approach ensures that sensitive data is properly masked during the workflow's execution, within the designated **_secrets** section of the input parameters.
+
+:::note
+In addition to **_secret** you can also use **_masked** to hide the sensitive values. 
+
+When working within workflow variables, input/output, and task input/output, utilizing a key labeled **_masked** will automatically mask the enclosed data. For instance:
+
+```json
+{
+"_masked":{"some":"data"}
+}
+```
+It will look like this:
+
+```json
+{
+"_masked":"***"
+}
+```
+
+It's essential to note that despite this masking in the UI, the actual data remains intact and is saved during archiving. Should you restart the workflow, the original data will still be accessible.
+
+However, if you opt for **_secrets** instead of **_masked**, there's a different behavior during archiving. Once the workflow reaches a terminal state and is removed from the primary execution store, any data labeled as **_secrets** will be permanently replaced with ***. Subsequently, attempting to retry the workflow might lead to failures in tasks reliant on that particular data.
+
+:::
 
 ## Additional Use Cases
 
