@@ -125,7 +125,7 @@ const config = {
                         position: 'left',
                     },
                     {
-                        href: 'https://github.com/Netflix/conductor',
+                        href: 'https://github.com/conductor-oss/conductor',
                         label: 'GitHub',
                         target: '_orkes_io',
                         position: 'right',
@@ -197,7 +197,7 @@ const config = {
                             },
                             {
                                 label: 'GitHub',
-                                href: 'https://github.com/Netflix/conductor',
+                                href: 'https://github.com/conductor-oss/conductor',
                             },
                         ],
                     },
