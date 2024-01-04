@@ -1,6 +1,6 @@
 # Orchestrating Human Tasks with Conductor
 
-Human tasks are used when you need to pause your workflow for an interaction with a human. When your workflow reaches the human task, it waits for a manual interaction to proceed with the workflow.
+Human tasks are used when you need to wait your workflow for an interaction with a human. When your workflow reaches the human task, it waits for a manual interaction to proceed with the workflow.
 
 It can be leveraged when you need manual approval from a human, such as when a  form needs to be approved within an application, such as approval workflows.
 
