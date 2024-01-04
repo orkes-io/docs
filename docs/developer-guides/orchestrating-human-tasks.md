@@ -106,6 +106,8 @@ The assignee can claim the task. To do this:
 
 Once claimed, you can update or complete the task. In addition, you can **release** the task to remove your assignment so that someone else can claim the task. 
 
+<p align="center"><img src="/content/img/update-complete-release-forms.png" alt="Update/Complete/Release forms" width="50%" height="auto"></img></p>
+
 Once the task is completed from here, the workflow moves to the next step. 
 
 <p align="center"><img src="/content/img/human-task-completed.png" alt="Human Task Completed" width="50%" height="auto"></img></p>
