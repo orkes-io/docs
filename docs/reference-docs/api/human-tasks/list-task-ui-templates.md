@@ -13,8 +13,8 @@ Used to list all human task templates stored in Conductor and optionally filter 
 
 | Attribute | Description         |
 |-----------|---------------------| 
-| name      | UI template name    | 
-| version   | UI template version | 
+| name      | The user-form/template name to be filtered.   | 
+| version   | The version of the user-form/template to be filtered.| 
 
 ## API Endpoint 
 

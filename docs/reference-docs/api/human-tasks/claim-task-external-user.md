@@ -21,16 +21,14 @@ proceed to the next step.
 :::note 
 The invoking user should be a task owner or an ADMIN. The provided userId will be matched if the assignee on the
 task is of type EXTERNAL_USER, CONDUCTOR_USER or CONDUCTOR_GROUP. If the assignee type is EXTERNAL_GROUP, the system
-will assume the external system has validated the claim criteria. If the task is assigned using the __Free for all__
-policy, any user will be able to retrieve the task. When using application credentials, the application should be the
-owner of the task in the workflow definition.
+will assume the external system has validated the claim criteria. If the task is not assigned to any one, any user will be able to retrieve the task. 
 :::
 
 ## Input Payload
 
 | Attribute  | Description                                                |
 |------------|------------------------------------------------------------| 
-| taskId     | The *taskId* of the human task which you want to retrieve. | 
+| taskId     | The *taskId* of the human task to be claimed. | 
 | userId     | The *userId* of the user claiming this task.               | 
 
 ## API Endpoint

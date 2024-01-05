@@ -6,19 +6,19 @@ import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
 # Update Human Task
 
-Used for updating a claimed task. Optionally complete the task.
+Used for updating a claimed task. Optionally this cane be used to complete the task.
 
 :::note 
-The invoking user should be a task owner, an ADMIN, or a claimant to the task. When using application credentials, the application should be the owner of the task in the workflow definition.
+The invoking user should be a task owner, an ADMIN, or a claimant to the task. 
 :::
 
 ## Input Payload
 
 | Attribute    | Description                                                                                                         |
 |--------------|---------------------------------------------------------------------------------------------------------------------| 
-| taskId       | The *taskId* of the human task which you want to release.                                                           | 
-| complete     | Boolean to mark if the task is complete or not, send this as false for just updating data, and keep the task in progress | 
-| Request Body | Output of the human task work - usually the payload of the human task form entries                                  | 
+| taskId       | The *taskId* of the human task to be updated.                                                           | 
+| complete     | Boolean to mark if the task is complete or not, send this as false for just updating data, and keep the task in progress. Set this is true to complete the task. | 
+| Request Body | Output of the human task work - usually the payload of the human task form entries.                                | 
 
 ## API Endpoint
 

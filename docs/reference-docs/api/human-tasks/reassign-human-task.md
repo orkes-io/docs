@@ -10,16 +10,15 @@ Admin API used for re-assigning a task to a different assignment policy. Use thi
 longer valid and the task needs to be reassigned so that it can proceed further.
 
 :::note 
-The invoking user should be a task owner or an ADMIN to the task. When using application credentials, the
-application should be the owner of the task in the workflow definition.
+The invoking user should be a task owner or an ADMIN to the task. 
 :::
 
 ## Input Payload
 
 | Attribute    | Description                                                                                                                  |
 |--------------|------------------------------------------------------------------------------------------------------------------------------| 
-| taskId       | The *taskId* of the human task which you want to retrieve.                                                                   | 
-| Request Body | New assignment policy with corresponding values. Supported policies are `free_for_all`, `least_busy_group_member`, and `fixed`   | 
+| taskId       | The *taskId* of the human task to be reassigned.                                                                  | 
+| Request Body | New assignment policy with corresponding values. Supported policies are `EXTERNAL_USER`, `EXTERNAL_GROUP`, `CONDUCTOR_USER` and `CONDUCTOR_GROUP`.  | 
 
 ## API Endpoint
 
