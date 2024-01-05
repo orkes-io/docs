@@ -7,10 +7,10 @@ import TabItem from '@theme/TabItem';
 
 # Get Human Task
 
-Used to retrieve a human task by id. Use this API to retrieve a task and its details.
+Used to retrieve a human task by using the task ID. Use this API to retrieve a task and its details.
 
 :::note
-The invoking user should be a task owner, an ADMIN, or an assignee to the task. If the task is assigned using the __Free for all__ policy, any user will be able to retrieve the task. When using application credentials, the application should be the owner of the task in the workflow definition.
+The invoking user should be the task admin, a cluster Admin, or an assignee to the task. If the task is not assigned to anyone, any user can retrieve the task.
 :::
 
 ## Input Payload
