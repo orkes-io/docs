@@ -5,7 +5,7 @@ sidebar_position: 13
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Delete Human Task Template
+# Delete Human Task User Form/Template
 
 Used to delete a human task template by its name. Use this API to delete a task template specification stored in Conductor.
 
