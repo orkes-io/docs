@@ -7,7 +7,7 @@ import TabItem from '@theme/TabItem';
 
 # Delete Human Task Template
 
-Used to delete a human task template by id. Use this API to delete a task template specification stored in Conductor.
+Used to delete a human task template by its name. Use this API to delete a task template specification stored in Conductor.
 
 :::danger Deleting Templates
 If the template is used by a workflow, it will fail to render.
@@ -17,12 +17,12 @@ If the template is used by a workflow, it will fail to render.
 
 | Attribute | Description                                                   |
 |-----------|---------------------------------------------------------------| 
-| id        | The *id* of the human task template which you want to delete. | 
+| name        | The *name* of the human task user-form/template to be deleted. | 
 
 ## API Endpoint 
 
 ```
-DELETE human/template/{id}
+DELETE human/template/{name}
 ```
 
 ## Client SDK Methods
