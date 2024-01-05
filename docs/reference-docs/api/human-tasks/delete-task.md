@@ -11,8 +11,7 @@ This API is only to be used to delete a task that is disconnected from a workflo
 normal conditions, this API wouldn't have to be used.
 
 :::note
-The invoking user should be a task owner or an ADMIN to the task. When using application credentials, 
-the application should be the owner of the task in the workflow definition.
+The invoking user should be a task owner or an ADMIN to the task. 
 :::
 
 :::warning Note
@@ -24,12 +23,12 @@ error state and the workflow would have to be retried or restarted to create a n
 
 | Attribute  | Description                                              |
 |------------|----------------------------------------------------------| 
-| taskId     | The *taskId* of the human task which you want to delete. | 
+| taskId     | The *taskId* of the human task to be deleted. | 
 
 ## API Endpoint 
 
 ```
-DELETE human/tasks/{taskId}
+DELETE human/tasks/delete/{taskId}
 ```
 
 ## Client SDK Methods
