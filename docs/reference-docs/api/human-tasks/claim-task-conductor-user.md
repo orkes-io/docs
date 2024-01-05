@@ -10,14 +10,14 @@ import TabItem from '@theme/TabItem';
 Used to claim a human task by an authenticated Conductor user. Use this API to claim a task for a user with Conductor identity.
 
 :::note
-The invoking user should be a task owner, an ADMIN, or a CONDUCTOR_USER or CONDUCTOR_GROUP assignee to the task. If the task is assigned using the __Free for all__ policy, any Conductor user will be able to retrieve the task. When using application credentials, the application should be the owner of the task in the workflow definition.
+The invoking user should be a task owner, an ADMIN, or a CONDUCTOR_USER or CONDUCTOR_GROUP assignee to the task. If the task is not assigned to anyone/group, any Conductor user will be able to retrieve the task. 
 :::
 
 ## Input Payload
 
 | Attribute  | Description                                                |
 |------------|------------------------------------------------------------| 
-| taskId     | The *taskId* of the human task which you want to retrieve. | 
+| taskId     | The *taskId* of the human task to be claimed. | 
 
 ## API Endpoint 
 
