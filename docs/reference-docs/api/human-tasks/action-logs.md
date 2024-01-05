@@ -10,7 +10,7 @@ import TabItem from '@theme/TabItem';
 Used to retrieve human task action logs.
 
 :::note
-The invoking user should be a task owner, an ADMIN, or an assignee to the task. When using application credentials, the application should be the owner of the task in the workflow definition.
+The invoking user should be a task owner, an ADMIN, or an assignee to the task. 
 :::
 
 ## Input Payload

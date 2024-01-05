@@ -10,7 +10,7 @@ import TabItem from '@theme/TabItem';
 Used to retrieve a list of human tasks by filters. An example use of this API will be to compose an inbox view for a user.
 
 :::note
-The invoking user should be a task owner, an ADMIN, or an assignee to the tasks returned. When using application credentials, the application should be the owner of the task in the workflow definition.
+The invoking user should be a task owner, an ADMIN, or an assignee to the tasks returned.
 :::
 
 ## Input Payload
