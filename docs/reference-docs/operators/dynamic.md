@@ -32,18 +32,39 @@ can be mapped to the dynamic task input.
 | taskToExecute        | Accepts the task name to execute.                                      |
 | dynamicTaskNameParam | Indicates the name of the task to be called during workflow execution. |
 
-If there is a possibility that the task called is a SUBWORKFLOW, you must also add:
+If there is a possibility that the task called is a sub-workflow, then the parameter **taskToExecute** must be “SUB_WORKFLOW”. 
+
+And the input parameter should be either:
 
 ```json
-    "subWorkflowParam": {
-      "name": "workflow_name",
-      "version": <workflow version>
-    },
+{
+"subWorkflowDefinition":{...}
+}
 ```
 
-:::note
-If **subWorkflowParam** is present, and the DYNAMIC workflow calls a task type that is not a SUBWORKFLOW, these parameters will be ignored.
-:::
+Or
+
+```json
+{
+"subWorkflowName":"...",
+"subworkflowVersion":1
+}
+```
+
+An example where a sub-workflow is added in a dynamic task:
+
+```json
+{
+     "name": "dynamic_task",
+     "taskReferenceName": "ref_name",
+     "inputParameters": {
+       "taskToExecute": "SUB_WORKFLOW",
+       "subWorkflowName": "workflow_name_here",
+       "subWorkflowVersion": 1
+     },
+     "type": "DYNAMIC",
+}
+```
 
 ### Output Parameters
 
