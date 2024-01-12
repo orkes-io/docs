@@ -6,7 +6,7 @@ import TabItem from '@theme/TabItem';
 
 # LLM Generate Embeddings
 
-A system task to generate embeddings from the input data provided. Embeddings are the processed input text converted into a sequence of vectors, which can then be stored in a vector database for retrieval later. You can use [a model that was previously integrated](http://localhost:3000/content/category/integrations/ai-llm) to generate these embeddings.
+A system task to generate embeddings from the input data provided. Embeddings are the processed input text converted into a sequence of vectors, which can then be stored in a vector database for retrieval later. You can use [a model that was previously integrated](/content/category/integrations/ai-llm) to generate these embeddings.
 
 ## Definitions
 
