@@ -3,7 +3,7 @@
 To ensure secure access to the Conductor server in a remote environment, it is critical to establish a system that enables access to the server. With Conductor’s Users & Groups functionality, an admin can easily create and manage users & groups in the Conductor server.
 
 :::note
-This feature is available only to the Admins of an Orkes Conductor instance.
+This feature is available only to the Admins of the Orkes Conductor clusters.
 :::
 
 ## Users​​
@@ -14,18 +14,8 @@ To invite a user to your Orkes Cloud instance,
 
 1. From your Conductor server, navigate to **Access Control > Users** from the left menu.
 2. Click the **Create User** button.
-3. You need to fill in the following user details:<ul><li>**User id** - Enter the email address of the user.</li><li>**Name** - Provide the user’s name.</li><li>**Permissions** - Choose the access level you wish the user to have. The available Conductor roles are *Admin*, *User*, *Metadata Manager*, *Workflow Manager*, and *Read Only User*.</li></ul>
+3. You need to fill in the following user details:<ul><li>**User id** - Enter the email address of the user.</li><li>**Name** - Provide the user’s name.</li><li>**Permissions** - Choose the access level you wish the user to have. The available Conductor roles are *Admin*, *User*, *Metadata Manager*, *Workflow Manager*, and *Read Only User*.</li><ul><li>**Admin** - An admin has full access to the Conductor instance.</li><li>**User** - A user can access permitted workflows, tasks, and shared Applications.</li><li>**Metadata Manager** - An "admin" for metadata who can create/update/delete any workflow or task.</li><li>**Workflow Manager** - A workflow manager can run/pause/rerun any workflow.</li><li>**Read Only User** - A user with read-only permissions over the workflows and tasks.</li></ul></ul>
 4. Click **Save**, and the user can now access the Conductor instance.
-
-### User Roles​​
-
-A user can have the following roles:
-
-* **Admin** - An admin has full access to the Conductor instance.
-* **User** - A user can access permitted workflows, tasks, and shared Applications.
-* **Metadata Manager** - An "admin" for metadata who can create/update/delete any workflow or task.
-* **Workflow Manager** - A workflow manager can run/pause/rerun any workflow.
-* **Read Only User** - A user with read-only permissions over the workflows and tasks.
 
 ### Editing Users​
 
@@ -42,7 +32,7 @@ Groups are a way to share workflows and tasks among your team quickly.
 ### Creating Groups​​
 To create a user group:
 1. From the left menu, navigate to **Access Control > Groups**.
-2. Click **Create Group** and provide the following details:<ul><li>**Name** - Provide a name to identify your group.</li><li>**Description** - Provide a suitable description for the group.</li><li>**Permissions** - Choose the required permission for the group. The Group can take the roles *Admin*, *User*, *Metadata Manager*, *Workflow Manager* or *Read Only User*. </li></ul>
+2. Click **Create Group** and provide the following details:<ul><li>**Name** - Provide a name to identify your group.</li><li>**Description** - Provide a suitable description for the group.</li><li>**Permissions** - Choose the required permission for the group. The Group can take the roles *Admin*, *User*, *Metadata Manager*, *Workflow Manager* or *Read Only User*.</li><ul><li>**Admin** - An admin has full access to the Conductor instance.</li><li>**User** - A user can access permitted workflows, tasks, and shared Applications.</li><li>**Metadata Manager** - An "admin" for metadata who can create/update/delete any workflow or task.</li><li>**Workflow Manager** - A workflow manager can run/pause/rerun any workflow.</li><li>**Read Only User** - A user with read-only permissions over the workflows and tasks.</li></ul></ul>
 3. Click **Save**.
 
 <p align="center"><img src="/content/img/creating-groups.png" alt="Creating Groups in Conductor" width="90%" height="auto"></img></p>
@@ -56,11 +46,18 @@ To create a user group:
 <p align="center"><img src="/content/img/adding-permissions-for-applications.png" alt="Granting access to specific tasks and workflows" width="90%" height="auto"></img></p>
 
 :::note
-Even if certain permissions are granted under the **Permissions** section, the chosen role supersedes these permissions. This means that if both the **Permissions** section is configured and a role is selected, the role always supersedes the other.
+Different cases when permissions are stacked up:
+- If the role is “Read Only User” and the group is given “Execute” permission for a workflow under the Permissions section, then all the groups members can execute that workflow, while the rest of the workflows would be read-only.
 :::
 
 ### Group Roles​
 Group roles allow you to add/remove permissions to groups of users quickly. The roles are the same for an individual user but are quickly applied to everyone in the group. Group has five possible roles: Admin, User, Metadata Manager, Workflow Manager, and Read Only User.
+
+* **Admin** - An admin has full access to the Conductor instance.
+* **User** - A user can access permitted workflows, tasks, and shared Applications.
+* **Metadata Manager** - An "admin" for metadata who can create/update/delete any workflow or task.
+* **Workflow Manager** - A workflow manager can run/pause/rerun any workflow.
+* **Read Only User** - A user with read-only permissions over the workflows and tasks.
 
 If a role is defined for these members, they will all be given this role for the Conductor instance. For example, if Admin is selected, all the group members are now admins irrespective of their individual roles.
 
