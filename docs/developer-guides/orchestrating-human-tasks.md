@@ -82,9 +82,9 @@ Once your workflow execution is initiated, navigate to **Executions > Human Task
 You can view the human task details, such as the task ID, Name (*Task Display Name* specified in the workflow definition), task state, assignee, claimant, etc.
 
 :::info
-Depending upon whether you are an admin or a regular user, you can have two different views for the execution. For a regular non-admin user, you get the **_Task Inbox_** view that lists all the tasks assigned to you or left open. 
+You can have two different views for human task execution. For a regular non-admin user, you get the **_Task Inbox_** view that lists all the tasks assigned to you or left open. 
 
-On the other hand, if you are an admin (cluster admin or the task admin - who created the workflow containing human tasks), you can also have another view. Click **_Switch to Task Admin View_** to have a list of all human tasks within the Conductor cluster. 
+On the other hand, if you are an admin (cluster admin or the task admin - who created the workflow containing human tasks), you can also have another view. Click **_Switch to Task Admin View_** to have a list of human tasks within the Conductor cluster. The cluster admin can view all the human tasks whereas the task admins (who created the workflow containing human tasks) can only view the tasks created by them.
 <p align="center"><img src="/content/img/admin-view-human-task.png" alt="Admin view of human task executions" width="100%" height="auto"></img></p>
 :::
 
