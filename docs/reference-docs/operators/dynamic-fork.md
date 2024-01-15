@@ -79,9 +79,7 @@ Example:
               }
             ]
           },
-          "type": "FORK_JOIN_DYNAMIC",
-          "dynamicForkTasksParam": "dynamicTasks",
-          "dynamicForkTasksInputParamName": "dynamicTasksInput"
+          "type": "FORK_JOIN_DYNAMIC"
         },
         {
           "name": "dynamic_workflow_array_simple_join",
