@@ -63,9 +63,21 @@ const sidebars = {
             items: [
                 'developer-guides/quickstart-ai-orchestration',
                 'developer-guides/passing-inputs-to-task-in-conductor',
-                'developer-guides/using-llms-in-your-orkes-conductor-workflows',
-                'developer-guides/using-vector-databases-in-your-orkes-conductor-workflows',
-                'developer-guides/creating-and-managing-gen-ai-prompt-templates',
+                {
+                    type: 'doc',
+                    id: 'developer-guides/using-llms-in-your-orkes-conductor-workflows',
+                    label: "Using LLMs in Conductor Workflows"
+                },
+                {
+                    type: 'doc',
+                    id: 'developer-guides/using-vector-databases-in-your-orkes-conductor-workflows',
+                    label: "Using Vector Databases in Conductor"
+                },
+                {
+                    type: 'doc',
+                    id: 'developer-guides/creating-and-managing-gen-ai-prompt-templates',
+                    label: "Gen-AI Prompt Templates"
+                },
                 'developer-guides/unit-and-regression-tests',
                 'developer-guides/integration-with-cicd',
                 'developer-guides/scheduling-workflows',
@@ -86,7 +98,12 @@ const sidebars = {
                 'developer-guides/scaling-workers',
                 'developer-guides/azure-service-bus-integration',
                 'developer-guides/event-handler',
-                'developer-guides/metrics-and-observability',
+                {
+                    type: 'doc',
+                    id: 'developer-guides/metrics-and-observability',
+                    label: "Metrics & Observability"
+                },
+                
                 'developer-guides/monitoring-task-queues',
                 'developer-guides/workflow-version-behavior-on-execution',
                 'developer-guides/task-and-workflow-status-in-conductor',
@@ -101,7 +118,16 @@ const sidebars = {
                     id: 'developer-guides/task-and-workflow-event-streaming-with-orkes-conductor-and-azure-event-hub',
                     label: "Event Streaming with Azure Event Hub"
                 },
-                'developer-guides/sqs-integration',
+                {
+                    type: 'doc',
+                    id: 'developer-guides/sqs-integration',
+                    label: "Orkes Conductor - SQS Integration"
+                },
+                {
+                    type: 'doc',
+                    id: 'developer-guides/integrating-orkes-conductor-with-confluent-cloud',
+                    label: "Orkes Conductor - Confluent Cloud"
+                },
             ],
             collapsible: true,
             collapsed: true,
