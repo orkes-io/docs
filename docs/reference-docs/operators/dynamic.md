@@ -7,9 +7,7 @@ import TabItem from '@theme/TabItem';
 
 # Dynamic 
 
-The dynamic task allows us to execute one of the registered tasks dynamically at run-time. This means you can run a task 
-that need not be fixed at the time of workflow definition. The task name could even be supplied as part of workflow input and 
-can be mapped to the dynamic task input.
+The dynamic task allows us to execute one of the registered tasks dynamically at run-time. This means that you can run a task not fixed at the time of the workflow’s execution. The task name could even be supplied as part of the workflow’s input and be mapped to the dynamic task input.
 
 ## Definitions
 
