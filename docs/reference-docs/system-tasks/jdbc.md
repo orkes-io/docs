@@ -7,7 +7,7 @@ import TabItem from '@theme/TabItem';
 
 # JDBC Task
 
-A JDBC task is a system task used to execute or store information in MySQL. 
+A JDBC task is a system task used to execute or store information in SQL databases. 
 
 ## Definitions
 
