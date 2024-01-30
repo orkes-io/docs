@@ -7,7 +7,7 @@ sidebar_position: 13
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-The Do While task sequentially executes a list of tasks as long as a condition is __true__. The list of tasks is executed first before the condition is checked, even for the first iteration, just like a regular do .. while task in programming languages.
+The Do While task sequentially executes a list of tasks as long as a condition is __true__. The list of tasks is executed first before the condition is checked, even for the first iteration, just like a regular __do .. while__ task in programming languages.
 
 ## Definitions
 
@@ -33,6 +33,7 @@ The Do While task sequentially executes a list of tasks as long as a condition i
 | ------------- |--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | loopCondition | Indicates the condition to be evaluated after every iteration. Supported types are **value-param**, and **ECMASCRIPT**.  If an exception occurs during evaluation, the task is set to FAILED_WITH_TERMINAL_ERROR. |
 | loopOver      | Includes the list of tasks to be executed as long as the condition is evaluated to `true`.                                                                                                                                       |
+| keepLastN (No of iterations to keep) | Specify the number of required iterations. On enabling this option, this value is set to 2 by default. You can also choose the option “No limits” based on your preference. |
 
 ### Output Parameters
 
@@ -40,7 +41,6 @@ The Do While task sequentially executes a list of tasks as long as a condition i
 | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | iteration  | Indicates the iteration number, which is the current one while executing, and the final one once the loop is finished.                                                                                  |
 | i          | Iteration number as a string mapped to the task references names and their output.                                                                                                                      |
-| keepLastN (No of iterations to keep) | Specify the number of required iterations. On enabling this option, this value is set to 2 by default. You can also choose the option “No limits” based on your preference. |
 
 :::note
 * Domain or isolation group execution is unsupported.
