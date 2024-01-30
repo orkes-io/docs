@@ -56,16 +56,16 @@ If the query type is chosen as METRICS, then the task definition is as follows:
 
 ```json
 {
-     "name": "query_processor",
-     "taskReferenceName": "query_processor_ref",
-     "inputParameters": {
-       "metricsQuery": "",
-       "metricsStart": "",
-       "metricsEnd": "",
-       "metricsStep": "",
-       "queryType": "METRICS"
-     },
-     "type": "QUERY_PROCESSOR",
+    "name": "query_processor",
+    "taskReferenceName": "query_processor_ref",
+    "inputParameters": {
+        "metricsQuery": "avg_over_time(cpu_usage{instance=\"your_instance\"}[1h])",
+        "metricsStart": "2024-01-01T00:00:00Z",
+        "metricsEnd": "2024-01-30T23:59:59Z",
+        "metricsStep": "5m",
+        "queryType": "METRICS"
+    },
+    "type": "QUERY_PROCESSOR"
 }
 ```
 
