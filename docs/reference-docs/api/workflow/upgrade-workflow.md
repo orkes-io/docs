@@ -9,10 +9,6 @@ import TabItem from '@theme/TabItem';
 
 Upgrade Workflow API upgrades a running workflow to a newer/older version. When the workflow is running, one of the tasks would be currently in the execution state. When this workflow is upgraded using this API, all the tasks in the newer definition before this running task will be marked as skipped. 
 
-:::note
-This API support is currently available only in the Conductor beta version. 
-:::
-
 ## Input Payload
 
 | Attribute     | Description                                                                                                                  | 
