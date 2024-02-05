@@ -123,11 +123,6 @@ const sidebars = {
                     id: 'developer-guides/sqs-integration',
                     label: "Orkes Conductor - SQS Integration"
                 },
-                {
-                    type: 'doc',
-                    id: 'developer-guides/integrating-orkes-conductor-with-confluent-cloud',
-                    label: "Orkes Conductor - Confluent Cloud"
-                },
             ],
             collapsible: true,
             collapsed: true,
@@ -459,6 +454,25 @@ const sidebars = {
                             type: 'doc',
                             id: 'integrations/vector-databases/weaviate',
                             label: 'Weaviate',
+                        },
+                    ],
+                    collapsible: true,
+                    collapsed: true,
+                    className: 'leftMenuHeader',
+                },
+                {
+                    type: 'category',
+                    label: 'Message Broker',
+                    link: {
+                        type: 'generated-index',
+                        title: 'Message Broker',
+                        slug: '/category/integrations/message-broker'
+                    },
+                    items: [
+                        {
+                            type: 'doc',
+                            id: 'integrations/message-broker/confluent-kafka',
+                            label: 'Confluent Kafka',
                         },
                     ],
                     collapsible: true,
