@@ -78,7 +78,7 @@ The script will have access to a variable called **$.joinOn**, which is an array
 
 ### Output Parameters
 
-The output is a map, where the keys are the names of task references being joined.
+The output is a map, where the keys are the names of task references being joined. The tasks get joined by the order of completion.
 
 ## Examples
 
