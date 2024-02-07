@@ -30,7 +30,7 @@ npm install --save @io-orkes/conductor-javascript
     };
 
     (async () => {
-      const clientPromise = orkesConductorClient(playConfig);
+      const clientPromise = orkesConductorClient(config);
       const client = await clientPromise;
     })();
 
