@@ -474,6 +474,11 @@ const sidebars = {
                             id: 'integrations/message-broker/confluent-kafka',
                             label: 'Confluent Kafka',
                         },
+                        {
+                            type: 'doc',
+                            id: 'integrations/message-broker/nats-messaging',
+                            label: 'NATS Messaging',
+                        },
                     ],
                     collapsible: true,
                     collapsed: true,
