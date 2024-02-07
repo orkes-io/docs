@@ -196,7 +196,7 @@ Here’s the JSON for the workflow:
 
 ### Executing Workflow in Orkes Conductor 
 
-The workflow can be run using different methods. You can use the **Run** button for quick testing, as shown in the image below:
+The workflow can be run using different methods. You can use the **Run Workflow** button for quick testing, as shown in the image below:
 
 <p align="center"><img src="/content/img/running-workflow-confluent.png" alt="Running workflow from Orkes Conductor UI" width="80%" height="auto"/></p>
 
