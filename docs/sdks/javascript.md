@@ -51,7 +51,7 @@ Once we have a key and secret, we can configure the app from properties or envir
     };
 
     (async () => {
-      const clientPromise = orkesConductorClient(playConfig);
+      const clientPromise = orkesConductorClient(config);
       const client = await clientPromise;
     })();
 
