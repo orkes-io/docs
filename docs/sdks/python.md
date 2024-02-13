@@ -1,7 +1,7 @@
 
 # Orkes Conductor Python SDK
 
-Orkes Conductor Python SDK is maintained here: https://github.com/conductor-sdk/conductor-python
+Orkes Conductor Python SDK is maintained here: https://github.com/conductor-sdk/conductor-python.
 
 ## Install SDK
 
@@ -167,7 +167,7 @@ That's it - you just created your first distributed python app!
 There are three main ways you will use Conductor when building durable, resilient, distributed applications.
 
 1. Write service workers that implements business logic to accomplish a specific goal - such as initiate payment transfer, get user information from database etc.
-2. Create Conductor workflows that implements application state - A typical workflow implements SAGA pattern
+2. Create Conductor workflows that implements application state - A typical workflow implements Saga pattern
 3. Use Conductor SDK and APIs to manage workflows from your application.
 
 - [Create and Run Conductor Workflows](https://github.com/conductor-sdk/conductor-python/blob/main/workers.md)
