@@ -114,14 +114,21 @@ const sidebars = {
                 },
                 'developer-guides/sending-signals-to-workflows',
                 {
-                    type: 'doc',
-                    id: 'developer-guides/task-and-workflow-event-streaming-with-orkes-conductor-and-azure-event-hub',
-                    label: "Event Streaming with Azure Event Hub"
-                },
-                {
-                    type: 'doc',
-                    id: 'developer-guides/sqs-integration',
-                    label: "Orkes Conductor - SQS Integration"
+                    type: 'category',
+                    label: 'Workflow CDC',
+                    link: {
+                        type: 'generated-index',
+                        title: 'Workflow CDC',
+                        slug: '/category/workflow-cdc',
+                        keywords: ['cdc']
+                    },
+                    items: [
+                        'developer-guides/workflow-cdc/task-and-workflow-event-streaming-with-orkes-conductor-and-azure-event-hub',
+                        'developer-guides/workflow-cdc/sqs-integration'
+                    ],
+                    collapsible: true,
+                    collapsed: true,
+                    className: 'leftMenuHeader',
                 },
             ],
             collapsible: true,

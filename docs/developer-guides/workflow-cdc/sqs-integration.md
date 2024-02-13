@@ -1,4 +1,4 @@
-# Integrating Orkes Conductor with SQS
+# Event Streaming with Orkes Conductor & SQS Queues
 
 This developer guide includes the steps to integrate Orkes Conductor with Amazon SQS (Simple Queue Service). The integration involves updating the access policy for the SQS queue & creating a workflow in Orkes Conductor for receiving events from the SQS messaging system.  
 
