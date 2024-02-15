@@ -478,6 +478,11 @@ const sidebars = {
                     items: [
                         {
                             type: 'doc',
+                            id: 'integrations/message-broker/amazon-msk',
+                            label: 'Amazon MSK',
+                        },
+                        {
+                            type: 'doc',
                             id: 'integrations/message-broker/confluent-kafka',
                             label: 'Confluent Kafka',
                         },
