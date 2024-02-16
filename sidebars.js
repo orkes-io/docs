@@ -483,6 +483,11 @@ const sidebars = {
                         },
                         {
                             type: 'doc',
+                            id: 'integrations/message-broker/azure-service-bus',
+                            label: 'Azure Service Bus',
+                        },
+                        {
+                            type: 'doc',
                             id: 'integrations/message-broker/confluent-kafka',
                             label: 'Confluent Kafka',
                         },
