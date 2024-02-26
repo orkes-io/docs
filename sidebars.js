@@ -483,6 +483,11 @@ const sidebars = {
                         },
                         {
                             type: 'doc',
+                            id: 'integrations/message-broker/amazon-sqs',
+                            label: 'Amazon SQS',
+                        },
+                        {
+                            type: 'doc',
                             id: 'integrations/message-broker/azure-service-bus',
                             label: 'Azure Service Bus',
                         },
