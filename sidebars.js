@@ -123,8 +123,7 @@ const sidebars = {
                         keywords: ['cdc']
                     },
                     items: [
-                        'developer-guides/workflow-cdc/task-and-workflow-event-streaming-with-orkes-conductor-and-azure-event-hub',
-                        'developer-guides/workflow-cdc/sqs-integration'
+                        'developer-guides/workflow-cdc/task-and-workflow-event-streaming-with-orkes-conductor-and-azure-event-hub'
                     ],
                     collapsible: true,
                     collapsed: true,
@@ -483,8 +482,8 @@ const sidebars = {
                         },
                         {
                             type: 'doc',
-                            id: 'integrations/message-broker/amazon-sqs',
-                            label: 'Amazon SQS',
+                            id: 'integrations/message-broker/aws-sqs',
+                            label: 'AWS SQS',
                         },
                         {
                             type: 'doc',
