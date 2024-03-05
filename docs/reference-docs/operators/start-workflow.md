@@ -12,17 +12,19 @@ Start Workflow is an operator task used to start another workflow from an existi
 ## Definitions
 
 ```json
-  {
-      "name": "start_workflow",
-      "taskReferenceName": "start_workflow_task_ref",
-      "inputParameters": {
-        "startWorkflow": {
-          "name": "name_of_the_workflow_to_be_started",
-          "version": 1
-        }
-      },
-      "type": "START_WORKFLOW"
-    }
+   {
+     "name": "start_workflow",
+     "taskReferenceName": "start_workflow_ref",
+     "inputParameters": {
+       "startWorkflow": {
+         "name": "workflow-name-to-be-started",
+         "input": {},
+         "correlationId": "xxxxxx",
+         "version": 1
+       }
+     },
+     "type": "START_WORKFLOW"
+   }
 ```
 :::note
 A start workflow task is considered successful when the requested workflow begins or, more precisely, when the requested workflow is in the *RUNNING* state.
@@ -32,14 +34,15 @@ A start workflow task is considered successful when the requested workflow begin
 
 | Attribute     | Description                                                                                                                        |
 | ------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| startWorkflow | Provide the workflow name to be started.                                                                                           |
+| name| Provide the workflow name to be started.                                                                                           |
 | version       | If the workflow has different versions, you can provide the version to be started here. If not specified, the latest version runs. |
+| correlationId | Provide the correlation ID to correlate your workflow instance with another running workflow instance. |
 
 ### Output Parameters
 
 | Attribute  | Description                              |
 | ---------- | ---------------------------------------- |
-| workflowId | Displays the ID of the started workflow. |
+| workflowId | Returns the workflow ID of the started workflow. |
 
 ## Examples
 
@@ -54,8 +57,9 @@ A start workflow task is considered successful when the requested workflow begin
 
 1. Add task type `Start Workflow Task`.
 2. Select the workflow to start.
-3. Select version if required.
-4. Add the input params to the workflow.
+3. Select the version if required.
+4. Provide the correlationId, if required.
+5. Add the input parameters to the workflow.
 
 </div>
 <div className="col">
@@ -73,19 +77,19 @@ A start workflow task is considered successful when the requested workflow begin
  <TabItem value="JSON" label="JSON Example">
 
 ```json
-    {
-      "name": "start_workflow_task_example",
-      "taskReferenceName": "start_workflow_task_example_ref_1",
-      "inputParameters": {
-        "startWorkflow": {
-          "name": "wait-task-example",
-          "input": {
-            "inputToWorkflow": "${workflow.input.sampleInput}"
-          }
-        }
-      },
-      "type": "START_WORKFLOW"
-    }
+   {
+     "name": "start_workflow",
+     "taskReferenceName": "start_workflow_ref",
+     "inputParameters": {
+       "startWorkflow": {
+         "name": "workflow-name-to-be-started",
+         "input": {},
+         "correlationId": "xxxxxx",
+         "version": 1
+       }
+     },
+     "type": "START_WORKFLOW"
+   }
 ```
 
 </TabItem>
@@ -116,7 +120,7 @@ Let’s see a sample JSON file for the start workflow task:
     }
 ```
 
-Here the input parameters are defined as:
+Here, the input parameters are defined as:
 
 ```json
     "inputParameters": {
