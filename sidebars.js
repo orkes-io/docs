@@ -477,6 +477,11 @@ const sidebars = {
                     items: [
                         {
                             type: 'doc',
+                            id: 'integrations/message-broker/amqp',
+                            label: 'AMQP',
+                        },
+                        {
+                            type: 'doc',
                             id: 'integrations/message-broker/amazon-msk',
                             label: 'Amazon MSK',
                         },
