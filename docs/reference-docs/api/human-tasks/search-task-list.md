@@ -7,7 +7,7 @@ import TabItem from '@theme/TabItem';
 
 # Search Human Tasks
 
-Used to retrieve a list of human tasks by search criteria. This API is similar to the API [List Human Tasks](/content/reference-docs/api/human-tasks/get-task-list).
+Used to retrieve a list of human tasks by search criteria. 
 
 :::note
 The invoking user should be a task owner, an ADMIN, or an assignee to the tasks returned. 
