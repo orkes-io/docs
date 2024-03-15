@@ -8,25 +8,25 @@ This guide will provide the steps for integrating Pinecone with Orkes Conductor.
 
 ## Steps to integrate with Pinecone Database
 
-Before beginning to integrate with Pinecone, you need to generate the API key.
+Before beginning to integrate with Pinecone, you need to get specific configuration parameters from the Pinecone console.
 
-### Get the Pinecone API key
+### Get Configuration Credentials from Pinecone
 
 1. Navigate to the [Pinecone console](https://app.pinecone.io/).
-2. Create an account or sign up with your existing account.
-3. From the left menu, navigate to **API Keys**.
-4. Click **+Create API Key.**
+2. Create a project and note the project ID generated. 
+
+<p align="center"><img src="/content/img/project-name.png" alt="Getting Project ID from Pinecone console" width="50%" height="auto"></img></p>
+
+3. Navigate to **API Keys** and click **+ Create API Key**. 
 
 <p align="center"><img src="/content/img/create-api-key-from-pinecone-db.png" alt="API Key creation from Pinecone Console" width="100%" height="auto"></img></p>
 
-5. Provide a name for the key and click **Create Key**.
-6. Note your environment name and project name for the API key generated. 
+4. Provide a name for the key and click **Create Key**. Copy the API key generated.
+5. Next, from **Indexes** on the left menu, create a new index and note the environment.
 
-Note and keep your API key and environment name.
+<p align="center"><img src="/content/img/get-environment-name.png" alt="Get environment name from Pinecone console" width="100%" height="auto"></img></p>
 
-## Create Indexes within your Pinecone project
-
-Check out the [official documentation to create indexes within your Pinecone project](https://docs.pinecone.io/docs/manage-indexes#creating-an-index).
+Check out Pinecone's [official documentation](https://docs.pinecone.io/docs/overview) for more details.
 
 ## Integrating with Pinecone as a provider
 
@@ -42,9 +42,9 @@ Now, you have the API key. Let’s integrate this with Orkes Conductor.
 | Parameters | Description |
 | ---------- | ----------- | 
 | Integration name | Provide a name for the integration. |
-| API Key | Provide the API key copied previously. |
-| Environment | Provide the environment for the API key copied. |
-| Project Name | Provide the project name. |
+| API Key | Provide the [API key copied previously](/content/integrations/vector-databases/pinecone#get-configuration-credentials-from-pinecone). |
+| Project Name | Provide the [project ID copied previously](/content/integrations/vector-databases/pinecone#get-configuration-credentials-from-pinecone). |
+| Environment | Provide the environment name. Refer to the previous section on [how to get the environment name](/content/integrations/vector-databases/pinecone#get-configuration-credentials-from-pinecone). |
 | Description | Provide a description of your integration. |
 
 5. You can toggle-on the **Active** button to activate the integration instantly.
@@ -65,7 +65,7 @@ To add a new index to the Pinecone integration:
 
 <p align="center"><img src="/content/img/create-new-pinecone-integration-index-model.png" alt="Create Indexes for Pinecone Integration Model" width="60%" height="auto"></img></p>
 
-4. Click the **Enable** checkbox to enable the model immediately.
+4. Turn on the **Active** button to enable the model immediately.
 5. Click **Save**.
 
 This ensures the integration model is saved for future use in LLM tasks within Orkes Conductor.
