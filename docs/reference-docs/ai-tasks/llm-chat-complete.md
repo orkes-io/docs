@@ -6,7 +6,7 @@ import TabItem from '@theme/TabItem';
 
 # LLM Chat Complete
 
-A system task to complete the chat query that is designed to direct the model's behavior accurately, preventing any deviation from the objective.
+A system task to complete the chat query. It can be used to instruct the model's behavior accurately to prevent any deviation from the objective.
 
 ## Definitions
 
