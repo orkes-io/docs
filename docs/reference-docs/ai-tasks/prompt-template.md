@@ -10,7 +10,7 @@ The AI prompts can be created in the Orkes Conductor cluster and can be used in 
 
 ## Parameters
 
-| Attribute | Description |
+| Parameter | Description |
 | --------- | ----------- |
 | Prompt Name | A name for the prompt. |
 | Description | A description for the prompt. |
