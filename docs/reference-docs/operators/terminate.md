@@ -6,42 +6,43 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 # Terminate 
-The Terminate task is a task that can terminate the current workflow with a termination status and reason. 
+
+A task that can terminate the current workflow with a termination status and reason.
 
 ## Definitions
 
 ```json
-    {
-      "name": "terminate_task",
-      "taskReferenceName": "terminate_task_ref",
-      "inputParameters": {
-        "terminationStatus": "COMPLETED",
-        "terminationReason": "Task completed successfully.",
-        "workflowOutput": {
-          "Some-Key": "Some-Value"
-        }
-      },
-      "type": "TERMINATE"
-    }
+{
+     "name": "terminate",
+     "taskReferenceName": "terminate_ref",
+     "inputParameters": {
+       "terminationStatus": "TERMINATED",
+       "workflowOutput": {
+         "key": "value"
+       },
+       "terminationReason": "${workflow.input.termination-reason}"
+     },
+     "type": "TERMINATE"
+   }
 ```
-
-:::tip
-The Terminate task can modify the workflow's output with a given parameter and act as a return statement for conditions where you want to terminate your workflow.
-:::
 
 ### Input Parameters
 
 | Attribute         | Description                                                                                        |
 | ----------------- | -------------------------------------------------------------------------------------------------- |
-| terminationStatus | Indicates the termination status. It can take values **COMPLETED**, **FAILED**, or **TERMINATED**. |
-| workflowOutput    | Provide the expected workflow output.                                                              |
-| terminationReason | Provide a reason to give a clear understanding of the termination status.                          |
+| terminationStatus | Choose the termination status while terminating the workflow. It can take values **COMPLETED**, **FAILED**, or **TERMINATED**. |
+| terminationReason | Provide a reason to give a clear understanding of the termination status. The termination reason can also be [passed as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor).                          |
+| workflowOutput    | Provide the expected workflow output on termination. It can be a string, number, boolean, null or object/array.                                                               |
+
+:::tip
+The Terminate task can modify the workflow's output with a given parameter and act as a return statement for conditions where you want to terminate your workflow.
+:::
 
 ### Output Parameters
 
 | Attribute | Description                                                                                                   |
 | --------- | ------------------------------------------------------------------------------------------------------------- |
-| output    | The content of **workflowOutput** from the inputParameters. An empty object if **workflowOutput** is not set. |
+| output    | Returns the workflow output from the defined input parameter. If *workflowOutput* is not set, it returns an empty object. |
 
 ## Examples
 
@@ -55,9 +56,9 @@ The Terminate task can modify the workflow's output with a given parameter and a
 <br/>
 <br/>
 
-1. Add task type `Terminate`.
-2. Select the state.
-3. Add the reason.
+1. Add task type **Terminate**.
+2. Choose the termination status and provide a termination reason.
+3. Optionally set the workflow output.
 
 </div>
 <div className="col">
@@ -75,15 +76,18 @@ The Terminate task can modify the workflow's output with a given parameter and a
  <TabItem value="JSON" label="JSON Example">
 
 ```json
-    {
-      "name": "terminate_task_example",
-      "taskReferenceName": "terminate_task_example_ref",
-      "inputParameters": {
-        "terminationStatus": "COMPLETED",
-        "terminationReason": "This is a test"
-      },
-      "type": "TERMINATE"
-    }
+{
+     "name": "terminate",
+     "taskReferenceName": "terminate_ref",
+     "inputParameters": {
+       "terminationStatus": "TERMINATED",
+       "workflowOutput": {
+         "key": "value"
+       },
+       "terminationReason": "${workflow.input.termination-reason}"
+     },
+     "type": "TERMINATE"
+   }
 ```
 
 </TabItem>
