@@ -7,26 +7,28 @@ import TabItem from '@theme/TabItem';
 
 # Wait
 
-The Wait task is used when the workflow needs to be paused for an external signal to continue. It is used when the workflow needs to wait and pause for external signals, such as a human intervention (like manual approval) or an event coming from an external source, such as Kafka or SQS.
+The wait task is used when the workflow needs to be paused for an external signal to continue. It is used when the workflow needs to wait and pause for external signals, such as a human intervention (like manual approval).
 
 ## Definitions
 
 ```json
-{
-  "name": "wait_task",
-  "taskReferenceName": "wait_task_ref",
-  "type": "WAIT",
-  "inputParameters": {
-    "duration": "x days"
-  }
-}
+   {
+     "name": "wait",
+     "taskReferenceName": "wait_ref",
+     "type": "WAIT",
+     "inputParameters": {
+       "until": "2024-04-30 15:20 GMT+04:00",
+       "key": "${workflow.input.value}"
+     }
+   }
 ```
 
 ### Input Parameters
 
-| Attributes | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Wait type  | Indicates the type of wait period. Supported types include **duration**, **until**, and **signal**. <ul><li><b>duration</b> - Specifies the wait duration in the format **x hours x days x minutes x seconds**. The accepted units in this field are *days*, *d*, *hrs*, *hours*, *h*, *minutes*, *mins*, *m*, *seconds*, *secs*, and *s*.</li><li><b>until</b> - Used to wait until a specified date & time, including the timezone. The date/time can be supplied in the format: **yyyy-mm-dd HH:mm**. For example, **2023-02-17 03:15 GMT+04:00**.</li><li><b>signal</b> - Can be configured if the workflow needs to wait for an external signal, such as a manual approval or an event from an external source, such as SQS or Kafka.</li></ul> |
+|Parameter | Description |
+| -------- | ----------- | 
+| Wait type | Indicates the type of wait period. Supported types include **_until_**, **_duration_**, and **_signal_**.<ul><li>**Until** - Used to wait until a specified date & time, including the timezone. The date/time can be supplied in the format: **YYYY-MM-DD hh:mm a/pm**. For example, 2024-04-30 15:20 GMT+04:00.<ul><li>On choosing the date & time, it displays the computed value. This value can also be [passed as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor).</li></ul></li><li>**Duration** - Specifies the wait duration in the format **x hours x days x minutes x seconds**. The accepted units in this field are _days_, _d_, _hrs_, _hours_, _h_, _minutes_, _mins_, _m_, _seconds_, _secs_, and _s_.</li><ul><li>**_Variable_** - The duration can also be [passed as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor).</li></ul><li>**Signal** - Configure this option if the workflow needs to wait for an external signal, such as a manual approval.</li></ul> |
+| inputParameters | Configure the input parameters required for the task. It can also be [passed as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor). |
 
 ## Examples
 
@@ -40,8 +42,8 @@ The Wait task is used when the workflow needs to be paused for an external signa
 <br/>
 <br/>
 
-1. Add task type `Wait`.
-2. Select the type of wait and its configuration.
+1. Add task type **Wait**.
+2. Select the wait type and provide its configuration.
 
 </div>
 <div className="col">
@@ -59,34 +61,35 @@ The Wait task is used when the workflow needs to be paused for an external signa
  <TabItem value="JSON" label="JSON Example">
 
 ```json
-    {
-      "name": "wait_task_example",
-      "taskReferenceName": "wait_task_example_ref",
-      "inputParameters": {
-        "duration": "300 seconds"
-      },
-      "type": "WAIT"
-    }
+   {
+     "name": "wait",
+     "taskReferenceName": "wait_ref",
+     "type": "WAIT",
+     "inputParameters": {
+       "until": "2024-04-30 15:20 GMT+04:00",
+       "key": "${workflow.input.value}"
+     }
+   }
 ```
 
 </TabItem>
 </Tabs>
 
 
-<details><summary>Simple Example</summary>
+<details><summary>Simple Workflow</summary>
 <p>
-The following wait task waits until Dec 25, {new Date().getFullYear() + 2} 9 am PST. Yes that's right <b>{new Date().getFullYear() + 2}</b>!
+The following task waits until Dec 25, 2026, 9 am GST. Yes, that's right, 2026!
 </p>
 
-<pre><code className="language-json">{`{
-  "name":"wait_until_date",
-  "taskReferenceName":"wait_until_date_ref",
-  "taskType": "WAIT",
-  "inputParameters": {
-    "until": "${new Date().getFullYear() + 2}-12-25 09:00 PST"
-  }
-}
-`}
-</code></pre>
+```json
+{
+     "name": "wait",
+     "taskReferenceName": "wait_ref",
+     "type": "WAIT",
+     "inputParameters": {
+       "until": "2026-12-25 09:00 GMT+04:00"
+     }
+   }
+```
 
 </details>
