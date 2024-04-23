@@ -505,6 +505,11 @@ const sidebars = {
                             id: 'integrations/message-broker/nats-messaging',
                             label: 'NATS Messaging',
                         },
+                        {
+                            type: 'doc',
+                            id: 'integrations/message-broker/gcp-pub-sub',
+                            label: 'GCP Pub Sub',
+                        },
                     ],
                     collapsible: true,
                     collapsed: true,
