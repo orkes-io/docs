@@ -96,7 +96,6 @@ const sidebars = {
                 'developer-guides/task-to-domain',
                 'developer-guides/secrets-in-conductor',
                 'developer-guides/scaling-workers',
-                'developer-guides/azure-service-bus-integration',
                 'developer-guides/event-handler',
                 {
                     type: 'doc',
