@@ -437,6 +437,11 @@ const sidebars = {
                             id: 'integrations/ai-llm/hugging-face',
                             label: 'Hugging Face',
                         },
+                        {
+                            type: 'doc',
+                            id: 'integrations/ai-llm/mistral',
+                            label: 'Mistral',
+                        },
                     ],
                     collapsible: true,
                     collapsed: true,
