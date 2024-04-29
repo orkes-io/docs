@@ -85,3 +85,7 @@ To provide explicit permission to Groups:
 5. Click **Add Permissions**. This ensures that all the group members can access these integration models in their workflows. 
 
 Similarly, you can also provide permissions to [applications](https://orkes.io/content/access-control-and-security/applications#configuring-application). 
+
+:::note
+Once the integration is ready to use, [start creating workflows](https://orkes.io/content/getting-started/first-workflow-application) with [LLM tasks](https://orkes.io/content/category/reference-docs/ai-tasks).
+:::

@@ -418,13 +418,18 @@ const sidebars = {
                     items: [
                         {
                             type: 'doc',
+                            id: 'integrations/ai-llm/azure-open-ai',
+                            label: 'Azure Open AI',
+                        },
+                        {
+                            type: 'doc',
                             id: 'integrations/ai-llm/open-ai',
                             label: 'Open AI',
                         },
                         {
                             type: 'doc',
-                            id: 'integrations/ai-llm/azure-open-ai',
-                            label: 'Azure Open AI',
+                            id: 'integrations/ai-llm/cohere',
+                            label: 'Cohere',
                         },
                         {
                             type: 'doc',
