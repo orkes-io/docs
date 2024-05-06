@@ -134,7 +134,6 @@ Here is the workflow that we are going to create using various language-specific
 <TabItem value="CSharp" label="CSharp">
 
 ```java
-    // @TODO:Gustavo
     @WorkerTask("fraud-check")
     public String checkForFraud(@InputParam("amount") BigDecimal amount, @InputParam("accountId") String accountId) {
         boolean isFraud = fraudService.isFraudulentTxn(accountId, amount);
