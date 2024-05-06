@@ -519,6 +519,11 @@ const sidebars = {
                             id: 'integrations/message-broker/gcp-pub-sub',
                             label: 'GCP Pub Sub',
                         },
+                        {
+                            type: 'doc',
+                            id: 'integrations/message-broker/ibm-mq',
+                            label: 'IBM MQ',
+                        },
                     ],
                     collapsible: true,
                     collapsed: true,
