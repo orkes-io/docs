@@ -31,7 +31,7 @@ For Maven-based projects, modify the `pom.xml` file in the project directory by 
 
 ## Hello World Application Using Conductor
 
-In this section, we will create a simple "Hello World" application that executes a "greetings" workflow managed by Conductor.
+In this section, we will create a "Hello World" application that executes a "greetings" workflow managed by Conductor.
 
 ### Step 1: Create Workflow
 
@@ -589,7 +589,7 @@ Workflow workflowRun = workflowExecution.get(10, TimeUnit.SECONDS);
 ### Managing Workflow Executions
 
 :::note
-See `workflow_ops.java` for a fully working application that demonstrates working with the workflow executions and sending signals to the workflow to manage its state.
+See [WorkflowOps.java](https://github.com/orkes-io/orkes-conductor-client/blob/main/examples/java/io/orkes/conductor/sdk/WorkflowOps.java) for a fully working application that demonstrates working with the workflow executions and sending signals to the workflow to manage its state.
 :::
 
 Workflows represent the application state. With Conductor, you can query the workflow execution state anytime during its lifecycle. You can also send signals to the workflow that determines the outcome of the workflow state.
@@ -870,7 +870,7 @@ Workflow workers are your regular Java functions and can be tested with any avai
 
 #### Example Unit Testing Application
 
-See `test_workflows.java` for a fully functional example of how to test a moderately complex workflow with branches.
+See [WorkflowTest.java](https://github.com/orkes-io/orkes-conductor-client/blob/main/examples/java/io/orkes/conductor/sdk/WorkflowTest.java) for a fully functional example of how to test a moderately complex workflow with branches.
 
 ### Workflow Deployments Using CI/CD
 
@@ -882,7 +882,7 @@ Here is a recommended approach when defining workflows using JSON:
 
 - Treat your workflow metadata as code.
 - Check in the workflow and task definitions along with the application code.
-- Use `POST /api/metadata/*` endpoints to register/update workflows as part of the deployment process.
+- Use `POST /api/metadata/*` endpoints or `MetadataClient(com.conductor.client.MetadataClient)` to register/update workflows as part of the deployment process.
 - Version your workflows. If there is a significant change, change the version field of the workflow. See versioning workflows below for more details.
 
 ### Versioning Workflows
