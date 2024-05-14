@@ -10,13 +10,8 @@ Webhook is an HTTP-based callback function that facilitates the communication be
 
 * GitHub
 * Slack
-* Twilio
 * Stripe
-* Pagerduty
-* Zendesk
-* Twitter
-* Facebook
-* Sendgrid
+* Microsoft Teams
 
 You can leverage the **Custom** option for integrating other than the above-mentioned third-party systems.
 
@@ -92,7 +87,7 @@ Let’s create a Webhook now.
 |-----------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Webhook name                            | Provide a unique name for your Webhook.                                                                                                                                                                                                                                         |
 | Workflow to receive webhook event       | Provide the workflow name that is supposed to receive this webhook event.                                                                                                                                                                                                       |
-| Source platform                         | Choose the platform from which this webhook event is going to be invoked. The currently supported platforms are GitHub, Slack, Twilio, Stripe, Pagerduty, Zendesk, Twitter, Facebook, Sendgrid & Custom. <br/> **Note**: You can use the option custom for unsupported systems. |
+| Source platform                         | Choose the platform from which this webhook event is going to be invoked. The currently supported platforms are GitHub, Slack, Stripe, Microsoft Teams and Custom. <br/> **Note**: You can use the option custom for unsupported systems. |
 | Start workflow when webhook events come | Check this option to start a new workflow based on the data received from the webhook event. Once enabled, you need to choose the workflow to be executed.                                                                                                                      |
 
 4. Click the **Create** button, and the Conductor will generate a Webhook URL, which will be unverified.
@@ -134,7 +129,7 @@ So here, the URL is marked as verified when the first Webhook event comes with a
 ### 2. Challenge-based Verifier Webhook
 
 * For this type of Webhook, the initial invocation must have a challenge parameter, and the same will be returned. This way, the Conductor marks the URL as verified. The Conductor would automatically accept the subsequent requests.
-* The URL is marked as verified when the challenge request comes from the system. If the URL is not verified, then all the requests will be ignored until the URL verification is completed via the challenge mechanism. The systems that support the challenge-based verifiers are Slack and Facebook.
+* The URL is marked as verified when the challenge request comes from the system. If the URL is not verified, then all the requests will be ignored until the URL verification is completed via the challenge mechanism. The systems that support the challenge-based verifier is Slack.
 
 <p align="center"><img src="/content/img/Creating-a-challenge-based-verifier-Webhook-in-Conductor.png" alt="Challenge-based verifier webhook" width="100%" height="auto"/></p>
 
@@ -142,16 +137,12 @@ So here, the URL is marked as verified when the first Webhook event comes with a
 
 ### 3. Signature-based Verifier Webhook
 
-This type of Webhook is configured using the token from the source platform. This token is used to verify the signature of the request. The systems that support the signature-based verifiers are GitHub, Twilio, Stripe, Pagerduty, Zendesk & Twitter.
+This type of Webhook is configured using the token from the source platform. This token is used to verify the signature of the request. The systems that support the signature-based verifiers are GitHub and Stripe.
 
 | System        | Header for request verification                                                                                                                                                                                                                                                                                                                                                                     |
 |---------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | GitHub        | <ul><li>Header **X-Hub-Signature 256** will be used to request verification. It is the request body’s HMAC hex digest and is spawned using the SHA-256 hash function and the secret as the HMAC key.</li><li>**[secret](https://docs.github.com/en/developers/webhooks-and-events/webhooks/securing-your-webhooks#setting-your-secret-token)** - Provide the GitHub account’s secret key.</li></ul> |
-| Twilio        | <ul><li>Header **X-Twilio-Signature** will be used to request verification.</li><li>**[AuthToken](https://www.twilio.com/docs/usage/security)** - Provide your AuthToken from the Twilio console.</li></ul>                                                                                                                                                                                         |
-| Stripe        | <ul><li>Header **Stripe-Signature** will be used to request verification.</li><li>**[endpointSecret](https://stripe.com/docs/webhooks/signatures)** - Provide your endpoint’s secret for Webhook from Stripe.</li></ul>                                                                                                                                                                             |
-| Pagerduty     | <ul><li>Header **x-pagerduty-signature** will be used to request verification.</li><li>**[secret](https://developer.pagerduty.com/docs/ZG9jOjExMDI5NTkz-verifying-signatures)** - Provide your Pagerduty’s secret token.</li></ul>                                                                                                                                                                  |
-| Zendesk       | <ul><li>Header **X-Zendesk-Webhook-Signature** will be used to request verification.</li><li>**[SIGNING_SECRET](https://developer.zendesk.com/documentation/event-connectors/webhooks/verifying/#retrieving-a-webhooks-signing-secret-key)** - Provide your Zendesk’s signing secret for Webhook.</li></ul>                                                                                         |
-| Twitter       | <ul><li>Header **x-twitter-webhooks-signature** will be used to request verification.</li><li>**[TWITTER_CONSUMER_SECRET](https://developer.twitter.com/en/docs/twitter-api/enterprise/account-activity-api/guides/securing-webhooks)** - Provide your Twitter app’s consumer secret.</li></ul>                                                                                                     |
+| Stripe        | <ul><li>Header **Stripe-Signature** will be used to request verification.</li><li>**[endpointSecret](https://stripe.com/docs/webhooks/signatures)** - Provide your endpoint’s secret for Webhook from Stripe.</li></ul>                                                                                                                                                                                                                                                                |
 
 <p align="center"><img src="/content/img/Creating-a-signature-based-verifier-Webhook-in-Conductor.png" alt="Signature-based verifier webhook" width="100%" height="auto"/></p>
 

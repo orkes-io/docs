@@ -11,13 +11,8 @@ Orkes Conductor currently supports the Webhook integration with the following th
 
 * GitHub
 * Slack
-* Twilio
 * Stripe
-* Pagerduty
-* Zendesk
-* Twitter
-* Facebook
-* Sendgrid
+* Microsoft Teams
 
 Apart from this, you can also use the option “Custom” to integrate with other third-party applications.
 
