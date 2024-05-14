@@ -29,6 +29,9 @@ const config = {
       src: baseUrlName + "/js/apollo.js",
     },
     {
+      src: baseUrlName + "/js/leadMagic.js",
+    },
+    {
       src: "https://player.vimeo.com/api/player.js",
     },
   ],
