@@ -1,6 +1,10 @@
 # Integrating Amazon MSK with Orkes Conductor
 
-This developer guide includes the steps to integrate Amazon MSK with Orkes Conductor. This integration lets you connect your Amazon MSK (Kafka) cluster to Conductor to publish and receive messages from queues/topics.
+This developer guide includes the steps to integrate Amazon MSK with Orkes Conductor. This integration lets you connect the Amazon MSK (Kafka) cluster to Conductor to publish and receive messages from queues/topics.
+
+:::note
+Amazon MSK is deprecated. Please use [Apache Kafka](https://orkes.io/content/integrations/message-broker/apache-kafka) for all future configurations.
+:::
 
 ## Get Configuration Credentials from Amazon MSK
 
@@ -8,9 +12,9 @@ Before beginning the integration process in Orkes Conductor, you must get specif
 
 To get the Bootstrap server:
 
-1. Open your [Amazon MSK console](https://console.aws.amazon.com/msk/). 
+1. Login to [Amazon MSK console](https://console.aws.amazon.com/msk/). 
 2. Once logged in, the table lists all the clusters under this account for the current region. 
-3. Choose your cluster, and click **_View client information_** on the cluster summary page. This gives the bootstrap broker and the Apache ZooKeeper connection string. 
+3. Choose the cluster and click _**View client information**_ on the cluster summary page. This will give you the bootstrap broker and the Apache ZooKeeper connection string. 
 
 [Refer to the official documentation for more details.](https://docs.aws.amazon.com/msk/latest/developerguide/msk-get-bootstrap-brokers.html)
 
@@ -27,12 +31,13 @@ Now, you have the required configuration credentials from Amazon MSK. Let’s in
 
 | Paremeters | Description |
 | ---------- | ----------- |
-| Integration Name | A name to identify your integration. |
-| Bootstrap Server | Provide the bootstrap server for the Amazon MSK cluster. [Refer to the previous section on how to get the bootstrap server.](/content/integrations/message-broker/amazon-msk#get-configuration-credentials-from-amazon-msk) | 
+| Integration Name | A name to identify the integration. |
+| Bootstrap Server | Provide the bootstrap server for the Amazon MSK cluster. [For instructions on how to get the bootstrap server, refer to the previous section.](/content/integrations/message-broker/amazon-msk#get-configuration-credentials-from-amazon-msk) | 
 | Sending Protocol | Choose the sending protocol for the integration. Currently supports **String**. |
 | Connection Security | Choose the connection security. Currently supports **_SASL_SSL/SCRAM-SHA-512_**. | 
-| Username | Provide the username of your Amazon MSK account. | 
-| Password | Provide the password of your Amazon MSK account. | 
+| Username | Provide the username of the Amazon MSK account. | 
+| Password | Provide the password of the Amazon MSK account. | 
+| Consumer Group ID | Enter the Consumer Group ID from Kafka. This unique identifier helps manage message processing, load balancing, and fault tolerance within consumer groups. |
 | Description | Provide a description of the integration. |
 
 5. You can toggle on the **Active** button to activate the integration instantly.
@@ -44,7 +49,7 @@ The integration is created successfully now. The next step is to create an event
 
 To do this:
 
-1. Navigate to **Definitions > Event Handler** from the left menu on your Conductor console.
+1. Navigate to **Definitions > Event Handler** from the left menu on the Conductor console.
 2. Click the **+ Define event handler** option from the top-right corner of the window.
 3. Create an event handler with the following configurations:
 
@@ -52,8 +57,8 @@ To do this:
 
 | Event Handler Parameters | Description |
 | ------------------------ | ----------- |
-| Name | Provide a name to identify your event handler definition. |
-| Event | Provide the event integration you have created in the following format:<br/><br/><b>Type : Config Name : Topic Name</b><br/><br/>Example: **kafka_msk:john-test:topic_0**<br/><br/>**Notes**: The drop-down automatically lists the integration you’ve added to the Conductor cluster. You can choose that and add the topic name you want to publish/receive messages. |
+| Name | Provide a name to identify the event handler definition. |
+| Event | Provide the event integration you have created in the following format:<br/><br/><b>Type : Config Name : Topic Name</b><br/><br/>Example: **kafka_msk:john-test:topic_0**<br/><br/>**Note**: The drop-down automatically lists the integrations you’ve added to the Conductor cluster. You can choose that and add the topic name you want to publish/receive messages. |
 | Condition | Provide the ECMAScript to control the message processing if required. Check out the [event handler documentation](https://orkes.io/content/developer-guides/event-handler#configuring-an-event-handler) for more details. | 
 | Actions | Choose the required actions to be carried out on receiving the events from MSK Kafka. It can take the following values:<ul><li>Complete Task</li><li>Terminate Workflow</li><li>Update Variables</li><li>Fail Task</li><li>Start Workflow</li></ul>Each type of action requires and supports a certain set of input parameters. Check out the [event handler documentation](https://orkes.io/content/developer-guides/event-handler#configuring-an-event-handler) for more details. |
 | Active | Set this to true or false. It determines if the event handler is running or not. |
@@ -123,6 +128,6 @@ The workflow can be run using different methods. You can use the **Run Workflow*
 
 Upon successful execution, you can verify the message's delivery through the Amazon MSK portal. 
 
-Here, the action added in the event handler definition was to start the workflow “**event-handler-test**”. You can verify the same from the **Executions > Workflow** page.
+Here, the action added in the event handler definition was to start the workflow “**event-handler-test**”. You can verify this from the **Executions > Workflow** page.
 
 <p align="center"><img src="/content/img/event-handler-action-msk.png" alt="Starting workflow on consuming events" width="90%" height="auto"/></p>
