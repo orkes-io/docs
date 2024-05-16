@@ -53,6 +53,7 @@ Apart from the above parameters, ensure that the following basic parameters for 
 | asyncComplete     | If set, the task remains in the IN_PROGRESS state even after the execution. An external event (Task Update API or Event handler) is expected to mark the task as completed. |
 | connectionTimeOut | Set the connection timeout in milliseconds.  If set to 0, it is equivalent to infinity. By default, the value is set to 100.                                                |
 | readTimeOut       | Set the read timeout in milliseconds.  If set to 0, it is equivalent to infinity. By default, the value is set to 150.                                                      |
+| encode | Determines whether the URI needs encoding. When set to true (the default), the Conductor will automatically encode the query parameters before sending the HTTP request.<br/><br/>Set this to false if the URI is already encoded. In this case, the Conductor will assume the query parameters are properly encoded and pass them to the HTTP endpoint as specified in the URI. |
 | cacheConfig | Enabling this option allows saving the cache output of the task. On enabling you can provide the following parameters:<ul><li>**TTL (in seconds)** - Provide the time to live in seconds.You can also pass this parameter as variables.</li><li>**Cache Key** - Provide the cache key, which is a string with parameter substitution based on the task input. You can also pass this parameter as variables.</li></ul>|
 
 ### Output Parameters
