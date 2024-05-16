@@ -1,6 +1,10 @@
 # Integrating Confluent Kafka with Orkes Conductor
 
-This developer guide includes the steps to integrate Confluent Kafka with Orkes Conductor. This integration lets you connect your Confluent Kafka cluster to Conductor to publish and receive messages from queues/topics.
+This developer guide includes the steps to integrate Confluent Kafka with Orkes Conductor. This integration lets you connect the Confluent Kafka cluster to Conductor to publish and receive messages from queues/topics.
+
+:::note
+Confluent Kafka configuration is deprecated. Please use [Apache Kafka](https://orkes.io/content/integrations/message-broker/apache-kafka) for all future configurations.
+:::
 
 ## Get Configuration Credentials from Confluent Kafka
 
@@ -8,8 +12,8 @@ Before beginning the integration process in Orkes Conductor, you must get specif
 
 To obtain the API Keys:
 
-1. From your [Confluent Cloud portal](https://confluent.cloud/), choose your cluster to be integrated with Orkes Conductor and navigate to **Cluster Overview > API Keys**.
-2. Create a new key by clicking **Create Key/+Add key** and selecting the required access (Global access/Granular access).
+1. From the [Confluent Cloud portal](https://confluent.cloud/), choose the cluster to be integrated with Orkes Conductor and navigate to **Cluster Overview > API Keys**.
+2. Create a new key by clicking **Create Key/+Add key** and selecting the required access (_Global access/Granular access_).
 3. Note down the values for the **Key** and **Secret**.
 
 <p align="center"><img src="/content/img/generating-api-keys-confluent.png" alt="Generating API Keys from Confluent Cloud" width="100%" height="auto"/></p>
@@ -27,7 +31,7 @@ To get the Bootstrap server:
 To get the Schema registry server, API key & secret (This is only required if you are integrating with a schema registry):
 
 1. Go to **Clients > Add new client.**
-2. Under the **“Copy the configuration snippet for your clients”** section, copy the **_Schema Registry URL_** & download the Schema Registry API Key. The downloaded file will have the Schema Registry API Key & Secret.
+2. Under the **“Copy the configuration snippet for your clients”** section, copy the **_Schema Registry URL_** & download the Schema Registry API key. The downloaded file will have the Schema Registry API key and secret.
 
 <p align="center"><img src="/content/img/schema-registry-url.png" alt="Getting Schema Registry URL" width="100%" height="auto"/></p>
 
@@ -44,15 +48,20 @@ Now, you have the required configuration credentials from Confluent Kafka. Let�
 
 | Paremeters | Description |
 | ---------- | ----------- |
-| Integration Name | A name to identify your integration. |
-| Bootstrap Server | Provide the bootstrap server for the cluster in your Confluent Kafka. Refer to the previous section on how to [get the bootstrap server](/content/integrations/message-broker/confluent-kafka#get-configuration-credentials-from-confluent-kafka). |
-| Sending Protocol | Choose the required sending protocol for the integration. It can take two values:<ul><li>String</li><li>AVRO</li></ul>If you are integrating with a schema registry, choose AVRO as the sending protocol. |
-| Connection Security | Choose the connection security. Currently supports **_SASL_SSL/PLAIN_**. |
-| Username | Provide the [API Key copied previously](/content/integrations/message-broker/confluent-kafka#get-configuration-credentials-from-confluent-kafka). |
-| Password | Provide the [API Secret copied previously](/content/integrations/message-broker/confluent-kafka#get-configuration-credentials-from-confluent-kafka). |
-| Schema Registry URL | Provide the Schema Registry URL from the Confluent Kafka console. [Refer to the previous section on how to get this](/content/integrations/message-broker/confluent-kafka#get-configuration-credentials-from-confluent-kafka).<br/>This field is only applicable if the **_Sending Protocol_** is chosen as AVRO. |
-| Schema Registry API Key | Provide the Schema Registry API Key from the Confluent Kafka console. [Refer to the previous section on how to get this](/content/integrations/message-broker/confluent-kafka#get-configuration-credentials-from-confluent-kafka).<br/>This field is only applicable if the **_Sending Protocol_** is chosen as AVRO. |
-| Schema Registry API Secret | Provide the Schema Registry API Secret from the Confluent Kafka console. [Refer to the previous section on how to get this](/content/integrations/message-broker/confluent-kafka#get-configuration-credentials-from-confluent-kafka).<br/>This field is only applicable if the **_Sending Protocol_** is chosen as AVRO. |
+| Integration Name | A name to identify the integration. |
+| Bootstrap Server | Provide the bootstrap server for the Confluent Kafka cluster. Refer to the previous section on how to [get the bootstrap server](/content/integrations/message-broker/confluent-kafka#get-configuration-credentials-from-confluent-kafka). |
+| Sending Protocol | Choose the required sending protocol for the integration. It can take two values:<ul><li>**String** - Messages are sent as simple string data.</li><li>**AVRO** - Messages are serialized using AVRO.</li></ul>If you are integrating with a schema registry, choose AVRO as the sending protocol. |
+| Connection Security | Choose the security mechanism for connecting to the Kafka cluster. It can take values:<ul><li>**SASL_SSL / PLAIN** - Secure connection using SASL (Simple Authentication and Security Layer) with SSL encryption.</li><li>**SASL_SSL / SCRAM-SHA-256 / JKS** - Secure connection using SASL with SCRAM-SHA-256 authentication and SSL encryption.</li></ul> | 
+| Username | If authentication is enabled (SASL_SSL), provide the username to authenticate with the Kafka cluster.<br/><br/>**Note**: For AVRO configuration, provide the [API key copied previously as the username](/content/integrations/message-broker/confluent-kafka#get-configuration-credentials-from-confluent-kafka). |
+| Password | Provide the password associated with the username to authenticate the connection.<br/><br/>**Note**: For AVRO configuration, provide the [API secret copied previously as the password](/content/integrations/message-broker/confluent-kafka#get-configuration-credentials-from-confluent-kafka). |
+| Schema Registry URL | Provide the Schema Registry URL from the Confluent Kafka console. [Refer to the previous section on how to get this](/content/integrations/message-broker/confluent-kafka#get-configuration-credentials-from-confluent-kafka).<br/><br/>**Note:** This field is only applicable if the **_Sending Protocol_** is chosen as **_AVRO_**. |
+| Schema Registry Auth Type | Specifies the authentication mechanism for connecting to the schema registry. It can be of the following types:<ul><li>Password in URL</li><li>Schema Registry User Info (Key/Password)</li><li>NONE</li></ul>**Note:** This field is only applicable if the Sending Protocol is chosen as **_AVRO_**. |
+| Schema Registry API Key | Provide the Schema Registry API Key from the Confluent Kafka console. [Refer to the previous section on how to get this](/content/integrations/message-broker/confluent-kafka#get-configuration-credentials-from-confluent-kafka).<br/><br/>**Note:** This field is only applicable if the **_Sending Protocol_** is chosen as **_AVRO_**. |
+| Schema Registry API Secret | Provide the Schema Registry API Secret from the Confluent Kafka console. [Refer to the previous section on how to get this](/content/integrations/message-broker/confluent-kafka#get-configuration-credentials-from-confluent-kafka).<br/><br/>**Note:** This field is only applicable if the **_Sending Protocol_** is chosen as **_AVRO_**. |
+| Value Subject Name Strategy | Defines the strategy for constructing the subject name under which the AVRO schema will be registered in the schema registry. It can take the following values:<ul><li>_io.confluent.kafka.serializers.subject.TopicNameStrategy_</li><li>_io.confluent.kafka.serializers.subject.RecordNameStrategy_</li><li>_io.confluent.kafka.serializers.subject.TopicRecordNameStrategy_</li></ul>**Note:** This field is only applicable for **_AVRO_** configuration. |
+| Choose Trust Store file | If SSL encryption is enabled, upload the Java JKS trust store file with CAs. |
+| Trust Store Password | Provide the password for the trust store file. | 
+| Consumer Group ID | Enter the Consumer Group ID from Kafka. This unique identifier helps manage message processing, load balancing, and fault tolerance within consumer groups. | 
 | Description | Provide a description of the integration. | 
 
 5. You can toggle on the **Active** button to activate the integration instantly.
@@ -64,7 +73,7 @@ The integration is created successfully now. The next step is to create an event
 
 To do this:
 
-1. Navigate to **Definitions > Event Handler** from the left menu on your Conductor console.
+1. Navigate to **Definitions > Event Handler** from the left menu on the Conductor console.
 2. Click **+ Define event handler** option from the top-right corner of the window.
 3. Create an event handler with the following configurations:
 
@@ -72,8 +81,8 @@ To do this:
 
 | Event Handler Parameters | Description |
 | ------------------------ | ----------- |
-| Name | Provide a name to identify your event handler definition. |
-| Event | Provide the event integration you have created in the following format:<br/><br/>**Type : Config Name : Topic Name**<br/><br/>Example: **kafka_confluent:john-test:topic_0**<br/><br/>**Notes**: The drop-down lists the integration you’ve added to the Conductor cluster automatically. You can choose that and add the topic name you want to publish/receive messages. |
+| Name | Provide a name to identify the event handler definition. |
+| Event | Provide the event integration you have created in the following format:<br/><br/>**Type : Config Name : Topic Name**<br/><br/>Example: **kafka_confluent:john-test:topic_0**<br/><br/>**Note**: The drop-down lists the integrations you’ve added to the Conductor cluster automatically. You can choose that and add the topic name you want to publish/receive messages. |
 | Condition | Provide the ECMAScript to control the message processing if required. Check out the [event handler documentation](https://orkes.io/content/developer-guides/event-handler#configuring-an-event-handler) for more details. |
 | Actions | Choose the required actions to be carried out on receiving the events from Kafka. It can take the following values:<ul><li>Complete Task</li><li>Terminate Workflow</li><li>Update Variables</li><li>Fail Task</li><li>Start Workflow</li></ul>Each type of action requires and supports a certain set of input parameters. Check out the [event handler documentation](https://orkes.io/content/developer-guides/event-handler#configuring-an-event-handler) for more details. |
 | Active | Set this to true or false. It determines if the event handler is running or not. |
@@ -204,6 +213,6 @@ Upon successful execution, you can verify the message's delivery through the Con
 
 <p align="center"><img src="/content/img/verifying-confluent.png" alt="Verifying the consumed message from Confluent Kafka" width="100%" height="auto"/></p>
 
-The action added in the event handler definition was to start the workflow **http-sample-test**. You can verify the same from the **Executions > Workflow** page.
+The action added in the event handler definition was to start the workflow **http-sample-test**. You can verify this from the **Executions > Workflow** page.
 
 <p align="center"><img src="/content/img/event-handler-action-confluent.png" alt="Starting workflow on consuming events" width="100%" height="auto"/></p>
