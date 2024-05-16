@@ -511,6 +511,11 @@ const sidebars = {
                         },
                         {
                             type: 'doc',
+                            id: 'integrations/message-broker/apache-kafka',
+                            label: 'Apache Kafka',
+                        },
+                        {
+                            type: 'doc',
                             id: 'integrations/message-broker/nats-messaging',
                             label: 'NATS Messaging',
                         },
