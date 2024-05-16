@@ -3,7 +3,7 @@
 This developer guide includes the steps to integrate Amazon MSK with Orkes Conductor. This integration lets you connect the Amazon MSK (Kafka) cluster to Conductor to publish and receive messages from queues/topics.
 
 :::note
-Amazon MSK is deprecated. Please use [Apache Kafka](https://orkes.io/content/integrations/message-broker/apache-kafka) for all future configurations.
+Amazon MSK configuration is deprecated. Please use [Apache Kafka](https://orkes.io/content/integrations/message-broker/apache-kafka) for all future configurations.
 :::
 
 ## Get Configuration Credentials from Amazon MSK
