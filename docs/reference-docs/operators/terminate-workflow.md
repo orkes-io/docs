@@ -1,5 +1,5 @@
 ---
-sidebar_position: 11
+sidebar_position: 7
 ---
 
 import Tabs from '@theme/Tabs';
