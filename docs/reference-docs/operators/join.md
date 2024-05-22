@@ -7,19 +7,22 @@ import TabItem from '@theme/TabItem';
 
 # Join 
 
-A JOIN task is used in conjunction with a **FORK_JOIN** or **FORK_JOIN_DYNAMIC** task to join all the tasks within the forks. 
+A Join task is used in conjunction with a [Fork Join](https://orkes.io/content/reference-docs/operators/fork-join) or [Dynamic Fork](https://orkes.io/content/reference-docs/operators/dynamic-fork) task to join all the tasks within the forks.
 
 ## Definitions
 
 ```json
-{
-  "name": "join_task",
-  "taskReferenceName": "join_task_ref",
-  "type": "JOIN",
-  "joinOn": [
-    // List of task reference names that this join should be waiting for
-  ]
-}
+   {
+     "name": "join",
+     "taskReferenceName": "join_ref",
+     "inputParameters": {
+       "key": "value"
+     },
+     "type": "JOIN",
+     "joinOn": [
+       // List of task reference names that this join should be waiting for
+     ]
+   }
 ```
 
 :::note
@@ -37,8 +40,16 @@ In the **FORK_JOIN** task, the JOIN task waits for a list of zero or more of the
 <td>A list of task reference names that this JOIN task will wait for completion.</td>
 </tr>
 <tr>
-<td>Join Script</td>
-<td> This is an optional field. When checked, you must provide a script to control how the join task completes. <p>A sample script looks like this:</p>
+<td>Join script</td>
+<td> This is an optional field. When checked, you must provide a script to control how the join task completes. You can also pass script parameters as input parameters to the join task.
+
+```json
+     "inputParameters": {
+       "key": "value"
+     }
+```
+
+<p>A sample script looks like this:</p>
 
 ```javascript
 (function(){
@@ -92,9 +103,10 @@ The output is a map, where the keys are the names of task references being joine
 <br/>
 <br/>
 
-1. Add task type `Fork Join`.
+1. Add task type **Fork Join**.
 2. Add the forks.
-3. Select the paired Join task and select joinOn params.
+3. Select the required forks to be joined.
+4. Optionally, enable the join scripting if required and provide the script.
 
 </div>
 <div className="col">
@@ -112,16 +124,19 @@ The output is a map, where the keys are the names of task references being joine
  <TabItem value="JSON" label="JSON Example">
 
 ```json
-    {
-      "name": "join_on_forked_tasks",
-      "taskReferenceName": "join_on_forked_tasks",
-      "type": "JOIN",
-      "joinOn": [
-        "http_task_3",
-        "http_task_2",
-        "http_task_1"
-      ]
-    }
+   {
+     "name": "join",
+     "taskReferenceName": "join_ref",
+     "inputParameters": {
+       "key": "value"
+     },
+     "type": "JOIN",
+     "joinOn": [
+       "http_ref",
+       "http_ref_1",
+       "http_ref_2"
+     ]
+   }
 ```
 
 </TabItem>
@@ -150,7 +165,7 @@ Here is an example of a JOIN task. This task will wait for the completion of tas
 <details><summary>Example with Fork/Join Task ignoring one fork</summary>
 <p>
 
-Here is an example of a JOIN task used in conjunction with a FORK_JOIN task. The 'FORK_JOIN' spawns three tasks. An **email_notification** task, a **sms_notification** task, and a **http_notification** task. Email and SMS are usually the best-effort delivery systems. However, in the case of an HTTP-based notification, you get a return code, and you can retry until it succeeds or eventually give up. When you set up a notification workflow, you may decide to continue if you kicked off an email and sms notification. In that case, you can decide to joinOn those specific tasks only. However, the **http_notification** task will still continue to execute, but it will not block the rest of the workflow from proceeding.
+Here is an example of a JOIN task used in conjunction with a FORK_JOIN task. The 'FORK_JOIN' spawns three tasks. An **email_notification** task, a **sms_notification** task, and a **http_notification** task. Email and SMS are usually the best-effort delivery systems. However, in the case of an HTTP-based notification, you get a return code, and you can retry until it succeeds or eventually give up. When you set up a notification workflow, you may decide to continue if you kick off an email and SMS notification. In that case, you can choose to joinOn those specific tasks only. However, the **http_notification** task will still continue to execute, but it will not block the rest of the workflow from proceeding.
 
 ```json
     [
@@ -220,7 +235,7 @@ Consider a fork-join task having 2 forks, of which both of them are sub-workflow
 
 In this case, both fork tasks should be marked as optional. 
 
-And the join task is joined using the following join script.
+The join task is joined using the following join script.
 
 ```javascript
 (function(){
@@ -247,7 +262,7 @@ And the join task is joined using the following join script.
  }
 })();
 ```
-This ensures the join task completes only if all the forks are completed. If any pending joins are found, the script will return the join task status to IN_PROGRESS and will get completed only on completing the fork tasks. 
+This ensures the join task is completed only if all the forks are completed. If any pending joins are found, the script will return the join task status to IN_PROGRESS and will complete it only after completing the fork tasks.
 
 If we run the workflow, you can see that the join has not been completed and is waiting for the second fork to complete. As per the script, this returns the join task to an in-progress state and remains until the pending joins are completed.
 
@@ -259,6 +274,6 @@ The join task gets completed after fixing the issue with the second fork task.
 <p align="center"><img src="/content/img/join-task-completed-state.png" alt="Join task completed" width="60%"
                        height="auto"/></p>
 
-So this ensures that the workflow gets completed only on completing all the pending joins as per the script.
+The join task is completed after the issue with the second fork task is fixed.
 
 </details>
