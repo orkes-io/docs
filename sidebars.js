@@ -443,6 +443,11 @@ const sidebars = {
                         },
                         {
                             type: 'doc',
+                            id: 'integrations/ai-llm/aws-bedrock-titan',
+                            label: 'AWS Bedrock Titan',
+                        },
+                        {
+                            type: 'doc',
                             id: 'integrations/ai-llm/mistral',
                             label: 'Mistral',
                         },
