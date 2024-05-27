@@ -78,6 +78,11 @@ const sidebars = {
                     id: 'developer-guides/creating-and-managing-gen-ai-prompt-templates',
                     label: "Gen-AI Prompt Templates"
                 },
+                {
+                    type: 'doc',
+                    id: 'developer-guides/enabling-cdc-on-conductor-workflows',
+                    label: "Workflow CDC"
+                },
                 'developer-guides/unit-and-regression-tests',
                 'developer-guides/integration-with-cicd',
                 'developer-guides/scheduling-workflows',
@@ -97,7 +102,6 @@ const sidebars = {
                 'developer-guides/secrets-in-conductor',
                 'developer-guides/scaling-workers',
                 'developer-guides/event-handler',
-                'developer-guides/enabling-cdc-on-conductor-workflows',
                 {
                     type: 'doc',
                     id: 'developer-guides/metrics-and-observability',
