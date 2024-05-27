@@ -97,6 +97,7 @@ const sidebars = {
                 'developer-guides/secrets-in-conductor',
                 'developer-guides/scaling-workers',
                 'developer-guides/event-handler',
+                'developer-guides/enabling-cdc-on-conductor-workflows',
                 {
                     type: 'doc',
                     id: 'developer-guides/metrics-and-observability',
@@ -112,22 +113,6 @@ const sidebars = {
                     label: "Orkes Template Explorer"
                 },
                 'developer-guides/sending-signals-to-workflows',
-                {
-                    type: 'category',
-                    label: 'Workflow CDC',
-                    link: {
-                        type: 'generated-index',
-                        title: 'Workflow CDC',
-                        slug: '/category/workflow-cdc',
-                        keywords: ['cdc']
-                    },
-                    items: [
-                        'developer-guides/workflow-cdc/task-and-workflow-event-streaming-with-orkes-conductor-and-azure-event-hub'
-                    ],
-                    collapsible: true,
-                    collapsed: true,
-                    className: 'leftMenuHeader',
-                },
             ],
             collapsible: true,
             collapsed: true,
