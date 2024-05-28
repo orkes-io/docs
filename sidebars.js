@@ -432,6 +432,11 @@ const sidebars = {
                         },
                         {
                             type: 'doc',
+                            id: 'integrations/ai-llm/aws-bedrock-llama2',
+                            label: 'AWS Bedrock Llama 2',
+                        },
+                        {
+                            type: 'doc',
                             id: 'integrations/ai-llm/aws-bedrock-titan',
                             label: 'AWS Bedrock Titan',
                         },
