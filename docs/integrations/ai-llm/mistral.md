@@ -51,7 +51,7 @@ To add a new model to the Mistral integration:
 <p align="center"><img src="/content/img/create-new-mistral-integration-model-from-integrations-page.png" alt="Create Mistral Integration Model from Listed Integrations" width="100%" height="auto"></img></p>
 
 2. Click **+New model**.
-3. Provide the model name and an optional description for the model. [You can get the complete list of Mistral models here](https://docs.mistral.ai/getting-started/models/). 
+3. Provide the model name and an optional description for the model. The complete [list of models in Mistral is available here](https://docs.mistral.ai/getting-started/models/). 
 
 <p align="center"><img src="/content/img/create-new-mistral-integration-model.png" alt="Create Mistral Integration Model" width="70%" height="auto"></img></p>
 

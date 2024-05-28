@@ -423,12 +423,17 @@ const sidebars = {
                         {
                             type: 'doc',
                             id: 'integrations/ai-llm/vertex-ai',
-                            label: 'Vertex AI',
+                            label: 'Google Vertex AI',
                         },
                         {
                             type: 'doc',
                             id: 'integrations/ai-llm/hugging-face',
                             label: 'Hugging Face',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'integrations/ai-llm/aws-bedrock-cohere',
+                            label: 'AWS Bedrock Cohere',
                         },
                         {
                             type: 'doc',

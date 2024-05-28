@@ -53,7 +53,7 @@ To add a new model to the Cohere integration:
 <p align="center"><img src="/content/img/create-new-cohere-integration-model-from-integrations-page.png" alt="Create Cohere Integration Model from Listed Integrations" width="100%" height="auto"></img></p>
 
 2. Click **+New model**.
-3. Provide the model name and an optional description for the model. [You can get the complete list of models in Cohere here](https://docs.cohere.com/docs/command-beta). 
+3. Provide the model name and an optional description for the model. The complete [list of models in Cohere is available here](https://docs.cohere.com/docs/command-beta). 
 
 <p align="center"><img src="/content/img/create-new-cohere-integration-model.png" alt="Create Cohere Integration Model" width="60%" height="auto"></img></p>
 

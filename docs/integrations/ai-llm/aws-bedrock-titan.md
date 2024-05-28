@@ -56,7 +56,7 @@ To add a new model to the AWS Bedrock Titan integration:
 <p align="center"><img src="/content/img/create-new-aws-bedrock-titan-integration-model-from-integrations-page.png" alt="Create AWS Bedrock Titan Integration Model from Listed Integrations" width="100%" height="auto"></img></p>
 
 2. Click **+New model**.
-3. Provide the model name and an optional description for the model. [You can get the complete list of models in AWS Bedrock Titan here](https://docs.aws.amazon.com/bedrock/latest/userguide/titan-models.html). 
+3. Provide the model name and an optional description for the model. The complete [list of models in AWS Bedrock Titan is available here](https://docs.aws.amazon.com/bedrock/latest/userguide/titan-models.html). 
 
 <p align="center"><img src="/content/img/create-new-aws-bedrock-titan-integration-model.png" alt="Create AWS Bedrock Titan Integration Model" width="70%" height="auto"></img></p>
 
