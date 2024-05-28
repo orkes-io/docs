@@ -56,7 +56,7 @@ To add a new model to the OpenAI integration:
 <p align="center"><img src="/content/img/create-new-model-for-open-ai-integration.png" alt="Create new model for OpenAI Integration" width="100%" height="auto"></img></p>
 
 2. Click **+New model.**
-3. Provide the model name and an optional description for the model. You can get the [complete list of models in OpenAI here](https://platform.openai.com/docs/models/overview). 
+3. Provide the model name and an optional description for the model. The complete [list of models in Open AI is available here](https://platform.openai.com/docs/models/overview). 
 
 <p align="center"><img src="/content/img/creating-new-model-for-open-ai-integration.png" alt="Creating new model for OpenAI Integration" width="70%" height="auto"></img></p>
 

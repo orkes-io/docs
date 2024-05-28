@@ -60,7 +60,7 @@ To add a new model to the Hugging Face integration:
 <p align="center"><img src="/content/img/create-new-model-for-hugging-face-integration.png" alt="Create new model for Hugging Face Integration" width="100%" height="auto"></img></p>
 
 2. Click **+New model**.
-3. Provide the model name, endpoint (the one you created in the previous step), and an optional description for the model. You can get the [complete list of models in Hugging Face here](https://huggingface.co/models).
+3. Provide the model name, endpoint (the one you created in the previous step), and an optional description for the model. The complete [list of models in Hugging Face is available here](https://huggingface.co/models).
 
 <p align="center"><img src="/content/img/creating-new-model-for-hugging-face-integration.png" alt="Creating new model for Hugging Face Integration" width="60%" height="auto"></img></p>
 

@@ -58,7 +58,7 @@ To add a new model to the Azure OpenAI integration:
 <p align="center"><img src="/content/img/create-new-azure-open-ai-integration-model-from-integrations-page.png" alt="Create Azure Open AI Integration Model from Listed Integrations" width="100%" height="auto"></img></p>
 
 2. Click **+New model**.
-3. Provide the model name and an optional description for the model. You can get the [complete list of models in Azure OpenAI here](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/legacy-models). 
+3. Provide the model name and an optional description for the model. The complete [list of models in Azure OpenAI is available here](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/legacy-models). 
 
 <p align="center"><img src="/content/img/create-new-azure-open-ai-integration-model.png" alt="Create Azure Open AI Integration Model" width="70%" height="auto"></img></p>
 

@@ -55,7 +55,7 @@ To add a new model to the AWS Bedrock Llama 2 integration:
 <p align="center"><img src="/content/img/create-new-aws-bedrock-llama2-integration-model-from-integrations-page.png" alt="Create AWS Bedrock Llama 2 Integration Model from Listed Integrations" width="100%" height="auto"></img></p>
 
 2. Click **+New model**.
-3. Provide the model name and an optional description for the model. [You can get the complete list of models in AWS Bedrock Llama 2 here](https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids.html). 
+3. Provide the model name and an optional description for the model. The complete [list of models in AWS Bedrock Llama 2 is available here](https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids.html). 
 
 <p align="center"><img src="/content/img/create-new-aws-bedrock-llama2-integration-model.png" alt="Create AWS Bedrock Llama 2 Integration Model" width="70%" height="auto"></img></p>
 
