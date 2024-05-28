@@ -85,5 +85,5 @@ To provide explicit permission to Groups:
 Similarly, you can also provide permissions to [applications](https://orkes.io/content/access-control-and-security/applications#configuring-application). 
 
 :::note
-Once the integration is ready to use, [start creating workflows](https://orkes.io/content/getting-started/first-workflow-application) with [LLM tasks](https://orkes.io/content/category/reference-docs/ai-tasks).
+Once the integration is ready, [start creating workflows](https://orkes.io/content/reference-docs/api/metadata/creating-workflow-definition) with [LLM tasks](https://orkes.io/content/category/reference-docs/ai-tasks).
 :::
