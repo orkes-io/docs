@@ -432,6 +432,11 @@ const sidebars = {
                         },
                         {
                             type: 'doc',
+                            id: 'integrations/ai-llm/aws-bedrock-anthropic',
+                            label: 'AWS Bedrock Anthropic',
+                        },
+                        {
+                            type: 'doc',
                             id: 'integrations/ai-llm/aws-bedrock-cohere',
                             label: 'AWS Bedrock Cohere',
                         },
