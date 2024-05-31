@@ -427,6 +427,11 @@ const sidebars = {
                         },
                         {
                             type: 'doc',
+                            id: 'integrations/ai-llm/anthropic-claude',
+                            label: 'Anthropic Claude',
+                        },
+                        {
+                            type: 'doc',
                             id: 'integrations/ai-llm/hugging-face',
                             label: 'Hugging Face',
                         },
