@@ -61,7 +61,7 @@ Besides the expression, any of the properties in the input values is accessible 
 
 
 </TabItem>
- <TabItem value="JSON" label="JSON Example">
+ <TabItem value="JSON" label="JSON">
 
 ```json
     {

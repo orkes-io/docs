@@ -57,7 +57,7 @@ For example, the above one will match the webhook event payload where the **even
 <br/>
 
 <Tabs>
- <TabItem value="JSON" label="JSON Example">
+ <TabItem value="JSON" label="JSON">
 
  ```json
     {
@@ -83,7 +83,7 @@ Let’s create a Webhook now.
 2. Click **New Webhook**.
 3. You need to fill in the following details:
 
-| Field                                   | Description                                                                                                                                                                                                                                                                     |
+| Attribute                                   | Description                                                                                                                                                                                                                                                                     |
 |-----------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Webhook name                            | Provide a unique name for your Webhook.                                                                                                                                                                                                                                         |
 | Workflow to receive webhook event       | Provide the workflow name that is supposed to receive this webhook event.                                                                                                                                                                                                       |

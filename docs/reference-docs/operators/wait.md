@@ -25,7 +25,7 @@ The wait task is used when the workflow needs to be paused for an external signa
 
 ### Input Parameters
 
-|Parameter | Description |
+|Attribute | Description |
 | -------- | ----------- | 
 | Wait type | Indicates the type of wait period. Supported types include **_until_**, **_duration_**, and **_signal_**.<ul><li>**Until** - Used to wait until a specified date & time, including the timezone. The date/time can be supplied in the format: **YYYY-MM-DD hh:mm a/pm**. For example, 2024-04-30 15:20 GMT+04:00.<ul><li>On choosing the date & time, it displays the computed value. This value can also be [passed as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor#expression). See the section below for a [complete example](#sample-workflows).</li></ul></li><li>**Duration** - Specifies the wait duration in the format **x days x hours x minutes x seconds**. The accepted units in this field are _days_, _d_, _hrs_, _hours_, _h_, _minutes_, _mins_, _m_, _seconds_, _secs_, and _s_.</li>**Note**: You can use the duration format to configure the wait period according to your requirements. For example, if you need to wait for 10 mins, you can use this format in your JSON `"inputParameters": {"duration": "10 minutes" }`. Or, you can provide 10 in the minute's field from the UI as shown below:<p align="center"><img src="/content/img/wait-for-10-mins.png" alt="Wait for 10 mins example" width="70%" height="auto"></img></p><ul><li>**_Variable_** - The duration can also be [passed as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor#expression). See the section below for a [complete example](#sample-workflows).</li></ul><li>**Signal** - Configure this option if the workflow needs to wait for an external signal, such as a manual approval.</li></ul> |
 | inputParameters | Configure the input parameters required for the task. It can also be [passed as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor#expression). See the section below for a [complete example](#sample-workflows). |
@@ -58,7 +58,7 @@ The wait task is used when the workflow needs to be paused for an external signa
 
 
 </TabItem>
- <TabItem value="JSON" label="JSON Example">
+ <TabItem value="JSON" label="JSON">
 
 ```json
    {

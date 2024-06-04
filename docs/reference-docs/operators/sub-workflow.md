@@ -73,7 +73,7 @@ The output of the sub-workflow is also supplied to the output of the workflow.
 
 
 </TabItem>
- <TabItem value="JSON" label="JSON Example">
+ <TabItem value="JSON" label="JSON">
 
 ```json
     {

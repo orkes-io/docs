@@ -29,7 +29,7 @@ The Do While task sequentially executes a list of tasks as long as a condition i
 
 ### Input Parameters
 
-| Attributes    | Description                                                                                                                                                                                                                    |
+| Attribute    | Description                                                                                                                                                                                                                    |
 | ------------- |--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | loopCondition | Indicates the condition to be evaluated after every iteration. Supported types are **value-param**, and **ECMASCRIPT**.  If an exception occurs during evaluation, the task is set to FAILED_WITH_TERMINAL_ERROR. |
 | loopOver      | Includes the list of tasks to be executed as long as the condition is evaluated to `true`.                                                                                                                                       |
@@ -37,7 +37,7 @@ The Do While task sequentially executes a list of tasks as long as a condition i
 
 ### Output Parameters
 
-| Attributes | Description                                                                                                                                                                                             |
+| Attribute | Description                                                                                                                                                                                             |
 | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | iteration  | Indicates the iteration number, which is the current one while executing, and the final one once the loop is finished.                                                                                  |
 | i          | Iteration number as a string mapped to the task references names and their output.                                                                                                                      |
@@ -77,7 +77,7 @@ The Do While task sequentially executes a list of tasks as long as a condition i
 
 
 </TabItem>
- <TabItem value="JSON" label="JSON Example">
+ <TabItem value="JSON" label="JSON">
 
 ```json
     {

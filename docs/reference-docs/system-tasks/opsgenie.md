@@ -33,7 +33,7 @@ A system task to send alerts to Opsgenie in the event of workflow failures. This
 
 ## Input Parameters
 
-| Attributes  | Description             |
+| Attribute  | Description             |
 |-------------|-------------------------|
 | alias | Specify the user-defined alias that will be created in Opsgenie when alerts are triggered. Alias are user-defined identifiers for alerts, limited to a maximum of 512 characters in Opsgenie. |
 | description | Specify the description related to the alert. The description is limited to 15,000 characters in Opsgenie. |
@@ -78,7 +78,7 @@ Refer to the official [Opsgenie documentation for more information on the alert 
 
 
 </TabItem>
- <TabItem value="JSON" label="JSON Example">
+ <TabItem value="JSON" label="JSON">
 
 ```json
  {

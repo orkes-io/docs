@@ -121,7 +121,7 @@ The output is a map, where the keys are the names of task references being joine
 
 
 </TabItem>
- <TabItem value="JSON" label="JSON Example">
+ <TabItem value="JSON" label="JSON">
 
 ```json
    {

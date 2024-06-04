@@ -29,7 +29,7 @@ A JDBC task is a system task used to execute or store information in SQL databas
 
 ## Input Parameters
 
-| Attributes | Description |
+| Attribute | Description |
 | ---------- | ----------- |
 | Integration name | Choose the required database integration. You can only choose the integration to which you have access here.<br/><br/>**Note**: If you haven’t configured your database on your Orkes console, navigate to the **Integrations** tab and configure the integration under “**RDBMS > Relational Database**”.|
 | Statement type | Indicates the SQL statement type. It can take 2 values: SELECT or UPDATE.<br/><br/><ul><li>**SELECT** - Used to retrieve data from a database.</li><li>**UPDATE** - Used to modify existing data from the database.<ul><li>**Expected update count** - If you have chosen ‘UPDATE’ as the statement type, provide the number of rows you need to update in the database.</li></ul></li></ul>|
@@ -67,7 +67,7 @@ A JDBC task is a system task used to execute or store information in SQL databas
 
 
 </TabItem>
- <TabItem value="JSON" label="JSON Example">
+ <TabItem value="JSON" label="JSON">
 
 ```json
    {

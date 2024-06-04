@@ -27,7 +27,7 @@ A system task to update the value of any secret, given the user has permission t
 
 ### Input Parameters
 
-| Attributes  | Description             |
+| Attribute  | Description             |
 |-------------|-------------------------|
 | secretKey   | Name of the secret key.  |
 | secretValue | Value of the secret key. |

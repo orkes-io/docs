@@ -80,7 +80,7 @@ The switch task is used for creating branching logic. It is a representation of 
 
 
 </TabItem>
- <TabItem value="JSON" label="JSON Example">
+ <TabItem value="JSON" label="JSON">
 
 ```json
     {

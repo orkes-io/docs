@@ -31,7 +31,7 @@ A system task that allows signing a JWT token.
 
 ### Input Parameters
 
-| Parameter | Description |
+| Attribute | Description |
 | --------- | ----------- |
 | subject | The subject of the JWT. Often represents the entity (e.g., user or service) for which the token is issued. |
 | issuer | The issuer of the JWT, identifying who created and signed the token. | 
@@ -69,7 +69,7 @@ A system task that allows signing a JWT token.
 
 
 </TabItem>
- <TabItem value="JSON" label="JSON Example">
+ <TabItem value="JSON" label="JSON">
 
 ```json
    {

@@ -24,7 +24,7 @@ A system task to retrieve the content of the document provided and use it for fu
 
 ## Input Parameters
 
-| Parameter | Description |
+| Attribute | Description |
 | --------- | ----------- |
 | url | Provide the URL of the document to be retrieved.<br/><br/>Check out our documentation on [how to pass parameters to tasks](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor). |
 | mediaType | Select the media type of the file to be retrieved. Currently, supported media types include:<ul><li>application/pdf</li><li>text/html</li><li>text/plain</li><li>json</li></ul> | 
@@ -56,7 +56,7 @@ A system task to retrieve the content of the document provided and use it for fu
 
 
 </TabItem>
- <TabItem value="JSON" label="JSON Example">
+ <TabItem value="JSON" label="JSON">
 
 ```json
 {

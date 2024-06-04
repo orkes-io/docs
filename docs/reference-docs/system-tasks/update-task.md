@@ -40,7 +40,7 @@ The user running this workflow should have access to the task being updated.
 
 ## Input Parameters
 
-| Attributes  | Description             |
+| Attribute  | Description             |
 |-------------|-------------------------|
 | taskStatus | Specify the status of the task to be updated. It can take values:<ul><li>PENDING</li><li>SKIPPED</li><li>TIMED_OUT</li><li>COMPLETED_WITH_ERRORS</li><li>CANCELED</li><li>SCHEDULED</li><li>FAILED_WITH_TERMINAL_ERROR</li><li>FAILED</li><li>IN_PROGRESS</li><li>COMPLETED</li></ul><br/>You can also pass this [value as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor). |
 | workflowId | The execution ID of the workflow containing the task to be updated.<br/><br/>**Note:**If the task status is updated using workflowId, ensure that you also provide the task reference name. |
@@ -51,7 +51,7 @@ The user running this workflow should have access to the task being updated.
 
 ## Output Parameters
 
-| Attributes  | Description             |
+| Attribute  | Description             |
 |-------------|-------------------------|
 | taskOutput | Displays the new output of the task if defined in the task definition. | 
 
@@ -82,7 +82,7 @@ The user running this workflow should have access to the task being updated.
 
 
 </TabItem>
- <TabItem value="JSON" label="JSON Example">
+ <TabItem value="JSON" label="JSON">
 
 ```json
     {

@@ -92,7 +92,7 @@ Apart from the above parameters, ensure that the following basic parameters for 
 
 
 </TabItem>
- <TabItem value="JSON" label="JSON Example">
+ <TabItem value="JSON" label="JSON">
 
 ```json
     {
