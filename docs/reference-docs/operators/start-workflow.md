@@ -74,7 +74,7 @@ A start workflow task is considered successful when the requested workflow begin
 
 
 </TabItem>
- <TabItem value="JSON" label="JSON Example">
+ <TabItem value="JSON" label="JSON">
 
 ```json
    {

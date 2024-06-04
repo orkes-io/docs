@@ -37,13 +37,13 @@ Conductor supports the ability to query the following sources:
 
 ## Input Parameters
 
-| Attributes  | Description             |
+| Attribute  | Description             |
 |-------------|-------------------------|
 | queryType | Choose the query type. It can take the following values:<ul><li>CONDUCTOR_API</li><li>METRICS</li></ul> | 
 
 Depending on the chosen query method, the configuration parameters vary. If CONDUCTOR_API is chosen, then provide the following parameters:
 
-| Attributes  | Description             |
+| Attribute  | Description             |
 |-------------|-------------------------|
 | workflowNames | Provide the workflow names for the query. | 
 | correlationIds | Provide the correlation ID of the workflows to be queried. |
@@ -69,7 +69,7 @@ If the query type is chosen as METRICS, then the task definition is as follows:
 }
 ```
 
-| Attributes  | Description             |
+| Attribute | Description             |
 |-------------|-------------------------|
 | metricsQuery | Indicates the Prometheus query. | 
 | metricsStart | Specifies the start time for the metrics query. |
@@ -78,7 +78,7 @@ If the query type is chosen as METRICS, then the task definition is as follows:
 
 ## Output Parameters
 
-| Attributes  | Description             |
+| Attribute  | Description             |
 |-------------|-------------------------|
 | workflowsUrl | A link to the queried workflow executions in Conductor UI. |
 
@@ -109,7 +109,7 @@ If the query type is chosen as METRICS, then the task definition is as follows:
 
 
 </TabItem>
- <TabItem value="JSON" label="JSON Example">
+ <TabItem value="JSON" label="JSON">
 
 ```json
     {

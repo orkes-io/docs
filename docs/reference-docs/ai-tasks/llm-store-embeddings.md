@@ -28,7 +28,7 @@ A system task responsible for storing the generated embeddings produced by the [
 
 ## Input Parameters
 
-| Parameter | Description |
+| Attribute | Description |
 | ---------- | ----------- |
 | vectorDB | Choose the vector database to which the data is to be stored. <br/><br/>**Note**: If you haven’t configured the vector database on your Orkes console, navigate to the **_Integrations_** tab and configure your required provider. Refer to this doc on [how to integrate Vector Databases with Orkes console](https://orkes.io/content/category/integrations/vector-databases). |
 | index | Choose the index in your vector database where the text or data is to be stored.<br/><br/>**Note**: For Weaviate integration, this field refers to the class name, while in Pinecone integration, it denotes the index name itself. | 
@@ -65,7 +65,7 @@ A system task responsible for storing the generated embeddings produced by the [
 
 
 </TabItem>
- <TabItem value="JSON" label="JSON Example">
+ <TabItem value="JSON" label="JSON">
 
 ```json
 {

@@ -73,7 +73,7 @@ The Terminate task can modify the workflow's output with a given parameter and a
 
 
 </TabItem>
- <TabItem value="JSON" label="JSON Example">
+ <TabItem value="JSON" label="JSON">
 
 ```json
 {

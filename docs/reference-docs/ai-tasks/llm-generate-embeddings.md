@@ -29,7 +29,7 @@ A system task to generate embeddings from the input data provided. Embeddings ar
 
 ## Input Parameters
 
-| Parameter | Description |
+| Attribute | Description |
 | --------- | ----------- |
 | llmProvider | Choose the required LLM provider. You can only choose providers to which you have access for at least one model from that provider.<br/><br/>**Note**:If you haven’t configured your AI / LLM provider on your Orkes console, navigate to the **Integrations** tab and configure your required provider. Refer to this doc on [how to integrate the LLM providers with Orkes console and provide access to required groups](/content/category/integrations/ai-llm).| 
 | model | Choose from the available language model for the chosen LLM provider. You can only choose models for which you have access.<br/><br/>For example, If your LLM provider is Azure Open AI & you’ve configured *text-davinci-003* as the language model, you can choose it under this field. |
@@ -67,7 +67,7 @@ The task output is a JSON array containing the vectors of the indexed data.
 
 
 </TabItem>
- <TabItem value="JSON" label="JSON Example">
+ <TabItem value="JSON" label="JSON">
 
 ```json
 {

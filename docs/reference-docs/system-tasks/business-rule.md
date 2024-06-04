@@ -93,7 +93,7 @@ Business rule task supports the following operators:
 
 
 </TabItem>
- <TabItem value="JSON" label="JSON Example">
+ <TabItem value="JSON" label="JSON">
 
 ```json
 

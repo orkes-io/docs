@@ -41,7 +41,7 @@ An example configuration of publishing an event to Confluent Kafka:
 
 ## Input Parameters​
 
-| Parameter | Description |
+| Attribute | Description |
 | --------- | ----------- |
 | sink | Provide the event queue sink. The UI drop-down lists the message broker integrations added to the Conductor cluster by default. Choose the required integration and add the topic/queue name along with the sink.<br/><br/>For example, the drop-down lists the sink for the above example as **_kafka_confluent:John-Test_**. Edit the sink manually to include the topic name, making it **_kafka_confluent:John-Test:topic-name_**. |
 | inputParameters | Provide the required input parameters so the task execution will be sent as the payload to the event sink. |
@@ -120,7 +120,7 @@ The task will produce the payload it sent as the output.
 
 
 </TabItem>
- <TabItem value="JSON" label="JSON Example">
+ <TabItem value="JSON" label="JSON">
 
 ```json
    {

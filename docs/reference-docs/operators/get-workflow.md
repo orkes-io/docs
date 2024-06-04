@@ -25,7 +25,7 @@ Get workflow is an operator task that retrieves the workflow execution details u
 
 ### Input Parameters
 
-| Parameter | Description |
+| Attribute | Description |
 | --------- | ----------- |
 | id | Provide the workflow ID of the workflow. You can also pass this [parameter as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor). |
 | includeTasks | Set this to true or false, depending on whether to retrieve the task details or not. |

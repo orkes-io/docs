@@ -26,7 +26,7 @@ A system task to get the numerical vector representations of words, phrases, sen
 
 ## Input Parameters
 
-| Parameter | Description |
+| Attribute | Description |
 | --------- | ----------- | 
 | vectorDB | Choose the required vector database.<br/><br/>**Note**:If you haven’t configured the vector database on your Orkes console, navigate to the Integrations tab and configure your required provider. Refer to this doc on [how to integrate Vector Databases with Orkes console](/content/category/integrations/vector-databases). |
 | namespace | Choose from the available namespace configured within the chosen vector database.<br/><br/>Namespaces are separate isolated environments within the database to manage and organize vector data effectively.<br/><br/>**Note**:Namespace field is applicable only for Pinecone integration and is not applicable to Weaviate integration.|
@@ -68,7 +68,7 @@ A system task to get the numerical vector representations of words, phrases, sen
 
 
 </TabItem>
- <TabItem value="JSON" label="JSON Example">
+ <TabItem value="JSON" label="JSON">
 
 ```json
 {

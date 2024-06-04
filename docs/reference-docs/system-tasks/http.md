@@ -77,7 +77,7 @@ HTTP task allows you to make calls to remote services exposed over HTTP/HTTPS.
 
 
 </TabItem>
- <TabItem value="JSON" label="JSON Example">
+ <TabItem value="JSON" label="JSON">
 
 ```json
     {
