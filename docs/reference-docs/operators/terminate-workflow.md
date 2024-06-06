@@ -7,7 +7,7 @@ import TabItem from '@theme/TabItem';
 
 # Terminate Workflow 
 
-The “Terminate Workflow” task terminates other workflows using their workflow IDs.
+The "Terminate Workflow" task allows for the termination of other workflows using their workflow IDs. It allows users to terminate single or multiple workflows with optional parameters for specifying termination reasons and triggering failure workflows.
 
 ## Definitions
 
@@ -30,9 +30,9 @@ The “Terminate Workflow” task terminates other workflows using their workflo
 
 | Attribute         | Description                                                                                                             |
 | ----------------- |-------------------------------------------------------------------------------------------------------------------------|
-| workflowId        | Provide the workflow IDs of the workflows to be executed. It can be [passed as a parameter](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor).                                                                |
-| terminationReason | Provide the reason for the workflows being terminated, which can help add context about why the workflow is terminated. It can be [passed as a parameter](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor).    |
-| triggerFailureWorkflow | Set this to **true** to trigger the failure workflow when the terminate workflow is called. Setting this to **false** will trigger the failure workflow only when the main workflow fails. | 
+| workflowId        | Specifies the workflow ID(s) of the workflows to be terminated. It can be a single ID or an array of IDs. It can also be [passed as a parameter](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor).                                                                |
+| terminationReason | PProvide a reason for terminating the workflows, aiding in understanding the context of the termination. It can be [passed as a parameter](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor).    |
+| triggerFailureWorkflow | When set to ‘true’, triggers the failure workflow associated with the workflow to be terminated.  Enabling this option means that the failure workflow of the terminated workflow will be triggered. | 
 
 ### Output Parameters
 
@@ -92,9 +92,7 @@ The “Terminate Workflow” task terminates other workflows using their workflo
 <details><summary>Sample Workflow</summary>
 <p>
 
-Suppose you want to terminate another running workflow using the terminate workflow task.
-
-A sample workflow look like this:
+To demonstrate the terminate workflow task, consider the following sample workflow. This example shows how to configure a workflow that terminates another running workflow.
 
 ```json
 {
@@ -119,7 +117,7 @@ A sample workflow look like this:
 }
 ```
 
-On running the workflow, the workflow with the mentioned workflow ID “289cf124-2240-11ef-8b99-ae209b03ac3f” gets terminated. You can confirm the workflow execution and get the terminated workflow IDs from the workflow's output.
+Upon running the workflow, the workflow with the specified ID “289cf124-2240-11ef-8b99-ae209b03ac3f” will be terminated.
 
 <p align="center"><img src="/content/img/terminate-workflow.png" alt="Terminate Workflow - Successful execution" width="90%" height="auto"></img></p>
 
@@ -132,6 +130,112 @@ Click on the workflow ID to view the execution.
 <p align="center"><img src="/content/img/terminated-workflow.png" alt="View of the terminated workflow" width="90%" height="auto"></img></p>
 
 You can also view the reason for the termination we provided (in the terminate workflow task) here.
+
+</p>
+</details>
+
+<details><summary>Sample Workflow - With “Trigger Failure Workflow” Enabled</summary>
+<p>
+
+Suppose the following workflow is to be terminated, which has a failure workflow set.
+
+<p align="center"><img src="/content/img/workflow-to-be-terminated.png" alt="Workflow to be terminated" width="90%" height="auto"></img></p>
+
+The workflow JSON is as follows:
+
+```json
+{
+ "name": "test-workflow",
+ "description": "test",
+ "version": 1,
+ "tasks": [
+   {
+     "name": "simple",
+     "taskReferenceName": "simple_ref",
+     "inputParameters": {},
+     "type": "SIMPLE"
+   }
+ ],
+ "failureWorkflow": "failure",
+ "schemaVersion": 2,
+ "ownerEmail": "devrel@orkes.io"
+}
+```
+
+Now, let’s run the workflow and obtain its workflow ID.
+
+<p align="center"><img src="/content/img/workflow-id-of-workflow-to-be-terminated.png" alt="Getting the workflow ID of the workflow to be terminated" width="90%" height="auto"></img></p>
+
+As the above image shows, the workflow ID is `8c14384c-2400-11ef-ad70-52278f6d0e42`. 
+
+Next, create a workflow to terminate the above running workflow.
+
+<p align="center"><img src="/content/img/terminate-workflow-sample.png" alt="Main workflow with terminate workflow task" width="40%" height="auto"></img></p>
+
+The JSON for the workflow is as follows:
+
+```json
+{
+ "name": "terminate-workflow-demo",
+ "description": "Sample workflow",
+ "version": 1,
+ "tasks": [
+   {
+     "name": "TW",
+     "taskReferenceName": "TW_ref",
+     "inputParameters": {
+       "workflowId": [
+         "8c14384c-2400-11ef-ad70-52278f6d0e42"
+       ],
+       "terminationReason": "Workflow is terminated.",
+       "triggerFailureWorkflow": true
+     },
+     "type": "TERMINATE_WORKFLOW"
+   }
+ ],
+ "schemaVersion": 2,
+ "ownerEmail": "devrel@orkes.io"
+}
+```
+
+Let’s look at the input parameters for the terminate workflow task:
+
+```json
+ {
+     "name": "TW",
+     "taskReferenceName": "TW_ref",
+     "inputParameters": {
+       "workflowId": [
+         "8c14384c-2400-11ef-ad70-52278f6d0e42"
+       ],
+       "terminationReason": "Workflow is terminated.",
+       "triggerFailureWorkflow": true
+     },
+     "type": "TERMINATE_WORKFLOW"
+   }
+```
+
+- workflowId - The above running workflow’s workflowId is provided as an input parameter, with a termination reason.
+- The option to trigger failure workflow is enabled.
+
+Now, let’s run this workflow.
+
+<p align="center"><img src="/content/img/running-terminate-workflow-demo.png" alt="Running terminate workflow demo" width="100%" height="auto"></img></p>
+
+Upon completion, the workflow with the ID `8c14384c-2400-11ef-ad70-52278f6d0e42` will be terminated.
+
+Let’s look at the execution of the terminated workflow:
+
+1. Navigate to **Executions > Workflow**.
+2. Search using the workflow ID.
+
+<p align="center"><img src="/content/img/terminated-workflow-execution.png" alt="Execution of the terminated workflow" width="100%" height="auto"></img></p>
+
+The warning at the top gives the termination reason specified in the workflow. You can also see that the failure workflow is triggered.
+
+Click “Triggered failure workflow” (indicated in the above image) to view the failure workflow’s execution.
+
+<p align="center"><img src="/content/img/failure-workflow-triggered.png" alt="Triggered failure workflow" width="40%" height="auto"></img></p>
 
 </p>
 </details>
