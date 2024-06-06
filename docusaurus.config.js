@@ -185,7 +185,7 @@ const config = {
               },
               {
                 label: "Slack Community",
-                href: "https://join.slack.com/t/orkes-conductor/shared_invite/zt-xyxqyseb-YZ3hwwAgHJH97bsrYRnSZg",
+                href: "https://join.slack.com/t/orkes-conductor/shared_invite/zt-2hmxn0i3n-_W~a9rWMbvMoYmlJo3Y15g",
               },
               {
                 label: "Twitter",
