@@ -9,7 +9,7 @@ Before beginning the integration process in Orkes Conductor, you must get specif
 To get the project ID:
 
 1. Login to [Google Cloud Console](https://console.cloud.google.com/) and create a project.
-2. Click the drop-down menu on the top left of the console to select your desired project. 
+2. If you have multiple projects, click the drop-down menu on the top left of the console to select your desired project. 
 3. The Project ID will be displayed on the dashboard below the project name.
 
 <p align="center"><img src="/content/img/get-project-id.png" alt="Get project ID from Google Cloud Console" width="100%" height="auto"/></p>

@@ -427,6 +427,11 @@ const sidebars = {
                         },
                         {
                             type: 'doc',
+                            id: 'integrations/ai-llm/google-gemini-ai',
+                            label: 'Google Gemini AI',
+                        },
+                        {
+                            type: 'doc',
                             id: 'integrations/ai-llm/anthropic-claude',
                             label: 'Anthropic Claude',
                         },
