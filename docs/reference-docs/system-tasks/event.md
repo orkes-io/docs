@@ -41,6 +41,7 @@ An example configuration of publishing an event to Confluent Kafka:
 | --------- | ----------- |
 | sink | Specifies the event queue sink, which is of the format:<br/><br/>**Type : Config Name : Queue/Topic Name**<br/>where,<ul><li>_Type_ - The type is message broker type where payload is being sent. These are the supporters types:<ul><li>AMQP - amqp</li><li>AWS SQS - sqs</li><li>Azure Service Bus - azure</li><li>Apache Kafka - kafka</li><li>NATS Messaging - nats</li><li>GCP Pub Sub - gcppubsub</li><li>IBM MQ - ibm_mq</li></ul></li><li>*Config Name* - The integration name added to the cluster.</li><li>*Queue/Topic Name* - The name of the queue or topic where the payload is being sent.</li></ul>If you are using Conductor UI, the UI drop-down lists available message broker integration in the Conductor cluster. Select the required integration and append the topic/queue name. For example, the drop-down lists the sink for the above example as **kafka_confluent:John-Test**. Edit the sink to append the topic name, making it **kafka_confluent:John-Test:topic-name**. |
 | inputParameters | Provide the required input parameters so the task execution will be sent as the payload to the event sink. |
+| optional | Enabling this option renders the task optional. The workflow continues unaffected by the task's outcome, whether it fails or remains incomplete. |
 
 ### Additional System Inputs to Payload​
 
