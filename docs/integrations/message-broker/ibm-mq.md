@@ -28,8 +28,15 @@ Once you have the required configuration credentials from IBM MQ, let’s integr
 | Port | The port number on which the IBM MQ server is configured to listen for incoming connections. The default port for IBM MQ is 1414, but it usually varies with the required connection. |
 | Queue Manager | Specify the queue manager to which Orkes Conductor will connect.<br/><br/>The queue manager should already be configured in your IBM MQ environment. Check out IBM MQ’s official documentation on [configuring queue manager](https://www.ibm.com/docs/en/ibm-mq/9.3?topic=configuring-creating-queue-managers-multiplatforms). | 
 | Channel | IBM MQ uses channels to establish connections between clients and queue managers. Specify the channel name the Conductor will use to communicate with IBM MQ. |
-| User | The username to authenticate the connection with the IBM MQ server. |
-| Password | The password associated with the username to authenticate the connection with the IBM MQ server. |
+| Connection Security | Choose the required connection security type. It can take the following values:<ul><li>With Username/Password</li><li>Passwordless</li></ul> | 
+| User | The username to authenticate the connection with the IBM MQ server.<br/><br/>**Note**: This field is applicable only if **_Connection Security_** is chosen as **_With Username/Password_**. |
+| Password | The password associated with the username to authenticate the connection with the IBM MQ server.<br/><br/>**Note**: This field is applicable only if **_Connection Security_** is chosen as **_With Username/Password_**. |
+| Select the preferred messaging method | Choose the messaging approach that suits your communication needs. It can be of the following types:<ul><li>**Topic-based Messaging** -  Allows messages to be broadcasted to multiple subscribers based on the topics of interest, fostering a publish/subscribe model.</li><li>**Queue-based Messaging** -  Allows point-to-point messaging, where messages are sent directly to individual queues for consumption by specific recipients.</li></ul> |
+| Topic String | Used to define the criteria for selecting topics in the messaging system. Allows you to specify patterns that match topics of interest. For example, entering ‘finance/’ would subscribe you to all topics under the ‘finance’ category. <br/><br/>**Note**: This field is applicable for **Topic-based Messaging**. | 
+| Authentication type | Choose the required authentication type. It can take the following values:<ul><li>**NONE**</li><li>**JKS**</li></ul> |
+| Choose Trust Store file | If the authentication is chosen as **JKS**, upload the Java JKS trust store file with CAs. | 
+| Password | Provide the password for the trust store. |
+| Cipher Suite | A Cipher Suite encompasses a set of algorithms ensuring encryption, key exchange, authentication, and data integrity for secure network communications. Choose the suitable Cipher Suite from the following options:<ul><li>TLS_RSA_WITH_AES_128_CBC_SHA256</li><li>TLS_RSA_WITH_AES_256_CBC_SHA256</li><li>TLS_RSA_WITH_AES_256_GCM_SHA384</li><li>ANY_TLS12</li></ul> | 
 | Description | Provide a description of the integration. | 
 
 5. You can toggle on the **Active** button to activate the integration instantly.
