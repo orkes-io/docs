@@ -7,7 +7,7 @@ import TabItem from '@theme/TabItem';
 
 # Event 
 
-An Event task in Orkes Conductor is a system task used to publish an event into one of the supported eventing systems. The supported eventing models include:
+An Event task is used to publish an event into one of the supported eventing systems. The supported eventing models include:
 
 - [AMQP](https://orkes.io/content/integrations/message-broker/amqp)
 - [Amazon MSK](https://orkes.io/content/integrations/message-broker/amazon-msk)
@@ -19,11 +19,7 @@ An Event task in Orkes Conductor is a system task used to publish an event into 
 - [GCP Pub Sub](https://orkes.io/content/integrations/message-broker/gcp-pub-sub)
 - [IBM MQ](https://orkes.io/content/integrations/message-broker/ibm-mq)
 
-:::note Pre-requisites:
-- [Integrate the required message broker with Orkes Conductor](https://orkes.io/content/category/integrations/message-broker)
-- [Create an event handler in Orkes Conductor](https://orkes.io/content/developer-guides/event-handler)<br/><br/>
-The configuration parameters vary with the eventing systems. Refer to the corresponding documentation for detailed steps on adding integration.
-:::
+To utilize this functionality, you must first [integrate the required message broker](https://orkes.io/content/category/integrations/message-broker) with Orkes Conductor followed by [creating an event handler](https://orkes.io/content/developer-guides/event-handler) in Orkes Conductor. The configuration parameters vary with the eventing systems. Refer to the corresponding documentation for detailed steps on adding integration.
 
 ## Definitions​
 
@@ -43,21 +39,19 @@ An example configuration of publishing an event to Confluent Kafka:
 
 | Attribute | Description |
 | --------- | ----------- |
-| sink | Provide the event queue sink. The UI drop-down lists the message broker integrations added to the Conductor cluster by default. Choose the required integration and add the topic/queue name along with the sink.<br/><br/>For example, the drop-down lists the sink for the above example as **_kafka_confluent:John-Test_**. Edit the sink manually to include the topic name, making it **_kafka_confluent:John-Test:topic-name_**. |
+| sink | Specifies the event queue sink, which is of the format:<br/><br/>**Type : Config Name : Queue/Topic Name**<br/>where,<ul><li>_Type_ - The type is message broker type where payload is being sent. These are the supporters types:<ul><li>AMQP - amqp</li><li>AWS SQS - sqs</li><li>Azure Service Bus - azure</li><li>Apache Kafka - kafka</li><li>NATS Messaging - nats</li><li>GCP Pub Sub - gcppubsub</li><li>IBM MQ - ibm_mq</li></ul></li><li>*Config Name* - The integration name added to the cluster.</li><li>*Queue/Topic Name* - The name of the queue or topic where the payload is being sent.</li></ul>If you are using Conductor UI, the UI drop-down lists available message broker integration in the Conductor cluster. Select the required integration and append the topic/queue name. For example, the drop-down lists the sink for the above example as **kafka_confluent:John-Test**. Edit the sink to append the topic name, making it **kafka_confluent:John-Test:topic-name**. |
 | inputParameters | Provide the required input parameters so the task execution will be sent as the payload to the event sink. |
 
 ### Additional System Inputs to Payload​
 
-Conductor will add the following parameters to the payload, ensuring these fields are not present in the original payload as they will be overwritten during execution:
+Conductor automatically adds the following parameters to the payload. Ensure these fields aren’t present in the payload, as they will be overwritten during execution.
 
 - workflowInstanceId - Workflow ID from where this event was sent.
 - workflowType - Name of the workflow definition.
 - workflowVersion - Version of the workflow definition.
 - correlationId - Correlation ID of the workflow execution.
 
-For example, 
-
-Given the following task definition:
+For example, given the following task definition:
 
 ```json
    {
@@ -87,9 +81,7 @@ The execution will produce the following output:
 
 ## Output Parameters​
 
-The task will produce the payload it sent as the output.
-
-
+The task produces the payload it sent as the output.
 
 ## Examples
 
@@ -102,7 +94,7 @@ The task will produce the payload it sent as the output.
 <br/>
 <br/>
 
-1. Add task type **EVENT**.
+1. Add task type **Event**.
 2. Select the sink type from the integrations added to the cluster.
 3. Add the topic name along with the sink.
 4. Provide the required input parameters.
