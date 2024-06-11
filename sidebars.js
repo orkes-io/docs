@@ -31,6 +31,11 @@ const sidebars = {
             className: 'leftMenuHeader',
         },
         {
+            type: 'doc',
+            id: 'getting-started-orkes-cloud',
+            className: 'leftMenuHeader',
+        },
+        {
             type: 'category',
             label: 'Getting Started',
             link: {
