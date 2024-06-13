@@ -7,63 +7,60 @@ import TabItem from '@theme/TabItem';
 
 # Rules Engine Execution
 
-Business rule task helps evaluate business rules compiled in spreadsheets. Conductor currently supports the following formats:
-* CSV
-* XLS
-* XLSX
+The Business Rule task allows the evaluation of business rules defined in spreadsheets. Supported formats include CSV, XLS, and XLSX.
 
 ## Definitions
 
  ```json
-
-    {
-      "name": "execute_rule",
-      "taskReferenceName": "execute_rule_ref",
-      "inputParameters": {
-        "ruleFileLocation": "https://business-rules.s3.amazonaws.com/rules.xlsx",
-        "executionStrategy": "FIRE_FIRST",
-        "inputColumns": {
-          "InputDate": "${workflow.input.inputDate}",
-          "ProductType": "${workflow.input.productType}"
-        },
-        "outputColumns": [
-          "Discount"
-        ]
-      },
-      "type": "BUSINESS_RULE"
-    }
-
+   {
+     "name": "execute_rule",
+     "taskReferenceName": "execute_rule_ref",
+     "inputParameters": {
+       "ruleFileLocation": "https://business-rules.s3.amazonaws.com/rules.xlsx",
+       "executionStrategy": "FIRE_FIRST",
+       "inputColumns": {
+         "InputDate": "${workflow.input.inputDate}",
+         "ProductType": "${workflow.input.productType}"
+       },
+       "outputColumns": [
+         "Discount"
+       ]
+     },
+     "type": "BUSINESS_RULE"
+   }
 ```
 
 ### Input Parameters
 
-| Attribute         | Description                                                                                                                                                                                                                                                                                                                                                                                                      |
-|-------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| ruleFileLocation  | Specify the URL location of the rule file to be evaluated. The rule file can be available on the internet (Stored in AWS S3 or Azure Blob). <br/> Sample URL for each case; <ul><li>On the web:  ```https://example.com/rules.csv```</li><li>AWS S3 - ```https://business-rules.s3.amazonaws.com/rules.xlsx```</li><li>Azure blob - ```https://business-rules.blob.core.windows.net/rules/Date.xlsx```</li></ul> |
-| executionStrategy | Specify the execution strategy to be followed. Currently, Conductor supports the following strategies: <br/><ul><li>**FIRE_FIRST** - The first rule which gets matched will be used to generate the output.</li><li>**FIRE_ALL** - All the rule that matches will be used to generate the output.</li></ul>                                                                                                      |
-| inputColumns      | Specifies the input to the rule file. It can be populated using previous task/workflow input/static input.                                                                                                                                                                                                                                                                                                       | 
-| outputColumns     | Specifies the list of columns that will be present in the task output. The columns that are not present here are considered input columns whose values should be specified.                                                                                                                                                                                                                                      | 
-| cacheConfig | Enabling this option allows saving the cache output of the task. On enabling you can provide the following parameters:<ul><li>**TTL (in seconds)** - Provide the time to live in seconds.You can also pass this parameter as variables.</li><li>**Cache Key** - Provide the cache key, which is a string with parameter substitution based on the task input. You can also pass this parameter as variables.</li></ul>|
+| Attribute | Description |
+| --------- | ----------- |
+| ruleFileLocation | URL of the rule file to be evaluated. For example, files can be stored on the web, AWS S3, Azure Blob, etc.<br/>Example:<ul><li>On the web - https://example.com/rules.csv.</li><li>AWS S3 - https://business-rules.s3.amazonaws.com/rules.xlsx.</li><li>Azure blob - https://business-rules.blob.core.windows.net/rules/Date.xlsx.</li></ul> |
+| executionStrategy | Strategy for rule execution. Supported options are:<ul><li>**FIRE_FIRST** - Uses the first rule that matches to generate the output.</li><li>**FIRE_ALL** - Uses all matching rules to generate the output, with subsequent rules overwriting previous values.</li></ul> | 
+| inputColumns | Specifies the inputs to the rule file. Values can be derived from previous task/workflow input or static input. |
+| outputColumns | List of columns that will be present in the task output. Columns not listed here are considered input columns whose values must be specified. |
+| cacheConfig | Enabling this option allows saving the cache output of the task. On enabling, you can provide the following parameters:<ul><li>**ttlInSecond** - Provide the time to live in seconds. You can also pass this [parameter as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor).</li><li>**key** - Provide the cache key, which is a string with parameter substitution based on the task input. You can also pass this [parameter as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor).</li></ul> |
+| optional | Enabling this option renders the task optional. The workflow continues unaffected by the task's outcome, whether it fails or remains incomplete. | 
 
 #### Execution Strategy
-To get an understanding of the **execution Strategy**, consider the below table: 
+
+To get an understanding of the **executionStrategy** (referred to as **_Method_** in UI), consider the below table:
 
 | Name       | Price        |
 |------------|--------------|
 | Phone      | 10$          |
 | Phone      | 11$          |
 
-Let’s assume the input Name is Phone. If the executionStrategy is **FIRE_FIRST**, then the output price will be $10. On the other hand, if the executionStrategy is **FIRE_ALL**, then the output price will be $11, as the second rule will overwrite the value of the price.
+Let’s assume the input name is Phone. If the executionStrategy is **FIRE_FIRST**, then the output price will be $10. On the other hand, if the executionStrategy is **FIRE_ALL**, then the output price will be $11, as the second rule will overwrite the value of the price.
 
 ### Supported Operators
 
 Business rule task supports the following operators:
 
-1. Comparison operators for numeric value. **<=,>=,=,<,>**.
-2. String equals/not equals operator. **productName != Phone**.
-3. **inList** and **!=inList** operator. productName **inList({"phone","laptop"})** will match if productName is phone or laptop.
-4. createList operator for output. **createList({"A","B","C"})** will generate list **{"A", "B", "C"}** in output.
-5. Date comparison. Currently supported date formats are **yyyy-MM-dd**, **yyyy-MMM-dd** and **yyyy-MM-dd HH:mm:ss**.
+1. **Comparison Operators**: <=, >=, =, <, >.
+2. **String Operators**: Equals (=) and Not Equals (!=).
+3. **List Operators**: **inList** and **!=inList**. For example, **_productName inList({"phone","laptop"}_**) will match if _productName_ is phone or laptop.
+4. **Operator**: createList. For example, **createList({"A","B","C"})** will generate list **{"A", "B", "C"}** in output.
+5. **Date Comparison**: Supported formats are **yyyy-MM-dd**, **yyyy-MMM-dd** and **yyyy-MM-dd HH:mm:ss**.
 
 ## Examples
 
@@ -77,8 +74,8 @@ Business rule task supports the following operators:
 <br/>
 
 1. Add task type `Business Rule`.
-2. Configure the task with rules input file.
-3. Input and output columns.
+2. Configure the task with an input file and parameters.
+
 
 </div>
 <div className="col">
@@ -97,22 +94,22 @@ Business rule task supports the following operators:
 
 ```json
 
-    {
-      "name": "execute_rule",
-      "taskReferenceName": "execute_rule_ref",
-      "inputParameters": {
-        "ruleFileLocation": "https://business-rules.s3.amazonaws.com/rules.xlsx",
-        "executionStrategy": "FIRE_FIRST",
-        "inputColumns": {
-          "InputDate": "${workflow.input.inputDate}",
-          "ProductType": "${workflow.input.productType}"
-        },
-        "outputColumns": [
-          "Discount"
-        ]
+  {
+    "name": "execute_rule",
+    "taskReferenceName": "execute_rule_ref",
+    "inputParameters": {
+      "ruleFileLocation": "https://business-rules.s3.amazonaws.com/rules.xlsx",
+      "executionStrategy": "FIRE_FIRST",
+      "inputColumns": {
+        "InputDate": "${workflow.input.inputDate}",
+        "ProductType": "${workflow.input.productType}"
       },
-      "type": "BUSINESS_RULE"
-    }
+      "outputColumns": [
+        "Discount"
+      ]
+    },
+    "type": "BUSINESS_RULE"
+  }
 
 ```
 
@@ -122,7 +119,7 @@ Business rule task supports the following operators:
 
 <details><summary>Sample Workflow</summary>
 
-Consider the below rule file for the input.
+Consider the following rule file:
 
 ```
 
@@ -135,7 +132,7 @@ food        |      pizza        |   < 2022-03-22 12:20:22   |       25      |   
 
 ```
 
-And following workflow definition.
+The workflow definition is as follows:
 
 ```json
 
@@ -168,7 +165,7 @@ And following workflow definition.
 
 ```
 
-If the workflow is triggered using input as: 
+If the workflow is triggered using the following input:
 
 ```json
 
@@ -182,7 +179,7 @@ If the workflow is triggered using input as:
 
 ```
 
-Then it will match the first row and generate output as: 
+It will match the first row and generate output as:
 
 ```json
 
@@ -192,9 +189,7 @@ Then it will match the first row and generate output as:
     }
 
 ```
-**Another Case**
-
- If the workflow is triggered using input as: 
+Let’s see another case where the same workflow is triggered using the following input:
 
 ```json
 
@@ -208,7 +203,7 @@ Then it will match the first row and generate output as:
 
 ```
 
-In order to compare double values, we should put the suffix **.0**. If it is not there, then it will match the third row and generate output as: 
+In order to compare double values, we should put the suffix .0. If it is not there, then it will match the third row and generate output as:
 
 ```json
     {
@@ -216,7 +211,8 @@ In order to compare double values, we should put the suffix **.0**. If it is not
       "ShippingCharges" : "4$"
     }
 ```
- When we use **FIRE_ALL** as **executionStrategy**, with the workflow input as:
+When we use FIRE_ALL as executionStrategy, with the workflow input as:
+
  ```json
     {
         "productType": "electronics",
@@ -226,7 +222,8 @@ In order to compare double values, we should put the suffix **.0**. If it is not
         "purchaseDate": "2022-04-22"
     }
 ```
-Then it will match the second row since it also matches the criteria and generates output as: 
+It matches the second row since it also matches the criteria and generates output as: 
+
 ```json
     {
       "Discount" : "13%",
