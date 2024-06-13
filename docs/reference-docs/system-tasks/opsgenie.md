@@ -6,46 +6,49 @@ import TabItem from '@theme/TabItem';
 
 # Opsgenie 
 
-A system task to send alerts to Opsgenie in the event of workflow failures. This task can be used in conjunction with the [Query Processor](/content/reference-docs/system-tasks/query-processor) task, which fetches metadata details to trigger alerts to Opsgenie as required.
+A system task to send alerts to Opsgenie in the event of workflow failures. This task can be used with the [Query Processor](/content/reference-docs/system-tasks/query-processor) task, which fetches metadata details to trigger alerts to Opsgenie as required.
 
 ## Definitions
 
 ```json
-{
-           "name": "ops_genie_task",
-           "taskReferenceName": "ops_genie_task_ref",
-           "inputParameters": {
-             "alias": "${workflow.input.opsGenieAlias}",
-             "description": "${query_processor_ref.output.result.workflowsUrl}",
-             "visibleTo": "${workflow.input.opsGenieVisibleTo}",
-             "message": "Failed Worklows detected",
-             "responders": "${workflow.input.opsGenieResponders}",
-             "details": {},
-             "priority": "${workflow.input.opsGeniePriority}",
-             "entity": "${workflow.input.opsGenieEntity}",
-             "tags": "${workflow.input.opsGenieTags}",
-             "actions": "${workflow.input.opsGenieActions}",
-             "token": "${workflow.secrets.OPS_GENIE_TOKEN}"
-           },
-           "type": "OPS_GENIE",
-}
+   {
+     "name": "ops_genie_task",
+     "taskReferenceName": "ops_genie_task_ref",
+     "inputParameters": {
+       "alias": "${workflow.input.opsGenieAlias}",
+       "description": "${query_processor_ref.output.result.workflowsUrl}",
+       "visibleTo": "${workflow.input.opsGenieVisibleTo}",
+       "message": "Failed Worklows detected",
+       "responders": "${workflow.input.opsGenieResponders}",
+       "details": {
+         "key": "value"
+       },
+       "priority": "${workflow.input.opsGeniePriority}",
+       "entity": "${workflow.input.opsGenieEntity}",
+       "tags": "${workflow.input.opsGenieTags}",
+       "actions": "${workflow.input.opsGenieActions}",
+       "token": "${workflow.secrets.OPS_GENIE_TOKEN}"
+     },
+     "type": "OPS_GENIE"
+   }
 ```
 
 ## Input Parameters
 
 | Attribute  | Description             |
 |-------------|-------------------------|
-| alias | Specify the user-defined alias that will be created in Opsgenie when alerts are triggered. Alias are user-defined identifiers for alerts, limited to a maximum of 512 characters in Opsgenie. |
-| description | Specify the description related to the alert. The description is limited to 15,000 characters in Opsgenie. |
-| visibleTo | Specify the users in Opsgenie who can view the alerts. | 
-| responders | Specify the names of the responders to be notified on creating this alert. |
-| message | Specify the message to be displayed in the Opsgenie. This field can be leveraged to quickly give an overview of the alert. |
-| priority | Set the priority of the alert. | 
-| entity | Specify the domain the alert is related to, such as the server's name or application. |
-| tags | Specify the tags to be added for the alerts in Opsgenie. |
-| actions | Specify the Opsgenie actions to be executed on the alert. |
-| token | Specify the API token to integrate with your Opsgenie account. Refer to the official [Opsgenie documentation to get the API keys](https://support.atlassian.com/opsgenie/docs/create-a-default-api-integration/). |
-| cacheConfig | Enabling this option allows saving the cache output of the task. On enabling you can provide the following parameters:<ul><li>**TTL (in seconds)** - Provide the time to live in seconds.You can also pass this parameter as variables.</li><li>**Cache Key** - Provide the cache key, which is a string with parameter substitution based on the task input. You can also pass this parameter as variables.</li></ul>|
+| alias | A custom identifier that will be generated in Opsgenie when alerts are triggered from Conductor. These aliases are user-defined and can be up to 512 characters long.|
+| description | Description of the alert, limited to 15,000 characters in Opsgenie. |
+| visibleTo | Users in Opsgenie who can view the alerts. Can be a string, number, boolean, object/array, or null. | 
+| responders | Names of the responders to be notified. Can be a string, number, boolean, object/array, or null.|
+| details | Additional details for the alert. Can be a string, number, boolean, object/array, or null. | 
+| message | Message to be displayed in Opsgenie, providing a quick overview of the alert.  |
+| actions | Opsgenie actions to be executed on the alert. Can be a string or object/array. |
+| priority | Priority of the alert. | 
+| entity | Domain the alert is related to, such as the server's name or application. |
+| token | API token for integrating with Opsgenie. Refer to the official [Opsgenie documentation](https://support.atlassian.com/opsgenie/docs/create-a-default-api-integration/) to get the API keys.<br/><br/>**Note:**Save the token as a [secret](https://orkes.io/content/developer-guides/secrets-in-conductor) in the Conductor for enhanced security. |
+| tags | Tags to be added to the alert in Opsgenie. Can be a string or object/array. |
+| cacheConfig | Enabling this option allows saving the cache output of the task. On enabling, you can provide the following parameters:<ul><li>**ttlInSecond** - Provide the time to live in seconds. You can also [pass this parameter as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor).</li><li>**key** - Provide the cache key, which is a string with parameter substitution based on the task input. You can also [pass this parameter as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor).</li></ul>|
 
 :::info
 Refer to the official [Opsgenie documentation for more information on the alert fields](https://support.atlassian.com/opsgenie/docs/alert-fields/). 
@@ -81,27 +84,29 @@ Refer to the official [Opsgenie documentation for more information on the alert 
  <TabItem value="JSON" label="JSON">
 
 ```json
- {
-           "name": "ops_genie_task",
-           "taskReferenceName": "ops_genie_task_ref",
-           "inputParameters": {
-             "alias": "DemoAlias",
-             "description": "Alert on failed workflows",
-             "visibleTo": "${workflow.input.visibleUsers}",
-             "message": "Failed Worklows detected",
-             "responders": "${workflow.input.responders}",
-             "details": {},
-             "priority": "${workflow.input.opsGeniePriority}",
-             "entity": "${workflow.input.opsGenieEntity}",
-             "tags": "${workflow.input.opsGenieTags}",
-             "actions": "${workflow.input.opsGenieActions}",
-             "token": "${workflow.secrets.OPS_GENIE_TOKEN}"
-           },
-           "type": "OPS_GENIE",
-}
+   {
+     "name": "ops_genie_task",
+     "taskReferenceName": "ops_genie_task_ref",
+     "inputParameters": {
+       "alias": "${workflow.input.opsGenieAlias}",
+       "description": "${query_processor_ref.output.result.workflowsUrl}",
+       "visibleTo": "${workflow.input.opsGenieVisibleTo}",
+       "message": "Failed Worklows detected",
+       "responders": "${workflow.input.opsGenieResponders}",
+       "details": {
+         "key": "value"
+       },
+       "priority": "${workflow.input.opsGeniePriority}",
+       "entity": "${workflow.input.opsGenieEntity}",
+       "tags": "${workflow.input.opsGenieTags}",
+       "actions": "${workflow.input.opsGenieActions}",
+       "token": "${workflow.secrets.OPS_GENIE_TOKEN}"
+     },
+     "type": "OPS_GENIE"
+   }
 ```
 
 </TabItem>
 </Tabs>
 
-Have a look at the [workflow alerting example with Opsgenie](https://orkes.io/content/templates/alerting/querying-orkes-data-and-triggering-opsgenie-alert) for a detailed example of leveraging this task.
+See the [workflow alerting example with Opsgenie](https://orkes.io/content/templates/alerting/querying-orkes-data-and-triggering-opsgenie-alert) for a detailed demonstration of leveraging this task.
