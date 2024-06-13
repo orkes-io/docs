@@ -7,29 +7,35 @@ import TabItem from '@theme/TabItem';
 
 # Query Processor
 
-A system task for executing queries across different systems, tailored for purposes like alert generation.
+A system task designed to execute queries across various systems, primarily used for alert generation.
 
-Conductor supports the ability to query the following sources:
+Conductor supports querying from the following sources:
 
 -  Conductor Search API
-    - This query type can be used for querying information from the Conductor Search API. It allows users to retrieve workflow-related data based on various parameters.
+    - This query type retrieves workflow-related data from the Conductor Search API using various parameters.
 - Conductor Metrics (Prometheus)
-    - This query type facilitates querying Conductor Metrics using Prometheus. It enables users to gather and analyze performance metrics and system statistics. 
+    - This query type allows gathering and analyzing performance metrics and system statistics through Prometheus. 
 
 ## Definitions
 
 ```json
-{
+  {
      "name": "query_processor",
      "taskReferenceName": "query_processor_ref",
      "inputParameters": {
+       "workflowNames": [
+         "workflow-1"
+       ],
+       "statuses": [
+         "FAILED"
+       ],
+       "correlationIds": [],
        "queryType": "CONDUCTOR_API",
-       "statuses": "${workflow.input.statuses}",
-       "workflowNames": "${workflow.input.workflows}",
-       "startTimeFrom": "${workflow.input.fromStartedMinsFromNow}",
-       "startTimeTo": "${workflow.input.toStartedMinsFromNow}",
-       "correlationIds": "${workflow.input.correlationIds}",
-       "freeText": "${workflow.input.freeText}"
+       "startTimeFrom": 15,
+       "endTimeFrom": 15,
+       "startTimeTo": 0,
+       "endTimeTo": 0,
+       "freeText": "your_input_here"
      },
      "type": "QUERY_PROCESSOR",
 }
@@ -39,20 +45,22 @@ Conductor supports the ability to query the following sources:
 
 | Attribute  | Description             |
 |-------------|-------------------------|
-| queryType | Choose the query type. It can take the following values:<ul><li>CONDUCTOR_API</li><li>METRICS</li></ul> | 
+| queryType | Select the query type. Supported values:<ul><li>CONDUCTOR_API</li><li>METRICS</li></ul> | 
 
-Depending on the chosen query method, the configuration parameters vary. If CONDUCTOR_API is chosen, then provide the following parameters:
+If **_queryType_** is **_CONDUCTOR_API_**:
 
 | Attribute  | Description             |
 |-------------|-------------------------|
-| workflowNames | Provide the workflow names for the query. | 
-| correlationIds | Provide the correlation ID of the workflows to be queried. |
-| statuses | Provide the statuses of the workflows to be queried. |
-| startTimeFrom | Specify the time range for the query to be performed. |
-| startTimeTo | Specify the time range for the query to be performed. |
-| freeText | Specify the free text search parameter. |
+| workflowNames | Names of the workflows to query. Can be a string or array. | 
+| correlationIds | Correlation IDs of the workflows to query. Can be a string or array. |
+| statuses | Statuses of the workflows to query. Can be a string or array. |
+| startTimeFrom | Defines the start of the time range for the query, in minutes from the current time. For example, setting this to 15 means the query will include data starting from 15 minutes ago. |
+| startTimeTo | Defines the end of the time range for the query, in minutes from the current time. Setting this to 0 means the query will include data up to the current time. |
+| endTimeFrom | Defines the start time of the time range for the query's execution end time, measured in minutes from the current time. |
+| endTimeTo | Defines the end time of the time range for the query's execution end time, measured in minutes from the current time. | 
+| freeText | Free text search parameter.. |
 
-If the query type is chosen as METRICS, then the task definition is as follows:
+If **_queryType_** is **_METRICS_**:
 
 ```json
 {
@@ -72,15 +80,16 @@ If the query type is chosen as METRICS, then the task definition is as follows:
 | Attribute | Description             |
 |-------------|-------------------------|
 | metricsQuery | Indicates the Prometheus query. | 
-| metricsStart | Specifies the start time for the metrics query. |
-| metricsEnd | Specifies the end time for the metrics query. |
+| metricsStart | Start time for the metrics query. |
+| metricsEnd | End time for the metrics query. |
 | metricsStep | Defines a step or interval of the metrics query. | 
 
 ## Output Parameters
 
 | Attribute  | Description             |
 |-------------|-------------------------|
-| workflowsUrl | A link to the queried workflow executions in Conductor UI. |
+| workflowsUrl | URL linking to the queried workflow executions in the UI. |
+| workflows | Returns the details of the queried workflow. | 
 
 ## Examples
 
@@ -112,17 +121,23 @@ If the query type is chosen as METRICS, then the task definition is as follows:
  <TabItem value="JSON" label="JSON">
 
 ```json
-    {
+  {
      "name": "query_processor",
      "taskReferenceName": "query_processor_ref",
      "inputParameters": {
+       "workflowNames": [
+         "workflow-1"
+       ],
+       "statuses": [
+         "FAILED"
+       ],
+       "correlationIds": [],
        "queryType": "CONDUCTOR_API",
-       "statuses": "${workflow.input.statuses}",
-       "workflowNames": "${workflow.input.workflows}",
-       "startTimeFrom": "${workflow.input.fromStartedMinsFromNow}",
-       "startTimeTo": "${workflow.input.toStartedMinsFromNow}",
-       "correlationIds": "${workflow.input.correlationIds}",
-       "freeText": "${workflow.input.freeText}"
+       "startTimeFrom": 15,
+       "endTimeFrom": 15,
+       "startTimeTo": 0,
+       "endTimeTo": 0,
+       "freeText": "your_input_here"
      },
      "type": "QUERY_PROCESSOR",
     }
@@ -131,4 +146,4 @@ If the query type is chosen as METRICS, then the task definition is as follows:
 </TabItem>
 </Tabs>
 
-Have a look at the [workflow alerting example with OpsGenie](https://orkes.io/content/templates/alerting/querying-orkes-data-and-triggering-opsgenie-alert) for a detailed example of leveraging this task.
+See the [workflow alerting example with Opsgenie](https://orkes.io/content/templates/alerting/querying-orkes-data-and-triggering-opsgenie-alert) for a detailed demonstration of leveraging this task.
