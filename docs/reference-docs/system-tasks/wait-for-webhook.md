@@ -18,23 +18,24 @@ You can leverage the **Custom** option to integrate other than the above-menti
 ## Definitions
 
 ```json
-    {
-      "name": "webhook_task",
-      "taskReferenceName": "webhook_task_ref",
-      "inputParameters": {
-        "matches": {
-          "$['event']['text']": "$.{workflow.input.somevalue}"
-        }
-      },
-      "type": "WAIT_FOR_WEBHOOK"
-    }
+   {
+     "name": "webhook",
+     "taskReferenceName": "webhook_ref",
+     "inputParameters": {
+       "matches": {
+         "$['event']['type']": "message",
+         "$['event']['text']": "Hello"
+       }
+     },
+     "type": "WAIT_FOR_WEBHOOK"
+   }
 ```
 
 ### Input Parameters
 
 #### Writing Custom Matches
 
-In the above example, you can see that the matches are described as follows:
+In the above example, you can see that the first part of the matches are described as follows:
 
 ```json
 "matches": 
@@ -54,43 +55,72 @@ This means that the incoming event payload has a JSON path **event.type**, and i
 
 For example, the above one will match the webhook event payload where the **event.type** is **message** AND **event.text** is **hello**.
 
-<br/>
+## Examples
 
 <Tabs>
+<TabItem value="UI" label="UI" className="paddedContent">
+
+<div className="row">
+<div className="col col--4">
+
+<br/>
+<br/>
+
+1. Add task type **Wait for Webhook**.
+2. Configure input parameters.
+
+</div>
+<div className="col">
+<div className="embed-loom-video">
+
+<p><img src="/content/img/webhook-ui-guide.png" alt="Webhook Task UI" width="500" height="auto"/></p>
+
+</div>
+</div>
+</div>
+
+
+
+</TabItem>
  <TabItem value="JSON" label="JSON">
 
- ```json
-    {
-      "name": "webhook_task",
-      "taskReferenceName": "webhook_task_ref",
-      "inputParameters": {
-        "matches": {
-          "$['event']['text']": "$.{workflow.input.somevalue}"
-        }
-      },
-      "type": "WAIT_FOR_WEBHOOK"
-    }
+```json
+   {
+     "name": "webhook",
+     "taskReferenceName": "webhook_ref",
+     "inputParameters": {
+       "matches": {
+         "$['event']['type']": "message",
+         "$['event']['text']": "Hello"
+       }
+     },
+     "type": "WAIT_FOR_WEBHOOK"
+   }
 ```
 
 </TabItem>
 </Tabs>
 
+If your workflow needs to wait for a Webhook, you need to create a Webhook in Orkes Conductor.
+
 ## Creating Webhook
 
-Let’s create a Webhook now.
+Steps to create a Webhook in Orkes Conductor:
 
 1. Navigate to **Definitions > Webhooks** from the left menu of your Conductor console.
-2. Click **New Webhook**.
+2. Click **+New Webhook**.
 3. You need to fill in the following details:
+
+<p align="center"><img src="/content/img/creating-webhook-in-orkes-conductor.png" alt="Creating Webhook in Orkes Conductor" width="100%" height="auto"/></p>
 
 | Attribute                                   | Description                                                                                                                                                                                                                                                                     |
 |-----------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Webhook name                            | Provide a unique name for your Webhook.                                                                                                                                                                                                                                         |
 | Workflow to receive webhook event       | Provide the workflow name that is supposed to receive this webhook event.                                                                                                                                                                                                       |
 | Source platform                         | Choose the platform from which this webhook event will be invoked. The currently supported platforms are GitHub, Slack, Stripe, Microsoft Teams, and Custom. <br/> **Note**: You can use the option custom for unsupported systems. |
-| Start workflow when webhook events come | Check this option to start a new workflow based on the data received from the webhook event. Once enabled, you need to choose the workflow to be executed.                                                                                                                      |
+| Start workflow when webhook events come | Check this option to start a new workflow based on the data received from the webhook event. Once enabled, you need to choose the workflow, version and idempotency key.                                                                                         |
 
-4. Click the **Create** button, and the Conductor will generate a Webhook URL, which will be unverified.
+4. Click the **Save** button, and the Conductor will generate a Webhook URL, which will be unverified.
 
 :::note
 If you have enabled the option to **Start workflow when webhook event comes**, the event payload will be passed as input to the specified workflow.
@@ -104,15 +134,13 @@ Once the URL is verified using the verification method, the Webhook URL is verif
 
 <p align="center"><img src="/content/img/Webhook-with-a-verified-URL-in-Conductor.png" alt="Webhook with a verified URL" width="70%" height="auto"/></p>
 
-## Supported Webhook Verification Methods by Conductor
+### Supported Webhook Verification Methods by Conductor
 
 Conductor supports the incoming Webhooks over HTTPS with the following verification methods:
 
 1. **Header Verification** - Validates a predefined header and value.
 2. **Signature Verification** - Validates the payload signature. This validation requires configuring the secret and header key on the Conductor side. When the request comes, the Conductor calculates the request payload hash and matches it with the pre-configured header value.
 3. **Challenge Verification** - Used when the third-party system sends a challenge request that the Conductor server responds to establish trust.
-
-## Different Types of Webhooks
 
 ### 1. Header-based Verifier Webhook
 
@@ -135,10 +163,10 @@ Check out the following examples implementing header-based Webhook verification.
 
 <p align="center"><img src="/content/img/Creating-a-challenge-based-verifier-Webhook-in-Conductor.png" alt="Challenge-based verifier webhook" width="70%" height="auto"/></p>
 
-Check out the following examples implementing challenge-based Webhook verification. 
+Check out the following examples of implementing challenge-based Webhook verification. 
 
 - [Slack Example - Standup Bot using Orkes Conductor](https://orkes.io/blog/create-standup-bot-using-conductor-slack-integration/)
-- [Slack Example - Automating Slack Community Greetings](https://orkes.io/blog/ai-orchestration-meetup-recap/)
+- [Slack Example - Automating Slack Community Greetings](https://orkes.io/blog/automating-slack-greetings-to-community-with-orkes-conductor/)
 
 ### 3. Signature-based Verifier Webhook
 
@@ -150,6 +178,6 @@ This type of Webhook is configured using the token from the source platform. Thi
 | Stripe        | <ul><li>Header **Stripe-Signature** will be used to request verification.</li><li>**[endpointSecret](https://stripe.com/docs/webhooks/signatures)** - Provide the endpoint’s secret for Webhook from Stripe.</li></ul>                                                                                                                                                                                                                                                                |
 | Microsoft Teams | <ul><li>Header **hmac base64-encoded-signature** will be used to request verification.</li></ul> |
 
-<p align="center"><img src="/content/img/Creating-a-signature-based-verifier-Webhook-in-Conductor.png" alt="Signature-based verifier webhook" width="70%" height="auto"/></p>
+<p align="center"><img src="/content/img/Creating-a-signature-based-verifier-Webhook-in-Conductor.png" alt="Signature-based verifier webhook" width="50%" height="auto"/></p>
 
 Here, the URL is marked as verified when the request comes with the header configured and when the request payload hash in the header and the calculated hash on the Conductor side match.
