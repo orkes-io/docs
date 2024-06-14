@@ -558,6 +558,25 @@ const sidebars = {
                     collapsed: true,
                     className: 'leftMenuHeader',
                 },
+                {
+                    type: 'category',
+                    label: 'RDBMS',
+                    link: {
+                        type: 'generated-index',
+                        title: 'RDBMS',
+                        slug: '/category/integrations/rdbms'
+                    },
+                    items: [
+                        {
+                            type: 'doc',
+                            id: 'integrations/rdbms/relational-database',
+                            label: 'Relational Database',
+                        },
+                    ],
+                    collapsible: true,
+                    collapsed: true,
+                    className: 'leftMenuHeader',
+                },
             ],
             collapsible: true,
             collapsed: true,

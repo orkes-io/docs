@@ -36,7 +36,7 @@ A JDBC task is a system task used to execute or store information in SQL databas
 
 | Attribute | Description |
 | ---------- | ----------- |
-| integrationName | Choose the required database integration. You can only choose the integration to which you have access here.<br/><br/>**Note**: If you haven’t configured your database on your Orkes console, navigate to the **Integrations** tab and configure the integration under “**RDBMS > Relational Database**”.|
+| integrationName | Choose the required database integration. You can only choose the integration to which you have access here.<br/><br/>**Note**: If you haven’t configured your database on your Orkes console, navigate to the **Integrations** tab and configure the integration under “**[RDBMS > Relational Database](https://orkes.io/content/integrations/rdbms/relational-database)**”.|
 | type | Indicates the SQL statement type. It can take 2 values: SELECT or UPDATE.<br/><br/><ul><li>**SELECT** - Used to retrieve data from a database.</li><li>**UPDATE** - Used to modify existing data from the database.<ul><li>**Expected update count** - If you have chosen ‘UPDATE’ as the statement type, provide the number of rows to be updated in the database.</li></ul></li></ul>|
 | statement | Provide the SQL statement to retrieve data from the SQL database. <br/><br/>Example: **SELECT * FROM tableName WHERE id=?**, a query used to retrieve data from a table in a database. Replace **tableName** with the actual table name. |
 | parameters | Provide the query parameters to be bound by the SQL statement. It can be a string, number, boolean, or null. | 
