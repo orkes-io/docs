@@ -6,47 +6,50 @@ import TabItem from '@theme/TabItem';
 
 # Transformation using JQ
 
-The JSON_JQ_TRANSFORM task is a System task that allows the processing of JSON data that is supplied to the task by using the popular JQ processing tool’s query expression language.
+A system task that allows the processing of JSON data supplied to the task by using the popular JQ processing tool’s query expression language.
 
 ## Definitions
 
 ```json
-{
-  "name": "jq_example_task",
-  "taskReferenceName": "my_jq_example_task_ref",
-  "type": "JSON_JQ_TRANSFORM",
-  "inputParameters": {
-    "key1": {
-      "value1": [
-        "a",
-        "b"
-      ]
-    },
-    "key2": {
-      "value2": [
-        "c",
-        "d"
-      ]
-    },
-    "queryExpression": "{ key3: (.key1.value1 + .key2.value2) }"
-  }
-}
+  {
+     "name": "json_transform",
+     "taskReferenceName": "json_transform_ref",
+     "type": "JSON_JQ_TRANSFORM",
+     "inputParameters": {
+       "persons": [
+         {
+           "name": "some",
+           "last": "name",
+           "email": "mail@mail.com",
+           "id": 1
+         },
+         {
+           "name": "some2",
+           "last": "name2",
+           "email": "mail2@mail.com",
+           "id": 2
+         }
+       ],
+       "queryExpression": ".persons | map({user:{email,id}})"
+     }
+   }
 ```
 
 ### Input Parameters
 
-| Attribute                           | Description                                                                                                                                                                                                                                                                   |
-|-------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| inputParameters                     | The input parameters that will be supplied to this task. The parameters will be a JSON object of at least 2 attributes, one of which will be called **queryExpression**. The others are user-named attributes. These attributes will be accessible by the JQ query processor. |
-| inputParameters/user-defined-key(s) | User-defined key(s) along with values.                                                                                                                                                                                                                                        |
-| inputParameters/queryExpression     | A JQ query expression.                                                                                                                                                                                                                                                        |
+| Attribute  | Description |
+|------------|------------ |
+| inputParameters (Referred to as _Script params_ in UI) | JSON object defining configuration data for task execution. |
+| queryExpression | A string that represents a JQ (JSON Query) expression. This expression will be used to transform JSON data. |
+| optional | Enabling this option renders the task optional. The workflow continues unaffected by the task's outcome, whether it fails or remains incomplete. | 
 
 ### Output Parameters
-| Attribute  | Description                                                                  |
-|------------|------------------------------------------------------------------------------|
-| result     | The first results returned by the JQ expression.                             |
-| resultList | A List of results returned by the JQ expression.                             |
-| error      | An optional error message indicating that the JQ query failed to process.    |
+
+| Attribute  | Description |
+|------------|------------ |
+| result     | The result attribute stores the first element of the **_resultList_**. |
+| resultList | List of results returned by the JQ expression. |
+| error      | Optional error message if the JQ query fails. | 
 
 ## Examples
 
@@ -59,8 +62,8 @@ The JSON_JQ_TRANSFORM task is a System task that allows the processing of JSON d
 <br/>
 <br/>
 
-1. Add task type `JSON JQ TRANSFORM`.
-2. Configure the JQ script and the input.
+1. Add task type **JSON JQ TRANSFORM**.
+2. Configure the JQ script and provide the input parameters.
 
 </div>
 <div className="col">
@@ -109,6 +112,8 @@ The JSON_JQ_TRANSFORM task is a System task that allows the processing of JSON d
 <details><summary>Sample Workflow</summary>
 <p>
 
+To demonstrate how this task operates, consider the following workflow definition:
+
 ```json
     {
       "name": "jq_example_task",
@@ -132,12 +137,14 @@ The JSON_JQ_TRANSFORM task is a System task that allows the processing of JSON d
     }
 ```
 
-The inputParameters attribute is expected to have a value object with the following:
+The **inputParameters** attribute contains:
 
-1. A list of key-value pair objects denoted key1/value1, key2/value2 in the example. Note the key1/value1 are arbitrary names used in this example.
-2. A key with the name **queryExpression**, whose value is a JQ expression. The expression will operate on the value of the **inputParameters attribute**. In this example, the **inputParameters** have two inner objects named by attributes **key1** and **key2**, each of which has an object that is named **value1** and **value2**. They have an associated array of strings as values, **"a"**, **"b"** and **"c"**, **"d"**. The expression **key3: (.key1.value1 + .key2.value2)** concatenates the 2 string arrays into a single array against an attribute named **key3**.
+1. Key-value pairs **key1/value1** and **key2/value2**, which are arbitrary names in this context.
+2. The **queryExpression** key holds a JQ expression that operates on these parameters.  In this example:
+  - **key1** and **key2** are objects containing **value1** (**["a", "b"]**) and **value2** (**["c", "d"]**) respectively.
+  - The JQ expression **{ key3: (.key1.value1 + .key2.value2) }** concatenates these arrays into a single array under **key3**.
 
-The execution of this example task above will provide the following output. The **resultList** attribute stores the full list of the **queryExpression** result. The **result** attribute stores the first element of the resultList. An optional **error** attribute along with a string message will be returned if there is an error processing the query expression.
+Upon executing the above task, the output is structured as follows:
 
 ```json
     {
@@ -161,14 +168,20 @@ The execution of this example task above will provide the following output. The 
       ]
     }
 ```
+
+- **result**: Contains the result of **queryExpression**, where **key3** holds the concatenated array **["a", "b", "c", "d"]**.
+- **resultList**: Stores all results generated by **queryExpression**, with a single entry similar to result.
+
 </p>
 </details>
 
 <details><summary>Cleaning up a JSON response</summary>
 <p>
-An HTTP Task makes an API call to GitHub to request a list of "stargazers" (users who have starred a repository). The API response (for just one user) looks like this:
 
-The snippet of **${hundred_stargazers_ref.output}**
+An HTTP task initiates an API call to GitHub to retrieve a list of "stargazers" (users who have starred a repository). The API response snippet (for a single user) is as follows:
+
+
+The snippet of **${hundred_stargazers_ref.output}**:
 
 ```json
     [
@@ -197,7 +210,9 @@ The snippet of **${hundred_stargazers_ref.output}**
       }
     ]
 ```
-We only need the **starred_at** and **login** parameters for users who starred the repository after a given date (provided as an input to the workflow **${workflow.input.cutoff_date}**). We'll use the JQ Transform to simplify the output:
+
+We are interested only in the **starred_at** and **login** parameters for users who starred the repository after a specified date (**${workflow.input.cutoff_date}**). We will use JQ Transform to simplify the output:
+
 
 ```json
     {
@@ -211,7 +226,18 @@ We only need the **starred_at** and **login** parameters for users who starred t
     }
 ```
 
-The JSON is stored in **starlist**. The **queryExpression** reads in the JSON, selects only entries where the **starred_at** value meets the date criteria, and generates output JSON of the form:
+Here's what's happening:
+
+  - Input Parameters Explanation:
+    - **starlist**: Contains the JSON data retrieved from the API call to GitHub.
+    - **queryExpression**: Uses JQ syntax to filter and format the data:
+      - **select(.starred_at > "${workflow.input.cutoff_date}")**: Filters entries where **starred_at** is after $__{workflow.input.cutoff_date}__.
+      - **{ occurred_at: .starred_at, member: { github: .user.login } }**: Constructs a JSON object with **occurred_at** set to the **starred_at** value and **member** containing GitHub login from user.
+
+The entire **queryExpression** is enclosed in **[]** to denote that it's intended to produce an array of JSON objects. Each object corresponds to a user who meets the specified criteria (**starred_at** after **${workflow.input.cutoff_date}**).
+
+The **queryExpression** filters the JSON data, selecting entries where **starred_at** meets the specified date criteria, and formats the output JSON as follows:
+
 ```json
     {
       "occurred_at": "date from JSON",
@@ -220,6 +246,6 @@ The JSON is stored in **starlist**. The **queryExpression** reads in the JSON, s
       }
     }
 ```
-The entire expression is wrapped in [] to indicate that the response should be an array.
+
 </p>
 </details>
