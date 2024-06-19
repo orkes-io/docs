@@ -494,6 +494,11 @@ const sidebars = {
                             id: 'integrations/vector-databases/weaviate',
                             label: 'Weaviate',
                         },
+                        {
+                            type: 'doc',
+                            id: 'integrations/vector-databases/postgres-vector-database',
+                            label: 'Postgres Vector Database',
+                        },
                     ],
                     collapsible: true,
                     collapsed: true,
