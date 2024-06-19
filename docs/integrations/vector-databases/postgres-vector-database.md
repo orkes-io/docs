@@ -22,7 +22,7 @@ Before beginning to integrate with Postgres, you need to get specific configurat
 | Integration name | Provide a name for the integration. |
 | Postgres Database User | Provide the database username. |
 | Postgres Database Password | Provide the password associated with the database username. |
-| Postgres Database URL | Provide the database URL.<br/><br/>**Note**: To use this integration for JDBC tasks, ensure that you provide the JDBC connection string in the format: **jdbc:database://url/databaseName**. |
+| Postgres Database URL | Provide the database URL. |
 | Embedding dimensions | Provide the number of dimensions in the embeddings. The embedding dimensions often depend on the AI model used to generate the embeddings. |
 | Distance metric | Choose the distance metric, which is a metric to measure the similarity or distance between vectors. Supported values:<ul><li>Cosine Similarity</li><li>Euclidean Distance</li><li>Inner Product</li></ul> |
 | Indexing method | Choose the indexing method. Supported methods:<ul><li>hnsv - Hierarchical Navigable Small World graphs</li><li>ivfflat - Inverted File Flat</li></ul> |
@@ -70,7 +70,3 @@ To provide explicit permission to Groups:
 5. Click **Add Permissions**. This ensures that all the group members can access these integration models in their workflows. 
 
 Similarly, you can also provide permissions to [applications](https://orkes.io/content/access-control-and-security/applications#configuring-application). 
-
-:::info
-Once the integration is set up and the required access is granted, the integration can be utilized for [JDBC](https://orkes.io/content/reference-docs/system-tasks/jdbc) tasks within Orkes Conductor.
-:::
