@@ -499,6 +499,11 @@ const sidebars = {
                             id: 'integrations/vector-databases/postgres-vector-database',
                             label: 'Postgres Vector Database',
                         },
+                        {
+                            type: 'doc',
+                            id: 'integrations/vector-databases/mongo-vector-database',
+                            label: 'Mongo Vector Database',
+                        },
                     ],
                     collapsible: true,
                     collapsed: true,
