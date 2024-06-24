@@ -30,8 +30,9 @@ Once you have the required configuration credentials from NATS Messaging, let’
 | Server | Provide the NATS server name to be integrated with Orkes Conductor. |
 | Connection Type | Choose the required connection type for the integration. It can take two values:<ul><li>Default</li><li>Jetstream</li></ul> | 
 | Authentication Type | Choose the required authentication type. You can opt for **_With Credentials_** or **_Without Credentials_**. |
-| Username | Provide the username for authentication. This field is required only if the **_Authentication Type_** is chosen as **_With Credentials_**. | 
-| Password | Provide the password for authentication. This field is required only if the **_Authentication Type_** is chosen as **_With Credentials_**. | 
+| Select security protocol | Choose the security protocol for authenticating the connection. It can take values:<ul><li>NONE</li><li>JWT - If JWT is opted, upload the JWT credentials file. </li></ul>This field is applicable only if the **_Authentication Type_** is chosen as **_With Credentials_**. | 
+| Username | Provide the username for authentication. This field is applicable only if the **_Authentication Type_** is chosen as **_With Credentials_**. | 
+| Password | Provide the password for authentication. This field is applicable only if the **_Authentication Type_** is chosen as **_With Credentials_**. | 
 | Description | Provide a description of the integration. | 
 
 5. You can toggle on the **Active** button to activate the integration instantly.
