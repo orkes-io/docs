@@ -38,6 +38,7 @@ A system task to index the provided text into a vector space that can be efficie
 | embeddingModel | Choose from the available language model for the chosen LLM provider. |
 | text | Provide the text to be indexed. |
 | docId | Provide the ID of the document where you need to store the indexed text. |
+| optional | Enabling this option renders the task optional. The workflow continues unaffected by the task's outcome, whether it fails or remains incomplete. | 
 
 ## Examples
 
