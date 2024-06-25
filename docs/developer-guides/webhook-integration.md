@@ -13,6 +13,7 @@ Orkes Conductor currently supports the Webhook integration with the following th
 * Slack
 * Stripe
 * Microsoft Teams
+* SendGrid
 
 Apart from this, you can also use the option “Custom” to integrate with other third-party applications.
 
