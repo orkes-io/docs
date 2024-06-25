@@ -38,6 +38,7 @@ For example, in a recommendation system, a user might issue a query to find prod
 | llmProvider | Choose the required LLM provider configured.<br/><br/>**Note:**If you haven’t configured your AI / LLM provider on your Orkes console, navigate to the Integrations tab and configure your required provider. Refer to this doc on [how to integrate the LLM providers with Orkes console](/content/category/integrations/ai-llm).|
 | model | Choose from the available language model configured for the chosen LLM provider.<br/><br/>For example, If your LLM provider is Azure Open AI & you’ve configured _text-davinci-003_ as the language model, you can choose it under this field. | 
 | query | Provide your search query. A query typically refers to a question, statement, or request made in natural language that is used to search, retrieve, or manipulate data stored in a database. | 
+| optional | Enabling this option renders the task optional. The workflow continues unaffected by the task's outcome, whether it fails or remains incomplete. | 
 
 ## Output Parameters
 

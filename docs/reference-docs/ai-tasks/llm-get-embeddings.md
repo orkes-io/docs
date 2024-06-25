@@ -32,6 +32,7 @@ A system task to get the numerical vector representations of words, phrases, sen
 | namespace | Choose from the available namespace configured within the chosen vector database.<br/><br/>Namespaces are separate isolated environments within the database to manage and organize vector data effectively.<br/><br/>**Note**:Namespace field is applicable only for Pinecone integration and is not applicable to Weaviate integration.|
 | index | Choose the index in your vector database where indexed text or data was stored.<br/><br/> **Note:**For Weaviate integration, this field refers to the class name, while in Pinecone integration, it denotes the index name itself.|
 | embeddings | Choose the embeddings from which the stored data is to be retrieved. It needs to be from the same embedding model that was used to create the other embeddings that are stored in the same index. |
+| optional | Enabling this option renders the task optional. The workflow continues unaffected by the task's outcome, whether it fails or remains incomplete. | 
 
 ## Output Parameters
 

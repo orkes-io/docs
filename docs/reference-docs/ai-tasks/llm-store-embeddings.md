@@ -36,6 +36,7 @@ A system task responsible for storing the generated embeddings produced by the [
 | embeddingModelProvider | Choose the required LLM provider for embedding.<br/><br/>**Note**:If you haven’t configured your AI / LLM provider on your Orkes console, navigate to the **_Integrations_** tab and configure your required provider. Refer to this doc on [how to integrate the LLM providers with Orkes console](https://orkes.io/content/category/integrations/ai-llm). |
 | embeddingModel | Choose from the available language model for the chosen LLM provider. |
 | Id | Optional field to provide the vector ID. |
+| optional | Enabling this option renders the task optional. The workflow continues unaffected by the task's outcome, whether it fails or remains incomplete. | 
 
 ## Examples
 
