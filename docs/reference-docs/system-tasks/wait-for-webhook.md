@@ -6,12 +6,13 @@ import TabItem from '@theme/TabItem';
 
 # Wait For Webhook 
 
-Webhook is an HTTP-based callback function that facilitates the communication between the Conductor and other third-party systems. It can be used to receive data from other applications to the Conductor. Conductor currently supports Webhook integration with the following third-party systems only:
+Webhook is an HTTP-based callback function that facilitates the communication between the Conductor and other third-party systems. It can be used to receive data from other applications to the Conductor. Conductor currently supports Webhook integration with the following platforms:
 
 * GitHub
+* Microsoft Teams
+* SendGrid
 * Slack
 * Stripe
-* Microsoft Teams
 
 You can leverage the **Custom** option to integrate other than the above-mentioned third-party systems.
 
@@ -117,7 +118,7 @@ Steps to create a Webhook in Orkes Conductor:
 |-----------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Webhook name                            | Provide a unique name for your Webhook.                                                                                                                                                                                                                                         |
 | Workflow to receive webhook event       | Provide the workflow name that is supposed to receive this webhook event.                                                                                                                                                                                                       |
-| Source platform                         | Choose the platform from which this webhook event will be invoked. The currently supported platforms are GitHub, Slack, Stripe, Microsoft Teams, and Custom. <br/> **Note**: You can use the option custom for unsupported systems. |
+| Source platform                         | Choose the platform from which this webhook event will be invoked. The currently supported platforms are GitHub, Slack, Stripe, Microsoft Teams, SendGrid, and Custom. <br/> **Note**: You can use the option custom for unsupported systems. |
 | Start workflow when webhook events come | Check this option to start a new workflow based on the data received from the webhook event. Once enabled, you need to choose the workflow, version and idempotency key.                                                                                         |
 
 4. Click the **Save** button, and the Conductor will generate a Webhook URL, which will be unverified.
@@ -174,9 +175,10 @@ This type of Webhook is configured using the token from the source platform. Thi
 
 | System        | Header for request verification                                                                                                                                                                                                                                                                                                                                                                     |
 |---------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| GitHub        | <ul><li>Header **X-Hub-Signature 256** will be used to request verification. It is the request body’s HMAC hex digest and is spawned using the SHA-256 hash function and the secret as the HMAC key.</li><li>**[secret](https://docs.github.com/en/developers/webhooks-and-events/webhooks/securing-your-webhooks#setting-your-secret-token)** - Provide the GitHub account’s secret key.</li></ul> |
-| Stripe        | <ul><li>Header **Stripe-Signature** will be used to request verification.</li><li>**[endpointSecret](https://stripe.com/docs/webhooks/signatures)** - Provide the endpoint’s secret for Webhook from Stripe.</li></ul>                                                                                                                                                                                                                                                                |
-| Microsoft Teams | <ul><li>Header **hmac base64-encoded-signature** will be used to request verification.</li></ul> |
+| GitHub        | <ul><li>Header **X-Hub-Signature 256** will be used to request verification. It is the request body’s HMAC hex digest and is spawned using the SHA-256 hash function and the secret as the HMAC key.</li><li>**[Secret](https://docs.github.com/en/developers/webhooks-and-events/webhooks/securing-your-webhooks#setting-your-secret-token)** - Provide the GitHub account’s secret key.</li></ul> |
+| Stripe        | <ul><li>Header **Stripe-Signature** will be used to request verification.</li><li>**[Endpoint Secret](https://stripe.com/docs/webhooks/signatures)** - Provide the endpoint’s secret for Webhook from Stripe.</li></ul>                                                                                                                                                                                                                                                                |
+| Microsoft Teams | <ul><li>Header **hmac base64-encoded-signature** will be used to request verification.</li><li>Security token - Provide the security token from Microsoft Teams.</li></ul> |
+| SendGrid | <ul><li>Header **X-Twilio-Email-Event-Webhook-Signature** will be used to request verification.</li><li>[Verification key](https://www.twilio.com/docs/sendgrid/for-developers/tracking-events/getting-started-event-webhook-security-features#enable-signature-verification) - Provide the Sendgrid Webhook’s verification key.</li></ul> |
 
 <p align="center"><img src="/content/img/Creating-a-signature-based-verifier-Webhook-in-Conductor.png" alt="Signature-based verifier webhook" width="50%" height="auto"/></p>
 
