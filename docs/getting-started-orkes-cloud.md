@@ -39,35 +39,32 @@ The cluster is provisioned, and the free trial account is activated with 14-day 
 To access your cluster, you need to “Sign up” for the cluster and not log in. This serves as a security capability: the cloud portal is intended for a DevOps audience, whereas the Conductor cluster is designed for a developer audience. This distinction allows for granular control over these two environments, ensuring that each audience has the appropriate level of access and control, thereby enhancing overall security and operational efficiency.
 :::
 
-## Upgrading from Trial to Enterprise Base Subscription Plan
+## Upgrading from Trial to Basic Plan
 
 :::note
-The **Enterprise Base** plan is the lowest subscription tier for Orkes Enterprise, starting at $695 per month when billed annually, or $825 per month when billed monthly.
+The **Basic** plan is the lowest subscription tier for Orkes Enterprise, starting at $695 per month when billed annually, or $825 per month when billed monthly.
 :::
 
-### Limits of Enterprise Base Cluster 
+### Limits of Basic Cluster 
 
-Enterprise base cluster has the following limits:
+The base cluster has the following limits:
 
-| Enterprise Base Cluster SKU Limits | Values |
+| SKU Limits| Default |
 | ---------------------------------- | ------ |
 | **Execution Limits** | - | 
-| Redis limit (in GB) | 1 |
 | Tasks/sec | 10 |
 | Task size (KB) | 2048 |
 | Tasks in workflow execution | 1000 |
 | In-memory serialized workflow size (MB) | 20 |
 | API calls/sec | 100 |
-| API payload size (MB) (incoming and outgoing) | 2048 |
+| API payload size (MB) (incoming and outgoing) | 1024 |
 | Webhook calls received/sec | 1 |
-| Webhook payload size (MB) | 2048 |
-| Events received/sec | 10 |
-| Events sent/sec | 10 |
-| Event payload size (KB) | 2048 |
+| Webhook payload size (MB) | 1024 |
+| Events received/sec | 2 |
+| Events sent/sec | 2 |
+| Event payload size (KB) | 1024 |
 | HTTP task duration seconds | 60 |
 | Maximum workflow duration (days) | Unlimited |
-| Execution history uncompressed (GB) (Orkes Hosted) | 25 | 
-| Execution history retention (days) (Orkes Hosted) |  7 |
 | Event Task expiration upon completion (sec) | 3600 |
 | Event Task expiration if not polled and executed (sec) | 86400 |
 | **Definition Limits** | - | 
@@ -75,22 +72,19 @@ Enterprise base cluster has the following limits:
 | Workflows defined | 1000 |
 | Workflow versions | Unlimited | 
 | Tasks in a workflow definition | 1000 |
-| Tags | 0 |
-| AI prompts | 0 | 
-| LLM models | 0 | 
-| Vector DB indexes | 0 | 
-| Schedules | 5 |
-| Minimum schedule interval (seconds) | 10 | 
-| Event sources | 2 |
-| Webhooks | 2 | 
-| Service accounts | 2 |
-| Users | 100 |
-| User Groups | 0 | 
-| Secrets | 0 | 
+| Scheduler definitions | 2 |
+| Minimum Interval between scheduled runs (seconds) | 10 |
+| Human task definitions | 0 |
+| AI prompt template | 0 |
+| Conductor users | 5 |
+| Conductor user groups | 0 | 
+| External application identities | 0 |
+| Secrets | 0 |
+| Tags | 0 | 
 
-### Subscribing to Enterprise Base plan
+### Subscribing to Basic plan
 
-To upgrade your Orkes Enterprise account from trial to the “Enterprise Base" plan:
+To upgrade your Orkes Enterprise account from trial to the “Basic" plan:
 
 1. From your free-trial cloud portal, click **Upgrade Plan**.
 
@@ -102,18 +96,18 @@ To upgrade your Orkes Enterprise account from trial to the “Enterprise Base" p
 
 3. Add your card details and check out to complete the payment process.
 
-Once the payment is completed successfully, your portal will be updated to the “Enterprise Base” plan. 
+Once the payment is completed successfully, your portal will be updated to the  "Basic" plan. 
 
 <p align="center"><img src="/content/img/updated-plan-details-orkes-cloud.png" alt="Updated plan details in Orkes Cloud portal" width="100%" height="auto"></img></p>
 
 :::noteNotes
-- Workflows using premium features in the trial won’t be runnable when subscribed to the Enterprise Base plan. 
-- [Contact our sales team](https://orkes.io/talk-to-an-expert) to upgrade your Enterprise base plan to higher subscription tiers.
+- Workflows using premium features in the trial won’t be runnable when subscribed to the base plan. 
+- [Contact our sales team](https://orkes.io/talk-to-an-expert) to upgrade your basic plan to higher subscription tiers.
 :::
 
 ### Enterprise Add-Ons
 
-In addition to the features available on the Enterprise base plan, you can purchase add-ons that include additional features and upgrades to cluster sizes and number of users. 
+In addition to the features available on the basic plan, you can purchase add-ons that include additional features and upgrades to cluster sizes and number of users. 
 
 :::note
 Enterprise Add-Ons are available at a custom price depending on the types of add-ons you choose. 
