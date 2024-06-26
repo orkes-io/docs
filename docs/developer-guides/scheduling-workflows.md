@@ -46,7 +46,12 @@ For creating a scheduler,
 3. Click **Save**.
 
 :::note
-Non-admin users can create a schedule only if they have "execute" permission over the workflow to be scheduled. You must also provide “read” permission to list the workflows in the scheduler or workflow definitions.
+For non-admin users to work with schedulers created by an admin, they need to be provided access to the required schedulers and workflows. This can be granted through a user group. Here’s how you can achieve this:
+<ol>
+  <li>Add the required tag to the scheduler and workflow to which non-admins may need access. Let’s add the tag “team:execute”.</li>
+  <li> Create a user group with required members and <a href="https://orkes.io/content/access-control-and-security/tags#using-user-groups">provide execute and read access</a> to the tag “team:execute”.</li>
+</ol>
+This ensures that the group members will have "execute" and “read” permission over the scheduler and workflows you’ve tagged with the tag “team:execute”.
 :::
 
 Once the schedule is created, you can carry out the following actions:
@@ -57,6 +62,7 @@ Once the schedule is created, you can carry out the following actions:
 - **Clone**: Use this option to duplicate your scheduler, making it easier to reuse your existing scheduler settings.
 - **Add/Edit Tags**: Use this option to add a new tag to the scheduler or edit an existing tag in the scheduler.
 - **Delete**: Use this option to permanently remove the scheduler from the Conductor console. This action cannot be undone.
+
 
 ## Cron Expression
 
@@ -111,7 +117,7 @@ Macros are also supported when setting a schedule.
 
 </details>
 
-## Viewing Executions
+## Scheduler Executions​
 
 Once the schedulers are defined, you can view the executions from the **Executions > Scheduler** page. 
 
@@ -119,14 +125,13 @@ Once the schedulers are defined, you can view the executions from the **Executio
 
 The execution page lists the details of all the scheduler executions. It includes details such as scheduled time, execution time, execution ID, workflow ID, status, reason for failure, and error details. You can view the workflow execution by directly clicking on the workflow ID. You can also filter further information using the available options.
 
-:::note
-For non-admin users to work with schedulers created by an admin, they need to be provided access to the required schedulers and workflows. This can be granted through a user group. Here’s how you can achieve this:
-<ol>
-  <li>Add the required tag to the scheduler and workflow to which non-admins may need access. Let’s add the tag “team:execute”.</li>
-  <li> Create a user group with required members and <a href="https://orkes.io/content/access-control-and-security/tags#using-user-groups">provide execute and read access</a> to the tag “team:execute”.</li>
-</ol>
-This ensures that the group members will have "execute" and “read” permission over the scheduler and workflows you’ve tagged with the tag “team:execute”.
-:::
+In addition, you can view the scheduler execution as code directly from the UI. To do this, click the arrow in the Search button and choose “Show as code”.
+
+<p align="center"><img src="/content/img/show-as-code-scheduler-executions.png" alt="Show as code scheduler workflow executions" width="100%" height="auto"></img></p>
+
+This will display the execution search data in various code formats. Currently, you can retrieve them in cURL and JavaScript.
+
+<p align="center"><img src="/content/img/scheduler-execution-search-data-code.png" alt="Scheduler search execution search data in code" width="100%" height="auto"></img></p>
 
 ## Scheduling Workflows from Completed Executions
 
