@@ -84,6 +84,10 @@ A sample JSON for the event handler is as follows:
 }
 ```
 
+:::note
+The IBM MQ event handler now supports custom headers, allowing users to pass custom string properties/headers in **_headers**.
+
+
 ## RBAC - Governance on who can use Integrations
 
 Once the integration is added, the next step is determining who can access these integrations.
