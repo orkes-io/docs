@@ -12,7 +12,7 @@ Refer to the [official IBM documentation](https://www.ibm.com/docs/en/ibm-mq) fo
 
 ## Integrating with IBM MQ as a Message Broker
 
-Once you have the required configuration credentials from IBM MQ, let’s integrate with Orkes Conductor.
+Once you have the required configuration parameters from IBM MQ, let’s integrate with Orkes Conductor.
 
 1. Navigate to **Integrations** from the left menu on the Conductor cluster.
 2. Click **+ New integration** from the top-right corner of your window.
@@ -35,8 +35,9 @@ Once you have the required configuration credentials from IBM MQ, let’s integr
 | Topic String | Used to define the criteria for selecting topics in the messaging system. Allows you to specify patterns that match topics of interest. For example, entering ‘finance/’ would subscribe you to all topics under the ‘finance’ category. <br/><br/>**Note**: This field is applicable for **Topic-based Messaging**. | 
 | Authentication type | Choose the required authentication type. It can take the following values:<ul><li>**NONE**</li><li>**JKS**</li></ul> |
 | Choose Trust Store file | If the authentication is chosen as **JKS**, upload the Java JKS trust store file with CAs. | 
-| Password | Provide the password for the trust store. |
-| Cipher Suite | A Cipher Suite encompasses a set of algorithms ensuring encryption, key exchange, authentication, and data integrity for secure network communications. Choose the suitable Cipher Suite from the following options:<ul><li>TLS_RSA_WITH_AES_128_CBC_SHA256</li><li>TLS_RSA_WITH_AES_256_CBC_SHA256</li><li>TLS_RSA_WITH_AES_256_GCM_SHA384</li><li>ANY_TLS12</li></ul> | 
+| Trust Store Password | Provide the password for the trust store. |
+| Transport Layer Security | Choose the TLS connection security. Supported values:<ul><li>**NONE**</li><li>**Using Cipher Suite**</li></ul> |
+| Cipher Suite | Select an appropriate Cipher Suite from the following options if TLS with Cipher Suite is chosen:<ul><li>TLS_RSA_WITH_AES_128_CBC_SHA256</li><li>TLS_RSA_WITH_AES_256_CBC_SHA256</li><li>TLS_RSA_WITH_AES_256_GCM_SHA384</li><li>ANY_TLS12</li></ul> | 
 | Description | Provide a description of the integration. | 
 
 5. You can toggle on the **Active** button to activate the integration instantly.
@@ -82,6 +83,10 @@ A sample JSON for the event handler is as follows:
  ]
 }
 ```
+
+:::note
+The IBM MQ event handler now supports custom headers, allowing users to pass custom string properties/headers in **_headers**.
+
 
 ## RBAC - Governance on who can use Integrations
 
