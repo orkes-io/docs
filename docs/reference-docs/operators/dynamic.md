@@ -7,170 +7,142 @@ import TabItem from '@theme/TabItem';
 
 # Dynamic 
 
-The dynamic task allows us to execute one of the registered tasks dynamically at run-time. This means that you can run a task not fixed at the time of the workflow’s execution. The task name could even be supplied as part of the workflow’s input and be mapped to the dynamic task input.
+The Dynamic task is used to execute a registered task dynamically at run-time. It is similar to a function pointer in programming, and can be used for when the decision to execute which task will only be made after the workflow has begun.
 
-## Definitions
+The Dynamic task takes in as input the name of a task, which can be a system task or a custom task registered on Conductor.
 
-```json
-    {
-      "name": "dynamic_task",
-      "taskReferenceName": "dynamic_task_ref",
-      "inputParameters": {
-        "taskToExecute": "${workflow.input.somevalue}" // Name of the task to execute
-      },
-      "type": "DYNAMIC",
-      "dynamicTaskNameParam": "taskToExecute" // Name of the input parameter holding the task name to execute
-    }
-```
+## Task configuration
 
-### Input Parameters
+Configure these parameters for the Dynamic task.
 
-| Attribute            | Description                                                            |
-| -------------------- | ---------------------------------------------------------------------- |
-| taskToExecute        | Accepts the task name to execute.                                      |
-| dynamicTaskNameParam | Indicates the name of the task to be called during workflow execution. |
+| Parameter     | Description                                                                                                                                                                                                | Required/ Optional |
+| ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
+| inputParameters. **taskToExecute** | The name of the task that will be executed. It can be passed as a variable. | Required. |
+| dynamicTaskNameParam    | The input parameter key whose value is used to schedule the task. For example, "taskToExecute". | Required. |
 
-If there is a possibility that the task called is a sub-workflow, then the parameter **taskToExecute** must be “SUB_WORKFLOW”. 
-
-And the input parameter should be either:
-
-```json
-{
-"subWorkflowDefinition":{...}
-}
-```
-
-Or
-
-```json
-{
-"subWorkflowName":"...",
-"subworkflowVersion":1
-}
-```
-
-An example where a sub-workflow is added in a dynamic task:
-
-```json
-{
-     "name": "dynamic_task",
-     "taskReferenceName": "ref_name",
-     "inputParameters": {
-       "taskToExecute": "SUB_WORKFLOW",
-       "subWorkflowName": "workflow_name_here",
-       "subWorkflowVersion": 1
-     },
-     "type": "DYNAMIC",
-}
-```
-
-### Output Parameters
-
-During execution, the DYNAMIC task is replaced in the workflow with whatever task is called dynamically. The output during execution is whatever the output of the called task.
-
-## Examples
-
+### Configuration for calling a sub-workflow
+If the Dynamic task to be called is a Sub Workflow task, then `taskToExecute` must be set to `SUB_WORKFLOW`. The `inputParameters` for the Dynamic task should also include these fields:
 
 <Tabs>
-<TabItem value="UI" label="UI" className="paddedContent">
-
-<div className="row">
-<div className="col col--4">
-
-<br/>
-<br/>
-
-1. Add task type `Dynamic Task`.
-2. Add the task to run by mapping it to a variable representing task name.
-
-</div>
-<div className="col">
-<div className="embed-loom-video">
-
-<p><img src="/content/img/ui-guide-dynamic-task.png" alt="Adding wait task" width="500" height="auto"/></p>
-
-</div>
-</div>
-</div>
-
-
-
-</TabItem>
- <TabItem value="JSON" label="JSON Example">
+<TabItem value="JSON" label="Using workflow JSON">
 
 ```json
-    {
-      "name": "dynamic_task",
-      "taskReferenceName": "dynamic_task_ref",
-      "inputParameters": {
-        "taskToExecute": "${workflow.input.somevalue}"
-      },
-      "type": "DYNAMIC",
-      "dynamicTaskNameParam": "taskToExecute"
-    }
+// Dynamic task defintion
+
+"inputParameters": {
+  "subWorkflowDefinition":{ //subworkflow JSON definition}
+}
+```
+
+</TabItem>
+
+<TabItem value="name and version" label="Using workflow name and version">
+
+```json
+// Dynamic task defintion
+
+"inputParameters": {
+  "subWorkflowName":"someName",
+  "subworkflowVersion": "1"
+}
+```
+
+</TabItem>
+</Tabs>
+
+## Task definition
+This is the JSON schema for a Dynamic task definition.
+
+<Tabs>
+<TabItem value="all" label="All tasks">
+
+```json
+{
+  "name": "dynamic",
+  "taskReferenceName": "dynamic_ref",
+  "inputParameters": {
+    "taskToExecute": "${workflow.input.dynamicTaskName}" // name of the task to execute
+  },
+  "type": "DYNAMIC",
+  "dynamicTaskNameParam": "taskToExecute" // input parameter key that will hold the task name to execute
+}
+```
+
+</TabItem>
+
+<TabItem value="sub-workflows" label="Sub-workflows">
+
+```json
+{
+  "name": "dynamic",
+  "taskReferenceName": "dynamic_ref",
+  "inputParameters": {
+    "taskToExecute": "SUB_WORKFLOW",
+    "subWorkflowName": "${workflow.input.someName}", // the name of the sub-workflow to execute
+    "subWorkflowVersion": "1"
+  },
+  "type": "DYNAMIC",
+  "dynamicTaskNameParam": "taskToExecute"
+}
 ```
 
 </TabItem>
 </Tabs>
 
 
-<details><summary>Shipping Courier</summary>
-<p>
-Suppose in a workflow, we have to decide to ship the courier, but the decision is to be made during execution. The workflow looks like this:
+## Task output
+During execution, the Dynamic task is replaced with whatever task that is called at runtime. The output of the Dynamic task will be whatever the output of the called task is.
 
+## Adding a Dynamic task in UI
+**To add a Dynamic task:**
+1. In your workflow, select the **(+)** icon and add a **Dynamic** task.
+2. Add the Task input params, which should include the parameter key that maps to task name (for example: taskToExecute).
+
+<p><img src="/content/img/ui-guide-dynamic-task.png" alt="Adding wait task" /></p>
+
+## Examples
+Here are some examples for using the Dynamic task.
+
+<details><summary>Using the Dynamic task in a workflow</summary>
+
+In this example workflow, shipments are made with different couriers depending on the shipping address. The decision can only be made during run-time when the address is received, and the subsequent shipping task could be either `ship_via_fedex` and `ship_via_ups`. A Dynamic task can be used in this workflow so that the shipping task can be decided in realtime.
 ```json
+// workflow definition
+
 {
-  "name": "Shipping_Flow",
-  "description": "Ships smartly on the basis of Shipping info",
-  "tasks": [
-    {
-      "name": "shipping_info",
-      "taskReferenceName": "shipping_info",
-      "inputParameters": {
-      },
-      "type": "SIMPLE"
-    },
-    {
-      "name": "shipping_task",
-      "taskReferenceName": "shipping_task",
-      "inputParameters": {
-        "taskToExecute": "${shipping_info.output.shipping_service}"
-      },
-      "type": "DYNAMIC",
-      "dynamicTaskNameParam": "taskToExecute"
-    }
-  ]
+ "name": "Shipping_Flow",
+ "description": "Ships smartly based on the shipping address",
+ "tasks": [
+   {
+     "name": "shipping_info",
+     "taskReferenceName": "shipping_info_ref",
+     "inputParameters": {
+     },
+     "type": "SIMPLE"
+   },
+   {
+     "name": "shipping_task",
+     "taskReferenceName": "shipping_task_ref",
+     "inputParameters": {
+       "taskToExecute": "${shipping_info.output.shipping_service}"
+     },
+     "type": "DYNAMIC",
+     "dynamicTaskNameParam": "taskToExecute"
+   }
+ ]
 }
 ```
 
-The **shipping_info** task generates an output that is used to determine which task is run in the **shipping_task** DYNAMIC task. The line **"taskToExecute": "${shipping_info.output.shipping_service}"** reads the **shipping_service** output from **shipping_info**. In this example, there are two possible outputs, **ship_via_fedex** or **ship_via_ups**.
-
-Here is the workflow with the DYNAMIC task:
+In the workflow, the `shipping_info` task generates an output that is used to determine which task is run in the Dynamic `shipping_task` task. The line `"taskToExecute": "${shipping_info.output.shipping_service}"` reads the `shipping_service` output from `shipping_info`. Here is the visual diagram of the same workflow:
 
 <p align="center"><img src="/content/img/dynamic-task-example.png" alt="Dynamic Task Example" width="50%" height="auto"></img></p>
 
-Now, assume a workflow execution where **shipping_info** outputs:
-
-```json
-{
- "shipping_service": "ship_via_fedex"
-}
-```
-
-The DYNAMIC task **shipping_task** has been replaced with **ship_via_fedex**:
-
+During workflow execution, if the `shipping_info` task output is `"shipping_service": "ship_via_fedex"`, the Dynamic `shipping_task` task will be replaced with the `ship_via_fedex` task:
 
 <p align="center"><img src="/content/img/ship-via-fedex.jpg" alt="Ship Via Fedex" width="50%" height="auto"></img></p>
 
-If the output is:
-
-```json
-{
-  "shipping_service": "ship_via_ups"
-}
-```
-The DYNAMIC task **shipping_task** has been replaced with **ship_via_ups**:
+If the `shipping_info` task output is `"shipping_service": "ship_via_ups"`, the Dynamic `shipping_task` task will be replaced with the `ship_via_ups` task:
 
 <p align="center"><img src="/content/img/ship-via-ups.jpg" alt="Ship Via UPS" width="50%" height="auto"></img></p>
-</p>
+
 </details>

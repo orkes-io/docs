@@ -7,176 +7,187 @@ import TabItem from '@theme/TabItem';
 
 # Switch 
 
-The switch task is used for creating branching logic. It is a representation of multiple **if...then...else** or **switch...case** statements in programming.
+The Switch task is used for conditional branching logic. It represents if...then...else or switch...case statements in programming, and can be used for any situation where different tasks have to be executed based on different conditions.
 
-## Definitions
+A Switch task evaluates an expression, either a simple input parameter key or a complex JavaScript expression, and matches the expression output with the name of each switch case. The appropriate tasks are executed based on the matching branch, which contains a sequence of tasks. The default branch will be executed if no matching branches are found.
+
+### Task configuration
+
+Configure these parameters for the Switch task.
+
+| Parameter     | Description                                                                                                                                                                                                | Required/ Optional |
+| ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
+| evaluatorType | The type of evaluator used. Supported types: <ul><li>`value-param`—Evaluates a specific input parameter in the Switch task.</li><li>`graaljs`—Evaluates JavaScript expressions and computes the value. Allows you to use ES6-compatible JavaScript.</li><li>`javascript`—Evaluates JavaScript expressions and computes the value. Deprecated; use graaljs instead.</li></ul> | Required. |
+| expression    | The expression that is evaluated by the Switch task. The expression format depends on the evaluator type:<ul><li>For the `value-param` evaluator, the expression is the input parameter key.</li><li>For the `javascript` and `graaljs` evaluators, the expression is the JavaScript expression. </li></ul> | Required. |
+| decisionCases | A map of the possible switch cases. The keys are the possible outputs of the evaluated expression, and the values are the list of tasks to be executed in each case.    | Required. |
+| defaultCase   | The default branch. Contains the list of tasks to be executed when no matching value is found in the decision cases.                               | Optional. |
+
+## Task definition
+
+This is the JSON schema for a Switch task definition.
+
+<Tabs>
+<TabItem value="value-param" label="value-param">
 
 ```json
 {
-  "name": "switch_task",
-  "taskReferenceName": "switch_task_ref",
+  "name": "switch",
+  "taskReferenceName": "switch_ref",
   "inputParameters": {
-    "switchCaseValue": "${workflow.input.service}"
+    "switchCaseValue": "${workflow.input}"
   },
   "type": "SWITCH",
-  "evaluatorType": "value-param",
-  "expression": "switchCaseValue",
-  "defaultCase": [//tasks],
   "decisionCases": {
-    "fedex": [//tasks],
-    "ups": [//tasks]
-  }
+    "caseName1": [
+      {//taskDefinition}
+    ],
+    "caseName2": [
+      {//taskDefinition}, 
+      {//taskDefinition}
+    ]
+  },
+  "defaultCase": [
+    {//taskDefinition}
+  ],
+  "evaluatorType": "value-param",
+  "expression": "switchCaseValue"
 }
 ```
-* A switch task takes an expression as input along with multiple branches containing a sequence of tasks to be executed and a *default* branch to be executed if no matching branches are found.
-* The output of the **expression** is matched with the name of the branch.
-* The expression can be a **javascript** expression or a value parameter that represents the input to the task directly.
-
-### Input Parameters
-
-| Attribute     | Description                                                                                                                                                                                                |
-| ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| evaluatorType | Indicates the type of evaluator used. Supported types are **value-param**, **javascript**, and **graaljs**.                                                                                                |
-| expression    | The expression depends on the evaluator type. For the **value-param** evaluator, the expression is the input parameter; for the **javascript** and **graaljs** evaluator, it is the javascript expression. |
-| decisionCases | Map where the key is possible values that can result from the **expression**, with the value being the list of tasks to be executed.                                                                       |
-| defaultCase   | List of tasks to be executed when no matching value is found in the decision case (default condition).                                                                                                         |
-
-#### Types of Evaluators
-| Attribute   | Description                                                                                           |
-| ----------- |-------------------------------------------------------------------------------------------------------|
-| value-param | Use a parameter directly as the value.                                                                |
-| javascript  | Evaluate Javascript expressions and compute the value - Legacy.  __Deprecated__ - use graaljs instead. |
-| graaljs     | Evaluate Javascript expressions and compute the value. Allows you to use ES6-compatible Javascript.   |
-
-
-## Examples
-
-<Tabs>
-<TabItem value="UI" label="UI" className="paddedContent">
-
-<div className="row">
-<div className="col col--4">
-
-<br/>
-<br/>
-
-1. Add task type `Switch`.
-2. Click on the (+) icon to add switch cases.
-3. Add the value parameter to evaluate for switch.
-4. Label the cases with values to match.
-5. Add one more task to the cases.
-6. Add tasks to default case if applicable.
-
-</div>
-<div className="col">
-<div className="embed-loom-video">
-
-<p><img src="/content/img/ui-guide-switch-task.png" alt="Adding event task" width="720" height="auto"/></p>
-
-</div>
-</div>
-</div>
-
-
 
 </TabItem>
- <TabItem value="JSON" label="JSON">
+<TabItem value="graaljs" label="graaljs">
 
 ```json
-    {
-      "name": "switch_example",
-      "taskReferenceName": "switch_example_1",
-      "inputParameters": {
-        "switchCaseValue": "${workflow.input.inputKey1}"
-      },
-      "type": "SWITCH",
-      "decisionCases": {
-        "CASE1": [
-          // task list for inputKey1 == CASE1
-        ],
-        "CASE2": [
-          // task list for inputKey1 == CASE2
-        ]
-      },
-      "defaultCase": [
-        // default task list when inputKey1 does not match any case
-      ],
-      "evaluatorType": "value-param",
-      "expression": "switchCaseValue"
-    }
+{
+  "name": "switch",
+  "taskReferenceName": "switch_ref",
+  "inputParameters": {
+    "switchCaseValue": "${workflow.input.num}"
+  },
+  "type": "SWITCH",
+  "decisionCases": {
+    "apples": [
+      {//taskDefinition}
+    ],
+    "tomatoes":  [
+      {//taskDefinition}
+    ],
+    "oranges":  [
+      {//taskDefinition}
+    ]
+  },
+  "defaultCase": [],
+  "evaluatorType": "graaljs",
+  "expression": "(function () {\n    switch ($.switchCaseValue) {\n      case \"1\":\n        return \"apple\";\n      case \"2\":\n        return \"tomatoes\";\n      case \"3\":\n        return \"oranges\"\n    }\n  }())"
+}
 ```
 
 </TabItem>
 </Tabs>
 
-## Access Switch Case Output
-We can access the output of the switch case in subsequent tasks by referring to the output value `selectedCase`. 
-For example, if the switch case reference was `switch_example_1` we can access the output value by:
 
-```json
-${switch_example_1.output.selectedCase}
-```
+## Task output
+
+The Switch task will return the following parameters.
+
+| Parameter     | Description                                                                                                                                                                                                |
+| ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| selectedCase | The evaluation result of the Switch task. | 
 
 
-## Using Javascript Expressions
+### Accessing the Switch task output
+You can access the output of the Switch task in subsequent tasks by referring to the output value `selectedCase`, using `${switchTaskName.output.selectedCase}` (replacing `switchTaskName` with the actual task reference name).
 
-When using **javascript** or **graaljs** as the evaluator type, the expression can be a javascript expression that returns a string.
+## Adding a Switch task in UI
 
-The input to the tasks is available as the variables inside the **$** scope within the script.
+**To add a Switch task:**
+1. In your workflow, select the **(+)** icon and add a **Switch** task.
+2. In Script params, add the parameter that will be evaluated in the expression.
+3. In Evaluate, select the evaluator type and enter the expression.
+    * Value-Param for a value-param evaluator
+    * ECMASCRIPT for a graaljs evaluator
+4. In Switch cases, label the cases with the relevant parameter values.
+5. In your workflow, select the **(+)** icon to add tasks to the each switch case.
+6. (Optional) Add tasks to the default case.
 
-```json
-    "inputParameters" : {
-      "shippingType": "${workflow.input.shippingType}"
-    }
-```
+<p><img src="/content/img/ui-guide-switch-task.png" alt="Adding event task"/></p>
 
-```javascript
 
-    (function () {
-      if ($.shippingType == 'EXPRESS') {
-        return "FEDEX";
-      }
-      return "USPS";
-    })();
-
-```
-
-<details><summary>Nested Switch case</summary>
+## Examples
+Here are some examples for using the Switch task.
+<details><summary>Nested switch case</summary>
 <p>
-Switch task can be nested just like nested if...then...else.
+Similar to any programming language, you can use other operators inside a switch case, such as nested switches, loops, forks, and so on.
 
 ```json
 {
+  "name": "switch",
+  "taskReferenceName": "switch_ref",
+  "inputParameters": {
+    "switchCaseValue": "${workflow.input.shipping}"
+  },
+  "type": "SWITCH",
   "decisionCases": {
-    "fedex": [//tasks],
+    "fedex": [
+      {//taskDefinition}
+    ],
     "ups": [
-      {
-        "taskType": "SWITCH",
-        "expression": "$.deliveryType == 'same-day' ? 'same_day' : 'regular'",
+      {//taskDefinition
+        "name": "nestedSwitch",
+        "taskReferenceName": "nestedSwitch_ref",
+        "inputParameters": {
+          "deliveryType": "${workflow.input.delivery}"
+        },
+        "type": "SWITCH",
         "decisionCases": {
-            "same_day": [],
-            "regular": [],
-        }
+            "same_day": [      {//taskDefinition}],
+            "regular": [      {//taskDefinition}]
+        },
+        "defaultCase": [],
+        "evaluatorType": "graaljs",
+        "expression": "$.deliveryType == 'same-day' ? 'same_day' : 'regular'",
       }
     ]
   }
+  "defaultCase": [],
+  "evaluatorType": "value-param",
+  "expression": "switchCaseValue"
 }
-
 ```
 </p>
 </details>
+<details><summary>JavaScript expressions​</summary>
+<p>
+When using `javascript` or `graaljs` as the evaluator type, the `expression` can be a JavaScript expression that returns a string. Within the `expression`, the Switch task input parameter is available as the variable inside the $ scope.
 
-:::tip
-Similar to any programming language, you can have other operators inside a switch case, such as nested switches, loops, forks, etc.
-:::
+**Input parameters for a javascript or graaljs evaluator type:**
 
-## FAQs
+``` json
+   "inputParameters" : {
+     "shippingType": "${workflow.input.shipping}"
+   }
+```
 
-### How can I create a JavaScript switch case statement that evaluates whether a given datetime string is older than one month?
+**Expression for a javascript or graaljs evaluator type:**
 
-You can use the following script:
+``` javascript
+((
+  function () {
+    if ($.shippingType == 'EXPRESS') {
+      return "FEDEX";
+    }
+    return "USPS";
+  }
+))();
+```
 
-```javascript
+</p>
+</details>
+<details><summary>JavaScript expression that evaluates a datetime string</summary>
+<p>
+The script below returns `OLDER` or `NEWER` depending on whether the input date is older than one month.
+
+``` javascript
 ((
   function () {
     const date = new Date($.timestamp);
@@ -192,4 +203,6 @@ You can use the following script:
 ))();
 ```
 
-It returns “OLDER” or “NEWER” depending on the input date. Check out the [sample workflow execution that runs this switch case](https://play.orkes.io/execution/9be8fb4d-e991-11ed-bb41-9e017806b678) in our playground.
+Check out the [sample workflow execution that runs this switch case](https://play.orkes.io/execution/9be8fb4d-e991-11ed-bb41-9e017806b678) in our Playground.
+</p>
+</details>

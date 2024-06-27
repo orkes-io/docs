@@ -2,245 +2,246 @@
 sidebar_position: 2
 ---
 
-# Do While
-
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-The Do While task sequentially executes a list of tasks as long as a condition is __true__. The list of tasks is executed first before the condition is checked, even for the first iteration, just like a regular __do .. while__ task in programming languages.
+# Do While
 
-## Definitions
+The Do While task executes a sequence of tasks as long as a given condition is true. The list of tasks is executed first before the condition is checked, even for the first iteration, just like a regular do .. while statement in programming.
+
+When a Do While loop is executed, each task in the loop will have its `taskReferenceName` concatenated with __i, with i as the iteration number starting at 1. If one of the loop task fails, the Do While task status will be set as FAILED and upon retry the iteration number will restart from 1.
+
+## Task configuration
+
+Configure these parameters for the Do While task.
+
+| Parameter     | Description                                                                                                                                                                                                | Required/ Optional |
+| ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
+| evaluatorType | The type of evaluator used. Supported types: <ul><li>`value-param`—Evaluates a specific input parameter in the Do While task.</li><li>`graaljs`—Evaluates JavaScript expressions and computes the value. Allows you to use ES6-compatible JavaScript.</li></ul> | Required. |
+| loopCondition    | The condition that is evaluated by the Do While task after every iteration. The expression format depends on the evaluator type:<ul><li>For the `value-param` evaluator, the expression is the input parameter key.</li><li>For the `javascript` and `graaljs` evaluators, the expression is the JavaScript expression. </li></ul> | Required. |
+| loopOver | The list of tasks to be executed as long as the condition is true.   | Required. |
+| inputParameters. **keepLastN**   | The number of required iterations. On enabling this option, this value is set to 2 by default. You can also choose not to include this parameter if there are no limits on the number of iterations.    | Optional. |
+
+## Task definition
+
+This is the JSON schema for a Do While task definition.
 
 ```json
-    {
-      "name": "do_while_task",
-      "taskReferenceName": "do_while_task_ref",
-      "type": "DO_WHILE",
-      "loopCondition": "", // Condition
-      "loopConditionType": "value-param",
-      "loopOver": [
-        // List of tasks to be executed in the loop
-      ]
-    }
+{
+  "name": "do_while",
+  "taskReferenceName": "do_while_ref",
+  "inputParameters": {},
+  "type": "DO_WHILE",
+  "loopCondition": "", // Condition
+  "evaluatorType": "value-param",
+  "loopOver": [ // List of tasks to be executed in the loop
+    {//taskDefinition}, 
+    {//taskDefinition}
+  ]
+}
 ```
-* When scheduled, each task of this loop will see its **taskReferenceName** concatenated with **__i**, with **i** being the iteration number, starting at 1. **Warning**: **taskReferenceName** containing arithmetic operators must not be used.
-* Each time the task is performed, the output is saved and indexed by the iteration value. This makes it possible for the condition to check the output of a specific task iteration. (E.g., **$.taskReferenceName['iteration]['first_task']**).
-* The DO_WHILE task is set to *FAILED* as soon as one of the loopTask fails. In such cases, for the retry, the iteration starts from 1.
 
-### Input Parameters
+## Task output
+The Do While task will return the following parameters.
 
-| Attribute    | Description                                                                                                                                                                                                                    |
-| ------------- |--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| loopCondition | Indicates the condition to be evaluated after every iteration. Supported types are **value-param**, and **ECMASCRIPT**.  If an exception occurs during evaluation, the task is set to FAILED_WITH_TERMINAL_ERROR. |
-| loopOver      | Includes the list of tasks to be executed as long as the condition is evaluated to `true`.                                                                                                                                       |
-| keepLastN (No of iterations to keep) | Specify the number of required iterations. On enabling this option, this value is set to 2 by default. You can also choose the option “No limits” based on your preference. |
+| Parameter     | Description                                                                                                                                                                                                |
+| ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| iteration | The number of iterations. If the Do While task is in progress, `iteration` will show the current iteration number. If the Do While task is completed, `iteration` will show the final number of iterations. | 
+| i | The iteration number, mapped to the task references names and their output. | 
 
-### Output Parameters
+In addition to the two parameters above, the output payload may also contain any state stored in `loopCondition`. For example, `storage` will exist as an output parameter if the `loopCondition` is `if ($.LoopTask['iteration'] <= 10) {$.LoopTask.storage = 3; true } else {false}`.
 
-| Attribute | Description                                                                                                                                                                                             |
-| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| iteration  | Indicates the iteration number, which is the current one while executing, and the final one once the loop is finished.                                                                                  |
-| i          | Iteration number as a string mapped to the task references names and their output.                                                                                                                      |
+**Example output**
 
-:::note
-* Domain or isolation group execution is unsupported.
-* Nested DO_WHILE is unsupported. However, we can achieve a similar functionality as the DO_WHILE task supports SUB_WORKFLOW as a loopOver task.
-* Since loopOver tasks will be executed in a loop inside the scope of a parent, the do-while task may not work as expected if it includes branching that crosses outside the DO_WHILE task.
-* Branching inside the loopOver task is supported.
-:::
+``` json
+{
+  "1": {
+    "taskA_ref": {
+      "response": {
+        "headers": {},
+        "body": {},
+        "statusCode": 200
+      }
+    },
+    "taskB_ref": {
+      //taskBOutput
+    }
+  },
+  "2": {
+    "taskA_ref": {
+      "response": {
+        "headers": {},
+        "body": {},
+        "statusCode": 200
+      }
+    },
+    "taskB_ref": {
+      //taskBOutput
+    }
+  },
+  "iteration": 2
+}
+```
+### Accessing the Do While task output
+
+Each time a task in the do while loop is completed, the output is saved and indexed by the iteration value. This makes it possible for the condition to check the output of a specific task iteration using `$.TaskName[’iteration’]['loopTask']`, replacing `TaskName` with the actual Do While task reference name and `loopTask` with the loop task reference name.
+
+## Adding a Do While task in UI
+**To add a Do While task:**
+1. In your workflow, select the **(+)** icon and add a **Do While** task.
+2. In Script params, add the parameter that will be evaluated in the expression.
+3. In Loop condition, select the evaluator type and enter the loop condition.
+    - Value-Param for value-param
+    - ECMASCRIPT for graaljs
+4. In your workflow, select the **(+)** icon to add tasks to the do while loop.
+5. (Optional) Set the number of required iterations by unchecking No Limits. There is no limit on the number of iterations by default.
+
+<p><img src="/content/img/ui-guide-do-while-task.png" alt="Adding Do While"/></p>
+
 ## Examples
-
-<Tabs>
-<TabItem value="UI" label="UI" className="paddedContent">
-
-<div className="row">
-<div className="col col--4">
-
-<br/>
-<br/>
-
-1. Add task type `Do While`.
-2. Select the loop condition type.
-3. Add the condition.
-4. Add the list of tasks in the loop.
-
-</div>
-<div className="col">
-<div className="embed-loom-video">
-
-<p><img src="/content/img/ui-guide-do-while-task.png" alt="Adding Do While" width="500" height="auto"/></p>
-
-</div>
-</div>
-</div>
+Here are some examples for using the Do While task.
 
 
-
-</TabItem>
- <TabItem value="JSON" label="JSON">
+<details><summary>Example Do While task</summary>
+<p>
 
 ```json
+{
+  "name": "Loop Task",
+  "taskReferenceName": "LoopTask",
+  "type": "DO_WHILE",
+  "inputParameters": {
+    "value": "${workflow.input.value}"
+  },
+  "loopCondition": "if ( ($.LoopTask['iteration'] < $.value ) || ( $.first_task['response']['body'] > 10)) { false; } else { true; }",
+  "loopOver": [
     {
-      "name": "do_while_example",
-      "taskReferenceName": "do_while_example_ref_1",
-      "inputParameters": {},
-      "type": "DO_WHILE",
-      "loopCondition": "(function () {\n  if ($.do_while_example_ref_1['iteration'] < 3) {\n    return true;\n  }\n  return false;\n})();",
-      "loopOver": [
-        {
-          "name": "sample_loop_task",
-          "taskReferenceName": "sample_loop_task",
-          "inputParameters": {
-            "http_request": {
-              "uri": "https://orkes-api-tester.orkesconductor.com/api",
-              "method": "GET",
-              "connectionTimeOut": 3000,
-              "readTimeOut": "3000",
-              "accept": "application/json",
-              "contentType": "application/json"
-            }
-          },
-          "type": "HTTP"
+      "name": "first task",
+      "taskReferenceName": "first_task",
+      "inputParameters": {
+        "http_request": {
+          "uri": "http://localhost:8082",
+          "method": "POST"
         }
-      ],
-      "evaluatorType": "graaljs"
-    }
-```
-
-</TabItem>
-</Tabs>
-
-<details><summary>Sample Workflow</summary>
-<p>
-
-```json
-{
-    "name": "Loop Task",
-    "taskReferenceName": "LoopTask",
-    "type": "DO_WHILE",
-    "inputParameters": {
-        "value": "${workflow.input.value}"
+      },
+      "type": "HTTP"
     },
-    "loopCondition": "if ( ($.LoopTask['iteration'] < $.value ) || ( $.first_task['response']['body'] > 10)) { false; } else { true; }",
-    "loopOver": [
-        {
-            "name": "first task",
-            "taskReferenceName": "first_task",
-            "inputParameters": {
-                "http_request": {
-                    "uri": "http://localhost:8082",
-                    "method": "POST"
-                }
-            },
-            "type": "HTTP"
-        },
-        {
-            "name": "second task",
-            "taskReferenceName": "second_task",
-            "inputParameters": {
-                "http_request": {
-                    "uri": "http://localhost:8082",
-                    "method": "POST"
-                }
-            },
-            "type": "HTTP"
+    {
+      "name": "second task",
+      "taskReferenceName": "second_task",
+      "inputParameters": {
+        "http_request": {
+          "uri": "http://localhost:8082",
+          "method": "POST"
         }
-    ]
+      },
+      "type": "HTTP"
+    }
+  ]
 }
 ```
 
-The above definition will produce the following execution, assuming three executions occurred (alongside **first_task__1**, **first_task__2**, **first_task__3**, **second_task__1**, **second_task__2**, and **second_task__3**):
+When executed successfully, the above Do While task will produce the following execution JSON, assuming three iterations occurred:
 
 ```json
 {
-    "taskType": "DO_WHILE",
-    "outputData": {
-        "iteration": 3,
-        "1": {
-            "first_task": {
-                "response": {},
-                "headers": {
-                    "Content-Type": "application/json"
-                }
-            },
-            "second_task": {
-                "response": {},
-                "headers": {
-                    "Content-Type": "application/json"
-                }
-            }
-        },
-        "2": {
-            "first_task": {
-                "response": {},
-                "headers": {
-                    "Content-Type": "application/json"
-                }
-            },
-            "second_task": {
-                "response": {},
-                "headers": {
-                    "Content-Type": "application/json"
-                }
-            }
-        },
-        "3": {
-            "first_task": {
-                "response": {},
-                "headers": {
-                    "Content-Type": "application/json"
-                }
-            },
-            "second_task": {
-                "response": {},
-                "headers": {
-                    "Content-Type": "application/json"
-                }
-            }
+  "taskType": "DO_WHILE",
+  "outputData": {
+    "iteration": 3,
+    "1": {
+      "first_task": {
+        "response": {},
+        "headers": {
+          "Content-Type": "application/json"
         }
+      },
+      "second_task": {
+        "response": {},
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    "2": {
+      "first_task": {
+        "response": {},
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "second_task": {
+        "response": {},
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    "3": {
+      "first_task": {
+        "response": {},
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "second_task": {
+        "response": {},
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
     }
+  }
 }
 ```
 </p>
 </details>
 
-<details><summary>Using Iteration Key</summary>
+<details><summary>Using the iteration key in a loop task</summary>
 <p>
-Sometimes, you may want to use the iteration value/counter in the tasks used in the loop. In this example, an API call is made to GitHub (to the Netflix Conductor repository), but each loop increases the pagination.
+Sometimes, you may want to use the Do While iteration value/counter inside your loop tasks. In this example, an API call is made to a GitHub repository to get all stargazers and each iteration increases the pagination.
+
+The Do While task’s `taskReferenceName` is "get_all_stars_loop_ref". To evaluate the current iteration, the parameter `$.get_all_stars_loop_ref['iteration']` is used in the `loopCondition`. In the HTTP task embedded in the loop, `${get_all_stars_loop_ref.output.iteration}` is used to define which page of results the API should return.
+
 
 ```json
 {
-    "name": "get_all_stars",
-    "taskReferenceName": "get_all_stars_loop_ref",
-    "inputParameters": {
+  "name": "get_all_stars",
+  "taskReferenceName": "get_all_stars_loop_ref",
+  "inputParameters": {
     "stargazers": "4000"
-    },
-    "type": "DO_WHILE",
-    "loopCondition": "if ($.get_all_stars_loop_ref['iteration'] < Math.ceil($.stargazers/100)) { true; } else { false; }",
-    "loopOver": [
-        {
-            "name": "100_stargazers",
-            "taskReferenceName": "hundred_stargazers_ref",
-            "inputParameters": {
-                "counter": "${get_all_stars_loop_ref.output.iteration}",
-                "http_request": {
-                    "uri": "https://api.github.com/repos/ntflix/conductor/stargazers?page=${get_all_stars_loop_ref.output.iteration}&per_page=100",
-                    "method": "GET",
-                    "headers": {
-                        "Authorization": "token ${workflow.input.gh_token}",
-                        "Accept": "application/vnd.github.v3.star+json"
-                    }
-                }
-            },
-            "type": "HTTP",
+  },
+  "type": "DO_WHILE",
+  "loopCondition": "if ($.get_all_stars_loop_ref['iteration'] < Math.ceil($.stargazers/100)) { true; } else { false; }",
+  "loopOver": [
+    {
+      "name": "100_stargazers",
+      "taskReferenceName": "hundred_stargazers_ref",
+      "inputParameters": {
+        "counter": "${get_all_stars_loop_ref.output.iteration}",
+        "http_request": {
+          "uri": "https://api.github.com/repos/conductor-oss/conductor/stargazers?page=${get_all_stars_loop_ref.output.iteration}&per_page=100",
+          "method": "GET",
+          "headers": {
+            "Authorization": "token ${workflow.input.gh_token}",
+            "Accept": "application/vnd.github.v3.star+json"
+          }
         }
-    ]
+      },
+      "type": "HTTP",
+    }
+  ]
 }
 ```
 
-* The Loop **taskReferenceName** is "get_all_stars_loop_ref".
-* In the **loopCondition**, the term **$.get_all_stars_loop_ref['iteration']** is used.
-* In tasks embedded in the loop, **${get_all_stars_loop_ref.output.iteration}** is used. In this case, it defines which page of results the API should return.
-
 </p>
 </details>
+
+## Limitations
+Within a Do While task, branching using Switch, Fork/Join, Dynamic Fork tasks are supported. However, since the loop tasks will be executed within the scope of its parent Do While task, the Do While task may not execute as expected if the branching crosses outside its scope.
+
+Nested Do While tasks are not supported. To achieve a similar functionality as a nested do while loop, you can use a Sub Workflow task inside the Do While task.
+
+Isolation group execution is not supported. However, domain is supported for loop tasks inside the Do While task.
+
+## Errors
+If an exception occurs during evaluation of the `loopCondition`, the task is set to `FAILED_WITH_TERMINAL_ERROR`.
