@@ -7,15 +7,16 @@ This developer guide includes the steps to integrate NATS Messaging with Orkes C
 :::note Pre-Requisites
 You must set up NATS messaging before integrating with Orkes Conductor. Refer to the [NATS Messaging official documentation](https://docs.nats.io/running-a-nats-service/introduction/installation) for more details.
 
-Get the following credentials from the NATS server:
+Get the following parameters from the NATS server:
 
 - Server name
 - [Username & password](https://docs.nats.io/running-a-nats-service/configuration/securing_nats/auth_intro/username_password) if you prefer to authenticate with credentials.
+- Stream name & consumer name if the connection mechanism is using consumer.
 :::
 
 ## Integrating with NATS Messaging as a Message Broker
 
-Once you have the required configuration credentials from NATS Messaging, let’s integrate with Orkes Conductor.
+Once you have the required configuration parameters from NATS Messaging, let’s integrate with Orkes Conductor.
 
 1. Navigate to **Integrations** from the left menu on the Conductor cluster.
 2. Click **+ New integration** from the top-right corner of your window.
@@ -28,11 +29,17 @@ Once you have the required configuration credentials from NATS Messaging, let’
 | ---------- | ----------- |
 | Integration Name | A name to identify your integration. | 
 | Server | Provide the NATS server name to be integrated with Orkes Conductor. |
-| Connection Type | Choose the required connection type for the integration. It can take two values:<ul><li>Default</li><li>Jetstream</li></ul> | 
+| Connection Type | Choose the required connection type for the integration. Supported values:<ul><li>**_Default_** - Standard NATS connection.</li><li>**_Jetstream_** - Advanced NATS connection with streaming capabilities.</li></ul> | 
+| Connection Mechanism | Choose the required connection mechanism for the Jetstream connection. Supported values:<ul><li>**_With stream_** - This is the regular approach in a Jetstream connection, where each stream defines how the messages are stored and the retention limits.</li><li>**_With consumer_** - This mechanism acts as an interface for clients to consume a subset of messages stored in a stream.</li></ul> This field is applicable only if the **_Connection Type_** is chosen as **_Jetstream_**.|
+| Stream name | Specify the name of the stream for Jetstream connection.<br/><br/>This field is applicable only if the **_Connection Type_** is chosen as **_Jetstream_** and the **_Connection Mechanism_** is chosen as **_With consumer_**. | 
+| Consumer name | Specify the name of the consumer for Jetstream connection.<br/><br/>This field is applicable only if the **_Connection Type_** is chosen as **_Jetstream_** and the **_Connection Mechanism_** is chosen as **_With consumer_**. | 
+| Consumer type | Define the type of consumer for Jetstream connection. Supported values:<ul><li>**_Push_** - The server actively delivers messages to the client.</li><li>**_Pull_** - The client requests messages from the server when ready.</li></ul>This field is applicable only if the **_Connection Type_** is chosen as **_Jetstream_** and the **_Connection Mechanism_** is chosen as **_With consumer_**.  | 
 | Authentication Type | Choose the required authentication type. You can opt for **_With Credentials_** or **_Without Credentials_**. |
-| Select security protocol | Choose the security protocol for authenticating the connection. It can take values:<ul><li>NONE</li><li>JWT - If JWT is opted, upload the JWT credentials file. </li></ul>This field is applicable only if the **_Authentication Type_** is chosen as **_With Credentials_**. | 
 | Username | Provide the username for authentication. This field is applicable only if the **_Authentication Type_** is chosen as **_With Credentials_**. | 
 | Password | Provide the password for authentication. This field is applicable only if the **_Authentication Type_** is chosen as **_With Credentials_**. | 
+| Select security protocol | Choose the security protocol for authenticating the connection. It can take values: <ul><li>**_NONE_**</li><li>**_JWT_** - If JWT is opted, upload the JWT credentials file. </li></ul>| 
+| Transport Layer Security | Choose the TLS security mechanism. Supported values:<ul><li>**_NONE_** - No TLS security.</li><li>**_PEM_** - Use PEM files for TLS security.  If PEM is opted for, upload the CA certificate PEM file.</li><li>**_JKS_** - Use Java KeyStore for TLS security. If JKS is opted for, upload the CA certificate JKS file.</li></ul> | 
+| Trust Store Authentication | Choose the required trust store authentication type. Supported values:<ul><li>**NONE** - No TLS authentication.</li><li>**_usingPassword_** - If opted, provide the trust store password.</li></ul>This field is applicable only if **_TLS_** is chosen as **_JKS_**. | 
 | Description | Provide a description of the integration. | 
 
 5. You can toggle on the **Active** button to activate the integration instantly.
