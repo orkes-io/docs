@@ -105,6 +105,7 @@ const sidebars = {
                 'developer-guides/debugging-workflows',
                 'developer-guides/task-to-domain',
                 'developer-guides/secrets-in-conductor',
+                'developer-guides/using-environment-variables',
                 'developer-guides/scaling-workers',
                 'developer-guides/event-handler',
                 {
