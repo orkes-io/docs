@@ -8,97 +8,75 @@ import TabItem from '@theme/TabItem';
 
 # Set Variable
 
-Set Variable allows us to set the workflow variables by creating or updating them with new values. Think of these as a temporary state, which you can set in any step and refer back to any steps that execute after setting the value.
+The Set Variable task allows you to create workflow variables or update them with new values. The task is used to track a shared variable at the workflow level across tasks, and these variables can be accessed or overwritten in any subsequent task in the workflow.
 
-## Definitions
+Variables can be initialized and updated at any point in the workflow. Once a variable is initialized, it can be accessed in any subsequent task using the expression `${workflow.variables.variableName}` (replacing variableName with the actual variable name). Initialized values can be overwritten by a subsequent Set Variable task.
 
-```json
-    {
-      "name": "set_variable",
-      "taskReferenceName": "set_variable_task_ref",
-      "type": "SET_VARIABLE",
-      "inputParameters": {
-        "variableName": "value"
-      }
-    }
-```
+## Task configuration
+To configure the Set Variable task, set your desired variables and their respective values in `inputParameters`. The values can be set in two ways:
+- Hard-coded in the workflow definition, or
+- A variable input that is defined in real-time during workflow execution.
 
-### Input Parameters
+## Task definition
 
-**Variables** - The variables can be initialized in the workflow definition as well as during the workflow run. Once a variable is initialized, it can be read or overwritten with a new value by any other task. Variables can be used to manage a state across all your tasks.
-
-## Examples
-
-
-<Tabs>
-<TabItem value="UI" label="UI" className="paddedContent">
-
-<div className="row">
-<div className="col col--4">
-
-<br/>
-<br/>
-
-1. Add task type `Set Variable`.
-2. Add the parameters to initialize or replace with values.
-
-</div>
-<div className="col">
-<div className="embed-loom-video">
-
-<p><img src="/content/img/ui-guide-set-variable.png" alt="Adding set variable" width="560" height="auto"/></p>
-
-</div>
-</div>
-</div>
-
-
-
-</TabItem>
- <TabItem value="JSON" label="JSON">
-
-```json
-    {
-      "name": "set_variable_example",
-      "taskReferenceName": "set_variable_example_ref_1",
-      "inputParameters": {
-        "organizationName": "${workflow.input.name}",
-        "anotherValue": "Hard Coded",
-        "objectValue": {
-          "sampleKey": "sampleValue"
-        }
-      },
-      "type": "SET_VARIABLE"
-    }
-```
-
-</TabItem>
-</Tabs>
-
-
-<details><summary>Sample Workflow - Set and Read Variables</summary>
-<p>
-Suppose in a workflow, we have to store a value in a variable and then, later in the workflow, reuse the value stored in the variable just as we do in programming; in such scenarios, the <i><b>Set Variable</b></i> task can be used.
-<br/><br/>
-
-Following is the workflow definition with the SET_VARIABLE task.
+This is the JSON schema for a Set Variable task definition.
 
 ```json
 {
-  "name": "Set_Variable_Workflow",
-  "description": "Set a value to a variable and then reuse it later in the workflow",
+  "name": "set_variable",
+  "taskReferenceName": "set_variable_ref",
+  "type": "SET_VARIABLE",
+  "inputParameters": {
+    "variableName": "value"
+  }
+}
+```
+
+## Adding a Set Variable task in UI
+**To add a Set Variable task:**
+1. In your workflow, select the **(+)** icon and add a **Set Variable** task.
+2. In **Variables**, add the desired workflow variables that will be initialized or replaced with a new value.
+3. For each workflow variable, configure the following:
+    - **Type**—the variable type, which can be a string, number, boolean, null, or object/array.
+    - **Key**—the variable name.
+    - **Value**—the variable value, which can be a variable input (for example, `${workflow.input.someKey}`) or a hard-coded value.
+
+<p><img src="/content/img/ui-guide-set-variable.png" alt="Adding set variable" /></p>
+
+## Examples
+
+Here are some examples for using the Set Variable task.
+
+<details><summary>Using the Set Variable task in a workflow</summary>
+<p>
+In this example workflow, a username is stored as a variable so that it can be reused in other tasks that require the username.
+
+```json
+// workflow definition
+
+{
+  "name": "Welcome_User_Workflow",
+  "description": "Designate a user to be welcomed",
   "tasks": [
     {
-      "name": "Set_Name",
-      "taskReferenceName": "Set_Name",
+      "name": "set_name",
+      "taskReferenceName": "set_name_ref",
       "type": "SET_VARIABLE",
       "inputParameters": {
-        "name": "Orkes"
+        "name": "${workflow.input.userName}"
       }
     },
     {
-      "name": "Read_Name",
-      "taskReferenceName": "Read_Name",
+      "name": "greet_user",
+      "taskReferenceName": "greet_user_ref",
+      "inputParameters": {
+        "var_name" : "${workflow.variables.name}"
+      },
+      "type": "SIMPLE"
+    },
+    {
+      "name": "send_reminder_email",
+      "taskReferenceName": "send_reminder_email_ref",
       "inputParameters": {
         "var_name" : "${workflow.variables.name}"
       },
@@ -107,7 +85,6 @@ Following is the workflow definition with the SET_VARIABLE task.
   ]
 }
 ```
-
-The above example shows that the task **Set_Name** is a Set Variable Task, and the variable name is set to **Orkes**. Later in the workflow, it is referenced by **${workflow.variables.name}** in another task.
+In the example above, `set_name` is a Set Variable Task that takes a variable input for `name`. In subsequent tasks, the `name` is later referenced using `${workflow.variables.name}`.
 </p>
 </details>

@@ -7,113 +7,96 @@ import TabItem from '@theme/TabItem';
 
 # Sub Workflow
 
-Sub Workflow allows executing another workflow from within the current workflow. 
+The Sub Workflow task allows another workflow to be executed within the current workflow. This allows you to reuse common workflows across multiple workflows.
 
-## Definitions
+The Sub Workflow task can also be used to overcome the limitations of other tasks:
+- Use it in a [Do While](./do-while) task to achieve nested Do While loops.
+- Use it in a Dynamic Fork task to execute more than one task in each fork.
+
+## Task configuration
+
+Configure these parameters for the Sub Workflow task.
+
+| Parameter     | Description                                                                                                                                                                                                | Required/ Optional |
+| ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
+| subWorkflowParam | A map that includes the sub-workflow’s configuration, such as the name, version, and task-to-domain mapping. | Required. |
+| subWorkflowParam. **name**    | The name of the workflow to be executed. This workflow should have a pre-existing definition in Conductor. | Required. |
+| subWorkflowParam. **version**     | The version of the workflow to be executed. | Required. |
+| subWorkflowParam. **taskToDomain**     | A map of sub-workflow tasks to specific domains. The keys are the task reference names and the values are the domain names. If not given, the taskToDomain of the executing parent workflow will take over. | Optional. |
+| subWorkflowParam. **idempotencyKey**     | A user-generated key to avoid duplicating transactions across workflow executions. Idempotency data is retained for the life of the workflow execution. | Optional. |
+| subWorkflowParam. **idempotencyStrategy**     | The strategy to use when a duplicate execution is already running. Supported values:<ul><li>`RETURN_EXISTING`—The request will not fail. Instead it will return the workflowId of the workflow which was triggered with the same idempotencyKey.</li><li>`FAIL`—The request will fail if the workflow has been triggered with the same idempotencyKey in the past.</li></ul> | Required if there is an idempotencyKey specified. |
+
+In addition, you can also configure the sub-workflow’s input in `inputParameters`, which will be passed down to the invoked sub-workflow. The sub-workflow’s input can be coupled to the parent workflow’s input parameters, or it can be invoked from the output of the preceding task.
+
+If you are taking the sub-workflow’s input parameters from the parent workflow, you need to add them as an input parameter in the parent workflow and then call the same input parameters inside the sub-workflow definition.
+
+
+## Task definition
+
+This is the JSON schema for a Sub Workflow task definition.
 
 ```json
-    {
-      "name": "sub_workflow",
-      "taskReferenceName": "sub_workflow_task_ref",
-      "type": "SUB_WORKFLOW",
-      "subWorkflowParam": {
-        "name": "sub-workflow-name",
-        "version": 1
-      }
+{
+  "name": "sub_workflow",
+  "taskReferenceName": "sub_workflow_ref",
+  "inputParameters": { // input parameters for the sub workflow},
+  "type": "SUB_WORKFLOW",
+  "subWorkflowParam": {
+    "name": "subworkflowName",
+    "version": 3,
+    "idempotencyKey": "someKey",
+    "idempotencyStrategy": "RETURN_EXISTING",
+    "taskToDomain": {
+      "someTask": "someDomain"
     }
+  }
+}
 ```
 
-:::tip
-* The Do-While task does not allow nested Do-While tasks. But it does permit a sub-workflow that can have a Do-While loop inside it.
-* Dynamic Forks can only contain one task. But using the sub-workflow concept, this single task can be a sub-workflow that includes additional tasks.
-:::
+## Task output
+The Sub Workflow task will return the following parameters.
 
-### Input Parameters
 
-| Attribute        | Description                                                                                                                                                                                                                                                                                                                                                                                                                               |
-| ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| subWorkflowParam | It includes the parameters name, version, & taskToDomain. <ul><li>**name** - You need to map this field with the name of the workflow you are planning to execute.</li><li>**version** - Include the version of the workflow to be executed.</li><li>**[taskToDomain](/content/developer-guides/task-to-domain)** - Allows scheduling the sub-workflow tasks per given mappings. If not given, the taskToDomain of the executing parent workflow is taken over.</li></ul>                                |
-| inputParameters  | The sub-workflow’s input can be coupled to the workflow’s input parameters, or it can be invoked from the output of the preceding task. For example, if you are taking the sub-workflow’s input parameter from the workflow, then you need to initially add this as an input parameter in the parent workflow (workflow to be called as the sub-workflow). Then you can call the same input parameter inside the sub-workflow definition. |
-
-### Output Parameters
-
-| Attribute     | Description                                                       |
+| Parameter     | Description                                                       |
 | ------------- | ----------------------------------------------------------------- |
-| subWorkflowId | Subworkflow execution ID generated when running the sub-workflow. |
+| subWorkflowId | The sub-workflow execution ID that is generated when running the sub-workflow. |
+In addition to the execution ID, the sub-workflow’s workflow output will also be supplied as the Sub Workflow task output.
 
-The output of the sub-workflow is also supplied to the output of the workflow.
+## Adding a Sub Workflow task in UI
+
+**To add a Sub Workflow task:**
+1. In your workflow, select the **(+)** icon and add a **Sub Workflow** task.
+2. Enter the **Workflow name** and **Version**.
+  Once selected, the sub-workflow’s input parameters will automatically appear if there are any pre-defined ones.
+3. (Optional) Enter the **Idempotency key** and select the **Idempotency strategy**.
+4. (Optional) Add any additional input parameters for the sub-workflow.
+5. (Optional) Add task to domain mapping for the sub-workflow tasks.
+
+To view the sub-workflow tasks inside the parent workflow, you can check **Expand** to display them in the visual diagram editor.
+
+<p><img src="/content/img/ui-guide-subworkflow-task.png" alt="Adding wait task" /></p>
 
 ## Examples
 
-<Tabs>
-<TabItem value="UI" label="UI" className="paddedContent">
+Here are some examples for using the Sub Workflow task.
 
-<div className="row">
-<div className="col col--4">
-
-<br/>
-<br/>
-
-1. Add task type `Sub Workflow`.
-2. Select the workflow and version.
-3. Check the option “Expand” if you need to expand the sub-workflow in the UI. This comes into use in cases where too many sub-workflows are added as forks in a fork-join task & you need to make the workflow diagram look crisp.
-4. Add input parameters.
-5. Add task to domain if applicable.
-
-</div>
-<div className="col">
-<div className="embed-loom-video">
-
-<p><img src="/content/img/ui-guide-subworkflow-task.png" alt="Adding wait task" width="500" height="auto"/></p>
-
-</div>
-</div>
-</div>
-
-
-
-</TabItem>
- <TabItem value="JSON" label="JSON">
-
-```json
-    {
-      "name": "sub_workflow_task_example",
-      "taskReferenceName": "sub_workflow_task_example_ref_1",
-      "inputParameters": {
-        "workflowInput": "${workflow.input.sampleInput}"
-      },
-      "type": "SUB_WORKFLOW",
-      "subWorkflowParam": {
-        "name": "wait-task-example",
-        "tasksToDomain": {
-          "*": "mydomain"
-        }
-      }
-    }
-```
-
-</TabItem>
-</Tabs>
-
-<details><summary>Complete Example</summary>
+<details><summary>Using the Sub Workflow task in a workflow</summary>
 <p>
 
-Let’s say you have a very long workflow, **“payment_for_subscription”**, which handles the payment for subscriptions as shown below:
+Let’s say you have a very long workflow, “payment_for_subscription”, which handles the payment for subscriptions as shown below:
 
 <p align="center"><img src="/content/img/payment-sub-workflow-example.jpg" alt="Payment sub workflow" width="100%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
-If you want to add this workflow to another workflow, copying the list of tasks to the required workflow would be possible. However, whenever this workflow is updated, it won’t be reflected in the workflow where you have added this. A better way to handle this is to call this workflow as a sub-workflow in your original workflow so that any updates to this workflow get reflected in all the workflows where it is called.
+To add this “payment_for_subscription” workflow to a larger subscription workflow, it would be possible to copy and paste the workflow JSON definition over. However, whenever the “payment_for_subscription” workflow is updated, it will not be reflected in the workflow where you have added it. A better way to handle this is to call the “payment_for_subscription” workflow as a sub-workflow in the wider subscription workflow so that any updates to this workflow get reflected in all its parent workflows.
 
-So, you can add this as a sub-workflow in your required workflow whenever a payment flow is to be implemented:
+You can add this as a sub-workflow in your required workflow whenever a payment flow is to be implemented:
+
 
 <p align="center"><img src="/content/img/payment-sub-workflow-in-main-workflow.png" alt="Payment workflow as sub-workflow in a subscription flow" width="50%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
-This is a subscription workflow with multiple instances where payment flow is to be implemented. Here the previously created payment workflow is added as sub-workflows.
-
-The above image is a simplified version of the subscription workflow. You can view the entire version in Playground here.
-
-| [View in Orkes Playground](https://play.orkes.io/workflowDef/Subscription/) |
-|--------------------------------------------------------------------------------------------------|
+This is a subscription workflow with multiple instances where payment flow is to be implemented. Here, the previously-created payment workflow is added as sub-workflows.
+The above image is a simplified version of the subscription workflow. You can view the entire version in Playground 
+[here](https://play.orkes.io/workflowDef/Subscription/).
 
 </p>
 </details>
@@ -122,7 +105,7 @@ The above image is a simplified version of the subscription workflow. You can vi
 
 ### How do we retry a sub-workflow from a specific task?
 
-You can use the following API to retry a sub-workflow from a specific task. From the Conductor UI, you check the task level start time to verify that the preceding tasks are not re-run. Additionally, you can insert a WAIT task before the desired re-run starting point and confirm that it does not transition to the state of that WAIT task.
+You can use the following API to retry a sub-workflow from a specific task. From the Conductor UI, check the task level start time to verify that the preceding tasks are not re-run. Additionally, you can insert a WAIT task before the desired re-run starting point and confirm that it does not transition to the state of that WAIT task.
 
 ```shell
  curl -X POST 'https://<conductor_server_dns>/api/workflow/<workflow_id>/rerun' \
