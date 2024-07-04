@@ -10,7 +10,7 @@ import TabItem from '@theme/TabItem';
 The Sub Workflow task allows another workflow to be executed within the current workflow. This allows you to reuse common workflows across multiple workflows.
 
 The Sub Workflow task can also be used to overcome the limitations of other tasks:
-- Use it in a Do While task to achieve nested do while loops.
+- Use it in a [Do While](./do-while) task to achieve nested Do While loops.
 - Use it in a Dynamic Fork task to execute more than one task in each fork.
 
 ## Task configuration
@@ -56,23 +56,23 @@ This is the JSON schema for a Sub Workflow task definition.
 ## Task output
 The Sub Workflow task will return the following parameters.
 
+
 | Parameter     | Description                                                       |
 | ------------- | ----------------------------------------------------------------- |
 | subWorkflowId | The sub-workflow execution ID that is generated when running the sub-workflow. |
-
 In addition to the execution ID, the sub-workflow’s workflow output will also be supplied as the Sub Workflow task output.
 
 ## Adding a Sub Workflow task in UI
 
 **To add a Sub Workflow task:**
 1. In your workflow, select the **(+)** icon and add a **Sub Workflow** task.
-2. Enter the Workflow name and Version.
+2. Enter the **Workflow name** and **Version**.
   Once selected, the sub-workflow’s input parameters will automatically appear if there are any pre-defined ones.
-3. (Optional) Enter the Idempotency key and select the Idempotency strategy.
+3. (Optional) Enter the **Idempotency key** and select the **Idempotency strategy**.
 4. (Optional) Add any additional input parameters for the sub-workflow.
 5. (Optional) Add task to domain mapping for the sub-workflow tasks.
 
-To view the sub-workflow tasks inside the parent workflow, you can check Expand to display them in the visual diagram editor.
+To view the sub-workflow tasks inside the parent workflow, you can check **Expand** to display them in the visual diagram editor.
 
 <p><img src="/content/img/ui-guide-subworkflow-task.png" alt="Adding wait task" /></p>
 

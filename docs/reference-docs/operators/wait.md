@@ -12,12 +12,12 @@ The Wait task is used when the workflow needs to be paused before continuing. It
 - For a certain duration; or
 - For an external trigger.
 
-The Wait task will remain in-progress until a certain point, at which point it will be marked as completed. There are three wait types for the Wait task:
+The Wait task will remain in-progress until a certain point. There are three wait types for the Wait task:
 - **Until**—Used to wait until a specified date and time, including the timezone.
 - **Duration**—Used to wait until a specified duration in the format: x hours x days x minutes x seconds.
 - **Signal**—Used to wait for an external signal.
 
-External signals can come from an event handler, direct API call, or a webhook. For example, the task update API can be invoked explicitly to mark the Wait task as COMPLETED.
+External signals can come from an event handler, direct API call, or a webhook. For example, the [task update API](https://orkes.io/content/reference-docs/api/task/update-task-status-in-workflow) can be invoked explicitly to mark the Wait task as COMPLETED.
 
 ## Task configuration
 
@@ -25,7 +25,7 @@ Configure these parameters for the Wait task.
 
 | Parameter     | Description                                                                                                                                                                                                | Required/ Optional |
 | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
-| inputParameters | The input parameters for the Wait task, which can be passed as a variable or a fixed value. These parameters include those required for the Wait task to complete, which depend on the wait type:<ul><li>`until` for the until wait type</li><li>`duration` for the duration wait type</li></ul> | Required. |
+| inputParameters | The input parameters for the Wait task, which can be [passed as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor) or a fixed value. These parameters include those required for the Wait task to complete, which depend on the wait type:<ul><li>`until` for the until wait type</li><li>`duration` for the duration wait type</li></ul> | Required. |
 | inputParameters. **until**    | The datetime and timezone in one of the following formats:<ul><li>yyyy-MM-dd HH:mm z</li><li>yyyy-MM-dd HH:mm</li><li>yyyy-MM-dd</li></ul>For example, 2024-04-30 15:20 GMT+04:00. | Required for until wait type. |
 | inputParameters. **duration** | The wait duration in the format `x days y hours z minutes aa seconds`. The accepted units in this field are:<ul><li>**days**, or **d** for days</li><li>**hours**, **hrs**, or **h** for hours</li><li>**minutes**, **mins**, or **m** for minutes</li><li>**seconds**, **secs**, or **s** for seconds</li></ul>  | Required for duration wait type. |
 
@@ -82,7 +82,7 @@ This is the JSON schema for a Switch task definition.
 ## Adding a Wait task in UI
 **To add a Wait task:**
 1. In your workflow, select the **(+)** icon and add a **Wait** task.
-2. Select the Wait type and configure it.
+2. Select the **Wait type** and configure it.
 
 <p><img src="/content/img/ui-guide-wait-task.png" alt="Adding wait task" /></p>
 

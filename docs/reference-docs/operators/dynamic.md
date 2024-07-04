@@ -9,7 +9,7 @@ import TabItem from '@theme/TabItem';
 
 The Dynamic task is used to execute a registered task dynamically at run-time. It is similar to a function pointer in programming, and can be used for when the decision to execute which task will only be made after the workflow has begun.
 
-The Dynamic task takes in as input the name of a task, which can be a system task or a custom task registered on Conductor.
+The Dynamic task accepts as input the name of a task, which can be a system task or a custom task registered on Conductor.
 
 ## Task configuration
 
@@ -17,11 +17,11 @@ Configure these parameters for the Dynamic task.
 
 | Parameter     | Description                                                                                                                                                                                                | Required/ Optional |
 | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
-| inputParameters. **taskToExecute** | The name of the task that will be executed. It can be passed as a variable. | Required. |
-| dynamicTaskNameParam    | The input parameter key whose value is used to schedule the task. For example, "taskToExecute". | Required. |
+| dynamicTaskNameParam    | The input parameter key whose value is used to schedule the task. For example, "taskToExecute", which will then be specified as an input parameter in the Dynamic task. | Required. |
+| inputParameters. **taskToExecute** | The name of the task that will be executed. It can be [passed as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor). | Required. |
 
 ### Configuration for calling a sub-workflow
-If the Dynamic task to be called is a Sub Workflow task, then `taskToExecute` must be set to `SUB_WORKFLOW`. The `inputParameters` for the Dynamic task should also include these fields:
+If the Dynamic task to be called is a [Sub Workflow](./sub-workflow) task, then `taskToExecute` must be set to `SUB_WORKFLOW`. The `inputParameters` for the Dynamic task should also include these fields:
 
 <Tabs>
 <TabItem value="JSON" label="Using workflow JSON">
@@ -96,7 +96,9 @@ During execution, the Dynamic task is replaced with whatever task that is called
 ## Adding a Dynamic task in UI
 **To add a Dynamic task:**
 1. In your workflow, select the **(+)** icon and add a **Dynamic** task.
-2. Add the Task input params, which should include the parameter key that maps to task name (for example: taskToExecute).
+2. In **Task input params**, configure the task to execute by setting a value in the `taskToExecute` parameter.
+  The value can be [passed as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor) (for example, ${workflow.input.dynamicTaskName}).
+
 
 <p><img src="/content/img/ui-guide-dynamic-task.png" alt="Adding wait task" /></p>
 

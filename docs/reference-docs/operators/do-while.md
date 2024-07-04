@@ -89,12 +89,12 @@ Each time a task in the do while loop is completed, the output is saved and inde
 ## Adding a Do While task in UI
 **To add a Do While task:**
 1. In your workflow, select the **(+)** icon and add a **Do While** task.
-2. In Script params, add the parameter that will be evaluated in the expression.
-3. In Loop condition, select the evaluator type and enter the loop condition.
-    - Value-Param for value-param
-    - ECMASCRIPT for graaljs
+2. In **Script params**, add the parameter that will be evaluated in the expression.
+3. In **Loop condition**, select the evaluator type and enter the loop condition.
+    - **Value-Param**—Ensure that the expression value matches the parameter key you have defined in Script params.
+    - **ECMASCRIPT**—Enter a Javascript script.
 4. In your workflow, select the **(+)** icon to add tasks to the do while loop.
-5. (Optional) Set the number of required iterations by unchecking No Limits. There is no limit on the number of iterations by default.
+5. (Optional) Set the number of required iterations by unchecking **No Limits**. There is no limit on the number of iterations by default.
 
 <p><img src="/content/img/ui-guide-do-while-task.png" alt="Adding Do While"/></p>
 
@@ -237,11 +237,11 @@ The Do While task’s `taskReferenceName` is "get_all_stars_loop_ref". To evalua
 </details>
 
 ## Limitations
-Within a Do While task, branching using Switch, Fork/Join, Dynamic Fork tasks are supported. However, since the loop tasks will be executed within the scope of its parent Do While task, the Do While task may not execute as expected if the branching crosses outside its scope.
 
-Nested Do While tasks are not supported. To achieve a similar functionality as a nested do while loop, you can use a Sub Workflow task inside the Do While task.
-
-Isolation group execution is not supported. However, domain is supported for loop tasks inside the Do While task.
+There are several limitations for the Do While task:
+- **Branching**—Within a Do While task, branching using Switch, Fork/Join, Dynamic Fork tasks are supported. However, the Do While task may not execute as expected if the branching crosses outside its scope, since the loop tasks will be executed within the scope.
+- **Nested loops**—Nested Do While tasks are not supported. To achieve a similar functionality as a nested do while loop, you can use a [Sub Workflow](./sub-workflow) task inside the Do While task.
+- **Isolation group execution**—Isolation group execution is not supported. However, domain is supported for loop tasks inside the Do While task.
 
 ## Errors
 If an exception occurs during evaluation of the `loopCondition`, the task is set to `FAILED_WITH_TERMINAL_ERROR`.

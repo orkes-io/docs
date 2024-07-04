@@ -11,7 +11,7 @@ The Dynamic fork task is used when the number of forks is to be determined at th
 
 The tasks to be executed can be defined in two ways:
 
-1. Using an array to run a simple task OR HTTP task OR a sub workflow.
+1. Using an array to run a simple task OR HTTP task OR a [Sub Workflow](./sub-workflow).
     1. Sub Workflows can be used when running more than one task in the fork per array item.
 2. Using input parameters.
 
@@ -27,7 +27,7 @@ Here, each array item is passed to a method called process. Conductor allows us 
 
 1. [Simple Task](/content/reference-docs/worker-task) - When we need to run a simple custom worker task.
 2. [HTTP Task](/content/reference-docs/system-tasks/http) - When we need to run the system HTTP workers.
-3. [Sub Workflows](./sub-workflow) - Use this when we want to run more than one task or a series of steps that can be a full-fledged complex flow.
+3. [Sub Workflow](./sub-workflow) - Use this when we want to run more than one task or a series of steps that can be a full-fledged complex flow.
 4. Other Conductor Task Types - This can also be used for other task types such as EVENT, WAIT, etc.
 
 <details><summary>Running Simple Tasks using Dynamic Fork</summary>
@@ -160,14 +160,14 @@ Run a sub-workflow for each of the inputs provided.
 | forkTaskInputs          | Array of inputs - a task will be executed for each input. |
 
 :::note
-**forkTaskWorkflow** - When this value is present, Conductor treats this as a dynamic fork that runs sub workflows.
+**forkTaskWorkflow** - When this value is present, Conductor treats this as a dynamic fork that runs Sub Workflows.
 :::
 
 Example:
 ```json
     {
       "name": "dynamic_workflow_array_sub_workflow",
-      "description": "Dynamic workflow array - run sub workflow tasks",
+      "description": "Dynamic workflow array - run Sub Workflow tasks",
       "tasks": [
         {
           "name": "dynamic_workflow_array_sub_workflow",

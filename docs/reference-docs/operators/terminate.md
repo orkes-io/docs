@@ -7,118 +7,85 @@ import TabItem from '@theme/TabItem';
 
 # Terminate 
 
-A task that can terminate the current workflow with a termination status and reason.
+The Terminate task is used to terminate the current workflow with a termination status and reason, and to modify the workflow output with a given value.
 
-## Definitions
+It can act as a return statement for cases where you want the workflow to be terminated without continuing the subsequent tasks. For example, you want to execute certain tasks only if a condition is met and otherwise terminate the workflow.
+
+
+## Task configuration
+Configure these parameters for the Terminate task.
+
+| Parameter     | Description                                                                                                                                                                                                | Required/ Optional |
+| ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
+| inputParameters. **terminationStatus** | The termination status for the current workflow. Accepted values:<ul><li>`COMPLETED`</li><li> `FAILED`</li><li> `TERMINATED`</li></ul>  | Required. |
+| inputParameters. **terminationReason**    | The reason for terminating the current workflow, which will provide the context of the termination. It can be [passed as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor). | Optional. |
+| inputParameters. **workflowOutput** | A map of the expected workflow output on termination. It can contain a string, number, boolean, null, or object/array. | Optional. |
+
+
+## Task definition
+This is the JSON schema for a Terminate task definition.
+
 
 ```json
 {
-     "name": "terminate",
-     "taskReferenceName": "terminate_ref",
-     "inputParameters": {
-       "terminationStatus": "TERMINATED",
-       "workflowOutput": {
-         "key": "value"
-       },
-       "terminationReason": "${workflow.input.termination-reason}"
-     },
-     "type": "TERMINATE"
-   }
+  "name": "terminate",
+  "taskReferenceName": "terminate_ref",
+  "inputParameters": {
+    "terminationStatus": "TERMINATED",
+    "terminationReason": "",
+    "workflowOutput": {
+      "key": "value"
+    }
+  },
+  "type": "TERMINATE"
+}
 ```
 
-### Input Parameters
+## Task output
+The Terminate task will return the following parameters.
 
-| Attribute         | Description                                                                                        |
-| ----------------- | -------------------------------------------------------------------------------------------------- |
-| terminationStatus | Choose the termination status while terminating the workflow. It can take values **COMPLETED**, **FAILED**, or **TERMINATED**. |
-| terminationReason | Provide a reason to give a clear understanding of the termination status. The termination reason can also be [passed as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor).                          |
-| workflowOutput    | Provide the expected workflow output on termination. It can be a string, number, boolean, null or object/array.                                                               |
 
-:::tip
-The Terminate task can modify the workflow's output with a given parameter and act as a return statement for conditions where you want to terminate your workflow.
-:::
-
-### Output Parameters
-
-| Attribute | Description                                                                                                   |
+| Parameter | Description                                                                                                   |
 | --------- | ------------------------------------------------------------------------------------------------------------- |
-| output    | Returns the workflow output from the defined input parameter. If *workflowOutput* is not set, it returns an empty object. |
+| output    | A map of the workflow output on termination, as defined in `inputParameters.workflowOutput`. If `workflowOutput` is not set in the Terminate task definition, the output will be an empty object. |
+
+## Adding a Terminate task in UI
+
+**To add a Terminate task:**
+1. In your workflow, select the (+) icon and add a Terminate task.
+2. Select the **Termination status**.
+3. Enter the **Termination reason**.
+4. (Optional) Add the workflow output.
+
+<p><img src="/content/img/ui-guide-terminate-task.png" alt="Adding wait task" /></p>
 
 ## Examples
+Here are some examples for using the Terminate task.
 
-
-<Tabs>
-<TabItem value="UI" label="UI" className="paddedContent">
-
-<div className="row">
-<div className="col col--4">
-
-<br/>
-<br/>
-
-1. Add task type **Terminate**.
-2. Choose the termination status and provide a termination reason.
-3. Optionally set the workflow output.
-
-</div>
-<div className="col">
-<div className="embed-loom-video">
-
-<p><img src="/content/img/ui-guide-terminate-task.png" alt="Adding wait task" width="500" height="auto"/></p>
-
-</div>
-</div>
-</div>
-
-
-
-</TabItem>
- <TabItem value="JSON" label="JSON">
+<details><summary>Using the Terminate task in a switch case</summary>
+<p>
+In a shipping workflow, a decision is made to ship with a specific shipping provider based on provided input while running the workflow. If the provided input does not match with the available shipping providers, then the workflow will fail and terminate. If the input provided matches, then it continues. Here is a snippet that shows the default switch case terminating the workflow:
 
 ```json
 {
-     "name": "terminate",
-     "taskReferenceName": "terminate_ref",
-     "inputParameters": {
-       "terminationStatus": "TERMINATED",
-       "workflowOutput": {
-         "key": "value"
-       },
-       "terminationReason": "${workflow.input.termination-reason}"
-     },
-     "type": "TERMINATE"
-   }
-```
-
-</TabItem>
-</Tabs>
-
-<details><summary>Complete Example</summary>
-<p>
-Suppose in a workflow; we have to make a decision to ship the courier with the shipping service providers based on input provided while running the workflow. If the input provided while running the workflow does not match with the available shipping providers, then the workflow will fail and return. If the input provided matches, then it goes ahead.
-<br/>
-Here is a snippet that shows the default switch case terminating the workflow:
-
-```json
+  "name": "switch_task",
+  "taskReferenceName": "switch_task",
+  "type": "SWITCH",
+  "defaultCase": [
     {
-      "name": "switch_task",
-      "taskReferenceName": "switch_task",
-      "type": "SWITCH",
-      "defaultCase": [
-        {
-          "name": "terminate",
-          "taskReferenceName": "terminate",
-          "type": "TERMINATE",
-          "inputParameters": {
-            "terminationStatus": "FAILED",
-            "terminationReason": "Shipping provider not found."
-          }
-        }
-      ]
+      "name": "terminate",
+      "taskReferenceName": "terminate",
+      "type": "TERMINATE",
+      "inputParameters": {
+        "terminationStatus": "FAILED",
+        "terminationReason": "{workflow.input.termination-reason}"
+      }
     }
+  ]
+}
 ```
 
-Workflow gets created as shown in the diagram.
+The full workflow with the Terminate task looks like this:
 
 <p align="center"><img src="/content/img/terminate-example.png" alt="Terminate Example" width="90%" height="auto"></img></p>
 

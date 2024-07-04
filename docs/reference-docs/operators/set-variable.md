@@ -35,7 +35,7 @@ This is the JSON schema for a Set Variable task definition.
 ## Adding a Set Variable task in UI
 **To add a Set Variable task:**
 1. In your workflow, select the **(+)** icon and add a **Set Variable** task.
-2. In Variables, add the desired workflow variables that will be initialized or replaced with a new value.
+2. In **Variables**, add the desired workflow variables that will be initialized or replaced with a new value.
 3. For each workflow variable, configure the following:
     - **Type**—the variable type, which can be a string, number, boolean, null, or object/array.
     - **Key**—the variable name.
