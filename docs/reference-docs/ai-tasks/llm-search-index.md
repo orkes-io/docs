@@ -30,22 +30,25 @@ For example, in a recommendation system, a user might issue a query to find prod
 
 ## Input Parameters
 
-| Attribute | Description |
+| Parameter | Description |
 | --------- | ----------- |
-| vectorDB | Choose the required vector database.<br/><br/>**Note**:If you haven’t configured the vector database on your Orkes console, navigate to the Integrations tab and configure your required provider. Refer to this doc on [how to integrate Vector Databases with Orkes console](/content/category/integrations/vector-databases). |
-| namespace | Choose from the available namespace configured within the chosen vector database.<br/><br/>Namespaces are separate isolated environments within the database to manage and organize vector data effectively.<br/><br/>**Note**:Namespace field is applicable only for Pinecone integration and is not applicable to Weaviate integration.|
-| index | Choose the index in your vector database where indexed text or data was stored.<br/><br/> **Note:**For Weaviate integration, this field refers to the class name, while in Pinecone integration, it denotes the index name itself.|
-| llmProvider | Choose the required LLM provider configured.<br/><br/>**Note:**If you haven’t configured your AI / LLM provider on your Orkes console, navigate to the Integrations tab and configure your required provider. Refer to this doc on [how to integrate the LLM providers with Orkes console](/content/category/integrations/ai-llm).|
-| model | Choose from the available language model configured for the chosen LLM provider.<br/><br/>For example, If your LLM provider is Azure Open AI & you’ve configured _text-davinci-003_ as the language model, you can choose it under this field. | 
+| vectorDB | Choose the required vector database.<br/><br/>**Note**:If you haven’t configured the vector database on your Orkes console, navigate to the **Integrations** tab and configure your required provider. Refer to the documentation on [how to integrate Vector Databases with Orkes console.](/content/category/integrations/vector-databases). |
+| namespace | Choose from the available namespace configured within the chosen vector database.<br/><br/>Namespaces are separate isolated environments within the database to manage and organize vector data effectively.<br/><br/>**Note**: The **_namespace_** field has different names and applicability based on the integration:<ul><li>For Pinecone integration, the namespace field is applicable.</li><li>For Weaviate integration, the namespace field is not applicable.</li><li>For MongoDB integration, the namespace field is referred to as “Collection” in MongoDB.</li><li>For Postgres integration, the namespace field is referred to as “Table” in Postgres.</li></ul>|
+| index | Choose the index in your vector database where indexed text or data was stored.<br/><br/> **Note:** For Weaviate integration, this field refers to the class name, while for other integrations, it denotes the index name.|
+| embeddingModelProvider | Choose the required LLM provider for embedding.<br/><br/>**Note:** If you haven’t configured your AI / LLM provider on your Orkes console, navigate to the **Integrations** tab and configure your required provider. Refer to the documentation on [how to integrate the LLM providers with Orkes console](/content/category/integrations/ai-llm).|
+| embeddingModel | Choose from the available language models provided by the selected LLM provider.| 
 | query | Provide your search query. A query typically refers to a question, statement, or request made in natural language that is used to search, retrieve, or manipulate data stored in a database. | 
-| optional | Enabling this option renders the task optional. The workflow continues unaffected by the task's outcome, whether it fails or remains incomplete. | 
 
 ## Output Parameters
 
-| Attribute | Description |
+| Parameter | Description |
 | --------- | ----------- |
+| result | A JSON array containing the results of the query. |
 | score | Represents a value that quantifies the degree of likeness between a specific item and a query vector, facilitating the ranking and ordering of results. Higher scores denote a stronger resemblance or relevance of a data point to the query vector. |
-| docId | Displays the docId from where the text is queried. |
+| metadata | An object containing additional metadata related to the retrieved document.|
+| docId | Displays the unique identifier of the document queried. |
+| parentDocId | Another identifier that might denote a parent document in hierarchical or relational data structures. |
+| text | Actual content of the document retrieved. |
 
 ## Examples
 
