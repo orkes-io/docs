@@ -24,10 +24,10 @@ A system task to retrieve the content of the document provided and use it for fu
 
 ## Input Parameters
 
-| Attribute | Description |
+| Parameter | Description |
 | --------- | ----------- |
-| url | Provide the URL of the document to be retrieved.<br/><br/>Check out our documentation on [how to pass parameters to tasks](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor). |
-| mediaType | Select the media type of the file to be retrieved. Currently, supported media types include:<ul><li>application/pdf</li><li>text/html</li><li>text/plain</li><li>json</li></ul> | 
+| url | Provide the URL of the document to be retrieved. This can also be [passed as variables.](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor). |
+| mediaType | Select the media type of the file to be retrieved. Currently, supported media types include:<ul><li>application/java-archive</li><li>application/EDI-X12</li><li>application/EDIFACT</li><li>application/javascript</li><li>application/octet-stream</li><li>application/ogg</li><li>application/pdf</li><li>application/xhtml+xml</li><li>application/x-shockwave-flash</li><li>application/json</li><li>application/ld+json</li><li>application/xml</li><li>application/zip</li><li>application/x-www-form-urlencoded</li><li>audio/mpeg</li><li>audio/x-ms-wma</li><li>audio/vnd.rn-realaudio</li><li>audio/x-wav</li><li>image/gif</li><li>image/jpeg</li><li>image/png</li><li>image/tiff</li><li>image/vnd.microsoft.icon</li><li>image/x-icon</li><li>image/vnd.djvu</li><li>image/svg+xml</li></ul> | 
 
 ## Examples
 
