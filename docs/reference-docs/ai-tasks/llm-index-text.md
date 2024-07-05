@@ -6,7 +6,7 @@ import TabItem from '@theme/TabItem';
 
 # LLM Index Text
 
-A system task to index the provided text into a vector space that can be efficiently searched, retrieved, and processed later.
+A system task designed to index the provided text into a vector space for efficient search, retrieval, and processing at a later stage.
 
 ## Definitions
 
@@ -29,16 +29,15 @@ A system task to index the provided text into a vector space that can be efficie
 
 ## Input Parameters
 
-| Attribute | Description |
+| Parameter | Description |
 | --------- | ----------- |
-| vectorDB | Choose the required vector database.<br/><br/>**Note**:If you haven’t configured the vector database on your Orkes console, navigate to the Integrations tab and configure your required provider. Refer to this doc on [how to integrate Vector Databases with Orkes console](/content/category/integrations/vector-databases). |
-| namespace | Choose from the available namespace configured within the chosen vector database.<br/><br/>Namespaces are separate isolated environments within the database to manage and organize vector data effectively.<br/><br/>**Note**:Namespace field is applicable only for Pinecone integration and is not applicable to Weaviate integration.|
-| index | Choose the index in your vector database where indexed text or data was stored.<br/><br/> **Note:**For Weaviate integration, this field refers to the class name, while in Pinecone integration, it denotes the index name itself.|
-| embeddingModelProvider | Choose the required LLM provider for embedding.<br/><br/>If you haven’t configured your AI / LLM provider on your Orkes console, navigate to the Integrations tab and configure your required provider. Refer to this doc on [how to integrate the LLM providers with Orkes console](/content/category/integrations/ai-llm).|
-| embeddingModel | Choose from the available language model for the chosen LLM provider. |
+| vectorDB | Choose the required vector database.<br/><br/>**Note**:If you haven’t configured the vector database on your Orkes console, navigate to the __Integrations__ tab and configure your required provider. Refer to the documentation on [how to integrate Vector Databases with Orkes console.](/content/category/integrations/vector-databases). |
+| namespace | Choose from the available namespace configured within the chosen vector database.<br/><br/>Namespaces are separate isolated environments within the database to manage and organize vector data effectively.<br/><br/>**Note**: The **_namespace_** field has different names and applicability based on the integration:<ul><li>For Pinecone integration, the namespace field is applicable.</li><li>For Weaviate integration, the namespace field is not applicable.</li><li>For MongoDB integration, the namespace field is referred to as “Collection” in MongoDB.</li><li>For Postgres integration, the namespace field is referred to as “Table” in Postgres.</li></ul>|
+| index | Choose the index in your vector database where indexed text or data was stored.<br/><br/> **Note:** For Weaviate integration, this field refers to the class name, while for other integrations, it denotes the index name.|
+| embeddingModelProvider | Choose the required LLM provider for embedding.<br/><br/>If you haven’t configured your AI / LLM provider on your Orkes console, navigate to the **Integrations** tab and configure your required provider. Refer to the documentation on [how to integrate the LLM providers with Orkes console](/content/category/integrations/ai-llm).|
+| embeddingModel | Choose from the available language models provided by the selected LLM provider. |
 | text | Provide the text to be indexed. |
-| docId | Provide the ID of the document where you need to store the indexed text. |
-| optional | Enabling this option renders the task optional. The workflow continues unaffected by the task's outcome, whether it fails or remains incomplete. | 
+| docId | Assign a unique ID to identify the document where the indexed text will be stored. |
 
 ## Examples
 
