@@ -11,7 +11,7 @@ The major steps for enabling CDC on Conductor workflow include:
 3. Execute Workflows.
 4. Verify Changes in Eventing Systems.
 
-# Add Eventing Integration in Orkes Conductor
+## Add Eventing Integration in Orkes Conductor
 
 The first step in enabling workflow CDC is to add the required integration in Orkes Conductor.
 
