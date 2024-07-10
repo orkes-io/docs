@@ -28,7 +28,7 @@ To create AI prompts,
 
 <p align="center"><img src="/content/img/create-ai-prompts.png" alt="Creating AI Prompts" width="100%" height="auto"></img></p>
 
-| Parameter | Decsription | 
+| Parameter | Description | 
 | --------- | ----------- | 
 | Prompt Name | A name for the prompt. |
 | Model | Choose the LLM models you want this prompt to be used from the already integrated list. If a model is not added here, it cannot be used as the model for generating responses based on this template. |
@@ -37,7 +37,7 @@ To create AI prompts,
 
 4. Now, let’s test the prompt right away by filling in the following parameters:
 
-| Parameter | Decsription | 
+| Parameter | Description | 
 | --------- | ----------- | 
 | Select model to test | From the chosen LLM models, you can choose any model for testing the prompt.<br/><br/> This makes your AI prompt diverse to be used among any language models, provided they have been integrated with your cluster. |
 | Temperature | Set the required temperature based on your requirements. Temperature is a parameter to indicate the randomness of the model’s output.<br/><br/>Higher temperatures, such as 1.0, make the output more random and creative. It can be used for generating creative content like creating social media posts, drafting emails, etc.<br/><br/>Whereas a lower value makes the output more stable and focused. It can be used in cases like text classification, where you provide a text and classify it into appropriate categories. |
