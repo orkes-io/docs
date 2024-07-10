@@ -106,7 +106,7 @@ To create prompt templates,
 
 <p align="center"><img src="/content/img/create-ai-prompts.png" alt="Creating AI Prompts" width="100%" height="auto"></img></p>
 
-| Parameter | Decsription | 
+| Parameter | Description | 
 | --------- | ----------- | 
 | Prompt Name | A name for the prompt.|
 | Model | Choose the LLM models you want this prompt to be used from the already integrated list. If a model is not added here, it cannot be used as the model for generating responses based on this template. |
