@@ -34,12 +34,13 @@ Once you have the required configuration parameters from NATS Messaging, let’s
 | Stream name | Specify the name of the stream for Jetstream connection.<br/><br/>This field is applicable only if the **_Connection Type_** is chosen as **_Jetstream_** and the **_Connection Mechanism_** is chosen as **_With consumer_**. | 
 | Consumer name | Specify the name of the consumer for Jetstream connection.<br/><br/>This field is applicable only if the **_Connection Type_** is chosen as **_Jetstream_** and the **_Connection Mechanism_** is chosen as **_With consumer_**. | 
 | Consumer type | Define the type of consumer for Jetstream connection. Supported values:<ul><li>**_Push_** - The server actively delivers messages to the client.</li><li>**_Pull_** - The client requests messages from the server when ready.</li></ul>This field is applicable only if the **_Connection Type_** is chosen as **_Jetstream_** and the **_Connection Mechanism_** is chosen as **_With consumer_**.  | 
-| Authentication Type | Choose the required authentication type. You can opt for **_With Credentials_** or **_Without Credentials_**. |
-| Username | Provide the username for authentication. This field is applicable only if the **_Authentication Type_** is chosen as **_With Credentials_**. | 
-| Password | Provide the password for authentication. This field is applicable only if the **_Authentication Type_** is chosen as **_With Credentials_**. | 
+| Batch Poll Consumers Count | Specifies how many consumers are polled per batch when using the **_Pull_** consumer type.<br/><br/>This field is applicable only if the **_Connection Type_** is chosen as **_Jetstream_** and the **_Connection Mechanism_** is chosen as **_With consumer_**. |
 | Select security protocol | Choose the security protocol for authenticating the connection. It can take values: <ul><li>**_NONE_**</li><li>**_JWT_** - If JWT is opted, upload the JWT credentials file. </li></ul>| 
 | Transport Layer Security | Choose the TLS security mechanism. Supported values:<ul><li>**_NONE_** - No TLS security.</li><li>**_PEM_** - Use PEM files for TLS security.  If PEM is opted for, upload the CA certificate PEM file.</li><li>**_JKS_** - Use Java KeyStore for TLS security. If JKS is opted for, upload the CA certificate JKS file.</li></ul> | 
 | Trust Store Authentication | Choose the required trust store authentication type. Supported values:<ul><li>**NONE** - No TLS authentication.</li><li>**_usingPassword_** - If opted, provide the trust store password.</li></ul>This field is applicable only if **_TLS_** is chosen as **_JKS_**. | 
+| Authentication Type | Choose the required authentication type. You can opt for **_With Credentials_** or **_Without Credentials_**. |
+| Username | Provide the username for authentication. This field is applicable only if the **_Authentication Type_** is chosen as **_With Credentials_**. | 
+| Password | Provide the password for authentication. This field is applicable only if the **_Authentication Type_** is chosen as **_With Credentials_**. | 
 | Description | Provide a description of the integration. | 
 
 5. You can toggle on the **Active** button to activate the integration instantly.
