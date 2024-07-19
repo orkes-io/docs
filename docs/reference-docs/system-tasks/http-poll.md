@@ -19,8 +19,6 @@ HTTP Poll task is used to invoke HTTP API endpoints until the specified conditio
        "http_request": {
          "uri": "https://orkes-api-tester.orkesconductor.com/api",
          "method": "GET",
-         "connectionTimeOut": 3000,
-         "readTimeOut": "3000",
          "accept": "application/json",
          "contentType": "application/json",
          "terminationCondition": "(function(){ return $.output.response.body.randomInt > 10;})();",
@@ -56,8 +54,6 @@ HTTP Poll task is used to invoke HTTP API endpoints until the specified conditio
 | pollingStrategy | Choose the required polling strategy. It can take any of the following values:<ul><li>**FIXED** - The duration between each HTTP API invocation will be fixed.</li><li>**LINEAR_BACKOFF** - The duration between each HTTP API invocation will be calculated by multiplying the poll count with pollingInterval. Note that the poll count is the incremental value based on each invocation.</li><li>**EXPONENTIAL_BACKOFF** - The duration between each HTTP API invocation will be calculated by multiplying the poll count by 2 base exponentials of the polling interval.</li></ul>By default, the value is set to FIXED. | 
 | headers           | A map of additional HTTP headers to be sent along with the request. The supported types are:<ul><li>Accept-Language</li><li>Authorization</li><li>Cache Control</li><li>Content-MD5</li><li>From</li><li>If-Match</li><li>If-Modified-Since</li><li>If-None-Match</li><li>Max-Forwards</li><li>Pragma</li><li>If-Range</li><li>If-Unmodified-Since</li><li>Proxy-Authorization</li><li>Range</li><li>Warning</li><li>x-api-key</li><li>Accept-Charset</li><li>Accept-Encoding</li><li>Accept-Control-Request-Headers</li><li>Accept-Control-Request-Method</li><li>Content-Transfer-Encoding</li><li>Expect</li><li>Transfer-Encoding</li><li>Trailer</li></ul> | 
 | body              | Request body when using POST, PUT, or PATCH. It can be added as _text_ (**"body": "text"**) or _parameters_ such as string, number, boolean, null, or object/array. | 
-| connectionTimeOut | Set the connection timeout in milliseconds. If set to 0, it is equivalent to infinity. By default, the value is set to 3000.                                                 |
-| readTimeOut       | Set the read timeout in milliseconds. If set to 0, it is equivalent to infinity. By default, the value is set to 3000.                                     |
 | encode | Determines whether the URI needs encoding. When set to true (the default), the Conductor will automatically encode the query parameters before sending the HTTP request.<br/><br/>Set this to false if the URI is already encoded. In this case, the Conductor will assume the query parameters are properly encoded and pass them to the HTTP endpoint as specified in the URI. |
 | cacheConfig | Enabling this option allows saving the cache output of the task. On enabling, you can provide the following parameters:<ul><li>**ttlInSecond** - Provide the time to live in seconds. You can also [pass this parameter as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor).</li><li>**key** - Provide the cache key, which is a string with parameter substitution based on the task input. You can also [pass this parameter as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor).</li></ul>|
 | optional | Enabling this option renders the task optional. The workflow continues unaffected by the task's outcome, whether it fails or remains incomplete. |
@@ -110,8 +106,6 @@ HTTP Poll task is used to invoke HTTP API endpoints until the specified conditio
        "http_request": {
          "uri": "https://orkes-api-tester.orkesconductor.com/api",
          "method": "GET",
-         "connectionTimeOut": 3000,
-         "readTimeOut": "3000",
          "accept": "application/json",
          "contentType": "application/json",
          "terminationCondition": "(function(){ return $.output.response.body.randomInt > 10;})();",
