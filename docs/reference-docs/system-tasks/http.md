@@ -19,8 +19,6 @@ HTTP task allows for making calls to remote services exposed over HTTP/HTTPS.
      "inputParameters": {
        "uri": "https://orkes-api-tester.orkesconductor.com/api",
        "method": "GET",
-       "connectionTimeOut": 3000,
-       "readTimeOut": "3000",
        "accept": "application/json",
        "contentType": "application/json",
        "encode": true,
@@ -49,8 +47,6 @@ HTTP task allows for making calls to remote services exposed over HTTP/HTTPS.
 | contentType       | Provide the content type for the server. The supported types are:<ul><li>application/java-archive</li><li>application/EDI-X12</li><li>application/EDIFACT</li><li>application/javascript</li><li>application/octet-stream</li><li>application/ogg</li><li>application/pdf</li><li>application/xhtml+xml</li><li>application/x-shockwave-flash</li><li>application/json</li><li>application/ld+json</li><li>application/xml</li><li>application/zip</li><li>application/x-www-form-urlencoded</li><li>audio/mpeg</li><li>audio/x-ms-wma</li><li>audio/vnd.rn-realaudio</li><li>audio/x-wav</li><li>image/gif</li><li>image/jpeg</li><li>image/png</li><li>image/tiff</li><li>image/vnd.microsoft.icon</li><li>image/x-icon</li><li>image/vnd.djvu</li><li>image/svg+xml</li></ul>By default, it is set to **_application/json_**. You can also [pass this parameter as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor). |
 | headers           | A map of additional HTTP headers to be sent along with the request. The supported types are:<ul><li>Accept-Language</li><li>Authorization</li><li>Cache Control</li><li>Content-MD5</li><li>From</li><li>If-Match</li><li>If-Modified-Since</li><li>If-None-Match</li><li>Max-Forwards</li><li>Pragma</li><li>If-Range</li><li>If-Unmodified-Since</li><li>Proxy-Authorization</li><li>Range</li><li>Warning</li><li>x-api-key</li><li>Accept-Charset</li><li>Accept-Encoding</li><li>Accept-Control-Request-Headers</li><li>Accept-Control-Request-Method</li><li>Content-Transfer-Encoding</li><li>Expect</li><li>Transfer-Encoding</li><li>Trailer</li></ul> | 
 | body              | Request body when using POST, PUT, or PATCH. It can be added as _text_ (**"body": "text"**) or _parameters_ such as string, number, boolean, null, or object/array. | 
-| connectionTimeOut | Set the connection timeout in milliseconds. If set to 0, it is equivalent to infinity. By default, the value is set to 3000.                                                 |
-| readTimeOut       | Set the read timeout in milliseconds. If set to 0, it is equivalent to infinity. By default, the value is set to 3000.                                     |
 | encode | Determines whether the URI needs encoding. When set to true (the default), the Conductor will automatically encode the query parameters before sending the HTTP request.<br/><br/>Set this to false if the URI is already encoded. In this case, the Conductor will assume the query parameters are properly encoded and pass them to the HTTP endpoint as specified in the URI. |
 | cacheConfig | Enabling this option allows saving the cache output of the task. On enabling, you can provide the following parameters:<ul><li>**ttlInSecond** - Provide the time to live in seconds. You can also [pass this parameter as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor).</li><li>**key** - Provide the cache key, which is a string with parameter substitution based on the task input. You can also [pass this parameter as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor).</li></ul>|
 | optional | Enabling this option renders the task optional. The workflow continues unaffected by the task's outcome, whether it fails or remains incomplete. |
@@ -104,8 +100,6 @@ HTTP task allows for making calls to remote services exposed over HTTP/HTTPS.
      "inputParameters": {
        "uri": "https://orkes-api-tester.orkesconductor.com/api",
        "method": "GET",
-       "connectionTimeOut": 3000,
-       "readTimeOut": "3000",
        "accept": "application/json",
        "contentType": "application/json",
        "encode": true,
@@ -173,8 +167,6 @@ Here’s a sample workflow with “asynComplete” set to “true”:
        "http_request": {
          "uri": "https://orkes-api-tester.orkesconductor.com/api",
          "method": "GET",
-         "connectionTimeOut": 3000,
-         "readTimeOut": "3000",
          "accept": "application/json",
          "contentType": "application/json"
        }
