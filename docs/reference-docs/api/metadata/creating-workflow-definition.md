@@ -6,27 +6,27 @@ import TabItem from '@theme/TabItem';
 
 # Creating Workflow Definition
 
-Workflow can be defined as the collection of tasks and operators that specifies the order and execution of the defined tasks. This API is used to create workflow definitions in Orkes Conductor.
+A workflow is a collection of tasks and operators that define the sequence and execution of tasks. This API allows you to create workflow definitions in Orkes Conductor.
 
 ## Input Payload
 
-You can configure workflow definition directly via UI and using API. The workflow definition include the following parameters:
+You can configure workflow definition directly via UI and using API. The workflow definition includes the following parameters:
 
 | Attribute                     | Description                                                                                                                                                                                                                                            |
 | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| name                          | Provide a unique name to identify the workflow. This field is mandatory.                                                                                                                                                                               |
-| description                   | Include a description to indicate the purpose of the workflow. This field is optional.                                                                                                                                                                 |
-| version                       | You can give versions to the workflow to keep track of the changes. By default, the value is 1.                                                                                                                                                        |
-| tasks                         | You can provide the tasks to be executed in the workflow here. If the task type is an operator or a system task, it is handled by the Conductor server. For user-defined/worker tasks, a worker running outside the Conductor environment is required. |
-| inputParameters               | Indicates the input values for the workflow.                                                                                                                                                                                                           |
-| outputParameters              | Indicates the output values of the workflow.                                                                                                                                                                                                           |
-| schemaVersion                 | Indicates the version number of the workflow definition schema.                                                                                                                                                                                        |
-| restartable                   | Set this value to **true** to restart a completed workflow. If restarting a completed workflow can impact the functioning, set this value to **false**.                                                                                                |
-| workflowStatusListenerEnabled | Setting this value to **true**, will enable workflow status change events to sink if configured. For more information  [workflow status change events](https://orkes.io/content/developer-guides/task-and-workflow-event-streaming-with-orkes-conductor-and-azure-event-hub#publishing-task--workflow-status-change-stream-events)                                     |
-| ownerEmail                    | This field will be auto-populated with the user’s email address.                                                                                                                                                                                       |
-| timeoutSeconds                | Time (in seconds), after which the workflow is marked as TIMED_OUT if not completed after transitioning to IN_PROGRESS status for the first time. No timeout occurs if the value is set to 0.                                                           |
-| timeoutPolicy                 | Indicates the condition at which the workflow should time out. It can take any of the following values:<ul><li>**TIME_OUT_WF** - The workflow status is marked as TIMEOUT and is terminated.</li><li>**ALERT_ONLY** - Registers a counter.</li></ul>   |
-| failureWorkflow               | Provide the workflow name to be triggered upon a failure of the execution of this workflow.                                                                                                                                                            |
+| name                          | Provide a unique name for the workflow. This field is mandatory.                                                                                                                                                                              |
+| description                   | Include a description that explains the purpose of the workflow. This field is optional.                                                                                                                                                                 |
+| version                       | Specify the version number of the workflow to track changes. The default value is 0.                                                                                                                                                      |
+| tasks                         | Define the tasks to be executed within the workflow. For operator or system tasks, the Conductor server manages the execution. User-defined or worker tasks require a worker running outside the Conductor environment. |
+| inputParameters               | Specify the input values for the workflow.                                                                                                                                                                                                         |
+| outputParameters              | Specify the output values of the workflow.                                                                                                                                                                                               |
+| schemaVersion                 | Indicates the version number of the workflow definition schema.                                                                                                                                                                                       |
+| restartable                   | Set to **true** to allow the workflow to be restarted after completion. Set to **false** if restarting could impact functionality.                                                                                                |
+| workflowStatusListenerEnabled | Set to **true** to enable workflow status change events to sink if configured. For more information, refer to the documentation [on enabling CDC](https://orkes.io/content/developer-guides/enabling-cdc-on-conductor-workflows).                                    |
+| ownerEmail                    | This field is auto-populated with the user’s email address.                                                                                                                                                  |
+| timeoutSeconds                | Specifies the time (in seconds) after which the workflow is marked as TIMED_OUT if it remains in the IN_PROGRESS status. A value of 0 indicates no timeout.         |
+| timeoutPolicy                 | Defines the condition under which the workflow should time out. Possible values are:<ul><li>**TIME_OUT_WF** - The workflow status is set to TIMEOUT, and the workflow is terminated.</li><li>**ALERT_ONLY** - Registers a counter.</li></ul>   |
+| failureWorkflow               | Provide the name of a workflow to trigger upon failure of the current workflow execution.                                                                                                                                               |
 
 
 ## API Endpoint
@@ -35,7 +35,6 @@ You can configure workflow definition directly via UI and using API. The workflo
 POST /api/metadata/workflow
 ```
 
-When a workflow definition is updated via API, it automatically increments the workflow version to the latest.
 
 ## Client SDK Methods
 
