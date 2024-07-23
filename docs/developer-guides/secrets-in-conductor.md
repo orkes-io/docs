@@ -3,110 +3,29 @@ sidebar_position: 6
 ---
 # Using Secrets in Conductor
 
-Often, we have requirements where sensitive values are used in workflows. In such situations, **secrets** can be 
-used to hide these sensitive values on the UI. These values include usernames, passwords, API keys, authorization tokens, etc.
+Sensitive information such as usernames, passwords, API keys, and authorization tokens is often required in workflows. To protect this sensitive data, secrets can be used to hide these values on the user interface. Secrets allow you to securely manage and use sensitive information within workflows without exposing it directly.
+
 
 ## Creating Secrets
 
-Follow the below steps to create and store secrets in Conductor:
+To create and store secrets in Conductor:
 
-1. From your Orkes Conductor Console, navigate to the **Definitions > Secrets** option from the left menu. The *Secrets* page lists all the secrets associated with your account that you have access to.
-2. Click **Add Secrets** and provide the following values:<ul><li>**Secret Name** - Reference name for your secret.</li><li>**Secret Value** - Provide the value to be stored.</li></ul>
-3. Clicking **Add** saves the secret.
+1. Navigate to **Definitions > Secrets** from the left menu on your Orkes Conductor cluster. The Secrets page will display all the secrets associated with your account.
+2. Click **+ Add secret** button in the top-right corner.
+3. Enter the following values:
 
-## Using Secrets in Workflow
+<p align="center"><img src="/content/img/creating-secret.png" alt="Creating secret in Orkes Conductor" width="50%" height="auto"></img></p>
 
-Once the secret is created, we can use them in the workflow using the variable **${workflow.secrets.secret_name}**.
-Refer to this [article](/content/developer-guides/passing-inputs-to-task-in-conductor) on how to pass values to tasks and sub workflows.
+ * **Secret name**: A descriptive name for your secret.
+ * **Secret value**: The actual value to be stored as a secret.
 
-## Managing Secrets
+4. Click **Add** to save the secret.
 
-We can manage secrets using the following ways. In each of these methods, the previous value is replaced with the new value, and the operation cannot be rolled back.
+### Using Secrets in Workflow​
 
-### Using UI 
+Once a secret is created, you can use it in your workflow by referencing it as a variable **${workflow.secrets.secret_name}**, where **secret_name** is the actual name of the secret. This expression retrieves the secret value dynamically during workflow execution, ensuring it is not exposed directly in the workflow definitions.
 
-Users with access to the secret can update the secret on the UI. Access the left menu "Definitions > Secrets". 
-
-### Using APIs
-
-The following API endpoints can be invoked with credentials that have permission to update the secret value.
-
-#### Using a Worker
-
-A common use case is when a secret managed by Conductor is an access token with an expiry. Tokens that expire require a periodic refresh, and this can be easily achieved using a system worker task that can update the secret. This system worker does the same function as a custom worker updating a secret.
-
-Refer to this link for the documentation on how to use this worker: [Update Secret](/content/reference-docs/system-tasks/update-secret).
-
-Refer to this link for the documentation on how to use a workflow to rotate secrets: [Rotating Secrets that Expire](/content/templates/examples/rotating-secrets-that-expire).
-
-## Adding Tags to Secrets
-
-Conductor also provides the provision to add tags to secret keys. This helps in granting permissions to the secret to an entity with tag-based access.
-Read more about using tags for permissions [here](/content/access-control-and-security/tags).
-
-## Masking/Hiding Secret Values
-
-Often, we might want to use a secret value as a workflow input/output or task input/output. 
-
-Suppose you want to use the secret value as an output of a task. This is when we want to pass this value as input to a subsequent task. In such cases, we can use the following convention to ensure that output value is managed as a secret. This can be achieved in 2 ways: either using **_secrets** or using **_masked**.
-
-All values stored in the output object with key name: **_secrets** will be hidden.
-
-```json
-{
- "_secrets" : {
-   "my-secret-key" : "my-secret-value"
- }
-}
-```
-
-:::info
-The users with the execute ability to the task will be able to read the task and will be able to see the inputs and outputs.
-:::
-
-Let’s take an example where you want to hide sensitive data when passing information from one task's output to the input of the next task in a workflow. So, you need to ensure that the input parameters of the subsequent task within the workflow definition are structured in the following manner:
-
-```json
-{
-"_secrets":
-  { "parameter":"${previousTask.output._secrets.someOutputParameter}"
- }
-}
-```
-
-This structure mandates that any input parameter to be hidden must be nested within the **_secrets** object. This approach ensures that sensitive data is properly masked during the workflow's execution, within the designated **_secrets** section of the input parameters.
-
-:::note
-In addition to **_secret** you can also use **_masked** to hide the sensitive values. 
-
-When working within workflow variables, input/output, and task input/output, utilizing a key labeled **_masked** will automatically mask the enclosed data. For instance:
-
-```json
-{
-"_masked":{"some":"data"}
-}
-```
-It will look like this:
-
-```json
-{
-"_masked":"***"
-}
-```
-
-It's essential to note that despite this masking in the UI, the actual data remains intact and is saved during archiving. Should you restart the workflow, the original data will still be accessible.
-
-However, if you opt for **_secrets** instead of **_masked**, there's a different behavior during archiving. Once the workflow reaches a terminal state and is removed from the primary execution store, any data labeled as **_secrets** will be permanently replaced with ***. Subsequently, attempting to retry the workflow might lead to failures in tasks reliant on that particular data.
-
-:::
-
-## Additional Use Cases
-
-In addition to using secrets for sensitive values, we can use them when we need to use a variable specific to an environment. For example -  `${workflow.secrets.env-variable-1}` - here, `env-variable-1` is not necessarily a secret but a value that could be configured differently in each environment, such as UAT vs. Production.
-
-## Example
-
-Here is a simple workflow definition that uses a secret in one of the tasks:
+Here is an example workflow definition using a secret:
 
 ```json
 {
@@ -121,7 +40,7 @@ Here is a simple workflow definition that uses a secret in one of the tasks:
           "uri": "https://orkes-api-tester.orkesconductor.com/api",
           "method": "GET",
           "connectionTimeOut": 3000,
-          "readTimeOut": "3000",
+          "readTimeOut": 3000,
           "accept": "application/json",
           "contentType": "application/json",
           "headers": {
@@ -136,5 +55,98 @@ Here is a simple workflow definition that uses a secret in one of the tasks:
 }
 ```
 
-When we run this workflow, as long as the permissions exist, the value `${workflow.secrets.sampletask-api-token}` will be replaced with the value stored in the secrets repository.
+When this workflow runs, **${workflow.secrets.sampletask-api-token}** will be replaced with the actual secret value, provided the necessary permissions are in place.
 
+### Adding Tags to Secrets​
+
+To add tags to a secret:
+
+1. From the **Definitions > Secrets** page, select the secret to add the tag and click on the tag icon.
+
+<p align="center"><img src="/content/img/adding-tags-to-secret.png" alt="Adding tags to secret in Orkes Conductor" width="100%" height="auto"></img></p>
+
+2. Add the tag in the format **key:value** and click **Save**.
+
+<p align="center"><img src="/content/img/tag-format-secret.png" alt="Tag format for secrets" width="60%" height="auto"></img></p>
+
+Tag-based access control allows you to grant permissions to entities based on the tags. For more information on tag-based permissions, refer to the documentation on [using tags for permissions](https://orkes.io/content/access-control-and-security/tags).
+
+
+### Updating Secrets
+
+Secrets can be updated in the following ways:
+
+#### Using UI
+
+Users with access to the secret can update it directly through the UI. 
+
+1.  Navigate to **Definitions > Secrets**, and click on the secret name to be updated.
+2. Enter the new value in the **Secret value** field, and click Edit to confirm.
+
+The secret value gets instantly updated in the UI.
+
+#### Using Update Secret Task
+
+Tokens that expire (such as access tokens) require periodic refreshes, which can be managed using a system task to update the secret. The update secret task is used to update the secret value, provided the user has permission to update the secret. Learn more about the configuration of the [update secret task](https://orkes.io/content/reference-docs/system-tasks/update-secret).
+
+## Masking Secret Values
+
+When using secret values as inputs/outputs in tasks/workflows, you can manage these values securely by using either **_secrets** or **_masked**.
+
+* **Using _secrets:**
+
+All values stored in the output object with key name: **_secrets** will be hidden.
+
+```json
+{
+ "_secrets" : {
+   "my-secret-key" : "my-secret-value"
+ }
+}
+```
+
+The users with the ability to execute the task will be able to read the task and see its inputs and outputs.
+
+Let’s take an example where you want to hide sensitive data when passing information from one task's output to the input of the next task in a workflow. So, you need to ensure that the input parameters of the subsequent task within the workflow definition are structured in the following manner:
+
+```json
+{
+"_secrets":
+  { "parameter":"${previousTask.output._secrets.someOutputParameter}"
+ }
+}
+```
+
+This structure mandates that any input parameter to be hidden must be nested within the **_secrets** object. This approach ensures that sensitive data is masked adequately during the workflow's execution within the designated **_secrets** section of the input parameters.
+
+* **Using _masked:**
+
+Values stored under the **_masked** key will be automatically masked in the UI and will appear as __***__. For example:
+
+```json
+{
+"_masked":{"some":"data"}
+}
+```
+
+This will be displayed as:
+
+```json
+{
+"_masked":"***"
+}
+```
+
+:::note
+While **_masked** hides the data in the UI, the original data remains intact and is saved during archiving. Should you restart the workflow, the original data will still be accessible.
+
+However, if you opt for **_secrets** instead of **_masked**, there's a different behavior during archiving. Once the workflow reaches a terminal state and is removed from the primary execution store, any data labeled as _secrets will be permanently replaced with ***. Subsequently, attempting to retry the workflow might lead to failures in tasks reliant on that particular data.
+:::
+
+## Advanced Applications of Secrets
+
+Secrets in Conductor are versatile and can be used beyond just handling sensitive information. Here are some advanced scenarios for leveraging secrets:
+
+* **Environment-Specific Variables**: Secrets can manage environment-specific configurations, such as different variables between development, testing, and production environments. For example, **${workflow.secrets.env-variable-1}** can be used to define values specific to UAT, production, or any other environment.
+* **Dynamic Configuration**: Use secrets to manage dynamic configurations that change based on the execution context or environment. This ensures that workflows can adapt to varying conditions without hardcoding sensitive or environment-specific data directly in the workflow definitions.
+* **Token Rotation**: Regular rotation of time-sensitive secrets, such as access tokens, is essential for maintaining security. Implement a strategy to rotate these tokens periodically to ensure they remain valid and secure. For detailed guidance on rotating secrets that expire, refer to the guide on [rotating secrets that expire](https://orkes.io/content/templates/examples/rotating-secrets-that-expire).
