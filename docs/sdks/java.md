@@ -552,7 +552,7 @@ public class ConductorWorkers {
 }
 ```
 
-See [DynamicWorkflow](https://github.com/orkes-io/orkes-conductor-client/tree/main/examples/java/io/orkes/conductor/sdk/DynamicWorkflow) for a fully functional example.
+See [DynamicWorkflow](https://github.com/orkes-io/orkes-conductor-client/tree/main/examples/java/io/orkes/conductor/sdk/examples/dynamicworkflow) for a fully functional example.
 
 #### Kitchen-Sink Workflow
 
