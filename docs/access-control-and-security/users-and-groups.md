@@ -1,6 +1,6 @@
 # Managing Users & Groups 
 
-To ensure secure access to the Conductor server in a remote environment, it is critical to establish a system that enables access to the server. With Conductor’s Users & Groups functionality, an admin can easily create and manage users & groups in the Conductor server.
+In a remote environment, ensuring secure access to the Conductor server is essential. Conductor’s RBAC functionality enables admins to easily create and manage users and groups on the server, providing a structured approach to access control.
 
 :::note
 This feature is available only to the Admins of the Orkes Conductor clusters.
@@ -10,62 +10,71 @@ This feature is available only to the Admins of the Orkes Conductor clusters.
 
 ### Inviting Users​​
 
-To invite a user to your Orkes Cloud instance,
+To invite a user to your Orkes Conductor cluster,
 
-1. From your Conductor server, navigate to **Access Control > Users** from the left menu.
-2. Click the **Create User** button.
-3. You need to fill in the following user details:<ul><li>**User id** - Enter the email address of the user.</li><li>**Name** - Provide the user’s name.</li><li>**Permissions** - Choose the access level you wish the user to have. The available Conductor roles are *Admin*, *User*, *Metadata Manager*, *Workflow Manager*, and *Read Only User*.</li><ul><li>**Admin** - An admin has full access to the Conductor instance.</li><li>**User** - A user can access permitted workflows, tasks, and shared Applications.</li><li>**Metadata Manager** - An "admin" for metadata who can create/update/delete any workflow or task.</li><li>**Workflow Manager** - A workflow manager can run/pause/rerun any workflow.</li><li>**Read Only User** - A user with read-only permissions over the workflows and tasks.</li></ul></ul>
-4. Click **Save**, and the user can now access the Conductor instance.
+1. Navigate to **Access Control > Users** from the left menu on your Orkes Conductor cluster.
+2. Click **+ Create User** from the top-right corner.
+3. Enter the following user details:<ul><li>_User id_ - The email address of the user.</li><li>_Name_ - The username.</li><li>_Roles_ - Select the access level you wish the user to have. The available roles are:</li><ul><li>_Admin_ - Full access to the Orkes Conductor cluster.</li><li>_User_ - Access to permitted metadata and those created by themselves.</li><li>_Metadata Manager_ - Can read, update, and delete all metadata in the system.</li><li>_Workflow Manager_ - Can view and execute all workflows in the system.</li><li>_Read Only User_ - Access to all metadata as read-only.</li></ul><li>_Groups_ - Select the groups the user should be part of.</li></ul>
+4. Click **Save**.
 
 ### Editing Users​
 
-To change the permission for a specific user, click on the edit button next to the user, and update with the required permissions.
+To change the permissions for a specific user:
+
+1. Click the **Edit** button next to the user.
+2. Update the required permissions.
 
 <p align="center"><img src="/content/img/edit-user-roles.png" alt="Editing user roles in Conductor" width="90%" height="auto"></img></p>
 
 ### Deleting Users​
-To delete a user from your Conductor server, click the trash icon near the username and confirm the action.
+
+To delete a user from your Orkes Conductor cluster:
+
+1. Click the **Trash** icon near the username.
+2. Confirm the action.
 
 ## Groups​​
-Groups are a way to share workflows and tasks among your team quickly.
+
+Groups are a way to share metadata among your team quickly.
 
 ### Creating Groups​​
+
 To create a user group:
-1. From the left menu, navigate to **Access Control > Groups**.
-2. Click **Create Group** and provide the following details:<ul><li>**Name** - Provide a name to identify your group.</li><li>**Description** - Provide a suitable description for the group.</li><li>**Permissions** - Choose the required permission for the group. The Group can take the roles *Admin*, *User*, *Metadata Manager*, *Workflow Manager* or *Read Only User*.</li><ul><li>**Admin** - An admin has full access to the Conductor instance.</li><li>**User** - A user can access permitted workflows, tasks, and shared Applications.</li><li>**Metadata Manager** - An "admin" for metadata who can create/update/delete any workflow or task.</li><li>**Workflow Manager** - A workflow manager can run/pause/rerun any workflow.</li><li>**Read Only User** - A user with read-only permissions over the workflows and tasks.</li></ul></ul>
+
+1. Navigate to **Access Control > Groups** from the left menu on your Orkes Conductor cluster.
+2. Click **+ Create group** from the top-right corner.
+3. Enter the following details:<ul><li>_Name_ - A name to identify your group.</li><li>_Description_ - A description of the group.</li><li>_Define group role_ - Select the required permission for the group. The available roles are:</li><ul><li>_Admin_ - An admin has full access to the Orkes Conductor cluster.</li><li>_User_ - A user can access permitted metadata and ones created by themselves.</li><li>_Metadata Manager_ -An admin for metadata who can read, update, and delete all the metadata in the system.</li><li>_Workflow Manager_ - A workflow manager who can view and execute all the workflows in the system.</li><li>_Read Only User_ - Read Only users have access to all the metadata and workflows in the system as read-only.</li></ul></ul>
+:::note
+ If a role is defined for these members, they will all be given this role to the Conductor cluster. For example, if Admin is selected, all the group members are now admins irrespective of their individual roles.
+:::
 3. Click **Save**.
 
 <p align="center"><img src="/content/img/creating-groups.png" alt="Creating Groups in Conductor" width="90%" height="auto"></img></p>
 
 4. You can add members by clicking **+Add User** from the **Members** section. You can add only the users that have already been created/invited. If the user you are looking for has not been added, you can invite and then add them to the groups.
 
-**Permissions** is an additional section where you can limit the group members' access to the permitted workflows, tasks, secrets, tags, domains, integrations & prompts.
+**Permissions** is an additional section where you can limit the group members' access to the permitted workflows, tasks, secrets, tags, domains, integrations, prompts, and environment variables.
 
-6. Click **+Add Permission**, and you can choose the group to have access to selected Workflows/Tasks/Secrets/Tags/Domains/Integrations/Prompts. Permissions that can be granted include Read, Create, Update, Execute & Delete.
+6. Click **+Add Permission**.
+7. Choose the group to have access to selected Workflows, Tasks, secrets, environment variables, tags, domains, integrations, and prompts. Permissions that can be granted include _Read_, _Create_, _Update_, _Execute_, and _Delete_.
 
 <p align="center"><img src="/content/img/adding-permissions-for-applications.png" alt="Granting access to specific tasks and workflows" width="90%" height="auto"></img></p>
 
 :::note
 Different cases when permissions are stacked up:
-- If the role is “Read Only User” and the group is given “Execute” permission for a workflow under the Permissions section, then all the groups members can execute that workflow, while the rest of the workflows would be read-only.
+- If the role is “Read Only” and the group is given “Execute” permission for a workflow under the permissions section, then all the group members can execute that workflow, while the rest are read-only.
 :::
 
-### Group Roles​
-Group roles allow you to add/remove permissions to groups of users quickly. The roles are the same for an individual user but are quickly applied to everyone in the group. Group has five possible roles: Admin, User, Metadata Manager, Workflow Manager, and Read Only User.
-
-* **Admin** - An admin has full access to the Conductor instance.
-* **User** - A user can access permitted workflows, tasks, and shared Applications.
-* **Metadata Manager** - An "admin" for metadata who can create/update/delete any workflow or task.
-* **Workflow Manager** - A workflow manager can run/pause/rerun any workflow.
-* **Read Only User** - A user with read-only permissions over the workflows and tasks.
-
-If a role is defined for these members, they will all be given this role for the Conductor instance. For example, if Admin is selected, all the group members are now admins irrespective of their individual roles.
-
 ### Editing Groups​
-The group settings can be modified by clicking the group name. This takes you to the individual group page, from where you can edit the group roles, members, and permissions.
+
+To modify group settings:
+
+1. Click the group name.
+2. Edit the group roles, members, and permissions.
 
 ### Deleting Groups​
-To delete a group from your Conductor server, click the trash icon near the group name and confirm the action.
 
-## Example for Workflow Permissions using Groups​
-In the [Orkes Playground](https://play.orkes.io/), default workflows are available for all users to try out. To facilitate sharing of these workflows/tasks, we have included them in a particular group. So, every person who signs up for the Playground is added to this group so that they can have access to the workflows.
+To delete a group:
+
+1. Click the **Trash** icon near the group name.
+2. Confirm the action.
