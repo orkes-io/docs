@@ -1,6 +1,6 @@
 # Integrating with Azure OpenAI in Orkes Conductor
 
-To effectively utilize AI and LLM tasks in Orkes Conductor, it's essential to integrate your Conductor cluster with the necessary AI and LLM models. 
+To effectively utilize AI and LLM tasks in Orkes Conductor, it's essential to integrate your Orkes Conductor cluster with the necessary AI and LLM models. 
 
 Azure OpenAI offers a range of models that can be incorporated into the Orkes Conductor console. The choice of model depends on your unique use case, the functionalities you require, and the specific natural language processing tasks you intend to tackle. 
 
@@ -8,7 +8,7 @@ This guide will provide the steps for integrating the Azure OpenAI provider with
 
 ## Steps to integrate with Azure OpenAI
 
-Before beginning to integrate with Azure OpenAI, you need to generate the API key & get the endpoints from the Azure portal.
+Before beginning to integrate with Azure OpenAI, you need to generate the API key and get the endpoints from the Azure portal.
 
 ### Get the Azure OpenAI API keys & Endpoint
 
@@ -24,21 +24,21 @@ Before beginning to integrate with Azure OpenAI, you need to generate the API ke
 
 ## Integrating with Azure OpenAI as a model provider
 
-Now, you have the API keys & endpoint. Let’s integrate this with Orkes Conductor.
+Now, you have the API keys and endpoint. Let’s integrate this with Orkes Conductor.
 
-1. Navigate to **Integrations** from the left menu on your Orkes Conductor console.
-2. Click **+New integration** button from the top-right of your window.
+1. Navigate to **Integrations** from the left menu on your Orkes Conductor cluster.
+2. Click **+New integration** button from the top-right corner.
 3. Under the **AI / LLM** section, choose **Azure + OpenAI**. 
 4. Click **+Add** and provide the following parameters:
 
-<p align="center"><img src="/content/img/create-new-azure-open-ai-integration.png" alt="Create Azure Open AI Integration" width="100%" height="auto"></img></p>
+<p align="center"><img src="/content/img/create-new-azure-open-ai-integration.png" alt="Create Azure Open AI Integration" width="70%" height="auto"></img></p>
 
 | Parameters | Description |
 | ---------- | ----------- | 
-| Integration name | Provide a name for the integration. |
-| API Key | Provide the API key copied previously. |
-| Endpoint | Provide the endpoint copied previously. |
-| Description | Provide a description of your integration. | 
+| Integration name | A name for the integration. |
+| API Key | The API key copied previously. |
+| Endpoint | The endpoint copied previously. |
+| Description | A description of your integration. | 
 
 5. You can toggle-on the **Active** button to activate the integration instantly.
 6. Click **Save**.
@@ -58,11 +58,11 @@ To add a new model to the Azure OpenAI integration:
 <p align="center"><img src="/content/img/create-new-azure-open-ai-integration-model-from-integrations-page.png" alt="Create Azure Open AI Integration Model from Listed Integrations" width="100%" height="auto"></img></p>
 
 2. Click **+New model**.
-3. Provide the model name and an optional description for the model. The complete [list of models in Azure OpenAI is available here](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/legacy-models). 
+3. Provide the model name and an optional description for the model. The complete [list of models in Azure OpenAI is available here](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models). 
 
-<p align="center"><img src="/content/img/create-new-azure-open-ai-integration-model.png" alt="Create Azure Open AI Integration Model" width="70%" height="auto"></img></p>
+<p align="center"><img src="/content/img/create-new-azure-open-ai-integration-model.png" alt="Create Azure Open AI Integration Model" width="60%" height="auto"></img></p>
 
-4. Click the **Enable** checkbox to enable the model immediately.
+4. Click the **Active** button to enable the model immediately.
 5. Click **Save**.
 
 This ensures the integration model is saved for future use in LLM tasks within Orkes Conductor.
@@ -75,7 +75,7 @@ The permission can be granted to applications/groups within the Orkes Conductor 
 
 To provide explicit permission to Groups:
 
-1. Navigate to **Access Control > Groups** from the left menu on your Orkes Conductor console.
+1. Navigate to **Access Control > Groups** from the left menu on your Orkes Conductor cluster.
 2. Create a new group or choose an existing group.
 3. Under the **Permissions** section, click **+Add Permission**.
 4. Under the **Integrations** tab, select the required integrations with the required permissions. 
