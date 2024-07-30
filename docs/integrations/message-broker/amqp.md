@@ -40,7 +40,7 @@ The integration is created successfully now. The next step is to create an event
 To do this:
 
 1. Navigate to **Definitions > Event Handler** from the left menu on your Orkes Conductor cluster.
-2. Click **+ Define event handler** option from the top-right corner of the window.
+2. Click **+ Define event handler** option from the top-right corner.
 3. Create an event handler with the following configurations:
 
 <p align="center"><img src="/content/img/event-handler-amqp.png" alt="Configuring Event Handler for AMQP Integration" width="50%" height="auto"/></p>
