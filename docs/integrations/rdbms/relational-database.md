@@ -1,6 +1,6 @@
 # Integrating with Relational Database in Orkes Conductor
 
-To effectively manage and optimize your workflows in Orkes Conductor, it's essential to integrate your Conductor cluster with a relational database management system (RDBMS). 
+To effectively manage and optimize your workflows in Orkes Conductor, it's essential to integrate your Orkes Conductor cluster with a relational database management system (RDBMS). 
 
 The choice of database depends on your specific use case, such as transaction processing, analytical querying, or data warehousing. It also depends on the functionalities you require, including indexing, partitioning, and replication, as well as the specific data management tasks you intend to perform, such as data integrity, concurrency control, and recovery. 
 
@@ -12,8 +12,8 @@ Orkes Conductor supports integration with the Postgres database, and you need to
 
 Now, let’s integrate Postgres database with Orkes Conductor.
 
-1. Navigate to **Integrations** from the left menu on your Orkes Conductor console.
-2. Click **+New integration** button from the top-right of your window.
+1. Navigate to **Integrations** from the left menu on your Orkes Conductor cluster.
+2. Click **+New integration** button from the top-right.
 3. Under the **RDBMS** section, choose **Relational Database**. 
 4. Click **+Add** and provide the following parameters:
 
@@ -21,19 +21,19 @@ Now, let’s integrate Postgres database with Orkes Conductor.
 
 | Parameter | Description |
 | --------- | ----------- |
-| Integration name | Provide a name for the integration. |
+| Integration name | A name for the integration. |
 | Database Type | Choose the type of database to integrate. Currently supports **_Postgres_**. |
-| Database User | Provide the database username. |
-| Database Password | Provide the password associated with the username. |
-| Database URL | Provide the database URL.<br/><br/>**Note**: To use this integration for [JDBC](https://orkes.io/content/reference-docs/system-tasks/jdbc) tasks, ensure that you provide the JDBC connection string in the format:  **_jdbc:database://url/databaseName_**. |
-| Description | Provide a description of your integration. |
+| Database User | The database username. |
+| Database Password | The password associated with the username. |
+| Database URL | The database URL.<br/><br/>**Note**: To use this integration for [JDBC](https://orkes.io/content/reference-docs/system-tasks/jdbc) tasks, ensure that you provide the JDBC connection string in the format:  **_jdbc:database://url/databaseName_**. |
+| Description | A description of your integration. |
 
 5. You can toggle-on the **Active** button to activate the integration instantly.
 6. Click **Save**.
 
 ## Adding Relational Database tables to integration
 
-You have now integrated your Conductor console with the Postgres database. The next step is to integrate with the specific tables.
+You have now integrated your Orkes Conductor cluster with the Postgres database. The next step is to integrate with the specific tables.
 
 To add a new table to the database integration:
 
@@ -51,11 +51,11 @@ To add a new table to the database integration:
 
 ## RBAC - Governance on who can use Integrations
 
-The integration with the required database is now ready. Next, we should determine the access control to these databases. The permission can be granted to applications/groups within the Orkes Conductor console. 
+The integration with the required database is now ready. Next, we should determine the access control to these databases. The permission can be granted to applications/groups within the Orkes Conductor cluster. 
 
 To provide explicit permission to Groups:
 
-1. Navigate to **Access Control > Groups** from the left menu on your Orkes Conductor console.
+1. Navigate to **Access Control > Groups** from the left menu on your Orkes Conductor cluster.
 2. Create a new group or choose an existing group.
 3. Under the **Permissions** section, click **+Add Permission**.
 4. Under the **Integrations** tab, select the required integrations with the required permissions. 
