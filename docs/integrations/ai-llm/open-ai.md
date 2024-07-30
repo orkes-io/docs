@@ -43,7 +43,7 @@ Now, you have the API key. Let’s integrate this with Orkes Conductor.
 
 ## Adding OpenAI models to the integration
 
-Now, you have integrated your Orkes Conductor console with the OpenAI provider. The next step is integrating with the specific OpenAI models. 
+Now, you have integrated your Orkes Conductor cluster with the OpenAI provider. The next step is integrating with the specific OpenAI models. 
 
 OpenAI has different models, such as text-davinci-003, text-embedding-ada-002, gpt-35-turbo and more. Each model is to be used for different use cases, such as text completion, generating embeddings, etc.
 
@@ -60,7 +60,7 @@ To add a new model to the OpenAI integration:
 
 <p align="center"><img src="/content/img/creating-new-model-for-open-ai-integration.png" alt="Creating new model for OpenAI Integration" width="70%" height="auto"></img></p>
 
-4. Click the **Active** button to enable the model immediately.
+4. Toggle-on the **Active** button to enable the model immediately.
 5. Click **Save**.
 
 This ensures the integration model is saved for future use in [LLM tasks](/content/category/reference-docs/ai-tasks) within Orkes Conductor.
@@ -69,11 +69,11 @@ This ensures the integration model is saved for future use in [LLM tasks](/conte
 
 Now, the integration with the required models is ready. Next, we should determine the access control to these models. 
 
-The permission can be granted to applications/groups within the Orkes Conductor console. 
+The permission can be granted to applications/groups within the Orkes Conductor cluster. 
 
 To provide explicit permission to Groups:
 
-1. Navigate to **Access Control > Groups** from the left menu on your Orkes Conductor console.
+1. Navigate to **Access Control > Groups** from the left menu on your Orkes Conductor cluster.
 2. Create a new group or choose an existing group.
 3. Under the **Permissions** section, click **+Add Permission**.
 4. Under the **Integrations** tab, select the required integrations with the required permissions. 

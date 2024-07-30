@@ -2,7 +2,7 @@
 
 To effectively utilize AI and LLM tasks in Orkes Conductor, it's essential to integrate your Orkes Conductor cluster with the necessary AI and LLM models. 
 
-Azure OpenAI offers a range of models that can be incorporated into the Orkes Conductor console. The choice of model depends on your unique use case, the functionalities you require, and the specific natural language processing tasks you intend to tackle. 
+Azure OpenAI offers a range of models that can be incorporated into the Orkes Conductor cluster. The choice of model depends on your unique use case, the functionalities you require, and the specific natural language processing tasks you intend to tackle. 
 
 This guide will provide the steps for integrating the Azure OpenAI provider with Orkes Conductor.
 
@@ -45,7 +45,7 @@ Now, you have the API keys and endpoint. Let’s integrate this with Orkes Condu
 
 ## Adding Azure OpenAI models to the integration
 
-Now, you have integrated your Conductor console with the Azure OpenAI provider. The next step is integrating with the specific models. 
+Now, you have integrated your Conductor cluster with the Azure OpenAI provider. The next step is integrating with the specific models. 
 
 Azure OpenAI has different models, such as text-davinci-003, text-embedding-ada-002, gpt-35-turbo and more. Each model is to be used for different use cases, such as text completion, generating embeddings, etc.
 
@@ -62,7 +62,7 @@ To add a new model to the Azure OpenAI integration:
 
 <p align="center"><img src="/content/img/create-new-azure-open-ai-integration-model.png" alt="Create Azure Open AI Integration Model" width="60%" height="auto"></img></p>
 
-4. Click the **Active** button to enable the model immediately.
+4. Toggle-on the **Active** button to enable the model immediately.
 5. Click **Save**.
 
 This ensures the integration model is saved for future use in LLM tasks within Orkes Conductor.
@@ -71,7 +71,7 @@ This ensures the integration model is saved for future use in LLM tasks within O
 
 Now, the integration with the required models is ready. Next, we should determine the access control to these models. 
 
-The permission can be granted to applications/groups within the Orkes Conductor console. 
+The permission can be granted to applications/groups within the Orkes Conductor cluster. 
 
 To provide explicit permission to Groups:
 

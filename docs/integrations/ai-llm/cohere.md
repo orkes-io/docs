@@ -2,7 +2,7 @@
 
 To effectively utilize AI and LLM tasks in Orkes Conductor, it's essential to integrate your Orkes Conductor cluster with the necessary AI and LLM models. 
 
-Cohere offers a range of models that can be incorporated into the Orkes Conductor console. The choice of model depends on your unique use case, the functionalities you require, and the specific natural language processing tasks you intend to tackle. 
+Cohere offers a range of models that can be incorporated into the Orkes Conductor cluster. The choice of model depends on your unique use case, the functionalities you require, and the specific natural language processing tasks you intend to tackle. 
 
 This guide will provide the steps for integrating the Cohere provider with Orkes Conductor.
 
@@ -41,7 +41,7 @@ Let’s integrate Cohere with Orkes Conductor.
 
 ## Adding Cohere models to integration
 
-You have now integrated your Orkes Conductor console with the Cohere provider. The next step is to integrate with the specific models. 
+You have now integrated your Orkes Conductor cluster with the Cohere provider. The next step is to integrate with the specific models. 
 Cohere AI has different models: command, command-r, embed, and more. Each model is intended for different use cases, such as text completion and generating embeddings.
 
 Depending on your use case, you must configure the required model within your Cohere configuration.
@@ -66,7 +66,7 @@ This ensures the integration model is saved for future use in LLM tasks within O
 
 The integration with the required models is now ready. Next, we should determine the access control to these models. 
 
-The permission can be granted to applications/groups within the Orkes Conductor console. 
+The permission can be granted to applications/groups within the Orkes Conductor cluster. 
 
 To provide explicit permission to Groups:
 
