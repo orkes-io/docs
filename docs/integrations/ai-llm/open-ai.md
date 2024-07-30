@@ -1,6 +1,6 @@
 # Integrating with OpenAI in Orkes Conductor
 
-To effectively utilize AI and LLM tasks in Orkes Conductor, it's essential to integrate your Conductor cluster with the necessary AI and LLM models. 
+To effectively utilize AI and LLM tasks in Orkes Conductor, it's essential to integrate your Orkes Conductor cluster with the necessary AI and LLM models. 
 
 OpenAI offers a range of models that can be incorporated into the Orkes Conductor cluster. The choice of model depends on your unique use case, the functionalities you require, and the specific natural language processing tasks you intend to tackle. 
 
@@ -25,25 +25,25 @@ Before beginning to integrate with OpenAI, you need to generate the API key from
 
 Now, you have the API key. Let’s integrate this with Orkes Conductor.
 
-1. Navigate to **Integrations** from the left menu on your Orkes Conductor console.
-2. Click **+New integration** button from the top-right of your window.
-3. Under the **AI / LLM** section, choose OpenAI. 
+1. Navigate to **Integrations** from the left menu on your Orkes Conductor cluster.
+2. Click **+New integration** button from the top-right corner.
+3. Under the **AI / LLM** section, choose **OpenAI**. 
 4. Click **+Add** and provide the following parameters:
 
-<p align="center"><img src="/content/img/create-new-open-ai-integration.png" alt="Create new OpenAI Integration" width="100%" height="auto"></img></p>
+<p align="center"><img src="/content/img/create-new-open-ai-integration.png" alt="Create new OpenAI Integration" width="70%" height="auto"></img></p>
 
 | Parameters | Description |
 | ---------- | ----------- | 
-| Integration name | Provide a name for the integration. |
-| API Key | Provide the API key copied previously. |
-| Description | Provide a description of your integration. |
+| Integration name | A name for the integration. |
+| API Key | The API key copied previously. |
+| Description | A description of your integration. |
 
 5. You can toggle-on the **Active** button to activate the integration instantly.
 6. Click **Save**.
 
 ## Adding OpenAI models to the integration
 
-Now, you have integrated your Conductor console with the OpenAI provider. The next step is integrating with the specific OpenAI models. 
+Now, you have integrated your Orkes Conductor cluster with the OpenAI provider. The next step is integrating with the specific OpenAI models. 
 
 OpenAI has different models, such as text-davinci-003, text-embedding-ada-002, gpt-35-turbo and more. Each model is to be used for different use cases, such as text completion, generating embeddings, etc.
 
@@ -60,7 +60,7 @@ To add a new model to the OpenAI integration:
 
 <p align="center"><img src="/content/img/creating-new-model-for-open-ai-integration.png" alt="Creating new model for OpenAI Integration" width="70%" height="auto"></img></p>
 
-4. Click the Enable checkbox to enable the model immediately.
+4. Toggle-on the **Active** button to enable the model immediately.
 5. Click **Save**.
 
 This ensures the integration model is saved for future use in [LLM tasks](/content/category/reference-docs/ai-tasks) within Orkes Conductor.
@@ -69,11 +69,11 @@ This ensures the integration model is saved for future use in [LLM tasks](/conte
 
 Now, the integration with the required models is ready. Next, we should determine the access control to these models. 
 
-The permission can be granted to applications/groups within the Orkes Conductor console. 
+The permission can be granted to applications/groups within the Orkes Conductor cluster. 
 
 To provide explicit permission to Groups:
 
-1. Navigate to **Access Control > Groups** from the left menu on your Orkes Conductor console.
+1. Navigate to **Access Control > Groups** from the left menu on your Orkes Conductor cluster.
 2. Create a new group or choose an existing group.
 3. Under the **Permissions** section, click **+Add Permission**.
 4. Under the **Integrations** tab, select the required integrations with the required permissions. 

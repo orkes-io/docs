@@ -14,8 +14,8 @@ Refer to the [official IBM documentation](https://www.ibm.com/docs/en/ibm-mq) fo
 
 Once you have the required configuration parameters from IBM MQ, let’s integrate with Orkes Conductor.
 
-1. Navigate to **Integrations** from the left menu on the Conductor cluster.
-2. Click **+ New integration** from the top-right corner of your window.
+1. Navigate to **Integrations** from the left menu on the Orkes Conductor cluster.
+2. Click **+ New integration** from the top-right corner.
 3. Under the **Message Broker** section, choose **IBM MQ**.
 4. Click **+Add** and provide the following parameters:
 
@@ -26,7 +26,7 @@ Once you have the required configuration parameters from IBM MQ, let’s integra
 | Integration Name | A name to identify your integration. |
 | Host Name | The hostname or IP address of the IBM MQ server. |
 | Port | The port number on which the IBM MQ server is configured to listen for incoming connections. The default port for IBM MQ is 1414, but it usually varies with the required connection. |
-| Queue Manager | Specify the queue manager to which Orkes Conductor will connect.<br/><br/>The queue manager should already be configured in your IBM MQ environment. Check out IBM MQ’s official documentation on [configuring queue manager](https://www.ibm.com/docs/en/ibm-mq/9.3?topic=configuring-creating-queue-managers-multiplatforms). | 
+| Queue Manager | The queue manager to which Orkes Conductor will connect.<br/><br/>The queue manager should already be configured in your IBM MQ environment. Check out IBM MQ’s official documentation on [configuring queue manager](https://www.ibm.com/docs/en/ibm-mq/9.3?topic=configuring-creating-queue-managers-multiplatforms). | 
 | Channel | IBM MQ uses channels to establish connections between clients and queue managers. Specify the channel name the Conductor will use to communicate with IBM MQ. |
 | Connection Security | Choose the required connection security type. It can take the following values:<ul><li>With Username/Password</li><li>Passwordless</li></ul> | 
 | User | The username to authenticate the connection with the IBM MQ server.<br/><br/>**Note**: This field is applicable only if **_Connection Security_** is chosen as **_With Username/Password_**. |
@@ -35,10 +35,10 @@ Once you have the required configuration parameters from IBM MQ, let’s integra
 | Topic String | Used to define the criteria for selecting topics in the messaging system. Allows you to specify patterns that match topics of interest. For example, entering ‘finance/’ would subscribe you to all topics under the ‘finance’ category. <br/><br/>**Note**: This field is applicable for **Topic-based Messaging**. | 
 | Authentication type | Choose the required authentication type. It can take the following values:<ul><li>**NONE**</li><li>**JKS**</li></ul> |
 | Choose Trust Store file | If the authentication is chosen as **JKS**, upload the Java JKS trust store file with CAs. | 
-| Trust Store Password | Provide the password for the trust store. |
+| Trust Store Password | The password for the trust store. |
 | Transport Layer Security | Choose the TLS connection security. Supported values:<ul><li>**NONE**</li><li>**Using Cipher Suite**</li></ul> |
 | Cipher Suite | Select an appropriate Cipher Suite from the following options if TLS with Cipher Suite is chosen:<ul><li>TLS_RSA_WITH_AES_128_CBC_SHA256</li><li>TLS_RSA_WITH_AES_256_CBC_SHA256</li><li>TLS_RSA_WITH_AES_256_GCM_SHA384</li><li>ANY_TLS12</li></ul> | 
-| Description | Provide a description of the integration. | 
+| Description | A description of the integration. | 
 
 5. You can toggle on the **Active** button to activate the integration instantly.
 6. Click **Save**.
@@ -49,17 +49,17 @@ The integration is created successfully now. The next step is to create an event
 
 To do this:
 
-1. Navigate to **Definitions > Event Handler** from the left menu on your Conductor console.
-2. Click the **+ Define event handler** option from the top-right corner of the window.
+1. Navigate to **Definitions > Event Handler** from the left menu on your Orkes Conductor cluster.
+2. Click the **+ Define event handler** option from the top-right corner.
 3. Create an event handler with the following configurations:
 
 <p align="center"><img src="/content/img/event-handler-ibm-mq.png" alt="Configuring Event Handler for IBM MQ Integration" width="70%" height="auto"/></p>
 
 | Event Handler Parameters | Description |
 | ------------------------ | ----------- |
-| Name | Provide a name to identify your event handler definition. |
-| Event | Provide the event integration you have created in the following format:<br/><br/>**Type : Config Name : Queue Name**<br/><br/>Example: **ibm_mq:ibm-mq:queue-name**<br/><br/>**Notes**: The drop-down automatically lists the integration you’ve added to the Conductor cluster. You can choose that and add the queue name to which you want to publish/receive messages. |
-| Condition | Provide the ECMAScript to control the message processing if required. Check out the [event handler documentation](https://orkes.io/content/developer-guides/event-handler#configuring-an-event-handler) for more details. | 
+| Name | A name to identify your event handler definition. |
+| Event | The event integration you have created in the following format:<br/><br/>**Type : Config Name : Queue Name**<br/><br/>Example: **ibm_mq:ibm-mq:queue-name**<br/><br/>**Notes**: The drop-down automatically lists the integration you’ve added to the Conductor cluster. You can choose that and add the queue name to which you want to publish/receive messages. |
+| Condition | The ECMAScript to control the message processing if required. Check out the [event handler documentation](https://orkes.io/content/developer-guides/event-handler#configuring-an-event-handler) for more details. | 
 | Actions | Choose the required actions to be carried out when sending/receiving the events from IBM MQ. It can take the following values:<ul><li>Complete Task</li><li>Terminate Workflow</li><li>Update Variables</li><li>Fail Task</li><li>Start Workflow</li></ul>Each type of action requires and supports a certain set of input parameters. Check out the [event handler documentation](https://orkes.io/content/developer-guides/event-handler#configuring-an-event-handler) for more details. | 
 | Active | Set this to true or false. It determines if the event handler is running or not. | 
 
@@ -96,7 +96,7 @@ The permissions can be granted to applications/groups within the Orkes Conductor
 
 To provide explicit permission to Groups:
 
-1. From the left menu on your Conductor cluster, navigate to **Access Control > Groups**.
+1. From the left menu on your Orkes Conductor cluster, navigate to **Access Control > Groups**.
 2. Create a new group or choose an existing group.
 3. Under the **Permissions** section, click **+Add Permission**.
 4. From the **Integrations** sub-tab, choose the integration with required permissions.
@@ -114,7 +114,7 @@ You can quickly build a workflow from UI in Orkes Conductor.
 
 For this,
 
-1. Navigate to **Definitions > Workflow**, and click the **Define Workflow** button.
+1. Navigate to **Definitions > Workflow**, and click the **+ Define Workflow** button.
 2. Create a workflow and add an event task at the required point with the **Sink** in the format **ibm_mq:ibm-mq:queue-name**, where “ibm-mq” is the integration name and “queue-name” is the queue to which Conductor should send/receive messages.
 
 <p align="center"><img src="/content/img/event-task-ibm-mq.png" alt="Event task for IBM MQ Integration in Orkes Conductor" width="70%" height="auto"/></p>

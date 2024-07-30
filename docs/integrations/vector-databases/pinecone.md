@@ -1,6 +1,6 @@
 # Integrating with Pinecone in Orkes Conductor
 
-To effectively utilize AI and LLM tasks in Orkes Conductor, it's essential to integrate your Conductor cluster with the necessary Vector Database models. 
+To effectively utilize AI and LLM tasks in Orkes Conductor, it's essential to integrate your Orkes Conductor cluster with the necessary Vector Database models. 
 
 Pinecone is a popular vector database known for its efficiency and versatility in handling large-scale vector data. This integration empowers you to access, query, and manipulate vector data effectively, enhancing the capabilities of Orkes Conductor in various natural language processing and artificial intelligence applications.
 
@@ -32,8 +32,8 @@ Check out Pinecone's [official documentation](https://docs.pinecone.io/docs/over
 
 Now, you have the API key. Let’s integrate this with Orkes Conductor.
 
-1. Navigate to **Integrations** from the left menu on your Orkes Conductor console.
-2. Click **+New integration** button from the top-right of your window.
+1. Navigate to **Integrations** from the left menu on your Orkes Conductor cluster.
+2. Click **+New integration** button from the top-right corner.
 3. Under the **Vector Databases** section, choose **Pinecone**. 
 4. Click **+Add** and provide the following parameters:
 
@@ -41,18 +41,18 @@ Now, you have the API key. Let’s integrate this with Orkes Conductor.
 
 | Parameters | Description |
 | ---------- | ----------- | 
-| Integration name | Provide a name for the integration. |
-| API Key | Provide the [API key copied previously](/content/integrations/vector-databases/pinecone#get-configuration-credentials-from-pinecone). |
-| Project Name | Provide the [project ID copied previously](/content/integrations/vector-databases/pinecone#get-configuration-credentials-from-pinecone). |
-| Environment | Provide the environment name. Refer to the previous section on [how to get the environment name](/content/integrations/vector-databases/pinecone#get-configuration-credentials-from-pinecone). |
-| Description | Provide a description of your integration. |
+| Integration name | A name for the integration. |
+| API Key | The [API key copied previously](/content/integrations/vector-databases/pinecone#get-configuration-credentials-from-pinecone). |
+| Project Name | The [project ID copied previously](/content/integrations/vector-databases/pinecone#get-configuration-credentials-from-pinecone). |
+| Environment | The environment name. Refer to the previous section on [how to get the environment name](/content/integrations/vector-databases/pinecone#get-configuration-credentials-from-pinecone). |
+| Description | A description of your integration. |
 
-5. You can toggle-on the **Active** button to activate the integration instantly.
+4. Toggle-on the **Active** button to enable the model immediately.
 6. Click **Save**.
 
 ## Adding Indexes to Pinecone Integration
 
-Now, you have integrated your Conductor console with the Pinecone provider. The next step is integrating with the specific indexes. 
+Now, you have integrated your Orkes Conductor cluster with the Pinecone provider. The next step is integrating with the specific indexes. 
 
 To add a new index to the Pinecone integration:
 
@@ -65,7 +65,7 @@ To add a new index to the Pinecone integration:
 
 <p align="center"><img src="/content/img/create-new-pinecone-integration-index-model.png" alt="Create Indexes for Pinecone Integration Model" width="60%" height="auto"></img></p>
 
-4. Turn on the **Active** button to enable the model immediately.
+4. Toggle-on the **Active** button to enable immediately.
 5. Click **Save**.
 
 This ensures the integration model is saved for future use in LLM tasks within Orkes Conductor.
@@ -74,11 +74,11 @@ This ensures the integration model is saved for future use in LLM tasks within O
 
 Now, the integration with the required models is ready. Next, we should determine the access control to these models. 
 
-The permission can be granted to applications/groups within the Orkes Conductor console. 
+The permission can be granted to applications/groups within the Orkes Conductor cluster. 
 
 To provide explicit permission to Groups:
 
-1. Navigate to **Access Control > Groups** from the left menu on your Orkes Conductor console.
+1. Navigate to **Access Control > Groups** from the left menu on your Orkes Conductor cluster.
 2. Create a new group or choose an existing group.
 3. Under the **Permissions** section, click **+Add Permission**.
 4. Under the **Integrations** tab, select the required integrations with the required permissions. 

@@ -2,7 +2,7 @@
 
 To effectively utilize AI and LLM tasks in Orkes Conductor, it's essential to integrate your Conductor cluster with the necessary AI and LLM models. 
 
-Anthropic Claude offers a range of models that can be incorporated into the Orkes Conductor console. The choice of model depends on your unique use case, the functionalities you require, and the specific natural language processing tasks you intend to tackle. 
+Anthropic Claude offers a range of models that can be incorporated into the Orkes Conductor cluster. The choice of model depends on your unique use case, the functionalities you require, and the specific natural language processing tasks you intend to tackle. 
 
 This guide will provide the steps for integrating the Anthropic Claude provider with Orkes Conductor.
 
@@ -23,8 +23,8 @@ To generate the API key:
 
 Let’s integrate the Anthropic Claude with Orkes Conductor.
 
-1. Navigate to **Integrations** from the left menu on your Orkes Conductor console.
-2. Click **+New integration** button from the top-right of your window.
+1. Navigate to **Integrations** from the left menu on your Orkes Conductor cluster.
+2. Click **+New integration** button from the top-right corner.
 3. Under the **AI/LLM** section, choose **Anthropic Claude**. 
 4. Click **+Add** and provide the following parameters:
 
@@ -32,17 +32,17 @@ Let’s integrate the Anthropic Claude with Orkes Conductor.
 
 | Parameters | Description |
 | ---------- | ----------- | 
-| Integration name | Provide a name for the integration. |
-| API Key | Provide the API key to integrate Anthropic Claude with Orkes Conductor. [Refer to the previous section on how to generate the API keys](/content/integrations/ai-llm/anthropic-claude#steps-to-integrate-with-anthropic-claude). | 
-| API Endpoint | Provide the API endpoint from the Cohere console. The base URL of the API endpoint is https://api.anthropic.com/v1. |
-| Description | Provide a description of your integration. |
+| Integration name | A name for the integration. |
+| API Key | The API key to integrate Anthropic Claude with Orkes Conductor. [Refer to the previous section on how to generate the API keys](/content/integrations/ai-llm/anthropic-claude#steps-to-integrate-with-anthropic-claude). | 
+| API Endpoint | The API endpoint from the Cohere console. The base URL of the API endpoint is https://api.anthropic.com/v1. |
+| Description | A description of your integration. |
 
 5. You can toggle-on the **Active** button to activate the integration instantly.
 6. Click **Save**.
 
 ## Adding Anthropic Claude models to integration
 
-You have now integrated your Conductor console with the Anthropic Claude provider. The next step is to integrate with the specific models. 
+You have now integrated your Orkes Conductor cluster with the Anthropic Claude provider. The next step is to integrate with the specific models. 
 
 Anthropic Claude has different models: Claude 3 Opus, Claude 3 Sonnet, Claude 3 Haiku, and more. Each model is intended for different use cases, such as text completion and generating embeddings.
 
@@ -68,11 +68,11 @@ This ensures the integration model is saved for future use in LLM tasks within O
 
 The integration with the required models is now ready. Next, we should determine the access control to these models. 
 
-The permission can be granted to applications/groups within the Orkes Conductor console. 
+The permission can be granted to applications/groups within the Orkes Conductor cluster. 
 
 To provide explicit permission to Groups:
 
-1. Navigate to **Access Control > Groups** from the left menu on your Orkes Conductor console.
+1. Navigate to **Access Control > Groups** from the left menu on your Orkes Conductor cluster.
 2. Create a new group or choose an existing group.
 3. Under the **Permissions** section, click **+Add Permission**.
 4. Under the **Integrations** tab, select the required integrations with the required permissions. 

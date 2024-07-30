@@ -13,8 +13,8 @@ Before beginning the integration process in Orkes Conductor, you must get specif
 
 Now, you have the required configuration credentials from Azure Service Bus. Let’s integrate with Orkes Conductor.
 
-1. Navigate to **Integrations** from the left menu on the Conductor cluster.
-2. Click **+ New integration** from the top-right corner of your window.
+1. Navigate to **Integrations** from the left menu on the Orkes Conductor cluster.
+2. Click **+ New integration** from the top-right corner.
 3. Under the **Message Broker** section, choose **Azure Service Bus**.
 4. Click **+Add** and provide the following parameters:
 
@@ -24,9 +24,9 @@ Now, you have the required configuration credentials from Azure Service Bus. Let
 | ---------- | ----------- |
 | Integration Name | A name to identify your integration. |
 | Connection Type | Choose the required connection type. It can take the following values:<ul><li>Connection String</li><li>Password Less</li></ul> |
-| Endpoint | Provide the endpoint of the service bus. [Refer to the previous section on how to get this.](/content/integrations/message-broker/azure-service-bus#get-configuration-credentials-from-azure-service-bus)<br/><br/>**Note**: This field is applicable only if the **_Connection Type_** is chosen as **_Connection String_**. |
-| Namespace | Provide the namespace of the service bus. [Refer to the previous section on how to get this.](/content/integrations/message-broker/azure-service-bus#get-configuration-credentials-from-azure-service-bus)<br/><br/>**Note**: This field is applicable only if the **_Connection Type_** is chosen as **_Password Less_**. |
-| Description | Provide a description of the integration. |
+| Endpoint | The endpoint of the service bus. [Refer to the previous section on how to get this.](/content/integrations/message-broker/azure-service-bus#get-configuration-credentials-from-azure-service-bus)<br/><br/>**Note**: This field is applicable only if the **_Connection Type_** is chosen as **_Connection String_**. |
+| Namespace | The namespace of the service bus. [Refer to the previous section on how to get this.](/content/integrations/message-broker/azure-service-bus#get-configuration-credentials-from-azure-service-bus)<br/><br/>**Note**: This field is applicable only if the **_Connection Type_** is chosen as **_Password Less_**. |
+| Description | A description of the integration. |
 
 5. You can toggle on the **Active** button to activate the integration instantly.
 6. Click **Save**.
@@ -37,17 +37,17 @@ The integration is created successfully now. The next step is to create an event
 
 To do this:
 
-1. Navigate to **Definitions > Event Handler** from the left menu on your Conductor console.
-2. Click the **+ Define event handler** option from the top-right corner of the window.
+1. Navigate to **Definitions > Event Handler** from the left menu on your Orkes Conductor cluster.
+2. Click the **+ Define event handler** option from the top-right corner.
 3. Create an event handler with the following configurations:
 
 <p align="center"><img src="/content/img/event-handler-azure-service-bus.png" alt="Configuring Event Handler for Azure Service Bus Integration" width="50%" height="auto"/></p>
 
 | Event Handler Parameters | Description |
 | ------------------------ | ----------- |
-| Name | Provide a name to identify your event handler definition. |
-| Event | Provide the event integration you have created in the following format:<br/><br/>**Type : Config Name : Queue Name**<br/><br/>Example: **azure:azureendpoint:events-test-1**<br/><br/>**Notes**: The drop-down automatically lists the integration you’ve added to the Conductor cluster. You can choose that and add the queue name you want to publish/receive messages. | 
-| Condition | Provide the ECMAScript to control the message processing if required. Check out the [event handler documentation](https://orkes.io/content/developer-guides/event-handler#configuring-an-event-handler) for more details. | 
+| Name | A name to identify your event handler definition. |
+| Event | The event integration you have created in the following format:<br/><br/>**Type : Config Name : Queue Name**<br/><br/>Example: **azure:azureendpoint:events-test-1**<br/><br/>**Notes**: The drop-down automatically lists the integration you’ve added to the Conductor cluster. You can choose that and add the queue name you want to publish/receive messages. | 
+| Condition | The ECMAScript to control the message processing if required. Check out the [event handler documentation](https://orkes.io/content/developer-guides/event-handler#configuring-an-event-handler) for more details. | 
 | Actions | Choose the required actions to be carried out on sending or receiving the events to/from Azure Service Bus. It can take the following values:<ul><li>Complete Task</li><li>Terminate Workflow</li><li>Update Variables</li><li>Fail Task</li><li>Start Workflow</li></ul> Each type of action requires and supports a certain set of input parameters. Check out the [event handler documentation](https://orkes.io/content/developer-guides/event-handler#configuring-an-event-handler) for more details. | 
 | Active | Set this to true or false. It determines if the event handler is running or not. |
 
@@ -85,7 +85,7 @@ The permissions can be granted to applications/groups within the Orkes Conductor
 
 To provide explicit permission to Groups:
 
-1. From the left menu on your Conductor cluster, navigate to **Access Control > Groups**.
+1. From the left menu on your Orkes Conductor cluster, navigate to **Access Control > Groups**.
 2. Create a new group or choose an existing group.
 3. Under the **Permissions** section, click **+Add Permission**.
 4. From the **Integrations** sub-tab, choose the integration with required permissions.
@@ -103,7 +103,7 @@ You can quickly build a workflow from UI in Orkes Conductor.
 
 For this,
 
-1. Navigate to **Definitions > Workflow**, and click the **Define Workflow** button.
+1. Navigate to **Definitions > Workflow**, and click the **+ Define Workflow** button.
 2. Create a workflow with an event task with the **Sink** in the format **azure:john-test:events-test-1**, where “john-test” is the integration name and “events-test-1”, is the queue to which Conductor should send/receive messages.
 
 <p align="center"><img src="/content/img/event-task-azure-service-bus.png" alt="Event task in Orkes Conductor" width="80%" height="auto"/></p>

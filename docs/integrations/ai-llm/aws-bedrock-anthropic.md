@@ -1,8 +1,8 @@
 # Integrating with AWS Bedrock Anthropic in Orkes Conductor
 
-To effectively utilize AI and LLM tasks in Orkes Conductor, it's essential to integrate your Conductor cluster with the necessary AI and LLM models. 
+To effectively utilize AI and LLM tasks in Orkes Conductor, it's essential to integrate your Orkes Conductor cluster with the necessary AI and LLM models. 
 
-AWS Bedrock Anthropic offers a range of models that can be incorporated into the Orkes Conductor console. The choice of model depends on your unique use case, the functionalities you require, and the specific natural language processing tasks you intend to tackle. 
+AWS Bedrock Anthropic offers a range of models that can be incorporated into the Orkes Conductor cluster. The choice of model depends on your unique use case, the functionalities you require, and the specific natural language processing tasks you intend to tackle. 
 
 This guide will provide the steps for integrating the AWS Bedrock Anthropic provider with Orkes Conductor.
 
@@ -19,8 +19,8 @@ Before beginning the integration process in Orkes Conductor, you must get specif
 
 Let’s integrate AWS Bedrock Anthropic with Orkes Conductor.
 
-1. Navigate to **Integrations** from the left menu on your Orkes Conductor console.
-2. Click **+New integration** button from the top-right of your window.
+1. Navigate to **Integrations** from the left menu on your Orkes Conductor cluster.
+2. Click **+New integration** button from the top-right corner.
 3. Under the **AI/LLM** section, choose **AWS Bedrock Anthropic**. 
 4. Click **+Add** and provide the following parameters:
 
@@ -28,22 +28,22 @@ Let’s integrate AWS Bedrock Anthropic with Orkes Conductor.
 
 | Parameters | Description |
 | ---------- | ----------- | 
-| Integration name | Provide a name for the integration. |
-| Connection type | Choose the required connection type. Depending upon how the connection is to be established, it can take the following values:<ul><li>**Current Conductor Role** - Choose this if you are using the current Conductor role to establish the connection.</li><li>**Assume External Role** - Choose this if you are assuming a role belonging to another AWS account. [Learn more](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-user_externalid.html). </li><li>**Access Key/Secret** - Choose this if you are establishing the connection using the access key and secret.</li></ul> |
-| Region | Provide the valid AWS region where the resource is located. |
-| Account ID | Provide your AWS account ID. This field is optional. |
-| Role ARN | Specify the Amazon Resource Name (ARN) required to set up the connection.<br/><br/>**Note**: This field is applicable only if the **_Connection Type_** is chosen as **_Assume External Role_**. | 
+| Integration name | A name for the integration. |
+| Connection type | Select the required connection type. Depending upon how the connection is to be established, it can take the following values:<ul><li>**Current Conductor Role** - Choose this if you are using the current Conductor role to establish the connection.</li><li>**Assume External Role** - Choose this if you are assuming a role belonging to another AWS account. [Learn more](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-user_externalid.html). </li><li>**Access Key/Secret** - Choose this if you are establishing the connection using the access key and secret.</li></ul> |
+| Region | The valid AWS region where the resource is located. |
+| Account ID | Your AWS account ID. This field is optional. |
+| Role ARN | The Amazon Resource Name (ARN) required to set up the connection.<br/><br/>**Note**: This field is applicable only if the **_Connection Type_** is chosen as **_Assume External Role_**. | 
 | External ID | If applicable, provide the external ID to assume the role.<br/><br/>**Note**: This field is applicable only if the **_Connection Type_** is chosen as **_Assume External Role_**. | 
-| Access key | Provide the AWS access key.<br/><br/>**Note**: This field is applicable only if the **_Connection Type_** is chosen as **_Access Key/Secret_**. | 
-| Access secret | Provide the AWS access secret.<br/><br/>**Note**: This field is applicable only if the **_Connection Type_** is chosen as **_Access Key/Secret_**. | 
-| Description | Provide a description of your integration. |
+| Access key | The AWS access key.<br/><br/>**Note**: This field is applicable only if the **_Connection Type_** is chosen as **_Access Key/Secret_**. | 
+| Access secret | The AWS access secret.<br/><br/>**Note**: This field is applicable only if the **_Connection Type_** is chosen as **_Access Key/Secret_**. | 
+| Description | A description of your integration. |
 
 5. You can toggle-on the **Active** button to activate the integration instantly.
 6. Click **Save**.
 
 ## Adding AWS Bedrock Anthropic models to integration
 
-You have now integrated your Conductor console with the AWS Bedrock Anthropic provider. The next step is to integrate with the specific models. 
+You have now integrated your Orkes Conductor cluster with the AWS Bedrock Anthropic provider. The next step is to integrate with the specific models. 
 AWS Bedrock Anthropic has different models: Claude, Claude 3 Sonnet, Claude 3 Haiku, Claude Instant, and more. Each model is intended for different use cases, such as text completion and generating embeddings.
 
 Depending on your use case, you must configure the required model within your AWS Bedrock Anthropic configuration.
@@ -68,11 +68,11 @@ This ensures the integration model is saved for future use in LLM tasks within O
 
 The integration with the required models is now ready. Next, we should determine the access control to these models. 
 
-The permission can be granted to applications/groups within the Orkes Conductor console. 
+The permission can be granted to applications/groups within the Orkes Conductor cluster. 
 
 To provide explicit permission to Groups:
 
-1. Navigate to **Access Control > Groups** from the left menu on your Orkes Conductor console.
+1. Navigate to **Access Control > Groups** from the left menu on your Orkes Conductor cluster.
 2. Create a new group or choose an existing group.
 3. Under the **Permissions** section, click **+Add Permission**.
 4. Under the **Integrations** tab, select the required integrations with the required permissions. 

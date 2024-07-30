@@ -1,8 +1,8 @@
 # Integrating with Mistral in Orkes Conductor
 
-To effectively utilize AI and LLM tasks in Orkes Conductor, it's essential to integrate your Conductor cluster with the necessary AI and LLM models. 
+To effectively utilize AI and LLM tasks in Orkes Conductor, it's essential to integrate your Orkes Conductor cluster with the necessary AI and LLM models. 
 
-Mistral AI offers a range of models that can be incorporated into the Orkes Conductor console. The choice of model depends on your unique use case, the functionalities you require, and the specific natural language processing tasks you intend to tackle. 
+Mistral AI offers a range of models that can be incorporated into the Orkes Conductor cluster. The choice of model depends on your unique use case, the functionalities you require, and the specific natural language processing tasks you intend to tackle. 
 
 This guide will provide the steps for integrating the Mistral provider with Orkes Conductor.
 
@@ -19,8 +19,8 @@ To get the API key:
 
 Let’s integrate Mistral with Orkes Conductor.
 
-1. Navigate to **Integrations** from the left menu on your Orkes Conductor console.
-2. Click **+New integration** button from the top-right of your window.
+1. Navigate to **Integrations** from the left menu on your Orkes Conductor cluster.
+2. Click **+New integration** button from the top-right corner.
 3. Under the **AI/LLM** section, choose **Mistral**. 
 4. Click **+Add** and provide the following parameters:
 
@@ -28,17 +28,17 @@ Let’s integrate Mistral with Orkes Conductor.
 
 | Parameters | Description |
 | ---------- | ----------- | 
-| Integration name | Provide a name for the integration. |
-| API Key | Provide the API key to integrate Mistral with Orkes Conductor. Refer to the previous section on how to generate the API keys. |
-| API Endpoint | Provide the API endpoint from your Mistral console. It is of the format: https://api.mistral.ai/v1 for open-source Mistral setup. Check out the [official Mistral documentation](https://docs.mistral.ai/) for more details on getting endpoints for Mistral Cloud. |
-| Description | Provide a description of your integration. |
+| Integration name | A name for the integration. |
+| API Key | The API key to integrate Mistral with Orkes Conductor. Refer to the previous section on how to generate the API keys. |
+| API Endpoint | The API endpoint from your Mistral console. It is of the format: https://api.mistral.ai/v1 for open-source Mistral setup. Check out the [official Mistral documentation](https://docs.mistral.ai/) for more details on getting endpoints for Mistral Cloud. |
+| Description | A description of your integration. |
 
 5. You can toggle-on the **Active** button to activate the integration instantly.
 6. Click **Save**.
 
 ## Adding Mistral models to the integration
 
-Now, you have integrated your Conductor console with the Mistral provider. The next step is integrating with the specific models. 
+Now, you have integrated your Orkes Conductor cluster with the Mistral provider. The next step is integrating with the specific models. 
 
 Mistral AI has different models, such as Mistral 7B, Mixtral 8x7B, Mixtral 8x22B, and more. Each model is intended for different use cases, such as text completion and generating embeddings.
 
@@ -64,11 +64,11 @@ This ensures the integration model is saved for future use in LLM tasks within O
 
 The integration with the required models is now ready. Next, we should determine the access control to these models. 
 
-The permission can be granted to applications/groups within the Orkes Conductor console. 
+The permission can be granted to applications/groups within the Orkes Conductor cluster. 
 
 To provide explicit permission to Groups:
 
-1. Navigate to **Access Control > Groups** from the left menu on your Orkes Conductor console.
+1. Navigate to **Access Control > Groups** from the left menu on your Orkes Conductor cluster.
 2. Create a new group or choose an existing group.
 3. Under the **Permissions** section, click **_+Add Permission_**.
 4. Under the **Integrations** tab, select the required integrations with the required permissions. 
