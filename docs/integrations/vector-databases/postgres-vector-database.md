@@ -47,7 +47,7 @@ To add a new index to the Postgres integration:
 
 <p align="center"><img src="/content/img/create-new-postgres-integration-index-model.png" alt="Create Indexes for Postgres Integration Model" width="60%" height="auto"></img></p>
 
-4. Turn on the **Active** button to enable the model immediately.
+4. Toggle-on the **Active** button to enable immediately.
 5. Click **Save**.
 
 This ensures the integration model is saved for future use in LLM tasks within Orkes Conductor.
