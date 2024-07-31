@@ -67,4 +67,4 @@ The LLM Text Complete task will return the following parameters.
 3. (Optional) Click **+Add variable** to provide the variable path if your prompt template includes variables.
 4. (Optional) Set the parameters **Temperature**, **Stop words**, **TopP**, and **Token Limit**.
 
-<center><p><img src="/content/img/llm-text-complete-ui-method.png " alt="LLM Text Complete Task - UI" width="80%" height="auto"/></p></center>
+<center><p><img src="/content/img/llm-text-complete-ui-method.png" alt="LLM Text Complete Task - UI" width="80%" height="auto"/></p></center>

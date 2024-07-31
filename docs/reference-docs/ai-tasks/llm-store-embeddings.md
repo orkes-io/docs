@@ -56,4 +56,4 @@ There is no output. The LLM Store Embeddings task will store the embeddings in t
 3. Choose the **Embedding model provider** and **Embedding model** used to generate the embeddings.
 4. In **Vector ID**, enter an arbitrary ID to identify the vector in the database.
 
-<center><p><img src="/content/img/llm-store-embeddings-ui.png " alt="LLM Get Embeddings Task - UI" width="80%" height="auto"/></p></center>
+<center><p><img src="/content/img/llm-store-embeddings-ui.png" alt="LLM Store Embeddings Task - UI" width="80%" height="auto"/></p></center>
