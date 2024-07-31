@@ -6,91 +6,60 @@ import TabItem from '@theme/TabItem';
 
 # LLM Index Document
 
-A system task designed to index a provided document into a vector database for efficient search, retrieval, and processing at a later stage.
+The LLM Index Document task is used to index a document into a vector database for efficient search, retrieval, and processing at a later stage.
 
-## Definitions
+The task uses a large language model (LLM) to create embeddings of the indexed document text, which are then stored in the vector database for later retrieval.
 
-```json
-{
-"name": "llm_index_document_task",
-"taskReferenceName": "llm_index_document_task_ref",
-"inputParameters": {
-"vectorDB": "pineconedb",
-"namespace": "myNewModel",
-"index": "test",
-"embeddingModelProvider": "azure_openai",
-"embeddingModel": "text-davinci-003",
-"url": "${workflow.input.url}",
-"mediaType": "application/xhtml+xml",
-"chunkSize": 500,
-"chunkOverlap": 100
-},
-"type": "LLM_INDEX_DOCUMENT"
-}
-```
+## Task configuration
 
-## Input Parameters
+Configure these parameters for the LLM Index Document task.
 
-| Parameter | Description |
-| --------- | ----------- |
-| vectorDB | Choose the required vector database.<br/><br/>**Note**:If you haven’t configured the vector database on your Orkes console, navigate to the Integrations tab and configure your required provider. Refer to the documentation on [how to integrate Vector Databases with Orkes console](/content/category/integrations/vector-databases). |
-| namespace | Choose from the available namespace configured within the chosen vector database.<br/><br/>Namespaces are separate isolated environments within the database to manage and organize vector data effectively.<br/><br/>**Note**: The **_namespace_** field has different names and applicability based on the integration:<ul><li>For Pinecone integration, the namespace field is applicable.</li><li>For Weaviate integration, the namespace field is not applicable.</li><li>For MongoDB integration, the namespace field is referred to as “Collection” in MongoDB.</li><li>For Postgres integration, the namespace field is referred to as “Table” in Postgres.</li></ul>|
-| index | Choose the index in your vector database where indexed text or data was stored.<br/><br/> **Note:** For Weaviate integration, this field refers to the class name, while for other integrations, it denotes the index name.|
-| embeddingModelProvider | Choose the required LLM provider for embedding.<br/><br/>If you haven’t configured your AI / LLM provider on your Orkes console, navigate to the **Integrations** tab and configure your required provider. Refer to the documentation on [how to integrate the LLM providers with Orkes console](/content/category/integrations/ai-llm).|
-| embeddingModel | Choose from the available language models provided by the selected LLM provider. |
-| url | Provide the URL of the file to be indexed. |
-| mediaType | Select the media type of the file to be indexed. Currently, supported media types include:<ul><li>application/java-archive</li><li>application/EDI-X12</li><li>application/EDIFACT</li><li>application/javascript</li><li>application/octet-stream</li><li>application/ogg</li><li>application/pdf</li><li>application/xhtml+xml</li><li>application/x-shockwave-flash</li><li>application/json</li><li>application/ld+json</li><li>application/xml</li><li>application/zip</li><li>application/x-www-form-urlencoded</li><li>audio/mpeg</li><li>audio/x-ms-wma</li><li>audio/vnd.rn-realaudio</li><li>audio/x-wav</li><li>image/gif</li><li>image/jpeg</li><li>image/png</li><li>image/tiff</li><li>image/vnd.microsoft.icon</li><li>image/x-icon</li><li>image/vnd.djvu</li><li>image/svg+xml</li></ul> | 
-| chunkSize | Specifies how long each input text segment should be when it’s divided for processing by the LLM.<br/><br/>For example, if the article contains 2000 words and the chunk size is configured as 500, then the document would be divided into four chunks for processing. |
-| chunkOverlap | Specifies the overlap between adjacent chunks.<br/><br/>For example, if the chunk overlap is specified as 100, then the first 100 words of each chunk would overlap with the last 100 words of the previous chunk. | 
+| Parameter | Description | Required/Optional | 
+| --------- | ----------- | ----------------- |
+| inputParameters.**vectorDB** | The vector database to store the data.<br/><br/>**Note**: If you haven’t configured the vector database on your Orkes Conductor cluster, navigate to the **Integrations** tab and configure your required provider. Refer to the documentation on [how to integrate Vector Databases with Orkes console](https://orkes.io/content/category/integrations/vector-databases). | Required. | 
+| inputParameters.**index** | The index in your vector database where the text or data will be stored.<br/><br/>The terminology of the index field varies depending on the integration:<ul><li>For Weaviate, the index field indicates the class name.</li><li>For other integrations, it denotes the index name.</li></ul> | Required. |
+| inputParameters.**namespace** | Namespaces are separate isolated environments within the database to manage and organize vector data effectively. Choose from the available namespace configured within the chosen vector database.<br/><br/>The usage and terminology of the namespace field vary depending on the integration:<ul><li>For Pinecone, the namespace field is applicable.</li><li>For Weaviate, the namespace field is not applicable.</li><li>For MongoDB, the namespace field is referred to as “Collection” in MongoDB.</li><li>For Postgres, the namespace field is referred to as “Table” in Postgres.</li></ul> | Required. | 
+| inputParameters.**embeddingModelProvider** | The LLM provider for generating the embeddings.<br/><br/>**Note**: If you haven’t configured your AI/LLM provider on your Orkes console, navigate to the **Integrations** tab and configure your required provider. Refer to the documentation on [how to integrate the LLM providers with Orkes Conductor](https://orkes.io/content/category/integrations/ai-llm). | Required. |
+| inputParameters.**embeddingModel** | The embedding model provided by the selected LLM provider to generate the embeddings. | Required. |
+| inputParameters.**url** | The URL of the file to be indexed. | Required. |
+| inputParameters.**mediaType** | The media type of the file to be indexed. Supported media types:<ul><li>application/java-archive</li><li>application/EDI-X12</li><li>application/EDIFACT</li><li>application/javascript</li><li>application/octet-stream</li><li>application/ogg</li><li>application/pdf</li><li>application/xhtml+xml</li><li>application/x-shockwave-flash</li><li>application/json</li><li>application/ld+json</li><li>application/xml</li><li>application/zip</li><li>application/x-www-form-urlencoded</li><li>audio/mpeg</li><li>audio/x-ms-wma</li><li>audio/vnd.rn-realaudio</li><li>audio/x-wav</li><li>image/gif</li><li>image/jpeg</li><li>image/png</li><li>image/tiff</li><li>image/vnd.microsoft.icon</li><li>image/x-icon</li><li>image/vnd.djvu</li><li>image/svg+xml</li></ul> | Optional. | 
+| inputParameters.**chunkSize** | The length of each input text segment when divided for processing by the LLM. For example, if the document contains 2,000 words and the chunk size is set to 500, the document is divided into four chunks for processing. | Optional. | 
+| inputParameters.**chunkOverlap** | The overlap between adjacent chunks. For example, if the chunk overlap is specified as 100, then the first 100 words of each chunk would overlap with the last 100 words of the previous chunk. | Optional. | 
 
+## Task definition
 
-## Examples
-
-<Tabs>
-<TabItem value="UI" label="UI" className="paddedContent">
-
-<div className="row">
-<div className="col col--4">
-
-<br/>
-<br/>
-
-1. Add task type **LLM Index Document**.
-2. Choose the vector database, & LLM provider for embedding the document.
-3. Provide the document URL to be indexed and other input parameters.
-
-</div>
-<div className="col">
-<div className="embed-loom-video">
-
-<p><img src="/content/img/llm-index-document-ui-method.png" alt="LLM Index Document Task" width="500" height="auto"/></p>
-
-</div>
-</div>
-</div>
-
-
-
-</TabItem>
- <TabItem value="JSON" label="JSON">
+This is the JSON schema for an LLM Index Document task definition.
 
 ```json
 {
-"name": "llm_index_document_task",
-"taskReferenceName": "llm_index_document_task_ref",
-"inputParameters": {
-"vectorDB": "pineconedb",
-"namespace": "myNewModel",
-"index": "test",
-"embeddingModelProvider": "azure_openai",
-"embeddingModel": "text-davinci-003",
-"url": "${workflow.input.url}",
-"mediaType": "application/xhtml+xml",
-"chunkSize": 500,
-"chunkOverlap": 100
-},
-"type": "LLM_INDEX_DOCUMENT"
+    "name": "llm_index_document_task",
+    "taskReferenceName": "llm_index_document_task_ref",
+    "inputParameters": {
+        "vectorDB": "pineconedb",
+        "namespace": "myNewModel",
+        "index": "test",
+        "embeddingModelProvider": "azure_openai",
+        "embeddingModel": "text-davinci-003",
+        "url": "${workflow.input.url}",
+        "mediaType": "application/xhtml+xml",
+        "chunkSize": 500,
+        "chunkOverlap": 100
+    },
+    "type": "LLM_INDEX_DOCUMENT"
 }
 ```
-</TabItem>
-</Tabs>
+
+## Task output
+
+There is no output. The LLM Index Document task will store the indexed data in the specified vector database.
+
+## Adding an LLM Index Document task in UI
+
+**To add an LLM Index Document task:**
+
+1. In your workflow, select the (**+**) icon and add an **LLM Index Document** task.
+2. Choose the **Vector database**, **Index**, **Namespace**, **Embedding model provider**, and **Embedding model**.
+3. Enter the **URL** of the document to be indexed.
+4. Choose the **Media type**, and enter the **Chunk Size** and **Chunk Overlap**.
+
+<center><p><img src="/content/img/llm-index-document-ui-method.png" alt="LLM Index Document Task - UI" width="80%" height="auto"/></p></center>
