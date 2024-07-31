@@ -28,7 +28,7 @@ In AI orchestration for RAG, a typical scenario might involve a vector database 
 
 ## Integrating with Vector Databases
 
-Before using all these functions of vector databases in your Orkes Conductor workflows, you need to integrate your cluster with vector databases from specific providers. Popular vector database providers such as **Pinecone** and **Weaviate** are natively supported in Orkes Conductor (more coming soon). Once the database is configured, you can configure the required indexes to be used in your applications. Indexes are the highest-level organizational unit of vector data (similar to the TABLE concept in a relational database).
+Before using all these functions of vector databases in your Orkes Conductor workflows, you need to integrate your cluster with vector databases from specific providers. Popular vector database providers such as **Pinecone**, **Weaviate**, **Postgres Vector Database**, and **Mongo Vector Database** are natively supported in Orkes Conductor (more coming soon). Once the database is configured, you can configure the required indexes to be used in your applications. Indexes are the highest-level organizational unit of vector data (similar to the TABLE concept in a relational database).
 
 For example, if you are using Pinecone as the vector database, then you can configure different indexes within the Pinecone configuration. 
 
@@ -47,7 +47,7 @@ The first step is integrating the required vector databases with your Orkes Cond
 6. Click **Save**.
 
 :::note
-Currently, we support integration with popular models Pinecone & Weaviate. The integration parameters to be configured differ with these models. Refer to the [Vector DB Integrations](/content/category/integrations/vector-databases) document for detailed information on each model. 
+Currently, we support integration with popular models Pinecone, Weaviate, Postgres Vector Database, and Mongo Vector Database. The integration parameters to be configured differ with these models. Refer to the [Vector DB Integrations](/content/category/integrations/vector-databases) document for detailed information on each model. 
 :::
 
 ## RBAC - Governance on who can use Integrations
@@ -60,7 +60,7 @@ The permission can be granted to applications/groups within the Orkes Conductor.
 
 To provide explicit permission to Groups:
 
-1. Navigate to **Access Control > Groups** from the left menu on your Orkes Conductor console.
+1. Navigate to **Access Control > Groups** from the left menu on your Orkes Conductor cluster.
 2. Create a new group or choose an existing group.
 3. Under the **Permissions** section, click **+Add Permission**.
 4. Under the **Integrations** tab, select the required integrations with the required permissions. 
@@ -78,6 +78,7 @@ The Vector Databases integrated are now ready to be used in your workflows in Or
 The following system tasks require a vector database to be configured:
 
 - [LLM Get Embeddings](/content/reference-docs/ai-tasks/llm-get-embeddings)
+- [LLM Store Embeddings](/content/reference-docs/ai-tasks/llm-store-embeddings)
 - [LLM Search Index](/content/reference-docs/ai-tasks/llm-search-index)
 - [LLM Index Document](/content/reference-docs/ai-tasks/llm-index-document)
 -  [LLM Index Text](/content/reference-docs/ai-tasks/llm-index-text)
@@ -86,7 +87,7 @@ The following system tasks require a vector database to be configured:
 
 If you are creating the workflow via the UI method,
 
-1. Navigate to **Definitions > Workflow** from the left menu on your Orkes Conductor console. 
+1. Navigate to **Definitions > Workflow** from the left menu on your Orkes Conductor cluster. 
 2. Click **Define Workflow** from the top-right corner. 
 3. Click **Start** on the diagram and add the required system task based on your use case.
 4. Choose the configured vector database and indexes.
