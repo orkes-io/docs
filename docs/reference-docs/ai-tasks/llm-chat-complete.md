@@ -6,111 +6,76 @@ import TabItem from '@theme/TabItem';
 
 # LLM Chat Complete
 
-A system task to complete the chat query. It can be used to instruct the model's behavior accurately to prevent any deviation from the objective.
+The LLM Chat Complete task is used to complete a chat query based on additional instructions. It can be used to govern the model's behavior to minimize deviation from the intended objective.
 
-## Definitions
+The LLM Chat Complete task processes a chat query by taking the user's input and generating a response based on the supplied instructions and parameters. This helps the model to stay focused on the objective and provides control over the model's output behavior.
 
-```json
-  {
-     "name": "llm_chat_complete",
-     "taskReferenceName": "llm_chat_complete_ref",
-     "inputParameters": {
-       "llmProvider": "openai",
-       "model": "gpt-4",
-       "instructions": "your-prompt-template",
-       "messages": [
-         {
-           "role": "user",
-           "message": "${workflow.input.text}"
-         }
-       ],
-       "temperature": 0.1,
-       "topP": 0.2,
-       "maxTokens": 4,
-       "stopWords": "spam",
-       "promptVariables": {
-         "text": "${workflow.input.text}",
-         "language": "${workflow.input.language}"
-       }
-     },
-     "type": "LLM_CHAT_COMPLETE"
-   }
-```
+## Task configuration
 
-## Input Parameters
+Configure these parameters for the LLM Chat Complete task.
 
-| Parameter | Description |
-| --------- | ----------- |
-| llmProvider | Select the required LLM provider. You can only choose providers to which you have access for at least one model from that provider.<br/><br/>**Note:** If you haven’t configured your AI / LLM provider on your Orkes console, navigate to the **Integrations** tab and set it up. Refer to the documentation for [integrating LLM providers with Orkes console and providing access to required groups](https://orkes.io/content/category/integrations/ai-llm). | 
-| model | Choose from the available language models provided by the selected LLM provider. You can only choose models for which you have access.<br/><br/>For example, If your LLM provider is Azure Open AI and you’ve configured *text-davinci-003* as the language model, you can select it here. |
-| instructions | Set the ground rule/instructions for the chat so the model responds to only specific queries and will not deviate from the objective.<br/><br/>Under this field, you can also choose the AI prompt created. You can only use the prompts for which you have access.<br/><br/>**Note:**If you haven’t created an AI prompt for your language model, refer to this documentation on [how to create AI Prompts in Orkes Conductor and provide access to required groups](https://orkes.io/content/reference-docs/ai-tasks/prompt-template). |
-| promptVariables | The instructions/prompts can include **_promptVariables_**, allowing for dynamic input. These variables support multiple data types, including string, number, boolean, null, and object/array. |
-| messages | Choose the role and messages to complete the chat query.<p align="center"><img src="/content/img/llm-chat-complete-messages.png" alt="Role and messages in LLM Chat complete task" width="50%" height="auto"></img></p><ul><li>Under ‘Role,’ choose the required role for the chat completion. It can take values such as *user*, *assistant*, *system*, or *human*.<ul><li>The roles “user” and “human” represent the user asking questions or initiating the conversation.</li><li>The roles “assistant” and “system” refer to the model responding to the user queries.</li></ul></li><li>Under “Message”, choose the corresponding input to be provided. It can also be [passed as variables](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor). </li></ul> | 
-| temperature | A parameter to control the randomness of the model’s output. Higher temperatures, such as 1.0, make the output more random and creative. Whereas a lower value makes the output more deterministic and focused.<br/><br/>Example: If you're using a text blurb as input and want to categorize it based on its content type, opt for a lower temperature setting. Conversely, if you're providing text inputs and intend to generate content like emails or blogs, it's advisable to use a higher temperature setting. |
-| stopWords | Provide the stop words to be omitted during the text generation process. It can be string or object/array.<br/><br/>In LLM, stop words may be filtered out or given less importance during the text generation process to ensure that the generated text is coherent and contextually relevant. |
-| topP | Another parameter to control the randomness of the model’s output. This parameter defines a probability threshold and then chooses tokens whose cumulative probability exceeds this threshold.<br/><br/>For example: Imagine you want to complete the sentence: “She walked into the room and saw a ______.” Now, the top 4 words the LLM model would consider based on the highest probabilities would be:<ul><li>Cat - 35%</li><li>Dog - 25% </li><li>Book - 15% </li><li>Chair - 10%</li></ul>If you set the top-p parameter to 0.70, the AI will consider tokens until their cumulative probability reaches or exceeds 70%. Here's how it works:<ul><li>Adding "Cat" (35%) to the cumulative probability.</li><li>Adding "Dog" (25%) to the cumulative probability, totaling 60%.</li><li>Adding "Book" (15%) to the cumulative probability, now at 75%.</li></ul>At this point, the cumulative probability is 75%, exceeding the set top-p value of 70%. Therefore, the AI will randomly select one of the tokens from the list of "Cat," "Dog," and "Book" to complete the sentence because these tokens collectively account for approximately 75% of the likelihood. |
-| maxTokens<br/><br/>(Referred as **_Token limit_** in UI) | The maximum number of tokens to be generated by the LLM and returned as part of the result. A token should be approximately four characters. |
+| Parameter | Description | Required/Optional | 
+| --------- | ----------- | ----------------- |
+| inputParameters.**llmProvider** | The LLM provider. You can choose providers for which you have access to at least one model.<br/><br/>**Note:** If you haven’t configured your AI/LLM provider on your Orkes Conductor cluster, go to the **Integrations** tab and set it up. Refer to the documentation for [integrating LLM providers with Orkes Conductor](https://orkes.io/content/category/integrations/ai-llm). | Required. |
+| inputParameters.**model** | The available language models provided by the selected LLM provider. You can only choose models for which you have access.<br/><br/>For example, If your LLM provider is Azure Open AI and you’ve configured text-davinci-003 as the language model, you can select it here. | Required. |
+| inputParameters.**instructions** | The ground rules or instructions for the chat so the model responds to only specific queries and will not deviate from the objective. Under this section, you can also save the instructions as an AI prompt and add them here. Only prompts that you have access to can be used.<br/><br/>**Note**: If you haven’t created an AI prompt for your language model, refer to the documentation on [creating AI Prompts in Orkes Conductor](https://orkes.io/content/developer-guides/creating-and-managing-gen-ai-prompt-templates). | Required. |
+| inputParameters.**promptVariables** | For prompts that involve variables, provide the input to these variables within this field. It can be string, number, boolean, null, object/array. | Optional. |
+| inputParameters.**messages** | The appropriate role and messages to complete the chat query. Supported values:<ul><li>role</li><li>message</li></ul> | Optional. |
+| inputParameters.**messages.role**| The required role for the chat completion. Available options include _user_, _assistant_, _system_, or _human_.<ul><li>The roles “user” and “human” represent the user asking questions or initiating the conversation.</li><li>The roles “assistant” and “system” refer to the model responding to the user queries.</li></ul> | Optional. |
+| inputParameters.**messages.message** | The corresponding input message to be provided. It can also be [passed as variables](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor). | Optional. |
+| inputParameters.**temperature** | A parameter to control the randomness of the model’s output. Higher temperatures, such as 1.0, make the output more random and creative. A lower value makes the output more deterministic and focused.<br/><br/>**Tip:** If you're using a text blurb as input and want to categorize it based on its content type, opt for a lower temperature setting. Conversely, if you're providing text inputs and intend to generate content like emails or blogs, it's advisable to use a higher temperature setting. | Optional. |
+| inputParameters.**stopWords** | List of words to be omitted during text generation. Supports string and object/array.<br/><br/>In LLM, stop words may be filtered out or given less importance during the text generation process to ensure that the generated text is coherent and contextually relevant. | Optional. |
+| inputParameters.**topP** | Another parameter to control the randomness of the model’s output. This parameter defines a probability threshold and then chooses tokens whose cumulative probability exceeds this threshold.<br/><br/>**Example**: Imagine you want to complete the sentence: “She walked into the room and saw a __.” The top few words the LLM model would consider based on the highest probabilities would be:<ul><li>Cat - 35%</li><li>Dog - 25%</li><li>Book - 15%</li><li>Chair - 10%</li></ul>If you set the top-p parameter to 0.70, the LLM model will consider tokens until their cumulative probability reaches or exceeds 70%. Here's how it works:<ol><li>Add "Cat" (35%) to the cumulative probability.</li><li>Add "Dog" (25%) to the cumulative probability, totaling 60%.</li><li>Add "Book" (15%) to the cumulative probability, now at 75%.</li></ol>At this point, the cumulative probability is 75%, exceeding the set top-p value of 70%. Therefore, the LLM will randomly select one of the tokens from the list of "Cat," "Dog," and "Book" to complete the sentence because these tokens collectively account for approximately 75% of the likelihood. | Optional. |
+| inputParameters.**maxTokens** | The maximum number of tokens to be generated by the LLM and returned as part of the result. A token is approximately four characters. | Optional. |
 
+## Task definition
 
-## Output Parameters
-
-The task output displays the completed chat by the LLM.
-
-## Examples
-
-<Tabs>
-<TabItem value="UI" label="UI" className="paddedContent">
-
-<div className="row">
-<div className="col col--4">
-
-<br/>
-<br/>
-
-1. Add task type **LLM Chat Complete**.
-2. Choose the LLM provider, model & prompt template.
-3. Provide the input parameters.
-
-</div>
-<div className="col">
-<div className="embed-loom-video">
-
-<p><img src="/content/img/llm-chat-complete-ui-method.png" alt="LLM Chat Complete Task" width="500" height="auto"/></p>
-
-</div>
-</div>
-</div>
-
-
-
-</TabItem>
- <TabItem value="JSON" label="JSON">
+This is the JSON schema for an LLM Chat Complete task definition.
 
 ```json
- {
-     "name": "llm_chat_complete",
-     "taskReferenceName": "llm_chat_complete_ref",
-     "inputParameters": {
-       "llmProvider": "openai",
-       "model": "gpt-4",
-       "instructions": "your-prompt-template",
-       "messages": [
-         {
-           "role": "user",
-           "message": "${workflow.input.text}"
-         }
-       ],
-       "temperature": 0.1,
-       "topP": 0.2,
-       "maxTokens": 4,
-       "stopWords": "spam",
-       "promptVariables": {
-         "text": "${workflow.input.text}",
-         "language": "${workflow.input.language}"
-       }
-     },
-     "type": "LLM_CHAT_COMPLETE"
-   }
+{
+  "name": "llm_chat_complete",
+  "taskReferenceName": "llm_chat_complete_ref",
+  "inputParameters": {
+    "llmProvider": "openai",
+    "model": "gpt-4",
+    "instructions": "your-prompt-template", // Can be harcoded instructions or select the prompt here
+    "messages": [
+      {
+        "role": "user",
+        "message": "${workflow.input.text}"
+      }
+    ],
+    "temperature": 0.1,
+    "topP": 0.2,
+    "maxTokens": 4,
+    "stopWords": "spam",
+    "promptVariables": {
+      "text": "${workflow.input.text}",
+      "language": "${workflow.input.language}"
+    }
+  },
+  "type": "LLM_CHAT_COMPLETE"
+}
 ```
-</TabItem>
-</Tabs>
+
+## Task output
+
+The LLM Chat Complete task will return the following parameters.
+
+| Parameter | Description | 
+| --------- | ----------- | 
+| result | The completed chat generated by the LLM. | 
+
+## Adding an LLM Text Complete task in UI
+
+**To add an LLM Text Complete task:**
+
+1. In your workflow, select the (**+**) icon and add an **LLM Text Complete** task.
+2. Choose the **LLM provider** and **Model**.
+3. In the **Instructions** field, set the ground rules or instructions to ensure the model responds only to specific queries. You can save these instructions as an AI prompt and add them here.
+4. (Optional) Click **+Add variable** to provide the variable path if your prompt template includes variables.
+5. (Optional) Click **+Add message** and choose the appropriate role and messages to complete the chat query.
+6. (Optional) Set the parameters **Temperature**, **Stop words**, **TopP**, and **Token Limit**.
+
+<center><p><img src="/content/img/llm-chat-complete-ui-method.png" alt="LLM Chat Complete Task - UI" width="80%" height="auto"/></p></center>
