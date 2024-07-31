@@ -6,7 +6,7 @@ In this guide, we’ll provide an overview of Generative AI, Large Language Mode
 
 Gen AI is a type of Artificial Intelligence (AI) capable of creating new human-like content from pre-trained models that have had exposure to vast swaths of similar content. It is extremely helpful as it increases productivity and unlocks new scenarios that were impossible before without compromising and amplifying human capabilities. However, it also requires humans to direct models on what needs to be generated - the more specific you are, the better the output you will get from the models. The way you instruct a Gen AI model is by sending prompts. Prompts are nothing but text instructions provided to the language models. The response from a Gen-AI model will also be text-based (at least for now), and such models are called Large Language Models (LLMs).
 
-LLMs, at its core, are deep learning algorithms trained on massive amounts of text data. They can perform various NLP (Natural Language Processing) tasks such as text generation, translation, chatbots, AI assistants, etc. LLMs must be pre-trained and fine-tuned to increase their problem-solving capabilities. Some popular LLMs are Open AI, Azure Open AI & Vertex AI.
+LLMs, at its core, are deep learning algorithms trained on massive amounts of text data. They can perform various NLP (Natural Language Processing) tasks such as text generation, translation, chatbots, AI assistants, etc. LLMs must be pre-trained and fine-tuned to increase their problem-solving capabilities. Some popular LLMs are Open AI, Azure Open AI, Google Vertex AI, and more.
 
 ## How does Orkes add value for engineers in using LLM models?
 
@@ -28,9 +28,18 @@ The first step is integrating the required LLM model providers with your Orkes C
 
 - Azure + Open AI
 - OpenAI
-- Vertex AI
+- Cohere
+- Google Vertex AI
+- Google Gemini AI
+- Anthropic Claude
+- Hugging Face
+- AWS Bedrock Anthropic
+- AWS Bedrock Cohere
+- AWS Bedrock Llama2
+- AWS Bedrock Titan
+- Mistral
 
-For example, if you are using Open AI as the model provider, it has four models: Ada, Babbage, Curic, and Davinci. These models vary in capabilities, such as memory, trained data, and more. You can configure the required model to be used within your organization based on your requirements. 
+For example, if you are using Open AI as the model provider, it has different models: Ada, Babbage, Curic, Davinci etc. These models vary in capabilities, such as memory, trained data, and more. You can configure the required model to be used within your organization based on your requirements. 
 
 ### Steps to Integrate AI / LLM Models with Orkes Conductor
 
@@ -38,7 +47,7 @@ For example, if you are using Open AI as the model provider, it has four models:
 2. Click **+New integration** button from the top-right of your window.
 3. Under the **AI / LLM** section, choose from the required provider. 
 
-<p align="center"><img src="/content/img/add-integrations.png" alt="Add New Integrations" width="100%" height="auto"></img></p>
+<p align="center"><img src="/content/img/quickstart-add-integrations.png" alt="Quickstart - Add Integrations" width="80%" height="auto"></img></p>
 
 4. Click +**Add** and provide the required parameters for the chosen provider.
 5. You can toggle-on the **Active** button to activate the integration instantly.
@@ -69,11 +78,11 @@ Now, the integration with the required models is ready. Next, we should determin
 
 Orkes Conductor has built-in access controls that specify which users or applications in an organization can use various resources available in the cluster. One of the supported resource types is an integrated language model like the one above. Having this level of granularity in access control for models ensures that its usage is done in a well-governed manner in an organization.
 
-The permission can be granted to applications/groups within the Orkes Conductor console. 
+The permission can be granted to applications/groups within the Orkes Conductor cluster. 
 
 To provide explicit permission to Groups:
 
-1. Navigate to **Access Control > Groups** from the left menu on your Orkes Conductor console.
+1. Navigate to **Access Control > Groups** from the left menu on your Orkes Conductor cluster.
 2. Create a new group or choose an existing group.
 3. Under the **Permissions** section, click **+Add Permission**.
 4. Under the **Integrations** tab, select the required integrations with the required permissions. 
@@ -121,7 +130,7 @@ Now, let’s test the prompt right away by filling in the following parameters:
 | --------- | ----------- | 
 | Select model to test | From the chosen LLM models, you can choose any model for testing the prompt.<br/><br/> This makes your AI prompt diverse to be used among any language models, provided they have been integrated with your cluster. |
 | Temperature | Set the required temperature based on your requirements. Temperature is a parameter to indicate the randomness of the model’s output.<br/><br/>Higher temperatures, such as 1.0, make the output more random and creative. It can be used for generating creative content like creating social media posts, drafting emails, etc.<br/><br/>Whereas a lower value makes the output more stable and focused. It can be used in cases like text classification, where you provide a text and classify it into appropriate categories. |
-| Stop words | In LLM, stop words may be filtered out or given less importance during the text generation process to ensure that the generated text is coherent and contextually relevant. The stop words are the words that are used in the sentences like “and”, “a”, and “the”, etc., but do not potentially provide any specific meaning but are required in completing the sentences. Provide the stop words to be filtered out. |
+| Stop words | In LLM, stop words may be filtered out or given less importance during the text generation process to ensure that the generated text is coherent and contextually relevant.  |
 | TopP | Another parameter to control the randomness of the model’s output. This parameter defines a probability threshold and then chooses tokens whose cumulative probability exceeds this threshold.<br/><br/>For example:<br/><br/>Imagine you want to complete the sentence: “She walked into the room and saw a ______.” Now, the top 4 words the LLM model would consider based on the highest probabilities would be:<ul><li>Cat - 35%</li><li>Dog - 25%</li><li>Book - 15%</li><li>Chair - 10%</li></ul>If you set the top-p parameter to 0.70, the AI will consider tokens until their cumulative probability reaches or exceeds 70%. Here's how it works:<ul><li>Adding "Cat" (35%) to the cumulative probability.</li><li>Adding "Dog" (25%) to the cumulative probability, totaling 60%.</li><li>Adding "Book" (15%) to the cumulative probability, now at 75%.</li></ul><br/><br/>At this point, the cumulative probability is 75%, exceeding the set top-p value of 70%. Therefore, the AI will randomly select one of the tokens from the list of "Cat," "Dog," and "Book" to complete the sentence because these tokens collectively account for approximately 75% of the likelihood.|
 
 Now, you can test it right there by clicking the **Test** button. 
@@ -138,7 +147,7 @@ Your Orkes Conductor console will have different applications/groups to which sp
 
 To provide permissions to Groups:
 
-1. Navigate to **Access Control > Groups** from the left menu on your Orkes Conductor console.
+1. Navigate to **Access Control > Groups** from the left menu on your Orkes Conductor cluster.
 2. Create a new group or choose an existing one with the members needing access to prompts.
 3. Under **Permissions** section, click +Add Permission.
 4. Under the **Prompt** tab, choose the required prompts with the required permissions. 
@@ -157,7 +166,7 @@ The AI Prompts and models integrated earlier are now ready to be used in your wo
 
 If you are creating the workflow via the UI method,
 
-1. Navigate to **Definitions > Workflow** from the left menu on your Orkes Conductor console. 
+1. Navigate to **Definitions > Workflow** from the left menu on your Orkes Conductor cluster. 
 2. Click **Define Workflow** from the top-right corner. 
 3. Click **Start** on the diagram and add the **LLM Text Complete** task.
 4. Choose the required LLM provider and model.
@@ -251,7 +260,7 @@ Now, let's add the **text-davinci-003** model to the integration.
 <p align="center"><img src="/content/img/translation-prompt-test.png" alt="Sample prompt test" width="100%" height="auto"></img></p>
 
 6. The prompt works fine. Let’s save the prompt now.
-7. Ensure to provide prompt access to required user groups as mentioned in the above section “RBAC - Governance on who can use Prompts”.
+7. Ensure to provide prompt access to required user groups as mentioned in the above section “[RBAC - Governance on who can use Prompts](/content/developer-guides/using-llms-in-your-orkes-conductor-workflows#rbac---governance-on-who-can-use-integrations)”.
 
 #### Step 4 - Create Workflow Definitions
 
