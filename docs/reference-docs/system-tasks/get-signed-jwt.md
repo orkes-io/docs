@@ -50,7 +50,7 @@ This is the JSON schema for a Get Signed JWT task definition.
 
 ## Adding a Get Signed JWT task in UI
 
-**To add a Get Signed JWT task::**
+**To add a Get Signed JWT task:**
 
 1. In your workflow, select the (**+**) icon and add a **Get Signed JWT** task.
 2. Enter the **Subject** and **Issuer** of the JWT.
