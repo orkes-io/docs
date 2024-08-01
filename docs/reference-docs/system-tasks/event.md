@@ -7,67 +7,50 @@ import TabItem from '@theme/TabItem';
 
 # Event 
 
-An Event task is used to publish an event into one of the supported eventing systems. The supported eventing models include:
+The Event task is used to publish events into eventing systems. It supports various eventing models, including AMQP, Amazon MSK, AWS SQS, Azure Service Bus, Confluent Kafka, Apache Kafka, NATS Messaging, GCP Pub/Sub, and IBM MQ.
 
-- [AMQP](https://orkes.io/content/integrations/message-broker/amqp)
-- [Amazon MSK](https://orkes.io/content/integrations/message-broker/amazon-msk)
-- [AWS SQS](https://orkes.io/content/integrations/message-broker/aws-sqs)
-- [Azure Service Bus](https://orkes.io/content/integrations/message-broker/azure-service-bus)
-- [Confluent Kafka](https://orkes.io/content/integrations/message-broker/confluent-kafka)
-- [Apache Kafka](https://orkes.io/content/integrations/message-broker/apache-kafka)
-- [NATS Messaging](https://orkes.io/content/integrations/message-broker/nats-messaging)
-- [GCP Pub Sub](https://orkes.io/content/integrations/message-broker/gcp-pub-sub)
-- [IBM MQ](https://orkes.io/content/integrations/message-broker/ibm-mq)
+An Event task publishes a message to an event queue or topic. The specific eventing system used depends on the configured sink. The sink parameter defines the message broker type, integration name, and queue/topic name. The task execution payload is sent to this sink, and Conductor automatically appends additional system input parameters to the payload.
 
-To utilize this functionality, you must first [integrate the required message broker](https://orkes.io/content/category/integrations/message-broker) with Orkes Conductor followed by [creating an event handler](https://orkes.io/content/developer-guides/event-handler) in Orkes Conductor. The configuration parameters vary with the eventing systems. Refer to the corresponding documentation for detailed steps on adding integration.
+:::note 
+**Prerequisite** - Before configuring the Event task, ensure that the [required message broker is integrated](https://orkes.io/content/category/integrations/message-broker) with Orkes Conductor, and then [create a corresponding event handle](https://orkes.io/content/developer-guides/event-handler). Configuration parameters vary with each eventing system. Refer to the corresponding documentation for detailed integration steps.
+:::
 
-## Definitions​
+## Task configuration
 
-An example configuration of publishing an event to Confluent Kafka:
+Configure these parameters for the Event task.
 
-```json
-   {
-     "name": "event",
-     "taskReferenceName": "event_ref",
-     "type": "EVENT",
-     "sink": "kafka_confluent:John-Test:topic-name",
-     "inputParameters": {}
-   }
-```
+| Parameter | Description | Required/Optional | 
+| --------- | ----------- | ----------------- |
+| sink | The event queue sink in the format: “Type : Config Name : Queue/Topic Name”.<br/><br/>Where,<ul><li>**Type**—The message broker type where the payload is being sent. Supported types:<ul><li>amqp</li><li>sqs</li><li>azure</li><li>kafka</li><li>nats</li><li>gcppubsub</li><li>ibm_mq</li></ul></li><li>**Config Name**—The integration name added to the cluster.</li><li>**Queue/Topic** Name—The name of the queue or topic where the payload is being sent.</li></ul> | Required. |
+| inputParameters | The input parameters for the Event task, which can be [passed as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor) or a fixed value. These parameters determine the payload sent to the event sink during task execution. | Optional. |
 
-## Input Parameters​
+### Additional system inputs to payload​
 
-| Attribute | Description |
-| --------- | ----------- |
-| sink | Specifies the event queue sink, which is of the format:<br/><br/>**Type : Config Name : Queue/Topic Name**<br/>where,<ul><li>_Type_ - The type is message broker type where payload is being sent. These are the supporters types:<ul><li>AMQP - amqp</li><li>AWS SQS - sqs</li><li>Azure Service Bus - azure</li><li>Apache Kafka - kafka</li><li>NATS Messaging - nats</li><li>GCP Pub Sub - gcppubsub</li><li>IBM MQ - ibm_mq</li></ul></li><li>*Config Name* - The integration name added to the cluster.</li><li>*Queue/Topic Name* - The name of the queue or topic where the payload is being sent.</li></ul>If you are using Conductor UI, the UI drop-down lists available message broker integration in the Conductor cluster. Select the required integration and append the topic/queue name. For example, the drop-down lists the sink for the above example as **kafka_confluent:John-Test**. Edit the sink to append the topic name, making it **kafka_confluent:John-Test:topic-name**. |
-| inputParameters | Provide the required input parameters so the task execution will be sent as the payload to the event sink. |
-| optional | Enabling this option renders the task optional. The workflow continues unaffected by the task's outcome, whether it fails or remains incomplete. |
+Conductor automatically adds the following parameters to the payload. Ensure that these fields are not present in the payload, as they will be overwritten during execution.
 
-### Additional System Inputs to Payload​
+* **workflowInstanceId** - Workflow ID from where this event was sent.
+* **workflowType** - Name of the workflow definition.
+* **workflowVersion** - Version of the workflow definition.
+* **correlationId** - Correlation ID of the workflow execution.
 
-Conductor automatically adds the following parameters to the payload. Ensure these fields aren’t present in the payload, as they will be overwritten during execution.
+**Example**
 
-- workflowInstanceId - Workflow ID from where this event was sent.
-- workflowType - Name of the workflow definition.
-- workflowVersion - Version of the workflow definition.
-- correlationId - Correlation ID of the workflow execution.
-
-For example, given the following task definition:
+Given the following task definition:
 
 ```json
-   {
-     "name": "event_task",
-     "taskReferenceName": "event_task_ref",
-     "type": "EVENT",
-     "sink": "kafka:external_event_name",
-     "inputParameters": {
-       "myKey": "myValue",
-       "myNumber": 100
-     }
-   }
+{
+  "name": "event_task",
+  "taskReferenceName": "event_task_ref",
+  "type": "EVENT",
+  "sink": "kafka:integration-name:topic-name",
+  "inputParameters": {
+    "myKey": "myValue",
+    "myNumber": 100
+  }
+}
 ```
 
-The execution will produce the following output:
+The execution will produce the following input parameters:
 
 ```json
     {
@@ -80,52 +63,30 @@ The execution will produce the following output:
     }
 ```
 
-## Output Parameters​
+## Task definition
 
-The task produces the payload it sent as the output.
-
-## Examples
-
-<Tabs>
-<TabItem value="UI" label="UI" className="paddedContent">
-
-<div className="row">
-<div className="col col--4">
-
-<br/>
-<br/>
-
-1. Add task type **Event**.
-2. Select the sink type from the integrations added to the cluster.
-3. Add the topic name along with the sink.
-4. Provide the required input parameters.
-
-</div>
-<div className="col">
-<div className="embed-loom-video">
-
-<p><img src="/content/img/ui-guide-event-task.png" alt="Adding event task" width="1024" height="auto"/></p>
-
-</div>
-</div>
-</div>
-
-
-
-</TabItem>
- <TabItem value="JSON" label="JSON">
+This is the JSON schema for an Event task definition.
 
 ```json
-   {
+  {
      "name": "event",
      "taskReferenceName": "event_ref",
      "type": "EVENT",
-     "sink": "kafka_confluent:John-Test:topic-name",
+     "sink": "messaging-type:integration-name:queue-or-topic-name",
      "inputParameters": {}
    }
 ```
 
-</TabItem>
-</Tabs>
+## Task output
 
+The task output mirrors the payload sent during execution, including system-appended parameters.
 
+## Adding an Event task in UI
+
+**To add an Event task:**
+
+1. In your workflow, select the (**+**) icon and add an **Event** task.
+2. In **Sink**, select the required integration and append the topic/queue name. Failure to do so may result in execution errors, as the payload won't have a valid destination.
+3. (Optional) Add any additional input parameters.
+
+<center><p><img src="/content/img/ui-guide-event-task.png" alt="Adding event task" width="1024" height="auto"/></p></center>

@@ -7,89 +7,54 @@ import TabItem from '@theme/TabItem';
 
 # Get Signed JWT
 
-A system task that allows signing a JWT token.
+The Get Signed JWT task is used to sign a JWT (JSON Web Token).
 
-## Definitions
+Using the RS256 algorithm, the task ensures robust cryptographic security during JWT signing. The resulting token effectively encapsulates specified authorization scopes and incorporates a TTL (time-to-live) mechanism to enforce its expiration, thereby maintaining secure access control.
 
-```json
-   {
-     "name": "get_signed_jwt",
-     "taskReferenceName": "get_signed_jwt_ref",
-     "inputParameters": {
-       "subject": "${workflow.input.subject}",
-       "issuer": "${workflow.input.issuer}",
-       "privateKey": "${workflow.secrets.jwt-privatekey}",
-       "privateKeyId": "key-123",
-       "audience": "${workflow.input.audience}",
-       "ttlInSecond": 3600,
-       "scopes": "${workflow.input.scope}",
-       "algorithm": "RS256"
-     },
-     "type": "GET_SIGNED_JWT"
-   }
-```
+## Task configuration
 
-### Input Parameters
+Configure these parameters for the Get Signed JWT task.
 
-| Attribute | Description |
-| --------- | ----------- |
-| subject | The subject of the JWT. Often represents the entity (e.g., user or service) for which the token is issued. |
-| issuer | The issuer of the JWT, identifying who created and signed the token. | 
-| privateKey | The private key used to sign the JWT. | 
-| privateKeyId | An identifier for the private key used to sign the JWT. |
-| audience | The intended recipient(s) of the JWT. |
-| ttlInSeconds | The time-to-live (TTL) or expiration time of the JWT, specified in seconds. |
-| scopes | The scopes associated with the JWT. It defines the access permissions for the token grants. It can be string or array. |
-| algorithm | The signing algorithm to use for the JWT. Currently, it's set to RS256, which refers to the RSA signature with the SHA-256 hash algorithm. | 
-| cacheConfig | Enabling this option allows saving the cache output of the task. On enabling, you can provide the following parameters:<ul><li>**ttlInSecond** - Provide the time to live in seconds. You can also [pass this parameter as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor).</li><li>**key** - Provide the cache key, which is a string with parameter substitution based on the task input. You can also [pass this parameter as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor).</li></ul>|
-| optional | Enabling this option renders the task optional. The workflow continues unaffected by the task's outcome, whether it fails or remains incomplete. |
+| Parameter | Description | Required/Optional | 
+| --------- | ----------- | ----------------- |
+| inputParameters.**subject** | The subject of the JWT, typically representing the entity (e.g., user or service) for which the token is issued. | Required. | 
+| inputParameters.**issuer** | The entity issuing the JWT, identifying who created and signed the token. | Required. | 
+| inputParameters.**privateKey** | The private key used to sign the JWT. | Required. | 
+| inputParameters.**privateKeyId** | The identifier for the private key used to sign the JWT. | Required. |
+| inputParameters.**audience** | The intended recipient(s) of the JWT. | Required. | 
+| inputParameters.**ttlInSeconds** | The time-to-live (TTL) or expiration time of the JWT, specified in seconds. | Required. |
+| inputParameters.**scopes** | The scopes associated with the JWT, defining the access permissions granted by the token. It can be a string or an array of strings. | Required. |
+| inputParameters.**algorithm** | The signing algorithm to use for the JWT. Currently set to RS256, which refers to the RSA signature with the SHA-256 hash algorithm. | Required. | 
 
-## Examples
+## Task definition
 
-<Tabs>
-<TabItem value="UI" label="UI" className="paddedContent">
-
-<div className="row">
-<div className="col col--4">
-
-<br/>
-<br/>
-
-1. Add task type **Get Signed JWT**.
-2. Configure the input parameters.
-
-</div>
-<div className="col">
-<div className="embed-loom-video">
-
-<p><img src="/content/img/get-signed-jwt-ui.png" alt="Get Signed JWT task UI method" width="1024" height="auto"/></p>
-
-</div>
-</div>
-</div>
-
-
-
-</TabItem>
- <TabItem value="JSON" label="JSON">
+This is the JSON schema for a Get Signed JWT task definition.
 
 ```json
-   {
-     "name": "get_signed_jwt",
-     "taskReferenceName": "get_signed_jwt_ref",
-     "inputParameters": {
-       "subject": "${workflow.input.subject}",
-       "issuer": "${workflow.input.issuer}",
-       "privateKey": "${workflow.secrets.jwt-privatekey}",
-       "privateKeyId": "key-123",
-       "audience": "${workflow.input.audience}",
-       "ttlInSecond": 3600,
-       "scopes": "${workflow.input.scope}",
-       "algorithm": "RS256"
-     },
-     "type": "GET_SIGNED_JWT"
-   }
+{
+  "name": "get_signed_jwt",
+  "taskReferenceName": "get_signed_jwt_ref",
+  "inputParameters": {
+    "subject": "${workflow.input.subject}",
+    "issuer": "${workflow.input.issuer}",
+    "privateKey": "${workflow.secrets.jwt-privatekey}",
+    "privateKeyId": "key-123",
+    "audience": "${workflow.input.audience}",
+    "ttlInSeconds": 3600,
+    "scopes": "${workflow.input.scope}",
+    "algorithm": "RS256"
+  },
+  "type": "GET_SIGNED_JWT"
+}
 ```
 
-</TabItem>
-</Tabs>
+## Adding a Get Signed JWT task in UI
+
+**To add a Get Signed JWT task:**
+
+1. In your workflow, select the (**+**) icon and add a **Get Signed JWT** task.
+2. Enter the **Subject** and **Issuer** of the JWT.
+3. Provide the **PrivateKey** and **PrivateKeyId** used for signing JWT.
+4. Set the **Audience**, **TTL (in seconds)**, **Scopes**, and **Algorithm** as required.
+
+<center><p><img src="/content/img/get-signed-jwt-ui.png" alt="Adding Get Signed JWT task" width="80%" height="auto"/></p></center>
