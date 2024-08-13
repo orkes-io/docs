@@ -66,6 +66,7 @@ const sidebars = {
                 keywords: ['guides', 'features', 'developer-guides']
             },
             items: [
+                'developer-guides/using-workers',
                 'developer-guides/quickstart-ai-orchestration',
                 'developer-guides/passing-inputs-to-task-in-conductor',
                 {
