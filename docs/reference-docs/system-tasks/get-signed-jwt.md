@@ -15,16 +15,20 @@ Using the RS256 algorithm, the task ensures robust cryptographic security during
 
 Configure these parameters for the Get Signed JWT task.
 
-| Parameter | Description | Required/Optional | 
+| Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- |
-| inputParameters.**subject** | The subject of the JWT, typically representing the entity (e.g., user or service) for which the token is issued. | Required. | 
-| inputParameters.**issuer** | The entity issuing the JWT, identifying who created and signed the token. | Required. | 
-| inputParameters.**privateKey** | The private key used to sign the JWT. | Required. | 
-| inputParameters.**privateKeyId** | The identifier for the private key used to sign the JWT. | Required. |
-| inputParameters.**audience** | The intended recipient(s) of the JWT. | Required. | 
-| inputParameters.**ttlInSeconds** | The time-to-live (TTL) or expiration time of the JWT, specified in seconds. | Required. |
-| inputParameters.**scopes** | The scopes associated with the JWT, defining the access permissions granted by the token. It can be a string or an array of strings. | Required. |
-| inputParameters.**algorithm** | The signing algorithm to use for the JWT. Currently set to RS256, which refers to the RSA signature with the SHA-256 hash algorithm. | Required. | 
+| inputParameters. **subject** | The subject of the JWT, typically representing the entity (e.g., user or service) for which the token is issued. | Required. | 
+| inputParameters **issuer** | The entity issuing the JWT, identifying who created and signed the token. | Required. | 
+| inputParameters. **privateKey** | The private key used to sign the JWT. | Required. | 
+| inputParameters. **privateKeyId** | The identifier for the private key used to sign the JWT. | Required. |
+| inputParameters. **audience** | The intended recipient(s) of the JWT. | Required. | 
+| inputParameters. **ttlInSeconds** | The time-to-live (TTL) or expiration time of the JWT, specified in seconds. | Required. |
+| inputParameters. **scopes** | The scopes associated with the JWT, defining the access permissions granted by the token. It can be a string or an array of strings. | Required. |
+| inputParameters. **algorithm** | The signing algorithm to use for the JWT. Currently set to RS256, which refers to the RSA signature with the SHA-256 hash algorithm. | Required. | 
+
+## Task output
+
+The Get Signed JWT task will return the signed JWT in the secret variable `_secrets`. The signed JWT will be masked (`***`). 
 
 ## Task definition
 
@@ -58,3 +62,32 @@ This is the JSON schema for a Get Signed JWT task definition.
 4. Set the **Audience**, **TTL (in seconds)**, **Scopes**, and **Algorithm** as required.
 
 <center><p><img src="/content/img/get-signed-jwt-ui.png" alt="Adding Get Signed JWT task" width="80%" height="auto"/></p></center>
+
+## Examples
+Here are some examples for using the Get Signed JWT task.
+
+<details><summary>Authorization</summary>
+
+``` json
+{
+  "name": "get_signed_jwt_token",
+  "taskReferenceName": "get_signed_jwt_token_ref",
+  "inputParameters": {
+    "privateKey": "${workflow.secrets.gcp_private_key}",
+    "privateKeyId": "${workflow.secrets.gcp_private_key_id}",
+    "audience": "https://oauth2.googleapis.com/token",
+    "ttlInSecond": 3600,
+    "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/documents",
+      "https://www.googleapis.com/auth/drive"
+    ],
+    "subject": "service-account-name@project-id.iam.gserviceaccount.com",
+    "issuer": "service-account-name@project-id.iam.gserviceaccount.com"
+  },
+  "type": "GET_SIGNED_JWT",
+}
+```
+
+</details>
+

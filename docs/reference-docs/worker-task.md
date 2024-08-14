@@ -10,7 +10,7 @@ import TabItem from '@theme/TabItem';
 
 A Worker task (also known as a Simple task) is used to run custom logic implemented in any language. The custom logic can be deployed anywhere and the Worker task requires an external worker for polling.
 
-For a full guide on how to use workers, refer to Using Workers.
+For a full guide on how to use workers, refer to [Using Workers](docs/developer-guides/using-workers.md).
 
 ## Task configuration
 
