@@ -7,16 +7,16 @@ import TabItem from '@theme/TabItem';
 
 # Inline 
 
-The inline task is used to execute scripting logic during workflow runtime by evaluating a JavaScript expression using an evaluator like graalJS. 
+The inline task is used to execute scripting logic during workflow runtime by evaluating a JavaScript expression using an evaluator like GraalJS. 
 
 ## Task configuration
 
 Configure these parameters for the Inline task.
 
-| Parameter | Description | Required/Optional | 
+| Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- |
-| inputParameters.**expression** | The JavaScript expression to be evaluated by the GraalJS evaluator. |  Required. | 
-| inputParameters.**evaluatorType** | The type of evaluator used. Supported types:<ul><li>`graaljs` - Evaluates the Javascript expression and computes the value.</li></ul> |  Required. | 
+| inputParameters. **expression** | The JavaScript expression to be evaluated by the GraalJS evaluator. |  Required. | 
+| inputParameters. **evaluatorType** | The type of evaluator used. Supported types:<ul><li>`graaljs` - Evaluates the Javascript expression and computes the value.</li></ul> |  Required. | 
 | inputParameters | The parameters for evaluating the script. Any property can be accessed as `$.value` for the expression to evaluate. | Required. | 
 
 ## Task definition
@@ -56,3 +56,44 @@ The Inline task will return the following parameters.
 <center><p><img src="/content/img/ui-guide-inline-task.png" alt="Adding wait task" width="80%" height="auto"/></p></center>
 
 
+## Examples
+Here are some examples for using the Inline task.
+
+<details><summary>Using the Inline task in a workflow</summary>
+An Inline task can be used for simple scripting logic that does not require a dedicated custom worker. In this example workflow, the Inline task is used to reverse a string based on the user input.
+
+``` javascript
+// the expression evaluated in the Inline task
+
+(function(){  return $.input_string.split('').reverse().join('');})();
+```
+
+Here is the full workflow containing the Inline task.
+
+``` json
+// workflow definition
+
+{
+  "name": "String_Reverser",
+  "description": "A workflow to reverse a string",
+  "version": 1,
+  "tasks": [
+    {
+      "name": "string_reverser",
+      "taskReferenceName": "string_reverser_ref",
+      "inputParameters": {
+        "expression": "(function(){  return $.input_string.split('').reverse().join('');})();",
+        "evaluatorType": "graaljs",
+        "input_string": "${workflow.input.in_str}"
+      },
+      "type": "INLINE"
+    }
+  ],
+  "inputParameters": [
+    "in_str"
+  ],
+  "outputParameters": {},
+  "failureWorkflow": ""
+}
+```
+</details>

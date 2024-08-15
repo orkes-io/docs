@@ -6,7 +6,7 @@ import TabItem from '@theme/TabItem';
 Business processes often involve human interaction. To augment your workflows with human interactions, Orkes Conductor offers a variety of features for real-time interfacing with human input:
 * At the core is Orkes’ **user form template**, a reusable JSON-based schema that defines the form's fields and layout.
 * Each **Human task** is associated with a user form template, which can be assigned to someone to complete.
-* The user form can be displayed on an external UI using Orkes’ **[Human Tasks API](https://orkes.io/content/reference-docs/api/human-tasks)**.
+* The user form can be displayed on an external UI using Orkes’ **[Human Tasks API](/docs/reference-docs/api/human-tasks/index.mdx)**.
 
 A Human task can be used for a variety of human-involved tasks, such as manual approval in an approval workflow or a booking form in an airline reservation workflow. When a workflow reaches the Human task, a form is generated based on the pre-defined template and assigned for a user or group to fill. Once the form has been submitted, the task will be set as Complete, allowing the workflow to progress to the next step.
 
@@ -31,7 +31,7 @@ During development, you can test and execute Human tasks internally on Orkes Pla
 To use a Human task in a workflow, you must first create a user form for it. The User Forms studio on Orkes Platform allows you to compose user forms easily, using JSON code or the pre-built form components. Once created, these forms can be safely versioned as well.
 
 :::tip
-It is best practice to create forms using Orkes’ User Form studio, even if the form will be displayed on an external UI. With the user form schema stored on Conductor, any changes can be instantly reflected on the frontend without any additional development effort.
+It is best practice to create forms using Orkes’ User Form studio, even if the form is displayed on an external UI. With the user form schema stored on Conductor, any changes can be instantly reflected on the frontend without any additional development effort.
 :::
 
 **To create a user form on Orkes Platform:**
@@ -120,10 +120,11 @@ Add the Human task to your workflow and configure its assignment policy and trig
     2. In Assign, select the **User type** for the assignee(s) and enter the corresponding user or group ID.
         * **External User** or **Group**—Select this if the assignees are managed and verified in an external system, and will access an external UI to complete the task.
         * **Conductor User** or **Group**—Select this if the assignees are Conductor users and will access Orkes Platform to complete the task.
+        <p align="center"><img src="/content/img/assignment-policy-human-task.png" alt=" Assignment policy of human task" width="70%" height="auto"></img></p>
     3. Enter the **SLA minutes** to specify the assignment duration before it times out. Use 0 minutes to set a non-expiring assignment.
     4. In **After assignments**, select the strategy for when the assignment times out.
     5. If needed, add another assignment to create a multi-level assignment chain.  
-    <p align="center"><img src="/content/img/assignment-policy-human-task.png" alt=" Assignment policy of human task" width="70%" height="auto"></img></p>
+    <p align="center"><img src="/content/img/assignment-policy-human-task-hierarchy.png" alt="Assignment policy of human task in hierarchical order" width="90%" height="auto"></img></p>
 6. (Optional) Add a trigger policy to start new workflows when the state of the Human task changes.
     1. In Trigger policy, select **(+) New trigger**.
     2. Select the **Trigger event**.
@@ -140,7 +141,7 @@ Refer to the [Human task reference](docs/reference-docs/operators/human.md) for 
 <p align="center"><img src="/content/img/human-task.png" alt="Human Task in Orkes Conductor" width="100%" height="auto"></img></p>
 
 :::tip
-During development, if the Human task is not yet connected to an external UI, you can set the assignment policy to Conductor User or Group first to test the form. Once the Human task is connected to an external UI, you can easily make the switch to External User or Group. Even after making the switch, the form can still be tested internally on Orkes Platform using the Human Task Inbox. 
+During development, you can set the assignment policy to Conductor User or Group first to test the form. Once the Human task is connected to an external UI, you can easily make the switch to External User or Group. Even after making the switch, the form can still be tested internally on Orkes Platform using the Human Task Inbox. 
 :::
 
 ### Step 4: Display the form on an external UI
