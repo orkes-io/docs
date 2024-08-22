@@ -33,7 +33,7 @@ Create [greetings_workflow.py](https://github.com/conductor-sdk/conductor-python
 ```python
 from conductor.client.workflow.conductor_workflow import ConductorWorkflow
 from conductor.client.workflow.executor.workflow_executor import WorkflowExecutor
-from greetings import greet
+from greetings_worker import greet
 
 def greetings_workflow(workflow_executor: WorkflowExecutor) -> ConductorWorkflow:
     name = 'greetings'
