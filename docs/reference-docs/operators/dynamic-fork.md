@@ -39,7 +39,7 @@ The dynamic fork executes the task specified by `forkTaskName` for each element 
 | Parameter     | Description                                                                                                                                                                                                | Required/ Optional |
 | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
 | inputParamters. **forkTaskName**    | The name of the task that will be executed in each fork. It can be [passed as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor). | Required. |
-| inputParameters. **dynamicTasksInput**   | An array of JSON inputs for each forked branch. The number of array elements determines the number of branches in the dynamic fork. It can be [passed as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor).    | Required. |
+| inputParameters. **forkTaskInputs**   | An array of JSON inputs for each forked branch. The number of array elements determines the number of branches in the dynamic fork. It can be [passed as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor).    | Required. |
 
 
 ### Configuration for running the same task — Sub Workflow task
