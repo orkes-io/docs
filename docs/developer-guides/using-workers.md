@@ -35,7 +35,7 @@ Begin by creating a worker and defining the logic for your task. It is possible 
 
 **Prerequisites**
 
-Ensure that you have installed the [Conductor SDK](/docs/conductor-clients.md) for your chosen language.
+Ensure that you have installed the [Conductor SDK](/category/sdks) for your chosen language.
 
 <Tabs>
 <TabItem value="Python" label="Python">
@@ -116,7 +116,7 @@ orkesConductorClient({
 </Tabs>
 
 
-For more information on creating workers in your preferred language, refer to the [SDK guides](/docs/conductor-clients.md). 
+For more information on creating workers in your preferred language, refer to the [SDK guides](/category/sdk). 
 
 
 ### Step 2: Define the task in Conductor

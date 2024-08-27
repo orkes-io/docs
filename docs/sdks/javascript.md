@@ -38,7 +38,7 @@ npm install --save @io-orkes/conductor-javascript
 
 ### Authentication Settings (optional)
 
-See [Security via Applications](/content/access-control-and-security/applications#generating-access-keys) or this [video](/content/how-to-videos/access-key-and-secret) for details on how to get an access key and secret.
+See [Security via Applications](/content/access-control-and-security/applications#generating-access-keys) or this [video](https://www.youtube.com/watch?v=f1b5vZRKn2Q) for details on how to get an access key and secret.
 
 Once we have a key and secret, we can configure the app from properties or environment variables, as shown in this example:
 
@@ -61,7 +61,7 @@ Remember to protect your app secrets like any other secrets or passwords.
 
 ## Related Topics
 
-- Video Guide on [Getting Access Key and Secret](/content/how-to-videos/access-key-and-secret)
+- Video Guide on [Getting Access Key and Secret](/developer-guides/running-workflows#run-in-ui)
 - [Access Control & Security](/content/category/access-control-and-security)
 - [NextJS Example](https://github.com/orkes-io/conductor-nextjs-example/tree/main)
 

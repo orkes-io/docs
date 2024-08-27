@@ -3,7 +3,7 @@ import TabItem from '@theme/TabItem';
 import Install from '@site/src/components/install.mdx';
 
 
-# Unit and Regression Testing Workflows
+# Unit and Regression Tests
 
 ## Unit Tests
 

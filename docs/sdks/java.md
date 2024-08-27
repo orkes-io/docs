@@ -263,7 +263,7 @@ For running the workflow in Orkes Conductor,
 export CONDUCTOR_SERVER_URL=https://play.orkes.io/api
 ```
 
-- Orkes Conductor requires authentication. [Obtain the key and secret from the Conductor server](https://orkes.io/content/how-to-videos/access-key-and-secret) and set the following environment variables.
+- Orkes Conductor requires authentication. [Obtain the key and secret from the Conductor server](https://www.youtube.com/watch?v=f1b5vZRKn2Q) and set the following environment variables.
 
 ```shell
 export KEY=your_key

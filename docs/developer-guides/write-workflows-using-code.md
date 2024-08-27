@@ -83,7 +83,7 @@ Here is the workflow that we are going to create using various language-specific
 ```
 
 </TabItem>
-<TabItem value="Golang" label="Golang">
+<TabItem value="Go" label="Go">
 
 ```go
 

@@ -1,7 +1,7 @@
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Orkes Conductor Dashboard - Metrics & Observability
+# Metrics and Observability
 
 The Orkes Conductor Dashboard gives a quick overview of the metrics & alerts on your Conductor console. It provides a centralized intuitive interface to track and get insights on the behavior and performance of tasks and workflows that can aid in troubleshooting errors.
 

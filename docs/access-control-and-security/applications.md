@@ -6,6 +6,14 @@ An application represents an entity interacting with the Conductor server via AP
 
 This document provides a detailed guide on creating application-based control for your metadata as well as the process for generating JWT tokens for each application.
 
+Watch how we can configure and manage Applications and its access from the UI.
+
+<center><iframe width="510" height="300" src="https://www.youtube.com/embed/PY34TcVzof0?si=ANSHZW6IMVDx1rI9" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="allowfullscreen"
+mozallowfullscreen="mozallowfullscreen"
+msallowfullscreen="msallowfullscreen"
+oallowfullscreen="oallowfullscreen"
+webkitallowfullscreen="webkitallowfullscreen"></iframe></center>
+
 ## Prototyping​
 
 For quick testing on Orkes Conductor without creating an application, you can obtain a JWT token from the Orkes Conductor dashboard. Click the account button in the bottom left corner and select "Copy Token." This token remains valid for your current session and has the same access as your user account.

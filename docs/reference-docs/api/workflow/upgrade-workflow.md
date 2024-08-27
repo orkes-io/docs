@@ -33,7 +33,7 @@ void upgradeRunningWorkflow(String workflowId, UpgradeWorkflowRequest upgradeWor
 ```
 
 </TabItem>
-<TabItem value="Golang" label="Golang">
+<TabItem value="Go" label="Go">
 
 ```go
 Coming Soon

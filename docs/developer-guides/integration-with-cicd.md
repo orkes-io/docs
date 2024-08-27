@@ -3,7 +3,7 @@ import TabItem from '@theme/TabItem';
 import Install from '@site/src/components/install.mdx';
 import CodeBlock from '@theme/CodeBlock';
 
-# Integration with CI/CD
+# CI/CD Best Practices
 Conductor workflows are the core part of your application and should be versioned, controlled, and released similarly to the code.
 
 ### Conductor Workflows
@@ -18,7 +18,7 @@ For details on how to unit test workflows, see [Unit and Regression Testing Work
 
 #### Steps to publish your workflows as part of the ci/cd
 :::note Notes
-See [Generating Tokens](/access-control-and-security/applications#generating-token) ([Video](/content/how-to-videos/access-key-and-secret)) on how to generate an access token for the API requests below.
+See [Generating Tokens](/access-control-and-security/applications#generating-token) ([Video](https://www.youtube.com/watch?v=f1b5vZRKn2Q)) on how to generate an access token for the API requests below.
 :::
 
 #### Downloading workflows from Conductor server to check into your version control

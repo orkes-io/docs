@@ -30,7 +30,7 @@ Watch this video and follow the steps below:
 1. Login and Navigate to **Workflows > Definitions**.
 2. Click the **Define Workflow** button at the top right corner.
 3. Create a workflow by adding 3 [HTTP](/content/reference-docs/system-tasks/http) tasks.
-4. Click the **Run Workflow** [[Guide]](../how-to-videos/run-workflow) option from the left menu, and choose your workflow.
+4. Click the **Run Workflow** [[Guide]](/developer-guides/running-workflows#run-in-ui) option from the left menu, and choose your workflow.
 
 </div>
 <div className="col ui-instructions-padding">

@@ -19,7 +19,7 @@ Continuing the use case from the previous step, we now have a requirement to add
 
 1. In your current definition, add a [Switch](/content/reference-docs/operators/switch) task before the deposit task.
 2. Add a switch case for checking amounts >= 10000, and add a [Worker](/content/reference-docs/worker-task) task for the case with the name `fraud-check`.
-3. [Run workflow](/content/how-to-videos/run-workflow).
+3. [Run workflow](/developer-guides/running-workflows#run-in-ui).
 
 </div>
 <div className="col">
@@ -133,7 +133,7 @@ with TaskHandler(workers, configuration, scan_for_annotated_workers=True) as tas
 ```
 
 </TabItem>
-<TabItem value="Golang" label="Golang">
+<TabItem value="Go" label="Go">
 
 ```java
     // @TODO:Gustavo
@@ -187,7 +187,7 @@ with TaskHandler(workers, configuration, scan_for_annotated_workers=True) as tas
 
 Once we have cloned the repo or copied the required elements to our local machines, we can run this locally by connecting to the playground server. 
 To do this, we must give the required permissions to our application.
-Refer to this [video](/content/how-to-videos/app-management) to add permission to execute the custom worker we just created above (`fraud-check-<replace-with-a-unique-value>`).
+Refer to this [video](https://www.youtube.com/watch?v=PY34TcVzof0) to add permission to execute the custom worker we just created above (`fraud-check-<replace-with-a-unique-value>`).
 After providing the permissions, we can change the definition to run our worker (`fraud-check-<replace-with-a-unique-value>`) and start the application.
 We can see that now our worker is picking up the task. 
 

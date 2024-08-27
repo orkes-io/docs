@@ -30,7 +30,7 @@ void terminateWorkflow(String workflowId, String reason)
 ```
 
 </TabItem>
-<TabItem value="Golang" label="Golang">
+<TabItem value="Go" label="Go">
 
 ```go
 func (e *WorkflowExecutor) Terminate(workflowId string, reason string) error

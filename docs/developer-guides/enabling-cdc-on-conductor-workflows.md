@@ -1,4 +1,4 @@
-# Enabling CDC (Change Data Capture) on Conductor Workflows
+# Enabling CDC (Change Data Capture)
 
 Change Data Capture (CDC) is a design pattern for tracking changes in the source data and replicating the changes to the target systems.
 

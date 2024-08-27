@@ -24,7 +24,7 @@ Orkes Conductor runs 1000s of parallel executions, limited only by the worker ca
 
 1. In your current workflow, add a new workflow called `batch-process-payments-<unique-id>` and add a [Worker](/content/reference-docs/worker-task) task for the case with the name `retrieve-deposit-batch`.
 2. Add a [Dynamic Fork](/content/reference-docs/operators/dynamic-fork) task - and  configure it to run a sub-workflow based on the output of `retrieve-deposit-batch` task.
-3. [Run workflow directly from the UI](/content/how-to-videos/run-workflow) using the Run Workflow button.
+3. [Run workflow directly from the UI](/developer-guides/running-workflows#run-in-ui) using the Run Workflow button.
 
 </div>
 <div className="col col--4">

@@ -47,7 +47,7 @@ void OrkesMetadataClient.updateTaskDef(TaskDef taskDef)
 ```
 
 </TabItem>
-<TabItem value="Golang" label="Golang">
+<TabItem value="Go" label="Go">
 
 ```go
 func (a *MetadataResourceApiService) UpdateTaskDef(ctx context.Context, body model.TaskDef) (*http.Response, error)

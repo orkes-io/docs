@@ -34,7 +34,7 @@ BulkResponse pauseWorkflow(List<String> workflowIds) throws ApiException
 ```
 
 </TabItem>
-<TabItem value="Golang" label="Golang">
+<TabItem value="Go" label="Go">
 
 ```go
 func (e *WorkflowExecutor) Pause(workflowId string) error

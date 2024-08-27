@@ -29,7 +29,7 @@ BulkResponse pauseWorkflow(List<String> workflowIds) throws ApiException
 ```
 
 </TabItem>
-<TabItem value="Golang" label="Golang">
+<TabItem value="Go" label="Go">
 
 ```go
 func (e *WorkflowExecutor) Pause(workflowId string) error
@@ -104,7 +104,7 @@ BulkResponse resumeWorkflow(List<String> workflowIds) throws ApiException
 ```
 
 </TabItem>
-<TabItem value="Golang" label="Golang">
+<TabItem value="Go" label="Go">
 
 ```go
 func (e *WorkflowExecutor) Resume(workflowId string) error
@@ -181,7 +181,7 @@ BulkResponse restartWorkflow(List<String> workflowIds, Boolean useLatestDefiniti
 ```
 
 </TabItem>
-<TabItem value="Golang" label="Golang">
+<TabItem value="Go" label="Go">
 
 ```go
 func (e *WorkflowExecutor) Restart(workflowId string, useLatestDefinition bool) error
@@ -273,7 +273,7 @@ String rerunWorkflow(String workflowId, RerunWorkflowRequest rerunWorkflowReques
 ```
 
 </TabItem>
-<TabItem value="Golang" label="Golang">
+<TabItem value="Go" label="Go">
 
 ```go
 func (e *WorkflowExecutor) ReRun(workflowId string, reRunRequest model.RerunWorkflowRequest) (id string, error error)
@@ -351,7 +351,7 @@ BulkResponse retryWorkflow(List<String> workflowIds) throws ApiException
 ```
 
 </TabItem>
-<TabItem value="Golang" label="Golang">
+<TabItem value="Go" label="Go">
 
 ```go
 func (e *WorkflowExecutor) Retry(workflowId string, resumeSubworkflowTasks bool) error
@@ -429,7 +429,7 @@ String OrkesTaskClient.updateTaskByRefName(Map<String, Object> output, String wo
 ```
 
 </TabItem>
-<TabItem value="Golang" label="Golang">
+<TabItem value="Go" label="Go">
 
 ```go
 func (*WorkflowExecutor) UpdateTaskByRefName(taskRefName string, workflowInstanceId string, status model.TaskResultStatus, output interface{}) error
@@ -514,7 +514,7 @@ void terminateWorkflow(String workflowId, String reason)
 ```
 
 </TabItem>
-<TabItem value="Golang" label="Golang">
+<TabItem value="Go" label="Go">
 
 ```go
 func (e *WorkflowExecutor) Terminate(workflowId string, reason string) error

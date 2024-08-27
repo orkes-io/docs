@@ -32,7 +32,7 @@ WorkflowStatus getWorkflowStatusSummary(String workflowId, Boolean includeOutput
 ```
 
 </TabItem>
-<TabItem value="Golang" label="Golang">
+<TabItem value="Go" label="Go">
 
 ```go
 func (e *WorkflowExecutor) GetWorkflow(workflowId string, includeTasks bool) (*model.Workflow, error)

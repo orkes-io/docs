@@ -1,4 +1,4 @@
-# Using Environment Variables in Orkes Conductor
+# Using Environment Variables
 
 Environment variables are essential for managing variables that need to be frequently accessed across multiple workflows. By storing these variables globally, they can be reused, making workflows more efficient and easier to manage.
 

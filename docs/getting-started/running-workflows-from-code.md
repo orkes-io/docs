@@ -44,7 +44,7 @@ print(f'Workflow id: {workflow_id}')`}
 </CodeBlock>
 
 </TabItem>
-<TabItem value="Golang" label="Golang">
+<TabItem value="Go" label="Go">
 
 ```go
 request := model.NewStartWorkflowRequest(
@@ -109,7 +109,7 @@ As an example, we might invoke this method when an endpoint is called, such as t
 
 In addition to triggering from code, we can also run them from:
 
-1. [UI - using the Run Workflow feature](/content/how-to-videos/run-workflow)
+1. [UI - using the Run Workflow feature](/developer-guides/running-workflows#run-in-ui)
 2. [Upon receiving an Event](/content/reference-docs/system-tasks/event)
 3. [Upon receiving a Webhook](/content/reference-docs/system-tasks/wait-for-webhook)
 4. [At a Schedule - using the Scheduler](/content/developer-guides/scheduling-workflows)

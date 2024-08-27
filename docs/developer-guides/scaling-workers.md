@@ -2,7 +2,7 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import Install from '@site/src/components/install.mdx';
 
-# Guide to Scaling Workers
+# Metrics for Scaling Workers
 Workers are responsible for executing business logic in the workflow applications. Scaling and performance tuning workers are dependent on the following metrics:
 
 1. No. of pending requests in the task queue

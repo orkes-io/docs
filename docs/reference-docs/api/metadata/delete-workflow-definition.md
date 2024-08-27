@@ -32,7 +32,7 @@ WorkflowDef OrkesMetadataClient.unregisterWorkflowDef(String name, Integer versi
 ```
 
 </TabItem>
-<TabItem value="Golang" label="Golang">
+<TabItem value="Go" label="Go">
 
 ```go
 func (a *MetadataResourceApiService) UnregisterWorkflowDef(ctx context.Context, name string, version int32) (*http.Response, error)

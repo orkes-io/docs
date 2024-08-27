@@ -32,7 +32,7 @@ void deleteWorkflow(String workflowId, boolean archiveWorkflow)
 ```
 
 </TabItem>
-<TabItem value="Golang" label="Golang">
+<TabItem value="Go" label="Go">
 
 ```go
 func (e *WorkflowExecutor) RemoveWorkflow(workflowId string) error

@@ -1,4 +1,4 @@
-# Using LLMs in your Orkes Conductor Workflows
+# Using LLMs
 
 In this guide, we’ll provide an overview of Generative AI, Large Language Models (LLMs), and how Orkes makes it easy to leverage the power of LLMs natively in their applications. Whether you’re a developer, product manager, or anyone interested in Gen-AI powering your business logic, this guide will help you understand the concepts and get started with AI-powered tasks in Orkes Conductor.
 

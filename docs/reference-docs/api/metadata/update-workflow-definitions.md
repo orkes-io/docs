@@ -48,7 +48,7 @@ void OrkesMetadataClient.updateWorkflowDefs(List<WorkflowDef> workflowDefs, bool
 ```
 
 </TabItem>
-<TabItem value="Golang" label="Golang">
+<TabItem value="Go" label="Go">
 
 ```go
 func (a *MetadataResourceApiService) Update(ctx context.Context, body []model.WorkflowDef) (*http.Response, error)

@@ -22,6 +22,15 @@ Using Playground requires __authorization__ keys which you can generate quickly 
 
 __Important__: Copy and store the Key and Secret in a safe location, as it is never displayed again.
 
+Watch how we can login to Orkes Conductor Playground UI.
+
+<center>
+<iframe width="510" height="300" src="https://www.youtube.com/embed/tVUaDtoKNgE?si=lBctmC1SeuIr0xtL" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="allowfullscreen"
+mozallowfullscreen="mozallowfullscreen"
+msallowfullscreen="msallowfullscreen"
+oallowfullscreen="oallowfullscreen"
+webkitallowfullscreen="webkitallowfullscreen"></iframe>
+</center>
 
 #### Setup environment variables
 ```shell
@@ -119,9 +128,3 @@ Navigate to [http://localhost:3000](http://localhost:3000).
 
 </p>
 </details>
-
-### Video Guides
-
-- [Getting Access Key & Secret](/content/how-to-videos/access-key-and-secret).
-- [Working on Orkes Playground](/content/how-to-videos/login-to-playground).
-
