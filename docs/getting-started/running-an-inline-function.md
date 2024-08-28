@@ -20,7 +20,7 @@ So far, we haven't done anything here, even if the fraud check fails. How can we
 2. Add another switch case to process the deposit only if the fraud check passes.
 3. Add an inline to compose the correct message for users.
 4. Pass the message as input to the send-message tasks.
-5. [Run workflow](/content/how-to-videos/run-workflow).
+5. [Run workflow](/developer-guides/running-workflows#run-in-ui).
 
 </div>
 <div className="col">

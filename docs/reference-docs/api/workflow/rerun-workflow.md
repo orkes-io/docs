@@ -39,7 +39,7 @@ String rerunWorkflow(String workflowId, RerunWorkflowRequest rerunWorkflowReques
 ```
 
 </TabItem>
-<TabItem value="Golang" label="Golang">
+<TabItem value="Go" label="Go">
 
 ```go
 func (e *WorkflowExecutor) ReRun(workflowId string, reRunRequest model.RerunWorkflowRequest) (id string, error error)

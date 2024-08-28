@@ -35,7 +35,7 @@ CompletableFuture<WorkflowRun> executeWorkflow(StartWorkflowRequest request, Str
 ```
 
 </TabItem>
-<TabItem value="Golang" label="Golang">
+<TabItem value="Go" label="Go">
 
 ```go
 func (e *WorkflowExecutor) ExecuteWorkflow(startWorkflowRequest *model.StartWorkflowRequest, waitUntilTask string) (run *model.WorkflowRun, err error)

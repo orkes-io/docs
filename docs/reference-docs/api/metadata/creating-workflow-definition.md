@@ -46,7 +46,7 @@ void OrkesMetadataClient.registerWorkflowDef(WorkflowDef workflowDef) throws Api
 ```
 
 </TabItem>
-<TabItem value="Golang" label="Golang">
+<TabItem value="Go" label="Go">
 
 ```go
 func (a *MetadataResourceApiService) RegisterWorkflowDef(ctx context.Context, overwrite bool, body model.WorkflowDef) (*http.Response, error)

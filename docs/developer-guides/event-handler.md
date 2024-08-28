@@ -1,7 +1,7 @@
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Event Handler
+# Event Handlers
 
 An event handler processes incoming messages and performs actions based on the event's details. Events can trigger various actions, such as:
 

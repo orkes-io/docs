@@ -30,7 +30,7 @@ BulkResponse restartWorkflow(List<String> workflowIds, Boolean useLatestDefiniti
 ```
 
 </TabItem>
-<TabItem value="Golang" label="Golang">
+<TabItem value="Go" label="Go">
 
 ```go
 func (e *WorkflowExecutor) Restart(workflowId string, useLatestDefinition bool) error

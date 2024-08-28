@@ -34,7 +34,7 @@ SearchResult<WorkflowSummary> search(Integer start, Integer size, String sort, S
 ```
 
 </TabItem>
-<TabItem value="Golang" label="Golang">
+<TabItem value="Go" label="Go">
 
 ```go
 func (e *WorkflowExecutor) Search(start int32, size int32, query string, freeText string) ([]model.WorkflowSummary, error)

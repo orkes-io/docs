@@ -3,7 +3,7 @@ import TabItem from '@theme/TabItem';
 import Install from '@site/src/components/install.mdx';
 
 
-# Passing Inputs to Tasks in Conductor
+# Dynamic Task Inputs
 
 When you start a Conductor workflow, you can pass inputs to the workflow - which can be used as parameters for various steps in the workflow. As the tasks progress in a workflow - each task will create its own outputs. So how can this data from previous tasks be used in the steps succeeding it? In Conductor, data can be passed to a task in different ways, such as from workflow inputs/outputs, prior task inputs/outputs, variables, and secrets.
 

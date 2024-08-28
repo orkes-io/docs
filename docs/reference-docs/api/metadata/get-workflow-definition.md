@@ -34,7 +34,7 @@ WorkflowDef OrkesMetadataClient.getWorkflowDefWithMetadata(String name, Integer 
 ```
 
 </TabItem>
-<TabItem value="Golang" label="Golang">
+<TabItem value="Go" label="Go">
 
 ```go
 func (a *MetadataResourceApiService) Get(ctx context.Context, name string, localVarOptionals *MetadataResourceApiGetOpts) (model.WorkflowDef, *http.Response, error)

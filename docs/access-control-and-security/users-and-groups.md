@@ -3,10 +3,20 @@
 In a remote environment, ensuring secure access to the Conductor server is essential. Conductor’s RBAC functionality enables admins to easily create and manage users and groups on the server, providing a structured approach to access control.
 
 :::note
-This feature is available only to the Admins of the Orkes Conductor clusters.
+This feature is available only to admins.
 :::
 
 ## Users​​
+
+Watch how we can configure and manage Users from the UI.
+
+<center>
+<iframe width="510" height="300" src="https://www.youtube.com/embed/O9lj4TAqldc?si=wOxzv26EzeI5pft1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="allowfullscreen"
+mozallowfullscreen="mozallowfullscreen"
+msallowfullscreen="msallowfullscreen"
+oallowfullscreen="oallowfullscreen"
+webkitallowfullscreen="webkitallowfullscreen"></iframe>
+</center>
 
 ### Inviting Users​​
 
@@ -36,6 +46,14 @@ To delete a user from your Orkes Conductor cluster:
 ## Groups​​
 
 Groups are a way to share metadata among your team quickly.
+
+Watch how we can manage groups in Orkes Conductor Platform.
+
+<center><iframe width="510" height="300" src="https://www.youtube.com/embed/REIRIjEvJLg?si=h28wjxj9DZi7A6bE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="allowfullscreen"
+mozallowfullscreen="mozallowfullscreen"
+msallowfullscreen="msallowfullscreen"
+oallowfullscreen="oallowfullscreen"
+webkitallowfullscreen="webkitallowfullscreen"></iframe></center>
 
 ### Creating Groups​​
 

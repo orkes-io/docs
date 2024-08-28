@@ -33,7 +33,7 @@ Map<String, List<Workflow>> getWorkflowsByNamesAndCorrelationIds(List<String> co
 ```
 
 </TabItem>
-<TabItem value="Golang" label="Golang">
+<TabItem value="Go" label="Go">
 
 ```go
 func (e *WorkflowExecutor) GetByCorrelationIds(workflowName string, includeClosed bool, includeTasks bool, correlationIds ...string) (map[string][]model.Workflow, error)

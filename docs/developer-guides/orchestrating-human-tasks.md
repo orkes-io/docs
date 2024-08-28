@@ -217,7 +217,7 @@ The workflow ID is generated. You can use it to view the execution progress and 
 
 <p align="center"><img src="/content/img/human-task-in-running-state.png" alt="Human Task in Running state" width="50%" height="auto"></img></p>
 
-### Complete the Human task in Orkes Platform
+### Complete the Human task
 
 As a Conductor user, you can also access all Human task executions on Orkes Platform. The list of Human task executions can be found in the left navigation menu under **Executions** > **Human Tasks**, allowing you to claim and complete pending Human tasks and view past Human task executions. 
 
@@ -269,7 +269,7 @@ In your selected Human task, select **Skip** to bypass it. Alternatively, select
 </TabItem>
 </Tabs>
 
-### Search Human task executions in Orkes Platform
+### Search Human task executions
 
 If you are a cluster admin or task admin (workflow creator for the Human task), you can use **Admin search** tab in **Executions** > **Human Tasks** to filter and sort through all Human task executions for testing and debugging.
 

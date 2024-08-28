@@ -47,7 +47,7 @@ TODO: Coming soon to the SDKs
 ```
 
 </TabItem>
-<TabItem value="Golang" label="Golang">
+<TabItem value="Go" label="Go">
 
 ```go
 TODO: Coming soon to the SDKs

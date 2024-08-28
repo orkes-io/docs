@@ -1,4 +1,4 @@
-# Task and Workflow Status in Conductor 
+# Task and Workflow Status
 
 The status of the task and workflow is crucial while debugging a workflow from UI. You can look into the workflow and task status to understand the current state of the workflow to identify any potential issues or errors.
 

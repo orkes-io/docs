@@ -41,6 +41,6 @@ Refer to this [link](https://github.com/conductor-sdk/conductor-clojure#quick-gu
 
 ## Related Topics
 
-- Video Guide on [Getting Access Key and Secret](/content/how-to-videos/access-key-and-secret)
+- Video Guide on [Getting Access Key and Secret](https://www.youtube.com/watch?v=f1b5vZRKn2Q)
 - [Access Control & Security](/content/category/access-control-and-security)
 

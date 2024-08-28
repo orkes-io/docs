@@ -23,7 +23,7 @@ public abstract Workflow updateVariables(String workflowId, Map<String, Object> 
 ```
 
 </TabItem>
-<TabItem value="Golang" label="Golang">
+<TabItem value="Go" label="Go">
 Coming Soon
 </TabItem>
 <TabItem value="Python" label="Python">

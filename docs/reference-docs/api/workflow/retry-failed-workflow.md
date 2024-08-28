@@ -33,7 +33,7 @@ BulkResponse retryWorkflow(List<String> workflowIds) throws ApiException
 ```
 
 </TabItem>
-<TabItem value="Golang" label="Golang">
+<TabItem value="Go" label="Go">
 
 ```go
 func (e *WorkflowExecutor) Retry(workflowId string, resumeSubworkflowTasks bool) error

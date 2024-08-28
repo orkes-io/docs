@@ -31,7 +31,7 @@ Task OrkesTaskClient.getTaskDetails(String taskId) throws ApiException
 ```
 
 </TabItem>
-<TabItem value="Golang" label="Golang">
+<TabItem value="Go" label="Go">
 
 ```go
 func (*TaskResourceApiService) GetTask(ctx context.Context, taskId string) (model.Task, *http.Response, error)

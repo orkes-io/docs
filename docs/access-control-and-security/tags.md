@@ -2,6 +2,14 @@
 
 Tags are metadata in Conductor, formatted as `key:value`, that can be applied to various entities like tasks, workflows, schedulers, secrets, webhooks, AI prompts, environment variables, integrations, and applications. Tags help in bulk permission sharing by associating permissions with specific tags.
 
+Watch how we can use tags to manage permissions in Orkes Conductor Platform.
+
+<center><iframe width="510" height="300" src="https://www.youtube.com/embed/qFHDwh2a_l4?si=DqWsT7_NgMv5ZZgx" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="allowfullscreen"
+mozallowfullscreen="mozallowfullscreen"
+msallowfullscreen="msallowfullscreen"
+oallowfullscreen="oallowfullscreen"
+webkitallowfullscreen="webkitallowfullscreen"></iframe></center>
+
 ## Adding Tags to Entities
 
 You can add or remove tags for various entities using similar steps. Follow the instructions below based on the type of entity you wish to tag:
