@@ -1,113 +1,99 @@
-# Managing Tags in Conductor
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
-Tags are metadata in Conductor, formatted as `key:value`, that can be applied to various entities like tasks, workflows, schedulers, secrets, webhooks, AI prompts, environment variables, integrations, and applications. Tags help in bulk permission sharing by associating permissions with specific tags.
 
-Watch how we can use tags to manage permissions in Orkes Conductor Platform.
+# Managing Tags
+
+Formatted as `key:value`, tags can be applied to most resources in Conductor:
+* Workflows
+* Tasks
+* Secrets
+* Environment variables
+* Integrations
+* Prompts
+* User forms
+* Schedules
+* Webhooks
+* Applications
+
+Tags are useful not only for organizing your resources, but also for bulk-sharing resource access at a group or application level.
+
+
+## Assigning tags to resources
+
+You can add or remove multiple tags to various resources.
+
+**To add or remove a tag:**
+1. In the left navigation menu, go to **Definitions** and select **Workflow** / **Task** / **Secrets** / **Environment Variables** / **AI Prompts** / **User Forms** / **Scheduler** / **Webhook**<br/>OR go to **Integrations**<br/>OR go to **Access Control** > **Applications** depending on the resource you want to tag.
+2. Locate the specific resource.
+    <p align="center"><img src="/content/img/RBAC/adding-tags-to-workflow.png" alt="Adding a tag to an existing workflow" width="90%" height="auto"></img></p>
+3. In the Actions column, select the **Tag** icon. <br/>A pop-up window for Edit Tags appears.
+    <p align="center"><img src="/content/img/RBAC/editing-tags-in-conductor.png" alt="Editing a tag" width="60%" height="auto"></img></p>
+4. To create a tag, enter a tag in the `key:value` format and select **Enter.** 
+5. To remove a tag, select **x** next to the tag.
+6. Once tagged, select **Save**.
+
+
+## Bulk-access to resources using tags
+
+Tags simplify permission management for large teams or projects. After tagging individual resources, you can use the tags to bulk-share resource access at a group- or application-level.
+
+
+### Granting tag permissions
+
+You can grant tag permissions to groups or to applications. When granting tag permissions, ensure that the relevant resources contain the specific tag (such as team:engineering).
+
+<Tabs>
+<TabItem value="group-level" label="For Groups">
+
+:::info
+This feature is only available to Admins.
+:::
+
+**To add permissions to a group:**
+1. In the left navigation menu, go to **Access Control** > **Groups**.
+2. Select the group name or the **Edit** icon located next to the group name.
+3. In the Permissions section, select **+ Add Permission**.
+4. Toggle to the **Tag** tab and select the tag to provide access to.
+5. Toggle the access levels for your selected resource:
+    - **Read**—Users will be able to view the resource.
+    - **Update**—Users will be able to update the resource.
+    - **Execute**—Users will be able to execute the resource.
+    - **Delete**—Users will be able to delete the resource.
+6. Select **Add Permissions**.
+
+All users in the group now have access to all resources under the tag. You can select the drop-down icon to view all of the tag’s resources.
+
+<p align="center"><img src="/content/img/RBAC/adding-tags-to-a-user-group-in-conductor.png" alt="Adding tags to a user group" width="90%" height="auto"></img></p>
+
+</TabItem>
+
+<TabItem value="application-level" label="For Applications">
+
+**To add permissions to an application:**
+1. In the left navigation menu, go to **Access Control** > **Applications**.
+2. Select the application name or the **Edit** icon located next to the application name.
+3. In the Permissions section, select **+ Add Permission**.
+4. Toggle to the **Tag** tab and select the tag to provide access to.
+5. Toggle the access levels for your selected resource:
+    - **Read**—The application will be able to view the resource.
+    - **Update**—The application will be able to update the resource.
+    - **Execute**—The application will be able to execute the resource.
+    - **Delete**—The application will be able to delete the resource.
+6. Select **Add Permissions**.
+
+The application now has access to all resources under the tag. You can select the drop-down icon to view all of the tag’s resources.
+
+<p align="center"><img src="/content/img/RBAC/adding-tags-to-application-in-orkes-conductor.png" alt="Adding tags to application in Conductor" width="90%" height="auto"></img></p>
+
+
+</TabItem>
+</Tabs>
+
+Watch how to use tags to manage permissions in Orkes Platform.
 
 <center><iframe width="510" height="300" src="https://www.youtube.com/embed/qFHDwh2a_l4?si=DqWsT7_NgMv5ZZgx" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="allowfullscreen"
 mozallowfullscreen="mozallowfullscreen"
 msallowfullscreen="msallowfullscreen"
 oallowfullscreen="oallowfullscreen"
 webkitallowfullscreen="webkitallowfullscreen"></iframe></center>
-
-## Adding Tags to Entities
-
-You can add or remove tags for various entities using similar steps. Follow the instructions below based on the type of entity you wish to tag:
-
-* Workflows
-* Tasks
-* Schedulers
-* Secrets
-* Webhooks
-* AI Prompts
-* Environment Variables
-
-Steps to add a tag:
-
-1. Navigate to **Definitions** from the left menu on your Orkes Conductor cluster.
-2. Select **Workflow / Task / Scheduler / Secrets / Webhook / AI prompts / Environment Variables** depending on the entity you want to tag.
-3. Locate the specific entity you wish to tag.
-4. In the **Actions** column, click the tag icon.
-
-<p align="center"><img src="/content/img/adding-tags-to-workflow.png" alt="Adding a tag to an already created workflow" width="90%" height="auto"></img></p>
-
-5. This opens a pop-up window where you can add a new tag. Enter a tag in the `key:value` format and press enter to create it. To remove a tag, click the "x" next to the tag.
-
-<p align="center"><img src="/content/img/editing-tags-in-conductor.png" alt="Editing a tag" width="60%" height="auto"></img></p>
-
-## Adding Tags to Integrations
-
-To add a tag to an integration:
-
-1. Navigate to **Integrations** from the left menu on your Orkes Conductor cluster.
-2. Locate the specific integration you wish to tag.
-3. In the **Actions** column, click the tag icon.
-
-<p align="center"><img src="/content/img/adding-tags-integrations.png" alt="Adding tags to integrations" width="90%" height="auto"></img></p>
-
-4. This opens a pop-up window where you can add a new tag. Enter a tag in the `key:value` format and press enter to create it. To remove a tag, click the "x" next to the tag.
-
-<p align="center"><img src="/content/img/tag-format-integrations.png" alt="Adding/Editing tags in integrations" width="70%" height="auto"></img></p>
-
-## Adding Tags to Applications
-
-To add a tag to an application:
-
-1. Navigate to **Access Control > Applications** from the left menu on your Orkes Conductor cluster.
-2. Locate the specific application you wish to tag.
-3. In the **Actions** column, click the tag icon.
-
-<p align="center"><img src="/content/img/adding-tags-application.png" alt="Adding tags to applications" width="90%" height="auto"></img></p>
-
-4. This opens a pop-up window where you can add a new tag. Enter a tag in the `key:value` format and press enter to create it. To remove a tag, click the "x" next to the tag.
-
-<p align="center"><img src="/content/img/tag-format-applications.png" alt="Adding/Editing tags in applications" width="70%" height="auto"></img></p>
-
-## Using Tags for Permission Sharing in Bulk​
-
-In addition to tagging individual entities, you can use tags for bulk permission sharing by assigning them to user groups or applications.
-
-### Using User Groups​
-
-To grant permissions to a group of users:
-
-1. Tag the Entities
-
-Ensure that the relevant entities are tagged with a specific tag, for example `team:accounts`.
-
-2. Update Group Permissions
-
-To add permissions to the group,
-
-1. Navigate to **Access Control > Groups** and click the edit icon next to the group name.
-2. In the **Permissions** section, click **+Add Permission**.
-3. Choose the **Tag** section, select the required tag, and assign the necessary permissions. Typically, you’ll need to provide **_EXECUTE_** permission for execution rights and **_READ_** permission to list the entities.
-4. Clicking **Add Permission** adds the tags to the group.
-5. Click on the **>** to view all the entities tagged. 
-
-
-<p align="center"><img src="/content/img/adding-tags-to-a-user-group-in-conductor.png" alt="Adding tags to a user group" width="100%" height="auto"></img></p>
-
-This configuration grants all group members execute and read access to the tagged entities simplifying permission management for large teams.
-
-### Using Applications
-
-To grant permissions to an application:
-
-1. Tag the Entities
-
-Ensure that the relevant entities are tagged with a specific tag, for example `team:accounts`.
-
-2. Update Group Permissions
-
-To add permissions to an application,
-
-1. Navigate to **Access Control > Applications** and click the edit icon next to the application name.
-2. In the **Permissions** section, click **+Add Permission**.
-3. Choose the **Tag** section, select the required tag, and assign the necessary permissions. Typically, you’ll need to provide **_EXECUTE_** permission for execution rights and **_READ_** permission to list the entities.
-4. Clicking **Add Permission** adds the tags to the application.
-5. Click on the **>** to view all the entities tagged. 
-
-<p align="center"><img src="/content/img/adding-tags-to-application-in-orkes-conductor.png" alt="Adding tags to application in Conductor" width="100%" height="auto"></img></p>
-
-This configuration grants the application execute and read access to the tagged entities simplifying permission management for large teams.
