@@ -205,16 +205,22 @@ const sidebars = {
                     type: 'category',
                     label: 'Access Control and Security',
                     link: {
-                        type: 'generated-index',
-                        title: 'Access Control and Security',
-                        slug: '/category/access-control-and-security',
-                        keywords: ['access control', 'security']
+                        type: 'doc',
+                        id: 'access-control-and-security/rbac-overview',
                     },
                     className: 'leftMenuHeader',
                     items: [
-                        'access-control-and-security/applications',
                         'access-control-and-security/users-and-groups',
-                        'access-control-and-security/tags',
+                        {
+                            type: 'doc',
+                            id: 'access-control-and-security/applications',
+                            label: 'Application-Level Access',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'access-control-and-security/tags',
+                            label: 'Tag-Based Access',
+                        },
                     ]
                 },
                 {
@@ -222,10 +228,15 @@ const sidebars = {
                     label: 'Conductor Clients & SDKs',
                     link: {
                         type: 'doc',
-                        id: 'sdks/index',
+                        id: 'sdks/sdk-index',
                     },
                     className: 'leftMenuHeader',
                     items: [
+                        {
+                            type: 'doc',
+                            id: 'sdks/authentication',
+                            label: 'Authentication',
+                        },
                         {
                             type: 'doc',
                             id: 'sdks/python',

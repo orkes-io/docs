@@ -1,15 +1,36 @@
-# Managing Users & Groups 
+# Managing Users and Groups
 
-In a remote environment, ensuring secure access to the Conductor server is essential. Conductor’s RBAC functionality enables admins to easily create and manage users and groups on the server, providing a structured approach to access control.
-
-:::note
-This feature is available only to admins.
+:::info
+This feature is only available to Admins.
 :::
 
-## Users​​
+Create and manage users and groups on your Conductor cluster, so as to ensure secure access.
 
-Watch how we can configure and manage Users from the UI.
 
+## Users
+
+A user represents a human user that interacts with Conductor via Orkes Platform. Users are authenticated using SSO providers or email/password. Each user has one or more roles assigned to them.
+
+
+### Adding users​
+
+Users must be added to your Orkes Conductor cluster before they can sign up or log in.
+
+**To add a user to your cluster:**
+1. In the left navigation menu, go to **Access Control** > **Users**.
+2. Select **(+) Create User**.
+3. Enter the following information:
+
+| Field | Description                                                                                                                                                                                                                                                     |
+| ------ |-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| User Id | The user’s email address. This cannot be changed later.                |
+| Name | The username.                                                             |
+| Roles | The user’s role(s), which governs the basic access level for the user. The available roles are: <ul><li>**Admin**—Superuser. Full access to the system and resources. Can manage users and groups.</li> <li>**User**—Can only access resources that they created.</li> <li>**Metadata Manager**—Can read, update, and delete all metadata in the system.</li> <li>**Workflow Manager**—Can view and execute all workflows in the system.</li> <li>**Read Only User**—Can access all metadata and workflows in the system as read-only. Cannot modify or execute workflows.</li></ul>                                                                                |
+| Groups | The groups that the user should be part of. This provides additional group-level permissions to the user.                                               |
+
+4. Select **Save**.
+
+<br/>
 <center>
 <iframe width="510" height="300" src="https://www.youtube.com/embed/O9lj4TAqldc?si=wOxzv26EzeI5pft1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="allowfullscreen"
 mozallowfullscreen="mozallowfullscreen"
@@ -18,81 +39,91 @@ oallowfullscreen="oallowfullscreen"
 webkitallowfullscreen="webkitallowfullscreen"></iframe>
 </center>
 
-### Inviting Users​​
 
-To invite a user to your Orkes Conductor cluster,
+### Editing user information
 
-1. Navigate to **Access Control > Users** from the left menu on your Orkes Conductor cluster.
-2. Click **+ Create User** from the top-right corner.
-3. Enter the following user details:<ul><li>_User id_ - The email address of the user.</li><li>_Name_ - The username.</li><li>_Roles_ - Select the access level you wish the user to have. The available roles are:</li><ul><li>_Admin_ - Full access to the Orkes Conductor cluster.</li><li>_User_ - Access to permitted metadata and those created by themselves.</li><li>_Metadata Manager_ - Can read, update, and delete all metadata in the system.</li><li>_Workflow Manager_ - Can view and execute all workflows in the system.</li><li>_Read Only User_ - Access to all metadata as read-only.</li></ul><li>_Groups_ - Select the groups the user should be part of.</li></ul>
-4. Click **Save**.
+You can edit a user’s name, role, or group anytime.
 
-### Editing Users​
+**To edit a user:**
+1. In the left navigation menu, go to **Access Control** > **Users**.
+2. Select the **Edit** button located next to the user.
+<p align="center"><img src="/content/img/RBAC/managing_users_and_groups-editing_user_information.png" alt="Editing user roles in Orkes Platform" width="90%" height="auto"></img></p>
+3. Update the user’s name, roles, or groups as desired.
+4. Select **Save**.
 
-To change the permissions for a specific user:
+### Deleting users
 
-1. Click the **Edit** button next to the user.
-2. Update the required permissions.
+**To delete a user from your cluster:**
+1. In the left navigation menu, go to **Access Control** > **Users**.
+2. Select the **Delete** icon located next to the user.
+3. Confirm the action by entering the user’s ID and selecting **Confirm**.
 
-<p align="center"><img src="/content/img/edit-user-roles.png" alt="Editing user roles in Conductor" width="90%" height="auto"></img></p>
 
-### Deleting Users​
+## Groups
 
-To delete a user from your Orkes Conductor cluster:
+A group is a set of users. Groups are a way to quickly share roles and permissions among multiple users.
 
-1. Click the **Trash** icon near the username.
-2. Confirm the action.
+When a user is added to a group, the user automatically inherits the roles and permissions of a group. Likewise, when a user is removed from a group, the roles and permissions are automatically removed from the user.
 
-## Groups​​
+:::note
+Read Only Users cannot be added to any groups.
+:::
 
-Groups are a way to share metadata among your team quickly.
+### Configuring groups​
 
-Watch how we can manage groups in Orkes Conductor Platform.
+**To configure a group:**
+1. Create a group.
+    1. In the left navigation menu, go to **Access Control** > **Groups**.
+    2. Select **(+) Create group**.
+    3. Enter the following information:
 
+| Field | Description                                                                                                                                                                                                                                                     |
+| ------ |-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Name | A name to identify your group. For example, “Engineering”. This cannot be changed later.                                                                     |
+| Description | A description of the group.                                        |
+| Default group role | Optional. The role(s) that all members of the group will inherit, on top of their individually defined role(s). The available roles are: <ul><li>**Admin**—Superuser. Full access to the system and resources. Can manage users and groups.</li> <li>**User**—Can only access resources that they created.</li> <li>**Metadata Manager**—Can read, update, and delete all metadata in the system.</li> <li>**Workflow Manager**—Can view and execute all workflows in the system.</li> <li>**Read Only User**—Can access all metadata and workflows in the system as read-only. Cannot modify or execute workflows.</li></ul>                           |
+&emsp;&emsp; iv. Select **Save**.<br/>&emsp;&emsp;The group has been created. You can proceed to add members or permissions to the group.
+
+<p align="center"><img src="/content/img/RBAC/managing_users_and_groups-editing_group_information.png" alt="Group configuration screen in Orkes Platform." width="90%" height="auto"></img></p>
+
+2. Add members to the group.
+    1. In the Members section, select **+ Add User** to add an existing user to the group. If the user you are looking for does not exist, you must first add them to your cluster.
+3. Add permissions to grant group-level access to resources.
+    1. In the Permissions section, select **+ Add Permission**.
+    <p align="center"><img src="/content/img/RBAC/managing_users_and_groups-adding_group_permissions.png" alt="Granting access to specific tasks and workflows" width="90%" height="auto"></img></p>
+    2. Toggle between each resource type and select the resources to provide access to.
+    3. Toggle the access levels for your selected resource:
+        * **Read**—Users will be able to view the resource.
+        * **Update**—Users will be able to update the resource.
+        * **Execute**—Users will be able to execute the resource.
+        * **Delete**—Users will be able to delete the resource.
+
+  All group members will now have these roles and permissions, on top of their existing user-based permissions.
+
+:::tip
+You can grant permissions to **tags**, rather than to individual resources. Tags can be added to multiple resources, so that when you grant a permission to a tag, it instantly provides access to all tagged resources. Learn more about tags in [Managing Tags](/access-control-and-security/tags).
+:::
+
+<br/>
 <center><iframe width="510" height="300" src="https://www.youtube.com/embed/REIRIjEvJLg?si=h28wjxj9DZi7A6bE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="allowfullscreen"
 mozallowfullscreen="mozallowfullscreen"
 msallowfullscreen="msallowfullscreen"
 oallowfullscreen="oallowfullscreen"
 webkitallowfullscreen="webkitallowfullscreen"></iframe></center>
 
-### Creating Groups​​
 
-To create a user group:
+### Editing group information
 
-1. Navigate to **Access Control > Groups** from the left menu on your Orkes Conductor cluster.
-2. Click **+ Create group** from the top-right corner.
-3. Enter the following details:<ul><li>_Name_ - A name to identify your group.</li><li>_Description_ - A description of the group.</li><li>_Define group role_ - Select the required permission for the group. The available roles are:</li><ul><li>_Admin_ - An admin has full access to the Orkes Conductor cluster.</li><li>_User_ - A user can access permitted metadata and ones created by themselves.</li><li>_Metadata Manager_ -An admin for metadata who can read, update, and delete all the metadata in the system.</li><li>_Workflow Manager_ - A workflow manager who can view and execute all the workflows in the system.</li><li>_Read Only User_ - Read Only users have access to all the metadata and workflows in the system as read-only.</li></ul></ul>
-:::note
- If a role is defined for these members, they will all be given this role to the Conductor cluster. For example, if Admin is selected, all the group members are now admins irrespective of their individual roles.
-:::
-3. Click **Save**.
+You can edit a group’s description, default roles, members, or permissions anytime.
 
-<p align="center"><img src="/content/img/creating-groups.png" alt="Creating Groups in Conductor" width="90%" height="auto"></img></p>
+**To edit a group:**
+1. In the left navigation menu, go to **Access Control** > **Groups**.
+2. Select the group name or the **Edit** icon located next to the group name.
+3. Update the group’s description, roles, members, or permissions as desired.
 
-4. You can add members by clicking **+Add User** from the **Members** section. You can add only the users that have already been created/invited. If the user you are looking for has not been added, you can invite and then add them to the groups.
 
-**Permissions** is an additional section where you can limit the group members' access to the permitted workflows, tasks, secrets, tags, domains, integrations, prompts, and environment variables.
+### Deleting groups
 
-6. Click **+Add Permission**.
-7. Choose the group to have access to selected Workflows, Tasks, secrets, environment variables, tags, domains, integrations, and prompts. Permissions that can be granted include _Read_, _Create_, _Update_, _Execute_, and _Delete_.
-
-<p align="center"><img src="/content/img/adding-permissions-for-applications.png" alt="Granting access to specific tasks and workflows" width="90%" height="auto"></img></p>
-
-:::note
-Different cases when permissions are stacked up:
-- If the role is “Read Only” and the group is given “Execute” permission for a workflow under the permissions section, then all the group members can execute that workflow, while the rest are read-only.
-:::
-
-### Editing Groups​
-
-To modify group settings:
-
-1. Click the group name.
-2. Edit the group roles, members, and permissions.
-
-### Deleting Groups​
-
-To delete a group:
-
-1. Click the **Trash** icon near the group name.
-2. Confirm the action.
+**To delete a group:**
+1. Select the **Delete** icon located next to the group name.
+2. Confirm the action by entering the group name and selecting **Confirm**.
