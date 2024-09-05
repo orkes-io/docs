@@ -33,7 +33,6 @@ This is the JSON schema for a Fork/Join task definition.
 
 ```json
 // JSON schema for the Fork task
-
 {
   "name": "fork",
   "taskReferenceName": "fork_ref",
