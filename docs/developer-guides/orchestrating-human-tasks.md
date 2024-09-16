@@ -22,7 +22,7 @@ During development, you can test and execute Human tasks internally on Orkes Pla
 **To orchestrate human-involved tasks:**
 1. Create a user form schema for the Human task.
 2. Define the Human task.
-3. Configure the Human task in your workflow definition to set the assignment and trigger policy.
+3. Configure the Human task in your workflow definition and set the assignment and trigger policy.
 4. Display the user form on an external UI.
 
 
@@ -122,17 +122,30 @@ Add the Human task to your workflow and configure its assignment policy and trig
         * **Conductor User** or **Group**—Select this if the assignees are Conductor users and will access Orkes Platform to complete the task.
         <p align="center"><img src="/content/img/assignment-policy-human-task.png" alt=" Assignment policy of human task" width="70%" height="auto"></img></p>
     3. Enter the **SLA minutes** to specify the assignment duration before it times out. Use 0 minutes to set a non-expiring assignment.
-    4. In **After assignments**, select the strategy for when the assignment times out.
+    4. In **After assignments**, select the strategy for when the assignment times out. 
+        * **Leave open**—The Human task execution remains open to be picked up by anyone.
+        * **Terminate**—The Human task execution is terminated and marked as deleted, and the workflow fails with the error “Task terminated as no more assignments pending and completion strategy is TERMINATE”.
     5. If needed, add another assignment to create a multi-level assignment chain.  
     <p align="center"><img src="/content/img/assignment-policy-human-task-hierarchy.png" alt="Assignment policy of human task in hierarchical order" width="90%" height="auto"></img></p>
-6. (Optional) Add a trigger policy to start new workflows when the state of the Human task changes.
-    1. In Trigger policy, select **(+) New trigger**.
-    2. Select the **Trigger event**.
-    3. Select the **Workflow** to start and its **Version**.
-    4. (Optional) Select **Additional inputs** to configure the workflow’s input parameters, correlation ID, and task-to-domain mapping.
-    5. If needed, add another trigger to start another workflow.
+6. (Optional) Add a trigger policy to start new workflows when the state of the Human task changes. The trigger policy works based on the human task state in the **Executions > Human Tasks** list.
+
+<p align="center"><img src="/content/img/human-task-states.png" alt="States in Human tasks based on which trigger policies can be defined" width="90%" height="auto"></img></p>
+
+To add a trigger policy:
+
+1. In Trigger policy, select **(+) New trigger**.
     <p align="center"><img src="/content/img/trigger-policy-human-task.png" alt=" Trigger policy for human task" width="90%" height="auto"></img></p>
-7. In Input parameters, configure the form fields depending on the input source:
+2. Select the **Trigger event**, the **Workflow** to start and its **Version**.
+    * **Pending**—If the human task execution is in the pending state, the trigger workflow is executed.
+    * **Assigned**—Once the human task is assigned to a specific assignee, the trigger workflow is executed.
+    * **In progress**—Once the human task execution is in the progress state, the trigger workflow is executed.
+    * **Completed**—Once the human task execution is completed, the trigger workflow is executed.
+    * **Timed out**—Once the human task execution is timed out, the trigger workflow is executed.
+     * **Assignee changed**—Once the human task assignee changes (as per the assignment policy or if left open and picked by anyone), the trigger workflow is executed.
+    * **Claimant changed**—When the claimant of a human task changes (e.g., if the initially assigned user does not claim the task and it remains open, allowing another user to claim it), the trigger workflow is executed. 
+3. (Optional) Select **Additional inputs** to configure the workflow’s input parameters, correlation ID, and task-to-domain mapping.
+4. If needed, add another trigger to start another workflow.
+5. In Input parameters, configure the form fields depending on the input source:
     * If the field is to be filled up by the assignee, you can leave the parameter value empty or pass in a default value that can be modified before submission.
     * If the field is read-only and will be passed from somewhere in the workflow, enter a parameter value. The value can be passed as a variable.
 
@@ -222,10 +235,8 @@ The workflow ID is generated. You can use it to view the execution progress and 
 As a Conductor user, you can also access all Human task executions on Orkes Platform. The list of Human task executions can be found in the left navigation menu under **Executions** > **Human Tasks**, allowing you to claim and complete pending Human tasks and view past Human task executions. 
 
 Depending on your permission level,  there are two tab views available on the page:
-* **Task inbox**—Contains unassigned Human tasks left open to everyone as well as  assigned tasks to you or your group, pending and completed.
-* **Admin search**—(applicable only to cluster admins or task creators) Contains all Human tasks in the Conductor cluster.
-
-<p align="center"><img src="/content/img/human-task-inbox-view.png" alt="Task inbox view of human task execution" width="100%" height="auto"></img></p>
+* **Task inbox**—As a regular non-admin user, you get the task Inbox view, which lists all the tasks assigned to you or left open. 
+* **Admin search**—If you are an admin (cluster-admin or the task creator—who created the workflow containing human tasks), you can also have another view: the admin search, which lists all human tasks within the Conductor cluster. 
 
 <Tabs>
 <TabItem value="claim task" label="To claim a task">
@@ -270,6 +281,17 @@ In your selected Human task, select **Skip** to bypass it. Alternatively, select
 </Tabs>
 
 ### Search Human task executions
+
+#### Task inbox
+
+The task inbox view is the non-admin regular user view that lists all the tasks assigned to you or left open.
+
+<p align="center"><img src="/content/img/human-task-inbox-view.png" alt="Task inbox view of human task execution" width="100%" height="auto"></img></p>
+
+* The executions can be filtered by task name and start time. You can also filter the executions by _Available_, _Completed_, or _All_.
+* On the execution page, you can view the human task details, such as the task ID, Name (Task display name specified in the workflow definition), task state, assignee, claimant, etc.
+
+#### Admin search
 
 If you are a cluster admin or task admin (workflow creator for the Human task), you can use **Admin search** tab in **Executions** > **Human Tasks** to filter and sort through all Human task executions for testing and debugging.
 
