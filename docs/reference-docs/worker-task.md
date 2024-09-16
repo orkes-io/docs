@@ -46,8 +46,8 @@ For a full guide on how to use workers, refer to Using Workers.
 
 **To add a Worker task:**
 1. In your workflow, select the **(+)** icon to add a new task. There are two ways to add a worker task:
-    * Search for your task using its task name and select to add it to the workflow.
-    * Add a **Worker Task (Simple)** and enter the task name in Task Definition.
+    * Search for your task using its task name (created previously) and select to add it to the workflow.
+    * Add a **Worker Task (Simple)** and enter the task name in Task Definition. This creates a new task definition.
 2. Configure the task, such as its inputs, caching, and optionality.
 
 
