@@ -30,7 +30,7 @@ Application roles an be added by any user with access to applications. General a
 
 <TabItem value="unrestricted roles" label="Unrestricted Roles">
 
-Unrestricted roles an only be added by an Admin. Unrestricted roles include:
+Unrestricted roles can only be added by an Admin. Unrestricted roles include:
 * **Unrestricted Worker**—Poll, execute updates, maintain logs, and handle any task without any constraints
 * **Metadata Manager**—Create, update, delete, and grant permissions to any workflow or task definition in the cluster.
 * **Workflow Manager**—Manage the lifecycle of workflows within the system. Start, pause, resume, rerun, and delete any workflow execution.
