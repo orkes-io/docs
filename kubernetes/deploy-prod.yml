@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orkes-portal-prod
+  namespace: orkes-portal-prod
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: orkes-portal-prod
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: orkes-portal-prod
+    spec:
+      containers:
+        - env:
+            - name: random
+              value: "125"
+          image: ghcr.io/orkes-io/orkes-portal/portal-prod:local1682986204
+          imagePullPolicy: IfNotPresent
+          name: orkes-portal-prod
+          resources:
+            limits:
+              cpu: "1000m"
+              memory: 1Gi
+            requests:
+              cpu: "1000m"
+              memory: 1Gi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      imagePullSecrets:
+        - name: regcredorkesgit
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      serviceAccount: orkes-portal-prod-sa
+      serviceAccountName: orkes-portal-prod-sa
+      terminationGracePeriodSeconds: 30

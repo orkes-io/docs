@@ -1,0 +1,64 @@
+# This workflow will do a clean install of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Main Portal Docker CI/CD
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+          cache: "npm"
+
+      - name: Checkout and build code
+        run: |
+          chmod +x ./scripts/build.sh
+          ./scripts/build.sh
+        env:
+          TYPESENSE_API_KEY: ${{ secrets.TYPESENSE_API_KEY }}
+          BRANCH: "main"
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Server
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: Dockerfile
+          push: true
+          tags: |
+            ghcr.io/orkes-io/orkes-portal/portal-prod:latest
+            ghcr.io/orkes-io/orkes-portal/portal-prod:${{ github.run_id }}
+
+      - name: Deploy Docker Image Set Context K8s
+        uses: azure/k8s-set-context@v3
+        with:
+          method: service-account
+          k8s-url: https://99167D87C0F5E61AA05B5CF10925436F.sk1.us-east-1.eks.amazonaws.com
+          k8s-secret: ${{ secrets.GH_ORKES_PORTAL_PROD_DEPLOY_TOKEN }}
+        id: setcontext
+
+      - name: Deploy Docker Image to K8s
+        uses: Azure/k8s-deploy@v4
+        with:
+          namespace: orkes-portal-prod
+          manifests: |
+            ./kubernetes/deploy-prod.yml
+          images: |
+            ghcr.io/orkes-io/orkes-portal/portal-prod:${{ github.run_id }}
