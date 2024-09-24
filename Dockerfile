@@ -8,6 +8,8 @@ COPY package.json yarn.lock ./
 
 # Install the dependencies using yarn
 RUN yarn
+ARG TYPESENSE_API_KEY
+ENV TYPESENSE_API_KEY=${TYPESENSE_API_KEY}
 
 # Copy the rest of the application files
 COPY . .
@@ -21,7 +23,8 @@ FROM nginx:stable-alpine
 # Copy the built files from the build stage to the nginx html directory
 COPY --from=build /app/build /usr/share/nginx/html/content
 
-COPY nginx.conf /etc/nginx/sites-available/default
+
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Expose port 80 to the outside world
 EXPOSE 80
