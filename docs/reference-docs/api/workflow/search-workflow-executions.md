@@ -5,18 +5,21 @@ sidebar_position: 10
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Search for Workflow Executions
+# Search Workflow Executions
 
-Used to search for workflow executions.
+Used to retrieve a list of workflow executions based on the provided search criteria.
 
 ## Input Payload
 
 | Attribute  | Description                                                                                                                                                                                                                                                                                                                      |
 |------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------| 
-| Start      | Indicates the start index, which is used for pagination.                                                                                                                                                                                                                                                                         | 
-| Size       | Indicates the number of results to return.                                                                                                                                                                                                                                                                                       | 
-| Query      | The query expression in the format FIELD = 'VALUE' or FIELD IN (value1, value2). Only **AND** operations are supported. E.g., workflowId IN ('a', 'b', 'c') AND workflowType ='test_workflow' AND startTime BETWEEN 1000 and 2000. Supported fields for Query are: **workflowId**,**correlationId**, **taskId**, **workflowType**, **taskType**, **status**, **startTime** and **modifiedTime**. |
-| FreeText   | All the workflow input, output, and task outputs up to a certain limit (check with your admins to find the size limit) are full-text indexed and can be used to search.                                                                                                                                                          |
+| start      | The start of the search results list, which is used for pagination. Default value: 0                                       | 
+| size       | The number of search results that should be returned from the specified start. Default value = 100                               | 
+| sort      | The manner in which the list will be sorted, in the format "FIELD:ASC|DESC”. Example: `sort = “workflowId:DESC”`.      |
+| freeText   | All full-text indexed data associated with the workflow execution (workflow input, output, and task outputs), up to a certain limit. Default value: * <br/> **Note**: Check with you admins to get the size limit.       |
+| query       | The query expression in the format “FIELD = VALUE” or “FIELD IN (value1, value2)”. Supported fields for querying: <ul><li>workflowId</li> <li>correlationId</li> <li>workflowType</li> <li>status</li> <li>startTime</li> <li>modifiedTime</li></ul> Only AND operations are supported. <br/><br/> Example queries: <ul><li>workflowType = your_workflow_name</li> <li>status IN (SCHEDULED, IN_PROGRESS)</li> <li>startTime >1726655978410</li> <li>startTime < 1696143600000</li> <li>workflowType = your_workflow_name AND status = SCHEDULED</li> <li>workflowId IN (3434546, 45365767, 20984885) AND workflowType = test_workflow</li></ul>                       | 
+| skipCache      | Whether to skip caching. Default value: false        |  
+
 
 ## API Endpoint
 ```
