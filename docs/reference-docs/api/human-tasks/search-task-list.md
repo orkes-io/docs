@@ -19,7 +19,7 @@ The invoking user should be a task owner, an ADMIN, or an assignee to the tasks 
 |--------------------|----------------------------------------------------------------------------------------------------| 
 | start               | The start of the search results list, which is used for pagination.                                      |
 | size                | The number of search results that should be returned from the specified start.                                                      |
-| searchType          | The user making the search. Supported values: ADMIN                              |
+| searchType          | The user making the search. Supported values: <ul><li>ADMIN</li> <li>INBOX</li></ul>                              |
 | definitionNames     | An array of Human task definition names.                |
 | displayNames        | An array of Human task display names.                   |
 | taskRefNames        | An array of Human task reference names.                 |
