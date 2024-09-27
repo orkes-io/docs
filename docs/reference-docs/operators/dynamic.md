@@ -99,8 +99,8 @@ During execution, the Dynamic task is replaced with whatever task that is called
 2. In **Task input params**, configure the task to execute by setting a value in the `taskToExecute` parameter.
   The value can be [passed as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor) (for example, ${workflow.input.dynamicTaskName}).
 
+<p><img src="/content/img/Task-References/dynamic_task_reference.png" alt="Screenshot of Dynamic Task in Orkes Platform"/></p>
 
-<p><img src="/content/img/ui-guide-dynamic-task.png" alt="Adding wait task" /></p>
 
 ## Examples
 Here are some examples for using the Dynamic task.
