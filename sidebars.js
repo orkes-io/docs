@@ -156,7 +156,7 @@ const sidebars = {
                         {
                             type: 'doc',
                             id: 'developer-guides/workflow-version-behavior-on-execution',
-                            label: "Runtiime Behaviour"
+                            label: "Runtime Behaviour"
                         }
                     ]
                 },

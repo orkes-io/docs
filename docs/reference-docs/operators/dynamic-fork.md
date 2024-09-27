@@ -201,6 +201,8 @@ forkTaskName and forkTaskInputs will take precedence even if dynamicForkTasksPar
     * `forkTaskName` and `forkTaskInputs` for all other task types.
 3. Select the Join task and configure its settings to complete the fork/join operations.
 
+<p><img src="/content/img/Task-References/dynamic_fork_task_reference.png" alt="Screenshot of Dynamic Fork Task in Orkes Platform"/></p>
+
 </TabItem>
 </Tabs>
 
@@ -360,7 +362,7 @@ During execution, Conductor will insert an additional parameter called `index` i
 }
 ```
 
-<p><img src="/content/img/Task-References/dynamic_fork_task-fruit_example_input_UI.png" alt="UI screenshot of one input instance for the Dynamic Fork task at run-time" /></p>
+<p align="center"><img src="/content/img/Task-References/dynamic_fork_task-fruit_example_input_UI.png" alt="UI screenshot of one input instance for the Dynamic Fork task at run-time" width="70%" height="auto"/></p>
 
 If simple values are used in `forkTaskInputs`, such as `"fruits" = ["apple", "orange", "kiwi"]`, Conductor will set each array element in a parameter called `input`, like so: 
 

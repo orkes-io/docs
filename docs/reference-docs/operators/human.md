@@ -124,6 +124,8 @@ For a full guide on how to use human-involved tasks, refer to the [Human Task Or
     * If the field is to be filled up by the assignee, you can leave the parameter value empty or pass in a default value that can be modified before submission.
     * If the field is read-only and will be passed from somewhere in the workflow, enter a parameter value. The value can be passed as a variable.
 
+<p><img src="/content/img/Task-References/human_task_reference.png" alt="Screenshot of Human Task in Orkes Platform"/></p>
+
 
 ## Examples
 
