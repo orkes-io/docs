@@ -96,7 +96,7 @@ Each time a task in the do while loop is completed, the output is saved and inde
 4. In your workflow, select the **(+)** icon to add tasks to the do while loop.
 5. (Optional) Set the number of required iterations by unchecking **No Limits**. There is no limit on the number of iterations by default.
 
-<p><img src="/content/img/ui-guide-do-while-task.png" alt="Adding Do While"/></p>
+<p><img src="/content/img/Task-References/do_while_task_reference.png" alt="Screenshot of Do While Task in Orkes Platform"/></p>
 
 ## Examples
 Here are some examples for using the Do While task.

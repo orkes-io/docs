@@ -110,8 +110,7 @@ You can access the output of the Switch task in subsequent tasks by referring to
 5. In your workflow, select the **(+)** icon to add tasks to each switch case.
 6. (Optional) Add tasks to the default case.
 
-<p><img src="/content/img/ui-guide-switch-task.png" alt="Adding event task"/></p>
-
+<p><img src="/content/img/Task-References/switch_task_reference.png" alt="Screenshot of Switch Task in Orkes Platform"/></p>
 
 ## Examples
 Here are some examples for using the Switch task.

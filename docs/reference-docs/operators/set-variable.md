@@ -41,7 +41,8 @@ This is the task configuration for a Set Variable task.
     - **Key**—the variable name.
     - **Value**—the variable value, which can be a variable input (for example, `${workflow.input.someKey}`) or a hard-coded value.
 
-<p><img src="/content/img/ui-guide-set-variable.png" alt="Adding set variable" /></p>
+<p><img src="/content/img/Task-References/set_variable_task_reference.png" alt="Screenshot of Set Variable Task in Orkes Platform"/></p>
+
 
 ## Examples
 
