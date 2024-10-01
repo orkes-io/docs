@@ -12,7 +12,7 @@ The Update Secret task is used to update the value of any secret, provided that 
 The update secret task updates a secret based on provided parameters. It requires a **secretKey** and **secretValue**. If the user does not have update permission for the specified **secretKey**, the workflow will terminate with a 403 error. 
 
 
-## Task configuration
+## Task parameters 
 
 Configure these parameters for the Update Secret task.
 
@@ -22,9 +22,9 @@ Configure these parameters for the Update Secret task.
 | inputparameters.**_secrets.secretKey** | The name of the secret key to be updated. It can be [passed as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor). | Required. | 
 | inputparameters.**_secrets.secretValue** | The new value for the secret key. It can be [passed as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor). | Required. | 
 
-## Task definition
+## Task configuration
 
-This is the JSON schema for an Update Secret task definition.
+This is the task configuration for an Update Secret task.
 
 ```json
 {

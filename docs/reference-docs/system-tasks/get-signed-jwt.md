@@ -11,7 +11,7 @@ The Get Signed JWT task is used to sign a JWT (JSON Web Token).
 
 Using the RS256 algorithm, the task ensures robust cryptographic security during JWT signing. The resulting token effectively encapsulates specified authorization scopes and incorporates a TTL (time-to-live) mechanism to enforce its expiration, thereby maintaining secure access control.
 
-## Task configuration
+## Task parameters
 
 Configure these parameters for the Get Signed JWT task.
 
@@ -30,9 +30,9 @@ Configure these parameters for the Get Signed JWT task.
 
 The Get Signed JWT task will return the signed JWT in the secret variable `_secrets`. The signed JWT will be masked (`***`). 
 
-## Task definition
+## Task configuration
 
-This is the JSON schema for a Get Signed JWT task definition.
+This is the task configuration for a Get Signed JWT task.
 
 ```json
 {

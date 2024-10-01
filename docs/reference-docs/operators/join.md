@@ -11,7 +11,7 @@ A Join task is used in conjunction with a [Fork Join](https://orkes.io/content/r
 
 In the Fork/Join task, the Join task waits for a list of forked tasks to be completed before proceeding with the next task. However, when used with a Dynamic Fork task, it implicitly waits for all forked tasks to complete.
 
-## Task configuration
+## Task parameters
 Configure these parameters for the Join task.
 
 | Parameter     | Description                                                                                                                                                                                                | Required/ Optional |
@@ -61,8 +61,8 @@ In the example script, there is a variable called `$.joinOn`, which is an array 
 The example script can be modified to suit your use case.
 
 
-## Task definition
-This is the JSON schema for a Join task definition.
+## Task configuration
+This is the task configuration for a Join task.
 
 
 ```json

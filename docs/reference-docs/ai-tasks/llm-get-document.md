@@ -10,7 +10,7 @@ The LLM Get Document task is used to retrieve the content of a specified documen
 
 The LLM Get Document task fetches a document from a specified URL based on the provided media type. It supports different formats, ensuring the retrieval of various types of documents. The task initiates a GET request to the URL and retrieves the document in the specified format, which is then available for subsequent AI-driven tasks or data processing.
 
-## Task configuration
+## Task parameters 
 
 Configure these parameters for the LLM Get Document task.
 
@@ -19,9 +19,9 @@ Configure these parameters for the LLM Get Document task.
 | inputParameters.**url** | The URL of the file to be retrieved. | Required. |
 | inputParameters.**mediaType** | The media type of the file to be retrieved. Supported media types:<ul><li>application/java-archive</li><li>application/EDI-X12</li><li>application/EDIFACT</li><li>application/javascript</li><li>application/octet-stream</li><li>application/ogg</li><li>application/pdf</li><li>application/xhtml+xml</li><li>application/x-shockwave-flash</li><li>application/json</li><li>application/ld+json</li><li>application/xml</li><li>application/zip</li><li>application/x-www-form-urlencoded</li><li>audio/mpeg</li><li>audio/x-ms-wma</li><li>audio/vnd.rn-realaudio</li><li>audio/x-wav</li><li>image/gif</li><li>image/jpeg</li><li>image/png</li><li>image/tiff</li><li>image/vnd.microsoft.icon</li><li>image/x-icon</li><li>image/vnd.djvu</li><li>image/svg+xml</li></ul> | Optional. |
 
-## Task definition
+## Task configuration
 
-This is the JSON schema for an LLM Get Document task definition.
+This is the task configuration for an LLM Get Document task.
 
 ```json
 {

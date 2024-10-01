@@ -14,7 +14,8 @@ You can get the workflow details only if you have at least read permission for t
 <p align="center"><img src="/content/img/error-no-access.png" alt="Error message on having no access to workflow execution" width="80%" height="auto" /></p>
 :::
 
-## Task configuration
+## Task parameters
+
 Configure these parameters for the Get Workflow task.
 
 | Parameter     | Description                                                                                                                                                                                                | Required/ Optional |
@@ -23,8 +24,9 @@ Configure these parameters for the Get Workflow task.
 | inputParameters. **includeTasks** | Whether to retrieve the task details or not. The default value is false. | Required. |
 
 
-## Task definition
-This is the JSON schema for a Get Workflow task definition.
+## Task configuration
+
+This is the task configuration for a Get Workflow task.
 
 
 ```json

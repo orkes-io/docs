@@ -10,7 +10,7 @@ The LLM Index Text task is designed to index the provided text into a vector spa
 
 It takes text input, processes it using a specified language model to generate embeddings, and stores these embeddings in a chosen vector database. 
 
-## Task configuration
+## Task parameters
 
 Configure these parameters for the LLM Index Text task.
 
@@ -24,9 +24,9 @@ Configure these parameters for the LLM Index Text task.
 | inputParameters.**text** | The text to be indexed. | Required. |
 | inputParameters.**docId** | A unique ID to identify the document where the indexed text will be stored. | Optional. |
 
-## Task definition
+## Task configuration
 
-This is the JSON schema for an LLM Index Text task definition.
+This is the task configuration for an LLM Index Text task.
 
 ```json
 {

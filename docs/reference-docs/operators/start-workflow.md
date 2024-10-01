@@ -11,7 +11,7 @@ The Start Workflow task starts another workflow in the current workflow. Unlike 
 
 A Start Workflow task is considered successful when the requested workflow begins or, more precisely, when the requested workflow is in the RUNNING state.
 
-## Task configuration
+## Task parameters
 Configure these parameters for the Start Workflow task.
 
 | Parameter     | Description                                                                                                                                                                                                | Required/ Optional |
@@ -25,8 +25,8 @@ Configure these parameters for the Start Workflow task.
 
 In addition, you can also configure the requested workflow’s input in `inputParameters.startWorkflow.input`, which will be passed to the invoked workflow.
 
-## Task definition
-This is the JSON schema for a Start Workflow task definition.​
+## Task configuration
+This is the task configuration for a Start Workflow task.​
 
 ```json
 {

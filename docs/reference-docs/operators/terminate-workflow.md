@@ -9,7 +9,7 @@ import TabItem from '@theme/TabItem';
 
 The Terminate Workflow task allows for the termination of other workflows using their workflow IDs. It allows users to terminate single or multiple workflows with optional parameters for specifying termination reasons and triggering failure workflows.
 
-## Task configuration
+## Task parameters
 
 Configure these parameters for the Terminate Workflow task.
 
@@ -20,9 +20,9 @@ Configure these parameters for the Terminate Workflow task.
 | triggerFailureWorkflow | Whether the failure workflow for the terminated workflow will be triggered. Accepted values:<ul><li>`true`—The failure workflow will be triggered.</li><li>`false`—The default option. The failure workflow will not be triggered.</li></ul>  | Required. |
 
 
-## Task definition
+## Task configuration
 
-This is the JSON schema for a Terminate Workflow task definition.
+This is the task configuration for a Terminate Workflow task.
 
 ```json
 {

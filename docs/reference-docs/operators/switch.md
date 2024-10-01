@@ -11,7 +11,7 @@ The Switch task is used for conditional branching logic. It represents if...then
 
 A Switch task evaluates an expression, either a simple input parameter key or a complex JavaScript expression, and matches the expression output with the name of each switch case. The appropriate tasks are executed based on the matching branch, which contains a sequence of tasks. The default branch will be executed if no matching branches are found.
 
-### Task configuration
+### Task parameters
 
 Configure these parameters for the Switch task.
 
@@ -22,9 +22,9 @@ Configure these parameters for the Switch task.
 | decisionCases | A map of the possible switch cases. The keys are the possible outputs of the evaluated expression, and the values are the list of tasks to be executed in each case.    | Required. |
 | defaultCase   | The default branch. Contains the list of tasks to be executed when no matching value is found in the decision cases.                               | Optional. |
 
-## Task definition
+## Task configuration
 
-This is the JSON schema for a Switch task definition.
+This is the task configuration for a Switch task.
 
 <Tabs>
 <TabItem value="value-param" label="value-param">

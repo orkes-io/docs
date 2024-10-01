@@ -12,7 +12,7 @@ The Business Rule task allows the evaluation of business rules defined in spread
 The Business Rule task evaluates business rules using a specified rule file. The file can be stored locally on the web, AWS S3, Azure Blob, or elsewhere. The task supports different execution strategies, input columns, and output columns. The rules can be configured to apply various logical operations such as comparison, string, list, and date operations.
 
 
-## Task configuration
+## Task parameters
 
 Configure these parameters for the Business Rule task.
 
@@ -48,9 +48,9 @@ The Business Rule task supports the following operators:
 For example, **createList({"A","B","C"})** will generate a list **{"A", "B", "C"}** in output.
 * **Date comparison**: **yyyy-MM-dd**, **yyyy-MMM-dd** and **yyyy-MM-dd HH:mm:ss**.
 
-## Task definition
+## Task configuration
 
-This is the JSON schema for a Business Rule task definition.
+This is the task configuration for a Business Rule task.
 
 ```json
   {

@@ -15,7 +15,7 @@ An Event task publishes a message to an event queue or topic. The specific event
 **Prerequisite** - Before configuring the Event task, ensure that the [required message broker is integrated](https://orkes.io/content/category/integrations/message-broker) with Orkes Conductor, and then [create a corresponding event handle](https://orkes.io/content/developer-guides/event-handler). Configuration parameters vary with each eventing system. Refer to the corresponding documentation for detailed integration steps.
 :::
 
-## Task configuration
+## Task parameters
 
 Configure these parameters for the Event task.
 
@@ -63,9 +63,9 @@ The execution will produce the following input parameters:
     }
 ```
 
-## Task definition
+## Task configuration
 
-This is the JSON schema for an Event task definition.
+This is the task configuration for an Event task.
 
 ```json
   {

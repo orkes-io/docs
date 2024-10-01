@@ -16,7 +16,7 @@ To support human-involved tasks, the Human task can be used alongside the follow
 For a full guide on how to use human-involved tasks, refer to the [Human Task Orchestration guide](docs/developer-guides/orchestrating-human-tasks.md).
 
 
-## Task configuration
+## Task parameters
 
 During workflow creation, the Human task can be configured for:
 * **Assignment policy**—Define who can fill out the form, how long the form is assigned to them, and what to do if the assignment times out.
@@ -48,9 +48,9 @@ In addition, you should also configure Human task’s `inputParameters`, which c
 * If the field is read-only and will be passed from somewhere in the workflow, enter a parameter value. The value can be [passed as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor).
 
 
-## Task definition
+## Task configuration
 
-This is the JSON schema for a Human task definition.
+This is the task configuration for a Human task.
 
 ```json
 {

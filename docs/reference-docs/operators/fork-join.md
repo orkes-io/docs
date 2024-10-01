@@ -9,7 +9,8 @@ import TabItem from '@theme/TabItem';
 
 A Fork/Join task is used to run tasks in parallel. It contains two components: the fork and the join operation. The fork operation lets you run lists of tasks, including [Sub Workflow](./sub-workflow) tasks, in parallel. The fork operation is followed by a join operation that waits on the forked tasks to finish before moving to the next task. This [Join](./join) task collects the outputs from each forked tasks.
 
-## Task configuration
+## Task parameters
+
 Configure these parameters for the Fork/Join task.
 
 **For the Fork task:**
@@ -28,8 +29,9 @@ The [Join](./join) task will run after the forked tasks. Configure the Join task
 | expression | The join script, which controls how the Join task completes if specified. | Optional. |
 
 
-## Task definition
-This is the JSON schema for a Fork/Join task definition.
+## Task configuration
+
+This is the task configuration for a Fork/Join task.
 
 ```json
 // JSON schema for the Fork task

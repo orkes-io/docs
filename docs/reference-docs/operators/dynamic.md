@@ -11,7 +11,7 @@ The Dynamic task is used to execute a registered task dynamically at run-time. I
 
 The Dynamic task accepts as input the name of a task, which can be a system task or a custom task registered on Conductor.
 
-## Task configuration
+## Task parameters
 
 Configure these parameters for the Dynamic task.
 
@@ -50,8 +50,9 @@ If the Dynamic task to be called is a [Sub Workflow](./sub-workflow) task, then 
 </TabItem>
 </Tabs>
 
-## Task definition
-This is the JSON schema for a Dynamic task definition.
+## Task configuration
+
+This is the task configuration for a Dynamic task.
 
 <Tabs>
 <TabItem value="all" label="All tasks">

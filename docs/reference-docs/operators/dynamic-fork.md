@@ -16,7 +16,7 @@ There are two ways to run the Dynamic Fork task:
 * **All forks run the same task**—Use `forkTaskName` and `forkTaskInputs` for any task type, or `forkTaskWorkflow` and `forkTaskInputs` for Sub Workflow tasks.
 
 
-## Task configuration
+## Task parameters
 
 Configure these parameters for the Dynamic Fork task. The input payload for the forked tasks should correspond with its expected input. For example, if the forked tasks are HTTP tasks, its input should include the method and URI.
 
@@ -71,9 +71,9 @@ The [Join](./join) task will run after the forked tasks. Configure the Join task
 
 
 
-## Task definition
+## Task configuration
 
-This is the JSON schema for a Dynamic Fork task definition.
+This is the task configuration for a Dynamic Fork task.
 
 <Tabs>
 <TabItem value="Different tasks" label="Run different tasks">

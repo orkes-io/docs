@@ -11,7 +11,7 @@ The HTTP task is used to make calls to remote services exposed over HTTP/HTTPS. 
 
 The HTTP task evaluates the parameters provided, constructs the HTTP request accordingly, and sends it to the specified URI. It handles the response by extracting useful information like status code, headers, and body content, which can be used in subsequent tasks in the workflow.
 
-## Task configuration
+## Task parameters
 
 Configure these parameters for the HTTP task.
 
@@ -26,9 +26,9 @@ Configure these parameters for the HTTP task.
 | inputParameters.**encode** | Determines whether the URI needs encoding. When set to `true`, the Conductor will automatically encode the query parameters before sending the HTTP request. Set this to `false` if the URI is already encoded. The default value is true. | Optional. | 
 | inputParameters.**asyncComplete** | When turned on, task completion occurs asynchronously, with the task remaining in progress while waiting for external APIs or events to complete the task. | Optional. | 
 
-## Task definition
+## Task configuration
 
-This is the JSON schema for an HTTP task definition.
+This is the task configuration for an HTTP task.
 
 ```json
   {

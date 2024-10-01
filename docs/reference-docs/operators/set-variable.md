@@ -12,14 +12,14 @@ The Set Variable task allows you to create workflow variables or update them wit
 
 Variables can be initialized and updated at any point in the workflow. Once a variable is initialized, it can be accessed in any subsequent task using the expression `${workflow.variables.variableName}` (replacing variableName with the actual variable name). Initialized values can be overwritten by a subsequent Set Variable task.
 
-## Task configuration
+## Task parameters
 To configure the Set Variable task, set your desired variables and their respective values in `inputParameters`. The values can be set in two ways:
 - Hard-coded in the workflow definition, or
 - A variable input that is defined in real-time during workflow execution.
 
-## Task definition
+## Task configuration
 
-This is the JSON schema for a Set Variable task definition.
+This is the task configuration for a Set Variable task.
 
 ```json
 {

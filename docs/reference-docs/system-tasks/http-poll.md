@@ -11,7 +11,7 @@ The HTTP Poll task is used to invoke HTTP API endpoints until the specified cond
 
 An HTTP Poll task sends HTTP requests to a specified endpoint at regular intervals and continues until a given termination condition is met. This is useful when you need to repeatedly check an HTTP service's status or output.
 
-## Task configuration
+## Task parameters
 
 Configure these parameters for the HTTP Poll task.
 
@@ -28,9 +28,9 @@ Configure these parameters for the HTTP Poll task.
 | inputParameters.**body** | The request body for POST, PUT, or PATCH methods. Can be text or parameters such as string, number, boolean, null, or object/array. | Required for POST, PUT, or PATCH. |
 | inputParameters.**encode** | Determines whether the URI needs encoding. When set to `true`, the Conductor will automatically encode the query parameters before sending the HTTP request. Set this to `false` if the URI is already encoded. The default value is true. | Optional. | 
 
-## Task definition
+## Task configuration
 
-This is the JSON schema for an HTTP Poll task definition.
+This is the task configuration for an HTTP Poll task.
 
 ```json
     {
