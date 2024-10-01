@@ -63,7 +63,7 @@ Note the target folders for Redis and Postgres data. You can empty these if you 
 
 <br/>
 
-#### Setup environment variables
+**Setup environment variables**
 ```shell
 export CONDUCTOR_SERVER_URL=http://localhost:8080/api
 ```
@@ -76,7 +76,7 @@ export CONDUCTOR_SERVER_URL=http://localhost:8080/api
 
 Orkes publishes containers to [DockerHub](https://hub.docker.com/) under [orkesio](https://hub.docker.com/orgs/orkesio/repositories) organization.
 
-## Orkes Cloud Build for Local Development and Testing
+**Orkes Cloud Build for Local Development and Testing**
 
 Available to the users of Orkes Cloud, with all the Orkes cloud features on your local machine. Requires subscription to Orkes Cloud.
 
@@ -91,11 +91,11 @@ The standalone container is only meant for local development and is not suitable
 :::
 
 
-### Obtaining Authorization Token​
+**Obtaining Authorization Token​**
 
 Please reach out to your Orkes contact to obtain the token.
 
-### Download and Run the Container​
+**Download and Run the Container​**
 
 Log in to the Docker Hub using Orkes Access Account. When prompted for the password, use the access token provided by the Orkes team.
 :::note
@@ -103,7 +103,7 @@ Log in to the Docker Hub using Orkes Access Account. When prompted for the passw
 * Standard security measures should be used within the organization when storing and distributing the access token.
 :::
 
-#### Download and Run the Latest Container Build​
+**Download and Run the Latest Container Build​**
 
 ```shell
 export orkes_access_key=<ACCESS_KEY_PROVIDED_BY_ORKES>
@@ -118,11 +118,11 @@ docker run -i -p 8080:8080 -p 3000:5000 --mount source=redis,target=/redis \
 --mount source=postgres,target=/pgdata orkesio/orkes-conductor-standalone:latest
 ```
 
-#### Access Conductor UI
+**Access Conductor UI**
 
 Navigate to [http://localhost:3000](http://localhost:3000).
 
-#### Access Swagger API Documentation
+**Access Swagger API Documentation**
 
 [http://localhost:8080/swagger-ui/index.html?configUrl=/api-docs/swagger-config#/](http://localhost:8080/swagger-ui/index.html?configUrl=/api-docs/swagger-config#/).
 
