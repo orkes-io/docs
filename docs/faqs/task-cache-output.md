@@ -9,8 +9,8 @@ Certain task types support the task caching functionality, where you can enable 
      }
 ```
 
-- **tlInSecondt**- Provide the time to live in seconds. You can also pass this parameter as a variable.
-- **key**- Provide the cache key, which is a string with parameter substitution based on the task input. You can also pass this parameter as a variable.
+- **tlInSecondt**: Provide the time to live in seconds. You can also [pass this parameter as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor).
+- **key**: Provide the cache key, which is a string with parameter substitution based on the task input. You can also [pass this parameter as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor).
 
 This field is currently supported for the following task types:
 
