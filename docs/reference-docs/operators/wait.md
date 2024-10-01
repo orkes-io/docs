@@ -19,7 +19,7 @@ The Wait task will remain in-progress until a certain point. There are three wai
 
 External signals can come from an event handler, direct API call, or a webhook. For example, the [task update API](https://orkes.io/content/reference-docs/api/task/update-task-status-in-workflow) can be invoked explicitly to mark the Wait task as COMPLETED.
 
-## Task configuration
+## Task parameters
 
 Configure these parameters for the Wait task.
 
@@ -30,8 +30,8 @@ Configure these parameters for the Wait task.
 | inputParameters. **duration** | The wait duration in the format `x days y hours z minutes aa seconds`. The accepted units in this field are:<ul><li>**days**, or **d** for days</li><li>**hours**, **hrs**, or **h** for hours</li><li>**minutes**, **mins**, or **m** for minutes</li><li>**seconds**, **secs**, or **s** for seconds</li></ul>  | Required for duration wait type. |
 
 
-## Task definition
-This is the JSON schema for a Switch task definition.
+## Task configuration
+This is the task configuration for a Switch task.
 
 <Tabs>
 <TabItem value="until" label="until">

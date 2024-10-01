@@ -9,7 +9,7 @@ import TabItem from '@theme/TabItem';
 
 The inline task is used to execute scripting logic during workflow runtime by evaluating a JavaScript expression using an evaluator like GraalJS. 
 
-## Task configuration
+## Task parameters
 
 Configure these parameters for the Inline task.
 
@@ -19,9 +19,9 @@ Configure these parameters for the Inline task.
 | inputParameters. **evaluatorType** | The type of evaluator used. Supported types:<ul><li>`graaljs` - Evaluates the Javascript expression and computes the value.</li></ul> |  Required. | 
 | inputParameters | The parameters for evaluating the script. Any property can be accessed as `$.value` for the expression to evaluate. | Required. | 
 
-## Task definition
+## Task configuration
 
-This is the JSON schema for an Inline task definition.
+This is the task configuration for an Inline task.
 
 ```json
 {

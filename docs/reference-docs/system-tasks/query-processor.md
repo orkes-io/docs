@@ -13,7 +13,7 @@ Conductor supports querying from two primary sources:
   - **Conductor Search API**—This query type retrieves workflow execution data from the Conductor Search API using various parameters.
   - **Conductor Metrics (Prometheus)**—This query type retrieves [workflow and task performance metrics](docs/developer-guides/metrics-and-observability.md) as well as system statistics through Prometheus.
 
-## Task configuration
+## Task parameters
 
 Configure these parameters for the Query Processor task.
 
@@ -48,9 +48,9 @@ Configure these parameters for the Query Processor task.
 </TabItem>
 </Tabs>
 
-## Task definition
+## Task configuration
 
-This is the JSON schema for a Query Processor task definition.
+This is the task configuration for a Query Processor task.
 
 <Tabs>
 <TabItem value="CONDUCTOR_API" label="CONDUCTOR_API">

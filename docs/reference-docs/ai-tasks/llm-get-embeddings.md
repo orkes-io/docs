@@ -10,7 +10,7 @@ The LLM Get Embeddings task retrieves numerical vector representations of words,
 
 The LLM Get Embeddings task accesses pre-computed embeddings stored in a vector database. It retrieves vectors based on specified parameters, such as vector database, namespace, index, and embedding source. This task enables efficient querying of stored embeddings to fetch relevant data quickly.
 
-## Task configuration
+## Task parameters 
 
 Configure these parameters for the LLM Get Embeddings task.
 
@@ -21,9 +21,9 @@ Configure these parameters for the LLM Get Embeddings task.
 | inputParameters.**index** | The index in your vector database where the indexed text or data was stored.<br/><br/>The terminology of the index field varies depending on the integration:<ul><li>For Weaviate, the index field indicates the class name.</li><li>For other integrations, it denotes the index name.</li></ul> | Required. |
 | inputParameters.**embeddings** | The embeddings from which the stored data will be retrieved. This should be from the same embedding model used to create the embeddings stored in the specified index. | Required. |
 
-## Task definition
+## Task configuration
 
-This is the JSON schema for an LLM Store Embeddings task definition.
+This is the task configuration for an LLM Store Embeddings task.
 
 ```json
 {

@@ -11,7 +11,7 @@ The Do While task executes a sequence of tasks as long as a given condition is t
 
 When a Do While loop is executed, each task in the loop will have its `taskReferenceName` concatenated with __i, with i as the iteration number starting at 1. If one of the loop task fails, the Do While task status will be set as FAILED and upon retry the iteration number will restart from 1.
 
-## Task configuration
+## Task parameters
 
 Configure these parameters for the Do While task.
 
@@ -22,9 +22,9 @@ Configure these parameters for the Do While task.
 | loopOver | The list of tasks to be executed as long as the condition is true.   | Required. |
 | inputParameters. **keepLastN**   | The number of required iterations. On enabling this option, this value is set to 2 by default. You can also choose not to include this parameter if there are no limits on the number of iterations.    | Optional. |
 
-## Task definition
+## Task configuration
 
-This is the JSON schema for a Do While task definition.
+This is the task configuration for a Do While task.
 
 ```json
 {

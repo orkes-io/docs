@@ -10,7 +10,7 @@ The Opsgenie task is used to send alerts to the alerting system Opsgenie.
 
 Opsgenie utilizes metadata to populate alert details and notify the appropriate responders. The task parameters allow for customization of the alert, including the message, priority, and the users who can view and respond to the alert.
 
-## Task configuration
+## Task parameters
 
 Configure these parameters for the Opsgenie task.
 
@@ -28,9 +28,9 @@ Configure these parameters for the Opsgenie task.
 | inputParameters.**token** | API token for integrating with Opsgenie. Refer to the official [Opsgenie documentation](https://support.atlassian.com/opsgenie/docs/create-a-default-api-integration/) to get the API keys.<br/>**Tip**: Save the token as a [secret](https://orkes.io/content/developer-guides/secrets-in-conductor) in the Conductor for enhanced security. | Required. | 
 | inputParameters.**tags** | Tags to be added to the alert in Opsgenie. Can be a string or object/array. | Optional. | 
 
-## Task definition
+## Task configuration
 
-This is the JSON schema for an Opsgenie task definition.
+This is the task configuration for an Opsgenie task.
 
 ```json
 {

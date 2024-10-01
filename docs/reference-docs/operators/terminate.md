@@ -12,7 +12,7 @@ The Terminate task is used to terminate the current workflow with a termination 
 It can act as a return statement for cases where you want the workflow to be terminated without continuing the subsequent tasks. For example, you want to execute certain tasks only if a condition is met and otherwise terminate the workflow.
 
 
-## Task configuration
+## Task parameters
 Configure these parameters for the Terminate task.
 
 | Parameter     | Description                                                                                                                                                                                                | Required/ Optional |
@@ -22,8 +22,9 @@ Configure these parameters for the Terminate task.
 | inputParameters. **workflowOutput** | A map of the expected workflow output on termination. It can contain a string, number, boolean, null, or object/array. | Optional. |
 
 
-## Task definition
-This is the JSON schema for a Terminate task definition.
+## Task configuration
+
+This is the task configuration for a Terminate task definition.
 
 
 ```json

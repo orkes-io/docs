@@ -10,7 +10,7 @@ The LLM Search Index task is used to search a vector database or repository of v
 
 The LLM Search Index task takes a query, which can be a question, statement, or request made in natural language. This query is processed to generate a vector representation, which is then used to search the vector database. The task returns a list of documents with vectors similar to the query vector, providing the closest matches based on the degree of similarity.
 
-## Task configuration
+## Task parameters 
 
 Configure these parameters for the LLM Search Index task.
 
@@ -23,9 +23,9 @@ Configure these parameters for the LLM Search Index task.
 | inputParameters.**embeddingModel** | The embedding model provided by the selected LLM provider. | Required. |
 | inputParameters.**query** | The search query. A query typically refers to a question, statement, or request made in natural language that is used to search, retrieve, or manipulate data stored in a database. | Required. |
 
-## Task definition
+## Task configuration
 
-This is the JSON schema for an LLM Search Index task definition.
+This is the task configuration for an LLM Search Index task.
 
 ```json
 {

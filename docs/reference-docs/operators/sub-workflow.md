@@ -13,7 +13,7 @@ The Sub Workflow task can also be used to overcome the limitations of other task
 - Use it in a [Do While](./do-while) task to achieve nested Do While loops.
 - Use it in a Dynamic Fork task to execute more than one task in each fork.
 
-## Task configuration
+## Task parameters
 
 Configure these parameters for the Sub Workflow task.
 
@@ -31,9 +31,9 @@ In addition, you can also configure the sub-workflow’s input in `inputParamete
 If you are taking the sub-workflow’s input parameters from the parent workflow, you need to add them as an input parameter in the parent workflow and then call the same input parameters inside the sub-workflow definition.
 
 
-## Task definition
+## Task configuration
 
-This is the JSON schema for a Sub Workflow task definition.
+This is the task configuration for a Sub Workflow task.
 
 ```json
 {

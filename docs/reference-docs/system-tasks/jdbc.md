@@ -12,7 +12,7 @@ The JDBC task is used to execute or store information in SQL databases. It allow
 A JDBC task evaluates SQL statements and parameters and can execute different SQL operations, such as SELECT or UPDATE. Based on the defined SQL statements and parameters, the appropriate database operations are carried out. 
 
 
-## Task configuration
+## Task parameters
 
 Configure these parameters for the JDBC task.
 
@@ -24,9 +24,9 @@ Configure these parameters for the JDBC task.
 | inputParameters. **statement** | The SQL statement to retrieve data from the SQL database. | Required. |
 | inputParameters. **parameters** | The query parameters to be bound by the SQL statement. It can be a string, number, boolean, or null. | Required. |
 
-## Task definition
+## Task configuration
 
-This is the JSON schema for a JDBC task definition.
+This is the task configuration for a JDBC task.
 
 ```json
    {

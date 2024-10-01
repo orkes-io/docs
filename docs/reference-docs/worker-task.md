@@ -12,14 +12,14 @@ A Worker task (also known as a Simple task) is used to run custom logic implemen
 
 For a full guide on how to use workers, refer to [Using Workers](docs/developer-guides/using-workers.md).
 
-## Task configuration
+## Task parameters
 
 To configure the Worker task, set its `inputParameters` as needed for your worker code. The inputs can be [passed as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor).
 
 
-## Task definition
+## Task configuration
 
-This is the JSON schema for a Worker task.
+This is the task configuration for a Worker task.
 
 ``` json
 {

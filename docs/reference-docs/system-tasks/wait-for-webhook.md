@@ -18,7 +18,7 @@ Additionally, the Custom option can be used to integrate other systems.
 
 For a full guide on how to use Webhook tasks, refer to [Webhook Integrations](https://orkes.io/content/developer-guides/webhook-integration).
 
-## Task configuration
+## Task parameters 
 
 Configure these parameters for the Wait for Webhook task.
 
@@ -51,9 +51,9 @@ Multiple matches can also be added within the `matches` section. All the matches
 For example, the configuration above will match the webhook event payload where `event.type` is `message` AND `event.text` is `hello`.
 
 
-## Task definition
+## Task configuration
 
-This is the JSON schema for a Wait for Webhook task definition.
+This is the task configuration for a Wait for Webhook task.
 
 ```json
 {

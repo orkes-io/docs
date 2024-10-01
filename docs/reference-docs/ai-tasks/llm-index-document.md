@@ -10,7 +10,7 @@ The LLM Index Document task is used to index a document into a vector database f
 
 The task uses a large language model (LLM) to create embeddings of the indexed document text, which are then stored in the vector database for later retrieval.
 
-## Task configuration
+## Task parameters 
 
 Configure these parameters for the LLM Index Document task.
 
@@ -26,9 +26,9 @@ Configure these parameters for the LLM Index Document task.
 | inputParameters.**chunkSize** | The length of each input text segment when divided for processing by the LLM. For example, if the document contains 2,000 words and the chunk size is set to 500, the document is divided into four chunks for processing. | Optional. | 
 | inputParameters.**chunkOverlap** | The overlap between adjacent chunks. For example, if the chunk overlap is specified as 100, then the first 100 words of each chunk would overlap with the last 100 words of the previous chunk. | Optional. | 
 
-## Task definition
+## Task configuration
 
-This is the JSON schema for an LLM Index Document task definition.
+This is the task configuration for an LLM Index Document task.
 
 ```json
 {

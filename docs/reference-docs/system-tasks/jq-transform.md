@@ -11,7 +11,7 @@ The JSON JQ Transform task allows the processing of JSON data using jq.
 A JSON JQ Transform task evaluates a `queryExpression` using jq syntax to transform JSON data provided as input parameters. The task processes the data based on the specified query, and the output is a transformed JSON object or array.
 
 
-## Task configuration
+## Task parameters
 
 Configure these parameters for the JSON JQ Transform task.
 
@@ -20,9 +20,9 @@ Configure these parameters for the JSON JQ Transform task.
 | inputParameters | JSON object containing the configuration data for task execution. Supports string, number, boolean, null, and object/array. | Required. |
 | inputParameters.**queryExpression** | A string representing a JQ (JSON Query) expression. This expression is used to transform the JSON data. | Required. |
 
-## Task definition
+## Task configuration
 
-This is the JSON schema for a JSON JQ Transform task definition.
+This is the task configuration for a JSON JQ Transform task.
 
 ```json
 {

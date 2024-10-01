@@ -10,7 +10,7 @@ The LLM Generate Embeddings task is used to convert input text into a sequence o
 
 The LLM Generate Embeddings task takes the input text and processes it through the selected language model (LLM) to produce embeddings. The task evaluates the specified parameters, such as the LLM provider and model, and generates a corresponding sequence of vectors for the provided text. The output is a JSON array containing these vectors, which can be used in subsequent tasks or stored for future use.
 
-## Task configuration
+## Task parameters 
 
 Configure these parameters for the LLM Generate Embeddings task.
 
@@ -20,9 +20,9 @@ Configure these parameters for the LLM Generate Embeddings task.
 | inputParameters.**model** | The available language models provided by the selected LLM provider. You can only choose models for which you have access.<br/><br/>For example, If your LLM provider is Azure Open AI and you’ve configured text-davinci-003 as the language model, you can select it here. | Required. | 
 | inputParameters.**text** | The text to be converted and stored as a vector. It can also be [passed as parameters](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor). | Required. | 
 
-## Task definition
+## Task configuration
 
-This is the JSON schema for an LLM Generate Embeddings task definition.
+This is the task configuration for an LLM Generate Embeddings task.
 
 ```json
 {
