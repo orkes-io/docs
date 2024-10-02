@@ -14,7 +14,7 @@ During workflow creation, the Human task can be configured for:
 * **Assignment policy**—Define who can fill out the form, how long the form is assigned to them, and what to do if the assignment times out.
 * **Trigger policy**—Trigger a workflow to start if the task state changes. 
 
-During development, you can test and execute Human tasks internally on Orkes Platform before integrating it with an external UI.
+During development, you can test and execute Human tasks internally on Orkes Conductor before integrating it with an external UI.
 
 
 ## Orchestrating human-involved tasks
@@ -28,26 +28,25 @@ During development, you can test and execute Human tasks internally on Orkes Pla
 
 ### Step 1: Create a user form schema
 
-To use a Human task in a workflow, you must first create a user form for it. The User Forms studio on Orkes Platform allows you to compose user forms easily, using JSON code or the pre-built form components. Once created, these forms can be safely versioned as well.
+To use a Human task in a workflow, you must first create a user form for it. The User Forms studio on Orkes Conductor allows you to compose user forms easily, using JSON code or the pre-built form components. Once created, these forms can be safely versioned as well.
 
 :::tip
 It is best practice to create forms using Orkes’ User Form studio, even if the form is displayed on an external UI. With the user form schema stored on Conductor, any changes can be instantly reflected on the frontend without any additional development effort.
 :::
 
-**To create a user form on Orkes Platform:**
-1. Go to your Conductor cluster on Orkes Platform.
-2. In the left navigation menu, go to **Definitions** > **User Forms**.
-3. Select **(+) New Form**.
-4. In Form details, provide a name for the form in **Form name**.
-5. To build the form, drag and drop the pre-built items for **Layout** and **Components** and configure each component.
-6. Preview your form at any time by selecting **Preview** on the top right.
-7. Once the form is ready, select **Save** > **Confirm** on the top right.
+**To create a user form on Orkes Conductor:**
+1. In the left navigation menu, go to **Definitions** > **User Forms**, on your Orkes Conductor cluster.
+2. Select **(+) New Form**.
+3. In Form details, provide a name for the form in **Form name**.
+4. To build the form, drag and drop the pre-built items for **Layout** and **Components** and configure each component.
+5. Preview your form at any time by selecting **Preview** on the top right.
+6. Once the form is ready, select **Save** > **Confirm** on the top right.
 
 <p align="center"><img src="/content/img/creating-forms-human-task.png" alt="Creating user forms for human task in Orkes Conductor" width="100%" height="auto"></img></p>
 
 #### Supported form components
 
-These are the pre-built form components available on Orkes Platform:
+These are the pre-built form components available on Orkes Conductor:
 * Boolean
 * Multiple Choice
 * Date
@@ -92,13 +91,12 @@ You can toggle to the Code tab to create custom components for your form. Howeve
 To use a Human task with an external UI, you must first define the Human task in **Definitions** > **Task**. 
 
 **To define a Human task:**
-1. Go to your Conductor cluster on Orkes Platform.
-2. In the left navigation menu, go to **Definitions** > **Task**.
-3. Select **(+) Define task**.
-4. In Name, enter a unique name for your Human task.
-5. In Description, enter the task description.
-6. Enter the task details, such as the rate limits, retry settings, timeout settings, and expected inputs and outputs.
-7. Select **Save** > **Confirm Save**.
+1. In the left navigation menu, go to **Definitions** > **Task**, on your Orkes Conductor cluster.
+2. Select **(+) Define task**.
+3. In Name, enter a unique name for your Human task.
+4. In Description, enter the task description.
+5. Enter the task details, such as the rate limits, retry settings, timeout settings, and expected inputs and outputs.
+6. Select **Save** > **Confirm Save**.
 
 Once the task is defined, you can proceed to add it to a workflow definition.
 
@@ -119,7 +117,7 @@ Add the Human task to your workflow and configure its assignment policy and trig
     1. In Assignment policy, select **(+) New assignment**.
     2. In Assign, select the **User type** for the assignee(s) and enter the corresponding user or group ID.
         * **External User** or **Group**—Select this if the assignees are managed and verified in an external system, and will access an external UI to complete the task.
-        * **Conductor User** or **Group**—Select this if the assignees are Conductor users and will access Orkes Platform to complete the task.
+        * **Conductor User** or **Group**—Select this if the assignees are Conductor users and will access Orkes Conductor to complete the task.
         <p align="center"><img src="/content/img/assignment-policy-human-task.png" alt=" Assignment policy of human task" width="70%" height="auto"></img></p>
     3. Enter the **SLA minutes** to specify the assignment duration before it times out. Use 0 minutes to set a non-expiring assignment.
     4. In **After assignments**, select the strategy for when the assignment times out. 
@@ -154,12 +152,12 @@ Refer to the [Human task reference](docs/reference-docs/operators/human.md) for 
 <p align="center"><img src="/content/img/human-task.png" alt="Human Task in Orkes Conductor" width="100%" height="auto"></img></p>
 
 :::tip
-During development, you can set the assignment policy to Conductor User or Group first to test the form. Once the Human task is connected to an external UI, you can easily make the switch to External User or Group. Even after making the switch, the form can still be tested internally on Orkes Platform using the Human Task Inbox. 
+During development, you can set the assignment policy to Conductor User or Group first to test the form. Once the Human task is connected to an external UI, you can easily make the switch to External User or Group. Even after making the switch, the form can still be tested internally on Orkes Conductor using the Human Task Inbox. 
 :::
 
 ### Step 4: Display the form on an external UI
 
-When the Human task begins, the associated user form will be assigned to the user or group defined in the task. The user form can be displayed on an external UI so that assignees can claim and complete user forms without having to log into Orkes Platform. These external assignees are referenced in the Human task definition but managed and verified in an external system.
+When the Human task begins, the associated user form will be assigned to the user or group defined in the task. The user form can be displayed on an external UI so that assignees can claim and complete user forms without having to log into Orkes Conductor. These external assignees are referenced in the Human task definition but managed and verified in an external system.
 
 **To display the form on an external UI:**
 
@@ -174,14 +172,13 @@ To use a Human task with an external UI, you need to add the Human task to an ap
 
 **To add the Human task to application account:**
 1. Go to the application account.
-    1. Go to your Conductor cluster on Orkes Platform.
-    2. In the left navigation menu, go to **Access Control** > **Applications**.
-    3. Select an application that you will be adding your worker to. Otherwise, create an application.
+    1. In the left navigation menu, go to **Access Control** > **Applications**, on your Orkes Conductor cluster.
+    2. Select an application that you will be adding your worker to. Otherwise, create an application.
 2. Grant Execute, Read, and Update permission to the application.
     1. Under Permissions, select **Add permission**.
     2. Select the **Task** tab and then your Human task.
     3. Enable the **Execute**, **Read**, and **Update **toggles.
-    4. (If Task to Domain is used) In Domain, enter the domain name used in your workflow.
+    4. (If Task-to-domain is used) In Domain, enter the domain name used in your workflow.
     5. Select Add Permissions.
 
 The application account can now execute the Human task.
@@ -205,26 +202,24 @@ Use the Human Tasks APIs to integrate your external UI with your Conductor clust
 
 </details>
 
+## Testing and completing Human tasks in Orkes Conductor
 
+When defining your workflows with Human tasks, you can test and complete the task internally on Orkes Conductor without having to test it from an external UI.
 
-## Testing and completing Human tasks in Orkes Platform
-
-When defining your workflows with Human tasks, you can test and complete the task internally on Orkes Platform without having to test it from an external UI.
-
-**To test and complete Human tasks in Orkes Platform:**
+**To test and complete Human tasks in Orkes Conductor:**
 1. Run the workflow.
-2. Complete the Human task in Orkes Platform.
+2. Complete the Human task in Orkes Conductor.
 
 
 ### Run the workflow
 
 Run the workflow to trigger a Human task execution. The Human task will remain in progress until the human interaction with the user form is complete.
 
-**To run the workflow on Orkes Platform:**
-1. Go to your Conductor cluster on Orkes Platform.
-2. In the left navigation menu, select **Run Workflow**.
-3. Select the desired workflow name and version and provide any input parameters as needed.
-4. On the top right, select **Run Workflow**.
+**To run the workflow on Orkes Conductor:**
+
+1. In the left navigation menu, select **Run Workflow**.
+2. Select the desired workflow name and version and provide any input parameters as needed.
+3. On the top right, select **Run Workflow**.
 
 The workflow ID is generated. You can use it to view the execution progress and details.
 
@@ -232,7 +227,7 @@ The workflow ID is generated. You can use it to view the execution progress and 
 
 ### Complete the Human task
 
-As a Conductor user, you can also access all Human task executions on Orkes Platform. The list of Human task executions can be found in the left navigation menu under **Executions** > **Human Tasks**, allowing you to claim and complete pending Human tasks and view past Human task executions. 
+As a Conductor user, you can also access all Human task executions on Orkes Conductor. The list of Human task executions can be found in the left navigation menu under **Executions** > **Human Tasks**, allowing you to claim and complete pending Human tasks and view past Human task executions. 
 
 Depending on your permission level,  there are two tab views available on the page:
 * **Task inbox**—As a regular non-admin user, you get the task Inbox view, which lists all the tasks assigned to you or left open. 
@@ -270,7 +265,7 @@ In your selected Human task, select **Skip** to bypass it. Alternatively, select
 1. In your selected Human task, select **Assign to a different subject** > **(+) New assignment**.
 2. In Assign, select the **User type** for the assignee(s) and enter the corresponding user or group ID.
     * **External User** or **Group**—Select this if the assignees are managed and verified in an external system, and will access an external UI to complete the task.
-    * **Conductor User** or **Group**—Select this if the assignees are Conductor users and will access Orkes Platform to complete the task.
+    * **Conductor User** or **Group**—Select this if the assignees are Conductor users and will access Orkes Conductor to complete the task.
 3. Enter the **SLA minutes** to specify the assignment duration before it times out. Use 0 minutes to set a non-expiring assignment.
 4. In **After assignments**, select the strategy for when the assignment times out.
 5. If needed, add another assignment to create a multi-level assignment chain.
