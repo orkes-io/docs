@@ -22,7 +22,7 @@ export const text = `"variableName" : "\${type.subtype.jsonpath}"`;
 
 Let’s break down this __expression__:
 
-| Attribute | Description |
+| Parameters | Description |
 | -- | -- |
 |**variableName**|A string that represents the variable name you want to assign this expression output.|
 |**${...}**|A notation that indicates the variable that would be dynamically replaced at run time.|
@@ -85,7 +85,7 @@ In summary, this expression defines a property called **key**, with a value that
 
 Depending on the context from where the data is being passed, the expression can take the following variants:
 
-| Workflow Attribute | Description |
+| Workflow Parameter | Description |
 | ------------------ | ----------- |
 | input | **${workflow.input.somevalue}** <br/>If the workflow has an input parameter “**_somevalue_**”, then the same parameter can be referred to using this expression.|
 | output | **${workflow.output.somevalue}** <br/>If the workflow has an output parameter “**_somevalue_**”, then the same parameter can be referred to using this expression.|

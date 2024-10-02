@@ -1,10 +1,10 @@
 # Using LLMs
 
-In this guide, we’ll provide an overview of Generative AI, Large Language Models (LLMs), and how Orkes makes it easy to leverage the power of LLMs natively in their applications. Whether you’re a developer, product manager, or anyone interested in Gen-AI powering your business logic, this guide will help you understand the concepts and get started with AI-powered tasks in Orkes Conductor.
+In this guide, we’ll provide an overview of Generative AI, Large Language Models (LLMs), and how Orkes makes it easy to leverage the power of LLMs natively in your applications. Whether you’re a developer, product manager, or anyone interested in GenAI powering your business logic, this guide will help you understand the concepts and get started with AI-powered applications in Orkes Conductor.
 
-## Generative AI or Gen AI
+## Generative AI or GenAI
 
-Gen AI is a type of Artificial Intelligence (AI) capable of creating new human-like content from pre-trained models that have had exposure to vast swaths of similar content. It is extremely helpful as it increases productivity and unlocks new scenarios that were impossible before without compromising and amplifying human capabilities. However, it also requires humans to direct models on what needs to be generated - the more specific you are, the better the output you will get from the models. The way you instruct a Gen AI model is by sending prompts. Prompts are nothing but text instructions provided to the language models. The response from a Gen-AI model will also be text-based (at least for now), and such models are called Large Language Models (LLMs).
+GenAI is a type of Artificial Intelligence (AI) capable of creating new human-like content from pre-trained models that had exposure to vast swaths of similar content. It is extremely helpful as it increases productivity and unlocks new scenarios that were impossible before without compromising and amplifying human capabilities. However, it also requires humans to direct models on what needs to be generated - the more specific you are, the better the output you will get from the models. The way you instruct a GenAI model is by sending prompts. Prompts are nothing but text instructions provided to the language models. The response from a GenAI model will also be text-based (at least for now), and such models are called Large Language Models (LLMs).
 
 LLMs, at its core, are deep learning algorithms trained on massive amounts of text data. They can perform various NLP (Natural Language Processing) tasks such as text generation, translation, chatbots, AI assistants, etc. LLMs must be pre-trained and fine-tuned to increase their problem-solving capabilities. Some popular LLMs are Open AI, Azure Open AI, Google Vertex AI, and more.
 
@@ -12,7 +12,7 @@ LLMs, at its core, are deep learning algorithms trained on massive amounts of te
 
 LLMs are powerful building blocks when developing a new application or when updating existing ones. The difficulty that teams encounter lies in embedding these building blocks within the core logic and execution of the application.
 
-With Orkes Conductor, you can seamlessly integrate LLMs into your applications, making them accessible to developers and engineers across the organization in a secure and governed manner. Adding a step to call a model and processing its output is as easy as dragging and dropping the various system tasks that Orkes Conductor provides into your new or existing workflows. You can then run them many or many million times and leverage the high levels of access controls and observability that come with using Orkes Conductor. 
+With Orkes Conductor, you can seamlessly integrate LLMs into your applications, making them accessible to developers and engineers across the organization in a secure and governed manner. Adding a step to call a model and processing its output is as easy as dragging and dropping various tasks that Orkes Conductor provides into your new or existing workflows. You can then run them many or million times and leverage the high levels of access controls and observability that come with using Orkes Conductor. 
 
 Furthermore, with Orkes Conductor, you can build, tune, and securely share the prompts that your organization is developing as part of a business logic you are leveraging LLMs for. This fundamental building block of an AI application is maintained with granular access controls so that you can choose which models they can be associated with and which teams can use them in their workflows.
 
@@ -43,7 +43,7 @@ For example, if you are using Open AI as the model provider, it has different mo
 
 ### Steps to Integrate AI / LLM Models with Orkes Conductor
 
-1. Navigate to **Integrations** from the left menu on your Orkes Conductor console.
+1. Navigate to **Integrations** from the left menu on your Orkes Conductor cluster.
 2. Click **+New integration** button from the top-right of your window.
 3. Under the **AI / LLM** section, choose from the required provider. 
 
@@ -54,7 +54,7 @@ For example, if you are using Open AI as the model provider, it has different mo
 6. Click **Save**.
 
 :::note
-Note: The integration parameters to be configured differ with these models. Refer to the [AI / LLM Integrations](/content/category/integrations/ai-llm) document for detailed information on each model. 
+The integration parameters to be configured differ with these models. Refer to the [AI / LLM Integrations](/content/category/integrations/ai-llm) document for detailed steps to integrate each model. 
 :::
 
 ### Different Use Cases of Various Integration Models
@@ -85,7 +85,7 @@ To provide explicit permission to Groups:
 1. Navigate to **Access Control > Groups** from the left menu on your Orkes Conductor cluster.
 2. Create a new group or choose an existing group.
 3. Under the **Permissions** section, click **+Add Permission**.
-4. Under the **Integrations** tab, select the required integrations with the required permissions. 
+4. Under the **Integrations** tab, select the required integrations with the necessary permissions. 
 
 <p align="center"><img src="/content/img/add-integration-permission.png" alt="Add Permissions for Integrations" width="70%" height="auto"></img></p>
 
@@ -109,7 +109,7 @@ After integrating models with your Orkes Conductor cluster, the next step is to 
 
 To create prompt templates,
 
-1. From your Orkes Conductor console, navigate to **Definitions > AI Prompts**.
+1. From your Orkes Conductor cluster, navigate to **Definitions > AI Prompts**.
 2. Click **+Add AI Prompt**.
 3. Create and save the prompt by providing the following details:
 
@@ -131,7 +131,7 @@ Now, let’s test the prompt right away by filling in the following parameters:
 | Select model to test | From the chosen LLM models, you can choose any model for testing the prompt.<br/><br/> This makes your AI prompt diverse to be used among any language models, provided they have been integrated with your cluster. |
 | Temperature | Set the required temperature based on your requirements. Temperature is a parameter to indicate the randomness of the model’s output.<br/><br/>Higher temperatures, such as 1.0, make the output more random and creative. It can be used for generating creative content like creating social media posts, drafting emails, etc.<br/><br/>Whereas a lower value makes the output more stable and focused. It can be used in cases like text classification, where you provide a text and classify it into appropriate categories. |
 | Stop words | In LLM, stop words may be filtered out or given less importance during the text generation process to ensure that the generated text is coherent and contextually relevant.  |
-| TopP | Another parameter to control the randomness of the model’s output. This parameter defines a probability threshold and then chooses tokens whose cumulative probability exceeds this threshold.<br/><br/>For example:<br/><br/>Imagine you want to complete the sentence: “She walked into the room and saw a ______.” Now, the top 4 words the LLM model would consider based on the highest probabilities would be:<ul><li>Cat - 35%</li><li>Dog - 25%</li><li>Book - 15%</li><li>Chair - 10%</li></ul>If you set the top-p parameter to 0.70, the AI will consider tokens until their cumulative probability reaches or exceeds 70%. Here's how it works:<ul><li>Adding "Cat" (35%) to the cumulative probability.</li><li>Adding "Dog" (25%) to the cumulative probability, totaling 60%.</li><li>Adding "Book" (15%) to the cumulative probability, now at 75%.</li></ul><br/><br/>At this point, the cumulative probability is 75%, exceeding the set top-p value of 70%. Therefore, the AI will randomly select one of the tokens from the list of "Cat," "Dog," and "Book" to complete the sentence because these tokens collectively account for approximately 75% of the likelihood.|
+| TopP | Another parameter to control the randomness of the model’s output. This parameter defines a probability threshold and then chooses tokens whose cumulative probability exceeds this threshold.<br/><br/>For example:<br/><br/>Imagine you want to complete the sentence: “She walked into the room and saw a ______.” Now, the top 4 words the LLM model would consider based on the highest probabilities would be:<ul><li>Cat - 35%</li><li>Dog - 25%</li><li>Book - 15%</li><li>Chair - 10%</li></ul>If you set the topP parameter to 0.70, the AI will consider tokens until their cumulative probability reaches or exceeds 70%. Here's how it works:<ul><li>Adding "Cat" (35%) to the cumulative probability.</li><li>Adding "Dog" (25%) to the cumulative probability, totaling 60%.</li><li>Adding "Book" (15%) to the cumulative probability, now at 75%.</li></ul>At this point, the cumulative probability is 75%, exceeding the set top-p value of 70%. Therefore, the AI will randomly select one of the tokens from the list of "Cat," "Dog," and "Book" to complete the sentence because these tokens collectively account for approximately 75% of the likelihood.|
 
 Now, you can test it right there by clicking the **Test** button. 
 
@@ -143,7 +143,7 @@ Now, the AI prompts are ready to be used in workflows. Next, you must provide ac
 
 #### RBAC - Governance on who can use Prompts
 
-Your Orkes Conductor console will have different applications/groups to which specific permissions can be granted to various resources. One of the resources is the prompt template, which allows you to specify which teams or applications can use this prompt in their workflows. It is also important to keep in mind that a user or an application needs to have the required access to both the prompt and one of the associated models with the prompt to use it inside a workflow.
+Your Orkes Conductor cluster will have different applications/groups to which specific permissions can be granted to various resources. One of the resources is the prompt template, which allows you to specify which teams or applications can use this prompt in their workflows. It is also important to keep in mind that a user or an application needs to have the required access to both the prompt and one of the associated models with the prompt to use it inside a workflow.
 
 To provide permissions to Groups:
 
@@ -213,11 +213,11 @@ Here, the developers only need to add the prompts to their workflows and build t
 
 Let’s now see an example where you need to translate a text into different languages. 
 
-Let’s assume that **Azure Open AI** with **text-davinci-003** model is to be integrated with your Orkes Conductor console.
+Let’s assume that **Azure Open AI** with **text-davinci-003** model is to be integrated with your Orkes Conductor cluster.
 
 #### Step 1 - Integrate Azure OpenAI Provider
 
-1. Navigate to **Integrations** from the left menu on your Orkes Conductor console.
+1. Navigate to **Integrations** from the left menu on your Orkes Conductor cluster.
 2. Click **+New integration** button from the top-right of your window.
 3. Under the **AI / LLM** section, choose **Azure + OpenAI**. 
 4. Click **+Add** and provide a name, description, endpoint, and the Azure OpenAI API key.
@@ -227,7 +227,7 @@ Let’s assume that **Azure Open AI** with **text-davinci-003** model is to be i
 5. Click **Save**.
 
 :::note
-Check out the [Azure Open AI integration](/content/integrations/ai-llm/azure-open-ai) doc for more information.
+Check out the [Azure Open AI integration](/content/integrations/ai-llm/azure-open-ai) doc for more details.
 :::
 
 #### Step 2 - Adding Azure OpenAI models to the Integration
@@ -264,7 +264,7 @@ Now, let's add the **text-davinci-003** model to the integration.
 
 #### Step 4 - Create Workflow Definitions
 
-1. Navigate to **Definitions > Workflow** from the left menu on your Orkes Conductor console. 
+1. Navigate to **Definitions > Workflow** from the left menu on your Orkes Conductor cluster. 
 2. Click **Define Workflow** from the top-right corner. 
 3. Click **Start** on the diagram and add the **LLM Text Complete** task.
 4. Choose the **LLM provider** as __azure_openai__ and the **model** as __text-davinci-003__.
