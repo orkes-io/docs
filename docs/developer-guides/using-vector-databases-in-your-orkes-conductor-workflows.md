@@ -36,7 +36,7 @@ For example, if you are using Pinecone as the vector database, then you can conf
 
 The first step is integrating the required vector databases with your Orkes Conductor cluster. 
 
-1. Navigate to **Integrations** from the left menu on your Orkes Conductor console.
+1. Navigate to **Integrations** from the left menu on your Orkes Conductor cluster.
 2. Click **+New integration** button from the top-right of your window.
 3. Under the **Vector Databases** section, choose from the required provider. 
 
@@ -47,7 +47,7 @@ The first step is integrating the required vector databases with your Orkes Cond
 6. Click **Save**.
 
 :::note
-Currently, we support integration with popular models Pinecone, Weaviate, Postgres Vector Database, and Mongo Vector Database. The integration parameters to be configured differ with these models. Refer to the [Vector DB Integrations](/content/category/integrations/vector-databases) document for detailed information on each model. 
+Currently, we support integration with popular models Pinecone, Weaviate, Postgres Vector Database, and Mongo Vector Database. The integration parameters to be configured differ with these models. Refer to the [Vector DB Integrations](/content/category/integrations/vector-databases) document for detailed steps to integrate each model.
 :::
 
 ## RBAC - Governance on who can use Integrations
@@ -63,7 +63,7 @@ To provide explicit permission to Groups:
 1. Navigate to **Access Control > Groups** from the left menu on your Orkes Conductor cluster.
 2. Create a new group or choose an existing group.
 3. Under the **Permissions** section, click **+Add Permission**.
-4. Under the **Integrations** tab, select the required integrations with the required permissions. 
+4. Under the **Integrations** tab, select the required integrations with the necessary permissions. 
 
 <p align="center"><img src="/content/img/add-integration-permission-for-vector-db.png" alt="Add Permissions for Integrations with Vector Database" width="60%" height="auto"></img></p>
 
