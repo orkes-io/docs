@@ -1,4 +1,4 @@
-# Routing Tasks (Task to Domain)
+# Routing Tasks (Task-to-domain)
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
@@ -10,7 +10,7 @@ workers connected to the server, as shown in this diagram:
 <p align="center"><img src="/content/img/task-routing.png" alt="Task to domain example workflow" width="90%"
                        height="auto"/></p>
 
-Conductor supports a feature where the same task can be routed to a different set of workers based on a concept called as **Task to Domain**. This value is supplied to the workflow when triggered, and if present, it routes the tasks in a different way than usual. This is illustrated as shown below.
+Conductor supports a feature where the same task can be routed to a different set of workers based on a concept called as **Task-to-domain**. This value is supplied to the workflow when triggered, and if present, it routes the tasks in a different way than usual. This is illustrated as shown below.
 
 <p align="center"><img src="/content/img/task-routing-domains.png" alt="Task to domain example workflow" width="90%"
                        height="auto"/></p>
@@ -20,7 +20,7 @@ Conductor supports a feature where the same task can be routed to a different se
 Here - task type __send_email__ has two additional sets of worker instances listening to specific domain-based tasks. Domains are nothing but a label that connects the task work to the worker instance. For example, all the tasks with domain `dedicated_for_app_x` are sent to the workers configured with domain `dedicated_for_app_x`.
 
 :::tip
-The Task to Domain is the concept of limiting the task execution only to a specific worker via domain mapping. The domain name can be an arbitrary string.
+The Task-to-domain is the concept of limiting the task execution only to a specific worker via domain mapping. The domain name can be an arbitrary string.
 :::
 
 This feature can be really useful in the following scenarios:
@@ -33,7 +33,7 @@ This feature can be really useful in the following scenarios:
 All of these cases can also be done using a unique task name, and the domain is just an alternative way. Instead of creating new tasks, we can use the same task name and still have custom routing based on the domain.
 
 
-## Using Task to Domain
+## Using Task-to-domain
 
 To successfully route a task by domain:
 
@@ -229,7 +229,7 @@ new TaskManager(
 
 ### Specifying Domain while Invoking Workflow
 
-When we start/run a workflow, we can specify which tasks must run on which domains. To run the workflow with tasks routed to the domain-based worker, we can specify the following task to domain mapping:
+When we start/run a workflow, we can specify which tasks must run on which domains. To run the workflow with tasks routed to the domain-based worker, we can specify the following task-to-domain mapping:
 
 ```json
 { 
@@ -237,11 +237,11 @@ When we start/run a workflow, we can specify which tasks must run on which domai
 }
 ```
 
-While running the workflow, you can provide the task to mapping as shown in the following image:
+While running the workflow, you can provide the task-to-domain mapping as shown in the following image:
 
 <p align="center"><img src="/content/img/task-to-domain.png" alt="Task To Domain mapping while invoking workflows" width="100%" height="auto"></img></p>
 
-## Fallback Task to Domain
+## Fallback Task-to-domain
 
 Another feature of domains is that you can specify a fallback domain. The concept is simple as follows:
 
