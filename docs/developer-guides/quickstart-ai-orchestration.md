@@ -48,7 +48,7 @@ curl -s https://raw.githubusercontent.com/orkes-io/orkes-templates/main/document
 
 <p align="center"><img src="/content/img/quickstart-empyt-model.png" alt="Empty model while adding integrations" width="50%" height="auto"></img></p>
 
-7. Select **gpt-3.5-turbo** for the model name and provide a description. Note: in this example we are using **gpt-3.5-turbo**, but you can choose to use other models from Open AI.
+7. Enter **gpt-3.5-turbo** as the model name and provide a description. Note: in this example we are using **gpt-3.5-turbo**, but you can choose to use other models from Open AI.
 
 <p align="center"><img src="/content/img/quickstart-add-integration-model.png" alt="Adding models to integration" width="80%" height="auto"></img></p>
 
@@ -121,10 +121,10 @@ You are now running this workflow using your user identity. The next section wil
 4. Click **Create Access Key** to create the *KEY* and *SECRET*. A dialog box opens with the newly generated Key and Secret.
 
 :::info
-Important: Copy and store the Key and Secret in a safe location, as it is never displayed again.
+Important: Copy and store the secret in a safe location, as it is never displayed again.
 :::
 
-5. In the **Workflow and tasks permissions** section, click on **Add permission**:
+5. In the **Permissionss** section, click on **Add permission**:
     - Select the **Workflow** tab and search for the name of the workflow you had created earlier. Select the workflow name and turn on the **READ** and **Execute** button.
     - Select the **Integrations** tab and search for the Open AI model integrations you had created earlier. Select the model integration name and turn on the **READ** and **Execute** button.
     - Select the **Prompts** tab and search for the AI Prompt Template you had created earlier. Select the Prompt name and turn on the **READ** and **Execute** button.
