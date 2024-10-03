@@ -1,13 +1,11 @@
 # Sequential HTTP Tasks
 
-## Introduction
-
 One of the primary reasons for microservice/workflow architectures is that services must run in a specific order - as downstream tasks require input from upstream tasks. We'll build a simple workflow with 2 HTTP tasks in this code lab to demonstrate this ability.
 
 This code lab is based on a [Stack Overflow question](https://stackoverflow.com/questions/71370237/java-design-pattern-orchestration-workflow/71385718#71385718) on the same topic.
 
 
-### Why HTTP Tasks?
+## Why HTTP Tasks?
 
 [HTTP Tasks](https://orkes.io/content/docs/reference-docs/system-tasks/http-task) are run locally on the Conductor server and do not require a separate worker to be run for the workflow to complete.  By using System tasks, this workflow can be completely self contained and run on any instance of Conductor with no coding at all.
 
@@ -25,7 +23,7 @@ The second task can only run with input provided by the first task.
 
 ## Codelab Requirements
 
-You'll need a version of Conductor.  The images will be based on the [Conductor Playground](https://play.orkes.io), but a [local Conductor instance](/content/docs/getting-started/install/running-locally-docker) works as well.
+You'll need a version of Conductor.  The images will be based on the [Conductor Playground](https://play.orkes.io), but a [local Conductor instance](http://localhost:3000/content/get-orkes-conductor) works as well.
 
 ## Workflow input
 
@@ -149,7 +147,7 @@ The weather API is a very slow API.  If you look at the ```http_request```, we h
 
 ### HTTP_Task retries
 
-The HTTP request system task does not have retry parameters built in by default, but we can extend the ```get_weather``` task to include retry parameters.  We do this by creating another task (with the same name), and adding the desired parameters:
+The HTTP request system task does not have retry parameters built in by default, but we can extend the ```get_weather``` task to include retry parameters.  We do this by creating another task definition (with the same name), and adding the desired parameters:
 
 ```json
 {
