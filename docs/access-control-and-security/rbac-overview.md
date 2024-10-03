@@ -7,7 +7,8 @@ import TabItem from '@theme/TabItem';
 
 # Access Control and Security
 
-Orkes Conductor provides a robust role-based access control (RBAC) mechanism for individual users on Orkes Platform, as well as for applications that use Conductor APIs. Conductor’s RBAC ensures fine-grained access to the following metadata resources:
+Orkes Conductor provides a robust role-based access control (RBAC) mechanism for individual users and applications that use Conductor APIs. Conductor’s RBAC ensures fine-grained access to the following metadata resources:
+
 * Workflows
 * Tasks
 * Secrets
@@ -25,7 +26,7 @@ Get started with using Orkes’ RBAC suite by understanding what are users, grou
 
 ## Users
 
-A user represents a human user that interacts with Conductor via Orkes Platform. Users are authenticated using SSO providers or email/password. Each user has one or more roles assigned to them.
+A user represents a human user that interacts with Conductor. Users are authenticated using SSO providers or email/password. Each user has one or more roles assigned to them.
 
 
 ## Groups
@@ -96,12 +97,12 @@ Besides the role-based permissions, you can add granular permissions to **groups
 
 Unlike other permission targets, **tags** and **domains** provide bulk access to multiple resources. Tags can be used to grant resources across almost every resource type. When you grant access for a tag “x”, all resources with the tag “x” will be made available to the group or application.
 
-Domain is used to grant access to all tasks under a particular domain. This is useful for mass-granting a worker application to execute all tasks under a specific domain, instead of having to add individual tasks and specifying its domain. Refer to [Routing Tasks](docs/developer-guides/task-to-domain.md) to learn more about domains.
+Domain is used to grant access to all tasks under a particular domain. This is useful for mass-granting a worker application to execute all tasks under a specific domain, instead of having to add individual tasks and specifying its domain. Refer to [Routing Tasks](docs/developer-guides/task-to-domain.md) to learn more about domain mappings.
 
 
 ### Permission stacking
 
-These granular permissions provide additional access on top of the user’s or application’s role-based permissions. For example, even though default Users can only access their own resources, they can also access other resources shared at the group level.
+These granular permissions provide additional access on top of the user’s or application’s role-based permissions. For example, even though default users can only access their own resources, they can also access other resources shared at the group level.
 
 
 ## Guides for access control
