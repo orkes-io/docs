@@ -439,6 +439,4 @@ The workflow execution begins, and upon any workflow state change, the details a
 
 ## Verifying Changes in Eventing Systems
 
-The final step is to verify that the workflow status changes are reflected in the configured eventing systems.
-
-The settings for each of the eventing systems vary, so ensure to verify under the configured topic/queue name.
+The final step is to verify that the workflow status changes are reflected in the configured eventing systems. The settings for each of the eventing systems vary, so ensure to verify under the configured topic/queue name.
