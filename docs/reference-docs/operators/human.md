@@ -110,7 +110,7 @@ For a full guide on how to use human-involved tasks, refer to the [Human Task Or
     1. In Assignment policy, select **(+) New assignment**.
     2. In Assign, select the **User type** for the assignee(s) and enter the corresponding user or group ID.
         * **External User** or **Group**—Select this if the assignees are managed and verified in an external system, and access an external UI to complete the task.
-        * **Conductor User** or **Group**—Select this if the assignees are Conductor users, and access Orkes Platform to complete the task.
+        * **Conductor User** or **Group**—Select this if the assignees are Conductor users, and uses Orkes Conductor to complete the task.
     3. Enter the **SLA minutes** to specify the assignment duration before it times out. Use 0 minutes to set a non-expiring assignment.
     4. In **After assignments**, select the strategy for when the assignment times out.
     5. If needed, add another assignment to create a multi-level assignment chain.  
@@ -124,7 +124,7 @@ For a full guide on how to use human-involved tasks, refer to the [Human Task Or
     * If the field is to be filled up by the assignee, you can leave the parameter value empty or pass in a default value that can be modified before submission.
     * If the field is read-only and will be passed from somewhere in the workflow, enter a parameter value. The value can be passed as a variable.
 
-<p><img src="/content/img/Task-References/human_task_reference.png" alt="Screenshot of Human Task in Orkes Platform"/></p>
+<p><img src="/content/img/Task-References/human_task_reference.png" alt="Screenshot of Human Task in Orkes Conductor"/></p>
 
 
 ## Examples
