@@ -9,7 +9,7 @@ Create and manage users and groups on your Conductor cluster, so as to ensure se
 
 ## Users
 
-A user represents a human user that interacts with Conductor via Orkes Platform. Users are authenticated using SSO providers or email/password. Each user has one or more roles assigned to them.
+A user represents a human user that interacts with Conductor. Users are authenticated using SSO providers or email/password. Each user has one or more roles assigned to them.
 
 
 ### Adding users​
@@ -19,13 +19,13 @@ Users must be added to your Orkes Conductor cluster before they can sign up or l
 **To add a user to your cluster:**
 1. In the left navigation menu, go to **Access Control** > **Users**.
 2. Select **(+) Create User**.
-3. Enter the following information:
+3. Enter the following details:
 
 | Field | Description                                                                                                                                                                                                                                                     |
 | ------ |-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | User Id | The user’s email address. This cannot be changed later.                |
 | Name | The username.                                                             |
-| Roles | The user’s role(s), which governs the basic access level for the user. The available roles are: <ul><li>**Admin**—Superuser. Full access to the system and resources. Can manage users and groups.</li> <li>**User**—Can only access resources that they created.</li> <li>**Metadata Manager**—Can read, update, and delete all metadata in the system.</li> <li>**Workflow Manager**—Can view and execute all workflows in the system.</li> <li>**Read Only User**—Can access all metadata and workflows in the system as read-only. Cannot modify or execute workflows.</li></ul>                                                                                |
+| Roles | The user’s role(s), which governs the basic access level for the user. The available roles are: <ul><li>**Admin**—Superuser. Full access to the system and resources. Can manage users and groups.</li> <li>**User**—Can only access resources created by them.</li> <li>**Metadata Manager**—Can read, update, and delete all metadata in the system.</li> <li>**Workflow Manager**—Can view and execute all workflows in the system.</li> <li>**Read Only User**—Can access all metadata and workflows in the system as read-only. Cannot modify or execute workflows.</li></ul>                                                                                |
 | Groups | The groups that the user should be part of. This provides additional group-level permissions to the user.                                               |
 
 4. Select **Save**.
@@ -75,7 +75,7 @@ Read Only Users cannot be added to any groups.
 1. Create a group.
     1. In the left navigation menu, go to **Access Control** > **Groups**.
     2. Select **(+) Create group**.
-    3. Enter the following information:
+    3. Enter the following details:
 
 | Field | Description                                                                                                                                                                                                                                                     |
 | ------ |-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|

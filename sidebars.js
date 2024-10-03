@@ -188,7 +188,7 @@ const sidebars = {
                     link: {
                         type: 'generated-index',
                         title: 'Eventing',
-                        description: 'Learn how to connect and use Conductor with eventing systems like Kafka or AWS SQS.',
+                        description: 'Learn how to connect and use Conductor with external eventing systems.',
                         slug: '/eventing'
                     },
                     className: 'leftMenuHeader',

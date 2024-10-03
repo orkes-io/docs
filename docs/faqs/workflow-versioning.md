@@ -22,7 +22,7 @@ Workflow versioning is vital because it allows you to change a workflow without 
 
 To create a new version of a workflow, you can make changes to your existing workflow and then save those changes by updating the version number.
 
-## How do I view previous versions of a workflow in Conductor?
+## How do I view previous versions of a workflow?
 
 You can view previous versions of a workflow from the Workflow Definitions page. 
 

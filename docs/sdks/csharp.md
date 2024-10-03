@@ -1,7 +1,7 @@
 
-# Orkes Conductor CSharp SDK
+# Orkes Conductor C# SDK
 
-Orkes Conductor CSharp SDK is maintained here: https://github.com/conductor-sdk/conductor-csharp
+Orkes Conductor C# SDK is maintained here: https://github.com/conductor-sdk/conductor-csharp
 
 ## Setup Conductor C# Package
 
@@ -52,5 +52,5 @@ Remember to protect your app secrets like any other secrets or passwords.
 
 - Video Guide on [Getting Access Key and Secret](https://www.youtube.com/watch?v=f1b5vZRKn2Q)
 - [Access Control & Security](/content/category/access-control-and-security)
-- [CSharp SDK Readme](https://github.com/conductor-sdk/conductor-csharp#readme)
+- [C# SDK Readme](https://github.com/conductor-sdk/conductor-csharp#readme)
 

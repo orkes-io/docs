@@ -70,7 +70,7 @@ In addition to the execution ID, the sub-workflow’s workflow output will also 
   Once selected, the sub-workflow’s input parameters will automatically appear if there are any pre-defined ones.
 3. (Optional) Enter the **Idempotency key** and select the **Idempotency strategy**.
 4. (Optional) Add any additional input parameters for the sub-workflow.
-5. (Optional) Add task to domain mapping for the sub-workflow tasks.
+5. (Optional) Add task-to-domain mapping for the sub-workflow tasks.
 
 To view the sub-workflow tasks inside the parent workflow, you can check **Expand** to display them in the visual diagram editor.
 

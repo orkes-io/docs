@@ -2,7 +2,7 @@
 
 Authentication is required for programmatic access to Conductor SDKs and APIs. Every connection to Orkes Conductor requires an authorization header with a valid JSON Web Token (JWT).
 
-The JWTs are created using access keys. In Orkes Conductor, the access keys are application-based, so each project can use a different access key, which can be generated and retrieved from Orkes Platform.
+The JWTs are created using access keys. In Orkes Conductor, the access keys are application-based, so each project can use a different access key, which can be generated and retrieved from Conductor.
 
 When using the Conductor SDKs, the authentication is handled automatically. Alternatively, you can also create a JWT using an API call.
 
@@ -13,7 +13,7 @@ Authentication does not grant full access to all the resources in your Conductor
 
 ## Retrieving access keys​​
 
-Access keys are required to create a valid JWT. Before retrieving your access key, you must first create an application in Orkes Platform.
+Access keys are required to create a valid JWT. Before retrieving your access key, you must first create an application in Orkes Conductor.
 
 <details><summary>To create an application</summary>
 
@@ -29,10 +29,9 @@ Learn more about applications in [Managing Applications](docs/access-control-and
 
 
 **To retrieve the access key:**
-1. Go to your Conductor cluster on Orkes Platform.
-2. In the left navigation menu, go to **Access Control** > **Applications**.
-3. Select the application name or the **Edit** icon located next to the application name.
-4. In the Access Keys section, select **(+) Create access key** to generate a unique Key Id and Key Secret.
+1. In the left navigation menu, go to **Access Control** > **Applications**.
+2. Select the application name or the **Edit** icon located next to the application name.
+3. In the Access Keys section, select **(+) Create access key** to generate a unique Key Id and Key Secret.
  <br/>The Key Secret is shown only once, so make sure to copy and store it securely.
 
 
@@ -111,7 +110,7 @@ export CONDUCTOR_AUTH_SECRET=your_key_secret
 
 ## Quick access for prototyping​​
 
-For quick testing on Orkes Conductor without creating an application, you can obtain a user-based JWT token from Orkes Platform. This token remains valid for your current session and has the same access as your user account.
+For quick testing on Orkes Conductor without creating an application, you can obtain a user-based JWT token. This token remains valid for your current session and has the same access as your user account.
 
 :::warning
 This token should never be used in a production setting.

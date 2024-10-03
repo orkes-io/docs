@@ -6,7 +6,7 @@ import CodeBlock from '@theme/CodeBlock';
 # CI/CD Best Practices
 Conductor workflows are the core part of your application and should be versioned, controlled, and released similarly to the code.
 
-### Conductor Workflows
+## Conductor Workflows
 Workflows have two main components:
 1. Workflow definition that is maintained as a file (JSON or code)
 2. Worker implementation used by the workflows
@@ -16,12 +16,12 @@ Workflow definitions should be maintained as an independent unit that can be uni
 
 For details on how to unit test workflows, see [Unit and Regression Testing Workflows](/content/developer-guides/unit-and-regression-tests).
 
-#### Steps to publish your workflows as part of the ci/cd
+### Steps to publish your workflows as part of CI/CD
 :::note Notes
 See [Generating Tokens](/access-control-and-security/applications#generating-token) ([Video](https://www.youtube.com/watch?v=f1b5vZRKn2Q)) on how to generate an access token for the API requests below.
 :::
 
-#### Downloading workflows from Conductor server to check into your version control
+#### Downloading workflows from Conductor cluster to check into your version control
 1. Download the JSON from the Conductor UI (Use the download button on the definition page).
 2. (Alternatively) Use the API to download JSON for the workflow.
     ```shell
@@ -32,7 +32,7 @@ See [Generating Tokens](/access-control-and-security/applications#generating-tok
     # Retrieve all the workflows
     GET -H "X-Authorization:<TOKEN>" /api/metadata/workflow/
     ```
-#### Publish workflows to the Conductor server from your deployment scripts
+#### Publish workflows to Conductor cluster from your deployment scripts
 Inject `ORKES_ACCESS_KEY`, `ORKES_ACCESS_SECRET` and `ORKES_CONDUCTOR_SERVER_URL` variables with the appropriate values in your deployment pipeline.
 
 The following script cycles through all the workflow definitions in the current folder and uploads it to the Conductor server.

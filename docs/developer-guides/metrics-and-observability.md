@@ -11,7 +11,7 @@ Orkes Conductor uses the popular platform Prometheus for recording a rich set of
 
 In this document, we’ve included a sample dashboard set using Prometheus & Grafana.
 
-1. To access your dashboard, navigate to **Metrics** from your Conductor console. If you cannot see this option on your Conductor console, [please reach out to our team](https://app.slack.com/client/T02KG20GJ1Z/C02KJ820XPW). 
+1. To access your dashboard, navigate to **Metrics** from your Conductor cluster. If you cannot see this option on your Conductor cluster, [please reach out to our team](https://app.slack.com/client/T02KG20GJ1Z/C02KJ820XPW). 
 
 <p align="center"><img src="/content/img/accessing-dashboard.png" alt="Accessing dashboard from Conductor Console" width="100%" height="auto"></img></p>
 
