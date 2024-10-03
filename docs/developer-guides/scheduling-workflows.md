@@ -27,7 +27,7 @@ For creating a scheduler,
 2. Click the **+ Define Schedule** button at the top right corner.
 3. Configure the scheduler by providing the following parameters:
 
-| Attribute | Description |
+| Parameter | Description |
 | ------------------------------------- | ------------------------------------ | 
 | Name | A unique name for the scheduler. Ensure the scheduler name contains no spaces or special characters.<br/><br/>**Note:** Renaming a scheduler creates a new scheduler. |
 | Description | A description for the scheduler. |
@@ -40,7 +40,7 @@ For creating a scheduler,
 | Idempotency key | A user-generated key to avoid conflicts with other workflows. Idempotency data is retained throughout the life of the workflow executions. |
 | Schedule start | Choose the date and local time for the scheduler to start running. It should be in the format **yyyy-mm-dd hh:mm (a/p)m**. This field is optional. |
 | Schedule end | Choose the date and local time for the scheduler to stop running. It should be in the format **yyyy-mm-dd hh:mm (a/p)m**. This field is optional. |
-| Task to domain mapping | Use this to limit the workflow execution to specific domains. This field is optional. |
+| Task-to-domain mapping | Use this to limit the workflow execution to specific domains. This field is optional. |
 | Start schedule paused? | If selected, the schedule will be paused (so it will not run) upon creation. It is helpful when you don’t want to run the workflow scheduler, such as during maintenance. To resume the scheduled executions, this needs to be unpaused. |
 
 3. Click **Save**.
