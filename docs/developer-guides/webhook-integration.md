@@ -38,7 +38,7 @@ Once the workflow is created, the next step is to create a webhook.
 
 1. Go to **Definitions > Webhooks** from the left menu on your Orkes Conductor cluster.
 2. Click **+ New Webhook**.
-3. Provide the following information:
+3. Provide the following details:
 
 <p align="center"><img src="/content/img/creating-webhook-in-orkes-conductor.png" alt="Creating Webhook in Orkes Conductor" width="100%" height="auto"></img></p>
 
@@ -58,7 +58,7 @@ Once the workflow is created, the next step is to create a webhook.
 
 <p align="center"><img src="/content/img/Webhook-with-a-verified-URL-in-Conductor.png" alt="Webhook with a verified UR" width="100%" height="auto"></img></p>
 
-This is the JSON schema for a webhook.
+This is the task confoguration for a Wait for Webhook task.
 
 ```json
 {
