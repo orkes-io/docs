@@ -23,7 +23,7 @@ Java SDK provides the following method that allows testing a workflow definition
 public abstract Workflow testWorkflow(WorkflowTestRequest testRequest);
 ```
 
-The actual workflow is executed on a real Conductor server, ensuring you are testing the behavior that will match the ACTUAL execution of the server.
+The actual workflow is executed on a real Conductor server, ensuring you are testing the behavior that will match the actual execution of the server.
 
 ## Setting up Conductor server for testing
 
