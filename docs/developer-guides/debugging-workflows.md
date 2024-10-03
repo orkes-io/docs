@@ -9,7 +9,7 @@ Orkes Conductor provides a visual representation of workflows that aids in quick
 
 ## Searching and Viewing Workflow Executions​
 
-All recent workflow executions are listed on the **Executions > Workflow** page. By default, users can only view executions of permitted workflows.
+All workflow executions are listed on the **Executions > Workflow** page. By default, users can only view executions of permitted workflows.
 
 <p align="center"><img src="/content/img/workflow-executions.png" alt="Workflow Executions page" width="90%"
                        height="auto"/></p>
@@ -50,7 +50,7 @@ The page consists of the following sub-tabs:
 * **Workflow Input/Output** - Lists inputs and outputs of the workflow.
 * **JSON** - Complete JSON representation of the workflow.
 * **Variables** - Displays variables passed using the set variable task.
-* **Task To Domain** - Mapping of tasks to domains used in the workflow execution.
+* **Task-to-Domain** - Mapping of tasks to domains used in the workflow execution.
 
 Each of these tabs gives the details that can help debug workflow issues.
 
