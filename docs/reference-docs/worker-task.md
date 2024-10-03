@@ -42,7 +42,7 @@ Before adding a Worker task to a workflow, you should complete the following:
 * Create a worker to run a custom task.
 * Define the task in Conductor using Orkes Platform or [API](https://orkes.io/content/reference-docs/api/metadata/creating-task-definitions).
 
-For a full guide on how to use workers, refer to Using Workers.
+For a full guide on how to use workers, refer to [Using Workers](docs/developer-guides/using-workers.md).
 
 **To add a Worker task:**
 1. In your workflow, select the **(+)** icon to add a new task. There are two ways to add a worker task:
