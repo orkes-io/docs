@@ -177,6 +177,25 @@ const sidebars = {
                 },
                 {
                     type: 'category',
+                    label: 'Eventing',
+                    link: {
+                        type: 'generated-index',
+                        title: 'Eventing',
+                        description: 'Learn how to connect and use Conductor with external eventing systems.',
+                        slug: '/eventing'
+                    },
+                    className: 'leftMenuHeader',
+                    items: [
+                        'developer-guides/event-handler',
+                        {
+                            type: 'doc',
+                            id: 'developer-guides/enabling-cdc-on-conductor-workflows',
+                            label: "Enabling CDC"
+                        }
+                    ]
+                },
+                {
+                    type: 'category',
                     label: 'Access Control and Security',
                     link: {
                         type: 'doc',
