@@ -1,9 +1,9 @@
 
-# Orkes Conductor Javascript SDK
+# Orkes Conductor JavaScript SDK
 
-Orkes Conductor Javascript SDK is maintained here: https://github.com/conductor-sdk/conductor-javascript
+Orkes Conductor JavaScript SDK is maintained here: https://github.com/conductor-sdk/conductor-javascript
 
-## Get Conductor Javascript SDK
+## Get Conductor JavaScript SDK
 
 ### Yarn
 

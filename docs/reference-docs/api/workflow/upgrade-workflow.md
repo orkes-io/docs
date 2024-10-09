@@ -47,14 +47,14 @@ Coming Soon
 ```
 
 </TabItem>
-<TabItem value="CSharp" label="CSharp">
+<TabItem value="CSharp" label="C#">
 
 ```csharp
 Coming Soon
 ```
 
 </TabItem>
-<TabItem value="Javascript" label="Javascript">
+<TabItem value="JavaScript" label="JavaScript">
 
 ```javascript
 Coming Soon

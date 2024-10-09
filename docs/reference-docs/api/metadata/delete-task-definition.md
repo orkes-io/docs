@@ -43,14 +43,14 @@ MetadataResourceApi.unregister_task_def(tasktype, **kwargs)
 ```
 
 </TabItem>
-<TabItem value="CSharp" label="CSharp">
+<TabItem value="CSharp" label="C#">
 
 ```csharp
 void MetadataResourceApi.UnregisterTaskDef(string tasktype)
 ```
 
 </TabItem>
-<TabItem value="Javascript" label="Javascript">
+<TabItem value="JavaScript" label="JavaScript">
 
 ```javascript
 MetadataResourceService.unregisterTaskDef(tasktype: string): CancelablePromise<any>

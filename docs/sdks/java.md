@@ -393,15 +393,15 @@ workflow.add(httptask);//workflow is an object of ConductorWorkflow<WorkflowInpu
 }
 ```
 
-#### Javascript Executor Task
+#### JavaScript Executor Task
 
-Execute ECMA-compliant Javascript code. It is useful when writing a script for data mapping, calculations, etc.
+Execute ECMA-compliant JavaScript code. It is useful when writing a script for data mapping, calculations, etc.
 
 **Using Code to Create Inline Task**
 
 ```java
-import com.netflix.conductor.sdk.workflow.def.tasks.Javascript;
-Javascript jstask = new Javascript("hello_script",
+import com.netflix.conductor.sdk.workflow.def.tasks.JavaScript;
+JavaScript jstask = new JavaScript("hello_script",
                   """function greetings(name) {
                      return {
                         "text": "hello " + name

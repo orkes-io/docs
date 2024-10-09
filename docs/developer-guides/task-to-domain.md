@@ -144,7 +144,7 @@ def startTaskRunnerWorkers():
 TODO: Coming soon
 
 </TabItem>
-<TabItem value="CSharp" label="CSharp">
+<TabItem value="CSharp" label="C#">
 
 TODO: Coming soon
 
@@ -157,7 +157,7 @@ TODO: Coming soon
 ```
 
 </TabItem>
-<TabItem value="Javascript" label="Javascript">
+<TabItem value="JavaScript" label="JavaScript">
 
 ```javascript
 // You can specify on the worker

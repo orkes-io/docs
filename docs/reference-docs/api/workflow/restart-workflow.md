@@ -44,14 +44,14 @@ WorkflowResourceApi.restart1(self, workflow_id, **kwargs)
 ```
 
 </TabItem>
-<TabItem value="CSharp" label="CSharp">
+<TabItem value="CSharp" label="C#">
 
 ```csharp
 void WorkflowResourceApi.Restart(string workflowId, bool? useLatestDefinitions = null)
 ```
 
 </TabItem>
-<TabItem value="Javascript" label="Javascript">
+<TabItem value="JavaScript" label="JavaScript">
 
 ```javascript
 WorkflowExecutor.restart(

@@ -39,14 +39,14 @@ MetadataResourceApi.get_all_workflows(**kwargs)
 ```
 
 </TabItem>
-<TabItem value="CSharp" label="CSharp">
+<TabItem value="CSharp" label="C#">
 
 ```csharp
 List<WorkflowDef> MetadataResourceApi.GetAllWorkflows(string access = null, bool? metadata = null, string tagKey = null, string tagValue = null, bool? _short = null)
 ```
 
 </TabItem>
-<TabItem value="Javascript" label="Javascript">
+<TabItem value="JavaScript" label="JavaScript">
 
 ```javascript
 MatadataResourceService.getAllWorkflows(

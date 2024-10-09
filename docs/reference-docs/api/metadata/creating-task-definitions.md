@@ -60,14 +60,14 @@ MetadataResourceApi.register_task_def(body, **kwargs)
 ```
 
 </TabItem>
-<TabItem value="CSharp" label="CSharp">
+<TabItem value="CSharp" label="C#">
 
 ```csharp
 Object MetadataResourceApi.RegisterTaskDef(List<TaskDef> body)
 ```
 
 </TabItem>
-<TabItem value="Javascript" label="Javascript">
+<TabItem value="JavaScript" label="JavaScript">
 
 ```javascript
 MetadataResourceService.registerTaskDef(requestBody: Array<TaskDef>): CancelablePromise<any>

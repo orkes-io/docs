@@ -47,14 +47,14 @@ WorkflowResourceApi.retry1(self, workflow_id, **kwargs)
 ```
 
 </TabItem>
-<TabItem value="CSharp" label="CSharp">
+<TabItem value="CSharp" label="C#">
 
 ```csharp
 void WorkflowResourceApi.Retry(string workflowId, bool? resumeSubworkflowTasks = null)
 ```
 
 </TabItem>
-<TabItem value="Javascript" label="Javascript">
+<TabItem value="JavaScript" label="JavaScript">
 
 ```javascript
 WorkflowExecutor.retry(

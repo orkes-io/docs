@@ -29,10 +29,10 @@ Coming Soon
 <TabItem value="Python" label="Python">
 Coming Soon
 </TabItem>
-<TabItem value="CSharp" label="CSharp">
+<TabItem value="CSharp" label="C#">
 Coming Soon
 </TabItem>
-<TabItem value="Javascript" label="Javascript">
+<TabItem value="JavaScript" label="JavaScript">
 Coming Soon
 </TabItem>
 <TabItem value="Clojure" label="Clojure">

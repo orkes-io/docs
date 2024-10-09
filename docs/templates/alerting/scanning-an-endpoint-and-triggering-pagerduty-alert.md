@@ -163,7 +163,7 @@ We are using a JavaScript task called [INLINE](https://orkes.io/content/referenc
 the start and end times for making the API query to Conductor. We can have any custom logic here to customize our alerting requirements.
 :::
 
-A switch task with Javascript condition checks if the situation warrants an alert, and if yes, makes a webhook call to
+A switch task with JavaScript condition checks if the situation warrants an alert, and if yes, makes a webhook call to
 alert our users using Pagerduty. Voilà! We have our alert configured!
 
 ## Configuring and Running Alerts

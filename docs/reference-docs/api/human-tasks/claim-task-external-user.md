@@ -61,14 +61,14 @@ TODO: Coming soon to the SDKs
 ```
 
 </TabItem>
-<TabItem value="CSharp" label="CSharp">
+<TabItem value="CSharp" label="C#">
 
 ```csharp
 TODO: Coming soon to the SDKs
 ```
 
 </TabItem>
-<TabItem value="Javascript" label="Javascript">
+<TabItem value="JavaScript" label="JavaScript">
 
 ```javascript
 HumanExecutor.claimTaskAsExternalUser(taskId: string, assignee: string)

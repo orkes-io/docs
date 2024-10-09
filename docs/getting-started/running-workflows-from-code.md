@@ -63,13 +63,13 @@ log.info("Workflow id: ", workflowId)
 ```
 
 </TabItem>
-<TabItem value="CSharp" label="CSharp">
+<TabItem value="CSharp" label="C#">
 
 ```csharp dynamic https://github.com/conductor-sdk/csharp-sdk-examples/blob/main/Examples/Service/WorkflowService.cs section=1 ../Service/WorkflowService.cs
 ```
 
 </TabItem>
-<TabItem value="Javascript" label="Javascript">
+<TabItem value="JavaScript" label="JavaScript">
 
 ```javascript
 const request: StartWorkflowRequest = {

@@ -36,7 +36,7 @@ webkitallowfullscreen="webkitallowfullscreen"></iframe></div>
 </Tabs>
 
 :::tip
-INLINE task is a great tool for writing basic logic, such as a predicate condition or object data transforms. With Javascript, you can
+INLINE task is a great tool for writing basic logic, such as a predicate condition or object data transforms. With JavaScript, you can
 write complex actions that will be executed by Conductor without having to find a place to host and run this worker.
 :::
 

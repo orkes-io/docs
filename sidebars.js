@@ -64,10 +64,8 @@ const sidebars = {
                     type: 'category',
                     label: 'Build Workflows',
                     link: {
-                        type: 'generated-index',
-                        title: 'Building Workflows',
-                        description: 'Learn the basics of building workflows in Orkes Conductor, including configuring task inputs and outputs, using workers, managing AI and human tasks, failure handling, and more.',
-                        slug: '/developer-guides/building-workflows'
+                        type: 'doc',
+                        id: 'developer-guides/building-workflows',
                     },
                     className: 'leftMenuHeader',
                     items: [
@@ -113,13 +111,27 @@ const sidebars = {
                             collapsible: false,
                         },
                         'developer-guides/orchestrating-human-tasks',
+                        {
+                            type: 'category',
+                            label: 'Eventing',
+                            link: {
+                                type: 'generated-index',
+                                title: 'Eventing',
+                                description: 'Learn how to connect and use Conductor with eventing systems like Kafka or AWS SQS.',
+                                slug: '/eventing'
+                            },
+                            items: [
+                                'developer-guides/event-handler',
+                                {
+                                    type: 'doc',
+                                    id: 'developer-guides/enabling-cdc-on-conductor-workflows',
+                                    label: "Enabling CDC"
+                                }
+                            ],
+                            collapsible: false,
+                        },
                         'developer-guides/webhook-integration',
                         'developer-guides/write-workflows-using-code',
-                        {
-                            type: 'doc',
-                            id: 'faqs/reuse-tasks',
-                            label: "Task Reuse"
-                        },
                         'error-handling'
                     ]
                 },
@@ -184,25 +196,6 @@ const sidebars = {
                 },
                 {
                     type: 'category',
-                    label: 'Eventing',
-                    link: {
-                        type: 'generated-index',
-                        title: 'Eventing',
-                        description: 'Learn how to connect and use Conductor with eventing systems like Kafka or AWS SQS.',
-                        slug: '/eventing'
-                    },
-                    className: 'leftMenuHeader',
-                    items: [
-                        'developer-guides/event-handler',
-                        {
-                            type: 'doc',
-                            id: 'developer-guides/enabling-cdc-on-conductor-workflows',
-                            label: "Enabling CDC"
-                        }
-                    ]
-                },
-                {
-                    type: 'category',
                     label: 'Access Control and Security',
                     link: {
                         type: 'doc',
@@ -250,12 +243,12 @@ const sidebars = {
                         {
                             type: 'doc',
                             id: 'sdks/javascript',
-                            label: 'Javascript',
+                            label: 'JavaScript',
                         },
                         {
                             type: 'doc',
                             id: 'sdks/csharp',
-                            label: 'CSharp',
+                            label: 'C#',
                         },
                         {
                             type: 'doc',

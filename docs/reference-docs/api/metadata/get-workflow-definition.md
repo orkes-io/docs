@@ -48,14 +48,14 @@ MetadataResourceApi.get(name, **kwargs)
 ```
 
 </TabItem>
-<TabItem value="CSharp" label="CSharp">
+<TabItem value="CSharp" label="C#">
 
 ```csharp
 WorkflowDef MetadataResourceApi.Get(string name, int? version = null, bool? metadata = null)
 ```
 
 </TabItem>
-<TabItem value="Javascript" label="Javascript">
+<TabItem value="JavaScript" label="JavaScript">
 
 ```javascript
 MatadataResourceService.get(
