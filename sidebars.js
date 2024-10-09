@@ -111,6 +111,25 @@ const sidebars = {
                             collapsible: false,
                         },
                         'developer-guides/orchestrating-human-tasks',
+                        {
+                            type: 'category',
+                            label: 'Eventing',
+                            link: {
+                                type: 'generated-index',
+                                title: 'Eventing',
+                                description: 'Learn how to connect and use Conductor with external eventing systems.',
+                                slug: '/eventing'
+                            },
+                            items: [
+                                'developer-guides/event-handler',
+                                {
+                                    type: 'doc',
+                                    id: 'developer-guides/enabling-cdc-on-conductor-workflows',
+                                    label: "Enabling CDC"
+                                }
+                            ],
+                            collapsible: false,
+                        },
                         'developer-guides/webhook-integration',
                         'developer-guides/write-workflows-using-code',
                         'error-handling'
@@ -173,25 +192,6 @@ const sidebars = {
                         },
                         'developer-guides/metrics-and-observability',
                         'developer-guides/integration-with-cicd'
-                    ]
-                },
-                {
-                    type: 'category',
-                    label: 'Eventing',
-                    link: {
-                        type: 'generated-index',
-                        title: 'Eventing',
-                        description: 'Learn how to connect and use Conductor with external eventing systems.',
-                        slug: '/eventing'
-                    },
-                    className: 'leftMenuHeader',
-                    items: [
-                        'developer-guides/event-handler',
-                        {
-                            type: 'doc',
-                            id: 'developer-guides/enabling-cdc-on-conductor-workflows',
-                            label: "Enabling CDC"
-                        }
                     ]
                 },
                 {
