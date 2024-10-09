@@ -82,7 +82,7 @@ Refer to the [Query Processor task](https://orkes.io/content/reference-docs/syst
 
 ### Switch
 
-A switch task with Javascript condition checks if there are failed workflows in a given time range, and if yes, makes a webhook call to alert our users using Opsgenie.
+A switch task with JavaScript condition checks if there are failed workflows in a given time range, and if yes, makes a webhook call to alert our users using Opsgenie.
 
 ### Opsgenie
 

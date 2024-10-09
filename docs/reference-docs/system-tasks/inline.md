@@ -16,7 +16,7 @@ Configure these parameters for the Inline task.
 | Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- |
 | inputParameters. **expression** | The JavaScript expression to be evaluated by the GraalJS evaluator. |  Required. | 
-| inputParameters. **evaluatorType** | The type of evaluator used. Supported types:<ul><li>`graaljs` - Evaluates the Javascript expression and computes the value.</li></ul> |  Required. | 
+| inputParameters. **evaluatorType** | The type of evaluator used. Supported types:<ul><li>`graaljs` - Evaluates the JavaScript expression and computes the value.</li></ul> |  Required. | 
 | inputParameters | The parameters for evaluating the script. Any property can be accessed as `$.value` for the expression to evaluate. | Required. | 
 
 ## Task configuration

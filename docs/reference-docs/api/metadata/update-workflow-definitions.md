@@ -62,14 +62,14 @@ MetadataResourceApi.update1(body, **kwargs)
 ```
 
 </TabItem>
-<TabItem value="CSharp" label="CSharp">
+<TabItem value="CSharp" label="C#">
 
 ```csharp
 Object MetadataResourceApi.UpdateWorkflowDefinitions(List<WorkflowDef> body, bool? overwrite = null)
 ```
 
 </TabItem>
-<TabItem value="Javascript" label="Javascript">
+<TabItem value="JavaScript" label="JavaScript">
 
 ```javascript
 MetadataResourceService.update(

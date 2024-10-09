@@ -21,7 +21,7 @@ Additionally, you can view the workflow execution as code directly from the UI b
 <p align="center"><img src="/content/img/show-as-code-in-workflow-search.png" alt="Show as code option in Workflow Search" width="90%"
                        height="auto"/></p>
 
-This would show the workflow search data in different codes. You can get the workflow search data in cURL and Javascript formats.
+This would show the workflow search data in different codes. You can get the workflow search data in cURL and JavaScript formats.
 
 
 <p align="center"><img src="/content/img/workflow-search-in-code.png" alt="Workflow search data in code" width="90%"

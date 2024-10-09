@@ -43,14 +43,14 @@ WorkflowResourceApi.pause_workflow1(self, workflow_id, **kwargs)
 ```
 
 </TabItem>
-<TabItem value="CSharp" label="CSharp">
+<TabItem value="CSharp" label="C#">
 
 ```csharp
 void WorkflowResourceApi.PauseWorkflow(string workflowId)
 ```
 
 </TabItem>
-<TabItem value="Javascript" label="Javascript">
+<TabItem value="JavaScript" label="JavaScript">
 
 ```javascript
 WorkflowExecutor.pauseWorkflow(
@@ -118,7 +118,7 @@ WorkflowResourceApi.resume_workflow1(self, workflow_id, **kwargs)
 ```
 
 </TabItem>
-<TabItem value="CSharp" label="CSharp">
+<TabItem value="CSharp" label="C#">
 
 ```csharp
 void WorkflowResourceApi.ResumeWorkflow(string workflowId)
@@ -126,7 +126,7 @@ void WorkflowResourceApi.ResumeWorkflow(string workflowId)
 
 </TabItem>
 
-<TabItem value="Javascript" label="Javascript">
+<TabItem value="JavaScript" label="JavaScript">
 
 ```javascript
 WorkflowExecutor.resume(
@@ -195,14 +195,14 @@ WorkflowResourceApi.restart1(self, workflow_id, **kwargs)
 ```
 
 </TabItem>
-<TabItem value="CSharp" label="CSharp">
+<TabItem value="CSharp" label="C#">
 
 ```csharp
 void WorkflowResourceApi.Restart(string workflowId, bool? useLatestDefinitions = null)
 ```
 
 </TabItem>
-<TabItem value="Javascript" label="Javascript">
+<TabItem value="JavaScript" label="JavaScript">
 
 ```javascript
 WorkflowExecutor.restart(
@@ -287,14 +287,14 @@ WorkflowResourceApi.rerun(self, body, workflow_id, **kwargs)
 ```
 
 </TabItem>
-<TabItem value="CSharp" label="CSharp">
+<TabItem value="CSharp" label="C#">
 
 ```csharp
 string WorkflowResourceApi.Rerun(RerunWorkflowRequest body, string workflowId)
 ```
 
 </TabItem>
-<TabItem value="Javascript" label="Javascript">
+<TabItem value="JavaScript" label="JavaScript">
 
 ```javascript
 WorkflowExecutor.rerun(
@@ -365,14 +365,14 @@ WorkflowResourceApi.retry1(self, workflow_id, **kwargs)
 ```
 
 </TabItem>
-<TabItem value="CSharp" label="CSharp">
+<TabItem value="CSharp" label="C#">
 
 ```csharp
 void WorkflowResourceApi.Retry(string workflowId, bool? resumeSubworkflowTasks = null)
 ```
 
 </TabItem>
-<TabItem value="Javascript" label="Javascript">
+<TabItem value="JavaScript" label="JavaScript">
 
 ```javascript
 WorkflowExecutor.retry(
@@ -443,14 +443,14 @@ TaskResourceApi.update_task1(taskOutput, workflow_id, task_ref_name, status, **k
 ```
 
 </TabItem>
-<TabItem value="CSharp" label="CSharp">
+<TabItem value="CSharp" label="C#">
 
 ```csharp
 string TaskResourceApi.UpdateTask(Dictionary<string, Object> taskOutput, string workflowId, string taskRefName, string status, string workerid = null)
 ```
 
 </TabItem>
-<TabItem value="Javascript" label="Javascript">
+<TabItem value="JavaScript" label="JavaScript">
 
 ```javascript
 TaskResourceService.updateTask(
@@ -528,14 +528,14 @@ WorkflowResourceApi.terminate1(self, workflow_id, **kwargs)
 ```
 
 </TabItem>
-<TabItem value="CSharp" label="CSharp">
+<TabItem value="CSharp" label="C#">
 
 ```csharp
 void WorkflowResourceApi.Terminate(string workflowId, string reason = null, bool? triggerFailureWorkflow = null)
 ```
 
 </TabItem>
-<TabItem value="Javascript" label="Javascript">
+<TabItem value="JavaScript" label="JavaScript">
 
 ```javascript
 WorkflowExecutor.terminate(

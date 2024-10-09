@@ -53,14 +53,14 @@ WorkflowResourceApi.rerun(self, body, workflow_id, **kwargs)
 ```
 
 </TabItem>
-<TabItem value="CSharp" label="CSharp">
+<TabItem value="CSharp" label="C#">
 
 ```csharp
 string WorkflowResourceApi.Rerun(RerunWorkflowRequest body, string workflowId)
 ```
 
 </TabItem>
-<TabItem value="Javascript" label="Javascript">
+<TabItem value="JavaScript" label="JavaScript">
 
 ```javascript
 WorkflowExecutor.rerun(

@@ -45,14 +45,14 @@ TaskResourceApi.get_task(task_id, **kwargs)
 ```
 
 </TabItem>
-<TabItem value="CSharp" label="CSharp">
+<TabItem value="CSharp" label="C#">
 
 ```csharp
 Task TaskResourceApi.GetTask(string taskId)
 ```
 
 </TabItem>
-<TabItem value="Javascript" label="Javascript">
+<TabItem value="JavaScript" label="JavaScript">
 
 ```javascript
 TaskResourceService.getTask(taskId: string): CancelablePromise<Task>

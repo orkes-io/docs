@@ -53,14 +53,14 @@ WorkflowResourceApi.start_workflow(self, body, **kwargs)
 ```
 
 </TabItem>
-<TabItem value="CSharp" label="CSharp">
+<TabItem value="CSharp" label="C#">
 
 ```csharp
 string WorkflowResourceApi.StartWorkflow(StartWorkflowRequest body)
 ```
 
 </TabItem>
-<TabItem value="Javascript" label="Javascript">
+<TabItem value="JavaScript" label="JavaScript">
 
 ```javascript
 WorkflowExecutor.startWorkflow(workflowRequest: StartWorkflowRequest): Promise<string>

@@ -46,14 +46,14 @@ MetadataResourceApi.unregister_workflow_def(name, version, **kwargs)
 ```
 
 </TabItem>
-<TabItem value="CSharp" label="CSharp">
+<TabItem value="CSharp" label="C#">
 
 ```csharp
 void MetadataResourceApi.UnregisterWorkflowDef(string name, int? version)
 ```
 
 </TabItem>
-<TabItem value="Javascript" label="Javascript">
+<TabItem value="JavaScript" label="JavaScript">
 
 ```javascript
 MatadataResourceService.unregisterWorkflowDef(name: string, version: number): CancelablePromise<any>

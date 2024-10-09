@@ -131,7 +131,7 @@ Here is the workflow that we are going to create using various language-specific
 
 </TabItem>
 
-<TabItem value="CSharp" label="CSharp">
+<TabItem value="CSharp" label="C#">
 
 ```java
     @WorkerTask("fraud-check")
@@ -146,7 +146,7 @@ Here is the workflow that we are going to create using various language-specific
 ```
 
 </TabItem>
-<TabItem value="Javascript" label="Javascript">
+<TabItem value="JavaScript" label="JavaScript">
 
 ```javascript
 const getUserDetailsTask = simpleTask(GET_USER_INFO, GET_USER_INFO, {

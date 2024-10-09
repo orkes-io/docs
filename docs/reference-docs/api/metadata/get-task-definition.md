@@ -43,14 +43,14 @@ MetadataResourceApi.get_task_def(tasktype, **kwargs)
 ```
 
 </TabItem>
-<TabItem value="CSharp" label="CSharp">
+<TabItem value="CSharp" label="C#">
 
 ```csharp
 TaskDef MetadataResourceApi.GetTaskDef(string tasktype, bool? metadata = null)
 ```
 
 </TabItem>
-<TabItem value="Javascript" label="Javascript">
+<TabItem value="JavaScript" label="JavaScript">
 
 ```javascript
 MetadataResourceService.getTaskDefs(

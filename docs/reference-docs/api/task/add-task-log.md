@@ -45,14 +45,14 @@ TaskResourceApi.log(body, task_id, **kwargs)
 ```
 
 </TabItem>
-<TabItem value="CSharp" label="CSharp">
+<TabItem value="CSharp" label="C#">
 
 ```csharp
 void TaskResourceApi.Log(string body, string taskId)
 ```
 
 </TabItem>
-<TabItem value="Javascript" label="Javascript">
+<TabItem value="JavaScript" label="JavaScript">
 
 ```javascript
 TaskResourceService.log(taskId: string, logMessage:string): CancelablePromise<Array<TaskExecLog>>

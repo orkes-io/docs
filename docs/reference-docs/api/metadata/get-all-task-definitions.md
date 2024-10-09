@@ -44,7 +44,7 @@ List<TaskDef> MetadataResourceApi.GetTaskDefs(string access = null, bool? metada
 ```
 
 </TabItem>
-<TabItem value="Javascript" label="Javascript">
+<TabItem value="JavaScript" label="JavaScript">
 
 ```javascript
 MetadataResourceService.getTaskDefs(

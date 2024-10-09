@@ -64,10 +64,8 @@ const sidebars = {
                     type: 'category',
                     label: 'Build Workflows',
                     link: {
-                        type: 'generated-index',
-                        title: 'Building Workflows',
-                        description: 'Learn the basics of building workflows in Orkes Conductor, including configuring task inputs and outputs, using workers, managing AI and human tasks, failure handling, and more.',
-                        slug: '/developer-guides/building-workflows'
+                        type: 'doc',
+                        id: 'developer-guides/building-workflows',
                     },
                     className: 'leftMenuHeader',
                     items: [
@@ -115,11 +113,6 @@ const sidebars = {
                         'developer-guides/orchestrating-human-tasks',
                         'developer-guides/webhook-integration',
                         'developer-guides/write-workflows-using-code',
-                        {
-                            type: 'doc',
-                            id: 'faqs/reuse-tasks',
-                            label: "Task Reuse"
-                        },
                         'error-handling'
                     ]
                 },
@@ -250,12 +243,12 @@ const sidebars = {
                         {
                             type: 'doc',
                             id: 'sdks/javascript',
-                            label: 'Javascript',
+                            label: 'JavaScript',
                         },
                         {
                             type: 'doc',
                             id: 'sdks/csharp',
-                            label: 'CSharp',
+                            label: 'C#',
                         },
                         {
                             type: 'doc',

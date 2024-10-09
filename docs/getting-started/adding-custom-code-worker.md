@@ -164,13 +164,13 @@ with TaskHandler(workers, configuration, scan_for_annotated_workers=True) as tas
 ```
 
 </TabItem>
-<TabItem value="CSharp" label="CSharp">
+<TabItem value="CSharp" label="C#">
 
 ```csharp dynamic https://github.com/conductor-sdk/csharp-sdk-examples/blob/main/Examples/Worker/Workers.cs section=1 ../Worker/Workers.cs
 ```
 
 </TabItem>
-<TabItem value="Javascript" label="Javascript">
+<TabItem value="JavaScript" label="JavaScript">
 
 ```javascript dynamic https://github.com/conductor-sdk/javascript-sdk-examples/blob/main/src/banking/workers/workers.js section=1 .../workers/workers.js
 ```

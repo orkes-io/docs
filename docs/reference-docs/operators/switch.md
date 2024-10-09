@@ -105,7 +105,7 @@ You can access the output of the Switch task in subsequent tasks by referring to
 2. In **Script params**, add the parameter that will be evaluated in the expression.
 3. In **Evaluate**, select the evaluator type and enter the expression.
     * **Value-Param**—Ensure that the expression value matches the parameter key you have defined in Script params.
-    * **ECMASCRIPT**—Enter a Javascript script.
+    * **ECMASCRIPT**—Enter a JavaScript script.
 4. In **Switch cases**, label the cases with the relevant parameter values.
 5. In your workflow, select the **(+)** icon to add tasks to each switch case.
 6. (Optional) Add tasks to the default case.

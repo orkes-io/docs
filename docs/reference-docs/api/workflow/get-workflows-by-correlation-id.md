@@ -47,14 +47,14 @@ WorkflowResourceApi.get_workflows(self, body, name, **kwargs)
 ```
 
 </TabItem>
-<TabItem value="CSharp" label="CSharp">
+<TabItem value="CSharp" label="C#">
 
 ```csharp
 string WorkflowResourceApi.StartWorkflow(StartWorkflowRequest body)
 ```
 
 </TabItem>
-<TabItem value="Javascript" label="Javascript">
+<TabItem value="JavaScript" label="JavaScript">
 
 ```javascript
 WorkflowResourceService.getWorkflow1(

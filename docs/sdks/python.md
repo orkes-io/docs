@@ -402,14 +402,14 @@ HttpTask(task_ref_name='call_remote_api', http_input={
 }
 ```
 
-#### Javascript Executor Task
+#### JavaScript Executor Task
 
-Execute ECMA-compliant Javascript code. It is useful when writing a script for data mapping, calculations, etc.
+Execute ECMA-compliant JavaScript code. It is useful when writing a script for data mapping, calculations, etc.
 
 **Using Code to Create Inline Task**
 
 ```python
-from conductor.client.workflow.task.javascript_task import JavascriptTask
+from conductor.client.workflow.task.javascript_task import JavaScriptTask
 
 say_hello_js = """
 function greetings() {
@@ -420,7 +420,7 @@ function greetings() {
 greetings();
 """
 
-js = JavascriptTask(task_ref_name='hello_script', script=say_hello_js, bindings={'name': '${workflow.input.name}'})
+js = JavaScriptTask(task_ref_name='hello_script', script=say_hello_js, bindings={'name': '${workflow.input.name}'})
 ```
 
 **JSON Configuration**
