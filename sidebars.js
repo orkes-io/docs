@@ -111,25 +111,6 @@ const sidebars = {
                             collapsible: false,
                         },
                         'developer-guides/orchestrating-human-tasks',
-                        {
-                            type: 'category',
-                            label: 'Eventing',
-                            link: {
-                                type: 'generated-index',
-                                title: 'Eventing',
-                                description: 'Learn how to connect and use Conductor with eventing systems like Kafka or AWS SQS.',
-                                slug: '/eventing'
-                            },
-                            items: [
-                                'developer-guides/event-handler',
-                                {
-                                    type: 'doc',
-                                    id: 'developer-guides/enabling-cdc-on-conductor-workflows',
-                                    label: "Enabling CDC"
-                                }
-                            ],
-                            collapsible: false,
-                        },
                         'developer-guides/webhook-integration',
                         'developer-guides/write-workflows-using-code',
                         'error-handling'
