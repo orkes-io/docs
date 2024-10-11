@@ -62,9 +62,6 @@ You can navigate to the **Run Workflow** button on the left side of your Conduct
 
 <p align="center"><img src="/content/img/run-workflow-from-ui-automatic-subtitle-generator.png" alt="Run Workflow from UI" width="70%" height="auto"></img></p>
 
-| [View Sample Execution](https://play.orkes.io/execution/e7a1f1ea-67c4-11ee-973c-6e520ab7b222) |
-|--------------------------------------------------------------------------------------------------|
-
 You can check the ***Workflow Input/Output*** tab for the finalized video output along with the subtitle file.
 
 <p align="center"><img src="/content/img/workflow-output-automatic-subtitle-generator.png" alt="Workflow Output" width="100%" height="auto"></img></p>
