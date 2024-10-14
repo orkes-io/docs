@@ -11,7 +11,7 @@ The Switch task is used for conditional branching logic. It represents if...then
 
 A Switch task evaluates an expression, either a simple input parameter key or a complex JavaScript expression, and matches the expression output with the name of each switch case. The appropriate tasks are executed based on the matching branch, which contains a sequence of tasks. The default branch will be executed if no matching branches are found.
 
-### Task parameters
+## Task parameters
 
 Configure these parameters for the Switch task.
 
