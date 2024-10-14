@@ -9,10 +9,9 @@ import TabItem from '@theme/TabItem';
 
 The Update Task is used to update the status of other tasks. The user should have access to the task being updated.
 
-The Update Task can update the status of a task in two ways:
-
-  - **Using the workflow ID and the reference name**—This method updates the task status by specifying the workflow execution ID and the task's reference name.
-  - **Using the task execution ID**—This method updates the task status directly by specifying the task's execution ID.
+The status of a task can be updated in two ways:
+  - **Using the workflow ID and the reference name**—Update the task status by specifying the workflow execution ID and the task's reference name.
+  - **Using the task execution ID**—Update the task status by specifying the task's execution ID.
 
  The task can be updated only if the workflow is in “RUNNING” status.
 
@@ -23,7 +22,7 @@ Configure these parameters for the Update Task.
 | Parameter | Description | Required/Optional | 
 | --------- | ----------- | ----------------- |
 | inputParameters.**taskStatus** |  The status of the task to be updated. Supported values:<ul><li>`FAILED_WITH_TERMINAL_ERROR`</li><li>`FAILED`</li><li>`COMPLETED`</li></ul>It can be [passed as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor). | Required. | 
-| inputParameters.**workflowId** | The execution ID of the workflow containing the task to be updated. It can be [passed as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor). | Required if updating using `workflowId` and `taskRefName`. |
+| inputParameters.**workflowId** | The execution ID of the workflow containing the task to be updated. It can be [passed as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor). The default value is `${workflow.workflowId}`. | Required if updating using `workflowId` and `taskRefName`. |
 | inputParameters.**taskRefName** | The reference name of the task to be updated. It can be [passed as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor). | Required if updating using `workflowId` and `taskRefName`. |
 | inputParameters.**taskId** | The execution ID of the task to be updated. It can be [passed as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor). | Required if updating using `taskId`. |
 | inputParameters.**taskOutput** | A key-value map that will be updated as the new task output. Supports string, number, boolean, null, and object/array. | Optional. |
@@ -43,8 +42,8 @@ This is the task configuration for an Update Task.
      "inputParameters": {
        "taskStatus": "COMPLETED",
        "mergeOutput": true,
-       "workflowId": "${workflow.input.workflowID}", // hardcoded value or passed as variables
-       "taskRefName": "${workflow.input.taskRefName}",// hardcoded value or passed as variables
+       "workflowId": "${workflow.workflowId}",
+       "taskRefName": "${workflow.input.taskRefName}",
        "taskOutput": {
          "key": "value"
        }
