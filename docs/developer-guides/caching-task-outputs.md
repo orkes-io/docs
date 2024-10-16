@@ -1,3 +1,6 @@
+---
+slug: "../faqs/task-cache-output"
+---
 # Caching Task Outputs
 
 Some task types support caching, which saves task outputs for reuse in subsequent tasks. This feature can be configured in the task configuration.
