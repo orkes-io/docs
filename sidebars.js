@@ -74,13 +74,10 @@ const sidebars = {
                             label: 'Inputs/Outputs',
                             items: [
                                 'developer-guides/passing-inputs-to-task-in-conductor',
+                                'developer-guides/schema-validation',
                                 'developer-guides/secrets-in-conductor',
                                 'developer-guides/using-environment-variables',
-                                {
-                                    type: 'doc',
-                                    id: 'faqs/task-cache-output',
-                                    label: "Caching Task Outputs"
-                                },
+                                'developer-guides/caching-task-outputs',
                             ],
                             collapsible: false,
                         },
