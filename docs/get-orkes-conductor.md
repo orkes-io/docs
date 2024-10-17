@@ -19,7 +19,7 @@ There are two hosting options:
 
 You can try [Orkes Playground](https://play.orkes.io/?utm_campaign=set-up-orkes-conductor&utm_source=orkes-doc&utm_medium=web) for immediate testing. A [14-day free trial of Orkes Cloud](https://cloud.orkes.io/signupset-up-orkes-conductororkes-doc&utm_medium=web) is also available for setting up custom Conductor clusters.
 
-## Orkes Cloud - Local Setup
+## Orkes Conductor - Local Setup
 
 Orkes Cloud users can utilize the Orkes Cloud containers available on [DockerHub](https://hub.docker.com/) under the [orkesio](https://hub.docker.com/orgs/orkesio/repositories) organization for local development and testing of the Orkes Conductor clusters. These containers include all the Cloud features but **require an Orkes Cloud subscription**.
 
