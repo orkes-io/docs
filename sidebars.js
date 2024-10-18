@@ -43,9 +43,30 @@ const sidebars = {
                 title: 'Getting Started',
                 description: 'Learn about the most important Orkes Conductor concepts!',
                 slug: '/category/getting-started',
-                keywords: ['getting-started', 'installation']
             },
-            items: ['getting-started/first-workflow-application', 'getting-started/running-workflows-from-code', 'getting-started/adding-custom-code-worker', 'getting-started/running-an-inline-function', 'getting-started/adding-wait-conditions', 'getting-started/executing-tasks-in-parallel'],
+            items: [
+                {
+                    type: 'category',
+                    label: 'Quickstarts',
+                    link: {
+                        type: 'doc',
+                        id: 'getting-started/quickstart-index',
+                    },
+                    className: 'leftMenuHeader',
+                    items: [
+                        'getting-started/quickstart-1',
+                        'getting-started/quickstart-2',
+                        'getting-started/quickstart-3',
+                        'getting-started/quickstart-4',
+                    ]
+                },
+                'getting-started/first-workflow-application',
+                'getting-started/running-workflows-from-code',
+                'getting-started/adding-custom-code-worker',
+                'getting-started/running-an-inline-function',
+                'getting-started/adding-wait-conditions',
+                'getting-started/executing-tasks-in-parallel'
+            ],
             collapsible: true,
             collapsed: false,
             className: 'leftMenuHeader',
