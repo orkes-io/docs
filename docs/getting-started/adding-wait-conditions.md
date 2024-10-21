@@ -8,6 +8,8 @@ import Install from '@site/src/components/install.mdx';
 
 # Step 5: Adding Wait Conditions
 
+[Continuing from Step 4](/getting-started/running-an-inline-function)
+
 The wait task in Conductor is used if the workflow is to be paused for external signals. The signals can be manual human interventions or an event from external sources such as Kafka, SQS, etc. Let’s learn how to pause your workflows using wait tasks. 
 
 #### Use case: What if we want to send the SMS only after a fixed time?
@@ -45,7 +47,4 @@ Since you have configured the wait task to wait for 10 seconds, once the workflo
 Try to configure a wait for longer - perhaps 2 days, set a reminder to check back after two days to see if that task is executed. Magic!
 :::
 
-## Related Topics
-
-* [API Reference for Wait](/content/reference-docs/operators/wait)
-* [Scheduling workflows](/content/developer-guides/scheduling-workflows) 
+* **[Step 6: Executing Tasks in Parallel](/getting-started/executing-tasks-in-parallel)**

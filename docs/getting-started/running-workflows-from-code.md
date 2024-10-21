@@ -12,6 +12,8 @@ import {
 
 # Step 2: Running Workflows from Code
 
+[Continuing from Step 1](/getting-started/first-workflow-application)
+
 So far, we have seen how to compose and run basic workflows from the UI. However, more commonly, we will be running the workflows from an application or service. Let’s learn how to do this from our applications. Orkes Conductor platform offers various SDKs in different languages
 for integration with applications or services. 
 
@@ -114,6 +116,7 @@ In addition to triggering from code, we can also run them from:
 3. [Upon receiving a Webhook](/content/reference-docs/system-tasks/wait-for-webhook)
 4. [At a Schedule - using the Scheduler](/content/developer-guides/scheduling-workflows)
 
-## Related Topics
-
-* Passing the [output of one task to the input](/content/developer-guides/passing-inputs-to-task-in-conductor) of another
+* **[Step 3: Adding Custom Code Worker](/getting-started/adding-custom-code-worker)**
+* **[Step 4: Running an Inline Function](/getting-started/running-an-inline-function)**
+* **[Step 5: Adding Wait Conditions](/getting-started/adding-wait-conditions)**
+* **[Step 6: Executing Tasks in Parallel](/getting-started/executing-tasks-in-parallel)**
