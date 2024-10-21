@@ -67,7 +67,7 @@ from multiprocessing import set_start_method
 set_start_method("fork")
 #############################################
 
-SERVER_API_URL = 'https://play.orkes.io/api'
+SERVER_API_URL = 'Developer Editionapi'
 KEY_ID = '<KEY_ID>'
 KEY_SECRET = '<KEY_SECRET>'
 
