@@ -21,33 +21,46 @@ const sidebars = {
             className: 'leftMenuHeader',
         },
         {
-            type: 'doc',
-            id: 'core-concepts',
+            type: 'category', 
+            label: 'Getting Started',
+            link: {
+                type: 'doc',
+                id: 'getting-started/introduction',
+            },
+            items: [
+                {
+                    type: 'doc',
+                    id: 'core-concepts',
+                    className: 'leftMenuHeader',
+                },
+                {
+                    type: 'doc',
+                    id: 'get-orkes-conductor',
+                    className: 'leftMenuHeader',
+                },
+                {
+                    type: 'category',
+                    label: 'Quickstarts',
+                    link: {
+                        type: 'doc',
+                        id: 'getting-started/quickstart-index',
+                    },
+                    className: 'leftMenuHeader',
+                    items: [
+                        'getting-started/quickstart-1',
+                        'getting-started/quickstart-2',
+                        'getting-started/quickstart-3',
+                        'getting-started/quickstart-4',
+                    ]
+                }
+            ],
+            collapsible: true,
+            collapsed: false,
             className: 'leftMenuHeader',
         },
         {
             type: 'doc',
             id: 'getting-started-orkes-cloud',
-            className: 'leftMenuHeader',
-        },
-        {
-            type: 'doc',
-            id: 'get-orkes-conductor',
-            className: 'leftMenuHeader',
-        },
-        {
-            type: 'category', // to move to tutorials
-            label: 'Getting Started',
-            link: {
-                type: 'generated-index',
-                title: 'Getting Started',
-                description: 'Learn about the most important Orkes Conductor concepts!',
-                slug: '/category/getting-started',
-                keywords: ['getting-started', 'installation']
-            },
-            items: ['getting-started/first-workflow-application', 'getting-started/running-workflows-from-code', 'getting-started/adding-custom-code-worker', 'getting-started/running-an-inline-function', 'getting-started/adding-wait-conditions', 'getting-started/executing-tasks-in-parallel'],
-            collapsible: true,
-            collapsed: false,
             className: 'leftMenuHeader',
         },
         {
