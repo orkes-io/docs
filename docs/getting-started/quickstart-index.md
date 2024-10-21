@@ -214,7 +214,7 @@ The Key Secret is shown only once. Make sure to copy and store it securely, so y
 
 
 ## Ready to start?
-* **[Quickstart 1: Learn how to create your first workflow.]** You can define workflows as code or on Orkes Platform.
-* **Quickstart 2: Learn how to use custom tasks**. Write workers in any language using Conductor SDKs.
-* **Quickstart 3: Learn how to deploy your workflow.** There are many ways to do this, such as creating a client application.
-* **Quickstart 4: Learn how to debug and monitor your workflow.**
+* **[Quickstart 1: Learn how to create your first workflow](/quickstarts/create-first-workflow)**. You can define workflows as code or on Orkes Platform.
+* **[Quickstart 2: Learn how to use custom tasks](/quickstarts/write-workers)**. Write workers in any language using Conductor SDKs.
+* **[Quickstart 3: Learn how to deploy your workflow](/quickstarts/deploy-workflows)**. There are many ways to do this, such as creating a client application.
+* **[Quickstart 4: Learn how to debug and monitor your workflow](/quickstarts/debug-and-monitor-workflows)**.

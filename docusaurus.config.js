@@ -119,7 +119,7 @@ const config = {
         items: [
           {
             type: "doc",
-            docId: "getting-started/first-workflow-application",
+            docId: "getting-started/quickstart-index",
             position: "left",
             label: "Getting Started",
           },
