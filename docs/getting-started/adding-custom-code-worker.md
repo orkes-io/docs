@@ -8,6 +8,8 @@ import CodeBlock from '@theme/CodeBlock';
 
 # Step 3: Adding Custom Code Worker
 
+[Continuing from Step 2](/getting-started/running-workflows-from-code)
+
 Continuing the use case from the previous step, we now have a requirement to add a fraud check for all deposit transactions >= $10,000.
 
 <Tabs>
@@ -198,8 +200,6 @@ We can run similar workflows in production, too, workers could live in **any app
 Conductor. All of this without worrying about creating inbound connections or exposing unwanted API endpoints.
 :::
 
-## Related Topics
-
-- Passing [inputs into workflow for tasks](/content/developer-guides/passing-inputs-to-task-in-conductor)
-- Passing the [output of one task to the input of another](/content/developer-guides/passing-inputs-to-task-in-conductor)
-- [Client SDKs](/content/category/sdks)
+* **[Step 4: Running an Inline Function](/getting-started/running-an-inline-function)**
+* **[Step 5: Adding Wait Conditions](/getting-started/adding-wait-conditions)**
+* **[Step 6: Executing Tasks in Parallel](/getting-started/executing-tasks-in-parallel)**

@@ -8,6 +8,8 @@ import Install from '@site/src/components/install.mdx';
 
 # Step 4: Running an Inline Function
 
+[Continuing from Step 3](/getting-started/adding-custom-code-worker)
+
 So far, we haven't done anything here, even if the fraud check fails. How can we handle the case where the fraud check returned a fail, and we want to skip processing the deposit transaction? We can add another inline task that can check for the outcome of the fraud check and send a different message to our users via SMS or Email.
 
 <Tabs>
@@ -52,8 +54,5 @@ INLINE tasks can be scripted from the following template:
 
 Read more on [INLINE tasks here](/content/reference-docs/system-tasks/inline).
 
-## Related Topics
-
-- Passing [inputs into workflow for tasks](/content/developer-guides/passing-inputs-to-task-in-conductor)
-- Passing the [output of one task to the input of another](/content/developer-guides/passing-inputs-to-task-in-conductor)
-- [Client SDKs](/content/category/sdks)
+* **[Step 5: Adding Wait Conditions](/getting-started/adding-wait-conditions)**
+* **[Step 6: Executing Tasks in Parallel](/getting-started/executing-tasks-in-parallel)**

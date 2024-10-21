@@ -8,6 +8,8 @@ import CodeBlock from '@theme/CodeBlock';
 
 # Step 6: Executing Tasks in Parallel
 
+[Continuing from Step 5](/getting-started/adding-wait-conditions)
+
 Another exciting feature of Conductor is executing tasks in parallel. A common scenario is to run a specific task based on an array of values. Let's try this out on our workflow.
 
 To do this, we will use the payment deposit workflow we created so far as a [sub-workflow](/content/reference-docs/operators/sub-workflow). In a new workflow, we will run a task that will return a given number of deposit transactions. For each transaction, we will trigger this sub-workflow - which will all run in parallel.
@@ -53,8 +55,3 @@ cluster, you can run parallel tasks into the thousands or tens of thousands depe
 :::note Try out a larger batch
 Try configuring a larger batch using the input called __`batchCount`__ to the task `retrieve-deposit-batch` task - we can observe the tasks running in parallel by looking at the timeline view or task list view.
 :::
-
-## Related Topics
-
-* [API Reference for Dynamic Fork](/content/reference-docs/operators/dynamic-fork)
-* [API Reference for Sub Workflows](/content/reference-docs/operators/sub-workflow)

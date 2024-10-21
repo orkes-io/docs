@@ -75,11 +75,8 @@ webkitallowfullscreen="webkitallowfullscreen"></iframe>
 </TabItem>
 </Tabs>
 
-## Related Topics
-
-- Passing [inputs into workflow for tasks](/content/developer-guides/passing-inputs-to-task-in-conductor).
-- Passing the [output of one task to the input of another](/content/developer-guides/passing-inputs-to-task-in-conductor).
-- Running [custom worker code](/content/getting-started/adding-custom-code-worker) (instead of HTTP endpoints)
-- [Conditional task executions](/content/reference-docs/operators/switch)
-- Running a [dynamic set of tasks in parallel](/content/reference-docs/operators/dynamic-fork)
-- Configuring [retries for your task](/content/error-handling)
+* **[Step 2: Running Workflows from Code](/getting-started/running-workflows-from-code)**
+* **[Step 3: Adding Custom Code Worker](/getting-started/adding-custom-code-worker)**
+* **[Step 4: Running an Inline Function](/getting-started/running-an-inline-function)**
+* **[Step 5: Adding Wait Conditions](/getting-started/adding-wait-conditions)**
+* **[Step 6: Executing Tasks in Parallel](/getting-started/executing-tasks-in-parallel)**

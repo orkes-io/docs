@@ -51,7 +51,9 @@ const sidebars = {
                         'getting-started/quickstart-2',
                         'getting-started/quickstart-3',
                         'getting-started/quickstart-4',
-                    ]
+                    ],
+                    collapsible: true,
+                    collapsed: false,
                 }
             ],
             collapsible: true,
