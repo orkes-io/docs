@@ -37,7 +37,7 @@ how the above logic is implemented.
 
 <p align="center"><img src="/content/img/alert-workflow.png" alt="Alert Workflow" width="80%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
-| [View in Playground](https://developers.orkes.cloud/workflowDef/track_workflow_failures) |
+| [View in Developer Edition](https://developers.orkes.cloud/workflowDef/track_workflow_failures) |
 |---------------------------------------------------------------------------------|
 
 
@@ -123,7 +123,7 @@ how the above logic is implemented.
 }
 ```
 
-In this example, we are looking to find failure instances of the workflow **sample_tracker_workflow** on the playground
+In this example, we are looking to find failure instances of the workflow **sample_tracker_workflow** on the Developer Edition
 environment of Orkes Conductor in a 10-minute window.
 
 An example payload for Pagerduty integration could look like:

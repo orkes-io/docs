@@ -85,9 +85,9 @@ Now, let’s see how the workflow works!
 
 The template requires a worker to run the tasks. This section will walk you through the steps to write an external worker. 
 
-If you want to run the workflow quickly, you can try to run them in Orkes Developer Edition. Since you haven’t set up the worker here, our Orkes workers will complete the task. Let’s see how to run this in the Playground. 
+If you want to run the workflow quickly, you can try to run them in Orkes Developer Edition. Since you haven’t set up the worker here, our Orkes workers will complete the task. Let’s see how to run this in the Developer Edition. 
 
-| [Run Video Recipe in Playground](https://developers.orkes.cloud/runWorkflow) |
+| [Run Video Recipe in Developer Edition](https://developers.orkes.cloud/runWorkflow) |
 |------------------------------------------------------------------------------| 
 
 1. Under **Workflow name**, choose the workflow **video_recipe.**
@@ -210,7 +210,7 @@ conductor.security.client.key-id=your_key_id
 conductor.security.client.secret=your_key_secret
 ```
 
-Replace the above values with your credentials. If you are testing this in the playground, **conductor.server.url** field remains the same. If you are using your own Conductor server, replace the playground URL with your server URL.
+Replace the above values with your credentials. If you are testing this in the Developer Edition, **conductor.server.url** field remains the same. If you are using your own Conductor server, replace the URL with your server URL.
 
 Next, you need to provide “execute” access to the workflows and tasks.
 1. Inside the **Application** created, navigate to the section **Workflow and tasks permissions**.
@@ -218,7 +218,7 @@ Next, you need to provide “execute” access to the workflows and tasks.
 3. Under the **Workflow** section, search for **video_recipes** workflow and enable EXECUTE permissions.
 4. Similarly, under the **Task** section and enable EXECUTE permissions for the tasks, **video_recipes_prefork**, and **video_recipes**. 
 
-This configuration ensures the connection between the worker and the Playground/Conductor.
+This configuration ensures the connection between the worker and the Conductor.
 
 #### Using Task to Domain 
 

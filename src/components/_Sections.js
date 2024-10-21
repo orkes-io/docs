@@ -21,8 +21,8 @@ const videoSource = [
     title: "Introduction to Orkes Conductor",
   },
   {
-    src: "https://www.youtube.com/embed/tVUaDtoKNgE",
-    title: "How to Login to Orkes Conductor Playground",
+    src: "https://youtu.be/REIRIjEvJLg?feature=shared",
+    title: "How to configure and manage Groups",
   },
   {
     src: "https://www.youtube.com/embed/f1b5vZRKn2Q",

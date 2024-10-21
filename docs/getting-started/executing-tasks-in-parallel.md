@@ -41,15 +41,15 @@ webkitallowfullscreen="webkitallowfullscreen"></iframe></div>
 </TabItem>
 </Tabs>
 
-If we named the task `retrieve-deposit-batch`, we'd notice that it is actually executed (in playground env), but how?
-That's because there is a pre-defined task that is polling and running all the tasks named `retrieve-deposit-batch`. We also have the required permissions in the playground for this task.
+If we named the task `retrieve-deposit-batch`, we'd notice that it is actually executed (in Developer Edition env), but how?
+That's because there is a pre-defined task that is polling and running all the tasks named `retrieve-deposit-batch`. We also have the required permissions in the Developer Edition for this task.
 
 Here is the code reference for this worker:
 
 ```java dynamic https://github.com/conductor-sdk/orkes-java-springboot2-example/blob/main/src/main/java/io/orkes/example/banking/workers/ConductorWorkers.java section=2 .../workers/ConductorWorkers.java
 ```
 
-By default, it would return a random value between __5-10 tasks__. If we supply an input called __`batchCount`__ - we can retrieve up to 100 transactions. This is a limitation of the playground. In a dedicated
+By default, it would return a random value between __5-10 tasks__. If we supply an input called __`batchCount`__ - we can retrieve up to 100 transactions. This is a limitation of the Developer Edition. In a dedicated
 cluster, you can run parallel tasks into the thousands or tens of thousands depending on the cluster's capacity.
 
 :::note Try out a larger batch

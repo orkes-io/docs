@@ -34,7 +34,7 @@ will schedule the same task instance to be polled exactly after the `callbackAft
 We are leveraging the output data to hold the context across polls, and once it reaches the desired state, we exit `IN_PROGRESS`
 and mark the task as `COMPLETED`.
 
-Go ahead and try [this worker](https://developers.orkes.cloud/workflowDef/poll-until-condition-workflow) in a workflow in our playground environment. We have already configured this in our sandbox, so it should run when you test.
+Go ahead and try [this worker](https://developers.orkes.cloud/workflowDef/poll-until-condition-workflow) in a workflow in our Developer Edition environment. We have already configured this in our sandbox, so it should run when you test.
 
 :::tip Language agnostic
 Such workers can be implemented in any of the languages.

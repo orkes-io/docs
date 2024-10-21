@@ -257,7 +257,7 @@ For running the workflow in Orkes Conductor,
  export CONDUCTOR_SERVER_URL="https://[your-cluster-name].orkesconductor.io/api"
 ```
 
-- If you want to run the workflow on the Orkes Conductor Playground, set the Conductor Server variable as follows:
+- If you want to run the workflow on the Orkes Developer Edition, set the Conductor Server variable as follows:
 
 ```shell
 export CONDUCTOR_SERVER_URL=https://developers.orkes.cloud/api

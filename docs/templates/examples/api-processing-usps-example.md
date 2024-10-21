@@ -12,7 +12,7 @@ The USPS can verify 160M addresses in the USA.  This workflow either responds wi
 |---------------------------------------------------------------------------------| 
 
 :::note
-This workflow requires a USPS username to be run.  Change the name of the workflow - to save it in your Playground, and add your USPS Username in the Set_USPS_Name task. The [API access is free](https://www.usps.com/business/web-tools-apis/).
+This workflow requires a USPS username to be run.  Change the name of the workflow - to save it, and add your USPS Username in the Set_USPS_Name task. The [API access is free](https://www.usps.com/business/web-tools-apis/).
 :::
 
 <p align="center"><img src="/content/img/check-address.jpg" alt="Document Approval Workflow" width="90%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
@@ -35,7 +35,7 @@ Given a `toZip` and `fromZip`, and some dimensions of the box (and the shipping 
 |--------------------------------------------------------------------------------| 
 
 :::note
-This workflow requires a USPS username to be run.  Change the name of the workflow - to save it in your Playground, and add your USPS Username in the Set_USPS_Name task. The [API access is free](https://www.usps.com/business/web-tools-apis/).
+This workflow requires a USPS username to be run.  Change the name of the workflow - to save it in your Developer Edition, and add your USPS Username in the Set_USPS_Name task. The [API access is free](https://www.usps.com/business/web-tools-apis/).
 :::
 
 <p align="center"><img src="/content/img/postage-rate.jpg" alt="Document Approval Workflow" width="60%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
