@@ -29,10 +29,8 @@ const sidebars = {
             type: 'category', 
             label: 'Getting Started',
             link: {
-                type: 'generated-index',
-                title: 'Getting Started',
-                description: 'Learn about the most important Orkes Conductor concepts!',
-                slug: '/category/getting-started',
+                type: 'doc',
+                id: 'getting-started/introduction',
             },
             items: [
                 {
