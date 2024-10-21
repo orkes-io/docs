@@ -67,7 +67,7 @@ from multiprocessing import set_start_method
 set_start_method("fork")
 #############################################
 
-SERVER_API_URL = 'Developer Editionapi'
+SERVER_API_URL = 'https://developers.orkes.cloud/api'
 KEY_ID = '<KEY_ID>'
 KEY_SECRET = '<KEY_SECRET>'
 
