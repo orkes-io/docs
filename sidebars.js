@@ -22,21 +22,11 @@ const sidebars = {
         },
         {
             type: 'doc',
-            id: 'core-concepts',
-            className: 'leftMenuHeader',
-        },
-        {
-            type: 'doc',
             id: 'getting-started-orkes-cloud',
             className: 'leftMenuHeader',
         },
         {
-            type: 'doc',
-            id: 'get-orkes-conductor',
-            className: 'leftMenuHeader',
-        },
-        {
-            type: 'category', // to move to tutorials
+            type: 'category', 
             label: 'Getting Started',
             link: {
                 type: 'generated-index',
@@ -45,6 +35,16 @@ const sidebars = {
                 slug: '/category/getting-started',
             },
             items: [
+                {
+                    type: 'doc',
+                    id: 'core-concepts',
+                    className: 'leftMenuHeader',
+                },
+                {
+                    type: 'doc',
+                    id: 'get-orkes-conductor',
+                    className: 'leftMenuHeader',
+                },
                 {
                     type: 'category',
                     label: 'Quickstarts',
@@ -59,13 +59,7 @@ const sidebars = {
                         'getting-started/quickstart-3',
                         'getting-started/quickstart-4',
                     ]
-                },
-                'getting-started/first-workflow-application',
-                'getting-started/running-workflows-from-code',
-                'getting-started/adding-custom-code-worker',
-                'getting-started/running-an-inline-function',
-                'getting-started/adding-wait-conditions',
-                'getting-started/executing-tasks-in-parallel'
+                }
             ],
             collapsible: true,
             collapsed: false,
