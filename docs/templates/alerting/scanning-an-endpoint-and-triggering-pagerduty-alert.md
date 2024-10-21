@@ -37,7 +37,7 @@ how the above logic is implemented.
 
 <p align="center"><img src="/content/img/alert-workflow.png" alt="Alert Workflow" width="80%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
-| [View in Playground](https://play.orkes.io/workflowDef/track_workflow_failures) |
+| [View in Playground](https://developers.orkes.cloud/workflowDef/track_workflow_failures) |
 |---------------------------------------------------------------------------------|
 
 

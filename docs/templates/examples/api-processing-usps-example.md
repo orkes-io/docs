@@ -8,7 +8,7 @@ The US Post Office has several APIs to simplify shipping. Let's look at how you 
 The USPS can verify 160M addresses in the USA.  This workflow either responds with the USPS version of the address (often in all CAPS), or with an error that the address was not found.
 
 
-| [See it in Orkes Playground](https://play.orkes.io/workflowDef/check_address/1) |
+| [See it in Orkes Developer Edition](https://developers.orkes.cloud/workflowDef/check_address/1) |
 |---------------------------------------------------------------------------------| 
 
 :::note
@@ -31,7 +31,7 @@ Sample input:
 
 Given a `toZip` and `fromZip`, and some dimensions of the box (and the shipping type), this workflow will output the price for that shipping type.
 
-| [See it in Orkes Playground](https://play.orkes.io/workflowDef/postage_rate/1) |
+| [See it in Orkes Developer Edition](https://developers.orkes.cloud/workflowDef/postage_rate/1) |
 |--------------------------------------------------------------------------------| 
 
 :::note

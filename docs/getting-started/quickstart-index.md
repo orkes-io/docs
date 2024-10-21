@@ -198,7 +198,7 @@ Get the Conductor Clojure package from [clojars](https://clojars.org/io.orkes/co
 Once your development environment is set up, you need to configure your access to the Conductor server. In Orkes, programmatic access to Conductor is enabled by application-based access keys. To get authenticated, you must first create an application in Orkes Platform, then create an access key for your application.
 
 **To create an application:**
-1. Log in to your Orkes cluster or the [Orkes Playground](https://play.orkes.io/).
+1. Log in to your Orkes cluster or the [Orkes Developer Edition](https://developers.orkes.cloud/).
 2. In the left navigation menu, go to **Access Control** > **Applications**.
 3. Select **(+) Create application**.
 4. Enter the application name, such as “myFirstWorkflow”. Use this application while following along with the quickstarts.

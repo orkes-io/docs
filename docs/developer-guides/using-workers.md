@@ -188,7 +188,7 @@ In Orkes, an application account with a Worker role type enables workers to auth
     1. Under Access Keys, select **Create access key** and store your credentials securely.
     2. Set the Key ID and Key Secret in your environment variables.
         ``` bash
-        export CONDUCTOR_SERVER_URL=<SERVER_URL> // eg: https://play.orkes.io/api
+        export CONDUCTOR_SERVER_URL=<SERVER_URL> // eg: https://developers.orkes.cloud/api
         export CONDUCTOR_AUTH_KEY=<KEY_ID>
         export CONDUCTOR_AUTH_SECRET=<KEY_SECRET>
         ```

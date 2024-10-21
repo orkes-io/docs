@@ -85,9 +85,9 @@ Now, let’s see how the workflow works!
 
 The template requires a worker to run the tasks. This section will walk you through the steps to write an external worker. 
 
-If you want to run the workflow quickly, you can try to run them in Orkes Playground. Since you haven’t set up the worker here, our Orkes workers will complete the task. Let’s see how to run this in the Playground. 
+If you want to run the workflow quickly, you can try to run them in Orkes Developer Edition. Since you haven’t set up the worker here, our Orkes workers will complete the task. Let’s see how to run this in the Playground. 
 
-| [Run Video Recipe in Playground](https://play.orkes.io/runWorkflow) |
+| [Run Video Recipe in Playground](https://developers.orkes.cloud/runWorkflow) |
 |------------------------------------------------------------------------------| 
 
 1. Under **Workflow name**, choose the workflow **video_recipe.**
@@ -205,7 +205,7 @@ To set up the connection between the worker and your Conductor instance:
 5. Open your Java project, and navigate to [application.properties](https://github.com/orkes-io/orkes-templates/blob/main/video-processing/workers/java/src/main/resources/application.properties) file.
 
 ```
-conductor.server.url=https://play.orkes.io/api/
+conductor.server.url=https://developers.orkes.cloud/api/
 conductor.security.client.key-id=your_key_id
 conductor.security.client.secret=your_key_secret
 ```

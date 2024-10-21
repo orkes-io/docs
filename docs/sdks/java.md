@@ -260,7 +260,7 @@ For running the workflow in Orkes Conductor,
 - If you want to run the workflow on the Orkes Conductor Playground, set the Conductor Server variable as follows:
 
 ```shell
-export CONDUCTOR_SERVER_URL=https://play.orkes.io/api
+export CONDUCTOR_SERVER_URL=https://developers.orkes.cloud/api
 ```
 
 - Orkes Conductor requires authentication. [Obtain the key and secret from the Conductor server](https://www.youtube.com/watch?v=f1b5vZRKn2Q) and set the following environment variables.

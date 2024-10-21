@@ -119,9 +119,9 @@ Refer to the [start workflow API doc](https://orkes.io/content/reference-docs/ap
 
 #### Conductor UI
 
-If you want to run the workflow quickly, you can try to run them in Orkes Playground. Since you haven’t set up the worker here, our Orkes workers will complete the task. Let’s see how to run this in the Playground. 
+If you want to run the workflow quickly, you can try to run them in Orkes Developer Edition. Since you haven’t set up the worker here, our Orkes workers will complete the task. Let’s see how to run this in the Playground. 
 
-| [Run Image Recipe in Playground](https://play.orkes.io/runWorkflow) |
+| [Run Image Recipe in Playground](https://developers.orkes.cloud/runWorkflow) |
 |--------------------------------------------------------------------------------------------------|
 
 1. Under the **Workflow name**, choose the **workflow image_effects**.

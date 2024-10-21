@@ -4,16 +4,16 @@ Orkes Conductor provides you the ability to build applications that leverage gen
 
 The example we will be using is to build a document classifier that identifies the type of document passed (e.g. a driver’s license, a W2 form, a mortgage application etc). The associated workflow in Conductor takes in as the input parameter a document file, checks that it is a pdf document, extracts the content from it, sends that information alongside a prompt to a LLM and obtains the classification result from the LLM. 
 
-This workflow is available as a [template in the Template Explorer](https://orkes.io/content/templates/document-classifier) in Orkes Conductor and in this guide we will be using the free Orkes Playground (you can use this example with your own Orkes Conductor cluster as well).
+This workflow is available as a [template in the Template Explorer](https://orkes.io/content/templates/document-classifier) in Orkes Conductor and in this guide we will be using the Orkes Developer Edition (you can use this example with your own Orkes Conductor cluster as well).
 
 ## Command Line
 
-1. Obtain a token from the Orkes Playground.
-    - Login to https://play.orkes.io/ - you can bookmark this URL for easy access.
+1. Obtain a token from the Orkes Developer Edition.
+    - Login to https://developers.orkes.cloud/ - you can bookmark this URL for easy access.
     - Obtain the access token by clicking on the **Copy Token** link at the bottom of the left hand navigation.
 2. Obtain an API key from Open AI by going [here](https://platform.openai.com/account/api-keys).
 3. Setup Environment Variables.
-    - export CONDUCTOR_ACCESS_TOKEN=(The key you copied from Playground)
+    - export CONDUCTOR_ACCESS_TOKEN=(The key you copied )
     - export OPEN_AI_KEY=(Your OPENAI API KEY)
 4. Run the shell script below to create your document classifier application, execute it and view the output:
 
@@ -27,9 +27,9 @@ curl -s https://raw.githubusercontent.com/orkes-io/orkes-templates/main/document
 
 ## Conductor UI
 
-### Step 1: Login to Orkes Playground
+### Step 1: Login to Orkes Developer Edition
 
-1. Login to https://play.orkes.io/ - you can bookmark this URL for easy access.
+1. Login to https://developers.orkes.cloud/ - you can bookmark this URL for easy access.
 
 ### Step 2: Create an LLM integration
 
@@ -138,7 +138,7 @@ Important: Copy and store the secret in a safe location, as it is never displaye
 
 ```shell
 curl -s -X 'POST' \
-  'https://play.orkes.io/api/token' \
+  'https://developers.orkes.cloud/api/token' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -151,7 +151,7 @@ curl -s -X 'POST' \
 
 ```shell
 curl -s -X 'POST' \
-'https://play.orkes.io/api/workflow/<WORKFLOW_NAME>?priority=0' \
+'https://developers.orkes.cloud/api/workflow/<WORKFLOW_NAME>?priority=0' \
  -H 'accept: text/plain' \
  -H 'X-Authorization: <YOUR_JWT_TOKEN>' \
  -H 'Content-Type: application/json' \
@@ -166,7 +166,7 @@ The command will return a workflow id. Note it down for use in the next step.
 
 ```shell
 curl -s -X 'GET' \
-'https://play.orkes.io/api/workflow/<WORKFLOW_EXECUTION_ID>/status?includeOutput=true&includeVariables=false' \
+'https://developers.orkes.cloud/api/workflow/<WORKFLOW_EXECUTION_ID>/status?includeOutput=true&includeVariables=false' \
  -H 'accept: */*' \
  -H 'X-Authorization: <YOUR_JWT_TOKEN>'
 ```
@@ -181,5 +181,5 @@ You can pipe the output of above to the command below (requires [installing of j
 4. You can view the execution visually by going to the Conductor UI and searching for it or directly via the URL below (make sure to replace the placeholder with your workflow execution id).
 
 ```json
-https://play.orkes.io/execution/<WORKFLOW_EXECUTION_ID>
+https://developers.orkes.cloud/execution/<WORKFLOW_EXECUTION_ID>
 ```
