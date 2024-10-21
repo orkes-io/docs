@@ -3,9 +3,12 @@ slug: "../category/getting-started"
 description: ""
 ---
 
+import {useCurrentSidebarCategory} from '@docusaurus/theme-common';
+import DocCardList from '@theme/DocCardList';
+
 # Introduction
 
-Orkes Conductor is an orchestration platform for building distributed applications in any language. Modern applications often consist of multiple services that must work together to complete the application. An orchestration layer is essential to manage this efficiently—similar to a frontend or backend layer in your tech stack. Orkes Conductor lets you add an orchestration layer to your existing applications or build new ones from scratch. 
+Orkes Conductor is an orchestration platform for building distributed applications in any language. Modern applications often consist of multiple services that must work together to complete the application. An orchestration layer is essential to manage this efficiently—similar to a frontend or backend layer in your tech stack. Orkes Conductor lets you add an orchestration layer to your existing applications or build new ones from scratch.
 
 Orchestration is the practice of managing the flow and coordination of tasks across multiple services, much like how Kubernetes orchestrates containers or step functions orchestrate cloud operations. Workflows are components used to orchestrate distributed services. As modern applications increasingly rely on distributed services, orchestration becomes essential for ensuring your app’s performance and resilience.
 
@@ -14,17 +17,19 @@ Conductor lets you build complex applications by breaking them down into simple 
 
 Developers can use Conductor to ensure high reliability, transactional consistency, and scalability, no matter where their components are deployed or what languages they use. Simply define the workflow, and the Conductor takes care of the execution.
 
-## Key features 
+## Key features
 
-* **Scalability**—Run workflows of any size, from small projects to large enterprise systems.
-* **Workflow as code**—Write workflows in your preferred language, including Java, Python, Go, C#, TypeScript, Clojure, and more.
-* **Task workers**—Build external task workers as microservices, serverless functions, or any deployment method you choose.
-* **Fault tolerance**—Automatically recover from failures using built-in retries and compensation mechanisms to ensure high availability and uninterrupted operations.
-* **Durable execution**—Create long-running workflows without worrying about system failures, dependencies, or scaling issues.
-* **Reusable components**—Package and reuse common functions to reduce duplication across workflows.
-* **Access controls**—Maintain control and visibility with built-in access management features.
-* **Troubleshooting**—Built-in metrics and logs help identify and resolve issues across distributed executions.
-* **Operational insights**—Access detailed metrics to gain insights into performance, bottlenecks, and SLA compliance.
-* **Upgrade existing systems**—Integrate microservices, AI agents, and APIs to extend existing systems and improve orchestration.
-* **Speed up development cycle**—Speed up development cycles, launch new applications faster, and maintain high standards of security and observability.
-* **Ease of integration**—Integrate seamlessly with various systems and services.
+- **Scalability**—Run workflows of any size, from small projects to large enterprise systems.
+- **Workflow as code**—Write workflows in your preferred language, including Java, Python, Go, C#, TypeScript, Clojure, and more.
+- **Task workers**—Build external task workers as microservices, serverless functions, or any deployment method you choose.
+- **Fault tolerance**—Automatically recover from failures using built-in retries and compensation mechanisms to ensure high availability and uninterrupted operations.
+- **Durable execution**—Create long-running workflows without worrying about system failures, dependencies, or scaling issues.
+- **Reusable components**—Package and reuse common functions to reduce duplication across workflows.
+- **Access controls**—Maintain control and visibility with built-in access management features.
+- **Troubleshooting**—Built-in metrics and logs help identify and resolve issues across distributed executions.
+- **Operational insights**—Access detailed metrics to gain insights into performance, bottlenecks, and SLA compliance.
+- **Upgrade existing systems**—Integrate microservices, AI agents, and APIs to extend existing systems and improve orchestration.
+- **Speed up development cycle**—Speed up development cycles, launch new applications faster, and maintain high standards of security and observability.
+- **Ease of integration**—Integrate seamlessly with various systems and services.
+
+<DocCardList items={useCurrentSidebarCategory().items} />
