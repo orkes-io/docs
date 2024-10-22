@@ -23,7 +23,7 @@ The second task can only run with input provided by the first task.
 
 ## Codelab Requirements
 
-You'll need a version of Conductor.  The images will be based on the [Conductor Developer Edition](https://play.orkes.io), but a [local Conductor instance](http://localhost:3000/content/get-orkes-conductor) works as well.
+You'll need a version of Conductor.  The images will be based on the [Conductor Developer Edition](https://developers.orkes.cloud), but a [local Conductor instance](http://localhost:3000/content/get-orkes-conductor) works as well.
 
 ## Workflow input
 
