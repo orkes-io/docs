@@ -52,7 +52,7 @@ We can also pass *correlationIds* and *freeText* just like on the Orkes workflow
 {
  "result": {
    "count": 1,
-   "workflowsUrl": "https://play.orkes.io?rowsPerPage=200&startFrom=1696447143843&startTo=1696448043843&status=FAILED&status=TERMINATED&workflowType=TestFailedWorkflow&workflowType=TestTerminatedWorkflow",
+   "workflowsUrl": "https://developers.orkes.cloud?rowsPerPage=200&startFrom=1696447143843&startTo=1696448043843&status=FAILED&status=TERMINATED&workflowType=TestFailedWorkflow&workflowType=TestTerminatedWorkflow",
    "workflows": [
      {
        "updateTime": "2023-10-04T19:30:39.105Z",

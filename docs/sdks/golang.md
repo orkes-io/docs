@@ -18,7 +18,7 @@ Everything related to server settings should be done within the `client.NewAPICl
     apiClient := client.NewAPIClient(
         nil,
         settings.NewHttpSettings(
-            "https://play.orkes.io",
+            "https://developers.orkes.cloud",
         ),
     )
 
@@ -38,7 +38,7 @@ Once we have a key and secret, we can configure the app from properties or envir
             SECRET,
         ),
         settings.NewHttpSettings(
-            "https://play.orkes.io",
+            "https://developers.orkes.cloud",
         ),
     )
 
