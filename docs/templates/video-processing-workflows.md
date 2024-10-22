@@ -114,12 +114,11 @@ We have used a video downloaded from [NASA Image and Video Library](https://imag
 
 3. Click **Run Workflow**.
 
-When the workflow execution begins, the **orkesworkers** catch up the tasks, and the workflow gets completed. 
+When the workflow execution begins, the **orkesworkers** catch up the tasks, and the workflow gets completed. The workflow output is stored in an Orkes-owned Amazon S3 bucket. 
 
-| [View Sample Execution](https://play.orkes.io/execution/963cb659-be59-11ed-99ea-b2b080784892) |
-|------------------------------------------------------------------------------| 
+<p align="center"><img src="/content/img/video-recipe-execution.png" alt="Sample execution" width="100%" height="auto"></img></p>
 
-The workflow output is stored in an Orkes-owned Amazon S3 bucket. In the output file, you can see the transcoded video with the Orkes logo as the watermark.
+In the output file, you can see the transcoded video with the Orkes logo as the watermark.
 
 | [View Sample Output with Watermark Recipe](https://image-processing-orkes.s3.amazonaws.com/f380e542-3a9c-486c-aecf-f91b855f7b36-WATERMARK.mp4) |
 |------------------------------------------------------------------------------| 
