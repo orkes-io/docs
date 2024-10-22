@@ -146,9 +146,6 @@ If you want to run the workflow quickly, you can try to run them in Orkes Develo
 
 When the workflow execution begins, the **orkesworkers** catch up the tasks, and the workflow gets completed. 
 
-| [View Sample Execution](https://play.orkes.io/execution/f2cb818d-68cf-11ee-973c-6e520ab7b222) |
-|--------------------------------------------------------------------------------------------------|
-
 The input image without any filter looks like this:
 
 <figure>
