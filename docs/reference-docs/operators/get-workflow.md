@@ -42,7 +42,7 @@ This is the task configuration for a Get Workflow task.
 ```
 
 ## Task output
-The Get Workflow task will return all the details of the retrieved workflow. View an example [here](https://play.orkes.io/execution/35d05a0f-0856-11ef-84f1-2e15deb1615b?tab=workflowInputOutput).
+The Get Workflow task will return all the details of the retrieved workflow. 
 
 ## Adding a Get Workflow task in UI
 **To add a Get Workflow task:**
