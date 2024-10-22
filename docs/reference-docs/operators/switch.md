@@ -201,7 +201,5 @@ The script below returns `OLDER` or `NEWER` depending on whether the input date 
   }
 ))();
 ```
-
-Check out the [sample workflow execution that runs this switch case](https://play.orkes.io/execution/9be8fb4d-e991-11ed-bb41-9e017806b678).
 </p>
 </details>
