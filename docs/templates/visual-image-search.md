@@ -66,9 +66,6 @@ You can navigate to the **Run Workflow** button on the left side of your Conduct
 
 <p align="center"><img src="/content/img/run-workflow-from-ui-visual-image-search.png" alt="Run Workflow from UI" width="70%" height="auto"></img></p>
 
-| [View Sample Execution](https://play.orkes.io/execution/67ffc938-62c6-11ee-973c-6e520ab7b222?tab=workflowInputOutput) |
-|--------------------------------------------------------------------------------------------------|
-
 Here, the input image used was:
 
 <p align="center"><img src="/content/img/workflow-input-visual-image-search.png" alt="Input to the workflow" width="20%" height="auto"></img></p>
@@ -77,4 +74,4 @@ The output returned the following similar images:
 
 <p align="center"><img src="/content/img/workflow-output-visual-image-search.png" alt="Few sample output from the workflow" width="70%" height="auto"></img></p>
 
-The above image contains only 4 samples that were generated. You can check the complete samples generated from the [Workflow Output tab of this execution](https://play.orkes.io/execution/67ffc938-62c6-11ee-973c-6e520ab7b222?tab=workflowInputOutput). 
+The above image contains only 4 samples that were generated. The workflow output generates a large number of similar images.
