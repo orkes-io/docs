@@ -17,7 +17,7 @@ In these quickstarts, you will learn the basics of developing with Conductor:
 4. How to debug workflow
 
 :::tip
-Familiarize yourself with the [Core Concepts](../core-concepts) in Conductor before diving into our quickstarts.
+Familiarize yourself with the [Core Concepts](core-concepts) in Conductor before diving into our quickstarts.
 :::
 
 With Orkes’ suite of SDKs, APIs, and Orkes Platform, you can mix-and-match our products to develop with Conductor.
