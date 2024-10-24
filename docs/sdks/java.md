@@ -1,9 +1,12 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 import versions from '../../codeblocks/versions.json'
 import CodeBlock from '@theme/CodeBlock';
 
 # Orkes Conductor Java SDK
 
-Orkes Conductor Java SDK is maintained here: https://github.com/orkes-io/orkes-conductor-client
+- Orkes Conductor Java SDK (old) is maintained here: https://github.com/orkes-io/orkes-conductor-client
+- Orkes Conductor Java SDK v4 is maintained here: https://github.com/conductor-oss/conductor/tree/main/conductor-clients/java/conductor-java-sdk
 
 ## Set Up Conductor Java SDK
 
@@ -13,21 +16,63 @@ Add `orkes-conductor-client` dependency to your project.
 
 For Gradle-based projects, modify the `build.gradle` file in the project directory by adding the following line to the dependencies block in that file:
 
+<Tabs groupId="java-version">
+<TabItem value="v4" label="v4">
+
+```java
+implementation 'org.conductoross:conductor-client:4.0.0'
+implementation 'io.orkes:orkes-conductor-client:4.0.0'
+```
+
+</TabItem>
+
+<TabItem value="old" label="Old">
+
 ```java
 implementation 'io.orkes.conductor:orkes-conductor-client:2.0.1'
 ```
+
+</TabItem>
+</Tabs>
+
 
 ### Maven
 
 For Maven-based projects, modify the `pom.xml` file in the project directory by adding the following XML snippet within the `dependencies` section:
 
-```shell
+
+<Tabs groupId="java-version">
+<TabItem value="v4" label="v4">
+
+```xml
+<dependency>
+    <groupId>org.conductoross</groupId>
+    <artifactId>conductor-client</artifactId>
+    <version>4.0.0</version>
+</dependency>
+<dependency>
+    <groupId>io.orkes</groupId>
+    <artifactId>orkes-conductor-client</artifactId>
+    <version>4.0.0</version>
+</dependency>
+```
+
+</TabItem>
+
+<TabItem value="old" label="Old">
+
+```xml
 <dependency>
   <groupId>io.orkes.conductor</groupId>
   <artifactId>orkes-conductor-client</artifactId>
   <version>1.1.14</version>
 </dependency>
 ```
+
+</TabItem>
+</Tabs>
+
+
 
 ## Hello World Application Using Conductor
 

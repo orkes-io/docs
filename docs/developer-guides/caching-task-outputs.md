@@ -4,7 +4,7 @@ slug: "../faqs/task-cache-output"
 
 # Caching Task Outputs
 
-Some task types support caching, which saves task outputs for reuse in subsequent tasks. This feature can be configured in the task configuration.
+Some task types support caching, which saves task outputs for reuse in subsequent task executions. This feature can be configured in the task configuration.
 
 **To cache task output:**
 1. In your Orkes Conductor cluster, go to **Definitions** > **Workflow** and select a workflow.
