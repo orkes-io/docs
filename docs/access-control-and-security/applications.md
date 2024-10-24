@@ -4,7 +4,7 @@ import TabItem from '@theme/TabItem';
 
 # Managing Applications
 
-An application represents an application that interacts with a Conductor server via APIs or SDKs. The application layer in Conductor provides application-based access to resources in your cluster. 
+An application represents an application that interacts with a Conductor cluster via APIs or SDKs. The application layer in Conductor provides application-based access to resources in your cluster. 
 
 Each application can also have one or more access key/secret pairs, which are used to grant access to Conductor SDK and API. Learn more about authentication in [Authentication and Access Keys](/sdks/authentication).
 
@@ -18,7 +18,7 @@ Application roles grant additional access on top of this default behavior and sh
 <Tabs>
 <TabItem value="application roles" label="Application Roles">
 
-Application roles an be added by any user with access to applications. General application roles include:
+Application roles can be added by any user with access to applications. General application roles include:
 * **Worker**—Poll and execute tasks that it has Execute permissions for.
     This role should be granted to a task worker application that is responsible for polling and executing a task.
 * **Metadata API**—Create and manage workflow and task metadata.
@@ -35,6 +35,7 @@ Unrestricted roles can only be added by an Admin. Unrestricted roles include:
 * **Metadata Manager**—Create, update, delete, and grant permissions to any workflow or task definition in the cluster.
 * **Workflow Manager**—Manage the lifecycle of workflows within the system. Start, pause, resume, rerun, and delete any workflow execution.
 * **Application Manager**—Manage applications in the cluster, such as creating, modifying, and deleting applications.
+* **Admin**—Create, read, modify, delete, and execute this particular application.
 
 </TabItem>
 </Tabs>
