@@ -17,7 +17,7 @@ There are two hosting options:
 * Orkes-hosted - End-to-end hosting managed by Orkes.
 * Customer-hosted -  Deploy within your own infrastructure (Azure, AWS, GCP, or private cloud).
 
-You can try [Orkes Playground](https://play.orkes.io/?utm_campaign=set-up-orkes-conductor&utm_source=orkes-doc&utm_medium=web) for immediate testing. A [14-day free trial of Orkes Cloud](https://cloud.orkes.io/signupset-up-orkes-conductororkes-doc&utm_medium=web) is also available for setting up custom Conductor clusters.
+You can try [Orkes Developer Edition](https://developer.orkescloud.com/?utm_campaign=set-up-orkes-conductor&utm_source=orkes-doc&utm_medium=web) for immediate testing. A [14-day free trial of Orkes Cloud](https://cloud.orkes.io/signupset-up-orkes-conductororkes-doc&utm_medium=web) is also available for setting up custom Conductor clusters.
 
 ## Orkes Conductor - Local Setup
 

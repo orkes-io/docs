@@ -57,7 +57,7 @@ from conductor.client.workflow.conductor_workflow import ConductorWorkflow
 from conductor.client.workflow.executor.workflow_executor import WorkflowExecutor
 
 configuration = Configuration(
-    server_api_url=SERVER_API_URL, // eg: https://play.orkes.io/api
+    server_api_url=SERVER_API_URL, // eg: https://developer.orkescloud.com/api
     debug=False,
     authentication_settings=AuthenticationSettings(key_id=KEY_ID, key_secret=KEY_SECRET)
 )
@@ -205,7 +205,7 @@ import {
 const clientPromise = orkesConductorClient({
   keyId: "XXX",
   keySecret: "XXXX",
-  serverUrl: "SERVER_URL", // eg: https://play.orkes.io/api
+  serverUrl: "SERVER_URL", // eg: https://developer.orkescloud.com/api
 });
 
 const client = await clientPromise;
@@ -293,7 +293,7 @@ apiClient := client.NewAPIClient(
         SECRET,
     ),
     settings.NewHttpSettings(
-        "https://play.orkes.io/api",
+        "https://developer.orkescloud.com/api",
     ))
 
 // Create new workflow executor
@@ -393,7 +393,7 @@ workflowId, err := executor.StartWorkflow(&model.StartWorkflowRequest{
 Use the visual workflow editor in Orkes Platform to create your workflows.
 
 **To create a workflow:**
-1. Log in to your Orkes cluster or the [Orkes Playground](https://play.orkes.io/).
+1. Log in to your Orkes cluster or the [Orkes Developer Edition](https://developer.orkescloud.com/).
 2. In the left navigation menu, go to **Definitions** > **Workflow**.
 3. Select **(+) Define workflow**.
 4. Enter a Name and Description for your workflow.

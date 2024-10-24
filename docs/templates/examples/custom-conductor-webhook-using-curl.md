@@ -104,7 +104,7 @@ You need to send a request like this:
 ```shell
 curl -H "Content-Type:application/json" -H "Accept:application/json" \
      -H 'someKey: someValue'    \
-     -X POST 'https://play.orkes.io/webhook/169d8857-ed45-4488-aefa-bf62cd8fb415' \
+     -X POST 'https://developer.orkescloud.com/webhook/169d8857-ed45-4488-aefa-bf62cd8fb415' \
      -d '{"event": {"type" : "type-1"}}'
 ```
 

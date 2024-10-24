@@ -23,7 +23,7 @@ The second task can only run with input provided by the first task.
 
 ## Codelab Requirements
 
-You'll need a version of Conductor.  The images will be based on the [Conductor Playground](https://play.orkes.io), but a [local Conductor instance](http://localhost:3000/content/get-orkes-conductor) works as well.
+You'll need a version of Conductor.  The images will be based on the [ Developer Edition](https://developer.orkescloud.com), but a [local Conductor instance](http://localhost:3000/content/get-orkes-conductor) works as well.
 
 ## Workflow input
 
@@ -39,7 +39,7 @@ The workflow is given an IP address:
 
 Here is the outline of the workflow.  At the moment, the 2 tasks are not included, but that code will appear as we discuss the tasks (and can be inserted for your testing purposes.)
 
-The workflow is pretty basic - with a name (if using the playground, your workflow will need a unique name). And description.  There are 2 ```outputParameters``` defined - that we'll discuss further in the codelab.
+The workflow is pretty basic - with a name (if using the Developer Edition, your workflow will need a unique name). And description.  There are 2 ```outputParameters``` defined - that we'll discuss further in the codelab.
 
 ```json
 {

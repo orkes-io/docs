@@ -84,7 +84,7 @@ Use the JWT token in the X-Authorization header for all your API calls.
 ``` shell
 // API call to a workflow called super_weather
 
-curl -X "POST" "https://play.orkes.io/api/workflow/super_weather" \
+curl -X "POST" "https://developer.orkescloud.com/api/workflow/super_weather" \
   -H 'Content-Type: application/json; charset=utf-8'  \
   -H 'X-Authorization:  <YOUR_JWT>'\
   -d '{

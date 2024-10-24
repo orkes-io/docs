@@ -96,8 +96,8 @@ You can add this as a sub-workflow in your required workflow whenever a payment 
 <p align="center"><img src="/content/img/payment-sub-workflow-in-main-workflow.png" alt="Payment workflow as sub-workflow in a subscription flow" width="50%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
 This is a subscription workflow with multiple instances where payment flow is to be implemented. Here, the previously-created payment workflow is added as sub-workflows.
-The above image is a simplified version of the subscription workflow. You can view the entire version in Playground 
-[here](https://play.orkes.io/workflowDef/Subscription/).
+The above image is a simplified version of the subscription workflow. You can view the entire version in Developer Edition 
+[here](https://developer.orkescloud.com/workflowDef/Subscription/).
 
 </p>
 </details>

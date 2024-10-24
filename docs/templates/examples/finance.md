@@ -11,7 +11,7 @@ This workflow does not have workers that evaluate the loan parameters and is for
 
 You can get the JSON file for the sample workflow detailed [here](https://github.com/conductor-sdk/conductor-examples/blob/main/finance/loan_banking.json).
 
-| [See it in Orkes Playground](https://play.orkes.io/workflowDef/loan_banking) |
+| [See it in Orkes Developer Edition](https://developer.orkescloud.com/workflowDef/loan_banking) |
 |------------------------------------------------------------------------------| 
 
 <center><img src="https://raw.githubusercontent.com/conductor-sdk/conductor-examples/main/finance/images/loan.png"

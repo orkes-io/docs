@@ -145,9 +145,9 @@ The asyncComplete option in the HTTP task configuration allows tasks to be marke
 }
 ```
 
-Now, let’s run this in the Playground.
+Now, let’s run this in the Developer Edition.
 
-[Run in Orkes Playground](https://play.orkes.io/runWorkflow)
+[Run in Orkes Developer Edition](https://developer.orkescloud.com/runWorkflow)
 
 1. Under **Workflow Name**, choose **async_complete_example**.
 2. Click **Run Workflow**.

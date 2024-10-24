@@ -24,7 +24,7 @@ export const faqs = [
 
 ### Is it possible to pull data from multiple endpoints simultaneously rather than sequentially?
 
-Yes, it’s possible to pull data from multiple endpoints simultaneously. Have a look at this [workflow execution](https://play.orkes.io/execution/7f438f95-e907-11ed-b7d4-364566de507d). You can see that the parallel execution, which is the construct supported in Conductor, can run 10s of thousands of parallel executions.
+Yes, it’s possible to pull data from multiple endpoints simultaneously, using [Fork/Join](https://orkes.io/content/reference-docs/operators/fork-join) task, which is the construct supported in Conductor, that can run 10s of thousands of parallel executions.
 
 ### Can we start a workflow not from the start but from any steps within the workflow? 
 

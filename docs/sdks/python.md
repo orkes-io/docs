@@ -227,10 +227,10 @@ For running the workflow in Orkes Conductor,
 export CONDUCTOR_SERVER_URL=https://[cluster-name].orkesconductor.io/api
 ```
 
-- If you want to run the workflow on the Orkes Conductor Playground, set the Conductor Server variable as follows:
+- If you want to run the workflow on the Orkes Developer Edition, set the Conductor Server variable as follows:
 
 ```shell
-export CONDUCTOR_SERVER_URL=https://play.orkes.io/api
+export CONDUCTOR_SERVER_URL=https://developer.orkescloud.com/api
 ```
 
 - Orkes Conductor requires authentication. [Obtain the key and secret from the Conductor server](https://www.youtube.com/watch?v=f1b5vZRKn2Q) and set the following environment variables.
@@ -528,7 +528,7 @@ def send_email(email: str, subject: str, body: str):
 def main():
 
     # defaults to reading the configuration using following env variables
-    # CONDUCTOR_SERVER_URL : conductor server e.g. https://play.orkes.io/api
+    # CONDUCTOR_SERVER_URL : conductor server e.g. https://developer.orkescloud.com/api
     # CONDUCTOR_AUTH_KEY : API Authentication Key
     # CONDUCTOR_AUTH_SECRET: API Auth Secret
     api_config = Configuration()

@@ -36,8 +36,8 @@ webkitallowfullscreen="webkitallowfullscreen"></iframe></div>
 </TabItem>
 </Tabs>
 
-We can see that when we run this workflow for amounts >= $10,000, it runs a fraud check. If we named the task `fraud-check`, we'd notice that it is actually executed (in playground env), but how? 
-That's because there is a pre-defined task that is polling and running all the tasks named `fraud-check`. We also have the required permissions in the playground for this task.
+We can see that when we run this workflow for amounts >= $10,000, it runs a fraud check. If we named the task `fraud-check`, we'd notice that it is actually executed (in Developer Edition env), but how? 
+That's because there is a pre-defined task that is polling and running all the tasks named `fraud-check`. We also have the required permissions in the Developer Edition for this task.
 
 So how can we implement this task for ourselves? First, let's rename the task to a new unique name for ourselves - for ex: `fraud-check-<replace-with-a-unique-value>`. And now, let’s see how this custom fraud check can be implemented:
 
@@ -67,7 +67,7 @@ from multiprocessing import set_start_method
 set_start_method("fork")
 #############################################
 
-SERVER_API_URL = 'https://play.orkes.io/api'
+SERVER_API_URL = 'https://developer.orkescloud.com/api'
 KEY_ID = '<KEY_ID>'
 KEY_SECRET = '<KEY_SECRET>'
 
@@ -187,13 +187,13 @@ with TaskHandler(workers, configuration, scan_for_annotated_workers=True) as tas
 </Tabs>
 
 
-Once we have cloned the repo or copied the required elements to our local machines, we can run this locally by connecting to the playground server. 
+Once we have cloned the repo or copied the required elements to our local machines, we can run this locally by connecting to the Conductor server. 
 To do this, we must give the required permissions to our application.
 Refer to this [video](https://www.youtube.com/watch?v=PY34TcVzof0) to add permission to execute the custom worker we just created above (`fraud-check-<replace-with-a-unique-value>`).
 After providing the permissions, we can change the definition to run our worker (`fraud-check-<replace-with-a-unique-value>`) and start the application.
 We can see that now our worker is picking up the task. 
 
-This is the **first example** of how a distributed worker is executed in Conductor; **without** exposing an endpoint or creating any sort of inbound connectivity, we were able to execute the task directly from our local machine pointing to the playground server.
+This is the **first example** of how a distributed worker is executed in Conductor; **without** exposing an endpoint or creating any sort of inbound connectivity, we were able to execute the task directly from our local machine pointing to the Developer Edition server.
 
 :::tip Distributed workers in Conductor
 We can run similar workflows in production, too, workers could live in **any applications** or even **third-party services** and we can connect them all together using
