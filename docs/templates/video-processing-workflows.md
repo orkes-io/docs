@@ -85,9 +85,9 @@ Now, let’s see how the workflow works!
 
 The template requires a worker to run the tasks. This section will walk you through the steps to write an external worker. 
 
-If you want to run the workflow quickly, you can try to run them in Orkes Playground. Since you haven’t set up the worker here, our Orkes workers will complete the task. Let’s see how to run this in the Playground. 
+If you want to run the workflow quickly, you can try to run them in Orkes Developer Edition. Since you haven’t set up the worker here, our Orkes workers will complete the task. Let’s see how to run this in the Developer Edition. 
 
-| [Run Video Recipe in Playground](https://play.orkes.io/runWorkflow) |
+| [Run Video Recipe in Developer Edition](https://developer.orkescloud.com/runWorkflow) |
 |------------------------------------------------------------------------------| 
 
 1. Under **Workflow name**, choose the workflow **video_recipe.**
@@ -115,9 +115,6 @@ We have used a video downloaded from [NASA Image and Video Library](https://imag
 3. Click **Run Workflow**.
 
 When the workflow execution begins, the **orkesworkers** catch up the tasks, and the workflow gets completed. 
-
-| [View Sample Execution](https://play.orkes.io/execution/963cb659-be59-11ed-99ea-b2b080784892) |
-|------------------------------------------------------------------------------| 
 
 The workflow output is stored in an Orkes-owned Amazon S3 bucket. In the output file, you can see the transcoded video with the Orkes logo as the watermark.
 
@@ -205,12 +202,12 @@ To set up the connection between the worker and your Conductor instance:
 5. Open your Java project, and navigate to [application.properties](https://github.com/orkes-io/orkes-templates/blob/main/video-processing/workers/java/src/main/resources/application.properties) file.
 
 ```
-conductor.server.url=https://play.orkes.io/api/
+conductor.server.url=https://developer.orkescloud.com/api/
 conductor.security.client.key-id=your_key_id
 conductor.security.client.secret=your_key_secret
 ```
 
-Replace the above values with your credentials. If you are testing this in the playground, **conductor.server.url** field remains the same. If you are using your own Conductor server, replace the playground URL with your server URL.
+Replace the above values with your credentials. If you are testing this in the Developer Edition, **conductor.server.url** field remains the same. If you are using your own Conductor server, replace the Developer Edition URL with your server URL.
 
 Next, you need to provide “execute” access to the workflows and tasks.
 1. Inside the **Application** created, navigate to the section **Workflow and tasks permissions**.
@@ -218,7 +215,7 @@ Next, you need to provide “execute” access to the workflows and tasks.
 3. Under the **Workflow** section, search for **video_recipes** workflow and enable EXECUTE permissions.
 4. Similarly, under the **Task** section and enable EXECUTE permissions for the tasks, **video_recipes_prefork**, and **video_recipes**. 
 
-This configuration ensures the connection between the worker and the Playground/Conductor.
+This configuration ensures the connection between the worker and the Developer Edition/Conductor.
 
 #### Using Task to Domain 
 

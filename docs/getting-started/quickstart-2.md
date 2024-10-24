@@ -198,7 +198,7 @@ import {
 const clientPromise = orkesConductorClient({
   keyId: "XXX",
   keySecret: "XXXX",
-  serverUrl: "SERVER_URL", // eg: https://play.orkes.io/api
+  serverUrl: "SERVER_URL", // eg: https://developer.orkescloud.com/api
 });
 
 const client = await clientPromise;
@@ -305,7 +305,7 @@ apiClient := client.NewAPIClient(
         SECRET,
     ),
     settings.NewHttpSettings(
-    "https://play.orkes.io/api",
+    "https://developer.orkescloud.com/api",
 ))
 
 taskRunner := worker.NewTaskRunnerWithApiClient(apiClient)
@@ -493,7 +493,7 @@ Finally, your worker application requires programmatic access to the Conductor s
 3. Generate the application access key and set the Key ID and Key Secret in your project environment variables.
 
 ```
-export CONDUCTOR_SERVER_URL=<SERVER_URL> // eg: https://play.orkes.io/api
+export CONDUCTOR_SERVER_URL=<SERVER_URL> // eg: https://developer.orkescloud.com/api
 export CONDUCTOR_AUTH_KEY=<KEY_ID>
 export CONDUCTOR_AUTH_SECRET=<KEY_SECRET>
 ```
