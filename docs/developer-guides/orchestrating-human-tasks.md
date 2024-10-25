@@ -283,7 +283,7 @@ The task inbox view is the non-admin regular user view that lists all the tasks 
 
 <p align="center"><img src="/content/img/human-task-inbox-view.png" alt="Task inbox view of human task execution" width="100%" height="auto"></img></p>
 
-* The executions can be filtered by task name and start time. You can also filter the executions by _Available_, _Completed_, or _All_.
+* The executions can be filtered by task name, workflow ID and start time. You can also filter the executions by _Available_, _Completed_, or _All_.
 * On the execution page, you can view the human task details, such as the task ID, Name (Task display name specified in the workflow definition), task state, assignee, claimant, etc.
 
 #### Admin search
@@ -305,6 +305,7 @@ If you are a cluster admin or task admin (workflow creator for the Human task), 
 | Start time | Filters based on the task execution time. |
 | Input data search | Filters based on the input data. |
 | Full-text search | Searches all data within the execution columns based on an “AND” and “OR” query. <p align="center"><img src="/content/img/full-text-search-human-task.png" alt="Full text view of human task executions" width="100%" height="auto"></img></p> For example, `“loan" OR "cc3d2dc-18d4-11ef-a811-8a584d19ffea"`. The search will return all results that contain either the text “loan” or the specific workflow ID “cc3d2dc-18d4-11ef-a811-8a584d19ffea”. To get results matching both criteria, use “AND” instead of “OR”. |
+| Workflow IDs | Filters based on the workflow execution IDs.|
 | Filter by actors | Filters based on Claimant or Assignee. |
 | Actor type | Filters based on the actor type for the selected actor. Supported values: <ul><li>Conductor User</li> <li>Conductor Group</li> <li>External User</li> <li>External Group</li> </ul> |
 | User/Group ID | Filters based on a particular user or group ID. |
