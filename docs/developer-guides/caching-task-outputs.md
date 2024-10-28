@@ -21,22 +21,116 @@ Configure the following parameters to enable task caching.
 | Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ------------------ |
 | cacheConfig. **ttlInSecond** | The time to live in seconds, which is the duration for the output to be cached. | Required. | 
-| cacheConfig. **key** | The cache key, which is a unique identifier for the cached output. <br/><br/> The key should be constructed as a string of dynamic task inputs, such as `${uri}-${method}`. | Required. | 
+| cacheConfig. **key** | The cache key is a unique identifier for the cached output and must be constructed exclusively from the task’s input parameters. <br/><br/> It can be a string concatenation that contains the task’s input keys, such as `${uri}-${method}` or `re_${uri}_${method}`. | Required. | 
 
 **Example**
 
-``` json
-//task configuration
+Here is a straightforward example of task caching using the task’s input keys, `url` and `mediaType`.
 
-  "cacheConfig": {
-    "ttlInSecond": 36000,
-    "key": "${uri}-${method}"
-  }
+```json
+// workflow definition
+{
+  ...
+  "tasks": [
+    {
+      "name": "get_document",
+      "taskReferenceName": "get_document_ref",
+      "inputParameters": {
+        "url": "${workflow.input.url}",
+        "mediaType": "application/pdf"
+      },
+      "type": "GET_DOCUMENT",
+      "cacheConfig": {
+        "key": "${url}-${mediaType}",
+        "ttlInSecond": 60
+      }
+    }
+  ],
+  "inputParameters": [
+    "url"
+  ],
+  "outputParameters": {},
+  "schemaVersion": 2
+}
+```
+
+In advanced cases where other parameters (such as workflow inputs or global variables) must be included in the `cacheConfig.key`, you must pass these parameters into the task’s `inputParameters` first.
+
+```json
+{
+  ...
+  "tasks": [
+    {
+      "name": "get_document",
+      "taskReferenceName": "get_document_ref",
+      "inputParameters": {
+        "url": "${workflow.input.url}",
+        "mediaType": "application/pdf",
+        "id": "${workflow.input.userId}"
+      },
+      "type": "GET_DOCUMENT",
+      "cacheConfig": {
+        "key": "${url}-${id}",
+        "ttlInSecond": 60
+      }
+    }
+  ],
+  "inputParameters": [
+    "url",
+    "userId"
+  ],
+  "outputParameters": {},
+  "schemaVersion": 2
+}
+```
+
+Example of passing as a variable through the Set Variable task:
+
+```json
+// workflow definition
+{
+  ...
+  "tasks": [
+    {
+      "name": "set_variable",
+      "taskReferenceName": "set_variable_ref",
+      "type": "SET_VARIABLE",
+      "inputParameters": {
+        "region": "${workflow.input.location}"
+      }
+    },
+    {
+      "name": "http",
+      "taskReferenceName": "http_ref",
+      "inputParameters": {
+        "uri": "https://orkes-api-tester.orkesconductor.com/api",
+        "method": "GET",
+        "accept": "application/json",
+        "contentType": "application/json",
+        "encode": true,
+        "body": {
+          "cacheKey": "${workflow.variables.region}",
+          "someUnrelated": "Some-val-qvw4g"
+        }
+      },
+      "type": "HTTP",
+      "cacheConfig": {
+        "key": "re_${body.cacheKey}",
+        "ttlInSecond": 60
+      }
+    }
+  ],
+  "inputParameters": [
+    "location"
+  ],
+  "outputParameters": {},
+  "schemaVersion": 2
+}
 ```
 
 ## Task behavior with caching
 
-Before a task is scheduled, the server checks if there is cached output for the given task definition name by matching the cache key. If a match is found, the task does not get scheduled, and the cached output is used to complete the task.
+Before a task is scheduled, the server checks if there is cached output for the given task definition name by matching the cache key. If a match is found, the task is not scheduled, and the cached output is used to complete it.
 
 If no cached output is found, the task is scheduled as usual. When the task is completed successfully, the output is cached against the cache key for the duration specified.
 
