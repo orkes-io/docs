@@ -58,7 +58,7 @@ Once the workflow is created, the next step is to create a webhook.
 
 <p align="center"><img src="/content/img/Webhook-with-a-verified-URL-in-Conductor.png" alt="Webhook with a verified UR" width="100%" height="auto"></img></p>
 
-This is the task confoguration for a Wait for Webhook task.
+This is the task configuration for a Wait for Webhook task.
 
 ```json
 {
