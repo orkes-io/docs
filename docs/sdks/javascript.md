@@ -1,5 +1,5 @@
 
-# Orkes Conductor JavaScript SDK
+# JavaScript SDK
 
 Orkes Conductor JavaScript SDK is maintained here: https://github.com/conductor-sdk/conductor-javascript
 

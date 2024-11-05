@@ -1,5 +1,5 @@
 
-# Orkes Conductor Python SDK
+# Python SDK
 
 Orkes Conductor Python SDK is maintained here: https://github.com/conductor-sdk/conductor-python.
 
