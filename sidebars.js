@@ -87,6 +87,12 @@ const sidebars = {
                         {
                             type: 'category',
                             label: 'Inputs/Outputs',
+                            link: {
+                                type: 'generated-index',
+                                title: 'Inputs/Outputs',
+                                description: 'Learn how to configure input/output parameters to be used in workflows.',
+                                slug: '/inputs-outputs'
+                            },
                             items: [
                                 'developer-guides/passing-inputs-to-task-in-conductor',
                                 'developer-guides/schema-validation',
@@ -99,6 +105,12 @@ const sidebars = {
                         {
                             type: 'category',
                             label: 'Workers',
+                            link: {
+                                type: 'generated-index',
+                                title: 'Workers',
+                                description: 'Learn how to configure, manage, and optimize workers to efficiently execute tasks and improve workflow performance in Conductor.',
+                                slug: '/workers'
+                            },
                             items: [
                                 'developer-guides/using-workers',
                                 'developer-guides/task-to-domain',
@@ -110,6 +122,12 @@ const sidebars = {
                         {
                             type: 'category',
                             label: 'AI Orchestration',
+                            link: {
+                                type: 'generated-index',
+                                title: 'AI Orchestration',
+                                description: 'Learn how to orchestrate AI-driven workflows in Orkes Conductor, from quick setup to using Large Language Models (LLMs), vector databases, and prompt templates for building GenAI applications.',
+                                slug: '/ai-orchestration'
+                            },
                             items: [
                                 {
                                     type: 'doc',
