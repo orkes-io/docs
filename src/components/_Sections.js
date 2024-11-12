@@ -356,8 +356,6 @@ export const VideoSection = ({}) => (
           <div className={styles.videoColumn} key={index}>
             <iframe
               className={styles.customIframe}
-              width="100%"
-              height="230px"
               src={item.src}
               allowfullscreen="allowfullscreen"
               mozallowfullscreen="mozallowfullscreen"
