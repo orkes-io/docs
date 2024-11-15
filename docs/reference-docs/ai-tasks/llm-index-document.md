@@ -22,7 +22,7 @@ Configure these parameters for the LLM Index Document task.
 | inputParameters.**embeddingModelProvider** | The LLM provider for generating the embeddings.<br/><br/>**Note**: If you haven’t configured your AI/LLM provider on your Orkes console, navigate to the **Integrations** tab and configure your required provider. Refer to the documentation on [how to integrate the LLM providers with Orkes Conductor](https://orkes.io/content/category/integrations/ai-llm). | Required. |
 | inputParameters.**embeddingModel** | The embedding model provided by the selected LLM provider to generate the embeddings. | Required. |
 | inputParameters.**url** | The URL of the file to be indexed. | Required. |
-| inputParameters.**mediaType** | The media type of the file to be indexed. Supported media types:ul> <li>application/pdf</li> <li>text/html</li> <li>text/plain</li> <li>application/json</li> </ul> | Optional. | 
+| inputParameters.**mediaType** | The media type of the file to be indexed. Supported media types: <ul> <li>application/pdf</li> <li>text/html</li> <li>text/plain</li> <li>application/json</li> </ul> | Optional. | 
 | inputParameters.**chunkSize** | The length of each input text segment when divided for processing by the LLM. For example, if the document contains 2,000 words and the chunk size is set to 500, the document is divided into four chunks for processing. | Optional. | 
 | inputParameters.**chunkOverlap** | The overlap between adjacent chunks. For example, if the chunk overlap is specified as 100, then the first 100 words of each chunk would overlap with the last 100 words of the previous chunk. | Optional. | 
 
