@@ -236,36 +236,42 @@ export const SDKList = ({}) => (
       <img
         src="/content/img/java.svg"
         style={{ height: 75, width: 75, margin: 5 }}
+        alt="Java SDK"
       />
     </a>
     <a className={"aClass"} href={"/content/sdks/python"}>
       <img
         src="/content/img/Python_logo.svg"
         style={{ height: 75, width: 75, margin: 5 }}
+        alt="Python SDK"
       />
     </a>
     <a className={"aClass"} href={"/content/sdks/csharp"}>
       <img
         src="/content/img/csharp.png"
         style={{ height: 75, width: 75, margin: 5 }}
+        alt="C# SDK"
       />
     </a>
     <a className={"aClass"} href={"/content/sdks/javascript"}>
       <img
         src="/content/img/JavaScript_logo_2.svg"
         style={{ height: 75, width: 75, margin: 5 }}
+        alt="JavaScript SDK"
       />
     </a>
     <a className={"aClass"} href={"/content/sdks/golang"}>
       <img
         src="/content/img/Go_Logo_Blue.svg"
         style={{ height: 75, width: 75, margin: 5 }}
+        alt="Go SDK"
       />
     </a>
     <a className={"aClass"} href={"/content/sdks/clojure"}>
       <img
         src="/content/img/clojure.png"
         style={{ height: 75, width: 75, margin: 5 }}
+        alt="Clojure SDK"
       />
     </a>
   </div>
