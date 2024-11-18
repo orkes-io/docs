@@ -45,27 +45,27 @@ const useCases = [
   {
     title: "Microservices Orchestration",
     image: "/content/img/usecases/microservices.svg",
-    alt: "microservices orchestration",
+    alt: "Microservices Orchestration",
   },
   {
     title: "API Orchestration",
     image: "/content/img/usecases/api.svg",
-    alt: "API orchestration",
+    alt: "API Orchestration",
   },
   {
     title: "Data Pipeline Orchestration",
     image: "/content/img/usecases/cicd.svg",
-    alt: "data pipeline",
+    alt: "Data Pipeline Orchestration",
   },
   {
     title: "Orchestrate Human Flows",
     image: "/content/img/usecases/humanflows.svg",
-    alt: "human flows",
+    alt: "Orchestrate Human Flows",
   },
   {
     title: "Event Driven Orchestration",
     image: "/content/img/usecases/events.svg",
-    alt: "event orchestration",
+    alt: "Event Driven Orchestration",
   },
 ];
 
