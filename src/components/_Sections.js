@@ -45,22 +45,27 @@ const useCases = [
   {
     title: "Microservices Orchestration",
     image: "/content/img/usecases/microservices.svg",
+    alt: "microservices orchestration",
   },
   {
     title: "API Orchestration",
     image: "/content/img/usecases/api.svg",
+    alt: "API orchestration",
   },
   {
     title: "Data Pipeline Orchestration",
     image: "/content/img/usecases/cicd.svg",
+    alt: "data pipeline",
   },
   {
     title: "Orchestrate Human Flows",
     image: "/content/img/usecases/humanflows.svg",
+    alt: "human flows",
   },
   {
     title: "Event Driven Orchestration",
     image: "/content/img/usecases/events.svg",
+    alt: "event orchestration",
   },
 ];
 
@@ -108,7 +113,8 @@ const accordionData = [
   {
     title: "Integrate With Applications",
     description: "Integrate the workflows into your application using SDKs.",
-    image: "/content/img/what-conductor-can-do/8_Integrate-With-Applications.png",
+    image:
+      "/content/img/what-conductor-can-do/8_Integrate-With-Applications.png",
   },
   {
     title: "Debug Visually",
@@ -226,50 +232,41 @@ const IconHeader = ({ icon, header }) => (
 
 export const SDKList = ({}) => (
   <div className={styles.sdklist}>
-    <a
-      className={"aClass"}
-      href={"/content/sdks/java"}
-    >
-      <img src="/content/img/java.svg" style={{ height: 75, width: 75, margin: 5 }} />
+    <a className={"aClass"} href={"/content/sdks/java"}>
+      <img
+        src="/content/img/java.svg"
+        style={{ height: 75, width: 75, margin: 5 }}
+      />
     </a>
-    <a
-      className={"aClass"}
-      href={"/content/sdks/python"}
-    >
+    <a className={"aClass"} href={"/content/sdks/python"}>
       <img
         src="/content/img/Python_logo.svg"
         style={{ height: 75, width: 75, margin: 5 }}
       />
     </a>
-    <a
-      className={"aClass"}
-      href={"/content/sdks/csharp"}
-    >
-      <img src="/content/img/csharp.png" style={{ height: 75, width: 75, margin: 5 }} />
+    <a className={"aClass"} href={"/content/sdks/csharp"}>
+      <img
+        src="/content/img/csharp.png"
+        style={{ height: 75, width: 75, margin: 5 }}
+      />
     </a>
-    <a
-      className={"aClass"}
-      href={"/content/sdks/javascript"}
-    >
+    <a className={"aClass"} href={"/content/sdks/javascript"}>
       <img
         src="/content/img/JavaScript_logo_2.svg"
         style={{ height: 75, width: 75, margin: 5 }}
       />
     </a>
-    <a
-      className={"aClass"}
-      href={"/content/sdks/golang"}
-    >
+    <a className={"aClass"} href={"/content/sdks/golang"}>
       <img
         src="/content/img/Go_Logo_Blue.svg"
         style={{ height: 75, width: 75, margin: 5 }}
       />
     </a>
-    <a
-      className={"aClass"}
-      href={"/content/sdks/clojure"}
-    >
-      <img src="/content/img/clojure.png" style={{ height: 75, width: 75, margin: 5 }} />
+    <a className={"aClass"} href={"/content/sdks/clojure"}>
+      <img
+        src="/content/img/clojure.png"
+        style={{ height: 75, width: 75, margin: 5 }}
+      />
     </a>
   </div>
 );
@@ -377,7 +374,7 @@ export const UseCasesSection = ({}) => (
       {useCases &&
         useCases.map((item, index) => (
           <div className={styles.useCase} key={index}>
-            <img src={item.image}></img>
+            <img src={item.image} alt={item.alt}></img>
             <div className={styles.useCaseTitle}>{item.title}</div>
           </div>
         ))}
