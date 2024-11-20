@@ -1,3 +1,8 @@
+---
+slug: "/access-control-and-security/tags"
+description: "Use tags to group tasks, workflows, schedulers, or secrets and easily share these tags with a group of users with the correct permissions."
+---
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
