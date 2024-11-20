@@ -1,3 +1,8 @@
+---
+slug: "/access-control-and-security/applications"
+description: "Use applications to manage secure access for all connections to your Conductor cluster."
+---
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 

@@ -113,9 +113,9 @@ const sidebars = {
                             },
                             items: [
                                 'developer-guides/using-workers',
-                                'developer-guides/task-to-domain',
                                 'developer-guides/monitoring-task-queues',
                                 'developer-guides/scaling-workers',
+                                'developer-guides/task-to-domain',
                             ],
                             collapsible: false,
                         },

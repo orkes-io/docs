@@ -1,5 +1,6 @@
 ---
 slug: /category/access-control-and-security
+description: "This guide focuses on how to configure Conductor features for access control and security, including applications, users, groups, and tags."
 ---
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
