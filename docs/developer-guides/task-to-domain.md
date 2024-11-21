@@ -3,50 +3,47 @@
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
+In Conductor, tasks are executed by workers, and the Conductor server manages task distribution through a task queue. The **task-to-domain** feature allows tasks to be routed to specific sets of workers based on domain labels. This gives you finer control over task execution, enabling you to assign tasks to workers with specific capabilities, permissions, or configurations.
 
-Typically, for each configured task type - Conductor server will maintain a queue and will distribute task work to all the 
-workers connected to the server, as shown in this diagram:
+## What is task-to-domain?
 
-<p align="center"><img src="/content/img/task-routing.png" alt="Task to domain example workflow" width="90%"
+Task-to-domain is a concept that allows you to route task executions to a specific pool of workers via domain mapping. The domain is an arbitrary string that can be freely defined so that you can split your task traffic by application, client type, and so on.
+
+To better understand the concept of routing tasks, consider an example task, `send_email`. By default, the task queue distributes this task to all available workers, as shown:
+
+<p align="center"><img src="/content/img/task-routing.png" alt="Task distribution by default" width="90%"
                        height="auto"/></p>
 
-Conductor supports a feature where the same task can be routed to a different set of workers based on a concept called as **Task-to-domain**. This value is supplied to the workflow when triggered, and if present, it routes the tasks in a different way than usual. This is illustrated as shown below.
+To route this task to a specific group of workers, you can assign it a domain when triggering the workflow. The task is then routed only to workers configured for that domain.
 
-<p align="center"><img src="/content/img/task-routing-domains.png" alt="Task to domain example workflow" width="90%"
+<p align="center"><img src="/content/img/task-routing-domains.png" alt="Task distribution via dedicated domains" width="90%"
                        height="auto"/></p>
 
+Here, the `send_email` task has two additional sets of worker instances that listen to specific domain-based tasks. For example, all the tasks triggered with domain `dedicated_for_app_x` are sent to the workers configured with domain `dedicated_for_app_x`.
 
+The task-to-domain feature is useful in the following scenarios:
+* Ensuring that the task is routed to a worker with the appropriate permissions.
+* Load balancing or prioritizing some tasks with a set of dedicated workers.
+* Implementing unique task-related configuration by domain, such as retry policy.
+* Debugging a task with a worker deployed on a local machine or a worker running a different version of the code.
 
-Here - task type __send_email__ has two additional sets of worker instances listening to specific domain-based tasks. Domains are nothing but a label that connects the task work to the worker instance. For example, all the tasks with domain `dedicated_for_app_x` are sent to the workers configured with domain `dedicated_for_app_x`.
+While these use cases can be achieved by creating separate task definitions, task-to-domain is more flexible. For example, in production environments, instead of creating new task definitions, you can use the same task definition while customizing routing based on the domain.
 
-:::tip
-The Task-to-domain is the concept of limiting the task execution only to a specific worker via domain mapping. The domain name can be an arbitrary string.
-:::
-
-This feature can be really useful in the following scenarios:
-
-* Ensuring that the work is routed to a worker with the appropriate permissions 
-* Load balancing or prioritizing some tasks with a set of dedicated workers
-* Implementing unique behaviors by domain
-* Debugging a task with a worker deployed on a local machine or a worker running a different version of the code than the regular one
-
-All of these cases can also be done using a unique task name, and the domain is just an alternative way. Instead of creating new tasks, we can use the same task name and still have custom routing based on the domain.
-
-
-## Using Task-to-domain
+## Routing tasks using task-to-domain​
 
 To successfully route a task by domain:
 
-1. Configure your workers to start polling for work that is tagged by the domain.
-2. When triggering the workflow, ensure the __taskToDomain__ map is set to the right mapping values.
+1. Configure workers to poll for tasks mapped to a specific domain.
+2. When triggering the workflow, ensure `taskToDomain` is mapped to the correct domain.
 
-### Configuring Workers with Domain
+### Worker configuration
 
-Let's configure the workers with a domain label called `test`. Every worker polling for `taskName` will use `test` as domain.
+Workers must be configured to listen for tasks mapped with a specific domain. Below are examples demonstrating how to set up workers to poll for tasks in the `test` domain across various programming languages:
 
 <Tabs>
 <TabItem value="Java" label="Java">
-The following table shows the order of precedence when initializing the task domain for a worker. If a system property is set according to the table below, it takes priority over the initialization of the taskToDomain map or passing the domain as an argument when using annotations. If <b>&#36;&#123;TASK_NAME&#125;</b> is replaced by all in the system property name, then all workers will pickup that task domain.
+
+The following table shows the order of precedence when initializing the task domain for a worker. Suppose a system property is set according to the table below. In that case, it takes priority over initializing the taskToDomain map or passing the domain as an argument when using annotations. If `${TASK_NAME}` is replaced by `all` in the system property name, then all workers will pick up that task domain.
 
 <br></br>
 
@@ -57,7 +54,7 @@ The following table shows the order of precedence when initializing the task dom
 | Class `TaskRunner` constructor param       | `taskToDomain`                         | `taskToDomain=Map.of("taskName", "test")`      |
 | Annotation `@WorkerTask` constructor param | `domain`                               | `@WorkerTask(value="taskName", domain="test")` |
 
-Code example for `TaskRunner`:
+**Code example for `TaskRunner`**:
 ```java
 Map<String, String> taskToDomains = new HashMap<>();
 taskToDomains.put("taskName", "test");
@@ -68,9 +65,7 @@ TaskRunnerConfigurer taskRunner = builder.withTaskToDomain(taskToDomains).build(
 
 ```
 
-<br></br>
-
-Code example for `@WorkerTask`:
+**Code example for `@WorkerTask`**:
 ```java
 @WorkerTask(value="taskName", domain="test")
 public TaskResult sendAnnotatedTaskDomain(Task task) {
@@ -81,7 +76,7 @@ public TaskResult sendAnnotatedTaskDomain(Task task) {
 
 ```
 
-View the [complete code here](https://github.com/orkes-io/orkes-conductor-client/blob/main/example/java/io/orkes/conductor/sdk/examples/TaskDomainWorker.java).
+In the example above, we map the task `taskName` to the domain `test`. Only workers configured to poll for the `test` domain will execute the task when the workflow is triggered. [See the complete code here](https://github.com/orkes-io/orkes-conductor-client/blob/main/examples/java/io/orkes/conductor/sdk/examples/TaskDomainWorker.java).
 
 </TabItem>
 <TabItem value="Python" label="Python">
@@ -136,25 +131,7 @@ def startTaskRunnerWorkers():
     ]
 ```
 
-[View More Details](https://github.com/conductor-sdk/conductor-python/tree/main/docs/worker)
-
-</TabItem>
-<TabItem value="Go" label="Go">
-
-TODO: Coming soon
-
-</TabItem>
-<TabItem value="CSharp" label="C#">
-
-TODO: Coming soon
-
-</TabItem>
-
-<TabItem value="Clojure" label="Clojure">
-
-```clojure
-(runner-executer-for-workers options [worker] 1 {:domain 'some-domain'})
-```
+In this example, we configure the `SimpleWorker` to listen for tasks with the `test` domain by implementing the `get_domain()` method. [See additional examples](https://github.com/conductor-sdk/conductor-python/tree/main/docs/worker#task-domains).
 
 </TabItem>
 <TabItem value="JavaScript" label="JavaScript">
@@ -223,13 +200,33 @@ new TaskManager(
 // *Note* worker domain has precedence over the domain passed in the poller 
 ```
 </TabItem>
+<TabItem value="Clojure" label="Clojure">
 
+```clojure
+(runner-executer-for-workers options [worker] 1 {:domain 'some-domain'})
+```
+
+</TabItem>
 </Tabs>
 
 
-### Specifying Domain while Invoking Workflow
+### Workflow configuration
 
-When we start/run a workflow, we can specify which tasks must run on which domains. To run the workflow with tasks routed to the domain-based worker, we can specify the following task-to-domain mapping:
+When you start a workflow, you can specify which tasks must run on which domains. 
+
+<Tabs>
+<TabItem value="Using API" label="Using API">
+
+Use the [Start Workflow Execution API](https://orkes.io/content/reference-docs/api/workflow/start-workflow-execution) to trigger the workflow by providing the `taskToDomain` as the input payload.
+
+```
+POST /api/workflow/{name}
+```
+
+</TabItem>
+<TabItem value="Using Conductor UI" label="Using Conductor UI">
+
+For running a workflow from the Conductor UI,  define the following task-to-domain mapping:
 
 ```json
 { 
@@ -237,48 +234,69 @@ When we start/run a workflow, we can specify which tasks must run on which domai
 }
 ```
 
-While running the workflow, you can provide the task-to-domain mapping as shown in the following image:
-
 <p align="center"><img src="/content/img/task-to-domain.png" alt="Task To Domain mapping while invoking workflows" width="100%" height="auto"></img></p>
 
-## Fallback Task-to-domain
+</TabItem>
+</Tabs>
 
-Another feature of domains is that you can specify a fallback domain. The concept is simple as follows:
+### RBAC configuration
 
-```javascript
+While configuring groups or applications in Conductor, you can add granular permissions to access specific resources. This includes granting permission to specific domains and allowing applications or groups to execute all tasks under that domain by eliminating the need to configure access for individual tasks.
+
+To enable domain permissions:
+
+1. Go to **Access Control** > **Applications/Groups** in the left menu on your Conductor cluster.
+2. Select your application or group.
+3. Scroll down to **Permissions**, and select **(+) Add Permission**.
+4. Under the **Domain** tab, select **(+) Add**, and enter the domain name.
+5. Enable the **Execute** toggle.
+6. Select **Add Permissions**.
+
+The application/group can now execute all tasks under the specified domain. 
+
+## Fallback task-to-domain​
+
+A fallback domain is a secondary or backup domain that the system will use if the primary domain fails or is unreachable. These domains can only be specified when triggering a workflow, as clients polling for tasks can use only one domain at a time.
+
+The Conductor tracks each worker's last polling time. When assigning tasks, it first checks if any active workers (those who polled within the last x seconds) are available for the primary domain. If no active workers are found, the Conductor tries the next domain in the fallback sequence.
+
+A fallback mapping for `task_x’ is as follows:
+
+```json
 {
     "task_x": "test,fallback,NO_DOMAIN"
 }
 ```
 
-Conductor will try to route to task workers with domain `test` if available, and if not, will try domain `fallback` and subsequently to workers with no domain.
+In this configuration, 
+* Conductor first assigns the task to workers in the `test` domain if available.
+* If no workers are active in the `test` domain, it tries the `fallback` domain.
+* If neither `test` nor  `fallback` have active workers, the task is assigned to `NO_DOMAIN`.
 
-:::tip
-NO_DOMAIN is a keyword that means workers with no domain.
+:::note Notes
+* `NO_DOMAIN` is a generic keyword for workers with no domain.
+* Always use `NO_DOMAIN` as the final fallback option.
+* If `NO_DOMAIN` is not included, the task falls back to subsequent domains. If it reaches an inactive domain, it remains there indefinitely until workers for that domain become active.
+* Use the `*` token to apply domains for all tasks. This can be overridden by providing task-specific mappings along with `*`.
 :::
 
-In terms of the order of domains: 
-* If **NO_DOMAIN** is provided as the last token in the list of domains, then no domain is set for the tasks.
-* Otherwise, the task will be added to the last inactive domain in the list of domains, hoping that workers will soon be available for that domain.
+## Example
+<details><summary>Using fallback domain</summary>
+In this example, we’ll assume the `taskToDomain` mapping is as follows:
 
-Also, a `*` token can be used to apply domains for all tasks. This can be overridden by providing task-specific mappings along with `*`.
-
-In this example, 
 ```json
 "taskToDomain": {
-   "*": "mydomain",
-   "task-a": "NO_DOMAIN",
-   "task-b": "abc, NO_DOMAIN",
-   "task-c": "someInactiveDomain1, someInactiveDomain2"
+  "*": "mydomain",
+  "task-a": "NO_DOMAIN",
+  "task-b": "abc, NO_DOMAIN",
+  "task-c": "someInactiveDomain1, someInactiveDomain2"
 }
 ```
 
-* Task **task-a** is put in the default queue (no domain).
-* Task **task-b** is put in the **abc** domain, if available, or in default otherwise.
-* Task **task-c** is put in **someInactiveDomain2**, even though workers are unavailable.
-* All other tasks in this workflow are put in **mydomain**.
+Here,
+* The `task-a` is routed to the `NO_DOMAIN` queue, meaning it doesn't have an assigned domain.
+* The `task-b` is routed first to the `abc` domain if available, or otherwise to the default domain (`NO_DOMAIN`).
+* The `task-c` is routed to the `someInactiveDomain1` and then to the `someInactiveDomain2`, but these are inactive, so they may not be processed in these domains.
+* All other tasks in this workflow are routed to `mydomain`.
 
-:::note
-* The "fallback" domain strings can only be used when starting the workflow. When polling from the client, only one domain is used.
-* The **NO_DOMAIN** token should be used last.
-:::
+</details>
