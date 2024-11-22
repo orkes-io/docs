@@ -92,8 +92,8 @@ python3 -m pip install conductor-python
 
 **For Gradle:**
 ``` java
-implementation 'org.conductoross:conductor-client:4.0.0'
-implementation 'io.orkes:orkes-conductor-client:4.0.0'
+implementation 'org.conductoross:conductor-client:4.0.1'
+implementation 'io.orkes.conductor:orkes-conductor-client:4.0.1' 
 ```
 
 **For Maven:**
@@ -101,12 +101,12 @@ implementation 'io.orkes:orkes-conductor-client:4.0.0'
 <dependency>
     <groupId>org.conductoross</groupId>
     <artifactId>conductor-client</artifactId>
-    <version>4.0.0</version>
+    <version>4.0.1</version>
 </dependency>
 <dependency>
     <groupId>io.orkes</groupId>
     <artifactId>orkes-conductor-client</artifactId>
-    <version>4.0.0</version>
+    <version>4.0.1</version>
 </dependency>
 ```
 
@@ -385,12 +385,7 @@ For well-defined access controls, your worker application should be kept separat
       <p align="center"><img src="/content/img/using-workers/using_workers-application_roles.png" alt="Add worker to application account in Orkes Platform" width="100%" height="auto"></img></p>
 2. Get the application access key for your worker project.
     1. Under Access Keys, select **Create access key** and store your credentials securely.
-    2. Set the Key ID and Key Secret in your project environment variables.
-        ``` bash
-        export CONDUCTOR_SERVER_URL=<SERVER_URL> // eg: https://play.orkes.io/api
-        export CONDUCTOR_AUTH_KEY=<KEY_ID>
-        export CONDUCTOR_AUTH_SECRET=<KEY_SECRET>
-        ```
+    2. Set the Key ID and Key Secret in your project.
 3. Grant Execute permission to the application.
     1. Under Permissions, select **Add permission**.
     2. Select the **Task** tab and then your worker task.
@@ -469,7 +464,7 @@ Refer to the [Create Workflow Definition](../reference-docs/api/metadata/creatin
 ### Run workflow
 
 Run the workflow to ensure that your worker has started successfully. If not, return to the previous steps and verify that all details have been entered correctly, such as:
-* **Server URL, Key ID, and Key Secret**— Added to your environment variables.
+* **Server URL, Key ID, and Key Secret**—Set in your worker project.
 * **Execute permissions**—Added for the worker task in your application account.
 * (if applicable) **Domain**—The domain in your code matches the domain used during workflow execution and in the application permissions.
 
