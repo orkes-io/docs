@@ -67,13 +67,28 @@ const sidebars = {
         },
         {
             type: 'category',
+            label: 'Conceptual Guides',
+            link: {
+                type: 'generated-index',
+                title: 'Conceptual Guides',
+                slug: '/category/conceptual-guides',
+            },
+            className: 'leftMenuHeader',
+            items: [
+                'conceptual-guides/workflow-and-task-status',
+            ]
+        },
+        {
+            type: 'category',
             label: 'Developer Guides',
             link: {
                 type: 'generated-index',
                 title: 'Developer Guides',
                 slug: '/category/developer-guides',
-                keywords: ['guides', 'features', 'developer-guides']
             },
+            className: 'leftMenuHeader',
+            collapsible: true,
+            collapsed: false,
             items: [
                 {
                     type: 'category',
@@ -174,7 +189,6 @@ const sidebars = {
                     },
                     className: 'leftMenuHeader',
                     items: [
-                        'developer-guides/task-and-workflow-status-in-conductor',
                         'developer-guides/scheduling-workflows',
                         'developer-guides/sending-signals-to-workflows',
                     ]
@@ -479,9 +493,6 @@ const sidebars = {
                     ],
                 },
             ],
-            collapsible: true,
-            collapsed: false,
-            className: 'leftMenuHeader',
         },
         {
             type: 'category',
