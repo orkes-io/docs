@@ -417,7 +417,7 @@ Follow along to build your first workflow, which is a conditional notification f
 2. The next task will evaluate the user information based on a set criteria. In this case, we want the workflow to send a notification only if the user is located in United States.
     1. Add a Switch task to the workflow.
     2. Enter the task name `user-criteria` in **Task definition**.
-    3. Set the evaluation criteria to `Value-Param` and enter the evaluation cases in **Switch cases**. In this case, select **Add more switch cases** and enter United States. This creates a new branch, where its tasks are only executed if the evaluation criteria is met. \
+    3. Set the evaluation criteria to `Value-Param` and enter the evaluation cases in **Switch cases**. In this case, select **Add more switch cases** and enter United States. This creates a new branch, where its tasks are only executed if the evaluation criteria is met.
         The parameter to be evaluated will be `switchCaseValue`, which will be wired to a variable input based on the previous `get-user` task output.
     4. To do so, in Script params, enter `${get-user_ref.output.response.body.results[0].location.country}` as the value for switchCaseValue. This is a dynamic variable, which is expressed in JSONPath syntax.
 3. The final task will send a notification to the user if they are located in United States.

@@ -76,7 +76,7 @@ In most common cases, you can make use of existing Conductor features instead of
 | Orchestrate human input in the loop        | [Human](../reference-docs/operators/human)      |
 | Query data from Conductor Search API or Metrics         | [Query Processor](../reference-docs/system-tasks/query-processor)      |
 | Send alerts to Opsgenie                    | [Opsgenie](../reference-docs/system-tasks/opsgenie)      |
-| Retrieve text or JSON content from a URL  | [Get Document](../reference-docs/system-tasks/opsgenie)      |
+| Retrieve text or JSON content from a URL  | [Get Document](../reference-docs/ai-tasks/llm-get-document)      |
 | Generate text embeddings                   | [Generate Embeddings](../reference-docs/ai-tasks/llm-generate-embeddings)      |
 | Store text embeddings in a vector database | [Store Embeddings](../reference-docs/ai-tasks/llm-store-embeddings)      |
 | Generate and store text embeddings in a vector database  | [Index Text](../reference-docs/ai-tasks/llm-index-text)      |
@@ -142,7 +142,7 @@ The workflow definition contains configuration parameters that define the workfl
 
 | Parameter     | Description                                                                                                                                                                                                | Required/ Optional |
 | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
-| name               | Workflow name. <ul><li>For v4.0.1 and prior: Only letters, digits, hyphens (-), and underscores (\_) are allowed.</li>   <li>For v4.0.2 and later: Only letters, digits, spaces, hyphens (-), underscores (\_), and certain special characters (<, >, {, }, #) are allowed.</li></ul> | Required. |
+| name               | Workflow name. <ul><li>For v4.0.1 and prior: Only letters, digits, hyphens (-), and underscores (\_) are allowed.</li>   <li>For v4.0.2 and later: Only letters, digits, spaces, hyphens (-), underscores (\_), and certain special characters (`<`, `>`, `{`, `}`, `#`) are allowed.</li></ul> | Required. |
 | description        | ​Workflow description.                                       | Required. |
 | version            | Workflow version.      | Required. |
 | tasks              | Array of [task configuration](building-workflows#task-configuration) objects.           | Required. |
@@ -151,7 +151,7 @@ The workflow definition contains configuration parameters that define the workfl
 | schemaVersion      | Version of Conductor’s JSON format. Must be 2.    | Required. |
 | restartable        | Whether the workflow is allowed to restart. The default value is true. <br/><br/> Set to false if restarting a completed workflow causes side effects.            | Optional. |
 | workflowStatusListenerEnabled  | Whether to enable a workflow status listener. The default value is false.                                       | Optional. |
-| ownerEmail         | The Conductor ID of the workflow creator.                   | Required. |
+| ownerEmail         | The email ID of the workflow creator.                   | Required. |
 | timeoutPolicy      | The workflow timeout policy.                                | Optional. |
 | timeoutSeconds     | The timeout, in seconds, after which the workflow will be set as TIMED_OUT if it hasn't reached a terminal state. <br/><br/> Set to 0 for no timeouts.                                    | Optional. |
 | failureWorkflow        | The compensation flow upon workflow failure. Useful for cleanup, notifications, or post actions.                                    | Optional. |
