@@ -13,7 +13,7 @@ To monitor task queues:
 <p align="center"><img src="/content/img/task-queue-monitor-view.png" alt="Monitoring Task Queues in Conductor" width="100%" height="auto"></img></p>
 
 The Queue Monitor page displays the following information:
-
+- **Queue Name** : The name of the task queued for execution.
 - **Queue Size** : The number of tasks waiting to be executed.
 - **Worker Count** : The number of worker instances polling for tasks.
 - **Last Poll Time** : The time the task was last polled.
@@ -26,7 +26,7 @@ To view worker details for a specific task queue:
 
 1. Select the desired task queue from the list in the **Queue Monitor**.
 2. Scroll down to the **Worker** section for details about the worker's polling tasks. This includes:
-    - Worker name
+    - The worker polling for the task
     - Task-to-domain mapping (if applicable)
     - Last poll time
 
