@@ -122,11 +122,11 @@ The action to mark a task as completed. There are two methods for marking a task
 
 | Parameter | Description | Required/Optional |
 | --------- | ----------- | ----------------- |
-| actions.**action** | The action to be triggered on receiving events. Set this to `complete_task`.| Required.|
-| actions.complete_task.**workflowId** | The ID of the workflow that contains the task to be completed. | Required if using `workflowId` and `taskRefName`method. |
-| actions.complete_task.**taskRefName** | The reference name of the task to be marked as completed. | Required if using `workflowId` and `taskRefName`method. |
-| actions.complete_task.**taskId** | The task execution ID of the task to be marked as completed. | Required if using `taskId`method. |
-| actions.complete_task.**output** | The output data to be sent along with the completion. Can be string, number, boolean, null, or object/array. | Optional. | 
+| actions. **action** | The action to be triggered on receiving events. Set this to `complete_task`.| Required.|
+| actions. complete_task. **workflowId** | The ID of the workflow that contains the task to be completed. | Required if using `workflowId` and `taskRefName`method. |
+| actions. complete_task. **taskRefName** | The reference name of the task to be marked as completed. | Required if using `workflowId` and `taskRefName`method. |
+| actions. complete_task. **taskId** | The task execution ID of the task to be marked as completed. | Required if using `taskId`method. |
+| actions. complete_task. **output** | The output data to be sent along with the completion. Can be string, number, boolean, null, or object/array. | Optional. | 
 
 ### Terminate Workflow​
 
@@ -155,9 +155,9 @@ The action to terminate a running workflow.
 ```
 | Parameter | Description | Required/Optional | 
 | --------- | ----------- | ----------------- | 
-| actions.**action** | The action to be triggered on receiving events. Set this to `terminate_workflow`. | Required. | 
-| actions.terminate_workflow.**workflowId** | The ID of the workflow to be terminated. | Required. | 
-| actions.terminate_workflow.**terminationReason** | The reason for terminating the workflow. | Required. | 
+| actions. **action** | The action to be triggered on receiving events. Set this to `terminate_workflow`. | Required. | 
+| actions. terminate_workflow. **workflowId** | The ID of the workflow to be terminated. | Required. | 
+| actions. terminate_workflow. **terminationReason** | The reason for terminating the workflow. | Required. | 
 
 ### Update Variables​
 
@@ -190,10 +190,10 @@ The action to update variables in a running workflow. Useful for controlling inp
 
 | Parameter | Description | Required/Optional | 
 | --------- | ----------- | ----------------- | 
-| actions.**action** | The action to be triggered on receiving events. Set this to `update_workflow_variables`.| Required. | 
-| actions.update_workflow_variables.**workflowId** | The ID of the workflow whose variables need to be updated. | Required. | 
-| actions.update_workflow_variables.**appendArray** | If set to `true`, all list (array) variables in the workflow are appended with new values instead of being replaced. This can be used to collect data from a series of events into a single workflow. | Optional. | 
-| actions.update_workflow_variables.**variables** | The variables to be updated in the workflow. Can be string, number, boolean, null, or object/array. | Required.| 
+| actions. **action** | The action to be triggered on receiving events. Set this to `update_workflow_variables`.| Required. | 
+| actions. update_workflow_variables. **workflowId** | The ID of the workflow whose variables need to be updated. | Required. | 
+| actions. update_workflow_variables. **appendArray** | If set to `true`, all list (array) variables in the workflow are appended with new values instead of being replaced. This can be used to collect data from a series of events into a single workflow. | Optional. | 
+| actions. update_workflow_variables. **variables** | The variables to be updated in the workflow. Can be string, number, boolean, null, or object/array. | Required.| 
 
 ### Fail Task​
 
@@ -258,11 +258,11 @@ The action to mark a task as failed. There are two methods for marking a task as
 
 | Parameter | Description | Required/Optional | 
 | --------- | ----------- | ----------------- |
-| actions.**action** | The action to be triggered on receiving events. Set this to `fail_task`. | Required. | 
-| actions.complete_task.**workflowId** | The ID of the workflow that contains the task to be marked as failed. | Required if using `workflowId` and `taskRefName`method. |
-| actions.complete_task.**taskRefName** | The reference name of the task to be marked as failed. | Required if using `workflowId` and `taskRefName`method. | Required if using `workflowId` and `taskRefName`method. |
-| actions.complete_task.**taskId** | The task execution ID of the task to be marked as failed. | Required if using `taskId` method. |
-| actions.complete_task.**output** | The output data to be sent along with the completion. Can be string, number, boolean, null, or object/array. | Optional. | 
+| actions. **action** | The action to be triggered on receiving events. Set this to `fail_task`. | Required. | 
+| actions. complete_task. **workflowId** | The ID of the workflow that contains the task to be marked as failed. | Required if using `workflowId` and `taskRefName`method. |
+| actions. complete_task. **taskRefName** | The reference name of the task to be marked as failed. | Required if using `workflowId` and `taskRefName`method. | Required if using `workflowId` and `taskRefName`method. |
+| actions. complete_task. **taskId** | The task execution ID of the task to be marked as failed. | Required if using `taskId` method. |
+| actions. complete_task. **output** | The output data to be sent along with the completion. Can be string, number, boolean, null, or object/array. | Optional. | 
 
 ### Start Workflow
 
@@ -301,14 +301,14 @@ The action to start a new workflow instance.
 
 | Parameter | Description | Required/Optional | 
 | --------- | ----------- | ----------------- | 
-| actions.**action** | The action to be triggered on receiving events. Set this to `start_workflow`. | Required. | 
-| actions.start_workflow.**name** | The name of the workflow to be started. | Required. | 
-| actions.start_workflow.**version** | The version of the workflow to be started. | Required. | 
-| actions.start_workflow.**correlationId** | A unique identifier for the workflow execution, used for correlating related workflows. | Optional. | 
-| actions.start_workflow.**idempotencyKey** | A unique key to prevent conflicts with other workflow instances. | Optional. | 
-| actions.start_workflow.**idempotencyStrategy** | The idempotency strategy to determine how to handle duplicate requests. Supported values:<ul><li>**RETURN_EXISTING**–Return the `workflowId` of the existing workflow with the same idempotency key.</li><li>**FAIL**–The request will fail if a workflow with the same idempotency key has already been triggered.</li></ul> | Required if ‘idempotencyKey’ is used. | 
-| actions.start_workflow.**input** | The input data to be passed to the new workflow. Can be string, number, boolean, null, or object/array. | Optional. | 
-| actions.start_workflow.**taskToDomain** | A mapping of task reference names to domain-specific values to [route the task to defined workers](https://orkes.io/content/developer-guides/task-to-domain). | Optional. | 
+| actions. **action** | The action to be triggered on receiving events. Set this to `start_workflow`. | Required. | 
+| actions. start_workflow. **name** | The name of the workflow to be started. | Required. | 
+| actions. start_workflow. **version** | The version of the workflow to be started. | Required. | 
+| actions. start_workflow. **correlationId** | A unique identifier for the workflow execution, used for correlating related workflows. | Optional. | 
+| actions. start_workflow. **idempotencyKey** | A unique key to prevent conflicts with other workflow instances. | Optional. | 
+| actions. start_workflow. **idempotencyStrategy** | The idempotency strategy to determine how to handle duplicate requests. Supported values:<ul><li>**RETURN_EXISTING**–Return the `workflowId` of the existing workflow with the same idempotency key.</li><li>**FAIL**–The request will fail if a workflow with the same idempotency key has already been triggered.</li></ul> | Required if ‘idempotencyKey’ is used. | 
+| actions. start_workflow. **input** | The input data to be passed to the new workflow. Can be string, number, boolean, null, or object/array. | Optional. | 
+| actions. start_workflow. **taskToDomain** | A mapping of task reference names to domain-specific values to [route the task to defined workers](https://orkes.io/content/developer-guides/task-to-domain). | Optional. | 
 
 ## Event handler configuration
 
