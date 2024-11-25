@@ -54,7 +54,7 @@ curl -s https://raw.githubusercontent.com/orkes-io/orkes-templates/main/document
 
 ### Step 3: Create an AI Prompt
 
-1. Navigate to **AI Prompts** from the left menu.
+1. Navigate to **Definitions** > **AI Prompts** from the left menu.
 2. Click on **Add AI Prompt** in the top right corner.
 3. Provide a name in the **Prompt Name** field.
 4. In the **Model(s)** field, select the model that was integrated in the previous step.
@@ -83,12 +83,12 @@ Append a string to the provided name so that your workflow name does not conflic
 
 <p align="center"><img src="/content/img/quickstart-classify-using-llm.png" alt="Classify using LLM task" width="70%" height="auto"></img></p>
 
-4. On the right hand side configurations pane: Select the **LLM Provider integration** and the associated **Model** that was setup in the previous step.
-5. Select the **Prompt Template** that was created in the earlier step.
+4. On the right hand side configurations pane: Select the **LLM provider** and the associated **Model** that was setup in the previous step.
+5. Select the **Prompt template** that was created in the earlier step.
 
 <p align="center"><img src="/content/img/quickstart-example.png" alt="LLM Provider & Model" width="70%" height="auto"></img></p>
 
-6. Click on **Save** and then **Confirm** on the upper right hand side to save the workflow definition.
+6. Select **Save** > **Confirm**.
 
 ### Step 5: Test the workflow
 
@@ -117,14 +117,15 @@ You are now running this workflow using your user identity. The next section wil
 
 1. Navigate to **Access Control > Applications** from the left menu.
 2. Click on **Create Application** button on top right corner.
-3. Open the newly created application and enable *Worker*, *Metadata API*, and *Application* API permissions.
-4. Click **Create Access Key** to create the *KEY* and *SECRET*. A dialog box opens with the newly generated Key and Secret.
+3. Enter a name for application and select **Save**.
+4. Enable *Worker*, *Metadata API*, and *Application* API permissions.
+5. Click **Create Access Key** to create the *KEY* and *SECRET*. A dialog box opens with the newly generated Key and Secret.
 
 :::info
-Important: Copy and store the secret in a safe location, as it is never displayed again.
+Important: Copy and store the secret in a safe location, as it is displayed only once.
 :::
 
-5. In the **Permissionss** section, click on **Add permission**:
+6. In the **Permissionss** section, click on **Add permission**:
     - Select the **Workflow** tab and search for the name of the workflow you had created earlier. Select the workflow name and turn on the **READ** and **Execute** button.
     - Select the **Integrations** tab and search for the Open AI model integrations you had created earlier. Select the model integration name and turn on the **READ** and **Execute** button.
     - Select the **Prompts** tab and search for the AI Prompt Template you had created earlier. Select the Prompt name and turn on the **READ** and **Execute** button.
