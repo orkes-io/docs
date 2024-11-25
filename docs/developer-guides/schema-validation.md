@@ -65,8 +65,6 @@ Here is an overview of using schemas in Conductor workflows:
 
 ### Step 1: Define a schema
 
-The Orkes Platform can be used to define schemas.
-
 **To define a schema:**
 1. Log in to your Orkes Conductor cluster.
 2. Go to **Definitions** > **Schemas**.
