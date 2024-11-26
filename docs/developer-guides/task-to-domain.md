@@ -264,13 +264,13 @@ The application/group can now execute all tasks under the specified domain.
 
 A fallback domain is a secondary or backup domain that the system will use if the primary domain fails or is unreachable. These domains can only be specified when triggering a workflow, as clients polling for tasks can use only one domain at a time.
 
-Conductor tracks each worker's last polling time. When assigning tasks, it first checks if any active workers are available for the primary domain. If no active workers are found, the Conductor tries the next domain in the fallback sequence.
+Conductor tracks the last polling time for each worker. When assigning tasks, it first checks if any active workers are available for the primary domain. If no active workers are found, the Conductor tries the next domain in the fallback sequence.
 
 :::note Notes
-* A worker is considered active if the last time it has polled is within the active threshold, which defaults to 10 seconds
-* Workers do not poll when they are busy doing work and resume polling once they have completed their tasks
-* The active threshold can be adjusted using the configuration field `conductor.app.activeWorkerLastPollTimeout`. This applies to all worker tasks, so extending the duration slows down the fallback response bahaviour across all tasks.
-* The domain of a task is determined at the point in time when the task is scheduled, so a domain worker becoming free after a task gets scheduled will not change the domain of a task that has already been scheduled
+* A worker is considered active if the polled time is within the active threshold, which defaults to 10 seconds.
+* Workers do not poll when they are busy doing work and resume polling after completing their tasks.
+* The active threshold can be adjusted using the configuration field `conductor.app.activeWorkerLastPollTimeout`. This applies to all worker tasks, so extending the duration slows down the fallback response behavior across all tasks.
+* The domain of a task is determined at the time when the task is scheduled. Therefore, a domain worker becoming available after a task is scheduled will not change the domain of the already scheduled task.
 :::
 
 A fallback mapping for `task_x’ is as follows:
