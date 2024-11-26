@@ -163,7 +163,7 @@ new TaskManager(
       options: { concurrency: 5, pollInterval: 100, domain: "domain" },
     }
   );
-// *Note* worker domain has precedence over the domain passed in the poller 
+// *Note* worker domain has precedence over the domain passed in the poller
 ```
 
 </TabItem>
@@ -197,7 +197,7 @@ new TaskManager(
       options: { concurrency: 5, pollInterval: 100, domain: "domain" },
     }
   )
-// *Note* worker domain has precedence over the domain passed in the poller 
+// *Note* worker domain has precedence over the domain passed in the poller
 ```
 </TabItem>
 <TabItem value="Clojure" label="Clojure">
@@ -212,7 +212,7 @@ new TaskManager(
 
 ### Workflow configuration
 
-When you start a workflow, you can specify which tasks must run on which domains. 
+When you start a workflow, you can specify which tasks must run on which domains.
 
 <Tabs>
 <TabItem value="Using API" label="Using API">
@@ -229,7 +229,7 @@ POST /api/workflow/{name}
 For running a workflow from the Conductor UI,  define the following task-to-domain mapping:
 
 ```json
-{ 
+{
     "task_x": "test"
 }
 ```
@@ -252,13 +252,20 @@ To enable domain permissions:
 5. Enable the **Execute** toggle.
 6. Select **Add Permissions**.
 
-The application/group can now execute all tasks under the specified domain. 
+The application/group can now execute all tasks under the specified domain.
 
 ## Fallback task-to-domain​
 
 A fallback domain is a secondary or backup domain that the system will use if the primary domain fails or is unreachable. These domains can only be specified when triggering a workflow, as clients polling for tasks can use only one domain at a time.
 
-The Conductor tracks each worker's last polling time. When assigning tasks, it first checks if any active workers (those who polled within the last x seconds) are available for the primary domain. If no active workers are found, the Conductor tries the next domain in the fallback sequence.
+Conductor tracks each worker's last polling time. When assigning tasks, it first checks if any active workers are available for the primary domain. If no active workers are found, the Conductor tries the next domain in the fallback sequence.
+
+:::note Notes
+* A worker is considered active if the last time it has polled is within the active threshold, which defaults to 10 seconds
+* Workers do not poll when they are busy doing work and resume polling once they have completed their tasks
+* The active threshold can be adjusted using the configuration field `conductor.app.activeWorkerLastPollTimeout`. This applies to all worker tasks, so extending the duration slows down the fallback response bahaviour across all tasks.
+* The domain of a task is determined at the point in time when the task is scheduled, so a domain worker becoming free after a task gets scheduled will not change the domain of a task that has already been scheduled
+:::
 
 A fallback mapping for `task_x’ is as follows:
 
@@ -268,7 +275,7 @@ A fallback mapping for `task_x’ is as follows:
 }
 ```
 
-In this configuration, 
+In this configuration,
 * Conductor first assigns the task to workers in the `test` domain if available.
 * If no workers are active in the `test` domain, it tries the `fallback` domain.
 * If neither `test` nor  `fallback` have active workers, the task is assigned to `NO_DOMAIN`.
