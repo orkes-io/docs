@@ -1,3 +1,8 @@
+---
+slug: "/developer-guides/passing-inputs-to-task-in-conductor"
+description: "Learn how to configure variable task inputs and create the right expressions to dynamically reference and pass data between tasks."
+---
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import Install from '@site/src/components/install.mdx';

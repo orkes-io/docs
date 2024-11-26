@@ -1,3 +1,8 @@
+---
+slug: "/developer-guides/event-handler"
+description: "Learn how to configure an event handler in a Conductor cluster to send and receive events."
+---
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 

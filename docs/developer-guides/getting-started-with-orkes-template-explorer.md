@@ -1,3 +1,8 @@
+---
+slug: "/developer-guides/getting-started-with-orkes-template-explorer"
+description: "Get started by using the available templates on Orkes Platform to build your Conductor workflows."
+---
+
 # Getting Started with Orkes Template Explorer
 
 Orkes Template Explorer offers a versatile collection of pre-designed templates. These templates are not only ready to use right out of the box but also highly customizable to align with your specific enterprise needs.

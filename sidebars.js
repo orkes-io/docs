@@ -177,7 +177,7 @@ const sidebars = {
                         },
                         'developer-guides/webhook-integration',
                         'developer-guides/write-workflows-using-code',
-                        'error-handling'
+                        'developer-guides/error-handling'
                     ]
                 },
                 {

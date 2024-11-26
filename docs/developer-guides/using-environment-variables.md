@@ -1,3 +1,8 @@
+---
+slug: "/developer-guides/using-environment-variables"
+description: "Learn how to configure environment variables for global use across multiple workflows."
+---
+
 # Using Environment Variables
 
 Environment variables are essential for managing variables that need to be frequently accessed across multiple workflows. By storing these variables globally, they can be reused, making workflows more efficient and easier to manage.
@@ -8,7 +13,7 @@ Environment variables can be created and stored in Orkes Conductor, that can be 
 
 To create an environment variable:
 
-1. From Orkes Conductor cluster, go to the **Definitions > Environment Variable**s from the left menu. 
+1. From Orkes Conductor Console, go to the **Definitions > Environment Variable**s from the left menu. 
 2. Click **+New Environment Variable** from the top-right corner of the page.
 3. Provide the following details:
 
@@ -52,7 +57,7 @@ Access to the environment variables can be granted via Groups/Applications in Or
 
 To provide explicit permission to Groups:
 
-1. Navigate to **Access Control > Groups** from the left menu on your Orkes Conductor cluster.
+1. Navigate to **Access Control > Groups** from the left menu on your Orkes Conductor console.
 2. Create a new group or choose an existing group.
 3. Under the **Permissions** section, click **+Add Permission**.
 4. Under the **Env variables** tab, select the required variables with the required permissions.

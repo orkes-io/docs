@@ -1,3 +1,8 @@
+---
+slug: "/developer-guides/creating-and-managing-gen-ai-prompt-templates"
+description: "Learn how to create prompt templates and use them in Orkes' system LLM tasks."
+---
+
 # Using GenAI Prompt Templates
 
 In this guide, we’ll provide a quick overview of Generative AI Prompt Templates and how Orkes makes it easy to leverage the power of Large Language Models (LLMs) natively in their applications.

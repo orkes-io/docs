@@ -1,6 +1,9 @@
 ---
 sidebar_position: 6
+slug: "/developer-guides/secrets-in-conductor"
+description: "Learn how to securely pass sensitive variables using secrets or masked inputs."
 ---
+
 # Using Secrets
 
 Sensitive information such as usernames, passwords, API keys, and authorization tokens is often required in workflows. To protect this sensitive data, secrets can be used to hide these values on the user interface. Secrets allow you to securely manage and use sensitive information within workflows without exposing it directly.

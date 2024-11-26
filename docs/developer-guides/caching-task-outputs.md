@@ -1,5 +1,6 @@
 ---
 slug: "../faqs/task-cache-output"
+description: "Learn how to cache task outputs for quick access."
 ---
 
 # Caching Task Outputs

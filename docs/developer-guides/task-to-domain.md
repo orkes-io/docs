@@ -1,3 +1,9 @@
+---
+sidebar_label: Routing Tasks
+slug: "/developer-guides/task-to-domain"
+description: "Learn how to route tasks to different sets of workers using the concept task to domain."
+---
+
 # Routing Tasks (Task-to-domain)
 
 import Tabs from '@theme/Tabs';

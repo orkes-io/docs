@@ -1,3 +1,8 @@
+---
+slug: "/developer-guides/using-vector-databases-in-your-orkes-conductor-workflows"
+description: "Learn how to use vector databases in Orkes' system LLM tasks, including the steps for integration and access control."
+---
+
 # Using Vector Databases
 
 In this guide, we’ll provide an overview of Vector Databases and how Orkes makes it easy for developers to use Vector DBs for AI tasks in your applications. We will go through the concepts, where and how vector DBs add capabilities for your AI-powered applications, and how to get started.
