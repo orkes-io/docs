@@ -756,7 +756,6 @@ const sidebars = {
             items: [
                 'faqs/general-faqs',
                 'faqs/directed-acyclic-graph',
-                'faqs/task-lifecycle',
             ],
             collapsible: true,
             collapsed: true,
