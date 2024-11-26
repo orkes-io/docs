@@ -95,7 +95,7 @@ The application now has access to all resources under the tag. You can select th
 </TabItem>
 </Tabs>
 
-Watch how to use tags to manage permissions in Orkes Platform.
+Watch how to use tags to manage permissions in Orkes Conductor.
 
 <center><iframe width="510" height="300" src="https://www.youtube.com/embed/qFHDwh2a_l4?si=DqWsT7_NgMv5ZZgx" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="allowfullscreen"
 mozallowfullscreen="mozallowfullscreen"

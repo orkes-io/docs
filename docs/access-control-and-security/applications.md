@@ -59,12 +59,12 @@ Configure the application’s roles and permissions to control what your applica
     3. Enter the application name.
     4. Select **Save**.
     The application has been created. You can proceed to add roles or permissions to the application.
-2. Generate access keys.
-    1. In the Access Keys section, select **+ Create access key** to generate a unique keyId and keySecret. The Key Secret is shown only once, so make sure to copy and store it securely.
-3. Add roles to the application.
+2. Add roles to the application.
     1. In the Application Roles or Unrestricted Roles section, toggle the different application roles for your application.
+3. Generate access keys.
+    1. In the Access Keys section, select **+ Create access key** to generate a unique keyId and keySecret. The Key Secret is shown only once, so make sure to copy and store it securely.
 4. Add permissions to grant application-level access to resources.
-    1. In the Permissions section, select **+ Add Permission**.
+    1. In the Permissions section, select **+ Add permission**.
     2. Toggle between each resource type and select the resources to provide access to.
     3. Toggle the access levels for your selected resource:
         * **Read**—The application will be able to view the resource.

@@ -128,7 +128,7 @@ Once the schedulers are defined, you can view the executions from the **Executio
 
 <p align="center"><img src="/content/img/scheduler-executions.jpg" alt="Scheduler Executions View" width="100%" height="auto"></img></p>
 
-The execution page lists the details of all the scheduler executions. It includes details such as scheduled time, execution time, execution ID, workflow ID, status, reason for failure, and error details. You can view the workflow execution by directly clicking on the workflow ID. You can also filter further information using the available options.
+The execution page lists the details of all the scheduler executions. It includes details such as scheduled time, execution time, execution ID, schedule name, workflow name, workflow ID, status, reason for failure, and error details. You can view the workflow execution by directly clicking on the workflow ID. You can also filter further information using the available options.
 
 In addition, you can view the scheduler execution as code directly from the UI. To do this, click the arrow in the Search button and choose “Show as code”.
 
