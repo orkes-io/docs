@@ -12,7 +12,7 @@ A Human task can be used for a variety of human-involved tasks, such as manual a
 
 During workflow creation, the Human task can be configured for:
 * **Assignment policy**—Define who can fill out the form, how long the form is assigned to them, and what to do if the assignment times out.
-* **Trigger policy**—Trigger a workflow to start if the task state changes. 
+* **Trigger policy**—Trigger a workflow to start if the human task state changes. 
 
 During development, you can test and execute Human tasks internally on Orkes Conductor before integrating it with an external UI.
 
@@ -44,16 +44,18 @@ It is best practice to create forms using Orkes’ User Form studio, even if the
 
 <p align="center"><img src="/content/img/creating-forms-human-task.png" alt="Creating user forms for human task in Orkes Conductor" width="100%" height="auto"></img></p>
 
-#### Supported form components
+#### Supported form layout and components
 
-These are the pre-built form components available on Orkes Conductor:
+Horizontal and vertical layouts are supported for user forms. 
+
+Following are the pre-built form components available on Orkes Conductor:
 * Boolean
 * Multiple Choice
 * Date
 * Date + Time
 * Description Text
 * Image
-* Number
+* Number Field
 * Text
 * Time
 * Video
@@ -79,7 +81,7 @@ You can toggle to the Code tab to create custom components for your form. Howeve
 | Boolean default value | Boolean. | Sets whether the default value is true or false. |
 | Items split by commas | Multiple Choice and Radio. | Contains the list of selection items split by a comma. |
 | Alignment | Description Text. | Sets the alignment of the description text. Supported values: <ul> <li>Left</li> <li>Center</li> <li>Right</li> <li>Justify</li> <li>inherit</li></ul> |
-| Allow-decimal | Number. | Sets whether to allow decimal values as input. |
+| Allow-decimal | Number Field. | Sets whether to allow decimal values as input. |
 | Multiline | Text. | Sets whether the text input box is multiline.  |
 | Height | Image and Video. | Sets the height of the image or video. |
 | Width | Image and Video. | Sets the width of the image or video. |
@@ -110,7 +112,7 @@ Add the Human task to your workflow and configure its assignment policy and trig
 
 **To add a Human task:**
 1. In your workflow, select the **(+)** icon and add a **Human** task.
-2. In Task Definition, select a Human task definition.
+2. In Task Definition, select the task definition created in the previous step.
 3. Enter the **Task display name**, which will appear on the connected UI for the user. Use a unique human-friendly name, such as “Loan Approval” or “Booking Form”.
 4. Select the **UI template** previously created in the User Form studio and its **Version**.
 5. (Optional) Add an assignment policy to control who can fill out the form.
@@ -120,11 +122,11 @@ Add the Human task to your workflow and configure its assignment policy and trig
         * **Conductor User** or **Group**—Select this if the assignees are Conductor users and will access Orkes Conductor to complete the task.
         <p align="center"><img src="/content/img/assignment-policy-human-task.png" alt=" Assignment policy of human task" width="70%" height="auto"></img></p>
     3. Enter the **SLA minutes** to specify the assignment duration before it times out. Use 0 minutes to set a non-expiring assignment.
-    4. In **After assignments**, select the strategy for when the assignment times out. 
+    4. If needed, add another assignment to create a multi-level assignment chain.  
+    <p align="center"><img src="/content/img/assignment-policy-human-task-hierarchy.png" alt="Assignment policy of human task in hierarchical order" width="90%" height="auto"></img></p>
+    5. In **After assignments**, select the strategy for when the assignment times out. 
         * **Leave open**—The Human task execution remains open to be picked up by anyone.
         * **Terminate**—The Human task execution is terminated and marked as deleted, and the workflow fails with the error “Task terminated as no more assignments pending and completion strategy is TERMINATE”.
-    5. If needed, add another assignment to create a multi-level assignment chain.  
-    <p align="center"><img src="/content/img/assignment-policy-human-task-hierarchy.png" alt="Assignment policy of human task in hierarchical order" width="90%" height="auto"></img></p>
 6. (Optional) Add a trigger policy to start new workflows when the state of the Human task changes. The trigger policy works based on the human task state in the **Executions > Human Tasks** list.
 
 <p align="center"><img src="/content/img/human-task-states.png" alt="States in Human tasks based on which trigger policies can be defined" width="90%" height="auto"></img></p>
@@ -170,8 +172,8 @@ Create an external UI to display the user form as desired. Some common display o
 
 To use a Human task with an external UI, you need to add the Human task to an application account and grant Execute permission to the application.
 
-**To add the Human task to application account:**
-1. Go to the application account.
+**To add the Human task to application:**
+1. Go to the application.
     1. In the left navigation menu, go to **Access Control** > **Applications**, on your Orkes Conductor cluster.
     2. Select an application that you will be adding your worker to. Otherwise, create an application.
 2. Grant Execute, Read, and Update permission to the application.
@@ -181,7 +183,7 @@ To use a Human task with an external UI, you need to add the Human task to an ap
     4. (If Task-to-domain is used) In Domain, enter the domain name used in your workflow.
     5. Select Add Permissions.
 
-The application account can now execute the Human task.
+The application can now execute the Human task.
 </details>
 
 <details><summary>3. Configure the Human task for external form assignment.</summary>
@@ -191,7 +193,7 @@ If the assignment policy in the Human task is not yet configured, go to the Huma
 
 <details><summary>4. Integrate the UI with Conductor.</summary>
 
-Use the Human Tasks APIs to integrate your external UI with your Conductor cluster. Get the API authentication tokens (key and secret) from your application account in Conductor.
+Use the Human Tasks APIs to integrate your external UI with your Conductor cluster. Get the API authentication tokens ([key and secret](https://orkes.io/content/access-control-and-security/applications#configuring-applications)) from your application account in Conductor.
 
 1. **Display all active Human task executions.**
    Call `GET human/tasks/search` to list Human tasks with Assigned status and Assignee as External Group or External User.
@@ -267,8 +269,7 @@ In your selected Human task, select **Skip** to bypass it. Alternatively, select
     * **External User** or **Group**—Select this if the assignees are managed and verified in an external system, and will access an external UI to complete the task.
     * **Conductor User** or **Group**—Select this if the assignees are Conductor users and will access Orkes Conductor to complete the task.
 3. Enter the **SLA minutes** to specify the assignment duration before it times out. Use 0 minutes to set a non-expiring assignment.
-4. In **After assignments**, select the strategy for when the assignment times out.
-5. If needed, add another assignment to create a multi-level assignment chain.
+4. If needed, add another assignment to create a multi-level assignment chain.
 
 <p align="center"><img src="/content/img/assign-to-different-subject.png" alt="Assigning to a different subject" width="60%" height="auto"></img></p>
 
