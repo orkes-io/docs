@@ -130,7 +130,7 @@ Now, let’s test the prompt right away by filling in the following parameters:
 | --------- | ----------- | 
 | Select model to test | From the chosen LLM models, you can choose any model for testing the prompt.<br/><br/> This makes your AI prompt diverse to be used among any language models, provided they have been integrated with your cluster. |
 | Temperature | Set the required temperature based on your requirements. Temperature is a parameter to indicate the randomness of the model’s output.<br/><br/>Higher temperatures, such as 1.0, make the output more random and creative. It can be used for generating creative content like creating social media posts, drafting emails, etc.<br/><br/>Whereas a lower value makes the output more stable and focused. It can be used in cases like text classification, where you provide a text and classify it into appropriate categories. |
-| Stop words | In LLM, stop words may be filtered out or given less importance during the text generation process to ensure that the generated text is coherent and contextually relevant.  |
+| Stop words | In LLM, stop words may be filtered out or given less importance during the text generation process to ensure that the generated text is coherent and contextually relevant. The stop words are the words that are used in the sentences like “and”, “a”, and “the”, etc., but do not potentially provide any specific meaning but are required in completing the sentences. Provide the stop words to be filtered out.  |
 | TopP | Another parameter to control the randomness of the model’s output. This parameter defines a probability threshold and then chooses tokens whose cumulative probability exceeds this threshold.<br/><br/>For example:<br/><br/>Imagine you want to complete the sentence: “She walked into the room and saw a ______.” Now, the top 4 words the LLM model would consider based on the highest probabilities would be:<ul><li>Cat - 35%</li><li>Dog - 25%</li><li>Book - 15%</li><li>Chair - 10%</li></ul>If you set the topP parameter to 0.70, the AI will consider tokens until their cumulative probability reaches or exceeds 70%. Here's how it works:<ul><li>Adding "Cat" (35%) to the cumulative probability.</li><li>Adding "Dog" (25%) to the cumulative probability, totaling 60%.</li><li>Adding "Book" (15%) to the cumulative probability, now at 75%.</li></ul>At this point, the cumulative probability is 75%, exceeding the set top-p value of 70%. Therefore, the AI will randomly select one of the tokens from the list of "Cat," "Dog," and "Book" to complete the sentence because these tokens collectively account for approximately 75% of the likelihood.|
 
 Now, you can test it right there by clicking the **Test** button. 
@@ -149,7 +149,7 @@ To provide permissions to Groups:
 
 1. Navigate to **Access Control > Groups** from the left menu on your Orkes Conductor cluster.
 2. Create a new group or choose an existing one with the members needing access to prompts.
-3. Under **Permissions** section, click +Add Permission.
+3. Under **Permissions** section, click **+Add Permission**.
 4. Under the **Prompt** tab, choose the required prompts with the required permissions. 
 
 <p align="center"><img src="/content/img/rbac-for-prompts.png" alt="RBAC for prompts" width="60%" height="auto"></img></p>

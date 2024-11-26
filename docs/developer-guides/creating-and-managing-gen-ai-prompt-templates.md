@@ -15,9 +15,9 @@ The AI prompts can be created in the Orkes Conductor cluster and can be used in 
 ## Creating AI Prompts in Orkes Conductor
 
 :::note
-Before creating AI prompts, ensure you have integrated your Orkes Conductor cluster with the required AI / LLM models. 
+Before creating AI prompts, ensure you have integrated your Orkes Conductor cluster with the required AI/LLM models. 
 
-If you haven’t configured your AI / LLM provider on your Orkes Conductor cluster, navigate to the **Integrations** tab and configure your required provider. Refer to this doc on [how to integrate the LLM providers with Orkes Conductor](/content/category/integrations/ai-llm).
+If you haven’t configured your AI/LLM provider on your Orkes Conductor cluster, navigate to the **Integrations** tab and configure your required provider. Refer to this doc on [how to integrate the LLM providers with Orkes Conductor](/content/category/integrations/ai-llm).
 :::
 
 To create AI prompts,
@@ -60,7 +60,7 @@ To provide permissions to Groups:
 
 1. Navigate to **Access Control > Groups** from the left menu on your Orkes Conductor cluster.
 2. Create a new group or choose an existing one with the members needing access to prompts.
-3. Under **Permissions** section, click +Add Permission.
+3. Under **Permissions** section, click **+Add Permission**.
 4. Under the **Prompt** tab, choose the required prompts with the required permissions. 
 
 <p align="center"><img src="/content/img/rbac-for-prompts.png" alt="RBAC for prompts" width="60%" height="auto"></img></p>
