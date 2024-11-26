@@ -1,3 +1,8 @@
+---
+slug: "/developer-guides/metrics-and-observability"
+description: "Discover how to use the Metrics dashboard to get insights into your workflow performance."
+---
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 

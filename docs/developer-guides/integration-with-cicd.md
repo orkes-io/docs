@@ -1,3 +1,8 @@
+---
+slug: "/developer-guides/integration-with-cicd"
+description: "Find out the best practices for integrating Conductor workflows into your CI/CD processes."
+---
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import Install from '@site/src/components/install.mdx';

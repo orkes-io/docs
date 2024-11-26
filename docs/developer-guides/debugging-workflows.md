@@ -1,3 +1,8 @@
+---
+slug: "/developer-guides/debugging-workflows"
+description: "Learn how to use Orkes Platform to debug workflows and recover from failed executions."
+---
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import Install from '@site/src/components/install.mdx';

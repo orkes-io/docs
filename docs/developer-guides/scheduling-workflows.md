@@ -1,3 +1,8 @@
+---
+slug: "/developer-guides/scheduling-workflows"
+description: "Learn how to schedule workflows in Orkes Conductor using cron expressions."
+---
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import Install from '@site/src/components/install.mdx';

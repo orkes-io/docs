@@ -1,3 +1,8 @@
+---
+slug: "/content/developer-guides/orchestrating-human-tasks"
+description: "Get started on orchestrating human tasks using Orkes Conductor."
+---
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 

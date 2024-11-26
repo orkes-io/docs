@@ -1,3 +1,8 @@
+---
+slug: "/developer-guides/sending-signals-to-workflows"
+description: "Learn how to send signals to control a workflow progress in Orkes Conductor."
+---
+
 # Sending Signals to Workflows
 
 import Tabs from '@theme/Tabs';

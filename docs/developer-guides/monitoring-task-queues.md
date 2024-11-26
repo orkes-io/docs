@@ -1,3 +1,8 @@
+---
+slug: "/developer-guides/monitoring-task-queues"
+description: "Learn how to monitor task queues in Orkes Conductor."
+---
+
 # Monitoring Task Queues
 
 When an application or workflow needs to execute a task in the background, it adds tasks to task queues. These queues hold tasks that are pending execution and are processed later by worker services.

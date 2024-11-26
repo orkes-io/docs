@@ -1,3 +1,7 @@
+---
+slug: "/developer-guides/running-workflows"
+description: "This guide focuses on the basics of running workflows in Orkes Conductor, including its task statuses, creating schedules, and sending signals."
+---
 
 # Running Conductor Workflows
 

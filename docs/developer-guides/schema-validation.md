@@ -1,5 +1,7 @@
 ---
 sidebar_label: Schema Validation
+slug: "/developer-guides/schema-validation"
+description: "Learn how to create schemas in Orkes Conductor to enforce the your input/output payload for workflows and tasks."
 ---
 
 import Tabs from '@theme/Tabs';

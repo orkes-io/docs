@@ -1,3 +1,8 @@
+---
+slug: "/developer-guides/scaling-workers"
+description: "Decide whether to scale the number of workers based on performance metrics like throughput and number of pending tasks."
+---
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import Install from '@site/src/components/install.mdx';

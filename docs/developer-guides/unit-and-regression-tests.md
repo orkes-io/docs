@@ -1,3 +1,8 @@
+---
+slug: "/developer-guides/unit-and-regression-tests"
+description: "Learn how to do unit tests and regression tests for Conductor workflows."
+---
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import Install from '@site/src/components/install.mdx';
