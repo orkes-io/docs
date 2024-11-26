@@ -79,6 +79,7 @@ If multiple roles are granted, they will have all granted role-level permissions
 | Metadata Manager | Can create, update, delete, and grant permissions to any workflow or task definition in the cluster. <br/> <br/> This role can only be granted by an Admin.                                                                             |
 | Workflow Manager | Can start, pause, resume, rerun, and delete any workflow execution in the cluster. <br/> <br/> This role can only be granted by an Admin.                                                                             |
 | Application Manager | Can create, update, and delete any application in the cluster. <br/> <br/> This role can only be granted by an Admin.                             |
+| Admin | Can create, read, modify, delete, and execute this particular application. <br/> <br/> This role can only be granted by an Admin.              |
 
 </TabItem>
 </Tabs>
@@ -91,10 +92,10 @@ Besides the role-based permissions, you can add granular permissions to **groups
 * Tasks
 * Secrets
 * Environment variables
-* Integrations
-* Prompts
 * Tags
 * Domains
+* Integrations
+* Prompts
 
 Unlike other permission targets, **tags** and **domains** provide bulk access to multiple resources. Tags can be used to grant resources across almost every resource type. When you grant access for a tag “x”, all resources with the tag “x” will be made available to the group or application.
 
