@@ -32,7 +32,7 @@ Now, you have the API key. Let’s integrate this with Orkes Conductor.
 
 1. Navigate to **Integrations** from the left menu on your Orkes Conductor cluster.
 2. Click **+New integration** button from the top-right corner.
-3. Under the **AI / LLM** section, choose **Hugging Face**. 
+3. Under the **AI/LLM** section, choose **Hugging Face**. 
 4. Click **+Add** and provide the following parameters:
 
 <p align="center"><img src="/content/img/create-new-hugging-face-integration.png" alt="Create new Hugging Face Integration" width="60%" height="auto"></img></p>
