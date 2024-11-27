@@ -23,7 +23,7 @@ The base URL for Cohere is https://api.cohere.ai/v1, which serves as the API End
 Let’s integrate Cohere with Orkes Conductor.
 
 1. Navigate to **Integrations** from the left menu on your Orkes Conductor cluster.
-2. Click **+New integration button** from the top-right corner.
+2. Click **+New integration** button from the top-right corner.
 3. Under the **AI/LLM** section, choose **Cohere**. 
 4. Click **+Add** and provide the following parameters:
 
