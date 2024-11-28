@@ -1,5 +1,5 @@
 ---
-slug: "/content/developer-guides/orchestrating-human-tasks"
+slug: "/developer-guides/orchestrating-human-tasks"
 description: "Get started on orchestrating human tasks using Orkes Conductor."
 ---
 
