@@ -1,3 +1,8 @@
+---
+slug: "/developer-guides/webhook-integration"
+description: "Get started on using webhook integrations in Orkes Conductor."
+---
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import Install from '@site/src/components/install.mdx';
@@ -54,11 +59,11 @@ Once the workflow is created, the next step is to create a webhook.
 <p align="center"><img src="/content/img/Webhook-with-an-unverified-URL-in-Conductor.png" alt="Webhook with an unverified UR" width="100%" height="auto"></img></p>
 
 5. Copy the generated URL to the platform from which the webhook will be invoked. This step varies with the platform being integrated.
-6. Once the URLs are verified (using the respective verification method), the URL status will be marked as **Verified**.
+6. Once the URLs are verified (using the respective [verification method](/content/developer-guides/webhook-integration#supported-webhook-verification-methods)), the URL status will be marked as **Verified**.
 
 <p align="center"><img src="/content/img/Webhook-with-a-verified-URL-in-Conductor.png" alt="Webhook with a verified UR" width="100%" height="auto"></img></p>
 
-This is the task confoguration for a Wait for Webhook task.
+This is the task configuration for a Wait for Webhook task.
 
 ```json
 {

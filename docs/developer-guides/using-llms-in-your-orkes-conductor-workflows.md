@@ -1,3 +1,8 @@
+---
+slug: "/developer-guides/using-llms-in-your-orkes-conductor-workflows"
+description: "Learn how to use Orkes' system LLM tasks, including the steps for integration, access control, and prompt creation."
+---
+
 # Using LLMs
 
 In this guide, we’ll provide an overview of Generative AI, Large Language Models (LLMs), and how Orkes makes it easy to leverage the power of LLMs natively in your applications. Whether you’re a developer, product manager, or anyone interested in GenAI powering your business logic, this guide will help you understand the concepts and get started with AI-powered applications in Orkes Conductor.
@@ -41,7 +46,7 @@ The first step is integrating the required LLM model providers with your Orkes C
 
 For example, if you are using Open AI as the model provider, it has different models: Ada, Babbage, Curic, Davinci etc. These models vary in capabilities, such as memory, trained data, and more. You can configure the required model to be used within your organization based on your requirements. 
 
-### Steps to Integrate AI / LLM Models with Orkes Conductor
+### Steps to Integrate AI/LLM Models with Orkes Conductor
 
 1. Navigate to **Integrations** from the left menu on your Orkes Conductor cluster.
 2. Click **+New integration** button from the top-right of your window.
@@ -50,11 +55,11 @@ For example, if you are using Open AI as the model provider, it has different mo
 <p align="center"><img src="/content/img/quickstart-add-integrations.png" alt="Quickstart - Add Integrations" width="80%" height="auto"></img></p>
 
 4. Click +**Add** and provide the required parameters for the chosen provider.
-5. You can toggle-on the **Active** button to activate the integration instantly.
+5. Enable the **Active** option to activate the integration instantly.
 6. Click **Save**.
 
 :::note
-The integration parameters to be configured differ with these models. Refer to the [AI / LLM Integrations](/content/category/integrations/ai-llm) document for detailed steps to integrate each model. 
+The integration parameters to be configured differ with these models. Refer to the [AI/LLM Integrations](/content/category/integrations/ai-llm) document for detailed steps to integrate each model. 
 :::
 
 ### Different Use Cases of Various Integration Models
@@ -130,7 +135,7 @@ Now, let’s test the prompt right away by filling in the following parameters:
 | --------- | ----------- | 
 | Select model to test | From the chosen LLM models, you can choose any model for testing the prompt.<br/><br/> This makes your AI prompt diverse to be used among any language models, provided they have been integrated with your cluster. |
 | Temperature | Set the required temperature based on your requirements. Temperature is a parameter to indicate the randomness of the model’s output.<br/><br/>Higher temperatures, such as 1.0, make the output more random and creative. It can be used for generating creative content like creating social media posts, drafting emails, etc.<br/><br/>Whereas a lower value makes the output more stable and focused. It can be used in cases like text classification, where you provide a text and classify it into appropriate categories. |
-| Stop words | In LLM, stop words may be filtered out or given less importance during the text generation process to ensure that the generated text is coherent and contextually relevant.  |
+| Stop words | In LLM, stop words may be filtered out or given less importance during the text generation process to ensure that the generated text is coherent and contextually relevant. The stop words are the words that are used in the sentences like “and”, “a”, and “the”, etc., but do not potentially provide any specific meaning but are required in completing the sentences. Provide the stop words to be filtered out.  |
 | TopP | Another parameter to control the randomness of the model’s output. This parameter defines a probability threshold and then chooses tokens whose cumulative probability exceeds this threshold.<br/><br/>For example:<br/><br/>Imagine you want to complete the sentence: “She walked into the room and saw a ______.” Now, the top 4 words the LLM model would consider based on the highest probabilities would be:<ul><li>Cat - 35%</li><li>Dog - 25%</li><li>Book - 15%</li><li>Chair - 10%</li></ul>If you set the topP parameter to 0.70, the AI will consider tokens until their cumulative probability reaches or exceeds 70%. Here's how it works:<ul><li>Adding "Cat" (35%) to the cumulative probability.</li><li>Adding "Dog" (25%) to the cumulative probability, totaling 60%.</li><li>Adding "Book" (15%) to the cumulative probability, now at 75%.</li></ul>At this point, the cumulative probability is 75%, exceeding the set top-p value of 70%. Therefore, the AI will randomly select one of the tokens from the list of "Cat," "Dog," and "Book" to complete the sentence because these tokens collectively account for approximately 75% of the likelihood.|
 
 Now, you can test it right there by clicking the **Test** button. 
@@ -149,7 +154,7 @@ To provide permissions to Groups:
 
 1. Navigate to **Access Control > Groups** from the left menu on your Orkes Conductor cluster.
 2. Create a new group or choose an existing one with the members needing access to prompts.
-3. Under **Permissions** section, click +Add Permission.
+3. Under **Permissions** section, click **+Add Permission**.
 4. Under the **Prompt** tab, choose the required prompts with the required permissions. 
 
 <p align="center"><img src="/content/img/rbac-for-prompts.png" alt="RBAC for prompts" width="60%" height="auto"></img></p>
@@ -160,7 +165,7 @@ Similarly, you can also provide permissions to [applications](https://orkes.io/c
 
 ## Using AI Prompts in LLM Tasks in Orkes Conductor
 
-The AI Prompts and models integrated earlier are now ready to be used in your workflows in Orkes Conductor. To do that, you need to add a system task [LLM Text Complete](/content/reference-docs/ai-tasks/llm-search-index) while creating workflows in Orkes Conductor. 
+The AI Prompts and models integrated earlier are now ready to be used in your workflows in Orkes Conductor. To do that, you need to add a system task like [LLM Text Complete](/content/reference-docs/ai-tasks/llm-search-index) while creating workflows in Orkes Conductor. 
 
 ### Creating Workflow with LLM Text Complete Task
 
@@ -169,7 +174,7 @@ If you are creating the workflow via the UI method,
 1. Navigate to **Definitions > Workflow** from the left menu on your Orkes Conductor cluster. 
 2. Click **Define Workflow** from the top-right corner. 
 3. Click **Start** on the diagram and add the **LLM Text Complete** task.
-4. Choose the required LLM provider and model.
+4. Choose the required LLM Provider and Model.
 5. Choose the created AI prompt under the **Prompt Template** field as shown below:
 
 <p align="center"><img src="/content/img/workflow-with-llm-text-complete-task.png" alt="Workflow with LLM Text Complete task" width="100%" height="auto"></img></p>
@@ -219,7 +224,7 @@ Let’s assume that **Azure Open AI** with **text-davinci-003** model is to be i
 
 1. Navigate to **Integrations** from the left menu on your Orkes Conductor cluster.
 2. Click **+New integration** button from the top-right of your window.
-3. Under the **AI / LLM** section, choose **Azure + OpenAI**. 
+3. Under the **AI/LLM** section, choose **Azure + OpenAI**. 
 4. Click **+Add** and provide a name, description, endpoint, and the Azure OpenAI API key.
 
 <p align="center"><img src="/content/img/add-azure-open-ai-integration.png" alt="Adding Azure OpenAI Integration" width="60%" height="auto"></img></p>
@@ -265,14 +270,14 @@ Now, let's add the **text-davinci-003** model to the integration.
 #### Step 4 - Create Workflow Definitions
 
 1. Navigate to **Definitions > Workflow** from the left menu on your Orkes Conductor cluster. 
-2. Click **Define Workflow** from the top-right corner. 
+2. Click **+Define Workflow** from the top-right corner. 
 3. Click **Start** on the diagram and add the **LLM Text Complete** task.
 4. Choose the **LLM provider** as __azure_openai__ and the **model** as __text-davinci-003__.
 5. Choose the created AI prompt under the **Prompt Template** field as shown below:
 
 <p align="center"><img src="/content/img/workflow-with-translation-prompt.png" alt="Workflow with translation prompt" width="100%" height="auto"></img></p>
 
-8. Let’s also wire the variable **input & language** to workflow inputs.
+8. Let’s also wire the variables **input** and **language** to workflow inputs.
 
 You can get the complete workflow JSON here:
 

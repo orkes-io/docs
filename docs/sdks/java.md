@@ -3,33 +3,39 @@ import TabItem from '@theme/TabItem';
 import versions from '../../codeblocks/versions.json'
 import CodeBlock from '@theme/CodeBlock';
 
-# Orkes Conductor Java SDK
+# Java SDK
 
-- Orkes Conductor Java SDK (old) is maintained here: https://github.com/orkes-io/orkes-conductor-client
-- Orkes Conductor Java SDK v4 is maintained here: https://github.com/conductor-oss/conductor/tree/main/conductor-clients/java/conductor-java-sdk
+- Orkes Conductor Java SDK v4.0.x is maintained here: https://github.com/conductor-oss/conductor/tree/main/conductor-clients/java/conductor-java-sdk
+- Orkes Conductor Java SDK v2.1.x is maintained here: https://github.com/orkes-io/orkes-conductor-client (deprecated)
 
 ## Set Up Conductor Java SDK
 
 Add `orkes-conductor-client` dependency to your project.
 
+:::notePre-requisites:
+- Java 17 or greater
+- Gradle or Maven for dependency management
+:::
+
 ### Gradle
 
-For Gradle-based projects, modify the `build.gradle` file in the project directory by adding the following line to the dependencies block in that file:
+For Gradle-based projects, modify the `build.gradle` file in the project directory by adding the following line to the dependencies block:
 
 <Tabs groupId="java-version">
-<TabItem value="v4" label="v4">
+<TabItem value="v4.0.1" label="v4.0.1">
 
 ```java
-implementation 'org.conductoross:conductor-client:4.0.0'
-implementation 'io.orkes:orkes-conductor-client:4.0.0'
+    implementation 'org.conductoross:conductor-client:4.0.1'
+    implementation 'org.conductoross:java-sdk:4.0.1'
+    implementation 'io.orkes.conductor:orkes-conductor-client:4.0.1'
 ```
 
 </TabItem>
 
-<TabItem value="old" label="Old">
+<TabItem value="v2.1.6" label="v2.1.6">
 
 ```java
-implementation 'io.orkes.conductor:orkes-conductor-client:2.0.1'
+implementation 'io.orkes.conductor:orkes-conductor-client:2.1.6'
 ```
 
 </TabItem>
@@ -38,41 +44,44 @@ implementation 'io.orkes.conductor:orkes-conductor-client:2.0.1'
 
 ### Maven
 
-For Maven-based projects, modify the `pom.xml` file in the project directory by adding the following XML snippet within the `dependencies` section:
+For Maven-based projects, modify the `pom.xml` file in the project directory by adding the following XML snippet within the dependencies section:
 
 
 <Tabs groupId="java-version">
-<TabItem value="v4" label="v4">
+<TabItem value="v4.0.1" label="v4.0.1">
 
 ```xml
 <dependency>
     <groupId>org.conductoross</groupId>
     <artifactId>conductor-client</artifactId>
-    <version>4.0.0</version>
+    <version>4.0.1</version>
 </dependency>
 <dependency>
-    <groupId>io.orkes</groupId>
+    <groupId>org.conductoross</groupId>
+    <artifactId>java-sdk</artifactId>
+    <version>4.0.1</version>
+</dependency>
+<dependency>
+    <groupId>io.orkes.conductor</groupId>
     <artifactId>orkes-conductor-client</artifactId>
-    <version>4.0.0</version>
+    <version>4.0.1</version>
 </dependency>
 ```
 
 </TabItem>
 
-<TabItem value="old" label="Old">
+<TabItem value="v2.1.6" label="v2.1.6">
 
 ```xml
 <dependency>
   <groupId>io.orkes.conductor</groupId>
   <artifactId>orkes-conductor-client</artifactId>
-  <version>1.1.14</version>
+  <version>2.1.6</version>
 </dependency>
 ```
 
 </TabItem>
 </Tabs>
-
-
 
 ## Hello World Application Using Conductor
 
@@ -82,25 +91,51 @@ In this section, we will create a "Hello World" application that executes a "gre
 
 #### Creating Workflows by Code
 
-Create `workflow/GreetingsWorkflow.java` with the following:
+The classes created in this first step will be used in Step 3 to create a workflow by code.
+Create the class `io.orkes.helloworld.WorkflowInput`:
 
 ```java
-package io.orkes.conductor.sdk.examples.HelloWorld.workflow;
+package io.orkes.helloworld;
+
+public class WorkflowInput {
+    private String name;
+
+    public WorkflowInput(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+}
+```
+
+Create the class `io.orkes.helloworld.GreetingsWorkflow`:
+
+```java
+package io.orkes.helloworld;
 
 import com.netflix.conductor.sdk.workflow.def.ConductorWorkflow;
 import com.netflix.conductor.sdk.workflow.def.tasks.SimpleTask;
 import com.netflix.conductor.sdk.workflow.executor.WorkflowExecutor;
 
-public class CreateWorkflow {
+public class GreetingsWorkflow {
     private final WorkflowExecutor executor;
+
     public GreetingsWorkflow(WorkflowExecutor executor) {
         this.executor = executor;
     }
+
     public ConductorWorkflow<WorkflowInput> createWorkflow() {
-        ConductorWorkflow<WorkflowInput> workflow = new ConductorWorkflow<>(executor);
+        var workflow = new ConductorWorkflow<WorkflowInput>(executor);
         workflow.setName("greetings");
         workflow.setVersion(1);
-        SimpleTask greetingsTask = new SimpleTask("greet", "greet_ref");
+
+        var greetingsTask = new SimpleTask("greet", "greet_ref");
         greetingsTask.input("name", "${workflow.input.name}");
         workflow.add(greetingsTask);
         return workflow;
@@ -108,159 +143,129 @@ public class CreateWorkflow {
 }
 ```
 
-Create `workflow/WorkflowInput.java` with the following:
+### Step 2: Write a Worker
 
-```java
-package io.orkes.conductor.sdk.examples.HelloWorld.workflow;
-
-public class WorkflowInput {
-    private String name;
-    public WorkflowInput(String name) {
-        this.name = name;
-    }
-    public String getName() {
-            return name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
-}
-```
-
-#### (Alternatively) Creating Workflows in JSON
-
-Create `workflow.json` with the following:
-
-```json
-{
-  "name": "greetings",
-  "description": "Sample greetings workflow",
-  "version": 1,
-  "tasks": [
-    {
-      "name": "greet",
-      "taskReferenceName": "greet_ref",
-      "type": "SIMPLE",
-      "inputParameters": {
-        "name": "${workflow.input.name}"
-      }
-    }
-  ],
-  "timeoutPolicy": "TIME_OUT_WF",
-  "timeoutSeconds": 60
-}
-```
-
-Workflows must be registered to the Conductor server. Use the API to register the greetings workflow from the JSON file above:
-
-```shell
-curl -X POST -H "Content-Type:application/json" \
-http://localhost:8080/api/metadata/workflow -d @workflow.json
-```
-
-:::note
-To use the Conductor API, the Conductor server must be up and running (see [Running over Conductor standalone (installed locally)](/content/sdks/java#running-workflows-on-conductor-standalone-installed-locally))
-:::
-
-### Step 2: Write Worker
-
-Create `workers/ConductorWorkers.java` with a simple worker and workflow function.
+Create another class, `io.orkes.helloworld.ConductorWorkers`. This class will contain a worker task method, which will execute a task in our workflow.
 
 :::note
 A single workflow can have task workers written in different languages and deployed anywhere, making your workflow polyglot and distributed!
 :::
 
 ```java
-package io.orkes.conductor.sdk.examples.HelloWorld.worker;
+package io.orkes.helloworld;
 
 import com.netflix.conductor.sdk.workflow.task.InputParam;
 import com.netflix.conductor.sdk.workflow.task.WorkerTask;
-  public class ConductorWorkers {
-    @WorkerTask("greet")
-    public String greet(@InputParam("name") String name) {
-      return "Hello " + name;
-    }
-  }
+
+public class ConductorWorkers {
+
+   @WorkerTask("greet")
+   public String greet(@InputParam("name") String name) {
+     return "Hello " + name;
+   }
+
+ }
 ```
 
-Now, we are ready to write our main application, which will execute our workflow.
+Next, write the main application, which will execute the workflow.
 
-### Step 3: Write _Hello World_ Application
+### Step 3: Running Application​ in Conductor
 
-Let's add `Main.java` with a `main` method:
+Let’s write the application first. To implement this step, we’ll create a `Main` class in the `io.orkes.helloworld` package. This class will contain the` main` method, which serves as the entry point to our application. The main method will initiate our Conductor client and use it to set up and execute the `Greetings` workflow we defined in previous steps.
+By creating this entry point, we allow our application to run independently, connecting to the Conductor server and executing workflows. 
+
+<Tabs groupId="java-version">
+<TabItem value="v4.0.1" label="v4.0.1">
 
 ```java
-package io.orkes.conductor.sdk.examples.HelloWorld;
+package io.orkes.helloworld;
 
-import java.util.List;
-import java.util.concurrent.CompletableFuture;
+import com.netflix.conductor.sdk.workflow.executor.WorkflowExecutor;
+import io.orkes.conductor.client.ApiClient;
+
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-import com.google.common.base.Preconditions;
-import com.netflix.conductor.client.worker.Worker;
-import com.netflix.conductor.common.run.Workflow;
-import com.netflix.conductor.sdk.workflow.def.ConductorWorkflow;
-import com.netflix.conductor.sdk.workflow.executor.WorkflowExecutor;
-
-import io.orkes.conductor.client.ApiClient;
-import io.orkes.conductor.client.MetadataClient;
-import io.orkes.conductor.client.OrkesClients;
-import io.orkes.conductor.client.TaskClient;
-import io.orkes.conductor.client.WorkflowClient;
-import io.orkes.conductor.client.automator.TaskRunnerConfigurer;
-import io.orkes.conductor.sdk.examples.HelloWorld.workflow.GreetingsWorkflow;
-import io.orkes.conductor.sdk.examples.HelloWorld.workflow.WorkflowInput;
-
 public class Main {
 
-    private static final String ENV_ROOT_URI = "CONDUCTOR_SERVER_URL";
-    private static final String ENV_KEY_ID = "KEY";
-    private static final String ENV_SECRET = "SECRET";
+    // Change these values according to your conductor server instance. Refer to the documentation on creating an access key - https://orkes.io/content/sdks/authentication#retrieving-access-keys.
+    private static final String CONDUCTOR_SERVER = "https://play.orkes.io/api";
+    private static final String KEY = "_CHANGE_ME_";
+    private static final String SECRET = "_CHANGE_ME_";
 
     public static void main(String[] args) throws ExecutionException, InterruptedException, TimeoutException {
         //Initialise Conductor Client
-        OrkesClients orkesClients = getApiClientWithCredentials();
-        TaskClient taskClient = orkesClients.getTaskClient();
-        WorkflowClient workflowClient = orkesClients.getWorkflowClient();
-        MetadataClient metadataClient = orkesClients.getMetadataClient();
+        var apiClient = new ApiClient(CONDUCTOR_SERVER, KEY, SECRET);
 
         //Initialise WorkflowExecutor and Conductor Workers
-        WorkflowExecutor workflowExecutor = new WorkflowExecutor(taskClient, workflowClient, metadataClient, 10);
-        workflowExecutor.initWorkers("io.orkes.conductor.sdk.examples.HelloWorld.workers");
+        var workflowExecutor = new WorkflowExecutor(apiClient, 10);
+        workflowExecutor.initWorkers("io.orkes.helloworld");
 
         //Create the workflow with input
-        GreetingsWorkflow workflowCreator = new GreetingsWorkflow(workflowExecutor);
-        ConductorWorkflow<WorkflowInput> simpleWorkflow = workflowCreator.createWorkflow();
-        WorkflowInput input = new WorkflowInput("Orkes");
-        CompletableFuture<Workflow> workflowExecution = simpleWorkflow.executeDynamic(input);
-        Workflow workflowRun = workflowExecution.get(10, TimeUnit.SECONDS);
+        var workflowCreator = new GreetingsWorkflow(workflowExecutor);
+        var simpleWorkflow = workflowCreator.createWorkflow();
+        var input = new WorkflowInput("Orkes");
+        var workflowExecution = simpleWorkflow.executeDynamic(input);
+        var workflowRun = workflowExecution.get(10, TimeUnit.SECONDS);
 
-        //Shutdown workflowClient and taskrunner
-        workflowClient.shutdown();
-        System.exit(0);
-    }
+        System.out.println("Started workflow " + workflowRun.getWorkflowId());
 
-    private static TaskRunnerConfigurer initWorkers(List<Worker> workers, TaskClient taskClient) {
-        TaskRunnerConfigurer.Builder builder = new TaskRunnerConfigurer.Builder(taskClient, workers);
-        TaskRunnerConfigurer taskRunner = builder.withThreadCount(1).withTaskPollTimeout(5).build();
-        // Start Polling for tasks and execute them
-        taskRunner.init();
-        return taskRunner;
-    }
-
-    public static OrkesClients getApiClientWithCredentials() {
-        ApiClient apiClient = new ApiClient(ENV_ROOT_URI,ENV_KEY_ID,ENV_SECRET);
-        apiClient.setWriteTimeout(30_000);
-        apiClient.setReadTimeout(30_000);
-        apiClient.setConnectTimeout(30_000);
-        return new OrkesClients(apiClient);
+        workflowExecutor.shutdown();
     }
 }
 ```
 
-Add the [ApiUtil.java](https://github.com/orkes-io/orkes-conductor-client/blob/main/examples/java/io/orkes/conductor/sdk/examples/ApiUtil.java) file to set the environment variables.
+</TabItem>
+
+<TabItem value="v2.1.6" label="v2.1.6">
+
+```java
+package io.orkes.helloworld;
+
+import com.netflix.conductor.sdk.workflow.executor.WorkflowExecutor;
+import io.orkes.conductor.client.ApiClient;
+import io.orkes.conductor.client.OrkesClients;
+
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+
+public class Main {
+
+ // Change these values according to your conductor server instance. Refer to the documentation on creating an access key - https://orkes.io/content/sdks/authentication#retrieving-access-keys.
+    private static final String CONDUCTOR_SERVER = "https://play.orkes.io/api";
+    private static final String KEY = "_CHANGE_ME_";
+    private static final String SECRET = "_CHANGE_ME_";
+
+    public static void main(String[] args) throws ExecutionException, InterruptedException, TimeoutException {
+        //Initialise Conductor Client
+        var apiClient = new ApiClient(CONDUCTOR_SERVER, KEY, SECRET);
+        var orkesClients = new OrkesClients(apiClient);
+        var taskClient = orkesClients.getTaskClient();
+        var workflowClient = orkesClients.getWorkflowClient();
+        var metadataClient = orkesClients.getMetadataClient();
+
+        //Initialise WorkflowExecutor and Conductor Workers
+        var workflowExecutor = new WorkflowExecutor(taskClient, workflowClient, metadataClient, 10);
+        workflowExecutor.initWorkers("io.orkes.helloworld");
+
+        //Create the workflow with input
+        var workflowCreator = new GreetingsWorkflow(workflowExecutor);
+        var simpleWorkflow = workflowCreator.createWorkflow();
+        var input = new WorkflowInput("Orkes");
+        var workflowExecution = simpleWorkflow.executeDynamic(input);
+        var workflowRun = workflowExecution.get(10, TimeUnit.SECONDS);
+
+        System.out.println("Started workflow " + workflowRun.getWorkflowId());
+
+        System.exit(0);
+    }
+}
+```
+
+</TabItem>
+</Tabs>
 
 ## Running Workflows on Conductor Standalone (Installed Locally)
 
@@ -286,46 +291,19 @@ To ensure the server has started successfully, open Conductor UI on http://local
 
 ### Execute Hello World Application
 
-Run the Java application now.
+To execute the application:​
 
-Now, the workflow is executed, and its execution status can be viewed from Conductor UI (http://localhost:5000).
-
-Navigate to the **Executions** tab to view the workflow execution.
-
-## Running Workflows on Orkes Conductor
-
-For running the workflow in Orkes Conductor,
-
-- Update the Conductor server URL to your cluster name.
-
-```shell
- export CONDUCTOR_SERVER_URL="https://[your-cluster-name].orkesconductor.io/api"
-```
-
-- If you want to run the workflow on the Orkes Developer Edition, set the Conductor Server variable as follows:
-
-```shell
-export CONDUCTOR_SERVER_URL=https://developer.orkescloud.com/api
-```
-
-- Orkes Conductor requires authentication. [Obtain the key and secret from the Conductor server](https://www.youtube.com/watch?v=f1b5vZRKn2Q) and set the following environment variables.
-
-```shell
-export KEY=your_key
-export SECRET=your_secret
-```
-
-Run the application and view the execution status from Conductor's UI Console.
+1. Run the Java application.
+2. The workflow will begin executing, and you can monitor its status through the Conductor UI at http://localhost:5000.
+3. Go to the **Executions** tab to view the details of the workflow execution.
 
 :::note
 That's it - you just created and executed your first distributed Java app!
 :::
 
-## Learn More about Conductor Java SDK
-
 There are three main ways you can use Conductor when building durable, resilient, distributed applications.
 
-1. Write service workers that implement business logic to accomplish a specific goal - such as initiating payment transfer, getting user information from the database, etc.
+1. Write service workers that implement business logic to accomplish a specific goal, such as initiating payment transfers or retrieving user information from the database.
 2. Create Conductor workflows that implement application state - A typical workflow implements the saga pattern.
 3. Use Conductor SDK and APIs to manage workflows from your application.
 
@@ -333,37 +311,41 @@ There are three main ways you can use Conductor when building durable, resilient
 
 ### Writing Workers
 
-A Workflow task represents a unit of business logic that achieves a specific goal, such as checking inventory, initiating payment transfer, etc. A worker implements a task in the workflow.
+A Workflow task represents a unit of business logic that achieves a specific goal, such as checking inventory or initiating payment transfer. A worker implements a task in the workflow.
 
 ### Implementing Workers
 
-The workers can be implemented by writing a simple Java function and annotating the function with the `@worker_task`.` Conductor workers are services (similar to microservices) that follow the [Single Responsibility Principle](https://en.wikipedia.org/wiki/Single-responsibility_principle).
+The workers can be implemented by writing a simple Java function and annotating the function with `@WorkerTask`. Conductor workers are services (similar to microservices) that follow the [Single Responsibility Principle](https://en.wikipedia.org/wiki/Single-responsibility_principle).
 
-Workers can be hosted along with the workflow or run in a distributed environment where a single workflow uses workers deployed and running in different machines/VMs/containers. Whether to keep all the workers in the same application or run them as a distributed application is a design and architectural choice. Conductor is well suited for both kinds of scenarios.
+Workers can be hosted along with the workflow or run in a distributed environment where a single workflow uses workers deployed and running in different machines/VMs/containers. Keeping all the workers in the same application or running them as a distributed application is a design and architectural choice. Conductor is well suited for both kinds of scenarios.
 
 You can create or convert any existing Java function to a distributed worker by adding `@WorkerTask` annotation to it. Here is a simple worker that takes name as input and returns greetings:
 
 ```java
+package io.orkes.helloworld;
+
 import com.netflix.conductor.sdk.workflow.task.InputParam;
 import com.netflix.conductor.sdk.workflow.task.WorkerTask;
 
 public class ConductorWorkers {
-    @WorkerTask("greetings")
-    public void greeting(@InputParam("name") String name) {
-        System.out.println("Hello my friend " + name);
+
+    @WorkerTask("greet")
+    public String greet(@InputParam("name") String name) {
+        return "Hello " + name;
     }
+
 }
 ```
 
 ### Managing Workers in Application
 
-Workers use a polling mechanism (with a long poll) to check for any available tasks from the server periodically. The startup and shutdown of workers are handled by the `conductor.client.automator.TaskRunnerConfigurer` class.
+Workers use a polling mechanism (with a long poll) to periodically check for available tasks from the server. The startup and shutdown of workers are handled by the `conductor.client.automator.TaskRunnerConfigurer` class.
 
 ```java
 WorkflowExecutor executor = new WorkflowExecutor("http://server/api/");
-/*List of packages  (comma separated) to scan for annotated workers.  
-  Please note the worker method MUST be public, and the class in which they are defined
-  MUST have a no-args constructor*/       
+/*List of packages  (comma separated) to scan for annotated workers. 
+ Please note the worker method MUST be public, and the class in which they are defined
+ MUST have a no-args constructor*/      
 executor.initWorkers("com.company.package1,com.company.package2");
 ```
 
@@ -374,7 +356,7 @@ Each worker embodies the design pattern and follows certain basic principles:
 1. Workers are stateless and do not implement a workflow-specific logic.
 2. Each worker executes a particular task and produces well-defined output given specific inputs.
 3. Workers are meant to be idempotent (Should handle cases where the partially executed task, due to timeouts, etc, gets rescheduled).
-4. Workers do not implement the logic to handle retries, etc., that is taken care of by the Conductor server.
+4. Workers do not implement the logic to handle retries, etc., that the Conductor server takes care of.
 
 ### System Task Workers
 
@@ -404,12 +386,12 @@ workflow.add(waitTask);//workflow is an object of ConductorWorkflow<WorkflowInpu
 
 ```json
 {
-  "name": "wait",
-  "taskReferenceName": "wait_till_jan_end",
-  "type": "WAIT",
-  "inputParameters": {
-    "until": "2024-01-31 00:00 UTC"
-  }
+ "name": "wait",
+ "taskReferenceName": "wait_till_jan_end",
+ "type": "WAIT",
+ "inputParameters": {
+   "until": "2024-01-31 00:00 UTC"
+ }
 }
 ```
 
@@ -447,12 +429,12 @@ Execute ECMA-compliant JavaScript code. It is useful when writing a script for d
 ```java
 import com.netflix.conductor.sdk.workflow.def.tasks.JavaScript;
 JavaScript jstask = new JavaScript("hello_script",
-                  """function greetings(name) {
-                     return {
-                        "text": "hello " + name
-                            }
-                      }
-                    greetings("Orkes");""");
+                 """function greetings(name) {
+                    return {
+                       "text": "hello " + name
+                           }
+                     }
+                   greetings("Orkes");""");
 workflow.add(jstask);
 ```
 
@@ -460,14 +442,14 @@ workflow.add(jstask);
 
 ```json
 {
-  "name": "inline_task",
-  "taskReferenceName": "inline_task_ref",
-  "type": "INLINE",
-  "inputParameters": {
-    "expression": " function greetings() {\n return {\n     \"text\": \"hello \" + $.name\n        }\n    }\n    greetings();",
-    "evaluatorType": "graaljs",
-    "name": "${workflow.input.name}"
-  }
+ "name": "inline_task",
+ "taskReferenceName": "inline_task_ref",
+ "type": "INLINE",
+ "inputParameters": {
+   "expression": " function greetings() {\n return {\n     \"text\": \"hello \" + $.name\n        }\n    }\n    greetings();",
+   "evaluatorType": "graaljs",
+   "name": "${workflow.input.name}"
+ }
 }
 ```
 
@@ -488,30 +470,30 @@ workflow.add(jqtask);
 
 ```json
 {
-  "name": "json_transform_task",
-  "taskReferenceName": "json_transform_task_ref",
-  "type": "JSON_JQ_TRANSFORM",
-  "inputParameters": {
-    "key1": "k1",        
-    "key2": "k2",
-    "queryExpression": "{ key3: (.key1.value1 + .key2.value2) }",
-  }
+ "name": "json_transform_task",
+ "taskReferenceName": "json_transform_task_ref",
+ "type": "JSON_JQ_TRANSFORM",
+ "inputParameters": {
+   "key1": "k1",       
+   "key2": "k2",
+   "queryExpression": "{ key3: (.key1.value1 + .key2.value2) }",
+ }
 }
 ```
 
 ### Worker vs. Microservice/HTTP Endpoints
 
 :::tip
-Workers are a lightweight alternative to exposing an HTTP endpoint and orchestrating using HTTP tasks. Using workers is a recommended approach if you do not need to expose the service over HTTP or gRPC endpoints.
+Workers are a lightweight alternative to exposing an HTTP endpoint and orchestrating using HTTP tasks. They are recommended if you do not need to expose the service over HTTP or gRPC endpoints.
 :::
 
 There are several advantages to this approach:
 
 1. **No need for an API management layer**: Given there are no exposed endpoints and workers are self-load-balancing.
-2. **Reduced infrastructure footprin**t: No need for an API gateway/load balancer.
-3. All the communication is initiated by workers using polling - avoiding the need to open up any incoming TCP ports.
+2. **Reduced infrastructure footprint**: No need for an API gateway/load balancer.
+3. Workers initiate all communication using polling, avoiding the need to open any incoming TCP ports.
 4. Workers **self-regulate** when busy; they only poll as much as they can handle. Backpressure handling is done out of the box.
-5. Workers can be scaled up / down quickly based on the demand by increasing the number of processes.
+5. Workers can be scaled up/down quickly based on the demand by increasing the number of processes.
 
 ### Deploying Workers in Production
 
@@ -531,7 +513,7 @@ Using Java as code to define and execute workflows lets you build extremely powe
 
 When the workflows are relatively static, they can be designed using the Orkes UI (available when using Orkes Conductor) and APIs or SDKs to register and run the workflows.
 
-Both the code and configuration approaches are equally powerful and similar in nature to how you treat Infrastructure as Code.
+The code and configuration approaches are equally powerful and similar to how you treat Infrastructure as Code.
 
 ### Execute Dynamic Workflows Using Code
 
@@ -546,31 +528,31 @@ import com.netflix.conductor.sdk.workflow.executor.WorkflowExecutor;
 
 public class CreateWorkflow {
 
-    private final WorkflowExecutor executor;
+   private final WorkflowExecutor executor;
 
-    public WorkflowCreator(WorkflowExecutor executor) {
-        this.executor = executor;
-    }
+   public WorkflowCreator(WorkflowExecutor executor) {
+       this.executor = executor;
+   }
 
-    public ConductorWorkflow<WorkflowInput> createSimpleWorkflow() {
-        ConductorWorkflow<WorkflowInput> workflow = new ConductorWorkflow<>(executor);
-        workflow.setName("email_send_workflow");
-        workflow.setVersion(1);
+   public ConductorWorkflow<WorkflowInput> createSimpleWorkflow() {
+       ConductorWorkflow<WorkflowInput> workflow = new ConductorWorkflow<>(executor);
+       workflow.setName("email_send_workflow");
+       workflow.setVersion(1);
 
-        SimpleTask getUserDetails = new SimpleTask("get_user_info", "get_user_info");
-        getUserDetails.input("userId", "${workflow.input.userId}");
+       SimpleTask getUserDetails = new SimpleTask("get_user_info", "get_user_info");
+       getUserDetails.input("userId", "${workflow.input.userId}");
 
-        // send email
-        SimpleTask sendEmail = new SimpleTask("send_email", "send_email");
-        // get user details user info, which contains the email field
-        sendEmail.input("email", "${get_user_info.output.email}");
+       // send email
+       SimpleTask sendEmail = new SimpleTask("send_email", "send_email");
+       // get user details user info, which contains the email field
+       sendEmail.input("email", "${get_user_info.output.email}");
 
-        workflow.add(getUserDetails);
-        workflow.add(sendEmail);
+       workflow.add(getUserDetails);
+       workflow.add(sendEmail);
 
-        return workflow;
-    }
-    
+       return workflow;
+   }
+  
 }
 ```
 
@@ -582,18 +564,18 @@ import com.netflix.conductor.sdk.workflow.task.WorkerTask;
 
 public class ConductorWorkers {
 
-    @WorkerTask("get_user_info")
-    public UserInfo getUserInfo(@InputParam("userId") String userId) {
-        UserInfo userInfo =  new UserInfo("User X", userId);
-        userInfo.setEmail(userId + "@example.com");
-        userInfo.setPhoneNumber("555-555-5555");
-        return userInfo;
-    }
+   @WorkerTask("get_user_info")
+   public UserInfo getUserInfo(@InputParam("userId") String userId) {
+       UserInfo userInfo =  new UserInfo("User X", userId);
+       userInfo.setEmail(userId + "@example.com");
+       userInfo.setPhoneNumber("555-555-5555");
+       return userInfo;
+   }
 
-    @WorkerTask("send_email")
-    public void sendEmail(@InputParam("email") String email) {
-        System.out.println("Sending email to " + email);
-    }
+   @WorkerTask("send_email")
+   public void sendEmail(@InputParam("email") String email) {
+       System.out.println("Sending email to " + email);
+   }
 }
 ```
 
@@ -695,7 +677,7 @@ restartWorkflow(List<String> workflowIds, Boolean useLatestDefinitions)
 
 #### Rerun Workflow from a Specific Task
 
-In the cases where a workflow needs to be restarted from a specific task rather than from the beginning, rerun provides that option. When issuing the rerun command to the workflow, you can specify the task ID from where the workflow should be restarted (as opposed to from the beginning), and optionally, the workflow's input can also be changed.
+Rerun provides an option for restarting a workflow from a specific task rather than from the beginning. When issuing the rerun command to the workflow, you can specify the task ID from which the workflow should be restarted (as opposed to from the beginning), and optionally, the workflow's input can also be changed.
 
 ```java
 setReRunFromTaskId(String reRunFromTaskId)
@@ -723,7 +705,7 @@ resumeWorkflow(List<String> workflowIds)
 
 ### Searching for Workflows
 
-Workflow executions are retained until removed from the Conductor. This gives complete visibility into all the executions an application has - regardless of the number of executions. Conductor has a powerful search API that allows you to search for workflow executions.
+Workflow executions remain stored in Conductor until explicitly removed, providing comprehensive visibility into all executions within an application, regardless of their volume. Conductor’s robust search API enables efficient querying of workflow executions.
 
 ```java
 searchWorkflows(queryId, start, size, sort, freeText, query, skipCache);
@@ -744,9 +726,7 @@ Here are the supported fields for the query:
 
 ### Handling Failures, Retries and Rate Limits
 
-Conductor lets you embrace failures rather than worry about the complexities introduced in the system to handle failures.
-
-All the aspects of handling failures, retries, rate limits, etc., are driven by the configuration that can be updated in real time without re-deploying your application.
+Conductor lets you embrace failures rather than worry about the complexities introduced in the system to handle failures. The configuration, which can be updated in real time without redeploying your application, drives all the aspects of handling failures, retries, rate limits, etc.
 
 #### Retries
 
@@ -837,31 +817,82 @@ See [TaskConfigure.java](https://github.com/orkes-io/orkes-conductor-client/blob
 
 ## Using Conductor in Your Application
 
-Conductor SDKs are lightweight and can easily be added to your existing or new Java app. This section will dive deeper into integrating Conductor in your application.
+Conductor SDKs are lightweight and can easily be added to your existing or new Java app. This section will explore integrating Conductor in your application.
 
 ### Adding Conductor SDK to Your Application
 
 Add `orkes-conductor-client` dependency to your project.
 
-#### Gradle
+:::notePre-requisites:
+- Java 17 or greater
+- Gradle or Maven for dependency management
+:::
 
-For Gradle-based projects, modify the `build.gradle` file in the project directory by adding the following line to the dependencies block in that file:
+### Gradle
+
+For Gradle-based projects, modify the `build.gradle` file in the project directory by adding the following line to the dependencies block:
+
+<Tabs groupId="java-version">
+<TabItem value="v4.0.1" label="v4.0.1">
 
 ```java
-implementation 'io.orkes.conductor:orkes-conductor-client:2.0.1'
+    implementation 'org.conductoross:conductor-client:4.0.1'
+    implementation 'org.conductoross:java-sdk:4.0.1'
+    implementation 'io.orkes.conductor:orkes-conductor-client:4.0.1'
 ```
 
-#### Maven
+</TabItem>
 
-For Maven-based projects, modify the pom.xml file in the project directory by adding the following XML snippet within the `dependencies` section:
+<TabItem value="v2.1.6" label="v2.1.6">
 
 ```java
+implementation 'io.orkes.conductor:orkes-conductor-client:2.1.6'
+```
+
+</TabItem>
+</Tabs>
+
+
+### Maven
+
+For Maven-based projects, modify the `pom.xml` file in the project directory by adding the following XML snippet within the dependencies section:
+
+
+<Tabs groupId="java-version">
+<TabItem value="v4.0.1" label="v4.0.1">
+
+```xml
+<dependency>
+    <groupId>org.conductoross</groupId>
+    <artifactId>conductor-client</artifactId>
+    <version>4.0.1</version>
+</dependency>
+<dependency>
+    <groupId>org.conductoross</groupId>
+    <artifactId>java-sdk</artifactId>
+    <version>4.0.1</version>
+</dependency>
+<dependency>
+    <groupId>io.orkes.conductor</groupId>
+    <artifactId>orkes-conductor-client</artifactId>
+    <version>4.0.1</version>
+</dependency>
+```
+
+</TabItem>
+
+<TabItem value="v2.1.6" label="v2.1.6">
+
+```xml
 <dependency>
   <groupId>io.orkes.conductor</groupId>
   <artifactId>orkes-conductor-client</artifactId>
-  <version>1.1.14</version>
+  <version>2.1.6</version>
 </dependency>
 ```
+
+</TabItem>
+</Tabs>
 
 ### Testing Workflows
 

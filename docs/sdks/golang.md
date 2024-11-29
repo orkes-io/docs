@@ -1,5 +1,5 @@
 
-# Orkes Conductor Go SDK
+# Go SDK
 
 Orkes Conductor Go SDK is maintained here: https://github.com/conductor-sdk/conductor-go
 

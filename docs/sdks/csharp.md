@@ -1,5 +1,5 @@
 
-# Orkes Conductor C# SDK
+# C# SDK
 
 Orkes Conductor C# SDK is maintained here: https://github.com/conductor-sdk/conductor-csharp
 

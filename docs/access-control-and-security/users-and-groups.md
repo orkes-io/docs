@@ -1,3 +1,8 @@
+---
+slug: "/access-control-and-security/users-and-groups"
+description: "Manage the users and groups on your Conductor cluster to provide the appropriate level of access and permissions. "
+---
+
 # Managing Users and Groups
 
 :::info
@@ -18,7 +23,7 @@ Users must be added to your Orkes Conductor cluster before they can sign up or l
 
 **To add a user to your cluster:**
 1. In the left navigation menu, go to **Access Control** > **Users**.
-2. Select **(+) Create User**.
+2. Select **(+) Create user**.
 3. Enter the following details:
 
 | Field | Description                                                                                                                                                                                                                                                     |

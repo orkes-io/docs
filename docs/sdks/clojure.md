@@ -1,5 +1,5 @@
 
-# Orkes Conductor Clojure SDK
+# Clojure SDK
 
 Orkes Conductor Clojure SDK is maintained here: https://github.com/conductor-sdk/conductor-clojure
 

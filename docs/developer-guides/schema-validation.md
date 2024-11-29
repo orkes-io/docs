@@ -1,5 +1,7 @@
 ---
 sidebar_label: Schema Validation
+slug: "/developer-guides/schema-validation"
+description: "Learn how to create schemas in Orkes Conductor to enforce the your input/output payload for workflows and tasks."
 ---
 
 import Tabs from '@theme/Tabs';
@@ -64,8 +66,6 @@ Here is an overview of using schemas in Conductor workflows:
 
 
 ### Step 1: Define a schema
-
-The Orkes Platform can be used to define schemas.
 
 **To define a schema:**
 1. Log in to your Orkes Conductor cluster.

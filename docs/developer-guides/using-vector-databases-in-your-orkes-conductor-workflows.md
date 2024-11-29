@@ -1,3 +1,8 @@
+---
+slug: "/developer-guides/using-vector-databases-in-your-orkes-conductor-workflows"
+description: "Learn how to use vector databases in Orkes' system LLM tasks, including the steps for integration and access control."
+---
+
 # Using Vector Databases
 
 In this guide, we’ll provide an overview of Vector Databases and how Orkes makes it easy for developers to use Vector DBs for AI tasks in your applications. We will go through the concepts, where and how vector DBs add capabilities for your AI-powered applications, and how to get started.
@@ -43,7 +48,7 @@ The first step is integrating the required vector databases with your Orkes Cond
 <p align="center"><img src="/content/img/add-integrations-for-dbs.png" alt="Add New Integrations for Databases" width="100%" height="auto"></img></p>
 
 4. Click **+Add** and provide the required parameters for the chosen provider.
-5. You can toggle-on the **Active** button to activate the integration instantly.
+5. Enable the **Active** option to activate the integration instantly.
 6. Click **Save**.
 
 :::note
@@ -88,7 +93,7 @@ The following system tasks require a vector database to be configured:
 If you are creating the workflow via the UI method,
 
 1. Navigate to **Definitions > Workflow** from the left menu on your Orkes Conductor cluster. 
-2. Click **Define Workflow** from the top-right corner. 
+2. Click **+Define Workflow** from the top-right corner. 
 3. Click **Start** on the diagram and add the required system task based on your use case.
 4. Choose the configured vector database and indexes.
 

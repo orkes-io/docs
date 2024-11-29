@@ -1,5 +1,7 @@
 ---
 sidebar_position: 5
+slug: "/reference-docs/operators/set-variable"
+description: "The Set Variable task is used to create or update workflow variables."
 ---
 
 
@@ -8,9 +10,10 @@ import TabItem from '@theme/TabItem';
 
 # Set Variable
 
-The Set Variable task allows you to create workflow variables or update them with new values. The task is used to track a shared variable at the workflow level across tasks, and these variables can be accessed or overwritten in any subsequent task in the workflow.
+The Set Variable task allows you to create or update workflow-level variables. The task is used to construct a shared variable at the workflow level across tasks, and these variables can be accessed or overwritten in any subsequent task in the workflow.
 
-Variables can be initialized and updated at any point in the workflow. Once a variable is initialized, it can be accessed in any subsequent task using the expression `${workflow.variables.variableName}` (replacing variableName with the actual variable name). Initialized values can be overwritten by a subsequent Set Variable task.
+Variables can be initialized and updated at any point in the workflow. Once a variable is initialized, it can be accessed in any subsequent task using the expression `${workflow.variables.variableNameHere}` (replacing variableNameHere with the actual variable name). Initialized values can be overwritten by a subsequent Set Variable task.
+
 
 ## Task parameters
 To configure the Set Variable task, set your desired variables and their respective values in `inputParameters`. The values can be set in two ways:
@@ -86,6 +89,11 @@ In this example workflow, a username is stored as a variable so that it can be r
   ]
 }
 ```
-In the example above, `set_name` is a Set Variable Task that takes a variable input for `name`. In subsequent tasks, the `name` is later referenced using `${workflow.variables.name}`.
+In the example above, `set_name` is a Set Variable task that takes a variable input for `name`. In subsequent tasks, the `name` is later referenced using `${workflow.variables.name}`.
 </p>
 </details>
+
+
+## Limitations
+
+The scope of the Set Variable task is limited to its workflow. An initialized variable in one workflow will not carry over to another workflow or sub-workflow and will have to be initialized again using a new Set Variable task. In some cases, you can consider setting up global [environment variables](/developer-guides/using-environment-variables) to manage frequently accessed variables across workflows.

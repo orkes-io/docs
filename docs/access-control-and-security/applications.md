@@ -1,3 +1,8 @@
+---
+slug: "/access-control-and-security/applications"
+description: "Use applications to manage secure access for all connections to your Conductor cluster."
+---
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -56,8 +61,10 @@ Configure the application’s roles and permissions to control what your applica
     The application has been created. You can proceed to add roles or permissions to the application.
 2. Add roles to the application.
     1. In the Application Roles or Unrestricted Roles section, toggle the different application roles for your application.
-3. Add permissions to grant application-level access to resources.
-    1. In the Permissions section, select **+ Add Permission**.
+3. Generate access keys.
+    1. In the Access Keys section, select **+ Create access key** to generate a unique keyId and keySecret. The Key Secret is shown only once, so make sure to copy and store it securely.
+4. Add permissions to grant application-level access to resources.
+    1. In the Permissions section, select **+ Add permission**.
     2. Toggle between each resource type and select the resources to provide access to.
     3. Toggle the access levels for your selected resource:
         * **Read**—The application will be able to view the resource.

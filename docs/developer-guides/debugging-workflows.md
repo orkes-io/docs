@@ -1,3 +1,8 @@
+---
+slug: "/developer-guides/debugging-workflows"
+description: "Learn how to use Orkes Platform to debug workflows and recover from failed executions."
+---
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import Install from '@site/src/components/install.mdx';
@@ -46,7 +51,7 @@ The page consists of the following sub-tabs:
 * **Diagram** - Visual representation of the workflow's status; tasks are color-coded (green for successful, red for failed, orange for completed with errors).
 * **Task List** - Details of tasks within the workflow.
 * **Timeline** -  Chronological timeline of task execution times, with zoom functionality for accuracy.
-* **Summary** - Includes key details such as workflow ID, status, version, start/end time, and duration.
+* **Summary** - Includes key details such as workflow ID, status, version, start/end time, duration, and reason for incompletion.
 * **Workflow Input/Output** - Lists inputs and outputs of the workflow.
 * **JSON** - Complete JSON representation of the workflow.
 * **Variables** - Displays variables passed using the set variable task.

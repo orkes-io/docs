@@ -1,3 +1,8 @@
+---
+slug: "/developer-guides/enabling-cdc-on-conductor-workflows"
+description: "Learn how to use the CDC (Change Data Capture) pattern to send workflow and task status updates to eventing systems."
+---
+
 # Enabling CDC (Change Data Capture)
 
 Change Data Capture (CDC) is a design pattern for tracking changes in the source data and replicating the changes to the target systems.

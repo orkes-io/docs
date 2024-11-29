@@ -67,13 +67,28 @@ const sidebars = {
         },
         {
             type: 'category',
+            label: 'Conceptual Guides',
+            link: {
+                type: 'generated-index',
+                title: 'Conceptual Guides',
+                slug: '/category/conceptual-guides',
+            },
+            className: 'leftMenuHeader',
+            items: [
+                'conceptual-guides/workflow-and-task-status',
+            ]
+        },
+        {
+            type: 'category',
             label: 'Developer Guides',
             link: {
                 type: 'generated-index',
                 title: 'Developer Guides',
                 slug: '/category/developer-guides',
-                keywords: ['guides', 'features', 'developer-guides']
             },
+            className: 'leftMenuHeader',
+            collapsible: true,
+            collapsed: false,
             items: [
                 {
                     type: 'category',
@@ -87,6 +102,12 @@ const sidebars = {
                         {
                             type: 'category',
                             label: 'Inputs/Outputs',
+                            link: {
+                                type: 'generated-index',
+                                title: 'Inputs/Outputs',
+                                description: 'Learn how to configure input/output parameters to be used in workflows.',
+                                slug: '/inputs-outputs'
+                            },
                             items: [
                                 'developer-guides/passing-inputs-to-task-in-conductor',
                                 'developer-guides/schema-validation',
@@ -99,17 +120,29 @@ const sidebars = {
                         {
                             type: 'category',
                             label: 'Workers',
+                            link: {
+                                type: 'generated-index',
+                                title: 'Workers',
+                                description: 'Learn how to configure, manage, and optimize workers to efficiently execute tasks and improve workflow performance in Conductor.',
+                                slug: '/workers'
+                            },
                             items: [
                                 'developer-guides/using-workers',
-                                'developer-guides/task-to-domain',
                                 'developer-guides/monitoring-task-queues',
                                 'developer-guides/scaling-workers',
+                                'developer-guides/task-to-domain',
                             ],
                             collapsible: false,
                         },
                         {
                             type: 'category',
                             label: 'AI Orchestration',
+                            link: {
+                                type: 'generated-index',
+                                title: 'AI Orchestration',
+                                description: 'Learn how to orchestrate AI-driven workflows in Orkes Conductor, from quick setup to using Large Language Models (LLMs), vector databases, and prompt templates for building GenAI applications.',
+                                slug: '/ai-orchestration'
+                            },
                             items: [
                                 {
                                     type: 'doc',
@@ -144,7 +177,7 @@ const sidebars = {
                         },
                         'developer-guides/webhook-integration',
                         'developer-guides/write-workflows-using-code',
-                        'error-handling'
+                        'developer-guides/error-handling'
                     ]
                 },
                 {
@@ -156,7 +189,6 @@ const sidebars = {
                     },
                     className: 'leftMenuHeader',
                     items: [
-                        'developer-guides/task-and-workflow-status-in-conductor',
                         'developer-guides/scheduling-workflows',
                         'developer-guides/sending-signals-to-workflows',
                     ]
@@ -461,9 +493,6 @@ const sidebars = {
                     ],
                 },
             ],
-            collapsible: true,
-            collapsed: false,
-            className: 'leftMenuHeader',
         },
         {
             type: 'category',
@@ -727,7 +756,6 @@ const sidebars = {
             items: [
                 'faqs/general-faqs',
                 'faqs/directed-acyclic-graph',
-                'faqs/task-lifecycle',
             ],
             collapsible: true,
             collapsed: true,
