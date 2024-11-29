@@ -122,7 +122,7 @@ def startTaskRunnerWorkers():
             key_id='key',
             key_secret='secret'
         ),
-        server_api_url='https://play.orkes.io/api',
+        server_api_url='https://developer.orkescloud.com/api',
         debug=True
     )
 

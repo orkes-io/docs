@@ -52,7 +52,7 @@ We can also pass *correlationIds* and *freeText* just like on the Orkes workflow
 {
  "result": {
    "count": 1,
-   "workflowsUrl": "https://play.orkes.io?rowsPerPage=200&startFrom=1696447143843&startTo=1696448043843&status=FAILED&status=TERMINATED&workflowType=TestFailedWorkflow&workflowType=TestTerminatedWorkflow",
+   "workflowsUrl": "https://developer.orkescloud.com?rowsPerPage=200&startFrom=1696447143843&startTo=1696448043843&status=FAILED&status=TERMINATED&workflowType=TestFailedWorkflow&workflowType=TestTerminatedWorkflow",
    "workflows": [
      {
        "updateTime": "2023-10-04T19:30:39.105Z",
@@ -93,7 +93,7 @@ This system task sends the alert to Opsgenie using the API integration key store
 ```json
 {
  "alias": "SomeAlias",
- "description": "https://play.orkes.io/rowsPerPage=200&startFrom=1696447143843&startTo=1696448043843&status=FAILED&workflowType=TestFailedWorkflow",
+ "description": "https://developer.orkescloud.com/rowsPerPage=200&startFrom=1696447143843&startTo=1696448043843&status=FAILED&workflowType=TestFailedWorkflow",
  "visibleTo": [
    {
      "id": "6e771bf9-8a72-47c2-897d-ccab90df66e2/main",
