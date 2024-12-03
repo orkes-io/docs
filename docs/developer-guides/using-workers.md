@@ -163,7 +163,7 @@ Get the Conductor Clojure package from [clojars](https://clojars.org/io.orkes/co
 
 ### Step 3: Write your worker logic
 
-In general, workers can be instantiated from a WorkerInterface class, defined as a function, or annotated using a WorkerTask decorator, depending on the language. The worker file in your project may look like this:
+In general, workers can be instantiated from classes that implement the Worker interface, or that are annotated using a WorkerTask annotation or decorator, depending on the language. A worker in your project may look like this:
 
 <Tabs groupId="language">
 <TabItem value="python" label="Python">
