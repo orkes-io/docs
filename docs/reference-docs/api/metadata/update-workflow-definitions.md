@@ -1,6 +1,9 @@
 ---
 sidebar_position: 7
+slug: "/reference-docs/api/metadata/update-workflow-definitions"
+description: "Workflows are directed sequences of tasks and operators. This API is used to update workflow definitions in Orkes Conductor."
 ---
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 

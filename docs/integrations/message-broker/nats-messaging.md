@@ -1,3 +1,8 @@
+---
+slug: "/integrations/message-broker/nats-messaging"
+description: "Learn how to integrate NATS Messaging your Orkes Conductor cluster."
+---
+
 # Integrating NATS Messaging with Orkes Conductor
 
 This developer guide includes the steps to integrate NATS Messaging with Orkes Conductor. This integration lets you connect your NATS server to Conductor to publish and receive messages from queues.

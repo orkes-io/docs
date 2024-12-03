@@ -1,3 +1,8 @@
+---
+slug: "/integrations/message-broker/confluent-kafka"
+description: "Learn how to integrate Confluent Kafka with your Orkes Conductor cluster."
+---
+
 # Integrating Confluent Kafka with Orkes Conductor
 
 This developer guide includes the steps to integrate Confluent Kafka with Orkes Conductor. This integration lets you connect the Confluent Kafka cluster to Conductor to publish and receive messages from queues/topics.

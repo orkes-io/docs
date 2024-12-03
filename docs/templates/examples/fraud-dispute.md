@@ -1,3 +1,7 @@
+---
+slug: "/templates/examples/fraud-dispute"
+description: "Check out this template for an example Conductor workflow on handling fraud disputes."
+---
 
 # Building Applications to handle fraud disputes using Conductor
 

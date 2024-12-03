@@ -1,3 +1,8 @@
+---
+slug: "/integrations/ai-llm/google-gemini-ai"
+description: "Learn how to integrate Google Gemini AI with your Orkes Conductor cluster."
+---
+
 # Integrating with Google Gemini AI in Orkes Conductor
 
 To effectively utilize AI and LLM tasks in Orkes Conductor, it's essential to integrate your Conductor cluster with the necessary AI and LLM models. 

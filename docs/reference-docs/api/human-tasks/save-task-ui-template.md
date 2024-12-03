@@ -1,5 +1,7 @@
 ---
 sidebar_position: 14
+slug: "/reference-docs/api/human-tasks/save-task-ui-template"
+description: "This API is used to save a Human task user form."
 ---
 
 import Tabs from '@theme/Tabs';

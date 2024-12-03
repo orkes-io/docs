@@ -1,5 +1,7 @@
 ---
 sidebar_position: 11
+slug: "/reference-docs/api/human-tasks/search-task-list"
+description: "This API is used to retrieve a list of Human tasks based on the search criteria."
 ---
 
 import Tabs from '@theme/Tabs';

@@ -1,5 +1,7 @@
 ---
 sidebar_position: 12
+slug: "/reference-docs/api/human-tasks/get-task-ui-template"
+description: "This API is used to retrieve the user form used in a Human task based on its task ID."
 ---
 
 import Tabs from '@theme/Tabs';

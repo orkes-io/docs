@@ -1,5 +1,7 @@
 ---
 sidebar_position: 4
+slug: "/reference-docs/system-tasks/inline"
+description: "The Inline task enables the execution of essential logic during workflow runtime by evaluating a JavaScript expression."
 ---
 
 import Tabs from '@theme/Tabs';

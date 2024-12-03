@@ -1,5 +1,7 @@
 ---
 sidebar_position: 8
+slug: "/reference-docs/api/metadata/delete-workflow-definition"
+description: "Workflows are directed sequences of tasks and operators. This API is used to delete workflow definitions in Orkes Conductor."
 ---
 
 import Tabs from '@theme/Tabs';

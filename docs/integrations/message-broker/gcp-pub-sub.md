@@ -1,3 +1,8 @@
+---
+slug: "/integrations/message-broker/gcp-pub-sub"
+description: "Learn how to integrate GCP Pub Sub with your Orkes Conductor cluster."
+---
+
 # Integrating GCP Pub Sub with Orkes Conductor
 
 This developer guide includes the steps to integrate Google Cloud Platform (GCP) Pub Sub with Orkes Conductor. This integration lets you connect your GCP Pub Sub to Conductor to publish and receive messages from topics.

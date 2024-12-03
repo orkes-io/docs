@@ -1,5 +1,7 @@
 ---
 sidebar_position: 13
+slug: "/reference-docs/system-tasks/query-processor"
+description: "The Query Processor task is used to make queries against various systems that can be used for workflow alerts, including Conductor APIs and Conductor Metrics (Prometheus)."
 ---
 
 import Tabs from '@theme/Tabs';

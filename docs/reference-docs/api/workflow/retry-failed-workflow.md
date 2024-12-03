@@ -1,5 +1,7 @@
 ---
 sidebar_position: 9
+slug: "/reference-docs/api/workflow/retry-failed-workflow"
+description: "This API is used to retry a failed workflow execution from the last failed task."
 ---
 
 import Tabs from '@theme/Tabs';

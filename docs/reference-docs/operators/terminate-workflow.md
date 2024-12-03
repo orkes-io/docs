@@ -1,5 +1,7 @@
 ---
 sidebar_position: 7
+slug: "/reference-docs/operators/terminate-workflow"
+description: "The Terminate Workflow task is used to terminate other workflows from the current workflow."
 ---
 
 import Tabs from '@theme/Tabs';

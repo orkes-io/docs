@@ -1,7 +1,8 @@
 ---
 sidebar_position: 8
+slug: "/reference-docs/api/human-tasks/release-human-task"
+description: "This API is used to release a previously-claimed Human task so that someone else can claim it."
 ---
-
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
 # Release Human Task

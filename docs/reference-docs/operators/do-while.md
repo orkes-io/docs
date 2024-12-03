@@ -1,5 +1,7 @@
 ---
 sidebar_position: 2
+slug: "/reference-docs/operators/do-while"
+description: "The Do While task iterates through a sequence of tasks as long as a given condition is true."
 ---
 
 import Tabs from '@theme/Tabs';

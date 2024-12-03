@@ -1,5 +1,7 @@
 ---
 sidebar_position: 3
+slug: "/reference-docs/system-tasks/http-poll"
+description: "The HTTP Poll task is used to poll HTTP API endpoints until the specified condition is matched."
 ---
 
 import Tabs from '@theme/Tabs';

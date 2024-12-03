@@ -1,5 +1,7 @@
 ---
 sidebar_position: 5
+slug: "/reference-docs/api/workflow/pause-worflow"
+description: "This API is used to pause a running workflow execution."
 ---
 
 import Tabs from '@theme/Tabs';

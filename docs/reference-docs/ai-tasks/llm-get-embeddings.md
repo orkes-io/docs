@@ -1,6 +1,9 @@
 ---
 sidebar_position: 5
+slug: "/reference-docs/ai-tasks/llm-get-embeddings"
+description: "The LLM Get Embeddings task retrieves embeddings from a vector database."
 ---
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 

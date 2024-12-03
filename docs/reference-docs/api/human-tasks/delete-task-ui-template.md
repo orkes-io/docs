@@ -1,5 +1,7 @@
 ---
 sidebar_position: 13
+slug: "/reference-docs/api/human-tasks/delete-task-ui-template"
+description: "This API is used to delete a Human task user form based on its name."
 ---
 
 import Tabs from '@theme/Tabs';

@@ -1,3 +1,8 @@
+---
+slug: "/integrations/rdbms/relational-database"
+description: "Learn how to integrate Relational Databases with your Orkes Conductor cluster."
+---
+
 # Integrating with Relational Database in Orkes Conductor
 
 To effectively manage and optimize your workflows in Orkes Conductor, it's essential to integrate your Orkes Conductor cluster with a relational database management system (RDBMS). 

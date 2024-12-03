@@ -1,3 +1,8 @@
+---
+slug: "/integrations/ai-llm/aws-bedrock-llama2"
+description: "Learn how to integrate AWS Bedrock Llama 2 with your Orkes Conductor cluster."
+---
+
 # Integrating with AWS Bedrock Llama 2 in Orkes Conductor
 
 To effectively utilize AI and LLM tasks in Orkes Conductor, it's essential to integrate your Orkes Conductor cluster with the necessary AI and LLM models. 

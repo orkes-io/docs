@@ -1,3 +1,8 @@
+---
+slug: "/integrations/message-broker/amazon-msk"
+description: "Learn how to integrate Amazon MSK with your Orkes Conductor cluster."
+---
+
 # Integrating Amazon MSK with Orkes Conductor
 
 This developer guide includes the steps to integrate Amazon MSK with Orkes Conductor. This integration lets you connect the Amazon MSK (Kafka) cluster to Conductor to publish and receive messages from queues/topics.

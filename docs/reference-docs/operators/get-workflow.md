@@ -1,5 +1,7 @@
 ---
 sidebar_position: 14
+slug: "/reference-docs/operators/get-workflow"
+description: "The Get Workflow task retrieves the details of a workflow execution using its workflow ID."
 ---
 
 import Tabs from '@theme/Tabs';

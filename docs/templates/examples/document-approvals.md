@@ -1,3 +1,7 @@
+---
+slug: "/templates/examples/document-approvals"
+description: "Use this template to build a document approval workflow."
+---
 
 # Document Approval Workflow
 

@@ -1,5 +1,7 @@
 ---
 sidebar_position: 10
+slug: "/reference-docs/api/workflow/search-workflow-executions"
+description: "This API is used to search for workflow executions."
 ---
 
 import Tabs from '@theme/Tabs';

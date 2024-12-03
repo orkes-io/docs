@@ -1,3 +1,7 @@
+---
+slug: "/sdks/golang"
+description: "Use Conductor to create applications in Go."
+---
 
 # Go SDK
 

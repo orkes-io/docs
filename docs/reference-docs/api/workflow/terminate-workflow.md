@@ -1,5 +1,7 @@
 ---
 sidebar_position: 14
+slug: "/reference-docs/api/workflow/terminate-workflow"
+description: "This API is used to terminate a workflow execution with a termination reason."
 ---
 
 import Tabs from '@theme/Tabs';

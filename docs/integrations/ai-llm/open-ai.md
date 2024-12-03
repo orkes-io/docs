@@ -1,3 +1,8 @@
+---
+slug: "/integrations/ai-llm/open-ai"
+description: "Learn how to integrate OpenAI with your Orkes Conductor cluster."
+---
+
 # Integrating with OpenAI in Orkes Conductor
 
 To effectively utilize AI and LLM tasks in Orkes Conductor, it's essential to integrate your Orkes Conductor cluster with the necessary AI and LLM models. 

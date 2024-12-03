@@ -1,5 +1,7 @@
 ---
 sidebar_position: 6
+slug: "/reference-docs/operators/sub-workflow"
+description: "The Sub Workflow task is used to run another workflow within the current workflow."
 ---
 
 import Tabs from '@theme/Tabs';

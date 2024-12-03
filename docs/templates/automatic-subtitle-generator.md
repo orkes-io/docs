@@ -1,3 +1,8 @@
+---
+slug: "/templates/automatic-subtitle-generator"
+description: "Use this template to build an AI-enabled automatic subtitle generator."
+---
+
 # Automatic Subtitle Generator
 
 In the fast-paced realm of technology, manual tasks are becoming a thing of the past. Our cutting-edge workflow takes the reins, transforming the time-consuming process of transcribing video subtitles into a seamless, automated symphony.

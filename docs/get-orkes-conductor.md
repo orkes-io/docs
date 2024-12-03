@@ -1,6 +1,9 @@
 ---
 sidebar_position: 1
+slug: "/get-orkes-conductor"
+description: "Learn how to set up Orkes Conductor for cloud or local use."
 ---
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 

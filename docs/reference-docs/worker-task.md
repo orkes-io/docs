@@ -1,5 +1,7 @@
 ---
 sidebar_position: 7
+slug: "/reference-docs/worker-task"
+description: "A Worker task is used when an external worker executes custom logic."
 ---
 
 

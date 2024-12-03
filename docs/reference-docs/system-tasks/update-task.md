@@ -1,5 +1,7 @@
 ---
 sidebar_position: 11
+slug: "/reference-docs/system-tasks/update-task"
+description: "The Update task is used to update the status of another task in any running workflow."
 ---
 
 import Tabs from '@theme/Tabs';

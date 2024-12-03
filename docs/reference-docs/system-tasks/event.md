@@ -1,5 +1,7 @@
 ---
 sidebar_position: 1
+slug: "/reference-docs/system-tasks/event"
+description: "The Event task is used to publish an event to an eventing system."
 ---
 
 import Tabs from '@theme/Tabs';

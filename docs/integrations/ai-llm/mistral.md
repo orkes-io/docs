@@ -1,3 +1,8 @@
+---
+slug: "/integrations/ai-llm/mistral"
+description: "Learn how to integrate Mistral with your Orkes Conductor cluster."
+---
+
 # Integrating with Mistral in Orkes Conductor
 
 To effectively utilize AI and LLM tasks in Orkes Conductor, it's essential to integrate your Orkes Conductor cluster with the necessary AI and LLM models. 

@@ -1,3 +1,8 @@
+---
+slug: "/integrations/message-broker/aws-sqs"
+description: "Learn how to integrate AWS SQS with your Orkes Conductor cluster."
+---
+
 # Integrating AWS SQS with Orkes Conductor
 
 This developer guide includes the steps to integrate AWS SQS with Orkes Conductor. This integration lets you connect your AWS SQS to Conductor to publish and receive messages from queues.

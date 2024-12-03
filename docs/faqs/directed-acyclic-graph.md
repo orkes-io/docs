@@ -1,3 +1,8 @@
+---
+slug: "/faqs/directed-acyclic-graph"
+description: "Conductor workflows are a form of directed acyclic graph and progress through a directed path without looping."
+---
+
 # Are Conductor Workflows Directed Acyclic Graph (DAG)?
 
 Conductor workflows are directed acyclic graphs (DAGs). But what exactly is a DAG?

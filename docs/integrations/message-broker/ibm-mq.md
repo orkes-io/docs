@@ -1,3 +1,8 @@
+---
+slug: "/integrations/message-broker/ibm-mq"
+description: "Learn how to integrate IBM MQ with your Orkes Conductor cluster."
+---
+
 # Integrating IBM MQ with Orkes Conductor
 
 This developer guide includes the steps to integrate IBM MQ with Orkes Conductor. This integration lets you connect your IBM MQ server to Conductor to publish and subscribe messages to/from IBM MQ.

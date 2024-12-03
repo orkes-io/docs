@@ -1,5 +1,7 @@
 ---
 sidebar_position: 13
+slug: "/reference-docs/operators/human"
+description: "The Human task enables user interaction in the middle of the workflow, such as form submissions, approvals, and so on."
 ---
 
 import Tabs from '@theme/Tabs';

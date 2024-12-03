@@ -1,6 +1,9 @@
 ---
 sidebar_position: 1
+slug: "/reference-docs/api/metadata/creating-task-definitions"
+description: "Tasks are the building blocks of workflow in Orkes Conductor. This API is used to create task definitions in Orkes Conductor."
 ---
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 

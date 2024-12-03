@@ -1,5 +1,7 @@
 ---
 sidebar_position: 15
+slug: "/reference-docs/api/workflow/upgrade-workflow"
+description: "This API is used to upgrade a currently running workflow to a different version."
 ---
 
 import Tabs from '@theme/Tabs';

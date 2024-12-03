@@ -1,6 +1,9 @@
 ---
 sidebar_position: 7
+slug: "/reference-docs/ai-tasks/llm-get-document"
+description: "The LLM Get Document task retrieves the content of a provided document, which can be used for further data processing using AI tasks."
 ---
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 

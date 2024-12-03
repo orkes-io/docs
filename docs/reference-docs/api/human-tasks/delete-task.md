@@ -1,5 +1,7 @@
 ---
 sidebar_position: 2
+slug: "/reference-docs/api/human-tasks/delete-task"
+description: "This API is used to delete a Human task that is disconnected from a workflow due to error conditions."
 ---
 
 import Tabs from '@theme/Tabs';
@@ -7,8 +9,7 @@ import TabItem from '@theme/TabItem';
 
 # Delete Human Task
 
-This API is only to be used to delete a task that is disconnected from a workflow due to error conditions. Under 
-normal conditions, this API wouldn't have to be used.
+This API is only to be used to delete a task that is disconnected from a workflow due to error conditions. Under normal conditions, this API wouldn't have to be used.
 
 :::note
 The invoking user should be a task owner or an ADMIN to the task. 

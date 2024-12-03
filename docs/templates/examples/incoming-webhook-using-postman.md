@@ -1,3 +1,8 @@
+---
+slug: "/templates/examples/incoming-webhook-using-postman"
+description: "Check out this template on how to create a workflow that uses a Postman webhook."
+---
+
 # Incoming Webhook using Postman
 
 Webhooks can be integrated with Conductor to facilitate communication with other third-party systems such as Slack, Pagerduty, Zendesk, etc.

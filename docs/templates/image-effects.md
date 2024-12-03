@@ -1,3 +1,8 @@
+---
+slug: "/templates/image-effects"
+description: "Use this template to build an image effects editor workflow."
+---
+
 # Image Effects Workflow
 
 In modern digital media, image filters are an indispensable tool. They have the ability to give life to your visuals with a wide range of moods and aesthetic effects. Image filters help in converting an ordinary image into an extraordinary one. 

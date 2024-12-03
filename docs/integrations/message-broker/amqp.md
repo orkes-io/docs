@@ -1,3 +1,8 @@
+---
+slug: "/integrations/message-broker/amqp"
+description: "Learn how to integrate AMQP with your Orkes Conductor cluster."
+---
+
 # Integrating AMQP with Orkes Conductor
 
 This developer guide includes the steps to integrate AMQP with Orkes Conductor. This integration lets you connect your AMQP to Conductor to publish and receive messages from queues.

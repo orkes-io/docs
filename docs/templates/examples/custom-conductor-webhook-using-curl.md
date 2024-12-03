@@ -1,3 +1,8 @@
+---
+slug: "/templates/examples/custom-conductor-webhook-using-curl"
+description: "Check out this template on how to create a workflow that uses a cURL webhook."
+---
+
 # Incoming Conductor Webhook using cURL
 
 Conductor-Webhook integration can be leveraged to implement most of your business flows. Webhooks can be integrated with Conductor to facilitate communication with other third-party systems such as Slack, Pagerduty, Zendesk, etc.

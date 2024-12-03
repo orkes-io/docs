@@ -1,3 +1,7 @@
+---
+slug: "/sdks/clojure"
+description: "Use Conductor to create applications in Clojure."
+---
 
 # Clojure SDK
 

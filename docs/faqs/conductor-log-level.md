@@ -1,3 +1,8 @@
+---
+slug: "/faqs/conductor-log-level"
+description: "Learn how to set log levels for monitoring Conductor workflows."
+---
+
 # How do we monitor log levels in Conductor?
 
 Conductor is based on Spring Boot, so the log levels are set via [Spring Boot properties](https://docs.spring.io/spring-boot/docs/2.1.13.RELEASE/reference/html/boot-features-logging.html).

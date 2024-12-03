@@ -1,5 +1,7 @@
 ---
 sidebar_position: 3
+slug: "/reference-docs/operators/wait"
+description: "The Wait task pauses the workflow until a certain condition is met."
 ---
 
 import Tabs from '@theme/Tabs';

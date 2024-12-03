@@ -1,5 +1,7 @@
 ---
 sidebar_position: 9
+slug: "/reference-docs/operators/fork-join"
+description: "The Fork/Join task is used to run tasks in parallel based on a predetermined number of forks."
 ---
 
 import Tabs from '@theme/Tabs';

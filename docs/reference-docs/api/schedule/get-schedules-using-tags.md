@@ -1,3 +1,8 @@
+---
+slug: "/reference-docs/api/schedule/get-schedules-using-tags"
+description: "This API is used to retreive the schedules associated with a specific tag."
+---
+
 # Get Schedules Using Tags
 
 Used to retrieve schedules associated with a specific tag.

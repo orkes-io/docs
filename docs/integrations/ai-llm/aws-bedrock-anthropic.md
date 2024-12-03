@@ -1,3 +1,8 @@
+---
+slug: "/integrations/ai-llm/aws-bedrock-anthropic"
+description: "Learn how to integrate AWS Bedrock Anthropic with your Orkes Conductor cluster."
+---
+
 # Integrating with AWS Bedrock Anthropic in Orkes Conductor
 
 To effectively utilize AI and LLM tasks in Orkes Conductor, it's essential to integrate your Orkes Conductor cluster with the necessary AI and LLM models. 

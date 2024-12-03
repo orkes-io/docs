@@ -1,3 +1,8 @@
+---
+slug: "/templates/examples/sequential-http-tasks"
+description: "Use this sequential HTTP tasks template to build a microservice-based application flow."
+---
+
 # Sequential HTTP Tasks
 
 One of the primary reasons for microservice/workflow architectures is that services must run in a specific order - as downstream tasks require input from upstream tasks. We'll build a simple workflow with 2 HTTP tasks in this code lab to demonstrate this ability.

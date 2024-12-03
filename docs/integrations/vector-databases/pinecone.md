@@ -1,3 +1,8 @@
+---
+slug: "/integrations/vector-databases/pinecone"
+description: "Learn how to integrate Pinecone with your Orkes Conductor cluster."
+---
+
 # Integrating with Pinecone in Orkes Conductor
 
 To effectively utilize AI and LLM tasks in Orkes Conductor, it's essential to integrate your Orkes Conductor cluster with the necessary Vector Database models. 

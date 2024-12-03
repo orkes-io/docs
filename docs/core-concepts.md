@@ -1,3 +1,8 @@
+---
+slug: "/core-concepts"
+description: "In Orkes Conductor, the three core concepts for orchestrating application flows are workers, tasks, and workflows."
+---
+
 # Core Concepts
 
 Orkes Conductor orchestrates the execution flow of distributed application components—be it code, functions, or APIs.

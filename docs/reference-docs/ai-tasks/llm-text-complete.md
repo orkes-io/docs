@@ -1,6 +1,9 @@
 ---
 sidebar_position: 2
+slug: "/reference-docs/ai-tasks/llm-text-complete"
+description: "The LLM Text Complete task generates text based on the provided prompt and LLM parameters."
 ---
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 

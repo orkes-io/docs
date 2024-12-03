@@ -1,3 +1,8 @@
+---
+slug: "/templates/examples/rotating-secrets-that-expire"
+description: "Use this template to learn how to rotate secrets used in workflows."
+---
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import Install from '@site/src/components/install.mdx';

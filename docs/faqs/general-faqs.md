@@ -1,3 +1,8 @@
+---
+slug: "/faqs/general-faqs"
+description: "Get answers to frequently asked questions about using Orkes Conductor."
+---
+
 # General FAQs
 
 <FAQStructuredData faqs={faqs} />

@@ -1,3 +1,9 @@
+---
+slug: "/templates/examples/keep-worker-running-until-condition-true"
+description: "Use this template to build and run a custom poll worker, which achieves the same functionality as the HTTP Poll task for non-HTTP based services."
+---
+
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import Install from '@site/src/components/install.mdx';

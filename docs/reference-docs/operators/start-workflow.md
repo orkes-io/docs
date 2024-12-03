@@ -1,5 +1,7 @@
 ---
 sidebar_position: 12
+slug: "/reference-docs/operators/start-workflow"
+description: "The Start Workflow task is used to start another workflow from the current workflow."
 ---
 
 import Tabs from '@theme/Tabs';

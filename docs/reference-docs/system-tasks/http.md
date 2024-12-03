@@ -1,5 +1,7 @@
 ---
 sidebar_position: 2
+slug: "/reference-docs/system-tasks/http"
+description: "The HTTP task is used to make calls to remote services exposed over HTTP/HTTPS."
 ---
 
 import Tabs from '@theme/Tabs';

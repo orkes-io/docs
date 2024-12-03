@@ -1,3 +1,8 @@
+---
+slug: "/integrations/vector-databases/weaviate"
+description: "Learn how to integrate Weaviate with your Orkes Conductor cluster."
+---
+
 # Integrating with Weaviate in Orkes Conductor
 
 To effectively utilize AI and LLM tasks in Orkes Conductor, it's essential to integrate your Orkes Conductor cluster with the necessary Vector Database models. 

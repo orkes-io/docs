@@ -1,6 +1,9 @@
 ---
 sidebar_position: 3
+slug: "/reference-docs/api/metadata/delete-task-definition"
+description: "Tasks are the building blocks of workflow in Orkes Conductor. This API is used to delete task definitions in Orkes Conductor."
 ---
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 

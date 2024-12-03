@@ -1,3 +1,8 @@
+---
+slug: "/sdks/authentication"
+description: "Learn how to authenticate for programmatic access to Conductor (SDK and API)."
+---
+
 # Authentication and Access Keys
 
 Authentication is required for programmatic access to Conductor SDKs and APIs. Every connection to Orkes Conductor requires an authorization header with a valid JSON Web Token (JWT).

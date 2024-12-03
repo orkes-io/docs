@@ -1,3 +1,8 @@
+---
+slug: "/templates/examples/api-processing-usps-example"
+description: "Check out this API prcoessing template for an example Conductor workflow on shipping services."
+---
+
 
 # API Processing Workflows - Example
 

@@ -1,5 +1,7 @@
 ---
 sidebar_position: 2
+slug: "/reference-docs/api/task/add-task-log"
+description: "This API is used to log messages associated with a specific task."
 ---
 
 import Tabs from '@theme/Tabs';

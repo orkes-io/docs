@@ -1,5 +1,7 @@
 ---
 sidebar_position: 10
+slug: "/reference-docs/ai-tasks/llm-chat-complete"
+description: "The LLM Chat Complete task is used instruct the LLM to behave in a certain manner."
 ---
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';

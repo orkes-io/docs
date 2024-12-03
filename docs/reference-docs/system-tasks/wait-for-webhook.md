@@ -1,6 +1,9 @@
 ---
 sidebar_position: 7
+slug: "/reference-docs/system-tasks/wait-for-webhook"
+description: "The Wait for Webhook task pauses the workflow until it receives a signal from a webhook."
 ---
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 

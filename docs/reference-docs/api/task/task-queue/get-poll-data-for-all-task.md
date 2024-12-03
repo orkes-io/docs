@@ -1,5 +1,7 @@
 ---
 sidebar_position: 1
+slug: "/reference-docs/api/task/task-queue/get-poll-data-for-all-task"
+description: "This API is used to retrieve the poll data for all tasks from in all task queues."
 ---
 
 # Get Poll Data for All Task 

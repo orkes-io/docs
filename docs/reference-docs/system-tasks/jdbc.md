@@ -1,5 +1,7 @@
 ---
 sidebar_position: 8
+slug: "/reference-docs/system-tasks/jdbc"
+description: "The JDBC task is used to execute or store data in SQL databases."
 ---
 
 import Tabs from '@theme/Tabs';
@@ -20,7 +22,7 @@ Configure these parameters for the JDBC task.
 | --------- | ----------- | ----------------- |
 | inputParamters. **integrationName** | Select the required database integration which you have access to. If your database isn't configured on your Orkes console, go to the **Integrations** tab and configure it under **[RDBMS > Relational Database](https://orkes.io/content/integrations/rdbms/relational-database)**. | Required. |
 | inputParamters. **type** | Select the SQL statement type. Supported values:<ul><li>**SELECT**—Used to retrieve data from a database.</li><li>**UPDATE / DELETE**—Used to modify or delete existing data from the database.</li></ul>| Required. |
-| inputParameters. **expectedUpdateCount** | The number of rows to be updated/deleted from the database.	| Required if the statement type is chosen as ‘UPDATE/DELETE’. | Required. |
+| inputParameters. **expectedOutputCount** | The number of rows to be updated/deleted from the database.	| Required if the statement type is chosen as ‘UPDATE/DELETE’. | Required. |
 | inputParameters. **statement** | The SQL statement to retrieve data from the SQL database. | Required. |
 | inputParameters. **parameters** | The query parameters to be bound by the SQL statement. It can be a string, number, boolean, or null. | Required. |
 
