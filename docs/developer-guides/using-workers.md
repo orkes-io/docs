@@ -93,6 +93,7 @@ python3 -m pip install conductor-python
 **For Gradle:**
 ``` java
 implementation 'org.conductoross:conductor-client:4.0.1'
+implementation 'org.conductoross:java-sdk:4.0.1'
 implementation 'io.orkes.conductor:orkes-conductor-client:4.0.1' 
 ```
 
@@ -101,6 +102,11 @@ implementation 'io.orkes.conductor:orkes-conductor-client:4.0.1'
 <dependency>
     <groupId>org.conductoross</groupId>
     <artifactId>conductor-client</artifactId>
+    <version>4.0.1</version>
+</dependency>
+<dependency>
+    <groupId>org.conductoross</groupId>
+    <artifactId>java-sdk</artifactId>
     <version>4.0.1</version>
 </dependency>
 <dependency>
