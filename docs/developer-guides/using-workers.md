@@ -421,12 +421,10 @@ python3 worker.py
 <TabItem value="Java run" label="Java">
 
 ``` bash
-gradle bootRun // using Gradle
+gradle build run
 ```
 
-``` bash
-mvn spring-boot:run // using Maven
-```
+
 </TabItem>
 
 <TabItem value="JavaScript run" label="JavaScript">
