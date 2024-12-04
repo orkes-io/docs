@@ -93,6 +93,7 @@ python3 -m pip install conductor-python
 **For Gradle:**
 ``` java
 implementation 'org.conductoross:conductor-client:4.0.1'
+implementation 'org.conductoross:java-sdk:4.0.1'
 implementation 'io.orkes.conductor:orkes-conductor-client:4.0.1' 
 ```
 
@@ -101,6 +102,11 @@ implementation 'io.orkes.conductor:orkes-conductor-client:4.0.1'
 <dependency>
     <groupId>org.conductoross</groupId>
     <artifactId>conductor-client</artifactId>
+    <version>4.0.1</version>
+</dependency>
+<dependency>
+    <groupId>org.conductoross</groupId>
+    <artifactId>java-sdk</artifactId>
     <version>4.0.1</version>
 </dependency>
 <dependency>
@@ -157,7 +163,7 @@ Get the Conductor Clojure package from [clojars](https://clojars.org/io.orkes/co
 
 ### Step 3: Write your worker logic
 
-In general, workers can be instantiated from a WorkerInterface class, defined as a function, or annotated using a WorkerTask decorator, depending on the language. The worker file in your project may look like this:
+In general, workers can be instantiated from classes that implement the Worker interface, or that are annotated using a WorkerTask annotation or decorator, depending on the language. A worker in your project may look like this:
 
 <Tabs groupId="language">
 <TabItem value="python" label="Python">
@@ -415,12 +421,10 @@ python3 worker.py
 <TabItem value="Java run" label="Java">
 
 ``` bash
-gradle bootRun // using Gradle
+gradle build run
 ```
 
-``` bash
-mvn spring-boot:run // using Maven
-```
+
 </TabItem>
 
 <TabItem value="JavaScript run" label="JavaScript">
