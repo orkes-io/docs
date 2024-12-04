@@ -1,3 +1,7 @@
+---
+slug: "/templates/examples/finance"
+description: "Check out this template for an example Conductor workflow on loan origination."
+---
 
 # Loan Origination made easier using Conductor
 

@@ -1,7 +1,8 @@
 ---
 sidebar_position: 8
+slug: "/reference-docs/operators/terminate"
+description: "The Terminate task is used to terminate the current workflow."
 ---
-
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 

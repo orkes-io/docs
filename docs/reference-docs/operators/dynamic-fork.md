@@ -1,5 +1,7 @@
 ---
 sidebar_position: 10
+slug: "/reference-docs/operators/dynamic-fork"
+description: "The Dynamic Fork task is used to run tasks in parallel, with the number of forks determined at run-time. "
 ---
 
 import Tabs from '@theme/Tabs';

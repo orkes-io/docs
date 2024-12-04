@@ -1,3 +1,8 @@
+---
+slug: "/sdks/java"
+description: "Use Conductor to create applications in Java."
+---
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import versions from '../../codeblocks/versions.json'

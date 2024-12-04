@@ -1,6 +1,9 @@
 ---
 sidebar_position: 12
+slug: "/reference-docs/system-tasks/opsgenie"
+description: "The Opsgenie task is used to send alerts to Opsgenie."
 ---
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 

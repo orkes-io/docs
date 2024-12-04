@@ -1,6 +1,6 @@
 ---
 slug: "../quickstarts/deploy-workflows"
-description: ""
+description: "In this quickstart, learn how to deploy your workflows as applications."
 ---
 
 import Tabs from '@theme/Tabs';

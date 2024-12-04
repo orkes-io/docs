@@ -1,5 +1,7 @@
 ---
 sidebar_position: 1
+slug: "/reference-docs/api/human-tasks/get-task"
+description: "This API is used to retrieve a Human task and its details based on its task ID."
 ---
 
 import Tabs from '@theme/Tabs';

@@ -1,5 +1,7 @@
 ---
 sidebar_position: 10
+slug: "/reference-docs/system-tasks/get-signed-jwt"
+description: "The Get Signed JWT task is used to sign a JWT token."
 ---
 
 import Tabs from '@theme/Tabs';

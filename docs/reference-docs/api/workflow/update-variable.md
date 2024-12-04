@@ -1,3 +1,8 @@
+---
+slug: "/reference-docs/api/workflow/update-variable"
+description: "This API is used to update the workflow variables in a currently running workflow."
+---
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 

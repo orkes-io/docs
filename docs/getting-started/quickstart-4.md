@@ -1,6 +1,6 @@
 ---
 slug: "../quickstarts/debug-and-monitor-workflows"
-description: ""
+description: "In this quickstart, learn the basics of debugging and monitoring your workflows."
 ---
 
 # Quickstart 4: Debug and Monitor Workflows

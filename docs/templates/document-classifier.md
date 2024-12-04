@@ -1,3 +1,8 @@
+---
+slug: "/templates/document-classifier"
+description: "Use this template to build an AI-enabled document classification workflow."
+---
+
 # Document Classification using LLM Tasks in Orkes Conductor
 
 The process of manual document classification is a daunting task for organizations that costs them time and resources and often results in human errors. Manual document classification is not just time-consuming; it's a drain on resources that could be better utilized elsewhere. The cost of human hours dedicated to sifting through documents, identifying types, and categorizing them accurately is a significant burden. Not to mention the inherent risk of human error, which can lead to misclassifications, data discrepancies, and subsequent operational challenges.

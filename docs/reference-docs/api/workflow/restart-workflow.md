@@ -1,5 +1,7 @@
 ---
 sidebar_position: 7
+slug: "/reference-docs/api/workflow/restart-workflow"
+description: "This API is used to restart a completed workflow from the beginning using the same workflow input."
 ---
 
 import Tabs from '@theme/Tabs';

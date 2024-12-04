@@ -1,3 +1,7 @@
+---
+slug: "/sdks/csharp"
+description: "Use Conductor to create applications in C#."
+---
 
 # C# SDK
 

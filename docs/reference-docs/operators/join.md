@@ -1,5 +1,7 @@
 ---
 sidebar_position: 11
+slug: "/reference-docs/operators/join"
+description: "The Join task is used in conjunction with a Fork/Join or Dynamic Fork task to join the forked tasks before proceeding to the next task."
 ---
 
 import Tabs from '@theme/Tabs';

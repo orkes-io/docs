@@ -1,3 +1,8 @@
+---
+slug: "/integrations/ai-llm/anthropic-claude"
+description: "Learn how to integrate Anthropic Claude with your Orkes Conductor cluster."
+---
+
 # Integrating with Anthropic Claude in Orkes Conductor
 
 To effectively utilize AI and LLM tasks in Orkes Conductor, it's essential to integrate your Conductor cluster with the necessary AI and LLM models. 

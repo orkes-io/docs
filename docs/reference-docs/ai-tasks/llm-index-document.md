@@ -1,6 +1,9 @@
 ---
 sidebar_position: 6
+slug: "/reference-docs/ai-tasks/llm-index-document"
+description: "The LLM Index Document task indexes a provided document into a vector database."
 ---
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 

@@ -1,5 +1,7 @@
 ---
 sidebar_position: 5
+slug: "/reference-docs/api/human-tasks/claim-task-conductor-user"
+description: "This API is used by an authenticated Orkes Conductor user to claim a Human task. "
 ---
 
 import Tabs from '@theme/Tabs';

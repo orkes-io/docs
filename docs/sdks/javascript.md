@@ -1,3 +1,7 @@
+---
+slug: "/sdks/javascript"
+description: "Use Conductor to create applications in JavaScript."
+---
 
 # JavaScript SDK
 

@@ -1,3 +1,8 @@
+---
+slug: "/reference-docs/api/workflow/rate-limit-workflow"
+description: "This API is used to limit the number of workflow executions at any given time."
+---
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 

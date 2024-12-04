@@ -1,6 +1,6 @@
 ---
 slug: "../category/getting-started"
-description: ""
+description: "Orkes Conductor is an orchestration platform for building distributed applications in any language. Get started on how to use Conductor, including its core concepts, installation, and more. "
 ---
 
 import {useCurrentSidebarCategory} from '@docusaurus/theme-common';

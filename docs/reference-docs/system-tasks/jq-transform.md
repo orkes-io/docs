@@ -1,6 +1,9 @@
 ---
 sidebar_position: 5
+slug: "/reference-docs/system-tasks/jq-transform"
+description: "The JSON JQ Transform task processes JSON data using jq."
 ---
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 

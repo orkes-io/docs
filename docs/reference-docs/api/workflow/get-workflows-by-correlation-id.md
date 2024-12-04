@@ -1,5 +1,7 @@
 ---
 sidebar_position: 3
+slug: "/reference-docs/api/workflow/get-workflows-by-correlation-id"
+description: "This API is used to retrieve a list of workflow executions based on its correlation IDs."
 ---
 
 import Tabs from '@theme/Tabs';

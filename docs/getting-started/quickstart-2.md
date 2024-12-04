@@ -1,6 +1,6 @@
 ---
 slug: "../quickstarts/write-workers"
-description: ""
+description: "In this quickstart, learn how to write your own workers for custom business logic."
 ---
 
 import Tabs from '@theme/Tabs';

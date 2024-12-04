@@ -1,3 +1,8 @@
+---
+slug: "/integrations/message-broker/apache-kafka"
+description: "Learn how to integrate Apache Kafka with your Orkes Conductor cluster."
+---
+
 # Integrating Apache Kafka with Orkes Conductor
 
 This developer guide includes the steps to integrate Apache Kafka with Orkes Conductor. This integration lets you connect the self-managed Apache Kafka, Amazon MSK, and Confluent Kafka clusters with the Conductor to publish/receive messages to/from topics.

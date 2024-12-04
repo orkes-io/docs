@@ -1,3 +1,8 @@
+---
+slug: "/integrations/message-broker/azure-service-bus"
+description: "Learn how to integrate Azure Service Bus with your Orkes Conductor cluster."
+---
+
 # Integrating Azure Service Bus with Orkes Conductor
 
 This developer guide includes the steps to integrate Azure Service Bus with Orkes Conductor. This integration lets you connect your Azure Service Bus to Conductor to publish and receive messages from queues.

@@ -1,5 +1,7 @@
 ---
 sidebar_position: 15
+slug: "/reference-docs/api/human-tasks/list-task-ui-templates"
+description: "This API is used to retrieve a list of Human task user forms stored in Orkes Conductor based on the search criteria."
 ---
 
 import Tabs from '@theme/Tabs';

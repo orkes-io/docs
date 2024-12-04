@@ -1,5 +1,7 @@
 ---
 sidebar_position: 2
+slug: "/reference-docs/api/task/update-task-status-in-workflow"
+description: "This API is used to update the status of a task during a workflow execution."
 ---
 
 import Tabs from '@theme/Tabs';

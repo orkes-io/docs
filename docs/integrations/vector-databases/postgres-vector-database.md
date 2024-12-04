@@ -1,3 +1,8 @@
+---
+slug: "/integrations/vector-databases/postgres-vector-database"
+description: "Learn how to integrate Postgres Vector Database with your Orkes Conductor cluster."
+---
+
 # Integrating with Postgres Vector Database in Orkes Conductor
 
 To effectively utilize AI and LLM tasks in Orkes Conductor, it's essential to integrate your Orkes Conductor cluster with the necessary Vector Database models. 

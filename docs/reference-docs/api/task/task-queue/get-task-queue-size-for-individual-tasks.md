@@ -1,5 +1,7 @@
 ---
 sidebar_position: 3
+slug: "/reference-docs/api/task/task-queue/get-task-queue-size-for-individual-tasks"
+description: "This API is used to retrieve the task queue size for a specific task in your Conductor cluster."
 ---
 
 # Get Task Queue Size for Individual Tasks

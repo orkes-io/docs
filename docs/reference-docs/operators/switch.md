@@ -1,5 +1,7 @@
 ---
 sidebar_position: 1
+slug: "/reference-docs/operators/switch"
+description: "The Switch task is used for conditional branching logic and can be used when different tasks have to be executed based on different conditions."
 ---
 
 import Tabs from '@theme/Tabs';

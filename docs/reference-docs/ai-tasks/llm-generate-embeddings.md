@@ -1,6 +1,9 @@
 ---
 sidebar_position: 3
+slug: "/reference-docs/ai-tasks/llm-generate-embeddings"
+description: "The LLM Generate Embeddings task generates embeddings of the provided data."
 ---
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 

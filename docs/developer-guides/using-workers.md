@@ -31,7 +31,11 @@ In Conductor, each worker should embody the microservice design pattern and foll
 
 Begin by creating a project to run workers for your custom task.
 
+<Tabs groupId="language">
+<TabItem value="python" label="Python">
+
 For Python projects, it is a good practice to use a virtual environment.
+
 
 <Tabs>
 <TabItem value="mac" label="Mac">
@@ -63,16 +67,21 @@ myProject\Scripts\activate
 </Tabs>
 
 
-For Go projects, you should initialize your Go module.
+</TabItem>
 
-<Tabs groupId="language">
+
 <TabItem value="go" label="Go">
+
+For Go projects, you should initialize your Go module.
 
 ``` go
 go mod init <module-path>
 ```
+
 </TabItem>
+
 </Tabs>
+
 
 
 ### Step 2: Get Conductor SDK

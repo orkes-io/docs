@@ -1,3 +1,8 @@
+---
+slug: "/templates/alerting/querying-orkes-data-and-triggering-opsgenie-alert"
+description: "Check out this template for an example on sending alerts to Opsgenie using Opsgenie task."
+---
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import Install from '@site/src/components/install.mdx';

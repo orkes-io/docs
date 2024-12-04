@@ -1,6 +1,6 @@
 ---
 slug: "../quickstarts/create-first-workflow"
-description: ""
+description: "In this quickstart, learn how to build your first Conductor workflow."
 ---
 
 import Tabs from '@theme/Tabs';

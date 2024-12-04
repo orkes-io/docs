@@ -1,5 +1,7 @@
 ---
 sidebar_position: 6
+slug: "/reference-docs/api/human-tasks/claim-task-external-user"
+description: "This API is used by any user (external or internal) to claim a Human task."
 ---
 
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';

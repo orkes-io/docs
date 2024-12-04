@@ -1,3 +1,8 @@
+---
+slug: "/templates/alerting/scanning-an-endpoint-and-triggering-pagerduty-alert"
+description: "Check out this template for an example on sending alerts to alerting tools like PagerDuty."
+---
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import Install from '@site/src/components/install.mdx';

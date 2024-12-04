@@ -1,6 +1,10 @@
 ---
 sidebar_position: 4
+slug: "/reference-docs/ai-tasks/llm-store-embeddings"
+description: "The LLM Store Embeddings task stores embeddings in a vector database."
 ---
+
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 

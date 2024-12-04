@@ -1,3 +1,8 @@
+---
+slug: "/templates/video-processing-workflows"
+description: "Use this template to build a video processing workflow."
+---
+
 # Video Processing Workflows
 
 Video processing refers to the process of optimizing video files from one format to another to suit different devices/platforms. The format/quality/size of the videos to deliver varies depending on the business requirements. If the video is streaming among different types of devices, such as mobile phones or TVs, the video's bitrate should be different. The look and feel of viewing videos also vary with the device models, operating systems, etc. It can also help improve the video's quality by converting it to different codecs or formats. 

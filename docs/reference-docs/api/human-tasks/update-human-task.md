@@ -1,5 +1,7 @@
 ---
 sidebar_position: 9
+slug: "/reference-docs/api/human-tasks/update-human-task"
+description: "This API is used to update a claimed Human task."
 ---
 
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';

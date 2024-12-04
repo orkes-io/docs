@@ -1,3 +1,8 @@
+---
+slug: "/templates/visual-image-search"
+description: "Use this template to build a visual image search workflow, enabled by computer vision."
+---
+
 # Visual Image Search
 
 Visual image search technology enables users to search for information using images instead of text. Users can input an image, and the system identifies and retrieves relevant information, providing a more intuitive method of exploring content online.

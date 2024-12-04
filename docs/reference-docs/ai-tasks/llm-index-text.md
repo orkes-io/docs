@@ -1,6 +1,10 @@
 ---
 sidebar_position: 8
+slug: "/reference-docs/ai-tasks/llm-index-text"
+description: "The LLM Index Text task indexes a provided text into a vector database."
 ---
+
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 

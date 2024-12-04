@@ -1,3 +1,8 @@
+---
+slug: "/templates/availability-monitoring-for-http-endpoints"
+description: "Use this template to periodically monitor the availability of your HTTP service."
+---
+
 # Availability Monitoring for HTTP Endpoints
 
 Availability and uptime are paramount for any application or service that serves your customers or provides critical services otherwise. There are many ways to incorporate this fundamental capability while deploying and operating your service (e.g., deploy across multiple availability zones to host your DNS records in more than one DNS service). However, you still need to be prepared to be alerted and respond if all fails.

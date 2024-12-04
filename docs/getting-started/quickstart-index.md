@@ -1,6 +1,6 @@
 ---
 slug: "../quickstarts"
-description: ""
+description: "Learn how to set up your development environment for building applications with Orkes Conductor."
 ---
 
 import Tabs from '@theme/Tabs';

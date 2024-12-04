@@ -1,5 +1,7 @@
 ---
 sidebar_position: 9
+slug: "/reference-docs/system-tasks/update-secret"
+description: "The Update Secret task is used to update the value of any secret."
 ---
 
 import Tabs from '@theme/Tabs';

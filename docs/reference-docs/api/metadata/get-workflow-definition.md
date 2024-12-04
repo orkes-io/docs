@@ -1,5 +1,7 @@
 ---
 sidebar_position: 10
+slug: "/reference-docs/api/metadata/get-workflow-definition"
+description: "Workflows are directed sequences of tasks and operators. This API is used to retrieve the individual workflow definition in Orkes Conductor."
 ---
 
 import Tabs from '@theme/Tabs';

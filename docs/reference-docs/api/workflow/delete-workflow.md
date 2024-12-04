@@ -1,5 +1,7 @@
 ---
 sidebar_position: 1
+slug: "/reference-docs/api/workflow/delete-workflow"
+description: "This API is used to permanently remove a workflow execution from your Conductor cluster"
 ---
 
 import Tabs from '@theme/Tabs';

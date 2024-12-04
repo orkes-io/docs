@@ -1,3 +1,8 @@
+---
+slug: "/faqs/workflow-versioning"
+description: "In Conductor, workflow versioning enables changes to be safely made and managed during production."
+---
+
 # What is Workflow Versioning in Conductor?
 
 Workflow versioning is the ability to manage different versions of a workflow. This feature allows you to make changes to a workflow without affecting the existing version of the workflow that is already running or scheduled to run.

@@ -1,5 +1,7 @@
 ---
 sidebar_position: 2
+slug: "/reference-docs/api/task/get-task"
+description: "This API is used to retrieve the current state and details of a specific task."
 ---
 
 import Tabs from '@theme/Tabs';

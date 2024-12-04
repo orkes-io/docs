@@ -1,5 +1,7 @@
 ---
 sidebar_position: 4
+slug: "/reference-docs/operators/dynamic"
+description: "The Dynamic task executes a registered task that is determined at runtime."
 ---
 
 import Tabs from '@theme/Tabs';

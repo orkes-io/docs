@@ -1,3 +1,8 @@
+---
+slug: "/developer-guides/write-workflows-using-code"
+description: "Use the Conductor SDKs to write workflows as code."
+---
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import Install from '@site/src/components/install.mdx';
