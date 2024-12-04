@@ -309,11 +309,12 @@ The action to start a new workflow instance.
 | actions. **action** | The action to be triggered on receiving events. Set this to `start_workflow`. | Required. | 
 | actions. start_workflow. **name** | The name of the workflow to be started. | Required. | 
 | actions. start_workflow. **version** | The version of the workflow to be started. | Required. | 
-| actions. start_workflow. **correlationId** | A unique identifier for the workflow execution, used for correlating related workflows. | Optional. | 
-| actions. start_workflow. **idempotencyKey** | A unique key to prevent conflicts with other workflow instances. | Optional. | 
-| actions. start_workflow. **idempotencyStrategy** | The idempotency strategy to determine how to handle duplicate requests. Supported values:<ul><li>**RETURN_EXISTING**–Return the `workflowId` of the existing workflow with the same idempotency key.</li><li>**FAIL**–The request will fail if a workflow with the same idempotency key has already been triggered.</li></ul> | Required if ‘idempotencyKey’ is used. | 
+| actions. start_workflow. **correlationId** | A unique identifier for the workflow execution, used to correlate the current workflow instance with other workflows. | Optional. | 
+| actions. start_workflow. **idempotencyKey** | A unique, user-generated key to prevent duplicate workflow executions. Idempotency data is retained for the life of the workflow execution. | Optional. | 
+| actions. start_workflow. **idempotencyStrategy** | The idempotency strategy for handling duplicate requests. Supported values:<ul><li>`RETURN_EXISTING`—Return the `workflowId` of the workflow instance with the same idempotency key.</li> <li>`FAIL`—Start a new workflow instance only if there are no workflow executions with the same idempotency key.</li> <li>`FAIL_ON_RUNNING`—Start a new workflow instance only if there are no RUNNING or PAUSED workflows with the same idempotency key. Completed workflows can run again.</li></ul> | Required if `idempotencyKey` is used. | 
 | actions. start_workflow. **input** | The input data to be passed to the new workflow. Can be string, number, boolean, null, or object/array. | Optional. | 
 | actions. start_workflow. **taskToDomain** | A mapping of task reference names to domain-specific values to [route the task to defined workers](https://orkes.io/content/developer-guides/task-to-domain). | Optional. | 
+
 
 ## Event handler configuration
 

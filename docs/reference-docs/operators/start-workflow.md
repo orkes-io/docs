@@ -9,9 +9,10 @@ import TabItem from '@theme/TabItem';
 
 # Start Workflow
 
-The Start Workflow task starts another workflow in the current workflow. Unlike the [Sub Workflow](./sub-workflow) task, the workflow started by the Start Workflow task is decoupled from the current workflow. That means the current workflow proceeds to the next task without waiting for the started workflow to complete.
+The Start Workflow task starts another workflow from the current workflow. Unlike the [Sub Workflow](./sub-workflow) task, the workflow triggered by the Start Workflow task will execute asynchronously. That means the current workflow proceeds to its next task without waiting for the started workflow to complete.
 
-A Start Workflow task is considered successful when the requested workflow begins or, more precisely, when the requested workflow is in the RUNNING state.
+A Start Workflow task is considered successful when the requested workflow enters the RUNNING state, regardless of its final status.
+
 
 ## Task parameters
 Configure these parameters for the Start Workflow task.
@@ -21,9 +22,9 @@ Configure these parameters for the Start Workflow task.
 | inputParameters. **startWorkflow** | A map that includes the requested workflow’s configuration, such as the name and version. | Required. |
 | inputParameters. startWorkflow. **name**    | The name of the workflow to be executed. This workflow should have a pre-existing definition in Conductor. | Required. |
 | inputParameters. startWorkflow. **version**     | The version of the workflow to be executed. If unspecified, the latest version will be used. | Optional. |
-| inputParameters. startWorkflow. **correlationId**     | The correlation ID to correlate your workflow instance with another running workflow instance. | Optional. |
-| inputParameters. startWorkflow. **idempotencyKey**     | A user-generated key to avoid duplicating transactions across workflow executions. Idempotency data is retained for the life of the workflow execution. | Optional. |
-| inputParameters. startWorkflow. **idempotencyStrategy**     | The strategy to use when a duplicate execution is already running. Supported values:<ul><li>`RETURN_EXISTING`—The request will not fail. Instead it will return the workflowId of the workflow which was triggered with the same idempotencyKey.</li><li>`FAIL`—The request will fail if the workflow has been triggered with the same idempotencyKey in the past.</li></ul> | Required if there is an idempotencyKey specified. |
+| inputParameters. startWorkflow. **correlationId**     | A unique identifier for the workflow execution, used to correlate the current workflow instance with other workflows. | Optional. |
+| inputParameters. startWorkflow. **idempotencyKey**     | A unique, user-generated key to prevent duplicate workflow executions. Idempotency data is retained for the life of the workflow execution. | Optional. |
+| inputParameters. startWorkflow. **idempotencyStrategy**     | The idempotency strategy for handling duplicate requests. Supported values:<ul><li>`RETURN_EXISTING`—Return the `workflowId` of the workflow instance with the same idempotency key.</li> <li>`FAIL`—Start a new workflow instance only if there are no workflow executions with the same idempotency key.</li> <li>`FAIL_ON_RUNNING`—Start a new workflow instance only if there are no RUNNING or PAUSED workflows with the same idempotency key. Completed workflows can run again.</li></ul> | Required if `idempotencyKey` is used. |
 
 In addition, you can also configure the requested workflow’s input in `inputParameters.startWorkflow.input`, which will be passed to the invoked workflow.
 
