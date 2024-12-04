@@ -72,6 +72,7 @@ const sidebars = {
                 type: 'generated-index',
                 title: 'Conceptual Guides',
                 slug: '/category/conceptual-guides',
+                description: 'The Conceptual Guides focus on essential concepts for building with Conductor.',
             },
             className: 'leftMenuHeader',
             items: [
@@ -85,6 +86,7 @@ const sidebars = {
                 type: 'generated-index',
                 title: 'Developer Guides',
                 slug: '/category/developer-guides',
+                description: 'The Developer Guides focus on how to use Orkes Conductor UI and SDK to build orchestrated workflows and applications.',
             },
             className: 'leftMenuHeader',
             collapsible: true,
@@ -312,7 +314,8 @@ const sidebars = {
                     link: {
                         type: 'generated-index',
                         title: 'Integrations',
-                        slug: '/category/integrations'
+                        slug: '/category/integrations',
+                        description: 'Integrate your Orkes Conductor cluster with various LLMs, vector databases, message brokers, and RDBMS systems.',
                     },
                     className: 'leftMenuHeader',
                     items: [
@@ -588,7 +591,7 @@ const sidebars = {
             link: {
                 type: 'generated-index',
                 title: 'API Reference',
-                description: 'Reference documentation for Orkes Conductor - APIs',
+                description: 'API reference documentation for Orkes Conductor.',
                 slug: '/category/ref-docs/api',
                 keywords: ['reference', 'apis', 'operators', 'api', 'tasks', 'system', 'system-tasks']
             },
@@ -606,7 +609,8 @@ const sidebars = {
             link: {
                 type: 'generated-index',
                 title: 'Templates',
-                slug: '/category/templates'
+                slug: '/category/templates',
+                description: 'Templates and examples for workflows in Orkes Conductor.',
             },
             className: 'leftMenuHeader',
             items: [
@@ -751,7 +755,8 @@ const sidebars = {
             link: {
                 type: 'generated-index',
                 title: 'FAQs',
-                slug: '/category/faqs'
+                slug: '/category/faqs',
+                description: 'Frequently-asked questions about Orkes Conductor.',
             },
             items: [
                 'faqs/general-faqs',
