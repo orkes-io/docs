@@ -1,7 +1,7 @@
 ---
 sidebar_position: 6
-slug: "The Business Rule task is used to evaluate business rules defined in spreadsheets."
-description: "/reference-docs/system-tasks/business-rule"
+slug: "/reference-docs/system-tasks/business-rule"
+description: "The Business Rule task is used to evaluate business rules defined in spreadsheets."
 ---
 
 import Tabs from '@theme/Tabs';
