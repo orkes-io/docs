@@ -3,6 +3,9 @@ slug: "/error-handling"
 description: "Conductor is built to handle failure and guarantee execution in the long run. Configure various resilience parameters for your workflows and tasks."
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # Handling Failures
 
 Orkes Conductor automatically handles transient workflow and task failures without the need to write custom code. Various failure-handling configurations can be set ahead of time, which will take effect during execution.
@@ -160,8 +163,9 @@ Based on the timeout configuration in the above figure, the following sequence o
 
 ## Task rate limits
 
-Rate limits on tasks are a key strategy for managing task load and worker capacity. When the number of tasks scheduled within a given duration exceeds the defined rate limit, the Conductor server will place the additional tasks in a PENDING status. Once an IN_PROGRESS task is completed, the rate limit is freed up, and the server will make the next PENDING task available for polling.
+A task’s rate limit controls the number of task executions in a given period and serves as a critical strategy for managing task load and worker capacity. 
 
+When the number of tasks scheduled within a given duration exceeds the defined rate limit, the Conductor server will place the additional tasks in a PENDING status. Once an IN_PROGRESS task is completed, the rate limit is freed up and the server will make the next PENDING task available for polling.
 
 ### Rate limit configuration
 
@@ -222,3 +226,66 @@ You can set a failure workflow for a workflow in its **workflow definition**. Be
   "failureWorkflow": "<name of the workflow that will run upon failure>"
 }
 ```
+
+## Workflow rate limits
+
+A workflow’s rate limit controls the number of concurrent executions being worked on. Beyond this limit, workflows will be queued for execution based on their trigger time.
+
+When the number of scheduled workflows exceeds the defined rate limit, the Conductor server will place these workflows in a RUNNING state with the first task set to a PENDING status. Once a workflow completes, the rate limit is freed up and the server will schedule the next first PENDING task for polling.
+
+
+### Rate limit configuration
+
+You can configure the limit on concurrent workflow executions in its **workflow definition**.
+
+| Parameter | Description | Required/ Optional |
+| --------- | ----------- | ------------------ | 
+| rateLimitConfig | A map of the workflow rate limit configuration. | Required. |
+| rateLimitConfig. **rateLimitKey** | A unique identifier to group workflow executions for rate limits. <br/><br/> Can be a fixed value (for example, “max”) or a [dynamic variable](/developer-guides/passing-inputs-to-task-in-conductor#sample-expressions) from the workflow parameters (for example, `${workflow.correlationId}`). | Required. |
+| rateLimitConfig. **concurrentExecLimit** | The number of workflow executions that can run concurrently for each rate limit key. Cannot be passed as a dynamic variable. | Required. |
+
+### Routing rate limits with dynamic key
+
+Using a dynamic `rateLimitKey`, you can apply separate rate limit queues based on workflow inputs like `correlationId` or  `version`. The rate limit for each group of workflows will be the same, based on the `concurrentExecLimit`. 
+
+For example, if workflow executions are grouped according to their correlation ID with `concurrentExecLimit` set to 100, workflows triggered with correlation IDs 1 and 2 will each have their own rate limit queues capped at 100.
+
+**Example**
+
+``` json
+// Workflow definition
+{
+  ...
+  "rateLimitConfig": {
+    "rateLimitKey": "${workflow.input.correlationId}",
+    "concurrentExecLimit": 100
+  }
+}
+```
+### Client SDK methods
+
+<Tabs groupId="language">
+<TabItem value="Java" label="Java">
+
+**Using a fixed `rateLimitKey`**
+
+```java
+        RateLimitConfig rateLimitConfig = new RateLimitConfig();
+        rateLimitConfig.setRateLimitKey("http");
+        rateLimitConfig.setConcurrentExecLimit(3);
+        workflowDef.setRateLimitConfig(rateLimitConfig);
+```
+
+**Using a dynamic `rateLimitKey`**
+
+In this case, a separate rate limit is applied for each correlation ID.
+
+```java
+        RateLimitConfig rateLimitConfig = new RateLimitConfig();
+        rateLimitConfig.setRateLimitKey("${workflow.correlationId}");
+        rateLimitConfig.setConcurrentExecLimit(3);
+        workflowDef.setRateLimitConfig(rateLimitConfig);
+```
+
+</TabItem>
+</Tabs>

@@ -9,11 +9,11 @@ import TabItem from '@theme/TabItem';
 
 # Sub Workflow
 
-The Sub Workflow task allows another workflow to be executed within the current workflow. This allows you to reuse common workflows across multiple workflows.
+The Sub Workflow task executes another workflow within the current workflow. This allows you to reuse common workflows across multiple workflows. Unlike the [Start Workflow](./start-workflow.md) task, the Sub Workflow task provides synchronous execution.
 
 The Sub Workflow task can also be used to overcome the limitations of other tasks:
 - Use it in a [Do While](./do-while) task to achieve nested Do While loops.
-- Use it in a Dynamic Fork task to execute more than one task in each fork.
+- Use it in a [Dynamic Fork](./dynamic-fork.md) task to execute more than one task in each fork.
 
 ## Task parameters
 
@@ -25,8 +25,8 @@ Configure these parameters for the Sub Workflow task.
 | subWorkflowParam. **name**    | The name of the workflow to be executed. This workflow should have a pre-existing definition in Conductor. | Required. |
 | subWorkflowParam. **version**     | The version of the workflow to be executed. | Required. |
 | subWorkflowParam. **taskToDomain**     | A map of sub-workflow tasks to specific domains. The keys are the task reference names and the values are the domain names. If not given, the taskToDomain of the executing parent workflow will take over. | Optional. |
-| subWorkflowParam. **idempotencyKey**     | A user-generated key to avoid duplicating transactions across workflow executions. Idempotency data is retained for the life of the workflow execution. | Optional. |
-| subWorkflowParam. **idempotencyStrategy**     | The strategy to use when a duplicate execution is already running. Supported values:<ul><li>`RETURN_EXISTING`—The request will not fail. Instead it will return the workflowId of the workflow which was triggered with the same idempotencyKey.</li><li>`FAIL`—The request will fail if the workflow has been triggered with the same idempotencyKey in the past.</li></ul> | Required if there is an idempotencyKey specified. |
+| subWorkflowParam. **idempotencyKey**     | A unique, user-generated key to prevent duplicate workflow executions. Idempotency data is retained for the life of the workflow execution.  | Optional. |
+| subWorkflowParam. **idempotencyStrategy**     | The idempotency strategy for handling duplicate requests. Supported values:<ul><li>`RETURN_EXISTING`—Return the `workflowId` of the workflow instance with the same idempotency key.</li> <li>`FAIL`—Start a new workflow instance only if there are no workflow executions with the same idempotency key.</li> <li>`FAIL_ON_RUNNING`—Start a new workflow instance only if there are no RUNNING or PAUSED workflows with the same idempotency key. Completed workflows can run again.</li></ul> | Required if `idempotencyKey` is used. |
 
 In addition, you can also configure the sub-workflow’s input in `inputParameters`, which will be passed down to the invoked sub-workflow. The sub-workflow’s input can be coupled to the parent workflow’s input parameters, or it can be invoked from the output of the preceding task.
 
