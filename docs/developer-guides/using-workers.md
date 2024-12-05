@@ -430,7 +430,7 @@ python3 worker.py
 <TabItem value="Java run" label="Java">
 
 ``` bash
-gradle build run
+./gradlew build run
 ```
 
 
