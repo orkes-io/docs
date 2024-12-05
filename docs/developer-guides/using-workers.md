@@ -206,13 +206,17 @@ public class Workers {
 <TabItem value="javascript" label="JavaScript">
 
 ``` javascript
-import { ConductorWorker, Task } from "@io-orkes/conductor-javascript";
-
-const worker: ConductorWorker = {
+const worker = {
   taskDefName: "myTask",
-  execute: async (
-    task: Task
-  ): Promise<Omit<TaskResult, "workflowInstanceId" | "taskId">> => {},
+  execute: async (task) => {
+    console.log(task)
+    return {
+      outputData: {
+        hello: "Hello " + task.inputData?.name,
+      },
+      status: "COMPLETED",
+    };
+  },
 };
 ```
 
