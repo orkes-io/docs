@@ -21,10 +21,11 @@ Configure these parameters for the Sub Workflow task.
 
 | Parameter     | Description                                                                                                                                                                                                | Required/ Optional |
 | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
-| subWorkflowParam | A map that includes the sub-workflow’s configuration, such as the name, version, and task-to-domain mapping. | Required. |
+| subWorkflowParam | A map that includes the sub-workflow’s configuration, such as the name, version, task-to-domain mapping, idempotency key, and priority.| Required. |
 | subWorkflowParam. **name**    | The name of the workflow to be executed. This workflow should have a pre-existing definition in Conductor. | Required. |
 | subWorkflowParam. **version**     | The version of the workflow to be executed. | Required. |
 | subWorkflowParam. **taskToDomain**     | A map of sub-workflow tasks to specific domains. The keys are the task reference names and the values are the domain names. If not given, the taskToDomain of the executing parent workflow will take over. | Optional. |
+| subWorkflowParam. **priority** | The priority of the subworkflow. Supports values from 0-99 and can be [passed as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor). | Optional. | 
 | subWorkflowParam. **idempotencyKey**     | A unique, user-generated key to prevent duplicate workflow executions. Idempotency data is retained for the life of the workflow execution.  | Optional. |
 | subWorkflowParam. **idempotencyStrategy**     | The idempotency strategy for handling duplicate requests. Supported values:<ul><li>`RETURN_EXISTING`—Return the `workflowId` of the workflow instance with the same idempotency key.</li> <li>`FAIL`—Start a new workflow instance only if there are no workflow executions with the same idempotency key.</li> <li>`FAIL_ON_RUNNING`—Start a new workflow instance only if there are no RUNNING or PAUSED workflows with the same idempotency key. Completed workflows can run again.</li></ul> | Required if `idempotencyKey` is used. |
 
@@ -46,6 +47,7 @@ This is the task configuration for a Sub Workflow task.
   "subWorkflowParam": {
     "name": "subworkflowName",
     "version": 3,
+    "priority": 5,
     "idempotencyKey": "someKey",
     "idempotencyStrategy": "RETURN_EXISTING",
     "taskToDomain": {
