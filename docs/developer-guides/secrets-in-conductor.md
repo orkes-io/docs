@@ -1,5 +1,4 @@
 ---
-sidebar_position: 6
 slug: "/developer-guides/secrets-in-conductor"
 description: "Learn how to securely pass sensitive variables using secrets or masked inputs."
 ---
