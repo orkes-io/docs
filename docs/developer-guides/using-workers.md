@@ -206,13 +206,17 @@ public class Workers {
 <TabItem value="javascript" label="JavaScript">
 
 ``` javascript
-import { ConductorWorker, Task } from "@io-orkes/conductor-javascript";
-
-const worker: ConductorWorker = {
+const worker = {
   taskDefName: "myTask",
-  execute: async (
-    task: Task
-  ): Promise<Omit<TaskResult, "workflowInstanceId" | "taskId">> => {},
+  execute: async (task) => {
+    console.log(task)
+    return {
+      outputData: {
+        hello: "Hello " + task.inputData?.name,
+      },
+      status: "COMPLETED",
+    };
+  },
 };
 ```
 
@@ -220,7 +224,19 @@ const worker: ConductorWorker = {
 
 <TabItem value="csharp" label="C#">
 
-*Coming soon.*
+``` csharp
+[WorkerTask(taskType: "myTask", batchSize: 5, pollIntervalMs: 500, workerId: "csharp-worker")]
+public static TaskResult MyTask(Conductor.Client.Models.Task task)
+{
+    var inputData = task.InputData;
+    var result = task.ToTaskResult();
+    result.OutputData = new Dictionary<string, object>
+    {
+        ["message"] = "Hello " + inputData.GetValueOrDefault("name", null)
+    };
+    return result;
+}
+```
 
 </TabItem>
 
@@ -244,7 +260,14 @@ func myTask(task *model.Task) (interface{}, error) {
 
 <TabItem value="clojure" label="Clojure">
 
-*Coming soon.*
+``` clojure
+(def worker
+  {:name "myTask",
+   :execute (fn [d]
+              (let [name (get-in d [:inputData :name])]
+                {:status  "COMPLETED"
+                 :outputData {"message" (str "hello "  name)}}))})
+```
 
 </TabItem>
 </Tabs>
@@ -277,11 +300,16 @@ Full worker example: [https://github.com/conductor-oss/python-worker-container/t
 Run the annotated Java worker using WorkflowExecutor.
 
 ``` java
-WorkflowExecutor executor = new WorkflowExecutor("http://server/api/");
-//List of packages  (comma separated) to scan for annotated workers.  
+var client = ApiClient.builder()
+        .basePath("https://developer.orkescloud.com/api")
+        .credentials("_CHANGE_ME_", "_CHANGE_ME_")
+        .build();
+int pollingInterval = 50;
+var executor = new WorkflowExecutor(client, pollingInterval);
+// List of packages  (comma separated) to scan for annotated workers.
 // Please note, the worker method MUST be public and the class in which they are defined
-//MUST have a no-args constructor        
-executor.initWorkers("com.company.package1,com.company.package2");
+// MUST have a no-args constructor
+executor.initWorkers("io.orkes.conductor.examples.workers");
 ```
 
 </TabItem>
@@ -310,7 +338,19 @@ orkesConductorClient({
 
 <TabItem value="csharp" label="C#">
 
-*Coming soon.*
+ ``` csharp
+ApiExtensions.Configuration = new Configuration
+{
+    BasePath = "https://developer.orkescloud.com/api",
+    AuthenticationSettings = new OrkesAuthenticationSettings("_CHANGE_ME_", "_CHANGE_ME_")
+};
+
+var host = WorkflowTaskHost.CreateWorkerHost(
+    ApiExtensions.Configuration,
+    LogLevel.Information
+);
+host.Start();
+ ```
 
 </TabItem>
 
@@ -333,18 +373,27 @@ apiClient := client.NewAPIClient(
         SECRET,
     ),
     settings.NewHttpSettings(
-    "https://play.orkes.io/api",
+    "https://developer.orkescloud.com/api",
 ))
 
 taskRunner = worker.NewTaskRunnerWithApiClient(apiClient)
-taskRunner.StartWorker("simple_task", examples.SimpleWorker, 1, time.Second*1)
+taskRunner.StartWorker("myTask", myTask, 1, time.Second*1)
 ```
 
 </TabItem>
 
 <TabItem value="clojure" label="Clojure">
 
-*Coming soon.*
+``` clojure
+(defn -main
+  [& args]
+  ;; Create and run the task executor
+  (tr/runner-executer-for-workers options [worker])
+  ;; Keep the process running
+  (loop []
+    (Thread/sleep 1000)
+    (recur)))
+```
 
 </TabItem>
 </Tabs>
@@ -430,7 +479,7 @@ python3 worker.py
 <TabItem value="Java run" label="Java">
 
 ``` bash
-gradle build run
+./gradlew build run
 ```
 
 
