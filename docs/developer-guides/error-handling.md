@@ -229,9 +229,9 @@ You can set a failure workflow for a workflow in its **workflow definition**. Be
 
 ## Workflow rate limits
 
-A workflow’s rate limit controls the number of concurrent executions being worked on. Beyond this limit, workflows will be queued for execution based on their trigger time.
+A workflow’s rate limit controls the number of concurrent executions that can be active. Beyond this limit, workflows will be queued for execution based on their start time.
 
-When the number of scheduled workflows exceeds the defined rate limit, the Conductor server will place these workflows in a RUNNING state with the first task set to a PENDING status. Once a workflow completes, the rate limit is freed up and the server will schedule the next first PENDING task for polling.
+When the number of scheduled workflows exceeds the defined rate limit, the Conductor server will place these workflows in a RUNNING state with the first task set to a PENDING status. Once a workflow completes, the rate limit is freed up and the server will schedule the next PENDING task for polling.
 
 
 ### Rate limit configuration
@@ -240,7 +240,7 @@ You can configure the limit on concurrent workflow executions in its **workflow 
 
 | Parameter | Description | Required/ Optional |
 | --------- | ----------- | ------------------ | 
-| rateLimitConfig | A map of the workflow rate limit configuration. | Required. |
+| rateLimitConfig | A map of the workflow rate limit configuration. | Optional. |
 | rateLimitConfig. **rateLimitKey** | A unique identifier to group workflow executions for rate limits. <br/><br/> Can be a fixed value (for example, “max”) or a [dynamic variable](/developer-guides/passing-inputs-to-task-in-conductor#sample-expressions) from the workflow parameters (for example, `${workflow.correlationId}`). | Required. |
 | rateLimitConfig. **concurrentExecLimit** | The number of workflow executions that can run concurrently for each rate limit key. Cannot be passed as a dynamic variable. | Required. |
 
@@ -248,7 +248,7 @@ You can configure the limit on concurrent workflow executions in its **workflow 
 
 Using a dynamic `rateLimitKey`, you can apply separate rate limit queues based on workflow inputs like `correlationId` or  `version`. The rate limit for each group of workflows will be the same, based on the `concurrentExecLimit`. 
 
-For example, if workflow executions are grouped according to their correlation ID with `concurrentExecLimit` set to 100, workflows triggered with correlation IDs 1 and 2 will each have their own rate limit queues capped at 100.
+For example, if workflow executions are grouped according to their correlation ID with `concurrentExecLimit` set to 100, workflows triggered with correlation IDs 1 and 2 will have their rate limit queues capped at 100 each.
 
 **Example**
 

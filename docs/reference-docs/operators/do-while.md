@@ -46,12 +46,15 @@ This is the task configuration for a Do While task.
 ## Task output
 The Do While task will return the following parameters.
 
-| Parameter     | Description                                                                                                                                                                                                |
-| ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Parameter     | Description                                                              |
+| ------------- | ------------------------------------------------------------------------ |
 | iteration | The number of iterations. If the Do While task is in progress, `iteration` will show the current iteration number. If the Do While task is completed, `iteration` will show the final number of iterations. | 
-| i | The iteration number, mapped to the task references names and their output. | 
 
-In addition to the two parameters above, the output payload may also contain any state stored in `loopCondition`. For example, `storage` will exist as an output parameter if the `loopCondition` is `if ($.LoopTask['iteration'] <= 10) {$.LoopTask.storage = 3; true } else {false}`.
+
+In addition, an object will be created for each iteration, keyed by its iteration number (eg. 1, 2, 3) and containing the task reference names of all the loop tasks and their outputs.
+
+The output payload may also contain any state stored in `loopCondition`. For example, `storage` will exist as an output parameter if the `loopCondition` is `if ($.LoopTask['iteration'] <= 10) {$.LoopTask.storage = 3; true } else {false}`.
+
 
 **Example output**
 
@@ -104,18 +107,18 @@ Each time a task in the do while loop is completed, the output is saved and inde
 Here are some examples for using the Do While task.
 
 
-<details><summary>Example Do While task</summary>
+<details><summary>Using `graaljs` evaluator</summary>
 <p>
 
 ```json
 {
-  "name": "Loop Task",
-  "taskReferenceName": "LoopTask",
-  "type": "DO_WHILE",
+  "name": "do_while",
+  "taskReferenceName": "do_while_ref",
   "inputParameters": {
-    "value": "${workflow.input.value}"
+    "number": "${workflow.input.qty}"
   },
-  "loopCondition": "if ( ($.LoopTask['iteration'] < $.value ) || ( $.first_task['response']['body'] > 10)) { false; } else { true; }",
+  "type": "DO_WHILE",
+  "loopCondition": "(function () {\n  if ($.do_while_ref['iteration'] < $.number) {\n    return true;\n  }\n  return false;\n})();",
   "loopOver": [
     {
       "name": "first task",
@@ -140,6 +143,7 @@ Here are some examples for using the Do While task.
       "type": "HTTP"
     }
   ]
+  "evaluatorType": "graaljs"
 }
 ```
 
@@ -235,6 +239,51 @@ The Do While task’s `taskReferenceName` is "get_all_stars_loop_ref". To evalua
 }
 ```
 
+</p>
+</details>
+
+<details><summary>Iterate over a list of items</summary>
+<p>
+It is possible to iterate over a list of items as long as the Do While task has `items` as an input parameter. 
+
+The number of iterations will be equal to the list size. If `“items”=[“a”,“b”,“c”]`, the loop tasks will be executed three times; if `“items”=[]`, the Do While task will be marked as completed without executing the loop tasks.
+
+Each item in the list is passed into each iteration of the loop task using `${do_while_ref.output.item}`.
+
+``` json
+{
+  "name": "do_while",
+  "taskReferenceName": "do_while_ref",
+  "inputParameters": {
+    "items": [
+      "a",
+      "b",
+      "c"
+    ]
+  },
+  "type": "DO_WHILE",
+  "loopCondition": "",
+  "loopOver": [
+    {
+      "name": "http",
+      "taskReferenceName": "http_ref",
+      "inputParameters": {
+        "uri": "https://orkes-api-tester.orkesconductor.com/api",
+        "method": "GET",
+        "accept": "application/json",
+        "contentType": "application/json",
+        "encode": true,
+        "body": {
+          "item": "${do_while_ref.output.item}"
+        },
+        "headers": {}
+      },
+      "type": "HTTP"
+    }
+  ],
+  "evaluatorType": "value-param"
+}
+```
 </p>
 </details>
 
