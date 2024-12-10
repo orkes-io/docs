@@ -39,12 +39,7 @@ const config = {
     [
       "@docusaurus/plugin-client-redirects",
       {
-        redirects: [
-          {
-            from: baseUrlName,
-            to: baseUrlName + "/",
-          },
-        ],
+        redirects: [],
       },
     ],
     [
