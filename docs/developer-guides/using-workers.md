@@ -172,10 +172,16 @@ Get the Conductor Clojure package from [clojars](https://clojars.org/io.orkes/co
 
 ### Step 3: Write your worker logic
 
-In general, workers can be instantiated from classes that implement the Worker interface, or that are annotated using a WorkerTask annotation or decorator, depending on the language. A worker in your project may look like this:
+In general, workers can be instantiated from classes that implement the Worker interface, or that are annotated using a WorkerTask annotation or decorator, depending on the language. 
+
+All workers must have a task definition name, which will used for reference during task polling and execution. The task definition name may be different from the name of the function or method that the worker is responsible for.
+
+A worker in your project may look like this:
 
 <Tabs groupId="language">
 <TabItem value="python" label="Python">
+
+Create a Python worker by adding a @worker_task decorator to a function. 
 
 ``` python
 from conductor.client.worker.worker_task import worker_task
@@ -188,6 +194,8 @@ def greet(name: str) -> str:
 </TabItem>
 
 <TabItem value="java" label="Java">
+
+Create a Java worker by instantiating a class that implements the Worker interface. The @WorkerTask annotation takes the task definition name as an argument. 
 
 ``` java
 import com.netflix.conductor.sdk.workflow.task.InputParam;
@@ -403,13 +411,13 @@ For more information on creating workers in your preferred language, refer to th
 
 ## Setting up the worker
 
-To use the worker in a workflow, you must register the worker task to the Conductor server, set up authorized access, and launch your worker project.
+To use the worker in a workflow, you should register the worker task to the Conductor server, set up authorized access, and launch your worker project.
 
 The worker task cannot begin execution until the worker is connected to the Conductor server. If the workflow is run, the task will remain in the Scheduled status until the worker comes online to service the task.
 
 ### Register worker task
 
-All worker tasks must be registered to the Conductor server, which is done by creating a task definition. Tasks can be defined in UI, using API, or SDK.
+All worker tasks should be registered to the Conductor server, which is done by creating a task definition. The task definition contains configuration options for failure handling and expected input/output payloads. Tasks can be defined in UI, using API, or SDK.
 
 **To define a worker task:**
 
