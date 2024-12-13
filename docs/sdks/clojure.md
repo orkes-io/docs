@@ -14,19 +14,19 @@ Orkes Conductor Clojure SDK is maintained here: https://github.com/conductor-sdk
 ### Leiningen/Boot
 
 ```clojure
-[io.orkes/conductor-clojure "0.3.0"]
+[io.orkes/conductor-clojure "0.3.1"]
 ```
 
 ### Clojure CLI/deps.edn
 
 ```clojure
-io.orkes/conductor-clojure {:mvn/version "0.3.0"}
+io.orkes/conductor-clojure {:mvn/version "0.3.1"}
 ```
 
 ### Gradle
 
 ```clojure
-implementation("io.orkes:conductor-clojure:0.3.0")
+implementation("io.orkes:conductor-clojure:0.3.1")
 ```
 
 ### Maven
@@ -35,7 +35,7 @@ implementation("io.orkes:conductor-clojure:0.3.0")
 <dependency>
   <groupId>io.orkes</groupId>
   <artifactId>conductor-clojure</artifactId>
-  <version>0.3.0</version>
+  <version>0.3.1</version>
 </dependency>
 ```
 
