@@ -119,7 +119,7 @@ implementation 'io.orkes.conductor:orkes-conductor-client:4.0.1'
     <version>4.0.1</version>
 </dependency>
 <dependency>
-    <groupId>io.orkes</groupId>
+    <groupId>io.orkes.conductor</groupId>
     <artifactId>orkes-conductor-client</artifactId>
     <version>4.0.1</version>
 </dependency>
