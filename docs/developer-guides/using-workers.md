@@ -328,18 +328,19 @@ Import TaskRunner to run the JavaScript worker.
 
 ``` javascript
 import {
-  OrkesApiConfig,
   orkesConductorClient,
-  TaskRunner,
+  TaskManager,
 } from "@io-orkes/conductor-javascript";
 
-orkesConductorClient({
-  keyId: process.env.CONDUCTOR_AUTH_KEY,
-  keySecret: process.env.CONDUCTOR_AUTH_SECRET,
-  serverUrl: process.env.CONDUCTOR_SERVER_URL,
-}).then((client) =>
-  new TaskManager(client, [ myWorker ]).startPolling()
-);
+const config = {
+  serverUrl: "https://developer.orkescloud.com/api",
+  keyId: "_CHANGE_ME_",
+  keySecret: "_CHANGE_ME_",
+};
+
+const client = await orkesConductorClient(config);
+const manager = new TaskManager(client, [worker]);
+manager.startPolling();
 ```
 
 </TabItem>
