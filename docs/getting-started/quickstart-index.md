@@ -98,8 +98,9 @@ In the `build.gradle` file, add the following dependencies.
 
 ``` java
 dependencies {
-    implementation 'org.conductoross:conductor-client:4.0.0'
-    implementation 'io.orkes:orkes-conductor-client:4.0.0'
+    implementation 'org.conductoross:conductor-client:4.0.1'
+    implementation 'org.conductoross:java-sdk:4.0.1'
+    implementation 'io.orkes.conductor:orkes-conductor-client:4.0.1'
 }
 ```
 
@@ -111,12 +112,17 @@ In the `pom.xml` file, add the following dependencies.
 <dependency>
     <groupId>org.conductoross</groupId>
     <artifactId>conductor-client</artifactId>
-    <version>4.0.0</version>
+    <version>4.0.1</version>
 </dependency>
 <dependency>
-    <groupId>io.orkes</groupId>
+    <groupId>org.conductoross</groupId>
+    <artifactId>java-sdk</artifactId>
+    <version>4.0.1</version>
+</dependency>
+<dependency>
+    <groupId>io.orkes.conductor</groupId>
     <artifactId>orkes-conductor-client</artifactId>
-    <version>4.0.0</version>
+    <version>4.0.1</version>
 </dependency>
 ```
 
