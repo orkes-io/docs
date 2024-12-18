@@ -8,14 +8,11 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 # Input/Output Schema Validation
+In Orkes Conductor, you can create schemas to define and enforce the payload structure of workflow or task inputs/outputs. Once created, schemas can be added to workflow or task definitions:
+* A **workflow-level schema** specifies what workflow inputs must be supplied.
+* A **task-level schema** specifies the inputs/outputs that must be wired to/from the task. The task-level schema can be general across workflows (specified in the *task definition*) or unique to a specific workflow (specified in the *task configuration*).
 
-Create schemas to define and enforce the payload structure of workflow or task inputs/outputs. 
-
-Once created, schemas can be added to workflow or task definitions:
-* A **workflow-level schema** allows you to specify what workflow inputs must be supplied.
-* A **task-level schema** allows you to specify a contract that the task worker should follow—in other words, the inputs/outputs that must be wired to/from the task configuration. The task-level schema can be general across workflows (specified in the *task definition*) or unique to a specific workflow (specified in the *task configuration*).
-
-The schema is enforced at runtime. The workflow or task will fail if the inputs/outputs do not pass the validation. This behavior is the main distinction between a *task-level schema* versus the *input keys, output keys, and input templates* in a task definition. The schema enforces validation on a payload, while the latter parameters are non-enforceable guides.
+The schema is enforced at runtime. The workflow or task will fail if the inputs/outputs do not pass the validation. This behavior is the main distinction between a *task-level schema* versus non-enforceable guides like the *input keys, output keys, and input templates* in a task definition.
 
 
 ## Schema formats
@@ -93,6 +90,8 @@ If the version is unspecified, the latest schema version will be used.
 5. Switch on the **Enforce schema** toggle.
 6. Select **Save** in the top right.
 
+<p align="center"><img src="/content/img/dev-guides/input_output_validation-task_def_schema.png" alt="Screenshot of adding a schema to a task definition." width="100%" height="auto"></img></p>
+
 ``` json
 // task definition
 
@@ -122,6 +121,8 @@ If the version is unspecified, the latest schema version will be used.
 5. Select a **Version** for the schema.
 6. Switch on the **Enforce schema** toggle.
 7. Select **Save** > **Confirm** in the top right.
+
+<p align="center"><img src="/content/img/dev-guides/input_output_validation-task_config_schema.png" alt="Screenshot of adding a schema to a task configuration in the workflow definition." width="100%" height="auto"></img></p>
 
 ``` json
 // workflow definition
@@ -167,6 +168,9 @@ If the version is unspecified, the latest schema version will be used.
 5. Switch on the **Enforce schema** toggle.
 6. Select **Save** > **Confirm** in the top right.
 
+
+<p align="center"><img src="/content/img/dev-guides/input_output_validation-workflow_def_schema.png" alt="Screenshot of adding a schema to the workflow definition." width="100%" height="auto"></img></p>
+
 ``` json
 // workflow definition
 
@@ -186,6 +190,12 @@ If the version is unspecified, the latest schema version will be used.
 
 Once the schema is added, modify your workflow or task inputs/outputs to match the schema.
 
+## Editing schemas
+
+Schemas can be edited in the **Definitions** > **Schema** tab or directly from where they are added to the workflow definition itself.
+
+Since schemas can be reused for multiple workflows or tasks, you are encouraged to save changes to an existing schema as a new version or as a new schema entirely.
+
 
 ## Workflow behavior with schemas
 
@@ -197,3 +207,29 @@ If a task does not pass its schema validation, it will fail with a terminal erro
 
 <p align="center"><img src="/content/img/dev-guides/input_output_validation-task_failure.png" alt="Screenshot of task failure due to invalid inputs or outputs." width="100%" height="auto"></img></p>
 
+## Supported tasks
+
+Schema validation is currently supported for the following task types:
+* [Worker (Simple)](/reference-docs/worker-task)
+* [Event](/reference-docs/system-tasks/event)
+* [HTTP](/reference-docs/system-tasks/http)
+* [HTTP Poll](/reference-docs/system-tasks/http-poll)
+* [Inline](/reference-docs/system-tasks/inline)
+* [JSON JQ Transform](/reference-docs/system-tasks/jq-transform)
+* [Business Rule](/reference-docs/system-tasks/business-rule)
+* [Wait For Webhook](/reference-docs/system-tasks/wait-for-webhook)
+* [JDBC](/reference-docs/system-tasks/jdbc)
+* [Update Secret](/reference-docs/system-tasks/update-secret)
+* [Get Signed JWT](/reference-docs/system-tasks/get-signed-jwt)
+* [Update Task](/reference-docs/system-tasks/update-task)
+* [Opsgenie](https://orkes.io/content/reference-docs/system-tasks/opsgenie)
+* [Query Processor](/reference-docs/system-tasks/query-processor)
+* [Text Complete](/reference-docs/ai-tasks/llm-text-complete)
+* [Generate Embeddings](/reference-docs/ai-tasks/llm-generate-embeddings)
+* [Get Embeddings](/reference-docs/ai-tasks/llm-get-embeddings)
+* [Store Embeddings](/reference-docs/ai-tasks/llm-store-embeddings)
+* [Search Index](/reference-docs/ai-tasks/llm-search-index)
+* [Index Document](/reference-docs/ai-tasks/llm-index-document)
+* [Get Document](/reference-docs/ai-tasks/llm-get-document)
+* [Index Text](/reference-docs/ai-tasks/llm-index-text)
+* [Chat Complete](/reference-docs/ai-tasks/llm-chat-complete)
