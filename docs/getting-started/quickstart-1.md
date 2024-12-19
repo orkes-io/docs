@@ -428,8 +428,6 @@ Follow along to build your first workflow, which is a conditional notification f
     Alternatively, you can copy the JSON code below into the **Code** tab of the workflow builder.
 
 ``` json
-// workflow definition in JSON
-
 {
  "name": "myFirstWorkflow",
  "description": "Workflow using a Switch task and HTTP tasks.",
@@ -470,7 +468,9 @@ Follow along to build your first workflow, which is a conditional notification f
          }
        ]
      },
-     "defaultCase": []
+     "defaultCase": [],
+     "evaluatorType": "value-param",
+     "expression": "switchCaseValue"
    }
  ],
  "inputParameters": [],
