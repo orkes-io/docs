@@ -23,21 +23,6 @@ public abstract Workflow updateVariables(String workflowId, Map<String, Object> 
 ```
 
 </TabItem>
-<TabItem value="Go" label="Go">
-Coming Soon
-</TabItem>
-<TabItem value="Python" label="Python">
-Coming Soon
-</TabItem>
-<TabItem value="CSharp" label="C#">
-Coming Soon
-</TabItem>
-<TabItem value="JavaScript" label="JavaScript">
-Coming Soon
-</TabItem>
-<TabItem value="Clojure" label="Clojure">
-Coming Soon
-</TabItem>
 </Tabs>
 
 ## Sample Code

@@ -28,34 +28,6 @@ POST human/tasks/{taskId}/claim
 ## Client SDK Methods
 
 <Tabs>
-<TabItem value="Java" label="Java">
-
-```java
-TODO: Coming soon to the SDKs
-```
-
-</TabItem>
-<TabItem value="Go" label="Go">
-
-```go
-TODO: Coming soon to the SDKs
-```
-
-</TabItem>
-<TabItem value="Python" label="Python">
-
-```python
-TODO: Coming soon to the SDKs
-```
-
-</TabItem>
-<TabItem value="CSharp" label="C#">
-
-```csharp
-TODO: Coming soon to the SDKs
-```
-
-</TabItem>
 <TabItem value="JavaScript" label="JavaScript">
 
 ```javascript
@@ -67,13 +39,6 @@ HumanExecutor.claimTaskAsConductorUser(taskId: string);
 
 ```typescript
 HumanExecutor.claimTaskAsConductorUser(taskId: string);
-```
-
-</TabItem>
-<TabItem value="Clojure" label="Clojure">
-
-```clojure
-TODO: Coming soon to the SDKs
 ```
 
 </TabItem>
