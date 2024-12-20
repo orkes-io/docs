@@ -33,7 +33,7 @@ In AI orchestration for RAG, a typical scenario might involve a vector database 
 
 ## Integrating with Vector Databases
 
-Before using all these functions of vector databases in your Orkes Conductor workflows, you need to integrate your cluster with vector databases from specific providers. Popular vector database providers such as **Pinecone**, **Weaviate**, **Postgres Vector Database**, and **Mongo Vector Database** are natively supported in Orkes Conductor (more coming soon). Once the database is configured, you can configure the required indexes to be used in your applications. Indexes are the highest-level organizational unit of vector data (similar to the TABLE concept in a relational database).
+Before using all these functions of vector databases in your Orkes Conductor workflows, you need to integrate your cluster with vector databases from specific providers. Popular vector database providers such as **Pinecone**, **Weaviate**, **Postgres Vector Database**, and **Mongo Vector Database** are natively supported in Orkes Conductor. Once the database is configured, you can configure the required indexes to be used in your applications. Indexes are the highest-level organizational unit of vector data (similar to the TABLE concept in a relational database).
 
 For example, if you are using Pinecone as the vector database, then you can configure different indexes within the Pinecone configuration. 
 

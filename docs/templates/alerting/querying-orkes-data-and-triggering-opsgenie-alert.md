@@ -30,7 +30,6 @@ This system task is designed to do queries against various systems that can be u
 
 1. Conductor APIs
 2. Conductor Metrics (Prometheus)
-3. Conductor Events (Coming soon)
 
 #### Sample Input​
 

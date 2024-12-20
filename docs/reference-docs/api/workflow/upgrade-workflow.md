@@ -35,48 +35,6 @@ void upgradeRunningWorkflow(String workflowId, UpgradeWorkflowRequest upgradeWor
 ```
 
 </TabItem>
-<TabItem value="Go" label="Go">
-
-```go
-Coming Soon
-```
-
-</TabItem>
-<TabItem value="Python" label="Python">
-
-```python
-Coming Soon
-```
-
-</TabItem>
-<TabItem value="CSharp" label="C#">
-
-```csharp
-Coming Soon
-```
-
-</TabItem>
-<TabItem value="JavaScript" label="JavaScript">
-
-```javascript
-Coming Soon
-```
-
-</TabItem>
-<TabItem value="Typescript" label="Typescript">
-
-```typescript
-Coming Soon
-```
-
-</TabItem>
-<TabItem value="Clojure" label="Clojure">
-
-```clojure
-Coming Soon
-```
-
-</TabItem>
 </Tabs>
 
 ## Examples
