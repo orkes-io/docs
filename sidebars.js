@@ -112,6 +112,7 @@ const sidebars = {
                             },
                             items: [
                                 'developer-guides/passing-inputs-to-task-in-conductor',
+                                'developer-guides/task-input-templates',
                                 'developer-guides/schema-validation',
                                 'developer-guides/secrets-in-conductor',
                                 'developer-guides/using-environment-variables',
