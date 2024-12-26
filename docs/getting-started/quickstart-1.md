@@ -436,54 +436,81 @@ Follow along to build your first workflow, which is a conditional notification f
 
 ``` json
 {
- "name": "myFirstWorkflow",
- "description": "Workflow using a Switch task and HTTP tasks.",
- "version": 1,
- "tasks": [
-   {
-     "name": "get-user",
-     "taskReferenceName": "get-user_ref",
-     "inputParameters": {
-       "uri": "https://randomuser.me/api/",
-       "method": "GET",
-       "accept": "application/json",
-       "contentType": "application/json",
-       "encode": true
-     },
-     "type": "HTTP"
-   },
-   {
-     "name": "user-criteria",
-     "taskReferenceName": "user-criteria_ref",
-     "inputParameters": {
-       "switchCaseValue": "${get-user_ref.output.response.body.results[0].location.country}"
-     },
-     "type": "SWITCH",
-     "decisionCases": {
-       "United States": [
-         {
-           "name": "send-notification",
-           "taskReferenceName": "send-notification_ref",
-           "inputParameters": {
-             "uri": "https://orkes-api-tester.orkesconductor.com/api",
-             "method": "POST",
-             "accept": "application/json",
-             "contentType": "application/json",
-             "encode": true
-           },
-           "type": "HTTP"
-         }
-       ]
-     },
-     "defaultCase": [],
-     "evaluatorType": "value-param",
-     "expression": "switchCaseValue"
-   }
- ],
- "inputParameters": [],
- "outputParameters": {},
- "failureWorkflow": "",
- "schemaVersion": 2
+  "name": "myFirstWorkflow",
+  "description": "Workflow that greets a user. Uses a Switch task, HTTP task, and Simple task.",
+  "version": 1,
+  "tasks": [
+    {
+      "name": "get-user",
+      "taskReferenceName": "get-user_ref",
+      "inputParameters": {
+        "uri": "https://randomuser.me/api/",
+        "method": "GET",
+        "accept": "application/json",
+        "contentType": "application/json",
+        "encode": true
+      },
+      "type": "HTTP",
+      "decisionCases": {},
+      "defaultCase": [],
+      "forkTasks": [],
+      "startDelay": 0,
+      "joinOn": [],
+      "optional": false,
+      "defaultExclusiveJoinTask": [],
+      "asyncComplete": false,
+      "loopOver": [],
+      "onStateChange": {},
+      "permissive": false
+    },
+    {
+      "name": "user-criteria",
+      "taskReferenceName": "user-criteria_ref",
+      "inputParameters": {
+        "switchCaseValue": "${get-user_ref.output.response.body.results[0].location.country}"
+      },
+      "type": "SWITCH",
+      "decisionCases": {
+        "United States": [
+          {
+            "name": "helloWorld",
+            "taskReferenceName": "simple_ref",
+            "inputParameters": {
+              "user": "${get-user_ref.output.response.body.results[0].name.first}"
+            },
+            "type": "SIMPLE",
+            "decisionCases": {},
+            "defaultCase": [],
+            "forkTasks": [],
+            "startDelay": 0,
+            "joinOn": [],
+            "optional": false,
+            "defaultExclusiveJoinTask": [],
+            "asyncComplete": false,
+            "loopOver": [],
+            "onStateChange": {},
+            "permissive": false
+          }
+        ]
+      },
+      "defaultCase": [],
+      "forkTasks": [],
+      "startDelay": 0,
+      "joinOn": [],
+      "optional": false,
+      "defaultExclusiveJoinTask": [],
+      "asyncComplete": false,
+      "loopOver": [],
+      "evaluatorType": "value-param",
+      "expression": "switchCaseValue",
+      "onStateChange": {},
+      "permissive": false
+    }
+  ],
+  "inputParameters": [],
+  "outputParameters": {},
+  "failureWorkflow": "",
+  "schemaVersion": 2
 }
 ```
 
