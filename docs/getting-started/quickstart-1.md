@@ -45,343 +45,350 @@ Create a project for your workflow client.
 <Tabs groupId="language">
 <TabItem value="python" label="Python">
 
-**Step 1: Configure access and create workflow**
+This sample Python code demonstrates how to create, register, and execute a workflow in Conductor. 
 
-To define a workflow, you must provide a MetadataClient and a WorkflowExecutor, which requires a Configuration object with the Conductor Server info. Here's an example of how to do that:
-
-``` python
-from conductor.client.configuration.configuration import Configuration
-from conductor.client.configuration.settings.authentication_settings import AuthenticationSettings
-from conductor.client.orkes.orkes_metadata_client import OrkesMetadataClient
-from conductor.client.workflow.conductor_workflow import ConductorWorkflow
-from conductor.client.workflow.executor.workflow_executor import WorkflowExecutor
-
-configuration = Configuration(
-    server_api_url=SERVER_API_URL, // eg: https://developer.orkescloud.com/api
-    debug=False,
-    authentication_settings=AuthenticationSettings(key_id=KEY_ID, key_secret=KEY_SECRET)
-)
-
-metadata_client = OrkesMetadataClient(configuration)
-
-workflow_executor = WorkflowExecutor(configuration)
-workflow = ConductorWorkflow(
-    executor=workflow_executor,
-    name='python_workflow_example_from_code',
-    description='Python workflow example from code'
-)
-```
-
-**Step 2: Add tasks to workflow**
-
-After creating an instance of a ConductorWorkflow, you can add tasks to it. There are two possible ways to do that:
-* method: add
-* operator: >>
-
-``` python
-from conductor.client.workflow.task.simple_task import SimpleTask
-
-simple_task_1 = SimpleTask(
-    task_def_name='python_simple_task_from_code_1',
-    task_reference_name='python_simple_task_from_code_1'
-)
-workflow.add(simple_task_1)
-
-simple_task_2 = SimpleTask(
-    task_def_name='python_simple_task_from_code_2',
-    task_reference_name='python_simple_task_from_code_2'
-)
-workflow >> simple_task_2
-```
-
-You can add input parameters to your workflow:
-
-``` python
-workflow.input_parameters(["a", "b"])
-```
-
-**Step 3: Register workflow**
-
-Register your workflow at the Conductor Server:
-
-``` python
-from conductor.client.http.models.workflow_def import WorkflowDef
-
-workflowDef = workflow.to_workflow_def()
-metadata_client.register_workflow_def(workflowDef, True)
-```
-
-
-**Step 4: Run workflow**
-
-Your first workflow is now created. Give your workflow a test run:
-
+Check out the full project [here](https://github.com/conductor-oss/conductor-apps/tree/main/python/quickstarts/create-your-first-workflow).
 
 ``` python
 from conductor.client.http.models import StartWorkflowRequest
+from conductor.client.configuration.configuration import Configuration
+from conductor.client.configuration.settings.authentication_settings import AuthenticationSettings
+from conductor.client.workflow.conductor_workflow import ConductorWorkflow
+from conductor.client.workflow.executor.workflow_executor import WorkflowExecutor
+from conductor.client.workflow.task.simple_task import SimpleTask
+from conductor.client.workflow.task.http_task import HttpTask
+from conductor.client.workflow.task.switch_task import SwitchTask
 
-request = StartWorkflowRequest()
-request.name = 'python_workflow_example_from_code'
-request.version = 1
-request.input = {'name': 'Orkes'}
 
-workflow_run = workflow_client.execute_workflow(
-        start_workflow_request=request, 
-        wait_for_seconds=12)
+def main():
+    # Sign up at https://developer.orkescloud.com and create an application.
+    # Use your application's Key ID and Key Secret here:
+    conf = Configuration(base_url='https://developer.orkescloud.com',
+                         authentication_settings=AuthenticationSettings(key_id='_CHANGE_ME_',
+                                                                        key_secret='_CHANGE_ME_'))
+
+    # A WorkflowExecutor instance is used to register and execute workflows.
+    executor = WorkflowExecutor(conf)
+
+    # Create the workflow definition.
+    workflow = ConductorWorkflow(
+        executor=executor,
+        name='myFirstWorkflow',
+        description='Workflow that greets a user. Uses a Switch task, HTTP task, and Simple task.',
+        version=1
+    )
+
+    # Create the tasks.
+    httpTask = HttpTask('get-user_ref', {'uri': 'https://randomuser.me/api/'})
+    switchTask = SwitchTask('user-criteria_ref', '${get-user_ref.output.response.body.results[0].location.country}').switch_case(
+        'United States', SimpleTask('helloWorld', 'simple_ref').input(
+            key='user', value='${get-user_ref.output.response.body.results[0].name.first}'))
+
+    # Add the tasks to the workflow using `add` method or the `>>` operator.
+    workflow.add(httpTask)
+    workflow >> switchTask
+
+    # Register the workflow.
+    workflow.register(True)
+    print(f"Registered workflow {workflow.name}")
+
+    # Start the workflow.
+    request = StartWorkflowRequest()
+    request.name = 'myFirstWorkflow'
+    request.version = 1
+    id = executor.start_workflow(request)
+    print(f"Started workflow {id}")
+
+
+if __name__ == '__main__':
+    main()
 
 ```
-
-
 </TabItem>
 
 <TabItem value="java" label="Java">
 
-**Step 1: Create workflow**
+This sample Java code demonstrates how to create, register, and execute a workflow in Conductor. 
 
-Create a ConductorWorkflow Instance.
-``` java
-ConductorWorkflow<GetInsuranceQuote> conductorWorkflow = new WorkflowBuilder<GetInsuranceQuote>(executor)
-    .name("sdk_workflow_example")
-    .version(1)
-    .ownerEmail("hello@example.com")
-    .description("Example Workflow")
-    .timeoutPolicy(WorkflowDef.TimeoutPolicy.TIME_OUT_WF, 100)
-    .add(new SimpleTask("calculate_insurance_premium", "calculate_insurance_premium"))
-    .add(new SimpleTask("send_email", "send_email"))
-    .build();
-```
-
-
-**Step 2: Add tasks to workflow**
-
-After creating an instance of a ConductorWorkflow, you can add tasks to it using the `add` method. The task inputs configured using the `input` method.
-``` java
-builder.add(
-        new SimpleTask("send_email", "send_email")
-                .input("email", "${workflow.input.email}")
-                .input("subject", "Your insurance quote for the amount ${generate_quote.output.amount}")
-);
-```
-
-**Step 3: Register workflow**
+Check out the full project [here](https://github.com/conductor-oss/conductor-apps/tree/main/java/quickstarts/create-your-first-workflow).
 
 ``` java
-//Returns true if the workflow is successfully created
-boolean registered = workflow.registerWorkflow();
-```
+import com.netflix.conductor.sdk.workflow.def.ConductorWorkflow;
+import com.netflix.conductor.sdk.workflow.def.WorkflowBuilder;
+import com.netflix.conductor.sdk.workflow.def.tasks.Http;
+import com.netflix.conductor.sdk.workflow.def.tasks.SimpleTask;
+import com.netflix.conductor.sdk.workflow.def.tasks.Switch;
+import com.netflix.conductor.sdk.workflow.executor.WorkflowExecutor;
+import io.orkes.conductor.client.ApiClient;
 
-**Step 4: Run workflow**
+import java.util.Map;
 
-Start the execution of the workflow based on the definition registered on the server. Use the register method to register a workflow on the server before executing.
-``` java
-//Returns a completable future
-CompletableFuture<Workflow> execution = conductorWorkflow.execute(input);
+public class WorkflowAsCode {
 
-//Wait for the workflow to complete -- useful if workflow completes within a reasonable amount of time
-Workflow workflowRun = execution.get();
+    public static void main(String[] args) {
+        // Sign up at https://developer.orkescloud.com and create an application.
+        // Use your application's Key ID and Key Secret here:
+        ApiClient client = ApiClient.builder()
+                .basePath("https://developer.orkescloud.com/api")
+                .credentials("_CHANGE_ME_", "_CHANGE_ME_")
+                .build();
 
-//Get the workflowId
-String workflowId = workflowRun.getWorkflowId();
+        // A WorkflowExecutor instance is used to register and execute workflows.
+        int pollingInterval = 50;
+        WorkflowExecutor executor = new WorkflowExecutor(client, pollingInterval);
 
-//Get the status of workflow execution
-WorkflowStatus status = workflowRun.getStatus();
+        // Create the workflow definition.
+        ConductorWorkflow<Object> workflow = new WorkflowBuilder<>(executor)
+                .name("myFirstWorkflow")
+                .version(1)
+                .description("Workflow that greets a user. Uses a Switch task, HTTP task, and Simple task.")
+                .add(new Http("get-user_ref").url("https://randomuser.me/api/"))
+                // This switch task will execute the "helloWorld" task if the user's country is "United States"
+                .add(new Switch("user-criteria_ref", "${get-user_ref.output.response.body.results[0].location.country}")
+                        .switchCase("United States", new SimpleTask("helloWorld", "simple_ref")
+                                .input("user", "${get-user_ref.output.response.body.results[0].name.first}")))
+                .build();
 
+        // Register the workflow with overwrite = true and registerTasks = true.
+        workflow.registerWorkflow(true, true);
+
+        // Start the workflow.
+        String id = executor.startWorkflow(workflow.getName(), workflow.getVersion(), Map.of());
+        System.out.printf("Started workflow %s%n", id);
+
+        executor.shutdown();
+    }
+
+}
 ```
 
 </TabItem>
 
 <TabItem value="javascript" label="JavaScript">
 
-**Step 1: Configure access and create workflow**
+This sample JavaScript code demonstrates how to create, register, and execute a workflow in Conductor. 
+
+Check out the full project [here](https://github.com/conductor-oss/conductor-apps/tree/main/javascript/quickstarts/create-your-first-workflow).
+
 ``` javascript
 import {
-  OrkesApiConfig,
   orkesConductorClient,
-  TaskRunner,
+  WorkflowExecutor,
+  httpTask,
   simpleTask,
+  switchTask,
 } from "@io-orkes/conductor-javascript";
 
-//API client instance with server address and authentication details
-const clientPromise = orkesConductorClient({
-  keyId: "XXX",
-  keySecret: "XXXX",
-  serverUrl: "SERVER_URL", // eg: https://developer.orkescloud.com/api
-});
-
-const client = await clientPromise;
-
-//Create new workflow executor
-const executor = new WorkflowExecutor(client);
-
-// Using Factory function to create a workflow
-const factoryWf = {
-  name: "my_first_workflow",
-  version: 1,
-  ownerEmail: "user@example.com",
-  tasks: [simpleTask("simple_task_ref", "simple_task", {})],
-  inputParameters: [],
-  outputParameters: {},
-  timeoutSeconds: 0,
+// Sign up at https://developer.orkescloud.com and create an application.
+// Use your application's Key ID and Key Secret here:
+const config = {
+  serverUrl: "https://developer.orkescloud.com/api",
+  keyId: "_CHANGE_ME_",
+  keySecret: "_CHANGE_ME_",
 };
-```
 
-**Step 2: Register workflow**
-
-``` javascript
-const workflow = executor.registerWorkflow(true, factoryWf);
-```
-
-
-**Step 3: Run workflow**
-
-Use Workflow Executor to start the previously-registered workflow.
-
-``` javascript
+const client = await orkesConductorClient(config);
+// A WorkflowExecutor instance is used to register and execute workflows.
 const executor = new WorkflowExecutor(client);
-const executionId = await executor.startWorkflow({ name, version, input: {} });
+
+// Create the workflow definition.
+const wf = {
+  name: "myFirstWorkflow",
+  version: 1,
+  description:
+    "Workflow that greets a user. Uses a Switch task, HTTP task, and Simple task.",
+  tasks: [
+    httpTask("get-user_ref", { uri: "https://randomuser.me/api/" }),
+    switchTask(
+      "user-criteria_ref",
+      "${get-user_ref.output.response.body.results[0].location.country}",
+      {
+        "United States": [
+          simpleTask("simple_ref", "helloWorld", {
+            user: "${get-user_ref.output.response.body.results[0].name.first}",
+          }),
+        ],
+      }
+    ),
+  ],
+};
+
+// Register the workflow with overwrite = true.
+await executor.registerWorkflow(true, wf);
+
+// Start the workflow.
+const id = await executor.startWorkflow({name: wf.name, version: wf.version});
+console.log(`Started workflow: ${id}`);
+client.stop()
+
 ```
 
 </TabItem>
 
 <TabItem value="csharp" label="C#">
 
-**Step 1: Configure access and create workflow**
+This sample C# code demonstrates how to create, register, and execute a workflow in Conductor. 
+
+Check out the full project [here](https://github.com/conductor-oss/conductor-apps/tree/main/csharp/quickstarts/create-your-first-workflow).
+
 ```csharp
+using Conductor.Client.Authentication;
+using Conductor.Client.Models;
 using Conductor.Client;
 using Conductor.Definition;
 using Conductor.Executor;
+using Conductor.Definition.TaskType;
 
-ConductorWorkflow GetConductorWorkflow()
+// Sign up at https://developer.orkescloud.com and create an application.
+// Use your application's Key ID and Key Secret here:
+var conf = new Configuration
 {
-    return new ConductorWorkflow()
-        .WithName("my_first_workflow")
+    BasePath = "https://developer.orkescloud.com/api",
+    AuthenticationSettings = new OrkesAuthenticationSettings("_CHANGE_ME_", "_CHANGE_ME_")
+};
+
+// A WorkflowExecutor instance is used to register and execute workflows.
+var executor = new WorkflowExecutor(conf);
+
+// Create the workflow definition.
+var worfklow = new ConductorWorkflow()
+        .WithName("myFirstWorkflow")
+        .WithDescription("Workflow that greets a user. Uses a Switch task, HTTP task, and Simple task.")
         .WithVersion(1)
-        .WithOwner("developers@orkes.io")
-            .WithTask(new SimpleTask("simple_task_2", "simple_task_1"))
-            .WithTask(new SimpleTask("simple_task_1", "simple_task_2"));
-}
+        .WithTask(new HttpTask("get-user_ref", new HttpTaskSettings { uri = "https://randomuser.me/api/" }))
+        .WithTask(new SwitchTask("user-criteria_ref", "${get-user_ref.output.response.body.results[0].location.country}")
+            .WithDecisionCase("United States",
+                [new SimpleTask("helloWorld", "simple_ref").WithInput("user", "${get-user_ref.output.response.body.results[0].name.first}")]));
 
-var configuration = new Configuration();
-
-var conductorWorkflow = GetConductorWorkflow();
-var workflowExecutor = new WorkflowExecutor(configuration);
-```
-
-**Step 2: Register workflow**
-``` csharp
-workflowExecutor.RegisterWorkflow(
-    workflow: conductorWorkflow
+// Register the workflow with overwrite = true.
+executor.RegisterWorkflow(
+    workflow: worfklow,
     overwrite: true
 );
-```
 
-**Step 3: Run workflow**
-``` csharp
-var workflowId = workflowExecutor.StartWorkflow(conductorWorkflow);
+// Start the workflow.
+var workflowId = executor.StartWorkflow(new StartWorkflowRequest(name: worfklow.Name, version: worfklow.Version));
+Console.WriteLine($"Started Workflow: {workflowId}");
+
 ```
 
 </TabItem>
 
 <TabItem value="go" label="Go">
 
-**Step 1: Configure access and create workflow**
-``` go
-// API client instance with server address and authentication details
-apiClient := client.NewAPIClient(
-    settings.NewAuthenticationSettings(
-        KEY,
-        SECRET,
-    ),
-    settings.NewHttpSettings(
-        "https://developer.orkescloud.com/api",
-    ))
+This sample Go code demonstrates how to create, register, and execute a workflow in Conductor. 
 
-// Create new workflow executor
-executor := executor.NewWorkflowExecutor(apiClient)
-
-// Create a new ConductorWorkflow instance
-conductorWorkflow := workflow.NewConductorWorkflow(executor).
-    Name("my_first_workflow").
-    Version(1).
-    OwnerEmail("developers@orkes.io")
-```
-
-**Step 2: Add tasks to workflow**
-``` go
-conductorWorkflow.
-	Add(workflow.NewSimpleTask("simple_task_2", "simple_task_1")).
-    Add(workflow.NewSimpleTask("simple_task_1", "simple_task_2"))
-```
-
-**Step 3: Register workflow**
-``` go
-conductorWorkflow.Register(true)        //Overwrite the existing definition with the new one
-```
-
-
-**Step 4: Execute workflow**
-
-Use Workflow Executor to start the previously-registered workflow.
+Check out the full project [here](https://github.com/conductor-oss/conductor-apps/tree/main/go/quickstarts/create-your-first-workflow).
 
 ``` go
-//Input can be either a map or a struct that is serializable to a JSON map
-workflowInput := map[string]interface{}{}
+package main
 
-workflowId, err := executor.StartWorkflow(&model.StartWorkflowRequest{
-    Name:  conductorWorkflow.GetName(),
-    Input: workflowInput,
-})
+import (
+	"fmt"
+	"log"
+
+	"github.com/conductor-sdk/conductor-go/sdk/client"
+	"github.com/conductor-sdk/conductor-go/sdk/model"
+	"github.com/conductor-sdk/conductor-go/sdk/settings"
+	"github.com/conductor-sdk/conductor-go/sdk/workflow"
+	"github.com/conductor-sdk/conductor-go/sdk/workflow/executor"
+)
+
+// Sign up at https://developer.orkescloud.com and create an application.
+// Use your application's Key ID and Key Secret here:
+const SERVER_URL = "https://developer.orkescloud.com/api"
+const KEY_ID = "_CHANGE_ME_"
+const SECRET = "_CHANGE_ME_"
+
+var (
+	apiClient = client.NewAPIClient(
+		settings.NewAuthenticationSettings(KEY_ID, SECRET),
+		settings.NewHttpSettings(SERVER_URL))
+	// A WorkflowExecutor instance is used to register and execute workflows.
+	workflowExecutor = executor.NewWorkflowExecutor(apiClient)
+)
+
+func main() {
+	// Create the workflow definition.
+	wf := workflow.NewConductorWorkflow(workflowExecutor).
+		Name("myFirstWorkflowGo").
+		Version(1).
+		Description("Workflow that greets a user. Uses a Switch task, HTTP task, and Simple task.")
+
+	httpTask := workflow.NewHttpTask("get-user_ref", &workflow.HttpInput{Uri: "https://randomuser.me/api/"})
+	switchTask := workflow.NewSwitchTask("user-criteria_ref", "${get-user_ref.output.response.body.results[0].location.country}").
+		SwitchCase("United States", workflow.NewSimpleTask("helloWorld", "simple_ref").Input("user", "${get-user_ref.output.response.body.results[0].name.first}"))
+
+	wf.Add(httpTask)
+	wf.Add(switchTask)
+	
+	// Register the workflow with overwrite = true.
+	err := wf.Register(true)
+	if err != nil {
+		log.Fatalf("Failed to register workflow: %v", err)
+	}
+	fmt.Printf("Registered workflow: %s\n", wf.GetName())
+
+	// Start the workflow.
+	id, err := workflowExecutor.StartWorkflow(&model.StartWorkflowRequest{
+		Name:    wf.GetName(),
+		Version: wf.GetVersion(),
+	})
+
+	if err != nil {
+		log.Fatalf("Error when starting workflow: %v", err)
+	}
+	fmt.Printf("Started workflow: %s\n", id)
+}
+
 ```
 
 </TabItem>
 
 <TabItem value="clojure" label="Clojure">
 
-**Step 1: Add tasks**
+This sample Clojure code demonstrates how to create, register, and execute a workflow in Conductor. 
+
+Check out the full project [here](https://github.com/conductor-oss/conductor-apps/tree/main/clojure/quickstarts/create-your-first-workflow).
 
 ``` clojure
+(ns wac.core
+  (:require [io.orkes.workflow-resource :as wr]
+            [io.orkes.sdk :as sdk]
+            [io.orkes.metadata :as metadata])
+  (:gen-class))
+
+; Sign up at https://developer.orkescloud.com and create an application.
+; Use your application's Key ID and Key Secret here:
+(def options
+  {:app-key "_CHANGE_ME_"
+   :app-secret "_CHANGE_ME_"
+   :url "https://developer.orkescloud.com/api/"})
+
+; Function that creates the tasks.
 (defn create-tasks
-  "Returns workflow tasks"
   []
-  (vector (sdk/simple-task (:get-user-info constants) (:get-user-info constants) {:userId "${workflow.input.userId}"})
-          (sdk/switch-task "emailorsms" "${workflow.input.notificationPref}" {"email" [(sdk/simple-task (:send-email constants) (:send-email constants) {"email" "${get_user_info.output.email}"})]
-                                                                              "sms" [(sdk/simple-task (:send-sms constants) (:send-sms constants) {"phoneNumber" "${get_user_info.output.phoneNumber}"})]} [])))
-```
+  (vector (sdk/http-task "get-user_ref" {:uri "https://randomuser.me/api/"})
+          (sdk/switch-task "user-criteria_ref" "${get-user_ref.output.response.body.results[0].location.country}"
+                           {"United States" [(sdk/simple-task "simple_ref"
+                                                              "helloWorld"
+                                                              {"user"
+                                                               "${get-user_ref.output.response.body.results[0].name.first}"})]}
+                           [])))
 
-
-**Step 2: Create workflow**
-
-```clojure
+; Function that creates the workflow definition.
 (defn create-workflow
-  "Returns a workflow with tasks"
   [tasks]
-  (merge (sdk/workflow (:workflow-name constants) tasks) {:inputParameters ["userId" "notificationPref"]}))
-  
-;; creates a workflow with tasks 
-(-> (create-tasks) (create-workflow))
-```
+  (merge (sdk/workflow "myFirstWorkflow" tasks)))
 
+(defn -main
+  []
+  ; Register the workflow with overwrite = true
+  (metadata/register-workflow-def options (-> (create-tasks) (create-workflow)) true)
+  ; Start the workflow
+  (let [workflow-id (wr/start-workflow options {:name "myFirstWorkflow" :version 1})]
+    (println "Started workflow:" workflow-id)))
 
-**Step 3: Register workflow**
-
-```clojure
-(defn
-  register-workflow-def-using-client
-  "Takes a client and a workflow definition in edn, will register a worflow in conductor"
-  ([client workflow overwrite]
-   (client "workflow" :method :post :body workflow :query-params {"overwrite" overwrite}))
-  ([client workflow] (register-workflow-def-using-client client workflow false)))
-```
-
-**Step 4: Run workflow**
-
-```clojure
-(def workflow-request {:name "SomeWFName"
-                       :version 1
-                       :input {"userId" "jim"
-                               "notificationPref" "sms"}})
-
-(wr/start-workflow options workflow-request)
 ```
 
 </TabItem>
