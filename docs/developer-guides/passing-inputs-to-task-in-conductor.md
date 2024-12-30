@@ -55,7 +55,7 @@ Depending on where the data is being referenced from, here is a non-exhaustive l
 | ${workflow.workflowType}        | References the current workflow name.         |
 | ${workflow.version}             | References the current workflow version.    |
 | ${workflow.createTime}          | References the workflow execution time.      |
-| ${workflow.correlationId}       | [JSONPath](https://goessner.net/articles/JsonPath/) expression in dot-notation. The path is based on the reference type’s JSON object.     |
+| ${workflow.correlationId}       | References the current workflow’s correlation ID.    |
 | ${workflow.taskToDomain._domainName_}    | References the workflow’s domain name that was invoked during its execution.     |
 | ${workflow.variables._someKey_}          | References the workflow variable `someKey`, which has been set earlier in a [Set Variable](/reference-docs/operators/set-variable) task.     |
 | ${workflow.env._someKey_}                | References the [environment variable](/developer-guides/using-environment-variables) `someKey`, which has been defined previously in the Conductor cluster.    |
