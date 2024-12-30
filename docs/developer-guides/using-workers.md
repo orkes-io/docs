@@ -27,64 +27,7 @@ In Conductor, each worker should embody the microservice design pattern and foll
 * **Decoupled implementation**—Workers do not implement the logic to handle retries, timeouts, and other implementation details, which are handled by the Conductor server.
 
 
-### Step 1: Set up your worker project
-
-Begin by creating a project to run workers for your custom task.
-
-<Tabs groupId="language">
-<TabItem value="python" label="Python">
-
-For Python projects, it is a good practice to use a virtual environment.
-
-
-<Tabs>
-<TabItem value="mac" label="Mac">
-
-``` shell
-// Using venv
-python -m venv myProject
-source myProject/bin/activate
-
-// Using virtualenv
-virtualenv myProject
-source myProject/bin/activate
-```
-
-</TabItem>
-
-<TabItem value="windows" label="Windows">
-
-``` shell
-// Using venv
-python -m venv myProject
-myProject\Scripts\activate
-
-// Using virtualenv
-virtualenv myProject
-myProject\Scripts\activate
-```
-</TabItem>
-</Tabs>
-
-
-</TabItem>
-
-
-<TabItem value="go" label="Go">
-
-For Go projects, you should initialize your Go module.
-
-``` go
-go mod init <module-path>
-```
-
-</TabItem>
-
-</Tabs>
-
-
-
-### Step 2: Get Conductor SDK
+### Step 1: Get Conductor SDK
 
 Get [Conductor SDK](../category/sdks) in your preferred language.
 
@@ -170,7 +113,7 @@ Get the Conductor Clojure package from [clojars](https://clojars.org/io.orkes/co
 </Tabs>
 
 
-### Step 3: Write your worker logic
+### Step 2: Write your worker logic
 
 In general, workers can be instantiated from classes that implement the Worker interface, or that are annotated using a WorkerTask annotation or decorator, depending on the language. 
 
@@ -190,6 +133,7 @@ from conductor.client.worker.worker_task import worker_task
 def greet(name: str) -> str:
     return f'Hello {name}'
 ```
+Check out the full sample worker project in Python: https://github.com/conductor-oss/conductor-apps/tree/main/python/developer-guides/using-workers
 
 </TabItem>
 
@@ -208,6 +152,8 @@ public class Workers {
     }
 }
 ```
+
+Check out the full sample worker project in Java: https://github.com/conductor-oss/conductor-apps/tree/main/java/developer-guides/using-workers
 
 </TabItem>
 
@@ -228,6 +174,8 @@ const worker = {
 };
 ```
 
+Check out the full sample worker project in JavaScript: https://github.com/conductor-oss/conductor-apps/tree/main/javascript/developer-guides/using-workers
+
 </TabItem>
 
 <TabItem value="csharp" label="C#">
@@ -245,6 +193,8 @@ public static TaskResult MyTask(Conductor.Client.Models.Task task)
     return result;
 }
 ```
+
+Check out the full sample worker project in C#: https://github.com/conductor-oss/conductor-apps/tree/main/csharp/developer-guides/using-workers
 
 </TabItem>
 
@@ -264,6 +214,9 @@ func myTask(task *model.Task) (interface{}, error) {
 }
 ```
 
+Check out the full sample worker project in Go: https://github.com/conductor-oss/conductor-apps/tree/main/go/developer-guides/using-workers
+
+
 </TabItem>
 
 <TabItem value="clojure" label="Clojure">
@@ -276,12 +229,13 @@ func myTask(task *model.Task) (interface{}, error) {
                 {:status  "COMPLETED"
                  :outputData {"message" (str "hello "  name)}}))})
 ```
+Check out the full sample worker project in Clojure: https://github.com/conductor-oss/conductor-apps/tree/main/clojure/developer-guides/using-workers
 
 </TabItem>
 </Tabs>
 
 
-### Step 4: Run your worker
+### Step 3: Run your worker
 
 Start the workers using the SDK-provided interface. The interface polls the server for work, executes worker code, and updates the results back to the server.
 
@@ -298,8 +252,6 @@ task_handler = TaskHandler(configuration=Configuration())
 task_handler.start_processes()
 task_handler.join_processes()
 ```
-
-Full worker example: [https://github.com/conductor-oss/python-worker-container/tree/main](https://github.com/conductor-oss/python-worker-container/tree/main)
 
 </TabItem>
 
@@ -443,6 +395,10 @@ Refer to the [Create Task Definition API](../reference-docs/api/metadata/creatin
 
 
 ### Set up authorized access
+
+:::info For Developer Edition
+If you are using the Developer Edition to create your worker, you can simply grab the access key ID and secret from the application in **Access Control** > **Applications** for your worker project and skip the rest of the steps in this section.
+:::
 
 In Orkes Conductor, an [application account](/category/access-control-and-security#applications) with a Worker role type enables workers to authenticate and authorize against the Conductor server. To set up authorized access, you need to add the worker to an application and grant it Execute permission.
 
