@@ -61,9 +61,10 @@ from conductor.client.workflow.task.switch_task import SwitchTask
 
 
 def main():
-    # Sign up at https://developer.orkescloud.com and create an application.
-    # Use your application's Key ID and Key Secret here:
-    conf = Configuration(base_url='https://developer.orkescloud.com',
+    # Set up an application in your Orkes Conductor cluster. Sign up for a Developer Edition account at https://developer.orkescloud.com. 
+    # - Set your cluster's URL as base_url (e.g., "https://developer.orkescloud.com" for Developer Edition).
+    # - Use the application's Key ID and Secret here.
+    conf = Configuration(base_url='_CHANGE_ME_',
                          authentication_settings=AuthenticationSettings(key_id='_CHANGE_ME_',
                                                                         key_secret='_CHANGE_ME_'))
 
@@ -126,10 +127,11 @@ import java.util.Map;
 public class WorkflowAsCode {
 
     public static void main(String[] args) {
-        // Sign up at https://developer.orkescloud.com and create an application.
-        // Use your application's Key ID and Key Secret here:
+        // Set up an application in your Orkes Conductor cluster. Sign up for a Developer Edition account at https://developer.orkescloud.com. 
+        // - Set your cluster's API URL as basePath (e.g., "https://developer.orkescloud.com/api" for Developer Edition).
+        // - Use the application's Key ID and Secret here.
         ApiClient client = ApiClient.builder()
-                .basePath("https://developer.orkescloud.com/api")
+                .basePath("_CHANGE_ME_")
                 .credentials("_CHANGE_ME_", "_CHANGE_ME_")
                 .build();
 
@@ -179,10 +181,11 @@ import {
   switchTask,
 } from "@io-orkes/conductor-javascript";
 
-// Sign up at https://developer.orkescloud.com and create an application.
-// Use your application's Key ID and Key Secret here:
+// Set up an application in your Orkes Conductor cluster. Sign up for a Developer Edition account at https://developer.orkescloud.com. 
+// - Set your cluster's API URL as the serverUrl (e.g., "https://developer.orkescloud.com/api" for Developer Edition).
+// - Use the application's Key ID and Secret here.
 const config = {
-  serverUrl: "https://developer.orkescloud.com/api",
+  serverUrl: "_CHANGE_ME_",
   keyId: "_CHANGE_ME_",
   keySecret: "_CHANGE_ME_",
 };
@@ -239,11 +242,12 @@ using Conductor.Definition;
 using Conductor.Executor;
 using Conductor.Definition.TaskType;
 
-// Sign up at https://developer.orkescloud.com and create an application.
-// Use your application's Key ID and Key Secret here:
+// Set up an application in your Orkes Conductor cluster. Sign up for a Developer Edition account at https://developer.orkescloud.com. 
+// - Set your cluster's API URL as the BasePath (e.g., "https://developer.orkescloud.com/api" for Developer Edition).
+// - Use the application's Key ID and Secret here.
 var conf = new Configuration
 {
-    BasePath = "https://developer.orkescloud.com/api",
+    BasePath = "_CHANGE_ME_",
     AuthenticationSettings = new OrkesAuthenticationSettings("_CHANGE_ME_", "_CHANGE_ME_")
 };
 
@@ -294,9 +298,10 @@ import (
 	"github.com/conductor-sdk/conductor-go/sdk/workflow/executor"
 )
 
-// Sign up at https://developer.orkescloud.com and create an application.
-// Use your application's Key ID and Key Secret here:
-const SERVER_URL = "https://developer.orkescloud.com/api"
+// Set up an application in your Orkes Conductor cluster. Sign up for a Developer Edition account at https://developer.orkescloud.com.
+// - Use the application's Key ID and Secret here.
+// - Set your cluster's API URL as the SERVER_URL (e.g., "https://developer.orkescloud.com/api" for Developer Edition).
+const SERVER_URL = "_CHANGE_ME_"
 const KEY_ID = "_CHANGE_ME_"
 const SECRET = "_CHANGE_ME_"
 
@@ -358,12 +363,13 @@ Check out the full project [here](https://github.com/conductor-oss/conductor-app
             [io.orkes.metadata :as metadata])
   (:gen-class))
 
-; Sign up at https://developer.orkescloud.com and create an application.
-; Use your application's Key ID and Key Secret here:
+; Set up an application in your Orkes Conductor cluster. Sign up for a Developer Edition account at https://developer.orkescloud.com.
+; - Set your cluster's API URL as url (e.g., "https://developer.orkescloud.com/api/" for Developer Edition).
+; - Use the application's Key ID and Secret here.
 (def options
-  {:app-key "_CHANGE_ME_"
-   :app-secret "_CHANGE_ME_"
-   :url "https://developer.orkescloud.com/api/"})
+  {:url "_CHANGE_ME_"
+   :app-key "_CHANGE_ME_"
+   :app-secret "_CHANGE_ME_"}) 
 
 ; Function that creates the tasks.
 (defn create-tasks
