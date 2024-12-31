@@ -255,7 +255,7 @@ var conf = new Configuration
 var executor = new WorkflowExecutor(conf);
 
 // Create the workflow definition.
-var worfklow = new ConductorWorkflow()
+var workflow = new ConductorWorkflow()
         .WithName("myFirstWorkflow")
         .WithDescription("Workflow that greets a user. Uses a Switch task, HTTP task, and Simple task.")
         .WithVersion(1)
@@ -266,12 +266,12 @@ var worfklow = new ConductorWorkflow()
 
 // Register the workflow with overwrite = true.
 executor.RegisterWorkflow(
-    workflow: worfklow,
+    workflow: workflow,
     overwrite: true
 );
 
 // Start the workflow.
-var workflowId = executor.StartWorkflow(new StartWorkflowRequest(name: worfklow.Name, version: worfklow.Version));
+var workflowId = executor.StartWorkflow(new StartWorkflowRequest(name: workflow.Name, version: workflow.Version));
 Console.WriteLine($"Started Workflow: {workflowId}");
 
 ```
