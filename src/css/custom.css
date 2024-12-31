@@ -339,6 +339,9 @@ html[data-theme="dark"] .midSectionOdd {
   border-radius: 8px;
   background-color: rgba(0, 0, 0, 0.04);
 }
+.tabs-container [role="tabpanel"] {
+  padding: 0 20px 10px;
+}
 .tabs {
   max-width: 100%;
   gap: 0px;
@@ -346,6 +349,24 @@ html[data-theme="dark"] .midSectionOdd {
   border-radius: 8px 8px 0px 0px;
   border-bottom: 1px solid #dadce0;
   background-color: #ffffff;
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: thin;
+  scrollbar-color: #dadce0 transparent;
+}
+.tabs::-webkit-scrollbar {
+  height: 4px;
+}
+.tabs::-webkit-scrollbar-track {
+  background: transparent;
+}
+.tabs::-webkit-scrollbar-thumb {
+  background-color: #dadce0;
+  border-radius: 8px;
+}
+
+.tabs::-webkit-scrollbar-thumb:hover {
+  background-color: #bdc1c6;
 }
 .tabs .tabs__item {
   font-size: 15px;
@@ -356,6 +377,7 @@ html[data-theme="dark"] .midSectionOdd {
   border-radius: 0rem;
   margin: 0 24px;
   max-width: fit-content;
+  display: inline-block;
 }
 .tabs .tabs__item--active {
   color: var(--ifm-color-info);
@@ -514,10 +536,10 @@ summary {
 }
 
 .headerFix > li {
-  margin: 5px!important;
-  margin-top: 0!important;
-  margin-bottom: 0!important;
-  line-height: 15px!important;
+  margin: 5px !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  line-height: 15px !important;
 }
 
 .markdown > *:last-child {
