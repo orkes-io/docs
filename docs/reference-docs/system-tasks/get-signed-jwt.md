@@ -17,20 +17,20 @@ Using the RS256 algorithm, the task ensures robust cryptographic security during
 
 Configure these parameters for the Get Signed JWT task.
 
-| Parameter | Description | Required/ Optional | 
+| Parameter | Description | Required/ Optional |
 | --------- | ----------- | ----------------- |
-| inputParameters. **subject** | The subject of the JWT, typically representing the entity (e.g., user or service) for which the token is issued. | Required. | 
-| inputParameters **issuer** | The entity issuing the JWT, identifying who created and signed the token. | Required. | 
-| inputParameters. **privateKey** | The private key used to sign the JWT. | Required. | 
+| inputParameters. **subject** | The subject of the JWT, typically representing the entity (e.g., user or service) for which the token is issued. | Required. |
+| inputParameters **issuer** | The entity issuing the JWT, identifying who created and signed the token. | Required. |
+| inputParameters. **privateKey** | The private key used to sign the JWT. This key needs to be in PKCS#8 format. | Required. |
 | inputParameters. **privateKeyId** | The identifier for the private key used to sign the JWT. | Required. |
-| inputParameters. **audience** | The intended recipient(s) of the JWT. | Required. | 
+| inputParameters. **audience** | The intended recipient(s) of the JWT. | Required. |
 | inputParameters. **ttlInSeconds** | The time-to-live (TTL) or expiration time of the JWT, specified in seconds. | Required. |
 | inputParameters. **scopes** | The scopes associated with the JWT, defining the access permissions granted by the token. It can be a string or an array of strings. | Required. |
-| inputParameters. **algorithm** | The signing algorithm to use for the JWT. Currently set to RS256, which refers to the RSA signature with the SHA-256 hash algorithm. | Required. | 
+| inputParameters. **algorithm** | The signing algorithm to use for the JWT. Currently set to RS256, which refers to the RSA signature with the SHA-256 hash algorithm. | Required. |
 
 ## Task output
 
-The Get Signed JWT task will return the signed JWT in the secret variable `_secrets`. The signed JWT will be masked (`***`). 
+The Get Signed JWT task will return the signed JWT in the secret variable `_secrets`. The signed JWT will be masked (`***`).
 
 ## Task configuration
 
