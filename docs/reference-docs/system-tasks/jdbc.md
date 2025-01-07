@@ -11,17 +11,17 @@ import TabItem from '@theme/TabItem';
 
 The JDBC task is used to execute or store information in SQL databases. It allows workflows to interact with SQL databases, enabling data retrieval and updates based on specified SQL queries.
 
-A JDBC task evaluates SQL statements and parameters and can execute different SQL operations, such as SELECT or UPDATE. Based on the defined SQL statements and parameters, the appropriate database operations are carried out. 
+A JDBC task evaluates SQL statements and parameters and can execute different SQL operations, such as SELECT or UPDATE. Based on the defined SQL statements and parameters, the appropriate database operations are carried out.
 
 
 ## Task parameters
 
 Configure these parameters for the JDBC task.
 
-| Parameter | Description | Required/ Optional | 
+| Parameter | Description | Required/ Optional |
 | --------- | ----------- | ----------------- |
-| inputParamters. **integrationName** | Select the required database integration which you have access to. If your database isn't configured on your Orkes console, go to the **Integrations** tab and configure it under **[RDBMS > Relational Database](https://orkes.io/content/integrations/rdbms/relational-database)**. | Required. |
-| inputParamters. **type** | Select the SQL statement type. Supported values:<ul><li>**SELECT**—Used to retrieve data from a database.</li><li>**UPDATE / DELETE**—Used to modify or delete existing data from the database.</li></ul>| Required. |
+| inputParameters. **integrationName** | Select the required database integration which you have access to. If your database isn't configured on your Orkes console, go to the **Integrations** tab and configure it under **[RDBMS > Relational Database](https://orkes.io/content/integrations/rdbms/relational-database)**. | Required. |
+| inputParameters. **type** | Select the SQL statement type. Supported values:<ul><li>**SELECT**—Used to retrieve data from a database.</li><li>**UPDATE / DELETE**—Used to modify or delete existing data from the database.</li></ul>| Required. |
 | inputParameters. **expectedOutputCount** | The number of rows to be updated/deleted from the database.	| Required if the statement type is chosen as ‘UPDATE/DELETE’. | Required. |
 | inputParameters. **statement** | The SQL statement to retrieve data from the SQL database. | Required. |
 | inputParameters. **parameters** | The query parameters to be bound by the SQL statement. It can be a string, number, boolean, or null. | Required. |
@@ -49,9 +49,9 @@ This is the task configuration for a JDBC task.
 
 The JDBC task will return the following parameters.
 
-| Parameter | Description | 
-| --------- | ----------- | 
-| result | An array of data queried from the database. | 
+| Parameter | Description |
+| --------- | ----------- |
+| result | An array of data queried from the database. |
 
 ## Adding a JDBC task in UI
 
