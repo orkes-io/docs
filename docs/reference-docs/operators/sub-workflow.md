@@ -78,7 +78,7 @@ In addition to the execution ID, the sub-workflow’s workflow output will also 
 
 To view the sub-workflow tasks inside the parent workflow, you can check **Expand** to display them in the visual diagram editor.
 
-<p><img src="/content/img/Task-References/sub_workflow_task_reference.png" alt="Screenshot of Sub Workflow Task in Orkes Platform"/></p>
+<p><img src="/content/img/Task-References/sub_workflow_task_reference.png" alt="Screenshot of Sub Workflow Task in Orkes Conductor"/></p>
 
 
 ## Examples

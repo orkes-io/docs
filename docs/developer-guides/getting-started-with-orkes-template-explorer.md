@@ -1,6 +1,6 @@
 ---
 slug: "/developer-guides/getting-started-with-orkes-template-explorer"
-description: "Get started by using the available templates on Orkes Platform to build your Conductor workflows."
+description: "Get started by using the available templates to build your Conductor workflows."
 ---
 
 # Getting Started with Orkes Template Explorer

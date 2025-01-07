@@ -8,7 +8,7 @@ description: "This guide focuses on the basics of running workflows in Orkes Con
 There are many ways to run a Conductor workflow:
 * Run via Conductor SDK or API
 * Set a schedule
-* Run in UI on Orkes Platform
+* Run in UI 
 
 ## Run in UI
 

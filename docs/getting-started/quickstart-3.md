@@ -8,7 +8,7 @@ import TabItem from '@theme/TabItem';
 
 # Quickstart 3: Deploy Workflows
 
-Your workflow is now ready to be deployed. This can be done in several different ways: via code, via API, or using the Orkes Platform.
+Your workflow is now ready to be deployed. This can be done in several different ways: via code, via API, or using the Conductor UI.
 
 In this quickstart, you will learn how to deploy your workflow via code.
 

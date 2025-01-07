@@ -52,4 +52,4 @@ The Get Workflow task will return all the details of the retrieved workflow.
 2. Enter the **Workflow ID**.
 3. (Optional) Check **Include tasks** if needed.
 
-<p><img src="/content/img/Task-References/get_workflow_task_reference.png" alt="Screenshot of Get Workflow Task in Orkes Platform"/></p>
+<p><img src="/content/img/Task-References/get_workflow_task_reference.png" alt="Screenshot of Get Workflow Task in Orkes Conductor"/></p>

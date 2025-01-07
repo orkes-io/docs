@@ -469,7 +469,7 @@ Register the task definition to Conductor.
 
 
 
-### B. Orkes Platform
+### B. Conductor UI
 1. Register the task definition to Conductor.
     1. In the left navigation menu, go to **Definitions** > **Task**.
     2. Select **(+) Define task**.
@@ -488,7 +488,7 @@ Register the task definition to Conductor.
 Finally, your worker application requires programmatic access to the Conductor server. This can be done by creating an application account for your worker application.
 
 **To grant execution permission to worker:**
-1. In Orkes Platform, go to **Access Control **> **Applications** and create a new application.
+1. In Conductor UI, go to **Access Control **> **Applications** and create a new application.
 2. Enable the **Worker** application role, which allows the application to poll and update tasks.
 3. Generate the application access key and set the Key ID and Key Secret in your project environment variables.
 

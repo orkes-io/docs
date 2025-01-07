@@ -52,7 +52,7 @@ You can edit a user’s name, role, or group anytime.
 **To edit a user:**
 1. In the left navigation menu, go to **Access Control** > **Users**.
 2. Select the **Edit** button located next to the user.
-<p align="center"><img src="/content/img/RBAC/managing_users_and_groups-editing_user_information.png" alt="Editing user roles in Orkes Platform" width="90%" height="auto"></img></p>
+<p align="center"><img src="/content/img/RBAC/managing_users_and_groups-editing_user_information.png" alt="Editing user roles in Conductor" width="90%" height="auto"></img></p>
 3. Update the user’s name, roles, or groups as desired.
 4. Select **Save**.
 
@@ -89,7 +89,7 @@ Read Only Users cannot be added to any groups.
 | Default group role | Optional. The role(s) that all members of the group will inherit, on top of their individually defined role(s). The available roles are: <ul><li>**Admin**—Superuser. Full access to the system and resources. Can manage users and groups.</li> <li>**User**—Can only access resources that they created.</li> <li>**Metadata Manager**—Can read, update, and delete all metadata in the system.</li> <li>**Workflow Manager**—Can view and execute all workflows in the system.</li> <li>**Read Only User**—Can access all metadata and workflows in the system as read-only. Cannot modify or execute workflows.</li></ul>                           |
 &emsp;&emsp; iv. Select **Save**.<br/>&emsp;&emsp;The group has been created. You can proceed to add members or permissions to the group.
 
-<p align="center"><img src="/content/img/RBAC/managing_users_and_groups-editing_group_information.png" alt="Group configuration screen in Orkes Platform." width="90%" height="auto"></img></p>
+<p align="center"><img src="/content/img/RBAC/managing_users_and_groups-editing_group_information.png" alt="Group configuration screen in Conductor UI." width="90%" height="auto"></img></p>
 
 2. Add members to the group.
     1. In the Members section, select **+ Add User** to add an existing user to the group. If the user you are looking for does not exist, you must first add them to your cluster.

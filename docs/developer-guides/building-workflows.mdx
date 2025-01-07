@@ -8,7 +8,7 @@ description: "This guide focuses on the basics of building workflows in Orkes Co
 In Conductor, all workflow definitions are stored as JSON. There are three ways to create a Conductor workflow:
 1. **Workflow as code**—Using the Conductor SDKs, define the workflow in your preferred language (Python, Java, JavaScript, C#, Go, Clojure) and register it to the Conductor server. Once registered, the JSON workflow definition is generated and saved.
 2. **Workflow as JSON**—Write the workflow in JSON and register it to the Conductor server using the /api/metadata/workflow endpoint.
-3. **Visual workflow editor**—Using Orkes Platform, define your workflow visually, which is formatted as JSON under the hood.
+3. **Visual workflow editor**—Using Conductor UI, define your workflow visually, which is formatted as JSON under the hood.
 
 
 ## Static vs dynamic workflows
@@ -144,18 +144,23 @@ The workflow definition contains configuration parameters that define the workfl
 | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
 | name               | Workflow name. <ul><li>For v4.0.1 and prior: Only letters, digits, hyphens (-), and underscores (\_) are allowed.</li>   <li>For v4.0.2 and later: Only letters, digits, spaces, hyphens (-), underscores (\_), and certain special characters (`<`, `>`, `{`, `}`, `#`) are allowed.</li></ul> | Required. |
 | description        | ​Workflow description.                                       | Required. |
-| version            | Workflow version.      | Required. |
+| version            | Workflow version.      | Optional. |
 | tasks              | Array of [task configuration](building-workflows#task-configuration) objects.           | Required. |
 | inputParameters    | Array of workflow input keys.   | Optional. |
 | outputParameters   | JSON template used to generate the workflow output. <br/><br/> If unspecified, the workflow output will be the output of the last executed task.     | Optional. |
-| schemaVersion      | Version of Conductor’s JSON format. Must be 2.    | Required. |
-| restartable        | Whether the workflow is allowed to restart. The default value is true. <br/><br/> Set to false if restarting a completed workflow causes side effects.            | Optional. |
-| workflowStatusListenerEnabled  | Whether to enable a workflow status listener. The default value is false.                                       | Optional. |
+| enforceSchema | Whether to enforce input schema validation. Set to `true` to enable validation or `false` to disable. | Optional. | 
+| inputSchema | The schema parameters to be used as input schema for the workflow definition. Learn more about [creating and using schema](https://orkes.io/content/developer-guides/schema-validation). | Required if ‘enforceSchema’ is set to `true’.|
+| schemaVersion      | The current version of the Conductor schema. Must be 2.   | Required. |
+| restartable        | Whether the workflow can be restarted after completion. The default value is true. <br/><br/> Set to false if restarting a completed workflow causes side effects.            | Optional. |
+| workflowStatusListenerEnabled  | Whether to enable status callback for workflow state changes. Learn more about [enabling CDC](https://orkes.io/content/developer-guides/enabling-cdc-on-conductor-workflows). The default value is false.                                       | Optional. |
+| workflowStatusListenerSink | The sink where workflow state changes are sent. | Required if `workflowStatusListener` is set to `true`. | 
 | ownerEmail         | The email ID of the workflow creator.                   | Required. |
 | timeoutPolicy      | The workflow timeout policy.                                | Optional. |
-| timeoutSeconds     | The timeout, in seconds, after which the workflow will be set as TIMED_OUT if it hasn't reached a terminal state. <br/><br/> Set to 0 for no timeouts.                                    | Optional. |
-| failureWorkflow        | The compensation flow upon workflow failure. Useful for cleanup, notifications, or post actions.                                    | Optional. |
-
+| timeoutSeconds     | The timeout, in seconds, after which the workflow will be set as TIMED_OUT if it hasn't reached a terminal state. <br/><br/> Set to 0 for no timeouts.                                    | Required. |
+| failureWorkflow        | The compensation workflow to trigger upon failure of the current workflow execution. Useful for cleanup, notifications, or post actions.                                    | Optional. |
+| rateLimitConfig | A map of the workflow rate limit configuration. | Optional. | 
+| rateLimitKey | A unique identifier to group workflow executions for rate limiting. | Optional. |
+| concurrentExecLimit | The number of workflow executions that can run concurrently for a given key. | Optional. | 
 
 ### More on configuring workflow parameters
 

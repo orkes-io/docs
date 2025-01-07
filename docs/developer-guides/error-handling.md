@@ -47,10 +47,10 @@ You can configure retry behavior for tasks in its **task definition**. The param
 
 | Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ------------------ |
-| retryCount        | The maximum number of times that the task will be retried. Default value is 3. | Required. | 
-| retryLogic        | The policy that determines when to schedule each retry. Supported values: <ul><li>**`FIXED`**—Reschedules the task after the given duration=`retryDelaySeconds`.</li> <li>**`LINEAR_BACKOFF`**—Reschedules occur with a delay that increases linearly based on the backoff rate and attempt number=`retryDelaySeconds` x `backoffScaleFactor` x `attemptNumber`.</li><li>**`EXPONENTIAL_BACKOFF`**—Reschedules the task after the given duration=`retryDelaySeconds` * (`backoffScaleFactor` ^ `attemptNumber`).</li></ul>     | Required. | 
-| retryDelaySeconds  | The base value duration to wait before the task is made available for polling again. This provides time for the task service to recover from any transient failure before it is retried. Default value is 60. <br/><br/> **Note:** The actual duration depends on the retry policy set in retryLogic.                           | Required. | 
-| backoffScaleFactor | The value multiplied with `retryDelay` in order to determine the interval for Linear or Exponential Backoff retry. Default value is 1.  | Required. | 
+| retryCount        | The number of retry attempts if the task fails. Default value is 3. | Optional. | 
+| retryLogic        | The policy that determines the retry mechanism for the tasks. Supported values: <ul><li>**`FIXED`**—Retries after a fixed interval defined by `retryDelaySeconds`.</li> <li>**`LINEAR_BACKOFF`**—Retries occur with a delay that increases linearly based on `retryDelaySeconds` x `backoffScaleFactor` x `attemptNumber`.</li><li>**`EXPONENTIAL_BACKOFF`**—Retries occur with a delay that increases exponentially based on  `retryDelaySeconds` x (`backoffScaleFactor` ^ `attemptNumber`).</li></ul>     | Optional. | 
+| retryDelaySeconds  | The time (in seconds) to wait before each retry attempt. This provides time for the task service to recover from any transient failure before it is retried. Default value is 60. <br/><br/> **Note:** The actual duration depends on the retry policy set in retryLogic.                           | Optional. | 
+| backoffScaleFactor | The value multiplied with `retryDelaySeconds`to determine the interval for retry. Default value is 1.  | Optional. | 
 
 **Example**
 
@@ -95,12 +95,12 @@ You can configure timeout behavior for tasks in its **task definition** to handl
 * Timeout policy
 
 
-| Parameter | Description | Required/ Optional | 
+| Parameter | Description | Required/Optional | 
 | --------- | ----------- | ------------------ |
-| pollTimeoutSeconds     | The maximum duration in seconds that a worker has to poll a task before it gets marked as `TIMED_OUT`. When configured with a value > 0, Conductor will wait for the task to be picked up by a worker. <br/> <br/> Useful for detecting a backlogged task queue with insufficient workers. <br/> <br/> Default value is 3600.     | Required. | 
-| responseTimeoutSeconds | The maximum duration in seconds that a worker has to respond to the server with a status update before it gets marked as `TIMED_OUT`. When configured with a value > 0, Conductor will wait for the worker to return a status update, starting from when the task was picked up. <br/><br/> If a task requires more time to complete, the worker can respond with the `IN_PROGRESS` status. <br/> <br/> Default value is 600.           | Required. | 
+| pollTimeoutSeconds     | The maximum duration in seconds that a worker has to poll a task before it gets marked as `TIMED_OUT`. When configured with a value > 0, Conductor will wait for the task to be picked up by a worker. <br/> <br/> Useful for detecting a backlogged task queue with insufficient workers. <br/> <br/> Default value is 3600.     | Optional. | 
+| responseTimeoutSeconds | The maximum duration in seconds that a worker has to respond to the server with a status update before it gets marked as `TIMED_OUT`. When configured with a value > 0, Conductor will wait for the worker to return a status update, starting from when the task was picked up. <br/><br/> If a task requires more time to complete, the worker can respond with the `IN_PROGRESS` status. <br/> <br/> Default value is 600.           | Optional. | 
 | timeoutSeconds         | The maximum duration in seconds for the task to reach a terminal state before it gets marked as `TIMED_OUT`. When configured with a value > 0, Conductor will wait for the task to complete, starting from when the task was picked up. <br/><br/> Useful for governing the overall SLA for completion. <br/><br/> Default value is 3600. | Required. | 
-| timeoutPolicy          | The policy for how the Conductor server should handle the timeout. Supported values: <ul><li><strong>RETRY</strong>—The task is retried again based on the retry configuration.</li> <li><strong>TIME_OUT_WF</strong>—The task is marked as TIMED_OUT and terminated, which also terminates the workflow as TIMED_OUT.</li> <li><strong>ALERT_ONLY</strong>—A counter is registered and an alert is sent. No further action is taken.</li></ul> <br/><br/> **Note:** The ALERT_ONLY option should be used only when you have your own metrics monitoring system to send alerts.                                            | Required. | 
+| timeoutPolicy          | The policy for handling timeout. Supported values: <ul><li><strong>RETRY</strong>—Retries the task based on the retry configuration.</li> <li><strong>TIME_OUT_WF</strong>—The task is marked as TIMED_OUT and is terminated, which also sets the workflow status as TIMED_OUT.</li> <li><strong>ALERT_ONLY</strong>—An alert message is logged when the timeout occurs.</li></ul>**Note:** The ALERT_ONLY option should be used only when you have your own metrics monitoring system to send alerts.                                            | Optional. | 
 
 
 :::note
@@ -176,9 +176,9 @@ You can configure rate limit behavior for tasks in its **task definition**. The 
 
 | Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ------------------ |
-| rateLimitPerFrequency   | The maximum number of task executions that can be scheduled in a given duration. Default value is 0. | Required. | 
-| rateLimitFrequencyInSeconds       | The duration, in seconds, specified for the rate limit. Default value is 1. | Required. | 
-| concurrentExecLimit | The number of task executions that can be scheduled concurrently. Default value is 0. | Required. | 
+| rateLimitPerFrequency   | The maximum number of task executions that can be scheduled in a given duration. Default value is 0. | Optional. | 
+| rateLimitFrequencyInSeconds       | The frequency window (in seconds) for the rate limit. | Optional. | 
+| concurrentExecLimit | The number of task executions that can be executed concurrently. Default value is 0. | Optional. | 
 
 
 :::note
@@ -241,8 +241,8 @@ You can configure the limit on concurrent workflow executions in its **workflow 
 | Parameter | Description | Required/ Optional |
 | --------- | ----------- | ------------------ | 
 | rateLimitConfig | A map of the workflow rate limit configuration. | Optional. |
-| rateLimitConfig. **rateLimitKey** | A unique identifier to group workflow executions for rate limits. <br/><br/> Can be a fixed value (for example, “max”) or a [dynamic variable](/developer-guides/passing-inputs-to-task-in-conductor#sample-expressions) from the workflow parameters (for example, `${workflow.correlationId}`). | Required. |
-| rateLimitConfig. **concurrentExecLimit** | The number of workflow executions that can run concurrently for each rate limit key. Cannot be passed as a dynamic variable. | Required. |
+| rateLimitConfig. **rateLimitKey** | A unique identifier to group workflow executions for rate limits. <br/><br/> Can be a fixed value (for example, “max”) or a [dynamic variable](/developer-guides/passing-inputs-to-task-in-conductor#sample-expressions) from the workflow input (for example, `${workflow.input.correlationId}`). | Optional. |
+| rateLimitConfig. **concurrentExecLimit** | The number of workflow executions that can run concurrently for each rate limit key. Cannot be passed as a dynamic variable. | Optional. |
 
 ### Routing rate limits with dynamic key
 

@@ -42,7 +42,7 @@ The Worker task will return the output defined in your worker code.
 
 Before adding a Worker task to a workflow, you should complete the following:
 * Create a worker to run a custom task.
-* Define the task in Conductor using Orkes Platform or [API](https://orkes.io/content/reference-docs/api/metadata/creating-task-definitions).
+* Define the task in Conductor using Conductor UI or [API](https://orkes.io/content/reference-docs/api/metadata/creating-task-definitions).
 
 For a full guide on how to use workers, refer to [Using Workers](docs/developer-guides/using-workers.md).
 

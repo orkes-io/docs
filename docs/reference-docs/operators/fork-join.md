@@ -74,7 +74,7 @@ There is usually no output for the Fork task. Refer to the Join task to find out
 3. In each fork branch, select the **(+)** icon to add tasks.
 4. Select the Join task and configure its settings to complete the fork/join operations.
 
-<p><img src="/content/img/Task-References/fork_join_task_reference.png" alt="Screenshot of Fork/Join Task in Orkes Platform"/></p>
+<p><img src="/content/img/Task-References/fork_join_task_reference.png" alt="Screenshot of Fork/Join Task in Orkes Conductor"/></p>
 
 
 
