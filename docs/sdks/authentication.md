@@ -125,4 +125,4 @@ This token should never be used in a production setting.
 
 In the bottom left corner of the screen, select **Copy Token**. 
 
-<p align="center"><img src="/content/img/SDKs/authentication-copying_token.png" alt="Copying user-based token in Orkes Platform" width="80%" height="auto"></img></p>
+<p align="center"><img src="/content/img/SDKs/authentication-copying_token.png" alt="Copying user-based token in Orkes Conductor" width="80%" height="auto"></img></p>

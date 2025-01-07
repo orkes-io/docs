@@ -381,7 +381,7 @@ All worker tasks should be registered to the Conductor server, which is done by 
 2. In the left navigation menu, go to **Definitions** > **Task**.
 3. Select **(+) Define task**.
 4. Enter the task details, such as the rate limits, retry settings, timeout settings, and expected inputs and outputs. <br/> The **Name** must match the task name defined previously in your code.
-    <p align="center"><img src="/content/img/using-workers/using_workers-define_custom_task.png" alt="Define task in Orkes Platform" width="100%" height="auto"></img></p>
+    <p align="center"><img src="/content/img/using-workers/using_workers-define_custom_task.png" alt="Define task in Orkes Conductor" width="100%" height="auto"></img></p>
 5. Select **Save** > **Confirm Save**.
 
 </TabItem>
@@ -411,7 +411,7 @@ For well-defined access controls, your worker application should be kept separat
     1. Go to your Orkes Conductor cluster.
     2. In the left navigation menu, go to **Access Control** > **Applications**.
     3. Create a new application or select an application to which you will be adding your worker. <br/> Ensure that the application role has **Worker** enabled.
-      <p align="center"><img src="/content/img/using-workers/using_workers-application_roles.png" alt="Add worker to application account in Orkes Platform" width="100%" height="auto"></img></p>
+      <p align="center"><img src="/content/img/using-workers/using_workers-application_roles.png" alt="Add worker to application account in Orkes Conductor" width="100%" height="auto"></img></p>
 2. Get the application access key for your worker project.
     1. Under Access Keys, select **Create access key** and store your credentials securely.
     2. Set the Key ID and Key Secret in your project.
@@ -424,7 +424,7 @@ For well-defined access controls, your worker application should be kept separat
 
 The application account can now execute the worker task.
 
-<p align="center"><img src="/content/img/using-workers/using_workers-app_permissions.png" alt="Add permissions to application account in Orkes Platform" width="100%" height="auto"></img></p>
+<p align="center"><img src="/content/img/using-workers/using_workers-app_permissions.png" alt="Add permissions to application account in Orkes Conductor" width="100%" height="auto"></img></p>
 
 
 
@@ -479,7 +479,7 @@ All custom worker tasks are denoted as [Simple tasks](/reference-docs/worker-tas
 5. Configure the task, such as its inputs, caching, and optionality.
 6. On the top right, select **Save** > **Confirm**.
 
-<p align="center"><img src="/content/img/using-workers/using_workers-add_task_to_workflow.png" alt="Add task in Orkes Platform" width="100%" height="auto"></img></p>
+<p align="center"><img src="/content/img/using-workers/using_workers-add_task_to_workflow.png" alt="Add task in Orkes Conductor" width="100%" height="auto"></img></p>
 </TabItem>
 
 <TabItem value="api add" label="Using API">

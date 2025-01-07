@@ -4,7 +4,7 @@ description: "In this quickstart, learn the basics of debugging and monitoring y
 ---
 
 # Quickstart 4: Debug and Monitor Workflows
-Orkes Platform provides a dashboard for introspecting each workflow execution, enabling you to debug and monitor while in development or production.
+Orkes Conductor provides a dashboard for introspecting each workflow execution, enabling you to debug and monitor while in development or production.
 
 The introspection dashboard can be found in **Executions** > **Workflow**, where each workflow execution is identified by a workflow ID.
 

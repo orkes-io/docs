@@ -20,10 +20,10 @@ In these quickstarts, you will learn the basics of developing with Conductor:
 Familiarize yourself with the [Core Concepts](core-concepts) in Conductor before diving into our quickstarts.
 :::
 
-With Orkes’ suite of SDKs, APIs, and Orkes Platform, you can mix-and-match our products to develop with Conductor.
+With Orkes’ suite of SDKs, APIs, and Conductor UI, you can mix-and-match our products to develop with Conductor.
 * **Conductor SDKs**—Manage, test, and deploy workflows; write workers;  or integrate Conductor into your applications. Available in Python, Java, Javascript, C#, Go, and Clojure.
 * **Conductor APIs**—Manage resources (workflows, tasks, users, etc) programmatically.
-* **Orkes Platform**—Manage resources from a user interface.
+* **Conductor UI**—Manage resources from a user interface.
 
 
 ## Preparing your tools
@@ -36,7 +36,7 @@ Before you begin, prepare the following:
 
 ### Get UI access
 
-Orkes Platform offers single-tenancy access. If you have an Orkes account, access your cluster and log in using your organization’s SSO provider.
+Orkes Conductor offers single-tenancy access. If you have an Orkes account, access your cluster and log in using your organization’s SSO provider.
 
 
 <p align="center"><img src="/content/img/getting-started/getting_started-log_in_page.png" alt="Screenshot of Orkes log in screen." width="100%" height="auto"></img></p>
@@ -201,7 +201,7 @@ Get the Conductor Clojure package from [clojars](https://clojars.org/io.orkes/co
 
 ### Configure programmatic access to Conductor
 
-Once your development environment is set up, you need to configure your access to the Conductor server. In Orkes, programmatic access to Conductor is enabled by application-based access keys. To get authenticated, you must first create an application in Orkes Platform, then create an access key for your application.
+Once your development environment is set up, you need to configure your access to the Conductor server. In Orkes, programmatic access to Conductor is enabled by application-based access keys. To get authenticated, you must first create an application in Orkes Conductor, then create an access key for your application.
 
 **To create an application:**
 1. Log in to your Orkes cluster or the [Orkes Developer Edition](https://developer.orkescloud.com/).
@@ -220,7 +220,7 @@ The Key Secret is shown only once. Make sure to copy and store it securely, so y
 
 
 ## Ready to start?
-* **[Quickstart 1: Learn how to create your first workflow](/quickstarts/create-first-workflow)**. You can define workflows as code or on Orkes Platform.
+* **[Quickstart 1: Learn how to create your first workflow](/quickstarts/create-first-workflow)**. You can define workflows as code or in Conductor UI.
 * **[Quickstart 2: Learn how to use custom tasks](/quickstarts/write-workers)**. Write workers in any language using Conductor SDKs.
 * **[Quickstart 3: Learn how to deploy your workflow](/quickstarts/deploy-workflows)**. There are many ways to do this, such as creating a client application.
 * **[Quickstart 4: Learn how to debug and monitor your workflow](/quickstarts/debug-and-monitor-workflows)**.

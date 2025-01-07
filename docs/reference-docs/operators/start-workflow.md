@@ -72,7 +72,7 @@ The Start Workflow task will not return the output of the started workflow.
 4. (Optional) Enter the **Idempotency key** and select the **Idempotency strategy**.
 5. (Optional) Add any additional input parameters for the workflow.
 
-<p><img src="/content/img/Task-References/start_workflow_task_reference.png" alt="Screenshot of Start Workflow Task in Orkes Platform"/></p>
+<p><img src="/content/img/Task-References/start_workflow_task_reference.png" alt="Screenshot of Start Workflow Task in Orkes Conductor"/></p>
 
 
 ## Examples

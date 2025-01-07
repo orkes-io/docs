@@ -14,7 +14,7 @@ As you will have learned in [Core Concepts](../core-concepts), Conductor’s cor
 
 In Conductor, workflow definitions are stored as JSON. To create a workflow, you can use one of the following ways:
 * **Workflow as code**—Using the Conductor SDKs, define your workflow in your preferred language.
-* **Visual workflow editor**—Using Orkes Platform, define your workflow visually, which is formatted as JSON under the hood.
+* **Visual workflow editor**—Using Conductor UI, define your workflow visually, which is formatted as JSON under the hood.
 
 **Static vs dynamic workflows**
 
@@ -403,7 +403,7 @@ Check out the full project [here](https://github.com/conductor-oss/conductor-app
 
 ## B. Visual workflow editor
 
-Use the visual workflow editor in Orkes Platform to create your workflows.
+Use the visual workflow editor in Conductor UI to create your workflows.
 
 **To create a workflow:**
 1. Log in to your Orkes cluster or the [Orkes Developer Edition](https://developer.orkescloud.com/).
@@ -413,7 +413,7 @@ Use the visual workflow editor in Orkes Platform to create your workflows.
 5. To add tasks to the workflow, select the **(+)** icon in the visual workflow diagram.
 6. To register the workflow, select **Save** > **Confirm**.
 
-<p align="center"><img src="/content/img/getting-started/getting_started-visual_workflow_editor.png" alt="Screenshot of visual workflow editor in Orkes Platform." width="100%" height="auto"></img></p>
+<p align="center"><img src="/content/img/getting-started/getting_started-visual_workflow_editor.png" alt="Screenshot of visual workflow editor in Orkes Conductor." width="100%" height="auto"></img></p>
 
 
 Once created, you can run your workflow by going to the **Run** tab and selecting **Run workflow**.

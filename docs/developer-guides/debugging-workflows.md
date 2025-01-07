@@ -1,6 +1,6 @@
 ---
 slug: "/developer-guides/debugging-workflows"
-description: "Learn how to use Orkes Platform to debug workflows and recover from failed executions."
+description: "Learn how to use Orkes Conductor to debug workflows and recover from failed executions."
 ---
 
 import Tabs from '@theme/Tabs';

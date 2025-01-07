@@ -203,7 +203,7 @@ forkTaskName and forkTaskInputs will take precedence even if dynamicForkTasksPar
     * `forkTaskName` and `forkTaskInputs` for all other task types.
 3. Select the Join task and configure its settings to complete the fork/join operations.
 
-<p><img src="/content/img/Task-References/dynamic_fork_task_reference.png" alt="Screenshot of Dynamic Fork Task in Orkes Platform"/></p>
+<p><img src="/content/img/Task-References/dynamic_fork_task_reference.png" alt="Screenshot of Dynamic Fork Task in Orkes Conductor"/></p>
 
 </TabItem>
 </Tabs>
