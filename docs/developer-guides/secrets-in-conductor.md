@@ -9,7 +9,7 @@ Sensitive information such as usernames, passwords, API keys, and authorization 
 
 Watch how we can manage secrets in Orkes Conductor.
 
-<center><iframe width="510" height="300" src="https://www.youtube.com/embed/kw5qUUaxj_w?si=zRjSe0ENlwx7yiy5" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="allowfullscreen"
+<center><iframe width="510" height="300" src="https://www.youtube.com/embed/6qxq7OmzdGI?si=W4QZ4HJy96UKKt7c" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="allowfullscreen"
 mozallowfullscreen="mozallowfullscreen"
 msallowfullscreen="msallowfullscreen"
 oallowfullscreen="oallowfullscreen"
