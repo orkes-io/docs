@@ -8,16 +8,16 @@ import TabItem from '@theme/TabItem';
 import Install from '@site/src/components/install.mdx';
 
 
-# Passing Dynamic Parameters
+# Wiring Parameters
 
-In Conductor, various workflow and task parameters can be hard-coded or dynamically referenced from its workflow parameters, prior task parameters, workflow variables, environment variables, and secrets. A parameter can be dynamically referenced as long as it can be passed as a string.
+In Conductor, various workflow and task parameters can be hard-coded or dynamically referenced from elsewhere (including its workflow parameters, prior task parameters, workflow variables, environment variables, and secrets). As long as it can be passed as a string, any workflow or task parameter can make use of a dynamic reference instead of a hard-coded value.
 
-These dynamic parameters are formatted as dot-notation expressions, taking after [JSONPath syntax](https://goessner.net/articles/JsonPath/).
+These dynamic references are formatted as dot-notation expressions, taking after [JSONPath syntax](https://goessner.net/articles/JsonPath/).
 
 
 ## Basic expression
 
-All dynamic parameters are formatted as the following expression:
+All dynamic references are formatted as the following expression:
 
 export const text = `"key" : "\${type.jsonpath}"`;
 
@@ -30,15 +30,15 @@ export const text = `"key" : "\${type.jsonpath}"`;
 | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | key               | A string representing the parameter name for a workflow or task parameter.                                  |
 | ${...}            | The root notation indicating that the variable will be dynamically replaced at runtime.                        |
-| type              | The type of input reference. Supported values:<ul><li>**workflow**—Refers to the current workflow instance.</li> <li>**workflow.input**—Refers to the workflow’s input parameters.</li> <li>**workflow.output**—Refers to the workflow’s output parameters.</li> <li>**workflow.secrets**—Refers to the secrets available in the Conductor cluster.</li> <li>**workflow.variables**—Refers to the workflow variables set in the workflow using the [Set Variable](/reference-docs/operators/set-variable) task.</li> <li>**workflow.env**—Refers to the environment variables available in the Conductor cluster.</li> <li>**_taskReferenceName_**—Refers to a task in the current workflow instance by its reference name. (For example, “http_ref”).</li> <li>**taskReferenceName.input**—Refers to the task’s input parameters.</li> <li>**taskReferenceName.output**—Refers to the task’s output parameters.</li></ul>     |
+| type              | The type of reference. Supported values:<ul><li>**workflow**—Refers to the current workflow instance.</li> <li>**workflow.input**—Refers to the workflow’s input parameters.</li> <li>**workflow.output**—Refers to the workflow’s output parameters.</li> <li>**workflow.secrets**—Refers to the secrets available in your Conductor cluster.</li> <li>**workflow.variables**—Refers to the workflow variables set in the workflow using the [Set Variable](/reference-docs/operators/set-variable) task.</li> <li>**workflow.env**—Refers to the environment variables available in your Conductor cluster.</li> <li>**_taskReferenceName_**—Refers to a task in the current workflow instance by its reference name. (For example, “http_ref”).</li> <li>**taskReferenceName.input**—Refers to the task’s input parameters.</li> <li>**taskReferenceName.output**—Refers to the task’s output parameters.</li></ul>     |
 | jsonpath          | [JSONPath](https://goessner.net/articles/JsonPath/) expression in dot-notation. The path is based on the reference type’s JSON object.     |
 
 
 ## Sample expressions
 
-Depending on where the data is being referenced from, here is a non-exhaustive list of possible dynamic parameters:
+Depending on where the data is being referenced from, here is a non-exhaustive list of possible dynamic references:
 
-| Dynamic Parameter     | Description                                                                                                                                                                                                |
+| Dynamic References     | Description                                                                                                                                                                                                |
 | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | ${_taskReferenceName_.input}    | References a prior task’s input object. Returns null if the task has not started when this reference was looked up.       |
 | ${_taskReferenceName_.output}   | References a prior task’s output object. Returns null if the task has not started when this reference was looked up.       |
@@ -64,7 +64,7 @@ Depending on where the data is being referenced from, here is a non-exhaustive l
 
 ## Examples
 
-Here are some examples for passing dynamic parameters in workflows.
+Here are some examples for using dynamic references in workflows.
 
 <details><summary>Referencing workflow inputs​​</summary>
 
@@ -143,7 +143,7 @@ If a secret named `api_key` with the value `Xxhhjiu0nbfdinvdHyj`  is stored in y
 }
 ```
 
-At runtime, the dynamic parameter `auth` will take on the value `USXxhhjiu0nbfdinvdHyj`. This value will not be exposed in the workflow execution JSON, and users will only see the reference expression while inspecting the JSON object:
+At runtime, the parameter `auth` will take on the value `USXxhhjiu0nbfdinvdHyj`. This value will not be exposed in the workflow execution JSON, and users will only see the reference expression while inspecting the JSON object:
 
 ```json
 {
@@ -213,7 +213,7 @@ To pass parameters from a parent workflow into its sub-workflow, you must declar
  "createTime": 1733980872607,
  "updateTime": 0,
  "name": "testParent",
- "description": "for dynamic params",
+ "description": "workflow with subworkflow",
  "version": 1,
  "tasks": [
    {
@@ -261,7 +261,7 @@ To pass parameters from a sub-workflow back to its parent workflow, you must pas
  "createTime": 1726651838873,
  "updateTime": 1733983507294,
  "name": "testSub",
- "description": "for dynamic params",
+ "description": "subworkflow for parent workflow",
  "version": 1,
  "tasks": [
    {
@@ -307,5 +307,5 @@ In the parent workflow, these sub-workflow outputs can be referenced using the e
 ## Troubleshooting errors
 
 You can verify if the data was passed correctly by checking the input/output values of the task execution in **Executions** > **Workflow**. Common errors:
-* If the expression is incorrectly formatted, the dynamic parameter may contain the wrong data or a null value.
-* If the reference parameter (such as a task output) has not resolved at the point when it is referenced, the dynamic parameter will be null.
+* If the reference expression is incorrectly formatted, the referencing parameter value may end up with the wrong data or a null value.
+* If the referenced value (such as a task output) has not resolved at the point when it is referenced, the referencing parameter value will be null.
