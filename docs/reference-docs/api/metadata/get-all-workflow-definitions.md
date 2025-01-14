@@ -10,67 +10,89 @@ import TabItem from '@theme/TabItem';
 
 # Get All Workflow Definitions
 
-The API to get all the workflow definitions.
+**Endpoint:** `GET /api/metadata/workflow`
 
-## API Endpoint
+Gets all the workflow definitions in the cluster.
 
+## Query parameters
+
+| Parameter  | Description | Type | Required/Optional |
+| ---------- | ----------- | ---- | ----------------- |
+| access | The access level being requested. Supported values: _READ_, _CREATE_, _UPDATE_, _EXECUTE_, and _DELETE_. Default is _READ_. | string | Optional. | 
+| metadata | Whether metadata (such as tags) should be included in the response. Default is _false_. | boolean | Optional. | 
+| tagKey | Option to filter based on the tag key associated with the task definitions. | string | Optional. | 
+| tagValue | Option to filter based on the tag value associated with the task definitions. | string | Optional. | 
+| name | The name of a specific workflow definition to retrieve. | string | Optional. | 
+| short | Whether to retrieve only essential parameters of the workflow definitions. Default is _false_. Set to _true_ to retrieve only the essential part of the definition. | boolean | Optional. | 
+
+## Response
+
+Returns an array containing all the workflow definitions in the cluster.
+
+## Examples
+
+### Get all workflow definitions with a specific tag
+
+<details><summary>Get all workflow definitions with a specific tag</summary>
+
+**Request**
+
+```bash
+curl -X 'GET' \
+  'https://<YOUR-CLUSTER>/api/metadata/workflow?access=READ&metadata=false&tagKey=api&tagValue=doc' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>'
 ```
-GET /api/metadata/workflow
+**Response**
+
+```json
+[
+  {
+    "createTime": 0,
+    "updateTime": 1735802256013,
+    "name": "api-test",
+    "description": "Sample workflow created using API",
+    "version": 1,
+    "tasks": [
+      {
+        "name": "event",
+        "taskReferenceName": "event_ref",
+        "inputParameters": {},
+        "type": "EVENT",
+        "decisionCases": {},
+        "defaultCase": [],
+        "forkTasks": [],
+        "startDelay": 0,
+        "joinOn": [],
+        "sink": "sqs:internal_event_name",
+        "optional": false,
+        "defaultExclusiveJoinTask": [],
+        "asyncComplete": false,
+        "loopOver": [],
+        "onStateChange": {},
+        "permissive": false
+      }
+    ],
+    "inputParameters": [],
+    "outputParameters": {},
+    "failureWorkflow": "",
+    "schemaVersion": 2,
+    "restartable": false,
+    "workflowStatusListenerEnabled": false,
+    "ownerEmail": "john.doe@acme.com",
+    "timeoutPolicy": "ALERT_ONLY",
+    "timeoutSeconds": 0,
+    "variables": {},
+    "inputTemplate": {},
+    "enforceSchema": true,
+    "overwriteTags": true,
+    "tags": [
+      {
+        "key": "api",
+        "value": "doc"
+      }
+    ]
+  }
+]
 ```
-
-## Client SDK Methods
-
-<Tabs>
-<TabItem value="Java" label="Java">
-
-```java
-WorkflowDef OrkesMetadataClient.getAllWorkflowDefs()
-```
-
-</TabItem>
-<TabItem value="Go" label="Go">
-
-```go
-func (a *MetadataResourceApiService) GetAll(ctx context.Context) ([]model.WorkflowDef, *http.Response, error)
-```
-
-</TabItem>
-<TabItem value="Python" label="Python">
-
-```python
-MetadataResourceApi.get_all_workflows(**kwargs)
-```
-
-</TabItem>
-<TabItem value="CSharp" label="C#">
-
-```csharp
-List<WorkflowDef> MetadataResourceApi.GetAllWorkflows(string access = null, bool? metadata = null, string tagKey = null, string tagValue = null, bool? _short = null)
-```
-
-</TabItem>
-<TabItem value="JavaScript" label="JavaScript">
-
-```javascript
-MatadataResourceService.getAllWorkflows(
-    access: string = 'READ',
-    metadata: boolean = false,
-    tagKey?: string,
-    tagValue?: string,
-  ): CancelablePromise<Array<WorkflowDef>>
-```
-
-</TabItem>
-<TabItem value="Typescript" label="Typescript">
-
-```typescript
-MatadataResourceService.getAllWorkflows(
-    access: string = 'READ',
-    metadata: boolean = false,
-    tagKey?: string,
-    tagValue?: string,
-  ): CancelablePromise<Array<WorkflowDef>>
-```
-
-</TabItem>
-</Tabs>
+</details>
