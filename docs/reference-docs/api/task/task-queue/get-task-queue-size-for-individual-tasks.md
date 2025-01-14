@@ -6,18 +6,40 @@ description: "This API is used to retrieve the task queue size for a specific ta
 
 # Get Task Queue Size for Individual Tasks
 
-Used to retrieve the task queue size for a particular task in your Conductor instance.
+**Endpoint:** `GET /tasks/queue/sizes`
 
-## Input Payload
+Gets the task queue size for a specified task type. The queue size represents the number of tasks of the given type waiting to be processed.
 
-| Attribute | Decsription |
-| --------- | ----------- |
-| taskType | The name of the task to be queried. |
+## Query parameters
 
-## API Endpoint
+| Parameter  | Description | Type | Required/Optional |
+| ---------- | ----------- | ---- | ----------------- |
+| taskType | The type of the task to be queried. For predefined tasks, this indicates the task type, such as _HTTP_. For user-defined tasks, it corresponds to the name of the task definition, such as _python_worker_. | string | Required. | 
 
+## Response
+
+Returns the queue size of the specified task type.
+
+## Examples
+
+### Get task queue for HTTP tasks
+
+<details><summary>Get task queue for HTTP tasks</summary>
+
+**Request**
+
+```bash
+curl -X 'GET' \
+  'https://<YOUR-CLUSTER>/api/tasks/queue/sizes?taskType=HTTP' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>'
 ```
-GET /tasks/queue/sizes
-```
+**Response**
 
-Returns the task queue size of the queried task.
+```json
+{
+  "HTTP": 3
+}
+```
+</details>
+

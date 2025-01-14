@@ -9,81 +9,146 @@ import TabItem from '@theme/TabItem';
 
 # Get Workflow Definition
 
-The API to retrieve a partticular workflow definition.
+**Endpoint:** `GET /api/metadata/workflow/{name}`
 
-## Input Payload
+Gets a specific workflow definition from the cluster.
 
-| Attribute | Description |
-| --------- | -------------- |
-| name      | The *name* of the workflow you want to retrieve definition of. |
-| version   | Provide the workflow version. |
-| metadata  | Provide the metadata details. |
+## Path parameters
 
-## API Endpoint
+| Parameter  | Description | Type | Required/Optional |
+| ---------- | ----------- | ---- | ----------------- |
+| taskType | The name of the workflow definition to be retrieved. | string | Required. | 
 
+## Query parameters
+
+| Parameter  | Description | Type | Required/Optional |
+| ---------- | ----------- | ---- | ----------------- |
+| version | The version of the workflow to be retrieved. | integer | Optional. | 
+| metadata | Whether metadata (such as tags) should be included in the response. Default is _false_. | boolean | Optional. | 
+
+## Response
+
+Returns the workflow definition and includes the metadata if queried.
+
+## Examples
+
+### Get an individual workflow definition without metadata
+
+<details><summary>Get an individual workflow definition without metadata</summary>
+
+**Request**
+
+```bash
+curl -X 'GET' \
+  'https://<YOUR-CLUSTER>/api/metadata/workflow/api-test?metadata=false' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>'
 ```
-GET /api/metadata/workflow/{name}?version=<version>&metadata=false
+**Response**
+
+```json
+{
+  "createTime": 0,
+  "updateTime": 1735802256013,
+  "name": "api-test",
+  "description": "Sample workflow created using API",
+  "version": 1,
+  "tasks": [
+    {
+      "name": "event",
+      "taskReferenceName": "event_ref",
+      "inputParameters": {},
+      "type": "EVENT",
+      "decisionCases": {},
+      "defaultCase": [],
+      "forkTasks": [],
+      "startDelay": 0,
+      "joinOn": [],
+      "sink": "sqs:internal_event_name",
+      "optional": false,
+      "defaultExclusiveJoinTask": [],
+      "asyncComplete": false,
+      "loopOver": [],
+      "onStateChange": {},
+      "permissive": false
+    }
+  ],
+  "inputParameters": [],
+  "outputParameters": {},
+  "failureWorkflow": "",
+  "schemaVersion": 2,
+  "restartable": false,
+  "workflowStatusListenerEnabled": false,
+  "ownerEmail": "john.doe@acme.com",
+  "timeoutPolicy": "ALERT_ONLY",
+  "timeoutSeconds": 0,
+  "variables": {},
+  "inputTemplate": {},
+  "enforceSchema": true
+}
 ```
+</details>
 
-## Client SDK Methods
+### Get an individual workflow definition with metadata
 
-<Tabs>
-<TabItem value="Java" label="Java">
+<details><summary>Get an individual workflow definition with metadata</summary>
 
-```java
-WorkflowDef OrkesMetadataClient.getWorkflowDef(String name, Integer version)
-WorkflowDef OrkesMetadataClient.getWorkflowDefWithMetadata(String name, Integer version)
+**Request**
+
+```bash
+curl -X 'GET' \
+  'https://<YOUR-CLUSTER>/api/metadata/workflow/api-test?metadata=true' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>'
 ```
+**Response**
 
-</TabItem>
-<TabItem value="Go" label="Go">
-
-```go
-func (a *MetadataResourceApiService) Get(ctx context.Context, name string, localVarOptionals *MetadataResourceApiGetOpts) (model.WorkflowDef, *http.Response, error)
+```json
+{
+  "createTime": 0,
+  "updateTime": 1735802256013,
+  "name": "api-test",
+  "description": "Sample workflow created using API",
+  "version": 1,
+  "tasks": [
+    {
+      "name": "event",
+      "taskReferenceName": "event_ref",
+      "inputParameters": {},
+      "type": "EVENT",
+      "decisionCases": {},
+      "defaultCase": [],
+      "forkTasks": [],
+      "startDelay": 0,
+      "joinOn": [],
+      "sink": "sqs:internal_event_name",
+      "optional": false,
+      "defaultExclusiveJoinTask": [],
+      "asyncComplete": false,
+      "loopOver": [],
+      "onStateChange": {},
+      "permissive": false
+    }
+  ],
+  "inputParameters": [],
+  "outputParameters": {},
+  "failureWorkflow": "",
+  "schemaVersion": 2,
+  "restartable": false,
+  "workflowStatusListenerEnabled": false,
+  "ownerEmail": "john.doe@acme.com",
+  "timeoutPolicy": "ALERT_ONLY",
+  "timeoutSeconds": 0,
+  "variables": {},
+  "inputTemplate": {},
+  "enforceSchema": true,
+  "overwriteTags": true,
+  "tags": [
+    {
+      "key": "api",
+      "value": "doc"
+    }
+  ]
+}
 ```
-
-</TabItem>
-<TabItem value="Python" label="Python">
-
-```python
-MetadataResourceApi.get(name, **kwargs)
-```
-
-</TabItem>
-<TabItem value="CSharp" label="C#">
-
-```csharp
-WorkflowDef MetadataResourceApi.Get(string name, int? version = null, bool? metadata = null)
-```
-
-</TabItem>
-<TabItem value="JavaScript" label="JavaScript">
-
-```javascript
-MatadataResourceService.get(
-    name: string,
-    version?: number,
-    metadata: boolean = false,
-  ): CancelablePromise<WorkflowDef>
-```
-
-</TabItem>
-<TabItem value="Typescript" label="Typescript">
-
-```typescript
-MatadataResourceService.get(
-    name: string,
-    version?: number,
-    metadata: boolean = false,
-  ): CancelablePromise<WorkflowDef>
-```
-
-</TabItem>
-<TabItem value="Clojure" label="Clojure">
-
-```clojure
-(metadata/get-workflow-def options name version)
-```
-
-</TabItem>
-</Tabs>
+</details>

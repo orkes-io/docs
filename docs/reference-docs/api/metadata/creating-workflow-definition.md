@@ -7,88 +7,82 @@ description: "Workflows are directed sequences of tasks and operators. This API 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Creating Workflow Definition
+# Create Workflow Definition
 
-A workflow is a collection of tasks and operators that define the sequence and execution of tasks. This API allows you to create workflow definitions in Orkes Conductor.
+**Endpoint:** `POST /api/metadata/workflow`
 
-## Input Payload
+Creates a new workflow definition.
 
-You can configure workflow definition directly via UI and using API. The workflow definition includes the following parameters:
+## Query parameters
 
-| Attribute                     | Description                                                                                                                                                                                                                                            |
-| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| name                          | Provide a unique name for the workflow. This field is mandatory.                                                                                                                                                                              |
-| description                   | Include a description that explains the purpose of the workflow. This field is optional.                                                                                                                                                                 |
-| version                       | Specify the version number of the workflow to track changes. The default value is 0.                                                                                                                                                      |
-| tasks                         | Define the tasks to be executed within the workflow. For operator or system tasks, the Conductor server manages the execution. User-defined or worker tasks require a worker running outside the Conductor environment. |
-| inputParameters               | Specify the input values for the workflow.                                                                                                                                                                                                         |
-| outputParameters              | Specify the output values of the workflow.                                                                                                                                                                                               |
-| schemaVersion                 | Indicates the version number of the workflow definition schema.                                                                                                                                                                                       |
-| restartable                   | Set to **true** to allow the workflow to be restarted after completion. Set to **false** if restarting could impact functionality.                                                                                                |
-| workflowStatusListenerEnabled | Set to **true** to enable workflow status change events to sink if configured. For more information, refer to the documentation [on enabling CDC](https://orkes.io/content/developer-guides/enabling-cdc-on-conductor-workflows).                                    |
-| ownerEmail                    | This field is auto-populated with the user’s email address.                                                                                                                                                  |
-| timeoutSeconds                | Specifies the time (in seconds) after which the workflow is marked as TIMED_OUT if it remains in the IN_PROGRESS status. A value of 0 indicates no timeout.         |
-| timeoutPolicy                 | Defines the condition under which the workflow should time out. Possible values are:<ul><li>**TIME_OUT_WF** - The workflow status is set to TIMEOUT, and the workflow is terminated.</li><li>**ALERT_ONLY** - Registers a counter.</li></ul>   |
-| failureWorkflow               | Provide the name of a workflow to trigger upon failure of the current workflow execution.                                                                                                                                               |
+| Parameter  | Description | Type | Required/Optional |
+| ---------- | ----------- | ---- | ----------------- |
+| overwrite | Whether to overwrite the existing definition with the same name. Default is _false_. Set to _true_ to overwrite an existing definition. | boolean | Optional. | 
+| newVersion | Whether to create a new version for the workflow definition. Default is _false_. Set to _true_ to create a new version. | boolean | Optional. | 
 
+## Request body
 
-## API Endpoint
+| Parameter  | Description | Type | Required/Optional |
+| ---------- | ----------- | ---- | ----------------- |
+| name | A unique name for the workflow definition.<ul><li>For v4.0.1 and prior: Only letters, digits, hyphens (-), and underscores (\_) are allowed.</li>   <li>For v4.0.2 and later: Only letters, digits, spaces, hyphens (-), underscores (\_), and certain special characters (`<`, `>`, `{`, `}`, `#`) are allowed.</li></ul> | string | Required. | 
+| description | A description of the workflow. | string | Optional. | 
+| version | The version of the workflow definition. Defaults to 0 if not specified. | integer | Optional. |
+| tasks | The task configurations to be included in the workflow.  | array of objects | Required. | 
+| inputParameters | The input keys for the workflow. | array of strings | Optional. |
+| outputParameters | The JSON template used to generate the workflow output. If unspecified, the workflow output is defined as the output of the last executed task. | object | Optional. | 
+| enforceSchema | Whether to enforce input schema validation. Set to _true_ to enable validation or _false_ to disable. | boolean | Optional. | 
+| inputSchema | The schema parameters to be used as input schema for the workflow definition. Learn more about [creating and using schemas](https://orkes.io/content/developer-guides/schema-validation). | object | Required if _enforceSchema_ is set to _true_. | 
+| schemaVersion | The current version of the Conductor schema. Must be 2. | integer | Required. | 
+| restartable | Whether the workflow can be restarted after completion. Set to _false_ if restarting could impact workflow functionality. | boolean | Optional. | 
+| timeoutSeconds | Time (in seconds), after which the workflow will be set as _TIMED_OUT_ if it hasn't reached a terminal state. No timeout occurs if the value is set to 0. | integer | Required. | 
+| timeoutPolicy | The policy for handling workflow timeout. Supported values:<ul><li>**TIME_OUT_WF–**The workflow is set to _TIMED_OUT_ and is terminated.</li><li>**ALERT_ONLY–**Increments the counter to check the workflow status when it times out and logs relevant messages.</li></ul> | string | Optional. | 
+| [rateLimitConfig](https://orkes.io/content/error-handling#workflow-rate-limits) | A map of the workflow rate limit configuration. | object | Optional. | 
+| rateLimitConfig. **rateLimitKey** | A unique identifier to group workflow executions for rate limiting.<br/>Can be a fixed value (for example, “max”) or a dynamic variable from the workflow input (for example, `${workflow.input.correlationId}`). | string | Optional. | 
+| rateLimitConfig. **concurrentExecLimit** | The number of workflow executions that can run concurrently for a given key. | integer | Optional. | 
+| workflowStatusListenerEnabled | Whether to enable status callback for workflow state changes. Learn more about [enabling CDC](https://orkes.io/content/developer-guides/enabling-cdc-on-conductor-workflows). | boolean | Optional. | 
+| workflowStatusListenerSink | The sink where workflow state changes are sent. | string | Required if _workflowStatusListener_ is set to _true_. | 
+| [failureWorkflow](https://orkes.io/content/error-handling#workflow-compensation-flows) | The compensation workflow to trigger upon failure of the current workflow execution. | string | Optional. | 
+| tags | A key-value map to add tags to the workflow definition. Each tag consists of a key associated with a corresponding value. | object | Optional. | 
+| ownerEmail | The email address of the user creating the workflow definition. | string | Required. | 
 
+## Examples
+
+### Create a new workflow definition
+
+<details><summary>Create a new workflow definition</summary>
+
+**Request**
+
+```bash
+curl -X 'POST' \
+  'https://<YOUR-CLUSTER>/api/metadata/workflow?overwrite=false&newVersion=false' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "name": "api-test",
+  "description": "Sample workflow created using API",
+  "version": 1,
+  "tasks": [
+    {
+      "name": "event",
+      "taskReferenceName": "event_ref",
+      "type": "EVENT",
+      "sink": "sqs:internal_event_name",
+      "inputParameters": {}
+    }
+  ],
+  "inputParameters": [],
+  "outputParameters": {},
+  "schemaVersion": 2,
+  "restartable": true,
+  "workflowStatusListenerEnabled": false,
+  "ownerEmail": "john.doe@acme.com",
+  "timeoutPolicy": "ALERT_ONLY",
+  "timeoutSeconds": 0
+}'
 ```
-POST /api/metadata/workflow
-```
+**Response**
 
-
-## Client SDK Methods
-
-<Tabs>
-<TabItem value="Java" label="Java">
-
-```java
-void OrkesMetadataClient.registerWorkflowDef(WorkflowDef workflowDef) throws ApiException
-```
-
-</TabItem>
-<TabItem value="Go" label="Go">
-
-```go
-func (a *MetadataResourceApiService) RegisterWorkflowDef(ctx context.Context, overwrite bool, body model.WorkflowDef) (*http.Response, error)
-```
-
-</TabItem>
-<TabItem value="Python" label="Python">
-
-```python
-MetadataResourceApi.metadata_client.create(body, **kwargs)
-```
-
-</TabItem>
-<TabItem value="CSharp" label="C#">
-
-```csharp
-Object MetadataResourceApi.Create(WorkflowDef body, bool? overwrite = null)
-```
-
-</TabItem>
-<TabItem value="JavaScript" label="JavaScript">
-
-```javascript
-WorkflowExecutor.registerWorkflow(override: boolean, workflow: WorkflowDef)
-```
-
-</TabItem>
-<TabItem value="Typescript" label="Typescript">
-
-```typescript
-WorkflowExecutor.registerWorkflow(override: boolean, workflow: WorkflowDef)
-```
-
-</TabItem>
-<TabItem value="Clojure" label="Clojure">
-
-```clojure
-(metadata/register-workflow-def options workflow true)
-```
-
-</TabItem>
-</Tabs>
+Returns 200 OK, indicating that the workflow definition has been created successfully.
+</details>

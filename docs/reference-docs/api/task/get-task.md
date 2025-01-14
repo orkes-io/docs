@@ -7,72 +7,89 @@ description: "This API is used to retrieve the current state and details of a sp
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Get Task
+# Get Task by ID
 
-Used to retrieve the current state and details of the specific task.
+**Endpoint:** `GET /tasks/{taskId}`
 
-## Input Payload
+Gets a task's execution details using its task execution ID.
 
-| Attribute | Description |
-| --------- | -------------- | 
-| taskId | The *taskId* of the task for which you want to log the message. | 
+## Path parameters
 
-## API Endpoint
+| Parameter  | Description | Type | Required/Optional |
+| ---------- | ----------- | ---- | ----------------- |
+| taskId | The execution ID of the task to be fetched. | string | Required. | 
 
+## Response
+
+Returns a JSON object containing the task's execution details.
+
+## Examples
+
+### Get task using its task execution ID
+
+<details><summary>Get task using its task execution ID</summary>
+
+**Request**
+
+```bash
+curl -X 'GET' \
+  'https://<YOUR-CLUSTER>/api/tasks/6f207c78-bdf2-11ef-88e4-ce0afa758ea1' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>'
 ```
-GET /tasks/{taskId}
+**Response**
+
+```json
+{
+  "taskType": "WAIT",
+  "status": "IN_PROGRESS",
+  "inputData": {
+    "_createdBy": "john.doe@acme.com"
+  },
+  "referenceTaskName": "wait_ref",
+  "retryCount": 0,
+  "seq": 1,
+  "pollCount": 1,
+  "taskDefName": "wait",
+  "scheduledTime": 1734697335733,
+  "startTime": 1734697335733,
+  "endTime": 0,
+  "updateTime": 0,
+  "startDelayInSeconds": 0,
+  "retried": false,
+  "executed": false,
+  "callbackFromWorker": true,
+  "responseTimeoutSeconds": 0,
+  "workflowInstanceId": "0c645656-becd-11ef-a89d-86a819bd92bf",
+  "workflowType": "test-workflow",
+  "taskId": "0c658ed7-becd-11ef-a89d-86a819bd92bf",
+  "callbackAfterSeconds": 2147483647,
+  "outputData": {},
+  "workflowTask": {
+    "inputParameters": {},
+    "type": "SIMPLE",
+    "decisionCases": {},
+    "defaultCase": [],
+    "forkTasks": [],
+    "startDelay": 0,
+    "joinOn": [],
+    "optional": false,
+    "rateLimited": false,
+    "defaultExclusiveJoinTask": [],
+    "asyncComplete": false,
+    "loopOver": [],
+    "onStateChange": {},
+    "permissive": false
+  },
+  "rateLimitPerFrequency": 0,
+  "rateLimitFrequencyInSeconds": 0,
+  "workflowPriority": 0,
+  "iteration": 0,
+  "subworkflowChanged": false,
+  "firstStartTime": 0,
+  "queueWaitTime": 0,
+  "loopOverTask": false,
+  "taskDefinition": null
+}
 ```
-
-## Client SDK Methods
-
-<Tabs>
-<TabItem value="Java" label="Java">
-
-```java
-Task OrkesTaskClient.getTaskDetails(String taskId) throws ApiException
-```
-
-</TabItem>
-<TabItem value="Go" label="Go">
-
-```go
-func (*TaskResourceApiService) GetTask(ctx context.Context, taskId string) (model.Task, *http.Response, error)
-```
-
-</TabItem>
-<TabItem value="Python" label="Python">
-
-```python
-TaskResourceApi.get_task(task_id, **kwargs)
-```
-
-</TabItem>
-<TabItem value="CSharp" label="C#">
-
-```csharp
-Task TaskResourceApi.GetTask(string taskId)
-```
-
-</TabItem>
-<TabItem value="JavaScript" label="JavaScript">
-
-```javascript
-TaskResourceService.getTask(taskId: string): CancelablePromise<Task>
-```
-
-</TabItem>
-<TabItem value="Typescript" label="Typescript">
-
-```typescript
-TaskResourceService.getTask(taskId: string): CancelablePromise<Task>
-```
-
-</TabItem>
-<TabItem value="Clojure" label="Clojure">
-
-```clojure
-(task-resource/get-task-details options task-ex-id)
-```
-
-</TabItem>
-</Tabs>
+</details>
