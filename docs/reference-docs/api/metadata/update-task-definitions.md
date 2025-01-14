@@ -7,89 +7,81 @@ description: "Tasks are the building blocks of workflow in Orkes Conductor. This
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Updating Task Definitions
+# Update Task Definition
 
-The API to update the existing task definitions.
+**Endpoint:** `PUT /api/metadata/taskdefs`
 
-## Input Payload
+Updates an existing task definition.
 
-You can update the task definitions directly via UI and using API. The task definitions include the following parameters:
+## Request body
 
-| Attribute                                          | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
-| -------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| name                                               | Provide a unique name to identify the task. This field is mandatory.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
-| description                                        | Include a description that indicates the purpose of the task. This field is optional.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
-| retryCount                                         | The number of retries to attempt when a task fails. The default value is 3.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
-| retryDelaySeconds                                  | Indicates the time (in seconds) to wait before each retry occurs. The default value is 60.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
-| retryLogic                                         | Indicates the mechanism for the retries. It can take any of the following values:<ul><li>**FIXED** - Every retry occurs as per the time set under *retryDelaySeconds*.</li><li>**EXPONENTIAL_BACKOFF** - Every retry occurs as per <i>retryDelaySeconds*2^(retryCount)</i></li></ul>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
-| timeOutSeconds                                     | Time (in seconds), after which the task is marked as **TIMED_OUT** if not completed after transitioning to **IN_PROGRESS** status for the first time. No timeout occurs if the value is set to 0.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| pollTimeoutSeconds                                 | Time (in seconds), after which the task is marked as **TIMED_OUT** if not polled by a worker. No timeout occurs if the value is set to 0.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-| timeoutPolicy                                      | Indicates the condition at which the task should time out. It can take any of the following values:<ul><li>**RETRY** - Retries the task again.</li><li>**TIME_OUT_WF** - The status of the task is marked as TIMEOUT and the task is terminated.</li><li>**ALERT_ONLY** - Registers a counter.</li></ul>**Note:** To create a task that never times out, set *timeoutSeconds* and *pollTimeoutSeconds* to 0.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| responseTimeoutSeconds                             | Set a time (in seconds) to reschedule the task if the task status is not updated. Default value is 3600.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-| inputKeys                                          | An array of keys for the task’s expected input.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| outputKeys                                         | An array of keys for the task’s expected output.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| inputTemplate                                      | Input templates are defined as part of task definitions. It acts as default input to the task while adding to the workflow. It can be overridden by values provided in Workflow definitions.<br/>**Note**: You cannot view the input templates in the workflow definition JSON code as they are part of only task definitions. But, on clicking the task, you can [view the input templates supplied from the UI](/content/developer-guides/passing-inputs-to-task-in-conductor#through-task-input-templates). 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
-| concurrentExecLimit                                | Indicates the number of tasks that can be executed at any given time. <br/><br/>For example, if you have 1000 task executions waiting in the queue and 1000 workers polling this queue for tasks, but if you have set *concurrentExecLimit* to 10, only ten tasks would be given to workers (which would lead to starvation). If any of the workers finish execution, a new task(s) will be removed from the queue while still keeping the current execution count to 10.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-| backOffScaleFactor                                 | The value to be multiplied with retryDelaySeconds in order to determine the interval for retry.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| rateLimitFrequencyInSeconds, rateLimitPerFrequency | <ul><li>**rateLimitFrequencyInSeconds** sets the frequency window, which is the duration to be used in events per duration.</li><li>**rateLimitPerFrequency** defines the number of tasks that can be given to workers per given frequency window.</li></ul>**Note**: Rate limiting is only supported for the Redis persistence module and is unavailable with other persistence layers.<br/><br/>For example, let’s set **rateLimitFrequencyInSeconds=5**, and **rateLimitPerFrequency=12**. This means our frequency window is 5 seconds in duration, and for each frequency window, the Conductor would only give 12 tasks to workers. So, in a given minute, the Conductor would only give 12*(60/5) = 144 tasks to workers, irrespective of the number of workers polling for the task.<br/>Unlike **concurrentExecLimit**, rate limiting doesn't consider the tasks already in progress/completed. Even if all the previous tasks are executed within 1 sec or would take a few days, the new tasks are still given to workers at configured frequency, 144 tasks per minute in the above example. |
-| ownerEmail                                         | This field will be auto-populated with the user's email address.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| Parameter  | Description | Type | Required/Optional |
+| ---------- | ----------- | ---- | ----------------- |
+| name | The name of the task definition to be updated.<br/>**Note:**Calling this API without an existing task definition name returns 404. | string | Required. |
+| description | A brief description of the task. | string | Optional. |
+| [retryCount](https://orkes.io/content/error-handling#task-retries) | The number of retry attempts if the task fails. | integer | Optional. |
+| [retryDelaySeconds](https://orkes.io/content/error-handling#task-retries) | The time (in seconds) to wait before each retry attempt. | integer | Optional. | 
+| [backOffScaleFactor](https://orkes.io/content/error-handling#task-retries) | The value multiplied with _retryDelaySeconds_ to determine the interval for retry. | integer | Optional. | 
+| [retryLogic](https://orkes.io/content/error-handling#task-retries) | The policy that determines the retry mechanism for the tasks. Supported values:<ul><li>**FIXED–**Retries after a fixed interval defined by _retryDelaySeconds_.</li><li>**LINEAR_BACKOFF–**Retries occur with a delay that increases linearly based on _retryDelaySeconds_ x _backoffScaleFactor_ x _attemptNumber_.</li><li>**EXPONENTIAL_BACKOFF–**Retries occur with a delay that increases exponentially based on  _retryDelaySeconds_ x (_backoffScaleFactor_ ^ _attemptNumber_).</li></ul> | string | Optional. | 
+| [rateLimitPerFrequency](https://orkes.io/content/error-handling#task-rate-limits) | The maximum number of task executions that can be scheduled in a given duration. | integer | Optional. |
+| [rateLimitFrequencyInSeconds](https://orkes.io/content/error-handling#task-rate-limits) | The frequency window (in seconds) for the rate limit. | integer | Optional. | 
+| [concurrentExecLimit](https://orkes.io/content/error-handling#task-rate-limits) | The number of task executions that can be executed concurrently. | integer | Optional. | 
+| [timeOutSeconds](https://orkes.io/content/error-handling#task-timeouts) | Time (in seconds) for the task to reach a terminal state before it gets marked as _TIMED_OUT_. No timeout occurs if the value is set to 0.	| integer | Required. | 
+| [responseTimeoutSeconds](https://orkes.io/content/error-handling#task-timeouts) | The maximum duration in seconds that a worker has to respond to the server with a status update before it gets marked as _TIMED_OUT_. | integer | Optional. |
+| [pollTimeoutSeconds](https://orkes.io/content/error-handling#task-timeouts) | Time (in seconds), after which the task is marked as _TIMED_OUT_ if not polled by a worker. No timeout occurs if the value is set to 0. | integer | Optional. | 
+| [timeoutPolicy](https://orkes.io/content/error-handling#task-timeouts) | The policy for handling timeout. Supported values:<ul><li>**RETRY–**Retries the task based on the retry configuration.</li><li>**TIME_OUT_WF–**The task is marked as _TIMED_OUT_ and is terminated, which also sets the workflow status as _TIMED_OUT_.</li><li>**ALERT_ONLY**–An alert message is logged when the timeout occurs.</li></ul>To create a task that never times out, set _timeoutSeconds_ and _pollTimeoutSeconds_ to 0. | string | Optional. |
+| [totalTimeoutSeconds](https://orkes.io/content/error-handling#task-timeouts) | The total duration (in seconds) after which the task will be _TIMED_OUT_, regardless of the retry configuration. Once this duration is reached, no further retries will be attempted. | integer | Required. | 
+| enforceSchema | Whether to enforce input/output schema validation for all instances of the task. Set to _true_ to enable validation or _false_ to disable. | boolean | Optional. |
+| inputSchema | The schema parameters to be used as input schema for the task definition. Learn more about [creating and using schemas](https://orkes.io/content/developer-guides/schema-validation). | object | Required if _enforceSchema_ is set to _true_. | 
+| outputSchema | The schema parameters to be used as output schema for the task definition. Learn more about [creating and using schemas](https://orkes.io/content/developer-guides/schema-validation). | object | Required if _enforceSchema_ is set to _true_. | 
+| inputTemplate | The default template values to be supplied for every instance of the task definition. Learn more about [using input templates](https://orkes.io/content/developer-guides/task-input-templates). | object | Optional. | 
+| inputKeys | Keys representing the expected input for the task. | array | Optional. | 
+| outputKeys | Keys representing the expected output from the task. | array | Optional. | 
+| tags | A key-value map to add tags to the task definition. Each tag consists of a key associated with a corresponding value. | object | Optional. | 
+| ownerEmail | The email address of the user updating the task definition. | string | Required. | 
 
-## API Endpoint
+## Examples
+
+### Update an existing task definition
+
+<details><summary>Update an existing task definition</summary>
+
+**Request**
+
+```bash
+curl -X 'PUT' \
+  'https://<YOUR-CLUSTER>/api/metadata/taskdefs' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "name": "sample-api-test",
+  "description": "Task created using API",
+  "retryCount": 5,
+  "timeoutSeconds": 3600,
+  "timeoutPolicy": "TIME_OUT_WF",
+  "retryLogic": "FIXED",
+  "retryDelaySeconds": 60,
+  "responseTimeoutSeconds": 600,
+  "rateLimitPerFrequency": 0,
+  "rateLimitFrequencyInSeconds": 1,
+  "ownerEmail": "john.doe@acme.com",
+  "pollTimeoutSeconds": 3600,
+  "inputKeys": [
+    "abc"
+  ],
+  "outputKeys": [
+    "xyz"
+  ],
+  "inputTemplate": 
+  {
+    "someKey": "someValue"
+  },
+  "backoffScaleFactor": 1,
+  "concurrentExecLimit": 0
+}'
 ```
-PUT /api/metadata/taskdefs
-```
+**Response**
 
-## Client SDK Methods
-
-<Tabs>
-<TabItem value="Java" label="Java">
-
-```java
-void OrkesMetadataClient.updateTaskDef(TaskDef taskDef)
-```
-
-</TabItem>
-<TabItem value="Go" label="Go">
-
-```go
-func (a *MetadataResourceApiService) UpdateTaskDef(ctx context.Context, body model.TaskDef) (*http.Response, error)
-```
-
-</TabItem>
-<TabItem value="Python" label="Python">
-
-```python
-MetadataResourceApi.update_task_def(body, **kwargs)
-```
-
-</TabItem>
-<TabItem value="CSharp" label="C#">
-
-```csharp
-Object MetadataResourceApi.UpdateTaskDef(TaskDef body)
-```
-
-</TabItem>
-<TabItem value="JavaScript" label="JavaScript">
-
-```javascript
-MetadataResourceService.updateTaskDef(requestBody: TaskDef): CancelablePromise<any>
-```
-
-</TabItem>
-<TabItem value="Typescript" label="Typescript">
-
-```typescript
-MetadataResourceService.updateTaskDef(requestBody: TaskDef): CancelablePromise<any>
-```
-
-</TabItem>
-<TabItem value="Clojure" label="Clojure">
-
-```clojure
-(metadata/update-task-definition options task-definition)
-```
-
-</TabItem>
-</Tabs>
+Returns 200 OK, indicating that the task definition has been updated successfully.
+</details>
