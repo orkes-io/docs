@@ -9,69 +9,31 @@ import TabItem from '@theme/TabItem';
 
 # Delete Task Definitions
 
-The API to delete the task definitions. 
+**Endpoint:** `DELETE /api/metadata/taskdefs/{taskType}`
 
-## Input Parameters
+Deletes an existing task definition.
 
-| Attribute  | Description                                           |
-|------------|-------------------------------------------------------|
-| taskType   | The name of the task which is to be deleted. |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+## Path parameters
 
-## API Endpoint
+| Parameter  | Description | Type | Required/Optional |
+| ---------- | ----------- | ---- | ----------------- |
+| taskType | The name of the task definition to be deleted. | string | Required. | 
+
+## Examples
+
+### Delete an existing task definition
+
+<details><summary>Delete an existing task definition</summary>
+
+**Request**
+
+```bash
+curl -X 'DELETE' \
+  'https://<YOUR-CLUSTER>/api/metadata/taskdefs/sample-api-test' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>'
 ```
-DELETE /api/metadata/taskdefs/{taskType}
-```
+**Response**
 
-## Client SDK Methods
-
-<Tabs>
-<TabItem value="Java" label="Java">
-
-```java
-void OrkesMetadataClient.unregisterTaskDef(String taskType) throws ApiException
-```
-
-</TabItem>
-<TabItem value="Go" label="Go">
-
-```go
-func (a *MetadataResourceApiService) UnregisterTaskDef(ctx context.Context, tasktype string) (*http.Response, error)
-```
-
-</TabItem>
-<TabItem value="Python" label="Python">
-
-```python
-MetadataResourceApi.unregister_task_def(tasktype, **kwargs)
-```
-
-</TabItem>
-<TabItem value="CSharp" label="C#">
-
-```csharp
-void MetadataResourceApi.UnregisterTaskDef(string tasktype)
-```
-
-</TabItem>
-<TabItem value="JavaScript" label="JavaScript">
-
-```javascript
-MetadataResourceService.unregisterTaskDef(tasktype: string): CancelablePromise<any>
-```
-
-</TabItem>
-<TabItem value="Typescript" label="Typescript">
-
-```typescript
-MetadataResourceService.unregisterTaskDef(tasktype: string): CancelablePromise<any>
-```
-
-</TabItem>
-<TabItem value="Clojure" label="Clojure">
-
-```clojure
-(metadata/unregister-task options task-ref)
-```
-
-</TabItem>
-</Tabs>
+Returns 200 OK, indicating that the task definition has been deleted successfully.
+</details>
