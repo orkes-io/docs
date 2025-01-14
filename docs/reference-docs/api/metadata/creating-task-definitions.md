@@ -7,7 +7,7 @@ description: "Tasks are the building blocks of workflow in Orkes Conductor. This
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Creating Task Definitions
+# Create Task Definition
 
 **Endpoint:** `POST /api/metadata/taskdefs`
 
