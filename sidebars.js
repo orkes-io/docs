@@ -606,12 +606,12 @@ const sidebars = {
         },
         {
             type: 'category',
-            label: 'Templates and Examples',
+            label: 'Orkes Templates',
             link: {
                 type: 'generated-index',
-                title: 'Templates',
+                title: 'Orkes Templates',
                 slug: '/category/templates',
-                description: 'Templates and examples for workflows in Orkes Conductor.',
+                description: 'Templates for workflows in Orkes Conductor.',
             },
             className: 'leftMenuHeader',
             items: [
@@ -620,13 +620,32 @@ const sidebars = {
                     id: 'developer-guides/getting-started-with-orkes-template-explorer',
                     label: "Overview"
                 },
+                'templates/automatic-subtitle-generator',
+                'templates/availability-monitoring-for-http-endpoints',
+                'templates/video-processing-workflows',
+                'templates/image-effects',
+                'templates/visual-image-search',
+                'templates/document-classifier',
+            ],
+        },
+        {
+            type: 'category',
+            label: 'Tutorials',
+            link: {
+                type: 'generated-index',
+                title: 'Tutorials',
+                slug: '/category/tutorials',
+                description: 'Tutorials for workflows in Orkes Conductor.',
+            },
+            className: 'leftMenuHeader',
+            items: [
                 {
                     type: 'category',
                     label: 'General',
                     link: {
                         type: 'generated-index',
-                        title: 'General Templates',
-                        description: 'Explore our basic templates to get started with using Orkes Conductor.',
+                        title: 'General',
+                        description: 'Explore our basic tutorials to get started with using Orkes Conductor.',
                         slug: '/general-templates'
                     },
                     items: [
@@ -640,7 +659,6 @@ const sidebars = {
                             id: 'templates/examples/api-processing-usps-example',
                             label: 'API Processing',
                         },
-                        'templates/availability-monitoring-for-http-endpoints',
                         'templates/examples/keep-worker-running-until-condition-true',
                         'templates/examples/rotating-secrets-that-expire',
                     ]
@@ -650,7 +668,8 @@ const sidebars = {
                     label: 'Application Alerts',
                     link: {
                         type: 'generated-index',
-                        title: 'Templates for Application Alerts',
+                        title: 'Application Alerts',
+                        description: 'Explore tutorials for alerting use cases with Conductor.',
                         slug: '/category/templates/alerting'
                     },
                     items: [
@@ -671,8 +690,8 @@ const sidebars = {
                     label: 'Webhooks',
                     link: {
                         type: 'generated-index',
-                        title: 'Webhook Templates',
-                        description: 'Explore templates that use webhook integrations in Conductor workflows.',
+                        title: 'Webhooks',
+                        description: 'Explore tutorials on using webhook integrations in Conductor workflows.',
                         slug: '/webhook-templates'
                     },
                     items: [
@@ -693,16 +712,11 @@ const sidebars = {
                     label: 'Documents',
                     link: {
                         type: 'generated-index',
-                        title: 'Templates for Documents',
-                        description: 'Explore templates meant for document processing and approval.',
+                        title: 'Documents',
+                        description: 'Explore tutorials for document related uses cases.',
                         slug: '/document-templates'
                     },
                     items: [
-                        {
-                            type: 'doc',
-                            id: 'templates/document-classifier',
-                            label: 'Document Classification',
-                        },
                         {
                             type: 'doc',
                             id: 'templates/examples/document-approvals',
@@ -716,7 +730,7 @@ const sidebars = {
                     link: {
                         type: 'generated-index',
                         title: 'Templates for Finance',
-                        description: 'Explore templates meant for finance use cases.',
+                        description: 'Explore tutorials for finance use cases.',
                         slug: '/finance-templates'
                     },
                     items: [
@@ -730,22 +744,6 @@ const sidebars = {
                             id: 'templates/examples/fraud-dispute',
                             label: 'Handling Fraud Disputes',
                         },
-                    ]
-                },
-                {
-                    type: 'category',
-                    label: 'Media',
-                    link: {
-                        type: 'generated-index',
-                        title: 'Templates for Media',
-                        description: 'Explore templates meant for media and entertainment use cases.',
-                        slug: '/media-templates'
-                    },
-                    items: [
-                        'templates/visual-image-search',
-                        'templates/image-effects',
-                        'templates/video-processing-workflows',
-                        'templates/automatic-subtitle-generator',
                     ]
                 },
             ],
