@@ -37,7 +37,7 @@ Creates a new task definition.
 | inputTemplate | The default template values to be supplied for every instance of the task definition. Learn more about [using input templates](https://orkes.io/content/developer-guides/task-input-templates). | object | Optional. | 
 | inputKeys | Keys representing the expected input for the task. | array | Optional. | 
 | outputKeys | Keys representing the expected output from the task. | array | Optional. | 
-| tags | A key-value map to add tags to the task definition. Each tag consists of a key associated with a corresponding value. | object | Optional. | 
+| tags | A key-value map to add tags to the task definition. Each tag consists of a key associated with a corresponding value. For examples:<pre><code>"tags": [ { "key": "string", "value": "string" } ]</code></pre>| object | Optional. | 
 | ownerEmail | The email address of the user creating the task definition. | string | Required. | 
 
 ## Examples
