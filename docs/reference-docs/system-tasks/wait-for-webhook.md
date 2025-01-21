@@ -42,17 +42,37 @@ In the example below, the matches are described as follows:
 
 Any custom JSON path based on the incoming event payload can be defined to write matches accordingly. This configuration means that the incoming event payload must have a JSON path `event.type`, and it must be a message to match the webhook event with this task.
 
+The input payload for the Webhook task to align with the above matches must be:
+
+```json
+"inputParameters": {
+  "event": {
+    "type": "message"
+  }
+}
+```
+
 Multiple matches can also be added within the `matches` section. All the matches will be calculated as AND operations within the matches.
 
 ```json
    "matches" : {
        "$['event']['type']": "message",
-       "$['event']['text']": "hello",
+       "$['event']['text']": "hello"
    }
 ```
 
 For example, the configuration above will match the webhook event payload where `event.type` is `message` AND `event.text` is `hello`.
 
+The input payload for the Webhook task to align with the above matches must be:
+
+```json
+"inputParameters": {
+    "event": {
+        "type": "message",
+        "text": "hello"
+    }
+}
+```
 
 ## Task configuration
 
