@@ -9,11 +9,11 @@ import TabItem from '@theme/TabItem';
 # Human Task Orchestration
 
 Business processes often involve human interaction. To augment your workflows with human interactions, Orkes Conductor offers a variety of features for real-time interfacing with human input:
-* At the core is Orkes’ **user form template**, a reusable JSON-based schema that defines the form's fields and layout.
-* Each **Human task** is associated with a user form template, which can be assigned to someone to complete.
+* At the core is Orkes’ **user form**, a reusable JSON-based schema that defines the form's fields and layout.
+* Each **Human task** is associated with a user form, which can be assigned to someone to complete.
 * The user form can be displayed on an external UI using Orkes’ **[Human Tasks API](/docs/reference-docs/api/human-tasks/index.mdx)**.
 
-A Human task can be used for a variety of human-involved tasks, such as manual approval in an approval workflow or a booking form in an airline reservation workflow. When a workflow reaches the Human task, a form is generated based on the pre-defined template and assigned for a user or group to fill. Once the form has been submitted, the task will be set as Complete, allowing the workflow to progress to the next step.
+A Human task can be used for a variety of human-involved tasks, such as manual approval in an approval workflow or a booking form in an airline reservation workflow. When a workflow reaches the Human task, a form is generated based on the pre-defined user form and assigned for a user or group to fill. Once the form has been submitted, the task will be set as Complete, allowing the workflow to progress to the next step.
 
 During workflow creation, the Human task can be configured for:
 * **Assignment policy**—Define who can fill out the form, how long the form is assigned to them, and what to do if the assignment times out.
@@ -100,8 +100,8 @@ To use a Human task with an external UI, you must first define the Human task in
 **To define a Human task:**
 1. In the left navigation menu, go to **Definitions** > **Task**, on your Orkes Conductor cluster.
 2. Select **(+) Define task**.
-3. In Name, enter a unique name for your Human task.
-4. In Description, enter the task description.
+3. In **Name**, enter a unique name for your Human task.
+4. In **Description**, enter the task description.
 5. Enter the task details, such as the rate limits, retry settings, timeout settings, and expected inputs and outputs.
 6. Select **Save** > **Confirm Save**.
 
@@ -119,7 +119,7 @@ Add the Human task to your workflow and configure its assignment policy and trig
 1. In your workflow, select the **(+)** icon and add a **Human** task.
 2. In Task Definition, select the task definition created in the previous step.
 3. Enter the **Task display name**, which will appear on the connected UI for the user. Use a unique human-friendly name, such as “Loan Approval” or “Booking Form”.
-4. Select the **UI template** previously created in the User Form studio and its **Version**.
+4. Select the **User form template** previously created in the User Form studio and its **Version**.
 5. (Optional) Add an assignment policy to control who can fill out the form.
     1. In Assignment policy, select **(+) New assignment**.
     2. In Assign, select the **User type** for the assignee(s) and enter the corresponding user or group ID.

@@ -7,73 +7,44 @@ description: "This API is used to log messages associated with a specific task."
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Add Task Log
+# Log Task Execution 
 
-Used to log messages associated with a specific task.
+**Endpoint:** `POST /tasks/{taskId}/log`
 
-## Input Payload
+Logs messages or additional details to a specific task execution.
 
-| Attribute | Description |
-| --------- | -------------- | 
-| taskId | The *taskId* of the task for which you want to log the message. | 
+## Path parameters
 
-## API Endpoint
+| Parameter  | Description | Type | Required/Optional |
+| ---------- | ----------- | ---- | ----------------- |
+| taskId | The execution ID of the task to log the message. | string | Required. | 
 
+## Request body
+
+Format the request to include the details to be logged for the task. 
+
+**Example**
+
+```json
+{"message": "Log this message to the task"}
 ```
-POST /tasks/{taskId}/log
+## Examples
+
+### Log messages to a task execution
+
+<details><summary>Log messages to a task execution</summary>
+
+**Request**
+
+```bash
+curl -X 'POST' \
+  'https://<YOUR-CLUSTER>/api/tasks/0c658ed7-becd-11ef-a89d-86a819bd92bf/log' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{"message": "Log this message to the task"}'
 ```
+**Response**
 
-## Client SDK Methods
-
-<Tabs>
-<TabItem value="Java" label="Java">
-
-```java
-void OrkesTaskClient.log(String body, String taskId) throws ApiException
-```
-
-</TabItem>
-<TabItem value="Go" label="Go">
-
-```go
-func (*TaskResourceApiService) Log(ctx context.Context, body string, taskId string) (*http.Response, error)
-```
-
-</TabItem>
-<TabItem value="Python" label="Python">
-
-```python
-TaskResourceApi.log(body, task_id, **kwargs)
-```
-
-</TabItem>
-<TabItem value="CSharp" label="C#">
-
-```csharp
-void TaskResourceApi.Log(string body, string taskId)
-```
-
-</TabItem>
-<TabItem value="JavaScript" label="JavaScript">
-
-```javascript
-TaskResourceService.log(taskId: string, logMessage:string): CancelablePromise<Array<TaskExecLog>>
-```
-
-</TabItem>
-<TabItem value="Typescript" label="Typescript">
-
-```typescript
-TaskResourceService.log(taskId: string,logMessage:string): CancelablePromise<Array<TaskExecLog>>
-```
-
-</TabItem>
-<TabItem value="Clojure" label="Clojure">
-
-```clojure
-(task-resource/log-task-execution-details options task-ex-id log-message);
-
-```
-
-</TabItem>
-</Tabs>
+Returns 200 OK, indicating that the message has been logged to the task execution.
+</details>

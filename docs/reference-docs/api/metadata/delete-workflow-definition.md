@@ -7,73 +7,34 @@ description: "Workflows are directed sequences of tasks and operators. This API 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Remove the Workflow Definition
+# Delete Workflow Definition
 
-The API to remove/delete the workflow definition.
+**Endpoint:** `DELETE /api/metadata/workflow/{name}/{version}`
 
-## Input Payload
+Deletes an existing task definition.
 
-| Attribute | Description |
-| --------- | -------------- |
-| name      | The *name* of the workflow you want to delete.|
-| version   | The version of the workflow to be deleted. |
+## Path parameters
 
-## API Endpoint
+| Parameter  | Description | Type | Required/Optional |
+| ---------- | ----------- | ---- | ----------------- |
+| name | The name of the workflow definition to be deleted. | string | Required. | 
+| version | The version of the workflow definition to be deleted. | integer | Required. | 
 
+## Examples
+
+### Delete an existing workflow definition
+
+<details><summary>Delete an existing workflow definition</summary>
+
+**Request**
+
+```bash
+curl -X 'DELETE' \
+  'https://<YOUR-CLUSTER>/api/metadata/workflow/api-test/2' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>'
 ```
-DELETE /api/metadata/workflow/{name}/{version}
-```
+**Response**
 
-## Client SDK Methods
-
-<Tabs>
-<TabItem value="Java" label="Java">
-
-```java
-WorkflowDef OrkesMetadataClient.unregisterWorkflowDef(String name, Integer version) throws ApiException
-```
-
-</TabItem>
-<TabItem value="Go" label="Go">
-
-```go
-func (a *MetadataResourceApiService) UnregisterWorkflowDef(ctx context.Context, name string, version int32) (*http.Response, error)
-```
-
-</TabItem>
-<TabItem value="Python" label="Python">
-
-```python
-MetadataResourceApi.unregister_workflow_def(name, version, **kwargs)
-```
-
-</TabItem>
-<TabItem value="CSharp" label="C#">
-
-```csharp
-void MetadataResourceApi.UnregisterWorkflowDef(string name, int? version)
-```
-
-</TabItem>
-<TabItem value="JavaScript" label="JavaScript">
-
-```javascript
-MatadataResourceService.unregisterWorkflowDef(name: string, version: number): CancelablePromise<any>
-```
-
-</TabItem>
-<TabItem value="Typescript" label="Typescript">
-
-```typescript
-MatadataResourceService.unregisterWorkflowDef(name: string, version: number): CancelablePromise<any>
-```
-
-</TabItem>
-<TabItem value="Clojure" label="Clojure">
-
-```clojure
-(metadata/nregister-workflow-def options name version)
-```
-
-</TabItem>
-</Tabs>
+Returns 200 OK, indicating that the particular version of workflow definition has been deleted successfully.
+</details>

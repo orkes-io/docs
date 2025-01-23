@@ -9,81 +9,60 @@ import TabItem from '@theme/TabItem';
 
 # Update Task Status in Workflow
 
-Used to update the execution status of the task within a workflow instance.
+**Endpoint:** `POST /tasks/{workflowId}/{taskRefName}/{status}`
 
-## Input Payload
+Updates the status of a running task in a workflow execution.
 
-| Attribute | Description |
-| -- | -- |
-| workflowId | The execution ID of the workflow to which the task belongs. | 
-| taskRefName | The reference name of the task whose status is being updated. |
-| status | Provide the new status to be set for the task. It can take values: **IN_PROGRESS**, **FAILED_WITH_TERMINAL_ERROR**, **FAILED**, or **COMPLETED**. |
+## Path parameters
 
-## API Endpoint
-```
-POST /tasks/{workflowId}/{taskRefName}/{status}
-```
+| Parameter  | Description | Type | Required/Optional |
+| ---------- | ----------- | ---- | ----------------- |
+| workflowId | The execution ID of the workflow containing the task. | string | Required. | 
+| taskRefName | The reference name of the task whose status is to be updated. | string | Required. | 
+| status | The status to which the task is to be updated. Supported values:<ul><li>**IN_PROGRESS**</li><li>**FAILED**</li><li>**FAILED_WITH_TERMINAL_ERROR**</li><li>**COMPLETED**</li></ul> | string | Required. | 
 
-## Client SDK Methods
+## Query parameters
 
-<Tabs>
-<TabItem value="Java" label="Java">
+| Parameter  | Description | Type | Required/Optional |
+| ---------- | ----------- | ---- | ----------------- |
+| workerId | The worker name from which the task is being polled, which is the hostname of the pod where the worker is running | string | Optional. | 
 
-```java
-String OrkesTaskClient.updateTaskByRefName(Map<String, Object> output, String workflowId, String taskRefName, String status) throws ApiException
-```
+## Request body
 
-</TabItem>
-<TabItem value="Go" label="Go">
+Format the request to include any additional parameters, such as task output parameters.
 
-```go
-func (*WorkflowExecutor) UpdateTaskByRefName(taskRefName string, workflowInstanceId string, status model.TaskResultStatus, output interface{}) error
+**Example**
+```json
+{
+  "taskOutput": "Add this as task output"
+}
 ```
 
-</TabItem>
-<TabItem value="Python" label="Python">
+## Response
 
-```python
-TaskResourceApi.update_task1(taskOutput, workflow_id, task_ref_name, status, **kwargs)
+Returns the task execution ID of the updated task.
+
+## Examples
+
+### Update task status in a workflow
+
+<details><summary>Update task status in a workflow</summary>
+
+**Request**
+
+```bash
+curl -X 'POST' \
+  'https://<YOUR_CLUSTER>/api/tasks/3e1baeeb-bdfa-11ef-88e4-ce0afa758ea1/wait_ref/FAILED' \
+  -H 'accept: text/plain' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+ "taskOutput": "Add this as task output"
+}'
 ```
+**Response**
 
-</TabItem>
-<TabItem value="CSharp" label="C#">
-
-```csharp
-string TaskResourceApi.UpdateTask(Dictionary<string, Object> taskOutput, string workflowId, string taskRefName, string status, string workerid = null)
+```json
+3e1c723c-bdfa-11ef-88e4-ce0afa758ea1
 ```
-
-</TabItem>
-<TabItem value="JavaScript" label="JavaScript">
-
-```javascript
-TaskResourceService.updateTask(
-    workflowId: string,
-    taskRefName: string,
-    status: 'IN_PROGRESS' | 'FAILED' | 'FAILED_WITH_TERMINAL_ERROR' | 'COMPLETED',
-    taskOutput: Record<string, any>,
-): CancelablePromise<string>
-```
-
-</TabItem>
-<TabItem value="Typescript" label="Typescript">
-
-```typescript
-TaskResourceService.updateTask(
-    workflowId: string,
-    taskRefName: string,
-    status: 'IN_PROGRESS' | 'FAILED' | 'FAILED_WITH_TERMINAL_ERROR' | 'COMPLETED',
-    taskOutput: Record<string, any>,
-): CancelablePromise<string>
-```
-
-</TabItem>
-<TabItem value="Clojure" label="Clojure">
-
-```clojure
-(task-resource/update-task-by-reference-name options workflow-id task-reference-name status update-req)
-```
-
-</TabItem>
-</Tabs>
+</details>

@@ -9,79 +9,116 @@ import TabItem from '@theme/TabItem';
 
 # Get Task Definition
 
-The API to get all the task definitions.
+**Endpoint:** `GET /api/metadata/taskdefs/{taskType}`
 
-## Input Payload
+Gets a single task definition from the cluster.
 
+## Path parameters
 
-| Attribute  | Description                                    |
-| ---------- |------------------------------------------------|
-| taskType   | The name of the task for which the task definition is to be retrieved. | 
-## API Endpoint
+| Parameter  | Description | Type | Required/Optional |
+| ---------- | ----------- | ---- | ----------------- |
+| taskType | The name of the task definition to be retrieved. | string | Required. | 
+
+## Query parameters
+
+| Parameter  | Description | Type | Required/Optional |
+| ---------- | ----------- | ---- | ----------------- |
+| metadata | Whether metadata (such as tags) should be included in the response. Default is _false_. | boolean | Optional. | 
+
+## Response
+
+Returns the task definition and includes the metadata if queried.
+
+## Examples
+
+### Get an individual task definition without metadata
+
+<details><summary>Get an individual task definition without metadata</summary>
+
+**Request**
+
+```bash
+curl -X 'GET' \
+  '<YOUR-CLUSTER>/api/metadata/taskdefs/simple?metadata=false' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>'
 ```
-GET /api/metadata/taskdefs/{taskType}
+**Response**
+
+```json
+{
+  "createTime": 1736398189156,
+  "updateTime": 1736398211995,
+  "createdBy": "john.doe@acme.com",
+  "updatedBy": "john.doe@acme.com",
+  "name": "simple",
+  "description": "test",
+  "retryCount": 3,
+  "timeoutSeconds": 3600,
+  "inputKeys": [],
+  "outputKeys": [
+    "someOutputParameter"
+  ],
+  "timeoutPolicy": "TIME_OUT_WF",
+  "retryLogic": "FIXED",
+  "retryDelaySeconds": 60,
+  "responseTimeoutSeconds": 600,
+  "concurrentExecLimit": 0,
+  "inputTemplate": {},
+  "rateLimitPerFrequency": 0,
+  "rateLimitFrequencyInSeconds": 1,
+  "ownerEmail": "john.doe@acme.com",
+  "pollTimeoutSeconds": 3600,
+  "backoffScaleFactor": 1,
+  "totalTimeoutSeconds": 0,
+  "enforceSchema": false
+}
 ```
+</details>
 
-## Client SDK Methods
+### Get an individual task definition with metadata
 
-<Tabs>
-<TabItem value="Java" label="Java">
+<details><summary>Get an individual task definition with metadata</summary>
 
-```java
-void OrkesMetadataClient.getTaskDef() throws ApiException
+**Request**
+
+```bash
+curl -X 'GET' \
+  'https://<YOUR-CLUSTER>/api/metadata/taskdefs/simple?metadata=true' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>'
 ```
+**Response**
 
-</TabItem>
-<TabItem value="Go" label="Go">
-
-```go
-func (a *MetadataResourceApiService) GetTaskDef(ctx context.Context, tasktype string) (model.TaskDef, *http.Response, error)
+```json
+{
+  "createTime": 1736398189156,
+  "updateTime": 1736398211995,
+  "createdBy": "john.doe@acme.com",
+  "updatedBy": "john.doe@acme.com",
+  "name": "simple",
+  "description": "test",
+  "retryCount": 3,
+  "timeoutSeconds": 3600,
+  "inputKeys": [],
+  "outputKeys": [
+    "someOutputParameter"
+  ],
+  "timeoutPolicy": "TIME_OUT_WF",
+  "retryLogic": "FIXED",
+  "retryDelaySeconds": 60,
+  "responseTimeoutSeconds": 600,
+  "concurrentExecLimit": 0,
+  "inputTemplate": {},
+  "rateLimitPerFrequency": 0,
+  "rateLimitFrequencyInSeconds": 1,
+  "ownerEmail": "john.doe@acme.com",
+  "pollTimeoutSeconds": 3600,
+  "backoffScaleFactor": 1,
+  "totalTimeoutSeconds": 0,
+  "enforceSchema": false,
+  "overwriteTags": true,
+  "tags": []
+}
 ```
-
-</TabItem>
-<TabItem value="Python" label="Python">
-
-```python
-MetadataResourceApi.get_task_def(tasktype, **kwargs)
-```
-
-</TabItem>
-<TabItem value="CSharp" label="C#">
-
-```csharp
-TaskDef MetadataResourceApi.GetTaskDef(string tasktype, bool? metadata = null)
-```
-
-</TabItem>
-<TabItem value="JavaScript" label="JavaScript">
-
-```javascript
-MetadataResourceService.getTaskDefs(
-    access: string = 'READ',
-    metadata: boolean = false,
-    tagKey?: string,
-    tagValue?: string,
-  ): CancelablePromise<Array<TaskDef>>
-```
-
-</TabItem>
-<TabItem value="Typescript" label="Typescript">
-
-```typescript
-MetadataResourceService.getTaskDefs(
-    access: string = 'READ',
-    metadata: boolean = false,
-    tagKey?: string,
-    tagValue?: string,
-  ): CancelablePromise<Array<TaskDef>>
-```
-
-</TabItem>
-<TabItem value="Clojure" label="Clojure">
-
-```clojure
-(metadata/get-task-def options task-def)
-```
-
-</TabItem>
-</Tabs>
+</details>
