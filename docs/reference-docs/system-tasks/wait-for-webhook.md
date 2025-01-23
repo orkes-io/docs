@@ -27,7 +27,7 @@ Configure these parameters for the Wait for Webhook task.
 
 | Parameter | Description | Required/Optional | 
 | --------- | ----------- | ----------------- |
-| inputParameters.**matches** | The conditions that incoming event payloads must meet to trigger the webhook. Can be string, number, boolean, null, or object/array. | Required. |
+| inputParameters.**matches** | The conditions that incoming event payloads must meet to trigger the webhook. Can be string, number, boolean, null, or object/array.<br/>**Note:** When you update the matches, there will be a default caching period of 60 seconds, causing the updates to reflect with a delay of up to 60 seconds. | Required. |
 
 ### Writing custom matches​
 
