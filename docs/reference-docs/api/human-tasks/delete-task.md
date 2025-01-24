@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 7
 slug: "/reference-docs/api/human-tasks/delete-task"
 description: "This API is used to delete a Human task that is disconnected from a workflow due to error conditions."
 ---
@@ -9,25 +9,41 @@ import TabItem from '@theme/TabItem';
 
 # Delete Human Task
 
-This API is only to be used to delete a task that is disconnected from a workflow due to error conditions. Under normal conditions, this API wouldn't have to be used.
+**Endpoint:** `DELETE /api/human/tasks/delete/{taskId}`
 
-:::note
-The invoking user should be a task owner or an ADMIN to the task. 
+Deletes a Human task execution. Use this endpoint only to delete a task that has been disconnected from a workflow execution due to error conditions. Under normal conditions, there is no need to use this endpoint.
+
+The invoking user should be one of the following:
+* Cluster admin
+* Task owner of the Human task
+* User with DELETE permission for the Human task definition
+
+:::warning
+If this API is used for a Human task that is still associated with a workflow execution, the workflow will not be able to proceed normally and must be retried or restarted to generate a new Human task.
 :::
 
-:::warning Note
-If this API is invoked while the task is still associated with a workflow, the workflow task will be in an
-error state and the workflow would have to be retried or restarted to create a new task.
-:::
 
-## Input Payload
+## Path parameters
 
-| Attribute  | Description                                              |
-|------------|----------------------------------------------------------| 
-| taskId     | The *taskId* of the human task to be deleted. | 
+| Parameter  | Description | Type | Required/ Optional |
+| ---------- | ----------- | ---- | ----------------- |
+| taskId | The unique identifier for the Human task execution to be deleted. | string | Required. |
 
-## API Endpoint 
+## Examples
 
+<details><summary>Delete a Human task execution</summary>
+
+**Request**
+
+``` shell
+curl -X 'DELETE' \
+  'https://<YOUR_CLUSTER>/api/human/tasks/delete/7f49e3c7-ce62-11ef-a89d-86a819bd92bf' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>'
 ```
-DELETE human/tasks/delete/{taskId}
-```
+
+**Response**
+
+Returns 200 OK, indicating that the Human task execution has been deleted.
+
+</details>

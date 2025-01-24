@@ -1,5 +1,5 @@
 ---
-sidebar_position: 15
+sidebar_position: 10
 slug: "/reference-docs/api/human-tasks/list-task-ui-templates"
 description: "This API is used to retrieve a list of Human task user forms stored in Orkes Conductor based on the search criteria."
 ---
@@ -7,20 +7,312 @@ description: "This API is used to retrieve a list of Human task user forms store
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# List Human Task Template
+# Get User Forms 
 
-Used to list all human task templates stored in Conductor and optionally filter by name and version.
+**Endpoint:** `GET /api/human/template`
 
-## Input Parameters
+Lists all user form details stored in the Conductor server, or gets a particular user form’s details by name and version.
 
-| Attribute | Description         |
-|-----------|---------------------| 
-| name      | The user-form/template name to be filtered.   | 
-| version   | The version of the user-form/template to be filtered.| 
+## Query parameters
 
-## API Endpoint 
+Add the following query parameters only if a particular user form is to be retrieved.
 
+| Parameter  | Description | Type | Required/ Optional |
+| ---------- | ----------- | ---- | ----------------- |
+| name | The user form name to be retrieved. | string | Optional. |
+| version | The version of the user form to be retrieved. | integer | Optional. |
+
+## Response
+
+Returns an array of user form details.
+
+## Examples
+
+<details><summary>Get all user forms</summary>
+
+**Request**
+
+``` shell
+curl -X 'GET' \
+  'https://<YOUR_CLUSTER>/api/human/template? \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
 ```
-GET human/template
+
+**Response**
+
+``` json
+[
+  {
+    "createTime": 1721621243092,
+    "updateTime": 1723805020725,
+    "createdBy": "USER:user@example.com",
+    "updatedBy": "USER:user@example.com",
+    "name": "ExpenseApproval",
+    "version": 1,
+    "jsonSchema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "expenseName": {
+          "type": "string"
+        },
+        "expenseAmt": {
+          "type": "number"
+        },
+        "approve": {
+          "type": "boolean"
+        },
+        "approveReason": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "expenseName",
+        "expenseAmt",
+        "approve"
+      ]
+    },
+    "templateUI": {
+      "type": "VerticalLayout",
+      "elements": [
+        {
+          "type": "Control",
+          "scope": "#/properties/expenseName",
+          "label": "Expense",
+          "options": {
+            "readonly": true
+          }
+        },
+        {
+          "type": "Control",
+          "scope": "#/properties/expenseAmt",
+          "label": "Amount",
+          "options": {
+            "readonly": true
+          }
+        },
+        {
+          "type": "Control",
+          "scope": "#/properties/approve",
+          "label": "Approved?",
+          "options": {}
+        },
+        {
+          "type": "Control",
+          "scope": "#/properties/approveReason",
+          "label": "Comments"
+        }
+      ]
+    }
+  },
+  {
+    "createTime": 1736938788768,
+    "updateTime": 1736938788768,
+    "createdBy": "USER:user@example.com",
+    "updatedBy": "USER:user@example.com",
+    "name": "someForm",
+    "version": 2,
+    "jsonSchema": {
+      "$schema": "http://json-schema.org/draft-07/schema",
+      "properties": {
+        "vegetable": {
+          "type": "string",
+          "enum": [
+            "potatoes",
+            "carrots",
+            "celery",
+            "apple",
+            "banana"
+          ]
+        }
+      }
+    },
+    "templateUI": {
+      "type": "VerticalLayout",
+      "elements": [
+        {
+          "type": "Control",
+          "scope": "#/properties/vegetable",
+          "label": "Pick a vegetable or fruit",
+          "options": {}
+        }
+      ]
+    }
+  },
+  {
+    "createTime": 1736938081924,
+    "updateTime": 1736940939545,
+    "createdBy": "USER:user@example.com",
+    "updatedBy": "USER:user@example.com",
+    "name": "someForm",
+    "version": 1,
+    "jsonSchema": {
+      "$schema": "http://json-schema.org/draft-07/schema",
+      "properties": {
+        "vegetable": {
+          "type": "string",
+          "enum": [
+            "potatoes",
+            "carrots"
+          ]
+        }
+      }
+    },
+    "templateUI": {
+      "type": "VerticalLayout",
+      "elements": [
+        {
+          "type": "Control",
+          "scope": "#/properties/vegetable",
+          "label": "Pick one",
+          "options": {}
+        }
+      ]
+    }
+  }
+]
 ```
 
+</details>
+
+
+<details><summary>Get all versions of a user form</summary>
+
+**Request**
+
+``` shell
+curl -X 'GET' \
+  'https://<YOUR_CLUSTER>/api/human/template?name=someForm \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+``` json
+[
+  {
+    "createTime": 1736938788768,
+    "updateTime": 1736938788768,
+    "createdBy": "USER:user@example.com",
+    "updatedBy": "USER:user@example.com",
+    "name": "someForm",
+    "version": 2,
+    "jsonSchema": {
+      "$schema": "http://json-schema.org/draft-07/schema",
+      "properties": {
+        "vegetable": {
+          "type": "string",
+          "enum": [
+            "potatoes",
+            "carrots",
+            "celery",
+            "apple",
+            "banana"
+          ]
+        }
+      }
+    },
+    "templateUI": {
+      "type": "VerticalLayout",
+      "elements": [
+        {
+          "type": "Control",
+          "scope": "#/properties/vegetable",
+          "label": "Pick a vegetable or fruit",
+          "options": {}
+        }
+      ]
+    }
+  },
+  {
+    "createTime": 1736938081924,
+    "updateTime": 1736940939545,
+    "createdBy": "USER:user@example.com",
+    "updatedBy": "USER:user@example.com",
+    "name": "someForm",
+    "version": 1,
+    "jsonSchema": {
+      "$schema": "http://json-schema.org/draft-07/schema",
+      "properties": {
+        "vegetable": {
+          "type": "string",
+          "enum": [
+            "potatoes",
+            "carrots"
+          ]
+        }
+      }
+    },
+    "templateUI": {
+      "type": "VerticalLayout",
+      "elements": [
+        {
+          "type": "Control",
+          "scope": "#/properties/vegetable",
+          "label": "Pick one",
+          "options": {}
+        }
+      ]
+    }
+  }
+]
+```
+
+</details>
+
+
+<details><summary>Get one version of a user form</summary>
+
+**Request**
+
+``` shell
+curl -X 'GET' \
+  'https://<YOUR_CLUSTER>/api/human/template?name=someForm&version=2 \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+``` json
+[
+  {
+    "createTime": 1736938788768,
+    "updateTime": 1736938788768,
+    "createdBy": "USER:user@example.com",
+    "updatedBy": "USER:user@example.com",
+    "name": "someForm",
+    "version": 2,
+    "jsonSchema": {
+      "$schema": "http://json-schema.org/draft-07/schema",
+      "properties": {
+        "vegetable": {
+          "type": "string",
+          "enum": [
+            "potatoes",
+            "carrots",
+            "celery",
+            "apple",
+            "banana"
+          ]
+        }
+      }
+    },
+    "templateUI": {
+      "type": "VerticalLayout",
+      "elements": [
+        {
+          "type": "Control",
+          "scope": "#/properties/vegetable",
+          "label": "Pick a vegetable or fruit",
+          "options": {}
+        }
+      ]
+    }
+  }
+]
+```
+
+</details>

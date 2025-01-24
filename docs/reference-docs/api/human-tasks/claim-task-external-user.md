@@ -1,59 +1,361 @@
 ---
-sidebar_position: 6
+sidebar_position: 4
 slug: "/reference-docs/api/human-tasks/claim-task-external-user"
 description: "This API is used by any user (external or internal) to claim a Human task."
 ---
 
-import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
+import Tabs from '@theme/Tabs'; 
+import TabItem from '@theme/TabItem';
 
 # Claim Task (External/All Users)
 
-Used to claim a human task by any user. Use this API to claim a task on behalf of a user, which can be external or
-internal.
+**Endpoint:** `POST /api/human/tasks/{taskId}/externalUser/{userId}`
 
-This is the API for applications that are built on top of Conductor to retrieve and act on tasks for users. For example,
-if user "A" is logged on to the system in application "APP", then "APP" can retrieve the tasks eligible for user "A" to
-act and can claim a task if user "A" is ready to act on it. "APP" needs to use a credential that is an owner of the
-tasks that user "A" is expected to work on.
+Claims an unclaimed Human task on behalf of any user (external or Conductor user).
 
-Claiming a task will allocate the task to the selected user and will not allow others to claim until the task is released
-by the original claimant. If the claimant completes the task, it will complete the corresponding workflow task and will
-proceed to the next step.
+Use this endpoint in applications built on top of Conductor to claim and retrieve tasks for users to act on. For example, if user "A" is logged into application "APP", then "APP" can retrieve the tasks eligible for user "A" to claim and complete. 
 
-:::note 
-The invoking user should be a task owner or an ADMIN. The provided userId will be matched if the assignee on the
-task is of type EXTERNAL_USER, CONDUCTOR_USER or CONDUCTOR_GROUP. If the assignee type is EXTERNAL_GROUP, the system
-will assume the external system has validated the claim criteria. If the task is not assigned to any one, any user will be able to retrieve the task. 
-:::
+The invoking user (such as "APP") should be a cluster admin or task owner. The provided *userId* will be validated if the assignee type is EXTERNAL_USER, CONDUCTOR_USER or CONDUCTOR_GROUP. If the assignee type is EXTERNAL_GROUP, the system will assume the external system has validated the claim criteria. If the task is not assigned to anyone, any authorized user will be able to claim the task.
 
-## Input Payload
 
-| Attribute  | Description                                                |
-|------------|------------------------------------------------------------| 
-| taskId     | The *taskId* of the human task to be claimed. | 
-| userId     | The *userId* of the user claiming this task.               | 
+## Path parameters
 
-## API Endpoint
+| Parameter  | Description | Type | Required/ Optional |
+| ---------- | ----------- | ---- | ----------------- |
+| taskId | The unique identifier for the Human task execution to be claimed. | string | Required. |
+| userId | The unique identifier for the user claiming the Human task. | string | Required. |
 
-```
-POST human/tasks/{taskId}/externalUser/{userId}
-```
 
-## Client SDK Methods
+## Query parameters
 
-<Tabs>
-<TabItem value="JavaScript" label="JavaScript">
+| Parameter  | Description | Type | Required/ Optional |
+| ---------- | ----------- | ---- | ----------------- |
+| overrideAssignment | Whether to override the existing assignment. Default is false. | boolean | Optional. |
+| withTemplate | Whether to include the task’s user form details in the response. Default is false. | boolean | Optional. |
 
-```javascript
-HumanExecutor.claimTaskAsExternalUser(taskId: string, assignee: string)
-```
+## Response
 
-</TabItem>
-<TabItem value="Typescript" label="Typescript">
+Returns the Human task object.
 
-```typescript
-HumanExecutor.claimTaskAsExternalUser(taskId: string, assignee: string)
+
+## Examples
+
+<details><summary>Claim a Human task by overriding the existing assignment</summary>
+
+**Request**
+
+``` shell
+curl -X 'POST' \
+  'https://<YOUR_CLUSTER>/api/human/tasks/869ed0ee-cf07-11ef-a89d-86a819bd92bf/externalUser/user%40example.com?overrideAssignment=true' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>' \
+  -d ''
 ```
 
-</TabItem>
-</Tabs>
+**Response**
+
+``` json
+{
+  "createdBy": "user@example.com",
+  "updatedBy": "user@example.com",
+  "taskId": "869ed0ee-cf07-11ef-a89d-86a819bd92bf",
+  "state": "IN_PROGRESS",
+  "displayName": "Pick your assets",
+  "definitionName": "selectAssets",
+  "workflowId": "8699a0c8-cf07-11ef-a89d-86a819bd92bf",
+  "workflowName": "assetPageFlow",
+  "taskRefName": "selectAssets_ref",
+  "assignee": {
+    "userType": "EXTERNAL_USER",
+    "user": "user@example.com"
+  },
+  "claimant": {
+    "userType": "EXTERNAL_USER",
+    "user": "user@example.com"
+  },
+  "humanTaskDef": {
+    "assignments": [
+      {
+        "slaMinutes": 11,
+        "assignee": {
+          "userType": "EXTERNAL_USER",
+          "user": "yes"
+        }
+      },
+      {
+        "slaMinutes": 0,
+        "assignee": {
+          "userType": "EXTERNAL_USER",
+          "user": "yup"
+        }
+      }
+    ],
+    "userFormTemplate": {
+      "name": "assetWatchlist",
+      "version": 1
+    },
+    "assignmentCompletionStrategy": "LEAVE_OPEN",
+    "displayName": "Pick your assets"
+  },
+  "input": {
+    "Confirm": false,
+    "_createdBy": "user@example.com",
+    "enterAssets": "",
+    "__humanTaskDefinition": {
+      "assignments": [],
+      "displayName": "Pick your assets",
+      "userFormTemplate": {
+        "name": "assetWatchlist",
+        "version": 1
+      },
+      "assignmentCompletionStrategy": "LEAVE_OPEN"
+    },
+    "__humanTaskProcessContext": {
+      "state": "IN_PROGRESS",
+      "lastUpdated": 1736482940421,
+      "humanTaskTriggerLog": [],
+      "humanTaskActionLogs": [
+        {
+          "id": "caa98777-e69c-4cbb-80f1-65d8389fa66f",
+          "state": "ASSIGNED",
+          "stateStart": 1736481670236,
+          "action": "ASSIGNMENTS_COMPLETED",
+          "actedBy": "system"
+        },
+        {
+          "id": "02c9a4e9-bd51-4d91-95da-33074f0dc48a",
+          "state": "IN_PROGRESS",
+          "stateStart": 1736482940421,
+          "assignee": {
+            "userType": "EXTERNAL_USER",
+            "user": "user@example.com"
+          },
+          "claimant": {
+            "userType": "EXTERNAL_USER",
+            "user": "user@example.com"
+          },
+          "action": "CLAIM",
+          "actedBy": "EXTERNAL_USER:user@example.com"
+        }
+      ],
+      "assigneeIndex": 1,
+      "skippedAssigneeIndexes": [],
+      "assignmentsCompleted": false
+    }
+  },
+  "output": {},
+  "createdOn": 1736481670209,
+  "updatedOn": 1736482354449
+}
+```
+
+</details>
+
+
+<details><summary>Claim a Human task without returning the user form details</summary>
+
+**Request**
+
+``` shell
+curl -X 'POST' \
+  'https://<YOUR_CLUSTER>.io/api/human/tasks/ade63b86-ce70-11ef-88e4-ce0afa758ea1/externalUser/user%40example.com?withTemplate=false' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>' \
+  -d ''
+```
+
+**Response**
+
+``` json
+{
+  "createdBy": "user@example.com",
+  "updatedBy": "user@example.com",
+  "taskId": "ade63b86-ce70-11ef-88e4-ce0afa758ea1",
+  "state": "IN_PROGRESS",
+  "displayName": "Pick your assets",
+  "definitionName": "selectAssets",
+  "workflowId": "ade291fe-ce70-11ef-88e4-ce0afa758ea1",
+  "workflowName": "assetPageFlow",
+  "taskRefName": "selectAssets_ref",
+  "claimant": {
+    "userType": "EXTERNAL_USER",
+    "user": "user@example.com"
+  },
+  "humanTaskDef": {
+    "assignments": [],
+    "userFormTemplate": {
+      "name": "assetWatchlist",
+      "version": 1
+    },
+    "assignmentCompletionStrategy": "LEAVE_OPEN",
+    "displayName": "Pick your assets"
+  },
+  "input": {
+    "Confirm": false,
+    "_createdBy": "user@example.com",
+    "enterAssets": "",
+    "__humanTaskDefinition": {
+      "assignments": [],
+      "displayName": "Pick your assets",
+      "userFormTemplate": {
+        "name": "assetWatchlist",
+        "version": 1
+      },
+      "assignmentCompletionStrategy": "LEAVE_OPEN"
+    },
+    "__humanTaskProcessContext": {
+      "state": "IN_PROGRESS",
+      "lastUpdated": 1736416961264,
+      "humanTaskTriggerLog": [],
+      "humanTaskActionLogs": [
+        {
+          "id": "298082b0-a6c2-492d-9e92-fefec55bf485",
+          "state": "ASSIGNED",
+          "stateStart": 1736416882112,
+          "action": "ASSIGNMENTS_COMPLETED",
+          "actedBy": "system"
+        },
+        {
+          "id": "8689f837-3b12-4a07-a1c3-212125668113",
+          "state": "IN_PROGRESS",
+          "stateStart": 1736416961264,
+          "claimant": {
+            "userType": "EXTERNAL_USER",
+            "user": "user@example.com"
+          },
+          "action": "CLAIM",
+          "actedBy": "EXTERNAL_USER:user@example.com"
+        }
+      ],
+      "skippedAssigneeIndexes": [],
+      "assignmentsCompleted": true
+    }
+  },
+  "output": {},
+  "createdOn": 1736416882100,
+  "updatedOn": 1736416882112
+}
+```
+</details>
+
+
+<details><summary>Claim a Human task and return the user form details</summary>
+
+**Request**
+
+``` shell
+curl -X 'POST' \
+  'https://<YOUR_CLUSTER>.io/api/human/tasks/d9a5e0ef-ce70-11ef-88e4-ce0afa758ea1/externalUser/user%40example.com?withTemplate=true' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>' \
+  -d ''
+```
+
+**Response**
+
+``` json
+{
+  "createdBy": "user@example.com",
+  "updatedBy": "user@example.com",
+  "taskId": "d9a5e0ef-ce70-11ef-88e4-ce0afa758ea1",
+  "state": "IN_PROGRESS",
+  "displayName": "Pick your assets",
+  "definitionName": "selectAssets",
+  "workflowId": "d9a2ac97-ce70-11ef-88e4-ce0afa758ea1",
+  "workflowName": "assetPageFlow",
+  "taskRefName": "selectAssets_ref",
+  "claimant": {
+    "userType": "EXTERNAL_USER",
+    "user": "user@example.com"
+  },
+  "humanTaskDef": {
+    "assignments": [],
+    "userFormTemplate": {
+      "name": "assetWatchlist",
+      "version": 1
+    },
+    "assignmentCompletionStrategy": "LEAVE_OPEN",
+    "displayName": "Pick your assets",
+    "fullTemplate": {
+      "createTime": 1736409506524,
+      "updateTime": 1736409506524,
+      "createdBy": "USER:user@example.com",
+      "updatedBy": "USER:user@example.com",
+      "name": "assetWatchlist",
+      "version": 1,
+      "jsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema",
+        "properties": {
+          "enterAssets": {
+            "type": "string"
+          },
+          "Confirm": {
+            "type": "boolean"
+          }
+        }
+      },
+      "templateUI": {
+        "type": "VerticalLayout",
+        "elements": [
+          {
+            "type": "Control",
+            "scope": "#/properties/enterAssets",
+            "label": "Enter Assets"
+          },
+          {
+            "type": "Control",
+            "scope": "#/properties/Confirm",
+            "options": {}
+          }
+        ]
+      }
+    }
+  },
+  "input": {
+    "Confirm": false,
+    "_createdBy": "user@example.com",
+    "enterAssets": "",
+    "__humanTaskDefinition": {
+      "assignments": [],
+      "displayName": "Pick your assets",
+      "userFormTemplate": {
+        "name": "assetWatchlist",
+        "version": 1
+      },
+      "assignmentCompletionStrategy": "LEAVE_OPEN"
+    },
+    "__humanTaskProcessContext": {
+      "state": "IN_PROGRESS",
+      "lastUpdated": 1736417131590,
+      "humanTaskTriggerLog": [],
+      "humanTaskActionLogs": [
+        {
+          "id": "26cdec64-a9a4-4fa1-a9db-7cdfe120803c",
+          "state": "ASSIGNED",
+          "stateStart": 1736416955529,
+          "action": "ASSIGNMENTS_COMPLETED",
+          "actedBy": "system"
+        },
+        {
+          "id": "5754de06-abb8-4a88-88a4-681c89d2d47a",
+          "state": "IN_PROGRESS",
+          "stateStart": 1736417131590,
+          "claimant": {
+            "userType": "EXTERNAL_USER",
+            "user": "user@example.com"
+          },
+          "action": "CLAIM",
+          "actedBy": "EXTERNAL_USER:user@example.com"
+        }
+      ],
+      "skippedAssigneeIndexes": [],
+      "assignmentsCompleted": true
+    }
+  },
+  "output": {},
+  "createdOn": 1736416955498,
+  "updatedOn": 1736416955529
+}
+```
+
+</details>

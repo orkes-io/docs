@@ -75,7 +75,7 @@ You can toggle to the Code tab to create custom components for your form. Howeve
 **To configure a component:**
 1. Select the Edit icon beside the component. <br/> A pop-up box appears. 
   <p align="center"><img src="/content/img/making-form-fields-mandatory.png" alt="Making form field mandatory in human tasks in Conductor" width="50%" height="auto"></img></p> 
-2. Enter the **Field Name**, which serves as the input parameter name in the Human task definition.
+2. Enter the **Field Name**, which serves as the input parameter name in the Human task configuration.
 3. Enter the **Label**, which is the text that end-users see when filling out the form.
 4. Configure the remaining settings:
 
@@ -164,7 +164,7 @@ During development, you can set the assignment policy to Conductor User or Group
 
 ### Step 4: Display the form on an external UI
 
-When the Human task begins, the associated user form will be assigned to the user or group defined in the task. The user form can be displayed on an external UI so that assignees can claim and complete user forms without having to log into Orkes Conductor. These external assignees are referenced in the Human task definition but managed and verified in an external system.
+When the Human task begins, the associated user form will be assigned to the user or group defined in the task. The user form can be displayed on an external UI so that assignees can claim and complete user forms without having to log into Orkes Conductor. These external assignees are referenced in the Human task configuration but managed and verified in an external system.
 
 **To display the form on an external UI:**
 
@@ -303,12 +303,12 @@ If you are a cluster admin or task admin (workflow creator for the Human task), 
 
 | Filter     | Description                                       |
 | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Task names | Filters based on the task display name specified in the Human task definition. Multiple entries can be selected. |
+| Task names | Filters based on the task display name specified in the workflow definition. Multiple entries can be selected. |
 | State | Filters based on the Human task status. Supported values:<ul><li>IN_PROGRESS</li> <li>PENDING</li> <li>ASSIGNED</li> <li>COMPLETED</li> <li>TIMED_OUT</li> <li>DELETED</li></ul> |
 | Definition names | Filters based on the task definition name. Multiple entries can be selected. |
 | Output data search | Filters based on the output data. |
 | Task reference name | Filters based on the task reference name. Multiple entries can be selected. |
-| Start time | Filters based on the task execution time. |
+| Start time | Filters based on the task's last updated time. |
 | Input data search | Filters based on the input data. |
 | Full-text search | Searches all data within the execution columns based on an “AND” and “OR” query. <p align="center"><img src="/content/img/full-text-search-human-task.png" alt="Full text view of human task executions" width="100%" height="auto"></img></p> For example, `“loan" OR "cc3d2dc-18d4-11ef-a811-8a584d19ffea"`. The search will return all results that contain either the text “loan” or the specific workflow ID “cc3d2dc-18d4-11ef-a811-8a584d19ffea”. To get results matching both criteria, use “AND” instead of “OR”. |
 | Workflow IDs | Filters based on the workflow execution IDs.|

@@ -1,5 +1,5 @@
 ---
-sidebar_position: 9
+sidebar_position: 6
 slug: "/reference-docs/api/human-tasks/update-human-task"
 description: "This API is used to update a claimed Human task."
 ---
@@ -8,22 +8,82 @@ import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
 # Update Human Task
 
-Used for updating a claimed task. Optionally this cane be used to complete the task.
+**Endpoint:** `POST /api/human/tasks/{taskId}/update`
 
-:::note 
-The invoking user should be a task owner, an ADMIN, or a claimant to the task. 
-:::
+Updates or completes a claimed Human task with the form field inputs.
 
-## Input Payload
+The invoking user should be one of the following:
+* Cluster admin
+* Task owner of the Human task
+* Task claimant
 
-| Attribute    | Description                                                                                                         |
-|--------------|---------------------------------------------------------------------------------------------------------------------| 
-| taskId       | The *taskId* of the human task to be updated.                                                           | 
-| complete     | Boolean to mark if the task is complete or not, send this as false for just updating data, and keep the task in progress. Set this is true to complete the task. | 
-| Request Body | Output of the human task work - usually the payload of the human task form entries.                                | 
+## Path parameters
 
-## API Endpoint
+| Parameter  | Description | Type | Required/ Optional |
+| ---------- | ----------- | ---- | ----------------- |
+| taskId | The unique identifier for the Human task execution to be updated. | string | Required. |
 
+## Query parameters
+
+| Parameter  | Description | Type | Required/ Optional |
+| ---------- | ----------- | ---- | ----------------- |
+| complete | Whether to mark the task as complete or not. Set to false to keep the task in progress. Default is false. | boolean | Optional. |
+
+## Response body
+
+Format the request as an object containing the form field inputs.
+
+**Example**
+
+``` json
+{
+  "formFieldName": "yourInputHere",
+}
 ```
-POST human/tasks/{taskId}/update
+
+## Examples
+
+<details><summary>Update a claimed Human task</summary>
+
+**Request**
+
+``` shell
+curl -X 'POST' \
+  'https://<YOUR_CLUSTER>/api/human/tasks/869ed0ee-cf07-11ef-a89d-86a819bd92bf/update' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "policyType": "travel",
+  "payout": true
+}'
 ```
+
+**Response**
+
+Returns 200 OK, indicating that the Human task has been updated successfully.
+
+</details>
+
+
+<details><summary>Complete a claimed Human task</summary>
+
+**Request**
+
+``` shell
+curl -X 'POST' \
+  'https://<YOUR_CLUSTER>/api/human/tasks/869ed0ee-cf07-11ef-a89d-86a819bd92bf/update?complete=true' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "policyType": "travel",
+  "payout": true
+}'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the Human task has been completed successfully.
+
+</details>

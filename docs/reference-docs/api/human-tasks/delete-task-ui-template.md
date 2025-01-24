@@ -1,5 +1,5 @@
 ---
-sidebar_position: 13
+sidebar_position: 12
 slug: "/reference-docs/api/human-tasks/delete-task-ui-template"
 description: "This API is used to delete a Human task user form based on its name."
 ---
@@ -7,23 +7,38 @@ description: "This API is used to delete a Human task user form based on its nam
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Delete Human Task User Form/Template
+# Delete User Form 
 
-Used to delete a human task template by its name. Use this API to delete a task template specification stored in Conductor.
+**Endpoint:** `DELETE /api/human/template/{name}`
 
-:::danger Deleting Templates
-If the template is used by a workflow, it will fail to render.
+Deletes a user form using its name from the Conductor server.
+
+:::warning
+After deletion, all Human tasks that make use of the deleted user form will fail to render.
 :::
 
-## Input Payload
 
-| Attribute | Description                                                   |
-|-----------|---------------------------------------------------------------| 
-| name        | The *name* of the human task user-form/template to be deleted. | 
+## Path parameters
 
-## API Endpoint 
+| Parameter  | Description | Type | Required/ Optional |
+| ---------- | ----------- | ---- | ----------------- |
+| name | The name of the user form to be deleted. | string | Required. |
 
+## Examples
+
+<details><summary>Delete a user form</summary>
+
+**Request**
+
+``` shell
+curl -X 'DELETE' \
+  'https://<YOUR_CLUSTER>/api/human/template/someForm \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>'
 ```
-DELETE human/template/{name}
-```
 
+**Response**
+
+Returns 200 OK, indicating that the user form has been deleted successfully.
+
+</details>
