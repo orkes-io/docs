@@ -1,5 +1,5 @@
 ---
-sidebar_position: 12
+sidebar_position: 1
 slug: "/reference-docs/api/workflow/start-workflow-execution"
 description: "This API is used to start a workflow execution and immediately generates a workflow ID."
 ---

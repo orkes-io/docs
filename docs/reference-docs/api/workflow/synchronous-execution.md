@@ -1,5 +1,5 @@
 ---
-sidebar_position: 13
+sidebar_position: 2
 slug: "/reference-docs/api/workflow/synchronous-execution"
 description: "This API is used to start a workflow execution. The API response returns only after the workflow or a specified task is completed. "
 ---

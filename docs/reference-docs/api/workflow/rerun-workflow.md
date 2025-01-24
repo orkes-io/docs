@@ -1,5 +1,5 @@
 ---
-sidebar_position: 6
+sidebar_position: 11
 slug: "/reference-docs/api/workflow/rerun-workflow"
 description: "This API is used to rerun a workflow from a specific task using on an updated workflow input if needed."
 ---

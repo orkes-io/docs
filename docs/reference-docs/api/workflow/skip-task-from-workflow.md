@@ -1,5 +1,5 @@
 ---
-sidebar_position: 11
+sidebar_position: 7
 slug: "/reference-docs/api/workflow/skip-task-from-workflow"
 description: "This API is used to skip a specific task in a currently running workflow."
 ---

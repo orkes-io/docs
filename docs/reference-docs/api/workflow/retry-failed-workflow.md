@@ -1,5 +1,5 @@
 ---
-sidebar_position: 9
+sidebar_position: 13
 slug: "/reference-docs/api/workflow/retry-failed-workflow"
 description: "This API is used to retry a failed workflow execution from the last failed task."
 ---

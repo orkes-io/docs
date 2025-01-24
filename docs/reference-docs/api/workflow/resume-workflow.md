@@ -1,5 +1,5 @@
 ---
-sidebar_position: 8
+sidebar_position: 9
 slug: "/reference-docs/api/workflow/resume-workflow"
 description: "This API is used to resume a paused workflow execution."
 ---

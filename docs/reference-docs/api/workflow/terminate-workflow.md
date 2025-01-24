@@ -1,5 +1,5 @@
 ---
-sidebar_position: 14
+sidebar_position: 10
 slug: "/reference-docs/api/workflow/terminate-workflow"
 description: "This API is used to terminate a workflow execution with a termination reason."
 ---

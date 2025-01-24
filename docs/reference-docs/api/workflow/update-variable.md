@@ -1,4 +1,5 @@
 ---
+sidebar_position: 5
 slug: "/reference-docs/api/workflow/update-variable"
 description: "This API is used to update the workflow variables in a currently running workflow."
 ---

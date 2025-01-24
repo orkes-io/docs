@@ -1,5 +1,5 @@
 ---
-sidebar_position: 5
+sidebar_position: 8
 slug: "/reference-docs/api/workflow/pause-worflow"
 description: "This API is used to pause a running workflow execution."
 ---

@@ -1,5 +1,5 @@
 ---
-sidebar_position: 0
+sidebar_position: 3
 slug: "/reference-docs/api/workflow/get-workflow-by-id"
 description: "This API is used to retrieve a workflow execution based on its workflow ID."
 ---
