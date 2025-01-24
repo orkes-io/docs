@@ -9,77 +9,37 @@ import TabItem from '@theme/TabItem';
 
 # Delete Workflow
 
-Remove workflow execution permanently from the system.
+**Endpoint:** `DELETE /api/workflow/{workflowId}/remove`
 
-## Input Payload
+Deletes a workflow execution from the server using the workflow ID.
 
-| Attribute  | Description                                          | 
-|------------|------------------------------------------------------| 
-| workflowId | The unique identifier of the workflow to be removed. |
+## Path parameters
 
-## API Endpoint
+| Parameter  | Description | Type | Required/ Optional |
+| ---------- | ----------- | ---- | ----------------- |
+| workflowId | The execution ID of the workflow to be deleted. | string | Required. |
+
+## Query parameters
+
+| Parameter  | Description | Type | Required/ Optional |
+| ---------- | ----------- | ---- | ----------------- |
+| archiveWorkflow | **Note:** This parameter is deprecated. There is no effect when configured. <br/><br/> If set to true, the workflow will be archived instead of permanently deleted. | boolean | Optional. |
+
+## Examples
+
+<details><summary>Delete workflow execution</summary>
+
+**Request**
+
 ```
-DELETE /workflow/{workflowId}/remove
-```
-
-Returns nil if no workflow is found by the id.
-
-## Client SDK Methods
-
-<Tabs>
-<TabItem value="Java" label="Java">
-
-```java
-void deleteWorkflow(String workflowId, boolean archiveWorkflow)
-```
-
-</TabItem>
-<TabItem value="Go" label="Go">
-
-```go
-func (e *WorkflowExecutor) RemoveWorkflow(workflowId string) error
+curl -X 'DELETE' \
+  'https://&lt;YOUR-CLUSTER>/api/workflow/373eabef-b846-11ef-b090-be4a9a728270/remove' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: &lt;TOKEN>'
 ```
 
-</TabItem>
-<TabItem value="Python" label="Python">
+**Response**
 
-```python
-WorkflowResourceApi.delete(self, workflow_id, **kwargs)
-```
+Returns 200 OK, indicating that the workflow has been deleted successfully.
 
-</TabItem>
-<TabItem value="CSharp" label="C#">
-
-```csharp
-void WorkflowResourceApi.Delete(string workflowId, bool? archiveWorkflow = null)
-```
-
-</TabItem>
-<TabItem value="JavaScript" label="JavaScript">
-
-```javascript
-WorkflowResourceService.delete(
-    workflowId: string,
-    archiveWorkflow: boolean = true,
-): CancelablePromise<any>
-```
-
-</TabItem>
-<TabItem value="Typescript" label="Typescript">
-
-```typescript
-WorkflowResourceService.delete(
-    workflowId: string,
-    archiveWorkflow: boolean = true,
-): CancelablePromise<any>
-```
-
-</TabItem>
-<TabItem value="Clojure" label="Clojure">
-
-```clojure
-(workflow-resource/delete-workflow [options workflow-id archive-workflow])
-```
-
-</TabItem>
-</Tabs>
+</details>
