@@ -24,7 +24,7 @@ Terminates a running workflow, with the option to provide a reason for terminati
 | Parameter  | Description | Type | Required/ Optional |
 | ---------- | ----------- | ---- | ----------------- |
 | reason | The reason for termination. | string | Optional. |
-| triggerFailureWorkflow | If set to true, the associated compensation flow (if any) will be triggered. Default is false. <br/><br/> Learn more about compensation flows in [Handling Failures](error-handling#workflow-compensation-flows). | boolean | Optional. |
+| triggerFailureWorkflow | If set to true, the associated compensation flow (if any) will be triggered. Default is false. <br/><br/> Learn more about compensation flows in [Handling Failures](/error-handling#workflow-compensation-flows). | boolean | Optional. |
 
 ## Examples
 

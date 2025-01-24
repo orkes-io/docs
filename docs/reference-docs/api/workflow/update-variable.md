@@ -9,6 +9,536 @@ import TabItem from '@theme/TabItem';
 
 # Update Variable
 
+**Endpoint:** `POST /api/workflow/{workflowId}/variables`
+
+Updates workflow variables for a running workflow. This method is similar to the [Set Variable](/reference-docs/operators/set-variable) task, except the variables can be updated anytime in real time.
+
+This endpoint is useful when a workflow variable needs to be updated based on an external trigger. For example, terminating a long-running loop based on a condition stored in the workflow variable.
+
+
+## **Path parameters**
+
+| Parameter  | Description | Type | Required/ Optional |
+| ---------- | ----------- | ---- | ----------------- |
+| workflowId | The execution ID of the workflow. | string | Required. |
+
+## Request body
+
+Contains the updated workflow variables. Format the request as an object containing key-value pairs.
+
+**Example**
+
+``` json
+{
+  "someKey": “someValue”,
+  "anotherKey": {}
+}
+```
+
+## Response
+
+Returns the current workflow execution JSON, which contains the updated variable.
+
+## Examples
+
+<details><summary>Update a variable to terminate a loop</summary>
+
+**Request**
+
+```
+curl -X 'POST' \
+  'https://<YOUR_CLUSTER>/api/workflow/5c2e72f2-da3e-11ef-a114-0af1b159704e/variables' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "condition": false
+}'
+```
+
+**Response**
+
+```
+{
+  "ownerApp": "",
+  "createTime": 1737714684115,
+  "updateTime": 0,
+  "createdBy": "user@example.com",
+  "status": "RUNNING",
+  "endTime": 0,
+  "workflowId": "5c2e72f2-da3e-11ef-a114-0af1b159704e",
+  "tasks": [
+    {
+      "taskType": "SET_VARIABLE",
+      "status": "COMPLETED",
+      "inputData": {
+        "condition": true,
+        "_createdBy": "user@example.com"
+      },
+      "referenceTaskName": "set_variable_ref",
+      "retryCount": 0,
+      "seq": 1,
+      "pollCount": 0,
+      "taskDefName": "set_variable",
+      "scheduledTime": 1737714684130,
+      "startTime": 1737714684130,
+      "endTime": 1737714684133,
+      "updateTime": 1737714684133,
+      "startDelayInSeconds": 0,
+      "retried": false,
+      "executed": true,
+      "callbackFromWorker": true,
+      "responseTimeoutSeconds": 0,
+      "workflowInstanceId": "5c2e72f2-da3e-11ef-a114-0af1b159704e",
+      "workflowType": "testLoop",
+      "taskId": "5c3020a3-da3e-11ef-a114-0af1b159704e",
+      "callbackAfterSeconds": 0,
+      "outputData": {},
+      "workflowTask": {
+        "name": "set_variable",
+        "taskReferenceName": "set_variable_ref",
+        "inputParameters": {
+          "condition": "${workflow.input.condition}"
+        },
+        "type": "SET_VARIABLE"
+      },
+      "rateLimitPerFrequency": 0,
+      "rateLimitFrequencyInSeconds": 0,
+      "workflowPriority": 0,
+      "iteration": 0,
+      "subworkflowChanged": false,
+      "firstStartTime": 0,
+      "queueWaitTime": 0,
+      "loopOverTask": false,
+      "taskDefinition": null
+    },
+    {
+      "taskType": "DO_WHILE",
+      "status": "IN_PROGRESS",
+      "inputData": {
+        "decider": true,
+        "_createdBy": "user@example.com"
+      },
+      "referenceTaskName": "do_while_ref",
+      "retryCount": 0,
+      "seq": 2,
+      "pollCount": 0,
+      "taskDefName": "do_while",
+      "scheduledTime": 1737714684138,
+      "startTime": 1737714684138,
+      "endTime": 0,
+      "updateTime": 1737714699763,
+      "startDelayInSeconds": 0,
+      "retried": false,
+      "executed": false,
+      "callbackFromWorker": true,
+      "responseTimeoutSeconds": 0,
+      "workflowInstanceId": "5c2e72f2-da3e-11ef-a114-0af1b159704e",
+      "workflowType": "testLoop",
+      "taskId": "5c315924-da3e-11ef-a114-0af1b159704e",
+      "callbackAfterSeconds": 0,
+      "outputData": {
+        "1": {
+          "getItem_ref": {}
+        },
+        "2": {
+          "getItem_ref": {}
+        },
+        "3": {
+          "getItem_ref": {}
+        },
+        "iteration": 3
+      },
+      "workflowTask": {
+        "name": "do_while",
+        "taskReferenceName": "do_while_ref",
+        "inputParameters": {
+          "decider": "${workflow.variables.condition}"
+        },
+        "type": "DO_WHILE",
+        "loopCondition": "decider",
+        "loopOver": [
+          {
+            "name": "getItem",
+            "taskReferenceName": "getItem_ref",
+            "inputParameters": {},
+            "type": "SIMPLE",
+            "taskDefinition": {
+              "createTime": 1737714668831,
+              "updateTime": 1737714668831,
+              "createdBy": "user@example.com",
+              "updatedBy": "user@example.com",
+              "name": "getItem",
+              "description": "Gets items",
+              "retryCount": 3,
+              "timeoutSeconds": 3600,
+              "timeoutPolicy": "TIME_OUT_WF",
+              "retryLogic": "FIXED",
+              "retryDelaySeconds": 60,
+              "responseTimeoutSeconds": 600,
+              "concurrentExecLimit": 0,
+              "rateLimitPerFrequency": 0,
+              "rateLimitFrequencyInSeconds": 1,
+              "ownerEmail": "user@example.com",
+              "pollTimeoutSeconds": 3600,
+              "backoffScaleFactor": 1,
+              "totalTimeoutSeconds": 0,
+            }
+          }
+        ],
+        "evaluatorType": "value-param"
+      },
+      "rateLimitPerFrequency": 0,
+      "rateLimitFrequencyInSeconds": 1,
+      "workflowPriority": 0,
+      "iteration": 3,
+      "subworkflowChanged": false,
+      "firstStartTime": 0,
+      "queueWaitTime": 0,
+      "loopOverTask": true,
+      "taskDefinition": null
+    },
+    {
+      "taskType": "getItem",
+      "status": "COMPLETED",
+      "inputData": {
+        "_createdBy": "user@example.com"
+      },
+      "referenceTaskName": "getItem_ref__1",
+      "retryCount": 0,
+      "seq": 3,
+      "pollCount": 0,
+      "taskDefName": "getItem",
+      "scheduledTime": 1737714684139,
+      "startTime": 0,
+      "endTime": 1737714690865,
+      "updateTime": 1737714690866,
+      "startDelayInSeconds": 0,
+      "retried": false,
+      "executed": true,
+      "callbackFromWorker": true,
+      "responseTimeoutSeconds": 600,
+      "workflowInstanceId": "5c2e72f2-da3e-11ef-a114-0af1b159704e",
+      "workflowType": "testLoop",
+      "taskId": "5c31f565-da3e-11ef-a114-0af1b159704e",
+      "callbackAfterSeconds": 0,
+      "outputData": {},
+      "workflowTask": {
+        "name": "getItem",
+        "taskReferenceName": "getItem_ref",
+        "inputParameters": {},
+        "type": "SIMPLE",
+        "taskDefinition": {
+          "createTime": 1737714668831,
+          "updateTime": 1737714668831,
+          "createdBy": "user@example.com",
+          "updatedBy": "user@example.com",
+          "name": "getItem",
+          "description": "Gets items",
+          "retryCount": 3,
+          "timeoutSeconds": 3600,
+          "timeoutPolicy": "TIME_OUT_WF",
+          "retryLogic": "FIXED",
+          "retryDelaySeconds": 60,
+          "responseTimeoutSeconds": 600,
+          "concurrentExecLimit": 0,
+          "rateLimitPerFrequency": 0,
+          "rateLimitFrequencyInSeconds": 1,
+          "ownerEmail": "user@example.com",
+          "pollTimeoutSeconds": 3600,
+          "backoffScaleFactor": 1,
+          "totalTimeoutSeconds": 0
+        }
+      },
+      "rateLimitPerFrequency": 0,
+      "rateLimitFrequencyInSeconds": 1,
+      "workflowPriority": 0,
+      "iteration": 1,
+      "subworkflowChanged": false,
+      "firstStartTime": 0,
+      "queueWaitTime": 0,
+      "loopOverTask": true,
+      "taskDefinition": {
+        "createTime": 1737714668831,
+        "updateTime": 1737714668831,
+        "createdBy": "user@example.com",
+        "updatedBy": "user@example.com",
+        "name": "getItem",
+        "description": "Gets items",
+        "retryCount": 3,
+        "timeoutSeconds": 3600,
+        "timeoutPolicy": "TIME_OUT_WF",
+        "retryLogic": "FIXED",
+        "retryDelaySeconds": 60,
+        "responseTimeoutSeconds": 600,
+        "concurrentExecLimit": 0,
+        "rateLimitPerFrequency": 0,
+        "rateLimitFrequencyInSeconds": 1,
+        "ownerEmail": "user@example.com",
+        "pollTimeoutSeconds": 3600,
+        "backoffScaleFactor": 1,
+        "totalTimeoutSeconds": 0
+      }
+    },
+    {
+      "taskType": "getItem",
+      "status": "COMPLETED",
+      "inputData": {
+        "_createdBy": "user@example.com"
+      },
+      "referenceTaskName": "getItem_ref__2",
+      "retryCount": 0,
+      "seq": 4,
+      "pollCount": 0,
+      "taskDefName": "getItem",
+      "scheduledTime": 1737714690881,
+      "startTime": 0,
+      "endTime": 1737714699742,
+      "updateTime": 1737714699744,
+      "startDelayInSeconds": 0,
+      "retried": false,
+      "executed": true,
+      "callbackFromWorker": true,
+      "responseTimeoutSeconds": 600,
+      "workflowInstanceId": "5c2e72f2-da3e-11ef-a114-0af1b159704e",
+      "workflowType": "testLoop",
+      "taskId": "6036dbd6-da3e-11ef-a114-0af1b159704e",
+      "callbackAfterSeconds": 0,
+      "outputData": {},
+      "workflowTask": {
+        "name": "getItem",
+        "taskReferenceName": "getItem_ref",
+        "inputParameters": {},
+        "type": "SIMPLE",
+        "taskDefinition": {
+          "createTime": 1737714668831,
+          "updateTime": 1737714668831,
+          "createdBy": "user@example.com",
+          "updatedBy": "user@example.com",
+          "name": "getItem",
+          "description": "Gets items",
+          "retryCount": 3,
+          "timeoutSeconds": 3600,
+          "timeoutPolicy": "TIME_OUT_WF",
+          "retryLogic": "FIXED",
+          "retryDelaySeconds": 60,
+          "responseTimeoutSeconds": 600,
+          "concurrentExecLimit": 0,
+          "rateLimitPerFrequency": 0,
+          "rateLimitFrequencyInSeconds": 1,
+          "ownerEmail": "user@example.com",
+          "pollTimeoutSeconds": 3600,
+          "backoffScaleFactor": 1,
+          "totalTimeoutSeconds": 0
+        }
+      },
+      "rateLimitPerFrequency": 0,
+      "rateLimitFrequencyInSeconds": 1,
+      "workflowPriority": 0,
+      "iteration": 2,
+      "subworkflowChanged": false,
+      "firstStartTime": 0,
+      "queueWaitTime": 0,
+      "loopOverTask": true,
+      "taskDefinition": {
+        "createTime": 1737714668831,
+        "updateTime": 1737714668831,
+        "createdBy": "user@example.com",
+        "updatedBy": "user@example.com",
+        "name": "getItem",
+        "description": "Gets items",
+        "retryCount": 3,
+        "timeoutSeconds": 3600,
+        "timeoutPolicy": "TIME_OUT_WF",
+        "retryLogic": "FIXED",
+        "retryDelaySeconds": 60,
+        "responseTimeoutSeconds": 600,
+        "concurrentExecLimit": 0,
+        "rateLimitPerFrequency": 0,
+        "rateLimitFrequencyInSeconds": 1,
+        "ownerEmail": "user@example.com",
+        "pollTimeoutSeconds": 3600,
+        "backoffScaleFactor": 1,
+        "totalTimeoutSeconds": 0
+      }
+    },
+    {
+      "taskType": "getItem",
+      "status": "SCHEDULED",
+      "inputData": {
+        "_createdBy": "user@example.com"
+      },
+      "referenceTaskName": "getItem_ref__3",
+      "retryCount": 0,
+      "seq": 5,
+      "pollCount": 0,
+      "taskDefName": "getItem",
+      "scheduledTime": 1737714699757,
+      "startTime": 0,
+      "endTime": 0,
+      "updateTime": 0,
+      "startDelayInSeconds": 0,
+      "retried": false,
+      "executed": false,
+      "callbackFromWorker": true,
+      "responseTimeoutSeconds": 600,
+      "workflowInstanceId": "5c2e72f2-da3e-11ef-a114-0af1b159704e",
+      "workflowType": "testLoop",
+      "taskId": "65813a91-da3e-11ef-87b1-b2b27c52ebde",
+      "callbackAfterSeconds": 0,
+      "outputData": {},
+      "workflowTask": {
+        "name": "getItem",
+        "taskReferenceName": "getItem_ref",
+        "inputParameters": {},
+        "type": "SIMPLE",
+        "taskDefinition": {
+          "createTime": 1737714668831,
+          "updateTime": 1737714668831,
+          "createdBy": "user@example.com",
+          "updatedBy": "user@example.com",
+          "name": "getItem",
+          "description": "Gets items",
+          "retryCount": 3,
+          "timeoutSeconds": 3600,
+          "timeoutPolicy": "TIME_OUT_WF",
+          "retryLogic": "FIXED",
+          "retryDelaySeconds": 60,
+          "responseTimeoutSeconds": 600,
+          "concurrentExecLimit": 0,
+          "rateLimitPerFrequency": 0,
+          "rateLimitFrequencyInSeconds": 1,
+          "ownerEmail": "user@example.com",
+          "pollTimeoutSeconds": 3600,
+          "backoffScaleFactor": 1,
+          "totalTimeoutSeconds": 0
+        }
+      },
+      "rateLimitPerFrequency": 0,
+      "rateLimitFrequencyInSeconds": 1,
+      "workflowPriority": 0,
+      "iteration": 3,
+      "subworkflowChanged": false,
+      "firstStartTime": 0,
+      "queueWaitTime": 0,
+      "loopOverTask": true,
+      "taskDefinition": {
+        "createTime": 1737714668831,
+        "updateTime": 1737714668831,
+        "createdBy": "user@example.com",
+        "updatedBy": "user@example.com",
+        "name": "getItem",
+        "description": "Gets items",
+        "retryCount": 3,
+        "timeoutSeconds": 3600,
+        "timeoutPolicy": "TIME_OUT_WF",
+        "retryLogic": "FIXED",
+        "retryDelaySeconds": 60,
+        "responseTimeoutSeconds": 600,
+        "concurrentExecLimit": 0,
+        "rateLimitPerFrequency": 0,
+        "rateLimitFrequencyInSeconds": 1,
+        "ownerEmail": "user@example.com",
+        "pollTimeoutSeconds": 3600,
+        "backoffScaleFactor": 1,
+        "totalTimeoutSeconds": 0
+      }
+    }
+  ],
+  "input": {
+    "condition": true
+  },
+  "output": {},
+  "taskToDomain": {},
+  "failedReferenceTaskNames": [],
+  "workflowDefinition": {
+    "createTime": 1737008800454,
+    "updateTime": 1737714679617,
+    "name": "testLoop",
+    "description": "value-condition",
+    "version": 2,
+    "tasks": [
+      {
+        "name": "set_variable",
+        "taskReferenceName": "set_variable_ref",
+        "inputParameters": {
+          "condition": "${workflow.input.condition}"
+        },
+        "type": "SET_VARIABLE"
+      },
+      {
+        "name": "do_while",
+        "taskReferenceName": "do_while_ref",
+        "inputParameters": {
+          "decider": "${workflow.variables.condition}"
+        },
+        "type": "DO_WHILE",
+        "loopCondition": "decider",
+        "loopOver": [
+          {
+            "name": "getItem",
+            "taskReferenceName": "getItem_ref",
+            "inputParameters": {},
+            "type": "SIMPLE",
+            "taskDefinition": {
+              "createTime": 1737714668831,
+              "updateTime": 1737714668831,
+              "createdBy": "user@example.com",
+              "updatedBy": "user@example.com",
+              "name": "getItem",
+              "description": "Gets items",
+              "retryCount": 3,
+              "timeoutSeconds": 3600,
+              "timeoutPolicy": "TIME_OUT_WF",
+              "retryLogic": "FIXED",
+              "retryDelaySeconds": 60,
+              "responseTimeoutSeconds": 600,
+              "concurrentExecLimit": 0,
+              "rateLimitPerFrequency": 0,
+              "rateLimitFrequencyInSeconds": 1,
+              "ownerEmail": "user@example.com",
+              "pollTimeoutSeconds": 3600,
+              "backoffScaleFactor": 1,
+              "totalTimeoutSeconds": 0
+            }
+          }
+        ]
+      }
+    ],
+    "inputParameters": [
+      "condition"
+    ],
+    "outputParameters": {},
+    "failureWorkflow": "compensationWorkflow",
+    "schemaVersion": 2,
+    "restartable": true,
+    "ownerEmail": "user@example.com",
+    "timeoutPolicy": "ALERT_ONLY",
+    "timeoutSeconds": 0,
+    "variables": {
+      "condition": true,
+      "_createdBy": "user@example.com"
+    }
+  },
+  "priority": 0,
+  "variables": {
+    "condition": false,
+    "_createdBy": "user@example.com"
+  },
+  "lastRetriedTime": 0,
+  "failedTaskNames": [],
+  "history": [],
+  "rateLimited": false,
+  "startTime": 1737714684115,
+  "workflowName": "testLoop",
+  "workflowVersion": 2
+}
+```
+</details>
+
+
+## OLD
+
 Update the workflow variables at any time while the workflow is in the RUNNING state. This is similar to the [SET_VARIABLE](https://orkes.io/content/reference-docs/operators/set-variable) task, except it can be updated anytime while the workflow is running. 
 
 Useful when the workflow state is to be updated based on an external trigger, such as terminating a long-running do-while loop with a terminating condition based on the workflow variables.
