@@ -18,7 +18,7 @@ It takes text input, processes it using a specified language model to generate e
 
 Configure these parameters for the LLM Index Text task.
 
-| Parameter | Description | Required/Optional | 
+| Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- |
 | inputParameters.**vectorDB** | The vector database to store the data.<br/><br/>**Note**: If you haven’t configured the vector database on your Orkes Conductor cluster, navigate to the **Integrations** tab and configure your required provider. Refer to the documentation on [how to integrate Vector Databases with Orkes console](https://orkes.io/content/category/integrations/vector-databases). | Required. |
 | inputParameters.**namespace** | Namespaces are separate isolated environments within the database to manage and organize vector data effectively. Choose from the available namespace configured within the chosen vector database.<br/><br/>The usage and terminology of the namespace field vary depending on the integration:<ul><li>For Pinecone, the namespace field is applicable.</li><li>For Weaviate, the namespace field is not applicable.</li><li>For MongoDB, the namespace field is referred to as “Collection” in MongoDB.</li><li>For Postgres, the namespace field is referred to as “Table” in Postgres.</li></ul> | Required. |

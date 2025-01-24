@@ -15,7 +15,7 @@ Deletes an existing task definition.
 
 ## Path parameters
 
-| Parameter  | Description | Type | Required/Optional |
+| Parameter  | Description | Type | Required/ Optional |
 | ---------- | ----------- | ---- | ----------------- |
 | name | The name of the workflow definition to be deleted. | string | Required. | 
 | version | The version of the workflow definition to be deleted. | integer | Required. | 

@@ -15,14 +15,14 @@ Creates a new workflow definition.
 
 ## Query parameters
 
-| Parameter  | Description | Type | Required/Optional |
+| Parameter  | Description | Type | Required/ Optional |
 | ---------- | ----------- | ---- | ----------------- |
 | overwrite | Whether to overwrite the existing definition with the same name. Default is _false_. Set to _true_ to overwrite an existing definition. | boolean | Optional. | 
 | newVersion | Whether to create a new version for the workflow definition. Default is _false_. Set to _true_ to create a new version. | boolean | Optional. | 
 
 ## Request body
 
-| Parameter  | Description | Type | Required/Optional |
+| Parameter  | Description | Type | Required/ Optional |
 | ---------- | ----------- | ---- | ----------------- |
 | name | A unique name for the workflow definition.<ul><li>For v4.0.1 and prior: Only letters, digits, hyphens (-), and underscores (\_) are allowed.</li>   <li>For v4.0.2 and later: Only letters, digits, spaces, hyphens (-), underscores (\_), and certain special characters (`<`, `>`, `{`, `}`, `#`) are allowed.</li></ul> | string | Required. | 
 | description | A description of the workflow. | string | Optional. | 
@@ -34,8 +34,8 @@ Creates a new workflow definition.
 | inputSchema | The schema parameters to be used as input schema for the workflow definition. Learn more about [creating and using schemas](https://orkes.io/content/developer-guides/schema-validation). | object | Required if _enforceSchema_ is set to _true_. | 
 | schemaVersion | The current version of the Conductor schema. Must be 2. | integer | Required. | 
 | restartable | Whether the workflow can be restarted after completion. Set to _false_ if restarting could impact workflow functionality. | boolean | Optional. | 
-| timeoutSeconds | Time (in seconds), after which the workflow will be set as _TIMED_OUT_ if it hasn't reached a terminal state. No timeout occurs if the value is set to 0. | integer | Required. | 
-| timeoutPolicy | The policy for handling workflow timeout. Supported values:<ul><li>**TIME_OUT_WF–**The workflow is set to _TIMED_OUT_ and is terminated.</li><li>**ALERT_ONLY–**Increments the counter to check the workflow status when it times out and logs relevant messages.</li></ul> | string | Optional. | 
+| timeoutSeconds | Time (in seconds), after which the workflow will be set as TIMED_OUT if it hasn't reached a terminal state. No timeout occurs if the value is set to 0. | integer | Required. | 
+| timeoutPolicy | The policy for handling workflow timeout. Supported values:<ul><li>**TIME_OUT_WF–**The workflow is set to TIMED_OUT and is terminated.</li><li>**ALERT_ONLY–**Increments the counter to check the workflow status when it times out and logs relevant messages.</li></ul> | string | Optional. | 
 | [rateLimitConfig](https://orkes.io/content/error-handling#workflow-rate-limits) | A map of the workflow rate limit configuration. | object | Optional. | 
 | rateLimitConfig. **rateLimitKey** | A unique identifier to group workflow executions for rate limiting.<br/>Can be a fixed value (for example, "max") or a dynamic variable from the workflow input (for example, `${workflow.input.correlationId}`). | string | Optional. | 
 | rateLimitConfig. **concurrentExecLimit** | The number of workflow executions that can run concurrently for a given key. | integer | Optional. | 

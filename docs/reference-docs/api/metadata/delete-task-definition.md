@@ -7,7 +7,7 @@ description: "Tasks are the building blocks of workflow in Orkes Conductor. This
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Delete Task Definitions
+# Delete Task Definition
 
 **Endpoint:** `DELETE /api/metadata/taskdefs/{taskType}`
 
@@ -15,7 +15,7 @@ Deletes an existing task definition.
 
 ## Path parameters
 
-| Parameter  | Description | Type | Required/Optional |
+| Parameter  | Description | Type | Required/ Optional |
 | ---------- | ----------- | ---- | ----------------- |
 | taskType | The name of the task definition to be deleted. | string | Required. | 
 

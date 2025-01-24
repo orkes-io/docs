@@ -15,13 +15,13 @@ Gets a specific workflow definition from the cluster.
 
 ## Path parameters
 
-| Parameter  | Description | Type | Required/Optional |
+| Parameter  | Description | Type | Required/ Optional |
 | ---------- | ----------- | ---- | ----------------- |
 | taskType | The name of the workflow definition to be retrieved. | string | Required. | 
 
 ## Query parameters
 
-| Parameter  | Description | Type | Required/Optional |
+| Parameter  | Description | Type | Required/ Optional |
 | ---------- | ----------- | ---- | ----------------- |
 | version | The version of the workflow to be retrieved. | integer | Optional. | 
 | metadata | Whether metadata (such as tags) should be included in the response. Default is _false_. | boolean | Optional. | 

@@ -15,7 +15,7 @@ Logs messages or additional details to a specific task execution.
 
 ## Path parameters
 
-| Parameter  | Description | Type | Required/Optional |
+| Parameter  | Description | Type | Required/ Optional |
 | ---------- | ----------- | ---- | ----------------- |
 | taskId | The execution ID of the task to log the message. | string | Required. | 
 

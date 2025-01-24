@@ -15,7 +15,7 @@ Gets a task's execution details using its task execution ID.
 
 ## Path parameters
 
-| Parameter  | Description | Type | Required/Optional |
+| Parameter  | Description | Type | Required/ Optional |
 | ---------- | ----------- | ---- | ----------------- |
 | taskId | The execution ID of the task to be fetched. | string | Required. | 
 

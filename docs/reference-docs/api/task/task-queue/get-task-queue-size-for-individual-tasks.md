@@ -12,7 +12,7 @@ Gets the task queue size for a specified task type. The queue size represents th
 
 ## Query parameters
 
-| Parameter  | Description | Type | Required/Optional |
+| Parameter  | Description | Type | Required/ Optional |
 | ---------- | ----------- | ---- | ----------------- |
 | taskType | The type of the task to be queried. For predefined tasks, this indicates the task type, such as _HTTP_. For user-defined tasks, it corresponds to the name of the task definition, such as _python_worker_. | string | Required. | 
 

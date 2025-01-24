@@ -15,7 +15,7 @@ Updates the status of a running task in a workflow execution.
 
 ## Path parameters
 
-| Parameter  | Description | Type | Required/Optional |
+| Parameter  | Description | Type | Required/ Optional |
 | ---------- | ----------- | ---- | ----------------- |
 | workflowId | The execution ID of the workflow containing the task. | string | Required. | 
 | taskRefName | The reference name of the task whose status is to be updated. | string | Required. | 
@@ -23,7 +23,7 @@ Updates the status of a running task in a workflow execution.
 
 ## Query parameters
 
-| Parameter  | Description | Type | Required/Optional |
+| Parameter  | Description | Type | Required/ Optional |
 | ---------- | ----------- | ---- | ----------------- |
 | workerId | The worker name from which the task is being polled, which is the hostname of the pod where the worker is running | string | Optional. | 
 

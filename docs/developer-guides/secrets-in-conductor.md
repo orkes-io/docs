@@ -18,7 +18,7 @@ Secrets in Conductor allows you to store and use sensitive data, such as usernam
 2. Select **+ Add secret**.
 3. Enter the following details:
 
-| Parameter | Description | Required/Optional |
+| Parameter | Description | Required/ Optional |
 | --------- | ----------- | ----------------- |
 | Secret name | A unique name for the secret. This will be used to refer to the secret in the workflow definitions. | Required. |
 | Secret value | The value to be stored as secret. | Required. | 
