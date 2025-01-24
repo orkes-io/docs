@@ -33,7 +33,7 @@ Contains the workflow inputs. Format the request as an object containing key-val
 
 **Example**
 
-``` json
+```json
 {
   "someKey": "someValue",
   "anotherKey": {}
@@ -57,11 +57,11 @@ Returns the workflow ID of the started workflow.
 
 **Request**
 
-```
+```shell
 curl -X 'POST' \
-  'https://&lt;YOUR-CLUSTER>/api/workflow/compensationWorkflow?priority=0' \
+  'https://<YOUR_CLUSTER>/api/workflow/compensationWorkflow?priority=0' \
   -H 'accept: text/plain' \
-  -H 'X-Authorization: &lt;TOKEN>' \
+  -H 'X-Authorization: <TOKEN>' \
   -d '{
     "input1": "someValue"
   }'

@@ -32,11 +32,11 @@ Retries a failed workflow execution from the last failed task. When invoked, the
 
 **Request**
 
-```
+```shell
 curl -X 'POST' \
-  'https://&lt;YOUR-CLUSTER>/api/workflow/2ce9207f-d4a6-11ef-87b1-b2b27c52ebde/retry?resumeSubworkflowTasks=false&retryIfRetriedByParent=true' \
+  'https://<YOUR_CLUSTER>/api/workflow/2ce9207f-d4a6-11ef-87b1-b2b27c52ebde/retry?resumeSubworkflowTasks=false&retryIfRetriedByParent=true' \
   -H 'accept: */*' \
-  -H 'X-Authorization: &lt;TOKEN>' \
+  -H 'X-Authorization: <TOKEN>' \
   -d ''
 ```
 
@@ -51,17 +51,17 @@ Returns 204 No Content, indicating that the workflow execution has been restarte
 
 **Request**
 
-```
+```shell
 curl -X 'POST' \
-  'https://&lt;YOUR_CLUSTER>/api/workflow/1f920305-da0c-11ef-a114-0af1b159704e/retry?resumeSubworkflowTasks=false&retryIfRetriedByParent=false' \
+  'https://<YOUR_CLUSTER>/api/workflow/1f920305-da0c-11ef-a114-0af1b159704e/retry?resumeSubworkflowTasks=false&retryIfRetriedByParent=false' \
   -H 'accept: */*' \
-  -H 'X-Authorization: &lt;TOKEN>' \
+  -H 'X-Authorization: <TOKEN>' \
   -d ''
 ```
 
 **Response**
 
-```
+```json
 {
   "status": 400,
   "message": "Parent task 1f8f6af4-da0c-11ef-a114-0af1b159704e of workflow 19c1d273-da0c-11ef-87b1-b2b27c52ebde is already retried, retrying subworkflow 1f920305-da0c-11ef-a114-0af1b159704e is prohibited because retryIfHasParent=false in retry request",

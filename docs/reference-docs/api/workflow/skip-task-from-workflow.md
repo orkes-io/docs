@@ -34,11 +34,11 @@ Skips a scheduled task in an ongoing workflow using the task reference name. The
 
 **Request**
 
-```
+```shell
 curl -X 'PUT' \
-  'https://&lt;YOUR-CLUSTER>o/api/workflow/18f871a1-d3f8-11ef-a114-0af1b159704e/skiptask/someTask_ref' \
+  'https://<YOUR_CLUSTER>o/api/workflow/18f871a1-d3f8-11ef-a114-0af1b159704e/skiptask/someTask_ref' \
   -H 'accept: */*' \
-  -H 'X-Authorization: &lt;TOKEN>'
+  -H 'X-Authorization: <TOKEN>'
 ```
 
 **Response**

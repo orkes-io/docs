@@ -44,8 +44,6 @@ Returns the task execution ID of the updated task.
 
 ## Examples
 
-### Update task status in a workflow
-
 <details><summary>Update task status in a workflow</summary>
 
 **Request**

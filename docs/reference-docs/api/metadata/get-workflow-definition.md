@@ -32,15 +32,13 @@ Returns the workflow definition and includes the metadata if queried.
 
 ## Examples
 
-### Get an individual workflow definition without metadata
-
 <details><summary>Get an individual workflow definition without metadata</summary>
 
 **Request**
 
 ```bash
 curl -X 'GET' \
-  'https://<YOUR-CLUSTER>/api/metadata/workflow/api-test?metadata=false' \
+  'https://<YOUR_CLUSTER>/api/metadata/workflow/api-test?metadata=false' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>'
 ```
@@ -89,7 +87,6 @@ curl -X 'GET' \
 ```
 </details>
 
-### Get an individual workflow definition with metadata
 
 <details><summary>Get an individual workflow definition with metadata</summary>
 
@@ -97,7 +94,7 @@ curl -X 'GET' \
 
 ```bash
 curl -X 'GET' \
-  'https://<YOUR-CLUSTER>/api/metadata/workflow/api-test?metadata=true' \
+  'https://<YOUR_CLUSTER>/api/metadata/workflow/api-test?metadata=true' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>'
 ```

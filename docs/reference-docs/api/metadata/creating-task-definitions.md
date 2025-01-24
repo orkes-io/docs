@@ -42,15 +42,13 @@ Creates a new task definition.
 
 ## Examples
 
-### Create a new task definition
-
 <details><summary>Create a new task definition</summary>
 
 **Request**
 
 ```bash
 curl -X 'POST' \
-  'https://<YOUR-CLUSTER>/api/metadata/taskdefs' \
+  'https://<YOUR_CLUSTER>/api/metadata/taskdefs' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>' \
   -d '{

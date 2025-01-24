@@ -30,15 +30,13 @@ Format the request to include the details to be logged for the task.
 ```
 ## Examples
 
-### Log messages to a task execution
-
 <details><summary>Log messages to a task execution</summary>
 
 **Request**
 
 ```bash
 curl -X 'POST' \
-  'https://<YOUR-CLUSTER>/api/tasks/0c658ed7-becd-11ef-a89d-86a819bd92bf/log' \
+  'https://<YOUR_CLUSTER>/api/tasks/0c658ed7-becd-11ef-a89d-86a819bd92bf/log' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>' \
   -H 'Content-Type: application/json' \

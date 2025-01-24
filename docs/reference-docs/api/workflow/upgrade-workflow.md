@@ -35,7 +35,7 @@ Format the request as an object containing the following parameters.
 
 **Example**
 
-``` json
+```json
 {
   "name": "myWorkflow",
   "taskOutput": {
@@ -56,11 +56,11 @@ Format the request as an object containing the following parameters.
 
 **Request**
 
-```
+```shell
 curl -X 'POST' \
-  'https://&lt;YOUR-CLUSTER>/api/workflow/77916c63-d3e7-11ef-87b1-b2b27c52ebde/upgrade' \
+  'https://<YOUR_CLUSTER>/api/workflow/77916c63-d3e7-11ef-87b1-b2b27c52ebde/upgrade' \
   -H 'accept: */*' \
-  -H 'X-Authorization: &lt;TOKEN>' \
+  -H 'X-Authorization: <TOKEN>' \
   -H 'Content-Type: application/json' \
   -d '{
   "name": "someWorkflow",

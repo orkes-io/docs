@@ -28,15 +28,13 @@ Returns an array containing all the task definitions in the cluster.
 
 ## Examples
 
-### Get all task definitions with a specific tag
-
 <details><summary>Get all task definitions with a specific tag</summary>
 
 **Request**
 
 ```bash
 curl -X 'GET' \
-  'https://<YOUR-CLUSTER>/api/metadata/taskdefs?access=READ&metadata=false&tagKey=team&tagValue=engineering' \
+  'https://<YOUR_CLUSTER>/api/metadata/taskdefs?access=READ&metadata=false&tagKey=team&tagValue=engineering' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>'
 ```

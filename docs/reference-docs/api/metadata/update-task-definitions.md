@@ -42,15 +42,13 @@ Updates an existing task definition.
 
 ## Examples
 
-### Update an existing task definition
-
 <details><summary>Update an existing task definition</summary>
 
 **Request**
 
 ```bash
 curl -X 'PUT' \
-  'https://<YOUR-CLUSTER>/api/metadata/taskdefs' \
+  'https://<YOUR_CLUSTER>/api/metadata/taskdefs' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>' \
   -H 'Content-Type: application/json' \

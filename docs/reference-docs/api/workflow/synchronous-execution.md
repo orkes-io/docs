@@ -33,7 +33,7 @@ Contains the workflow inputs. Format the request as an object containing key-val
 
 **Example**
 
-``` json
+```json
 {
   "someKey": "someValue",
   "anotherKey": {}
@@ -60,12 +60,12 @@ Returns the workflow output.
 
 **Request**
 
-```
+```shell
 curl -X 'POST' \
-  'https://&lt;YOUR-CLUSTER>/api/workflow/execute/someWorkflow' \
+  'https://<YOUR_CLUSTER>/api/workflow/execute/someWorkflow' \
   -H 'accept: application/json' \
   -H 'waitForSeconds: 15' \
-  -H 'X-Authorization: &lt;TOKEN>' \
+  -H 'X-Authorization: <TOKEN>' \
   -H 'Content-Type: application/json' \
   -d '{
     "input1": "someValue"
@@ -74,7 +74,7 @@ curl -X 'POST' \
 
 **Response**
 
-```
+```json
 {
   "output": {
     "output1": "anotherValue",

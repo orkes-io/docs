@@ -15,15 +15,13 @@ Returns a map containing the queue size for all tasks. Each task type is represe
 
 ## Examples
 
-### Get task queue size for all tasks
-
 <details><summary>Get task queue size for all tasks</summary>
 
 **Request**
 
 ```bash
 curl -X 'GET' \
-  'https://<YOUR-CLUSTER>/api/tasks/queue/all' \
+  'https://<YOUR_CLUSTER>/api/tasks/queue/all' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>'
 ```

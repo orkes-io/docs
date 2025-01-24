@@ -31,15 +31,13 @@ Returns the task definition and includes the metadata if queried.
 
 ## Examples
 
-### Get an individual task definition without metadata
-
 <details><summary>Get an individual task definition without metadata</summary>
 
 **Request**
 
 ```bash
 curl -X 'GET' \
-  '<YOUR-CLUSTER>/api/metadata/taskdefs/simple?metadata=false' \
+  '<YOUR_CLUSTER>/api/metadata/taskdefs/simple?metadata=false' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>'
 ```
@@ -76,7 +74,6 @@ curl -X 'GET' \
 ```
 </details>
 
-### Get an individual task definition with metadata
 
 <details><summary>Get an individual task definition with metadata</summary>
 
@@ -84,7 +81,7 @@ curl -X 'GET' \
 
 ```bash
 curl -X 'GET' \
-  'https://<YOUR-CLUSTER>/api/metadata/taskdefs/simple?metadata=true' \
+  'https://<YOUR_CLUSTER>/api/metadata/taskdefs/simple?metadata=true' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>'
 ```

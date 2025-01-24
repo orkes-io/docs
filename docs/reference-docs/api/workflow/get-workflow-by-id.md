@@ -36,16 +36,16 @@ Returns a JSON object containing the workflow’s execution details.
 
 **Request**
 
-```
+```shell
 curl -X 'GET' \
-  'https://&lt;YOUR-CLUSTER>/api/workflow/6f5aa0f1-b871-11ef-b090-be4a9a728270?includeTasks=true' \
+  'https://<YOUR_CLUSTER>/api/workflow/6f5aa0f1-b871-11ef-b090-be4a9a728270?includeTasks=true' \
   -H 'accept: */*' \
-  -H 'X-Authorization: &lt;TOKEN>'
+  -H 'X-Authorization: <TOKEN>'
 ```
 
 **Response**
 
-```
+```json
 {
   "ownerApp": "",
   "createTime": 1733998281080,
@@ -135,16 +135,16 @@ curl -X 'GET' \
 
 **Request**
 
-```
+```shell
 curl -X 'GET' \
-  'https://&lt;YOUR_CLUSTER>/api/workflow/6f5aa0f1-b871-11ef-b090-be4a9a728270?includeTasks=false' \
+  'https://<YOUR_CLUSTER>/api/workflow/6f5aa0f1-b871-11ef-b090-be4a9a728270?includeTasks=false' \
   -H 'accept: */*' \
-  -H 'X-Authorization: &lt;TOKEN>'
+  -H 'X-Authorization: <TOKEN>'
 ```
 
 **Response**
 
-```
+```json
 {
   "ownerApp": "",
   "createTime": 1733998281080,

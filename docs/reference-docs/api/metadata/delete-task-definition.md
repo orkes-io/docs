@@ -21,15 +21,13 @@ Deletes an existing task definition.
 
 ## Examples
 
-### Delete an existing task definition
-
 <details><summary>Delete an existing task definition</summary>
 
 **Request**
 
 ```bash
 curl -X 'DELETE' \
-  'https://<YOUR-CLUSTER>/api/metadata/taskdefs/sample-api-test' \
+  'https://<YOUR_CLUSTER>/api/metadata/taskdefs/sample-api-test' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>'
 ```

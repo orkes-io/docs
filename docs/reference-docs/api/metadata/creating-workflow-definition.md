@@ -37,7 +37,7 @@ Creates a new workflow definition.
 | timeoutSeconds | Time (in seconds), after which the workflow will be set as _TIMED_OUT_ if it hasn't reached a terminal state. No timeout occurs if the value is set to 0. | integer | Required. | 
 | timeoutPolicy | The policy for handling workflow timeout. Supported values:<ul><li>**TIME_OUT_WF–**The workflow is set to _TIMED_OUT_ and is terminated.</li><li>**ALERT_ONLY–**Increments the counter to check the workflow status when it times out and logs relevant messages.</li></ul> | string | Optional. | 
 | [rateLimitConfig](https://orkes.io/content/error-handling#workflow-rate-limits) | A map of the workflow rate limit configuration. | object | Optional. | 
-| rateLimitConfig. **rateLimitKey** | A unique identifier to group workflow executions for rate limiting.<br/>Can be a fixed value (for example, “max”) or a dynamic variable from the workflow input (for example, `${workflow.input.correlationId}`). | string | Optional. | 
+| rateLimitConfig. **rateLimitKey** | A unique identifier to group workflow executions for rate limiting.<br/>Can be a fixed value (for example, "max") or a dynamic variable from the workflow input (for example, `${workflow.input.correlationId}`). | string | Optional. | 
 | rateLimitConfig. **concurrentExecLimit** | The number of workflow executions that can run concurrently for a given key. | integer | Optional. | 
 | workflowStatusListenerEnabled | Whether to enable status callback for workflow state changes. Learn more about [enabling CDC](https://orkes.io/content/developer-guides/enabling-cdc-on-conductor-workflows). | boolean | Optional. | 
 | workflowStatusListenerSink | The sink where workflow state changes are sent. | string | Required if _workflowStatusListener_ is set to _true_. | 
@@ -47,15 +47,13 @@ Creates a new workflow definition.
 
 ## Examples
 
-### Create a new workflow definition
-
 <details><summary>Create a new workflow definition</summary>
 
 **Request**
 
 ```bash
 curl -X 'POST' \
-  'https://<YOUR-CLUSTER>/api/metadata/workflow?overwrite=false&newVersion=false' \
+  'https://<YOUR_CLUSTER>/api/metadata/workflow?overwrite=false&newVersion=false' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>' \
   -H 'Content-Type: application/json' \

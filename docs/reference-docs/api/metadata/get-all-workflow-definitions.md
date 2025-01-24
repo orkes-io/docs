@@ -31,15 +31,13 @@ Returns an array containing all the workflow definitions in the cluster.
 
 ## Examples
 
-### Get all workflow definitions with a specific tag
-
 <details><summary>Get all workflow definitions with a specific tag</summary>
 
 **Request**
 
 ```bash
 curl -X 'GET' \
-  'https://<YOUR-CLUSTER>/api/metadata/workflow?access=READ&metadata=false&tagKey=api&tagValue=doc' \
+  'https://<YOUR_CLUSTER>/api/metadata/workflow?access=READ&metadata=false&tagKey=api&tagValue=doc' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>'
 ```

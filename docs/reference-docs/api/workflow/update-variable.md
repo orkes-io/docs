@@ -28,9 +28,9 @@ Contains the updated workflow variables. Format the request as an object contain
 
 **Example**
 
-``` json
+```json
 {
-  "someKey": “someValue”,
+  "someKey": "someValue",
   "anotherKey": {}
 }
 ```
@@ -45,7 +45,7 @@ Returns the current workflow execution JSON, which contains the updated variable
 
 **Request**
 
-```
+```shell
 curl -X 'POST' \
   'https://<YOUR_CLUSTER>/api/workflow/5c2e72f2-da3e-11ef-a114-0af1b159704e/variables' \
   -H 'accept: */*' \
@@ -58,7 +58,7 @@ curl -X 'POST' \
 
 **Response**
 
-```
+```json
 {
   "ownerApp": "",
   "createTime": 1737714684115,

@@ -35,15 +35,13 @@ If a worker has not picked up the task, no _pollData_ will be available and the 
 
 ## Examples
 
-### Get the last poll data for tasks with a queue size greater than 7
-
 <details><summary>Get the last poll data for tasks with a queue size greater than 7</summary>
 
 **Request**
 
 ```bash
 curl -X 'GET' \
-  'https://<YOUR-CLUSTER>/api/tasks/queue/polldata/all?queueSize=7&queueOpt=GT' \
+  'https://<YOUR_CLUSTER>/api/tasks/queue/polldata/all?queueSize=7&queueOpt=GT' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>'
 ```

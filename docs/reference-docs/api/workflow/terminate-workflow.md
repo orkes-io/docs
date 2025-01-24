@@ -32,11 +32,11 @@ Terminates a running workflow, with the option to provide a reason for terminati
 
 **Request**
 
-```
+```shell
 curl -X 'DELETE' \
-  'https://&lt;YOUR-CLUSTER>/api/workflow/77916c63-d3e7-11ef-87b1-b2b27c52ebde?reason=transaction%20cancelled&triggerFailureWorkflow=false' \
+  'https://<YOUR_CLUSTER>/api/workflow/77916c63-d3e7-11ef-87b1-b2b27c52ebde?reason=transaction%20cancelled&triggerFailureWorkflow=false' \
   -H 'accept: */*' \
-  -H 'X-Authorization: &lt;TOKEN>'
+  -H 'X-Authorization: <TOKEN>'
 ```
 
 **Response**

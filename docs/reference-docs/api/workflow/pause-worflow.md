@@ -21,16 +21,15 @@ Pauses an ongoing workflow execution. Any currently running tasks will be comple
 
 ## Examples
 
-
 <details><summary>Pause a workflow execution</summary>
 
 **Request**
 
-```
+```shell
 curl -X 'PUT' \
-  'https://&lt;YOUR-CLUSTER>/api/workflow/2ce9207f-d4a6-11ef-87b1-b2b27c52ebde/pause' \
+  'https://<YOUR_CLUSTER>/api/workflow/2ce9207f-d4a6-11ef-87b1-b2b27c52ebde/pause' \
   -H 'accept: */*' \
-  -H 'X-Authorization: &lt;TOKEN>'
+  -H 'X-Authorization: <TOKEN>'
 ```
 
 **Response**

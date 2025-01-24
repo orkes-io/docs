@@ -22,15 +22,13 @@ Returns the queue size of the specified task type.
 
 ## Examples
 
-### Get task queue for HTTP tasks
-
 <details><summary>Get task queue for HTTP tasks</summary>
 
 **Request**
 
 ```bash
 curl -X 'GET' \
-  'https://<YOUR-CLUSTER>/api/tasks/queue/sizes?taskType=HTTP' \
+  'https://<YOUR_CLUSTER>/api/tasks/queue/sizes?taskType=HTTP' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>'
 ```

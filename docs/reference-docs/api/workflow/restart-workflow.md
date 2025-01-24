@@ -31,11 +31,11 @@ Restarts a terminal workflow execution from the beginning using the same input a
 
 **Request**
 
-```
+```shell
 curl -X 'POST' \
-  'https://&lt;YOUR-CLUSTER>/api/workflow/bf6ac066-d493-11ef-87b1-b2b27c52ebde/restart' \
+  'https://<YOUR_CLUSTER>/api/workflow/bf6ac066-d493-11ef-87b1-b2b27c52ebde/restart' \
   -H 'accept: */*' \
-  -H 'X-Authorization: &lt;TOKEN>' \
+  -H 'X-Authorization: <TOKEN>' \
   -d ''
 ```
 
@@ -50,11 +50,11 @@ Returns 204, indicating that the workflow execution has been restarted successfu
 
 **Request**
 
-```
+```shell
 curl -X 'POST' \
-  'https://&lt;YOUR_CLUSTER>/api/workflow/bf6ac066-d493-11ef-87b1-b2b27c52ebde/restart?useLatestDefinitions=true' \
+  'https://<YOUR_CLUSTER>/api/workflow/bf6ac066-d493-11ef-87b1-b2b27c52ebde/restart?useLatestDefinitions=true' \
   -H 'accept: */*' \
-  -H 'X-Authorization: &lt;TOKEN>' \
+  -H 'X-Authorization: <TOKEN>' \
   -d ''
 ```
 

@@ -26,7 +26,7 @@ You can construct your search query in the Conductor UI (**Executions** > **Work
 | size | The number of search results that should be returned from the specified start. Default is 100. | integer | Optional. |
 | sort | The manner in which the list will be sorted, in the format "FIELD:ASC\|DESC". For example, "workflowId:DESC". | string | Optional. |
 | freeText | All full-text indexed data associated with the workflow execution (workflow input values, workflow output values, workflow variable values, task output values, correlation ID, and reason for incompletion). Default is *. <br/><br/> **Note:** This query only searches for exact matches. | string | Optional. |
-| query | The query expression in the format `FIELD = VALUE` or `FIELD IN (value1, value2)`. Supported fields for querying: <ul><li>workflowId</li> <li>correlationId</li> <li>workflowType</li> <li>status</li> <li>startTime</li> <li>modifiedTime</li></ul> <br/> Only AND operations are supported. <br/><br/> **Example queries:**<ul><li>workflowType = your_workflow_name</li> <li>status IN (PAUSED, RUNNING)</li> <li>startTime >1726655978410</li> <li>startTime &lt; 1696143600000</li> <li>workflowType = your_workflow_name AND status = PAUSED</li> <li>workflowId IN (3434546, 45365767, 20984885) AND workflowType = test_workflow</li></ul> | string | Optional. |
+| query | The query expression in the format `FIELD = VALUE` or `FIELD IN (value1, value2)`. Supported fields for querying: <ul><li>workflowId</li> <li>correlationId</li> <li>workflowType</li> <li>status</li> <li>startTime</li> <li>modifiedTime</li></ul> <br/> Only AND operations are supported. <br/><br/> **Example queries:**<ul><li>workflowType = your_workflow_name</li> <li>status IN (PAUSED, RUNNING)</li> <li>startTime >1726655978410</li> <li>startTime < 1696143600000</li> <li>workflowType = your_workflow_name AND status = PAUSED</li> <li>workflowId IN (3434546, 45365767, 20984885) AND workflowType = test_workflow</li></ul> | string | Optional. |
 | skipCache | **Note:** This parameter is deprecated. There is no effect when configured. <br/><br/> Whether to skip caching of the search results. Default is false. | boolean | Optional. |
 
 ## Response
@@ -39,16 +39,16 @@ Returns the total number of results in *totalHits* and a list of workflow execut
 
 **Request**
 
-```
+```shell
 curl -X 'GET' \
-  'https://&lt;YOUR-CLUSTER>/api/workflow/search?start=0&size=100&freeText=%2A&query=workflowType%3DsomeWorkflow' \
+  'https://<YOUR_CLUSTER>/api/workflow/search?start=0&size=100&freeText=%2A&query=workflowType%3DsomeWorkflow' \
   -H 'accept: */*' \
-  -H 'X-Authorization: &lt;TOKEN>'
+  -H 'X-Authorization: <TOKEN>'
 ```
 
 **Response**
 
-```
+```json
 {
   "totalHits": 1,
   "results": [
@@ -79,16 +79,16 @@ curl -X 'GET' \
 
 **Request**
 
-```
+```shell
 curl -X 'GET' \
-  'https://&lt;YOUR_CLUSTER>/api/workflow/search?start=0&size=100&freeText=%2A&query=status%20IN%20%28RUNNING%29%20AND%20workflowType%3DcompensationWorkflow' \
+  'https://<YOUR_CLUSTER>/api/workflow/search?start=0&size=100&freeText=%2A&query=status%20IN%20%28RUNNING%29%20AND%20workflowType%3DcompensationWorkflow' \
   -H 'accept: */*' \
-  -H 'X-Authorization: &lt;TOKEN>'
+  -H 'X-Authorization: <TOKEN>'
 ```
 
 **Response**
 
-```
+```json
 {
   "totalHits": 5,
   "results": [

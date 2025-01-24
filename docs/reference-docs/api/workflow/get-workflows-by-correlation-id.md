@@ -40,11 +40,11 @@ Returns a map where each key is the correlation ID, and its corresponding value 
 
 **Request**
 
-```
+```shell
 curl -X 'POST' \
-  'https://&lt;YOUR_CLUSTER>/api/workflow/someWorkflow/correlated?includeClosed=false&includeTasks=false' \
+  'https://<YOUR_CLUSTER>/api/workflow/someWorkflow/correlated?includeClosed=false&includeTasks=false' \
   -H 'accept: */*' \
-  -H 'X-Authorization: &lt;TOKEN>' \
+  -H 'X-Authorization: <TOKEN>' \
   -H 'Content-Type: application/json' \
   -d '[
   "1", "2"
@@ -53,7 +53,7 @@ curl -X 'POST' \
 
 **Response**
 
-```
+```json
 {
   "1": [
     {
@@ -136,11 +136,11 @@ curl -X 'POST' \
 
 **Request**
 
-```
+```shell
 curl -X 'POST' \
-  'https://&lt;YOUR_CLUSTER>/api/workflow/someWorkflow/correlated?includeClosed=true&includeTasks=false' \
+  'https://<YOUR_CLUSTER>/api/workflow/someWorkflow/correlated?includeClosed=true&includeTasks=false' \
   -H 'accept: */*' \
-  -H 'X-Authorization: &lt;TOKEN>' \
+  -H 'X-Authorization: <TOKEN>' \
   -H 'Content-Type: application/json' \
   -d '[
   "1", "2"
@@ -149,7 +149,7 @@ curl -X 'POST' \
 
 **Response**
 
-```
+```json
 {
   "1": [
    {

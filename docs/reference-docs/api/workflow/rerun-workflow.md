@@ -33,7 +33,7 @@ Format the request as an object containing the following parameters.
 
 **Example**
 
-``` json
+```json
 {
   "correlationId": "string",
   "reRunFromTaskId": "string",
@@ -61,11 +61,11 @@ Returns the supplied *workflowId*.
 
 **Request**
 
-```
+```shell
 curl -X 'POST' \
-  'https://&lt;YOUR-CLUSTER>/api/workflow/3163f2e3-d4a9-11ef-a114-0af1b159704e/rerun' \
+  'https://<YOUR_CLUSTER>/api/workflow/3163f2e3-d4a9-11ef-a114-0af1b159704e/rerun' \
   -H 'accept: text/plain' \
-  -H 'X-Authorization: &lt;TOKEN>' \
+  -H 'X-Authorization: <TOKEN>' \
   -H 'Content-Type: application/json' \
   -d '{
   "reRunFromTaskId": "87799dc8-d4b8-11ef-a114-0af1b159704e"

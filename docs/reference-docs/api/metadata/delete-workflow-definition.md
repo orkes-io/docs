@@ -22,15 +22,13 @@ Deletes an existing task definition.
 
 ## Examples
 
-### Delete an existing workflow definition
-
 <details><summary>Delete an existing workflow definition</summary>
 
 **Request**
 
 ```bash
 curl -X 'DELETE' \
-  'https://<YOUR-CLUSTER>/api/metadata/workflow/api-test/2' \
+  'https://<YOUR_CLUSTER>/api/metadata/workflow/api-test/2' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>'
 ```

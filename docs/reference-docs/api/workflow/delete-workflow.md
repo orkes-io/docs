@@ -31,11 +31,11 @@ Deletes a workflow execution from the server using the workflow ID.
 
 **Request**
 
-```
+```shell
 curl -X 'DELETE' \
-  'https://&lt;YOUR-CLUSTER>/api/workflow/373eabef-b846-11ef-b090-be4a9a728270/remove' \
+  'https://<YOUR_CLUSTER>/api/workflow/373eabef-b846-11ef-b090-be4a9a728270/remove' \
   -H 'accept: */*' \
-  -H 'X-Authorization: &lt;TOKEN>'
+  -H 'X-Authorization: <TOKEN>'
 ```
 
 **Response**

@@ -25,11 +25,11 @@ Resumes a paused workflow execution. This method has no effect if the workflow i
 
 **Request**
 
-```
+```shell
 curl -X 'PUT' \
-  'https://&lt;YOUR-CLUSTER>/api/workflow/2ce9207f-d4a6-11ef-87b1-b2b27c52ebde/resume' \
+  'https://<YOUR_CLUSTER>/api/workflow/2ce9207f-d4a6-11ef-87b1-b2b27c52ebde/resume' \
   -H 'accept: */*' \
-  -H 'X-Authorization: &lt;TOKEN>'
+  -H 'X-Authorization: <TOKEN>'
 ```
 
 **Response**
