@@ -9,84 +9,72 @@ import TabItem from '@theme/TabItem';
 
 # Rerun Workflow
 
-Reruns a workflow from a specific task (ReRunFromTaskId) and optionally change the input. If required, it also updates the completed tasks with new input (ReRunFromTaskId).
+**Endpoint:** `POST /api/workflow/{workflowId}/rerun`
 
-## Input Payload
+Reruns an ongoing or terminal workflow from a specific *reRunFromTaskId* task, or reruns a terminal workflow execution from the start, with the option to supply updated inputs. When invoked, all previous *reRunFromTaskId* task attempts will be marked as canceled even if they have been completed successfully.
 
-| Attribute | Description | 
-| --------- | ----------- | 
-| workflowId | The unique identifier of the workflow to be rerun. | 
+## Path parameters
 
-## API Endpoint
-```json
-POST /workflow/{workflowId}/rerun
+| Parameter  | Description | Type | Required/ Optional |
+| ---------- | ----------- | ---- | ----------------- |
+| workflowId | The execution ID of the workflow to be rerun. | string | Required. |
+
+## Request body
+
+Format the request as an object containing the following parameters.
+
+| Parameter  | Description | Type | Required/ Optional |
+| ---------- | ----------- | ---- | ----------------- |
+| reRunFromTaskId | The unique identifier of the task to rerun the workflow from. | string | Optional. |
+| reRunFromWorkflowId | The unique identifier of the workflow to be rerun. | string | Optional. |
+| correlationId | A unique identifier used to correlate the current workflow execution with other executions of the same workflow. | string | Optional. |
+| taskInput | The task inputs for the task identified in _reRunFromTaskId_. If unspecified, the same inputs from the previous run will be used. | object | Optional. |
+| workflowInput | The workflow inputs. If unspecified, the same inputs from the previous run will be used. | object | Optional. |
+
+**Example**
+
+``` json
 {
-    "reRunFromTaskId": "TASK_ID_TO_REREUN_FROM",
-    "taskInput": {
-        //Extra inputs to the task 
-    },
-    "workflowInput": {
-        //Changes to workflow inputs as part of re-run 
-    }
+  "correlationId": "string",
+  "reRunFromTaskId": "string",
+  "reRunFromWorkflowId": "string",
+  "taskInput": {
+    "additionalProp1": {},
+    "additionalProp2": {},
+    "additionalProp3": {}
+  },
+  "workflowInput": {
+    "additionalProp1": {},
+    "additionalProp2": {},
+    "additionalProp3": {}
+  }
 }
 ```
 
-## Client SDK Methods
+## Response
 
-<Tabs>
-<TabItem value="Java" label="Java">
+Returns the supplied *workflowId*.
 
-```java
-String rerunWorkflow(String workflowId, RerunWorkflowRequest rerunWorkflowRequest)
+## Examples
+
+<details><summary>Rerun workflow from a task</summary>
+
+**Request**
+
+```
+curl -X 'POST' \
+  'https://&lt;YOUR-CLUSTER>/api/workflow/3163f2e3-d4a9-11ef-a114-0af1b159704e/rerun' \
+  -H 'accept: text/plain' \
+  -H 'X-Authorization: &lt;TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "reRunFromTaskId": "87799dc8-d4b8-11ef-a114-0af1b159704e"
+}'
 ```
 
-</TabItem>
-<TabItem value="Go" label="Go">
+**Response**
 
-```go
-func (e *WorkflowExecutor) ReRun(workflowId string, reRunRequest model.RerunWorkflowRequest) (id string, error error)
 ```
-
-</TabItem>
-<TabItem value="Python" label="Python">
-
-```python
-WorkflowResourceApi.rerun(self, body, workflow_id, **kwargs)
+3163f2e3-d4a9-11ef-a114-0af1b159704e
 ```
-
-</TabItem>
-<TabItem value="CSharp" label="C#">
-
-```csharp
-string WorkflowResourceApi.Rerun(RerunWorkflowRequest body, string workflowId)
-```
-
-</TabItem>
-<TabItem value="JavaScript" label="JavaScript">
-
-```javascript
-WorkflowExecutor.rerun(
-    workflowId: string,
-    requestBody: RerunWorkflowRequest,
-): CancelablePromise<string>
-```
-
-</TabItem>
-<TabItem value="Typescript" label="Typescript">
-
-```typescript
-WorkflowResourceService.rerun(
-    workflowId: string,
-    requestBody: RerunWorkflowRequest,
-): CancelablePromise<string>
-```
-
-</TabItem>
-<TabItem value="Clojure" label="Clojure">
-
-```clojure
-(workflow-resource/rerun-workflow [options workflow-id rerun-wf-request])
-```
-
-</TabItem>
-</Tabs>
+</details>
