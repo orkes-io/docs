@@ -8,86 +8,312 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 # Get Workflow by ID
-Get workflow execution by workflow ID. 
 
-## Input Payload
+**Endpoint:** `GET /api/workflow/{workflowId}`
 
-| Attribute | Description | 
-| --------- | ----------- | 
-| workflowId | The ID of the workflow whose details are to be fetched. |
-| includeTasks | If set to true, it fetches all the task details. |
+Gets a workflow’s execution details using its workflow ID.
 
-## API Endpoint
+## Path parameters
+
+| Parameter  | Description | Type | Required/ Optional |
+| ---------- | ----------- | ---- | ----------------- |
+| workflowId | The execution ID of the workflow whose details are to be fetched. | string | Required. |
+
+## Query parameters
+
+| Parameter  | Description | Type | Required/ Optional |
+| ---------- | ----------- | ---- | ----------------- |
+| includeTasks | If set to true, all task execution details will be fetched in a `tasks` array. Default is true. | boolean | Optional. |
+| summarize | **Note:** This parameter is deprecated. There is no effect when configured. <br/><br/> Whether the workflow details will be summarized. | boolean | Optional. |
+
+## Response
+
+Returns a JSON object containing the workflow’s execution details.
+
+## Examples
+
+<details><summary>Get workflow with task execution details</summary>
+
+**Request**
+
 ```
-GET /workflow/{workflowId}
-```
-
-Returns nil if no workflow is found by the id.
-
-## Client SDK Methods
-
-<Tabs>
-<TabItem value="Java" label="Java">
-
-```java
-WorkflowStatus getWorkflowStatusSummary(String workflowId, Boolean includeOutput, Boolean includeVariables)
-```
-
-</TabItem>
-<TabItem value="Go" label="Go">
-
-```go
-func (e *WorkflowExecutor) GetWorkflow(workflowId string, includeTasks bool) (*model.Workflow, error)
-```
-
-</TabItem>
-<TabItem value="Python" label="Python">
-
-```python
-## Get workflow including tasks
-
-workflow = workflow_client.getWorkflow(workflow_id, True)
-
-## Get workflow excluding tasks
-
-workflow = workflow_client.getWorkflow(workflow_id, False)
+curl -X 'GET' \
+  'https://&lt;YOUR-CLUSTER>/api/workflow/6f5aa0f1-b871-11ef-b090-be4a9a728270?includeTasks=true' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: &lt;TOKEN>'
 ```
 
-</TabItem>
-<TabItem value="CSharp" label="C#">
+**Response**
 
-```csharp
-WorkflowStatus WorkflowResourceApi.GetWorkflowStatusSummary(string workflowId, bool? includeOutput = null, bool? includeVariables = null)
+```
+{
+  "ownerApp": "",
+  "createTime": 1733998281080,
+  "updateTime": 1733998281080,
+  "createdBy": "user@example.com",
+  "status": "RUNNING",
+  "endTime": 0,
+  "workflowId": "6f5aa0f1-b871-11ef-b090-be4a9a728270",
+  "tasks": [],
+  "input": {},
+  "output": {},
+  "taskToDomain": {},
+  "failedReferenceTaskNames": [],
+  "workflowDefinition": {
+    "createTime": 1728528754591,
+    "updateTime": 1728529067708,
+    "name": "simple-worker-project",
+    "description": "Java worker",
+    "version": 1,
+    "tasks": [
+      {
+        "name": "simple-java-worker",
+        "taskReferenceName": "simple-java-worker_ref",
+        "inputParameters": {},
+        "type": "SIMPLE",
+        "decisionCases": {},
+        "defaultCase": [],
+        "forkTasks": [],
+        "startDelay": 0,
+        "joinOn": [],
+        "optional": false,
+        "taskDefinition": {
+          "createTime": 0,
+          "updateTime": 0,
+          "name": "simple-java-worker",
+          "retryCount": 3,
+          "timeoutSeconds": 0,
+          "inputKeys": [],
+          "outputKeys": [],
+          "timeoutPolicy": "TIME_OUT_WF",
+          "retryLogic": "FIXED",
+          "retryDelaySeconds": 60,
+          "responseTimeoutSeconds": 3600,
+          "inputTemplate": {},
+          "rateLimitPerFrequency": 0,
+          "rateLimitFrequencyInSeconds": 1,
+          "backoffScaleFactor": 1,
+          "totalTimeoutSeconds": 0,
+          "enforceSchema": false
+        },
+        "defaultExclusiveJoinTask": [],
+        "asyncComplete": false,
+        "loopOver": [],
+        "onStateChange": {},
+        "permissive": false
+      }
+    ],
+    "inputParameters": [],
+    "outputParameters": {},
+    "failureWorkflow": "",
+    "schemaVersion": 2,
+    "restartable": true,
+    "workflowStatusListenerEnabled": false,
+    "ownerEmail": "user@example.com",
+    "timeoutPolicy": "ALERT_ONLY",
+    "timeoutSeconds": 0,
+    "variables": {},
+    "inputTemplate": {},
+    "enforceSchema": true
+  },
+  "priority": 0,
+  "variables": {},
+  "lastRetriedTime": 0,
+  "failedTaskNames": [],
+  "history": [],
+  "rateLimited": false,
+  "startTime": 1733998281080,
+  "workflowVersion": 1,
+  "workflowName": "simple-worker-project"
+}
 ```
 
-</TabItem>
-<TabItem value="JavaScript" label="JavaScript">
+</details>
 
-```javascript
-WorkflowExecutor.getWorkflowStatusSummary(
-    workflowId: string,
-    includeOutput: boolean
-    includeVariables: boolean,
-): CancelablePromise<WorkflowStatus>
+
+<details><summary>Get workflow without task execution details</summary>
+
+**Request**
+
+```
+curl -X 'GET' \
+  'https://&lt;YOUR_CLUSTER>/api/workflow/6f5aa0f1-b871-11ef-b090-be4a9a728270?includeTasks=false' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: &lt;TOKEN>'
 ```
 
-</TabItem>
-<TabItem value="Typescript" label="Typescript">
+**Response**
 
-```javascript
-WorkflowExecutor.getWorkflowStatusSummary(
-    workflowId: string,
-    includeOutput: boolean
-    includeVariables: boolean,
-): CancelablePromise<WorkflowStatus>
 ```
-
-</TabItem>
-<TabItem value="Clojure" label="Clojure">
-
-```clojure
-(workflow-resource/get-workflow [options workflow-id & {:keys [includeTasks], :or {includeTasks true}}])
+{
+  "ownerApp": "",
+  "createTime": 1733998281080,
+  "updateTime": 1733998281080,
+  "createdBy": "user@example.com",
+  "status": "RUNNING",
+  "endTime": 0,
+  "workflowId": "6f5aa0f1-b871-11ef-b090-be4a9a728270",
+  "tasks": [
+    {
+      "taskType": "simple-java-worker",
+      "status": "SCHEDULED",
+      "inputData": {
+        "_createdBy": "user@example.com"
+      },
+      "referenceTaskName": "simple-java-worker_ref",
+      "retryCount": 0,
+      "seq": 1,
+      "pollCount": 0,
+      "taskDefName": "simple-java-worker",
+      "scheduledTime": 1733998281088,
+      "startTime": 0,
+      "endTime": 0,
+      "updateTime": 0,
+      "startDelayInSeconds": 0,
+      "retried": false,
+      "executed": false,
+      "callbackFromWorker": true,
+      "responseTimeoutSeconds": 3600,
+      "workflowInstanceId": "6f5aa0f1-b871-11ef-b090-be4a9a728270",
+      "workflowType": "simple-worker-project",
+      "taskId": "6f5bd972-b871-11ef-b090-be4a9a728270",
+      "callbackAfterSeconds": 0,
+      "outputData": {},
+      "workflowTask": {
+        "name": "simple-java-worker",
+        "taskReferenceName": "simple-java-worker_ref",
+        "inputParameters": {},
+        "type": "SIMPLE",
+        "decisionCases": {},
+        "defaultCase": [],
+        "forkTasks": [],
+        "startDelay": 0,
+        "joinOn": [],
+        "optional": false,
+        "taskDefinition": {
+          "createTime": 0,
+          "updateTime": 0,
+          "name": "simple-java-worker",
+          "retryCount": 3,
+          "timeoutSeconds": 0,
+          "inputKeys": [],
+          "outputKeys": [],
+          "timeoutPolicy": "TIME_OUT_WF",
+          "retryLogic": "FIXED",
+          "retryDelaySeconds": 60,
+          "responseTimeoutSeconds": 3600,
+          "inputTemplate": {},
+          "rateLimitPerFrequency": 0,
+          "rateLimitFrequencyInSeconds": 1,
+          "backoffScaleFactor": 1,
+          "totalTimeoutSeconds": 0,
+          "enforceSchema": false
+        },
+        "defaultExclusiveJoinTask": [],
+        "asyncComplete": false,
+        "loopOver": [],
+        "onStateChange": {},
+        "permissive": false
+      },
+      "rateLimitPerFrequency": 0,
+      "rateLimitFrequencyInSeconds": 1,
+      "workflowPriority": 0,
+      "iteration": 0,
+      "subworkflowChanged": false,
+      "firstStartTime": 0,
+      "queueWaitTime": 0,
+      "loopOverTask": false,
+      "taskDefinition": {
+        "createTime": 0,
+        "updateTime": 0,
+        "name": "simple-java-worker",
+        "retryCount": 3,
+        "timeoutSeconds": 0,
+        "inputKeys": [],
+        "outputKeys": [],
+        "timeoutPolicy": "TIME_OUT_WF",
+        "retryLogic": "FIXED",
+        "retryDelaySeconds": 60,
+        "responseTimeoutSeconds": 3600,
+        "inputTemplate": {},
+        "rateLimitPerFrequency": 0,
+        "rateLimitFrequencyInSeconds": 1,
+        "backoffScaleFactor": 1,
+        "totalTimeoutSeconds": 0,
+        "enforceSchema": false
+      }
+    }
+  ],
+  "input": {},
+  "output": {},
+  "taskToDomain": {},
+  "failedReferenceTaskNames": [],
+  "workflowDefinition": {
+    "createTime": 1728528754591,
+    "updateTime": 1728529067708,
+    "name": "simple-worker-project",
+    "description": "Java worker",
+    "version": 1,
+    "tasks": [
+      {
+        "name": "simple-java-worker",
+        "taskReferenceName": "simple-java-worker_ref",
+        "inputParameters": {},
+        "type": "SIMPLE",
+        "decisionCases": {},
+        "defaultCase": [],
+        "forkTasks": [],
+        "startDelay": 0,
+        "joinOn": [],
+        "optional": false,
+        "taskDefinition": {
+          "createTime": 0,
+          "updateTime": 0,
+          "name": "simple-java-worker",
+          "retryCount": 3,
+          "timeoutSeconds": 0,
+          "inputKeys": [],
+          "outputKeys": [],
+          "timeoutPolicy": "TIME_OUT_WF",
+          "retryLogic": "FIXED",
+          "retryDelaySeconds": 60,
+          "responseTimeoutSeconds": 3600,
+          "inputTemplate": {},
+          "rateLimitPerFrequency": 0,
+          "rateLimitFrequencyInSeconds": 1,
+          "backoffScaleFactor": 1,
+          "totalTimeoutSeconds": 0,
+          "enforceSchema": false
+        },
+        "defaultExclusiveJoinTask": [],
+        "asyncComplete": false,
+        "loopOver": [],
+        "onStateChange": {},
+        "permissive": false
+      }
+    ],
+    "inputParameters": [],
+    "outputParameters": {},
+    "failureWorkflow": "",
+    "schemaVersion": 2,
+    "restartable": true,
+    "workflowStatusListenerEnabled": false,
+    "ownerEmail": "user@example.com",
+    "timeoutPolicy": "ALERT_ONLY",
+    "timeoutSeconds": 0,
+    "variables": {},
+    "inputTemplate": {},
+    "enforceSchema": true
+  },
+  "priority": 0,
+  "variables": {},
+  "lastRetriedTime": 0,
+  "failedTaskNames": [],
+  "history": [],
+  "rateLimited": false,
+  "startTime": 1733998281080,
+  "workflowName": "simple-worker-project",
+  "workflowVersion": 1
+}
 ```
-
-</TabItem>
-</Tabs>
+</details>
