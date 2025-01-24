@@ -1,5 +1,5 @@
 ---
-sidebar_position: 8
+sidebar_position: 5
 slug: "/reference-docs/api/human-tasks/release-human-task"
 description: "This API is used to release a previously-claimed Human task so that someone else can claim it."
 ---
@@ -7,40 +7,38 @@ import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
 # Release Human Task
 
-Used for releasing a previously claimed task. If the user is unable to complete this task, this API can be used to
-release the task so that a new claimant can claim this task.
+**Endpoint:** `POST /api/human/tasks/{taskId}/release`
 
-:::note 
-The invoking user should be a task owner, an ADMIN, or a claimant to the task.
-:::
+Releases a previously claimed Human task. Use this endpoint if the user is unable to complete the task so that another user can claim it.
 
-## Input Payload
+The invoking user should be one of the following:
+* Cluster admin
+* Task owner of the Human task
+* Task claimant
 
-| Attribute    | Description                                               |
-|--------------|-----------------------------------------------------------| 
-| taskId       | The *taskId* of the human task to be released. | 
 
-## API Endpoint
+## Path parameters
 
-```
-POST human/tasks/{taskId}/release
-```
+| Parameter  | Description | Type | Required/ Optional |
+| ---------- | ----------- | ---- | ----------------- |
+| taskId | The unique identifier for the Human task execution to be released. | string | Required. |
 
-## Client SDK Methods
+## Examples
 
-<Tabs>
-<TabItem value="JavaScript" label="JavaScript">
+<details><summary>Release a claimed Human task</summary>
 
-```javascript
-HumanExecutor.releaseTask(taskId:string)
-```
+**Request**
 
-</TabItem>
-<TabItem value="Typescript" label="Typescript">
-
-```typescript
-HumanExecutor.releaseTask(taskId:string)
+``` shell
+curl -X 'POST' \
+  'https://<YOUR_CLUSTER>/api/human/tasks/869ed0ee-cf07-11ef-a89d-86a819bd92bf/release' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -d ''
 ```
 
-</TabItem>
-</Tabs>
+**Response**
+
+Returns 200 OK, indicating that the Human task has been released successfully.
+
+</details>

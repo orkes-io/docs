@@ -1,5 +1,5 @@
 ---
-sidebar_position: 12
+sidebar_position: 9
 slug: "/reference-docs/api/human-tasks/get-task-ui-template"
 description: "This API is used to retrieve the user form used in a Human task based on its task ID."
 ---
@@ -7,19 +7,72 @@ description: "This API is used to retrieve the user form used in a Human task ba
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Get Human Task User Forms (Templates)
+# Get User Form by Task ID
 
-Used to retrieve a human task user forms/templates by id. Use this API to retrieve a user form/template specification stored in Conductor.
+**Endpoint:** `GET /api/human/template/{humanTaskId}`
 
-## Input Payload
+Retrieves the user form associated with a Human task using its task ID.
 
-| Attribute | Description                                                     |
-|-----------|-----------------------------------------------------------------| 
-| humanTaskId        | The *id* of the human task in which the user form/template is added. | 
+## Path parameters
 
-## API Endpoint 
+| Parameter  | Description | Type | Required/ Optional |
+| ---------- | ----------- | ---- | ----------------- |
+| taskId | The unique identifier for the Human task execution. | string | Required. |
 
+## Response
+
+Returns the user form for the Human task.
+
+
+## Examples
+
+<details><summary>Get a user form using a Human task ID</summary>
+
+**Request**
+
+``` shell
+curl -X 'GET' \
+  'https://<YOUR_CLUSTER>/api/human/template/b5070997-d326-11ef-a7d0-3e3f9199f5b3' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>''
 ```
-GET human/template/{humanTaskId}
-```
 
+**Response**
+
+``` json
+{
+  "createTime": 1736409506524,
+  "updateTime": 1736409506524,
+  "createdBy": "USER:user@example.com",
+  "updatedBy": "USER:user@example.com",
+  "name": "formSubmission",
+  "version": 1,
+  "jsonSchema": {
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "properties": {
+      "enterAssets": {
+        "type": "string"
+      },
+      "Confirm approval": {
+        "type": "boolean"
+      }
+    }
+  },
+  "templateUI": {
+    "type": "VerticalLayout",
+    "elements": [
+      {
+        "type": "Control",
+        "scope": "#/properties/enterReason",
+        "label": "Enter reason for approval"
+      },
+      {
+        "type": "Control",
+        "scope": "#/properties/Confirm",
+        "options": {}
+      }
+    ]
+  }
+}
+```
+</details>
