@@ -1,5 +1,5 @@
 ---
-sidebar_position: 15
+sidebar_position: 6
 slug: "/reference-docs/api/workflow/upgrade-workflow"
 description: "This API is used to upgrade a currently running workflow to a different version."
 ---
@@ -9,65 +9,70 @@ import TabItem from '@theme/TabItem';
 
 # Upgrade Workflow
 
-Upgrade Workflow API upgrades a running workflow to a newer/older version. When the workflow is running, one of the tasks would be currently in the execution state. When this workflow is upgraded using this API, all the tasks in the newer definition before this running task will be marked as skipped. 
+**Endpoint:** `POST /api/workflow/{workflowId}/upgrade`
 
-## Input Payload
+Upgrades a running workflow to a different version. 
 
-| Attribute     | Description                                                                                                                  | 
-|---------------|------------------------------------------------------------------------------------------------------------------------------| 
-| workflowId    | The unique identifier of the workflow to be upgraded.                                                                    | 
-| name          | Name of the workflow with the latest definition to be upgraded. |                                                                   |
-| version       | Version to which the workflow is to be updated. |                                                                 |
-| taskOutput    | A map of key and value containing the output of the tasks that will be skipped. Here, the key is the task reference name, and the value is the task output. |
-| workflowInput | A map of key and value to be given as the input to the new workflow execution.                                                  |
+The workflow execution will continue from its last running task, even when it has been upgraded. In other words, all the tasks in the upgraded definition prior to the currently running task will be marked as skipped.
 
-## API Endpoint
+
+## Path parameters
+
+| Parameter  | Description | Type | Required/ Optional |
+| ---------- | ----------- | ---- | ----------------- |
+| workflowId | The execution ID of the workflow to be upgraded. | string | Required. |
+
+## Request body
+
+Format the request as an object containing the following parameters.
+
+| Parameter  | Description | Type | Required/ Optional |
+| ---------- | ----------- | ---- | ----------------- |
+| name | The name of the workflow definition. | string | Required. |
+| version | The version to which the workflow is to be updated. | integer | Required. |
+| taskOutput | A map of task outputs for any skipped tasks, with the key as the task reference name, and the value as the task output object. | map | Optional. |
+| workflowInput | A map of inputs for the upgraded workflow execution, with the parameter name as the key and its input value as the value. | map | Optional. |
+
+**Example**
+
+```json
+{
+  "name": "myWorkflow",
+  "taskOutput": {
+    "newTaskRefName": {
+      "someKey: "someValue
+    }
+  },
+  "version": 3,
+  "workflowInput": {
+    "someKey": "someValue"
+  }
+}
 ```
-POST /workflow/{workflowId}/upgrade
-```
-## Client SDK Methods
-
-<Tabs>
-<TabItem value="Java" label="Java">
-
-```java
-void upgradeRunningWorkflow(String workflowId, UpgradeWorkflowRequest upgradeWorkflowRequest)
-```
-
-</TabItem>
-</Tabs>
 
 ## Examples
 
-<details><summary>Sample Workflow</summary>
-<p>
+<details><summary>Upgrade to the next version</summary>
 
-Consider a workflow definition with version 1 as follows:
-<p align="center"><img src="/content/img/upgrade-workflow-old-definition.png" alt="Upgrade workflow old definition" width="33%" height="20%"></img></p>
+**Request**
 
-Now let's run the workflow. Currently **simple_task2** is completed, but **simple_task4** is in a running state:
-<p align="center"><img src="/content/img/upgrade-workflow-old-running.png" alt="Upgrade workflow old instance running" width="33%" height="20%"></img></p>
-
-Now, we want to update the workflow to the newer definition with 2 more tasks as follows:
-<p align="center"><img src="/content/img/upgrade-workflow-new-definition.png" alt="Upgrade workflow new definition" width="33%" height="20%"></img></p>
-
-Let's call the upgrade API with the following **UpgradeWorkflowRequest**:
-```java
-UpgradeWorkflowRequest upgradeWorkflowRequest = new UpgradeWorkflowRequest();
-Map<String, Object> output = Map.of("updatedBy" , "upgrade");
-upgradeWorkflowRequest.setTaskOutput(Map.of("simple_task3", output,"simple_task1",output));
-upgradeWorkflowRequest.setWorkflowInput(Map.of("name", "orkes"));
-
-upgradeWorkflowRequest.setVersion(2);
-upgradeWorkflowRequest.setName(workflowName);
+```shell
+curl -X 'POST' \
+  'https://<YOUR_CLUSTER>/api/workflow/77916c63-d3e7-11ef-87b1-b2b27c52ebde/upgrade' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "name": "someWorkflow",
+  "taskOutput": {},
+  "version": 2
+}'
 ```
 
-Now, the workflow gets upgraded to the latest version as shown below:
+**Response**
 
-<p align="center"><img src="/content/img/upgrade-workflow-new-running.png" alt="Upgrade workflow new instance running" width="33%" height="20%"></img></p>
+Returns 200 OK, indicating that the workflow execution has been upgraded successfully. All new tasks before the currently running task are skipped in the execution.
 
-All the tasks added above the running **simple_task4** gets skipped here. The tasks **simple_task1** and **simple_task3** will have output as per the taskOutput map above. The workflow input will also get changed as per the workflowInput map.
+<p align="center"><img src="/content/img//upgrade_workflow_api-skipped_task.png" alt="Screenshot of Conductor UI showing the skipped tasks in the upgraded workflow execution." width="90%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
-</p>
 </details>
-

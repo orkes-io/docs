@@ -1,5 +1,5 @@
 ---
-sidebar_position: 7
+sidebar_position: 12
 slug: "/reference-docs/api/workflow/restart-workflow"
 description: "This API is used to restart a completed workflow from the beginning using the same workflow input."
 ---
@@ -9,75 +9,57 @@ import TabItem from '@theme/TabItem';
 
 # Restart Workflow 
 
-Restart a workflow execution from the beginning with the same input. This operation has no effect when called on a workflow that is not in a terminal status. If **useLatestDefinition** is set, the restarted workflow fetches the latest definition from the metadata store.
+**Endpoint:** `POST /api/workflow/{workflowId}/restart`
 
-## Input Payload
+Restarts a terminal workflow execution from the beginning using the same input and workflow definition, with the option to use the latest definition instead. This method has no effect on ongoing workflows.
 
-| Attribute | Description | 
-| --------- | ----------- | 
-| workflowId | The unique identifier of the workflow to be restarted. | 
+## Path parameters
 
-## API Endpoint
-```
-POST /workflow/{workflowId}/restart
-```
+| Parameter  | Description | Type | Required/ Optional |
+| ---------- | ----------- | ---- | ----------------- |
+| workflowId | The execution ID of the workflow to be restarted. | string | Required. |
 
-## Client SDK Methods
+## Query parameters
 
-<Tabs>
-<TabItem value="Java" label="Java">
+| Parameter  | Description | Type | Required/ Optional |
+| ---------- | ----------- | ---- | ----------------- |
+| useLatestDefinitions | If set to true, the restarted workflow will use the latest definition from the metadata store. Default is false. | boolean | Optional. |
 
-```java
-BulkResponse restartWorkflow(List<String> workflowIds, Boolean useLatestDefinitions) throws ApiException
-```
+## Examples
 
-</TabItem>
-<TabItem value="Go" label="Go">
+<details><summary>Restart workflow execution without using the latest definition</summary>
 
-```go
-func (e *WorkflowExecutor) Restart(workflowId string, useLatestDefinition bool) error
-```
+**Request**
 
-</TabItem>
-<TabItem value="Python" label="Python">
-
-```python
-WorkflowResourceApi.restart1(self, workflow_id, **kwargs)
+```shell
+curl -X 'POST' \
+  'https://<YOUR_CLUSTER>/api/workflow/bf6ac066-d493-11ef-87b1-b2b27c52ebde/restart' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -d ''
 ```
 
-</TabItem>
-<TabItem value="CSharp" label="C#">
+**Response**
 
-```csharp
-void WorkflowResourceApi.Restart(string workflowId, bool? useLatestDefinitions = null)
+Returns 204, indicating that the workflow execution has been restarted successfully.
+
+</details>
+
+
+<details><summary>Restart workflow execution using the latest definition</summary>
+
+**Request**
+
+```shell
+curl -X 'POST' \
+  'https://<YOUR_CLUSTER>/api/workflow/bf6ac066-d493-11ef-87b1-b2b27c52ebde/restart?useLatestDefinitions=true' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -d ''
 ```
 
-</TabItem>
-<TabItem value="JavaScript" label="JavaScript">
+**Response**
 
-```javascript
-WorkflowExecutor.restart(
-    workflowId: string,
-    useLatestDefinitions: boolean,
-): CancelablePromise<void>
-```
+Returns 204 No Content, indicating that the workflow execution has been restarted successfully.
 
-</TabItem>
-<TabItem value="Typescript" label="Typescript">
-
-```typescript
-WorkflowExecutor.restart(
-    workflowId: string,
-    useLatestDefinitions: boolean,
-): CancelablePromise<void>
-```
-
-</TabItem>
-<TabItem value="Clojure" label="Clojure">
-
-```clojure
-(workflow-resource/restart-workflow [options workflow-id])
-```
-
-</TabItem>
-</Tabs>
+</details>

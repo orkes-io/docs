@@ -1,5 +1,5 @@
 ---
-sidebar_position: 12
+sidebar_position: 1
 slug: "/reference-docs/api/workflow/start-workflow-execution"
 description: "This API is used to start a workflow execution and immediately generates a workflow ID."
 ---
@@ -7,81 +7,70 @@ description: "This API is used to start a workflow execution and immediately gen
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Start Workflow Execution
+# Start Workflow Execution (Async)
 
-Starts a workflow and returns the ID of the workflow. The API returns immediately without waiting for the workflow to be completed.
+**Endpoint:** `POST /api/workflow/{name}`
 
-## Input Payload
+Starts a workflow execution asynchronously. This method returns immediately with the workflow ID without waiting for the workflow to be completed.
 
-| Parameter     | Description                                                                                                                      |
-| ------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| name          | Name of the workflow.                                                                                                             |
-| version       | Choose the workflow version.                                                                                                 |
-| input         | Map of Key and Value given as the input to the workflow.                                                                          |
-| correlationId | User-supplied correlation id, which can be used to query the workflow execution later.                                             |
-| priority      | Priority of the workflow. 0 is the default priority, which executes workflows in FIFO. Valid values are from 0-99.|
-| taskToDomain  | [Task to Domain](/content/developer-guides/task-to-domain) limits the workflow execution to the specified domain only.                                                                 |
-| workflowDef   | Provide the entire workflow definition. Used for executing ephemeral workflow definitions.                                |
+## Path parameters
+
+| Parameter  | Description | Type | Required/ Optional |
+| ---------- | ----------- | ---- | ----------------- |
+| name | The name of the workflow to be started. | string | Required. |
+
+## Query parameters
+
+| Parameter  | Description | Type | Required/ Optional |
+| ---------- | ----------- | ---- | ----------------- |
+| version | The workflow version. If unspecified, the latest version will be used. | integer | Optional. |
+| correlationId | A unique identifier used to correlate the current workflow execution with other executions of the same workflow. | string | Optional. |
+| priority | Priority of the workflow execution. Supported values: 0-99. <br/><br/> Default is 0, which means workflows are completed in a first-in-first-out order. | integer | Optional. |
+
+## Request body
+
+Contains the workflow inputs. Format the request as an object containing key-value pairs.
+
+**Example**
+
+```json
+{
+  "someKey": "someValue",
+  "anotherKey": {}
+}
+```
+
+## Header parameters
+
+| Parameter  | Description | Type | Required/ Optional |
+| ---------- | ----------- | ---- | ----------------- |
+| X-Idempotency-key | A unique, user-generated key to prevent duplicate workflow executions. Idempotency data is retained for the life of the workflow execution. | string | Optional. |
+| X-on-conflict | The idempotency strategy for handling duplicate requests. Supported values: <ul><li>**RETURN_EXISTING**—Return the _workflowId_ of the workflow instance with the same idempotency key.</li> <li>**FAIL**—Start a new workflow instance only if there are no workflow executions with the same idempotency key.</li> <li>**FAIL_ON_RUNNING**—Start a new workflow instance only if there are no RUNNING or PAUSED workflows with the same idempotency key. Completed workflows can run again.</li></ul> | string | Required if _X-Idempotency-key_ is specified. |
 
 ## Response
-A string representing the id of the workflow execution.
 
-## API Endpoint
-```
-POST /api/workflow/{name}
-```
+Returns the workflow ID of the started workflow.
 
-## SDK Methods
+## Examples
 
-<Tabs>
-<TabItem value="Java" label="Java">
+<details><summary>Start a workflow</summary>
 
-```java
-String startWorkflow(StartWorkflowRequest startWorkflowRequest)
-```
+**Request**
 
-</TabItem>
-<TabItem value="Go" label="Go">
-
-```go
-func (e *WorkflowExecutor) StartWorkflow(startWorkflowRequest *model.StartWorkflowRequest) (workflowId string, err error)
+```shell
+curl -X 'POST' \
+  'https://<YOUR_CLUSTER>/api/workflow/compensationWorkflow?priority=0' \
+  -H 'accept: text/plain' \
+  -H 'X-Authorization: <TOKEN>' \
+  -d '{
+    "input1": "someValue"
+  }'
 ```
 
-</TabItem>
-<TabItem value="Python" label="Python">
-
-```python
-WorkflowResourceApi.start_workflow(self, body, **kwargs)
-```
-
-</TabItem>
-<TabItem value="CSharp" label="C#">
-
-```csharp
-string WorkflowResourceApi.StartWorkflow(StartWorkflowRequest body)
-```
-
-</TabItem>
-<TabItem value="JavaScript" label="JavaScript">
-
-```javascript
-WorkflowExecutor.startWorkflow(workflowRequest: StartWorkflowRequest): Promise<string>
+**Response**
 
 ```
-
-</TabItem>
-<TabItem value="Typescript" label="Typescript">
-
-```typescript
-WorkflowExecutor.startWorkflow(workflowRequest: StartWorkflowRequest): Promise<string>
+c0933afc-d3f4-11ef-87b1-b2b27c52ebde
 ```
 
-</TabItem>
-<TabItem value="Clojure" label="Clojure">
-
-```clojure
-(workflow-resource/start-workflow [options start-workflow-request])
-```
-
-</TabItem>
-</Tabs>
+</details>

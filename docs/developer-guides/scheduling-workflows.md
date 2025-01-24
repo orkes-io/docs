@@ -28,7 +28,7 @@ Examples include:
 
 Configure these parameters when creating a schedule.
 
-| Parameter | Description | Required/Optional |
+| Parameter | Description | Required/ Optional |
 | --------- | ----------- | ----------------- | 
 | name | The name of the schedule. Must be alphanumeric and can include underscores. Renaming an existing schedule creates a new one. | Required. | 
 | description | A description of the schedule. | Optional. | 

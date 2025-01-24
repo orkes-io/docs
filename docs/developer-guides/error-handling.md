@@ -95,7 +95,7 @@ You can configure timeout behavior for tasks in its **task definition** to handl
 * Timeout policy
 
 
-| Parameter | Description | Required/Optional | 
+| Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ------------------ |
 | pollTimeoutSeconds     | The maximum duration in seconds that a worker has to poll a task before it gets marked as `TIMED_OUT`. When configured with a value > 0, Conductor will wait for the task to be picked up by a worker. <br/> <br/> Useful for detecting a backlogged task queue with insufficient workers. <br/> <br/> Default value is 3600.     | Optional. | 
 | responseTimeoutSeconds | The maximum duration in seconds that a worker has to respond to the server with a status update before it gets marked as `TIMED_OUT`. When configured with a value > 0, Conductor will wait for the worker to return a status update, starting from when the task was picked up. <br/><br/> If a task requires more time to complete, the worker can respond with the `IN_PROGRESS` status. <br/> <br/> Default value is 600.           | Optional. | 

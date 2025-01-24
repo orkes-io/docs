@@ -17,7 +17,7 @@ The LLM Generate Embeddings task takes the input text and processes it through t
 
 Configure these parameters for the LLM Generate Embeddings task.
 
-| Parameter | Description | Required/Optional | 
+| Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- |
 | inputParameters.**llmProvider** | The LLM provider. You can choose providers for which you have access to at least one model.<br/><br/>**Note**: If you haven’t configured your AI/LLM provider on your Orkes Conductor cluster, go to the **Integrations** tab and set it up. Refer to the documentation for [integrating LLM providers with Orkes Conductor](https://orkes.io/content/category/integrations/ai-llm). | Required. | 
 | inputParameters.**model** | The available language models provided by the selected LLM provider. You can only choose models for which you have access.<br/><br/>For example, If your LLM provider is Azure Open AI and you’ve configured text-davinci-003 as the language model, you can select it here. | Required. | 

@@ -17,7 +17,7 @@ An HTTP Poll task sends HTTP requests to a specified endpoint at regular interva
 
 Configure these parameters for the HTTP Poll task.
 
-| Parameter | Description | Required/Optional | 
+| Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- |
 | inputParameters.**uri** | The URI for the service. It can be a partial value when using `vipAddress` or it can be the server address. | Required. | 
 | inputParameters.**method** | The HTTP method. Supported methods:<ul><li>GET</li><li>HEAD</li><li>POST</li><li>PUT</li><li>PATCH</li><li>DELETE</li><li>OPTIONS</li><li>TRACE</li></ul> | Required. |

@@ -1,5 +1,5 @@
 ---
-sidebar_position: 14
+sidebar_position: 10
 slug: "/reference-docs/api/workflow/terminate-workflow"
 description: "This API is used to terminate a workflow execution with a termination reason."
 ---
@@ -9,75 +9,38 @@ import TabItem from '@theme/TabItem';
 
 # Terminate Workflow
 
-Terminates a running workflow. A reason must be provided that is captured as the termination reason for the workflow.
+**Endpoint:** `DELETE /api/workflow/{workflowId}`
 
-## Input Payload
+Terminates a running workflow, with the option to provide a reason for termination and/or trigger a failure workflow.
 
-| Attribute | Description | 
-| --------- | ----------- | 
-| workflowId | The unique identifier of the workflow to be terminated. | 
+## Path parameters
 
-## API Endpoint
-```
-DELETE /workflow/{workflowId}
-```
+| Parameter  | Description | Type | Required/ Optional |
+| ---------- | ----------- | ---- | ----------------- |
+| workflowId | The execution ID of the workflow to be terminated. | string | Required. |
 
-## Client SDK Methods
+## Query parameters
 
-<Tabs>
-<TabItem value="Java" label="Java">
+| Parameter  | Description | Type | Required/ Optional |
+| ---------- | ----------- | ---- | ----------------- |
+| reason | The reason for termination. | string | Optional. |
+| triggerFailureWorkflow | If set to true, the associated compensation flow (if any) will be triggered. Default is false. <br/><br/> Learn more about compensation flows in [Handling Failures](/error-handling#workflow-compensation-flows). | boolean | Optional. |
 
-```java
-void terminateWorkflow(String workflowId, String reason)
-```
+## Examples
 
-</TabItem>
-<TabItem value="Go" label="Go">
+<details><summary>Terminate a workflow execution</summary>
 
-```go
-func (e *WorkflowExecutor) Terminate(workflowId string, reason string) error
-```
+**Request**
 
-</TabItem>
-<TabItem value="Python" label="Python">
-
-```python
-WorkflowResourceApi.terminate1(self, workflow_id, **kwargs)
+```shell
+curl -X 'DELETE' \
+  'https://<YOUR_CLUSTER>/api/workflow/77916c63-d3e7-11ef-87b1-b2b27c52ebde?reason=transaction%20cancelled&triggerFailureWorkflow=false' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>'
 ```
 
-</TabItem>
-<TabItem value="CSharp" label="C#">
+**Response**
 
-```csharp
-void WorkflowResourceApi.Terminate(string workflowId, string reason = null, bool? triggerFailureWorkflow = null)
-```
+Returns 200 OK, indicating that the workflow execution has been terminated successfully.
 
-</TabItem>
-<TabItem value="JavaScript" label="JavaScript">
-
-```javascript
-WorkflowExecutor.terminate(
-    workflowId: string,
-    reason: string,
-): CancelablePromise<any>
-```
-
-</TabItem>
-<TabItem value="Typescript" label="Typescript">
-
-```typescript
-WorkflowExecutor.terminate(
-    workflowId: string,
-    reason: string,
-): CancelablePromise<any>
-```
-
-</TabItem>
-<TabItem value="Clojure" label="Clojure">
-
-```clojure
-(workflow-resource/terminate-workflow [options workflow-id & args])
-```
-
-</TabItem>
-</Tabs>
+</details>

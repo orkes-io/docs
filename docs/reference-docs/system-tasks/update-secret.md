@@ -18,7 +18,7 @@ The update secret task updates a secret based on provided parameters. It require
 
 Configure these parameters for the Update Secret task.
 
-| Parameter | Description | Required/Optional | 
+| Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- |
 | inputparameters.**_secrets** | A nested object within `inputParameters` containing the `secretKey` and `secretValue` fields. | Required. | 
 | inputparameters.**_secrets.secretKey** | The name of the secret key to be updated. It can be [passed as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor). | Required. | 

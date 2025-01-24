@@ -15,14 +15,12 @@ Deletes an existing task definition.
 
 ## Path parameters
 
-| Parameter  | Description | Type | Required/Optional |
+| Parameter  | Description | Type | Required/ Optional |
 | ---------- | ----------- | ---- | ----------------- |
 | name | The name of the workflow definition to be deleted. | string | Required. | 
 | version | The version of the workflow definition to be deleted. | integer | Required. | 
 
 ## Examples
-
-### Delete an existing workflow definition
 
 <details><summary>Delete an existing workflow definition</summary>
 
@@ -30,7 +28,7 @@ Deletes an existing task definition.
 
 ```bash
 curl -X 'DELETE' \
-  'https://<YOUR-CLUSTER>/api/metadata/workflow/api-test/2' \
+  'https://<YOUR_CLUSTER>/api/metadata/workflow/api-test/2' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>'
 ```

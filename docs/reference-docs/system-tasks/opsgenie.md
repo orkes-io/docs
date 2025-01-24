@@ -17,7 +17,7 @@ Opsgenie utilizes metadata to populate alert details and notify the appropriate 
 
 Configure these parameters for the Opsgenie task.
 
-| Parameter | Description | Required/Optional | 
+| Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- |
 | inputParameters.**alias** | A custom identifier that will be generated in Opsgenie when alerts are triggered. Up to 512 characters long. | Required. | 
 | inputParameters.**description** | Description of the alert, limited to 15,000 characters in Opsgenie. | Required. |

@@ -17,7 +17,7 @@ The LLM Get Document task fetches a document from a specified URL based on the p
 
 Configure these parameters for the LLM Get Document task.
 
-| Parameter | Description | Required/Optional | 
+| Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- |
 | inputParameters.**url** | The URL of the file to be retrieved. | Required. |
 | inputParameters.**mediaType** | The media type of the file to be retrieved. Supported media types:<ul> <li>application/pdf</li> <li>text/html</li> <li>text/plain</li> <li>application/json</li> </ul> | Optional. |

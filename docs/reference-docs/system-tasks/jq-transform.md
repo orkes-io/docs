@@ -18,7 +18,7 @@ A JSON JQ Transform task evaluates a `queryExpression` using jq syntax to transf
 
 Configure these parameters for the JSON JQ Transform task.
 
-| Parameter | Description | Required/Optional | 
+| Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- |
 | inputParameters | JSON object containing the configuration data for task execution. Supports string, number, boolean, null, and object/array. | Required. |
 | inputParameters.**queryExpression** | A string representing a JQ (JSON Query) expression. This expression is used to transform the JSON data. | Required. |

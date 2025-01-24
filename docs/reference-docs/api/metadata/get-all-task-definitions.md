@@ -15,7 +15,7 @@ Gets all the task definitions in the cluster.
 
 ## Query parameters
 
-| Parameter  | Description | Type | Required/Optional |
+| Parameter  | Description | Type | Required/ Optional |
 | ---------- | ----------- | ---- | ----------------- |
 | access | The access level being requested. Supported values: _READ_, _CREATE_, _UPDATE_, _EXECUTE_, and _DELETE_. Default is _READ_. | string | Optional. | 
 | metadata | Whether metadata (such as tags) should be included in the response. Default is _false_. | boolean | Optional. | 
@@ -28,15 +28,13 @@ Returns an array containing all the task definitions in the cluster.
 
 ## Examples
 
-### Get all task definitions with a specific tag
-
 <details><summary>Get all task definitions with a specific tag</summary>
 
 **Request**
 
 ```bash
 curl -X 'GET' \
-  'https://<YOUR-CLUSTER>/api/metadata/taskdefs?access=READ&metadata=false&tagKey=team&tagValue=engineering' \
+  'https://<YOUR_CLUSTER>/api/metadata/taskdefs?access=READ&metadata=false&tagKey=team&tagValue=engineering' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>'
 ```

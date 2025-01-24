@@ -12,7 +12,7 @@ Gets the last poll data for all the tasks in the task queue. The filter paramete
 
 ## Query parameters
 
-| Parameter  | Description | Type | Required/Optional |
+| Parameter  | Description | Type | Required/ Optional |
 | ---------- | ----------- | ---- | ----------------- |
 | workerSize | The number of worker instances polling for all the tasks in the queue. | integer | Optional. | 
 | workerOpt | Option to filter based on the worker size. Supported values:<ul><li>**GT** (Greater than)</li><li>**LT** (Less than)</li></ul> | string | Required if _workerSize_ is used. |
@@ -35,15 +35,13 @@ If a worker has not picked up the task, no _pollData_ will be available and the 
 
 ## Examples
 
-### Get the last poll data for tasks with a queue size greater than 7
-
 <details><summary>Get the last poll data for tasks with a queue size greater than 7</summary>
 
 **Request**
 
 ```bash
 curl -X 'GET' \
-  'https://<YOUR-CLUSTER>/api/tasks/queue/polldata/all?queueSize=7&queueOpt=GT' \
+  'https://<YOUR_CLUSTER>/api/tasks/queue/polldata/all?queueSize=7&queueOpt=GT' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>'
 ```

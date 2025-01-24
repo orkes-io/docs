@@ -18,7 +18,7 @@ The Business Rule task evaluates business rules using a specified rule file. The
 
 Configure these parameters for the Business Rule task.
 
-| Parameter | Description | Required/Optional | 
+| Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- |
 | inputParamemeter.**ruleFileLocation** | URL of the spreadsheet to be evaluated, in CSV, XLS, or XLSX format. The file can be stored on the web, AWS S3, Azure Blob, etc.<br/><br/>**Note:**A spreadsheet without an explicitly-defined .csv, .xls, or .xlsx extension can also be processed as long as its `Content-Type` indicates a supported format, such as a Google spreadsheet published to the web. | Required. | 
 | inputParamemeter.**executionStrategy** | Strategy for rule execution. Supported types:<ul><li>**FIRE_FIRST**—Uses the first rule that matches to generate the output.</li><li>**FIRE_ALL**—Uses all matching rules to generate the output, with subsequent rules overwriting previous values.</li></ul>**Note:**When you update the rule for any files, there will be a default caching period of 60 mins, causing the updated rules to reflect with a delay of up to 60 minutes. | Required. |

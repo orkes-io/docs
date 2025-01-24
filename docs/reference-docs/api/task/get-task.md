@@ -15,7 +15,7 @@ Gets a task's execution details using its task execution ID.
 
 ## Path parameters
 
-| Parameter  | Description | Type | Required/Optional |
+| Parameter  | Description | Type | Required/ Optional |
 | ---------- | ----------- | ---- | ----------------- |
 | taskId | The execution ID of the task to be fetched. | string | Required. | 
 
@@ -25,15 +25,13 @@ Returns a JSON object containing the task's execution details.
 
 ## Examples
 
-### Get task using its task execution ID
-
 <details><summary>Get task using its task execution ID</summary>
 
 **Request**
 
 ```bash
 curl -X 'GET' \
-  'https://<YOUR-CLUSTER>/api/tasks/6f207c78-bdf2-11ef-88e4-ce0afa758ea1' \
+  'https://<YOUR_CLUSTER>/api/tasks/6f207c78-bdf2-11ef-88e4-ce0afa758ea1' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>'
 ```

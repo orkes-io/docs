@@ -15,7 +15,7 @@ Creates a new task definition.
 
 ## Request body
 
-| Parameter  | Description | Type | Required/Optional |
+| Parameter  | Description | Type | Required/ Optional |
 | ---------- | ----------- | ---- | ----------------- |
 | name | A unique name for the task. | string | Required. |
 | description | A brief description of the task. | string | Optional. |
@@ -26,11 +26,11 @@ Creates a new task definition.
 | [rateLimitPerFrequency](https://orkes.io/content/error-handling#task-rate-limits) | The maximum number of task executions that can be scheduled in a given duration. | integer | Optional. |
 | [rateLimitFrequencyInSeconds](https://orkes.io/content/error-handling#task-rate-limits) | The frequency window (in seconds) for the rate limit. | integer | Optional. | 
 | [concurrentExecLimit](https://orkes.io/content/error-handling#task-rate-limits) | The number of task executions that can be executed concurrently. | integer | Optional. | 
-| [timeOutSeconds](https://orkes.io/content/error-handling#task-timeouts) | Time (in seconds) for the task to reach a terminal state before it gets marked as _TIMED_OUT_. No timeout occurs if the value is set to 0.	| integer | Required. | 
-| [responseTimeoutSeconds](https://orkes.io/content/error-handling#task-timeouts) | The maximum duration in seconds that a worker has to respond to the server with a status update before it gets marked as _TIMED_OUT_. | integer | Optional. |
-| [pollTimeoutSeconds](https://orkes.io/content/error-handling#task-timeouts) | Time (in seconds), after which the task is marked as _TIMED_OUT_ if not polled by a worker. No timeout occurs if the value is set to 0. | integer | Optional. | 
-| [timeoutPolicy](https://orkes.io/content/error-handling#task-timeouts) | The policy for handling timeout. Supported values:<ul><li>**RETRY–**Retries the task based on the retry configuration.</li><li>**TIME_OUT_WF–**The task is marked as _TIMED_OUT_ and is terminated, which also sets the workflow status as _TIMED_OUT_.</li><li>**ALERT_ONLY**–An alert message is logged when the timeout occurs.</li></ul>To create a task that never times out, set _timeoutSeconds_ and _pollTimeoutSeconds_ to 0. | string | Optional. |
-| [totalTimeoutSeconds](https://orkes.io/content/error-handling#task-timeouts) | The total duration (in seconds) after which the task will be _TIMED_OUT_, regardless of the retry configuration. Once this duration is reached, no further retries will be attempted. | integer | Required. | 
+| [timeOutSeconds](https://orkes.io/content/error-handling#task-timeouts) | Time (in seconds) for the task to reach a terminal state before it gets marked as TIMED_OUT. No timeout occurs if the value is set to 0.	| integer | Required. | 
+| [responseTimeoutSeconds](https://orkes.io/content/error-handling#task-timeouts) | The maximum duration in seconds that a worker has to respond to the server with a status update before it gets marked as TIMED_OUT. | integer | Optional. |
+| [pollTimeoutSeconds](https://orkes.io/content/error-handling#task-timeouts) | Time (in seconds), after which the task is marked as TIMED_OUT if not polled by a worker. No timeout occurs if the value is set to 0. | integer | Optional. | 
+| [timeoutPolicy](https://orkes.io/content/error-handling#task-timeouts) | The policy for handling timeout. Supported values:<ul><li>**RETRY–**Retries the task based on the retry configuration.</li><li>**TIME_OUT_WF–**The task is marked as TIMED\_OUT and is terminated, which also sets the workflow status as TIMED\_OUT.</li><li>**ALERT_ONLY**–An alert message is logged when the timeout occurs.</li></ul>To create a task that never times out, set _timeoutSeconds_ and _pollTimeoutSeconds_ to 0. | string | Optional. |
+| [totalTimeoutSeconds](https://orkes.io/content/error-handling#task-timeouts) | The total duration (in seconds) after which the task will be TIMED_OUT, regardless of the retry configuration. Once this duration is reached, no further retries will be attempted. | integer | Required. | 
 | enforceSchema | Whether to enforce input/output schema validation for all instances of the task. Set to _true_ to enable validation or _false_ to disable. | boolean | Optional. |
 | inputSchema | The schema parameters to be used as input schema for the task definition. Learn more about [creating and using schemas](https://orkes.io/content/developer-guides/schema-validation). | object | Required if _enforceSchema_ is set to _true_. | 
 | outputSchema | The schema parameters to be used as output schema for the task definition. Learn more about [creating and using schemas](https://orkes.io/content/developer-guides/schema-validation). | object | Required if _enforceSchema_ is set to _true_. | 
@@ -42,15 +42,13 @@ Creates a new task definition.
 
 ## Examples
 
-### Create a new task definition
-
 <details><summary>Create a new task definition</summary>
 
 **Request**
 
 ```bash
 curl -X 'POST' \
-  'https://<YOUR-CLUSTER>/api/metadata/taskdefs' \
+  'https://<YOUR_CLUSTER>/api/metadata/taskdefs' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>' \
   -d '{

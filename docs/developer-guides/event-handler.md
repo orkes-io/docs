@@ -23,7 +23,7 @@ Integrate the required message broker with Orkes Conductor. Refer to the [Integr
 ## Event handler parameters
 Configure these parameters for the Event Handler.
 
-| Parameter | Description | Required/Optional | 
+| Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- |
 | name | A unique name for the event handler. | Required. | 
 | description | A description of the event handler.| Optional. | 
@@ -125,7 +125,7 @@ The action to mark a task as completed. There are two methods for marking a task
 </TabItem>
 </Tabs>
 
-| Parameter | Description | Required/Optional |
+| Parameter | Description | Required/ Optional |
 | --------- | ----------- | ----------------- |
 | actions. **action** | The action to be triggered on receiving events. Set this to `complete_task`.| Required.|
 | actions. complete_task. **workflowId** | The ID of the workflow that contains the task to be completed. | Required if using `workflowId` and `taskRefName`method. |
@@ -158,7 +158,7 @@ The action to terminate a running workflow.
  ]
 }
 ```
-| Parameter | Description | Required/Optional | 
+| Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- | 
 | actions. **action** | The action to be triggered on receiving events. Set this to `terminate_workflow`. | Required. | 
 | actions. terminate_workflow. **workflowId** | The ID of the workflow to be terminated. | Required. | 
@@ -193,7 +193,7 @@ The action to update variables in a running workflow. Useful for controlling inp
 }
 ```
 
-| Parameter | Description | Required/Optional | 
+| Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- | 
 | actions. **action** | The action to be triggered on receiving events. Set this to `update_workflow_variables`.| Required. | 
 | actions. update_workflow_variables. **workflowId** | The ID of the workflow whose variables need to be updated. | Required. | 
@@ -261,7 +261,7 @@ The action to mark a task as failed. There are two methods for marking a task as
 </TabItem>
 </Tabs>
 
-| Parameter | Description | Required/Optional | 
+| Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- |
 | actions. **action** | The action to be triggered on receiving events. Set this to `fail_task`. | Required. | 
 | actions. complete_task. **workflowId** | The ID of the workflow that contains the task to be marked as failed. | Required if using `workflowId` and `taskRefName`method. |
@@ -304,7 +304,7 @@ The action to start a new workflow instance.
 }
 ```
 
-| Parameter | Description | Required/Optional | 
+| Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- | 
 | actions. **action** | The action to be triggered on receiving events. Set this to `start_workflow`. | Required. | 
 | actions. start_workflow. **name** | The name of the workflow to be started. | Required. | 

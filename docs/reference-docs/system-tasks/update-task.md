@@ -21,7 +21,7 @@ The status of a task can be updated in two ways:
 
 Configure these parameters for the Update Task.
 
-| Parameter | Description | Required/Optional | 
+| Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- |
 | inputParameters.**taskStatus** |  The status of the task to be updated. Supported values:<ul><li>`FAILED_WITH_TERMINAL_ERROR`</li><li>`FAILED`</li><li>`COMPLETED`</li></ul>It can be [passed as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor). | Required. | 
 | inputParameters.**workflowId** | The execution ID of the workflow containing the task to be updated. It can be [passed as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor). The default value is `${workflow.workflowId}`. | Required if updating using `workflowId` and `taskRefName`. |
