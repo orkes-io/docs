@@ -28,7 +28,7 @@ Gets a list of execution details for a specific workflow definition based on a l
 
 ## Request body
 
-Format the request as an array of correlation IDs. For example, `[“1”, “2”, “3”]`.
+Format the request as an array of correlation IDs. For example, `["1", "2", "3"]`.
 
 ## Response
 

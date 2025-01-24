@@ -8,87 +8,80 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 
-# Synchronous Execution
+# Execute Workflow Synchronously
 
-Starts a workflow and waits until the workflow completes or the **waitUntilTask** completes. 
+**Endpoint:** `POST /api/workflow/execute/{name}`
+
+Starts a workflow execution synchronously. This method returns a response after a specified *waitForSeconds* has passed or when a specified *waitUntilTaskRef* task completes, whichever completes first.
+
+## Path parameters
+
+| Parameter  | Description | Type | Required/ Optional |
+| ---------- | ----------- | ---- | ----------------- |
+| name | The name of the workflow to be started. | string | Required. |
+
+## Query parameters
+
+| Parameter  | Description | Type | Required/ Optional |
+| ---------- | ----------- | ---- | ----------------- |
+| version | The workflow version. If unspecified, the latest version will be used. | integer | Optional. |
 
 
-## Input Payload
+## Request body
 
-| Attribute | Description | 
-| ------------ | ------------- |
-| name | Name of the workflow to be executed. |
-| version  | Choose the required version of the workflow. |
+Contains the workflow inputs. Format the request as an object containing key-value pairs.
 
-## API Endpoint
-```
-POST /api/workflow/execute/{name}/{version}
-```
+**Example**
 
-Returns the output of the workflow.
-
-## Client SDK Methods
-
-<Tabs>
-<TabItem value="Java" label="Java">
-
-```java
-CompletableFuture<WorkflowRun> executeWorkflow(StartWorkflowRequest request, String waitUntilTask)
-```
-
-</TabItem>
-<TabItem value="Go" label="Go">
-
-```go
-func (e *WorkflowExecutor) ExecuteWorkflow(startWorkflowRequest *model.StartWorkflowRequest, waitUntilTask string) (run *model.WorkflowRun, err error)
+``` json
+{
+  "someKey": "someValue",
+  "anotherKey": {}
+}
 ```
 
-</TabItem>
-<TabItem value="Python" label="Python">
+## Header parameters
 
-```python
-WorkflowResourceApi.execute_workflow(self, body, request_id, name, version, **kwargs)
+| Parameter  | Description | Type | Required/ Optional |
+| ---------- | ----------- | ---- | ----------------- |
+| X-Idempotency-key | A unique, user-generated key to prevent duplicate workflow executions. Idempotency data is retained for the life of the workflow execution. | string | Optional. |
+| X-on-conflict | The idempotency strategy for handling duplicate requests. Supported values: <ul><li>**RETURN_EXISTING**—Return the _workflowId_ of the workflow instance with the same idempotency key.</li> <li>**FAIL**—Start a new workflow instance only if there are no workflow executions with the same idempotency key.</li> <li>**FAIL_ON_RUNNING**—Start a new workflow instance only if there are no RUNNING or PAUSED workflows with the same idempotency key. Completed workflows can run again.</li></ul> | string | Required if _X-Idempotency-key_ is specified. |
+| requestId | A user-generated request ID, which can be used to track the API request. | string | Optional. |
+| waitUntilTaskRef | The reference name of the task to wait for before returning a response. <br/><br/> **Note:** If the workflow is incomplete, the response will return 206. | string | Optional. |
+| waitForSeconds | The duration in seconds to wait before returning a response. Default is 10. | integer | Optional. |
+
+## Response
+
+Returns the workflow output.
+
+## Examples
+
+<details><summary>Execute a workflow synchronously</summary>
+
+**Request**
+
+```
+curl -X 'POST' \
+  'https://&lt;YOUR-CLUSTER>/api/workflow/execute/someWorkflow' \
+  -H 'accept: application/json' \
+  -H 'waitForSeconds: 15' \
+  -H 'X-Authorization: &lt;TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "input1": "someValue"
+  }'
 ```
 
-</TabItem>
-<TabItem value="CSharp" label="C#">
+**Response**
 
-```csharp
-WorkflowRun WorkflowResourceApi.ExecuteWorkflow(StartWorkflowRequest body, string requestId, string name, int? version, string waitUntilTaskRef = null)
+```
+{
+  "output": {
+    "output1": "anotherValue",
+    "output2": "yetAnotherValue"
+    "
+  }
+}
 ```
 
-</TabItem>
-<TabItem value="JavaScript" label="JavaScript">
-
-```javascript
-WorkflowExecutor.executeWorkflow(
-    workflowRequest: StartWorkflowRequest,
-    name: string,
-    version: number,
-    requestId: string,
-    waitUntilTaskRef: string = '',
-  ): Promise<WorkflowRun>
-```
-
-</TabItem>
-<TabItem value="Typescript" label="Typescript">
-
-```typescript
-WorkflowExecutor.executeWorkflow(
-    workflowRequest: StartWorkflowRequest,
-    name: string,
-    version: number,
-    requestId: string,
-    waitUntilTaskRef: string = '',
-  ): Promise<WorkflowRun>
-```
-
-</TabItem>
-<TabItem value="Clojure" label="Clojure">
-
-```clojure
-(run-workflow-sync [options name version requestId {}])
-```
-
-</TabItem>
-</Tabs>
+</details>

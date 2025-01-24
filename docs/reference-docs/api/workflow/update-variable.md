@@ -34,7 +34,7 @@ public abstract Workflow updateVariables(String workflowId, Map<String, Object> 
 ## Sample Code
 
 :::note
-You need to register the workflow “update_variable_test” initially.
+You need to register the workflow "update_variable_test" initially.
 :::
 
 ```java
