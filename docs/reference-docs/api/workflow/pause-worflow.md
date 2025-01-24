@@ -9,77 +9,32 @@ import TabItem from '@theme/TabItem';
 
 # Pause Workflow
 
-This API pauses the execution of a running workflow. Any currently running tasks will finish, but no new tasks will be scheduled until the workflow is resumed.
+**Endpoint:** `PUT /api/workflow/{workflowId}/pause`
 
-:::note
-This method is intended for pausing your workflow for debugging purposes. For handling your use cases in a live environment, refer to our documentation [pausing workflows for external signals](https://orkes.io/content/developer-guides/pausing-for-external-signals).
-:::
+Pauses an ongoing workflow execution. Any currently running tasks will be completed, but no new tasks will be scheduled until the workflow is resumed.
 
-## Input Payload
+## Path parameters
 
-| Attribute | Description | 
-| --------- | ----------- | 
-| workflowId | The unique identifier of the workflow to be paused. | 
+| Parameter  | Description | Type | Required/ Optional |
+| ---------- | ----------- | ---- | ----------------- |
+| workflowId | The execution ID of the workflow to be paused. | string | Required. |
 
-## API Endpoint
+## Examples
+
+
+<details><summary>Pause a workflow execution</summary>
+
+**Request**
+
 ```
-PUT /workflow/{workflowId}/pause
-```
-
-## Client SDK Methods
-
-<Tabs>
-<TabItem value="Java" label="Java">
-
-```java
-BulkResponse pauseWorkflow(List<String> workflowIds) throws ApiException
+curl -X 'PUT' \
+  'https://&lt;YOUR-CLUSTER>/api/workflow/2ce9207f-d4a6-11ef-87b1-b2b27c52ebde/pause' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: &lt;TOKEN>'
 ```
 
-</TabItem>
-<TabItem value="Go" label="Go">
+**Response**
 
-```go
-func (e *WorkflowExecutor) Pause(workflowId string) error
-```
+Returns 200 OK, indicating that the workflow execution has paused successfully.
 
-</TabItem>
-<TabItem value="Python" label="Python">
-
-```python
-WorkflowResourceApi.pause_workflow1(self, workflow_id, **kwargs)
-```
-
-</TabItem>
-<TabItem value="CSharp" label="C#">
-
-```csharp
-void WorkflowResourceApi.PauseWorkflow(string workflowId)
-```
-
-</TabItem>
-<TabItem value="JavaScript" label="JavaScript">
-
-```javascript
-WorkflowExecutor.pauseWorkflow(
-    workflowId: string,
-): CancelablePromise<any>
-```
-
-</TabItem>
-<TabItem value="Typescript" label="Typescript">
-
-```typescript
-WorkflowExecutor.pauseWorkflow(
-    workflowId: string,
-): CancelablePromise<any>
-```
-
-</TabItem>
-<TabItem value="Clojure" label="Clojure">
-
-```clojure
-(workflow-resource/pause-workflow [options workflow-id])
-```
-
-</TabItem>
-</Tabs>
+</details>
