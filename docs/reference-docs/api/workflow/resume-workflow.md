@@ -8,74 +8,32 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 # Resume Workflow
-Resume the execution of a workflow that is paused. If the workflow is not paused, this method has no effect.
 
-## Input Payload
+**Endpoint:** `PUT /api/workflow/{workflowId}/resume` 
 
-| Attribute | Description | 
-| --------- | ----------- | 
-| workflowId | The unique identifier of the paused workflow to be resumed. | 
+Resumes a paused workflow execution. This method has no effect if the workflow is not paused.
 
-## API Endpoint
+## Path parameters
+
+| Parameter  | Description | Type | Required/ Optional |
+| ---------- | ----------- | ---- | ----------------- |
+| workflowId | The execution ID of the paused workflow to be resumed. | string | Required. |
+
+## Examples
+
+<details><summary>Resume workflow execution</summary>
+
+**Request**
+
 ```
-PUT /workflow/{workflowId}/resume  
-```
-
-## Client SDK Methods
-
-<Tabs>
-<TabItem value="Java" label="Java">
-
-```java
-BulkResponse resumeWorkflow(List<String> workflowIds) throws ApiException
-```
-
-</TabItem>
-<TabItem value="Go" label="Go">
-
-```go
-func (e *WorkflowExecutor) Resume(workflowId string) error
+curl -X 'PUT' \
+  'https://&lt;YOUR-CLUSTER>/api/workflow/2ce9207f-d4a6-11ef-87b1-b2b27c52ebde/resume' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: &lt;TOKEN>'
 ```
 
-</TabItem>
-<TabItem value="Python" label="Python">
+**Response**
 
-```python
-WorkflowResourceApi.resume_workflow1(self, workflow_id, **kwargs)
-```
+Returns 200 OK, indicating that the workflow execution has resumed successfully.
 
-</TabItem>
-<TabItem value="CSharp" label="C#">
-
-```csharp
-void WorkflowResourceApi.ResumeWorkflow(string workflowId)
-```
-
-</TabItem>
-
-<TabItem value="JavaScript" label="JavaScript">
-
-```javascript
-WorkflowExecutor.resume(
-    workflowId: string,
-): CancelablePromise<any>
-```
-
-</TabItem>
-<TabItem value="Typescript" label="Typescript">
-
-```typescript
-WorkflowExecutor.resume(
-    workflowId: string,
-): CancelablePromise<any>
-```
-
-</TabItem>
-<TabItem value="Clojure" label="Clojure">
-
-```clojure
-(workflow-resource/resume-workflow [options workflow-id])
-```
-
-</TabItem>
-</Tabs>
+</details>
