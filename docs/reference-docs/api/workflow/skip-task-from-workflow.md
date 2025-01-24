@@ -7,82 +7,42 @@ description: "This API is used to skip a specific task in a currently running wo
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Skip Task from Workflow Execution
+# Skip Task in Workflow Execution
 
-Skips a given task execution from a currently running workflow.
+**Endpoint:** `PUT /api/workflow/{workflowId}/skiptask/{taskReferenceName}`
 
-## Input Payload
+Skips a scheduled task in an ongoing workflow using the task reference name. The skipped task’s inputs and outputs can be updated using *skipTaskRequest*.
 
-| Attribute | Description | 
-| --------- | ----------- | 
-| workflowId | The unique identifier of the running workflow that contains the task to be skipped. | 
-| taskReferenceName | The reference name of the task to be skipped. |
+## Path parameters
 
-## API Endpoint
+| Parameter  | Description | Type | Required/ Optional |
+| ---------- | ----------- | ---- | ----------------- |
+| workflowId | The execution ID of the running workflow that contains the task to be skipped. | string | Required. |
+| taskReferenceName | The reference name of the task to be skipped. | string | Required. |
+
+## Query parameters
+
+| Parameter  | Description | Type | Required/ Optional |
+| ---------- | ----------- | ---- | ----------------- |
+| skipTaskRequest | Contains the skipped task’s inputs and outputs. | object | Required. |
+| skipTaskRequest. **taskInput** | The skipped task’s inputs. | object | Optional. |
+| skipTaskRequest. **taskOutput** | The skipped task’s outputs. | object | Optional. |
+
+## Examples
+
+<details><summary>Skip a task</summary>
+
+**Request**
+
 ```
-PUT /workflow/{workflowId}/skiptask/{taskReferenceName}
-```
-
-When skipped, the task's input and outputs are updated from **skipTaskRequest** parameter.
-
-## Client SDK Methods
-
-<Tabs>
-<TabItem value="Java" label="Java">
-
-```java
-void skipTaskFromWorkflow(String workflowId, String taskReferenceName)
-```
-
-</TabItem>
-<TabItem value="Go" label="Go">
-
-```go
-func (e *WorkflowExecutor) SkipTasksFromWorkflow(workflowId string, taskReferenceName string, skipTaskRequest model.SkipTaskRequest) error
-```
-
-</TabItem>
-<TabItem value="Python" label="Python">
-
-```python
-WorkflowResourceApi.skip_task_from_workflow(self, workflow_id, task_reference_name, **kwargs)
+curl -X 'PUT' \
+  'https://&lt;YOUR-CLUSTER>o/api/workflow/18f871a1-d3f8-11ef-a114-0af1b159704e/skiptask/someTask_ref' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: &lt;TOKEN>'
 ```
 
-</TabItem>
-<TabItem value="CSharp" label="C#">
+**Response**
 
-```csharp
-void WorkflowResourceApi.SkipTaskFromWorkflow(string workflowId, string taskReferenceName, SkipTaskRequest skipTaskRequest)
-```
+Returns 200 OK, indicating that the task has been skipped successfully.
 
-</TabItem>
-<TabItem value="JavaScript" label="JavaScript">
-
-```javascript
-WorkflowExecutor.skipTaskFromWorkflow(
-    workflowId: string,
-    taskReferenceName: string,
-    requestBody: Partial<SkipTaskRequest>,
-): CancelablePromise<any>
-```
-
-</TabItem>
-<TabItem value="Typescript" label="Typescript">
-
-```typescript
-WorkflowExecutor.skipTaskFromWorkflow(
-    workflowId: string,
-    taskReferenceName: string,
-    requestBody: Partial<SkipTaskRequest>,
-): CancelablePromise<any>
-```
-
-</TabItem>
-<TabItem value="Clojure" label="Clojure">
-
-```clojure
-(workflow-resource/skip-task-from-workflow [options workflow-id task-reference-name])
-```
-
-</TabItem>
-</Tabs>
+</details>
