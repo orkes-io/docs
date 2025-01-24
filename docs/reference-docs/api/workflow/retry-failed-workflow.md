@@ -9,78 +9,65 @@ import TabItem from '@theme/TabItem';
 
 # Retry Failed Workflow
 
-This API retries a failed workflow from the last failed task.
+**Endpoint:** `POST /api/workflow/{workflowId}/retry`
 
-## Input Payload
+Retries a failed workflow execution from the last failed task. When invoked, the failed task is scheduled again, and the workflow moves to RUNNING status.
 
-| Attribute | Description | 
-| --------- | ----------- | 
-| workflowId | The unique identifier of the failed workflow to be retried. | 
+## Path parameters
 
-## API Endpoint
+| Parameter  | Description | Type | Required/ Optional |
+| ---------- | ----------- | ---- | ----------------- |
+| workflowId | The execution ID of the  failed workflow to be retried. | string | Required. |
+
+## Query parameters
+
+| Parameter  | Description | Type | Required/ Optional |
+| ---------- | ----------- | ---- | ----------------- |
+| resumeSubworkflowTasks | (For cases where the last failed task is a Sub Workflow task) If set to true, the parent workflow is restarted from the sub-workflow’s last failed task. If set to false, a new sub-workflow execution is created. Default is false. | boolean | Optional. |
+| retryIfRetriedByParent | (For cases where a sub-workflow is being retried) If set to false, the sub-workflow will be prohibited from retrying if its parent workflow has been retried before. Default is true. | boolean | Optional. |
+
+## Examples
+
+<details><summary>Retry failed workflow from last failed task</summary>
+
+**Request**
+
 ```
-POST /workflow/{workflowId}/retry
-```
-
-When called, the task in the failed state is scheduled again, and the workflow moves to RUNNING status. If **resumeSubworkflowTasks** is set and the last failed task was a sub-workflow, the server restarts the sub-workflow from the failed task. If set to false, the sub-workflow is re-executed.
-
-
-## Client SDK Methods
-
-<Tabs>
-<TabItem value="Java" label="Java">
-
-```java
-BulkResponse retryWorkflow(List<String> workflowIds) throws ApiException
-```
-
-</TabItem>
-<TabItem value="Go" label="Go">
-
-```go
-func (e *WorkflowExecutor) Retry(workflowId string, resumeSubworkflowTasks bool) error
-```
-
-</TabItem>
-<TabItem value="Python" label="Python">
-
-```python
-WorkflowResourceApi.retry1(self, workflow_id, **kwargs)
+curl -X 'POST' \
+  'https://&lt;YOUR-CLUSTER>/api/workflow/2ce9207f-d4a6-11ef-87b1-b2b27c52ebde/retry?resumeSubworkflowTasks=false&retryIfRetriedByParent=true' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: &lt;TOKEN>' \
+  -d ''
 ```
 
-</TabItem>
-<TabItem value="CSharp" label="C#">
+**Response**
 
-```csharp
-void WorkflowResourceApi.Retry(string workflowId, bool? resumeSubworkflowTasks = null)
+Returns 204 No Content, indicating that the workflow execution has been restarted successfully from the last failed task.
+
+</details>
+
+
+<details><summary>Retry sub-workflow when retryIfRetriedByParent=false</summary>
+
+**Request**
+
+```
+curl -X 'POST' \
+  'https://&lt;YOUR_CLUSTER>/api/workflow/1f920305-da0c-11ef-a114-0af1b159704e/retry?resumeSubworkflowTasks=false&retryIfRetriedByParent=false' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: &lt;TOKEN>' \
+  -d ''
 ```
 
-</TabItem>
-<TabItem value="JavaScript" label="JavaScript">
+**Response**
 
-```javascript
-WorkflowExecutor.retry(
-    workflowId: string,
-    resumeSubworkflowTasks: boolean,
-): CancelablePromise<void>
+```
+{
+  "status": 400,
+  "message": "Parent task 1f8f6af4-da0c-11ef-a114-0af1b159704e of workflow 19c1d273-da0c-11ef-87b1-b2b27c52ebde is already retried, retrying subworkflow 1f920305-da0c-11ef-a114-0af1b159704e is prohibited because retryIfHasParent=false in retry request",
+  "instance": "orkes-conductor-deployment-64f9978cfc-r8ftz",
+  "retryable": false
+}
 ```
 
-</TabItem>
-<TabItem value="Typescript" label="Typescript">
-
-```typescript
-WorkflowExecutor.retry(
-    workflowId: string,
-    resumeSubworkflowTasks: boolean,
-): CancelablePromise<void>
-```
-
-</TabItem>
-<TabItem value="Clojure" label="Clojure">
-
-```clojure
-(workflow-resource/retry-last-failed-task [options workflow-id resume-subworkflow-tasks])
-```
-
-</TabItem>
-</Tabs>
+</details>
