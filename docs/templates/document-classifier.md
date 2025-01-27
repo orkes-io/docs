@@ -40,8 +40,8 @@ This template utilizes the following Conductor features:
 **To import the template:**
 
 1. Go to **Template Explorer** from the left navigation menu on your Conductor cluster.
-2. In **Document Classifier**, select **Import**.
-3. Rename the workflow and task names. For example, rename the workflow as *document_classifier_your_name*.
+2. Choose **Document Classifier** and select select **Import**.
+3. Rename the workflow and task names. For example, rename the workflow as *"document_classifier_your_name"*.
 4. Select **Save**.
 
 The workflow is now imported and ready for use.
