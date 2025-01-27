@@ -3,167 +3,183 @@ slug: "/templates/availability-monitoring-for-http-endpoints"
 description: "Use this template to periodically monitor the availability of your HTTP service."
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import Install from '@site/src/components/install.mdx';
+
 # Availability Monitoring for HTTP Endpoints
 
-Availability and uptime are paramount for any application or service that serves your customers or provides critical services otherwise. There are many ways to incorporate this fundamental capability while deploying and operating your service (e.g., deploy across multiple availability zones to host your DNS records in more than one DNS service). However, you still need to be prepared to be alerted and respond if all fails.
+Maintaining the availability and uptime of your services is crucial for delivering seamless experiences to customers and ensuring business continuity. Even with robust infrastructure strategies like multi-zone deployments or redundant DNS setups, proactive monitoring remains essential to detect and address issues before they impact users.
 
-That is where a service that continuously checks the availability of your service by sending and receiving an HTTP response comes in. This service will initiate a request and ensure that a 200 OK is received within a specified time. If that does not happen, it will re-attempt (to take into account any transient issues), and if the response is still not received, or if the response is not as expected (e.g., 200 OK), then an alert is fired (e.g., by posting a Slack message).
+With this template, you can automate availability monitoring by sending periodic HTTP requests to your endpoints and validating responses. It checks for successful responses, retries upon transient failures, and triggers alerts through various channels when downtime is detected.
 
-This template provides a Conductor workflow definition that does just that, and you can easily run it on a continuous schedule in Conductor. As with all Orkes-provided templates, you can customize it for your specific case (e.g., check every minute) and use it as often as you need. 
+## Conductor features used
 
-## How Conductor makes it easy to monitor services
+This template utilizes the following Conductor features:
 
-Leveraging Conductor is a great option for this use case due to the flexibility Conductor offers to define it easily for your specific needs. Using the UI or directly in the code, you can set the right parameters for your use case.  Want to send an alert to your cloud monitoring platform in addition to sending a message to Slack? You can do that and more. 
-
-Conductor also makes it easy to customize this (and any other) workflow to your specific needs. Do you need the response times to be different? Just change that in the task definition. In addition to all these, you get out-of-the-box monitoring and historical metrics for this health checker. One way you could use that is by seeing how the endpoint had been performing in terms of availability for the last thirty days - A great way to demonstrate how your service has been doing against its availability SLA.
-
-Conductor is also a perfect choice when it comes to running a series of steps on a predefined schedule, and that's something this use case needs. And with the ability to get started and go to production in a matter of minutes, using Conductor supercharges your velocity and agility!
-
-## Conductor features used 
-
-- [Workflows](https://orkes.io/content/core-concepts)
-- [HTTP System Task](https://orkes.io/content/reference-docs/system-tasks/http)
-- [Inline Task](https://orkes.io/content/reference-docs/system-tasks/inline)
-- [Sub Workflows](https://orkes.io/content/reference-docs/operators/sub-workflow)
-- [Switch Operator](https://orkes.io/content/reference-docs/operators/switch)
-- [Scheduler](https://orkes.io/content/developer-guides/scheduling-workflows)
+- [HTTP task](https://orkes.io/content/reference-docs/system-tasks/http)
+- [Inline task](https://orkes.io/content/reference-docs/system-tasks/inline)
+- [Sub Workflow task](https://orkes.io/content/reference-docs/operators/sub-workflow)
+- [Switch task](https://orkes.io/content/reference-docs/operators/switch)
+- [Workflow Scheduler](https://orkes.io/content/developer-guides/scheduling-workflows)
 
 ## How to use the template
 
-When you click on **Use this Template** in the workflow explorer, you will be navigated to the workflow definition page where you can see the name of the workflow as **Monitor-HTTP-Endpoint-Availability**. This template is free for you to use as is, or you can modify it for your specific use case.
+1. Import the template
+2. Understand the workflow logic
+3. Set up providers for sending notifications
+4. Run workflow
 
-Let's look at what this workflow does and how to run it!
+### Import the template
 
-<p align="center"><img src="/content/img/monitoring-http-endpoint-workflow.png" alt="Monitoring HTTP Endpoint Workflow" width="70%" height="auto"></img></p>
+**To import the template:**
 
-### Workflow Logic
+1. Go to **Template Explorer** from the left navigation menu on your Conductor cluster.
+2. Choose **Availability Monitoring for HTTP(S) Endpoints** and select **Import**.
+3. Rename the workflow and task names. For example, rename the workflow as *“Monitor-HTTP-Endpoint-Availability_your_name”*.
+4. Select **Save**.
 
-The input parameters to this workflow are:
+The workflow is now imported and ready for use.
 
-- **endpoint_url** - An HTTP(S) endpoint that you want to monitor continuously for availability, e.g., https://orkes.io/content/. 
-- **notification_type** - Specifies how you want to be notified if the endpoint being monitored is down. Supported values are:
-    * SMS
-    * EMAIL
-    * SLACK
-    * PAGERDUTY
-- **notification_to** - Specifies the email or phone number to send the notification to. This is applicable only if the *notification_type* is SMS or EMAIL.
-- **notification_from** - Specifies the email or phone number to be shown as the originator for this notification. This is applicable only if the *notification_type* is SMS or EMAIL. For SLACK and PAGERDUTY, this can be null.
+<p align="center"><img src="/content/img/monitoring-http-endpoint-workflow.png" alt="Monitoring HTTP Endpoint Workflow" width="50%" height="auto"></img></p>
 
-Here is an example of the payload that goes in as inputs to this workflow. 
+### Understand the workflow logic
 
-```
+This section explains the workflow logic and how to execute it.
+
+**Workflow inputs:**
+
+- **endpoint_url**–The HTTP(S) endpoint to be monitored using the workflow.
+- **notification_type**–The medium for sending notifications if the endpoint is down. Supported values are:
+    - SMS
+    - EMAIL
+    - SLACK
+    - PAGERDUTY
+- **notification_to**–The email or phone number to which the notification is sent if the *notification_type* is SMS or EMAIL.
+- **notification_from**–The email or phone number to be displayed as the notification originator if the *notification_type* is SMS or EMAIL.
+
+**Example input payload for sending an SMS alert using Twilio:**
+
+```json
 {
- "notification_type": "SMS",
- "endpoint_url": "https://example.com/",
- "notification_from": "14084084084",
- "notification_to": "12062062052"
+"notification_type": "SMS",
+"endpoint_url": "https://example.com/",
+"notification_from": "14XXXXXXXXX",
+"notification_to": "12XXXXXXXX"
 }
 ```
 
-This input specifies that the HTTP endpoint to monitor is https://www.example.com and that in the case of a failure, you want to get notified via SMS that is sent through Twilio. 
+**Workflow logic:**
+- The workflow begins with an [HTTP task](https://orkes.io/content/reference-docs/system-tasks/http) that sends a GET request to the specified endpoint.
+- In the next step, the [Inline task](https://orkes.io/content/reference-docs/system-tasks/inline) retrieves the current timestamp from the server.
+- Next, the [Switch task](https://orkes.io/content/reference-docs/operators/switch) evaluates the output of the previous HTTP task to determine if the response indicates a success or failure.
+    - If a 200 OK response is returned, the Switch task directs the execution via the **defaultCase**, ending the workflow.
+    - For any other response or failure (e.g., DNS error), the Switch task sends execution to the **FAILED** path.
+    
+<p align="center"><img src="/content/img/switch-case-for-http-status-code-check.png" alt="Switch task evaluating the HTTP status code" width="40%" height="auto"></img></p>
 
-Here is another example that should fail since the domain name is invalid. Here, you want to get notified via Slack. 
+- The failure path invokes a [Sub Workflow](https://orkes.io/content/reference-docs/operators/sub-workflow), namely **Notify-Channels**, which sends a failure notification via the specified channel. 
 
-```
-{
- "notification_type": "SLACK",
- "endpoint_url": "https://orkes.iot/"
-}
-```
+<p align="center"><img src="/content/img/notify-channels-workflow.png" alt="Workflow called as a sub workflow" width="100%" height="auto"></img></p>
 
-- The first step in the workflow is an HTTP System Task (remember, [System Tasks](https://orkes.io/content/category/reference-docs/system-tasks) are tasks that execute inside Conductor and for which you do not need to write external worker implementations) to send a GET request to the specified endpoint. 
-- The next step is to get the current timestamp, which is done using an [Inline Task](https://orkes.io/content/reference-docs/system-tasks/inline).
-- The output of the HTTP task is then passed to the next step in the workflow, which is an operator, [Switch Task](https://orkes.io/content/reference-docs/operators/switch), that will decide if the response indicates a success or failure scenario.
-- If a **200 OK** was returned in the previous step, the Switch task sends the execution on the success path, which essentially goes directly to the end of the workflow. 
-- If any other value was returned, or if the HTTP System Task itself failed (e.g., DNS error), the Switch task will send the execution to the failure path.
-- The failure path invokes a sub-workflow called **Notify-Channels** so that the failure message can be sent via the notification type specified in the input of the original workflow. The first step in that sub-workflow is to check and see if the *notification_type* is one of the supported formats. Then, it executes a series of steps to send the notification through that channel. 
+- This workflow begins with a Switch task confirming that the *notification_type* is a supported format. 
+- Depending on the *notification_type*, the corresponding switch case executes and sends the notification through the specified channel.
 
-In the template provided, we are using the below providers for sending the notification depending on the type. This list also specifies what the parameters required by the provider are. 
+### Set up providers for sending notifications
 
-:::note
-To ensure security for your provider-specific credentials, it is strongly recommended to store them securely as [Secrets](https://orkes.io/content/developer-guides/secrets-in-conductor) in Orkes Conductor, and the caller of the original workflow needs to be explicitly granted permissions to these secrets. As a best practice, we would recommend you to create [an User Group](https://orkes.io/content/access-control-and-security/users-and-groups#groups) in Orkes Conductor and add the caller of the parent workflow along with any other individuals who require access to these secrets during the workflow invocations. Then, add the credentials from the provider one by one as a Secret, and in the earlier created group, provide read access to those secrets.
+This template sends notifications using the following providers: 
+
+- **Twilio**–Required for SMS notifications.
+- **SendGrid**–Required for email notifications.
+- **PagerDuty**–Required for PagerDuty alerts.
+- **Custom Slack webhook**–Required for Slack notifications.
+
+Configure your preferred provider and add the required credentials as [secrets in Conductor](https://orkes.io/content/developer-guides/secrets-in-conductor).
+
+| Notification Type | Provider | Credentials to be saved as Secret in Conductor | 
+| ----------------- | -------- | ---------------------------------------------- |
+| SMS | Twilio | The account ID of the Twilio account.<ol><li>In your [Twilio](https://console.twilio.com/) console, go to **Account Info** > **Account SID**.</li><li>Copy the account ID.</li><li>Save it as a [secret in Orkes Conductor](https://orkes.io/content/developer-guides/secrets-in-conductor) with the name **orkes_template_twillio_account_id**.</li></ol>The authentication token of the Twilio account.<ol><li>In your [Twilio](https://console.twilio.com/) console, go to **Account Info** > **Auth Token**.</li><li>Copy the token.</li><li>Combine the Account SID and Auth Token in the format: *your_account_id:your_auth_token*.</li><li>Base64 encode the combined string using the command:<pre><code>echo -n "your_account_id:your_auth_token" \| base64</code></pre></li><li>Save the encoded string as a [secret in Orkes Conductor](https://orkes.io/content/developer-guides/secrets-in-conductor) with the name **orkes_template_twilio_base64_encoded_basic_auth**.</li></ol>|
+| EMAIL | Sendgrid | The API key from Sendgrid.<ol><li>In your [Sendgrid](https://app.sendgrid.com/settings/api_keys) account, go to **Settings** > **API Keys**.</li><li>Select **Create API Key** and provide a name for the key.</li><li>Set the **API Key Permissions** to **Full Access**.</li><li>Copy the API key.</li><li>Save it as a [secret in Orkes Conductor](https://orkes.io/content/developer-guides/secrets-in-conductor) with the name **orkes_template_sendgrid_api_key**.</li></ol> | 
+| SLACK | Slack | Slack Webhook URL.<ol><li>Create a [custom webhook in Slack](https://api.slack.com/messaging/webhooks) to post to a specific channel.</li><li>Copy the Webhook URL.</li><li>Save it as a [secret in Orkes Conductor](https://orkes.io/content/developer-guides/secrets-in-conductor) with the name **orkes_template_slack_webhook**.</li></ol> | 
+| PAGERDUTY | Pagerduty | Routing key for sending messages to Pagerduty.<ol><li>In your Pagerduty account, create a **Service**.</li><li>Open the service and go to the **Integrations** tab.</li><li>Select **+ Add an integration**, and choose **Events API V2**.</li><li>Once the integration is added, copy the 32 digit **Integration Key**, which is the routing key for the workflow.</li><li>Save it as a [secret in Orkes Conductor](https://orkes.io/content/developer-guides/secrets-in-conductor) with the name **orkes_template_pagerduty_eventsv2_integration_key**.</li></ol> | 
+
+The workflow is already configured with the above-mentioned secret names, so no further modifications are needed.
+
+:::noteNotes
+- Ensure the credentials are correctly set before running the workflow to avoid errors. The workflow will fail if any of the parameters are incorrect or unreadable.
+- If you use different names for the secrets, ensure the **_Notify-Channels_** workflow is updated with the correct secret names. Failure to do so will result in an unauthorized error.
 :::
 
-:::info
-Please ensure to update the workflow definitions with your own values for each of these secrets so that they are specific to your setup. Running the workflow without doing so will result in a non-authorized error.
-:::
+### Run workflow
 
-<table>
-    <tr>
-        <th>Notification Type</th>
-        <th>Provider</th>
-        <th>Credentials Required</th>
-        <th>Associated Secret Reference in Workflow Definition</th>
-    </tr>
-    <tr>
-        <td rowspan="2">SMS</td>
-        <td rowspan="2">Twilio</td>
-        <td>The account id of your Twilio account.<ol><li>From your <a href="https://console.twilio.com/">Twilio</a> console, navigate to <strong>Account Info &gt; Account SID</strong> and copy the account ID.</li></ol></td>
-        <td rowspan="2">orkes_template_twillio_account_id</td>
-    </tr>
-    <tr>
-        <td>Authentication token from your Twilio account.<ol><li>From your Twilio console, navigate to <strong>Account Info &gt; Auth Token</strong> and copy the token.</li></ol></td>
-    </tr>
-    <tr>
-        <td>EMAIL</td>
-        <td>Sendgrid</td>
-        <td>API key obtained from Sendgrid.<ol><li>From your <a href="https://app.sendgrid.com/settings/api_keys">Sendgrid</a> account, navigate to <strong>Settings &gt; API Keys</strong></li><li>Click <strong>Create API Key</strong> and provide a name for your key.</li><li>Choose the <strong>API Key Permissions</strong> as <strong>Full Access.</strong></li><li>Copy and keep your key securely, as it would be shown only once.</li></ol></td>
-        <td>orkes_template_sendgrid_api_key</td>
-    </tr>
-    <tr>
-        <td>SLACK</td>
-        <td>Slack</td>
-        <td>Custom webhook obtained from Slack to post to a specific channel.</td>
-        <td>orkes_template_slack_webhook</td>
-    </tr>
-    <tr>
-        <td>PAGERDUTY</td>
-        <td>Pagerduty</td>
-        <td>Routing key for sending messages to a particular channel defined in Pagerduty.<ol><li>In your Pagerduty account, create a <strong>Service</strong>.</li><li>Click on the created service and click <strong>Integrations</strong> sub-tab.</li><li><strong>Click +Add an integration</strong>, and choose <strong>Events API V2</strong>.</li><li>Once the integration is added, click on 🔽 near to the integration name.</li><li>Copy the 32 digit <strong>Integration Key</strong>, which is the routing key to be used in the workflow.</li></ol></td>
-        <td>orkes_template_pagerduty_eventsv2_integration_key</td>
-    </tr>
-</table>
+You can run the workflow in different ways. 
 
-Depending upon how you wish to notify, you can configure the required provider and get the required credentials. This needs to be saved as a [secret](https://orkes.io/content/developer-guides/secrets-in-conductor) in your Conductor console as with the mentioned secret name in the above table. This seamlessly helps you run the workflow.
+<Tabs>
+<TabItem name="Using Scheduler" value="Using Scheduler">
 
-If any of the parameters listed above are not readable or are wrong, the workflow execution will fail. Therefore, it is important to test this ahead of time to ensure you have the values set correctly.
+The Scheduler allows you to set a predefined cadence for running a workflow. Once the schedule is configured, Conductor will automatically invoke the workflow at the specified intervals, requiring no further action from the user.
 
-Once the notifications are completed, the sub-workflow returns, and the caller workflow (i.e., this workflow) finishes its execution.
+**To schedule workflows:**
+1. Go to **Definitions** > **Scheduler** from the left navigation menu on your Conductor cluster.
+2. Select **+ Define Schedule**.
+3. Provide a schedule name, select the workflow name and version, and set the schedule using the cron expression. 
+4. Select **Save** > **Confirm**.
 
-:::note
-For SMS & Email notifications, we have used the service providers Twilio & Sendgrid, respectively, for illustration purposes. You can use any service provider of your choice.
-:::
+This saves the Schedule definition, and the workflow is now automated to run at specific cadence. Refer to [Scheduling Workflows](https://orkes.io/content/developer-guides/scheduling-workflows) documentation for more details.
+</TabItem>
+<TabItem name="Using Conductor UI" value="Using Conductor UI">
 
-Of course, this is just a starting point. The power of the Conductor model is that you can customize this workflow (and any other ones!) to your needs. You can add additional steps (e.g., write to a log file) or add a different provider (e.g., use Opsgenie for incident notifications). The possibilities are endless, and you can easily build this workflow to do exactly what you want, and, without any effort, scale it up as much as you want!
+**To run the workflow using Conductor UI:**
 
-### Workflow Invocation 
+1. From your imported workflow, go to the **Run** tab.
+2. Enter the **Input Params**.
+3. Select **Run Workflow**.
 
-You can invoke the workflow in many different ways. However, the best practice for an availability monitoring workflow is to schedule the workflow at predefined cadences.
+<p align="center"><img src="/content/img/run-workflow-from-ui-http-endpoint-monitoring-template.png" alt="Workflow called as a sub workflow" width="100%" height="auto"></img></p>
 
-#### Scheduler
+</TabItem>
+<TabItem name="Using API" value="Using API">
 
-One of the features of Orkes Conductor is that you can specify that a particular workflow should be run at a predefined cadence. Once the schedule is set, Orkes Conductor will invoke it at that cadence without any further action from you. This invocation option is a great choice for the HTTP availability monitoring workflow. 
+Use the following endpoint to start the workflow:
 
-Here’s how to schedule workflows:
-1. From your Conductor console, navigate to **Definitions > Scheduler** from the left menu.
-2. Click the **Define Schedule** button from the top right corner. 
-3. Provide a schedule name, choose your workflow name and version to be scheduled, and set your schedule using the cron expression. Refer to [this document](https://orkes.io/content/developer-guides/scheduling-workflows) for detailed information on all the parameters. 
-5. Click **Save Schedule**.
-
-#### REST
-
-As with any workflow in Conductor, you can invoke it by calling the REST endpoint of the Conductor server and specifying the workflow name, version, and input data.
-
-You can use the following API to start a workflow execution:
-
-```
+```shell
 POST /api/workflow/{name}
 ```
 
-Refer to the [start workflow API doc](https://orkes.io/content/reference-docs/api/workflow/start-workflow-execution) for more info. 
+Refer to the [Start Workflow Execution API reference](https://orkes.io/content/reference-docs/api/workflow/start-workflow-execution) for more information.
 
-#### Conductor UI
+</TabItem>
+</Tabs>
 
-You can navigate to the **Run Workflow** button on the left side of your Conductor UI, and from there, select the workflow's name, the version to use, and the input parameters. Using the example variables to invoke through the UI is a great way to test this workflow.
+## Workflow output
 
-<p align="center"><img src="/content/img/run-workflow-from-ui-http-endpoint-monitoring-template.png" alt=" Monitoring HTTP Endpoint Workflow UI Execution" width="90%" height="auto"></img></p>
+The workflow output includes details of the notification sent to the respective platform.
+
+**Examples**
+<Tabs>
+<TabItem name="PagerDuty" value="PagerDuty">
+
+Example for a notification received in PagerDuty: 
+
+<p align="center"><img src="/content/img/notification-received-in-pagerduty.png" alt="Example for a notification received in Pagerduty" width="100%" height="auto"></img></p>
+
+</TabItem>
+<TabItem name="Slack" value="Slack">
+Example for a notification received in a Slack channel:
+<p align="center"><img src="/content/img/notification-received-in-slack.png" alt="Example for a notification received in a slack channel" width="70%" height="auto"></img></p>
+
+</TabItem>
+<TabItem name="Twilio" value="Twilio">
+Example for a notification received as SMS via Twilio:
+<p align="center"><img src="/content/img/notification-received-as-sms.png" alt="Example for a notification received as SMS via Twilio" width="50%" height="auto"></img></p>
+
+</TabItem>
+<TabItem name="Sendgrid" value="Sendgrid">
+
+Example for a notification received as an email via Sendgrid:
+<p align="center"><img src="/content/img/notification-received-as-email.png" alt="Example for a notification received as email via Sendgrid" width="100%" height="auto"></img></p>
+
+</TabItem>
+</Tabs>
+
+This template provides a starting point for customizing the workflow to your needs.  You can add additional steps, such as logging events, or add a different provider (like Opsgenie for incident notifications) to suit your business requirements. 
