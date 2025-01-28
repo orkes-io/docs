@@ -53,7 +53,7 @@ Currently, schemas can be defined in the [JSON Schema](https://json-schema.org/s
 ## Using schemas
 
 To enforce validation for input/output payloads, schemas can be added to:
-* **A workflow definition**—Enforce workflow inputs.
+* **A workflow definition**—Enforce workflow inputs/outputs.
 * **A task definition**—Enforce task inputs/outputs for all instances of the task.
 * **A task configuration**—Enforce task inputs/outputs for a specific workflow.
 
@@ -69,9 +69,9 @@ Here is an overview of using schemas in Conductor workflows:
 2. Go to **Definitions** > **Schemas**.
 3. Select **(+) New schema** on the top right.
     A schema editor opens.
-4. Add your schema definition in the `data` object. Make sure to fill out at least the `$schema`, `$id`,  `type`, and `properties` parameters as outlined in the JSON Schema.
+4. Add your schema definition in the _data_ object. Make sure to fill out at least the _$schema_, _$id_, _type_, and _properties_ parameters as outlined in the JSON Schema.
 
-Learn more about creating a JSON Schema in [their documentation](https://json-schema.org/learn/getting-started-step-by-step).
+Learn more about [creating a JSON Schema](https://json-schema.org/learn/getting-started-step-by-step).
 
 
 ### Step 2: Add schema to workflow or task
@@ -117,9 +117,9 @@ If the version is unspecified, the latest schema version will be used.
 1. Go to **Definitions** > **Workflow**.
 2. Select a workflow that you want to add a task-level schema to.
 3. In the visual workflow editor, select a task.
-4. In the Schema section, select a schema to use as an **Input Schema** or **Output Schema**.
-5. Select a **Version** for the schema.
-6. Switch on the **Enforce schema** toggle.
+4. In the Schema section, switch on the **Enforce schema** toggle.
+5. Select a schema to use as an **Input Schema** or **Output Schema**.
+6. Select a **Version** for the schema.
 7. Select **Save** > **Confirm** in the top right.
 
 <p align="center"><img src="/content/img/dev-guides/input_output_validation-task_config_schema.png" alt="Screenshot of adding a schema to a task configuration in the workflow definition." width="100%" height="auto"></img></p>
@@ -163,11 +163,10 @@ If the version is unspecified, the latest schema version will be used.
 
 1. Go to **Definitions** > **Workflow**.
 2. Select a workflow that you want to add a task-level schema to.
-3. In the Schema section of the Workflow tab, select a schema to use as an **Input Schema**.
-4. Select a **Version** for the schema.
-5. Switch on the **Enforce schema** toggle.
+3. In the Schema section of the Workflow tab, switch on the **Enforce schema** toggle.
+4. Select a schema to use as an **Input Schema** or **Output Schema**.
+5. Select a **Version** for the schema.
 6. Select **Save** > **Confirm** in the top right.
-
 
 <p align="center"><img src="/content/img/dev-guides/input_output_validation-workflow_def_schema.png" alt="Screenshot of adding a schema to the workflow definition." width="100%" height="auto"></img></p>
 
@@ -224,12 +223,12 @@ Schema validation is currently supported for the following task types:
 * [Update Task](/reference-docs/system-tasks/update-task)
 * [Opsgenie](https://orkes.io/content/reference-docs/system-tasks/opsgenie)
 * [Query Processor](/reference-docs/system-tasks/query-processor)
-* [Text Complete](/reference-docs/ai-tasks/llm-text-complete)
-* [Generate Embeddings](/reference-docs/ai-tasks/llm-generate-embeddings)
-* [Get Embeddings](/reference-docs/ai-tasks/llm-get-embeddings)
-* [Store Embeddings](/reference-docs/ai-tasks/llm-store-embeddings)
-* [Search Index](/reference-docs/ai-tasks/llm-search-index)
-* [Index Document](/reference-docs/ai-tasks/llm-index-document)
+* [LLM Text Complete](/reference-docs/ai-tasks/llm-text-complete)
+* [LLM Generate Embeddings](/reference-docs/ai-tasks/llm-generate-embeddings)
+* [LLM Get Embeddings](/reference-docs/ai-tasks/llm-get-embeddings)
+* [LLM Store Embeddings](/reference-docs/ai-tasks/llm-store-embeddings)
+* [LLM Search Index](/reference-docs/ai-tasks/llm-search-index)
+* [LLM Index Document](/reference-docs/ai-tasks/llm-index-document)
 * [Get Document](/reference-docs/ai-tasks/llm-get-document)
-* [Index Text](/reference-docs/ai-tasks/llm-index-text)
-* [Chat Complete](/reference-docs/ai-tasks/llm-chat-complete)
+* [LLM Index Text](/reference-docs/ai-tasks/llm-index-text)
+* [LLM Chat Complete](/reference-docs/ai-tasks/llm-chat-complete)
