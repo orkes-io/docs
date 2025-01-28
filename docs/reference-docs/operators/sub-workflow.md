@@ -31,8 +31,10 @@ Configure these parameters for the Sub Workflow task.
 
 In addition, you can also configure the sub-workflow’s input in `inputParameters`, which will be passed down to the invoked sub-workflow. The sub-workflow’s input can be coupled to the parent workflow’s input parameters, or it can be invoked from the output of the preceding task.
 
-If you are taking the sub-workflow’s input parameters from the parent workflow, you need to add them as an input parameter in the parent workflow and then call the same input parameters inside the sub-workflow definition.
-
+:::noteNotes
+- If you are taking the sub-workflow’s input parameters from the parent workflow, you need to add them as an input parameter in the parent workflow and then call the same input parameters inside the sub-workflow definition.
+- If an idempotency strategy is configured in the sub-workflow task definition and no idempotency key is provided, the sub-workflow task will automatically inherit the idempotency key from its parent workflow.
+:::
 
 ## Task configuration
 
@@ -54,6 +56,7 @@ This is the task configuration for a Sub Workflow task.
       "someTask": "someDomain"
     }
   }
+}
 }
 ```
 
