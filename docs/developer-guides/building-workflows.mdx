@@ -107,7 +107,7 @@ Although each task type has its own unique configuration, all tasks share severa
 
 | Parameter     | Description                                                                                                                                                                                                | Required/ Optional |
 | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
-| name               | Name of the task. The default value is the same as the task type. <br/><br/> The name can be changed to something descriptive. To use a given task definition, the task name here must match the task definition name (case-sensitive). | Required. |
+| name               | Name of the task. The default value is the same as the task type. <br/><br/> The name can be changed to something descriptive. To use a given task definition, the task name here must match the task definition name (case-sensitive).<br/><br/>**Note**: It is recommended to use alphanumeric characters for task names. While special characters are allowed for backward compatibility, they are not fully supported and may cause unexpected behavior. | Required. |
 | taskReferenceName  | Reference name for the task. <br/><br/> Must be a unique value in a given workflow.                                                            | Required. |
 | type               | The task type. For example, HTTP, SIMPLE.     | Required. |
 | inputParameters    | Map of the task’s input parameters.           | Depends on task type. |
@@ -142,7 +142,7 @@ The workflow definition contains configuration parameters that define the workfl
 
 | Parameter     | Description                                                                                                                                                                                                | Required/ Optional |
 | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
-| name               | Workflow name. <ul><li>For v4.0.1 and prior: Only letters, digits, hyphens (-), and underscores (\_) are allowed.</li>   <li>For v4.0.2 and later: Only letters, digits, spaces, hyphens (-), underscores (\_), and certain special characters (`<`, `>`, `{`, `}`, `#`) are allowed.</li></ul> | Required. |
+| name               | Workflow name. <ul><li>For v4.0.1 and prior: Only letters, digits, hyphens (-), and underscores (\_) are allowed.</li>   <li>For v4.0.2 and later: Only letters, digits, spaces, hyphens (-), underscores (\_), and certain special characters (`<`, `>`, `{`, `}`, `#`) are allowed.</li></ul>**Note**: It is recommended to use alphanumeric characters for workflow names. While special characters are allowed for backward compatibility, they are not fully supported and may cause unexpected behavior. | Required. |
 | description        | ​Workflow description.                                       | Required. |
 | version            | Workflow version.      | Optional. |
 | tasks              | Array of [task configuration](building-workflows#task-configuration) objects.           | Required. |

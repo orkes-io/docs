@@ -17,7 +17,7 @@ Creates a new task definition.
 
 | Parameter  | Description | Type | Required/ Optional |
 | ---------- | ----------- | ---- | ----------------- |
-| name | A unique name for the task. | string | Required. |
+| name | A unique name for the task.<br/><br/>**Note**: It is recommended to use alphanumeric characters for task names. While special characters are allowed for backward compatibility, they are not fully supported and may cause unexpected behavior. | string | Required. |
 | description | A brief description of the task. | string | Optional. |
 | [retryCount](https://orkes.io/content/error-handling#task-retries) | The number of retry attempts if the task fails. | integer | Optional. |
 | [retryDelaySeconds](https://orkes.io/content/error-handling#task-retries) | The time (in seconds) to wait before each retry attempt. | integer | Optional. | 
