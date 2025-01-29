@@ -24,7 +24,7 @@ Creates a new workflow definition.
 
 | Parameter  | Description | Type | Required/ Optional |
 | ---------- | ----------- | ---- | ----------------- |
-| name | A unique name for the workflow definition.<ul><li>For v4.0.1 and prior: Only letters, digits, hyphens (-), and underscores (\_) are allowed.</li>   <li>For v4.0.2 and later: Only letters, digits, spaces, hyphens (-), underscores (\_), and certain special characters (`<`, `>`, `{`, `}`, `#`) are allowed.</li></ul> | string | Required. | 
+| name | A unique name for the workflow definition.<ul><li>For v4.0.1 and prior: Only letters, digits, hyphens (-), and underscores (\_) are allowed.</li>   <li>For v4.0.2 and later: Only letters, digits, spaces, hyphens (-), underscores (\_), and certain special characters (`<`, `>`, `{`, `}`, `#`) are allowed.</li></ul> **Note**: It is recommended to use alphanumeric characters for workflow names. While special characters are allowed for backward compatibility, they are not fully supported and may cause unexpected behavior.| string | Required. | 
 | description | A description of the workflow. | string | Optional. | 
 | version | The version of the workflow definition. Defaults to 0 if not specified. | integer | Optional. |
 | tasks | The task configurations to be included in the workflow.  | array of objects | Required. | 
