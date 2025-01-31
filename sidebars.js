@@ -622,6 +622,7 @@ const sidebars = {
                     label: "Overview"
                 },
                 'templates/automatic-subtitle-generator',
+                `templates/daily-scrum-automation-using-standup-bot`,
                 'templates/availability-monitoring-for-http-endpoints',
                 'templates/video-processing-workflows',
                 'templates/image-effects',
