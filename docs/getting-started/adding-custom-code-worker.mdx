@@ -1,10 +1,11 @@
 ---
 sidebar_position: 1
 ---
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-import Install from '@site/src/components/install.mdx';
-import CodeBlock from '@theme/CodeBlock';
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import Install from "@site/src/components/install.mdx";
+import CodeBlock from "@theme/CodeBlock";
 
 # Step 3: Adding Custom Code Worker
 
@@ -17,7 +18,6 @@ Continuing the use case from the previous step, we now have a requirement to add
 
 <div className="row">
 <div className="col col--4">
-
 
 1. In your current definition, add a [Switch](/content/reference-docs/operators/switch) task before the deposit task.
 2. Add a switch case for checking amounts >= 10000, and add a [Worker](/content/reference-docs/worker-task) task for the case with the name `fraud-check`.
@@ -36,7 +36,7 @@ webkitallowfullscreen="webkitallowfullscreen"></iframe></div>
 </TabItem>
 </Tabs>
 
-We can see that when we run this workflow for amounts >= $10,000, it runs a fraud check. If we named the task `fraud-check`, we'd notice that it is actually executed (in Developer Edition env), but how? 
+We can see that when we run this workflow for amounts >= $10,000, it runs a fraud check. If we named the task `fraud-check`, we'd notice that it is actually executed (in Developer Edition env), but how?
 That's because there is a pre-defined task that is polling and running all the tasks named `fraud-check`. We also have the required permissions in the Developer Edition for this task.
 
 So how can we implement this task for ourselves? First, let's rename the task to a new unique name for ourselves - for ex: `fraud-check-<replace-with-a-unique-value>`. And now, let’s see how this custom fraud check can be implemented:
@@ -46,9 +46,19 @@ View our documentation on [Conductor Clients & SDKs](/content/category/sdks) lis
 <Tabs>
 <TabItem value="Java" label="Java">
 
-```java dynamic https://github.com/conductor-sdk/orkes-java-springboot2-example/blob/main/src/main/java/io/orkes/example/banking/workers/ConductorWorkers.java section=1 ../workers/ConductorWorkers.java
-```
+<CodeBlock language="java" title={ <div ><i>Complete source file on Github:</i> <a href="https://github.com/conductor-sdk/orkes-java-springboot2-example/blob/main/src/main/java/io/orkes/example/banking/workers/ConductorWorkers.java">.../workers/ConductorWorkers.java</a></div>}>
+{`
+     /**
+      * Note: Using this setting, up to 5 tasks will run in parallel, with tasks being polled every 200ms
+      */
+     @WorkerTask(value = "fraud-check", threadCount = 5, pollingInterval = 200)
+     public FraudCheckResult checkForFraudTask(DepositDetail depositDetail) {
+        return fraudCheckService.checkForFraud(depositDetail);
+    }
 
+`}
+
+</CodeBlock>
 </TabItem>
 <TabItem value="Python" label="Python">
 
@@ -101,7 +111,7 @@ def execute(task: Task) -> TaskResult:
 def python_annotated_task(input) -> object:
     return {'message': 'python is so great :)'}
 
-# Create worker with domain using a WorkerTask decorator 
+# Create worker with domain using a WorkerTask decorator
 @WorkerTask(task_definition_name='python_annotated_task', worker_id='decorated_domain', domain='cool')
 def python_annotated_task_with_domain(input) -> object:
     return {'message': 'python is so great and cool :)'}
@@ -168,30 +178,79 @@ with TaskHandler(workers, configuration, scan_for_annotated_workers=True) as tas
 </TabItem>
 <TabItem value="CSharp" label="C#">
 
-```csharp dynamic https://github.com/conductor-sdk/csharp-sdk-examples/blob/main/Examples/Worker/Workers.cs section=1 ../Worker/Workers.cs
-```
+<CodeBlock language="csharp" title={ <div ><i>Complete source file on Github:</i> <a href="https://github.com/conductor-sdk/csharp-sdk-examples/blob/main/Examples/Worker/Workers.cs">.../Worker/Workers.cs</a></div>}>
+{`      // Note: Using this setting, up to 5 tasks will run in parallel, with tasks being polled every 200ms
+        [WorkerTask(taskType: "fraud-check", batchSize: 5, domain: null, pollIntervalMs: 200, workerId: "workerId")]
+        public TaskResult FraudWorker(Task task)
+        {
+            var depositDetail = (DepositDetail)task.InputData["depositDetail"];
+            var fraudCheckResult = _fraudCheckService.CheckForFraud(depositDetail);
+            var result = task.Completed();
+            result.OutputData = Examples.Util.TypeUtil.GetDictionaryFromObject(fraudCheckResult);
+            return result;
+        }
+
+`}
+
+</CodeBlock>
 
 </TabItem>
 <TabItem value="JavaScript" label="JavaScript">
 
-```javascript dynamic https://github.com/conductor-sdk/javascript-sdk-examples/blob/main/src/banking/workers/workers.js section=1 .../workers/workers.js
-```
+<CodeBlock language="javascript" title={ <div ><i>Complete source file on Github:</i> <a href="https://github.com/conductor-sdk/javascript-sdk-examples/blob/main/src/banking/workers/workers.js">.../workers/workers.js</a></div>}>
+{`const fraudCheckWorker = {
+    taskDefName: "fraud-check",
+    execute: async ({ inputData }) => {
+        const { amount, accountId } = inputData;
+        const fraudResult = fraudService.isFraudulentTxn(accountId, amount);
+        
+        return {
+            outputData: fraudResult,
+            status: "COMPLETED",
+        };
+    },
+    domain: "fraud", // Optional
+    pollInterval: 100, // Optional, can be specified in the TaskManager
+    concurrency: 1, // Optional, can be specified in the TaskManager
+};
+
+`}
+
+</CodeBlock>
 
 </TabItem>
 <TabItem value="Typescript" labe="typescript">
 
-```typescript dynamic https://github.com/conductor-sdk/typescript-examples/blob/main/src/banking/workers/workers.ts section=1 ../workers/workers.ts
-```
+<CodeBlock language="typescript" title={ <div ><i>Complete source file on Github:</i> <a href="https://github.com/conductor-sdk/typescript-examples/blob/main/src/banking/workers/workers.ts">.../workers/workers.ts</a></div>}>
+{`export const fraudCheckWorker: ConductorWorker = {
+    taskDefName: "fraud-check",
+    execute: async ({ inputData }) => {
+        const amount = inputData?.amount;
+        const accountId = inputData?.accountId;
+        const fraudResult = fraudService.isFraudulentTxn(accountId, amount);
 
+        return {
+            outputData: fraudResult,
+            status: "COMPLETED",
+        };
+    },
+    domain: "fraud", // Optional
+    pollInterval: 100, // Optional, can be specified in the TaskManager
+    concurrency: 2, // Optional, can be specified in the TaskManager
+
+};
+
+`}
+
+</CodeBlock>
 </TabItem>
 </Tabs>
 
-
-Once we have cloned the repo or copied the required elements to our local machines, we can run this locally by connecting to the Conductor server. 
+Once we have cloned the repo or copied the required elements to our local machines, we can run this locally by connecting to the Conductor server.
 To do this, we must give the required permissions to our application.
 Refer to this [video](https://www.youtube.com/watch?v=PY34TcVzof0) to add permission to execute the custom worker we just created above (`fraud-check-<replace-with-a-unique-value>`).
 After providing the permissions, we can change the definition to run our worker (`fraud-check-<replace-with-a-unique-value>`) and start the application.
-We can see that now our worker is picking up the task. 
+We can see that now our worker is picking up the task.
 
 This is the **first example** of how a distributed worker is executed in Conductor; **without** exposing an endpoint or creating any sort of inbound connectivity, we were able to execute the task directly from our local machine pointing to the Developer Edition server.
 
@@ -200,6 +259,6 @@ We can run similar workflows in production, too, workers could live in **any app
 Conductor. All of this without worrying about creating inbound connections or exposing unwanted API endpoints.
 :::
 
-* **[Step 4: Running an Inline Function](/getting-started/running-an-inline-function)**
-* **[Step 5: Adding Wait Conditions](/getting-started/adding-wait-conditions)**
-* **[Step 6: Executing Tasks in Parallel](/getting-started/executing-tasks-in-parallel)**
+- **[Step 4: Running an Inline Function](/getting-started/running-an-inline-function)**
+- **[Step 5: Adding Wait Conditions](/getting-started/adding-wait-conditions)**
+- **[Step 6: Executing Tasks in Parallel](/getting-started/executing-tasks-in-parallel)**

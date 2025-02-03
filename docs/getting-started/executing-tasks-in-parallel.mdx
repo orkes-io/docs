@@ -1,10 +1,11 @@
 ---
 sidebar_position: 1
 ---
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-import Install from '@site/src/components/install.mdx';
-import CodeBlock from '@theme/CodeBlock';
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import Install from "@site/src/components/install.mdx";
+import CodeBlock from "@theme/CodeBlock";
 
 # Step 6: Executing Tasks in Parallel
 
@@ -25,7 +26,7 @@ Orkes Conductor runs 1000s of parallel executions, limited only by the worker ca
 <div className="col col--4">
 
 1. In your current workflow, add a new workflow called `batch-process-payments-<unique-id>` and add a [Worker](/content/reference-docs/worker-task) task for the case with the name `retrieve-deposit-batch`.
-2. Add a [Dynamic Fork](/content/reference-docs/operators/dynamic-fork) task - and  configure it to run a sub-workflow based on the output of `retrieve-deposit-batch` task.
+2. Add a [Dynamic Fork](/content/reference-docs/operators/dynamic-fork) task - and configure it to run a sub-workflow based on the output of `retrieve-deposit-batch` task.
 3. [Run workflow directly from the UI](/developer-guides/running-workflows#run-in-ui) using the Run Workflow button.
 
 </div>
@@ -46,12 +47,30 @@ That's because there is a pre-defined task that is polling and running all the t
 
 Here is the code reference for this worker:
 
-```java dynamic https://github.com/conductor-sdk/orkes-java-springboot2-example/blob/main/src/main/java/io/orkes/example/banking/workers/ConductorWorkers.java section=2 .../workers/ConductorWorkers.java
-```
+<CodeBlock language="java" title={ <div ><i>Complete source file on Github:</i> <a href="https://github.com/conductor-sdk/orkes-java-springboot2-example/blob/main/src/main/java/io/orkes/example/banking/workers/ConductorWorkers.java">.../workers/ConductorWorkers.java</a></div>}>
+{`
+    @WorkerTask(value = "retrieve-deposit-batch", threadCount = 5, pollingInterval = 200)
+    public List<DepositDetail> retrieveDepositBatch(@InputParam("batchCount") Integer batchCount) {
+        if (batchCount == null) {
+            batchCount = random.nextInt(5, 11);
+        }
+        batchCount = Math.min(100, batchCount); // Limit to 100 in playground
+        List<DepositDetail> depositDetails = IntStream.range(0, batchCount)
+                .mapToObj(i -> DepositDetail.builder()
+                        .accountId("acc-id-" + i)
+                        .amount(BigDecimal.valueOf(i * 1500L)) // Create random amounts
+                        .build())
+                .toList();
+        log.info("Returning {} transactions", depositDetails.size());
+        return depositDetails;
+    }
+`}
 
-By default, it would return a random value between __5-10 tasks__. If we supply an input called __`batchCount`__ - we can retrieve up to 100 transactions. This is a limitation of the Developer Edition. In a dedicated
+</CodeBlock>
+
+By default, it would return a random value between **5-10 tasks**. If we supply an input called **`batchCount`** - we can retrieve up to 100 transactions. This is a limitation of the Developer Edition. In a dedicated
 cluster, you can run parallel tasks into the thousands or tens of thousands depending on the cluster's capacity.
 
 :::note Try out a larger batch
-Try configuring a larger batch using the input called __`batchCount`__ to the task `retrieve-deposit-batch` task - we can observe the tasks running in parallel by looking at the timeline view or task list view.
+Try configuring a larger batch using the input called **`batchCount`** to the task `retrieve-deposit-batch` task - we can observe the tasks running in parallel by looking at the timeline view or task list view.
 :::
