@@ -6,8 +6,8 @@ description: "Learn how to route tasks to different sets of workers using the co
 
 # Routing Tasks (Task-to-domain)
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
 
 In Conductor, tasks are executed by workers, and the Conductor server manages task distribution through a task queue. The **task-to-domain** feature allows tasks to be routed to specific sets of workers based on domain labels. This gives you finer control over task execution, enabling you to assign tasks to workers with specific capabilities, permissions, or configurations.
 
@@ -17,13 +17,25 @@ Task-to-domain is a concept that allows you to route task executions to a specif
 
 To better understand the concept of routing tasks, consider an example task, `send_email`. By default, the task queue distributes this task to all available workers, as shown:
 
-<p align="center"><img src="/content/img/task-routing.png" alt="Task distribution by default" width="90%"
-                       height="auto"/></p>
+<p align="center">
+  <img
+    src="/content/img/task-routing.png"
+    alt="Task distribution by default"
+    width="90%"
+    height="auto"
+  />
+</p>
 
 To route this task to a specific group of workers, you can assign it a domain when triggering the workflow. The task is then routed only to workers configured for that domain.
 
-<p align="center"><img src="/content/img/task-routing-domains.png" alt="Task distribution via dedicated domains" width="90%"
-                       height="auto"/></p>
+<p align="center">
+  <img
+    src="/content/img/task-routing-domains.png"
+    alt="Task distribution via dedicated domains"
+    width="90%"
+    height="auto"
+  />
+</p>
 
 Here, the `send_email` task has two additional sets of worker instances that listen to specific domain-based tasks. For example, all the tasks triggered with domain `dedicated_for_app_x` are sent to the workers configured with domain `dedicated_for_app_x`.
 
@@ -235,7 +247,14 @@ For running a workflow from the Conductor UI, define the following task-to-domai
 }
 ```
 
-<p align="center"><img src="/content/img/task-to-domain.png" alt="Task To Domain mapping while invoking workflows" width="100%" height="auto"></img></p>
+<p align="center">
+  <img
+    src="/content/img/task-to-domain.png"
+    alt="Task To Domain mapping while invoking workflows"
+    width="100%"
+    height="auto"
+  ></img>
+</p>
 
 </TabItem>
 </Tabs>
@@ -295,6 +314,7 @@ In this configuration,
 
 <details>
 <summary>Using fallback domain</summary>
+
 In this example, we’ll assume the `taskToDomain` mapping is as follows:
 
 ```json

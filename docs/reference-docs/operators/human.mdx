@@ -140,6 +140,7 @@ Here are some examples for using the Human task.
 
 <details>
 <summary>Expense approval</summary>
+
 In this example, an expense approval workflow contains two Human tasks, one for approval by the HR department and another for approval by the Finance department. Since the approval process is the same for both rounds, the same user form template can be re-used across both Human tasks.
 
 The expense name and amount are passed into read-only form fields for the user to view and approve. If the expense has been approved by HR, it will proceed to the next stage of approval. Otherwise, the workflow will terminate. Once the expense has been approved by Finance, a notification workflow will be triggered.

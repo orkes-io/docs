@@ -4,8 +4,8 @@ slug: "/reference-docs/system-tasks/inline"
 description: "The Inline task enables the execution of essential logic during workflow runtime by evaluating a JavaScript expression."
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
 
 # Inline
 
@@ -55,7 +55,16 @@ The Inline task will return the following parameters.
 2. In **Script params**, add the parameters that will be evaluated in the expression.
 3. Enter the expression to be evaluated in the **Code** section. The JSON definition offers a concise string representation of the script, whereas the UI representation typically incorporates formatted indentation and line breaks to enhance user readability.
 
-<center><p><img src="/content/img/ui-guide-inline-task.png" alt="Adding wait task" width="80%" height="auto"/></p></center>
+<center>
+  <p>
+    <img
+      src="/content/img/ui-guide-inline-task.png"
+      alt="Adding wait task"
+      width="80%"
+      height="auto"
+    />
+  </p>
+</center>
 
 ## Examples
 
@@ -63,6 +72,7 @@ Here are some examples for using the Inline task.
 
 <details>
 <summary>Using the Inline task in a workflow</summary>
+
 An Inline task can be used for simple scripting logic that does not require a dedicated custom worker. In this example workflow, the Inline task is used to reverse a string based on the user input.
 
 ```javascript
