@@ -261,7 +261,7 @@ Run the annotated Java worker using WorkflowExecutor.
 
 ``` java
 var client = ApiClient.builder()
-        .basePath("https://developer.orkescloud.com/api")
+        .basePath("https://SERVER_URL/api") // e.g., "https://developer.orkescloud.com/api"
         .credentials("_CHANGE_ME_", "_CHANGE_ME_")
         .build();
 int pollingInterval = 50;
@@ -285,7 +285,7 @@ import {
 } from "@io-orkes/conductor-javascript";
 
 const config = {
-  serverUrl: "https://developer.orkescloud.com/api",
+  serverUrl: "https://SERVER_URL/api", // e.g., "https://developer.orkescloud.com/api"
   keyId: "_CHANGE_ME_",
   keySecret: "_CHANGE_ME_",
 };
@@ -302,7 +302,7 @@ manager.startPolling();
  ``` csharp
 var conf = new Configuration
 {
-    BasePath = "https://developer.orkescloud.com/api",
+    BasePath = "https://SERVER_URL/api", // e.g., "https://developer.orkescloud.com/api"
     AuthenticationSettings = new OrkesAuthenticationSettings("_CHANGE_ME_", "_CHANGE_ME_")
 };
 
@@ -334,7 +334,7 @@ apiClient := client.NewAPIClient(
         SECRET,
     ),
     settings.NewHttpSettings(
-    "https://developer.orkescloud.com/api",
+    "https://SERVER_URL/api", // e.g., "https://developer.orkescloud.com/api"
 ))
 
 taskRunner = worker.NewTaskRunnerWithApiClient(apiClient)
