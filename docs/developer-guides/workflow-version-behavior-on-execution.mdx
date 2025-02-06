@@ -68,7 +68,7 @@ class WorkflowMigration
 
     private static Configuration configuration = new Configuration()
     {
-        BasePath = "conductor_url",
+        BasePath = "https://SERVER_URL/api", // e.g., "https://developer.orkescloud.com/api" for Developer Edition
         AuthenticationSettings = new OrkesAuthenticationSettings("keyId", "keySecret")
     };
 

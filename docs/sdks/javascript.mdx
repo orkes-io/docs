@@ -30,7 +30,7 @@ npm install --save @io-orkes/conductor-javascript
     } from "@io-orkes/conductor-javascript";
 
     export const config = {
-      serverUrl: `${process.env.SERVER_URL}`,
+      serverUrl: `${process.env.SERVER_URL}`, // e.g., "https://developer.orkescloud.com/api" for Developer Edition
     };
 
     (async () => {
@@ -51,7 +51,7 @@ Once we have a key and secret, we can configure the app from properties or envir
     export const config = {
       keyId: process.env.KEY,
       keySecret:process.env.SECRET,
-      serverUrl: `${process.env.SERVER_URL}`,
+      serverUrl: `${process.env.SERVER_URL}`, // e.g., "https://developer.orkescloud.com/api" for Developer Edition
     };
 
     (async () => {
@@ -68,4 +68,3 @@ Remember to protect your app secrets like any other secrets or passwords.
 - Video Guide on [Getting Access Key and Secret](/developer-guides/running-workflows#run-in-ui)
 - [Access Control & Security](/content/category/access-control-and-security)
 - [NextJS Example](https://github.com/orkes-io/conductor-nextjs-example/tree/main)
-

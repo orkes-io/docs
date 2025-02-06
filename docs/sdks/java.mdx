@@ -194,7 +194,7 @@ import java.util.concurrent.TimeoutException;
 public class Main {
 
     // Change these values according to your conductor server instance. Refer to the documentation on creating an access key - https://orkes.io/content/sdks/authentication#retrieving-access-keys.
-    private static final String CONDUCTOR_SERVER = "https://play.orkes.io/api";
+    private static final String CONDUCTOR_SERVER = "https://developer.orkescloud.com/api";
     private static final String KEY = "_CHANGE_ME_";
     private static final String SECRET = "_CHANGE_ME_";
 
@@ -238,7 +238,7 @@ import java.util.concurrent.TimeoutException;
 public class Main {
 
  // Change these values according to your conductor server instance. Refer to the documentation on creating an access key - https://orkes.io/content/sdks/authentication#retrieving-access-keys.
-    private static final String CONDUCTOR_SERVER = "https://play.orkes.io/api";
+    private static final String CONDUCTOR_SERVER = "https://SERVER_URL/api"; // e.g., https://developer.orkescloud.com/api
     private static final String KEY = "_CHANGE_ME_";
     private static final String SECRET = "_CHANGE_ME_";
 
@@ -278,7 +278,7 @@ public class Main {
 Everything related to server settings should be done within the `ApiClient` class by setting the required parameters when initializing an object, like this:
 
 ```shell
-ApiClient apiClient = new ApiClient("CONDUCTOR_SERVER_URL");
+ApiClient apiClient = new ApiClient("https://SERVER_URL/api"); // e.g., "https://developer.orkescloud.com/api" for Developer Edition
 ```
 
 If you are using Spring Framework, you can initialize the above class as a bean that can be used across the project.
@@ -346,7 +346,7 @@ public class ConductorWorkers {
 Workers use a polling mechanism (with a long poll) to periodically check for available tasks from the server. The startup and shutdown of workers are handled by the `conductor.client.automator.TaskRunnerConfigurer` class.
 
 ```java
-WorkflowExecutor executor = new WorkflowExecutor("http://server/api/");
+WorkflowExecutor executor = new WorkflowExecutor("https://SERVER_URL/api";); // e.g., https://developer.orkescloud.com/api
 /*List of packages  (comma separated) to scan for annotated workers.
  Please note the worker method MUST be public, and the class in which they are defined
  MUST have a no-args constructor*/
