@@ -18,7 +18,9 @@ For tasks, you can configure the following resilience parameters in its task def
 
 For workflows, you can configure the following resilience parameters in its workflow definition:
 
+- Timeouts
 - Compensation flows (known as failure workflow in Conductor)
+- Rate limits
 
 :::note
 To deal with workflow failures post-execution, refer to [Debugging Workflows](/developer-guides/debugging-workflows).
@@ -219,10 +221,41 @@ To configure tasks with no rate limits, set `rateLimitPerFrequency` and `concurr
 // task definition
 {
   "name": "someTaskDefName",
-  "pollTimeoutSeconds": 3600,
-  "responseTimeoutSeconds": 600,
-  "timeoutSeconds": 3600,
-  "timeoutPolicy": "TIME_OUT_WF"
+  "rateLimitPerFrequency": 0,
+  "rateLimitFrequencyInSeconds": 1,
+  "concurrentExecLimit": 0
+}
+
+```
+
+## Workflow timeouts
+
+A workflow can be configured to timeout in situations where:
+
+- The workflow has been running longer than expected and is not completed within the defined time frame. 
+- An external dependency required by the workflow is unresponsive or taking too long to respond. 
+- Business logic requires the workflows to be completed within a strict time limit to maintain efficiency.
+
+### Timeout configuration​
+
+You can configure timeout behavior for workflow in its **workflow definition**. The parameters for a workflow’s timeout behavior are:
+
+- Timeout seconds
+- Timeout policy
+
+| Parameter           | Description                             | Required/Optional |
+| ------------------- | --------------------------------------- | ----------------- | 
+| timeoutSeconds | Time (in seconds), after which the workflow will be set as TIMED_OUT if it hasn't reached a terminal state. No timeout occurs if the value is set to 0. | Required. |
+| timeoutPolicy | The policy for handling workflow timeout. Supported values:<ul><li>**TIME_OUT_WF**–The workflow is set to TIMED_OUT and is terminated.</li><li>**ALERT_ONLY**–Increments the counter to check the workflow status when it times out and logs relevant messages.</li></ul> | Optional. | 
+
+**Example**
+
+```json
+// workflow definition
+{
+ "name": "someWorkflow",
+ "timeoutPolicy": "TIME_OUT_WF",
+ "timeoutSeconds": 1800
 }
 ```
 
