@@ -1,169 +1,232 @@
 ---
-slug: "../quickstarts/write-workers"
-description: "In this quickstart, learn how to write your own workers for custom business logic."
+slug: "../quickstarts/create-first-workflow"
+description: "In this quickstart, learn how to build your first Conductor workflow."
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Quickstart 2: Write Workers
+# Quickstart 2: Create Your First Workflow
 
-In Conductor, tasks are executed using a worker-queue architecture. System tasks are serviced by Conductor workers, while custom tasks are serviced by the workers that you create. In this quickstart, you will learn how to write your own workers that will execute custom tasks.
+*Estimated time: 8min*
 
-**Decoupled by design**
+In Conductor, workflow definitions are stored as JSON. These workflows can be created using a UI-based or code-based approach:
+* **Visual workflow editor**—Using the Conductor UI, define and execute your workflow visually.
+* **Workflow as code**—Using the Conductor SDKs, define and execute your workflow in your preferred language.
 
-The worker code contains your task logic, which is decoupled from both the task definition (number of retries, rate limits) and the workflow-specific task configuration (inputs from other tasks, optionality).
-
-**Worker deployment**
-
-Conductor workers can run in a cloud-native environment or on-premise. Like any other application, workers can be easily deployed in a container, VM, or bare metal.
-
-For the purpose of this quickstart, we will deploy the worker from your own machine.
+In this quickstart, you will use your preferred option to:
+* Create and register a workflow definition consisting of a system task, a custom task, and an operator.
+* Test run the workflow.
 
 
-## Quickstart overview
-1. Create task worker(s) that poll for scheduled tasks at regular interval
-2. Create and register task definitions for these workers.
-3. Add the custom task to the workflow definition.
-4. Grant execution permission to the worker.
+### Create and register workflow
+
+Follow along to build your first workflow, a conditional helloWorld flow that greets users based on their location.
+
+<Tabs groupId="workflow-method">
+<TabItem value="visual" label="Visual workflow editor">
+
+Use the visual workflow editor in Conductor UI to create your *helloWorld* workflow.
+
+**To create a workflow:**
+1. Log in to your Orkes cluster or the [Orkes Developer Edition](https://developer.orkescloud.com/?utm_campaign=quickstarts&utm_source=orkes-doc&utm_medium=web).
+2. In the left navigation menu, go to **Definitions** > **Workflow**.
+3. Select **(+) Define workflow**.
+
+<p align="center"><img src="/content/img/getting-started/getting_started-visual_workflow_editor.png" alt="Screenshot of visual workflow editor in Orkes Conductor." width="100%" height="auto"></img></p>
+
+4. Copy the JSON code below into the **Code** tab of the workflow builder.
+
+    ```
+    {
+      "name": "helloWorld",
+      "description": "Hello World workflow that greets a user. Uses a Switch task, HTTP task, and Simple task.",
+      "version": 1,
+      "tasks": [
+        {
+          "name": "get-user",
+          "taskReferenceName": "get-user_ref",
+          "inputParameters": {
+            "uri": "https://randomuser.me/api/",
+            "method": "GET",
+            "accept": "application/json",
+            "contentType": "application/json",
+            "encode": true
+          },
+          "type": "HTTP"
+        },
+        {
+          "name": "user-criteria",
+          "taskReferenceName": "user-criteria_ref",
+          "inputParameters": {
+            "switchCaseValue": "${get-user_ref.output.response.body.results[0].location.country}"
+          },
+          "type": "SWITCH",
+          "decisionCases": {
+            "United States": [
+              {
+                "name": "myTask",
+                "taskReferenceName": "myTask_ref",
+                "inputParameters": {
+                  "name": "${get-user_ref.output.response.body.results[0].name.first}"
+                },
+                "type": "SIMPLE"
+              }
+            ]
+          },
+          "defaultCase": [],
+          "evaluatorType": "value-param",
+          "expression": "switchCaseValue"
+        }
+      ],
+      "inputParameters": [],
+      "outputParameters": {},
+      "failureWorkflow": "",
+      "schemaVersion": 2
+    }
+    ```
+
+5. To register the workflow, select **Save** > **Confirm**.
+
+Your first workflow has been created!
+
+</TabItem>
+
+<TabItem value="code" label="Workflow as code">
+
+Code your Hello World workflow using Conductor SDKs.
 
 
-## Before you begin
+#### Step 1: Create your workflow in code
 
-Ensure that you have [prepared your tools and access](../quickstarts#preparing-your-tools).
+Create a project for your workflow client where you can define, register, and execute workflows programmatically. To get started quickly, download one of our sample workflow as code projects in your preferred language:
 
+``` shell
+gh repo clone conductor-oss/conductor-apps
+```
 
-## Create a worker application
+* [Python](https://github.com/conductor-oss/conductor-apps/tree/main/python/quickstarts/create-your-first-workflow)
+* [Java](https://github.com/conductor-oss/conductor-apps/tree/main/java/quickstarts/create-your-first-workflow) 
+* [JavaScript](https://github.com/conductor-oss/conductor-apps/tree/main/javascript/quickstarts/create-your-first-workflow) 
+* [C#](https://github.com/conductor-oss/conductor-apps/tree/main/csharp/quickstarts/create-your-first-workflow) 
+* [Go](https://github.com/conductor-oss/conductor-apps/tree/main/go/quickstarts/create-your-first-workflow) 
+* [Clojure](https://github.com/conductor-oss/conductor-apps/tree/main/clojure/quickstarts/create-your-first-workflow)
 
-Create a new project for your worker application, keeping it separate from your workflow client.
 
 <Tabs groupId="language">
 <TabItem value="python" label="Python">
 
-You can create a worker by writing a Python function and annotating it with a @worker_task decorator.
+This sample Python code demonstrates how to create, register, and execute a workflow in Conductor. 
 
 ``` python
-from conductor.client.worker.worker_task import worker_task
-
-@worker_task(task_definition_name='greetings')
-def greetings(name: str) -> str:
-    return f'Hello, {name}'
-```
-
-
-A worker can take inputs which are primitives (str, int, float, bool, and so on) or complex data classes. Here is an example worker that uses `dataclass` as part of the worker input.
-
-
-``` python
-from conductor.client.worker.worker_task import worker_task
-from dataclasses import dataclass
-
-@dataclass
-class OrderInfo:
-    order_id: int
-    sku: str
-    quantity: int
-    sku_price: float
-
-    
-@worker_task(task_definition_name='process_order')
-def process_order(order_info: OrderInfo) -> str:
-    return f'order: {order_info.order_id}'
-```
-
-Workers use a polling mechanism (with a long poll) to check for any available tasks from the server periodically. The startup and shutdown of workers are handled by the conductor.client.automator.task_handler.TaskHandler class.
-
-``` python
-from conductor.client.automator.task_handler import TaskHandler
+from conductor.client.http.models import StartWorkflowRequest
 from conductor.client.configuration.configuration import Configuration
+from conductor.client.configuration.settings.authentication_settings import AuthenticationSettings
+from conductor.client.workflow.conductor_workflow import ConductorWorkflow
+from conductor.client.workflow.executor.workflow_executor import WorkflowExecutor
+from conductor.client.workflow.task.simple_task import SimpleTask
+from conductor.client.workflow.task.http_task import HttpTask
+from conductor.client.workflow.task.switch_task import SwitchTask
+
 
 def main():
-    api_config = Configuration()
+    # Set up an application in your Orkes Conductor cluster. Sign up for a Developer Edition account at https://developer.orkescloud.com. 
+    # - Set your cluster's URL as base_url (e.g., "https://developer.orkescloud.com" for Developer Edition).
+    # - Use the application's Key ID and Secret here.
+    conf = Configuration(base_url='_CHANGE_ME_',
+                         authentication_settings=AuthenticationSettings(key_id='_CHANGE_ME_',
+                                                                        key_secret='_CHANGE_ME_'))
 
-    task_handler = TaskHandler(
-        workers=[],
-        configuration=api_config,
-        scan_for_annotated_workers=True,
-        import_modules=['greetings']  # import workers from this module - leave empty if all the workers are in the same module
+    # A WorkflowExecutor instance is used to register and execute workflows.
+    executor = WorkflowExecutor(conf)
+
+    # Create the workflow definition.
+    workflow = ConductorWorkflow(
+        executor=executor,
+        name='myFirstWorkflow',
+        description='Workflow that greets a user. Uses a Switch task, HTTP task, and Simple task.',
+        version=1
     )
-    
-    # start worker polling
-    task_handler.start_processes()
 
-    # Call to stop the workers when the application is ready to shutdown
-    task_handler.stop_processes()
+    # Create the tasks.
+    httpTask = HttpTask('get-user_ref', {'uri': 'https://randomuser.me/api/'})
+    switchTask = SwitchTask('user-criteria_ref', '${get-user_ref.output.response.body.results[0].location.country}').switch_case(
+        'United States', SimpleTask('helloWorld', 'simple_ref').input(
+            key='user', value='${get-user_ref.output.response.body.results[0].name.first}'))
+
+    # Add the tasks to the workflow using `add` method or the `>>` operator.
+    workflow.add(httpTask)
+    workflow >> switchTask
+
+    # Register the workflow.
+    workflow.register(True)
+    print(f"Registered workflow {workflow.name}")
+
+    # Start the workflow.
+    request = StartWorkflowRequest()
+    request.name = 'myFirstWorkflow'
+    request.version = 1
+    id = executor.start_workflow(request)
+    print(f"Started workflow {id}")
 
 
 if __name__ == '__main__':
     main()
 ```
-
 </TabItem>
 
 <TabItem value="java" label="Java">
 
-Create a worker class that implements the `Worker` interface and its methods `getTaskDefName()` and `execute(Task task)`.
+This sample Java code demonstrates how to create, register, and execute a workflow in Conductor.
 
 ``` java
-import com.netflix.conductor.client.worker.Worker;
-import com.netflix.conductor.common.metadata.tasks.Task;
-import com.netflix.conductor.common.metadata.tasks.TaskResult;
+import com.netflix.conductor.sdk.workflow.def.ConductorWorkflow;
+import com.netflix.conductor.sdk.workflow.def.WorkflowBuilder;
+import com.netflix.conductor.sdk.workflow.def.tasks.Http;
+import com.netflix.conductor.sdk.workflow.def.tasks.SimpleTask;
+import com.netflix.conductor.sdk.workflow.def.tasks.Switch;
+import com.netflix.conductor.sdk.workflow.executor.WorkflowExecutor;
+import io.orkes.conductor.client.ApiClient;
 
-public class SimpleWorker implements Worker {
+import java.util.Map;
 
-    @Override
-    public String getTaskDefName() {
-        return "simple-java-worker";
-    }
-
-    @Override
-    public TaskResult execute(Task task) {
-        TaskResult taskResult = new TaskResult(task);
-        taskResult.setStatus(TaskResult.Status.COMPLETED);
-        taskResult.getOutputData().put("message", "Hello World!");
-        return taskResult;
-    }
-}
-```
-
-Workers use a polling mechanism as defined by the TaskClient. Here is an example of a Java worker application:
-
-``` java
-package com.netflix.conductor.gettingstarted;
-
-import java.util.List;
-
-import com.netflix.conductor.client.automator.TaskRunnerConfigurer;
-import com.netflix.conductor.client.http.ConductorClient;
-import com.netflix.conductor.client.http.TaskClient;
-import com.netflix.conductor.client.worker.Worker;
-import com.netflix.conductor.common.metadata.tasks.Task;
-import com.netflix.conductor.common.metadata.tasks.TaskResult;
-
-public class HelloWorker implements Worker {
-
-    @Override
-    public TaskResult execute(Task task) {
-        var taskResult = new TaskResult(task);
-        taskResult.setStatus(TaskResult.Status.COMPLETED);
-        taskResult.getOutputData().put("message", "Hello World!");
-        return taskResult;
-    }
-
-    @Override
-    public String getTaskDefName() {
-        return "hello_task";
-    }
+public class WorkflowAsCode {
 
     public static void main(String[] args) {
-        var client = new ConductorClient("http://localhost:8080/api");
-        var taskClient = new TaskClient(client);
-        var runnerConfigurer = new TaskRunnerConfigurer
-                .Builder(taskClient, List.of(new HelloWorker()))
-                .withThreadCount(10)
+        // Set up an application in your Orkes Conductor cluster. Sign up for a Developer Edition account at https://developer.orkescloud.com. 
+        // - Set your cluster's API URL as basePath (e.g., "https://developer.orkescloud.com/api" for Developer Edition).
+        // - Use the application's Key ID and Secret here.
+        ApiClient client = ApiClient.builder()
+                .basePath("_CHANGE_ME_")
+                .credentials("_CHANGE_ME_", "_CHANGE_ME_")
                 .build();
-        runnerConfigurer.init();
+
+        // A WorkflowExecutor instance is used to register and execute workflows.
+        int pollingInterval = 50;
+        WorkflowExecutor executor = new WorkflowExecutor(client, pollingInterval);
+
+        // Create the workflow definition.
+        ConductorWorkflow<Object> workflow = new WorkflowBuilder<>(executor)
+                .name("myFirstWorkflow")
+                .version(1)
+                .description("Workflow that greets a user. Uses a Switch task, HTTP task, and Simple task.")
+                .add(new Http("get-user_ref").url("https://randomuser.me/api/"))
+                // This switch task will execute the "helloWorld" task if the user's country is "United States"
+                .add(new Switch("user-criteria_ref", "${get-user_ref.output.response.body.results[0].location.country}")
+                        .switchCase("United States", new SimpleTask("helloWorld", "simple_ref")
+                                .input("user", "${get-user_ref.output.response.body.results[0].name.first}")))
+                .build();
+
+        // Register the workflow with overwrite = true and registerTasks = true.
+        workflow.registerWorkflow(true, true);
+
+        // Start the workflow.
+        String id = executor.startWorkflow(workflow.getName(), workflow.getVersion(), Map.of());
+        System.out.printf("Started workflow %s%n", id);
+
+        executor.shutdown();
     }
+
 }
 ```
 
@@ -171,350 +234,290 @@ public class HelloWorker implements Worker {
 
 <TabItem value="javascript" label="JavaScript">
 
-
-Create a worker function using the following template:
-
-``` javascript
-import { ConductorWorker, Task } from "@io-orkes/conductor-javascript";
-
-const worker: ConductorWorker = {
-  taskDefName: "task-def-name",
-  execute: async (
-    task: Task
-  ): Promise<Omit<TaskResult, "workflowInstanceId" | "taskId">> => {},
-};
-```
-
-
-Use the `TaskRunner` interface to start the workers, which takes care of polling server for the work, executing worker code, and updating the results back to the server.
+This sample JavaScript code demonstrates how to create, register, and execute a workflow in Conductor.
 
 ``` javascript
 import {
-  OrkesApiConfig,
   orkesConductorClient,
-  TaskRunner,
+  WorkflowExecutor,
+  httpTask,
+  simpleTask,
+  switchTask,
 } from "@io-orkes/conductor-javascript";
 
-const clientPromise = orkesConductorClient({
-  keyId: "XXX",
-  keySecret: "XXXX",
-  serverUrl: "SERVER_URL", // eg: https://developer.orkescloud.com/api
-});
-
-const client = await clientPromise;
-
-const taskDefName = "HelloWorldWorker";
-
-const customWorker: ConductorWorker = {
-taskDefName,
-  execute: async ({ inputData, taskId }) => {
-    return {
-      outputData: {
-        greeting: "Hello World",
-      },
-      status: "COMPLETED",
-    };
-  },
+// Set up an application in your Orkes Conductor cluster. Sign up for a Developer Edition account at https://developer.orkescloud.com. 
+// - Set your cluster's API URL as the serverUrl (e.g., "https://developer.orkescloud.com/api" for Developer Edition).
+// - Use the application's Key ID and Secret here.
+const config = {
+  serverUrl: "_CHANGE_ME_",
+  keyId: "_CHANGE_ME_",
+  keySecret: "_CHANGE_ME_",
 };
-// Worker Options will take precedence over options defined in the manager
 
-const manager = new TaskManager(client, [customWorker], {
-  options: { pollInterval: 100, concurrency: 1 },
-});
+const client = await orkesConductorClient(config);
+// A WorkflowExecutor instance is used to register and execute workflows.
+const executor = new WorkflowExecutor(client);
 
-manager.startPolling();
-// You can update all worker settings at once using
-manager.updatePollingOptions({ pollInterval: 100, concurrency: 1 });
-
-// You can update a single worker setting using :
-manager.updatePollingOptionForWorker(taskDefName, {
-  pollInterval: 100,
-  concurrency: 1,
-});
-
-manager.isPolling // Will resolve to true
-
-await manager.stopPolling();
-
-manager.isPolling // Will resolve to false
-```
-
-</TabItem>
-
-<TabItem value="csharp" label="C#">
-
-Create a worker class that implements the `IWorkflowTask` interface.
-
-``` csharp
-public class SimpleWorker : IWorkflowTask
-{
-    public string TaskType { get; }
-    public WorkflowTaskExecutorConfiguration WorkerSettings { get; }
-
-    public SimpleWorker(string taskType = "test-sdk-csharp-task")
-    {
-        TaskType = taskType;
-        WorkerSettings = new WorkflowTaskExecutorConfiguration();
-    }
-
-    public TaskResult Execute(Task task)
-    {
-        return task.Completed();
-    }
-}
-```
-
-Use `WorkflowTaskHost` to create a worker host, which requires a configuration object and workers.
-
-``` csharp
-using Conductor.Client.Worker;
-using System;
-using System.Threading.Thread;
-
-var host = WorkflowTaskHost.CreateWorkerHost(configuration, new SimpleWorker());
-await host.startAsync();
-Thread.Sleep(TimeSpan.FromSeconds(100));
-```
-
-</TabItem>
-
-<TabItem value="go" label="Go">
-
-Create a worker function using the following template:
-
-``` go
-type ExecuteTaskFunction func(t *Task) (interface{}, error)
-```
-
-Here is an example worker in Go:
-
-``` go
-func Greet(task *model.Task) (interface{}, error) {
-	return map[string]interface{}{
-		"hello": "Hello, " + fmt.Sprintf("%v", task.InputData["person_to_be_greated"]),
-	}, nil
-}
-```
-
-Use the `TaskRunner` interface to start the workers, which takes care of polling server for the work, executing worker code, and updating the results back to the server.
-
-``` go
-apiClient := client.NewAPIClient(
-    settings.NewAuthenticationSettings(
-        KEY,
-        SECRET,
+// Create the workflow definition.
+const wf = {
+  name: "myFirstWorkflow",
+  version: 1,
+  description:
+    "Workflow that greets a user. Uses a Switch task, HTTP task, and Simple task.",
+  tasks: [
+    httpTask("get-user_ref", { uri: "https://randomuser.me/api/" }),
+    switchTask(
+      "user-criteria_ref",
+      "${get-user_ref.output.response.body.results[0].location.country}",
+      {
+        "United States": [
+          simpleTask("simple_ref", "helloWorld", {
+            user: "${get-user_ref.output.response.body.results[0].name.first}",
+          }),
+        ],
+      }
     ),
-    settings.NewHttpSettings(
-    "https://developer.orkescloud.com/api",
-))
+  ],
+};
 
-taskRunner := worker.NewTaskRunnerWithApiClient(apiClient)
-//Start polling for a task by name "simple_task", with a batch size of 1 and 1 second interval
-//Between polls if there are no tasks available to execute
-taskRunner.StartWorker("simple_task", examples.SimpleWorker, 1, time.Second*1)
-//Add more StartWorker calls as needed
+// Register the workflow with overwrite = true.
+await executor.registerWorkflow(true, wf);
 
-//Block
-taskRunner.WaitWorkers()
+// Start the workflow.
+const id = await executor.startWorkflow({name: wf.name, version: wf.version});
+console.log(`Started workflow: ${id}`);
+client.stop()
+
 ```
-
-</TabItem>
-
-<TabItem value="clojure" label="Clojure">
-
-Create a worker function using the following template:
-``` clojure
-(def worker
-           {:name "cool_clj_task_b",
-            :execute (fn [d]
-                       [:completed (:inputData d)])})
-```
-
-Use the `TaskRunner` interface to start the workers, which takes care of polling server for the work, executing worker code, and updating the results back to the server.
-
-``` clojure
-(:require 
-            [io.orkes.taskrunner :refer :all])
-
-;; Will  poll for tasks
-(def shutdown-task-runner (runner-executer-for-workers options [worker]))
-
-;; Stops polling for tasks
-(shutdown-task-runner )
-```
-
-</TabItem>
-</Tabs>
-
-
-## Add worker task to a workflow
-
-All worker tasks need to be registered to the Conductor server before it can be added to a workflow. Let’s add a worker to a workflow and give it a test run:
-1. Register the task by adding its definition in Conductor.
-2. Add a Worker task to a workflow.
-
-### A. Code
-
-<Tabs groupId="language">
-<TabItem value="python" label="Python">
-
-Register the task definition to Conductor.
-
-``` python
-from conductor.client.http.models.task_def import TaskDef
-
-taskDef = TaskDef(
-    name="PYTHON_TASK",
-    description="Python Task Example",
-    input_keys=["a", "b"]
-)
-metadata_client.register_task_def(taskDef)
-```
-
-Add the Worker task to your workflow.
-``` python
-workflow >> SimpleTask("simple_task", "simple_task_ref_2")
-updatedWorkflowDef = workflow.to_workflow_def()
-metadata_client.update_workflow_def(updatedWorkflowDef, True)
-```
-
-</TabItem>
-
-<TabItem value="java" label="Java">
-
-Create and register the task definition to Conductor.
-
-``` java
-TaskDef taskDef = new TaskDef();
-taskDef.setName(your_task_name);
-taskDef.setDescription("task to compress image");
-taskDef3.setOwnerEmail("test@orkes.io");
-taskDef.setRetryCount(3);  // Optional
-
-metadataClient.registerTaskDefs(Arrays.asList(taskDef));
-```
-
-Add the Worker task to your workflow.
-``` java
-builder.add(
-        new SimpleTask("send_email", "send_email")
-                .input("email", "${workflow.input.email}")
-                .input("subject", "Your insurance quote for the amount ${generate_quote.output.amount}")
-);
-```
-
-</TabItem>
-
-<TabItem value="javascript" label="JavaScript">
-
-Register the task definition to Conductor.
-
-``` javascript
-public registerTask(taskDef: TaskDef): Promise<void> {
-    return tryCatchReThrow(() =>
-      this._client.metadataResource.registerTaskDef([taskDef])
-    );
-  }
-```
-
-Add the Worker task to your workflow.
 
 </TabItem>
 
 <TabItem value="csharp" label="C#">
 
-Register the task definition to Conductor.
-``` csharp
+This sample C# code demonstrates how to create, register, and execute a workflow in Conductor. 
+
+```csharp
+using Conductor.Client.Authentication;
+using Conductor.Client.Models;
+using Conductor.Client;
+using Conductor.Definition;
+using Conductor.Executor;
+using Conductor.Definition.TaskType;
+
+// Set up an application in your Orkes Conductor cluster. Sign up for a Developer Edition account at https://developer.orkescloud.com. 
+// - Set your cluster's API URL as the BasePath (e.g., "https://developer.orkescloud.com/api" for Developer Edition).
+// - Use the application's Key ID and Secret here.
+var conf = new Configuration
 {
-new TaskDef{Description = ExampleConstants.GetEmailDescription, Name = ExampleConstants.GetEmail },
-new TaskDef{Description = ExampleConstants.SendEmailDescription,Name = ExampleConstants.SendEmail}
+    BasePath = "_CHANGE_ME_",
+    AuthenticationSettings = new OrkesAuthenticationSettings("_CHANGE_ME_", "_CHANGE_ME_")
 };
 
-            _metaDataClient.RegisterTaskDef(taskDefs);
-```
+// A WorkflowExecutor instance is used to register and execute workflows.
+var executor = new WorkflowExecutor(conf);
 
-Add the Worker task to your workflow.
-``` csharp
-            _metaDataClient.UpdateWorkflowDefinitions(new List<WorkflowDef>(1) { workflow });
+// Create the workflow definition.
+var workflow = new ConductorWorkflow()
+        .WithName("myFirstWorkflow")
+        .WithDescription("Workflow that greets a user. Uses a Switch task, HTTP task, and Simple task.")
+        .WithVersion(1)
+        .WithTask(new HttpTask("get-user_ref", new HttpTaskSettings { uri = "https://randomuser.me/api/" }))
+        .WithTask(new SwitchTask("user-criteria_ref", "${get-user_ref.output.response.body.results[0].location.country}")
+            .WithDecisionCase("United States",
+                [new SimpleTask("helloWorld", "simple_ref").WithInput("user", "${get-user_ref.output.response.body.results[0].name.first}")]));
+
+// Register the workflow with overwrite = true.
+executor.RegisterWorkflow(
+    workflow: workflow,
+    overwrite: true
+);
+
+// Start the workflow.
+var workflowId = executor.StartWorkflow(new StartWorkflowRequest(name: workflow.Name, version: workflow.Version));
+Console.WriteLine($"Started Workflow: {workflowId}");
+
 ```
 
 </TabItem>
 
 <TabItem value="go" label="Go">
 
-Register the task definition to Conductor.
+This sample Go code demonstrates how to create, register, and execute a workflow in Conductor. 
 
 ``` go
-client.RegisterTaskDef(ctx, taskDefinitions)
-```
+package main
 
-Add the Worker task to your workflow.
+import (
+	"fmt"
+	"log"
+
+	"github.com/conductor-sdk/conductor-go/sdk/client"
+	"github.com/conductor-sdk/conductor-go/sdk/model"
+	"github.com/conductor-sdk/conductor-go/sdk/settings"
+	"github.com/conductor-sdk/conductor-go/sdk/workflow"
+	"github.com/conductor-sdk/conductor-go/sdk/workflow/executor"
+)
+
+// Set up an application in your Orkes Conductor cluster. Sign up for a Developer Edition account at https://developer.orkescloud.com.
+// - Use the application's Key ID and Secret here.
+// - Set your cluster's API URL as the SERVER_URL (e.g., "https://developer.orkescloud.com/api" for Developer Edition).
+const SERVER_URL = "_CHANGE_ME_"
+const KEY_ID = "_CHANGE_ME_"
+const SECRET = "_CHANGE_ME_"
+
+var (
+	apiClient = client.NewAPIClient(
+		settings.NewAuthenticationSettings(KEY_ID, SECRET),
+		settings.NewHttpSettings(SERVER_URL))
+	// A WorkflowExecutor instance is used to register and execute workflows.
+	workflowExecutor = executor.NewWorkflowExecutor(apiClient)
+)
+
+func main() {
+	// Create the workflow definition.
+	wf := workflow.NewConductorWorkflow(workflowExecutor).
+		Name("myFirstWorkflowGo").
+		Version(1).
+		Description("Workflow that greets a user. Uses a Switch task, HTTP task, and Simple task.")
+
+	httpTask := workflow.NewHttpTask("get-user_ref", &workflow.HttpInput{Uri: "https://randomuser.me/api/"})
+	switchTask := workflow.NewSwitchTask("user-criteria_ref", "${get-user_ref.output.response.body.results[0].location.country}").
+		SwitchCase("United States", workflow.NewSimpleTask("helloWorld", "simple_ref").Input("user", "${get-user_ref.output.response.body.results[0].name.first}"))
+
+	wf.Add(httpTask)
+	wf.Add(switchTask)
+	
+	// Register the workflow with overwrite = true.
+	err := wf.Register(true)
+	if err != nil {
+		log.Fatalf("Failed to register workflow: %v", err)
+	}
+	fmt.Printf("Registered workflow: %s\n", wf.GetName())
+
+	// Start the workflow.
+	id, err := workflowExecutor.StartWorkflow(&model.StartWorkflowRequest{
+		Name:    wf.GetName(),
+		Version: wf.GetVersion(),
+	})
+
+	if err != nil {
+		log.Fatalf("Error when starting workflow: %v", err)
+	}
+	fmt.Printf("Started workflow: %s\n", id)
+}
+
+```
 
 </TabItem>
 
 <TabItem value="clojure" label="Clojure">
 
-Register the task definition to Conductor.
+This sample Clojure code demonstrates how to create, register, and execute a workflow in Conductor.
 
 ``` clojure
-(defn register-tasks-using-client
-  "Given a client instance and a list of tasks,
-  will register the task in consuctor"
-  [client tasks]
-  (client "taskdefs" :method :post :body tasks))
+(ns wac.core
+  (:require [io.orkes.workflow-resource :as wr]
+            [io.orkes.sdk :as sdk]
+            [io.orkes.metadata :as metadata])
+  (:gen-class))
+
+; Set up an application in your Orkes Conductor cluster. Sign up for a Developer Edition account at https://developer.orkescloud.com.
+; - Set your cluster's API URL as url (e.g., "https://developer.orkescloud.com/api/" for Developer Edition).
+; - Use the application's Key ID and Secret here.
+(def options
+  {:url "_CHANGE_ME_"
+   :app-key "_CHANGE_ME_"
+   :app-secret "_CHANGE_ME_"}) 
+
+; Function that creates the tasks.
+(defn create-tasks
+  []
+  (vector (sdk/http-task "get-user_ref" {:uri "https://randomuser.me/api/"})
+          (sdk/switch-task "user-criteria_ref" "${get-user_ref.output.response.body.results[0].location.country}"
+                           {"United States" [(sdk/simple-task "simple_ref"
+                                                              "helloWorld"
+                                                              {"user"
+                                                               "${get-user_ref.output.response.body.results[0].name.first}"})]}
+                           [])))
+
+; Function that creates the workflow definition.
+(defn create-workflow
+  [tasks]
+  (merge (sdk/workflow "myFirstWorkflow" tasks)))
+
+(defn -main
+  []
+  ; Register the workflow with overwrite = true
+  (metadata/register-workflow-def options (-> (create-tasks) (create-workflow)) true)
+  ; Start the workflow
+  (let [workflow-id (wr/start-workflow options {:name "myFirstWorkflow" :version 1})]
+    (println "Started workflow:" workflow-id)))
+
 ```
 
 </TabItem>
 </Tabs>
 
+#### Step 2: Get access credentials for your workflow client
 
+To connect your workflow-as-code project, you must again use an application in Conductor, which is an access layer with its own permissions and access tokens. This time, the application should have the Metadata API role.
 
-### B. Conductor UI
-1. Register the task definition to Conductor.
-    1. In the left navigation menu, go to **Definitions** > **Task**.
-    2. Select **(+) Define task**.
-    3. Enter the **Name** for the task, which must match the task definition name in your worker code.
-    4. Select **Save** > **Confirm Save**.
-2. Add the Worker task to your workflow.
-    1. In the left navigation menu, go to **Definitions** > **Workflow** and select the workflow to add the task.
-    2. In the visual workflow editor, select the **(+)** icon to add a new task. There are two ways to add a worker task:
-        * Search for your task using its task name and select it.
-        * Add a **Worker Task (Simple)** and enter the task name in Task Definition.
-    3. On the top right, select **Save** > **Confirm**.
+:::note
+If you are using [Orkes Developer Edition](https://developer.orkescloud.com/?utm_campaign=quickstarts&utm_source=orkes-doc&utm_medium=web), you can only create one application. Use the same application as the worker project for this step.
+:::
 
+**To create an application for your workflow client:**
+1. In the left navigation menu of the Conductor UI, go to **Access Control** > **Applications**.
+2. Select **(+) Create application** and enter a **Name** for it. For example, *myWorkflowClient* or *myApp*.
+3. Enable the **Metadata API** application role, which allows the application to create and manage workflows and tasks.
+4. Select **(+) Create access key** and store the generated credentials securely.
+5. Set the Key ID and Key Secret in your project.
 
-## Grant execution permission to worker
+**Example** (Java)
 
-Finally, your worker application requires programmatic access to the Conductor server. This can be done by creating an application account for your worker application.
-
-**To grant execution permission to worker:**
-1. In Conductor UI, go to **Access Control **> **Applications** and create a new application.
-2. Enable the **Worker** application role, which allows the application to poll and update tasks.
-3. Generate the application access key and set the Key ID and Key Secret in your project environment variables.
-
-```
-export CONDUCTOR_SERVER_URL=<SERVER_URL> // eg: https://developer.orkescloud.com/api
-export CONDUCTOR_AUTH_KEY=<KEY_ID>
-export CONDUCTOR_AUTH_SECRET=<KEY_SECRET>
+``` java
+ApiClient client = ApiClient.builder()
+        .basePath("[https://SERVER_URL/api](https://SERVER_URL/api)") // e.g., “[https://developer.orkescloud.com/api](https://developer.orkescloud.com/api)” for Developer Edition
+        .credentials("_CHANGE_ME_", "_CHANGE_ME_")
+        .build();
 ```
 
-4. Grant Execute permission to the application.
-    1. Under Permissions, select **Add permission**.
-    2. Select the **Task** tab and then your worker task.
-    3. Enable the **Execute** toggle.
-    4. Select **Add Permissions**.
+The application account can now create, manage, and execute the workflow. 
 
-The application account can now execute the worker task.
+</TabItem>
+</Tabs>
 
+### Run workflow
 
-## Launch the worker
+Let’s give your first workflow a test run. 
 
-Launch the worker to begin polling the Conductor server. The method depends on your language and project configuration.
+:::tip
+Before running the workflow, make sure that your *myTask* worker is actively polling the Conductor server. Otherwise, go back and [start your worker](write-workers#start-the-worker) again.
+:::
 
-**Example**
+<Tabs groupId="workflow-method">
+<TabItem value="visual" label="Visual workflow editor">
 
-``` python
-python3 main.py
+Inside the workflow visual editor, go to the **Run** tab and select **Run workflow**.
+
+<p align="center"><img src="/content/img/getting-started/getting_started-run_workflow.png" alt="Screenshot of the Run tab in the visual workflow editor in Orkes Conductor." width="100%" height="auto"></img></p>
+
+</TabItem>
+
+<TabItem value="code" label="Workflow as code">
+
+Using the command line, launch the workflow client. The commands depend on your language and project configuration. You can follow the README instructions in the sample workflow-as-code project to register and run the workflow.
+
+**Example (Java)**
+
+``` shell
+./gradlew build
+./gradlew run
 ```
 
-When you run the workflow with the Worker task, the task should run to completion. Learn how to deploy the workflow in the next quickstart.
+</TabItem>
+</Tabs>
+
+Done! To track the workflow progress, go to **Executions** > **Workflow** in the Conductor UI. 
+
+Now that you have gotten the hang of creating workflows, let’s discover the power of Conductor in monitoring and debugging workflow executions in the next quickstart.
