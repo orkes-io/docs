@@ -1,106 +1,38 @@
 ---
-slug: "../quickstarts/deploy-workflows"
-description: "In this quickstart, learn how to deploy your workflows as applications."
+slug: "../quickstarts/debug-and-monitor-workflows"
+description: "In this quickstart, learn the basics of debugging and monitoring your workflows."
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+# Quickstart 3: Monitor and Debug Workflows
 
-# Quickstart 3: Deploy Workflows
+*Estimated time: 2min*
 
-Your workflow is now ready to be deployed. This can be done in several different ways: via code, via API, or using the Conductor UI.
+Orkes Conductor provides comprehensive views into each workflow execution, enabling you to debug and monitor them while in development or production.
 
-In this quickstart, you will learn how to deploy your workflow via code.
+The workflow introspection dashboard can be found in **Executions** > **Workflow**, where each workflow execution is identified by a workflow ID.
 
-<Tabs groupId="language">
-<TabItem value="python" label="Python">
+## Try it out
 
-``` python
-// synchronous execution - applicable for quick-running workflows (0--30 seconds)
+Check out the execution of the helloWorld workflow you’ve just run. If successful, the workflow should have a Completed status, with each task highlighted in green. Otherwise, the workflow diagram will highlight the failed task in red.
 
+<p align="center"><img src="/content/img/getting-started/getting_started-failed_task_introspection.png" alt="Screenshot of the workflow execution screen showing the failed task in red." width="100%" height="auto"></img></p>
 
-from conductor.client.http.models import StartWorkflowRequest
+However, a workflow can still successfully run to completion, even with the wrong logic. You can check if the data have been correctly passed between tasks by selecting a task, followed by its **Input** or **Output** tab.
 
-request = StartWorkflowRequest()
-request.name = 'hello'
-request.version = 1
-request.input = {'name': 'Orkes'}
+Here’s a successful workflow execution, for example.
 
-workflow_run = workflow_client.execute_workflow(
-        start_workflow_request=request, 
-        wait_for_seconds=12)
-```
+<p align="center"><img src="/content/img/getting-started/getting_started-input_introspection.png" alt="Screenshot of Task Input tab in the workflow execution screen." width="100%" height="auto"></img></p>
 
-</TabItem>
+However, the workflow should have flowed through the United States path instead of the defaultCase path, because the user’s location was the United States. Inspecting the Switch task input, we can deduce that the input had not been correctly passed from the get-user task to the Switch task. This sort of visibility into the workflow execution enables you to quickly pinpoint and fix any errors.
 
-<TabItem value="java" label="Java">
+You might also be interested in how long each task took to complete to find the bottlenecks in your execution performance. To inspect this, go to **Timeline** in the top navigation bar.
 
-Use the WorkflowClient interface to start a workflow:
+<p align="center"><img src="/content/img/getting-started/getting_started-timeline_introspection.png" alt="Screenshot of Timeline tab in the workflow execution screen." width="100%" height="auto"></img></p>
 
-``` java
-import com.netflix.conductor.client.http.ConductorClient;
-import com.netflix.conductor.client.http.WorkflowClient;
-import com.netflix.conductor.common.metadata.workflow.StartWorkflowRequest;
+## What’s next?
 
-// … other code
-var client = new ConductorClient("http://localhost:8080/api");
-var workflowClient = new WorkflowClient(client);
-var workflowId = workflowClient.startWorkflow(new StartWorkflowRequest()
-        .withName("hello_workflow")
-        .withVersion(1));
-
-System.out.println("Started workflow " + workflowId);
-
-```
-
-</TabItem>
-
-<TabItem value="javascript" label="JavaScript">
-
-``` javascript
-const executor = new WorkflowExecutor(client);
-const executionId = await executor.startWorkflow({ name, version, input: {} });
-```
-
-</TabItem>
-
-<TabItem value="csharp" label="C#">
-
-``` csharp
-using Conductor.Executor;
-
-var workflowId = workflowExecutor.StartWorkflow(conductorWorkflow);
-```
-
-</TabItem>
-
-<TabItem value="go" label="Go">
-
-``` go
-//Input can be either a map or a struct that is serializable to a JSON map
-workflowInput := map[string]interface{}{}
-
-workflowId, err := executor.StartWorkflow(&model.StartWorkflowRequest{
-    Name:  conductorWorkflow.GetName(),
-    Input: workflowInput,
-})
-```
-
-</TabItem>
-
-<TabItem value="clojure" label="Clojure">
-
-``` clojure
-(defn start-workflow
-  "Takes an option map and a start-request map and starts a workflow.
-  Returns the id of a workflow execution"
-  ([options wf-request]
-   (-> (workflow-client options)
-       (start-workflow-with-client wf-request))))
-```
-
-</TabItem>
-</Tabs>
-
-
-Ready to dive deeper? Learn more about [running workflows](../developer-guides/running-workflows)
+Congratulations! You have successfully created, executed, and debugged a Conductor workflow within 15 minutes. Gain deeper mastery by exploring each topic in detail:
+* Code with Conductor: [SDK Guides](https://orkes.io/content/category/sdks)
+* Build more complex workflows, using LLM chaining, human-in-workflows, eventing, secrets, and more: [Build Workflows](https://orkes.io/content/developer-guides/building-workflows)
+* Run workflows at production-level: [Run Workflows](https://orkes.io/content/developer-guides/running-workflows)
+* Debug and monitor workflows by exploring both the execution dashboard and metrics dashboard in greater detail. [Deploy and Monitor Workflows](https://orkes.io/content/developer-guides/deploying-workflows)
