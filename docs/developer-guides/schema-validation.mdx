@@ -8,6 +8,12 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 # Input/Output Schema Validation
+
+:::info Available since
+- v3.3.85 and later
+- v4.0.11 and later
+:::
+
 In Orkes Conductor, you can create schemas to define and enforce the payload structure of workflow or task inputs/outputs. Once created, schemas can be added to workflow or task definitions:
 * A **workflow-level schema** specifies what workflow inputs must be supplied.
 * A **task-level schema** specifies the inputs/outputs that must be wired to/from the task. The task-level schema can be general across workflows (specified in the *task definition*) or unique to a specific workflow (specified in the *task configuration*).
