@@ -1,4 +1,4 @@
-export default function TableNote({ children }) {
+export default function TableNote({title="note", children }) {
   return (
     <div className="theme-admonition theme-admonition-note admonition_xJq3 alert alert--secondary">
       <div className="admonitionHeading_Gvgb">
@@ -10,7 +10,7 @@ export default function TableNote({ children }) {
             />
           </svg>
         </span>
-        note
+        {title}
       </div>
       <div className="admonitionContent_BuS1">{children}</div>
     </div>
