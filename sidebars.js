@@ -76,6 +76,7 @@ const sidebars = {
             className: 'leftMenuHeader',
             items: [
                 'conceptual-guides/workflow-and-task-status',
+                'conceptual-guides/directed-acyclic-graph',
             ]
         },
         {
@@ -778,7 +779,6 @@ const sidebars = {
             },
             items: [
                 'faqs/general-faqs',
-                'faqs/directed-acyclic-graph',
             ],
             collapsible: true,
             collapsed: true,
