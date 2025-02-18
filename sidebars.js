@@ -57,7 +57,7 @@ const sidebars = {
             ],
             collapsible: true,
             collapsed: false,
-            className: 'leftMenuHeader',
+            className: 'leftMenuHeader'
         },
         {
             type: 'doc',
@@ -100,6 +100,7 @@ const sidebars = {
                     },
                     className: 'leftMenuHeader',
                     items: [
+                        'developer-guides/write-workflows-using-code',
                         {
                             type: 'category',
                             label: 'Inputs/Outputs',
@@ -120,23 +121,38 @@ const sidebars = {
                             ],
                             collapsible: false,
                         },
-                        {
-                            type: 'category',
-                            label: 'Workers',
-                            link: {
-                                type: 'generated-index',
-                                title: 'Workers',
-                                description: 'Learn how to configure, manage, and optimize workers to efficiently execute tasks and improve workflow performance in Conductor.',
-                                slug: '/workers'
-                            },
-                            items: [
-                                'developer-guides/using-workers',
-                                'developer-guides/monitoring-task-queues',
-                                'developer-guides/scaling-workers',
-                                'developer-guides/task-to-domain',
-                            ],
-                            collapsible: false,
-                        },
+                        'developer-guides/error-handling',
+                        'developer-guides/debugging-workflows',
+                    ]
+                },
+                {
+                    type: 'category',
+                    label: 'Task Workers and Queues',
+                    link: {
+                        type: 'generated-index',
+                        title: 'Task Workers and Queues',
+                        description: 'Learn how to configure, manage, and optimize task workers and queues to execute tasks efficiently and improve workflow performance in Conductor.',
+                        slug: '/workers'
+                    },
+                    className: 'leftMenuHeader',
+                    items: [
+                        'developer-guides/using-workers',
+                        'developer-guides/monitoring-task-queues',
+                        'developer-guides/scaling-workers',
+                        'developer-guides/task-to-domain',
+                    ]
+                },
+                {
+                    type: 'category',
+                    label: 'Advanced Workflows',
+                    link: {
+                        type: 'generated-index',
+                        title: 'Advanced Workflows',
+                        description: 'Learn how to build more advanced workflows with AI orchestration, human-in-the-loops,event-driven systems, and webhooks, human-in-the-loops.',
+                        slug: 'developer-guides/advanced-workflows'
+                    },
+                    className: 'leftMenuHeader',
+                    items: [
                         {
                             type: 'category',
                             label: 'AI Orchestration',
@@ -178,9 +194,7 @@ const sidebars = {
                             ],
                             collapsible: false,
                         },
-                        'developer-guides/webhook-integration',
-                        'developer-guides/write-workflows-using-code',
-                        'developer-guides/error-handling'
+                        'developer-guides/webhook-integration'
                     ]
                 },
                 {
@@ -221,17 +235,16 @@ const sidebars = {
                 },
                 {
                     type: 'category',
-                    label: 'Deploy and Monitor Workflows',
+                    label: 'Test and Monitor Workflows',
                     link: {
                         type: 'generated-index',
-                        title: 'Deploying and Monitoring Workflows',
-                        description: 'Learn the best practices for deploying and monitoring Conductor workflows, including unit tests, regression tests, logging, cluster metrics, and CI/CD.',
+                        title: 'Testing and Monitoring Workflows',
+                        description: 'Learn the best practices for testing and monitoring Conductor workflows, including unit tests, regression tests, logging, cluster metrics, and CI/CD.',
                         slug: '/developer-guides/deploying-workflows'
                     },
                     className: 'leftMenuHeader',
                     items: [
                         'developer-guides/unit-and-regression-tests',
-                        'developer-guides/debugging-workflows',
                         {
                             type: 'doc',
                             id: 'faqs/conductor-log-level',
