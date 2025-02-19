@@ -8,38 +8,71 @@ import TabItem from '@theme/TabItem';
 
 # Metrics and Observability
 
-The Orkes Conductor Dashboard gives a quick overview of the metrics & alerts on your Conductor console. It provides a centralized intuitive interface to track and get insights on the behavior and performance of tasks and workflows that can aid in troubleshooting errors.
+Orkes Conductor allows you to monitor workflow performance using tools like Prometheus, Grafana, and Datadog. The Conductor dashboard provides a centralized view of key metrics, allowing you to gain real-time insights and set up customizable alerts for proactive monitoring.
 
-Orkes Conductor uses the popular platform Prometheus for recording a rich set of metrics that will be available automatically in your deployment and pushes the metrics to Grafana/Datadog on request to dedicated clusters.
+## Dashboard setup 
 
-## Accessing Dashboard from Conductor Console
+Orkes Conductor uses Prometheus to capture a comprehensive set of metrics, which are readily available in your cluster deployment. On request, these metrics can be pushed to Grafana or Datadog.
+:::note Notes
+- For cloud deployments, Prometheus and Grafana/Datadog are provisioned by the Orkes team. 
+- For on-premise deployments, users must set up their own monitoring tools.
+:::
 
-In this document, we’ve included a sample dashboard set using Prometheus & Grafana.
+### Accessing the dashboard 
 
-1. To access your dashboard, navigate to **Metrics** from your Conductor cluster. If you cannot see this option on your Conductor cluster, [please reach out to our team](https://app.slack.com/client/T02KG20GJ1Z/C02KJ820XPW). 
+To access the dashboard, go to **Metrics** from the left navigation menu on your Conductor cluster. 
 
-<p align="center"><img src="/content/img/accessing-dashboard.png" alt="Accessing dashboard from Conductor Console" width="100%" height="auto"></img></p>
+Note: To enable Metrics for your cluster, please get in touch with the [Orkes team](https://orkes.io/talk-to-an-expert).
 
-2. It takes you to the Conductor dashboard set using Grafana. A sample one looks like this:
+<p align="center"><img src="/content/img/accessing-dashboard.png" alt="Accessing dashboard from Conductor UI" width="100%" height="auto"></img></p>
+
+**Example dashboard set up using Prometheus and Grafana**
 
 <p align="center"><img src="/content/img/sample-dashboard.png" alt="Sample Dashboard" width="100%" height="auto"></img></p>
 
-## Conductor Metrics
+## Conductor metrics​
 
-The server publishes the following metrics. You can use these metrics to configure alerts for your workflows and tasks.
+The Conductor server collects the following metrics via Prometheus, which can be visualized using Grafana/Datadog for monitoring and setting up alerts.
 
-### Workflow and Task Metrics
+### Workflow metrics​
 
-| Metrics | Sample Visualization | Purpose | Tags |
-| ------- | -------------------- | ------- | ---- | 
-| Workflow Latencies (Name and Percentile)<br/><br/>**workflow_completed_seconds** | <p align="center"><img src="/content/img/workflow-completed-seconds.png" alt="Workflow Latencies" width="100%" height="auto"></img></p> | Timer indicating the time taken for completing the workflows. | workflowName, quantile |
-| Workflow completion/sec<br/><br/>**workflow_completed_seconds_count** | <p align="center"><img src="/content/img/workflow-completed-seconds-count.png" alt="Workflow completion/sec" width="100%" height="auto"></img></p> | Counter indicating the number of workflows completed per second. | workflowName | 
-| Workflow failures/sec<br/><br/>**workflow_completed_seconds_count** (Ensure to add the filter "FAILED" to get the failed list) | <p align="center"><img src="/content/img/workflow-completed-seconds-count-1.png" alt="Workflow failures/sec" width="100%" height="auto"></img></p> | Counter indicating the number of workflows failed per second. | workflowName |
-| No of workflows currently Running<br/><br/>**workflow_running** | <p align="center"><img src="/content/img/workflow-running.png" alt="No of workflows currently running" width="100%" height="auto"></img></p> | Gauge for the number of running workflows. | workflowName |
-| Workflow Start Rate/sec<br/><br/>**workflow_start_request_seconds_count** | <p align="center"><img src="/content/img/workflow-start-request-seconds-count.png" alt="Workflow Start Rate/sec" width="100%" height="auto"></img></p> | Counter for no. of workflows started. | workflowName |
-| Total no. of workflows started in the time period<br/><br/>**workflow_start_request_seconds_count** | <p align="center"><img src="/content/img/workflow-start-request-seconds-count-1.png" alt="Total no. of workflows started in the time period" width="100%" height="auto"></img></p> | Counter for no. of workflows started in the time period. | workflowName | 
-| Workflow Search Latency Percentile<br/><br/>**http_server_requests_seconds** | <p align="center"><img src="/content/img/http-server-requests-seconds.png" alt="Workflow Search Latency Percentile" width="100%" height="auto"></img></p> | Indicates the latency values for the search operation in workflows. | quantile | 
-| Task Latencies (Name and Percentile)<br/><br/>**task_completed_seconds** | <p align="center"><img src="/content/img/task-completed-seconds.png" alt="Task Latencies" width="100%" height="auto"></img></p> | Timer for completing the tasks. | taskType, quantile |
-| Task completion/sec<br/><br/>**task_completed_seconds_count** | <p align="center"><img src="/content/img/task-completed-seconds-count-1.png" alt="Task completion/sec" width="100%" height="auto"></img></p> | Counter indicating the number of completed tasks per second. | taskType |
-| Task failures/sec<br/><br/>**task_completed_seconds_count** | <p align="center"><img src="/content/img/task-completed-seconds-count.png" alt="Task failures/sec" width="100%" height="auto"></img></p> | Counter indicating the number of failed tasks per second. | taskType | 
+| Metrics | Decsription | Tags | 
+| ------- | ----------- | ---- |
+| workflow_completed_seconds | Timer indicating the average time taken to complete the workflows. | workflowName, quantile |
+| workflow_completed_seconds_count | Counter indicating the number of workflows completed per second. Apply the FAILED filter to get the failed workflows. | workflowName | 
+| workflow_running | Gauge indicating the number of running workflows. | workflowName | 
+| workflow_start_request_seconds_count | Counter indicating the number of workflows started per second. | workflowName | 
 
+### Task metrics​
+
+| Metrics | Decsription | Tags | 
+| ------- | ----------- | ---- |
+| task_completed_seconds | Timer indicating the average time taken to complete the task. | taskType, quantile | 
+| task_completed_seconds_count | Counter indicating the number of tasks completed per second. Apply the FAILED filter to get the failed tasks. | taskType | 
+| task_queue_depth | Counter indicating the number of pending tasks in a given time period. | taskType | 
+| task_poll_request_seconds_count | Counter indicating the number of tasks polled per second. | taskType | 
+
+## Configuring alerts 
+
+Alerts can be configured for any metric from your dashboard or via the *Alerting* section in Grafana.
+
+<Tabs>
+<TabItem value="To configure alerts for a metric from your dashboard" label="To configure alerts for a metric from your dashboard">
+
+1. Open your Grafana dashboard and select the metric.
+2. Select **Edit**.
+<p align="center"><img src="/content/img/editing-metric.png" alt="Editing a metric from dashboard" width="50%" height="auto"></img></p>
+3. Go to the **Alerts** tab and select **Create alert rule from this panel.**
+<p align="center"><img src="/content/img/creating-alerts-for-metrics.png" alt="Creating alerts from a metrics in dashboard" width="100%" height="auto"></img></p>
+4. [Create the alert](https://grafana.com/tutorials/alerting-get-started/#create-an-alert) based on your requirements.
+
+</TabItem>
+<TabItem value="To configure alerts from the Alerting section" label="To configure alerts from the Alerting section">
+
+1. Go to **Alerting** > **Alert rules** from the left navigation menu on your Grafana dashboard.
+2. Select **+ New alert rule**.
+3. Create the alert based on your requirements.
+</TabItem>
+</Tabs>
+
+Refer to the official Grafana documentation for more information on [setting up alerts](https://grafana.com/tutorials/alerting-get-started/).
