@@ -27,6 +27,7 @@ Configure these parameters for the LLM Index Text task.
 | inputParameters.**embeddingModel** | The embedding model provided by the selected LLM provider to generate the embeddings. | Required. |
 | inputParameters.**text** | The text to be indexed. | Required. |
 | inputParameters.**docId** | A unique ID to identify the document where the indexed text will be stored. | Optional. |
+| inputParameters.**dimensions** | The size of the vector, which is the number of elements in the vector. | Optional. | 
 
 ## Task configuration
 
@@ -43,7 +44,8 @@ This is the task configuration for an LLM Index Text task.
     "embeddingModelProvider": "azure_openai",
     "embeddingModel": "text-davinci-003",
     "text": "${workflow.input.text}",
-    "docId": "XXXX"
+    "docId": "XXXX",
+    "dimensions": "${workflow.input.dimensions}"
   },
   "type": "LLM_INDEX_TEXT"
 }

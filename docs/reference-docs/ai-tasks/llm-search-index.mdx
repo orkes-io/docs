@@ -26,7 +26,7 @@ Configure these parameters for the LLM Search Index task.
 | inputParameters.**embeddingModel** | The embedding model provided by the selected LLM provider. | Required. |
 | inputParameters.**query** | The search query. A query typically refers to a question, statement, or request made in natural language that is used to search, retrieve, or manipulate data stored in a database. | Required. |
 | inputParameters.**maxResults** | The maximum number of results to return. Provide a non-zero integer between 1 and 10000. | Required. |
-
+| inputParameters.**dimensions** | The size of the vector, which is the number of elements in the vector. | Optional. | 
 
 ## Task configuration
 
@@ -42,7 +42,8 @@ This is the task configuration for an LLM Search Index task.
     "index": "test",
     "llmProvider": "azure_openai",
     "embeddingModel": "text-davinci-003",
-    "query": "What is an LLM model?"
+    "query": "What is an LLM model?",
+    "dimensions": "${workflow.input.dimensions}"
   },
   "type": "LLM_SEARCH_INDEX"
 }
