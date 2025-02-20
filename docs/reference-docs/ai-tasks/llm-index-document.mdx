@@ -28,6 +28,7 @@ Configure these parameters for the LLM Index Document task.
 | inputParameters.**mediaType** | The media type of the file to be indexed. Supported media types: <ul> <li>application/pdf</li> <li>text/html</li> <li>text/plain</li> <li>application/json</li> </ul> | Optional. | 
 | inputParameters.**chunkSize** | The length of each input text segment when divided for processing by the LLM. For example, if the document contains 2,000 words and the chunk size is set to 500, the document is divided into four chunks for processing. | Optional. | 
 | inputParameters.**chunkOverlap** | The overlap between adjacent chunks. For example, if the chunk overlap is specified as 100, then the first 100 words of each chunk would overlap with the last 100 words of the previous chunk. | Optional. | 
+| inputParameters.**dimensions** | The size of the vector, which is the number of elements in the vector. | Optional. | 
 
 ## Task configuration
 
@@ -46,7 +47,8 @@ This is the task configuration for an LLM Index Document task.
         "url": "${workflow.input.url}",
         "mediaType": "application/xhtml+xml",
         "chunkSize": 500,
-        "chunkOverlap": 100
+        "chunkOverlap": 100,
+        "dimensions": "${workflow.input.dimensions}"
     },
     "type": "LLM_INDEX_DOCUMENT"
 }
