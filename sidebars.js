@@ -207,6 +207,7 @@ const sidebars = {
                     },
                     className: 'leftMenuHeader',
                     items: [
+                        'developer-guides/running-workflows-in-ui',
                         'developer-guides/scheduling-workflows',
                         'developer-guides/sending-signals-to-workflows',
                     ]
