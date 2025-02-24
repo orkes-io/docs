@@ -1,0 +1,69 @@
+---
+slug: "/faqs/workflow-versioning"
+description: "In Conductor, workflow versioning enables changes to be safely made and managed during production."
+---
+
+# Managing Workflow Versions
+
+Using the Conductor UI, you can create, edit, run, and delete workflow versions.
+
+
+## Creating new workflow versions
+
+By default, the workflow version starts from 1 and increments with each new version.
+
+``` json
+{
+  "name": "newWorkflow",
+  "description": "Sample Description",
+  "version": 1,
+  "tasks": [
+    //list of tasks
+   ]
+}
+```
+
+**To create a new version:**
+
+After making changes to the workflow definition in the Conductor UI, select the ⏷ (down arrow) icon beside Save > **Save as new version** to create a new version. The keyboard shortcut is **Ctrl**+**S**+**N**.
+
+<p align="center"><img src="/content/img/dev-guides/workflow_versions-save_new.png" alt="Screenshot of the Orkes Conductor UI, showing the Save as new version button." width="100%" height="auto"></img></p>
+
+You can view all versions of a workflow in the visual workflow editor in **Definitions** > **Workflow**.
+
+## Editing workflow versions
+
+Each workflow version can be edited and saved separately, allowing you to update and run multiple versions of the same workflow in production.
+
+**To edit a previous workflow version:**
+1. Go to **Definitions** > **Workflow** and select the desired workflow.
+2. From the version dropdown in the top right corner, select the desired version.
+
+<p align="center"><img src="/content/img/dev-guides/workflow_versions-dropdown_view.png" alt="Screenshot of the Orkes Conductor UI, showing the version dropdown view in the visual workflow editor." width="100%" height="auto"></img></p>
+
+You can make the necessary changes in that workflow version and proceed to save it.
+
+
+## Running workflow versions
+
+While running a workflow, you should specify which version to use. The latest version will run by default if a version is not specified.
+
+
+<p align="center"><img src="/content/img/dev-guides/workflow_versions-run_version.png" alt="Screenshot of the Run tab in the Orkes Conductor UI, with the version dropdown selection in the visual workflow editor." width="100%" height="auto"></img></p>
+
+
+Learn more about managing workflow versions at runtime: [Workflow Versions at Runtime](/developer-guides/workflow-version-behavior-on-execution)
+
+
+## Deleting workflow versions
+
+You can delete workflow versions that are no longer needed. All currently running executions for the deleted version will continue to completion, but no new executions can be invoked. All new versions added afterward will continue incrementing from the latest version.
+
+**To delete a workflow version:**
+1. Go to **Definitions** > **Workflow** and select the desired workflow.
+2. From the version dropdown in the top right corner, select the version to be deleted.
+3. Select **Delete** > **Confirm**.
+
+
+
+<p align="center"><img src="/content/img/dev-guides/workflow_versions-delete.png" alt="Screenshot of the Orkes Conductor UI, showing the Delete button in the visual workflow editor." width="100%" height="auto"></img></p>
