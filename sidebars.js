@@ -218,15 +218,15 @@ const sidebars = {
                     link: {
                         type: 'generated-index',
                         title: 'Versioning Workflows',
-                        description: 'Learn how to manage multiple workflow versions in Orkes Conductor and its behaviour at runtime.',
+                        description: 'Workflow versioning is the ability to manage different versions of a workflow. This feature allows you to edit a workflow safely without disrupting ongoing or scheduled workflow executions in production. Learn how to manage multiple workflow versions in Orkes Conductor and understand its behavior at runtime.',
                         slug: '/developer-guides/versioning-workflows'
                     },
                     className: 'leftMenuHeader',
                     items: [
                         {
                             type: 'doc',
-                            id: 'faqs/workflow-versioning',
-                            label: "Overview"
+                            id: 'developer-guides/workflow-versioning',
+                            label: "Managing Workflow Versions"
                         },
                         {
                             type: 'doc',
