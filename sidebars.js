@@ -158,20 +158,13 @@ const sidebars = {
                             type: 'category',
                             label: 'AI Orchestration',
                             link: {
-                                type: 'generated-index',
-                                title: 'AI Orchestration',
-                                description: 'Learn how to orchestrate AI-driven workflows in Orkes Conductor, from quick setup to using Large Language Models (LLMs), vector databases, and prompt templates for building GenAI applications.',
-                                slug: '/ai-orchestration'
+                                type: 'doc',
+                                id: 'developer-guides/ai-orchestration',
                             },
                             items: [
-                                {
-                                    type: 'doc',
-                                    id: 'developer-guides/quickstart-ai-orchestration',
-                                    label: "Quickstart"
-                                },
                                 'developer-guides/using-llms-in-your-orkes-conductor-workflows',
                                 'developer-guides/using-vector-databases-in-your-orkes-conductor-workflows',
-                                'developer-guides/creating-and-managing-gen-ai-prompt-templates',
+                                'developer-guides/using-ai-prompts',
                             ],
                             collapsible: false,
                         },
@@ -340,7 +333,7 @@ const sidebars = {
                             label: 'AI / LLM',
                             link: {
                                 type: 'generated-index',
-                                title: 'AI / LLM',
+                                title: 'AI / LLM Integrations',
                                 slug: '/category/integrations/ai-llm'
                             },
                             items: [
