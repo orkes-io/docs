@@ -404,7 +404,7 @@ const sidebars = {
                             label: 'Vector Databases',
                             link: {
                                 type: 'generated-index',
-                                title: 'Vector Databases',
+                                title: 'Vector Databases Integrations',
                                 slug: '/category/integrations/vector-databases'
                             },
                             items: [
@@ -435,7 +435,7 @@ const sidebars = {
                             label: 'Message Broker',
                             link: {
                                 type: 'generated-index',
-                                title: 'Message Broker',
+                                title: 'Message Broker Integrations',
                                 slug: '/category/integrations/message-broker'
                             },
                             items: [
@@ -491,7 +491,7 @@ const sidebars = {
                             label: 'RDBMS',
                             link: {
                                 type: 'generated-index',
-                                title: 'RDBMS',
+                                title: 'RDBMS Integrations',
                                 slug: '/category/integrations/rdbms'
                             },
                             items: [
@@ -718,6 +718,23 @@ const sidebars = {
                             type: 'doc',
                             id: 'templates/examples/incoming-webhook-using-postman',
                             label: 'Postman',
+                        },
+                    ]
+                },
+                {
+                    type: 'category',
+                    label: 'AI',
+                    link: {
+                        type: 'generated-index',
+                        title: 'AI Tutorials',
+                        description: 'Explore tutorials for AI orchestration and agentic workflows.',
+                        slug: '/tutorials/ai'
+                    },
+                    items: [
+                        {
+                            type: 'doc',
+                            id: 'tutorials/quickstart-ai-orchestration',
+                            label: 'AI-Powered Translator',
                         },
                     ]
                 },
