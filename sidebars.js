@@ -385,7 +385,7 @@ const sidebars = {
                                 {
                                     type: 'doc',
                                     id: 'integrations/ai-llm/aws-bedrock-llama2',
-                                    label: 'AWS Bedrock Llama 2',
+                                    label: 'AWS Bedrock Llama3',
                                 },
                                 {
                                     type: 'doc',
