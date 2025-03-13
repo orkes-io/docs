@@ -58,6 +58,31 @@ Returns the supplied _workflowId_.
 ## Examples
 
 <details>
+<summary>Rerun workflow from the start</summary>
+
+**Request**
+
+```shell
+curl -X 'POST' \
+  'https://<YOUR-CLUSTER>/api/workflow/3163f2e3-d4a9-11ef-a114-0af1b159704e/rerun' \
+  -H 'accept: text/plain' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "reRunFromWorkflowId": "3163f2e3-d4a9-11ef-a114-0af1b159704e"
+}'
+```
+
+**Response**
+
+```
+3163f2e3-d4a9-11ef-a114-0af1b159704e
+```
+
+</details>
+
+
+<details>
 <summary>Rerun workflow from a task</summary>
 
 **Request**
