@@ -8,23 +8,24 @@ description: "Learn how to send signals to control a workflow progress in Orkes 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-In certain scenarios, there might arise a need to transmit signals to workflows for purposes such as pausing, terminating, or restarting them. There are different ways through which you can achieve this.
 
-In this document, let’s look at the different ways to send signals to your workflows in a production environment.
+You can manage and automate workflows by sending signals to pause, resume, terminate, restart, rerun workflows, and more. Using Conductor SDKs or APIs, you can integrate and programmatically control workflows during production and in case of failure.
 
 
-## Pause Workflow
+## Pause workflow
 
-You can pause the workflows to wait for external signals. There are different methods to pause your workflow.
+You can pause a workflow to wait for external signals.
 
-### Using API
+<Tabs groupId="method">
+<TabItem value="api" label="Using API">
 
-Once the workflow is run, the **workflowId** will be generated. Use the following API with the workflowId as the input payload to pause your workflow:
+Use the [Pause Workflow](/reference-docs/api/workflow/pause-worflow) API on a running workflow.
 
-```
-PUT /workflow/{workflowId}/pause
-```
-### SDKs
+**Endpoint:** `PUT /api/workflow/{workflowId}/pause`
+
+</TabItem>
+
+<TabItem value="sdk" label="Using SDK">
 
 <Tabs>
 <TabItem value="Java" label="Java">
@@ -82,24 +83,35 @@ WorkflowExecutor.pauseWorkflow(
 </TabItem>
 </Tabs>
 
-### From Conductor UI
+</TabItem>
 
-From the workflow executions page, click **Actions**, and choose **Pause**.
+<TabItem value="ui" label="Using UI">
 
-<p align="center"><img src="/content/img/pause-workflow-from-ui.png" alt="Pausing workflows from UI" width="100%" height="auto"></img></p>
+In the workflow execution page (**Executions** > **Workflow** > *someWorkflow*), select **Actions** > **Pause**.
 
-## Resume Workflow
+<p align="center"><img src="/content/img/dev-guides/sending_signals-pause_workflow.png" alt="Pausing workflows from UI" width="100%" height="auto"></img></p>
 
-You can resume the paused workflows once the purpose is served.
+</TabItem>
 
-### Using API
+</Tabs>
 
-Use the following API with the workflowId as the input parameter to resume your paused workflow:
 
-```
-PUT /workflow/{workflowId}/resume  
-```
-### SDKs
+
+
+## Resume workflow
+
+Once an external signal is received, you can resume the paused workflow.
+
+<Tabs groupId="method">
+<TabItem value="api" label="Using API">
+
+Use the [Resume Workflow](/reference-docs/api/workflow/resume-workflow) API on a paused workflow.
+
+**Endpoint:** `PUT /api/workflow/{workflowId}/resume`
+
+</TabItem>
+
+<TabItem value="sdk" label="Using SDK">
 
 <Tabs>
 <TabItem value="Java" label="Java">
@@ -158,25 +170,44 @@ WorkflowExecutor.resume(
 </TabItem>
 </Tabs>
 
-### From Conductor UI
+</TabItem>
 
-From the workflow executions page, click **Actions**, and choose **Resume**.
+<TabItem value="ui" label="Using UI">
 
-<p align="center"><img src="/content/img/resume-workflow-from-ui.png" alt="Resuming workflows from UI" width="100%" height="auto"></img></p>
+In the workflow execution page (**Executions** > **Workflow** > *someWorkflow*), select **Actions** > **Resume**.
 
-## Restart Workflow
+<p align="center"><img src="/content/img/dev-guides/sending_signals-resume_workflow.png" alt="Resuming workflows from UI" width="100%" height="auto"></img></p>
 
-In certain situations, your workflow may fail due to any reason, and it will reach the terminated state. In such cases, you can quickly restart the workflow execution from the beginning.
+</TabItem>
 
-### Using API
+</Tabs>
 
-With the **workflowId** as the input parameter, use the following API to restart the workflow from the beginning with the same input. This operation has no effect when called on a workflow that is not in a terminal status.
 
-```
-POST /workflow/{workflowId}/restart 
-```
 
-### SDKs
+
+## Restart workflow
+
+If a workflow execution fails for any reason and enters a terminal state, you can restart it from the beginning. There are two options for restarting workflows:
+
+* **Restart with Current Definitions**—Restart using the same workflow definition that was referenced in the initial execution. This is useful if the workflow definition has changed and the original definition needs to be retained.
+* **Restart with Latest Definitions**—Restart using the latest workflow definition and version. If you’ve changed the definition, you can use this option to rerun the execution with the latest version.
+
+:::note
+When restarting workflows, the same inputs will be used. To use different workflow inputs, rerun the workflow instead.
+:::
+
+
+<Tabs groupId="method">
+<TabItem value="api" label="Using API">
+
+Use the [Restart Workflow](/reference-docs/api/workflow/restart-workflow) API on a terminal workflow to restart the workflow from the beginning with the same input.
+
+**Endpoint:** `POST /api/workflow/{workflowId}/restart`
+
+</TabItem>
+
+<TabItem value="sdk" label="Using SDK">
+
 
 <Tabs>
 <TabItem value="Java" label="Java">
@@ -236,39 +267,35 @@ WorkflowExecutor.restart(
 </TabItem>
 </Tabs>
 
-### From Conductor UI
+</TabItem>
 
-From the workflow executions page, click **Actions**, and you can choose to restart workflows either using the same definition or with the latest definitions.
+<TabItem value="ui" label="Using UI">
 
-<p align="center"><img src="/content/img/restart-workflows-from-ui.png" alt="Restarting workflows from UI" width="100%" height="auto"></img></p>
+In the workflow execution page (**Executions** > **Workflow** > *someWorkflow*), select **Actions** > **Restart with current definitions** or **Restart with latest definitions**.
 
-- **Restart with Current Definitions** - Restart the workflow from the beginning using the same version of the workflow definition that originally ran this execution. This is useful if the workflow definition has changed and we want to retain this instance in the original version.
-- **Restart with Latest Definitions** -  Restart this workflow from the beginning using the latest definition of the workflow. If you’ve made changes to the definition, you could use this option to rerun the flow with the latest version.
+<p align="center"><img src="/content/img/dev-guides/sending_signals-restart_workflow.png" alt="Restarting workflows from UI" width="100%" height="auto"></img></p>
 
-## Rerun Workflow
+</TabItem>
 
-The restart option restarts the workflow with either the current or latest definitions. However, if you want to run a new instance of the workflow by making changes to the workflow inputs, correlation ID, or task to domain mapping, you can utilize the rerun option.
+</Tabs>
 
-### Using API for rerunning a workflow from a specific task
 
-Once you have the **workflowId**, you can rerun the workflow from a specific task using the following API. Get the task execution ID from the UI and include it in the API. 
 
-<p align="center"><img src="/content/img/task-execution-id.png" alt="Task Execution ID from Conductor UI" width="100%" height="auto"></img></p>
 
-```
-POST /workflow/{workflowId}/rerun
-{
-    "reRunFromTaskId": "TASK_ID_TO_REREUN_FROM",
-    "taskInput": {
-        //Extra inputs to the task 
-    },
-    "workflowInput": {
-        //Changes to workflow inputs as part of re-run 
-    }
-}
-```
+## Rerun workflow
 
-### SDKs
+You can rerun a terminal workflow from the start if you need to change the workflow inputs, correlation ID, or task-to-domain mapping. The workflow ID from the original run will be retained.
+
+<Tabs groupId="method">
+<TabItem value="api" label="Using API">
+
+Use the [Rerun Workflow](/reference-docs/api/workflow/rerun-workflow) API to rerun the workflow from the beginning with updated inputs.
+
+**Endpoint:** `POST /api/workflow/{workflowId}/rerun`
+
+</TabItem>
+
+<TabItem value="sdk" label="Using SDK">
 
 <Tabs>
 <TabItem value="Java" label="Java">
@@ -328,25 +355,134 @@ WorkflowResourceService.rerun(
 </TabItem>
 </Tabs>
 
-### From Conductor UI
+</TabItem>
 
-From the workflow executions page, click **Actions** and choose **Re-run Workflow**. Clicking on this takes us to the *Run Workflow* page, where you can rerun the workflow. While running, you can change the workflow input parameters and task to domain mapping.
+<TabItem value="ui" label="Using UI">
 
-<p align="center"><img src="/content/img/rerun-workflow.png" alt="Rerun from Conductor UI" width="100%" height="auto"></img></p>
+:::note
+In the UI, there is no option to rerun the workflow using the same workflow ID. However, you can rerun it by creating a new execution instance.
+:::
 
-## Retry from Failed Task 
+In the workflow execution page (**Executions** > **Workflow** > *someWorkflow*), select **Actions** >  **Re-run Workflow**. You will be redirected to the Run Workflow page, where you can update the workflow inputs, correlation ID, and task-to-domain mapping to run a new workflow instance.
 
-Suppose your workflow fails at a task; you can retry the workflow from the failed task.
+<p align="center"><img src="/content/img/rerun-workflow.png" alt="Rerun workflow in Conductor UI" width="100%" height="auto"></img></p>
 
-### Using API 
 
-Once you have the **workflowId**, you can retry a failed workflow from the failed task using the following API.
+</TabItem>
 
+</Tabs>
+
+
+
+### Rerun workflow from task
+
+In certain cases, you may wish to rerun an ongoing or terminal workflow from a specific task instead.
+
+<Tabs groupId="method">
+<TabItem value="api" label="Using API">
+
+Use the [Rerun Workflow](/reference-docs/api/workflow/rerun-workflow) API to rerun the workflow from a specific task, with the option to provide updated task inputs.
+
+**Endpoint:** `POST /api/workflow/{workflowId}/rerun`
+
+</TabItem>
+
+<TabItem value="sdk" label="Using SDK">
+
+
+<Tabs>
+<TabItem value="Java" label="Java">
+
+```java
+String rerunWorkflow(String workflowId, RerunWorkflowRequest rerunWorkflowRequest)
 ```
-POST /workflow/{workflowId}/retry
+
+</TabItem>
+<TabItem value="Go" label="Go">
+
+```go
+func (e *WorkflowExecutor) ReRun(workflowId string, reRunRequest model.RerunWorkflowRequest) (id string, error error)
 ```
 
-### SDKs
+</TabItem>
+<TabItem value="Python" label="Python">
+
+```python
+WorkflowResourceApi.rerun(self, body, workflow_id, **kwargs)
+```
+
+</TabItem>
+<TabItem value="CSharp" label="C#">
+
+```csharp
+string WorkflowResourceApi.Rerun(RerunWorkflowRequest body, string workflowId)
+```
+
+</TabItem>
+<TabItem value="JavaScript" label="JavaScript">
+
+```javascript
+WorkflowExecutor.rerun(
+    workflowId: string,
+    requestBody: RerunWorkflowRequest,
+): CancelablePromise<string>
+```
+
+</TabItem>
+<TabItem value="Typescript" label="Typescript">
+
+```typescript
+WorkflowResourceService.rerun(
+    workflowId: string,
+    requestBody: RerunWorkflowRequest,
+): CancelablePromise<string>
+```
+
+</TabItem>
+<TabItem value="Clojure" label="Clojure">
+
+```clojure
+(workflow-resource/rerun-workflow [options workflow-id rerun-wf-request])
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+
+<TabItem value="ui" label="Using UI">
+
+
+In the workflow execution page (**Executions** > **Workflow** > *someWorkflow*), select a task in the visual diagram, then select **Re-Run from Task**. The task will be rerun, and the previous attempt(s) will be marked as CANCELED.
+
+<p align="center"><img src="/content/img/dev-guides/sending_signals-rerun_from_task.png" alt="Rerun workflow from task in Conductor UI" width="100%" height="auto"></img></p>
+
+
+:::note
+If you need to provide updated task inputs, use the API instead.
+:::
+
+</TabItem>
+
+</Tabs>
+
+
+
+
+## Retry from failed task
+
+If the workflow fails, you can retry it from its last failed task.
+
+<Tabs groupId="method">
+<TabItem value="api" label="Using API">
+
+Use the [Retry Failed Workflow](/reference-docs/api/workflow/retry-failed-workflow) API to retry the workflow from its last failed task.
+
+**Endpoint:** `POST /api/workflow/{workflowId}/retry`
+
+</TabItem>
+
+<TabItem value="sdk" label="Using SDK">
 
 <Tabs>
 <TabItem value="Java" label="Java">
@@ -406,25 +542,38 @@ WorkflowExecutor.retry(
 </TabItem>
 </Tabs>
 
-### From Conductor UI
+</TabItem>
 
-From the workflow executions page, click **Actions**, and choose **Retry - From failed task**.
+<TabItem value="ui" label="Using UI">
+
+In the workflow execution page (**Executions** > **Workflow** > *someWorkflow*), select **Actions** > **Retry - from failed task**. The task will be rerun, and the previous attempt(s) will be marked as CANCELED.
 
 <p align="center"><img src="/content/img/retrying-failed-workflows-in-conductor.png" alt="Retry from Conductor UI" width="100%" height="auto"></img></p>
 
-## Manually Updating Task Status in a Workflow
+</TabItem>
 
-Certain situations may require you to manually update the task status in a workflow.
+</Tabs>
 
-### Using API
 
-By providing the workflowId, task reference name, and the task status as the input, you can use the following API to update a task status manually:
+## Update task status
 
-```
-POST /tasks/{workflowId}/{taskRefName}/{status}
-```
+In some cases, you may need to update the task status in an ongoing workflow with a signal, such as updating the status of a signal-type [Wait](/reference-docs/operators/wait) task.
 
-### SDKs
+<Tabs groupId="method">
+<TabItem value="api" label="Using API">
+
+Use the [Update Task Status in Workflow](/reference-docs/api/task/update-task-status-in-workflow) API to update the task status to one of the following options:
+* FAILED
+* FAILED_WITH_TERMINAL_ERROR
+* COMPLETED
+
+You can also provide the task output in the request body.
+
+**Endpoint:** `POST /api/tasks/{workflowId}/{taskRefName}/{status}`
+
+</TabItem>
+
+<TabItem value="sdk" label="Using SDK">
 
 <Tabs>
 <TabItem value="Java" label="Java">
@@ -488,28 +637,39 @@ TaskResourceService.updateTask(
 </TabItem>
 </Tabs>
 
-### Using Conductor UI
+</TabItem>
 
-- Navigate to the workflow execution, and click on the task whose status is to be updated manually. 
-- From the summary tab, select the status under the field *Update task*.
+<TabItem value="ui" label="Using UI">
 
-<p align="center"><img src="/content/img/manually-completing-task-in-conductor.png" alt="Manually completing the task from Conductor UI" width="90%" height="auto"></img></p>
+1. In the workflow execution page (**Executions** > **Workflow** > *someWorkflow*), select a task in the visual diagram.
+2. In the **Summary** tab, select a status in the **Update task** field.
+3. (Optional) Add the task outputs in the Code field.
+4. Select **Update**.
+
+<p align="center"><img src="/content/img/dev-guides/sending_signals-update_task.gif" alt="Update a task's status in Conductor UI" width="90%" height="auto"></img></p>
+
+</TabItem>
+
+</Tabs>
 
 
-## Terminate Workflow
-
-In certain situations, you may want to send signals to terminate the workflows.
 
 
-### Using API
+## Terminate workflow
 
-Use the following API with the workflowId as the input parameter to terminate your running workflow:
+In some cases, you may need to terminate the workflow with a signal. For example, if a user terminates an ongoing indexing process.
 
-```
-DELETE /workflow/{workflowId}
-```
+<Tabs groupId="method">
+<TabItem value="api" label="Using API">
 
-### SDKs
+Use the [Terminate Workflow](/reference-docs/api/workflow/terminate-workflow) API to terminate an ongoing workflow.
+
+**Endpoint:** `DELETE /api/workflow/{workflowId}`
+
+</TabItem>
+
+<TabItem value="sdk" label="Using SDK">
+
 
 <Tabs>
 <TabItem value="Java" label="Java">
@@ -569,8 +729,15 @@ WorkflowExecutor.terminate(
 </TabItem>
 </Tabs>
 
-### Using Conductor UI
+</TabItem>
 
-From the workflow executions page, click **Actions** > **Terminate**.
+<TabItem value="ui" label="Using UI">
 
-<p align="center"><img src="/content/img/terminating-task-in-conductor.png" alt="Terminating Workflow from Conductor UI" width="90%" height="auto"></img></p>
+In the workflow execution page (**Executions** > **Workflow** > *someWorkflow*), select **Actions** > **Terminate**.
+
+<p align="center"><img src="/content/img/terminating-task-in-conductor.png" alt="Terminate workflow from Conductor UI" width="90%" height="auto"></img></p>
+
+
+</TabItem>
+
+</Tabs>

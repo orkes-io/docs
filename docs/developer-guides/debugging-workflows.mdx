@@ -8,103 +8,153 @@ import TabItem from '@theme/TabItem';
 import Install from '@site/src/components/install.mdx';
 
 
-# Debugging Workflows
+# Debugging Workflow Executions
 
-Orkes Conductor provides a visual representation of workflows that aids in quickly troubleshooting issues. The Conductor UI allows users to inspect workflow executions, facilitating rapid identification and resolution of problems.
-
-## Searching and Viewing Workflow Executions​
-
-All workflow executions are listed on the **Executions > Workflow** page. By default, users can only view executions of permitted workflows.
-
-<p align="center"><img src="/content/img/workflow-executions.png" alt="Workflow Executions page" width="90%"
-                       height="auto"/></p>
-
-The workflow execution data can be filtered by searching through workflow name, workflow ID, correlation ID, idempotency key, status, time period, and free text search. Turn on **SQL format** to view the workflow execution data in SQL format.
-
-Additionally, you can view the workflow execution as code directly from the UI by clicking the arrow in the Search button and selecting **Show as code**. 
-
-<p align="center"><img src="/content/img/show-as-code-in-workflow-search.png" alt="Show as code option in Workflow Search" width="90%"
-                       height="auto"/></p>
-
-This would show the workflow search data in different codes. You can get the workflow search data in cURL and JavaScript formats.
+Using Orkes Conductor’s visual workflow diagrams, you can quickly inspect and debug workflow executions during development. All viewable workflow executions are listed in **Executions** > **Workflow**.
 
 
-<p align="center"><img src="/content/img/workflow-search-in-code.png" alt="Workflow search data in code" width="90%"
-                       height="auto"/></p>
+<p align="center"><img src="/content/img/workflow-executions.png" alt="Workflow Executions page" width="90%" height="auto"/></p>
+
+
+From this introspection dashboard, you can troubleshoot terminal errors and failures during execution.
 
 :::note
-Partial searches using wildcards `*` are supported for workflow names. For example, searching for **test*** will display all workflows with names containing "test".
-
-<p align="center"><img src="/content/img/workflow-partial-search.png" alt="Workflow search with wildcard support"
-                       width="90%" height="auto"/></p>
-:::
-
-### Viewing Individual Workflow Execution
-
-Click on a specific execution to view detailed information. A sample execution looks like this:
-
-<p align="center"><img src="/content/img/sample-workflow-execution.png" alt="Sample Workflow Executions page"
-                       width="90%" height="auto"/></p>
-
-The page consists of the following sub-tabs:
-
-* **Diagram** - Visual representation of the workflow's status; tasks are color-coded (green for successful, red for failed, orange for completed with errors).
-* **Task List** - Details of tasks within the workflow.
-* **Timeline** -  Chronological timeline of task execution times, with zoom functionality for accuracy.
-* **Summary** - Includes key details such as workflow ID, status, version, start/end time, duration, and reason for incompletion.
-* **Workflow Input/Output** - Lists inputs and outputs of the workflow.
-* **JSON** - Complete JSON representation of the workflow.
-* **Variables** - Displays variables passed using the set variable task.
-* **Task-to-Domain** - Mapping of tasks to domains used in the workflow execution.
-
-Each of these tabs gives the details that can help debug workflow issues.
-
-## Debugging Executions
-
-The **Diagram** tab on the workflow execution page visually represents task statuses:
-
-<p align="center"><img src="/content/img/types-of-errors.png" alt="Different types of errors in a failed workflow"
-                       width="80%" height="auto"/></p>
-
-* Green: Successful tasks
-* Red: Failed tasks
-* Orange: Tasks completed with errors
-
-
-:::tip
-A task ends up with the status “Completed with Errors” only when it is marked as __optional:true__ in the workflow definition. The default value of this setting is false, so it needs to be explicitly set to continue the workflow even when there are errors.
+Refer to [Handling Failures](/developer-guides/error-handling) for information on native failure-handling features that automatically resolve transient failures.
 :::
 
 
-Clicking on the failed task gives the failure details. The following fields are helpful in debugging:
+## Searching workflow executions
 
-| Field | Description | 
-| -- | -- |
-| Summary > Reason for Incompletion | This field displays the reason for task incompletion. It can capture details such as exceptions thrown by the worker, task-related exceptions such as failed to invoke HTTP endpoints, etc. |
-| Summary > Worker | This field shows the worker instance that polled the task. It can help dig logs if not captured by the Conductor. |
-| Input | You can verify if the task inputs were computed and provided correctly. |
-| Output | You can verify the task’s output details here. If the task’s output is supplied as the next task’s input, such details can be verified from here. | 
-| Logs | You can get the logs from this tab if the task supplies logs. |
-| Attempt | If your task was retried, you can see all the attempts and corresponding details here. |
+The workflow execution data can be filtered by the following parameters:
+* Workflow name
+* Workflow ID
+* Correlation ID
+* Idempotency key
+* Status
+* Execution start time range
 
-Here is a screen grab of the fields referred above.
+The free text search box also enables you to search inside workflow input values, workflow output values, workflow variable values, task output values, correlation ID, and reason for incompletion.
 
-<p align="center"><img src="/content/img/failure-reasons-of-task.png" alt="Failure reasons for the task" width="100%" height="auto"></img></p>
 
-## Recovering From Failures​
+### Partial search
 
-Once the issues regarding the workflow execution failure are resolved, you can retry the failed workflows. The **Actions** button towards the top-right corner of the execution page provides the following options:
+Use the `*` wildcard to conduct partial searches for *Workflow name* or *Free text search*. For example, searching `test*` will display all workflows with names starting "test".
 
-<p align="center"><img src="/content/img/workflow-recovery.png" alt="Workflow Recovery Options" width="80%" height="auto"></img></p>
+<p align="center"><img src="/content/img/workflow-partial-search.png" alt="Workflow search with wildcard support" width="90%" height="auto"/></p>
 
-| Action | Description                                                                                                                                                                                                                                                     |
-| ------ |-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Terminate | Terminates the workflow and changes the workflow status to **TERMINATED**.                                                                                                                                                                                      |
-| Restart with current definitions | Restart the workflow from the beginning using the same version of the workflow definition that originally ran this execution. This is useful if the workflow definition has changed and you want to retain this instance of the original version.                |
-| Restart with latest definitions | Restart this workflow from the beginning using the latest definition of the workflow. If you've made changes to the definition, you could use this option to re-run the flow with the latest version.                                                             |
-| Retry - from failed task | Retries the workflow from the failed task.                                                                                                                                                                                                                      |
-| Re-run Workflow | Clicking on this takes to the **Run Workflow** page, where you can rerun the workflow. While running, you can change the workflow input parameters, idempotency key, correlation ID, and task to domain mapping.                |                                      
 
-:::tip
-Check out the documentation on native [retry and error handling](https://orkes.io/content/error-handling) features, which enable tasks to be automatically retried in the event of transient failures.
-:::
+### SQL search
+
+You can switch on **SQL format** to search the workflow execution data in SQL format. The following syntax is supported:
+* `FIELD = VALUE`
+* `FIELD IN (value1, value2)`
+* `AND`
+
+You can use SQL to search the following:
+* workflowId
+* correlationId
+* workflowType
+* status
+* startTime
+* modifiedTime
+
+**Example**
+
+Here are some example queries:
+* workflowType = your_workflow_name
+* status IN (PAUSED, RUNNING)
+* startTime >1726655978410
+* startTime &lt; 1696143600000
+* workflowType = your_workflow_name AND status = PAUSED
+* workflowId IN (3434546, 45365767, 20984885) AND workflowType = test_workflow
+
+
+### API search
+
+You can conduct searches via the [Search Workflow Executions](/reference-docs/api/workflow/search-workflow-executions) API (GET /api/workflow/search) as well. To help format your API search query, you can select the **⏷** (down arrow) icon beside Search > **Show as Code** to get the same search request as an API call.
+
+<p align="center"><img src="/content/img/show-as-code-in-workflow-search.png" alt="Show as code option in Workflow Search" width="90%" height="auto"/></p>
+
+
+Currently, you can get the workflow search query in cURL and JavaScript.
+
+<p align="center"><img src="/content/img/workflow-search-in-code.png" alt="Workflow search data in code" width="90%" height="auto"/></p>
+
+
+
+## Inspecting a workflow execution
+
+In **Executions** > **Workflow**, select a specific execution to view the details. Here is an example of the execution details:
+
+<p align="center"><img src="/content/img/dev-guides/workflow_executions-workflow_tabs.png" alt="Sample Workflow Executions page, with the different tab views." width="90%" height="auto"/></p>
+
+
+The introspection dashboard consists of the following tabs:
+* **Diagram**—Visual diagram representation of the workflow’s task sequence and status, with zoom, search, and download functionalities.
+* **Task List**—List of details for all tasks in the workflow.
+* **Timeline**—Chronological timeline of task execution duration, with zoom functionality for granularity.
+* **Summary**—Summary of key workflow details like workflow ID, status, version, start/end time, duration, and reason for incompletion.
+* **Workflow Input/Output**—Display for the workflow inputs and outputs.
+* **JSON**—The full workflow execution JSON.
+* **Variables**—Display for the workflow variables (created using the [Set Variable](/reference-docs/operators/set-variable) task).
+* **Task-to-domain**—Display for the task-to-domain mappings used in the workflow execution.
+
+Each tab provides details that can help debug workflow issues.
+
+
+### Diagram tab
+
+The **Diagram** tab visually represents task statuses in different colors:
+* Green: Successful task
+* Red: Failed task
+* Orange: Task completed with errors
+
+Refer to [Workflow and Task Status](/conceptual-guides/workflow-and-task-status) for more information on the task status.
+
+<p align="center"><img src="/content/img/types-of-errors.png" alt="Different types of errors in a failed workflow" width="80%" height="auto"/></p>
+
+Selecting a task from the diagram opens a right-hand panel showcasing the task details.
+
+
+## Inspecting a task execution
+
+The task details dashboard consists of the following tabs:
+* **Summary**—Summary of key task details like task type, status, retry count, duration, worker, reason for incompletion, and more.
+* **Input**—Display for the task inputs.
+* **Output**—Display for the task outputs.
+* **Logs**—Logs for the task (if supplied by the task).
+* **JSON**—The task execution JSON.
+* **Definition**—The task definition used at runtime.
+
+
+<p align="center"><img src="/content/img/dev-guides/workflow_executions-task_tabs.png" alt="Sample Workflow Executions page, with the task tab details." width="90%" height="auto"/></p>
+
+
+If the task has been retried multiple times, you can select an attempt from the dropdown bar and view the details for a specific attempt.
+
+<p align="center"><img src="/content/img/dev-guides/workflow_executions-task_attempts.png" alt="Task attempt dropdown selection." width="90%" height="auto"/></p>
+
+
+### Debugging a failed task execution
+
+To debug a failed task, you can try inspecting the following areas:
+* **Reason for incompletion**—Located in the task’s Summary tab, it captures exceptions thrown by the worker or task, like “Failed to invoke HTTP endpoint”.
+* **Worker**—Located in the task’s Summary tab, it captures the worker instance that polled for the task. This is useful for digging out logs that aren’t captured in Conductor.
+* **Task inputs**—Verify if the task’s inputs were correctly provided and computed.
+* **Task outputs**—Verify if the task’s outputs were correctly provided and computed, and compare them with any task inputs that reference these outputs.
+
+
+## Recovering from failures
+
+Once the issues regarding the workflow failure are resolved, you can retry the failed workflows using the **Actions** button in the top-right corner of the page.
+
+<p align="center"><img src="/content/img/dev-guides/workflow_executions-recovering_from_failure.png" alt="Workflow Recovery Options" width="80%" height="auto"></img></p>
+
+| Action | Description                                                                                          |
+| ------ |-----------------------------------------------------------------------------------------------------|
+| Terminate                         | Change the workflow status to TERMINATED.                      |
+| Restart with current definitions  | Restart the workflow from the beginning using the same workflow definition that was referenced in the initial execution. This is useful if the workflow definition has changed and the original definition needs to be retained.                                        |
+| Restart with latest definitions   | Restart the workflow from the beginning using the latest workflow definition and version. If you’ve changed the definition, you can use this option to rerun the execution with the latest version.                                                               |
+| Retry - from failed task          | Retry the workflow from its last failed task.                  |
+| Re-run workflow                   | Run a new workflow execution instance with updated workflow input parameters, idempotency key, correlation ID, and task-to-domain mapping.                  |     
+| Retry - resume subworkflow        | (Only if the workflow contains a sub-workflow) Retry the parent workflow from the sub-workflow’s last failed task.                                                 |  
