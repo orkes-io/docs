@@ -240,11 +240,6 @@ const sidebars = {
                     className: 'leftMenuHeader',
                     items: [
                         'developer-guides/unit-and-regression-tests',
-                        {
-                            type: 'doc',
-                            id: 'faqs/conductor-log-level',
-                            label: "Log Levels"
-                        },
                         'developer-guides/metrics-and-observability',
                         'developer-guides/integration-with-cicd'
                     ]
