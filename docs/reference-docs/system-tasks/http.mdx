@@ -44,7 +44,8 @@ This is the task configuration for an HTTP task.
     "contentType": "application/json",
     "encode": true,
     "headers": {
-      "header-1": "${workflow.input.header-1}"
+      "Authorization": "Bearer ${workflow.secrets.api_key}",
+      "Accept": "application/json"
     },
     "body": {
       "key": "value"
