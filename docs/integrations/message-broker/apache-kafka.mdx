@@ -3,144 +3,172 @@ slug: "/integrations/message-broker/apache-kafka"
 description: "Learn how to integrate Apache Kafka with your Orkes Conductor cluster."
 ---
 
-import Tabs from "@theme/Tabs";
-import TabItem from "@theme/TabItem";
+# Integrating Apache Kafka with Orkes Conductor
 
-# Apache Kafka Integration with Orkes Conductor
+This developer guide includes the steps to integrate Apache Kafka with Orkes Conductor. This integration lets you connect the self-managed Apache Kafka, Amazon MSK, and Confluent Kafka clusters with the Conductor to publish/receive messages to/from topics.
 
-To use the [Event task](https://orkes.io/content/reference-docs/system-tasks/event) or [enable Change Data Capture (CDC)](https://orkes.io/content/developer-guides/enabling-cdc-on-conductor-workflows) in Orkes Conductor, you must integrate your Conductor cluster with the necessary message brokers. This guide explains how to integrate self-managed Apache Kafka, Amazon MSK, or Confluent Kafka clusters with Orkes Conductor to publish and receive messages from topics. Here’s an overview:
+## Get Configuration Credentials from Apache Kafka
 
-1. Get the required credentials from Kafka.
-2. Configure a new Apache Kafka integration in Orkes Conductor.
-3. Set access limits to the message broker to govern which applications or groups can use them.
+Before beginning the integration process in Orkes Conductor, you must obtain specific configuration credentials from the Kafka cluster, such as the Bootstrap server, Schema registry URL, and API keys.
 
-## Step 1: Get the Kafka credentials
+The configuration steps vary depending on the type of Kafka cluster to be integrated. 
 
-To integrate Kafka with Orkes Conductor, retrieve the following credentials from the Kafka cluster:
+### Case - 1: Getting configuration credentials from self-managed Apache Kafka.
 
-- API keys
-- Bootstrap server
-- Schema registry URL 
+Refer to the [official Apache Kafka documentation](https://kafka.apache.org/documentation/) for setting up Apache Kafka locally. Get the bootstrap server and API keys & secrets for integrating with Conductor.
 
-The configuration steps vary depending on the type of Kafka cluster to be integrated.
+### Case - 2: Getting configuration credentials from Confluent Kafka.
 
-<Tabs>
-<TabItem title="Get Apache Kafka credentials" value="Get Apache Kafka credentials">
+To obtain the API keys from Confluent Kafka:
 
-Set up [Apache Kafka](https://kafka.apache.org/documentation/) locally and retrieve the following credentials:
-
-- Bootstrap server
-- API key and secret
-
-</TabItem>
-<TabItem title="Get Confluent Kafka credentials" value="Get Confluent Kafka credentials">
-
-To integrate Confluent Kafka with Orkes Conductor, retrieve the following credentials from the Confluent Cloud portal:
-
-- API keys
-- Bootstrap server
-- Schema registry URL
-
-**To retrieve the API keys:**
-
-1. Sign in to the [Confluent Cloud portal](https://confluent.cloud/).
-2. Select the Confluent cluster to integrate with Orkes Conductor.
-3. Go to **Cluster Overview** > **API Keys** from the left navigation menu.
-4. Select **Create Key** > **+ Add key**.
-5. Choose either **Global access** or **Granular access**.
-6. Copy and store the **Key** and **Secret**.
+1. From the [Confluent Cloud portal](https://confluent.cloud/), choose the cluster to be integrated with Orkes Conductor and navigate to **Cluster Overview > API Keys**.
+2. Create a new key by clicking **Create Key/+Add key** and selecting the required access (_Global access/Granular access_).
+3. Note down the values for the key and secret.
 
 <p align="center"><img src="/content/img/generating-api-keys-confluent.png" alt="Generating API Keys from Confluent Cloud" width="100%" height="auto"/></p>
 
-**To retrieve the Bootstrap server:**
+To get the Bootstrap server from Confluent Kafka:
 
-1. Sign in to the [Confluent Cloud portal](https://confluent.cloud/).
-2. Go to **Cluster Overview** > **Cluster Settings** > **Endpoints**.
-3. Copy the **Bootstrap server**.
+1. Navigate to **Cluster Overview > Cluster Settings > Endpoints** and copy the **Bootstrap server**.
 
 <p align="center"><img src="/content/img/getting-bootstrap-token.png" alt="Getting Bootstrap token from Confluent Cloud" width="100%" height="auto"/></p>
 
-4. Go to **Topics** and identify the **Topic name** to use for this integration.
+2. Then, navigate to **Topics** to see the list of topics on this cluster and identify the **Topic name** to use for this integration.
 
 <p align="center"><img src="/content/img/topics.png" alt="Topics in Confluent Cloud" width="100%" height="auto"/></p>
 
-The Schema registry server, API key, and secret are only required if you are integrating with a schema registry (for AVRO protocol).
+To get the Schema registry server, API key & secret (This is only required if you are integrating with a schema registry):
 
-**To get the Schema registry server and API keys:**
-
-1. Sign in to the [Confluent Cloud portal](https://confluent.cloud/).
-2. Go to **Clients** > **Add new client**.
-3. In **Copy the configuration snippet for your clients** > **schema.registry.url**, copy the URL.
-4. Select **Create Schema Registry API key** to download the file. The downloaded file will have the Schema Registry API key and secret.
+1. Go to **Clients > Add new client**.
+2. Under the “Copy the configuration snippet for your clients” section, copy the Schema Registry URL and download the Schema Registry API Key. The downloaded file will contain the Schema Registry API key and secret.
 
 <p align="center"><img src="/content/img/schema-registry-url.png" alt="Getting Schema Registry URL" width="100%" height="auto"/></p>
 
-</TabItem>
-<TabItem title="Get Amazon MSK credentials" value="Get Amazon MSK credentials">
+### Case - 3: Getting configuration credentials from Amazon MSK.
 
-To integrate Amazon MSK with Orkes Conductor, retrieve the following credentials from your Amazon MSK console:
+To get the Bootstrap server:
 
-- [Bootstrap server](https://docs.aws.amazon.com/msk/latest/developerguide/msk-get-bootstrap-brokers.html)
-- Username and Password 
-- Consumer Group ID
+1. Login to [Amazon MSK console](https://console.aws.amazon.com/msk/).
+2. Once logged in, the table lists all the clusters under the account for the current region.
+3. Choose your cluster, and click _View client information_ on the cluster summary page. This gives the bootstrap broker and the Apache ZooKeeper connection string.
 
-Refer to the official [Amazon MSK documentation](https://docs.aws.amazon.com/msk/latest/developerguide/getting-started.html) for more details.
-</TabItem>
-</Tabs>
+[Refer to the official Amazon MSK documentation for more details](https://docs.aws.amazon.com/msk/latest/developerguide/msk-get-bootstrap-brokers.html).
 
-## Step 2: Add an integration for Apache Kafka
+## Integrating with Apache Kafka as a Message Broker
 
-After obtaining the credentials, add an Apache Kafka integration to your Conductor cluster.
+Once you have the configuration credentials from the Kafka cluster, let’s integrate with Orkes Conductor.
 
-**To create an Apache Kafka integration:**
+1. Navigate to **Integrations** from the left menu on the Orkes Conductor cluster.
+2. Click **+ New integration** from the top-right corner.
+3. Under the **Message Broker** section, choose **Apache Kafka**.
+4. Click **+Add** and provide the following parameters:
 
-1. Go to **Integrations** from the left navigation menu on your Conductor cluster.
-2. Select **+ New integration**.
-3. In the **Message Broker** section, choose **Apache Kafka**.
-4. Select **+ Add** and enter the following parameters:
+<p align="center"><img src="/content/img/integration-apache-kafka.png" alt="Integration configuration for Apache Kafka" width="60%" height="auto"/></p>
 
-| Parameters | Description | Required / Optional | Notes | 
-| ---------- | ----------- | ------------------- | ----- | 
-| Integration name | A name for the integration. | Required. | – |
-| Bootstrap Server | The bootstrap server of the Kafka cluster. | Required. | – |
-| Sending Protocol | The sending protocol for the integration. Supported values:<ul><li>**String**–Sends messages as plain string data.</li><li>**AVRO**–Serializes messages using AVRO. To use a schema registry, select AVRO.</li></ul> | Required. | AVRO protocol is not supported for Amazon MSK clusters. | 
-| Connection Security | The security mechanism for connecting to the Kafka cluster. Supported values:<ul><li>**SASL_SSL / PLAIN**–Secure connection using SASL (Simple Authentication and Security Layer) with SSL encryption. </li><li>**SASL_SSL / SCRAM-SHA-256 / JKS**–Secure connection using SASL with SCRAM-SHA-256 authentication and SSL encryption.</li><li>**SASL_SSL/SCRAM-SHA-512**–Secure connection using SASL with SCRAM-SHA-512 authentication and SSL encryption.</li><li>**SASL_PLAINTEXT**–Basic authentication mechanism in Kafka without data encryption during transit.</li><li>**PLAINTEXT**–Plain text connection without any encryption or authentication.</li></ul> | Required. | Amazon MSK supports only **SASL_SSL/SCRAM-SHA-512**. | 
-| Username | The username to authenticate with the Kafka cluster.<br/>For AVRO configuration, use the API key copied previously as the username. | Required (except for **PLAINTEXT**)| – | 
-| Password | The password associated with the username.<br/>For AVRO configuration, use the API secret copied previously as the password. | Required (except for **PLAINTEXT**) | – | 
-| Truststore type | If SSL encryption is enabled, select the trust store type. Supported values:<ul><li>**NONE**</li><li>**JKS**–If chosen, upload the Java JKS trust store file with CAs.</li><li>**PEM**–If chosen, upload the PEM certificate file</li></ul>| Required for connection types **SASL_SSL / PLAIN** and **SASL_PLAINTEXT.** | Not supported for Amazon MSK clusters. | 
-| Trust Store Password | The password for the trust store. | Required if **Truststore type** is **JKS**. | Not supported for Amazon MSK clusters. | 
-| Select Sasl mechanism | The SASL mechanism to connect to the Kafka cluster. Supported values:<ul><li>**SASL_SSL/SCRAM-SHA-512**–Secure connection using SASL with SCRAM-SHA-512 authentication and SSL encryption.</li><li>**PLAIN**– Basic authentication mechanism without encryption, used for non-secure connections.</li></ul> | Required if **_Connection Security_** is **SASL_PLAINTEXT**. | – | 
-| Schema Registry URL | The Schema Registry URL copied from the Kafka console. | Required if **_Sending Protocol_** is **AVRO**. | Not supported for Amazon MSK clusters. | 
-| Schema Registry Auth Type | The authentication mechanism for connecting to the schema registry. Supported values:<ul><li>**Password in URL**</li><li>**Schema Registry User Info (Key/Password)**</li><li>**NONE**</li></ul> | Required if **_Sending Protocol_** is **AVRO**. | Not supported for Amazon MSK clusters. | 
-| Schema Registry API Key | The schema registry API key obtained from the schema registry server. | Required if<ul><li>**_Sending Protocol_** is **AVRO**.</li><li>**_Schema Registry Auth Type_** is **Schema Registry User Info (Key/Password)**.</li></ul> | Not supported for Amazon MSK clusters. | 
-| Schema Registry API Secret | The schema registry API secret obtained from the schema registry server. | Required if<ul><li>**_Sending Protocol_** is **AVRO**.</li><li>**_Schema Registry Auth Type_** is **Schema Registry User Info (Key/Password)**.</li></ul> | Not supported for Amazon MSK clusters. | 
-| Value Subject Name Strategy | The strategy for constructing the subject name under which the AVRO schema will be registered in the schema registry. Supported values:<ul><li>**io.confluent.kafka.serializers.subject.TopicNameStrategy**</li><li>**io.confluent.kafka.serializers.subject.RecordNameStrategy**</li><li>**io.confluent.kafka.serializers.subject.TopicRecordNameStrategy**</li></ul> | Required if **_Sending Protocol_** is **AVRO**. | Not supported for Amazon MSK clusters. | 
-| Consumer Group ID | The Consumer Group ID from Kafka. This unique identifier helps manage message processing, load balancing, and fault tolerance within consumer groups. | Required. | – | 
-| Description | A description of the integration. | Required. | – | 
+| Parameters | Description |
+| ---------- | ----------- |
+| Integration Name | A name to identify the integration. |
+| Bootstrap Server | The bootstrap server of the Apache Kafka cluster. |
+| Sending Protocol | Choose the required sending protocol for the integration. It can take two values: <ul><li>**String** - Messages are sent as simple string data.</li><li>**AVRO** - Messages are serialized using AVRO. [Not supported for Amazon MSK clusters]</li></ul>If you are integrating with a schema registry, choose AVRO as the sending protocol. |
+| Connection Security | Choose the security mechanism for connecting to the Kafka cluster. It can take values:<ul><li>**SASL_SSL / PLAIN** - Secure connection using SASL (Simple Authentication and Security Layer) with SSL encryption.  [Not supported by Amazon MSK].</li><li>**SASL_SSL / SCRAM-SHA-256 / JKS** - Secure connection using SASL with SCRAM-SHA-256 authentication and SSL encryption. [Not supported by Amazon MSK].</li><li>**SASL_PLAINTEXT** - Basic authentication mechanism in Kafka without data encryption during transit. </li><li>**PLAINTEXT** - Plain text connection without any encryption or authentication.</li></ul> |
+| Select Sasl mechanism<br/><br/>(This field is applicable only if **_Connection Security_** is chosen as **_SASL_PLAINTEXT_**.) | Choose the SASL mechanism for connecting to the Kafka cluster. It can take values:<ul><li>**SASL_SSL/SCRAM-SHA-512** - Secure connection using SASL with SCRAM-SHA-512 authentication and SSL encryption.</li><li>**PLAIN** - Basic authentication mechanism without encryption, used for non-secure connections.</li></ul> |
+| Username | If authentication is enabled (SASL_SSL), provide the username to authenticate with the Kafka cluster.<br/><br/>**Note**: For AVRO configuration, provide the API key copied previously as the username. |
+| Password | The password associated with the username to authenticate the connection.<br/><br/>**Note**: For AVRO configuration, provide the API secret copied previously as the password. |
+| Schema Registry URL | The Schema Registry URL from the Apache Kafka console.<br/><br/>**Notes:**<ul><li>This field is only applicable if the **_Sending Protocol_** is chosen as **_AVRO_**.</li><li>Not supported for Amazon MSK clusters.</li></ul> |
+| Schema Registry Auth Type | The authentication mechanism for connecting to the schema registry. It can be of the following types:<ul><li>Password in URL</li><li>Schema Registry User Info (Key/Password)</li><li>NONE</li></ul>**Notes:**<ul><li>This field is only applicable if the **_Sending Protocol_** is chosen as **_AVRO_**.</li><li>Not supported for Amazon MSK clusters.</li></ul> |
+| Schema Registry API Key | The Schema Registry API Key from the Kafka console.<br/><br/>**Notes:**<ul><li>This field is only applicable if the **_Sending Protocol_** is chosen as **_AVRO_**.</li><li>Not supported for Amazon MSK clusters.</li></ul> |
+| Schema Registry API Secret | The Schema Registry API Secret from the Kafka console.<br/><br/>**Notes:**<ul><li>This field is only applicable if the **_Sending Protocol_** is chosen as **_AVRO_**.</li><li>Not supported for Amazon MSK clusters.</li></ul> |
+| Value Subject Name Strategy | Defines the strategy for constructing the subject name under which the AVRO schema will be registered in the schema registry. It can take the following values:<ul><li>_io.confluent.kafka.serializers.subject.TopicNameStrategy_</li><li>_io.confluent.kafka.serializers.subject.RecordNameStrategy_</li><li>_io.confluent.kafka.serializers.subject.TopicRecordNameStrategy_</li></ul>**Notes:**<ul><li>This field is only applicable for **_AVRO_** configuration.</li><li>Not supported for Amazon MSK clusters.</li></ul> | 
+| Truststore type | If SSL encryption is enabled, provide the type and password for the trust store containing the CA certificates used to verify the Kafka broker's SSL certificate. It can be of the following types:<ul><li>NONE</li><li>JKS - Upload the Java JKS trust store file with CAs.</li><li>PEM - Upload the PEM certificate file</li></ul>**Note:** Not supported for Amazon MSK clusters. | 
+| Trust Store Password | If the trust store type is JKS, provide the password for the trust store.<br/><br/>**Note:** Not supported for Amazon MSK clusters. | 
+| Consumer Group ID | Enter the Consumer Group ID from Kafka. This unique identifier helps manage message processing, load balancing, and fault tolerance within consumer groups. |
+| Description | A description of the integration. |
 
-5. (Optional) Toggle the **Active** button off if you don’t want to activate the integration instantly.
-6. Select **Save**.
+5. You can toggle on the **Active** button to activate the integration instantly.
+6. Click **Save**.
 
-<p align="center"><img src="/content/img/integration-apache-kafka.png" alt="Apache Kafka Integration with Orkes Conductor" width="60%" height="auto"/></p>
+## Creating Event Handlers in Orkes Conductor 
 
-## Step 3: Set access limits to integration
+The integration is created successfully now. The next step is to create an event handler in Orkes Conductor.
 
-Once the integration is configured, set access controls to manage which applications or groups can use the message broker.
+To do this:
 
-**To provide access to an application or group:**
+1. Navigate to **Definitions > Event Handler** from the left menu on your Orkes Conductor cluster.
+2. Click the **+ Define event handler** option from the top-right corner.
+3. Create an event handler with the following configurations:
 
-1. Go to **Access Control** > **Applications** or **Groups** from the left navigation menu on your Conductor cluster.
-2. Create a new group/application or select an existing one.
-3. In the **Permissions** section, select **+ Add Permission**.
-4. In the **Integration** tab, select the required message broker and toggle the necessary permissions.
+<p align="center"><img src="/content/img/event-handler-apache-kafka.png" alt="Configuring Event Handler for Apache Kafka Integration" width="60%" height="auto"/></p>
 
-<p align="center"><img src="/content/img/rbac-apache-kafka.png" alt="Configuring RBAC for Apache Kafka Integration" width="70%" height="auto"/></p>
+| Event Handler Parameters | Description | 
+| ------------------------ | ----------- |
+| Name | A name to identify your event handler definition. |
+| Event | The event integration you have created in the following format:<br/><br/>**Type : Config Name : Topic Name**<br/><br/>Example: **kafka:integration-test:topic-name**<br/><br/>**Note**: The drop-down automatically lists the integration you’ve added to the Conductor cluster. You can choose that and add the topic name you want to publish/receive messages. | 
+| Condition | The ECMAScript to control the message processing if required. Check out the [event handler documentation](https://orkes.io/content/developer-guides/event-handler#configuring-an-event-handler) for more details. |
+| Actions | Choose the required actions to be carried out when sending/receiving the events to/from Apache Kafka. It can take the following values:<ul><li>Complete Task</li><li>Terminate Workflow</li><li>Update Variables</li><li>Fail Task</li><li>Start Workflow</li></ul> Each type of action requires and supports a particular set of input parameters. Check out the [event handler documentation](https://orkes.io/content/developer-guides/event-handler#configuring-an-event-handler) for more details. | 
+| Active | Set this to true or false. It determines if the event handler is running or not. |
 
-The group or application can now access the message broker according to the configured permissions.
+A sample JSON for the event handler is as follows:
 
-## Next steps
+```json
+{
+ "name": "kafka-event-handler",
+ "event": "kafka:kafka-test:topic-name",
+ "condition": "true",
+ "actions": [
+   {
+     "action": "start_workflow",
+     "start_workflow": {
+       "name": "event-handler-test",
+       "version": 1
+     },
+     "expandInlineJSON": false
+   }
+ ],
+ "active": false,
+ "evaluatorType": "javascript",
+ "createdBy": "devrel@orkes.io"
+}
+```
 
-With the integration in place, you can now:
+## RBAC - Governance on who can use Integrations
 
-- [Create Event Handlers](https://orkes.io/content/developer-guides/event-handler) for use in [Event tasks](https://orkes.io/content/reference-docs/system-tasks/event).
-- [Enable Change Data Capture (CDC)](https://orkes.io/content/developer-guides/enabling-cdc-on-conductor-workflows) to send workflow state changes to message brokers.
+Once the integration is added, the next step is determining who can access these integrations.
+
+The permissions can be granted to applications/groups within the Orkes Conductor cluster.
+
+To provide explicit permission to Groups:
+
+1. From the left menu on your Orkes Conductor cluster, navigate to **Access Control > Groups**.
+2. Create a new group or choose an existing group.
+3. Under the **Permissions** section, click **+Add Permission**.
+4. From the **Integrations** sub-tab, choose the integration with required permissions.
+5. Click **Add Permissions**. This ensures that all the group members can access these integration models in their workflows.
+
+<p align="center"><img src="/content/img/rbac-apache-kafka.png" alt="Configuring RBAC for Apache Kafka Integration" width="60%" height="auto"/></p>
+
+Similarly, you can also provide permissions to [applications](https://orkes.io/content/access-control-and-security/applications#configuring-application).
+
+## Creating Workflow in Orkes Conductor 
+
+This step involves creating a workflow with an event task in Orkes Conductor. Here, we are utilizing the Apache Kafka topic as a sink for the event. 
+
+You can quickly build a workflow from UI in Orkes Conductor. 
+
+For this,
+
+1. Navigate to **Definitions > Workflow**, and click the **+ Define Workflow** button.
+2. Create a workflow and add an event task at the required point with the **Sink** in the format **kafka:kafka-test:topic-name**, where “kafka-test” is the integration name and “topic-name” is the topic to which Conductor should send/receive messages.
+
+<p align="center"><img src="/content/img/event-task-apache-kafka.png" alt="Event task for Apache Kafka Integration in Orkes Conductor" width="100%" height="auto"/></p>
+
+### Executing Workflow in Orkes Conductor 
+
+The workflow can be run using different methods. You can use the **Run Workflow** button for quick testing, as shown in the image below:
+
+<p align="center"><img src="/content/img/running-workflow-apache-kafka.png" alt="Running workflow from Orkes Conductor UI" width="100%" height="auto"/></p>
+
+Upon successful execution, you can verify the message's delivery through the Apache Kafka console. 
+
+The action added in the event handler definition was to start the workflow **event-handler-test**. You can verify this from the **Executions > Workflow** page.
+
+<p align="center"><img src="/content/img/event-handler-action-apache-kafka.png" alt="Starting workflow on sending events" width="100%" height="auto"/></p>
