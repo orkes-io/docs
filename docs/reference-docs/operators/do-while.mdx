@@ -249,7 +249,7 @@ The Do While task’s `taskReferenceName` is "get_all_stars_loop_ref". To evalua
 <details>
 <summary>Iterate over a list of items</summary>
 <p>
-It is possible to iterate over a list of items as long as the Do While task has `items` as an input parameter.
+It is possible to iterate over a list of items. To iterate over a list, the Do-While task MUST have an input parameter specifically named 'items' containing the collection to process. The parameter name 'items' is required and cannot be substituted with another name.
 
 The number of iterations will be equal to the list size. If `“items”=[“a”,“b”,“c”]`, the loop tasks will be executed three times; if `“items”=[]`, the Do While task will be marked as completed without executing the loop tasks.
 
