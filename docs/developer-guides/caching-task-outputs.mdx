@@ -31,7 +31,7 @@ Configure the following parameters to enable task caching.
 | cacheConfig. **ttlInSecond** | The time to live in seconds, which is the duration for the output to be cached.                                                                                                                                                                                        | Required.          |
 | cacheConfig. **key**         | The cache key is a unique identifier for the cached output and must be constructed exclusively from the task’s input parameters. <br/><br/> It can be a string concatenation that contains the task’s input keys, such as `${uri}-${method}` or `re_${uri}_${method}`. | Required.          |
 
-**Example**
+## Example
 
 Here is a straightforward example of task caching using the task’s input keys, `url` and `mediaType`.
 
@@ -92,7 +92,7 @@ In advanced cases where other parameters (such as workflow inputs or global vari
 }
 ```
 
-Example of passing as a variable through the Set Variable task:
+Here is an example of using a workflow variable as the cacheKey:
 
 ```json
 // workflow definition
