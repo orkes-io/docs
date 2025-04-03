@@ -89,7 +89,7 @@ const sidebars = {
             items: [
                 {
                     type: 'category',
-                    label: 'Build Workflows',
+                    label: 'Building Workflows',
                     link: {
                         type: 'generated-index',
                         title: 'Build Workflows',
