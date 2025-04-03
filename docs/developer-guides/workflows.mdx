@@ -1,0 +1,94 @@
+---
+slug: "/developer-guides/workflows"
+description: "This guide focuses on the basics of building workflows in Orkes Conductor, including the different ways to create a workflow and the parameters of a workflow definition."
+---
+
+# Overview: Workflows
+
+
+Build workflows in Conductor for a range of uses: business processes, event-driven workflows, agentic workflows, or microservice or API-driven applications.
+
+
+## Ways to create workflows
+
+In Conductor, all workflow definitions are stored as JSON. There are three ways to create a Conductor workflow:
+1. **Code**—Using Conductor SDKs, define the workflow in any programming language (Python, Java, JavaScript, C#, Go, Clojure). Learn more in [Write Workflows as Code](write-workflows-using-code).
+2. **JSON**—Write the workflow in JSON and register it to the Conductor server using the [`/api/metadata/workflow`](/reference-docs/api/metadata/creating-workflow-definition) endpoint.
+3. **Visual workflow editor**—Using Conductor UI, define your workflow visually, which is formatted as JSON under the hood.
+
+
+### Static vs dynamic workflows
+
+With Conductor, you can create workflows statically (ahead of time) or dynamically (at runtime). 
+
+Dynamic workflows are created using the workflow-as-code approach, allowing you to write your workflow and task workers in your preferred language and execute it immediately. This is useful in cases where workflows cannot be defined ahead of time, as the number of tasks and flow control depend on real-time factors. Learn more in [Write Workflows as Code](write-workflows-using-code).
+
+
+### AI-powered and agentic workflows
+
+An agentic workflow is an AI-driven process where the sequence of tasks are dynamically executed with minimal human interaction to achieve a particular goal. Using Conductor’s suite of [AI Orchestration](ai-orchestration.mdx) and [human-in-the-loop](orchestrating-human-tasks) features, you can rapidly build agentic or AI-powered workflows that are auditable, scalable, and safely embedded with human oversight. Learn more in [Advanced Workflows](advanced-workflows). 
+
+
+### Event-driven workflows
+
+Create event-driven workflows and seamlessly integrate with event-driven pipelines with Conductor’s suite of features: webhooks, event handlers, message broker integrations, and more. Learn more in [Advanced Workflows](advanced-workflows). 
+
+
+## Workflow definition
+
+The workflow definition contains configuration parameters that define the workflow behavior, including the flow of tasks, the workflow inputs and outputs, and the workflow failure handling settings.
+
+The most important parameter is the `tasks` array, which specifies the order and execution of the defined tasks and operators.
+
+| Parameter                     | Description                                                                     | Required/ Optional              |
+| ----------------------------- | --------------------------------------------------------------------------------| ------------------------------- |
+| name                          | Workflow name. <ul><li>For v4.0.1 and prior: Only letters, digits, hyphens (-), and underscores (\_) are allowed.</li> <li>For v4.0.2 and later: Only letters, digits, spaces, hyphens (-), underscores (\_), and certain special characters (`<`, `>`, `{`, `}`, `#`) are allowed.</li></ul>**Note**: It is recommended to use alphanumeric characters for workflow names. While special characters are allowed for backward compatibility, they are not fully supported and may cause unexpected behavior. | Required.                       |
+| description                   | ​Workflow description.                                              | Required.                       |
+| version                       | Workflow version.                                             | Optional.                       |
+| schemaVersion                 | The current Conductor Schema version. Must be 2.                       | Required.                       |
+| tasks                         | Array of [task configuration](tasks#task-configuration) objects. This defines the flow of tasks in the workflow.                                       | Required.                                              |
+| inputParameters               | Array of workflow input keys.                                                | Optional.                       |
+| outputParameters              | JSON template used to generate the workflow output. <br/><br/> If unspecified, the workflow output will be the output of the last executed task.                                                | Optional.                       |
+| enforceSchema                 | Whether to enforce input schema validation. Set to `true` to enable validation. <br/><br/> Learn more about using schemas in [Schema Validation](schema-validation).                                | Optional.                       |
+| inputSchema                   | The input schema parameters for the workflow.                                   | Required if `enforceSchema` is set to true.          |
+| outputSchema                  | The output schema parameters for the workflow.                                 | Required if `enforceSchema` is set to true.          |
+| restartable                   | Whether the workflow can be restarted after completion. The default value is true. <br/><br/> Set to false if restarting a completed workflow causes side effects.                            | Optional.                       |
+| workflowStatusListenerEnabled | Whether to enable status callback for workflow state changes. The default value is false. <br/><br/> Learn more in [Enabling CDC](enabling-cdc-on-conductor-workflows).                            | Optional.                       |
+| workflowStatusListenerSink    | The sink where workflow state changes are sent.                                 | Required if `workflowStatusListener` is set to true. |
+| ownerEmail                    | The email ID of the workflow creator.                                          | Required.                       |
+| timeoutPolicy                 | The workflow timeout policy. <br/><br/> Learn more about workflow timeouts in [Handling Failures](/error-handling).                                                                             | Required.                       |
+| timeoutSeconds                | The timeout duration in seconds.                                                | Required.                       |
+| failureWorkflow               | The compensation workflow to trigger upon failure of the current workflow execution. Useful for cleanup, notifications, or post actions. <br/><br/> Learn more about compensation workflows in [Handling Failures](/error-handling).                                                                          | Optional.                       |
+| rateLimitConfig               | A map of the workflow rate limit configuration. <br/><br/> Learn more about workflow rate limits in [Handling Failures](/error-handling).                                         | Optional.                       |
+| rateLimitConfig. rateLimitKey             | A unique identifier to group workflow executions for rate limiting.                                                                                                         | Optional.                       |
+| rateLimitConfig. concurrentExecLimit      | The number of workflow executions that can run concurrently for a given key.                                                                           | Optional.                       |
+
+
+### Example
+
+Here is an example workflow definition JSON:
+
+
+``` json
+{
+  "name": "exampleWorkflow",
+  "description": "Example workflow definition.", 
+  "version": 1,
+  "tasks": [],
+  "inputParameters": [
+    "someKey",
+    "anotherKey"
+  ],
+  "outputParameters": {
+    "someOutput": "${task_reference_name.output.id}",
+    "anotherOutput": "${workflow.version}"
+  },
+  "schemaVersion": 2,
+  "restartable": true,
+  "workflowStatusListenerEnabled": false,
+  "ownerEmail": "user@example.com",
+  "timeoutPolicy": "ALERT_ONLY",
+  "timeoutSeconds": 0,
+  "failureWorkflow": ""
+}
+```

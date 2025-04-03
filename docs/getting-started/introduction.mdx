@@ -8,35 +8,39 @@ import DocCardList from '@theme/DocCardList';
 
 # Introduction
 
-Orkes Conductor is an orchestration platform for building distributed applications in any language. Modern applications often consist of multiple services that must work together to complete the application. An orchestration layer is essential to manage this efficiently—similar to a frontend or backend layer in your tech stack. Orkes Conductor lets you add an orchestration layer to your existing applications or build new ones from scratch.
+Orkes Conductor is a Unified Application Platform for orchestrating distributed applications and agentic AI systems with enterprise-grade reliability, scalability, and observability. An orchestration layer is essential in today’s complex architectures, where microservices, APIs, and AI components must interoperate seamlessly.
 
-Orchestration is the practice of managing the flow and coordination of tasks across multiple services, much like how Kubernetes orchestrates containers or step functions orchestrate cloud operations. Workflows are components used to orchestrate distributed services. As modern applications increasingly rely on distributed services, orchestration becomes essential for ensuring your app’s performance and resilience.
+Conductor acts as the orchestration layer that unifies your application stack, enabling coordination across services, APIs, and intelligent agents. Whether you’re orchestrating backend services, coordinating AI agents, or executing long-running workflows, Conductor provides the operational backbone to ensure reliability, transactional integrity, and fault tolerance throughout your application's lifecycle.
 
-Whether managing microservices, handling data pipelines, or building AI applications like Agentic RAG (Retrieval Augmented Generation), Conductor helps coordinate services effectively, ensuring reliable performance.
-Conductor lets you build complex applications by breaking them down into simple tasks. It automatically handles state management, task sequencing, retries, and error handling, allowing you to focus on developing your core logic without worrying about orchestration.
+At the core of Conductor are workflows: modular blueprints that define how tasks are executed across your system. These workflows manage state, handle retries, and provide centralized control over distributed processes. This makes Conductor ideal not only for microservices and event-driven data pipelines but also for agentic AI systems, such as:
 
-Developers can use Conductor to ensure high reliability, transactional consistency, and scalability, no matter where their components are deployed or what languages they use. Simply define the workflow, and the Conductor takes care of the execution.
+- **Retrieval-Augmented Generation (RAG)**—Coordinate multiple AI services (retrieval engines, LLMs, and post-processing steps) into reliable, observable pipelines.
+- **Agentic Workflows**—Empower AI agents to take actions, call APIs, and perform multi-step reasoning by integrating them into deterministic, auditable workflows.
+- **Human-in-the-Loop Interactions**—Seamlessly integrate human approvals or feedback into automated processes for hybrid decision-making.
+
+Developers can define workflows declaratively, regardless of the languages or environments their components run in, and let Conductor manage the complexity of execution, scaling, and error handling.
 
 ## Key features
 
-- **Scalability**—Run workflows of any size, from small projects to large enterprise systems.
-- **Workflow as code**—Write workflows in your preferred language, including Java, Python, Go, C#, TypeScript, Clojure, and more.
-- **Task workers**—Build external task workers as microservices, serverless functions, or any deployment method you choose.
+- **Scalability**—Run workflows of any size, from lightweight automation to mission-critical enterprise systems, without compromising performance or reliability.
+- **Workflow as code**—Write workflows in your preferred language, including Python, Java, Javascript, C#, Go, and Clojure.
+- **Task workers**—Build task workers as microservices, serverless functions, or containerized services. Deploy them anywhere, using any tech stack or runtime.
+- **Agentic orchestration**—Seamlessly manage agentic AI patterns such as Retrieval-Augmented Generation (RAG), multi-step tool use, and human-in-the-loop processes with deterministic, traceable workflows.
 - **Fault tolerance**—Automatically recover from failures using built-in retries and compensation mechanisms to ensure high availability and uninterrupted operations.
 - **Durable execution**—Create long-running workflows without worrying about system failures, dependencies, or scaling issues.
-- **Reusable components**—Package and reuse common functions to reduce duplication across workflows.
+- **Reusable components**—Package and reuse common functions to minimize duplication across workflows.
 - **Access controls**—Maintain control and visibility with built-in access management features.
 - **Troubleshooting**—Built-in metrics and logs help identify and resolve issues across distributed executions.
 - **Operational insights**—Access detailed metrics to gain insights into performance, bottlenecks, and SLA compliance.
 - **Upgrade existing systems**—Integrate microservices, AI agents, and APIs to extend existing systems and improve orchestration.
-- **Speed up development cycle**—Speed up development cycles, launch new applications faster, and maintain high standards of security and observability.
+- **Accelerate development cycle**—Speed up development cycles, launch new applications faster, and maintain high standards of security and observability.
 - **Ease of integration**—Integrate seamlessly with various systems and services.
 
 ## Product suite
 With Orkes’ suite of SDKs, APIs, and Conductor UI, you can mix and match our products to develop with Conductor.
 * **Conductor SDKs**—Manage, test, and deploy workflows; write workers;  or integrate Conductor into your applications. Available in Python, Java, Javascript, C#, Go, and Clojure.
 * **Conductor APIs**—Manage resources (workflows, tasks, applications, users, and so on) programmatically.
-* **Orkes Platform**—Manage resources from a user interface, which includes a visual workflow editor.
+* **Conductor UI**—Manage resources from a user interface, which includes a visual workflow editor.
 
 ## Get started with Orkes Conductor
 
