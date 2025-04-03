@@ -43,7 +43,7 @@ To connect your task worker with the Conductor server, you must:
 2. Create a worker application and grant it Execute permission
 
 **To register your worker:**
-1. Log in to your Orkes cluster or [Orkes Developer Edition](https://developer.orkescloud.com/?utm_campaign=quickstarts&utm_source=orkes-doc&utm_medium=web).
+1. Log in to your Orkes cluster or [Orkes Developer Playground](https://developer.orkescloud.com/?utm_campaign=quickstarts&utm_source=orkes-doc&utm_medium=web).
 1. In the left navigation menu of the Conductor UI, go to **Definitions** > **Task**.
 2. Select **(+) Define task**.
 3. Enter the **Name** for the task, which must match the task definition name in your worker code. This must be *myTask* if you are using the sample worker project downloaded in the previous step.
@@ -54,7 +54,7 @@ The task is now saved to the Conductor server, which facilitates the routing of 
 Finally, your worker requires programmatic access to the Conductor server. This can be done by creating an application in Conductor, which is an access layer with its own permissions and access tokens.
 
 :::note
-If you are using [Orkes Developer Edition](https://developer.orkescloud.com/?utm_campaign=quickstarts&utm_source=orkes-doc&utm_medium=web), you can only create one application with the Admin role enabled.
+If you are using [Orkes Developer Playground](https://developer.orkescloud.com/?utm_campaign=quickstarts&utm_source=orkes-doc&utm_medium=web), you can only create one application with the Admin role enabled.
 :::
 
 **To create an application for your worker:**
@@ -71,7 +71,7 @@ If you are using [Orkes Developer Edition](https://developer.orkescloud.com/?utm
                                       authentication_settings=AuthenticationSettings(key_id='_CHANGE_ME_',
                                                                                      key_secret='_CHANGE_ME_'))
     ```
-6. (Skip this step if you are using [Orkes Developer Edition](https://developer.orkescloud.com/?utm_campaign=quickstarts&utm_source=orkes-doc&utm_medium=web)) Grant Execute permission to the application.
+6. (Skip this step if you are using [Orkes Developer Playground](https://developer.orkescloud.com/?utm_campaign=quickstarts&utm_source=orkes-doc&utm_medium=web)) Grant Execute permission to the application.
     1. Under Permissions, select **Add permission**.
     2. Select the **Task** tab and then your worker task “myTask”.
     3. Enable the **Execute** toggle.

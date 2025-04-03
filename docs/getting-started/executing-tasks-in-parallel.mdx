@@ -42,8 +42,8 @@ webkitallowfullscreen="webkitallowfullscreen"></iframe></div>
 </TabItem>
 </Tabs>
 
-If we named the task `retrieve-deposit-batch`, we'd notice that it is actually executed (in Developer Edition env), but how?
-That's because there is a pre-defined task that is polling and running all the tasks named `retrieve-deposit-batch`. We also have the required permissions in the Developer Edition for this task.
+If we named the task `retrieve-deposit-batch`, we'd notice that it is actually executed (in Developer Playground env), but how?
+That's because there is a pre-defined task that is polling and running all the tasks named `retrieve-deposit-batch`. We also have the required permissions in the Developer Playground for this task.
 
 Here is the code reference for this worker:
 
@@ -68,7 +68,7 @@ Here is the code reference for this worker:
 
 </CodeBlock>
 
-By default, it would return a random value between **5-10 tasks**. If we supply an input called **`batchCount`** - we can retrieve up to 100 transactions. This is a limitation of the Developer Edition. In a dedicated
+By default, it would return a random value between **5-10 tasks**. If we supply an input called **`batchCount`** - we can retrieve up to 100 transactions. This is a limitation of the Developer Playground. In a dedicated
 cluster, you can run parallel tasks into the thousands or tens of thousands depending on the cluster's capacity.
 
 :::note Try out a larger batch
