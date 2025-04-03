@@ -1,0 +1,150 @@
+---
+slug: "/developer-guides/tasks"
+description: "This guide introduces the different tasks available in Orkes Conductor and explores the ways to configure a task."
+---
+
+# Tasks in workflows
+
+When building workflows, you can use the built-in system tasks and operators provided by Conductor and additionally [write your own custom worker tasks](using-workers).
+
+## Built-in tasks
+Here is an introduction of the built-in tasks available in Conductor. These tasks enable you to quickly build workflows without needing to code.
+
+### For control flow
+
+The control structures and operations in your Conductor workflow are implemented as tasks. Here are the tasks available for managing the flow of execution:
+
+- Conditional flow
+  - **[Switch](../reference-docs/operators/switch)**—Execute tasks conditionally, like an _if…else…_ statement.
+- Looping flow
+  - **[Do While](../reference-docs/operators/do-while)**—Execute tasks repeatedly, like a _do…while…_ statement.
+- Parallel flows
+  - **[Fork](../reference-docs/operators/fork-join)**—Execute a static number of tasks in parallel.
+  - **[Dynamic Fork](../reference-docs/operators/dynamic-fork)**—Execute a dynamic number of tasks in parallel.
+  - **[Join](../reference-docs/operators/join)**—Join the forks after a Fork or Dynamic Fork before proceeding to the next task.
+  - **[Start Workflow](../reference-docs/operators/start-workflow)**—Asynchronously start another workflow.
+- Jumps or state changes in flow
+  - **[Terminate](../reference-docs/operators/terminate)**—Terminate the current workflow, like a _return_ statement.
+  - **[Sub Workflow](../reference-docs/operators/sub-workflow)**—Synchronously start another workflow, like a subroutine.
+  - **[Terminate Workflow](../reference-docs/operators/terminate-workflow.mdx)**—Terminate another ongoing workflow.
+  - **[Update Task](../reference-docs/system-tasks/update-task)**—Update the status of another ongoing task.
+- State querying
+  - **[Get Workflow](../reference-docs/operators/get-workflow)**—Get the execution details of another ongoing workflow.
+- Waits in flow
+  - **[Wait](../reference-docs/operators/wait)**—Pause the current workflow until a set time, duration, or signal is received.
+  - **[Wait for Webhook](../reference-docs/system-tasks/wait-for-webhook)**—Pause the current workflow for an incoming webhook signal.
+  - **[Human](../reference-docs/operators/human)**–Pause the current workflow for user input before proceeding to the next task.
+- Dynamic tasks in flow
+  - **[Dynamic](../reference-docs/operators/dynamic)**—Execute a task dynamically, like a function pointer.
+
+### For assigning variables
+
+In general, variables are bounded within each task and passed along in the workflow as necessary. However, you can also handle variables or secrets at a global environment or workflow level.
+
+- **[Set Variable](../reference-docs/operators/set-variable)**—Create or update workflow variables.
+- **[Update Secret](../reference-docs/system-tasks/update-secret)**—Create or update secrets in your Conductor cluster.
+
+### For execution logic
+
+In most common cases, you can make use of existing Conductor features instead of creating a custom worker from scratch. These include tasks for data transformation, user journeys, and LLM chaining.
+
+| Use Case                                                                                     | Task to Use                                                               |
+| -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| Call an API or HTTP endpoint                                                                 | [HTTP](../reference-docs/system-tasks/http)                               |
+| Poll an API or HTTP endpoint                                                                 | [HTTP Poll](../reference-docs/system-tasks/http-poll)                     |
+| Publish or consume events                                                                    | [Event](../reference-docs/system-tasks/event)                             |
+| Clean or transform JSON data                                                                 | [JSON JQ](../reference-docs/system-tasks/jq-transform)                    |
+| Modify SQL databases                                                                         | [JDBC](../reference-docs/system-tasks/jdbc)                               |
+| Execute JavaScript scripts                                                                   | [Inline](../reference-docs/system-tasks/inline)                           |
+| Evaluate and retrieve data in spreadsheets                                                   | [Business Rule](../reference-docs/system-tasks/business-rule)             |
+| Get authorized using a signed JWT                                                            | [Get Signed JWT](../reference-docs/system-tasks/get-signed-jwt)           |
+| Orchestrate human input in the loop                                                          | [Human](../reference-docs/operators/human)                                |
+| Query data from Conductor Search API or Metrics                                              | [Query Processor](../reference-docs/system-tasks/query-processor)         |
+| Send alerts to Opsgenie                                                                      | [Opsgenie](../reference-docs/system-tasks/opsgenie)                       |
+| Retrieve text or JSON content from a URL                                                     | [Get Document](../reference-docs/ai-tasks/llm-get-document)               |
+| Generate text embeddings                                                                     | [Generate Embeddings](../reference-docs/ai-tasks/llm-generate-embeddings) |
+| Store text embeddings in a vector database                                                   | [Store Embeddings](../reference-docs/ai-tasks/llm-store-embeddings)       |
+| Generate and store text embeddings in a vector database                                      | [Index Text](../reference-docs/ai-tasks/llm-index-text)                   |
+| Chunk, generate, and store text embeddings in a vector database                              | [Index Document](../reference-docs/ai-tasks/llm-index-document)           |
+| Retrieve data from a vector database                                                         | [Get Embeddings](../reference-docs/ai-tasks/llm-get-embeddings)           |
+| Retrieve data from a vector database based on a search query                                 | [Search Index](../reference-docs/ai-tasks/llm-search-index)               |
+| Generate text from an LLM based on a defined prompt                                          | [Text Complete](../reference-docs/ai-tasks/llm-text-complete)             |
+| Generate text from an LLM based on a user query and additional system/assistant instructions | [Chat Complete](../reference-docs/ai-tasks/llm-chat-complete)             |
+
+
+
+## Task definition
+
+A task definition specifies a task’s general implementation details, like the expected input and output keys, and [failure-handling configurations](/error-handling), like rate limits, retries, and timeouts. This definition applies to all instances of the task across workflows.
+
+For all custom worker tasks, a task definition needs to be added to the Conductor server before it can be used in a workflow. While system tasks do not require a task definition, it can be created to so that task’s failure handling settings can be configured.
+
+All task definitions are stored as JSON. These parameters can be updated in real time without needing to redeploy your application.
+
+
+### Example
+
+Here is an example task definition JSON:
+
+
+``` json
+{
+  "createTime": 1721901586970,
+  "updateTime": 1725926875230,
+  "createdBy": "user@acme.com",
+  "updatedBy": "user@acme.com",
+  "name": "calculate-fx",
+  "description": "Calculates currency exchange",
+  "retryCount": 0,
+  "timeoutSeconds": 3600,
+  "inputKeys": [],
+  "outputKeys": [],
+  "timeoutPolicy": "TIME_OUT_WF",
+  "retryLogic": "EXPONENTIAL_BACKOFF",
+  "retryDelaySeconds": 30,
+  "responseTimeoutSeconds": 600,
+  "concurrentExecLimit": 20,
+  "inputTemplate": {},
+  "rateLimitPerFrequency": 10,
+  "rateLimitFrequencyInSeconds": 1,
+  "ownerEmail": "user@acme.com",
+  "pollTimeoutSeconds": 3600,
+  "backoffScaleFactor": 1,
+  "enforceSchema": false
+}
+```
+
+
+## Task configuration
+
+The task configuration is part of the workflow definition. It specifies the workflow-specific implementation details, like the task reference name, task type, task input parameters, and so on.
+
+Although each task type has its unique configuration, all tasks share several parameters in common. Refer to the [Task Reference](/category/reference-docs) to learn more about the task configuration for each task type.
+
+### Common configuration parameters
+
+| Parameter         | Description                                                                                 | Required/ Optional  |
+| ----------------- | ------------------------------------------------------------------------------------------- | ------------------- |
+| name              | Name of the task. The default value is the same as the task type. <br/><br/> The name can be changed to something descriptive. To use a given task definition, the task name here must match the task definition name (case-sensitive).<br/><br/>**Note**: It is recommended to use alphanumeric characters for task names. While special characters are allowed for backward compatibility, they are not fully supported and may cause unexpected behavior. | Required.             |
+| taskReferenceName | Reference name for the task. <br/><br/> Must be a unique value in a given workflow.                                                                                                    | Required.           |
+| type              | The task type. For example, HTTP, SIMPLE.                                              | Required.           |
+| inputParameters   | Map of the task’s input parameters.                                                    | Depends on the task type. |
+| optional          | Whether the task is optional. <br/><br/> If set to true, the workflow continues to the next task even if this task fails or remains incomplete.                                                           | Optional.           |
+| asyncComplete     | Whether the task is completed asynchronously. The default value is false. Supported values: <ul><li>**false**—Task status is set to COMPLETED upon successful execution.</li><li>**true**—Task status is kept as IN_PROGRESS until an external event completes it.</li></ul>                                                 | Optional.           |
+| startDelay        | The time in seconds to wait before making the task available for worker polling. The default value is 0.                                                                                               | Optional.           |
+| onStateChange     | Configuration for publishing an event or starting another task when this task status changes.                                                                                                 | Optional.           |
+
+
+### Passing data between tasks
+
+Data can be passed from one task to another, by using dynamic references in a task’s `inputParameters`. These dynamic references are formatted as JSONPath expressions. Refer to [Wiring Parameters](passing-inputs-to-task-in-conductor) to learn more.
+
+
+## Task reuse
+
+Since task workers typically perform a unit of work as part of a larger workflow, Conductor’s infrastructure is built to enable task reusability out of the box. Once a task is defined in Conductor, it can be reused numerous times:
+
+- In the same workflow, using different task reference names.
+- Across various workflows.
+
+When reusing tasks, it's important to think of situations that a multi-tenant system faces. By default, all the work assigned to this worker goes into the same task queue. This could result in your worker not being polled quickly if there is a noisy neighbor in the ecosystem. You can tackle this situation by scaling up the number of workers to handle the task load, or even using [task-to-domain](task-to-domain) to route the task load into separate queues.

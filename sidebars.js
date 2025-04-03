@@ -91,12 +91,30 @@ const sidebars = {
                     type: 'category',
                     label: 'Build Workflows',
                     link: {
-                        type: 'doc',
-                        id: 'developer-guides/building-workflows',
+                        type: 'generated-index',
+                        title: 'Developer Guides',
+                        slug: '/developer-guides/building-workflows',
+                        description: 'In this section, learn the basics of building Conductor workflows through various methods (via code, JSON, or UI). This includes topics on how to pass parameters in workflows securely, configure failure-handling settings for tasks and workflows, and debug workflows in development.',
                     },
                     className: 'leftMenuHeader',
                     items: [
-                        'developer-guides/write-workflows-using-code',
+                        {
+                            type: 'category',
+                            label: 'Workflows',
+                            link: {
+                                type: 'doc',
+                                id: 'developer-guides/workflows',
+                            },
+                            items: [
+                                'developer-guides/write-workflows-using-code',
+                            ],
+                            collapsible: false,
+                        },
+                        {
+                            type: 'doc',
+                            id: 'developer-guides/tasks-in-workflows',
+                            label: "Tasks",
+                        },
                         {
                             type: 'category',
                             label: 'Inputs/Outputs',
@@ -151,7 +169,7 @@ const sidebars = {
                     items: [
                         {
                             type: 'category',
-                            label: 'AI Orchestration',
+                            label: 'AI Orchestration and Agentic Workflows',
                             link: {
                                 type: 'doc',
                                 id: 'developer-guides/ai-orchestration',

@@ -245,8 +245,8 @@ You can configure timeout behavior for workflow in its **workflow definition**. 
 
 | Parameter           | Description                             | Required/Optional |
 | ------------------- | --------------------------------------- | ----------------- | 
-| timeoutSeconds | Time (in seconds), after which the workflow will be set as TIMED_OUT if it hasn't reached a terminal state. No timeout occurs if the value is set to 0. | Required. |
-| timeoutPolicy | The policy for handling workflow timeout. Supported values:<ul><li>**TIME_OUT_WF**–The workflow is set to TIMED_OUT and is terminated.</li><li>**ALERT_ONLY**–Increments the counter to check the workflow status when it times out and logs relevant messages.</li></ul> | Optional. | 
+| timeoutSeconds | The timeout, in seconds, after which the workflow will be set as TIMED_OUT if it hasn't reached a terminal state. <br/> <br/> Set to 0 for no timeouts. | Required. |
+| timeoutPolicy | The policy for handling workflow timeout. Supported values:<ul><li>**TIME_OUT_WF**–The workflow is set to TIMED_OUT and is terminated.</li><li>**ALERT_ONLY**–Increments the counter to check the workflow status when it times out and logs relevant messages.</li></ul> | Required. | 
 
 **Example**
 
