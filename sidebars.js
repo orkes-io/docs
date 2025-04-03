@@ -655,6 +655,11 @@ const sidebars = {
                     items: [
                         {
                             type: 'doc',
+                            id: 'tutorials/long-running-apis',
+                            label: 'Long-Running APIs',
+                          },
+                        {
+                            type: 'doc',
                             id: 'templates/examples/sequential-http-tasks',
                             label: 'Sequential HTTP Tasks',
                         },

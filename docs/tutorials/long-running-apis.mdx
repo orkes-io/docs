@@ -1,0 +1,384 @@
+---
+slug: "/tutorials/long-running-apis"
+description: "Learn how to handle long-running APIs using Orkes Conductor, including asynchronous execution and state persistence best practices."
+---
+
+# Orchestrating Long-Running APIs
+
+This tutorial demonstrates how to handle long-running API tasks efficiently using Orkes Conductor. You’ll learn how to handle HTTP timeouts by invoking tasks asynchronously and polling for their status.
+
+In this tutorial, you will:
+- Create an AWS Lambda function to simulate a long-running task.
+- Store execution status in Amazon DynamoDB.
+- Set up Amazon API Gateway endpoints to invoke and monitor tasks.
+- Define and run a Conductor workflow.
+
+By the end, you'll have a fully functional workflow that orchestrates long-running API tasks effectively.
+
+## Understanding the challenge
+
+### Problem: Handling long-running API calls
+
+Conductor’s HTTP task is designed for synchronous API calls, with a default timeout of 60 seconds. This can be problematic when dealing with APIs that require extended processing time (e.g., 4 minutes or more).
+
+### Solution: Use asynchronous invocation with polling
+
+To address this, you can use employ a two-step pattern:
+
+1. **Trigger the long-running task asynchronously** using an HTTP task.
+2. **Poll the task status** using an HTTP Poll task until it completes.
+
+## The long running workflow
+
+Here is the long running workflow that you’ll build in this tutorial:
+
+<p align="center"><img src="/content/img/tutorial/long-running-workflow.png" alt="Long Running API Workflow in Conductor" width="50%" height="auto"></img></p>
+
+## Step 1: Create an Amazon DynamoDB table to track task status
+
+To store task status, begin by creating a DynamoDB table:
+
+1. Sign in to the [AWS Console](https://console.aws.com).
+2. In the navigation pane, go to [**Services** > **Amazon DynamoDB**](https://console.aws.amazon.com/dynamodb/home).
+3. In the left menu, select **Tables**, and then choose **Create table**.
+4. Set the **Table name** to *lambda-invocation-status*.
+5. Set the **Partition Key** to *requestId*.
+
+<p align="center"><img src="/content/img/tutorial/dynamo-db-table.png" alt="Creating a table in Amazon DynamoDB" width="100%" height="auto"></img></p>
+
+:::note
+The requestId is a unique identifier used to track each task instance throughout the workflow. It is provided when running the workflow, passed to the Lambda function, and used later to poll for status from DynamoDB.
+:::
+
+For more information, refer to [DynamoDB documentation](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/getting-started-step-1.html).
+
+## Step 2: Set up a long-running task in AWS Lambda
+
+Create an AWS Lambda function that stimulates a long-running task. It will take requestId as input and store its execution status in DynamoDB.
+
+### Create a Lambda function
+
+**To create a Lambda function:**
+
+1. In the [AWS Console](https://console.aws.com), go to **Services** > **AWS Lambda**.
+2. Select **Create a function**.
+3. Enter a **Function name**.
+4. In **Runtime**, select **Python**.
+
+<p align="center"><img src="/content/img/tutorial/lambda-function.png" alt="Creating a Lambda function" width="100%" height="auto"></img></p>
+
+5. Select **Create function**.
+6. After the function is created, go to the **Code** tab, and replace the default code with the following:
+
+```python
+import json
+import time
+import boto3
+
+dynamodb = boto3.resource('dynamodb')
+table = dynamodb.Table('lambda-invocation-status')
+
+def lambda_handler(event, context):
+    request_id = event['requestId']
+    action = event.get("action")
+
+    if action == "invoke":
+        table.put_item(Item={'requestId': request_id, 'status': 'PROCESSING'})
+
+        # Simulate long processing time
+        time.sleep(2)
+        process_long_running_task(request_id)
+
+        return {
+            "statusCode": 202,
+            "body": json.dumps({"requestId": request_id, "status": "PROCESSING"})
+        }
+
+    elif action == "status":
+        response = table.get_item(Key={'requestId': request_id})
+        item = response.get('Item')
+        if item:
+            return {"statusCode": 200, "body": json.dumps(item)}
+        else:
+            return {"statusCode": 404, "body": json.dumps({"status": "NOT_FOUND"})}
+
+def process_long_running_task(request_id):
+    time.sleep(25)  # Simulate processing time
+    table.update_item(
+        Key={'requestId': request_id},
+        UpdateExpression='SET #s = :val',
+        ExpressionAttributeNames={'#s': 'status'},
+        ExpressionAttributeValues={':val': 'COMPLETED'}
+    )
+```
+
+7. In **Configurations** > **General configuration**, increase the **Timeout** to 1 minute.
+
+### Create an IAM policy
+
+Next, [create an IAM policy](https://docs.aws.amazon.com/lambda/latest/dg/lambda-intro-execution-role.html#permissions-executionrole-console) to allow the Lambda function to access DynamoDB.
+
+1. Go to **IAM** > **[Roles](https://console.aws.amazon.com/iam/home#/roles)** > **Create role**.
+2. In **Trusted entity type**, select **AWS service**.
+3. In **Use case**, select **Lambda**.
+4. Select **Next**.
+5. In **Permission policies**, select **AmazonDynamoDBFullAccess**.
+6. Select **Next**.
+7. Enter a **Role name** and then choose **Create role**.
+
+### Attach IAM policy to Lambda function
+
+Next you need to attach the policy to the Lambda function.
+
+1. Open the Lambda [function](https://console.aws.amazon.com/lambda/home#/functions).
+2. Go to **Configurations** > **Permissions**.
+3. In **Execution role**, select **Edit**.
+4. In **Existing role**, select the policy you just created.
+5. Select **Save**.
+
+## Step 3: Set up API Gateway Endpoints
+
+We’ll now expose our Lambda function using Amazon API Gateway. For this, create the following two API endpoints:
+
+- `POST /invoke-lambda`: Triggers the Lambda function asynchronously.
+- `GET /{requestId}`: Retrieves the status of the Lambda execution. 
+
+### Create REST API
+
+1. In the [AWS Console](https://console.aws.com), go to **Services** > **Amazon API Gateway**.
+2. In **Choose an API type**, select **REST API** > **Build**.
+3. Enter an **API name**, and select **Create API**.
+
+### Create resources
+
+Next, we need to create resources for each API endpoint.
+
+<details>
+<summary>POST /invoke-lambda Endpoint</summary>
+
+1. In **Resources**, select **Create resource**.
+2. In **Resource path**, select **/**.
+3. In **Resource name**, enter **invoke-lambda**, then select **Create resource**.
+4. Select **Create method**, and choose **Method type** as **POST**.
+5. Select **Integration type** as **Lambda**.
+6. In **Lambda function**, select the Lambda function created in [Step 2](/content/tutorials/long-running-apis#step-2-set-up-a-long-running-task-in-aws-lambda).
+7. Select **Create method**.
+
+<p align="center"><img src="/content/img/tutorial/post-resource.png" alt="Resource for invoking lambda function" width="100%" height="auto"></img></p>
+
+Next, let’s add the integration request mapping.
+
+1. In **Integration request** tab, select **Edit**.
+2. In **Mapping templates**, set **Content type** as **application/json**.
+3. In **Template body**, paste this:
+
+```json
+#set($context.requestOverride.header.X-Amz-Invocation-Type = "Event")
+
+{
+  "action": "invoke",
+  "requestId": "$input.path('$.requestId')"
+}
+```
+
+<p align="center"><img src="/content/img/tutorial/mapping-template-post-request.png" alt="Mapping template in integration request" width="100%" height="auto"></img></p>
+
+Now, let’s configure the method response.
+
+1. Go to **Method response** tab, select **Edit**.
+2. Delete the default 200 response.
+3. Select **Create method response**.
+4. Set **HTTP status code** to **202**.
+5. Set **Header name** to **Content-Type**.
+
+<p align="center"><img src="/content/img/tutorial/post-method-response.png" alt="Method response configuration" width="100%" height="auto"></img></p>
+
+Finally, set up an integration response to return a processing acknowledgment.
+
+1. In **Integration response** tab, delete the existing 200 responses.
+2. Select **Create response**.
+3. Set **Method response status code** to **202**.
+4. Select **Create**, then select **Edit**.
+5. In **Mapping templates**, set **Content type** as **application/json**.
+6. In **Template body**, paste this:
+
+```json
+{
+  "requestId": "$input.json('$.body.requestId')",
+  "status": "PROCESSING"
+}
+```
+
+<p align="center"><img src="/content/img/tutorial/post-integration-response.png" alt="Integration response configuration" width="100%" height="auto"></img></p>
+
+</details>
+
+<details>
+<summary>GET  /\{requestId} Endpoint</summary>
+
+1. In **Resources**, select **Create resource**.
+2. In **Resource path**, select **/**.
+3. In **Resource name**, enter **\{requestId}**, then select **Create resource**.
+4. Select **Create method**, and choose **Method type** as **GET**.
+5. Select **Integration type** as **Lambda**.
+6. In **Lambda function**, select the Lambda function created in [Step 2](/content/tutorials/long-running-apis#step-2-set-up-a-long-running-task-in-aws-lambda).
+7. Select **Create method**.
+
+<p align="center"><img src="/content/img/tutorial/get-resource.png" alt="Resource for polling the API status" width="100%" height="auto"></img></p>
+
+Next, add the integration request mapping.
+
+1. In **Integration request** tab, select **Edit**.
+2. In **Mapping templates**, set **Content type** as **application/json**.
+3. In **Template body**, paste this:
+
+```json
+{
+  "action": "status",
+  "requestId": "$input.params('requestId')"
+}
+```
+
+<p align="center"><img src="/content/img/tutorial/mapping-template-get-request.png" alt="Mapping template in integration request" width="100%" height="auto"></img></p>
+
+Next, add a header to the method response.
+
+1. Go to **Method response** tab, select **Edit**.
+2. For 200 responses, select **Add header**.
+3. Set **Header name** to **Content-Type**.
+4. Set the **Response body** as **application/json**.
+
+<p align="center"><img src="/content/img/tutorial/get-method-response.png" alt="Method response configuration" width="100%" height="auto"></img></p>
+
+Finally, let’s confirm the integration response configuration. In the **Integration response** tab, verify that the method response status code is 200.
+
+<p align="center"><img src="/content/img/tutorial/get-integration-response.png" alt="Integration response configuration" width="100%" height="auto"></img></p>
+
+</details>
+
+### Deploy REST API
+
+Next, [deploy the APIs to a stage](https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-deployments.html#create-deployment) (e.g., test, prod).
+
+**To deploy your API:**
+
+1. Select **Deploy API**.
+2. In **Stage**, select **New stage**.
+3. Enter a **Stage name**.
+4. Select **Deploy**.
+
+Once deployed, note the **Invoke URL** which will be of the format:
+
+```
+https://<your-api-gateway-id>.execute-api.<your-region>.amazonaws.com/<stage>
+```
+
+For more details, refer to [API Gateway REST API setup guide](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-getting-started-with-rest-apis.html).
+
+## Step 4: Create Conductor workflow
+
+:::tip
+Use the free [Developer Playground](https://developer.orkescloud.com/) to create workflows.
+:::
+
+Now, define a Conductor workflow that:
+- Invokes the Lambda function using an HTTP task.
+- Polls the status endpoint until the task is completed using the HTTP Poll task.
+
+**To create a workflow:**
+
+1. Go to **Definitions** > **Workflow** from the left navigation menu on your Conductor cluster.
+2. Select **+ Define workflow**.
+3. In the **Code** tab, paste the following code:
+
+```json
+{
+ "name": "LongRunningAPIWorkflow",
+ "description": "Sample workflow",
+ "version": 1,
+ "tasks": [
+   {
+     "name": "InvokeLambdaTask",
+     "taskReferenceName": "invokeLambda",
+     "inputParameters": {
+       "http_request": {
+         "uri": "https://<your-api-gateway-id>.execute-api.<your-region>.amazonaws.com/<stage>/invoke-lambda",
+         "method": "POST",
+         "headers": {
+           "Content-Type": "application/json",
+           "X-Amz-Invocation-Type": "Event"
+         },
+         "body": {
+           "requestId": "${workflow.input.requestId}"
+         }
+       }
+     },
+     "type": "HTTP"
+   },
+   {
+     "name": "http_poll",
+     "taskReferenceName": "http_poll_ref",
+     "inputParameters": {
+       "http_request": {
+         "uri": "https://<your-api-gateway-id>.execute-api.<your-region>.amazonaws.com/<stage>/${workflow.input.requestId}",
+         "method": "GET",
+         "accept": "application/json",
+         "contentType": "application/json",
+         "terminationCondition": "(function(){ return $.output.response.statusCode == 200 && $.output.response.body.body.status == \"COMPLETED\";})();",
+         "pollingInterval": "5",
+         "pollingStrategy": "FIXED",
+         "encode": true
+       }
+     },
+     "type": "HTTP_POLL"
+   }
+ ],
+ "inputParameters": [
+   "requestId"
+ ],
+ "schemaVersion": 2
+}
+```
+
+4. Select **Save** > **Confirm**.
+
+### Modify workflow
+
+Next, let’s modify the workflow to include your deployed API Gateway URLs.
+
+1. In **InvokeLambdaTask**, replace the uri value with your deployed API endpoint for invoking the Lambda:
+
+```
+https://<your-api-gateway-id>.execute-api.<your-region>.amazonaws.com/<stage>/invoke-lambda
+```
+
+2. In **http_poll**, replace the polling URL with the endpoint for checking Lambda status:
+
+```
+https://<your-api-gateway-id>.execute-api.<your-region>.amazonaws.com/<stage>/${workflow.input.requestId}
+```
+
+3. Save the workflow
+
+## Step 5: Run workflow
+
+Now, let’s test the workflow:
+
+1. Go to the **Run** tab.
+2. Enter the input parameters. For example:
+
+```json
+{
+  "requestId": "12345"
+}
+```
+
+3. Select **Run Workflow**.
+
+On running the workflow, the **InvokeLambdaTask** will trigger the Lambda function. The **http_poll** task will continuously check the status until the task is completed.
+
+## Troubleshooting
+
+- **Workflow gets stuck on polling**: Check API Gateway response format.
+- **Lambda execution fails**: Ensure it has the right IAM permissions for DynamoDB.
+- **Polling stops too soon**: Adjust *pollingInterval* for the HTTP task in the workflow definition.
