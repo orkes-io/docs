@@ -30,7 +30,7 @@ npm install --save @io-orkes/conductor-javascript
     } from "@io-orkes/conductor-javascript";
 
     export const config = {
-      serverUrl: `${process.env.SERVER_URL}`, // e.g., "https://developer.orkescloud.com/api" for Developer Edition
+      serverUrl: `${process.env.SERVER_URL}`, // e.g., "https://developer.orkescloud.com/api" for Developer Playground
     };
 
     (async () => {
@@ -51,7 +51,7 @@ Once we have a key and secret, we can configure the app from properties or envir
     export const config = {
       keyId: process.env.KEY,
       keySecret:process.env.SECRET,
-      serverUrl: `${process.env.SERVER_URL}`, // e.g., "https://developer.orkescloud.com/api" for Developer Edition
+      serverUrl: `${process.env.SERVER_URL}`, // e.g., "https://developer.orkescloud.com/api" for Developer Playground
     };
 
     (async () => {
