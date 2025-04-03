@@ -17,12 +17,13 @@ When a Do While loop is executed, each task in the loop will have its `taskRefer
 
 Configure these parameters for the Do While task.
 
-| Parameter                      | Description                                                                                                                                                                                                                                                                                                                        | Required/ Optional |
-| ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
+| Parameter                      | Description                                                          | Required/ Optional   |
+| ------------------------------ | ------------------------------------------------------------------------------------------------------- | -------------------- |
 | evaluatorType                  | The type of evaluator used. Supported types: <ul><li>`value-param`—Evaluates a specific input parameter in the Do While task.</li><li>`graaljs`—Evaluates JavaScript expressions and computes the value. Allows you to use ES6-compatible JavaScript.</li></ul>                                                                    | Required.          |
 | loopCondition                  | The condition that is evaluated by the Do While task after every iteration. The expression format depends on the evaluator type:<ul><li>For the `value-param` evaluator, the expression is the input parameter key.</li><li>For the `javascript` and `graaljs` evaluators, the expression is the JavaScript expression. </li></ul> | Required.          |
-| loopOver                       | The list of tasks to be executed as long as the condition is true.                                                                                                                                                                                                                                                                 | Required.          |
-| inputParameters. **keepLastN** | The number of required iterations. On enabling this option, this value is set to 2 by default. You can also choose not to include this parameter if there are no limits on the number of iterations.                                                                                                                               | Optional.          |
+| loopOver                       | The list of tasks to be executed as long as the condition is true.    | Required.          |
+| inputParameters. **keepLastN** | The number of required iterations. On enabling this option, this value is set to 2 by default. You can also choose not to include this parameter if there are no limits on the number of iterations.                | Optional. Do not use if `inputParamters.items` is set.         |
+| inputParameters. **items** | An array of items, which will be iterated over in the loop. The number of iterations is equal to the list size. You can use this to iterate without a condition. Refer to [Examples](#examples) for more information on how to use the `items` parameter.            | Optional.          |
 
 ## Task configuration
 
