@@ -8,7 +8,7 @@ import TabItem from "@theme/TabItem";
 
 # Apache Kafka Integration with Orkes Conductor
 
-To use the [Event task](https://orkes.io/content/reference-docs/system-tasks/event) or [enable Change Data Capture (CDC)](https://orkes.io/content/developer-guides/enabling-cdc-on-conductor-workflows) in Orkes Conductor, you must integrate your Conductor cluster with the necessary message brokers. This guide explains how to integrate self-managed Apache Kafka, Amazon MSK, or Confluent Kafka clusters with Orkes Conductor to publish and receive messages from topics. Here’s an overview:
+To use the [Event task](https://orkes.io/content/reference-docs/system-tasks/event), [Event Handler](https://orkes.io/content/developer-guides/event-handler), or [enable Change Data Capture (CDC)](https://orkes.io/content/developer-guides/enabling-cdc-on-conductor-workflows) in Orkes Conductor, you must integrate your Conductor cluster with the necessary message brokers. This guide explains how to integrate self-managed Apache Kafka, Amazon MSK, or Confluent Kafka clusters with Orkes Conductor to publish and receive messages from topics. Here’s an overview:
 
 1. Get the required credentials from Kafka.
 2. Configure a new Apache Kafka integration in Orkes Conductor.
@@ -142,5 +142,6 @@ The group or application can now access the message broker according to the conf
 
 With the integration in place, you can now:
 
-- [Create Event Handlers](https://orkes.io/content/developer-guides/event-handler) for use in [Event tasks](https://orkes.io/content/reference-docs/system-tasks/event).
+- [Create Event Handlers](https://orkes.io/content/developer-guides/event-handler).
+- [Configure Event tasks](https://orkes.io/content/reference-docs/system-tasks/event).
 - [Enable Change Data Capture (CDC)](https://orkes.io/content/developer-guides/enabling-cdc-on-conductor-workflows) to send workflow state changes to message brokers.

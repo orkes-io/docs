@@ -5,7 +5,7 @@ description: "Learn how to integrate Azure Service Bus with your Orkes Conductor
 
 # Azure Service Bus Integration with Orkes Conductor
 
-To use the [Event task](https://orkes.io/content/reference-docs/system-tasks/event) or [enable Change Data Capture (CDC)](https://orkes.io/content/developer-guides/enabling-cdc-on-conductor-workflows) in Orkes Conductor, you must integrate your Conductor cluster with the necessary message brokers. This guide explains how to integrate Azure Service Bus with Orkes Conductor to publish and receive messages from queues. Here’s an overview:
+To use the [Event task](https://orkes.io/content/reference-docs/system-tasks/event), [Event Handler](https://orkes.io/content/developer-guides/event-handler), or [enable Change Data Capture (CDC)](https://orkes.io/content/developer-guides/enabling-cdc-on-conductor-workflows) in Orkes Conductor, you must integrate your Conductor cluster with the necessary message brokers. This guide explains how to integrate Azure Service Bus with Orkes Conductor to publish and receive messages from queues. Here’s an overview:
 
 1. Get the required credentials from Azure Service Bus.
 2. Configure a new Azure Service Bus integration in Orkes Conductor.
@@ -61,5 +61,6 @@ The group or application can now access the message broker according to the conf
 
 With the integration in place, you can now:
 
-- [Create Event Handlers](https://orkes.io/content/developer-guides/event-handler) for use in [Event tasks](https://orkes.io/content/reference-docs/system-tasks/event).
+- [Create Event Handlers](https://orkes.io/content/developer-guides/event-handler).
+- [Configure Event tasks](https://orkes.io/content/reference-docs/system-tasks/event).
 - [Enable Change Data Capture (CDC)](https://orkes.io/content/developer-guides/enabling-cdc-on-conductor-workflows) to send workflow state changes to message brokers.
