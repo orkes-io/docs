@@ -1,0 +1,25 @@
+---
+slug: "/developer-guides/running-workflows"
+description: "This guide focuses on the basics of running workflows in Orkes Conductor, including running from UI, creating automated schedules, and sending signals."
+---
+
+# Running Workflows
+
+There are many ways to run a Conductor workflow:
+* Run in Conductor UI
+* Set a schedule
+* Run from a webhook
+* Run from an event
+* Run via Conductor APIs (sending signals)
+* Run via Conductor SDKs (workflow as code)
+
+The Conductor UI is typically used to run workflows during development and testing. In production, workflows can be triggered from a cron schedule, a webhook event, an event from message brokers like Kafka, or using our APIs/SDKs. The API suite contains various endpoints for starting, pausing, terminating workflows, and more. The SDK approach to running workflows is suitable for dynamic workflows.
+
+
+## Learn more
+
+```mdx-code-block
+import DocCardList from '@theme/DocCardList';
+
+<DocCardList />
+```

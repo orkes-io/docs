@@ -1,0 +1,72 @@
+---
+slug: "/developer-guides/workflow-version-behavior-on-execution"
+description: "Find out how workflow versions intersect with current and new executions."
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Workflow Versioning and Upgrades at Runtime
+
+Learn how workflow versioning works during runtime and how to upgrade a currently running workflow.
+
+
+## General runtime behavior
+
+Each workflow execution runs based on the snapshot of the workflow definition and version at the start of the execution. To get a better understanding, take a look at the following illustration:
+
+<p align="center"><img src="/content/img/dev-guides/Workflow-versioning-at-runtime-V2.jpg" alt="General Behavior of Workflow Version" width="100%"
+                       height="auto"/></p>
+
+In the illustration above, the workflow with version V1 is executed at timestamp T1 and thus uses the workflow definition at that time.
+
+When the workflow definition is updated but with the same version V1, all previously running executions will continue based on the definition at timestamp T1. Meanwhile, any newly-triggered executions with version V1 will run based on the definition at timestamp T3.
+
+When a new workflow version V2 is added at T2, all new executions from that point will also execute based on the latest version V2, unless V1 is explicitly specified.
+
+
+### Behavior during restarts
+
+By default, all workflow restarts, retries, and task reruns will also be executed based on the snapshot of the workflow definition and version at the start of the *first* execution attempt. 
+
+
+<p align="center"><img src="/content/img/dev-guides/Restarting-workflows-at-runtime-v2.jpg" alt="Behavior of Workflow Version during restarts." width="100%"
+                       height="auto"/></p>
+
+In the illustration above, if a V1 execution is restarted after a new version V2 has been created, the restarted execution will still be based on the definition at T1. This is true even if the V1 execution is restarted after the V1 definition itself has been updated.
+
+There is also an option to restart the execution based on the latest definitions rather than the definitions at the initial execution time. In this case, the V1 execution will restart using the definition at T2 instead. 
+
+Learn more about recovering from failures in [Debugging Workflows](https://orkes.io/content/developer-guides/debugging-workflows#recovering-from-failures).
+
+
+## **Upgrading running workflows**
+
+Since all workflow executions are based on the snapshot of their definition at the start of the execution, any changes to the definition will not impact currently running executions. If necessary, running workflows can be upgraded to the latest definitions using Conductor UI or API.
+
+**To upgrade a running workflow:**
+
+
+<Tabs groupId="method">
+<TabItem value="ui" label="Using Conductor UI">
+
+To run the latest version in UI, terminate the currently running execution and restart it with the latest definition.
+
+1. Go to **Executions** > **Workflow** in the left navigation menu and select the workflow to upgrade.
+2. In the top right, select **Actions** > **Terminate**.
+    <p align="center"><img src="/content/img/step-1-terminate-workflow.png" alt="Step 2 - Terminate the running workflow" width="100%"
+                       height="auto"/></p>
+3. Once terminated, select **Actions** > **Restart with latest definitions**.
+    <p align="center"><img src="/content/img/step-2-restart-with-latest-definitions.png" alt="Step 3 - Restart with Latest Definitions" width="100%"
+                       height="auto"/></p>
+
+For consistency with your business flow, you can use the [Skip Task API](https://orkes.io/content/reference-docs/api/workflow/skip-task-from-workflow) to skip the tasks that were previously completed.
+
+</TabItem>
+
+<TabItem value="api" label="Using API">
+
+Use the [Upgrade Workflow API](https://orkes.io/content/reference-docs/api/workflow/upgrade-workflow) to upgrade the running workflow to another version.
+
+</TabItem>
+</Tabs>

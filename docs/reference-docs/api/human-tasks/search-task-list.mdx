@@ -1,0 +1,130 @@
+---
+sidebar_position: 8
+slug: "/reference-docs/api/human-tasks/search-task-list"
+description: "This API is used to retrieve a list of Human tasks based on the search criteria."
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Search Human Tasks
+
+**Endpoint:** `POST /api/human/tasks/search`
+
+Retrieves a list of Human tasks based on the provided search criteria.
+
+The invoking user should be one of the following:
+
+- Cluster admin
+- Task owner of the Human task
+- Task assignee
+
+:::tip
+You can construct your search query in the Conductor UI (**Executions** > **Human Tasks**) and open the browser developer console’s network tab to get the same search request as an API payload.
+:::
+
+## **Request body**
+
+Format the request as an object containing the following search parameters.
+
+| Parameter               | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      | Type             | Required/ Optional                  |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------- | ----------------------------------- |
+| searchType              | The type of search. Supported values: <ul><li>**ADMIN**—Shows all Human task executions only if the user is a cluster admin.</li> <li>**INBOX**—Shows all Human task executions assigned to the requesting user.</li></ul>                                                                                                                                                                                                                                                                       | string           | Required.                           |
+| size                    | The start of the search results list, which is used for pagination.                                                                                                                                                                                                                                                                                                                                                                                                                              | integer          | Required.                           |
+| start                   | The number of search results that should be returned from the specified start.                                                                                                                                                                                                                                                                                                                                                                                                                   | integer          | Required.                           |
+| assignees               | The assignee details.                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | array of objects | Optional.                           |
+| assignees. **userType** | The type of user or group that will be assigned to the task. Supported values: <ul><li>**External User**—The assignee is a user residing outside the Conductor cluster in an external system.</li> <li>**External Group**—The assignee is a group residing outside the Conductor cluster in an external system.</li> <li>**Conductor User**—The assignee is a user in the Conductor cluster.</li> <li>**Conductor Group**—The assignee is a group in the Conductor cluster.</li></ul>            | array of objects | Required if searching by assignees. |
+| assignees. **user**     | The user or group ID for the assignee. The value depends on the user type. <ul><li>**External User**—Provide the user's email that is managed and verified in an external system.</li> <li>**External Group**—Provide the name of the group that is managed and verified in an external system.</li> <li>**Conductor User**—Provide the user’s Conductor email.</li> <li>**Conductor Group**—Provide the [Conductor group](/access-control-and-security/users-and-groups#groups) name.</li></ul> | string           | Required if searching by assignees. |
+| claimants               | The claimant details.                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | array of objects | Optional.                           |
+| claimants. **userType** | The type of user or group that will be assigned to the task. Supported values: <ul><li>**External User**—The assignee is a user residing outside the Conductor cluster in an external system.</li> <li>**External Group**—The assignee is a group residing outside the Conductor cluster in an external system.</li> <li>**Conductor User**—The assignee is a user in the Conductor cluster.</li> <li>**Conductor Group**—The assignee is a group in the Conductor cluster.</li></ul>            | string           | Required if searching by claimants. |
+| claimants. **user**     | The user or group ID for the claimant. The value depends on the user type.<ul><li>**External User**—Provide the user's email that is managed and verified in an external system.</li> <li>**External Group**—Provide the name of the group that is managed and verified in an external system.</li> <li>**Conductor User**—Provide the user’s Conductor email.</li> <li>**Conductor Group**—Provide the [Conductor group](/access-control-and-security/users-and-groups#groups) name.</li></ul>  | string           | Required if searching by claimants. |
+| definitionNames         | The task definition name for the Human task.                                                                                                                                                                                                                                                                                                                                                                                                                                                     | array of strings | Optional.                           |
+| displayNames            | The task display name specified in the workflow definition.                                                                                                                                                                                                                                                                                                                                                                                                                                      | array of strings | Optional.                           |
+| taskRefNames            | The task reference name for the Human task.                                                                                                                                                                                                                                                                                                                                                                                                                                                      | array of strings | Optional.                           |
+| fullTextQuery           | All full-text indexed data associated with the Human task (task input, name, and so on). Only AND and OR operations are supported. "\*" can be used as a wildcard character to return partial matches.                                                                                                                                                                                                                                                                                           | string           | Optional.                           |
+| states                  | The Human task status. Supported values: <ul><li>PENDING</li> <li>ASSIGNED</li> <li>IN_PROGRESS</li> <li>COMPLETED</li> <li>TIMED_OUT</li> <li>DELETED</li></ul>                                                                                                                                                                                                                                                                                                                                 | array of strings | Optional.                           |
+| taskInputQuery          | The query expression for the input data to the Human task, in the format `FIELD = VALUE` or `FIELD IN (value1, value2)`. Only AND and OR operations are supported. <br/><br/> **Note:** This query only searches for exact matches.                                                                                                                                                                                                                                                              | string           | Optional.                           |
+| taskOutputQuery         | The query expression for the output data from the Human task, in the format `FIELD = VALUE` or `FIELD IN (value1, value2)`. Only AND and OR operations are supported. <br/><br/> **Note:** This query only searches for exact matches.                                                                                                                                                                                                                                                           | string           | Optional.                           |
+| updateStartTime         | The start range for Human task’s last updated time.                                                                                                                                                                                                                                                                                                                                                                                                                                              | integer          | Optional.                           |
+| updateEndTime           | The end range for Human task’s last updated time.                                                                                                                                                                                                                                                                                                                                                                                                                                                | integer          | Optional.                           |
+| workflowIds             | The workflow ID associated with the Human task.                                                                                                                                                                                                                                                                                                                                                                                                                                                  | array of strings | Optional.                           |
+| workflowNames           | The workflow name associated to the Human task.                                                                                                                                                                                                                                                                                                                                                                                                                                                  | array of strings | Optional.                           |
+
+## Response
+
+Returns the Human task object.
+
+## Examples
+
+<details>
+<summary>Search for incomplete Human tasks</summary>
+
+**Request**
+
+```shell
+curl -X 'POST' \
+  'https://<YOUR_CLUSTER>/api/human/tasks/search' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{"size":20,"states":["IN_PROGRESS", "PENDING", "ASSIGNED"],"taskOutputQuery":"","taskInputQuery":"","fullTextQuery":"","definitionNames":[],"taskRefNames":[],"displayNames":["Expense Approval"],"claimants":[],"assignees":[],"workflowIds":[],"start":0}'
+```
+
+**Response**
+
+```json
+{
+  "totalHits": 1,
+  "results": [
+    {
+      "createdBy": "user@example.com",
+      "updatedBy": "user@example.com",
+      "taskId": "b5070997-d326-11ef-a7d0-3e3f9199f5b3",
+      "state": "ASSIGNED",
+      "displayName": "Expense Approval",
+      "definitionName": "formSubmission",
+      "workflowId": "b4e7c1c1-d326-11ef-a7d0-3e3f9199f5b3",
+      "workflowName": "Expensing",
+      "taskRefName": "formSubmission_ref",
+      "input": {
+        "Confirm": false,
+        "_createdBy": "user@example.com",
+        "enterAssets": "",
+        "__humanTaskDefinition": {
+          "assignments": [],
+          "displayName": "Expense Approval",
+          "userFormTemplate": {
+            "name": "Expense Form",
+            "version": 1
+          },
+          "assignmentCompletionStrategy": "LEAVE_OPEN"
+        },
+        "__humanTaskProcessContext": {
+          "state": "ASSIGNED",
+          "lastUpdated": 1736934867236,
+          "humanTaskActionLogs": [
+            {
+              "id": "fefd9fa7-a287-43dc-9d4a-7e57d4bd7721",
+              "state": "ASSIGNED",
+              "action": "ASSIGNMENTS_COMPLETED",
+              "actedBy": "system",
+              "stateStart": 1736934867236
+            }
+          ],
+          "humanTaskTriggerLog": [],
+          "assignmentsCompleted": true,
+          "skippedAssigneeIndexes": []
+        }
+      },
+      "output": {},
+      "createdOn": 1736934867118,
+      "updatedOn": 1736934867236
+    }
+  ],
+  "hits": 1,
+  "start": 0,
+  "pageSizeLimit": 20
+}
+```
+
+</details>

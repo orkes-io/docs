@@ -1,0 +1,168 @@
+---
+slug: "/developer-guides/using-llms-in-your-orkes-conductor-workflows"
+description: "Learn how to use AI models or LLMs with Orkes' system LLM tasks, including the steps for integration, access control, and more."
+---
+
+# Using AI Models or LLMs
+
+In this guide, you will learn how to leverage the power of Orkes Conductor and AI models, such as large language models (LLMs) or embedding models, in your applications. Here is an overview of using AI models in Orkes Conductor to build an AI-powered application:
+
+1. Choose an AI model for your use case.
+2. Integrate your chosen AI model with your Orkes Conductor cluster.
+3. (If required) Create an AI prompt using Orkes’ AI Prompt Studio, where you can tune the prompt and test it with different models.
+4. (If required) Integrate your chosen vector database with your Orkes Conductor cluster.
+5. Set access limits to the AI model, prompt, or vector database to govern which applications or groups can use them.
+6. Add a system AI task to your workflow and configure it for the chosen model and prompt template.
+
+
+## Step 1: Choose an AI model
+
+The AI models offered by different providers have a wide range of applications, such as:
+* Text generation and completion
+* Text summarization
+* Language translation
+* Sentiment analysis
+* Text classification
+* Embedding generation
+
+Not all models are suitable for all these use cases, as some models are better at specific tasks due to their architecture and training. For example, OpenAI offers models like "text-embedding-ada-002" designed specifically to generate embeddings.
+
+
+### Available model providers
+
+The following model providers are available for integration with Orkes Conductor:
+* [Azure + OpenAI](https://learn.microsoft.com/en-us/azure/ai-services/openai/)
+* [OpenAI](https://platform.openai.com/docs/overview)
+* [Cohere](https://docs.cohere.com/docs/the-cohere-platform)​​
+* [Google Vertex AI](https://cloud.google.com/vertex-ai/generative-ai/docs/overview)
+* [Google Gemini AI](https://ai.google.dev/gemini-api/docs)
+* [Anthropic Claude](https://docs.anthropic.com/en/home)
+* [Hugging Face](https://huggingface.co/)
+* [AWS Bedrock Anthropic](https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-bedrock.html)
+* [AWS Bedrock Cohere](https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-bedrock.html)
+* [AWS Bedrock Llama2](https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-bedrock.html)
+* [AWS Bedrock Titan](https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-bedrock.html)
+* [Mistral](https://docs.mistral.ai/)
+
+Review the model provider’s official documentation to determine which models suit your use case.
+
+
+## Step 2: Integrate an AI model
+
+Before using an AI model in a workflow, you must integrate it with your Orkes Conductor cluster.
+
+**To integrate an LLM:**
+1. Go to **Integrations** from the left menu on your Orkes Conductor cluster.
+2. Select **+ New integration** from the top-right of your window.
+3. In the **AI/LLM** section, select **+ Add** to integrate your preferred model provider.
+   <p align="center"><img src="/content/img/quickstart-add-integrations.png" alt="Quickstart - Add Integrations" width="80%" height="auto"></img></p>
+
+4. Enter the required parameters for the chosen provider.
+
+    :::note
+    The integration configuration differs with each model provider. For detailed steps on integrating with each provider, refer to [AI/LLM Integrations](/category/integrations/ai-llm).
+    :::
+
+5. (Optional) Toggle the **Active** button off if you don’t want to activate the integration instantly.
+6. Select **Save**.
+
+
+### Add the preferred models
+
+Once the AI/LLM integration is added, you can begin adding models from the provider.
+
+<details>
+<summary>List of models</summary>
+
+* [Azure OpenAI models](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models?tabs=global-standard%2Cstandard-chat-completions)
+* [OpenAI models](https://platform.openai.com/docs/models/overview)
+* [Cohere models](https://docs.cohere.com/docs/models)
+* [Google Vertex AI models](https://cloud.google.com/vertex-ai/generative-ai/docs/learn/models)
+* [Google Gemini AI models](https://ai.google.dev/gemini-api/docs/models/gemini#model-variations)
+* [Anthropic Claude models](https://docs.anthropic.com/en/docs/about-claude/models)
+* [Hugging Face models](https://huggingface.co/models)
+* [AWS Bedrock Anthropic models](https://docs.aws.amazon.com/bedrock/latest/userguide/models-supported.html)
+* [AWS Bedrock Cohere models](https://docs.aws.amazon.com/bedrock/latest/userguide/models-supported.html)
+* [AWS Bedrock Llama 2 models](https://docs.aws.amazon.com/bedrock/latest/userguide/models-supported.html)
+* [AWS Bedrock Titan models](https://docs.aws.amazon.com/bedrock/latest/userguide/titan-models.html)
+* [Mistral models](https://docs.mistral.ai/getting-started/models/models_overview/)
+
+</details>
+
+**To add a model:**
+1. In **Integrations**, select the **+** icon next to your newly-created integration.
+2. Select **+ New model**.
+3. Enter the model name and an optional description for the model. 
+4. (Optional) Toggle the **Active** button off if you don’t want to activate the model instantly.
+5. Select **Save**.
+
+
+## Step 3: Create an AI prompt 
+
+If you are using an [LLM Text Complete](../reference-docs/ai-tasks/llm-text-complete) or [LLM Chat Complete](../reference-docs/ai-tasks/llm-chat-complete) task, you must use a prompt to interact with it. You can create a prompt in the AI Prompt Studio to be used with system AI tasks in a workflow. Refer to [Using AI Prompts](creating-and-managing-gen-ai-prompt-templates) for more information.
+
+
+## Step 4: Integrate a vector database
+
+You must also integrate a vector database if you are using one of the following system AI tasks:
+* [LLM Store Embeddings](../reference-docs/ai-tasks/llm-store-embeddings)
+* [LLM Index Text](../reference-docs/ai-tasks/llm-index-text)
+* [LLM Index Document](../reference-docs/ai-tasks/llm-index-document)
+* [LLM Get Embeddings](../reference-docs/ai-tasks/llm-get-embeddings)
+* [LLM Search Index](../reference-docs/ai-tasks/llm-search-index)
+
+Refer to [Using Vector Databases](using-vector-databases-in-your-orkes-conductor-workflows) for more information.
+
+
+## Step 5: Set access limits
+
+As best practice, use Orkes’ [RBAC feature](../category/access-control-and-security) to govern which applications or user groups can access the AI models, prompts, and vector databases.
+
+**To provide access to an application or group:**
+1. Go to **Access Control** > **Applications** or **Groups** from the left menu on your Orkes Conductor cluster.
+2. Create a new group/application or select an existing one.
+3. In the Permissions section, select **+ Add Permission**.
+4. In the **Integration** tab, select the required AI models and/or vector databases and toggle the necessary permissions.
+
+    <p align="center"><img src="/content/img/add-integration-permission.png" alt="Add Permissions for Integrations" width="50%" height="auto"></img></p>
+
+5. In the **Prompt** tab, select the required prompt and toggle the necessary permissions.
+6. Select **Add Permissions**.
+
+The group or application can now access the AI resources according to the configured permissions.
+
+
+## Step 6: Add a system AI task to your workflow
+
+With the AI/LLM integration and AI prompt ready, you can add a system AI task to your workflow and configure the task for the chosen model and prompt.
+
+**To add a system AI task:**
+1. Go to **Definitions** > **Workflow** from the left menu on your Orkes Conductor cluster.
+2. Create a new workflow or select an existing workflow.
+3. Add an AI task and select the desired model provider and model.
+4. Configure the remaining task parameters. If you are using an LLM Text Complete or LLM Chat Complete task, you can select the prompt template from the dropdown based on the chosen model.
+    
+    :::note
+    Refer to the [AI Task Reference](../category/reference-docs/ai-tasks) for more details on configuring the task parameters.
+    :::
+
+5. Save the workflow.
+
+Once the workflow is saved, you can test the newly added AI task or run the workflow.
+
+<p align="center"><img src="/content/img/dev-guides/using_llms-test_task.png" alt="Test AI task." width="70%" height="auto"></img></p>
+
+## Examples
+
+<details>
+<summary>AI-powered translator</summary>
+
+Check out the tutorial on how to build an [AI-powered language translator](/developer-guides/quickstart-ai-orchestration).
+
+</details>
+
+## More resources
+* [Using AI Prompts](creating-and-managing-gen-ai-prompt-templates)
+* [Using Vector Databases](using-vector-databases-in-your-orkes-conductor-workflows)
+* [AI/LLM Integration Guides](/category/integrations/ai-llm)
+* [AI Task Reference](../category/reference-docs/ai-tasks)

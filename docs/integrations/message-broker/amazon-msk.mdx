@@ -1,0 +1,76 @@
+---
+slug: "/integrations/message-broker/amazon-msk"
+description: "Learn how to integrate Amazon MSK with your Orkes Conductor cluster."
+---
+
+# Amazon MSK Integration with Orkes Conductor
+
+:::note
+The Amazon MSK configuration is deprecated. For new configurations, use [Apache Kafka](https://orkes.io/content/integrations/message-broker/apache-kafka).
+:::
+
+To use the [Event task](https://orkes.io/content/reference-docs/system-tasks/event), [Event Handler](https://orkes.io/content/developer-guides/event-handler), or [enable Change Data Capture (CDC)](https://orkes.io/content/developer-guides/enabling-cdc-on-conductor-workflows) in Orkes Conductor, you must integrate your Conductor cluster with the necessary message brokers. This guide explains how to integrate Amazon MSK with Orkes Conductor to publish and receive messages from topics. Here’s an overview:
+
+1. Get the required credentials from Amazon MSK.
+2. Configure a new Amazon MSK integration in Orkes Conductor.
+3. Set access limits to the message broker to govern which applications or groups can use them.
+
+## Step 1: Get the Amazon MSK credentials
+
+To integrate Amazon MSK with Orkes Conductor, retrieve the following credentials from your Amazon MSK console:
+
+- [Bootstrap server](https://docs.aws.amazon.com/msk/latest/developerguide/msk-get-bootstrap-brokers.html)
+- Username and Password 
+- Consumer Group ID
+
+Refer to the official [Amazon MSK documentation](https://docs.aws.amazon.com/msk/latest/developerguide/getting-started.html) for more details.
+
+## Step 2: Add an integration for Amazon MSK
+
+After obtaining the credentials, add an Amazon MSK integration to your Conductor cluster.
+
+**To create an Amazon MSK integration:**
+
+1. Go to **Integrations** from the left navigation menu on your Conductor cluster.
+2. Select **+ New integration**.
+3. In the **Message Broker** section, choose **Amazon MSK**.
+4. Select **+ Add** and enter the following parameters:
+
+| Paremeters | Description |
+| ---------- | ----------- |
+| Integration name | A name for the integration. |
+| Bootstrap Server | The bootstrap server of the Amazon MSK cluster. | 
+| Sending Protocol | The sending protocol for the integration. Supported values:<ul><li>**String**.</li></ul>
+| Connection Security | The security mechanism for establishing connection. Supported values:<ul><li>**SASL_SSL / SCRAM-SHA-512.**</li></ul> | 
+| Username | The username of the Amazon MSK account. | 
+| Password | The password associated with the username. | 
+| Consumer Group ID | The Consumer Group ID from Kafka. This unique identifier helps manage message processing, load balancing, and fault tolerance within consumer groups. |
+| Description | A description of the integration. |
+
+<p align="center"><img src="/content/img/integration-amazon-msk.png" alt="Amazon MSK Integration with Orkes Conductor" width="50%" height="auto"/></p>
+
+5. (Optional) Toggle the **Active** button off if you don’t want to activate the integration instantly.
+6. Select **Save**.
+
+## Step 3: Set access limits to integration
+
+Once the integration is configured, set access controls to manage which applications or groups can use the message broker.
+
+**To provide access to an application or group:**
+
+1. Go to **Access Control** > **Applications** or **Groups** from the left navigation menu on your Conductor cluster.
+2. Create a new group/application or select an existing one.
+3. In the **Permissions** section, select **+ Add Permission**.
+4. In the **Integration** tab, select the required message broker and toggle the necessary permissions.
+
+<p align="center"><img src="/content/img/rbac-amazon-msk.png" alt="Configuring RBAC for Amazon MSK Integration" width="70%" height="auto"/></p>
+
+The group or application can now access the message broker according to the configured permissions.
+
+## Next steps
+
+With the integration in place, you can now:
+
+- [Create Event Handlers](https://orkes.io/content/developer-guides/event-handler).
+- [Configure Event tasks](https://orkes.io/content/reference-docs/system-tasks/event).
+- [Enable Change Data Capture (CDC)](https://orkes.io/content/developer-guides/enabling-cdc-on-conductor-workflows) to send workflow state changes to message brokers.

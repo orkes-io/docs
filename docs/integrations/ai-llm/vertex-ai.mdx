@@ -1,0 +1,137 @@
+---
+slug: "/integrations/ai-llm/vertex-ai"
+description: "Learn how to integrate Google Vertex AI with your Orkes Conductor cluster."
+---
+
+# Google Vertex AI Integration with Orkes Conductor
+
+To use system AI tasks in Orkes Conductor, you must integrate your Conductor cluster with the necessary AI/LLM providers. This guide explains how to integrate Google Vertex AI with Orkes Conductor. Here’s an overview:
+
+1. Get the required credentials from Google Vertex AI.
+2. Configure a new Google Vertex AI integration in Orkes Conductor.
+3. Add models to the integration.
+4. Set access limits to the AI model to govern which applications or groups can use them.
+
+## Step 1: Get the Google Vertex AI credentials
+
+To integrate Google Vertex AI with Orkes Conductor, retrieve the project ID and service account JSON from the Google Cloud console.
+
+### Get the project ID
+
+**To get the project ID:**
+
+1. Sign in to the [Google Cloud Console](https://console.cloud.google.com/).
+2. Create a new project or select an existing one.
+3. Get the **Project ID** from the dashboard.
+
+<p align="center"><img src="/content/img/get-project-id.png" alt="Get project ID from Google Cloud Console" width="100%" height="auto"/></p>
+
+For more information, refer to the official documentation on [creating and managing projects in GCP](https://cloud.google.com/resource-manager/docs/creating-managing-projects).
+
+### Get the service account JSON
+
+**To get the service account JSON:**
+
+1. Go to **IAM & Admin** > **Service Accounts** from the left menu on your GCP console. 
+2. Create a new service or select an existing one.
+3. In the **KEYS** tab, select **ADD KEY** > **Create new key**.
+
+<p align="center"><img src="/content/img/get-service-account-json.png" alt="Get Service Account JSON from Google Cloud Console" width="100%" height="auto"/></p>
+
+4. Select the key type as **JSON**.
+5. Select **Create** to download the JSON file.
+
+<p align="center"><img src="/content/img/get-service-account-json-key.png" alt="Get Service Account JSON key from Google Cloud Console" width="60%" height="auto"/></p>
+
+To use Google Vertex AI with Orkes Conductor, you must enable the Vertex AI API from the GCP console.
+
+### Enable Vertex AI API
+
+**To enable Vertex AI API:**
+
+1. Go to **APIs & Services** > **Enabled APIs & services** from the left menu on your GCP console.
+2. Select **+ ENABLE APIS AND SERVICES**.
+
+<p align="center"><img src="/content/img/enable-apis-and-services.png" alt="Enabling APIs and services from GCP console" width="100%" height="auto"/></p>
+
+3. In the **API Library**, search for **Vertex AI API**.
+
+<p align="center"><img src="/content/img/vertex-ai-api.png" alt="Searching for Vertex AI API in API Library" width="100%" height="auto"/></p>
+
+4. Select **ENABLE**.
+
+<p align="center"><img src="/content/img/enable-vertex-ai-api.png" alt="Enabling Vertex AI API" width="60%" height="auto"/></p>
+
+Once enabled, the Vertex AI API is ready for use with your GCP project.
+
+## Step 2: Add an integration for Google Vertex AI
+
+After obtaining the credentials, add a Google Vertex AI integration to your Conductor cluster.
+
+**To create a Google Vertex AI integration:**
+
+1. Go to **Integrations** from the left navigation menu on your Conductor cluster.
+2. Select **+ New integration**.
+3. In the **AI/LLM** section, choose **Google Vertex AI**.
+4. Select **+ Add** and enter the following parameters:
+
+| Parameters | Description |
+| ---------- | ----------- |
+| Integration name | A name for the integration. |
+| Project ID | The Project ID retrieved from the GCP console. | 
+| Location | The Google Cloud region of your GCP account. |
+| Publisher | The publisher’s name in GCP. By default, this is set to **google**. | 
+| Choose Service account credentials JSON | Upload the service account JSON file, which is a key file containing the credentials for authenticating the Orkes Conductor cluster with the GCP services. |
+| Description | A description of the integration. |  
+
+<p align="center"><img src="/content/img/create-new-vertex-ai-integration.png" alt="Google Vertex AI Integration with Orkes Conductor" width="60%" height="auto"></img></p>
+
+5. (Optional) Toggle the **Active** button off if you don’t want to activate the integration instantly.
+6. Select **Save**.
+
+## Step 3: Add Google Vertex AI models
+
+Once you’ve integrated Google Vertex AI, the next step is to configure specific models.
+
+Google Vertex AI has different models, such as Bison, Gecko, and more, each designed for various use cases. Choose the model that best fits your use case.
+
+**To add a model to the Google Vertex AI integration:**
+
+1. Go to the **Integrations** page and select the **+** button next to the integration created.
+
+<p align="center"><img src="/content/img/create-new-model-for-vertex-ai-integration.png" alt="Create new model for Vertex AI Integration" width="100%" height="auto"></img></p>
+
+2. Select **+ New model**.
+3. Enter the **Model name** and a **Description**. Get the complete [list of Vertex AI models](https://cloud.google.com/vertex-ai/generative-ai/docs/model-garden/available-models). 
+
+<p align="center"><img src="/content/img/creating-new-model-for-vertex-ai-integration.png" alt="Creating new model for Vertex AI Integration" width="60%" height="auto"></img></p>
+
+4. (Optional) Toggle the **Active** button off if you don’t want to activate the model instantly.
+5. Select **Save**.
+
+This saves the model for future use in AI tasks within Orkes Conductor.
+
+## Step 4: Set access limits to integration
+
+Once the integration is configured, set access controls to manage which applications or groups can use the models.
+
+**To provide access to an application or group:**
+
+1. Go to **Access Control** > **Applications** or **Groups** from the left navigation menu on your Conductor cluster.
+2. Create a new group/application or select an existing one.
+3. In the **Permissions** section, select **+ Add Permission**.
+4. In the **Integration** tab, select the required AI models and toggle the necessary permissions.
+5. Select **Add Permissions**. 
+
+<p align="center"><img src="/content/img/add-integration-permission-for-vertex-ai.png" alt="Add Permissions for Vertex AI Integration" width="70%" height="auto"></img></p>
+
+The group or application can now access the AI model according to the configured permissions.
+
+With the integration in place, you can now create workflows using [AI/LLM tasks](https://orkes.io/content/category/reference-docs/ai-tasks).
+
+## More resources
+
+- [Using AI Models or LLMs](https://orkes.io/content/developer-guides/using-llms-in-your-orkes-conductor-workflows)
+- [Using Vector Databases](https://orkes.io/content/developer-guides/using-vector-databases-in-your-orkes-conductor-workflows)
+- [Using AI Prompts](https://orkes.io/content/developer-guides/creating-and-managing-gen-ai-prompt-templates)
+- [AI Orchestration Tutorials](https://orkes.io/content/developer-guides/quickstart-ai-orchestration)

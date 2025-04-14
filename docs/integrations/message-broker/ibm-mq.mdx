@@ -1,0 +1,83 @@
+---
+slug: "/integrations/message-broker/ibm-mq"
+description: "Learn how to integrate IBM MQ with your Orkes Conductor cluster."
+---
+
+# IBM MQ Integration with Orkes Conductor
+
+To use the [Event task](https://orkes.io/content/reference-docs/system-tasks/event), [Event Handler](https://orkes.io/content/developer-guides/event-handler), or [enable Change Data Capture (CDC)](https://orkes.io/content/developer-guides/enabling-cdc-on-conductor-workflows) in Orkes Conductor, you must integrate your Conductor cluster with the necessary message brokers. This guide explains how to integrate IBM MQ with Orkes Conductor to publish and receive messages from queues. Here’s an overview:
+
+1. Get the required credentials from IBM MQ.
+2. Configure a new IBM MQ integration in Orkes Conductor.
+3. Set access limits to the message broker to govern which applications or groups can use them.
+
+## Step 1: Get the IBM MQ credentials
+
+To integrate IBM MQ with Orkes Conductor, retrieve the following credentials from the IBM MQ server:
+
+- Hostname
+- Port
+- [Queue Manager](https://www.ibm.com/docs/en/ibm-mq/9.4?topic=configuring-creating-queue-managers-multiplatforms)
+- [Channel](https://www.ibm.com/docs/en/ibm-mq/9.4?topic=explorer-channels)
+- (If the connection is authenticated with credentials) Username and Password
+- (For topic-based messaging) [Topic String](https://www.ibm.com/docs/en/ibm-mq/9.4?topic=topics-topic-strings)
+
+Refer to the [official IBM documentation](https://www.ibm.com/docs/en/ibm-mq) for more details.
+
+## Step 2: Add an integration for IBM MQ
+
+After obtaining the credentials, add an IBM MQ integration to your Conductor cluster.
+
+**To create an IBM MQ integration:**
+
+1. Go to **Integrations** from the left navigation menu on your Conductor cluster.
+2. Select **+ New integration**.
+3. In the **Message Broker** section, choose **IBM MQ**.
+4. Select **+ Add** and enter the following parameters:
+
+| Parameters | Description | Required / Optional |
+| ---------- | ----------- | ------------------- | 
+| Integration name | A name for the integration. | Required. | 
+| Host Name | The hostname or IP address of the IBM MQ server. | Required. | 
+| Port | The port number that the IBM MQ server listens to for incoming connections.  The default port is 1414, which varies depending on the connection requirements. | Required. | 
+| Queue Manager | The name of the queue manager that Orkes Conductor will connect to. Ensure the queue manager is already configured and running on your IBM MQ server. | Required. | 
+| Channel | The channel name that Orkes Conductor will use to communicate with IBM MQ. IBM MQ uses channels to establish connections between clients and queue managers. | Required. | 
+| Connection Security | The type of connection security. Supported values:<ul><li>**With Username/Password**</li><li>**Passwordless**</li></ul> | Required. | 
+| User | The username to authenticate the connection to the IBM MQ server. | Required if **_Connection Security_** is **With Username/Password**. | 
+| Password | The password associated with the username. | Required if **_Connection Security_** is **With Username/Password**. | 
+| Select the preferred messaging method | The messaging approach that suits your communication needs. Supported values:<ul><li>**Topic-based Messaging**–Allows messages to be broadcasted to multiple subscribers based on the topics of interest, fostering a publish/subscribe model.</li><li>**Queue-based Messaging**–Allows point-to-point messaging, where messages are sent directly to individual queues for consumption by specific recipients.</li></ul> | Required. | 
+| Topic String | Enter the topic string in the format **topic/** to specify the criteria for selecting topics in the messaging system. Use patterns to match topics of interest—for example, entering **finance/** subscribes you to all topics under the finance category. | Required if the messaging method is chosen as **Queue-based Messaging**. | 
+| Authentication type | Select the authentication type. Supported values:<ul><li>**NONE**–No authentication.</li><li>**JKS**–Uses Java KeyStore for authentication. </li></ul> | Required. | 
+| Choose Trust Store file | Upload the Java JKS trust store file with CAs. | Required if **_Authentication type_** is **JKS**. | 
+| Trust Store Password | The password for the trust store file. | Required if **_Authentication type_** is **JKS**. | 
+| Transport Layer Security | Choose the TLS connection security. Supported values:<ul><li>**NONE**</li><li>**Using Cipher Suite**</li></ul> | Required. | 
+| Cipher Suite | Select an appropriate Cipher Suite for TLS. Supported values:<ul><li>**TLS_RSA_WITH_AES_128_CBC_SHA256**</li><li>**TLS_RSA_WITH_AES_256_CBC_SHA256**</li><li>**TLS_RSA_WITH_AES_256_GCM_SHA384**</li><li>**ANY_TLS12**</li></ul> | Required if **_Transport Layer Security_** is **usingCipherSuite**. | 
+| Description | A description of the integration. | Required. | 
+
+<p align="center"><img src="/content/img/integration-ibm-mq-messaging.png" alt="IBM MQ Integration with Orkes Conductor" width="50%" height="auto"/></p>
+
+5. (Optional) Toggle the **Active** button off if you don’t want to activate the integration instantly.
+6. Select **Save**.
+
+## Step 3: Set access limits to integration
+
+Once the integration is configured, set access controls to manage which applications or groups can use the message broker.
+
+**To provide access to an application or group:**
+
+1. Go to **Access Control** > **Applications** or **Groups** from the left navigation menu on your Conductor cluster.
+2. Create a new group/application or select an existing one.
+3. In the **Permissions** section, select **+ Add Permission**.
+4. In the **Integration** tab, select the required message broker and toggle the necessary permissions.
+
+<p align="center"><img src="/content/img/rbac-ibm-mq.png" alt="Configuring RBAC for IBM MQ Integration" width="70%" height="auto"/></p>
+
+The group or application can now access the message broker according to the configured permissions.
+
+## Next steps
+
+With the integration in place, you can now:
+
+- [Create Event Handlers](https://orkes.io/content/developer-guides/event-handler).
+- [Configure Event tasks](https://orkes.io/content/reference-docs/system-tasks/event).
+- [Enable Change Data Capture (CDC)](https://orkes.io/content/developer-guides/enabling-cdc-on-conductor-workflows) to send workflow state changes to message brokers.

@@ -1,0 +1,41 @@
+---
+sidebar_position: 8
+slug: "/reference-docs/api/metadata/delete-workflow-definition"
+description: "Workflows are directed sequences of tasks and operators. This API is used to delete workflow definitions in Orkes Conductor."
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Delete Workflow Definition
+
+**Endpoint:** `DELETE /api/metadata/workflow/{name}/{version}`
+
+Deletes an existing task definition.
+
+## Path parameters
+
+| Parameter | Description                                           | Type    | Required/ Optional |
+| --------- | ----------------------------------------------------- | ------- | ------------------ |
+| name      | The name of the workflow definition to be deleted.    | string  | Required.          |
+| version   | The version of the workflow definition to be deleted. | integer | Required.          |
+
+## Examples
+
+<details>
+<summary>Delete an existing workflow definition</summary>
+
+**Request**
+
+```bash
+curl -X 'DELETE' \
+  'https://<YOUR_CLUSTER>/api/metadata/workflow/api-test/2' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the particular version of workflow definition has been deleted successfully.
+
+</details>

@@ -1,0 +1,742 @@
+---
+slug: "/developer-guides/sending-signals-to-workflows"
+description: "Learn how to send signals to control a workflow progress in Orkes Conductor."
+---
+
+# Sending Signals to Workflows
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+
+You can manage and automate workflows by sending signals to pause, resume, terminate, restart, rerun workflows, and more. Using Conductor SDKs or APIs, you can integrate and programmatically control workflows during production and in case of failure.
+
+
+## Pause workflow
+
+You can pause a workflow to wait for external signals.
+
+<Tabs groupId="method">
+<TabItem value="api" label="Using API">
+
+Use the [Pause Workflow](/reference-docs/api/workflow/pause-worflow) API on a running workflow.
+
+**Endpoint:** `PUT /api/workflow/{workflowId}/pause`
+
+</TabItem>
+
+<TabItem value="sdk" label="Using SDK">
+
+<Tabs>
+<TabItem value="Java" label="Java">
+
+```java
+BulkResponse pauseWorkflow(List<String> workflowIds) throws ApiException
+```
+
+</TabItem>
+<TabItem value="Go" label="Go">
+
+```go
+func (e *WorkflowExecutor) Pause(workflowId string) error
+```
+
+</TabItem>
+<TabItem value="Python" label="Python">
+
+```python
+WorkflowResourceApi.pause_workflow1(self, workflow_id, **kwargs)
+```
+
+</TabItem>
+<TabItem value="CSharp" label="C#">
+
+```csharp
+void WorkflowResourceApi.PauseWorkflow(string workflowId)
+```
+
+</TabItem>
+<TabItem value="JavaScript" label="JavaScript">
+
+```javascript
+WorkflowExecutor.pauseWorkflow(
+    workflowId: string,
+): CancelablePromise<any>
+```
+
+</TabItem>
+<TabItem value="Typescript" label="Typescript">
+
+```typescript
+WorkflowExecutor.pauseWorkflow(
+    workflowId: string,
+): CancelablePromise<any>
+```
+
+</TabItem>
+<TabItem value="Clojure" label="Clojure">
+
+```clojure
+(workflow-resource/pause-workflow [options workflow-id])
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+
+<TabItem value="ui" label="Using UI">
+
+In the workflow execution page (**Executions** > **Workflow** > *someWorkflow*), select **Actions** > **Pause**.
+
+<p align="center"><img src="/content/img/dev-guides/sending_signals-pause_workflow.png" alt="Pausing workflows from UI" width="100%" height="auto"></img></p>
+
+</TabItem>
+
+</Tabs>
+
+
+
+
+## Resume workflow
+
+Once an external signal is received, you can resume the paused workflow.
+
+<Tabs groupId="method">
+<TabItem value="api" label="Using API">
+
+Use the [Resume Workflow](/reference-docs/api/workflow/resume-workflow) API on a paused workflow.
+
+**Endpoint:** `PUT /api/workflow/{workflowId}/resume`
+
+</TabItem>
+
+<TabItem value="sdk" label="Using SDK">
+
+<Tabs>
+<TabItem value="Java" label="Java">
+
+```java
+BulkResponse resumeWorkflow(List<String> workflowIds) throws ApiException
+```
+
+</TabItem>
+<TabItem value="Go" label="Go">
+
+```go
+func (e *WorkflowExecutor) Resume(workflowId string) error
+```
+
+</TabItem>
+<TabItem value="Python" label="Python">
+
+```python
+WorkflowResourceApi.resume_workflow1(self, workflow_id, **kwargs)
+```
+
+</TabItem>
+<TabItem value="CSharp" label="C#">
+
+```csharp
+void WorkflowResourceApi.ResumeWorkflow(string workflowId)
+```
+
+</TabItem>
+
+<TabItem value="JavaScript" label="JavaScript">
+
+```javascript
+WorkflowExecutor.resume(
+    workflowId: string,
+): CancelablePromise<any>
+```
+
+</TabItem>
+<TabItem value="Typescript" label="Typescript">
+
+```typescript
+WorkflowExecutor.resume(
+    workflowId: string,
+): CancelablePromise<any>
+```
+
+</TabItem>
+<TabItem value="Clojure" label="Clojure">
+
+```clojure
+(workflow-resource/resume-workflow [options workflow-id])
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+
+<TabItem value="ui" label="Using UI">
+
+In the workflow execution page (**Executions** > **Workflow** > *someWorkflow*), select **Actions** > **Resume**.
+
+<p align="center"><img src="/content/img/dev-guides/sending_signals-resume_workflow.png" alt="Resuming workflows from UI" width="100%" height="auto"></img></p>
+
+</TabItem>
+
+</Tabs>
+
+
+
+
+## Restart workflow
+
+If a workflow execution fails for any reason and enters a terminal state, you can restart it from the beginning. There are two options for restarting workflows:
+
+* **Restart with Current Definitions**—Restart using the same workflow definition that was referenced in the initial execution. This is useful if the workflow definition has changed and the original definition needs to be retained.
+* **Restart with Latest Definitions**—Restart using the latest workflow definition and version. If you’ve changed the definition, you can use this option to rerun the execution with the latest version.
+
+:::note
+When restarting workflows, the same inputs will be used. To use different workflow inputs, rerun the workflow instead.
+:::
+
+
+<Tabs groupId="method">
+<TabItem value="api" label="Using API">
+
+Use the [Restart Workflow](/reference-docs/api/workflow/restart-workflow) API on a terminal workflow to restart the workflow from the beginning with the same input.
+
+**Endpoint:** `POST /api/workflow/{workflowId}/restart`
+
+</TabItem>
+
+<TabItem value="sdk" label="Using SDK">
+
+
+<Tabs>
+<TabItem value="Java" label="Java">
+
+```java
+BulkResponse restartWorkflow(List<String> workflowIds, Boolean useLatestDefinitions) throws ApiException
+```
+
+</TabItem>
+<TabItem value="Go" label="Go">
+
+```go
+func (e *WorkflowExecutor) Restart(workflowId string, useLatestDefinition bool) error
+```
+
+</TabItem>
+<TabItem value="Python" label="Python">
+
+```python
+WorkflowResourceApi.restart1(self, workflow_id, **kwargs)
+```
+
+</TabItem>
+<TabItem value="CSharp" label="C#">
+
+```csharp
+void WorkflowResourceApi.Restart(string workflowId, bool? useLatestDefinitions = null)
+```
+
+</TabItem>
+<TabItem value="JavaScript" label="JavaScript">
+
+```javascript
+WorkflowExecutor.restart(
+    workflowId: string,
+    useLatestDefinitions: boolean,
+): CancelablePromise<void>
+```
+
+</TabItem>
+<TabItem value="Typescript" label="Typescript">
+
+```typescript
+WorkflowExecutor.restart(
+    workflowId: string,
+    useLatestDefinitions: boolean,
+): CancelablePromise<void>
+```
+
+</TabItem>
+<TabItem value="Clojure" label="Clojure">
+
+```clojure
+(workflow-resource/restart-workflow [options workflow-id])
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+
+<TabItem value="ui" label="Using UI">
+
+In the workflow execution page (**Executions** > **Workflow** > *someWorkflow*), select **Actions** > **Restart with current definitions** or **Restart with latest definitions**.
+
+<p align="center"><img src="/content/img/dev-guides/sending_signals-restart_workflow.png" alt="Restarting workflows from UI" width="100%" height="auto"></img></p>
+
+</TabItem>
+
+</Tabs>
+
+
+
+
+## Rerun workflow
+
+You can rerun a terminal workflow from the start if you need to change the workflow inputs, correlation ID, or task-to-domain mapping. The workflow ID from the original run will be retained.
+
+<Tabs groupId="method">
+<TabItem value="api" label="Using API">
+
+Use the [Rerun Workflow](/reference-docs/api/workflow/rerun-workflow) API to rerun the workflow from the beginning with updated inputs.
+
+**Endpoint:** `POST /api/workflow/{workflowId}/rerun`
+
+</TabItem>
+
+<TabItem value="sdk" label="Using SDK">
+
+<Tabs>
+<TabItem value="Java" label="Java">
+
+```java
+String rerunWorkflow(String workflowId, RerunWorkflowRequest rerunWorkflowRequest)
+```
+
+</TabItem>
+<TabItem value="Go" label="Go">
+
+```go
+func (e *WorkflowExecutor) ReRun(workflowId string, reRunRequest model.RerunWorkflowRequest) (id string, error error)
+```
+
+</TabItem>
+<TabItem value="Python" label="Python">
+
+```python
+WorkflowResourceApi.rerun(self, body, workflow_id, **kwargs)
+```
+
+</TabItem>
+<TabItem value="CSharp" label="C#">
+
+```csharp
+string WorkflowResourceApi.Rerun(RerunWorkflowRequest body, string workflowId)
+```
+
+</TabItem>
+<TabItem value="JavaScript" label="JavaScript">
+
+```javascript
+WorkflowExecutor.rerun(
+    workflowId: string,
+    requestBody: RerunWorkflowRequest,
+): CancelablePromise<string>
+```
+
+</TabItem>
+<TabItem value="Typescript" label="Typescript">
+
+```typescript
+WorkflowResourceService.rerun(
+    workflowId: string,
+    requestBody: RerunWorkflowRequest,
+): CancelablePromise<string>
+```
+
+</TabItem>
+<TabItem value="Clojure" label="Clojure">
+
+```clojure
+(workflow-resource/rerun-workflow [options workflow-id rerun-wf-request])
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+
+<TabItem value="ui" label="Using UI">
+
+:::note
+In the UI, there is no option to rerun the workflow using the same workflow ID. However, you can rerun it by creating a new execution instance.
+:::
+
+In the workflow execution page (**Executions** > **Workflow** > *someWorkflow*), select **Actions** >  **Re-run Workflow**. You will be redirected to the Run Workflow page, where you can update the workflow inputs, correlation ID, and task-to-domain mapping to run a new workflow instance.
+
+<p align="center"><img src="/content/img/rerun-workflow.png" alt="Rerun workflow in Conductor UI" width="100%" height="auto"></img></p>
+
+
+</TabItem>
+
+</Tabs>
+
+
+
+### Rerun workflow from task
+
+In certain cases, you may wish to rerun an ongoing or terminal workflow from a specific task instead.
+
+<Tabs groupId="method">
+<TabItem value="api" label="Using API">
+
+Use the [Rerun Workflow](/reference-docs/api/workflow/rerun-workflow) API to rerun the workflow from a specific task, with the option to provide updated task inputs.
+
+**Endpoint:** `POST /api/workflow/{workflowId}/rerun`
+
+</TabItem>
+
+<TabItem value="sdk" label="Using SDK">
+
+
+<Tabs>
+<TabItem value="Java" label="Java">
+
+```java
+String rerunWorkflow(String workflowId, RerunWorkflowRequest rerunWorkflowRequest)
+```
+
+</TabItem>
+<TabItem value="Go" label="Go">
+
+```go
+func (e *WorkflowExecutor) ReRun(workflowId string, reRunRequest model.RerunWorkflowRequest) (id string, error error)
+```
+
+</TabItem>
+<TabItem value="Python" label="Python">
+
+```python
+WorkflowResourceApi.rerun(self, body, workflow_id, **kwargs)
+```
+
+</TabItem>
+<TabItem value="CSharp" label="C#">
+
+```csharp
+string WorkflowResourceApi.Rerun(RerunWorkflowRequest body, string workflowId)
+```
+
+</TabItem>
+<TabItem value="JavaScript" label="JavaScript">
+
+```javascript
+WorkflowExecutor.rerun(
+    workflowId: string,
+    requestBody: RerunWorkflowRequest,
+): CancelablePromise<string>
+```
+
+</TabItem>
+<TabItem value="Typescript" label="Typescript">
+
+```typescript
+WorkflowResourceService.rerun(
+    workflowId: string,
+    requestBody: RerunWorkflowRequest,
+): CancelablePromise<string>
+```
+
+</TabItem>
+<TabItem value="Clojure" label="Clojure">
+
+```clojure
+(workflow-resource/rerun-workflow [options workflow-id rerun-wf-request])
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+
+<TabItem value="ui" label="Using UI">
+
+
+In the workflow execution page (**Executions** > **Workflow** > *someWorkflow*), select a task in the visual diagram, then select **Re-Run from Task**. The task will be rerun, and the previous attempt(s) will be marked as CANCELED.
+
+<p align="center"><img src="/content/img/dev-guides/sending_signals-rerun_from_task.png" alt="Rerun workflow from task in Conductor UI" width="100%" height="auto"></img></p>
+
+
+:::note
+If you need to provide updated task inputs, use the API instead.
+:::
+
+</TabItem>
+
+</Tabs>
+
+
+
+
+## Retry from failed task
+
+If the workflow fails, you can retry it from its last failed task.
+
+<Tabs groupId="method">
+<TabItem value="api" label="Using API">
+
+Use the [Retry Failed Workflow](/reference-docs/api/workflow/retry-failed-workflow) API to retry the workflow from its last failed task.
+
+**Endpoint:** `POST /api/workflow/{workflowId}/retry`
+
+</TabItem>
+
+<TabItem value="sdk" label="Using SDK">
+
+<Tabs>
+<TabItem value="Java" label="Java">
+
+```java
+BulkResponse retryWorkflow(List<String> workflowIds) throws ApiException
+```
+
+</TabItem>
+<TabItem value="Go" label="Go">
+
+```go
+func (e *WorkflowExecutor) Retry(workflowId string, resumeSubworkflowTasks bool) error
+```
+
+</TabItem>
+<TabItem value="Python" label="Python">
+
+```python
+WorkflowResourceApi.retry1(self, workflow_id, **kwargs)
+```
+
+</TabItem>
+<TabItem value="CSharp" label="C#">
+
+```csharp
+void WorkflowResourceApi.Retry(string workflowId, bool? resumeSubworkflowTasks = null)
+```
+
+</TabItem>
+<TabItem value="JavaScript" label="JavaScript">
+
+```javascript
+WorkflowExecutor.retry(
+    workflowId: string,
+    resumeSubworkflowTasks: boolean,
+): CancelablePromise<void>
+```
+
+</TabItem>
+<TabItem value="Typescript" label="Typescript">
+
+```typescript
+WorkflowExecutor.retry(
+    workflowId: string,
+    resumeSubworkflowTasks: boolean,
+): CancelablePromise<void>
+```
+
+</TabItem>
+<TabItem value="Clojure" label="Clojure">
+
+```clojure
+(workflow-resource/retry-last-failed-task [options workflow-id resume-subworkflow-tasks])
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+
+<TabItem value="ui" label="Using UI">
+
+In the workflow execution page (**Executions** > **Workflow** > *someWorkflow*), select **Actions** > **Retry - from failed task**. The task will be rerun, and the previous attempt(s) will be marked as CANCELED.
+
+<p align="center"><img src="/content/img/retrying-failed-workflows-in-conductor.png" alt="Retry from Conductor UI" width="100%" height="auto"></img></p>
+
+</TabItem>
+
+</Tabs>
+
+
+## Update task status
+
+In some cases, you may need to update the task status in an ongoing workflow with a signal, such as updating the status of a signal-type [Wait](/reference-docs/operators/wait) task.
+
+<Tabs groupId="method">
+<TabItem value="api" label="Using API">
+
+Use the [Update Task Status in Workflow](/reference-docs/api/task/update-task-status-in-workflow) API to update the task status to one of the following options:
+* FAILED
+* FAILED_WITH_TERMINAL_ERROR
+* COMPLETED
+
+You can also provide the task output in the request body.
+
+**Endpoint:** `POST /api/tasks/{workflowId}/{taskRefName}/{status}`
+
+</TabItem>
+
+<TabItem value="sdk" label="Using SDK">
+
+<Tabs>
+<TabItem value="Java" label="Java">
+
+```java
+String OrkesTaskClient.updateTaskByRefName(Map<String, Object> output, String workflowId, String taskRefName, String status) throws ApiException
+```
+
+</TabItem>
+<TabItem value="Go" label="Go">
+
+```go
+func (*WorkflowExecutor) UpdateTaskByRefName(taskRefName string, workflowInstanceId string, status model.TaskResultStatus, output interface{}) error
+```
+
+</TabItem>
+<TabItem value="Python" label="Python">
+
+```python
+TaskResourceApi.update_task1(taskOutput, workflow_id, task_ref_name, status, **kwargs)
+```
+
+</TabItem>
+<TabItem value="CSharp" label="C#">
+
+```csharp
+string TaskResourceApi.UpdateTask(Dictionary<string, Object> taskOutput, string workflowId, string taskRefName, string status, string workerid = null)
+```
+
+</TabItem>
+<TabItem value="JavaScript" label="JavaScript">
+
+```javascript
+TaskResourceService.updateTask(
+    workflowId: string,
+    taskRefName: string,
+    status: 'IN_PROGRESS' | 'FAILED' | 'FAILED_WITH_TERMINAL_ERROR' | 'COMPLETED',
+    taskOutput: Record<string, any>,
+): CancelablePromise<string>
+```
+
+</TabItem>
+<TabItem value="Typescript" label="Typescript">
+
+```typescript
+TaskResourceService.updateTask(
+    workflowId: string,
+    taskRefName: string,
+    status: 'IN_PROGRESS' | 'FAILED' | 'FAILED_WITH_TERMINAL_ERROR' | 'COMPLETED',
+    taskOutput: Record<string, any>,
+): CancelablePromise<string>
+```
+
+</TabItem>
+<TabItem value="Clojure" label="Clojure">
+
+```clojure
+(task-resource/update-task-by-reference-name options workflow-id task-reference-name status update-req)
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+
+<TabItem value="ui" label="Using UI">
+
+1. In the workflow execution page (**Executions** > **Workflow** > *someWorkflow*), select a task in the visual diagram.
+2. In the **Summary** tab, select a status in the **Update task** field.
+3. (Optional) Add the task outputs in the Code field.
+4. Select **Update**.
+
+Once the task is updated via UI,the *worker* is automatically set to *conductor-ui*, providing better traceability for manual overrides.
+
+<p align="center"><img src="/content/img/dev-guides/sending_signals-update_task.gif" alt="Update a task's status in Conductor UI" width="90%" height="auto"></img></p>
+
+</TabItem>
+
+</Tabs>
+
+## Terminate workflow
+
+In some cases, you may need to terminate the workflow with a signal. For example, if a user terminates an ongoing indexing process.
+
+<Tabs groupId="method">
+<TabItem value="api" label="Using API">
+
+Use the [Terminate Workflow](/reference-docs/api/workflow/terminate-workflow) API to terminate an ongoing workflow.
+
+**Endpoint:** `DELETE /api/workflow/{workflowId}`
+
+</TabItem>
+
+<TabItem value="sdk" label="Using SDK">
+
+
+<Tabs>
+<TabItem value="Java" label="Java">
+
+```java
+void terminateWorkflow(String workflowId, String reason)
+```
+
+</TabItem>
+<TabItem value="Go" label="Go">
+
+```go
+func (e *WorkflowExecutor) Terminate(workflowId string, reason string) error
+```
+
+</TabItem>
+<TabItem value="Python" label="Python">
+
+```python
+WorkflowResourceApi.terminate1(self, workflow_id, **kwargs)
+```
+
+</TabItem>
+<TabItem value="CSharp" label="C#">
+
+```csharp
+void WorkflowResourceApi.Terminate(string workflowId, string reason = null, bool? triggerFailureWorkflow = null)
+```
+
+</TabItem>
+<TabItem value="JavaScript" label="JavaScript">
+
+```javascript
+WorkflowExecutor.terminate(
+    workflowId: string,
+    reason: string,
+): CancelablePromise<any>
+```
+
+</TabItem>
+<TabItem value="Typescript" label="Typescript">
+
+```typescript
+WorkflowExecutor.terminate(
+    workflowId: string,
+    reason: string,
+): CancelablePromise<any>
+```
+
+</TabItem>
+<TabItem value="Clojure" label="Clojure">
+
+```clojure
+(workflow-resource/terminate-workflow [options workflow-id & args])
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+
+<TabItem value="ui" label="Using UI">
+
+In the workflow execution page (**Executions** > **Workflow** > *someWorkflow*), select **Actions** > **Terminate**.
+
+<p align="center"><img src="/content/img/terminating-task-in-conductor.png" alt="Terminate workflow from Conductor UI" width="90%" height="auto"></img></p>
+
+
+</TabItem>
+
+</Tabs>

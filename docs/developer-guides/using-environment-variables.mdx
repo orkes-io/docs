@@ -1,0 +1,110 @@
+---
+slug: "/developer-guides/using-environment-variables"
+description: "Learn how to configure environment variables for global use across multiple workflows."
+---
+
+# Using Environment Variables
+
+:::info Available since
+- v3.3.9 and later
+:::
+
+In Orkes Conductor, environment variables help manage frequently used values across multiple workflows. By storing these variables globally in Conductor, you can reuse them in workflows to improve efficiency and maintainability.
+
+## Creating environment variables
+
+**To create an environment variable:**
+
+1. Go to **Definitions** > **Environment Variables** from the left navigation menu on the Conductor cluster.
+2. Select **+ New environment variable**.
+3. Enter the following details:
+  - **Name**–A unique identifier for the variable. This name will be used to reference the variable in workflow definitions.
+  - **Value**–The value to be stored as the variable.
+  - **Value Type**–Select *Plain Text* or *JSON*.
+4. Select **Add** to save the variable.
+
+### Using environment variables in workflow
+
+To use an environment variable in a workflow, use the following expression:
+
+```
+${workflow.env.variable-name}
+```
+Replace *variable-name* with the actual environment variable name. This expression dynamically retrieves the variable during workflow execution.
+
+## Updating environment variables
+
+**To update an environment variable:**
+
+1. Go to **Definitions** > **Environment Variables**, and select the variable to update.
+2. In **Value**, enter the updated variable.
+3. Select **Edit** to confirm.
+
+<p align="center">
+  <img
+    src="/content/img/editing-environment-variable.png"
+    alt="Editing an environment variable in Orkes Conductor"
+    width="60%"
+    height="auto"
+  ></img>
+</p>
+
+## Sample Workflow
+
+<details>
+<summary>Using environment variables in a workflow</summary>
+<p>
+
+To illustrate the use of environment variables in a workflow, consider the following variable stored in Orkes Conductor.
+
+<p align="center">
+  <img
+    src="/content/img/sample-environment-variable.png"
+    alt="Sample environment variable"
+    width="50%"
+    height="auto"
+  ></img>
+</p>
+
+The following example defines a workflow that references the stored environment variable:
+
+```json
+{
+  "name": "sample-workflow",
+  "description": "Workflow to demonstrate passing variables through environment variables",
+  "version": 1,
+  "tasks": [
+    {
+      "name": "http",
+      "taskReferenceName": "http_ref",
+      "inputParameters": {
+        "uri": "${workflow.env.sample-url}",
+        "method": "GET",
+        "connectionTimeOut": 3000,
+        "readTimeOut": "3000",
+        "accept": "application/json",
+        "contentType": "application/json",
+        "encode": true
+      },
+      "type": "HTTP"
+    }
+  ],
+  "schemaVersion": 2,
+  "ownerEmail": "name@example.com"
+}
+```
+
+When this workflow runs, the expression `${workflow.env.sample-url}` is dynamically replaced with the actual variable value, provided that the user running the workflow has permission to access the variable.
+To verify that the stored variable is passed correctly, go to the workflow execution page, select the HTTP task, and check the **Input**.
+
+<p align="center">
+  <img
+    src="/content/img/sample-environment-variable-used.png"
+    alt="Verifying sample environment variable used in workflow definition"
+    width="100%"
+    height="auto"
+  ></img>
+</p>
+
+</p>
+</details>

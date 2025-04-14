@@ -1,0 +1,96 @@
+---
+sidebar_position: 12
+slug: "/reference-docs/system-tasks/opsgenie"
+description: "The Opsgenie task is used to send alerts to Opsgenie."
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Opsgenie
+
+The Opsgenie task is used to send alerts to the alerting system Opsgenie.
+
+Opsgenie utilizes metadata to populate alert details and notify the appropriate responders. The task parameters allow for customization of the alert, including the message, priority, and the users who can view and respond to the alert.
+
+## Task parameters
+
+Configure these parameters for the Opsgenie task.
+
+| Parameter                       | Description                                                                                                                                                                                                                                                                                                                                   | Required/ Optional |
+| ------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
+| inputParameters.**alias**       | A custom identifier that will be generated in Opsgenie when alerts are triggered. Up to 512 characters long.                                                                                                                                                                                                                                  | Required.          |
+| inputParameters.**description** | Description of the alert, limited to 15,000 characters in Opsgenie.                                                                                                                                                                                                                                                                           | Required.          |
+| inputParameters.**visibleTo**   | Users in Opsgenie who can view the alerts. Can be a string, number, boolean, object/array, or null.                                                                                                                                                                                                                                           | Required.          |
+| inputParameters.**responders**  | Users in Opsgenie to be notified of the alert. Can be a string, number, boolean, object/array, or null.                                                                                                                                                                                                                                       | Required.          |
+| inputParameters.**details**     | Additional details for the alert. Can be a string, number, boolean, object/array, or null.                                                                                                                                                                                                                                                    | Optional.          |
+| inputParameters.**message**     | Message to be displayed in Opsgenie, providing a quick overview of the alert.                                                                                                                                                                                                                                                                 | Optional.          |
+| inputParameters.**actions**     | Opsgenie actions to be executed on the alert. Can be a string or object/array.                                                                                                                                                                                                                                                                | Optional           |
+| inputParameters.**priority**    | The priority of the alert.                                                                                                                                                                                                                                                                                                                    | Optional.          |
+| inputParameters.**entity**      | Domain the alert is related to, such as the server's name or application.                                                                                                                                                                                                                                                                     | Optional.          |
+| inputParameters.**token**       | API token for integrating with Opsgenie. Refer to the official [Opsgenie documentation](https://support.atlassian.com/opsgenie/docs/create-a-default-api-integration/) to get the API keys.<br/>**Tip**: Save the token as a [secret](https://orkes.io/content/developer-guides/secrets-in-conductor) in the Conductor for enhanced security. | Required.          |
+| inputParameters.**tags**        | Tags to be added to the alert in Opsgenie. Can be a string or object/array.                                                                                                                                                                                                                                                                   | Optional.          |
+
+## Task configuration
+
+This is the task configuration for an Opsgenie task.
+
+```json
+{
+  "name": "ops_genie_task",
+  "taskReferenceName": "ops_genie_task_ref",
+  "inputParameters": {
+    "alias": "${workflow.input.opsGenieAlias}",
+    "description": "${query_processor_ref.output.result.workflowsUrl}",
+    "visibleTo": "${workflow.input.opsGenieVisibleTo}",
+    "message": "Failed Worklows detected",
+    "responders": "${workflow.input.opsGenieResponders}",
+    "details": {
+      "key": "value"
+    },
+    "priority": "${workflow.input.opsGeniePriority}",
+    "entity": "${workflow.input.opsGenieEntity}",
+    "tags": "${workflow.input.opsGenieTags}",
+    "actions": "${workflow.input.opsGenieActions}",
+    "token": "${workflow.secrets.OPS_GENIE_TOKEN}"
+  },
+  "type": "OPS_GENIE"
+}
+```
+
+## Task output
+
+The task returns a response with headers containing alert details such as alert ID, status, message, created/updated time, and so on.
+
+## Adding an Opsgenie task in UI
+
+**To add an Opsgenie task:**
+
+1. In your workflow, select the (**+**) icon and add a **Opsgenie**.
+2. Enter the **Alias** and **Description**.
+3. Set the respective user IDs in **visibleTo** and **responders** fields.
+4. (Optional)In **Details**, add any additional details for the alert.
+5. (Optional) Set the following Opsgenie parameters:
+
+- **Message**—Message to be displayed in Opsgenie.
+- **Actions**—Action to be carried out on receiving the alert.
+- **Priority**—Set the priority of the alert.
+- **Entity**—Add the domain to which the alert is related to.
+- **Tags**—The tags to be added to the alert.
+
+6. **Token**—The API token for integrating with Opsgenie. Refer to the official [Opsgenie documentation](https://support.atlassian.com/opsgenie/docs/create-a-default-api-integration/) on how to get the API keys.
+
+<center><p><img src="/content/img/opsgenie-ui-guide.png" alt="Adding Opsgenie task" width="100%" height="auto"/></p></center>
+
+## Examples
+
+Here are some examples for using the Opsgenie task.
+
+<details>
+<summary>Alerting using Opsgenie for failure workflow</summary>
+<p>
+
+Get the full example on [how to alert Opsgenie for workflow failures using Orkes Conductor](https://orkes.io/content/templates/alerting/querying-orkes-data-and-triggering-opsgenie-alert).
+
+</p>
+</details>

@@ -50,7 +50,6 @@ const sidebars = {
                         'getting-started/quickstart-1',
                         'getting-started/quickstart-2',
                         'getting-started/quickstart-3',
-                        'getting-started/quickstart-4',
                     ],
                     collapsible: true,
                     collapsed: false,
@@ -58,12 +57,7 @@ const sidebars = {
             ],
             collapsible: true,
             collapsed: false,
-            className: 'leftMenuHeader',
-        },
-        {
-            type: 'doc',
-            id: 'getting-started-orkes-cloud',
-            className: 'leftMenuHeader',
+            className: 'leftMenuHeader'
         },
         {
             type: 'category',
@@ -77,6 +71,7 @@ const sidebars = {
             className: 'leftMenuHeader',
             items: [
                 'conceptual-guides/workflow-and-task-status',
+                'conceptual-guides/directed-acyclic-graph',
             ]
         },
         {
@@ -96,11 +91,30 @@ const sidebars = {
                     type: 'category',
                     label: 'Build Workflows',
                     link: {
-                        type: 'doc',
-                        id: 'developer-guides/building-workflows',
+                        type: 'generated-index',
+                        title: 'Building Workflows',
+                        slug: '/developer-guides/building-workflows',
+                        description: 'In this section, learn the basics of building Conductor workflows through various methods (via code, JSON, or UI). This includes topics on how to pass parameters in workflows securely, configure failure-handling settings for tasks and workflows, and debug workflows in development.',
                     },
                     className: 'leftMenuHeader',
                     items: [
+                        {
+                            type: 'category',
+                            label: 'Workflows',
+                            link: {
+                                type: 'doc',
+                                id: 'developer-guides/workflows',
+                            },
+                            items: [
+                                'developer-guides/write-workflows-using-code',
+                            ],
+                            collapsible: false,
+                        },
+                        {
+                            type: 'doc',
+                            id: 'developer-guides/tasks-in-workflows',
+                            label: "Tasks",
+                        },
                         {
                             type: 'category',
                             label: 'Inputs/Outputs',
@@ -121,41 +135,49 @@ const sidebars = {
                             ],
                             collapsible: false,
                         },
+                        'developer-guides/error-handling',
+                        'developer-guides/debugging-workflows',
+                    ]
+                },
+                {
+                    type: 'category',
+                    label: 'Task Workers and Queues',
+                    link: {
+                        type: 'generated-index',
+                        title: 'Task Workers and Queues',
+                        description: 'Learn how to configure, manage, and optimize task workers and queues to execute tasks efficiently and improve workflow performance in Conductor.',
+                        slug: '/workers'
+                    },
+                    className: 'leftMenuHeader',
+                    items: [
+                        'developer-guides/using-workers',
+                        'developer-guides/monitoring-task-queues',
+                        'developer-guides/scaling-workers',
+                        'developer-guides/task-to-domain',
+                    ]
+                },
+                {
+                    type: 'category',
+                    label: 'Advanced Workflows',
+                    link: {
+                        type: 'generated-index',
+                        title: 'Advanced Workflows',
+                        description: 'Learn how to build more advanced workflows with AI orchestration, human-in-the-loops,event-driven systems, and webhooks, human-in-the-loops.',
+                        slug: 'developer-guides/advanced-workflows'
+                    },
+                    className: 'leftMenuHeader',
+                    items: [
                         {
                             type: 'category',
-                            label: 'Workers',
+                            label: 'AI Orchestration and Agentic Workflows',
                             link: {
-                                type: 'generated-index',
-                                title: 'Workers',
-                                description: 'Learn how to configure, manage, and optimize workers to efficiently execute tasks and improve workflow performance in Conductor.',
-                                slug: '/workers'
+                                type: 'doc',
+                                id: 'developer-guides/ai-orchestration',
                             },
                             items: [
-                                'developer-guides/using-workers',
-                                'developer-guides/monitoring-task-queues',
-                                'developer-guides/scaling-workers',
-                                'developer-guides/task-to-domain',
-                            ],
-                            collapsible: false,
-                        },
-                        {
-                            type: 'category',
-                            label: 'AI Orchestration',
-                            link: {
-                                type: 'generated-index',
-                                title: 'AI Orchestration',
-                                description: 'Learn how to orchestrate AI-driven workflows in Orkes Conductor, from quick setup to using Large Language Models (LLMs), vector databases, and prompt templates for building GenAI applications.',
-                                slug: '/ai-orchestration'
-                            },
-                            items: [
-                                {
-                                    type: 'doc',
-                                    id: 'developer-guides/quickstart-ai-orchestration',
-                                    label: "Quickstart"
-                                },
                                 'developer-guides/using-llms-in-your-orkes-conductor-workflows',
                                 'developer-guides/using-vector-databases-in-your-orkes-conductor-workflows',
-                                'developer-guides/creating-and-managing-gen-ai-prompt-templates',
+                                'developer-guides/using-ai-prompts',
                             ],
                             collapsible: false,
                         },
@@ -179,9 +201,7 @@ const sidebars = {
                             ],
                             collapsible: false,
                         },
-                        'developer-guides/webhook-integration',
-                        'developer-guides/write-workflows-using-code',
-                        'developer-guides/error-handling'
+                        'developer-guides/webhook-integration'
                     ]
                 },
                 {
@@ -193,6 +213,7 @@ const sidebars = {
                     },
                     className: 'leftMenuHeader',
                     items: [
+                        'developer-guides/running-workflows-in-ui',
                         'developer-guides/scheduling-workflows',
                         'developer-guides/sending-signals-to-workflows',
                     ]
@@ -203,15 +224,15 @@ const sidebars = {
                     link: {
                         type: 'generated-index',
                         title: 'Versioning Workflows',
-                        description: 'Learn how to manage multiple workflow versions in Orkes Conductor and its behaviour at runtime.',
+                        description: 'Workflow versioning is the ability to manage different versions of a workflow. This feature allows you to edit a workflow safely without disrupting ongoing or scheduled workflow executions in production. Learn how to manage multiple workflow versions in Orkes Conductor and understand its behavior at runtime.',
                         slug: '/developer-guides/versioning-workflows'
                     },
                     className: 'leftMenuHeader',
                     items: [
                         {
                             type: 'doc',
-                            id: 'faqs/workflow-versioning',
-                            label: "Overview"
+                            id: 'developer-guides/workflow-versioning',
+                            label: "Managing Workflow Versions"
                         },
                         {
                             type: 'doc',
@@ -222,22 +243,16 @@ const sidebars = {
                 },
                 {
                     type: 'category',
-                    label: 'Deploy and Monitor Workflows',
+                    label: 'Test and Monitor Workflows',
                     link: {
                         type: 'generated-index',
-                        title: 'Deploying and Monitoring Workflows',
-                        description: 'Learn the best practices for deploying and monitoring Conductor workflows, including unit tests, regression tests, logging, cluster metrics, and CI/CD.',
+                        title: 'Testing and Monitoring Workflows',
+                        description: 'Learn the best practices for testing and monitoring Conductor workflows, including unit tests, regression tests, logging, cluster metrics, and CI/CD.',
                         slug: '/developer-guides/deploying-workflows'
                     },
                     className: 'leftMenuHeader',
                     items: [
                         'developer-guides/unit-and-regression-tests',
-                        'developer-guides/debugging-workflows',
-                        {
-                            type: 'doc',
-                            id: 'faqs/conductor-log-level',
-                            label: "Log Levels"
-                        },
                         'developer-guides/metrics-and-observability',
                         'developer-guides/integration-with-cicd'
                     ]
@@ -326,7 +341,7 @@ const sidebars = {
                             label: 'AI / LLM',
                             link: {
                                 type: 'generated-index',
-                                title: 'AI / LLM',
+                                title: 'AI / LLM Integrations',
                                 slug: '/category/integrations/ai-llm'
                             },
                             items: [
@@ -378,7 +393,7 @@ const sidebars = {
                                 {
                                     type: 'doc',
                                     id: 'integrations/ai-llm/aws-bedrock-llama2',
-                                    label: 'AWS Bedrock Llama 2',
+                                    label: 'AWS Bedrock Llama3',
                                 },
                                 {
                                     type: 'doc',
@@ -397,7 +412,7 @@ const sidebars = {
                             label: 'Vector Databases',
                             link: {
                                 type: 'generated-index',
-                                title: 'Vector Databases',
+                                title: 'Vector Databases Integrations',
                                 slug: '/category/integrations/vector-databases'
                             },
                             items: [
@@ -428,7 +443,7 @@ const sidebars = {
                             label: 'Message Broker',
                             link: {
                                 type: 'generated-index',
-                                title: 'Message Broker',
+                                title: 'Message Broker Integrations',
                                 slug: '/category/integrations/message-broker'
                             },
                             items: [
@@ -484,7 +499,7 @@ const sidebars = {
                             label: 'RDBMS',
                             link: {
                                 type: 'generated-index',
-                                title: 'RDBMS',
+                                title: 'RDBMS Integrations',
                                 slug: '/category/integrations/rdbms'
                             },
                             items: [
@@ -507,7 +522,7 @@ const sidebars = {
                 title: 'Task Reference',
                 description: 'Reference documentation for tasks in Orkes Conductor',
                 slug: '/category/reference-docs',
-                keywords: ['reference', 'apis', 'operators', 'api', 'tasks', 'system', 'system-tasks']
+                keywords: ['reference', 'operators', 'tasks', 'system', 'system-tasks']
             },
             collapsed: false,
             className: 'leftMenuHeader',
@@ -521,7 +536,7 @@ const sidebars = {
                         title: 'Operators',
                         description: 'Reference documentation for Orkes Conductor - Operators',
                         slug: '/category/reference-docs/operators',
-                        keywords: ['reference', 'apis', 'operators', 'api', 'tasks', 'system', 'system-tasks']
+                        keywords: ['reference', 'operators', 'tasks', 'system', 'system-tasks']
                     },
                     items: [
                         {
@@ -537,7 +552,7 @@ const sidebars = {
                         title: 'System Tasks',
                         description: 'Reference documentation for Orkes Conductor - System Tasks',
                         slug: '/category/reference-docs/system-tasks',
-                        keywords: ['reference', 'apis', 'operators', 'api', 'tasks', 'system', 'system-tasks']
+                        keywords: ['reference', 'operators', 'tasks', 'system', 'system-tasks']
                     },
                     items: [
                             'reference-docs/system-tasks/event',
@@ -559,7 +574,7 @@ const sidebars = {
                                 title: 'Alerting Tasks',
                                 description: 'Reference documentation for Orkes Conductor - Alerting Tasks',
                                 slug: '/category/reference-docs/alerting-tasks',
-                                keywords: ['reference', 'apis', 'operators', 'api', 'tasks', 'system', 'system-tasks','ai-tasks']
+                                keywords: ['reference',  'tasks', 'system', 'system-tasks','alerting-tasks']
                             },
                             items: [
                                     'reference-docs/system-tasks/opsgenie',
@@ -574,7 +589,7 @@ const sidebars = {
                                 title: 'AI Tasks',
                                 description: 'Reference documentation for Orkes Conductor - AI Tasks',
                                 slug: '/category/reference-docs/ai-tasks',
-                                keywords: ['reference', 'apis', 'operators', 'api', 'tasks', 'system', 'system-tasks','ai-tasks']
+                                keywords: ['reference', 'operators', 'tasks', 'system', 'system-tasks','ai-tasks']
                             },
                             items: [
                                 {
@@ -595,11 +610,16 @@ const sidebars = {
                 title: 'API Reference',
                 description: 'API reference documentation for Orkes Conductor.',
                 slug: '/category/ref-docs/api',
-                keywords: ['reference', 'apis', 'operators', 'api', 'tasks', 'system', 'system-tasks']
+                keywords: ['reference', 'apis', 'api']
             },
             collapsed: false,
             className: 'leftMenuHeader',
             items: [
+                {
+                    type: 'doc',
+                    id: 'sdks/authentication',
+                    label: 'Authentication',
+                },
                 {
                     type: 'autogenerated',
                     dirName: 'reference-docs/api',
@@ -622,6 +642,7 @@ const sidebars = {
                     label: "Overview"
                 },
                 'templates/automatic-subtitle-generator',
+                `templates/daily-scrum-automation-using-standup-bot`,
                 'templates/availability-monitoring-for-http-endpoints',
                 'templates/video-processing-workflows',
                 'templates/image-effects',
@@ -650,6 +671,11 @@ const sidebars = {
                         slug: '/general-templates'
                     },
                     items: [
+                        {
+                            type: 'doc',
+                            id: 'tutorials/long-running-apis',
+                            label: 'Long-Running APIs',
+                          },
                         {
                             type: 'doc',
                             id: 'templates/examples/sequential-http-tasks',
@@ -710,6 +736,23 @@ const sidebars = {
                 },
                 {
                     type: 'category',
+                    label: 'AI',
+                    link: {
+                        type: 'generated-index',
+                        title: 'AI Tutorials',
+                        description: 'Explore tutorials for AI orchestration and agentic workflows.',
+                        slug: '/tutorials/ai'
+                    },
+                    items: [
+                        {
+                            type: 'doc',
+                            id: 'tutorials/quickstart-ai-orchestration',
+                            label: 'AI-Powered Translator',
+                        },
+                    ]
+                },
+                {
+                    type: 'category',
                     label: 'Documents',
                     link: {
                         type: 'generated-index',
@@ -760,7 +803,6 @@ const sidebars = {
             },
             items: [
                 'faqs/general-faqs',
-                'faqs/directed-acyclic-graph',
             ],
             collapsible: true,
             collapsed: true,

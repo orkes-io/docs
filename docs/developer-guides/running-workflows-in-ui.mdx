@@ -1,0 +1,67 @@
+---
+slug: "/how-to-videos/run-workflow"
+description: "This guide shows you how to run Conductor workflows from UI."
+---
+
+# Running Workflows in UI​
+
+You can run workflows from the Conductor UI in two places:
+* **Run Workflow** in the left navigation menu
+* The **Run** tab in a workflow definition’s visual diagram editor
+
+**To run a workflow:**
+1. Select the **Workflow name** and **Version**.
+    If the version is unspecified, the latest version will run.
+2. Enter the **Input params**.
+
+    ``` json
+    {
+      “key”: “value”,
+      “someKey”: 2
+    }
+    ```
+3. (Optional) Enter the **Idempotency key,** **Correlation id**, and **[Task to domain mapping](/developer-guides/task-to-domain)**.
+
+    **Example task to domain mapping**
+
+    ``` json
+    {
+      "task_x": "someDomain"
+    }
+    ```
+4. Select **Run Workflow** in the top right corner.
+
+<p align="center"><img src="/content/img/dev-guides/run_in_ui-running_a_workflow.gif" alt="Run a workflow in the Conductor UI." width="100%" height="auto"></img></p>
+
+The workflow ID for the current execution will appear at the top of the page. Select the workflow ID to view the execution details.
+
+## Workflow run history
+
+The **Run Workflow** page has a panel for the workflow run history. 
+
+<p align="center"><img src="/content/img/dev-guides/run_in_ui-workflow_run_history.png" alt="Screenshot of the Workflow run history section in the Conductor UI." width="100%" height="auto"></img></p>
+
+The workflow run history contains all workflow executions initiated from the UI. You can select the **Execution name** or **Execution link** to jump to the execution details screen.
+
+You can also select the **Restore Form Values** button to load a past execution’s configuration values into the UI form and rerun the workflow.
+
+<p align="center"><img src="/content/img/dev-guides/run_in_ui-restore_form_values.gif" alt="Restore a previous workflow execution configuration to run it again." width="100%" height="auto"></img></p>
+
+To clear the workflow run history, select **Reset** > **Confirm**.
+
+
+## Video guide
+
+Watch how we can run a workflow from UI.
+
+<center>
+<iframe width="510" height="300" 
+src="https://www.youtube.com/embed/_cy9lIYJwmo?si=bExth8UNYEXnRRkd" 
+title="YouTube video player" 
+frameborder="0" 
+allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+allowfullscreen="allowfullscreen"
+mozallowfullscreen="mozallowfullscreen"
+msallowfullscreen="msallowfullscreen"
+oallowfullscreen="oallowfullscreen"
+webkitallowfullscreen="webkitallowfullscreen"></iframe></center>

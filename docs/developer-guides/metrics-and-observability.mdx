@@ -1,0 +1,78 @@
+---
+slug: "/developer-guides/metrics-and-observability"
+description: "Discover how to use the Metrics dashboard to get insights into your workflow performance."
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Metrics and Observability
+
+Orkes Conductor allows you to monitor workflow performance using tools like Prometheus, Grafana, and Datadog. The Conductor dashboard provides a centralized view of key metrics, allowing you to gain real-time insights and set up customizable alerts for proactive monitoring.
+
+## Dashboard setup 
+
+Orkes Conductor uses Prometheus to capture a comprehensive set of metrics, which are readily available in your cluster deployment. On request, these metrics can be pushed to Grafana or Datadog.
+:::note Notes
+- For cloud deployments, Prometheus and Grafana/Datadog are provisioned by the Orkes team. 
+- For on-premise deployments, users must set up their own monitoring tools.
+:::
+
+### Accessing the dashboard 
+
+To access the dashboard, go to **Metrics** from the left navigation menu on your Conductor cluster. 
+
+Note: To enable Metrics for your cluster, please get in touch with the [Orkes team](https://orkes.io/talk-to-an-expert).
+
+<p align="center"><img src="/content/img/accessing-dashboard.png" alt="Accessing dashboard from Conductor UI" width="100%" height="auto"></img></p>
+
+**Example dashboard set up using Prometheus and Grafana**
+
+<p align="center"><img src="/content/img/sample-dashboard.png" alt="Sample Dashboard" width="100%" height="auto"></img></p>
+
+## Conductor metrics​
+
+The Conductor server collects the following metrics via Prometheus, which can be visualized using Grafana/Datadog for monitoring and setting up alerts.
+
+### Workflow metrics​
+
+| Metrics | Decsription | Tags | 
+| ------- | ----------- | ---- |
+| workflow_completed_seconds | Timer indicating the average time taken to complete the workflows. | workflowName, quantile |
+| workflow_completed_seconds_count | Counter indicating the number of workflows completed per second. Apply the FAILED filter to get the failed workflows. | workflowName | 
+| workflow_running | Gauge indicating the number of running workflows. | workflowName | 
+| workflow_start_request_seconds_count | Counter indicating the number of workflows started per second. | workflowName | 
+
+### Task metrics​
+
+| Metrics | Decsription | Tags | 
+| ------- | ----------- | ---- |
+| task_completed_seconds | Timer indicating the average time taken to complete the task. | taskType, quantile | 
+| task_completed_seconds_count | Counter indicating the number of tasks completed per second. Apply the FAILED filter to get the failed tasks. | taskType | 
+| task_queue_depth | Counter indicating the number of pending tasks in a given time period. | taskType | 
+| task_poll_request_seconds_count | Counter indicating the number of tasks polled per second. | taskType | 
+
+## Configuring alerts 
+
+Alerts can be configured for any metric from your dashboard or via the *Alerting* section in Grafana.
+
+<Tabs>
+<TabItem value="To configure alerts for a metric from your dashboard" label="To configure alerts for a metric from your dashboard">
+
+1. Open your Grafana dashboard and select the metric.
+2. Select **Edit**.
+<p align="center"><img src="/content/img/editing-metric.png" alt="Editing a metric from dashboard" width="50%" height="auto"></img></p>
+3. Go to the **Alerts** tab and select **Create alert rule from this panel.**
+<p align="center"><img src="/content/img/creating-alerts-for-metrics.png" alt="Creating alerts from a metrics in dashboard" width="100%" height="auto"></img></p>
+4. [Create the alert](https://grafana.com/tutorials/alerting-get-started/#create-an-alert) based on your requirements.
+
+</TabItem>
+<TabItem value="To configure alerts from the Alerting section" label="To configure alerts from the Alerting section">
+
+1. Go to **Alerting** > **Alert rules** from the left navigation menu on your Grafana dashboard.
+2. Select **+ New alert rule**.
+3. Create the alert based on your requirements.
+</TabItem>
+</Tabs>
+
+Refer to the official Grafana documentation for more information on [setting up alerts](https://grafana.com/tutorials/alerting-get-started/).
