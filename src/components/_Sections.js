@@ -43,29 +43,40 @@ const videoSource = [
 ];
 const useCases = [
   {
-    title: "Microservices Orchestration",
+    title: "Microservices Workflow Orchestration",
     image: "/content/img/usecases/microservices.svg",
-    alt: "Microservices Orchestration",
+    alt: "Microservices Workflow Orchestration",
+    url: "https://orkes.io/use-cases/microservices-orchestration",
   },
   {
-    title: "API Orchestration",
+    title: "Realtime API Orchestration",
     image: "/content/img/usecases/api.svg",
-    alt: "API Orchestration",
+    alt: "Realtime API Orchestration",
+    url: "https://orkes.io/use-cases/api-orchestration",
   },
   {
-    title: "Data Pipeline Orchestration",
+    title: "Event Driven Architecture",
     image: "/content/img/usecases/cicd.svg",
-    alt: "Data Pipeline Orchestration",
+    alt: "Event Driven Architecture",
+    url: "https://orkes.io/use-cases/event-driven-architecture",
   },
   {
-    title: "Orchestrate Human Flows",
-    image: "/content/img/usecases/humanflows.svg",
-    alt: "Orchestrate Human Flows",
+    title: "Agentic Workflows",
+    image: "/content/img/usecases/agentic-workflow.svg",
+    alt: "Agentic Workflows",
+    url: "https://orkes.io/use-cases/agentic-workflows",
   },
   {
-    title: "Event Driven Orchestration",
+    title: "Human Workflow Orchestration",
     image: "/content/img/usecases/events.svg",
-    alt: "Event Driven Orchestration",
+    alt: "Human Workflow Orchestration",
+    url: "https://orkes.io/use-cases/human-workflow-orchestration",
+  },
+  {
+    title: "Process Orchestration",
+    image: "/content/img/usecases/process-orchestration.svg",
+    alt: "Process Orchestration",
+    url: "https://orkes.io/use-cases/process-orchestration ",
   },
 ];
 
@@ -379,7 +390,11 @@ export const UseCasesSection = ({}) => (
     <div className={styles.useCasesSection}>
       {useCases &&
         useCases.map((item, index) => (
-          <div className={styles.useCase} key={index}>
+          <div
+            className={styles.useCase}
+            key={index}
+            onClick={() => window.open(item.url)}
+          >
             <img src={item.image} alt={item.alt}></img>
             <div className={styles.useCaseTitle}>{item.title}</div>
           </div>
@@ -390,10 +405,8 @@ export const UseCasesSection = ({}) => (
 
 export const AccordionSection = ({}) => (
   <div className="padding-vert--md">
-    <h2>What can Conductor do?</h2>
-    <h5>
-      Here are some of the key features we can do with Orkes Conductor platform:
-    </h5>
+    <h2>What can Orkes Conductor do?</h2>
+
     <AccordionWithImg data={accordionData} />
   </div>
 );

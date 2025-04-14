@@ -55,7 +55,9 @@
 }
 .useCasesSection {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 .useCase {
   width: 168px;
@@ -69,6 +71,11 @@
   padding: 20px;
   text-align: center;
   margin: 10px;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+}
+.useCase:hover {
+  transform: scale(1.1);
 }
 .useCase img {
   width: 70px;
@@ -92,6 +99,6 @@
   }
   .useCasesSection {
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: flex-start;
   }
 }
