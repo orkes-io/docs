@@ -135,6 +135,7 @@ const sidebars = {
                             ],
                             collapsible: false,
                         },
+                        'developer-guides/rate-limits',
                         'developer-guides/error-handling',
                         'developer-guides/debugging-workflows',
                     ]
