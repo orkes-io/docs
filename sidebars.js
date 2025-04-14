@@ -135,6 +135,7 @@ const sidebars = {
                             ],
                             collapsible: false,
                         },
+                        'developer-guides/rate-limits',
                         'developer-guides/error-handling',
                         'developer-guides/debugging-workflows',
                     ]
@@ -534,7 +535,7 @@ const sidebars = {
                     link: {
                         type: 'generated-index',
                         title: 'Operators',
-                        description: 'Reference documentation for Orkes Conductor - Operators',
+                        description: 'Reference documentation for operators in Orkes Conductor. Operators are control flow primitives, similar to programming constructs like loops, if/else, or fork/joins.',
                         slug: '/category/reference-docs/operators',
                         keywords: ['reference', 'operators', 'tasks', 'system', 'system-tasks']
                     },
@@ -550,7 +551,7 @@ const sidebars = {
                     link: {
                         type: 'generated-index',
                         title: 'System Tasks',
-                        description: 'Reference documentation for Orkes Conductor - System Tasks',
+                        description: 'Reference documentation for system tasks in Orkes Conductor. Designed for common use cases like HTTP calls, system tasks are built-in tasks managed and run in Conductor, allowing you to get started quickly without needing custom workers.',
                         slug: '/category/reference-docs/system-tasks',
                         keywords: ['reference', 'operators', 'tasks', 'system', 'system-tasks']
                     },
@@ -572,7 +573,7 @@ const sidebars = {
                             link: {
                                 type: 'generated-index',
                                 title: 'Alerting Tasks',
-                                description: 'Reference documentation for Orkes Conductor - Alerting Tasks',
+                                description: 'Reference documentation for system alerting tasks in Orkes Conductor. These system tasks are meant for monitoring and triggering alerts based on specific conditions.',
                                 slug: '/category/reference-docs/alerting-tasks',
                                 keywords: ['reference',  'tasks', 'system', 'system-tasks','alerting-tasks']
                             },
@@ -587,7 +588,7 @@ const sidebars = {
                             link: {
                                 type: 'generated-index',
                                 title: 'AI Tasks',
-                                description: 'Reference documentation for Orkes Conductor - AI Tasks',
+                                description: 'Reference documentation for system AI tasks in Orkes Conductor. These system tasks are meant for building AI-powered or agentic components in workflows.',
                                 slug: '/category/reference-docs/ai-tasks',
                                 keywords: ['reference', 'operators', 'tasks', 'system', 'system-tasks','ai-tasks']
                             },
