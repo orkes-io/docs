@@ -89,7 +89,7 @@ const accordionData = [
   },
   {
     title: "Branch Your Flows",
-    description: "Use switch-case operator to make branching decisions.",
+    description: "Use switch-case operators to make branching decisions.",
     image: "/content/img/what-conductor-can-do/2_Branch-Your-Flows.png",
   },
   {
@@ -117,8 +117,21 @@ const accordionData = [
     image: "/content/img/what-conductor-can-do/6_Use-Built-In-Tasks.png",
   },
   {
-    title: "Handle Errors & Failures",
-    description: "Set timeouts, auto retries and failure handlers for tasks.",
+    title: "Use LLM Tasks",
+    description:
+      "Use LLM tasks to build AI-powered workflows, including agentic workflows.",
+    image: "/content/img/what-conductor-can-do/use-llm-tasks.png",
+  },
+  {
+    title: "Human in the Loop Automation",
+    description: "Plug in manual steps in your workflows using Human tasks.",
+    image:
+      "/content/img/what-conductor-can-do/human-in-the-loop-automation.png",
+  },
+  {
+    title: "Handle Failures",
+    description:
+      "Set timeouts and rate limits to manage failures for tasks and workflows.",
     image: "/content/img/what-conductor-can-do/7_Handle-Errors-Failures.png",
   },
   {
@@ -129,12 +142,13 @@ const accordionData = [
   },
   {
     title: "Debug Visually",
-    description: "Identify and debug failing workflows in the UI.",
+    description: "Track and debug workflows from Conductor UI.",
     image: "/content/img/what-conductor-can-do/9_Debug-Visually.png",
   },
   {
     title: "Collaborate Securely",
-    description: "Use role based access controls to share workflows and tasks.",
+    description:
+      "Use role-based access controls to share metadata and resources.",
     image: "/content/img/what-conductor-can-do/10_Collaborate-Securely.png",
   },
   {
@@ -142,6 +156,33 @@ const accordionData = [
     description:
       "Orkes Cloud provides SLA backed, enterprise grade and fully managed Conductor clusters.",
     image: "/content/img/what-conductor-can-do/11_Run-In-The-Cloud.png",
+  },
+];
+
+const moreResoucesData = [
+  {
+    title: "Blog",
+    description:
+      "Explore technical use cases, community posts, product updates, and more from our team at Orkes",
+    logo: "/content/img/svg/more-resources/blogs.svg",
+    url: "https://orkes.io/blog/",
+    ctaLabel: "Read blogs",
+  },
+  {
+    title: "Video Guides",
+    description:
+      "Watch step-by-step tutorials and feature demos to help you get started with Conductor.",
+    logo: "/content/img/svg/more-resources/video-guide.svg",
+    url: "https://www.youtube.com/channel/UCI7sk4DD6F6r9CWg9gHRlVg",
+    ctaLabel: "Explore video guides",
+  },
+  {
+    title: "Developer Events",
+    description:
+      "Stay ahead with upcoming developer events, webinars, and workshops from Orkes.",
+    logo: "/content/img/svg/more-resources/dev-events.svg",
+    url: "https://orkes.io/events/",
+    ctaLabel: "Check upcoming events ",
   },
 ];
 export const StepBoxesSection = ({ steps = [] }) => (
@@ -410,3 +451,27 @@ export const AccordionSection = ({}) => (
     <AccordionWithImg data={accordionData} />
   </div>
 );
+
+export const MoreResourcesSection = () => {
+  return (
+    <div className="padding-vert--md">
+      <h2>More Resources</h2>
+      <div className={styles.moreResourcesSection}>
+        {moreResoucesData.map((item, index) => {
+          return (
+            <div className={styles.moreResourcesItem} key={index}>
+              <img src={item.logo} alt={item.title} />
+              <div>
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
+                <Link to={item.url} className={styles.moreResourcesLink}>
+                  {item.ctaLabel}
+                </Link>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
