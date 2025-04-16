@@ -60,7 +60,7 @@
   gap: 12px;
 }
 .useCase {
-  width: 168px;
+  width: 150px;
   height: 176px;
   border: 1px solid #c8c8c8;
   border-radius: 16px;
@@ -78,8 +78,8 @@
   transform: scale(1.1);
 }
 .useCase img {
-  width: 70px;
-  height: 70px;
+  width: 65px;
+  height: 65px;
   object-fit: contain;
 }
 .useCaseTitle {
@@ -94,7 +94,7 @@
   gap: 30px;
 }
 .moreResourcesItem {
-  width: 370px;
+  width: 300px;
   border: 1px solid #c8c8c8;
   border-radius: 16px;
   display: flex;
@@ -102,14 +102,13 @@
   align-items: center;
   justify-content: space-between;
   padding: 20px;
-  gap: 20px;
   text-align: center;
-  margin-top: 10px;
+  margin: 10px;
 }
 
 .moreResourcesItem img {
-  width: 100px;
-  height: 100px;
+  width: 90px;
+  height: 90px;
   object-fit: contain;
 }
 
