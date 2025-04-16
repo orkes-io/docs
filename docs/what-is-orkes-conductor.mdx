@@ -13,53 +13,51 @@ import {
   StepBoxesSection,
   UseCasesSection,
   VideoSection,
+  MoreResourcesSection,
 } from "../src/components/_Sections";
 
-# Conductor Documentation
+# Orkes Conductor Documentation
 
 <main className={`mainContainer container`}>
-  <StepBoxesSection
-    steps={[
-      {
-        title: "Getting Started",
-        description:
-          "Learn how to build workflows, discover key concepts, and explore powerful features.",
-        to: "/quickstarts/create-first-workflow",
-      },
-      {
-        title: "Examples",
-        description:
-          "Examples and easy to get started templates for various use cases",
-        to: "/category/templates",
-      },
-      {
-        title: "Reference Docs",
-        description: "Conductor features, capabilities and APIs",
-        to: "/category/reference-docs",
-      },
-    ]}
-  />
-  <NewToConductorSection
-    title="New to Conductor?"
-    description={
-      <div>
-          Discover the possibilities with Orkes Conductor - build microservices,
-        hybrid apps, long-running workflows, and mission-critical applications
-        with high reliability.
-          <br/>
-          Start by <a
-              href="/content/get-orkes-conductor"
-              target="_self"
-          >setting up your cluster</a>,&nbsp;
-          <a href="/quickstarts/create-first-workflow" target="_self">build your first workflow</a>&nbsp;
-          and continue through our getting started guide&nbsp;
-          <a href="/core-concepts" target="_self">to learn the basics of Conductor</a>.
-          Continue your journey by walking through the <a href="/content/category/developer-guides" target="_self">developer guides</a>.
-      </div>
-    }
-  />
+<NewToConductorSection
+  title="What is Orkes Conductor?"
+  description={
+    <div>
+      Orkes Conductor is a Unified Application Platform (UAP) for building
+      highly reliable applications and AI agents.
+      <br />
+      Unlock the full potential of Orkes Conductor to create distributed
+      applications, orchestrate agentic workflows, implement event-driven
+      architectures, streamline process orchestration, and much more.
+    </div>
+  }
+/>
+<StepBoxesSection
+  steps={[
+    {
+      title: "Getting Started",
+      description:
+        "Explore key concepts, set up Orkes Conductor, and learn how to build your first workflow.",
+      to: "/category/getting-started ",
+    },
+    {
+      title: "Orkes Templates",
+      description:
+        "Discover ready-to-use templates to build powerful use cases at speed.",
+      to: "/category/templates",
+    },
+    {
+      title: "AI Orchestration",
+      description:
+        "Dive into Orkes Conductor's AI capabilities and learn how to leverage LLM tasks to create AI-powered and agentic workflows.",
+      to: "/ai-orchestration ",
+    },
+  ]}
+/>
+
   <LanguagesSection />
   <AccordionSection />
   <UseCasesSection />
-  <VideoSection />
+  {/* <VideoSection /> */}
+  <MoreResourcesSection />
 </main>

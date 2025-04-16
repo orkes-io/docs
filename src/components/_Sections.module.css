@@ -55,7 +55,9 @@
 }
 .useCasesSection {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 .useCase {
   width: 168px;
@@ -69,6 +71,11 @@
   padding: 20px;
   text-align: center;
   margin: 10px;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+}
+.useCase:hover {
+  transform: scale(1.1);
 }
 .useCase img {
   width: 70px;
@@ -78,6 +85,32 @@
 .useCaseTitle {
   padding-top: 10px;
   font-weight: 600;
+}
+
+.moreResourcesSection {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+.moreResourcesItem {
+  width: 370px;
+  border: 1px solid #c8c8c8;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  gap: 20px;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.moreResourcesItem img {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
 }
 
 @media screen and (max-width: 996px) {
@@ -92,6 +125,6 @@
   }
   .useCasesSection {
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: flex-start;
   }
 }
