@@ -90,6 +90,10 @@ Use the visual workflow editor in Conductor UI to create your *helloWorld* workf
 
 Your first workflow has been created!
 
+Note how the code above references _myTask_ - this tells the workflow to push tasks on a queue with that name.
+Your local worker is then constantly polling for work on that queue (pointed to via the worker's _taskDefName_ field).
+To learn more about how tasks are routed see [Routing Tasks](https://orkes.io/content/developer-guides/task-to-domain).
+
 </TabItem>
 
 <TabItem value="code" label="Workflow as code">
