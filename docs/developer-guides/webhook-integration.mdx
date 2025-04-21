@@ -9,61 +9,77 @@ import Install from '@site/src/components/install.mdx';
 
 # Webhook Integrations
 
-Webhooks are user-driven HTTP callback functions that facilitate the connection between Orkes Conductor and external systems. A webhook sends data from one system to another when an event occurs. By leveraging webhooks, workflows can act on events outside the Conductor environment. You can also trigger other workflows in Conductor based on received webhook events.
+Webhooks are HTTP callback functions that enable Orkes Conductor to interact with external systems in real time. When an event occurs on an external platform, a webhook sends event data to Conductor. This enables:
 
-Orkes Conductor supports webhook integration with the following systems:
+- Workflows (containing webhook tasks) to act on external events.
+- To trigger other workflows in response to incoming webhook events.
 
-* GitHub
-* Slack
-* Stripe
-* Microsoft Teams
-* SendGrid
+Orkes Conductor supports webhook integration with the following platforms:
 
-Additionally, you can use the "Custom" option to integrate with other external applications.
+- GitHub
+- Microsoft Teams
+- SendGrid
+- Slack
+- Stripe
 
-**To integrate webhooks with Orkes Conductor:**
+In addition, you can integrate it with any other system using the *Custom* platform option. 
 
-1. Create a Workflow with Wait for Webhook task.
-2. Create a Webhook in Orkes Conductor.
-3. Execute Workflow
+## Overview
 
-## Step 1: Create a Workflow with Wait for Webhook Task
+This guide explains how to integrate Webhook with Orkes Conductor. Here’s an overview:
 
-The first step is to create a workflow with a Wait for Webhook task.
+1. Create a workflow including a Wait for Webhook task
+2. Create a webhook in Orkes Conductor
+3. Verify webhook
+4. Run workflow
 
-1. Navigate to **Definitions > Workflow**, from the left menu on your Orkes Conductor cluster.
-2. Click **+ Define Workflow**.
-3. In your workflow, select the (**+**) icon and add a **Wait for Webhook** task.
-4. Configure the [input matches](https://orkes.io/content/reference-docs/system-tasks/wait-for-webhook).
+Webhook payloads can trigger workflows in different ways, depending on your use case:
+
+1. **If a workflow must wait for a specific webhook event**–Create a workflow that includes a [Wait for Webhook](https://orkes.io/content/reference-docs/system-tasks/wait-for-webhook) task with input matches defined based on the expected webhook payload. Proceed to [Step 1](/content/developer-guides/webhook-integration#step-1-create-a-workflow).
+2. **If a webhook event must trigger a new workflow**–Configure the webhook to start a separate workflow when the event is received. In this case, you can skip Step 1, and proceed directly to [Step 2](/content/developer-guides/webhook-integration#step-2-create-a-webhook).
+3. **If you need both behaviors**–Configure the webhook to send its payload to the workflow containing a Wait for Webhook task while also triggering a separate workflow.
+
+## Step 1: Create a workflow
+
+To create a workflow:
+
+1. Go to **Definitions** > **Workflow** from the left menu on your Orkes Conductor cluster.
+2. Select **+ Define Workflow**.
+3. In your visual workflow builder, select the (**+**) icon and add a **Wait for Webhook** task.
+4. Configure the [input matches](https://orkes.io/content/reference-docs/system-tasks/wait-for-webhook#writing-custom-matches) to align with the payload structure expected from the incoming webhook platform.
 5. **Save** the workflow definition. 
 
-## Step 2: Create a Webhook in Orkes Conductor
+[Run the workflow](https://orkes.io/content/how-to-videos/run-workflow) before the webhook event is received. The workflow will pause at the Wait for Webhook task and resume only when an incoming event matches the configured criteria.
 
-Once the workflow is created, the next step is to create a webhook.
+## Step 2: Create a webhook 
 
-1. Go to **Definitions > Webhooks** from the left menu on your Orkes Conductor cluster.
-2. Click **+ New Webhook**.
-3. Provide the following details:
+The next step is to create a webhook in Orkes Conductor.
 
-<p align="center"><img src="/content/img/creating-webhook-in-orkes-conductor.png" alt="Creating Webhook in Orkes Conductor" width="100%" height="auto"></img></p>
+**To create a webhook:**
+
+1. Go to **Definitions** > **Webhooks** from the left menu on your Orkes Conductor cluster.
+2. Select **+ New Webhook**.
+3. Enter the following details:
 
 | Parameter | Description | 
 |----------|----------|
 | Webhook name | A unique name for the webhook. |
-| Workflow to receive webhook event | Add the workflows that are supposed to receive this webhook event. (The workflow created in step 1). |
-| Source platform | Select the platform from which this webhook event will be invoked. Supported platforms are _GitHub_, _Slack_, _Stripe_, _Microsoft Teams_, _SendGrid_, and _Custom_. Use _Custom_ for unsupported systems. | 
-| Start workflow when webhook events come | Enable this option to start a new workflow using data received from the webhook event. Once enabled, specify the workflow name, version, and idempotency key. The event payload will then be passed as input to the chosen workflow. |
+| Workflow to receive webhook event | The workflow that must receive the incoming webhook event—this is the one you created in [Step 1](/content/developer-guides/webhook-integration#step-1-create-a-workflow). If the webhook is intended to start a new workflow, leave this field blank. | 
+| Source platform | The platform from which this webhook event will be invoked. Supported platforms:<ul><li>**GitHub**–Enter the GitHub account’s [secret](https://docs.github.com/en/webhooks/using-webhooks/creating-webhooks) key.</li><li>**Microsoft Teams**–Enter the [security token](https://learn.microsoft.com/en-us/microsoftteams/platform/sbs-outgoing-webhooks?tabs=dev&tutorial-step=3) from Microsoft Teams.</li><li>**SendGrid**–Enter the Sendgrid webhook’s [verification key](https://www.twilio.com/docs/sendgrid/for-developers/tracking-events/getting-started-event-webhook-security-features#enable-signature-verification).</li><li>**Slack**–No additional parameters required.</li><li>**Stripe**–Enter the [endpoint secret](https://stripe.com/docs/webhooks/signatures) for webhook from Stripe.</li><li>**Custom**–Use this for any other platforms and configure the header keys and values.</li></ul> | 
+| Start workflow when webhook events come | Enable this option to automatically start a workflow using the data received from the webhook event. Once enabled, you must specify the workflow name, version, and (optionally) an idempotency key. The event payload will be passed as input to the specified workflow. | 
 
-4. Click **Save**. An unverified webhook URL will be generated.
+:::note
+When both the options—**Workflow to receive webhook event** and **Start workflow when webhook events come**—are configured, the webhook payload will be sent to both workflows.
+:::
+<p align="center"><img src="/content/img/creating-webhook-in-orkes-conductor.png" alt="Creating Webhook in Orkes Conductor" width="100%" height="auto"></img></p>
+
+4. Select **Save**. 
+
+An unverified webhook URL will be generated.
 
 <p align="center"><img src="/content/img/Webhook-with-an-unverified-URL-in-Conductor.png" alt="Webhook with an unverified UR" width="100%" height="auto"></img></p>
 
-5. Copy the generated URL to the platform from which the webhook will be invoked. This step varies with the platform being integrated.
-6. Once the URLs are verified (using the respective [verification method](/content/developer-guides/webhook-integration#supported-webhook-verification-methods)), the URL status will be marked as **Verified**.
-
-<p align="center"><img src="/content/img/Webhook-with-a-verified-URL-in-Conductor.png" alt="Webhook with a verified UR" width="100%" height="auto"></img></p>
-
-This is the task configuration for a Wait for Webhook task.
+Here is the JSON schema for a webhook:
 
 ```json
 {
@@ -86,67 +102,30 @@ This is the task configuration for a Wait for Webhook task.
 }
 ```
 
-### Supported Webhook Verification Methods
+## Step 3: Verify the webhook
 
-Conductor supports incoming webhooks over HTTPS with the following verification methods:
+The next step is to verify the webhook URL. The verification mechanism varies based on the platform from which webhook events will be received. Conductor supports incoming webhooks over HTTPS with the following verification methods:
 
-1. Header Verification.
-2. Signature Verification.
-3. Challenge Verification.
+| Method | Description | Used by | Examples |
+| ------ | ----------- | ------- | -------- |
+| Header-based verification | A header-based verifier validates incoming requests by checking for headers and their expected values. The request must match all headers and values as specified in Conductor; otherwise, it will be ignored. The URL is marked as verified when the first matching request is received. | Custom | <ul><li>[Incoming webhook using cURL](https://orkes.io/content/templates/examples/custom-conductor-webhook-using-curl)</li><li>[Incoming webhook using Postman](https://orkes.io/content/templates/examples/incoming-webhook-using-postman)</li></ul> | 
+| Challenge-based verification | A challenge-based verifier is used when the external system sends a challenge request to which the Conductor server responds to establish trust. The URL is marked as verified once this challenge response is completed. Until then, all incoming requests are ignored. | Slack | <ul><li>[Daily Scrum Automation using Standup Bot](https://orkes.io/content/templates/daily-scrum-automation-using-standup-bot)</li><li>[Automating Slack Greetings to Community](https://orkes.io/blog/automating-slack-greetings-to-community-with-orkes-conductor/)</li></ul>
+| Signature-based verification | A signature-based verifier validates the payload signature. This validation requires configuring the secret or header key on the Conductor side. When the request comes, Conductor calculates the request payload hash, and if it matches the pre-configured secret or header value in Conductor, the URL is marked as verified. | <ul><li>GitHub–Uses the **X-Hub-Signature 256** header.</li><li>Stripe–Uses the **Stripe-Signature** header.</li><li>Microsoft Teams–Uses the **hmac base64-encoded-signature** header.</li><li>SendGrid–Uses the **X-Twilio-Email-Event-Webhook-Signature** header.</li></ul> | <ul><li>[SendGrid Webhooks for Email Nurturing Workflows](https://orkes.io/blog/sendgrid-webhook-for-email-nurturing/)</li></ul>
 
-### 1. Header-based Verifier Webhook​
+Once the URLs are verified (using the respective verification method), the URL status will be marked as Verified.
 
-A header-based verifier webhook validates a predefined header and value. Each request must contain all the headers with the keys and values specified. The request will be ignored if the keys and values are not specified. The URL is marked as verified when the first webhook event comes with all the header keys and values configured.
+<p align="center"><img src="/content/img/Webhook-with-a-verified-URL-in-Conductor.png" alt="Webhook with a verified UR" width="100%" height="auto"></img></p>
 
-<p align="center"><img src="/content/img/Creating-a-header-based-verifier-Webhook-in-Conductor.png" alt="Header-based verifier webhook" width="70%" height="auto"></img></p>
+## Step 4: Verify incoming webhooks
 
-Check out the following examples implementing header-based webhook verification:
+The incoming webhook payload triggers the workflow in different ways, depending on your use case:
 
-* [Incoming Webhook using cURL](https://orkes.io/content/templates/examples/custom-conductor-webhook-using-curl)
-* [Incoming Webhook using Postman](https://orkes.io/content/templates/examples/incoming-webhook-using-postman)
+1. **If the workflow is waiting for a specific webhook event**–After you run the workflow, it pauses at the Wait for Webhook task. When the expected event is received, the workflow continues automatically.
+2. **If the webhook is configured to start a workflow**–Conductor can automatically start the workflow when a webhook event is received. The event payload will be passed as input to the specified workflow.
+3. **If both options are configured**–When you configure both **Workflow to receive webhook event** and **Start workflow when webhook events come**, Conductor sends the webhook payload to both workflows.
 
-### 2. Challenge-based Verifier Webhook​
-
-A challenge-based verifier webhook is used when the external system sends a challenge request that the Conductor server responds to establish trust. The URL is marked as verified when the system receives a challenge request. If the URL is not verified, all requests will be ignored until the URL verification is completed via the challenge mechanism. Slack supports the challenge-based verifier method.
-
-<p align="center"><img src="/content/img/Creating-a-challenge-based-verifier-Webhook-in-Conductor.png" alt="Challenge-based verifier webhook" width="70%" height="auto"></img></p>
-
-Check out the following examples implementing challenge-based webhook verification:
-
-- [Slack Example - Standup Bot using Orkes Conductor](https://orkes.io/blog/create-standup-bot-using-conductor-slack-integration/)
-- [Slack Example - Automating Slack Community Greetings](https://orkes.io/blog/automating-slack-greetings-to-community-with-orkes-conductor/)
-
-### 3. Signature-based Verifier Webhook​
-
-A signature-based verifier webhook validates the payload signature. This validation requires configuring the secret and header key on the Conductor side. When the request comes, Conductor calculates the request payload hash and matches it with the pre-configured header value. The systems that support signature-based verifiers are GitHub, Stripe, Microsoft Teams, and SendGrid.
-
-<p align="center"><img src="/content/img/Creating-a-signature-based-verifier-Webhook-in-Conductor.png" alt="Signature-based verifier webhook" width="70%" height="auto"></img></p>
-
-Configure the following parameters for each of the systems while creating webhooks in Orkes Conductor:
-
-| System | Header for request verification | Parameter to be configured in Orkes Conductor |
-| ------ | ------------------------------- | --------------------------------------------- |
-| GitHub | Header `X-Hub-Signature 256` will be used to request verification. The request body’s HMAC hex digest is spawned using the SHA-256 hash function and the secret as the HMAC key. | [Secret](https://docs.github.com/en/webhooks/using-webhooks/creating-webhooks) - Enter the GitHub account’s secret key. | 
-| Stripe | Header `Stripe-Signature` will be used to request verification. | [Endpoint Secret](https://stripe.com/docs/webhooks/signatures) - Enter the endpoint’s secret for Webhook from Stripe. | 
-| Microsoft Teams | Header `hmac base64-encoded-signature` will be used to request verification. | [Security token](https://learn.microsoft.com/en-us/microsoftteams/platform/sbs-outgoing-webhooks?tabs=dev&tutorial-step=3) - Enter the security token from Microsoft Teams. | 
-| SendGrid | Header `X-Twilio-Email-Event-Webhook-Signature` will be used to request verification. | [Verification key](https://www.twilio.com/docs/sendgrid/for-developers/tracking-events/getting-started-event-webhook-security-features#enable-signature-verification) - Enter the Sendgrid Webhook’s verification key. | 
-
-### Verifying Webhook Executions 
-
-To review the webhook events received by Orkes Conductor, navigate to the created webhook and access the webhook execution history. This includes details such as the event ID received, whether the headers are matched, the triggered workflow execution, and the timestamp of when the event was received.
+To verify that the webhook events have been received by Conductor, open the webhook, by navigating to **Definitions** > **Webhook**,  and access the webhook execution history. 
 
 <p align="center"><img src="/content/img/webhook-execution-history.png" alt="Verifying Webhook execution in Orkes Conductor" width="100%" height="auto"></img></p>
 
-## Step 3: Execute Workflow
-
-The workflow can begin in two ways:
-
-1. Automatically triggered when events are received from the webhook.
-2. Running the workflow initially and waiting for the webhook event.
-    To run the workflow from Conductor UI:
-    1. Go to **Run Workflow** from the left menu on your Orkes Conductor cluster.
-    2. Select the desired workflow name and version and provide any input parameters as needed.
-    3. Specify correlation ID or tasks to domain mapping if required.
-    4. On the top right, select **Run Workflow**.
-
-After running the workflow, a workflow ID will be generated. Click on it to monitor the execution progress and view detailed information. The workflow will proceed based on the data received through the webhook events.
+This includes details such as the event ID, whether the headers are matched, the triggered workflow execution IDs, and the timestamp of when the event was received.
