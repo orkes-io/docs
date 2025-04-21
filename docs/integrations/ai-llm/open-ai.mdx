@@ -2,6 +2,8 @@
 slug: "/integrations/ai-llm/open-ai"
 description: "Learn how to integrate OpenAI with your Orkes Conductor cluster."
 ---
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
 
 # OpenAI Integration with Orkes Conductor
 
@@ -14,7 +16,13 @@ To use system AI tasks in Orkes Conductor, you must integrate your Conductor clu
 
 ## Step 1: Get the OpenAI credentials
 
-To integrate OpenAI with Orkes Conductor, retrieve the API key from the OpenAI platform.
+To integrate OpenAI with Orkes Conductor, retrieve the API key from the OpenAI platform. Two types of keys can be generated:
+
+- **User account key**–Tied to your individual account. This key can make requests on behalf of the selected project.
+- **Service account key**–Linked to a bot user (service account) that is added to the project.
+
+<Tabs>
+<TabItem value="Using user account" label="Using user account">
 
 **To get the API key:**
 
@@ -23,10 +31,42 @@ To integrate OpenAI with Orkes Conductor, retrieve the API key from the OpenAI p
 
 <p align="center"><img src="/content/img/create-new-api-key.png" alt="Create new API Keys in OpenAI API platform" width="100%" height="auto"></img></p>
 
-3. Enter a name for your secret and select **Create secret key**.
-4. Copy and store the generated key securely, as it is shown only once.
+3. In **Owned by**, select **You**.
 
-<p align="center"><img src="/content/img/generated-open-ai-key.png" alt="Generated OpenAI key" width="50%" height="auto"></img></p>
+<p align="center"><img src="/content/img/generating-api-token-user-account.png" alt="Create new API Keys in OpenAI API platform" width="40%" height="auto"></img></p>
+
+4. Configure the following parameters:
+
+- **Name**–A name for your secret.
+- **Project**–Select the required project. 
+- **Permissions**–Select the required permissions. Supported values: *All*, *Restricted*, and *Read only*.
+
+5. Select **Create secret key**.
+6. Copy and store the generated key securely, as it is shown only once.
+
+</TabItem>
+<TabItem value="Using service account" label="Using service account">
+
+**To get the API key:**
+
+1. Sign in to the [OpenAI platform](https://platform.openai.com/).
+2. Go to **Dashboard** > **API keys** from the left menu and select **+ Create new secret key**.
+
+<p align="center"><img src="/content/img/create-new-api-key.png" alt="Create new API Keys in OpenAI API platform" width="100%" height="auto"></img></p>
+
+3. In **Owned by**, select **Service account**.
+
+<p align="center"><img src="/content/img/generating-api-token-service-account.png" alt="Create new API Keys in OpenAI API platform" width="40%" height="auto"></img></p>
+
+4. Configure the following parameters:
+
+- **Service Key Name**–A name for your service account key.
+- **Project**–Select the required project. 
+
+5. Select **Create secret key**.
+6. Copy and store the generated key securely, as it is shown only once.
+</TabItem>
+</Tabs>
 
 ## Step 2: Add an integration for OpenAI
 
