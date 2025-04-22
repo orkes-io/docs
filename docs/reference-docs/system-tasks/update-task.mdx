@@ -114,20 +114,20 @@ Let’s update this task with the following workflow containing an update task.
 ```json
 //workflow definition
 
-{
-  "name": "update_task",
-  "taskReferenceName": "update_task_ref",
-  "inputParameters": {
-    "taskStatus": "COMPLETED",
-    "mergeOutput": false,
-    "workflowId": "97c19cc0-4fd9-11ef-9e2a-9ab0a049e912",
-    "taskRefName": "http_ref"
-  },
-  "type": "UPDATE_TASK"
-}
+   {
+     "name": "update_task",
+     "taskReferenceName": "update_task_ref",
+     "inputParameters": {
+       "taskStatus": "COMPLETED",
+       "mergeOutput": false,
+       "workflowId": "c7a49124-1f4c-11f0-853e-523c761f9110",
+       "taskRefName": "wait_ref"
+     },
+     "type": "UPDATE_TASK"
+   }
 ```
 
-Now, run the workflow. Once the execution is successful, check the workflow containing the HTTP task to verify that the task status has been updated successfully.
+Now, run the workflow. Once the execution is successful, check the workflow containing the Wait task to verify that the task status has been updated successfully.
 
 <center><p><img src="/content/img/completed-workflow-using-update-task.png" alt="Completed workflow using update task" width="80%" height="auto"/></p></center>
 
