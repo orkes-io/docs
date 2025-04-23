@@ -107,6 +107,7 @@ const sidebars = {
                             },
                             items: [
                                 'developer-guides/write-workflows-using-code',
+                                'developer-guides/convert-bpmn-to-workflows',
                             ],
                             collapsible: false,
                         },
@@ -406,6 +407,16 @@ const sidebars = {
                                     id: 'integrations/ai-llm/mistral',
                                     label: 'Mistral',
                                 },
+                                {
+                                    type: 'doc',
+                                    id: 'integrations/ai-llm/perplexity',
+                                    label: 'Perplexity',
+                                },
+                                {
+                                    type: 'doc',
+                                    id: 'integrations/ai-llm/grok',
+                                    label: 'Grok',
+                                },
                             ],
                         },
                         {
@@ -511,6 +522,22 @@ const sidebars = {
                                 },
                             ],
                         },
+                        {
+                            type: 'category',
+                            label: 'Email',
+                            link: {
+                                type: 'generated-index',
+                                title: 'Email Integrations',
+                                slug: '/category/integrations/email'
+                            },
+                            items: [
+                                {
+                                    type: 'doc',
+                                    id: 'integrations/email/sendgrid',
+                                    label: 'SendGrid Email',
+                                },
+                            ],
+                        },
                     ],
                 },
             ],
@@ -562,6 +589,7 @@ const sidebars = {
                             'reference-docs/system-tasks/inline',
                             'reference-docs/system-tasks/jq-transform',
                             'reference-docs/system-tasks/business-rule',
+                            'reference-docs/system-tasks/sendgrid',
                             'reference-docs/system-tasks/wait-for-webhook',
                             'reference-docs/system-tasks/jdbc',
                             'reference-docs/system-tasks/update-secret',

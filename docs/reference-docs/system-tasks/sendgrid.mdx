@@ -1,0 +1,61 @@
+---
+sidebar_position: 7
+slug: "/reference-docs/system-tasks/sendgrid"
+description: "The SendGrid task is used to send emails using SendGrid platform."
+---
+
+# SendGrid
+
+The SendGrid task is used to send emails through the SendGrid platform. Use this task in workflows when you need to programmatically deliver emails such as alerts, confirmations, or updates.
+
+The task uses a pre-configured SendGrid integration for authentication and delivery. Upon execution, it connects to the SendGrid API and sends the email as defined in the task configuration, which includes the sender and recipient email addresses, email subject, and message body.
+
+:::note Prerequisites: 
+- [Integrate SendGrid](/content/integrations/email/sendgrid) with Orkes Conductor.
+:::
+
+## Task parameters
+
+Configure these parameters for the SendGrid task.
+
+| Parameter                      | Description                                                                                                                                                            | Required/ Optional |
+| ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
+| inputParameters.**from** | The sender’s email address. This must be a verified email in SendGrid. [Learn more](https://www.twilio.com/docs/sendgrid/for-developers/sending-email/sender-identity). | Required. |
+| inputParameters.**to** | The recipient’s email address. | Required. | 
+| inputParameters.**subject** | The email subject. | Required. | 
+| inputParameters.**contentType** | The type of email content. Supported values:<ul><li>**text/plain**</li><li>**text/html**</li></ul> | Required. | 
+| inputParameters.**content** | The email body. | Required. | 
+| inputParameters.**sendgridConfiguration** | The SendGrid integration that is configured in your cluster. | Required. |
+
+## Task configuration
+
+This is the task configuration for a SendGrid task.
+
+```json
+   {
+     "name": "sendgrid",
+     "taskReferenceName": "sendgrid_ref",
+     "inputParameters": {
+       "from": "john.doe@acme.com",
+       "to": "jane.doe@acme.com",
+       "subject": "Email Subject",
+       "contentType": "text/plain",
+       "content": "Email Body",
+       "sendgridConfiguration": "<INTEGRATION-NAME>"
+     },
+     "type": "SENDGRID"
+   }
+```
+
+## Adding a SendGrid task in UI
+
+**To add a SendGrid task:**
+
+1. In your workflow, select the (**+**) icon and add a **SendGrid** task.
+2. In **From**, enter the [verified SendGrid sender email](https://www.twilio.com/docs/sendgrid/for-developers/sending-email/sender-identity).
+3. In **To**, enter the recipient’s email address.
+4. In **Content Type**, select the type of email content as *text/plain* or *text/html*.
+5. In **Content**, enter the email body.
+6. In **SendGrid Configuration**, select the SendGrid integration added to the cluster.
+
+<center><p><img src="/content/img/sendgrid-ui.png " alt="Adding SendGrid task" width="80%" height="auto"/></p></center>
