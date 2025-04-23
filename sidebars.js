@@ -411,6 +411,11 @@ const sidebars = {
                                     id: 'integrations/ai-llm/perplexity',
                                     label: 'Perplexity',
                                 },
+                                {
+                                    type: 'doc',
+                                    id: 'integrations/ai-llm/grok',
+                                    label: 'Grok',
+                                },
                             ],
                         },
                         {
