@@ -589,6 +589,7 @@ const sidebars = {
                             'reference-docs/system-tasks/inline',
                             'reference-docs/system-tasks/jq-transform',
                             'reference-docs/system-tasks/business-rule',
+                            'reference-docs/system-tasks/sendgrid',
                             'reference-docs/system-tasks/wait-for-webhook',
                             'reference-docs/system-tasks/jdbc',
                             'reference-docs/system-tasks/update-secret',
