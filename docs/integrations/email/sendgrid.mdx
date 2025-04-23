@@ -1,0 +1,67 @@
+---
+slug: "/integrations/email/sendgrid"
+description: "Learn how to integrate SendGrid Email with your Orkes Conductor cluster."
+---
+
+# SendGrid Email Integration with Orkes Conductor
+
+To use the SendGrid task in Orkes Conductor, you must integrate your Conductor cluster with the SendGrid provider. This guide explains how to set up the integration. Here’s an overview:
+
+1. Get the required credentials from SendGrid.
+2. Configure a new SendGrid Email integration in Orkes Conductor.
+3. Set access limits for the integration to govern which applications or groups can use them.
+
+## Step 1: Get the SendGrid credentials
+
+To integrate SendGrid with Orkes Conductor, retrieve the API key from the SendGrid console.
+
+**To get the API key:**
+
+1. Sign in to the [SendGrid console](https://app.sendgrid.com/).
+2. Go to [**Settings** > **API Keys**](https://app.sendgrid.com/settings/api_keys) from the left menu.
+3. Select **Create API Key**.
+4. Enter an **API Key Name**, and select the required **API Key Permissions**. 
+
+<p align="center"><img src="/content/img/sendgrid-api-key.png" alt="Getting SendGrid API Key" width="80%" height="auto"></img></p>
+
+5. Select **Create & View**.
+6. Copy and store the generated key securely, as it is shown only once.
+
+## Step 2: Add an integration for SendGrid Email
+
+After obtaining the credentials, add a SendGrid Email integration to your Conductor cluster.
+
+**To create an integration:**
+
+1. Go to **Integrations** from the left navigation menu on your Conductor cluster.
+2. Select **+ New integration**.
+3. In the **Email** section, choose **SendGrid Email**.
+4. Select **+ Add** and enter the following parameters:
+
+| Parameters | Description |
+| ---------- | ----------- |
+| Integration name | A name for the integration. |
+| API Key | The API key copied previously from the SendGrid console.
+| Description | A description of the integration. | 
+
+<p align="center"><img src="/content/img/adding-sendgrid-integration.png" alt="SendGrid Integration with Orkes Conductor" width="70%" height="auto"></img></p>
+
+5. (Optional) Toggle the **Active** button off if you don’t want to activate the integration instantly.
+6. Select **Save**.
+
+## Step 3: Set access limits to integration
+
+Once the integration is configured, set access controls to manage which applications or groups can use them.
+
+**To provide access to an application or group:**
+
+1. Go to **Access Control** > **Applications** or **Groups** from the left navigation menu on your Conductor cluster.
+2. Create a new group/application or select an existing one.
+3. In the **Permissions** section, select **+ Add Permission**.
+4. In the **Integration** tab, select the required integration and toggle the necessary permissions.
+5. Select **Add Permissions**. 
+
+<p align="center"><img src="/content/img/sendgrid-rbac.png" alt="Add Permissions for Perplexity Integration" width="70%" height="auto"></img></p>
+
+The group or application can now access the integration according to the configured permissions.
+With the integration in place, you can now create workflows using the SendGrid task.

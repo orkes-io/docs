@@ -522,6 +522,22 @@ const sidebars = {
                                 },
                             ],
                         },
+                        {
+                            type: 'category',
+                            label: 'Email',
+                            link: {
+                                type: 'generated-index',
+                                title: 'Email Integrations',
+                                slug: '/category/integrations/email'
+                            },
+                            items: [
+                                {
+                                    type: 'doc',
+                                    id: 'integrations/email/sendgrid',
+                                    label: 'SendGrid Email',
+                                },
+                            ],
+                        },
                     ],
                 },
             ],
