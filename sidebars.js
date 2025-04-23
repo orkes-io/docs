@@ -406,6 +406,11 @@ const sidebars = {
                                     id: 'integrations/ai-llm/mistral',
                                     label: 'Mistral',
                                 },
+                                {
+                                    type: 'doc',
+                                    id: 'integrations/ai-llm/perplexity',
+                                    label: 'Perplexity',
+                                },
                             ],
                         },
                         {
