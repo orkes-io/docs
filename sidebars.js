@@ -107,6 +107,7 @@ const sidebars = {
                             },
                             items: [
                                 'developer-guides/write-workflows-using-code',
+                                'developer-guides/convert-bpmn-to-workflows',
                             ],
                             collapsible: false,
                         },

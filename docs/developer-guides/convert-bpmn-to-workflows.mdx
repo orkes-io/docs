@@ -1,0 +1,44 @@
+---
+slug: "/developer-guides/convert-bpmn-to-workflows"
+description: "Easily convert BPMN files to workflows using Orkes Conductor. Import BPMN or XML files and automate process model migration in just a few clicks."
+---
+
+# Convert BPMN to Workflows 
+
+In Orkes Conductor, you can quickly convert BPMN files into workflow definitions. This simplifies the migration from BPMN-based systems by supporting standard XML and BPMN formats. Whether you’re transitioning from legacy tools or starting with predefined processes, the BPMN importer enables a fast, code-free transition into the Conductor ecosystem.
+
+## Importing BPMN files
+
+**To import BPMN files:**
+
+1. Go to **Definitions** > **Workflows** from the left navigation menu on your Conductor cluster.
+2. Select the **⏷** icon next to **+ Define workflow**.
+3. From the dropdown menu, select **Import BPMN**.
+
+<p align="center"><img src="/content/img/import-bpmn.png" alt="Imporing BPMN files" width="100%" height="auto"></img></p>
+
+4. Import files using any of the following methods:
+    - **Upload a file**—Select .bpmn file from your local device.
+    - **Drag and drop**—Drop the BPMN files directly into the designated area in the UI.
+    - **Paste XML**—Paste the raw XML content of your BPMN directly into the **Code** tab.
+
+<p align="center"><img src="/content/img/bpmn-importer.png" alt="BPMN Importer" width="50%" height="auto"></img></p>
+
+5. Edit the **Workflow Name** if required.
+6. (Optional) Enable **Overwrite workflow** to replace any existing workflow definition with the same name.
+7. Select **Import**.
+
+This immediately converts the BPMN files to workflow definitions in Orkes Conductor.
+
+<p align="center"><img src="/content/img/converting-bpmn-to-workflow.gif" alt="BPMN Importer" width="100%" height="auto"></img></p>
+
+After importing, the newly created workflows appear in **Definitions** > **Workflows**. Each imported file is converted into an equivalent Orkes Conductor workflow, preserving the original logic and structure.
+
+## Next steps
+
+With the imported workflow definitions in place, you can:
+
+- Review and modify the imported workflow as per your requirements.
+- [Run the workflow](https://orkes.io/content/how-to-videos/run-workflow) or integrate it into your [existing code](https://orkes.io/content/category/sdks).
+- Apply [version control](https://orkes.io/content/developer-guides/versioning-workflows).
+- Enhance it with [advanced Conductor features](https://orkes.io/content/developer-guides/advanced-workflows).
