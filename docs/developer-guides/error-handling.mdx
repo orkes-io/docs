@@ -179,7 +179,7 @@ Based on the timeout configuration in the above figure, the following sequence o
 
 Based on the timeout configuration in the above figure, the following sequence of events will occur when a task cannot be completed within the given duration:
 
-1. At 0 seconds, a worker polls the Conductor server for task T1 and receives the task. T1 is marked as `IN_PROGRESS` by the server.
+1. At 0 seconds, a worker polls the Conductor server for task T1 and receives the task. T1 is marked as IN_PROGRESS by the server.
 2. The worker starts processing the task but is unable to complete it within the response timeout. The worker updates the server with T1 set to an IN_PROGRESS status and a callback of 9 seconds.
 3. The server puts T1 back in the queue but makes it invisible and the worker continues to poll for the task but does not receive T1 for 9 seconds.
 4. After 9 seconds, the worker receives T1 from the server but is still unable to finish processing the task. As such, the worker updates the server again with a callback of 9 seconds.
