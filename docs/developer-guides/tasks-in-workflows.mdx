@@ -5,10 +5,12 @@ description: "This guide introduces the different tasks available in Orkes Condu
 
 # Tasks in workflows
 
-When building workflows, you can use the built-in system tasks and operators provided by Conductor and additionally [write your own custom worker tasks](using-workers).
+When building workflows, you can use the built-in system tasks and operators provided by Conductor and additionally [write your own custom worker tasks](using-workers) to implement custom logic.
 
 ## Built-in tasks
-Here is an introduction of the built-in tasks available in Conductor. These tasks enable you to quickly build workflows without needing to code.
+Here is an introduction of the built-in tasks available in Conductor.  These system tasks and operators enable you to quickly build workflows without needing to code.
+* **System tasks** are managed by Conductor and run within its JVM, allowing you to get started quickly without needing custom workers. System tasks include [AI tasks](/category/reference-docs/ai-tasks) that can be used to build AI-powered and agentic applications.
+* **Operators** are also managed by Conductor and run within its JVM. They enable you to declaratively design the workflow control flow and logic with minimal code required.
 
 ### For control flow
 
@@ -71,16 +73,18 @@ In most common cases, you can make use of existing Conductor features instead of
 | Generate text from an LLM based on a defined prompt                                          | [Text Complete](../reference-docs/ai-tasks/llm-text-complete)             |
 | Generate text from an LLM based on a user query and additional system/assistant instructions | [Chat Complete](../reference-docs/ai-tasks/llm-chat-complete)             |
 
+## Custom tasks
+
+A [Worker task](../reference-docs/worker-task) can be used to implement custom logic outside the scope of Conductor’s system tasks. These tasks can be written in any programming language of your choice (Python, Java, JavaScript, C#, Go, and Clojure).
+
+Refer to [Writing Workers for Conductor Workflows](/developer-guides/using-workers) for more information.
 
 
 ## Task definition
 
 A task definition specifies a task’s general implementation details, like the expected input and output keys, and [failure-handling configurations](/error-handling), like rate limits, retries, and timeouts. This definition applies to all instances of the task across workflows.
 
-For all custom worker tasks, a task definition needs to be added to the Conductor server before it can be used in a workflow. While system tasks do not require a task definition, it can be created to so that task’s failure handling settings can be configured.
-
 All task definitions are stored as JSON. These parameters can be updated in real time without needing to redeploy your application.
-
 
 ### Example
 
@@ -115,13 +119,35 @@ Here is an example task definition JSON:
 ```
 
 
+## Task registration
+
+The following task types **must be registered as a task definition** in Conductor before they can be used in a workflow:
+* Worker tasks
+* Human tasks
+
+Task definitions enable configuration of the task’s failure handling settings, as well as RBAC governance. You may also choose to create a task definition for other system tasks if required.
+
+Task definitions can be registered via the Conductor UI or through SDK/API. Once registered, they can be referenced and used in different workflows.
+
+
 ## Task configuration
 
 The task configuration is part of the workflow definition. It specifies the workflow-specific implementation details, like the task reference name, task type, task input parameters, and so on.
 
-Although each task type has its unique configuration, all tasks share several parameters in common. Refer to the [Task Reference](/category/reference-docs) to learn more about the task configuration for each task type.
+Although each task type has its unique configuration, all tasks share several parameters in common.
+
+
+
+* For all tasks, the configuration specifies the input parameters.
+* For custom worker tasks, the configuration contains a reference to a registered worker.
+* For system tasks and operators, the configuration includes parameters that control the task behavior. For example, the configuration for an HTTP task specifies the endpoint URL and the payload template, which will be used during task execution.
+
+Refer to the [Task Reference](/category/reference-docs) to learn more about the task configuration for each task type.
+
 
 ### Common configuration parameters
+
+The task configurations appear in the *tasks* array of the workflow definition JSON. Each task configuration JSON object may contain the following parameters:
 
 | Parameter         | Description                                                                                 | Required/ Optional  |
 | ----------------- | ------------------------------------------------------------------------------------------- | ------------------- |
