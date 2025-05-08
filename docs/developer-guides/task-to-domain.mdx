@@ -313,6 +313,561 @@ In this configuration,
 ## Example
 
 <details>
+<summary>Task-to-domain implementation using Java Spring Boot</summary>
+
+Let’s create a simple workflow that includes a worker task ([SIMPLE](https://orkes.io/content/reference-docs/worker-task)) and configure it to poll only from a specific domain.
+
+**Step 1: Create a task definition**
+
+**To create a task definition:**
+
+1. Go to **Definitions** > **Task** from the left menu on your Conductor cluster.
+2. Select **+ Define task**.
+3. In **Code** tab, paste the following JSON:
+
+```json
+{
+ "name": "hello_task",
+ "description": "Sample",
+ "retryCount": 3,
+ "timeoutSeconds": 3600,
+ "inputKeys": [],
+ "outputKeys": [],
+ "timeoutPolicy": "TIME_OUT_WF",
+ "retryLogic": "FIXED",
+ "retryDelaySeconds": 60,
+ "responseTimeoutSeconds": 600,
+ "concurrentExecLimit": 0,
+ "inputTemplate": {},
+ "rateLimitPerFrequency": 0,
+ "rateLimitFrequencyInSeconds": 1,
+ "ownerEmail": "john.doe@acme.com",
+ "pollTimeoutSeconds": 3600,
+ "backoffScaleFactor": 1,
+ "totalTimeoutSeconds": 0,
+ "enforceSchema": false
+}
+```
+
+4. Select **Save** > **Confirm Save**.
+
+**Step 2: Create a workflow definition**
+
+**To create a workflow definition:**
+
+1. Go to **Definitions** > **Workflow** from the left menu on your Conductor cluster.
+2. Select **+ Define workflow**.
+3. In **Code** tab, paste the following JSON:
+
+```json
+{
+ "name": "hello_world_workflow",
+ "description": "A simple workflow that runs the hello_task in test_domain",
+ "version": 1,
+ "tasks": [
+   {
+     "name": "hello_task",
+     "taskReferenceName": "hello_ref",
+     "type": "SIMPLE"
+   }
+ ],
+ "schemaVersion": 2
+}
+```
+
+4. Select **Save** > **Confirm Save**.
+
+**Step 3: Configure task-to-domain routing in Spring Boot**
+
+This Spring Boot worker configuration connects to your Orkes Conductor cluster and sets up domain-based task polling. This configuration:
+
+- Loads a task-to-domain mapping
+- Registers the worker
+- Routes `hello_task` to `test_domain`
+
+```java
+package com.example.demo.condutor;
+
+
+import com.netflix.conductor.client.automator.TaskRunnerConfigurer;
+import com.netflix.conductor.client.http.TaskClient;
+import com.netflix.conductor.client.worker.Worker;
+import io.orkes.conductor.client.ApiClient;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+
+@Configuration
+public class ConductorConfig {
+
+
+   private static final String CONDUCTOR_SERVER = "http://<YOUR-CLUSTER>/api";
+   private static final String KEY = "<YOUR-ACCESS-KEY>";
+   private static final String SECRET = "<YOUR-ACCESS-SECRET>";
+
+
+   // Environment properties simulation
+   private static final Map<String, String> environment = new ConcurrentHashMap<>();
+
+
+   static {
+       // Initialize environment properties
+       environment.put("conductor.server.url", CONDUCTOR_SERVER);
+       environment.put("conductor.security.client.key-id", KEY);
+       environment.put("conductor.security.client.secret", SECRET);
+       environment.put("verifySsl", "N");
+       environment.put("isTaskToDomainEnabled", "Y");
+
+
+       // Sample task to domain mapping
+       environment.put("taskToDomain",
+               "{\"task_example\": \"test_domain\", \"hello_task\": \"test_domain\", \"*\": \"default_domain\"}");
+   }
+
+
+   @Bean
+   public TaskClient taskClient(ApiClient apiClient) {
+       return new TaskClient(apiClient);
+   }
+
+
+   @Bean
+   @Primary
+   public TaskRunnerConfigurer domainAwareTaskRunnerConfigurer(TaskClient taskClient) {
+       List<Worker> workers = List.of(new HelloWorldWorker());
+       // Create taskToDomain map from properties
+       Map<String, String> taskToDomain = loadTaskToDomainMap();
+
+
+       // Log what we're doing (for debugging)
+       System.out.println("Creating domain-aware TaskRunnerConfigurer with domains: " + taskToDomain);
+
+
+       // Create the TaskRunnerConfigurer with domain settings
+       TaskRunnerConfigurer configurer = new TaskRunnerConfigurer.Builder(taskClient, workers)
+               .withThreadCount(5)  // Use your desired thread count
+               .withTaskToDomain(taskToDomain)
+               .build();
+
+
+       configurer.init();
+       return configurer;
+   }
+
+
+   private Map<String, String> loadTaskToDomainMap() {
+       Map<String, String> taskToDomain = new HashMap<>();
+       String isTaskToDomainEnabled = "Y";
+
+
+       if ("Y".equals(isTaskToDomainEnabled)) {
+           String taskToDomainJsonStr = environment.get("taskToDomain");
+           if (taskToDomainJsonStr != null && !taskToDomainJsonStr.isEmpty()) {
+               try {
+                   JSONParser parser = new JSONParser();
+                   JSONObject taskToDomainJson = (JSONObject) parser.parse(taskToDomainJsonStr);
+
+
+                   // Convert JSON object to Map<String, String>
+                   for (Object key : taskToDomainJson.keySet()) {
+                       String taskName = (String) key;
+                       String domainValue = (String) taskToDomainJson.get(key);
+                       taskToDomain.put(taskName, domainValue);
+                   }
+
+
+               } catch (Exception e) {
+                   System.err.println("Error parsing taskToDomain JSON: " + e.getMessage());
+               }
+           }
+       }
+
+
+       return taskToDomain;
+   }
+
+
+   @Bean
+   public static ApiClient getApiClientForOrkes() throws Exception {
+       // Initialize the API client first
+        String envKey = (String) env.getProperty("conductor.security.client.key-id");
+        String envSecret = (String) env.getProperty("conductor.security.client.secret");
+        String rootUrl = (String) env.getProperty("conductor.server.url");
+       boolean verifySsl = env.getProperty("verifySsl", "N").equals("Y");
+
+
+       ApiClient apiClient = ApiClient.builder()
+               .basePath(CONDUCTOR_SERVER)
+                .credentials(envKey, envSecret)
+               .verifyingSsl(verifySsl)
+               .readTimeout(50000)
+               .build();
+
+
+       // Initialize TaskClient with the API client
+       TaskClient taskClient = new TaskClient(apiClient);
+
+
+       // Set up taskToDomain mapping
+       Map<String, String> taskToDomain = new HashMap<>();
+       String isTaskToDomainEnabled = "Y";
+
+
+       if ("Y".equals(isTaskToDomainEnabled)) {
+           String taskToDomainJsonStr = environment.get("taskToDomain");
+           if (taskToDomainJsonStr != null && !taskToDomainJsonStr.isEmpty()) {
+               try {
+                   JSONParser parser = new JSONParser();
+                   JSONObject taskToDomainJson = (JSONObject) parser.parse(taskToDomainJsonStr);
+
+
+                   // Convert JSON object to Map<String, String>
+                   for (Object key : taskToDomainJson.keySet()) {
+                       String taskName = (String) key;
+                       String domainValue = (String) taskToDomainJson.get(key);
+                       taskToDomain.put(taskName, domainValue);
+                   }
+
+
+                   // Log the taskToDomain map to verify it's populated
+                   System.out.println("Task to Domain mapping: " + taskToDomain);
+
+
+               } catch (org.json.simple.parser.ParseException e) {
+                   System.err.println("Error parsing taskToDomain JSON: " + e.getMessage());
+                   // Don't throw runtime exception - continue with empty map instead
+               }
+           }
+       }
+
+
+       return apiClient;
+   }
+}
+```
+
+**Step 4: Generate access keys**
+
+To connect your Java Spring Boot worker to a Conductor cluster, you must generate application credentials with the required permissions:
+
+**To generate the access keys:**
+
+1. Go to **Access Control** > **Applications** from the left navigation menu on your Conductor cluster.
+2. Select **+ Create application**.
+3. Name your application and enable **Application roles** > **Worker**.
+4. Select **+ Create access key**.
+5. Store the key ID and key secret, as the secret would be shown only once.
+6. In **Permissions** section, select **+ Add permission**.
+  - In the **Workflow** tab, search for `hello_world_workflow` and enable **EXECUTE** permission.
+  - In the **Task** tab, search for `hello_task` and enable **EXECUTE** permission.
+
+Then update the following lines in your worker code with your credentials:
+
+```json
+   private static final String CONDUCTOR_SERVER = "http://<YOUR-CLUSTER>/api";
+   private static final String KEY = "<YOUR-ACCESS-KEY>";
+   private static final String SECRET = "<YOUR-ACCESS-SECRET>";
+```
+
+**Step 5: Run your Spring Boot application**
+
+Once configured, start your Java application. Your worker will register and start polling tasks.
+
+**Step 6: Run the workflow**
+
+**To run the workflow:**
+
+1. From your workflow definition, go to the **Run** tab.
+2. In **Tasks to domain** mapping, enter the following mapping:
+
+```json
+{
+   "hello_task": "test_domain"
+}
+```
+
+3. Select **Run workflow**.
+
+The `hello_task` will be picked up only by the worker polling` test_domain`. You can verify this in the Conductor UI under **Executions** > **Workflows**, where the task’s domain will be shown as `test_domain`.
+
+<p align="center">
+  <img
+    src="/content/img/task-to-domain-example-workflow.png"
+    alt="Task to domain workflow example"
+    width="90%"
+    height="auto"
+  />
+</p>
+
+</details>
+
+<details>
+<summary>Task-to-domain implementation using a Java client</summary>
+
+This example shows how to configure domain-based task routing in a Java application.
+
+**What this setup does:**
+
+- Connects to your Orkes Conductor cluster using access credentials
+- Maps `hello_task` to the `test_domain` using a task-to-domain map
+- Defines a `HelloWorldWorker` to process the task
+- Registers a sample workflow (`hello_world_workflow`)
+- Starts the workflow and verifies that the task runs in the right domain
+- Prints workflow status and task output
+
+**How to run this example:**
+
+To connect your Java worker to a Conductor cluster, you must generate access keys.
+
+**To generate the access keys:**
+
+1. Go to **Access Control** > **Applications** from the left navigation menu on your Conductor cluster.
+2. Select **+ Create application**.
+3. Name your application and enable **Application roles** > **Worker**.
+4. Select **+ Create access key**.
+5. Store the key ID and key secret, as the secret would be shown only once.
+6. Replace the credentials and cluster URL in the code below:
+
+```java
+import com.netflix.conductor.client.automator.TaskRunnerConfigurer;
+import com.netflix.conductor.client.http.MetadataClient;
+import com.netflix.conductor.client.http.TaskClient;
+import com.netflix.conductor.client.worker.Worker;
+import com.netflix.conductor.common.metadata.tasks.Task;
+import com.netflix.conductor.common.metadata.tasks.TaskResult;
+import com.netflix.conductor.common.metadata.workflow.StartWorkflowRequest;
+import com.netflix.conductor.common.metadata.workflow.WorkflowDef;
+import com.netflix.conductor.common.run.Workflow;
+import io.orkes.conductor.client.ApiClient;
+import io.orkes.conductor.client.http.OrkesWorkflowClient;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+
+public class ConductorClientTest {
+
+    private static final String CONDUCTOR_SERVER = "http://<YOUR-CLUSTER>/api";
+    private static final String KEY = "<YOUR-ACCESS-KEY>";
+    private static final String SECRET = "<YOUR-ACCESS-SECRET>";
+
+    private static final Map<String, String> environment = new ConcurrentHashMap<>();
+
+    static {
+        environment.put("conductor.server.url", CONDUCTOR_SERVER);
+        environment.put("conductor.security.client.key-id", KEY);
+        environment.put("conductor.security.client.secret", SECRET);
+        environment.put("verifySsl", "N");
+        environment.put("isTaskToDomainEnabled", "Y");
+        environment.put("taskToDomain",
+                "{\"task_example\": \"test_domain\", \"hello_task\": \"test_domain\", \"*\": \"default_domain\"}");
+    }
+
+    public static class HelloWorldWorker implements Worker {
+        @Override
+        public String getTaskDefName() {
+            return "hello_task";
+        }
+
+        @Override
+        public TaskResult execute(Task task) {
+            System.out.println("===> Worker started executing task: " + task.getTaskDefName());
+            TaskResult result = new TaskResult(task);
+            result.setStatus(TaskResult.Status.COMPLETED);
+            result.addOutputData("greeting", "Hello " + task.getInputData().getOrDefault("name", "World"));
+            System.out.println("===> Task completed with output: " + result.getOutputData());
+            return result;
+        }
+    }
+
+    public static class Environment {
+        public Object getProperty(String key) {
+            return environment.get(key);
+        }
+
+        public Object getProperty(String key, String defaultValue) {
+            return environment.getOrDefault(key, defaultValue);
+        }
+    }
+
+    public static ApiClient getApiClientForOrkes(Environment env) throws Exception {
+        String envKey = (String) env.getProperty("conductor.security.client.key-id");
+        String envSecret = (String) env.getProperty("conductor.security.client.secret");
+        String rootUrl = (String) env.getProperty("conductor.server.url");
+        boolean verifySsl = env.getProperty("verifySsl", "N").equals("Y");
+
+        ApiClient apiClient = ApiClient.builder()
+                .basePath(rootUrl)
+                .credentials(envKey, envSecret)
+                .verifyingSsl(verifySsl)
+                .readTimeout(50000)
+                .build();
+
+        TaskClient taskClient = new TaskClient(apiClient);
+
+        Map<String, String> taskToDomain = new HashMap<>();
+        String taskToDomainJsonStr = (String) env.getProperty("taskToDomain");
+        if (taskToDomainJsonStr != null && !taskToDomainJsonStr.isEmpty()) {
+            JSONParser parser = new JSONParser();
+            JSONObject taskToDomainJson = (JSONObject) parser.parse(taskToDomainJsonStr);
+            for (Object key : taskToDomainJson.keySet()) {
+                taskToDomain.put((String) key, (String) taskToDomainJson.get(key));
+            }
+            System.out.println("Task to Domain mapping: " + taskToDomain);
+        }
+
+        List<Worker> workers = List.of(new HelloWorldWorker());
+
+        TaskRunnerConfigurer configurer = new TaskRunnerConfigurer.Builder(taskClient, workers)
+                .withTaskToDomain(taskToDomain)
+                .withThreadCount(5)
+                .build();
+        configurer.init();
+
+        return apiClient;
+    }
+
+    public static void registerWorkflow(ApiClient apiClient, String workflowJson) throws Exception {
+        MetadataClient metadataClient = new MetadataClient(apiClient);
+        JSONParser parser = new JSONParser();
+        JSONObject workflowObj = (JSONObject) parser.parse(workflowJson);
+
+        WorkflowDef workflowDef = new WorkflowDef();
+        workflowDef.setName((String) workflowObj.get("name"));
+        workflowDef.setDescription((String) workflowObj.get("description"));
+        workflowDef.setVersion(((Long) workflowObj.getOrDefault("version", 1L)).intValue());
+        workflowDef.setSchemaVersion(((Long) workflowObj.getOrDefault("schemaVersion", 2L)).intValue());
+
+        List<com.netflix.conductor.common.metadata.workflow.WorkflowTask> workflowTasks = new ArrayList<>();
+        org.json.simple.JSONArray tasksArray = (org.json.simple.JSONArray) workflowObj.get("tasks");
+
+        for (Object taskObj : tasksArray) {
+            JSONObject task = (JSONObject) taskObj;
+            com.netflix.conductor.common.metadata.workflow.WorkflowTask workflowTask =
+                    new com.netflix.conductor.common.metadata.workflow.WorkflowTask();
+            workflowTask.setName((String) task.get("name"));
+            workflowTask.setTaskReferenceName((String) task.get("taskReferenceName"));
+            workflowTask.setType((String) task.get("type"));
+
+            if (task.containsKey("inputParameters")) {
+                JSONObject inputParams = (JSONObject) task.get("inputParameters");
+                Map<String, Object> inputMap = new HashMap<>();
+                for (Object key : inputParams.keySet()) {
+                    inputMap.put((String) key, inputParams.get(key));
+                }
+                workflowTask.setInputParameters(inputMap);
+            }
+            workflowTasks.add(workflowTask);
+        }
+
+        workflowDef.setTasks(workflowTasks);
+
+        if (workflowObj.containsKey("outputParameters")) {
+            JSONObject outputParams = (JSONObject) workflowObj.get("outputParameters");
+            Map<String, Object> outputMap = new HashMap<>();
+            for (Object key : outputParams.keySet()) {
+                outputMap.put((String) key, outputParams.get(key));
+            }
+            workflowDef.setOutputParameters(outputMap);
+        }
+
+        metadataClient.registerWorkflowDef(workflowDef);
+        System.out.println("Workflow registered successfully: " + workflowDef.getName());
+    }
+
+    public static void startWorkflow(ApiClient apiClient, String workflowName) throws Exception {
+        OrkesWorkflowClient workflowClient = new OrkesWorkflowClient(apiClient);
+        StartWorkflowRequest request = new StartWorkflowRequest();
+        request.setName(workflowName);
+        request.setVersion(1);
+
+        Map<String, Object> input = new HashMap<>();
+        input.put("name", "Orkes User");
+        request.setInput(input);
+
+        Map<String, String> taskToDomainForWorkflow = new HashMap<>();
+        taskToDomainForWorkflow.put("hello_task", "test_domain");
+        request.setTaskToDomain(taskToDomainForWorkflow);
+
+        String workflowId = workflowClient.startWorkflow(request);
+        System.out.println("Workflow started with ID: " + workflowId);
+
+        Workflow workflow = workflowClient.getWorkflow(workflowId, true);
+        System.out.println("Workflow status: " + workflow.getStatus());
+        if (!workflow.getTasks().isEmpty()) {
+            System.out.println("First task status: " + workflow.getTasks().get(0).getStatus());
+            System.out.println("First task domain: " + workflow.getTasks().get(0).getDomain());
+        }
+    }
+
+    public static void main(String[] args) {
+        try {
+            Environment env = new Environment();
+            ApiClient apiClient = getApiClientForOrkes(env);
+
+            String sampleWorkflowJson = getSampleWorkflowJson();
+            registerWorkflow(apiClient, sampleWorkflowJson);
+            startWorkflow(apiClient, "hello_world_workflow");
+
+            System.out.println("Worker is polling. Press Ctrl+C to exit.");
+            Thread.sleep(Long.MAX_VALUE);
+
+        } catch (Exception e) {
+            System.err.println("Error running client: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    private static String getSampleWorkflowJson() {
+        return "{\n" +
+                "  \"name\": \"hello_world_workflow\",\n" +
+                "  \"description\": \"A simple Hello World workflow\",\n" +
+                "  \"version\": 1,\n" +
+                "  \"tasks\": [\n" +
+                "    {\n" +
+                "      \"name\": \"hello_task\",\n" +
+                "      \"taskReferenceName\": \"hello_ref\",\n" +
+                "      \"inputParameters\": {\n" +
+                "        \"name\": \"${workflow.input.name}\"\n" +
+                "      },\n" +
+                "      \"type\": \"SIMPLE\"\n" +
+                "    }\n" +
+                "  ],\n" +
+                "  \"outputParameters\": {\n" +
+                "    \"greeting\": \"${hello_ref.output.greeting}\"\n" +
+                "  },\n" +
+                "  \"schemaVersion\": 2\n" +
+                "}";
+    }
+}
+```
+
+Compile and run the Java worker. This registers and starts the workflow.
+
+The `hello_task` will be picked up only by the worker polling `test_domain`. You can verify this in the Conductor UI under **Executions** > **Workflows**, where the task’s domain will be shown as `test_domain`.
+
+<p align="center">
+  <img
+    src="/content/img/task-to-domain-example-workflow.png"
+    alt="Task to domain workflow example"
+    width="90%"
+    height="auto"
+  />
+</p>
+
+</details>
+
+<details>
 <summary>Using fallback domain</summary>
 
 In this example, we’ll assume the `taskToDomain` mapping is as follows:
