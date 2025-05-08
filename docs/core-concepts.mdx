@@ -5,20 +5,11 @@ description: "In Orkes Conductor, the three core concepts for orchestrating appl
 
 # Core Concepts
 
-Orkes Conductor orchestrates the execution flow of distributed application components—be it code, functions, or APIs.
+Orkes Conductor orchestrates the execution flow of distributed application components—including APIs, events, functions, AI models, databases, and other systems. Here are the core concepts you need to know to understand Conductor:
 
-## Conductor architecture
-<p align="center"><img src="/content/img/conductor-architecture.jpg" alt="Conductor architecture" width="90%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
-
-In Conductor, workflows are orchestrated by a state machine evaluator, which ensures each task is executed based on predefined rules. 
-
-Workflows can be triggered by code, an API call, a predefined schedule, webhook events, and external eventing systems like AWS SQS, Kafka, etc. These workflows follow a worker-task queue architecture, where each task type has its own dedicated task queue.
-
-The task workers execute these tasks by communicating with the Conductor server over HTTP/gRPC. Each task is queued in distributed queues that are polled by task workers. The orchestrator monitors each task's state and ensures it is retried, completed, or failed as required.
-
-Conductor ensures high scalability by leveraging persistence stores (PostgreSQL, Redis, or Elasticsearch) to maintain workflow/task metadata, task queues, and execution history. Integrations with tools like Prometheus and Datadog allow you to easily collect and monitor system performance data.
-
-The process of orchestrating using Conductor revolves around three main concepts: Workflows, Tasks, and Workers.
+* Workflows  
+* Tasks   
+* Workers
 
 ## Workflows
 A workflow is a sequence of tasks with a defined order and execution. Each workflow encapsulates a specific process, such as:
