@@ -200,11 +200,11 @@ const sidebars = {
                                     type: 'doc',
                                     id: 'developer-guides/enabling-cdc-on-conductor-workflows',
                                     label: "Enabling CDC"
-                                }
+                                },
+                                'developer-guides/webhook-integration'
                             ],
                             collapsible: false,
                         },
-                        'developer-guides/webhook-integration'
                     ]
                 },
                 {
