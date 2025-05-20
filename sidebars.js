@@ -803,7 +803,7 @@ const sidebars = {
                     label: 'Finance',
                     link: {
                         type: 'generated-index',
-                        title: 'Templates for Finance',
+                        title: 'Finance',
                         description: 'Explore tutorials for finance use cases.',
                         slug: '/finance-templates'
                     },
