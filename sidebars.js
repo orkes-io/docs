@@ -779,6 +779,11 @@ const sidebars = {
                             id: 'tutorials/quickstart-ai-orchestration',
                             label: 'AI-Powered Translator',
                         },
+                        {
+                            type: 'doc',
+                            id: 'tutorials/agentic-interview-app',
+                            label: 'Agentic Interview App',
+                        },
                     ]
                 },
                 {
