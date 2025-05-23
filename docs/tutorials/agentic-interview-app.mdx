@@ -1,0 +1,325 @@
+---
+slug: "/tutorials/agentic-interview-app"
+description: "Learn how to create an Agentic Interview Application using Conductor's AI orchestration features."
+---
+
+# Build an Agentic Interview App with Orkes Conductor
+
+This tutorial demonstrates how to build an agentic coding interview application using Conductor’s [AI Orchestration](https://orkes.io/content/ai-orchestration) features. The app leverages LLMs for reasoning, Google Docs for transcript generation, SendGrid for email delivery, and Orkes Conductor for workflow orchestration.
+
+In this tutorial, you will:
+
+1. Set up APIs for OpenAI, Google Docs, and SendGrid.
+2. Clone and configure the application code.
+3. Deploy a Python backend and Next.js frontend.
+4. Trigger and run a multi-step interview workflow.
+5. Generate interview transcripts and send thank-you emails.
+
+## Agentic interview application
+
+The application consists of a frontend for candidate interaction, a backend that triggers Conductor workflows automatically, and Orkes Conductor, which orchestrates the flow.
+
+The application flow includes:
+
+- Candidate data collection, including name, email, and preferred programming language.
+- A looped interview using LLM-generated LeetCode-style programming questions.
+- Evaluation of the response, scores answers, and provides feedback.
+- Generates a formatted interview transcript.
+- Sends a thank-you email.
+
+When you run the application, it automatically registers and runs the following *Interview Agentic Workflow*,  which handles candidate intake and initiates the interview process:
+
+<p align="center"><img src="/content/img/agentic-interview-workflow.jpg" alt="Agentic interview workflow" width="100%" height="auto"></img></p>
+
+After collecting the candidate details, the app proceeds to generate questions. It uses a secondary workflow, the *Core Interview Loop*, to create and process a sequence of three LeetCode-style programming challenges. This is done using the [Start Workflow task](https://orkes.io/content/reference-docs/operators/start-workflow) in Conductor, where a new workflow instance is separately run.
+
+<p align="center"><img src="/content/img/core-interview-loop-workflow.jpg" alt="Core Interview Loop workflow" width="50%" height="auto"></img></p>
+
+:::info Prerequisites:
+To follow along, ensure you have access to the following:
+- A free account on [Orkes Developer Playground](https://developer.orkescloud.com/)
+- An [OpenAI account](https://platform.openai.com/account/api-keys)
+- A [Google Cloud project](https://console.cloud.google.com/)
+- A [SendGrid account](https://login.sendgrid.com/)
+:::
+
+## Step 1: Clone the repository
+
+Clone the [awesome-conductor-apps](https://github.com/conductor-oss/awesome-conductor-apps/tree/main/python/interview_agentic_app) repository where the project source code is available:
+
+```bash
+git clone https://github.com/conductor-oss/awesome-conductor-apps/
+```
+
+Open the project and navigate to the *interview_agentic_app* folder:
+
+```bash
+cd python/interview_agentic_app
+```
+
+## Step 2: Set up environment variables
+
+Since the application interacts with multiple tools, you must set up environment variables after retrieving the following credentials:
+
+- Orkes Conductor
+- OpenAI
+- Google Cloud
+- SendGrid
+
+### Orkes Conductor access key and secret
+
+To connect your Developer Playground with your interview application, [create an Application in Orkes Conductor](https://orkes.io/content/access-control-and-security/applications) and generate the access keys.
+
+**To generate the access keys:**
+
+1. Go to [**Access Control** > **Applications**](https://developer.orkescloud.com/applicationManagement/applications) from the left navigation menu on your Conductor cluster.
+2. Select **+ Create application**.
+3. Enter a **Name** for your application, and select **Save**.
+4. Set the **Application roles** to **Worker** and **Metadata API**.
+5. Select  **+ Create access key**.
+
+<p align="center"><img src="/content/img/application-in-conductor.jpg" alt="Application in Orkes Conductor" width="100%" height="auto"></img></p>
+
+6. Copy the **Key ID**, **Key Secret**, and **Server URL**.
+
+Next, open the cloned project in any IDE of your choice and set the following variables:
+
+```bash
+export CONDUCTOR_SERVER_URL=<YOUR_SERVER_URL>
+export CONDUCTOR_AUTH_KEY=<YOUR_CONDUCTOR_AUTH_KEY>
+export CONDUCTOR_AUTH_SECRET=<YOUR_CONDUCTOR_AUTH_SECRET>
+```
+
+### OpenAI API key
+
+Next, generate the API key from the OpenAI platform.
+
+**To generate an API key:**
+
+1. Log in to the [OpenAI platform](https://platform.openai.com/).
+2. Go to **Dashboard** from the top navigation menu and select **[API keys](https://platform.openai.com/api-keys)** from the left menu.
+3. Select **+ Create new secret key**.
+4. Enter a **Name** for the key, and select **Create secret key**.
+5. Copy and store the generated key.
+
+Return to your project and set the environment variable:
+
+```bash
+export OPENAI_API_KEY=<YOUR_OPENAI_KEY>
+```
+
+### Google authentication credentials
+
+Google authentication credentials are required to access Google APIs. The interview transcription is generated using Google Docs API. 
+
+#### Generate a service account key
+
+**To generate a service account key:**
+
+1. Log in to the [Google Cloud console](https://console.cloud.google.com/).
+2. Go to [**IAM & Admin** > **Service Accounts**](https://console.cloud.google.com/projectselector/iam-admin/serviceaccounts/create?walkthrough_id=iam--create-service-account#step_index=1).
+3. Select a project. If you don't have any existing projects, consider creating a new one.
+4. Enter a **Service account name** and select **Done**.
+5. Open the created service account and go to the **Keys** tab.
+6. Select **Add key** > **Create new key**.
+
+<p align="center"><img src="/content/img/service-account-key.jpg" alt="Getting service account key from Google Cloud console" width="100%" height="auto"></img></p>
+
+7. Select the **Key type **as **JSON** and select **Create**.
+
+This saves a private key to your device.
+
+Next, we need to stringify the contents of the JSON file  using the following command:
+
+```python
+python3 -c 'import json; print(json.dumps(json.load(open("<PATH-TO-JSON-FILE>/project-name.json"))))'
+```
+
+Ensure to replace with your path to the saved file and your file name.
+
+Copy the output of the above command, which is the stringified JSON, and then set the environment variables:
+
+```bash
+export GOOGLE_SERVICE_ACCOUNT_JSON='<PASTE_THE_STRING_HERE>'
+export ENV=prod
+```
+
+Next, let's enable the Google Docs API for this project.
+
+#### Enable Google Docs API
+
+**To enable the Google Docs API for the project:**
+
+1. Go to [**APIs & Services** > **Enabled APIs & Services**](https://console.cloud.google.com/apis/dashboard) from the left menu.
+2. Select **+ Enable APIs and services**.
+3. In the **API Library**, search for **Google Docs API**.
+
+<p align="center"><img src="/content/img/enabling-google-docs-api.jpg" alt="Enabling Google Docs API for GCP project" width="100%" height="auto"></img></p>
+
+4. Select **Enable**.
+
+### SendGrid API
+
+The SendGrid API sends the candidate the final interview summary and transcript file. Before generating the API key, we need to verify the sender email address in your SendGrid account.
+
+#### Verify sender identity
+
+**To verify your sender:**
+
+1. Go to [**Marketing** > **Senders**](https://mc.sendgrid.com/senders) from the left menu.
+2. Select **Create New Sender**.
+3. Enter the following mandatory parameters:
+    - From Name
+    - From Email Address
+    - Reply to
+    - Company Address
+    - City
+    - Country
+    - Nickname
+
+<p align="center"><img src="/content/img/sender-creation.jpg" alt="Adding a sender in SendGrid portal" width="100%" height="auto"></img></p>
+
+4. Select **Save**.
+
+This saves the sender to your SendGrid portal and sends an email for verification. Once the sender clicks the verification link in the email, the sender’s status is updated to ‘verified’ within the portal.
+
+<p align="center"><img src="/content/img/sender-verified.jpg" alt="Sender verified in SendGrid portal" width="100%" height="auto"></img></p>
+
+Then, set the environment variable for your verified sender email:
+
+```bash
+export SEND_GRID_EMAIL_ADDRESS=<YOUR_SEND_GRID_VERIFIED_EMAIL_ADDRESS>
+```
+
+#### Generate API key
+
+**To generate an API key:**
+
+1. Go to [**Settings**  > **API Keys**](https://app.sendgrid.com/settings/api_keys) from the left menu.
+2. Select **Create API Key**.
+3. Enter an **API Key Name**.
+4. Select the required **API Key Permissions**.
+5. Select **Create & View**.
+6. Copy and store the generated API key.
+
+<p align="center"><img src="/content/img/sendgrid-api-key.jpg" alt="Generating API key from SenGrid portal" width="100%" height="auto"></img></p>
+
+Now, set the environment variable for your API Key:
+
+```bash
+export SEND_GRID_API_KEY=<YOUR_SEND_GRID_API_KEY>
+```
+
+Finally, update the workflow definition JSON to use this sender email. Go to the **python/interview_agentic_app/resources/interviewAgenticWorkflow.json** file.
+
+- In line 878, replace the **from.email** value:
+
+```json
+//workflow JSON
+
+ "from": {
+                  "email": "<SENDGRID_VERIFIED_SENDER_EMAIL>" //Line 878
+                },
+                "subject": "Thank you ${workflow.variables.name} for interviewing with Orkes",
+```
+
+- In line 996, replace the **from.email** value:
+
+```json
+//workflow JSON 
+                "from": {
+                  "email": "<SENDGRID_VERIFIED_SENDER_EMAIL>" //Line 996
+                },
+                "subject": "Thank you ${workflow.variables.name} for interviewing with Orkes",
+```
+
+## Step 3: Start the backend server
+
+Next, launch the Python-based backend server that listens for incoming requests and triggers the Conductor workflow.
+
+Set the Python path:
+
+```python
+export PYTHONPATH=/[PATH_TO_REPO]/awesome-conductor-apps/python/interview_agentic_app
+```
+
+Create and activate a virtual environment:
+
+```python
+python3 -m venv venv
+source venv/bin/activate
+```
+
+Install required dependencies:
+
+```python
+pip3 install -r requirements.txt
+```
+
+Start the backend server:
+
+```python
+cd workflow
+python app.py
+```
+
+In your Developer Playground, the OpenAI integration, AI prompts, and workflow definitions are auto-generated without—no extra configuration required.
+
+<p align="center"><img src="/content/img/playground-resources.jpg" alt="Created resources in playground" width="70%" height="auto"></img></p>
+
+## Step 4: Start the frontend server
+
+Now, launch the Next.js frontend server where candidates can enter their information and take the interview in an interactive chat UI.
+
+In  a new terminal, go to the frontend directory:
+
+```python
+cd python/interview_agentic_app/interview-chat
+```
+
+Install dependencies:
+
+```js
+npm install --legacy-peer-deps
+```
+
+Start the frontend server:
+
+```js
+npm run dev
+```
+
+The app should now be running locally.
+
+## Step 5: View the interview app in action
+
+To launch the interview experience locally, go to http://localhost:3000  in your browser. 
+
+<p align="center"><img src="/content/img/interview-app-ui.jpg" alt="Agentic interview application UI" width="70%" height="auto"></img></p>
+
+When the interview begins, the *Interview Agentic Workflow* is triggered first. Each interview question is handled separately using the *Core Interview Loop* workflow. For an interview with three questions, this workflow is run in sequence three times using the [Start Workflow task](https://orkes.io/content/reference-docs/operators/start-workflow) in Conductor.
+
+<p align="center"><img src="/content/img/workflows-triggered.jpg" alt="Workflows triggered by the interview app" width="100%" height="auto"></img></p>
+
+Once the interview is completed, a thank-you email with feedback and scores is sent to the candidate via the SendGrid API.
+
+<p align="center"><img src="/content/img/thank-you-email.jpg" alt="Thank you email received instantly on completing the interview" width="50%" height="auto"></img></p>
+
+In parallel, a fully formatted Google Docs transcript is generated and stored in Google Drive. The interviewer and candidate are granted access, and a link is shared in a follow-up email after a fixed wait period.
+
+<p align="center"><img src="/content/img/interview-transcript.jpg" alt="Interview transcription generated" width="100%" height="auto"></img></p>
+
+You now have a fully functional agentic interview app that orchestrates candidate interactions, automates interview workflows, and delivers results seamlessly.
+
+## Troubleshooting
+
+Here are a few common issues and how to fix them:
+
+| Issues | Fixes | 
+| ------ | ----- | 
+| App doesn’t load | <ul><li>Make sure the backend and frontend servers are both running.</li><li>Make sure you're accessing the correct port.</li></ul> | 
+| Transcript isn’t created | <ul><li>Ensure that the Google Docs API is enabled in your Google Cloud project.</li><li>Verify that your Google service account credentials are correctly configured and accessible.</li></ul> | 
+| Emails aren’t delivered | <ul><li>Ensure that your SendGrid sender identity is verified.</li><li>Confirm that your SendGrid API key is valid and included in your environment variables.</li></ul> | 
+| Conductor workflows don’t start | <ul><li>Check that Orkes Conductor credentials (AUTH_KEY, AUTH_SECRET, and SERVER_URL) are set correctly.</li><li>Ensure the Conductor application has the correct roles: *Worker* and *Metadata API*.</li></ul> | 
+| OpenAI responses fail | <ul><li>Verify that your OpenAI API key is active and has a usage quota.</li><li>Ensure that the environment variable is correctly set and accessible from your backend process.</li></ul> | 
+| Frontend displays a blank page or a 500 error | <ul><li>Open the browser dev tools and inspect the network requests.</li><li>Check if the backend server is reachable at the expected endpoint (default: http://localhost:5000).</li></ul> | 
