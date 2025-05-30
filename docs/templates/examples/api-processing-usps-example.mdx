@@ -8,13 +8,11 @@ description: "Check out this API prcoessing template for an example Conductor wo
 
 The US Post Office has several APIs to simplify shipping. Let's look at how you can use Conductor to abstract the APIs - taking into account many important features. The USPS requests and responses are all XML, and these workflows manage the conversions so that the inputs and outputs are JSON.
 
-## Workflow to Check Address - [check_address](https://github.com/conductor-sdk/conductor-examples/blob/main/US_post_office/check_address.json)
+## Workflow to Check Address 
 
 The USPS can verify 160M addresses in the USA.  This workflow either responds with the USPS version of the address (often in all CAPS), or with an error that the address was not found.
 
-
-| [See it in Orkes Developer Playground](https://developer.orkescloud.com/workflowDef/check_address/1) |
-|---------------------------------------------------------------------------------| 
+Get the [workflow JSON here](https://github.com/conductor-sdk/conductor-examples/blob/main/US_post_office/check_address.json).
 
 :::note
 This workflow requires a USPS username to be run.  Change the name of the workflow - to save it in your Developer Playground, and add your USPS Username in the Set_USPS_Name task. The [API access is free](https://www.usps.com/business/web-tools-apis/).
@@ -32,12 +30,11 @@ Sample input:
 }
  ```
 
-## Workflow to Check Postage Rates - [**postage_rate**](https://github.com/conductor-sdk/conductor-examples/blob/main/US_post_office/postage_rate.json)
+## Workflow to Check Postage Rates 
 
 Given a `toZip` and `fromZip`, and some dimensions of the box (and the shipping type), this workflow will output the price for that shipping type.
 
-| [See it in Orkes Developer Playground](https://developer.orkescloud.com/workflowDef/postage_rate/1) |
-|--------------------------------------------------------------------------------| 
+Get the [workflow JSON here](https://github.com/conductor-sdk/conductor-examples/blob/main/US_post_office/postage_rate.json).
 
 :::note
 This workflow requires a USPS username to be run.  Change the name of the workflow - to save it in your Developer Playground, and add your USPS Username in the Set_USPS_Name task. The [API access is free](https://www.usps.com/business/web-tools-apis/).

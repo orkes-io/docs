@@ -3,117 +3,168 @@ slug: "/templates/examples/incoming-webhook-using-postman"
 description: "Check out this template on how to create a workflow that uses a Postman webhook."
 ---
 
-# Incoming Webhook using Postman
+# Incoming Custom Webhook using Postman
 
-Webhooks can be integrated with Conductor to facilitate communication with other third-party systems such as Slack, Pagerduty, Zendesk, etc.
+This tutorial demonstrates how to create a custom webhook in Orkes Conductor and trigger it with a Postman request.
 
-In this article, let’s look at creating a webhook in Conductor and passing an incoming request to the webhook using Postman.
+In this tutorial, you will:
+1. Create a Conductor workflow with a Wait for Webhook task.
+2. Set up a custom webhook in Conductor to receive events.
+3. Run the workflow.
+4. Send a Postman request to trigger the webhook.
+5. Verify incoming webhook requests.
 
-## Creating Workflow
+To follow along, ensure you have access to the free [Orkes Developer Playground](https://developer.orkescloud.com/).
 
-Consider the following workflow that waits for a webhook event from Postman:
+## Step 1: Create a workflow in Conductor
 
-<p align="center"><img src="/content/img/wait-for-webhook-workflow.png" alt="Workflow with webhook task" width="40%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+Create a workflow with a [Wait for Webhook task](https://orkes.io/content/reference-docs/system-tasks/wait-for-webhook) to receive webhook events.
 
-To create a workflow:
+**To create a workflow:**
 
-1. Navigate to **Definitions > Workflows** from the left menu.
-2. Click **Define Workflow** and create a workflow including a [WAIT_FOR_WEBHOOK](https://orkes.io/content/reference-docs/system-tasks/wait-for-webhook) task.
-
-For the WAIT_FOR_WEBHOOK task, the input matches are defined as:
-
-```json
-"inputParameters": {
-       "matches": {
-         "$['data']['recipientId']": "${workflow.input.recipientId}"
-       }
-     },
-```
-
-The complete workflow JSON looks like this:
+1. Go to **Definitions** > **Workflows** from the left menu on your Conductor cluster.
+2. Select **+ Define workflow**.
+3. In the **Code** tab, paste the following code:
 
 ```json
 {
- "name": "sample-webhook",
+ "name": "sample-webhook-postman",
+ "description": "Sample webhook for demonstration purpose",
  "version": 1,
  "tasks": [
    {
-     "name": "http_task_uzpd9",
-     "taskReferenceName": "http_task_uzpd9_ref",
-     "inputParameters": {
-       "http_request": {
-         "uri": "https://orkes-api-tester.orkesconductor.com/api",
-         "method": "GET",
-         "connectionTimeOut": 3000,
-         "readTimeOut": "3000",
-         "accept": "application/json",
-         "contentType": "application/json"
-       }
-     },
-     "type": "HTTP",
-     "optional": false
-   },
-   {
-     "name": "webhook_task_myey4",
-     "taskReferenceName": "webhook_task_myey4_ref",
+     "name": "webhook_task",
+     "taskReferenceName": "webhook_task_ref",
      "inputParameters": {
        "matches": {
          "$['data']['recipientId']": "${workflow.input.recipientId}"
        }
      },
-     "type": "WAIT_FOR_WEBHOOK",
-     "optional": false
+     "type": "WAIT_FOR_WEBHOOK"
    }
  ],
  "inputParameters": [
    "recipientId"
  ],
- "schemaVersion": 2,
- "ownerEmail": "riza.farheen@orkes.io"
+ "schemaVersion": 2
 }
 ```
 
-Next, create a webhook to invoke this workflow.
+4. Select **Save** > **Confirm**.
 
-## Creating Webhook in Conductor
+Your workflow will look like this:
 
-1. From your Conductor server, navigate to **Definitions > Webhooks** from the left menu.
-2. Click the **New Webhook** button and create the webhook with the following configurations.
+<p align="center"><img src="/content/img/wait-for-webhook-workflow.png" alt="Workflow with webhook task" width="100%" height="auto" /></p>
 
-<p align="center"><img src="/content/img/sample-webhook.png" alt="Webhook example" width="70%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+## Step 2: Create a webhook in Conductor
 
-Under the field “Workflows to Receive Webhook Event”, choose the workflow that includes your webhook task created earlier. Since the platform is Postman, let’s choose the **Source Platform** as **Custom**.
+Next, create a custom webhook that listens for incoming events from Postman.
 
-Provider a header key and value. Let’s also configure to start the workflow **“start-http-task”** when the webhook event comes from Postman.
+**To create a webhook:**
 
-On saving the webhook, an unverified URL will be generated. Since this is a header-based verifier, the URL will be verified once the first Webhook event comes with all the header keys and values configured. 
+1. Go to **Definitions** > **Webhook** from the left menu on your Conductor cluster.
+2. Select **+ New webhook**.
+3. In the **Code** tab, paste the following code:
 
-## Run Workflow
+```json
+{
+ "verifier": "HEADER_BASED",
+ "headers": {
+   "appName": "demoApp"
+ },
+ "name": "SampleWebhookPostman",
+ "receiverWorkflowNamesToVersions": {
+   "sample-webhook-postman": 1
+ },
+ "sourcePlatform": "Custom"
+}
+```
 
-Next, you must run the workflow by clicking the **Run Workflow** button from the left menu.
+4. Select **Save**.
 
-When the execution reaches the “WAIT_FOR_WEBHOOK” task, it waits for the event to come from Postman.
+<p align="center"><img src="/content/img/sample-webhook.png" alt="Webhook example" width="100%" height="auto" /></p>
 
-<p align="center"><img src="/content/img/webhook-workflow-execution.png" alt="Workflow execution waiting for webhook event" width="40%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+An unverified webhook URL is generated. It remains unverified until a request with the expected headers is received.
 
-Now, open [Postman](https://www.postman.com/), create a new request with your webhook URL, and change the method to POST. 
+## Step 3: Run workflow
 
-Provide the header key and value, and the input matches in JSON format. 
+Before triggering the webhook, run the workflow with an input value that the webhook event should match.
 
-<p align="center"><img src="/content/img/configuring-headers-in-postman-request.jpg" alt="Configuring headers in Postman request" width="80%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+Since the Wait for Webhook task uses the following input matches:
 
-<p align="center"><img src="/content/img/send-request-postman.png" alt="Sending POST request from Postman" width="80%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+```json
+       "matches": {
+         "$['data']['recipientId']": "${workflow.input.recipientId}"
+       }
+```
+Run the workflow to pass `recipientId` as the workflow input. 
 
-Click **Send**, and it should return a 200 OK.
+Go back to your workflow definition, navigate to the **Run** tab, and paste the following input parameters:
 
-Now, if we return to the webhook, you can see that the event has been received. This triggered the workflow in which the webhook task was added.
+```json
+{
+"recipientId":"123"
+}
+```
 
-<p align="center"><img src="/content/img/workflow-triggered.png" alt="Workflow with webhook task triggered on receiving webhook event" width="100%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+Select **Run workflow** to view the execution.
 
-You can see that the webhook URL has been verified now. And if you check the previous workflow execution, you can verify that it has been completed successfully.
+<p align="center"><img src="/content/img/run-webhook-workflow.png" alt="Workflow execution" width="100%" height="auto" /></p>
 
-<p align="center"><img src="/content/img/workflow-completed.png" alt="Sample webhook workflow completed" width="40%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+The workflow is now running and waiting for a webhook event that contains an input payload with `“recipientId”: "123"`.
 
-We have also configured to start the workflow **“start_http_task”** on receiving this webhook event. You can verify the same from the **Executions > Workflow** page.
+## Step 4: Send a request using Postman
 
-<p align="center"><img src="/content/img/workflow-started-when-request-came.png" alt="Workflow triggered when request came from Postman" width="100%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+Now that the workflow is waiting for input, you can send a matching request using Postman.
+
+You ran the workflow using the input:
+```json
+{
+"recipientId":"123"
+}
+```
+
+Therefore, send a matching request from Postman.
+
+**To configure a Postman request:**
+
+1. Log in to [Postman](https://www.postman.com/).
+2. Select **Send an API request** > **New Request**.
+3. Create a new request with the following configurations:
+  - **Method**: POST.
+  - **URL**: The unverified webhook URL from Conductor.
+4.  In the **Headers** section, add the following key-value pair: `appName: demoApp`.
+
+<p align="center"><img src="/content/img/configuring-headers-in-postman-request.jpg.png" alt="Configuring headers in Postman request" width="100%" height="auto" /></p>
+
+5. In the **Body** tab, select **raw** and choose **JSON**. Paste the following payload:
+
+```json
+{
+  "data": {
+    "recipientId": "123"
+  }
+}
+```
+
+:::note
+Ensure to pass the matching input JSON. The value for "recipientId" in the request payload must match the input provided when running the workflow ("123" in this example).
+:::
+
+6. Select **Send**.
+
+<p align="center"><img src="/content/img/send-request-postman.png" alt="Sending POST request from Postman" width="100%" height="auto" /></p>
+
+The Postman request should return a 200 OK.
+
+## Step 5: Verify incoming webhook requests
+
+Once the request is received, the webhook is automatically verified, and the payload is received in Conductor.
+
+<p align="center"><img src="/content/img/workflow-triggered.png" alt="Workflow with webhook task triggered on receiving webhook event" width="100%" height="auto" /></p>
+
+Select the workflow ID from the **Webhook execution history** to view the execution. You can verify that the webhook task is completed.
+
+<p align="center"><img src="/content/img/workflow-completed.png" alt="Sample webhook workflow completed" width="100%" height="auto" /></p>
+
+You’ve successfully created and triggered a custom webhook in Orkes Conductor using Postman. 

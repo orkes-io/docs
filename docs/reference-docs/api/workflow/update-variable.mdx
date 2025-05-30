@@ -535,18 +535,6 @@ curl -X 'POST' \
 
 </details>
 
-## OLD
-
-Update the workflow variables at any time while the workflow is in the RUNNING state. This is similar to the [SET_VARIABLE](https://orkes.io/content/reference-docs/operators/set-variable) task, except it can be updated anytime while the workflow is running.
-
-Useful when the workflow state is to be updated based on an external trigger, such as terminating a long-running do-while loop with a terminating condition based on the workflow variables.
-
-## Input Payload
-
-| Attribute  | Description                                                            |
-| ---------- | ---------------------------------------------------------------------- |
-| workflowId | The unique identifier of the workflow whose variable is to be updated. |
-
 ## Client SDK Methods
 
 <Tabs>

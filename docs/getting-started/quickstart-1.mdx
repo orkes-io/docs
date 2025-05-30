@@ -10,7 +10,8 @@ import TabItem from '@theme/TabItem';
 
 *Estimated time: 5min*
 
-As you will have learned in [Core Concepts](/core-concepts), the core units of every Conductor workflow are tasks and operators. System tasks are serviced by Conductor workers, but you can also create custom workers to service custom logic for your workflows. 
+As you will have learned in [Core Concepts](/core-concepts), the core units of every Conductor workflow are tasks and operators. All code is executed by workers - system tasks are serviced by internal Conductor workers (a.k.a. system tasks/workers), and any custom tasks must be serviced by workers of your own hosting.
+<p align="center"><img src="/content/img/getting-started/getting_started-worker-diagram.jpg" alt="Diagram of system workers (i.e. inline tasks, http tasks) and customer workers." width="100%" height="auto"></img></p>
 
 Custom workers can be deployed anywhere: container, VM, or bare metal.
 
@@ -84,11 +85,13 @@ The application account can now execute the worker task.
 
 Using the command line, launch the worker so that it begins polling the Conductor server. The commands depend on your language and project configuration. You can follow the README instructions in the sample worker project to start it.
 
-**Example** (Java)
+**Example** (Python)
 
-``` java
-./gradlew build
-./gradlew run
+``` python
+python3 -m venv venv
+source venv/bin/activate
+pip3 install -r requirements.txt
+python3 main.py
 ```
 
 

@@ -200,11 +200,11 @@ const sidebars = {
                                     type: 'doc',
                                     id: 'developer-guides/enabling-cdc-on-conductor-workflows',
                                     label: "Enabling CDC"
-                                }
+                                },
+                                'developer-guides/webhook-integration'
                             ],
                             collapsible: false,
                         },
-                        'developer-guides/webhook-integration'
                     ]
                 },
                 {
@@ -779,6 +779,11 @@ const sidebars = {
                             id: 'tutorials/quickstart-ai-orchestration',
                             label: 'AI-Powered Translator',
                         },
+                        {
+                            type: 'doc',
+                            id: 'tutorials/agentic-interview-app',
+                            label: 'Agentic Interview App',
+                        },
                     ]
                 },
                 {
@@ -803,7 +808,7 @@ const sidebars = {
                     label: 'Finance',
                     link: {
                         type: 'generated-index',
-                        title: 'Templates for Finance',
+                        title: 'Finance',
                         description: 'Explore tutorials for finance use cases.',
                         slug: '/finance-templates'
                     },
