@@ -1,0 +1,514 @@
+---
+slug: "/templates/agentic-research"
+description: "Use this template to build an agentic research assistant for academic research."
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Agentic Research Assistant
+
+:::note
+This template is only available on the [Developer Playground](https://developer.orkescloud.com/) in Launch Pad. 
+:::
+
+This agentic research template generates either a literature review or a research gap report based on the user query. Powered by LLMs, the workflow identifies the user’s intent from the query and compiles the latest research findings with search grounding. 
+
+An agentic research assistant can speed up the discovery process in academic research. Within minutes, researchers can gain a deeper understanding of a specific field, freeing up time to design their research thesis.
+
+This template serves as a quickstart for building agentic workflows. You can use this as a basis to understand the design patterns involved in an agentic workflow and extend it with your own data sources and control flow.
+
+
+## Conductor features used
+
+This template utilizes the following Conductor features:
+* [Set Variable task](/reference-docs/operators/set-variable)
+* [Fork/Join task](/reference-docs/operators/fork-join)
+* [Switch task](/reference-docs/operators/switch)
+* [Terminate task](/reference-docs/operators/terminate)
+* [Do While task](/reference-docs/operators/do-while)
+* [Inline task](/reference-docs/system-tasks/inline)
+* [Dynamic Fork task](/reference-docs/operators/dynamic-fork)
+* [LLM Text Complete task](/reference-docs/ai-tasks/llm-text-complete)
+* [AI Prompt Template](/developer-guides/creating-and-managing-gen-ai-prompt-templates)
+* [Worker task (Simple)](/reference-docs/worker-task)
+
+
+## How to use the template
+
+1. Import the template from Launch Pad.
+2. Configure AI/LLM integrations and models.
+3. Configure AI prompts.
+4. Set up a worker for report generation.
+5. Run workflow.
+
+
+:::info Prerequisites
+The agentic research template uses AI models. Ensure that you have API keys for the following model providers:
+* [OpenAI](https://platform.openai.com/settings/organization/api-keys)
+* [Perplexity](https://www.perplexity.ai/account/api)
+* [Anthropic](https://console.anthropic.com/account/keys)
+:::
+
+
+### Step 1: Import the template
+
+The agentic research template is only available on the [Developer Playground](https://developer.orkescloud.com/) in Launch Pad. 
+
+**To import the template:**
+
+1. Log in to [Developer Playground](https://developer.orkescloud.com/).
+2. Go to **Launch Pad** on the left navigation menu.
+3. Select **Agentic Research** > **View Template**.
+
+The `agentic_research` workflow is now imported and ready for use.
+
+<p align="center"><img src="/content/img/tutorial/agentic_workflow_side-by-side.jpg" alt="Agentic Research Workflow." width="auto" height="auto"></img></p>
+
+
+#### Understand the workflow logic
+
+This section explains the workflow logic and how to execute it.
+
+**AI components:**
+
+There are five LLM Text Complete tasks in the workflow. Using LLMs, each LLM Text Complete task contributes either to a decision-making node (agentic) or to generating content:
+* `determine_research_task` — Determines what task to conduct in the workflow (*research-gap*, *literature-review*, *both*, or *none*) based on the user’s research question.
+* `break_into_subtopics` — Identify research sub-topics based on the user’s research question.
+* `lit_review_task` (used in a Dynamic Fork) — Conduct literature review research.
+* `research_gap_task` (used in a Dynamic Fork) — Conducts a research gap analysis.
+* `compile_subtopics_response` — Synthesizes a compiled report based on the `lit_review_task` and/or `research_gap_task`.
+
+**Workflow inputs:**
+* **question**—The research question (“What are the latest findings in neutron stars and what is still unknown?”)
+* **filename**—The file name for the generated .pdf report. (“myReport.pdf”)
+
+**Workflow logic:**
+
+The workflow begins with a [Set Variable](/reference-docs/operators/set-variable) task that initializes global workflow variables for convenient retrieval later:
+* **answer**—the final report content, which is an empty string for now.
+* **question**—the user’s initial query.
+* **lit_reviews**—the research from the `lit_review_task` (an empty array for now).
+* **research_gaps**—the research from the `research_gap_task`  (an empty array for now).
+
+With the variables declared, the workflow proceeds to identify what task to do next and the list of research sub-topics based on the user’s query using separate [LLM Text Complete](/reference-docs/ai-tasks/llm-text-complete) tasks. A [Fork/Join](/reference-docs/operators/fork-join) is used to process these tasks in parallel.
+
+Another [Set Variable](/reference-docs/operators/set-variable) task is used to declare additional global workflow variables based on the LLM evaluation:
+* **subtopics**—the list of sub-topics that will be used for the research.
+* **decision**—the selected task(s) that the workflow will carry out (*research-gap*, *literature-review*, *both*, or *none*).
+
+If the decision is *none*, meaning the user query is irrelevant, the workflow will terminate with a [Terminate](/reference-docs/operators/terminate) task. 
+
+Otherwise, the workflow will continue to a [Switch](/reference-docs/operators/switch) task, which routes to the relevant [Set Variable] task that prepares the exact configuration of the task(s) to be carried out later. This routing step is in preparation for the [Dynamic Fork](/reference-docs/operators/dynamic-fork) task later on, which requires the task configuration as input.
+
+Next, a [Do While](/reference-docs/operators/do-while) task is used to iterate through each sub-topic and generate its research findings. Inside the loop:
+* The [Inline](/reference-docs/system-tasks/inline) task is used to track the iteration counter and set the relevant sub-topic.
+* The [Dynamic Fork](/reference-docs/operators/dynamic-fork) will dynamically call the task(s) set during the prior [Switch](/reference-docs/operators/switch) task.
+    * The task(s) serve as the core research generation step carried out by [LLM Text Complete tasks](/reference-docs/ai-tasks/llm-text-complete), which are powered by Perplexity models with web search access. 
+    * If both a literature review and a research gap report are required, the Dynamic Fork will generate two forks to conduct research for both areas in parallel. Likewise, if only one task is required, the Dynamic Fork will generate one fork.
+* Another [Switch](/reference-docs/operators/switch) task and [Set Variable](/reference-docs/operators/set-variable) task combination is used to concatenate each sub-topic’s research findings into a single array, which can be accessed and updated with the previously-declared `lit_reviews` and/or `research_gaps` variables.
+
+Finally, once the research is completed, another [LLM Chat Complete](/reference-docs/ai-tasks/llm-text-complete) task is used to synthesize the sub-topics’ findings into a formatted report that answers the user’s original question. A custom [Worker task](/reference-docs/worker-task) is used to generate a .pdf file that downloads directly to the user’s desktop for convenient access.
+
+
+### Step 2: Configure AI/LLM integrations and models
+
+To use the LLM Text Complete tasks, you must set up the AI/LLM integrations with the relevant model providers. The integrations required for the `agentic_research` workflow have already been imported during Step 1:
+* **openAI**–used for `determine_research_task` for `break_into_subtopics`
+* **perplexity**—used for `lit_review_task` (used in a Dynamic Fork) and `research_gap_task`
+* **AnthropicClaude**—used for `compile_subtopics_response` 
+
+**To finish setting up the AI/LLM integrations:**
+1. From the `agentic_research` workflow definition, go to the **Dependencies** tab.
+2. In the **Integrations** section, select each integration to provide the **API Key**, then select **Save**.
+
+
+<p align="center"><img src="/content/img/tutorial/agentic_workflow_quickstart_integrations.png" alt="Screenshot of workflow integrations in Conductor UI." width="90%" height="auto"></img></p>
+
+
+Once completed, you can proceed to add specific models for each integration.
+
+**To add a model to your integration:**
+1. Go to **Integrations** on the left navigation menu.
+2. For each integration (*openAI*, *perplexity*, *AnthropicClaude*), select the **+** icon (Add/Edit models), then select **+ New model**.
+
+    <p align="center"><img src="/content/img/tutorial/agentic_workflow_quickstart_add_models.png" alt="Screenshot of integrations list in Conductor UI." width="90%" height="auto"></img></p>
+
+3. Add the following **Model name** for the corresponding integration:
+    * **openAI**–gpt-4o
+    * **perplexity**—sonar
+    * **AnthropicClaude**—claude-3-7-sonnet-20250219
+4. Ensure that the **Active** toggle is switched on and select **Save**.
+
+The AI/LLM models are now ready to use.
+
+
+### Step 3: Configure AI prompts 
+
+To use the LLM Text Complete tasks, you must set up the AI prompts. The five prompts required for the `agentic_research` workflow have already been imported during Step 1:
+
+<Tabs>
+<TabItem value="query_task_decision" label="query_task_decision">
+
+The prompt determines subsequent tasks (*research-gap*, *literature-review,* *both* or *none*) based on the user's query.
+
+```
+
+You are an academic research agent.
+
+Given the user's request, identify what kind of research task they want to perform:
+
+Options:
+
+- literature-review - if they are asking for a summary of existing knowledge
+
+- research-gap - if they want to identify what is still unknown or under-researched
+
+- both - if they want both a literature review and to find gaps
+
+- none - if the query doesn't request any research
+
+User query: "${user-query}"
+
+Output only one of: "literature-review", "research-gap", "both", or "none"
+
+Ex. 1
+
+Query: What are the latest findings in child development psychology?
+
+Output: literature-review
+
+Ex. 2
+
+Query: What is still unknown about neutron stars?
+
+Output: research-gap
+
+Ex. 3
+
+Query: What do we know and don't know about black holes?
+
+Output: both
+
+Ex. 4
+
+Query: Write me a Haiku!
+
+Output: none
+
+```
+
+</TabItem>
+<TabItem value="break_into_subtopics" label="break_into_subtopics">
+
+The prompt breaks a research query into distinct sub-topics.
+
+```
+
+You are an academic research agent. Your task is to identify relevant and specific sub-topics within the field mentioned in the user's query:
+
+"${user-query}"
+
+Make sure:
+
+- If the query is broad, generate a diverse but representative set of sub-topics (up to 5).
+
+- If the query is narrow or specific, output only the most relevant sub-topics (fewer than 5 is fine).
+
+- Sub-topics must directly align with the focus of the query—avoid generalities.
+
+- Only output a JSON-style array of topic strings.
+
+Ex. 1
+
+Input: "What are the latest findings in child development psychology?"
+
+Output: ["cognitive development", "emotional and social development", "language acquisition", "attachment and parenting styles", "impact of technology on development"]
+
+Ex. 2
+
+Input: "What is still unknown about neutron stars?"
+
+Output: ["interior composition and equation of state", "post-merger behavior", "magnetic field dynamics"]
+
+Ex. 3
+
+Input: "What are the implications of microplastics in drinking water?"
+
+Output: ["human health impacts of microplastics", "microplastic contamination pathways", "removal methods in water treatment systems"]
+
+Ex. 4
+
+Input: "I want to know what are the current efforts into the taxonomy of Singapore's fly species."
+
+Output: ["taxonomic classification of Diptera in Southeast Asia", "endemic fly species in Singapore", "molecular phylogenetics of Singaporean flies", "biodiversity surveys and insect sampling methods in urban tropics"]
+
+```
+
+</TabItem>
+<TabItem value="literature_review_task" label="literature_review_task">
+
+
+The prompt conducts a literature review given a sub-topic.
+
+```
+
+You are an academic research assistant.
+
+Your task is to write a concise literature review for the following topic:
+
+"${sub-topic}"
+
+Follow these instructions carefully:
+
+🔍 Use Only Verifiable Information
+
+- Base your summary solely on reliable academic sources.
+
+- If no credible information is available on a point, do not make assumptions or generalizations. It is better to omit than speculate.
+
+📚 Ground the Review in Real Citations
+
+- As much as possible, include author names, publication years, or study titles.
+
+- If such details are not available, clearly state the lack of citation rather than inventing examples.
+
+✍️ Tone and Style
+
+- Write in a concise, academic, and readable tone.
+
+- Highlight foundational theories, well-known studies, and recent developments in the field.
+
+- Do not overstate the certainty of findings; reflect the nuance and debate present in the literature.
+
+🧠 Structure and Focus
+
+- Focus on summarizing what is well-understood or frequently studied.
+
+- If relevant, note key gaps or disagreements in the research.
+
+Example Inputs and Expected Outputs:
+
+Sub-Topic 1: "attachment theory"
+
+Output 1: "Attachment theory, developed by John Bowlby in the mid-20th century, posits that early emotional bonds between children and caregivers are critical for psychological development. Mary Ainsworth's "Strange Situation" study (1978) identified attachment styles such as secure, avoidant, and anxious. Recent literature explores how attachment patterns persist into adulthood (Mikulincer & Shaver, 2016) and how cultural contexts influence attachment behavior. Neurobiological research has also linked secure attachment to lower stress reactivity in infants."
+
+Sub-Topic 2: "neutron star mergers and gravitational waves"
+
+Output 2: "Neutron star mergers are a key source of gravitational waves, as confirmed by the landmark detection of GW170817 in 2017 by LIGO and Virgo. These events provide insight into the r-process nucleosynthesis responsible for heavy elements like gold and platinum. Literature since 2018 has focused on electromagnetic counterparts (e.g., kilonovae), constraints on the neutron star equation of state, and the role of binary evolution in producing merger progenitors. Current research emphasizes multi-messenger astronomy and refining mass-radius measurements through future observations."
+
+Sub-Topic 3: "quantum computing in early childhood education"
+
+Output 3: "There is currently limited peer-reviewed literature directly addressing the use of quantum computing in early childhood education. While quantum computing is an emerging field in computer science and physics, its application in K–12 education—particularly among early learners—has not been widely explored. Existing studies on quantum education primarily focus on undergraduate and graduate-level curricula (e.g., Singh et al., 2020) or public engagement strategies. Future interdisciplinary research could examine how simplified quantum concepts might be introduced in age-appropriate educational contexts, but as of now, this remains an underexplored area in the academic literature."
+
+Tips for Strong Literature Review:
+
+- Be specific about the tone: "concise," "academic," "grounded in research"
+
+- Encourage citations and publication dates to increase trust
+
+- Prompt for recent and foundational work
+
+- If using a web-search agent, you can also instruct the model to "retrieve recent peer-reviewed sources" before summarizing
+
+```
+
+</TabItem>
+<TabItem value="research_gap_task" label="research_gap_task">
+
+
+The prompt conducts a research gap analysis given a sub-topic.
+
+```
+
+You are an academic research assistant.
+
+Your task is to identify verifiable research gaps in the following topic:
+
+"${sub-topic}"
+
+Carefully review the existing body of knowledge and pinpoint areas that remain poorly understood, underexplored, or debated. Focus on:
+
+- Unanswered questions highlighted by recent reviews or studies
+
+- Methodological limitations (e.g., sample size, bias, study design)
+
+- Outdated theories or assumptions challenged by newer work
+
+- Contradictions between major findings or schools of thought
+
+- Population or context-specific gaps (e.g., non-Western settings, underrepresented groups)
+
+Write in an academic yet accessible tone. Each gap should be clearly framed to guide future research efforts.
+
+⚠️ If insufficient peer-reviewed literature exists on the topic, explicitly state that the research field is still emerging or underdeveloped.
+
+As much as possible, reference key authors, study names, or publication years to justify why these gaps persist and why they matter.
+
+Example Inputs and Expected Outputs:
+
+Sub-Topic 1: "attachment theory"
+
+Output 1: "While attachment theory is well-established, several gaps remain. For example, there is limited understanding of how digital communication platforms (e.g., texting, social media) affect attachment formation during adolescence (see Madigan et al., 2018). Cross-cultural validation is also limited; most empirical studies focus on Western contexts, with relatively little research from collectivist cultures (Mesman et al., 2016). Additionally, longitudinal studies tracking the impact of early attachment on adult psychopathology across diverse populations are scarce, hindering broader generalizability."
+
+Sub-Topic 2: "neutron star mergers and gravitational waves"
+
+Output 2: "Despite the breakthrough observation of GW170817 (Abbott et al., 2017), major research gaps persist. One involves the poorly constrained role of magnetic fields in post-merger dynamics, which remain difficult to simulate accurately. Another is the uncertainty around how much mass is ejected during mergers and its impact on r-process nucleosynthesis. Current theoretical models often diverge from observational estimates, particularly regarding kilonova brightness and decay curves (Metzger, 2019)."
+
+Sub-Topic 3: "impact of technology on child development"
+
+Output 3: "While research on screen time is abundant, gaps remain in understanding how different types of digital content—interactive vs. passive—affect cognitive outcomes (Rideout & Robb, 2021). There is also limited research on the influence of AI-generated or algorithmically curated content on children's language and emotional development. Furthermore, few large-scale studies explore how socio-economic disparities mediate access, content quality, and parental mediation practices."
+
+Tips for Strong Research Gap Analysis:
+
+- Analyze limitations in the current research, not just summarize it.
+
+- Use cues like underexplored, contradictory, outdated, or not well understood.
+
+- Encourage it to include why a gap matters (i.e. “this gap impedes X”).
+
+- Mentioning methodological or population-specific gaps often adds depth.
+
+```
+
+</TabItem>
+<TabItem value="compile_subtopic_responses" label="compile_subtopic_responses">
+
+
+The prompt compiles a report, given a list of literature reviews and/or research gap analysis.
+
+```
+
+You are an academic research assistant.
+
+You are given information on sub-topics within a broader research field. This information may include:
+
+- A list of literature reviews (summaries of key findings, theories, or recent work)
+
+- A list of research gaps (open questions, underexplored areas, or suggested future research)
+
+You may receive one, the other, or both.
+
+Your task is to generate a single, synthesized literature review that addresses the original research question:
+
+${original_question}
+
+Organize the report according to the information from the subtopics:
+
+- Summarize the key points under a "Literature Review" section (if provided).
+
+- List any identified research gaps under a "Research Gaps" section (if provided).
+
+- If only one type of content is available, include just that.
+
+- Avoid structuring the report by each subtopic, it should be synthesized to the original question.
+
+Your final output should be:
+
+- A cohesive, academic-style report written in a formal tone using all sub-topics
+
+- Focused on synthesizing the provided content to give a holistic view of the research landscape related to the original question
+
+Ensure the output is in HTML format and fully wrapped in appropriate <html>, <head>, and <body> tags. Use the following structure:
+
+1. HTML Structure:
+
+- Use <h1>, <h2>, <h3> tags for headings.
+
+- Use <p> tags for paragraphs.
+
+- Use <ul> and <li> for lists.
+
+Here is the data:
+
+Literature Reviews:
+
+${lit_reviews}
+
+Research Gaps:
+
+${research_gaps}
+
+Generate a synthesized academic report accordingly.
+
+```
+
+</TabItem>
+</Tabs>
+
+**To finish setting up the AI prompts:**
+1. Go to **Definitions** > **Workflow** and select the `agentic_research` workflow.
+2. Go to the **Dependencies** tab.
+3. In the **Prompts** section, select each AI prompt and add the associated **Model(s)**, then select **Save**:
+    * **break_into_subtopics**—openAI:gpt-4o
+    * **query_task_decision**—openAI:gpt-4o
+    * **literature_review_task**—perplexity:sonar
+    * **research_gap_task**—perplexity:sonar
+    * **compile_subtopic_responses**—AnthropicClaude:claude-3-7-sonnet-20250219
+
+
+<p align="center"><img src="/content/img/tutorial/agentic_workflow_quickstart_prompts.png" alt="Screenshot of workflow prompts in Conductor UI." width="90%" height="auto"></img></p>
+
+
+
+### Step 4: Set up custom worker
+
+The final .pdf report is created using a custom Worker task that takes the raw report content and generates a file based on the supplied file name. To use the task, you need to set up a worker locally and connect it to the Conductor server with access credentials.
+
+**To retrieve the access credentials:**
+
+1. Go to **Definitions** > **Workflow** and select the `agentic_research` workflow.
+2. In the **Workflow** tab on the right-hand panel, select **Get Access Keys**.
+    <p align="center"><img src="/content/img/tutorial/agentic_workflow_quickstart-get_access_keys.png" alt="Screenshot of Conductor UI where you can get the access keys." width="90%" height="auto"></img></p>
+
+3. Copy the key ID, secret, and server URL and store them securely.
+
+
+**To set up the worker**:
+
+1. Copy the following command into your terminal:
+
+    ``` bash
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/conductor-oss/awesome-conductor-apps/refs/heads/agent_research_fix_enh/python/agentic_research/workers/install.sh)"
+    ```
+
+2. Enter the access key ID, secret, and server URL into the terminal when prompted. 
+
+
+### Step 5: Run the workflow
+
+With the workflow fully set up, give it a run.
+
+**To run the workflow:**
+
+1. From the  `agentic_research` workflow definition, go to the **Run** tab.
+2. Enter the **Input Params**.
+
+    **Example:**
+    ```
+    {
+      "question": "What is the latest updates on cancer research in 2025?",
+      "filename": "latest-cancer-research-updates.pdf"
+    }
+    ```
+
+3. Select **Execute**.
+
+<p align="center"><img src="/content/img/tutorial/agentic_workflow_quickstart_run_workflow.gif" alt="Run the agen6tic research workflow in Conductor UI." width="90%" height="auto"></img></p>
+
+
+## Workflow output
+
+Once the workflow is completed, a .pdf file of the research findings will be downloaded onto your local desktop. You can locate it in `/awesome-conductor-apps/python/agentic_research/workers`. Open the file to review the research report.
+
+<p align="center"><img src="/content/img/tutorial/agentic_workflow_quickstart-research_output.png" alt="Example PDF file created by the workflow." width="60%" height="auto"></img></p>
+
+
+## Workflow modifications
+
+This template provides a starting point for customizing the workflow to your needs. You can easily swap out the AI models or modify the AI prompts for better results.
+
+
+:::note
+If you want to switch out the AI models, you must modify the workflow LLM Text Complete task and its corresponding AI prompt before running the workflow.
+:::
