@@ -9,9 +9,7 @@ import TabItem from '@theme/TabItem';
 
 # Do While
 
-The Do While task executes a sequence of tasks as long as a given condition is true. The list of tasks is executed first before the condition is checked, even for the first iteration, just like a regular do .. while statement in programming.
-
-When a Do While loop is executed, each task in the loop will have its `taskReferenceName` concatenated with \_\_i, with i as the iteration number starting at 1. If one of the loop task fails, the Do While task status will be set as FAILED and upon retry the iteration number will restart from 1.
+The Do While task iterates through a sequence of tasks as long as a given condition is true. The sequence of tasks gets executed before the condition is checked, even for the first iteration, just like a regular `do .. while` statement in programming.
 
 ## Task parameters
 
@@ -20,10 +18,10 @@ Configure these parameters for the Do While task.
 | Parameter                      | Description                                                          | Required/ Optional   |
 | ------------------------------ | ------------------------------------------------------------------------------------------------------- | -------------------- |
 | evaluatorType                  | The type of evaluator used. Supported types: <ul><li>`value-param`—Evaluates a specific input parameter in the Do While task.</li><li>`graaljs`—Evaluates JavaScript expressions and computes the value. Allows you to use ES6-compatible JavaScript.</li></ul>                                                                    | Required.          |
-| loopCondition                  | The condition that is evaluated by the Do While task after every iteration. The expression format depends on the evaluator type:<ul><li>For the `value-param` evaluator, the expression is the input parameter key.</li><li>For the `javascript` and `graaljs` evaluators, the expression is the JavaScript expression. </li></ul> | Required.          |
+| loopCondition                  | The condition that is evaluated by the Do While task after every iteration. The expression format depends on the evaluator type:<ul><li>For the `value-param` evaluator, the expression is the input parameter key.</li><li>For the `javascript` and `graaljs` evaluators, the expression is the JavaScript expression. </li></ul> | Required, unless iterating over a list of items.          |
 | loopOver                       | The list of tasks to be executed as long as the condition is true.    | Required.          |
-| inputParameters. **keepLastN** | The number of required iterations. On enabling this option, this value is set to 2 by default. You can also choose not to include this parameter if there are no limits on the number of iterations.                | Optional. Do not use if `inputParamters.items` is set.         |
-| inputParameters. **items** | An array of items, which will be iterated over in the loop. The number of iterations is equal to the list size. You can use this to iterate without a condition. Refer to [Examples](#examples) for more information on how to use the `items` parameter.            | Optional.          |
+| inputParameters. **items** | An array of items, which will be iterated over in the loop. The number of iterations is equal to the list size. You can use this to iterate without a condition. <br/><br/> Refer to [Examples](#examples) for more information on how to use the `items` parameter.            | Optional.          |
+| inputParameters. **keepLastN** | The number of iteration execution data to retain. If enabled, the default value is 2. <br/><br/> Use `keepLastN` if the number of iterations is expected to be large and not all execution data needs to be retained. Refer to [Execution data](#execution-data) for more information.         | Optional.        |
 
 ## Task configuration
 
@@ -50,11 +48,11 @@ The Do While task will return the following parameters.
 
 | Parameter | Description                                                                                                                                                                                                 |
 | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| iteration | The number of iterations. If the Do While task is in progress, `iteration` will show the current iteration number. If the Do While task is completed, `iteration` will show the final number of iterations. |
+| iteration | The number of iterations. <br/><br/> If the Do While task is in progress, `iteration` will show the current iteration number. If the Do While task is completed, `iteration` will show the final number of iterations. |
 
 In addition, an object will be created for each iteration, keyed by its iteration number (eg. 1, 2, 3) and containing the task reference names of all the loop tasks and their outputs.
 
-The output payload may also contain any state stored in `loopCondition`. For example, `storage` will exist as an output parameter if the `loopCondition` is `if ($.LoopTask['iteration'] <= 10) {$.LoopTask.storage = 3; true } else {false}`.
+The output payload may also contain any state stored in `loopCondition`. For example,  if the `loopCondition` is `if ($.LoopTask['iteration'] <= 10) {$.LoopTask.storage = 3; true } else {false}`, `storage` will exist as an output parameter.
 
 **Example output**
 
@@ -102,13 +100,76 @@ Each time a task in the do while loop is completed, the output is saved and inde
    - **Value-Param**—Ensure that the expression value matches the parameter key you have defined in Script params.
    - **ECMASCRIPT**—Enter a JavaScript script.
 4. In your workflow, select the **(+)** icon to add tasks to the do while loop.
-5. (Optional) Set the number of required iterations by unchecking **No Limits**. There is no limit on the number of iterations by default.
+5. (Optional) If the number of iterations is expected to be large, turn off **No Limits** to set the number of iteration execution data to retain. By default, there is no limit on the execution data kept if the task size is below 300.
 
 <p><img src="/content/img/Task-References/do_while_task_reference.png" alt="Screenshot of Do While Task in Orkes Conductor"/></p>
+
+## Execution
+
+When a Do While loop is executed, each task in the loop will have its `taskReferenceName` concatenated with \_\_i, with i as the iteration number starting at 1. If one of the loop task fails, the Do While task status will be set as FAILED and upon retry the iteration number will restart from 1.
+
+If an exception occurs during evaluation of the `loopCondition`, the task is set to `FAILED_WITH_TERMINAL_ERROR`.
+
+
+### Execution data
+
+During execution, each iteration execution can be accessed from the dropdown box in the Conductor UI for the Do While task and all its loop tasks.
+
+<p><img src="/content/img/Task-References/do_while_iterations.png" alt="List of iterations during workflow execution."/></p>
+
+
+If `keepLastN` is used, the latest *n* iterations will be retained. In the example below where `keepLastN=2`, the latest two iterations are accessible from the dropdown box in the UI.
+
+<p><img src="/content/img/Task-References/do_while_keeplastn_iterations.png" alt="List of iterations during workflow execution where keepLastN is enabled."/></p>
+
+
+From v4.1.52 onwards, Do While executions that exceed 300 tasks across its iterations will be summarized, and the Conductor UI will only display the latest two iterations. If required, u​​se `keepLastN` to display more iterations.
+
+<p><img src="/content/img/Task-References/do_while_summarized_iterations.png" alt="List of iterations during workflow execution where workflow is summarized."/></p>
+
 
 ## Examples
 
 Here are some examples for using the Do While task.
+
+<details>
+<summary>Using `value-param` evaluator</summary>
+
+When using the `value-param` evaluator, the input key (such as `state` in the example below) must be a boolean value.
+
+```json
+{
+  "name": "do_while",
+  "taskReferenceName": "do_while_ref",
+  "inputParameters": {
+    "state": "${workflow.input.active}"
+  },
+  "type": "DO_WHILE",
+  "loopCondition": "state",
+  "loopOver": [
+    {
+      "name": "http",
+      "taskReferenceName": "http_ref",
+      "inputParameters": {
+        "uri": "https://orkes-api-tester.orkesconductor.com/api",
+        "method": "GET",
+        "accept": "application/json",
+        "contentType": "application/json",
+        "encode": true
+      },
+      "type": "HTTP"
+    },
+    {
+      "name": "wait",
+      "taskReferenceName": "wait_ref",
+      "inputParameters": {},
+      "type": "WAIT"
+    }
+  ],
+  "evaluatorType": "value-param"
+}
+```
+</details>
 
 <details>
 <summary>Using `graaljs` evaluator</summary>
@@ -297,7 +358,3 @@ There are several limitations for the Do While task:
 - **Branching**—Within a Do While task, branching using Switch, Fork/Join, Dynamic Fork tasks are supported. However, the Do While task may not execute as expected if the branching crosses outside its scope, since the loop tasks will be executed within the scope.
 - **Nested loops**—Nested Do While tasks are not supported. To achieve a similar functionality as a nested do while loop, you can use a [Sub Workflow](./sub-workflow) task inside the Do While task.
 - **Isolation group execution**—Isolation group execution is not supported. However, domain is supported for loop tasks inside the Do While task.
-
-## Errors
-
-If an exception occurs during evaluation of the `loopCondition`, the task is set to `FAILED_WITH_TERMINAL_ERROR`.
