@@ -59,7 +59,7 @@ The Start Workflow task will return the following parameters.
 
 | Parameter  | Description                                        |
 | ---------- | -------------------------------------------------- |
-| workflowId | The workflow ID of the started workflow execution. |
+| workflowId | The workflow (execution) ID of the started workflow execution. |
 
 :::note
 The Start Workflow task will not return the output of the started workflow.
@@ -123,7 +123,7 @@ In the Start Workflow task, the input parameters are defined as:
 
 This will start a workflow named “your_workflow_name_to_be_started”, with version 3.
 
-The output shows the generated workflow ID of the started workflow.
+The output shows the generated workflow (execution) ID of the started workflow.
 
 ```json
 // task output
@@ -133,7 +133,7 @@ The output shows the generated workflow ID of the started workflow.
 }
 ```
 
-To find the newly started workflow execution, go to **Executions** > **Workflow** and search for the workflow containing the Start Workflow task. Select the workflow to view the execution and select the Start Workflow task. The task details Summary tab contains newly-started workflow ID.
+To find the newly started workflow execution, go to **Executions** > **Workflow** and search for the workflow containing the Start Workflow task. Select the workflow to view the execution and select the Start Workflow task. The task details Summary tab contains newly-started workflow (execution) ID.
 
 <p align="center"><img src="/content/img/start-workflow-output-in-conductor.png" alt="Completed start workflow type" width="100%" height="auto" /></p>
 
