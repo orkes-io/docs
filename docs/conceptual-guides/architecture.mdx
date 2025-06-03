@@ -42,7 +42,7 @@ By default, workers infinitely poll Conductor every 100ms. The polling interval 
 <p align="center"><img src="/content/img/conceptual-guides/Worker-Interaction-Diagram.jpg" alt="Worker-server interaction with Conductor." width="90%" height="auto" style={{paddingBottom: 5, paddingTop: 5}} /></p>
 
 
-1. The application starts a workflow execution by interacting with Orkes Conductor, which returns a workflow ID. The workflow ID can be used to track the workflow's progress and manage its execution.
+1. The application starts a workflow execution by interacting with Orkes Conductor, which returns a workflow (execution) ID. It can be used to track the workflow's progress and manage its execution.
 2. Conductor schedules the first task in the workflow to its task queue.
 3. The workers responsible for executing the first task within the workflow are polling Orkes Conductor for tasks to execute via HTTP or gRPC. When a task is scheduled, Conductor sends it to the next available worker, which then performs the required work.
 4. Periodically, the worker returns the task status to Conductor (eg IN PROGRESS, FAILED, COMPLETED, etc).
@@ -50,4 +50,4 @@ By default, workers infinitely poll Conductor every 100ms. The polling interval 
 
 Conductor manages and maintains the workflow state, keeping track of which tasks have been completed and which are still pending. This ensures that the workflow is executed correctly, with each task triggered precisely at the right time.
 
-Using the workflow ID, the application can check the Conductor server for the workflow status at any time. This is particularly useful for asynchronous or long-running workflows, as it allows the application to monitor the workflow's progress and take appropriate action, such as pausing or terminating the workflow if needed.
+Using the workflow (execution) ID, the application can check the Conductor server for the workflow status at any time. This is particularly useful for asynchronous or long-running workflows, as it allows the application to monitor the workflow's progress and take appropriate action, such as pausing or terminating the workflow if needed.

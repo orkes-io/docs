@@ -284,7 +284,7 @@ In the workflow execution page (**Executions** > **Workflow** > *someWorkflow*),
 
 ## Rerun workflow
 
-You can rerun a terminal workflow from the start if you need to change the workflow inputs, correlation ID, or task-to-domain mapping. The workflow ID from the original run will be retained.
+You can rerun a terminal workflow from the start if you need to change the workflow inputs, correlation ID, or task-to-domain mapping. The workflow (execution) ID from the original run will be retained.
 
 <Tabs groupId="method">
 <TabItem value="api" label="Using API">
@@ -360,7 +360,7 @@ WorkflowResourceService.rerun(
 <TabItem value="ui" label="Using UI">
 
 :::note
-In the UI, there is no option to rerun the workflow using the same workflow ID. However, you can rerun it by creating a new execution instance.
+In the UI, there is no option to rerun the workflow using the same workflow (execution) ID. However, you can rerun it by creating a new execution instance.
 :::
 
 In the workflow execution page (**Executions** > **Workflow** > *someWorkflow*), select **Actions** >  **Re-run Workflow**. You will be redirected to the Run Workflow page, where you can update the workflow inputs, correlation ID, and task-to-domain mapping to run a new workflow instance.

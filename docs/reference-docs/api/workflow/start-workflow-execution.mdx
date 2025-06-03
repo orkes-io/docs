@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
 slug: "/reference-docs/api/workflow/start-workflow-execution"
-description: "This API is used to start a workflow execution and immediately generates a workflow ID."
+description: "This API is used to start a workflow execution and immediately generates a workflow (execution) ID."
 ---
 
 import Tabs from '@theme/Tabs';
@@ -11,7 +11,7 @@ import TabItem from '@theme/TabItem';
 
 **Endpoint:** `POST /api/workflow/{name}`
 
-Starts a workflow execution asynchronously. This method returns immediately with the workflow ID without waiting for the workflow to be completed.
+Starts a workflow execution asynchronously. This method returns immediately with the workflow (execution) ID without waiting for the workflow to be completed.
 
 ## Path parameters
 
@@ -49,7 +49,7 @@ Contains the workflow inputs. Format the request as an object containing key-val
 
 ## Response
 
-Returns the workflow ID of the started workflow.
+Returns the workflow (execution) ID of the started workflow.
 
 ## Examples
 
