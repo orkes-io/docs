@@ -778,7 +778,7 @@ const sidebars = {
                 },
                 {
                     type: 'category',
-                    label: 'AI',
+                    label: 'AI Tutorials',
                     link: {
                         type: 'generated-index',
                         title: 'AI Tutorials',
