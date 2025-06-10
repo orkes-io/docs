@@ -335,10 +335,41 @@ const sidebars = {
                         type: 'generated-index',
                         title: 'Integrations',
                         slug: '/category/integrations',
-                        description: 'Integrate your Orkes Conductor cluster with various LLMs, vector databases, message brokers, and RDBMS systems.',
+                        description: 'Integrate your Orkes Conductor cluster with various AI, LLMs, vector databases, message brokers, emails, and RDBMS systems.',
                     },
                     className: 'leftMenuHeader',
                     items: [
+                        {
+                            type: 'category',
+                            label: 'AI',
+                            link: {
+                                type: 'generated-index',
+                                title: 'AI Integrations',
+                                slug: '/category/integrations/ai'
+                            },
+                            items: [
+                                {
+                                    type: 'doc',
+                                    id: 'integrations/ai-llm/aws-bedrock-anthropic',
+                                    label: 'AWS Bedrock Anthropic',
+                                },
+                                {
+                                    type: 'doc',
+                                    id: 'integrations/ai-llm/aws-bedrock-cohere',
+                                    label: 'AWS Bedrock Cohere',
+                                },
+                                {
+                                    type: 'doc',
+                                    id: 'integrations/ai-llm/aws-bedrock-llama2',
+                                    label: 'AWS Bedrock Llama3',
+                                },
+                                {
+                                    type: 'doc',
+                                    id: 'integrations/ai-llm/aws-bedrock-titan',
+                                    label: 'AWS Bedrock Titan',
+                                },
+                            ],
+                        },
                         {
                             type: 'category',
                             label: 'AI / LLM',
@@ -385,26 +416,6 @@ const sidebars = {
                                 },
                                 {
                                     type: 'doc',
-                                    id: 'integrations/ai-llm/aws-bedrock-anthropic',
-                                    label: 'AWS Bedrock Anthropic',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/ai-llm/aws-bedrock-cohere',
-                                    label: 'AWS Bedrock Cohere',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/ai-llm/aws-bedrock-llama2',
-                                    label: 'AWS Bedrock Llama3',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/ai-llm/aws-bedrock-titan',
-                                    label: 'AWS Bedrock Titan',
-                                },
-                                {
-                                    type: 'doc',
                                     id: 'integrations/ai-llm/mistral',
                                     label: 'Mistral',
                                 },
@@ -422,32 +433,17 @@ const sidebars = {
                         },
                         {
                             type: 'category',
-                            label: 'Vector Databases',
+                            label: 'Email',
                             link: {
                                 type: 'generated-index',
-                                title: 'Vector Databases Integrations',
-                                slug: '/category/integrations/vector-databases'
+                                title: 'Email Integrations',
+                                slug: '/category/integrations/email'
                             },
                             items: [
                                 {
                                     type: 'doc',
-                                    id: 'integrations/vector-databases/pinecone',
-                                    label: 'Pinecone',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/vector-databases/weaviate',
-                                    label: 'Weaviate',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/vector-databases/postgres-vector-database',
-                                    label: 'Postgres Vector Database',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/vector-databases/mongo-vector-database',
-                                    label: 'Mongo Vector Database',
+                                    id: 'integrations/email/sendgrid',
+                                    label: 'SendGrid Email',
                                 },
                             ],
                         },
@@ -525,17 +521,32 @@ const sidebars = {
                         },
                         {
                             type: 'category',
-                            label: 'Email',
+                            label: 'Vector Databases',
                             link: {
                                 type: 'generated-index',
-                                title: 'Email Integrations',
-                                slug: '/category/integrations/email'
+                                title: 'Vector Databases Integrations',
+                                slug: '/category/integrations/vector-databases'
                             },
                             items: [
                                 {
                                     type: 'doc',
-                                    id: 'integrations/email/sendgrid',
-                                    label: 'SendGrid Email',
+                                    id: 'integrations/vector-databases/pinecone',
+                                    label: 'Pinecone',
+                                },
+                                {
+                                    type: 'doc',
+                                    id: 'integrations/vector-databases/weaviate',
+                                    label: 'Weaviate',
+                                },
+                                {
+                                    type: 'doc',
+                                    id: 'integrations/vector-databases/postgres-vector-database',
+                                    label: 'Postgres Vector Database',
+                                },
+                                {
+                                    type: 'doc',
+                                    id: 'integrations/vector-databases/mongo-vector-database',
+                                    label: 'Mongo Vector Database',
                                 },
                             ],
                         },
