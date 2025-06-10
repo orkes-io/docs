@@ -350,22 +350,22 @@ const sidebars = {
                             items: [
                                 {
                                     type: 'doc',
-                                    id: 'integrations/ai-llm/aws-bedrock-anthropic',
+                                    id: 'integrations/ai/aws-bedrock-anthropic',
                                     label: 'AWS Bedrock Anthropic',
                                 },
                                 {
                                     type: 'doc',
-                                    id: 'integrations/ai-llm/aws-bedrock-cohere',
+                                    id: 'integrations/ai/aws-bedrock-cohere',
                                     label: 'AWS Bedrock Cohere',
                                 },
                                 {
                                     type: 'doc',
-                                    id: 'integrations/ai-llm/aws-bedrock-llama2',
+                                    id: 'integrations/ai/aws-bedrock-llama2',
                                     label: 'AWS Bedrock Llama3',
                                 },
                                 {
                                     type: 'doc',
-                                    id: 'integrations/ai-llm/aws-bedrock-titan',
+                                    id: 'integrations/ai/aws-bedrock-titan',
                                     label: 'AWS Bedrock Titan',
                                 },
                             ],
