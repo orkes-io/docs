@@ -16,7 +16,7 @@ Each application can also have one or more access key/secret pairs, which are us
 
 ## Application roles
 
-By default, all applications can manage workflow and task executions if they have access to the required resources. For example, an application can execute `someWorkflow` long as Execute permission is granted for those resources. Likewise, an application can view workflow executions if Read permission is granted.
+By default, all applications can manage workflow and task executions if they have access to the required resources. For example, an application can execute `someWorkflow` as long as **Execute** permission is granted for those resources. Likewise, an application can view workflow executions if **Read** permission is granted.
 
 Application roles grant additional access on top of this default behavior and should be selected only if your application is used for another purpose besides managing workflow executions. These additional application roles should be selected based on your application requirements. There are two categories of application roles available: 
 
@@ -24,7 +24,7 @@ Application roles grant additional access on top of this default behavior and sh
 <TabItem value="application roles" label="Application Roles">
 
 Application roles can be added by any user with access to applications. General application roles include:
-* **Worker**—Poll and execute tasks that it has Execute permissions for.
+* **Worker**—Poll and execute tasks that it has **Execute** permissions for.
     This role should be granted to a task worker application that is responsible for polling and executing a task.
 * **Metadata API**—Create and manage workflow and task metadata.
     This role should be granted to an application that is responsible for retrieving and managing workflow and task definitions, such as for testing or CI/CD integration purposes.
@@ -36,11 +36,11 @@ Application roles can be added by any user with access to applications. General 
 <TabItem value="unrestricted roles" label="Unrestricted Roles">
 
 Unrestricted roles can only be added by an Admin. Unrestricted roles include:
-* **Unrestricted Worker**—Poll, execute updates, maintain logs, and handle any task without any constraints
+* **Unrestricted Worker**—Poll, execute updates, maintain logs, and handle any task without any constraints.
 * **Metadata Manager**—Create, update, delete, and grant permissions to any workflow or task definition in the cluster.
 * **Workflow Manager**—Manage the lifecycle of workflows within the system. Start, pause, resume, rerun, and delete any workflow execution.
 * **Application Manager**—Manage applications in the cluster, such as creating, modifying, and deleting applications.
-* **Admin**—Create, read, modify, delete, and execute this particular application.
+* **Admin**—Manage all aspects of a specific application, including creating, viewing, modifying, deleting, and executing it.
 
 </TabItem>
 </Tabs>
@@ -60,11 +60,11 @@ Configure the application’s roles and permissions to control what your applica
     4. Select **Save**.
     The application has been created. You can proceed to add roles or permissions to the application.
 2. Add roles to the application.
-    1. In the Application Roles or Unrestricted Roles section, toggle the different application roles for your application.
+    1. In the **Application Roles** or **Unrestricted Roles** section, toggle the different application roles for your application.
 3. Generate access keys.
-    1. In the Access Keys section, select **+ Create access key** to generate a unique keyId and keySecret. The Key Secret is shown only once, so make sure to copy and store it securely.
+    1. In the **Access Keys** section, select **+ Create access key** to generate the Server URL, a unique Key Id and a Key Secret. The Key Secret is shown only once, so make sure to copy and store it securely.
 4. Add permissions to grant application-level access to resources.
-    1. In the Permissions section, select **+ Add permission**.
+    1. In the **Permissions** section, select **+ Add permission**.
     2. Toggle between each resource type and select the resources to provide access to.
     3. Toggle the access levels for your selected resource:
         * **Read**—The application will be able to view the resource.
