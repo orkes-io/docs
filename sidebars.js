@@ -734,25 +734,42 @@ const sidebars = {
                 },
                 {
                     type: 'category',
-                    label: 'Application Alerts',
+                    label: 'AI Tutorials',
                     link: {
                         type: 'generated-index',
-                        title: 'Application Alerts',
-                        description: 'Explore tutorials for alerting use cases with Conductor.',
-                        slug: '/category/templates/alerting'
+                        title: 'AI Tutorials',
+                        description: 'Explore tutorials for AI orchestration and agentic workflows.',
+                        slug: '/tutorials/ai'
                     },
                     items: [
                         {
                             type: 'doc',
-                            id: 'templates/alerting/querying-orkes-data-and-triggering-opsgenie-alert',
-                            label: 'OpsGenie',
+                            id: 'tutorials/quickstart-ai-orchestration',
+                            label: 'AI-Powered Translator',
                         },
                         {
                             type: 'doc',
-                            id: 'templates/alerting/scanning-an-endpoint-and-triggering-pagerduty-alert',
-                            label: 'PagerDuty',
+                            id: 'tutorials/agentic-interview-app',
+                            label: 'Agentic Interview App',
                         },
-                    ],
+                    ]
+                },
+                {
+                    type: 'category',
+                    label: 'MCP',
+                    link: {
+                        type: 'generated-index',
+                        title: 'MCP',
+                        description: 'Explore tutorials for connecting AI agents to Orkes Conductor using the MCP server.',
+                        slug: '/tutorials/mcp'
+                    },
+                    items: [
+                        {
+                            type: 'doc',
+                            id: 'tutorials/create-workflows-using-ai-agent-claude',
+                            label: 'Using Claude',
+                        },
+                    ]
                 },
                 {
                     type: 'category',
@@ -773,28 +790,6 @@ const sidebars = {
                             type: 'doc',
                             id: 'templates/examples/incoming-webhook-using-postman',
                             label: 'Postman',
-                        },
-                    ]
-                },
-                {
-                    type: 'category',
-                    label: 'AI Tutorials',
-                    link: {
-                        type: 'generated-index',
-                        title: 'AI Tutorials',
-                        description: 'Explore tutorials for AI orchestration and agentic workflows.',
-                        slug: '/tutorials/ai'
-                    },
-                    items: [
-                        {
-                            type: 'doc',
-                            id: 'tutorials/quickstart-ai-orchestration',
-                            label: 'AI-Powered Translator',
-                        },
-                        {
-                            type: 'doc',
-                            id: 'tutorials/agentic-interview-app',
-                            label: 'Agentic Interview App',
                         },
                     ]
                 },
@@ -836,6 +831,28 @@ const sidebars = {
                             label: 'Handling Fraud Disputes',
                         },
                     ]
+                },
+                               {
+                    type: 'category',
+                    label: 'Application Alerts',
+                    link: {
+                        type: 'generated-index',
+                        title: 'Application Alerts',
+                        description: 'Explore tutorials for alerting use cases with Conductor.',
+                        slug: '/category/templates/alerting'
+                    },
+                    items: [
+                        {
+                            type: 'doc',
+                            id: 'templates/alerting/querying-orkes-data-and-triggering-opsgenie-alert',
+                            label: 'OpsGenie',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'templates/alerting/scanning-an-endpoint-and-triggering-pagerduty-alert',
+                            label: 'PagerDuty',
+                        },
+                    ],
                 },
             ],
         },
