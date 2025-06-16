@@ -1,0 +1,159 @@
+---
+slug: "/tutorials/create-workflows-using-ai-agent-claude"
+description: "Learn how to use Claude as an AI agent to create, execute, and manage Orkes Conductor workflows through natural language using the Conductor MCP server."
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+# Create Workflows using AI Agents (Conductor MCP Server + Claude)
+
+This tutorial demonstrates how to connect **Claude** to **Orkes Conductor** using the [**Conductor MCP server**](https://github.com/conductor-oss/conductor-mcp), allowing Claude to act as an AI agent that creates, executes, and modifies workflows based on natural language prompts without writing any code manually.
+
+In this tutorial, you will learn how to:
+1. Install the Conductor MCP server using PyPi
+2. Get access keys from Orkes Conductor
+3. Create a config file with Conductor keys
+4. Configure the MCP server for Claude
+5. Create Conductor workflows with Claude
+
+:::info Prerequisites:
+- An account in the free [Orkes Developer Playground](https://developer.orkescloud.com/).
+- An account in [Claude](https://claude.ai/).
+- Python 3.13 or later.
+:::
+
+## Step 1: Install the Conductor MCP server
+
+Install the MCP server using PyPi:
+
+```shell
+pip install conductor-mcp
+```
+
+## Step 2: Get access keys from Orkes Conductor 
+
+[Applications in Conductor](https://orkes.io/content/access-control-and-security/applications) are used to interact with a Conductor server via APIs or SDKs. To facilitate this, you need to generate an access key from an application in Orkes Conductor.
+
+**To generate the access keys:**
+
+1. Go to [**Access Control** > **Applications**](https://developer.orkescloud.com/applicationManagement/applications) from the left navigation menu on your Conductor cluster.
+2. Select **+ Create application** to create a new one or select an existing one.
+3. If you are creating a new one, enter a **Name** for your application.
+4. Select **Save**.
+5. In **Application roles**, enable **Worker** and **Metadata API**.
+6. Select **+ Create access key**.
+
+<p align="center"><img src="/content/img/conductor-access-key.png" alt="Generating access keys from Orkes Conductor" width="100%" height="auto"></img></p>
+
+7. Copy and store the credentials, including **Key ID**, **Key Secret**, and **Server URL**.
+
+## Step 3: Create a config file with Conductor keys
+
+Create a configuration file with an arbitrary name like `conductor-config.json`  with the generated credentials:
+
+```json
+{
+  "CONDUCTOR_SERVER_URL": "<YOUR-CONDUCTOR-SERVER-URL/api>",
+  "CONDUCTOR_AUTH_KEY": "<YOUR_APPLICATION_AUTH_KEY>",
+  "CONDUCTOR_AUTH_SECRET": "<YOUR_APPLICATION_SECRET_KEY>"
+}
+```
+
+Save the file and note down its file path.
+
+## Step 4: Configure the MCP server for Claude
+
+In this tutorial, we are using Claude as the AI agent. Claude will launch and manage the MCP server using the Claude configuration.
+
+:::info Prerequisite:
+- Download [Claude Desktop](https://claude.ai/download) for macOS or Windows. Linux is not supported.is not supported.
+:::
+
+<Tabs>
+<TabItem value="macOS" label="macOS">
+
+**To configure the MCP server for Claude:**
+
+1. Open the Claude desktop application.
+2. In the top-left menu on your Mac, select **Claude** > **Settings**.
+
+<p align="center"><img src="/content/img/claude-settings.png" alt="Accessing Claude settings in Mac" width="40%" height="auto"></img></p>
+
+3. Select **Developer** >  **Edit Config**.
+
+<p align="center"><img src="/content/img/edit-claude-config-file.png" alt="Editing Claude config files" width="60%" height="auto"></img></p>
+
+4. This creates and opens a configuration file. Replace its content with the following:
+
+```json
+{
+  "mcpServers": {
+    "conductor": {
+      "command": "conductor-mcp",
+      "args": [
+        "--config",
+        "ABSOLUTE_PATH_TO_conductor-config.json"
+      ]
+    }
+  }
+}
+```
+
+Replace **ABSOLUTE_PATH_TO_conductor-config.json** with the config file path saved in [Step 3](/content/tutorials/create-workflows-using-ai-agent-claude#step-3-create-a-config-file-with-conductor-keys). 
+
+5. Save the file.
+6. Quit and restart the Claude application.
+
+If the configuration is correct, Claude starts without errors. You can verify the Conductor MCP server is running from **Claude** > **Settings** > **Developer**.
+
+<p align="center"><img src="/content/img/conductor-mcp-running.png" alt="Conductor MCP server running successfully in Claude" width="70%" height="auto"></img></p>
+
+In some cases, the MCP connection may show as failed. This can be resolved by explicitly setting the binary path for the MCP server.
+
+If Claude cannot launch the MCP server with the default command:
+
+1. Run the following command to get the binary path:
+
+```shell
+which conductor-mcp
+```
+2. Update the configuration file with the binary path:
+
+```json
+{
+  "mcpServers": {
+    "conductor": {
+      "command": "ABSOLUTE_PATH_TO_conductor-mcp_BINARY",
+      "args": [
+        "--config",
+        "ABSOLUTE_PATH_TO_conductor-config.json"
+      ]
+    }
+  }
+}
+```
+
+3. Save the file.
+4. Quit and restart the Claude application.
+
+</TabItem>
+</Tabs>
+
+## Step 5: Create Conductor workflows with Claude
+
+Launch the Claude application, open a new chat, and try this prompt:
+
+> Create and execute a Conductor workflow named GetWeatherDubai. It should call a free public weather API that doesn’t require an API key and return the current temperature in Dubai. Use schemaVersion 2.
+
+<p align="center"><img src="/content/img/claude-creating-conductor-workflows.gif" alt="Claude creating and running Conductor workflows" width="100%" height="auto"></img><center><figcaption><b>Claude creating and executing workflows in Orkes Conductor</b></figcaption></center></p>
+
+Claude created and executed a Conductor workflow to fetch the current weather in Dubai. The initial run failed due to a JSON parsing error in the Inline task. Claude then identified the issue, corrected the expression to handle already-parsed input, and successfully re-executed the workflow, returning the requested weather conditions.
+
+<p align="center"><img src="/content/img/claude-editing-workflow.png" alt="Claude analyzing execution and editing workflow" width="100%" height="auto"></img></p>
+
+To look up the workflow execution in Conductor, go to **Executions** > **Workflow** and search using the workflow (execution) ID.
+
+<p align="center"><img src="/content/img/verify-claude-workflows.gif" alt="Verifying workflow executions ran by Claude" width="100%" height="auto"></img><center><figcaption><b>Verifying workflow executions ran by Claude in Orkes Conductor</b></figcaption></center></p>
+
+With this, you can now create, execute, and refine Orkes Conductor workflows directly through Claude using natural language prompts.
