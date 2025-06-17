@@ -55,10 +55,13 @@ After obtaining the credentials, add an Azure OpenAI integration to your Conduct
 
 Once you’ve integrated Azure OpenAI, the next step is to configure specific models.
 
-Azure OpenAI has different models, such as text-davinci-003, text-embedding-ada-002, gpt-35-turbo, and more, each designed for various use cases, such as text completion and embedding generation. Choose the model that best fits your use case.
+[Azure OpenAI has different models](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models), such as text-davinci-003, text-embedding-ada-002, gpt-35-turbo, and more, each designed for various use cases, such as text completion and embedding generation. Choose the model that best fits your use case.
+
+When you deploy a model in the Azure portal, you are required to assign it a deployment name. This name is not the same as the model name (e.g., gpt-35-turbo). Instead, it is a unique identifier that your  integration uses to reference the model instance. 
 
 :::info Prerequisites
-To use Azure OpenAI models with Orkes Conductor, you must first deploy the [desired models in your Azure portal](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/create-resource?pivots=web-portal#deploy-a-model). Once deployment is complete, proceed with adding the model to your Orkes Conductor cluster.
+- To use Azure OpenAI models with Orkes Conductor, you must first deploy the [desired models in your Azure portal](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/create-resource?pivots=web-portal#deploy-a-model). Models are not available for use until they have been explicitly deployed in your Azure portal.
+- Note the deployment name you assign, these will be referenced during integration. Once the deployment is complete, proceed with adding the model to Orkes Conductor.
 :::
 
 **To add a model to the Azure OpenAI integration:**
@@ -68,12 +71,13 @@ To use Azure OpenAI models with Orkes Conductor, you must first deploy the [desi
 <p align="center"><img src="/content/img/create-new-azure-open-ai-integration-model-from-integrations-page.png" alt="Create Azure Open AI Integration Model from Listed Integrations" width="100%" height="auto"></img></p>
 
 2. Select **+ New model**.
-3. Enter the **Model name** and a **Description**. Get the complete [list of Azure OpenAI models](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models).
+3. Enter the **Model name**, which is the deployment name used in the Azure portal. For example, if your deployment name is *mySummarizerModel*, enter *mySummarizerModel* here—not the base model name like gpt-35-turbo.
 
 <p align="center"><img src="/content/img/create-new-azure-open-ai-integration-model.png" alt="Create Azure Open AI Integration Model" width="60%" height="auto"></img></p>
 
-4. (Optional) Toggle the **Active** button off if you don’t want to activate the model instantly.
-5. Select **Save**.
+4. Provide a **Description**.
+5. (Optional) Toggle the **Active** button off if you don’t want to activate the model instantly.
+6. Select **Save**.
 
 This saves the model for future use in AI tasks within Orkes Conductor.
 
