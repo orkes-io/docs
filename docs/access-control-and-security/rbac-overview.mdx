@@ -36,7 +36,9 @@ Each Conductor group can be associated with one or more roles. Groups can also b
 
 ## Applications
 
-An application represents an application that interacts with a Conductor server via APIs or SDKs. Applications can be assigned a set of permissions, which provides it with access to specific Conductor resources. Each application can also have one or more access key/secret pairs, which are used to grant access to Conductor SDK and API.
+An application represents a non-human identity, such as a script, service, task worker, client, or CI/CD pipeline, that interacts with a Conductor server via APIs or SDKs. In Orkes Conductor, applications serve the role of service accounts commonly used in other platforms. 
+
+You can assign each application a set of roles and granular permissions, providing access to specific Conductor resources. Each application can also have one or more access key/secret pairs, which can be used to authenticate with the Conductor SDK or API.
 
 ## Tags
 
@@ -74,7 +76,7 @@ If multiple roles are granted, they will have all granted role-level permissions
 | Metadata Manager    | Can create, update, delete, and grant permissions to any workflow or task definition in the cluster. <br/> <br/> This role can only be granted by an Admin.                                                                         |
 | Workflow Manager    | Can start, pause, resume, rerun, and delete any workflow execution in the cluster. <br/> <br/> This role can only be granted by an Admin.                                                                                           |
 | Application Manager | Can create, update, and delete any application in the cluster. <br/> <br/> This role can only be granted by an Admin.                                                                                                               |
-| Admin               | Can create, read, modify, delete, and execute this particular application. <br/> <br/> This role can only be granted by an Admin.                                                                                                   |
+| Admin               | Manage all aspects of a specific application, including creating, viewing, modifying, deleting, and executing it. <br/> <br/> This role can only be granted by an Admin.                                                                                                   |
 
 </TabItem>
 </Tabs>

@@ -13,6 +13,14 @@ An application represents an application that interacts with a Conductor cluster
 
 Each application can also have one or more access key/secret pairs, which are used to grant access to Conductor SDK and API. Learn more about authentication in [Authentication and Access Keys](/sdks/authentication).
 
+## Applications as service accounts
+
+In Orkes Conductor, applications are the equivalent of service accounts used in traditional systems. They are designed to represent non-human identities, such as CI/CD pipelines, automated scripts, microservices, or system integrations, that need to authenticate and interact with Conductor programmatically. Instead of creating a user with an email address, you can create an application and assign it the appropriate roles and permissions for the tasks it needs to perform. For example: 
+
+- A CI/CD pipeline that creates or updates workflow definitions.
+- A background service that polls and executes tasks.
+
+Each application can have one or more access keys, which include a key ID and secret. These keys can be securely stored and used to authenticate API or SDK requests. This setup enables automated access without relying on human credentials or email-based accounts, following industry-standard service account patterns. 
 
 ## Application roles
 
