@@ -791,6 +791,11 @@ const sidebars = {
                             id: 'templates/examples/incoming-webhook-using-postman',
                             label: 'Postman',
                         },
+                                                {
+                            type: 'doc',
+                            id: 'tutorials/using-idempotency-keys-in-webhook-triggered-workflows',
+                            label: 'Using Variable Idempotency Keys',
+                        },
                     ]
                 },
                 {
