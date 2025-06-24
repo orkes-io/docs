@@ -9,9 +9,9 @@ import TabItem from '@theme/TabItem';
 
 # Yield
 
-The Yield task temporarily yields control over the workflow by pausing the execution until it is explicitly resumed using the sync or async signal endpoints, typically in response to external conditions or events.
+The Yield task temporarily yields control over the workflow by pausing the execution until it is explicitly resumed using the [sync](/content/reference-docs/api/task/signal-running-task-synchronously) or [async](/content/reference-docs/api/task/signal-running-task-asynchronously) signal endpoints, typically in response to external conditions or events.
 
-It is similar to the [Wait task](https://orkes.io/content/reference-docs/operators/wait), which also introduces a pause point in a workflow. However, unlike the Wait task, the Yield task must be explicitly completed using the sync or async signal endpoints and supports passing data back into the workflow when resumed. This enables workflows to continue in flight with updated inputs.
+It is similar to the [Wait task](https://orkes.io/content/reference-docs/operators/wait), which also introduces a pause point in a workflow. However, unlike the Wait task, the Yield task must be explicitly completed using the [sync](/content/reference-docs/api/task/signal-running-task-synchronously) or [async](/content/reference-docs/api/task/signal-running-task-asynchronously) signal endpoints and supports passing data back into the workflow when resumed. This enables workflows to continue in flight with updated inputs.
 
 ## Task parameters
 
@@ -65,7 +65,7 @@ This is the task configuration for a Yield task.
 
 ## Task output
 
-The task returns the output passed through the sync or async signal endpoints. This output can include updated values provided by an external system, allowing workflows to continue with new data injected mid-execution. For example:
+The task returns the output passed through the [sync](/content/reference-docs/api/task/signal-running-task-synchronously) or [async](/content/reference-docs/api/task/signal-running-task-asynchronously) signal endpoints. This output can include updated values provided by an external system, allowing workflows to continue with new data injected mid-execution. For example:
 
 ```json
 {
@@ -127,7 +127,7 @@ In this example:
 - After the HTTP task is completed, it proceeds to the Yield task.
 - The workflow is now paused, and the Yield task waits to be signaled.
 
-Let’s signal this task asynchronously using the endpoint `POST /api/tasks/{workflowId}/{status}/signal`. An example API request:
+Let’s signal this task asynchronously using the endpoint [`POST /api/tasks/{workflowId}/{status}/signal`](/content/reference-docs/api/task/signal-running-task-asynchronously). An example API request:
 
 ```shell
 curl -X 'POST' \
