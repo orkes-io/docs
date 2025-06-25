@@ -6,85 +6,118 @@ description: "Find out the best practices for integrating Conductor workflows in
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 import Install from "@site/src/components/install.mdx";
-import CodeBlock from "@theme/CodeBlock";
 
 # CI/CD Best Practices
 
-Conductor workflows are the core part of your application and should be versioned, controlled, and released similarly to the code.
+Conductor resources and metadata are the core part of your application and should be versioned, controlled, and released similarly to the code. 
 
-## Conductor Workflows
+When moving Conductor resources across different environments, there are three main components involved:
 
-Workflows have two main components:
+* **Workflow definitions** (maintained as JSON or as code)  
+* **Other metadata**, like task definitions, user forms, event handlers, webhooks, AI prompts, schemas, and so on (maintained as JSON)  
+* **Worker implementation** used by the workflows (in code)
 
-1. Workflow definition that is maintained as a file (JSON or code)
-2. Worker implementation used by the workflows
+## CI/CD for Conductor workflows and resources
 
-### Workflows
+Similar to any CI/CD pipeline, this is the general process for managing Conductor resources across releases:
 
-Workflow definitions should be maintained as an independent unit that can be unit and integration tested before releasing to the production environment.
+1. Download the resource JSONs to a version control system.  
+2. (For workflow definitions) Run tests on the changes.  
+3. Deploy the resource JSONs to the target environment using a pipeline or script.
 
-For details on how to unit test workflows, see [Unit and Regression Testing Workflows](/content/developer-guides/unit-and-regression-tests).
+The exact steps depend on your own CI/CD implementation, but this guide will showcase some general procedures to accomplish this.
 
-### Steps to publish your workflows as part of CI/CD
+### Step 1: Download resource JSONs 
 
-:::note Notes
-See [Generating Tokens](/access-control-and-security/applications#generating-token) ([Video](https://www.youtube.com/watch?v=f1b5vZRKn2Q)) on how to generate an access token for the API requests below.
+Use the Conductor UI to download each JSON one by one, or the API to download the JSONs in bulk.
+
+
+<Tabs>
+<TabItem value="ui" label="Conductor UI">
+
+**To download each JSON:**
+
+1. Go to **Definitions** > **Workflows** or **Task** or **User Forms** or **Event Handler** or **Webhook** or **AI Prompts** or **Schemas** in the left navigation menu.  
+2. Select the desired resource.  
+3. Retrieve the JSON in one of the following ways:  
+    * Select **Download** to download the .json file, or  
+    * Go to the **Code** tab and copy the JSON into a file.  
+4. Save the files to your version control system.
+
+</TabItem>
+<TabItem value="api" label="API">
+
+
+:::info Prerequisites
+
+You must generate an access token to authenticate your API requests. Refer to [Authentication](/sdks/authentication) for more information.
+
 :::
 
-#### Downloading workflows from Conductor cluster to check into your version control
+* To retrieve the workflow definition JSONs, you can use the [Get All Workflow Definitions](/reference-docs/api/metadata/get-all-workflow-definitions) API, which allows you to filter based on [tags](/access-control-and-security/tags) or a specific workflow.  
+* To retrieve the task definition JSONs, you can use the [Get All Task Definitions](/reference-docs/api/metadata/get-all-task-definitions) API, which also allows you to filter based on [tags](/access-control-and-security/tags).  
+* To retrieve the user form JSONs, you can use the [Get User Forms](/reference-docs/api/human-tasks/list-task-ui-templates) API.
 
-1. Download the JSON from the Conductor UI (Use the download button on the definition page).
-2. (Alternatively) Use the API to download JSON for the workflow.
-   ```shell
-   # Get the workflow definition given name and version
-   GET -H "X-Authorization:<TOKEN>" /api/metadata/workflow/{name}?version=<version>
-   ```
-   ```shell
-   # Retrieve all the workflows
-   GET -H "X-Authorization:<TOKEN>" /api/metadata/workflow/
-   ```
+Refer to the **API Docs** on your Conductor UI for more details on the available API endpoints.
 
-#### Publish workflows to Conductor cluster from your deployment scripts
+</TabItem>
+</Tabs>
 
-Inject `ORKES_ACCESS_KEY`, `ORKES_ACCESS_SECRET` and `ORKES_CONDUCTOR_SERVER_URL` variables with the appropriate values in your deployment pipeline.
+Once the resources are updated in your version control system, you can open a PR and begin testing.
 
-The following script cycles through all the workflow definitions in the current folder and uploads it to the Conductor server.
+### Step 2: Test workflow definitions
 
-<CodeBlock language="java" title={ <div ><i>Complete source file on Github:</i> <a href="https://github.com/orkes-io/workflow-cicd/blob/main/src/deploy_workflows.sh">.../src/deploy_workflows.sh</a></div>}>
-{`export response=\`curl -s -X POST $CONDUCTOR_SERVER_URL/token -H 'Content-Type:application/json' -d '{
-	        "keyId": "'"$CONDUCTOR_AUTH_KEY"'",
-	        "keySecret": "'"$CONDUCTOR_AUTH_SECRET"'"
-}'\`
+As part of the CI pipeline, workflow definitions should be maintained as independent units that can be unit and integration-tested before being released to the production environment.
 
-if [["$response" != *'token'*]]; then
-echo "Unable to generate the auth header. Please check KEY, SECRET and CONDUCTOR_SERVER_URL variables"
-echo "Server response:"
-echo $response
-exit 1
+For a guide on testing Conductor workflows, refer to [Unit and Regression Tests](/developer-guides/unit-and-regression-tests).
+
+### Step 3: Deploy changes to the target environment
+
+When deploying the changes to your target environment, it is crucial to assess what resources are being modified and the deployment scope. For example, the deployment will only target resources grouped under a specific tag, a file name prefix, etc.
+
+Once you have determined the deployment scope, map the resources to the endpoints you need to call to deploy the changes. For example, use the [Update Workflow Definition](/reference-docs/api/metadata/update-workflow-definitions) API to update the workflow definition JSONs.
+
+:::tip
+Refer to the **API Docs** on your Conductor UI for the full list of available API endpoints for updating the different resources.
+:::
+
+You can use pipelines or deployment scripts to push the changes in an automated fashion.
+
+**Example deployment script**
+
+The following script cycles through all the workflow definitions in the current folder and uploads them to the Conductor server.
+
+To use the script, you must inject `ORKES_ACCESS_KEY`, `ORKES_ACCESS_SECRET`, and `ORKES_CONDUCTOR_SERVER_URL` (ending in /api) variables with the appropriate values in your deployment pipeline. Refer to [Authentication](/sdks/authentication) for a guide on retrieving your Orkes access tokens.
+
+``` shell
+export response=`curl -s -X POST $CONDUCTOR_SERVER_URL/token -H 'Content-Type:application/json' -d '{
+	"keyId": "'"$CONDUCTOR_AUTH_KEY"'",
+	"keySecret": "'"$CONDUCTOR_AUTH_SECRET"'"
+}'`
+
+if [[ "$response" != *'token'* ]]; then
+ echo "Unable to generate the auth header.  Please check KEY, SECRET and CONDUCTOR_SERVER_URL variables"
+ echo "Server response:"
+ echo $response
+ exit 1
 fi
 
-export token=\`echo $response | cut -d '"' -f4\`
+export token=`echo $response | cut -d '"' -f4`
 
-for FILE in main/resources/workflows/\*;
-do
-echo "Deploying @$FILE"
+for FILE in main/resources/workflows/*;
+ do
+   echo "Deploying @$FILE";
 
-curl -X POST $CONDUCTOR_SERVER_URL/metadata/workflow?overwrite=true \
-    -H "X-Authorization: $token" \
-    -H "accept: */*" \
-    -H "Content-Type: application/json" \
-    -d @$FILE
-done
-`}
+   curl -X POST $CONDUCTOR_SERVER_URL/metadata/workflow?overwrite=true          -H "X-Authorization: $token"          -H "accept: */*"          -H "Content-Type: application/json"          -d @$FILE
+ done
+```
 
-</CodeBlock>
+Refer to the full source code in [.../src/deploy_workflows.sh](https://github.com/orkes-io/workflow-cicd/blob/main/src/deploy_workflows.sh#L8-L32).
 
-### CI/CD for workers
+## CI/CD for workers
 
-Workers are application-specific code and should be maintained, tested, and released as any other code released to production.
+Workers are application-specific code deployed in a non-Conductor environment. They should be maintained, tested, and released as any other code released to production. Here are some best practices for maintaining workers:
 
-#### Best practices for maintaining workers
-
-1. Keep worker deployments and maintenance separate from the workflows.
-2. Unit test workers based on the expected inputs and outputs similar to any other application code.
-3. Workers are the unit of scale for your workflows. Either deploy each worker in an independent container or group set of workers that typically need to be scaled up/down together.
+* Keep worker deployments and maintenance separate from the workflows.  
+* Unit test workers based on the expected inputs and outputs, similar to any other application code.  
+* Workers are the unit of scale for your workflows. You can either deploy each worker in an independent container or group a set of workers to be scaled up/down together.
