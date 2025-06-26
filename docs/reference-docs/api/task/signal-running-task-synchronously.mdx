@@ -6,6 +6,11 @@ description: "This API is used to update the task status and output of a Yield t
 
 # Signal Running Task Synchronously
 
+:::info Available since
+v5.1.0 and later
+:::
+
+
 **Endpoint**: `POST /api/tasks/{workflowId}/{status}/signal/sync`
 
 Signals a running [Yield task](/content/reference-docs/operators/yield) in the specified workflow synchronously with a new status and output. The request blocks execution until the signal is processed and returns the updated workflow state, based on the `returnStrategy`. This API is useful for tightly coordinated task control or integrating external events into an ongoing workflow. 
