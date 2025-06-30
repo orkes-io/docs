@@ -677,11 +677,6 @@ const sidebars = {
             },
             className: 'leftMenuHeader',
             items: [
-                {
-                    type: 'doc',
-                    id: 'developer-guides/getting-started-with-orkes-template-explorer',
-                    label: "Overview"
-                },
                 'templates/agentic-research',
                 'templates/automatic-subtitle-generator',
                 `templates/daily-scrum-automation-using-standup-bot`,
