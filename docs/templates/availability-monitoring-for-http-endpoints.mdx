@@ -7,183 +7,148 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import Install from '@site/src/components/install.mdx';
 
-# Availability Monitoring for HTTP Endpoints
+# HTTP Endpoint Monitoring
 
-Maintaining the availability and uptime of your services is crucial for delivering seamless experiences to customers and ensuring business continuity. Even with robust infrastructure strategies like multi-zone deployments or redundant DNS setups, proactive monitoring remains essential to detect and address issues before they impact users.
+:::note
+This template is only available on the [Developer Playground](https://developer.orkescloud.com/) in Launch Pad.
+:::
 
-With this template, you can automate availability monitoring by sending periodic HTTP requests to your endpoints and validating responses. It checks for successful responses, retries upon transient failures, and triggers alerts through various channels when downtime is detected.
+This endpoint monitoring template checks the health of a specified HTTP endpoint and sends an email alert if the endpoint is unreachable or returns an unexpected status code.
+
+This template serves as a quickstart for building monitoring workflows. You can use this as a foundation and extend it with features such as alternative notification channels, and more.
 
 ## Conductor features used
 
 This template utilizes the following Conductor features:
 
 - [HTTP task](https://orkes.io/content/reference-docs/system-tasks/http)
-- [Inline task](https://orkes.io/content/reference-docs/system-tasks/inline)
-- [Sub Workflow task](https://orkes.io/content/reference-docs/operators/sub-workflow)
 - [Switch task](https://orkes.io/content/reference-docs/operators/switch)
-- [Workflow Scheduler](https://orkes.io/content/developer-guides/scheduling-workflows)
+- [SendGrid task](https://orkes.io/content/reference-docs/system-tasks/sendgrid)
+- [Set Variable task](https://orkes.io/content/reference-docs/operators/set-variable)
+- [Terminate task](https://orkes.io/content/reference-docs/operators/terminate)
 
 ## How to use the template
 
-1. Import the template
-2. Understand the workflow logic
-3. Set up providers for sending notifications
-4. Run workflow
+1. Import the template from Launch Pad.
+2. Configure and verify the sender email in SendGrid.
+3. Run workflow.
 
-### Import the template
+:::info Prerequisites:
+This template uses SendGrid integration. Ensure that you obtain the [SendGrid API key](https://app.sendgrid.com/settings/api_keys) from your SendGrid account.
+:::
+
+### Step 1: Import the template
+
+The endpoint monitoring template is available only in the [Developer Playground](https://developer.orkescloud.com/) on Launch Pad.
 
 **To import the template:**
 
-1. Go to **Template Explorer** from the left navigation menu on your Conductor cluster.
-2. Choose **Availability Monitoring for HTTP(S) Endpoints** and select **Import**.
-3. Rename the workflow and task names. For example, rename the workflow as _“Monitor-HTTP-Endpoint-Availability_your_name”_.
-4. Select **Save**.
+1. Log in to [Developer Playground](https://developer.orkescloud.com/).
+2. Go to **Launch Pad** on the left navigation menu.
+3. Select **HTTP Endpoint Monitoring** > **Use Template**.
+4. Select **Import**.
+5. In **Required Integrations** > **SendGrid email**, either select an existing SendGrid integration or create a new one.
+  - If creating a new one, select **Create integration** from the drop-down.
+6. Enter an **Integration name**.
+7. In **API Key**, paste the API key copied from the SendGrid account.
+8. Select **Save**.
+9. Select **Continue Workflow** to import the workflow.
 
-The workflow is now imported and ready for use.
+The `HTTP_EndPoint_Monitoring` workflow is now imported and ready for use.
 
-<p align="center"><img src="/content/img/monitoring-http-endpoint-workflow.png" alt="Monitoring HTTP Endpoint Workflow" width="50%" height="auto"></img></p>
+<p align="center"><img src="/content/img/monitoring-http-endpoint-workflow.png" alt="HTTP Endpoint Monitoring workflow" width="50%" height="auto"></img></p>
 
-### Understand the workflow logic
+#### Understand the workflow logic
 
 This section explains the workflow logic and how to execute it.
 
 **Workflow inputs:**
 
-- **endpoint_url**–The HTTP(S) endpoint to be monitored using the workflow.
-- **notification_type**–The medium for sending notifications if the endpoint is down. Supported values are:
-  - SMS
-  - EMAIL
-  - SLACK
-  - PAGERDUTY
-- **notification_to**–The email or phone number to which the notification is sent if the _notification_type_ is SMS or EMAIL.
-- **notification_from**–The email or phone number to be displayed as the notification originator if the _notification_type_ is SMS or EMAIL.
+- **URL**–The HTTP(S) endpoint to be monitored using the workflow.
+- **sender_email**–The sender email address to display the alert.
+- **customer_email**–The recipient email address for alert notifications.
 
-**Example input payload for sending an SMS alert using Twilio:**
+**Example input payload:**
 
 ```json
 {
-  "notification_type": "SMS",
-  "endpoint_url": "https://example.com/",
-  "notification_from": "14XXXXXXXXX",
-  "notification_to": "12XXXXXXXX"
+ "URL": "https://orkes.io/",
+ "sender_email": "verified-sender@example.com",
+ "customer_email": "alerts@example.com"
 }
 ```
 
 **Workflow logic:**
 
 - The workflow begins with an [HTTP task](https://orkes.io/content/reference-docs/system-tasks/http) that sends a GET request to the specified endpoint.
-- In the next step, the [Inline task](https://orkes.io/content/reference-docs/system-tasks/inline) retrieves the current timestamp from the server.
-- Next, the [Switch task](https://orkes.io/content/reference-docs/operators/switch) evaluates the output of the previous HTTP task to determine if the response indicates a success or failure.
-  - If a 200 OK response is returned, the Switch task directs the execution via the **defaultCase**, ending the workflow.
-  - For any other response or failure (e.g., DNS error), the Switch task sends execution to the **FAILED** path.
+- Next, the [Switch task](https://orkes.io/content/reference-docs/operators/switch) evaluates the HTTP status code to determine if the response indicates a success or failure.
+  - If the response status code is **200**, a [Set Variable task](https://orkes.io/content/reference-docs/operators/set-variable) sets a success flag, and the workflow completes.
+  - For any other response or failure (e.g., DNS error), the [Switch task](https://orkes.io/content/reference-docs/operators/switch) sends execution to the **defaultCase** path.
+- In the **defaultCase** path, a [SendGrid task](https://orkes.io/content/reference-docs/system-tasks/sendgrid) sends an email notification using the provided sender and recipient addresses. The subject and message content indicate that the endpoint health check failed.
+- After sending the alert, a [Terminate task](https://orkes.io/content/reference-docs/operators/terminate) ends the workflow with the reason “**did not receive 200 status code**.”
 
-<p align="center"><img src="/content/img/switch-case-for-http-status-code-check.png" alt="Switch task evaluating the HTTP status code" width="40%" height="auto"></img></p>
+### Step 2: Configure and verify sender email in SendGrid
 
-- The failure path invokes a [Sub Workflow](https://orkes.io/content/reference-docs/operators/sub-workflow), namely **Notify-Channels**, which sends a failure notification via the specified channel.
+For the SendGrid integration to work, the [sender email must be verified](https://www.twilio.com/docs/sendgrid/ui/sending-email/sender-verification#adding-a-sender).
 
-<p align="center"><img src="/content/img/notify-channels-workflow.png" alt="Workflow called as a sub workflow" width="100%" height="auto"></img></p>
+**To verify the sender email:**
 
-- This workflow begins with a Switch task confirming that the _notification_type_ is a supported format.
-- Depending on the _notification_type_, the corresponding switch case executes and sends the notification through the specified channel.
+1. Go to [**Marketing** > **Senders**](https://mc.sendgrid.com/senders) from the left menu on your SendGrid account.
+2. Select **Create New Sender**.
+3. Enter the following mandatory parameters:
+  - From Name
+  - From Email Address
+  - Reply to
+  - Company Address
+  - City
+  - Country
+  - Nickname
 
-### Set up providers for sending notifications
+<p align="center"><img src="/content/img/sender-creation.jpg" alt="Adding a sender in SendGrid portal" width="100%" height="auto"></img></p>
 
-This template sends notifications using the following providers:
+4. Select **Save**.
 
-- **Twilio**–Required for SMS notifications.
-- **SendGrid**–Required for email notifications.
-- **PagerDuty**–Required for PagerDuty alerts.
-- **Custom Slack webhook**–Required for Slack notifications.
+This saves the sender to your SendGrid portal and sends a verification email. Once the sender clicks the verification link, the sender’s status is updated to ‘verified’ within the SendGrid portal.
 
-Configure your preferred provider and add the required credentials as [secrets in Conductor](https://orkes.io/content/developer-guides/secrets-in-conductor).
+<p align="center"><img src="/content/img/sender-verified.jpg" alt="Sender verified in SendGrid portal" width="100%" height="auto"></img></p>
 
-| Notification Type | Provider  | Credentials to be saved as Secret in Conductor                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
-| ----------------- | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| SMS               | Twilio    | The account ID of the Twilio account.<ol><li>In your [Twilio](https://console.twilio.com/) console, go to **Account Info** > **Account SID**.</li><li>Copy the account ID.</li><li>Save it as a [secret in Orkes Conductor](https://orkes.io/content/developer-guides/secrets-in-conductor) with the name **orkes_template_twillio_account_id**.</li></ol>The authentication token of the Twilio account.<ol><li>In your [Twilio](https://console.twilio.com/) console, go to **Account Info** > **Auth Token**.</li><li>Copy the token.</li><li>Combine the Account SID and Auth Token in the format: _your_account_id:your_auth_token_.</li><li>Base64 encode the combined string using the command:<pre><code>echo -n "your_account_id:your_auth_token" \| base64</code></pre></li><li>Save the encoded string as a [secret in Orkes Conductor](https://orkes.io/content/developer-guides/secrets-in-conductor) with the name **orkes_template_twilio_base64_encoded_basic_auth**.</li></ol> |
-| EMAIL             | Sendgrid  | The API key from Sendgrid.<ol><li>In your [Sendgrid](https://app.sendgrid.com/settings/api_keys) account, go to **Settings** > **API Keys**.</li><li>Select **Create API Key** and provide a name for the key.</li><li>Set the **API Key Permissions** to **Full Access**.</li><li>Copy the API key.</li><li>Save it as a [secret in Orkes Conductor](https://orkes.io/content/developer-guides/secrets-in-conductor) with the name **orkes_template_sendgrid_api_key**.</li></ol>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
-| SLACK             | Slack     | Slack Webhook URL.<ol><li>Create a [custom webhook in Slack](https://api.slack.com/messaging/webhooks) to post to a specific channel.</li><li>Copy the Webhook URL.</li><li>Save it as a [secret in Orkes Conductor](https://orkes.io/content/developer-guides/secrets-in-conductor) with the name **orkes_template_slack_webhook**.</li></ol>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
-| PAGERDUTY         | Pagerduty | Routing key for sending messages to Pagerduty.<ol><li>In your Pagerduty account, create a **Service**.</li><li>Open the service and go to the **Integrations** tab.</li><li>Select **+ Add an integration**, and choose **Events API V2**.</li><li>Once the integration is added, copy the 32 digit **Integration Key**, which is the routing key for the workflow.</li><li>Save it as a [secret in Orkes Conductor](https://orkes.io/content/developer-guides/secrets-in-conductor) with the name **orkes_template_pagerduty_eventsv2_integration_key**.</li></ol>                                                                                                                                                                                                                                                                                                                                                                                                                             |
+### Step 3: Run the workflow
 
-The workflow is already configured with the above-mentioned secret names, so no further modifications are needed.
+**To run the workflow:**
 
-:::note Notes
+1. From the `HTTP_EndPoint_Monitoring` workflow definition, go to the **Run** tab.
+2. Enter the **Input Params**. For example:
 
-- Ensure the credentials are correctly set before running the workflow to avoid errors. The workflow will fail if any of the parameters are incorrect or unreadable.
-- If you use different names for the secrets, ensure the **_Notify-Channels_** workflow is updated with the correct secret names. Failure to do so will result in an unauthorized error.
-  :::
-
-### Run workflow
-
-You can run the workflow in different ways.
-
-<Tabs>
-<TabItem name="Using Scheduler" value="Using Scheduler">
-
-The Scheduler allows you to set a predefined cadence for running a workflow. Once the schedule is configured, Conductor will automatically invoke the workflow at the specified intervals, requiring no further action from the user.
-
-**To schedule workflows:**
-
-1. Go to **Definitions** > **Scheduler** from the left navigation menu on your Conductor cluster.
-2. Select **+ Define Schedule**.
-3. Provide a schedule name, select the workflow name and version, and set the schedule using the cron expression.
-4. Select **Save** > **Confirm**.
-
-This saves the Schedule definition, and the workflow is now automated to run at specific cadence. Refer to [Scheduling Workflows](https://orkes.io/content/developer-guides/scheduling-workflows) documentation for more details.
-</TabItem>
-<TabItem name="Using Conductor UI" value="Using Conductor UI">
-
-**To run the workflow using Conductor UI:**
-
-1. From your imported workflow, go to the **Run** tab.
-2. Enter the **Input Params**.
-3. Select **Run Workflow**.
-
-<p align="center"><img src="/content/img/run-workflow-from-ui-http-endpoint-monitoring-template.png" alt="Workflow called as a sub workflow" width="100%" height="auto"></img></p>
-
-</TabItem>
-<TabItem name="Using API" value="Using API">
-
-Use the following endpoint to start the workflow:
-
-```shell
-POST /api/workflow/{name}
+```json
+{
+ "URL": "https://orkes.io/", 
+ "sender_email": "<YOUR-SENDGRID-VERIFIED-EMAIL>",
+ "customer_email": "<ALERT-RECEIVER-EMAIL>" 
+}
 ```
 
-Refer to the [Start Workflow Execution API reference](https://orkes.io/content/reference-docs/api/workflow/start-workflow-execution) for more information.
+3. Select **Execute**.
 
-</TabItem>
-</Tabs>
+<p align="center"><img src="/content/img/http-endpoint-workflow-sample-execution.gif" alt="Sample execution for HTTP endpoint monitoring workflow" width="80%" height="auto"></img></p>
 
 ## Workflow output
 
-The workflow output includes details of the notification sent to the respective platform.
+If the monitored HTTP endpoint is healthy, the workflow follows the success path (**200**) and completes successfully.
 
-**Examples**
-<Tabs>
-<TabItem name="PagerDuty" value="PagerDuty">
+<p align="center"><img src="/content/img/run-workflow-from-ui-http-endpoint-monitoring-template.png" alt="Sample workflow executed successfully" width="80%" height="auto"></img></p>
 
-Example for a notification received in PagerDuty:
+If the endpoint is down, the workflow follows the **defaultCase**, sends an alert email, and ends with a termination reason.
 
-<p align="center"><img src="/content/img/notification-received-in-pagerduty.png" alt="Example for a notification received in Pagerduty" width="100%" height="auto"></img></p>
+<p align="center"><img src="/content/img/endpoint-monitoring-template-default-path-execution.png" alt="Endpoint monitoring template’s default execution path" width="80%" height="auto"></img></p>
 
-</TabItem>
-<TabItem name="Slack" value="Slack">
-Example for a notification received in a Slack channel:
-<p align="center"><img src="/content/img/notification-received-in-slack.png" alt="Example for a notification received in a slack channel" width="70%" height="auto"></img></p>
+The user receives an alert email through SendGrid.
 
-</TabItem>
-<TabItem name="Twilio" value="Twilio">
-Example for a notification received as SMS via Twilio:
-<p align="center"><img src="/content/img/notification-received-as-sms.png" alt="Example for a notification received as SMS via Twilio" width="50%" height="auto"></img></p>
+<p align="center"><img src="/content/img/sendgrid-alert-email.png" alt="Alert email received via SendGrid" width="80%" height="auto"></img></p>
 
-</TabItem>
-<TabItem name="Sendgrid" value="Sendgrid">
+## Workflow modifications
 
-Example for a notification received as an email via Sendgrid:
+This template provides a starting point for customizing the workflow to your needs.  You can add additional steps, such as:
 
-<p align="center"><img src="/content/img/notification-received-as-email.png" alt="Example for a notification received as email via Sendgrid" width="100%" height="auto"></img></p>
-
-</TabItem>
-</Tabs>
-
-This template provides a starting point for customizing the workflow to your needs. You can add additional steps, such as logging events, or add a different provider (like Opsgenie for incident notifications) to suit your business requirements.
+- Add a different provider (like Opsgenie for incident notifications, Slack/Microsoft Teams notification, or integrate with Jira/Zendesk via API ).
+- Modify email content based on your requirements and next steps.
+- Add any escalation steps.
