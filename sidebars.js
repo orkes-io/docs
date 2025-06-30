@@ -678,13 +678,7 @@ const sidebars = {
             className: 'leftMenuHeader',
             items: [
                 'templates/agentic-research',
-                'templates/automatic-subtitle-generator',
-                `templates/daily-scrum-automation-using-standup-bot`,
                 'templates/availability-monitoring-for-http-endpoints',
-                'templates/video-processing-workflows',
-                'templates/image-effects',
-                'templates/visual-image-search',
-                'templates/document-classifier',
             ],
         },
         {
@@ -747,6 +741,7 @@ const sidebars = {
                             id: 'tutorials/agentic-interview-app',
                             label: 'Agentic Interview App',
                         },
+                        'templates/document-classifier',
                     ]
                 },
                 {
@@ -791,6 +786,7 @@ const sidebars = {
                             id: 'tutorials/using-idempotency-keys-in-webhook-triggered-workflows',
                             label: 'Using Variable Idempotency Keys',
                         },
+                        `templates/daily-scrum-automation-using-standup-bot`,
                     ]
                 },
                 {
