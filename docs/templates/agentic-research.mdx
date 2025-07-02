@@ -58,8 +58,18 @@ The agentic research template is only available on the [Developer Playground](ht
 **To import the template:**
 
 1. Log in to [Developer Playground](https://developer.orkescloud.com/).
-2. Go to **Launch Pad** on the left navigation menu.
-3. Select **Agentic Research** > **View Template**.
+2. Go to **Launch Pad** on the left navigation menu.  
+3. Select **Agentic Research**, then select **Import**.  
+4. In **Required Integrations**, select or create an integration for the following services:  
+    * [OpenAI](https://platform.openai.com/settings/organization/api-keys)
+    * [Perplexity](https://www.perplexity.ai/account/api)
+    * [Anthropic](https://console.anthropic.com/account/keys)
+5. (If creating a new integration) Select **Create integration** from the dropdown list.  
+   1. Enter an **Integration name**.  
+   2. In **API Key**, paste the API key copied from your OpenAI / Perplexity / Anthropic account.  
+   3. Enter a **Description** for the integration.  
+   4. Select **Save**.  
+6. Select **Continue Workflow** to import the workflow.
 
 The `agentic_research` workflow is now imported and ready for use.
 
@@ -111,33 +121,27 @@ Next, a [Do While](/reference-docs/operators/do-while) task is used to iterate t
 Finally, once the research is completed, another [LLM Chat Complete](/reference-docs/ai-tasks/llm-text-complete) task is used to synthesize the sub-topics’ findings into a formatted report that answers the user’s original question. A custom [Worker task](/reference-docs/worker-task) is used to generate a .pdf file that downloads directly to the user’s desktop for convenient access.
 
 
-### Step 2: Configure AI/LLM integrations and models
+### Step 2: Configure AI/LLM models
 
-To use the LLM Text Complete tasks, you must set up the AI/LLM integrations with the relevant model providers. The integrations required for the `agentic_research` workflow have already been imported during Step 1:
-* **openAI**–used for `determine_research_task` for `break_into_subtopics`
-* **perplexity**—used for `lit_review_task` (used in a Dynamic Fork) and `research_gap_task`
-* **AnthropicClaude**—used for `compile_subtopics_response` 
+To use the LLM Text Complete tasks, you must set up the following models for the AI/LLM integrations imported in Step 1:
+* **OpenAI**–gpt-4o (for `determine_research_task` and `break_into_subtopics`)
+* **Perplexity**—sonar (for `lit_review_task` and `research_gap_task` in the Dynamic Fork) 
+* **Anthropic**—claude-3-7-sonnet-20250219 (for `compile_subtopics_response`)
 
-**To finish setting up the AI/LLM integrations:**
-1. From the `agentic_research` workflow definition, go to the **Dependencies** tab.
-2. In the **Integrations** section, select each integration to provide the **API Key**, then select **Save**.
-
-
-<p align="center"><img src="/content/img/tutorial/agentic_workflow_quickstart_integrations.png" alt="Screenshot of workflow integrations in Conductor UI." width="90%" height="auto"></img></p>
-
-
-Once completed, you can proceed to add specific models for each integration.
+:::note
+There is a limit of 5 models on Orkes Developer Playground.
+:::
 
 **To add a model to your integration:**
 1. Go to **Integrations** on the left navigation menu.
-2. For each integration (*openAI*, *perplexity*, *AnthropicClaude*), select the **+** icon (Add/Edit models), then select **+ New model**.
+2. For each integration, select the **+** icon (Add/Edit models), then select **+ New model**.
 
     <p align="center"><img src="/content/img/tutorial/agentic_workflow_quickstart_add_models.png" alt="Screenshot of integrations list in Conductor UI." width="90%" height="auto"></img></p>
 
 3. Add the following **Model name** for the corresponding integration:
-    * **openAI**–gpt-4o
-    * **perplexity**—sonar
-    * **AnthropicClaude**—claude-3-7-sonnet-20250219
+    * **OpenAI**–gpt-4o
+    * **Perplexity**—sonar
+    * **Anthropic**—claude-3-7-sonnet-20250219
 4. Ensure that the **Active** toggle is switched on and select **Save**.
 
 The AI/LLM models are now ready to use.
@@ -437,17 +441,16 @@ Generate a synthesized academic report accordingly.
 </Tabs>
 
 **To finish setting up the AI prompts:**
-1. Go to **Definitions** > **Workflow** and select the `agentic_research` workflow.
-2. Go to the **Dependencies** tab.
-3. In the **Prompts** section, select each AI prompt and add the associated **Model(s)**, then select **Save**:
-    * **break_into_subtopics**—openAI:gpt-4o
-    * **query_task_decision**—openAI:gpt-4o
-    * **literature_review_task**—perplexity:sonar
-    * **research_gap_task**—perplexity:sonar
-    * **compile_subtopic_responses**—AnthropicClaude:claude-3-7-sonnet-20250219
+1. Go to **Definitions** \> **AI Prompts**.  
+2. Select each prompt, add the associated **Model(s)**, then select **Save** \> **Confirm save**:  
+    * **break\_into\_subtopics**—*\[yourOpenAIIntegration\]*:gpt-4o  
+    * **query\_task\_decision**—*\[yourOpenAIIntegration\]*:gpt-4o  
+    * **literature\_review\_task**—*\[yourPerplexityIntegration\]*:sonar  
+    * **research\_gap\_task**—*\[yourPerplexityIntegration\]*:sonar  
+    * **compile\_subtopic\_responses**—*\[yourAnthropicIntegration\]*:claude-3-7-sonnet-20250219
 
 
-<p align="center"><img src="/content/img/tutorial/agentic_workflow_quickstart_prompts.png" alt="Screenshot of workflow prompts in Conductor UI." width="90%" height="auto"></img></p>
+<p align="center"><img src="/content/img/tutorial/agentic_workflow_quickstart-add_models_to_prompts.gif" alt="Gif of adding a model to the AI prompt in Conductor UI." width="90%" height="auto"></img></p>
 
 
 
@@ -510,5 +513,5 @@ This template provides a starting point for customizing the workflow to your nee
 
 
 :::note
-If you want to switch out the AI models, you must modify the workflow LLM Text Complete task and its corresponding AI prompt before running the workflow.
+When switching out the AI models, you must modify both the workflow LLM Text Complete task and its corresponding AI prompts before running the workflow.
 :::
