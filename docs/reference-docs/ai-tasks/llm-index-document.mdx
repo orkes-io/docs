@@ -25,16 +25,43 @@ Configure these parameters for the LLM Index Document task.
 
 | Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- |
-| inputParameters.**vectorDB** | The vector database to store the data.<br/><br/>**Note**: If you haven’t configured the vector database on your Orkes Conductor cluster, navigate to the **Integrations** tab and configure your required provider. Refer to the documentation on [how to integrate Vector Databases with Orkes console](https://orkes.io/content/category/integrations/vector-databases). | Required. | 
+| inputParameters.**vectorDB** | The vector database to store the data.<br/><br/>**Note**: If you haven’t configured the vector database on your Orkes Conductor cluster, navigate to the **Integrations** tab and [configure your required provider](https://orkes.io/content/category/integrations/vector-databases). | Required. | 
 | inputParameters.**index** | The index in your vector database where the text or data will be stored.<br/><br/>The terminology of the index field varies depending on the integration:<ul><li>For Weaviate, the index field indicates the collection name.</li><li>For other integrations, it denotes the index name.</li></ul> | Required. |
 | inputParameters.**namespace** | Namespaces are separate isolated environments within the database to manage and organize vector data effectively. Choose from the available namespace configured within the chosen vector database.<br/><br/>The usage and terminology of the namespace field vary depending on the integration:<ul><li>For Pinecone, the namespace field is applicable.</li><li>For Weaviate, the namespace field is not applicable.</li><li>For MongoDB, the namespace field is referred to as “Collection” in MongoDB.</li><li>For Postgres, the namespace field is referred to as “Table” in Postgres.</li></ul> | Required. | 
-| inputParameters.**embeddingModelProvider** | The LLM provider for generating the embeddings.<br/><br/>**Note**: If you haven’t configured your AI/LLM provider on your Orkes console, navigate to the **Integrations** tab and configure your required provider. Refer to the documentation on [how to integrate the LLM providers with Orkes Conductor](https://orkes.io/content/category/integrations/ai-llm). | Required. |
+| inputParameters.**embeddingModelProvider** | The LLM provider for generating the embeddings.<br/><br/>**Note**: If you haven’t configured your AI/LLM provider on your Orkes console, navigate to the **Integrations** tab and [configure your required provider](https://orkes.io/content/category/integrations/ai-llm).  | Required. |
 | inputParameters.**embeddingModel** | The embedding model provided by the selected LLM provider to generate the embeddings. | Required. |
 | inputParameters.**url** | The URL of the file to be indexed. | Required. |
 | inputParameters.**mediaType** | The media type of the file to be indexed. Supported media types: <ul> <li>application/pdf</li> <li>text/html</li> <li>text/plain</li> <li>application/json</li> </ul> | Optional. | 
 | inputParameters.**chunkSize** | The length of each input text segment when divided for processing by the LLM. For example, if the document contains 2,000 words and the chunk size is set to 500, the document is divided into four chunks for processing. | Optional. | 
 | inputParameters.**chunkOverlap** | The overlap between adjacent chunks. For example, if the chunk overlap is specified as 100, then the first 100 words of each chunk would overlap with the last 100 words of the previous chunk. | Optional. | 
 | inputParameters.**dimensions** | The size of the vector, which is the number of elements in the vector. | Optional. | 
+
+### Caching parameters
+
+You can cache the task outputs using the following parameters. Refer to [Caching Task Outputs](https://orkes.io/content/faqs/task-cache-output) for a full guide.
+
+| Parameter | Description | Required/Optional | 
+| --------- | ----------- | ----------------- | 
+| cacheConfig.**ttlInSecond** | The time to live in seconds, which is the duration for the output to be cached. | Required if using *cacheConfig*. |
+| cacheConfig.**key** | The cache key is a unique identifier for the cached output and must be constructed exclusively from the task’s input parameters.<br/>It can be a string concatenation that contains the task’s input keys, such as `${uri}-${method}` or `re_${uri}_${method}`. | Required if using *cacheConfig*. |
+
+### Schema parameters
+
+You can enforce input/output validation for the task using the following parameters. Refer to [Schema Validation](https://orkes.io/content/developer-guides/schema-validation) for a full guide.
+
+| Parameter | Description | Required/Optional | 
+| --------- | ----------- | ----------------- | 
+| taskDefinitiom.**enforceSchema** | Whether to enforce schema validation for task inputs/outputs. Set to *true* to enable validation. | Optional. | 
+| taskDefinition.**inputSchema** | The name and type of the input schema to be associated with the task. | Required if *enforceSchema* is set to true. | 
+| taskDefinition.**outputSchema** | The name and type of the output schema to be associated with the task. | Required if *enforceSchema* is set to true.
+
+### Other generic parameters
+
+Here are other parameters for configuring the task behavior.
+
+| Parameter | Description | Required/Optional | 
+| --------- | ----------- | ----------------- | 
+| optional | Whether the task is optional. If set to true, the workflow continues to the next task even if this task is in progress or fails.| Optional. | 
 
 ## Task configuration
 
