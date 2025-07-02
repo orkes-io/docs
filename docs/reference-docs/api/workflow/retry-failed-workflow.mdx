@@ -35,7 +35,7 @@ Retries a failed workflow execution from the last failed task. When invoked, the
 
 ```shell
 curl -X 'POST' \
-  'https://<YOUR_CLUSTER>/api/workflow/2ce9207f-d4a6-11ef-87b1-b2b27c52ebde/retry?resumeSubworkflowTasks=false&retryIfRetriedByParent=true' \
+   'https://<YOUR-CLUSTER>/api/workflow/2ce9207f-d4a6-11ef-87b1-b2b27c52ebde/retry' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>' \
   -d ''
@@ -45,7 +45,60 @@ curl -X 'POST' \
 
 Returns 204 No Content, indicating that the workflow execution has been restarted successfully from the last failed task.
 
+In the Conductor UI, the workflow execution will re-enter the RUNNING status, and the last failed task will be re-attempted.
+
+<p align="center"><img src="/content/img/SDKs/retry_failed_workflow-workflow_status.png" alt="Conductor UI showing task being retried" width="90%" height="auto"></img></p>
+
 </details>
+
+<details>
+<summary>Retry failed workflow from last failed Sub Workflow task when resumeSubworkflowTasks=true</summary>
+
+**Request**
+
+```shell
+curl -X 'POST' \
+  'https://<YOUR_CLUSTER>/api/workflow/35831168-50da-11f0-bb6c-9aabfb2793e8/retry?resumeSubworkflowTasks=true' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -d ''
+```
+
+**Response**
+
+Returns 204 No Content, indicating that the workflow execution has been restarted successfully from the last failed task.
+
+In the Conductor UI, both the parent workflow and sub-workflow execution will re-enter the RUNNING status.
+
+<p align="center"><img src="/content/img/SDKs/retry_failed_workflow-resumeSubworkflowTasks_true.png" alt="Conductor UI showing both workflows in RUNNING state." width="90%" height="auto"></img></p>
+
+</details>
+
+
+<details>
+<summary>Retry failed workflow from last failed Sub Workflow task when resumeSubworkflowTasks=false</summary>
+
+**Request**
+
+```shell
+curl -X 'POST' \
+  'https://<YOUR_CLUSTER>/api/workflow/35831168-50da-11f0-bb6c-9aabfb2793e8/retry?resumeSubworkflowTasks=false' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -d ''
+```
+
+**Response**
+
+Returns 204 No Content, indicating that the workflow execution has been restarted successfully from the last failed task.
+
+In the Conductor UI, the parent workflow execution will re-enter the RUNNING status, and a new sub-workflow execution instance will be created.
+
+<p align="center"><img src="/content/img/SDKs/retry_failed_workflow-resumeSubworkflowTasks_false.png" alt="Conductor UI showing parent workflow in RUNNING state and a new sub-workflow instance." width="90%" height="auto"></img></p>
+
+</details>
+
+
 
 <details>
 <summary>Retry sub-workflow when retryIfRetriedByParent=false</summary>
@@ -54,7 +107,7 @@ Returns 204 No Content, indicating that the workflow execution has been restarte
 
 ```shell
 curl -X 'POST' \
-  'https://<YOUR_CLUSTER>/api/workflow/1f920305-da0c-11ef-a114-0af1b159704e/retry?resumeSubworkflowTasks=false&retryIfRetriedByParent=false' \
+  'https://<YOUR_CLUSTER>/api/workflow/1f920305-da0c-11ef-a114-0af1b159704e/retry?retryIfRetriedByParent=false' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>' \
   -d ''
