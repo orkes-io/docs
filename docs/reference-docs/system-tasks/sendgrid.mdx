@@ -25,7 +25,34 @@ Configure these parameters for the SendGrid task.
 | inputParameters.**subject** | The email subject. | Required. | 
 | inputParameters.**contentType** | The type of email content. Supported values:<ul><li>**text/plain**</li><li>**text/html**</li></ul> | Required. | 
 | inputParameters.**content** | The email body. | Required. | 
-| inputParameters.**sendgridConfiguration** | The SendGrid integration that is configured in your cluster. | Required. |
+| inputParameters.**sendgridConfiguration** | The name of the SendGrid integration that is configured in your cluster. | Required. |
+
+### Caching parameters
+
+You can cache the task outputs using the following parameters. Refer to [Caching Task Outputs](https://orkes.io/content/faqs/task-cache-output) for a full guide.
+
+| Parameter | Description | Required/Optional | 
+| --------- | ----------- | ----------------- | 
+| cacheConfig.**ttlInSecond** | The time to live in seconds, which is the duration for the output to be cached. | Required if using *cacheConfig*. |
+| cacheConfig.**key** | The cache key is a unique identifier for the cached output and must be constructed exclusively from the task’s input parameters.<br/>It can be a string concatenation that contains the task’s input keys, such as `${uri}-${method}` or `re_${uri}_${method}`. | Required if using *cacheConfig*. |
+
+### Schema parameters
+
+You can enforce input/output validation for the task using the following parameters. Refer to [Schema Validation](https://orkes.io/content/developer-guides/schema-validation) for a full guide.
+
+| Parameter | Description | Required/Optional | 
+| --------- | ----------- | ----------------- | 
+| taskDefinitiom.**enforceSchema** | Whether to enforce schema validation for task inputs/outputs. Set to *true* to enable validation. | Optional. | 
+| taskDefinition.**inputSchema** | The name and type of the input schema to be associated with the task. | Required if *enforceSchema* is set to true. | 
+| taskDefinition.**outputSchema** | The name and type of the output schema to be associated with the task. | Required if *enforceSchema* is set to true.
+
+### Other generic parameters
+
+Here are other parameters for configuring the task behavior.
+
+| Parameter | Description | Required/Optional | 
+| --------- | ----------- | ----------------- | 
+| optional | Whether the task is optional. If set to true, the workflow continues to the next task even if this task is in progress or fails.| Optional. | 
 
 ## Task configuration
 
@@ -46,6 +73,17 @@ This is the task configuration for a SendGrid task.
      "type": "SENDGRID"
    }
 ```
+
+## Task output
+
+The SendGrid task will return the following parameters.
+
+| Parameter    | Description                                                                                                                   |
+| ------------ | ----------------------------------------------------------------------------------------------------------------------------- |
+| response     | A JSON object representing the response, if present.                                                                          |
+| headers      | An object containing the metadata about the response.                                                                         |
+| statusCode   | The [HTTP status code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes) indicating success or failure of the request. |
+| body         | The response body containing the data returned by the API.                                                                    |
 
 ## Adding a SendGrid task in UI
 

@@ -21,6 +21,24 @@ Configure these parameters for the Inline task.
 | inputParameters. **evaluatorType** | The type of evaluator used. Supported types:<ul><li>`graaljs` - Evaluates the JavaScript expression and computes the value.</li></ul> | Required.          |
 | inputParameters                    | The parameters for evaluating the script. Any property can be accessed as `$.value` for the expression to evaluate.                   | Required.          |
 
+### Schema parameters
+
+You can enforce input/output validation for the task using the following parameters. Refer to [Schema Validation](https://orkes.io/content/developer-guides/schema-validation) for a full guide.
+
+| Parameter | Description | Required/Optional | 
+| --------- | ----------- | ----------------- | 
+| taskDefinitiom.**enforceSchema** | Whether to enforce schema validation for task inputs/outputs. Set to *true* to enable validation. | Optional. | 
+| taskDefinition.**inputSchema** | The name and type of the input schema to be associated with the task. | Required if *enforceSchema* is set to true. | 
+| taskDefinition.**outputSchema** | The name and type of the output schema to be associated with the task. | Required if *enforceSchema* is set to true.
+
+### Other generic parameters
+
+Here are other parameters for configuring the task behavior.
+
+| Parameter | Description | Required/Optional | 
+| --------- | ----------- | ----------------- | 
+| optional | Whether the task is optional. If set to true, the workflow continues to the next task even if this task is in progress or fails.| Optional. | 
+
 ## Task configuration
 
 This is the task configuration for an Inline task.
