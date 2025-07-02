@@ -22,6 +22,24 @@ Configure these parameters for the JSON JQ Transform task.
 | inputParameters                     | JSON object containing the configuration data for task execution. Supports string, number, boolean, null, and object/array. | Required.          |
 | inputParameters.**queryExpression** | A string representing a JQ (JSON Query) expression. This expression is used to transform the JSON data.                     | Required.          |
 
+### Schema parameters
+
+You can enforce input/output validation for the task using the following parameters. Refer to [Schema Validation](https://orkes.io/content/developer-guides/schema-validation) for a full guide.
+
+| Parameter | Description | Required/Optional | 
+| --------- | ----------- | ----------------- | 
+| taskDefinitiom.**enforceSchema** | Whether to enforce schema validation for task inputs/outputs. Set to *true* to enable validation. | Optional. | 
+| taskDefinition.**inputSchema** | The name and type of the input schema to be associated with the task. | Required if *enforceSchema* is set to true. | 
+| taskDefinition.**outputSchema** | The name and type of the output schema to be associated with the task. | Required if *enforceSchema* is set to true.
+
+### Other generic parameters
+
+Here are other parameters for configuring the task behavior.
+
+| Parameter | Description | Required/Optional | 
+| --------- | ----------- | ----------------- | 
+| optional | Whether the task is optional. If set to true, the workflow continues to the next task even if this task is in progress or fails.| Optional. | 
+
 ## Task configuration
 
 This is the task configuration for a JSON JQ Transform task.
