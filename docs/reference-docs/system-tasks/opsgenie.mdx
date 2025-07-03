@@ -28,25 +28,25 @@ Configure these parameters for the Opsgenie task.
 | inputParameters.**actions**     | Opsgenie actions to be executed on the alert. Can be a string or object/array.                                                                                                                                                                                                                                                                | Optional           |
 | inputParameters.**priority**    | The priority of the alert.                                                                                                                                                                                                                                                                                                                    | Optional.          |
 | inputParameters.**entity**      | Domain the alert is related to, such as the server's name or application.                                                                                                                                                                                                                                                                     | Optional.          |
-| inputParameters.**token**       | API token for integrating with Opsgenie. Refer to the official [Opsgenie documentation](https://support.atlassian.com/opsgenie/docs/create-a-default-api-integration/) to get the API keys.<br/>**Tip**: Save the token as a [secret](https://orkes.io/content/developer-guides/secrets-in-conductor) in the Conductor for enhanced security. | Required.          |
+| inputParameters.**token**       | API token for integrating with Opsgenie. Refer to the official [Opsgenie documentation](https://support.atlassian.com/opsgenie/docs/create-a-default-api-integration/) to get the API keys.<br/>**Tip**: Save the token as a [secret](/developer-guides/secrets-in-conductor) in the Conductor for enhanced security. | Required.          |
 | inputParameters.**tags**        | Tags to be added to the alert in Opsgenie. Can be a string or object/array.                                                                                                                                                                                                                                                                   | Optional.          |
 
 ### Caching parameters
 
-You can cache the task outputs using the following parameters. Refer to [Caching Task Outputs](https://orkes.io/content/faqs/task-cache-output) for a full guide.
+You can cache the task outputs using the following parameters. Refer to [Caching Task Outputs](/faqs/task-cache-output) for a full guide.
 
-| Parameter | Description | Required/Optional | 
+| Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- | 
 | cacheConfig.**ttlInSecond** | The time to live in seconds, which is the duration for the output to be cached. | Required if using *cacheConfig*. |
 | cacheConfig.**key** | The cache key is a unique identifier for the cached output and must be constructed exclusively from the task’s input parameters.<br/>It can be a string concatenation that contains the task’s input keys, such as `${uri}-${method}` or `re_${uri}_${method}`. | Required if using *cacheConfig*. |
 
 ### Schema parameters
 
-You can enforce input/output validation for the task using the following parameters. Refer to [Schema Validation](https://orkes.io/content/developer-guides/schema-validation) for a full guide.
+You can enforce input/output validation for the task using the following parameters. Refer to [Schema Validation](/developer-guides/schema-validation) for a full guide.
 
-| Parameter | Description | Required/Optional | 
+| Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- | 
-| taskDefinitiom.**enforceSchema** | Whether to enforce schema validation for task inputs/outputs. Set to *true* to enable validation. | Optional. | 
+| taskDefinition.**enforceSchema** | Whether to enforce schema validation for task inputs/outputs. Set to *true* to enable validation. | Optional. | 
 | taskDefinition.**inputSchema** | The name and type of the input schema to be associated with the task. | Required if *enforceSchema* is set to true. | 
 | taskDefinition.**outputSchema** | The name and type of the output schema to be associated with the task. | Required if *enforceSchema* is set to true.
 
@@ -108,7 +108,7 @@ Here are some examples for using the Opsgenie task.
 <summary>Alerting using Opsgenie for failure workflow</summary>
 <p>
 
-Get the full example on [how to alert Opsgenie for workflow failures using Orkes Conductor](https://orkes.io/content/templates/alerting/querying-orkes-data-and-triggering-opsgenie-alert).
+Get the full example on [how to alert Opsgenie for workflow failures using Orkes Conductor](/templates/alerting/querying-orkes-data-and-triggering-opsgenie-alert).
 
 </p>
 </details>
