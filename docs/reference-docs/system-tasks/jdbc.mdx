@@ -19,7 +19,7 @@ Configure these parameters for the JDBC task.
 
 | Parameter                                | Description                                                                                                                                                                                                                                                                           | Required/ Optional                                           |
 | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------ | 
-| inputParameters. **integrationName**     | The relational database integration to use with the JDBC task. If your database isn't configured on your Conductor cluster, go to the Integrations tab and configure it under **[RDBMS > Relational Database](https://orkes.io/content/integrations/rdbms/relational-database)**. | Required.                                                    |
+| inputParameters. **integrationName**     | The relational database integration to use with the JDBC task. If your database isn't configured on your Conductor cluster, go to the Integrations tab and configure it under **[RDBMS > Relational Database](/integrations/rdbms/relational-database)**. | Required.                                                    |
 | inputParameters. **type**                | The SQL statement type. Supported values:<ul><li>**SELECT**—Used to retrieve data from a database.</li><li>**UPDATE / DELETE**—Used to modify or delete existing data from the database.</li></ul>                                                                             | Required.                                                    |
 | inputParameters. **expectedOutputCount** | The number of rows to be updated/deleted from the database.                                                                                                                                                                                                                           | Required if the statement type is chosen as ‘UPDATE/DELETE’. | 
 | inputParameters. **statement**           | The SQL statement to retrieve data from the SQL database.                                                                                                                                                                                                                             | Required.                                                    |
@@ -27,20 +27,20 @@ Configure these parameters for the JDBC task.
 
 ### Caching parameters
 
-You can cache the task outputs using the following parameters. Refer to [Caching Task Outputs](https://orkes.io/content/faqs/task-cache-output) for a full guide.
+You can cache the task outputs using the following parameters. Refer to [Caching Task Outputs](/faqs/task-cache-output) for a full guide.
 
-| Parameter | Description | Required/Optional | 
+| Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- | 
 | cacheConfig.**ttlInSecond** | The time to live in seconds, which is the duration for the output to be cached. | Required if using *cacheConfig*. |
 | cacheConfig.**key** | The cache key is a unique identifier for the cached output and must be constructed exclusively from the task’s input parameters.<br/>It can be a string concatenation that contains the task’s input keys, such as `${uri}-${method}` or `re_${uri}_${method}`. | Required if using *cacheConfig*. |
 
 ### Schema parameters
 
-You can enforce input/output validation for the task using the following parameters. Refer to [Schema Validation](https://orkes.io/content/developer-guides/schema-validation) for a full guide.
+You can enforce input/output validation for the task using the following parameters. Refer to [Schema Validation](/developer-guides/schema-validation) for a full guide.
 
-| Parameter | Description | Required/Optional | 
+| Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- | 
-| taskDefinitiom.**enforceSchema** | Whether to enforce schema validation for task inputs/outputs. Set to *true* to enable validation. | Optional. | 
+| taskDefinition.**enforceSchema** | Whether to enforce schema validation for task inputs/outputs. Set to *true* to enable validation. | Optional. | 
 | taskDefinition.**inputSchema** | The name and type of the input schema to be associated with the task. | Required if *enforceSchema* is set to true. | 
 | taskDefinition.**outputSchema** | The name and type of the output schema to be associated with the task. | Required if *enforceSchema* is set to true.
 
@@ -48,9 +48,10 @@ You can enforce input/output validation for the task using the following paramet
 
 Here are other parameters for configuring the task behavior.
 
-| Parameter | Description | Required/Optional | 
+| Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- | 
-| optional | Whether the task is optional. If set to true, the workflow continues to the next task even if this task is in progress or fails.| Optional. | 
+| optional | Whether the task is optional. The default is false. <br/> <br/> If set to true, the workflow continues to the next task even if this task is in progress or fails.| Optional. | 
+
 
 ## Task configuration
 

@@ -20,7 +20,7 @@ Configure these parameters for the Dynamic task.
 | Parameter                          | Description                                                                                                                                                             | Required/ Optional |
 | ---------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
 | dynamicTaskNameParam               | The input parameter key whose value is used to schedule the task. For example, "taskToExecute", which will then be specified as an input parameter in the Dynamic task. | Required.          |
-| inputParameters. **taskToExecute** | The name of the task that will be executed. It can be [passed as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor).            | Required.          |
+| inputParameters. **taskToExecute** | The name of the task that will be executed. It can be [passed as a dynamic input](/developer-guides/passing-inputs-to-task-in-conductor).            | Required.          |
 
 ### Configuration for calling a sub-workflow
 
@@ -52,6 +52,15 @@ If the Dynamic task to be called is a [Sub Workflow](./sub-workflow) task, then 
 
 </TabItem>
 </Tabs>
+
+
+### Other generic parameters
+
+Here are other parameters for configuring the task behavior.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| optional | Whether the task is optional. The default is false. <br/> <br/> If set to true, the workflow continues to the next task even if this task is in progress or fails.| Optional. | 
 
 ## Task configuration
 
@@ -103,7 +112,7 @@ During execution, the Dynamic task is replaced with whatever task that is called
 
 1. In your workflow, select the **(+)** icon and add a **Dynamic** task.
 2. In **Task input params**, configure the task to execute by setting a value in the `taskToExecute` parameter.
-   The value can be [passed as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor) (for example, `${workflow.input.dynamicTaskName}`).
+   The value can be [passed as a dynamic input](/developer-guides/passing-inputs-to-task-in-conductor) (for example, `${workflow.input.dynamicTaskName}`).
 
 <p><img src="/content/img/Task-References/dynamic_task_reference.png" alt="Screenshot of Dynamic Task in Orkes Conductor"/></p>
 
@@ -117,8 +126,6 @@ Here are some examples for using the Dynamic task.
 In this example workflow, shipments are made with different couriers depending on the shipping address. The decision can only be made during run-time when the address is received, and the subsequent shipping task could be either `ship_via_fedex` and `ship_via_ups`. A Dynamic task can be used in this workflow so that the shipping task can be decided in realtime.
 
 ```json
-// workflow definition
-
 {
   "name": "Shipping_Flow",
   "description": "Ships smartly based on the shipping address",

@@ -75,3 +75,22 @@ You can also select the **Restore Form Values** button to load a past executionâ
 To clear the workflow run history, select **Reset** > **Confirm**.
 
 ## Run tasks
+
+If you want to test the behavior of single tasks inside a workflow, you can use the Test Task feature on the Conductor UI.
+
+**To test a task:**
+
+1. Go to **Definitions** \> **Workflow**.  
+2. Select a workflow that you want to test.  
+3. In the workflow diagram, select a task that you want to test.  
+4. Select **Test Task** in the right-side panel.  
+   <center><p><img src="/content/img/dev-guides/test_task-ui.png" alt="Test Task UI" width="90%" height="auto"/></p></center>
+5. Using either the **Form** or **JSON** display, enter the input parameters for the task.  
+6. (Optional) Enter the **Domain** for the task if [task-to-domain](/developer-guides/task-to-domain) is used.  
+7. Select **Run Test**.
+
+<center><p><img src="/content/img/dev-guides/test_task.gif" alt="Test Task Procedure." width="90%" height="auto"/></p></center>
+
+Once completed, the task output will appear. These tests are essentially single-task workflows, and you can select the workflow (execution) ID to view the full execution details.
+
+<center><p><img src="/content/img/dev-guides/test_task-view_execution.gif" alt="View execution after testing task." width="90%" height="auto"/></p></center>

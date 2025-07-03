@@ -17,11 +17,40 @@ Configure these parameters for the Do While task.
 
 | Parameter                      | Description                                                          | Required/ Optional   |
 | ------------------------------ | ------------------------------------------------------------------------------------------------------- | -------------------- |
-| evaluatorType                  | The type of evaluator used. Supported types: <ul><li>`value-param`—Evaluates a specific input parameter in the Do While task.</li><li>`graaljs`—Evaluates JavaScript expressions and computes the value. Allows you to use ES6-compatible JavaScript.</li></ul>                                                                    | Required.          |
-| loopCondition                  | The condition that is evaluated by the Do While task after every iteration. The expression format depends on the evaluator type:<ul><li>For the `value-param` evaluator, the expression is the input parameter key.</li><li>For the `javascript` and `graaljs` evaluators, the expression is the JavaScript expression. </li></ul> | Required, unless iterating over a list of items.          |
+| evaluatorType                  | The type of evaluator used. Supported types: <ul><li>`value-param`—Evaluates a boolean input parameter in the Do While task.</li><li>`graaljs`—Evaluates JavaScript expressions and computes the value. Allows you to use ES6-compatible JavaScript.</li></ul>                                                                    | Required.          |
+| loopCondition                  | The condition that is evaluated by the Do While task after every iteration. The expression format depends on the evaluator type:<ul><li>For the `value-param` evaluator, the expression is the input parameter key.</li><li>For the `javascript` and `graaljs` evaluators, the expression is in ES6-compatible JavaScript. Refer to [Script expression](#script-expression) for more information. </li></ul> | Required, unless iterating over a list of items.          |
 | loopOver                       | The list of tasks to be executed as long as the condition is true.    | Required.          |
 | inputParameters. **items** | An array of items, which will be iterated over in the loop. The number of iterations is equal to the list size. You can use this to iterate without a condition. <br/><br/> Refer to [Examples](#examples) for more information on how to use the `items` parameter.            | Optional.          |
 | inputParameters. **keepLastN** | The number of iteration execution data to retain. If enabled, the default value is 2. <br/><br/> Use `keepLastN` if the number of iterations is expected to be large and not all execution data needs to be retained. Refer to [Execution data](#execution-data) for more information.         | Optional.        |
+
+
+### Other generic parameters
+
+Here are other parameters for configuring the task behavior.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| optional | Whether the task is optional. The default is false. <br/> <br/> If set to true, the workflow continues to the next task even if this task is in progress or fails.| Optional. | 
+
+### Script expression
+
+When using the `graaljs` evaluator, the JavaScript function should be formatted using the following syntax:
+
+```
+(function () {
+  // statements
+})();
+```
+
+Or
+```
+(() => {
+  // statements
+})();
+```
+
+The function should return a boolean value. To dynamically reference other input parameters in the script, it is recommended to use bracket notation (for example, `$.do_while_ref['iteration']`).
+
 
 ## Task configuration
 
@@ -36,8 +65,8 @@ This is the task configuration for a Do While task.
   "loopCondition": "", // Condition
   "evaluatorType": "value-param",
   "loopOver": [ // List of tasks to be executed in the loop
-    {//taskDefinition},
-    {//taskDefinition}
+    {// task configuration},
+    {// task configuration}
   ]
 }
 ```
@@ -48,11 +77,9 @@ The Do While task will return the following parameters.
 
 | Parameter | Description                                                                                                                                                                                                 |
 | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| iteration | The number of iterations. <br/><br/> If the Do While task is in progress, `iteration` will show the current iteration number. If the Do While task is completed, `iteration` will show the final number of iterations. |
+| iteration | The number of iterations. <br/><br/> If the Do While task is in progress, `iteration` will show the current iteration number. When completed, `iteration` will show the final number of iterations. |
 
-In addition, an object will be created for each iteration, keyed by its iteration number (eg. 1, 2, 3) and containing the task reference names of all the loop tasks and their outputs.
-
-The output payload may also contain any state stored in `loopCondition`. For example,  if the `loopCondition` is `if ($.LoopTask['iteration'] <= 10) {$.LoopTask.storage = 3; true } else {false}`, `storage` will exist as an output parameter.
+In addition, an object will be created for each iteration, keyed by its iteration number (e.g., 1, 2, 3), and will contain the task outputs for all of the `loopOver` tasks.
 
 **Example output**
 
@@ -67,7 +94,7 @@ The output payload may also contain any state stored in `loopCondition`. For exa
       }
     },
     "taskB_ref": {
-      //taskBOutput
+      // taskBOutput
     }
   },
   "2": {
@@ -79,7 +106,7 @@ The output payload may also contain any state stored in `loopCondition`. For exa
       }
     },
     "taskB_ref": {
-      //taskBOutput
+      // taskBOutput
     }
   },
   "iteration": 2
@@ -96,19 +123,19 @@ Each time a task in the do while loop is completed, the output is saved and inde
 
 1. In your workflow, select the **(+)** icon and add a **Do While** task.
 2. In **Script params**, add the parameter that will be evaluated in the expression.
-3. In **Loop condition**, select the evaluator type and enter the loop condition.
-   - **Value-Param**—Ensure that the expression value matches the parameter key you have defined in Script params.
-   - **ECMASCRIPT**—Enter a JavaScript script.
-4. In your workflow, select the **(+)** icon to add tasks to the do while loop.
+3. In **Loop condition**, select the evaluator type and enter the loop condition in the **Code** field.
+   - **Value-Param**—* Enter the parameter key you have defined in Script params.
+   - **ECMASCRIPT**—Enter a JavaScript script. Refer to [Script expression](#script-expression) for information.
+4. In your workflow, select the **(+)** icon to add tasks to the Do While loop.
 5. (Optional) If the number of iterations is expected to be large, turn off **No Limits** to set the number of iteration execution data to retain. By default, there is no limit on the execution data kept if the task size is below 300.
 
 <p><img src="/content/img/Task-References/do_while_task_reference.png" alt="Screenshot of Do While Task in Orkes Conductor"/></p>
 
 ## Execution
 
-When a Do While loop is executed, each task in the loop will have its `taskReferenceName` concatenated with \_\_i, with i as the iteration number starting at 1. If one of the loop task fails, the Do While task status will be set as FAILED and upon retry the iteration number will restart from 1.
+When a Do While loop is executed, each task in the loop will have its `taskReferenceName` concatenated with \_\_i, with i as the iteration number starting at 1.  If one of the loop tasks fails, the Do While task status will be set as FAILED, and upon retry, the iteration number will restart from 1.
 
-If an exception occurs during evaluation of the `loopCondition`, the task is set to `FAILED_WITH_TERMINAL_ERROR`.
+If an exception occurs during evaluation of the `loopCondition`, the task is set to CANCELED.
 
 
 ### Execution data
@@ -311,7 +338,7 @@ The Do While task’s `taskReferenceName` is "get_all_stars_loop_ref". To evalua
 <details>
 <summary>Iterate over a list of items</summary>
 <p>
-It is possible to iterate over a list of items. To iterate over a list, the Do-While task MUST have an input parameter specifically named 'items' containing the collection to process. The parameter name 'items' is required and cannot be substituted with another name.
+It is possible to iterate over a list of items as long as the Do While task has `items` as an input parameter. The parameter name 'items' is required and cannot be substituted with another name.
 
 The number of iterations will be equal to the list size. If `“items”=[“a”,“b”,“c”]`, the loop tasks will be executed three times; if `“items”=[]`, the Do While task will be marked as completed without executing the loop tasks.
 
@@ -348,6 +375,25 @@ Each item in the list is passed into each iteration of the loop task using `${do
 }
 ```
 
+When the above Do While task has been executed successfully, the input to the first iteration of the HTTP loop task will look like this:
+
+```json
+{
+ "encode": true,
+ "headers": {},
+ "method": "GET",
+ "asyncComplete": false,
+ "_createdBy": "john.doe@acme.com",
+ "body": {
+   "item": "a"
+ },
+ "uri": "https://orkes-api-tester.orkesconductor.com/api",
+ "contentType": "application/json",
+ "accept": "application/json"
+}
+```
+
+
 </p>
 </details>
 
@@ -356,5 +402,5 @@ Each item in the list is passed into each iteration of the loop task using `${do
 There are several limitations for the Do While task:
 
 - **Branching**—Within a Do While task, branching using Switch, Fork/Join, Dynamic Fork tasks are supported. However, the Do While task may not execute as expected if the branching crosses outside its scope, since the loop tasks will be executed within the scope.
-- **Nested loops**—Nested Do While tasks are not supported. To achieve a similar functionality as a nested do while loop, you can use a [Sub Workflow](./sub-workflow) task inside the Do While task.
+- **Nested loops**—Nested Do While tasks are not supported. To achieve a similar functionality as a nested loop, you can use a [Sub Workflow](./sub-workflow) task inside the Do While task.
 - **Isolation group execution**—Isolation group execution is not supported. However, domain is supported for loop tasks inside the Do While task.

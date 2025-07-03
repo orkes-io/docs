@@ -23,11 +23,11 @@ Configure these parameters for the Inline task.
 
 ### Schema parameters
 
-You can enforce input/output validation for the task using the following parameters. Refer to [Schema Validation](https://orkes.io/content/developer-guides/schema-validation) for a full guide.
+You can enforce input/output validation for the task using the following parameters. Refer to [Schema Validation](/developer-guides/schema-validation) for a full guide.
 
-| Parameter | Description | Required/Optional | 
+| Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- | 
-| taskDefinitiom.**enforceSchema** | Whether to enforce schema validation for task inputs/outputs. Set to *true* to enable validation. | Optional. | 
+| taskDefinition.**enforceSchema** | Whether to enforce schema validation for task inputs/outputs. Set to *true* to enable validation. | Optional. | 
 | taskDefinition.**inputSchema** | The name and type of the input schema to be associated with the task. | Required if *enforceSchema* is set to true. | 
 | taskDefinition.**outputSchema** | The name and type of the output schema to be associated with the task. | Required if *enforceSchema* is set to true.
 
@@ -35,9 +35,10 @@ You can enforce input/output validation for the task using the following paramet
 
 Here are other parameters for configuring the task behavior.
 
-| Parameter | Description | Required/Optional | 
+| Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- | 
-| optional | Whether the task is optional. If set to true, the workflow continues to the next task even if this task is in progress or fails.| Optional. | 
+| optional | Whether the task is optional. The default is false. <br/> <br/> If set to true, the workflow continues to the next task even if this task is in progress or fails.| Optional. | 
+
 
 ## Task configuration
 
@@ -101,11 +102,9 @@ An Inline task can be used for simple scripting logic that does not require a de
 })();
 ```
 
-Here is the full workflow containing the Inline task.
+Here is the full workflow definition containing the Inline task.
 
 ```json
-// workflow definition
-
 {
   "name": "String_Reverser",
   "description": "A workflow to reverse a string",

@@ -26,15 +26,15 @@ Configure these parameters for the Event task.
 | Parameter       | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | Required/ Optional |
 | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
 | sink            | The event queue sink in the format: <br/>**message-broker-type:integration-name:topic/queue-name**<br/>Where,<ul><li>**message-broker-type**—The message broker type where the payload is being sent. Supported types:<ul><li>amqp</li><li>sqs</li><li>azure</li><li>kafka</li><li>nats</li><li>gcp_pubsub</li><li>ibm_mq</li></ul></li><li>**integration-name**—The integration name added to the cluster.</li><li>**topic/queue-name** Name—The name of the queue or topic where the payload is being sent.</li></ul> | Required.          |
-| inputParameters | The input parameters for the Event task, which can be [passed as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor) or a fixed value. These parameters determine the payload sent to the event sink during task execution.                                                                                                                                                                                                           | Optional.          |
+| inputParameters | The input parameters for the Event task, which can be [passed as a dynamic input](/developer-guides/passing-inputs-to-task-in-conductor) or a fixed value. These parameters determine the payload sent to the event sink during task execution.                                                                                                                                                                                                           | Optional.          |
 
 ### Schema parameters
 
-You can enforce input/output validation for the task using the following parameters. Refer to [Schema Validation](https://orkes.io/content/developer-guides/schema-validation) for a full guide.
+You can enforce input/output validation for the task using the following parameters. Refer to [Schema Validation](/developer-guides/schema-validation) for a full guide.
 
-| Parameter | Description | Required/Optional | 
+| Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- | 
-| taskDefinitiom.**enforceSchema** | Whether to enforce schema validation for task inputs/outputs. Set to *true* to enable validation. | Optional. | 
+| taskDefinition.**enforceSchema** | Whether to enforce schema validation for task inputs/outputs. Set to *true* to enable validation. | Optional. | 
 | taskDefinition.**inputSchema** | The name and type of the input schema to be associated with the task. | Required if *enforceSchema* is set to true. | 
 | taskDefinition.**outputSchema** | The name and type of the output schema to be associated with the task. | Required if *enforceSchema* is set to true.
 
@@ -42,9 +42,9 @@ You can enforce input/output validation for the task using the following paramet
 
 Here are other parameters for configuring the task behavior.
 
-| Parameter | Description | Required/Optional | 
+| Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- | 
-| optional | Whether the task is optional. If set to true, the workflow continues to the next task even if this task is in progress or fails.| Optional. | 
+| optional | Whether the task is optional. The default is false. <br/> <br/> If set to true, the workflow continues to the next task even if this task is in progress or fails.| Optional. |
 | asyncComplete | Whether the task is completed asynchronously. The default value is false.<ul><li>**false**—Task status is set to COMPLETED upon successful execution.</li><li>**true**—Task status is kept as IN_PROGRESS until an external event marks it as complete.</li></ul><TableNote title="Available since">v4.1.40 and later</TableNote> | Optional. | 
 
 ### Additional system inputs to payload​
@@ -58,7 +58,7 @@ Conductor automatically adds the following parameters to the payload. Ensure tha
 
 **Example**
 
-Given the following task definition:
+Given the following task configuration:
 
 ```json
 {
@@ -130,7 +130,7 @@ In this example, we’ll integrate Confluent Kafka with Orkes Conductor to publi
 
 **Step 1: Integrate Confluent Kafka with Orkes Conductor**
 
-Get the configuration credentials and [integrate Kafka as a message broker in Conductor cluster](https://orkes.io/content/integrations/message-broker/confluent-kafka).
+Get the configuration credentials and [integrate Kafka as a message broker in Conductor cluster](/integrations/message-broker/confluent-kafka).
 
 <center><p><img src="/content/img/confluent-kafka-integration.png" alt="Confluent Kafka sample integration" width="100%" height="auto"/></p></center>
 
@@ -141,7 +141,7 @@ Next, create an event handler for the added integration.
 **To create an event handler:**
 
 1. Go to **Definitions** > **Event Handlers**, from the left menu in the Conductor cluster.
-2. Select **+ Define event handler** and configure the [parameters](https://orkes.io/content/developer-guides/event-handler#event-handler-configuration).
+2. Select **+ Define event handler** and configure the [parameters](/developer-guides/event-handler#event-handler-configuration).
 3. In the `event` field, specify the integration in the following format.
 
 ```json

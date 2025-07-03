@@ -17,9 +17,20 @@ Configure these parameters for the Terminate Workflow task.
 
 | Parameter                              | Description                                                                                                                                                                                                                                  | Required/ Optional |
 | -------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
-| inputParameters. **workflowId**        | An array of one or more workflow (execution) IDs of the workflow executions to be terminated. It can be [passed as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor).                                           | Required.          |
-| inputParameters. **terminationReason** | The reason for terminating the workflow(s), which will provide the context of the termination. It can be [passed as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor).                              | Optional.          |
+| inputParameters. **workflowId**        | An array of one or more workflow (execution) IDs of the workflow executions to be terminated. It can be [passed as a dynamic input](/developer-guides/passing-inputs-to-task-in-conductor).                                           | Required.          |
+| inputParameters. **terminationReason** | The reason for terminating the workflow(s), which will provide the context of the termination. It can be [passed as a dynamic input](/developer-guides/passing-inputs-to-task-in-conductor).                              | Optional.          |
 | triggerFailureWorkflow                 | Whether the failure workflow for the terminated workflow will be triggered. Accepted values:<ul><li>`true`—The failure workflow will be triggered.</li><li>`false`—The default option. The failure workflow will not be triggered.</li></ul> | Required.          |
+
+
+### Other generic parameters
+
+Here are other parameters for configuring the task behavior.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| optional | Whether the task is optional. The default is false. <br/> <br/> If set to true, the workflow continues to the next task even if this task is in progress or fails.| Optional. | 
+
+
 
 ## Task configuration
 
@@ -70,8 +81,6 @@ Here are some examples for using the Terminate Workflow task.
 To demonstrate the Terminate Workflow task, consider the following sample workflow. This example shows how to configure a workflow that terminates another running workflow.
 
 ```json
-// workflow definition
-
 {
   "name": "terminate-workflow-sample-workflow",
   "description": "Sample workflow to demonstrate terminate workflow task",
@@ -116,8 +125,6 @@ In this example workflow, a failure workflow has been set up for it.
 This is the example workflow JSON definition, which includes the failure workflow:
 
 ```json
-// workflow definition
-
 {
   "name": "test-workflow",
   "description": "test",
@@ -145,8 +152,6 @@ In a separate workflow, you can terminate the above running workflow using the T
 This is the JSON definition for the second workflow:
 
 ```json
-// workflow definition
-
 {
   "name": "terminate-workflow-demo",
   "description": "Sample workflow",

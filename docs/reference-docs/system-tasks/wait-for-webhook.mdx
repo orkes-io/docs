@@ -19,7 +19,7 @@ A webhook is an HTTP-based callback function that facilitates communication betw
 
 Additionally, the Custom option can be used to integrate other systems.
 
-For a full guide on how to use webhook tasks, refer to [Webhook Integrations](https://orkes.io/content/developer-guides/webhook-integration).
+For a full guide on how to use webhook tasks, refer to [Webhook Integrations](/developer-guides/webhook-integration).
 
 ## Task parameters
 
@@ -76,11 +76,11 @@ The input payload for the webhook task to align with the above matches must be:
 
 ### Schema parameters
 
-You can enforce input/output validation for the task using the following parameters. Refer to [Schema Validation](https://orkes.io/content/developer-guides/schema-validation) for a full guide.
+You can enforce input/output validation for the task using the following parameters. Refer to [Schema Validation](/developer-guides/schema-validation) for a full guide.
 
-| Parameter | Description | Required/Optional | 
+| Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- | 
-| taskDefinitiom.**enforceSchema** | Whether to enforce schema validation for task inputs/outputs. Set to *true* to enable validation. | Optional. | 
+| taskDefinition.**enforceSchema** | Whether to enforce schema validation for task inputs/outputs. Set to *true* to enable validation. | Optional. | 
 | taskDefinition.**inputSchema** | The name and type of the input schema to be associated with the task. | Required if *enforceSchema* is set to true. | 
 | taskDefinition.**outputSchema** | The name and type of the output schema to be associated with the task. | Required if *enforceSchema* is set to true.
 
@@ -88,9 +88,10 @@ You can enforce input/output validation for the task using the following paramet
 
 Here are other parameters for configuring the task behavior.
 
-| Parameter | Description | Required/Optional | 
+| Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- | 
-| optional | Whether the task is optional. If set to true, the workflow continues to the next task even if this task is in progress or fails.| Optional. | 
+| optional | Whether the task is optional. The default is false. <br/> <br/> If set to true, the workflow continues to the next task even if this task is in progress or fails.| Optional. | 
+
 
 ## Task configuration
 
@@ -131,7 +132,7 @@ Here are some examples for using the Wait for Webhook task.
 <summary>Incoming webhook using cURL</summary>
 <p>
 
-See an example of [passing an incoming request to Webhook using cURL commands](https://orkes.io/content/templates/examples/custom-conductor-webhook-using-curl).
+See an example of [passing an incoming request to Webhook using cURL commands](/templates/examples/custom-conductor-webhook-using-curl).
 
 </p>
 </details>
@@ -140,7 +141,7 @@ See an example of [passing an incoming request to Webhook using cURL commands](h
 <summary>Incoming webhook using Postman</summary>
 <p>
 
-See an example of [passing an incoming request to Webhook using Postman](https://orkes.io/content/templates/examples/incoming-webhook-using-postman).
+See an example of [passing an incoming request to Webhook using Postman](/templates/examples/incoming-webhook-using-postman).
 
 </p>
 </details>
@@ -149,7 +150,7 @@ See an example of [passing an incoming request to Webhook using Postman](https:/
 <summary>Sample Workflow for Slack webhook - Creating standup bot</summary>
 <p>
 
-See an example of [creating a standup bot using Slack Webhook.](https://orkes.io/content/templates/daily-scrum-automation-using-standup-bot).
+See an example of [creating a standup bot using Slack Webhook.](/templates/daily-scrum-automation-using-standup-bot).
 
 </p>
 </details>
@@ -164,10 +165,10 @@ See an example of [automating Slack Greetings using Slack Webhook.](https://orke
 </details>
 
 <details>
-<summary>Using variable idempotency keys in webhook-triggered workflows</summary>
+<summary>Using dynamic idempotency keys in webhook-triggered workflows</summary>
 <p>
 
-See an example of [using variable idempotency keys in webhook-triggered workflows.](/content/tutorials/using-idempotency-keys-in-webhook-triggered-workflows).
+See an example of [using dynamic idempotency keys in webhook-triggered workflows.](/content/tutorials/using-idempotency-keys-in-webhook-triggered-workflows).
 
 </p>
 </details>

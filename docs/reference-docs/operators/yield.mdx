@@ -13,32 +13,32 @@ import TabItem from '@theme/TabItem';
 The functionality described in this document is **not available by default**. To get access, please contact [Orkes support](https://www.orkes.io/talk-to-an-expert) or your Orkes account representative.
 :::
 
-The Yield task temporarily yields control over the workflow by pausing the execution until it is explicitly resumed using endpoints such as [sync](https://orkes.io/content/reference-docs/api/task/signal-running-task-synchronously) or [async](https://orkes.io/content/reference-docs/api/task/signal-running-task-asynchronously) signals, typically in response to external conditions or events.
+The Yield task temporarily yields control over the workflow by pausing the execution until it is explicitly resumed using endpoints such as [sync](/reference-docs/api/task/signal-running-task-synchronously) or [async](/reference-docs/api/task/signal-running-task-asynchronously) signals, typically in response to external conditions or events.
 
 ## Task parameters
 
 Configure these parameters for the Yield task.
 
-| Parameter | Description | Required/Optional | 
+| Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- | 
-| inputParameters | The input parameters for the Yield task, which can be fixed or [passed as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor). | Required. | 
+| inputParameters | The input parameters for the Yield task, which can be fixed or [passed as a dynamic input](/developer-guides/passing-inputs-to-task-in-conductor). | Required. | 
 
 ### Caching parameters
 
-You can cache the task outputs using the following parameters. Refer to [Caching Task Outputs](https://orkes.io/content/faqs/task-cache-output) for a full guide.
+You can cache the task outputs using the following parameters. Refer to [Caching Task Outputs](/faqs/task-cache-output) for a full guide.
 
-| Parameter | Description | Required/Optional | 
+| Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- | 
 | cacheConfig.**ttlInSecond** | The time to live in seconds, which is the duration for the output to be cached. | Required if using *cacheConfig*. |
 | cacheConfig.**key** | The cache key is a unique identifier for the cached output and must be constructed exclusively from the task’s input parameters.<br/>It can be a string concatenation that contains the task’s input keys, such as `${uri}-${method}` or `re_${uri}_${method}`. | Required if using *cacheConfig*. |
 
 ### Schema parameters
 
-You can enforce input/output validation for the task using the following parameters. Refer to [Schema Validation](https://orkes.io/content/developer-guides/schema-validation) for a full guide.
+You can enforce input/output validation for the task using the following parameters. Refer to [Schema Validation](/developer-guides/schema-validation) for a full guide.
 
-| Parameter | Description | Required/Optional | 
+| Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- | 
-| taskDefinitiom.**enforceSchema** | Whether to enforce schema validation for task inputs/outputs. Set to *true* to enable validation. | Optional. | 
+| taskDefinition.**enforceSchema** | Whether to enforce schema validation for task inputs/outputs. Set to *true* to enable validation. | Optional. | 
 | taskDefinition.**inputSchema** | The name and type of the input schema to be associated with the task. | Required if *enforceSchema* is set to true. | 
 | taskDefinition.**outputSchema** | The name and type of the output schema to be associated with the task. | Required if *enforceSchema* is set to true.
 
@@ -46,9 +46,10 @@ You can enforce input/output validation for the task using the following paramet
 
 Here are other parameters for configuring the task behavior.
 
-| Parameter | Description | Required/Optional | 
+| Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- | 
-| optional | Whether the task is optional. If set to true, the workflow continues to the next task even if this task is in progress or fails.| Optional. | 
+| optional | Whether the task is optional. The default is false. <br/> <br/> If set to true, the workflow continues to the next task even if this task is in progress or fails.| Optional. | 
+
 
 ## Task configuration
 

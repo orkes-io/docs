@@ -25,8 +25,8 @@ Configure these parameters for the Sub Workflow task.
 | subWorkflowParam                          | A map that includes the sub-workflow’s configuration, such as the name, version, task-to-domain mapping, idempotency key, and priority.                                                                                                                                                                                                                                                                                                                                                          | Required.                             |
 | subWorkflowParam. **name**                | The name of the workflow to be executed. This workflow should have a pre-existing definition in Conductor.                                                                                                                                                                                                                                                                                                                                                                                       | Required.                             |
 | subWorkflowParam. **version**             | The version of the workflow to be executed. If unspecified or set to 0, the latest version will be used.                                                                                                                                                                                                                                                                                                                                                                                         | Required.                             |
-| subWorkflowParam. **taskToDomain**        | A map of sub-workflow tasks to specific domains. The keys are the task reference names and the values are the domain names. If not given, the taskToDomain of the executing parent workflow will take over.                                                                                                                                                                                                                                                                                      | Optional.                             |
-| subWorkflowParam. **priority**            | The priority of the subworkflow. Supports values from 0-99 and can be [passed as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor).<br/>If set, this **priority** overrides the parent workflow’s **priority**. If not, it inherits the parent workflow’s **priority**.                                                                                                                                                                                 | Optional.                             |
+| subWorkflowParam. **taskToDomain**        | A map of sub-workflow tasks to specific domains. The keys are the task reference names and the values are the domain names. If unspecified, the taskToDomain of the executing parent workflow will take over.                       | Optional.                             |
+| subWorkflowParam. **priority**            | The priority of the subworkflow. Supports values from 0-99 and can be [passed as a dynamic input](/developer-guides/passing-inputs-to-task-in-conductor).<br/>If set, this **priority** overrides the parent workflow’s **priority**. If not, it inherits the parent workflow’s **priority**.                                                                                                                                                                                 | Optional.                             |
 | subWorkflowParam. **idempotencyKey**      | A unique, user-generated key to prevent duplicate workflow executions. Idempotency data is retained for the life of the workflow execution.                                                                                                                                                                                                                                                                                                                                                      | Optional.                             |
 | subWorkflowParam. **idempotencyStrategy** | The idempotency strategy for handling duplicate requests. Supported values:<ul><li>`RETURN_EXISTING`—Return the `workflowId` of the workflow instance with the same idempotency key.</li> <li>`FAIL`—Start a new workflow instance only if there are no workflow executions with the same idempotency key.</li> <li>`FAIL_ON_RUNNING`—Start a new workflow instance only if there are no RUNNING or PAUSED workflows with the same idempotency key. Completed workflows can run again.</li></ul> | Required if `idempotencyKey` is used. |
 
@@ -35,8 +35,16 @@ In addition, you can also configure the sub-workflow’s input in `inputParamete
 :::note Notes
 
 - If you are taking the sub-workflow’s input parameters from the parent workflow, you need to add them as an input parameter in the parent workflow and then call the same input parameters inside the sub-workflow definition.
-- If an idempotency strategy is configured in the sub-workflow task definition and no idempotency key is provided, the sub-workflow task will automatically inherit the idempotency key from its parent workflow.
-  :::
+- If an idempotency strategy is configured in the sub-workflow task configuration and no idempotency key is provided, the sub-workflow task will automatically inherit the idempotency key from its parent workflow.
+:::
+
+### Other generic parameters
+
+Here are other parameters for configuring the task behavior.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| optional | Whether the task is optional. The default is false. <br/> <br/> If set to true, the workflow continues to the next task even if this task is in progress or fails.| Optional. | 
 
 ## Task configuration
 
@@ -84,7 +92,7 @@ In addition to the execution ID, the sub-workflow’s workflow output will also 
 4. (Optional) Add any additional input parameters for the sub-workflow.
 5. (Optional) Add task-to-domain mapping for the sub-workflow tasks.
 
-To view the sub-workflow tasks inside the parent workflow, you can check **Expand** to display them in the visual diagram editor.
+To view the sub-workflow tasks inside the parent workflow, you can select **Expand** to display them in the visual diagram editor.
 
 <p>
   <img
@@ -127,9 +135,7 @@ You can add this as a sub-workflow in your required workflow whenever a payment 
   />
 </p>
 
-This is a subscription workflow with multiple instances where payment flow is to be implemented. Here, the previously-created payment workflow is added as sub-workflows.
-The above image is a simplified version of the subscription workflow. You can view the entire version in Developer Playground
-[here](https://developer.orkescloud.com/workflowDef/Subscription/).
+This is a subscription workflow with multiple instances where the payment flow is to be implemented. Here, the previously-created payment workflow is added as sub-workflows.
 
 </p>
 </details>

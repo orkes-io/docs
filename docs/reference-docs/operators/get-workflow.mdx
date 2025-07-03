@@ -12,7 +12,7 @@ import TabItem from '@theme/TabItem';
 The Get Workflow task retrieves the details of a workflow execution using its workflow (execution) ID. 
 
 :::note
-You can get the workflow details only if you have at least read permission for the workflow. Otherwise, the workflow will fail with an error message like this:
+You can get the workflow details only if you have at least read permission for the workflow. Otherwise, the workflow will fail with an error message:
 <p align="center"><img src="/content/img/error-no-access.png" alt="Error message on having no access to workflow execution" width="80%" height="auto" /></p>
 :::
 
@@ -22,8 +22,17 @@ Configure these parameters for the Get Workflow task.
 
 | Parameter     | Description                                                                                                                                                                                                | Required/ Optional |
 | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
-| inputParameters. **id** | The workflow (execution) ID of the workflow to be retrieved. It can be [passed as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor). | Required. |
+| inputParameters. **id** | The workflow (execution) ID of the workflow to be retrieved. It can be [passed as a dynamic input](/developer-guides/passing-inputs-to-task-in-conductor). | Required. |
 | inputParameters. **includeTasks** | Whether to retrieve the task details or not. The default value is false. | Required. |
+
+
+### Other generic parameters
+
+Here are other parameters for configuring the task behavior.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| optional | Whether the task is optional. The default is false. <br/> <br/> If set to true, the workflow continues to the next task even if this task is in progress or fails.| Optional. | 
 
 
 ## Task configuration
@@ -44,12 +53,12 @@ This is the task configuration for a Get Workflow task.
 ```
 
 ## Task output
-The Get Workflow task will return all the details of the retrieved workflow. 
+The Get Workflow task will return all the details of the retrieved workflow.
 
 ## Adding a Get Workflow task in UI
 **To add a Get Workflow task:**
 1. In your workflow, select the **(+)** icon and add a **Get Workflow** task.
 2. Enter the **Workflow ID**.
-3. (Optional) Check **Include tasks** if needed.
+3. (Optional) Select **Include tasks** if you need to retrieve the task details.
 
 <p><img src="/content/img/Task-References/get_workflow_task_reference.png" alt="Screenshot of Get Workflow Task in Orkes Conductor"/></p>
