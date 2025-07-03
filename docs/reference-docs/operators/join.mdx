@@ -163,7 +163,7 @@ Here are some examples for using the Join task.
 In this example, the Join task waits for all forks to complete. The task will wait for the completion of `my_task_ref_1` and `my_task_ref_2` as specified by the `joinOn` attribute.
 
 ```json
-// Join task definition
+// Join task configuration
 
 {
   "name": "join_task",
@@ -185,7 +185,7 @@ In this example, the Fork task spawns three tasks, an email_notification task, a
 When you set up a notification workflow, you may decide to continue after sending an email and SMS notification. In that case, you can choose to joinOn those specific tasks only. Meanwhile, the http_notification task will continue to execute but will not block the rest of the workflow from proceeding.
 
 ```json
-// task definitions
+// task configurations
 
 [
   {

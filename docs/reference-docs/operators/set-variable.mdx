@@ -18,7 +18,7 @@ Variables can be initialized and updated at any point in the workflow. Once a va
 To configure the Set Variable task, set your desired variables and their respective values in `inputParameters`. The values can be set in two ways:
 
 - Hard-coded in the workflow definition, or
-- A variable input that is defined in real-time during workflow execution.
+- A dynamic input that is defined in real-time during workflow execution.
 
 ## Task configuration
 
@@ -42,9 +42,9 @@ This is the task configuration for a Set Variable task.
 1. In your workflow, select the **(+)** icon and add a **Set Variable** task.
 2. In **Variables**, add the desired workflow variables that will be initialized or replaced with a new value.
 3. For each workflow variable, configure the following:
-   - **Type**—the variable type, which can be a string, number, boolean, null, or object/array.
    - **Key**—the variable name.
-   - **Value**—the variable value, which can be a variable input (for example, `${workflow.input.someKey}`) or a hard-coded value.
+   - **Type**—the variable type, which can be a string, number, boolean, null, or object/array.
+   - **Value**—the variable value, which can be a fixed value or a dynamic input (e.g., `${workflow.input.someKey}`).
 
 <p><img src="/content/img/Task-References/set_variable_task_reference.png" alt="Screenshot of Set Variable Task in Orkes Conductor"/></p>
 

@@ -29,7 +29,7 @@ Configure these parameters for the Wait task.
 
 | Parameter                     | Description                                                                                                                                                                                                                                                                                                                                                                       | Required/ Optional               |
 | ----------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- |
-| inputParameters               | The input parameters for the Wait task, which can be [passed as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor) or a fixed value. These parameters include those required for the Wait task to complete, which depend on the wait type:<ul><li>`until` for the until wait type</li><li>`duration` for the duration wait type</li></ul> | Required.                        |
+| inputParameters               | The input parameters for the Wait task, which can be [passed as a dynamic input](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor) or a fixed value. These parameters include those required for the Wait task to complete, which depend on the wait type:<ul><li>`until` for the until wait type</li><li>`duration` for the duration wait type</li></ul> | Required.                        |
 | inputParameters. **until**    | The datetime and timezone in one of the following formats:<ul><li>yyyy-MM-dd HH:mm z</li><li>yyyy-MM-dd HH:mm</li><li>yyyy-MM-dd</li></ul>For example, 2024-04-30 15:20 GMT+04:00.                                                                                                                                                                                                | Required for until wait type.    |
 | inputParameters. **duration** | The wait duration in the format `x days y hours z minutes aa seconds`. The accepted units in this field are:<ul><li>**days**, or **d** for days</li><li>**hours**, **hrs**, or **h** for hours</li><li>**minutes**, **mins**, or **m** for minutes</li><li>**seconds**, **secs**, or **s** for seconds</li></ul>                                                                  | Required for duration wait type. |
 
@@ -103,7 +103,7 @@ The following task is configured to wait until Dec 25, 2026, 9AM.
 </p>
 
 ```json
-// Wait task definition
+// Wait task configuration
 
 {
   "name": "wait",
@@ -115,7 +115,7 @@ The following task is configured to wait until Dec 25, 2026, 9AM.
 }
 ```
 
-To pass the Wait task parameter as a variable, you can define a workflow input parameter and use it in the Wait task.
+To pass the Wait task parameter as a dynamic input, you can define a workflow input parameter and use it in the Wait task.
 
 ```json
 // workflow definition
@@ -128,7 +128,7 @@ To pass the Wait task parameter as a variable, you can define a workflow input p
 The Wait task can reference the workflow input parameter using `${workflow.input.variableName}`, replacing `variableName` with the actual variable name.
 
 ```json
-// Wait task definition
+// Wait task configuration
 
 {
   "name": "wait",
@@ -160,7 +160,7 @@ Based on the input, the workflow waits until 03:46 PM on 23 April 2024.
 The following task is configured to wait for 28 days.
 
 ```json
-// Wait task definition
+// Wait task configuration
 
 {
   "name": "wait",
@@ -187,7 +187,7 @@ To pass the Wait task parameter as a variable, you can define a workflow input p
 The Wait task can reference the workflow input parameter using `${workflow.input.variableName}`, replacing `variableName` with the actual variable name.
 
 ```json
-// Wait task definition
+// Wait task configuration
 
 {
   "name": "wait",

@@ -68,7 +68,7 @@ This is the task configuration for an LLM Store Embeddings task.
     "vectorDB": "pineconedb",
     "namespace": "myNewModel",
     "index": "test",
-    "embeddings": "${llm_generate_embeddings_task_ref.output}" // Can be passed as variable from preceding task
+    "embeddings": "${llm_generate_embeddings_task_ref.output}" // Can be passed as a dynamic input from preceding tasks
   },
   "type": "LLM_GET_EMBEDDINGS"
 }

@@ -26,7 +26,7 @@ Configure these parameters for the Event task.
 | Parameter       | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | Required/ Optional |
 | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
 | sink            | The event queue sink in the format: <br/>**message-broker-type:integration-name:topic/queue-name**<br/>Where,<ul><li>**message-broker-type**—The message broker type where the payload is being sent. Supported types:<ul><li>amqp</li><li>sqs</li><li>azure</li><li>kafka</li><li>nats</li><li>gcp_pubsub</li><li>ibm_mq</li></ul></li><li>**integration-name**—The integration name added to the cluster.</li><li>**topic/queue-name** Name—The name of the queue or topic where the payload is being sent.</li></ul> | Required.          |
-| inputParameters | The input parameters for the Event task, which can be [passed as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor) or a fixed value. These parameters determine the payload sent to the event sink during task execution.                                                                                                                                                                                                           | Optional.          |
+| inputParameters | The input parameters for the Event task, which can be [passed as a dynamic input](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor) or a fixed value. These parameters determine the payload sent to the event sink during task execution.                                                                                                                                                                                                           | Optional.          |
 
 ### Schema parameters
 
@@ -58,7 +58,7 @@ Conductor automatically adds the following parameters to the payload. Ensure tha
 
 **Example**
 
-Given the following task definition:
+Given the following task configuration:
 
 ```json
 {

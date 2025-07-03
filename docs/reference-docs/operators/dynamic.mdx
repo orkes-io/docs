@@ -20,7 +20,7 @@ Configure these parameters for the Dynamic task.
 | Parameter                          | Description                                                                                                                                                             | Required/ Optional |
 | ---------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
 | dynamicTaskNameParam               | The input parameter key whose value is used to schedule the task. For example, "taskToExecute", which will then be specified as an input parameter in the Dynamic task. | Required.          |
-| inputParameters. **taskToExecute** | The name of the task that will be executed. It can be [passed as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor).            | Required.          |
+| inputParameters. **taskToExecute** | The name of the task that will be executed. It can be [passed as a dynamic input](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor).            | Required.          |
 
 ### Configuration for calling a sub-workflow
 
@@ -103,7 +103,7 @@ During execution, the Dynamic task is replaced with whatever task that is called
 
 1. In your workflow, select the **(+)** icon and add a **Dynamic** task.
 2. In **Task input params**, configure the task to execute by setting a value in the `taskToExecute` parameter.
-   The value can be [passed as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor) (for example, `${workflow.input.dynamicTaskName}`).
+   The value can be [passed as a dynamic input](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor) (for example, `${workflow.input.dynamicTaskName}`).
 
 <p><img src="/content/img/Task-References/dynamic_task_reference.png" alt="Screenshot of Dynamic Task in Orkes Conductor"/></p>
 

@@ -48,7 +48,7 @@ Configure these parameters for the Human task.
 In addition, you should also configure Human task’s `inputParameters`, which contain the fields taken from its associated user form template. The configuration depends on the input source:
 
 - If the field is to be filled up by the assignee, leave the parameter value empty.
-- If the field is read-only and will be passed from somewhere in the workflow, enter a parameter value. The value can be [passed as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor).
+- If the field is read-only and will be passed from somewhere in the workflow, enter a parameter value. The value can be [passed as a dynamic input](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor).
 
 ## Task configuration
 
@@ -125,7 +125,7 @@ For a full guide on how to use human-involved tasks, refer to the [Human Task Or
    5. If needed, add another trigger to start another workflow.
 7. In Input parameters, configure the form fields depending on the input source:
    - If the field is to be filled up by the assignee, you can leave the parameter value empty or pass in a default value that can be modified before submission.
-   - If the field is read-only and will be passed from somewhere in the workflow, enter a parameter value. The value can be passed as a variable.
+   - If the field is read-only and will be passed from somewhere in the workflow, enter a parameter value. The value can be passed as a dynamic input.
 
 <p>
   <img
