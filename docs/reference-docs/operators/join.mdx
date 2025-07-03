@@ -9,7 +9,7 @@ import TabItem from '@theme/TabItem';
 
 # Join
 
-A Join task is used in conjunction with a [Fork Join](https://orkes.io/content/reference-docs/operators/fork-join) or [Dynamic Fork](https://orkes.io/content/reference-docs/operators/dynamic-fork) task to join all the tasks within the forks.
+A Join task is used in conjunction with a [Fork Join](/reference-docs/operators/fork-join) or [Dynamic Fork](/reference-docs/operators/dynamic-fork) task to join all the tasks within the forks.
 
 In the Fork/Join task, the Join task waits for a list of forked tasks to be completed before proceeding with the next task. However, when used with a Dynamic Fork task, it implicitly waits for all forked tasks to complete.
 
@@ -21,6 +21,15 @@ Configure these parameters for the Join task.
 | ---------- | ---------------------------------------------------------------------------------------------------------------- | ------------------ |
 | joinOn     | A list of task reference names that the Join task will wait for completion before proceeding with the next task. | Required.          |
 | expression | The join script, which controls how the Join task completes if specified.                                        | Optional.          |
+
+
+### Other generic parameters
+
+Here are other parameters for configuring the task behavior.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| optional | Whether the task is optional. The default is false. <br/> <br/> If set to true, the workflow continues to the next task even if this task is in progress or fails.| Optional. | 
 
 ### Join script configuration
 

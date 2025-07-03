@@ -24,6 +24,16 @@ Configure these parameters for the Switch task.
 | decisionCases | A map of the possible switch cases. The keys are the possible outputs of the evaluated expression, and the values are the list of tasks to be executed in each case.                                                                                                                      | Required.          |
 | defaultCase   | The default branch. Contains the list of tasks to be executed when no matching value is found in the decision cases.                                                                                                                                                                      | Optional.          |
 
+
+### Other generic parameters
+
+Here are other parameters for configuring the task behavior.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| optional | Whether the task is optional. The default is false. <br/> <br/> If set to true, the workflow continues to the next task even if this task is in progress or fails.| Optional. | 
+
+
 ## Task configuration
 
 This is the task configuration for a Switch task.
@@ -41,15 +51,15 @@ This is the task configuration for a Switch task.
   "type": "SWITCH",
   "decisionCases": {
     "caseName1": [
-      {//taskDefinition}
+      {// task configuration}
     ],
     "caseName2": [
-      {//taskDefinition},
-      {//taskDefinition}
+      {// task configuration},
+      {// task configuration}
     ]
   },
   "defaultCase": [
-    {//taskDefinition}
+    {// task configuration}
   ],
   "evaluatorType": "value-param",
   "expression": "switchCaseValue"
@@ -69,13 +79,13 @@ This is the task configuration for a Switch task.
   "type": "SWITCH",
   "decisionCases": {
     "apples": [
-      {//taskDefinition}
+      {// task configuration}
     ],
     "tomatoes":  [
-      {//taskDefinition}
+      {// task configuration}
     ],
     "oranges":  [
-      {//taskDefinition}
+      {// task configuration}
     ]
   },
   "defaultCase": [],
@@ -133,10 +143,10 @@ Similar to any programming language, you can use other operators inside a switch
   "type": "SWITCH",
   "decisionCases": {
     "fedex": [
-      {//taskDefinition}
+      {// task configuration}
     ],
     "ups": [
-      {//taskDefinition
+      {// task configuration
         "name": "nestedSwitch",
         "taskReferenceName": "nestedSwitch_ref",
         "inputParameters": {
@@ -144,8 +154,8 @@ Similar to any programming language, you can use other operators inside a switch
         },
         "type": "SWITCH",
         "decisionCases": {
-            "same_day": [      {//taskDefinition}],
-            "regular": [      {//taskDefinition}]
+            "same_day": [      {// task configuration}],
+            "regular": [      {// task configuration}]
         },
         "defaultCase": [],
         "evaluatorType": "graaljs",

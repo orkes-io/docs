@@ -43,8 +43,8 @@ This is the task configuration for a Fork/Join task.
   "type": "FORK_JOIN",
   "forkTasks": [
     [ // fork branch
-      {//taskDefinition},
-      {//taskDefinition}
+      {// task configuration},
+      {// task configuration}
     ],
     [ // another fork branch ]
   ]
@@ -90,7 +90,7 @@ IIn this example workflow, three notifications are sent: email, SMS, and HTTP. S
 Each fork runs tasks for each notification type (email, SMS, HTTP) in parallel, meaning that they are run independently. Here is the workflow definition:
 
 ```json
-// workflow definition
+// task configuration
 
 [
   {

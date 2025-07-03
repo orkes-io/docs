@@ -11,11 +11,45 @@ import TabItem from "@theme/TabItem";
 
 A Worker task (also known as a Simple task) is used to run custom logic implemented in any language. The custom logic can be deployed anywhere and the Worker task requires an external worker for polling.
 
-For a full guide on how to use workers, refer to [Using Workers](docs/developer-guides/using-workers.mdx).
+:::info Prerequisites
+Before adding a Worker task to a workflow, you should complete the following:
+
+- Create a worker to run a custom task.
+- Define the task in Conductor using Conductor UI or [API](/reference-docs/api/metadata/creating-task-definitions).
+
+For a full guide on how to use workers, refer to [Writing Workers](/developer-guides/using-workers).
+:::
 
 ## Task parameters
 
-To configure the Worker task, set its `inputParameters` as needed for your worker code. The values can be [passed as a dynamic input](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor).
+To configure the Worker task, set its `inputParameters` as needed for your worker code. The values can be [passed as a dynamic input](/developer-guides/passing-inputs-to-task-in-conductor).
+
+### Caching parameters
+
+You can cache the task outputs using the following parameters. Refer to [Caching Task Outputs](/faqs/task-cache-output) for a full guide.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| cacheConfig.**ttlInSecond** | The time to live in seconds, which is the duration for the output to be cached. | Required if using *cacheConfig*. |
+| cacheConfig.**key** | The cache key is a unique identifier for the cached output and must be constructed exclusively from the task’s input parameters.<br/>It can be a string concatenation that contains the task’s input keys, such as `${uri}-${method}` or `re_${uri}_${method}`. | Required if using *cacheConfig*. |
+
+### Schema parameters
+
+You can enforce input/output validation for the task using the following parameters. Refer to [Schema Validation](/developer-guides/schema-validation) for a full guide.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| taskDefinition.**enforceSchema** | Whether to enforce schema validation for task inputs/outputs. Set to *true* to enable validation. | Optional. | 
+| taskDefinition.**inputSchema** | The name and type of the input schema to be associated with the task. | Required if *enforceSchema* is set to true. | 
+| taskDefinition.**outputSchema** | The name and type of the output schema to be associated with the task. | Required if *enforceSchema* is set to true.
+
+### Other generic parameters
+
+Here are other parameters for configuring the task behavior.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| optional | Whether the task is optional. The default is false. <br/> <br/> If set to true, the workflow continues to the next task even if this task is in progress or fails.| Optional. | 
 
 ## Task configuration
 
@@ -36,13 +70,6 @@ The Worker task will return the output defined in your worker code.
 
 ## Adding a Worker task in UI
 
-Before adding a Worker task to a workflow, you should complete the following:
-
-- Create a worker to run a custom task.
-- Define the task in Conductor using Conductor UI or [API](https://orkes.io/content/reference-docs/api/metadata/creating-task-definitions).
-
-For a full guide on how to use workers, refer to [Using Workers](docs/developer-guides/using-workers.mdx).
-
 **To add a Worker task:**
 
 1. In your workflow, select the **(+)** icon to add a new task. There are two ways to add a worker task:
@@ -54,4 +81,4 @@ Sample worker code snippets are available in the UI for reference.
 
 ## Examples
 
-Find an [example of how to add and run a Worker task](https://orkes.io/content/getting-started/adding-custom-code-worker) in our Getting Started guide.
+Find an [example of how to add and run a Worker task](/quickstarts/write-workers) in our Quickstart.

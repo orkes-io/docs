@@ -19,9 +19,19 @@ Configure these parameters for the Terminate task.
 
 | Parameter                              | Description                                                                                                                                                                                                          | Required/ Optional |
 | -------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
-| inputParameters. **terminationStatus** | The termination status for the current workflow. Accepted values:<ul><li>`COMPLETED`</li><li> `FAILED`</li><li> `TERMINATED`</li></ul>                                                                               | Required.          |
-| inputParameters. **terminationReason** | The reason for terminating the current workflow, which will provide the context of the termination. It can be [passed as a dynamic input](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor). | Optional.          |
+| inputParameters. **terminationStatus** | The termination status for the current workflow. Accepted values:<ul><li>COMPLETED</li><li> FAILED</li><li> TERMINATED</li></ul>                                                                               | Required.          |
+| inputParameters. **terminationReason** | The reason for terminating the current workflow, which will provide the context of the termination. It can be [passed as a dynamic input](/developer-guides/passing-inputs-to-task-in-conductor). | Optional.          |
 | inputParameters. **workflowOutput**    | A map of the expected workflow output on termination. It can contain a string, number, boolean, null, or object/array.                                                                                               | Optional.          |
+
+
+### Other generic parameters
+
+Here are other parameters for configuring the task behavior.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| optional | Whether the task is optional. The default is false. <br/> <br/> If set to true, the workflow continues to the next task even if this task is in progress or fails.| Optional. | 
+
 
 ## Task configuration
 

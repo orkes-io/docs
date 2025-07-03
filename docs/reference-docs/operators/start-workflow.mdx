@@ -28,6 +28,17 @@ Configure these parameters for the Start Workflow task.
 
 In addition, you can also configure the requested workflow’s input in `inputParameters.startWorkflow.input`, which will be passed to the invoked workflow.
 
+
+### Other generic parameters
+
+Here are other parameters for configuring the task behavior.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| optional | Whether the task is optional. The default is false. <br/> <br/> If set to true, the workflow continues to the next task even if this task is in progress or fails.| Optional. | 
+
+
+
 ## Task configuration
 
 This is the task configuration for a Start Workflow task.​
@@ -88,8 +99,6 @@ Here are some examples for using the Start Workflow task.
 To demonstrate the Start Workflow task, consider the following sample workflow. This example shows how to configure a workflow that starts another workflow.
 
 ```json
-// workflow definition
-
 {
   "name": "sample_start_workflow",
   "description": "Sample Workflow to start a new workflow.",

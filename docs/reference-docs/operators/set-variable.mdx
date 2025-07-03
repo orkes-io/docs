@@ -20,6 +20,14 @@ To configure the Set Variable task, set your desired variables and their respect
 - Hard-coded in the workflow definition, or
 - A dynamic input that is defined in real-time during workflow execution.
 
+### Other generic parameters
+
+Here are other parameters for configuring the task behavior.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| optional | Whether the task is optional. The default is false. <br/> <br/> If set to true, the workflow continues to the next task even if this task is in progress or fails.| Optional. | 
+
 ## Task configuration
 
 This is the task configuration for a Set Variable task.
@@ -58,8 +66,6 @@ Here are some examples for using the Set Variable task.
 In this example workflow, a username is stored as a variable so that it can be reused in other tasks that require the username.
 
 ```json
-// workflow definition
-
 {
   "name": "Welcome_User_Workflow",
   "description": "Designate a user to be welcomed",
