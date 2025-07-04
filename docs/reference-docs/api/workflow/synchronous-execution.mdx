@@ -9,6 +9,10 @@ import TabItem from '@theme/TabItem';
 
 # Execute Workflow Synchronously
 
+:::info Deprecated since
+v5.1.0 and later
+:::
+
 **Endpoint:** `POST /api/workflow/execute/{name}`
 
 Starts a workflow execution synchronously. This method returns a response after a specified _waitForSeconds_ has passed or when a specified _waitUntilTaskRef_ task completes, whichever completes first.
