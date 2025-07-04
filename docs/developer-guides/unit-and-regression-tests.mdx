@@ -10,17 +10,37 @@ import Install from '@site/src/components/install.mdx';
 
 # Unit and Regression Tests
 
-## Unit Tests
+Use [Conductor SDKs](/category/sdks) and [APIs](/category/ref-docs/api) to conduct unit and regression tests on your workflows.
 
-Conductor workflows can be unit-tested using **POST /workflow/test endpoint**. The approach is similar to how you unit test using mock objects in Java or similar languages.
+## Unit tests
 
-### Why Unit Test Workflows?
-Unit tests allow you to test for the correctness of the workflow definition, ensuring:
-1. Given a specific input, workflow reaches the terminal state in a COMPLETED or FAILED state.
-2. Given a specific input, the workflow executes a specific set of tasks. This is useful for testing branching and dynamic forks.
-3. Task inputs are wired correctly - e.g., if a task receives its input from the output of another task, this can be verified using the unit test.
+In Conductor, the smallest unit you can test is a workflow. A unit test enables you to test the workflow logic, ensuring the correctness of the workflow definition for the following areas:
 
-## Unit Testing Workflows
+* **Terminal state**—Given a specific input, the workflow reaches the terminal state in a COMPLETED or FAILED state.  
+* **Control flow**—Given a specific input, the workflow executes a specific set of tasks. This is useful for testing branching, switching, and dynamic forks.  
+* **Task I/O**—Task inputs are wired correctly from one task to another. This is useful if a task receives its input from the output of another task.
+
+### Test environment
+
+The actual workflow is executed on a real Conductor server, ensuring you are testing behavior that will match the server's actual execution.
+
+Tests can be run against a remote server (useful for integration tests) or a local containerized instance. It is recommended that you use [test containers](https://github.com/testcontainers) to manage your test environments cleanly.
+
+### Mock tasks
+
+When unit-testing workflows, only [Worker tasks](/reference-docs/worker-task) can be mocked to isolate external dependencies on workers. All other system tasks and operators cannot be mocked and will be executed.
+
+### Methods for unit testing workflows
+
+
+<Tabs>
+<TabItem value="Using API" label="Using API">
+
+Conductor workflows can be unit-tested using the [Test Workflow](/reference-docs/api/workflow/test-workflow) API. This approach is similar to unit-testing using mock objects in Java or similar languages.
+
+</TabItem>
+
+<TabItem value="Using SDK" label="Using SDK">
 
 Java SDK provides the following method that allows testing a workflow definition against mock inputs:
 
@@ -28,132 +48,348 @@ Java SDK provides the following method that allows testing a workflow definition
 public abstract Workflow testWorkflow(WorkflowTestRequest testRequest);
 ```
 
-The actual workflow is executed on a real Conductor server, ensuring you are testing the behavior that will match the actual execution of the server.
-
-## Setting up Conductor server for testing
-
-Tests can be run against a remote server (useful for integration tests) or a local containerized instance. A recommended approach is to use **testcontainers**.
-
-## Examples
-
-### Unit Test
-* **LoanWorkflowTest.java**
+Use `testRequest.setName()` to set the workflow to be tested (e.g., `some-flow`). This method will retrieve the workflow definition from a Conductor server. 
 
 ```java
-/**
- * Unit test a workflow with inputs read from a file.
- */
-public class LoanWorkflowTest extends AbstractWorkflowTests {
-
-    /**
-     * Uses mock inputs to verify the workflow execution and input/outputs of the tasks
-     */
-    @Test
-    public void verifyWorkflowExecutionWithMockInputs() throws IOException {
-        WorkflowDef def = getWorkflowDef("/workflows/calculate_loan_workflow.json");
-        assertNotNull(def);
-        Map<String, List<WorkflowTestRequest.TaskMock>> testInputs = getTestInputs("/test_data/loan_workflow_input.json");
-        assertNotNull(testInputs);
-
-        WorkflowTestRequest testRequest = new WorkflowTestRequest();
-        testRequest.setWorkflowDef(def);
-
-
-        LoanWorkflowInput workflowInput = new LoanWorkflowInput();
-        workflowInput.setUserEmail("user@example.com");
-        workflowInput.setLoanAmount(new BigDecimal(11_000));
-        testRequest.setInput(objectMapper.convertValue(workflowInput, Map.class));
-
-        testRequest.setTaskRefToMockOutput(testInputs);
-        testRequest.setName(def.getName());
-        testRequest.setVersion(def.getVersion());
-
-        Workflow execution = workflowClient.testWorkflow(testRequest);
-        assertNotNull(execution);
+WorkflowTestRequest testRequest = new WorkflowTestRequest();
+testRequest.setName(workflowName);
 ```
 
-View the [complete code here](https://github.com/orkes-io/workflow-cicd/blob/main/src/test/java/io/orkes/conductor/cicd/workflows/LoanWorkflowTest.java).
+If you need to load the workflow definition locally, you must include the workflow definition in your test code repository and use `testRequest.setWorkflowDef()`. You can define the [workflow as code](/developer-guides/write-workflows-using-code) or use the JSON workflow definition.
 
-* Testing workflows that contain sub-workflows: **SubWorkflowTest.java**
+```java
+WorkflowTestRequest testRequest = new WorkflowTestRequest();       
+testRequest.setName(workflowName);
+testRequest.setWorkflowDef(workflowDef);
+```
+
+The `testRequest.setWorkflowDef()` method can also be used if you need to modify the remote workflow definition locally before running the unit tests. This is useful if you need to replace system tasks with mocks. For example, if you need to change Sub Workflow tasks to a dummy task, or if you need to use a dummy URL in an HTTP task. For more information, refer to [the full example on modifying workflows](#examples).
+
+**Mocking Worker tasks**
+
+To mock Worker tasks, use `testRequest.setTaskRefToMockOutput()` to set a mock output.
+
+```java
+WorkflowTestRequest testRequest = new WorkflowTestRequest();
+testRequest.setName(workflowName);
+testRequest.setWorkflowDef(workflowDef);
+testRequest.setTaskRefToMockOutput(Map.of(
+    "task-a-ref", List.of(new TaskMock(COMPLETED, Map.of("key1", "value1", "key2", 5))),
+    "task-b-ref", List.of(new TaskMock(COMPLETED, Map.of("key3", 3))
+    )));
+```
+
+For more information, refer to [the full example on mocking Worker tasks](#examples).
+
+**Mocking Worker tasks in sub-workflows**
+
+When testing workflows containing sub-workflows with Worker tasks in them, you must use `testRequest.setSubWorkflowTestRequest();` to mock those sub-workflow Worker tasks.
+
+```java
+WorkflowTestRequest testRequest = new WorkflowTestRequest();
+testRequest.setName(workflowName);
+testRequest.setWorkflowDef(workflowDef);
+testRequest.setSubWorkflowTestRequest(Map.of(
+    "sub-workflow-ref-1", testRequest2,
+    "sub-workflow-ref-2", testRequest3
+));
+```
+
+For more information, refer to [the full example on mocking Worker tasks in sub-workflows](#examples).
+
+</TabItem>
+</Tabs>
+
+
+### Examples
+
+Here are some examples for unit-testing Conductor workflows.
+
+<details>
+<summary>Pull workflows locally</summary>
+
+To test a local workflow definition:
+
+```java
+public class WorkflowTests extends BaseTest {
+    @Test
+    public void testWorkflow() {
+        WorkflowTestRequest testRequest = new WorkflowTestRequest();
+        testRequest.setName("parent-flow");
+        testRequest.setWorkflowDef(Util.getWorkflowDef("parent-flow"));
+        testRequest.setTaskRefToMockOutput(Map.of(
+            "lookup-person-ref", List.of(new TaskMock(COMPLETED, Map.of("name", "June", "id", 543321))),
+            "do-sensitive-work-ref", List.of(new TaskMock(COMPLETED, Map.of("_masked", Map.of("q", "q"), "_secrets", Map.of("z", "z")))),
+            "do-intensive-task-ref", List.of(new TaskMock(COMPLETED, Map.of("result", 3.14159))
+            )));
+        Workflow workflow = workflowClient.testWorkflow(testRequest);
+        assertEquals(3.14159, workflow.getOutput().get("result"));
+    }
+}
+```
+
+The `parent-flow` workflow is defined as code here:
+
+```java
+public class Util {
+    public static WorkflowDef getWorkflowDef(String workflowName) {
+        WorkflowTask lookupPersonTask = new WorkflowTask();
+        lookupPersonTask.setName("lookup-person");
+        lookupPersonTask.setTaskReferenceName("lookup-person-ref");
+        lookupPersonTask.setInputParameters(Map.of("query", "john"));
+
+        WorkflowTask doSensitiveWorkTask = new WorkflowTask();
+        doSensitiveWorkTask.setName("do-sensitive-work");
+        doSensitiveWorkTask.setTaskReferenceName("do-sensitive-work-ref");
+        doSensitiveWorkTask.setInputParameters(Map.of(
+            "_masked", Map.of("a", "b"),
+            "_secrets", Map.of("a", "b")
+        ));
+
+        WorkflowTask doIntensiveTask = new WorkflowTask();
+        doIntensiveTask.setName("do-intensive-task");
+        doIntensiveTask.setTaskReferenceName("do-intensive-task-ref");
+        doIntensiveTask.setInputParameters(Map.of("_masked", "${do-sensitive-work-ref.output._masked}"));
+
+        List<WorkflowTask> tasks = List.of(lookupPersonTask, doSensitiveWorkTask, doIntensiveTask);
+        WorkflowDef workflowDef = new WorkflowDef();
+        workflowDef.setName(workflowName);
+        workflowDef.setVersion(1);
+        workflowDef.setTasks(tasks);
+        workflowDef.setDescription("Example workflow for orkes-worker-java demo");
+
+        return workflowDef;
+    }
+}
+```
+
+Refer to [the complete code here](https://github.com/ystxn/orkes-worker-java/blob/main/src/test/java/space/yong/orkes/WorkflowTests.java).
+
+</details>
+
+
+<details>
+<summary>Pull workflows from server</summary>
+
+To pull workflows from the server instead, you can simply omit `testRequest.setWorkflowDef();`. 
+
+```java
+public class WorkflowTests extends BaseTest {
+    @Test
+    public void testWorkflow() {
+        WorkflowTestRequest testRequest = new WorkflowTestRequest();
+        testRequest.setName("parent-flow");
+        testRequest.setTaskRefToMockOutput(Map.of(
+            "lookup-person-ref", List.of(new TaskMock(COMPLETED, Map.of("name", "June", "id", 543321))),
+            "do-sensitive-work-ref", List.of(new TaskMock(COMPLETED, Map.of("_masked", Map.of("q", "q"), "_secrets", Map.of("z", "z")))),
+            "do-intensive-task-ref", List.of(new TaskMock(COMPLETED, Map.of("result", 3.14159))
+            )));
+        Workflow workflow = workflowClient.testWorkflow(testRequest);
+        assertEquals(3.14159, workflow.getOutput().get("result"));
+    }
+}
+```
+
+</details>
+
+
+<details>
+<summary>Modify workflows before testing</summary>
+
+Here is an example of modifying a workflow definition retrieved from a server and using `testRequest.setWorkflowDef()` to test the modified workflow definition. You can use `metadataClient.getWorkflowDef` to retrieve the workflow definition.
+
+In this example, the workflow definition is modified so that all Sub Workflow tasks are replaced with a mock workflow `dummy` that has been added beforehand to the server.
+
+``` java
+@Test
+public void testWorkflow() {
+    String workflowName = "parent-flow";
+    int workflowVersion = 1;
+
+    // Substitute all sub-flows to use `dummy` flow, e.g., containing an inline task
+    WorkflowDef workflowDef = metadataClient.getWorkflowDef(workflowName, workflowVersion);
+    workflowDef.getTasks().stream()
+        .filter(t -> t.getType().equals("SUB_WORKFLOW"))
+        .forEach(t -> t.getSubWorkflowParam().setName("dummy"));
+
+    WorkflowTestRequest testRequest = new WorkflowTestRequest();
+    testRequest.setName(workflowName);
+    testRequest.setVersion(workflowVersion);
+    testRequest.setWorkflowDef(workflowDef); // Use this instead of deployed definition
+    Workflow workflow = workflowClient.testWorkflow(testRequest);
+    
+    assertEquals(3, workflow.getOutput().get("result"));
+}
+```
+
+</details>
+
+
+<details>
+<summary>Test workflows with Worker tasks</summary>
+
+Here is an example of using `testRequest.setTaskRefToMockOutput()` to mock Worker tasks.
 
 ```java
 /**
- * Demonstrates how to test workflows that contain sub-workflows
- */
+* Unit test a workflow with inputs read from a file.
+*/
+public class LoanWorkflowTest extends AbstractWorkflowTests {
+
+   /**
+    * Uses mock inputs to verify the workflow execution and input/outputs of the tasks
+    */
+   @Test
+   public void verifyWorkflowExecutionWithMockInputs() throws IOException {
+       WorkflowDef def = getWorkflowDef("/workflows/calculate_loan_workflow.json");
+       assertNotNull(def);
+       Map<String, List<WorkflowTestRequest.TaskMock>> testInputs = getTestInputs("/test_data/loan_workflow_input.json");
+       assertNotNull(testInputs);
+
+       WorkflowTestRequest testRequest = new WorkflowTestRequest();
+       testRequest.setWorkflowDef(def);
+
+
+       LoanWorkflowInput workflowInput = new LoanWorkflowInput();
+       workflowInput.setUserEmail("user@example.com");
+       workflowInput.setLoanAmount(new BigDecimal(11_000));
+       testRequest.setInput(objectMapper.convertValue(workflowInput, Map.class));
+
+       testRequest.setTaskRefToMockOutput(testInputs);
+       testRequest.setName(def.getName());
+       testRequest.setVersion(def.getVersion());
+
+       Workflow execution = workflowClient.testWorkflow(testRequest);
+       assertNotNull(execution);
+```
+
+Refer to the [complete code here](https://github.com/orkes-io/workflow-cicd/blob/main/src/test/java/io/orkes/conductor/cicd/workflows/LoanWorkflowTest.java).
+
+</details>
+
+
+
+<details>
+<summary>Test workflows with Sub Workflow tasks</summary>
+
+Here is an example of testing workflows that contain Sub Workflow tasks.
+
+```java
+/**
+* Demonstrates how to test workflows that contain sub-workflows
+*/
 public class SubWorkflowTest extends AbstractWorkflowTests {
 
 
-    @Test
-    public void verifySubWorkflowExecutions() throws IOException {
-        WorkflowDef def = getWorkflowDef("/workflows/kitchensink.json");
-        assertNotNull(def);
+   @Test
+   public void verifySubWorkflowExecutions() throws IOException {
+       WorkflowDef def = getWorkflowDef("/workflows/kitchensink.json");
+       assertNotNull(def);
 
-        WorkflowDef subWorkflowDef = getWorkflowDef("/workflows/PopulationMinMax.json");
-        metadataClient.registerWorkflowDef(subWorkflowDef);
-
-
-        WorkflowTestRequest testRequest = getWorkflowTestRequest(def);
-
-        //The following are the dynamic tasks which are not present in the workflow definition but are created by dynamic fork
-        testRequest.getTaskRefToMockOutput().put("_x_test_worker_0_0", List.of(new WorkflowTestRequest.TaskMock()));
-        testRequest.getTaskRefToMockOutput().put("_x_test_worker_0_1", List.of(new WorkflowTestRequest.TaskMock()));
-        testRequest.getTaskRefToMockOutput().put("_x_test_worker_0_2", List.of(new WorkflowTestRequest.TaskMock()));
-        testRequest.getTaskRefToMockOutput().put("simple_task_1__1", List.of(new WorkflowTestRequest.TaskMock()));
-        testRequest.getTaskRefToMockOutput().put("simple_task_5", List.of(new WorkflowTestRequest.TaskMock()));
+       WorkflowDef subWorkflowDef = getWorkflowDef("/workflows/PopulationMinMax.json");
+       metadataClient.registerWorkflowDef(subWorkflowDef);
 
 
-        Workflow execution = workflowClient.testWorkflow(testRequest);
-        assertNotNull(execution);
+       WorkflowTestRequest testRequest = getWorkflowTestRequest(def);
+
+       //The following are the dynamic tasks which are not present in the workflow definition but are created by dynamic fork
+       testRequest.getTaskRefToMockOutput().put("_x_test_worker_0_0", List.of(new WorkflowTestRequest.TaskMock()));
+       testRequest.getTaskRefToMockOutput().put("_x_test_worker_0_1", List.of(new WorkflowTestRequest.TaskMock()));
+       testRequest.getTaskRefToMockOutput().put("_x_test_worker_0_2", List.of(new WorkflowTestRequest.TaskMock()));
+       testRequest.getTaskRefToMockOutput().put("simple_task_1__1", List.of(new WorkflowTestRequest.TaskMock()));
+       testRequest.getTaskRefToMockOutput().put("simple_task_5", List.of(new WorkflowTestRequest.TaskMock()));
+
+
+       Workflow execution = workflowClient.testWorkflow(testRequest);
+       assertNotNull(execution);
 ```
-View the [complete code here](https://github.com/orkes-io/workflow-cicd/blob/main/src/test/java/io/orkes/conductor/cicd/workflows/SubWorkflowTest.java).
 
-### Regression Test
-Workflows can be regression tested with golden inputs and outputs. This approach is useful when modifying workflows that are running in production to ensure the behavior remains correct.
+Refer to the [complete code here](https://github.com/orkes-io/workflow-cicd/blob/main/src/test/java/io/orkes/conductor/cicd/workflows/SubWorkflowTest.java).
 
-See the below **RegressionTest.java** for an example, which uses previously captured workflow execution as golden input/output to verify the workflow execution.
+</details>
+
+
+<details>
+<summary>Test workflows with sub-workflows that contain Worker tasks</summary>
+
+Here is an example of testing workflows that contain sub-workflows with Worker tasks.
 
 ```java
+@Test
+public void testWorkflow() {
+    WorkflowTestRequest testRequest2 = new WorkflowTestRequest();
+    testRequest2.setName("subflow-flow");
+    testRequest2.setWorkflowDef(Util.getWorkflowDef("parent-flow"));
+    testRequest2.setTaskRefToMockOutput(Map.of(
+        "lookup-person-ref", List.of(new TaskMock(COMPLETED, Map.of("name", "June", "id", 543321))),
+        "do-sensitive-work-ref", List.of(new TaskMock(COMPLETED, Map.of("_masked", Map.of("q", "q"), "_secrets", Map.of("z", "z")))),
+        "do-intensive-task-ref", List.of(new TaskMock(COMPLETED, Map.of("result", 3.14159))
+        )));
+        
+    WorkflowTestRequest testRequest = new WorkflowTestRequest();
+    testRequest.setName("parent-flow");
+    testRequest.setWorkflowDef(Util.getWorkflowDef("parent-flow"));
+    testRequest.setSubWorkflowTestRequest(Map.of(
+        "sub-workflow-ref-1", testRequest2
+    ));
+}
+```
+
+</details>
+
+
+## Regression tests
+
+Regression tests are useful for ensuring that changes to a workflow definition do not cause unwanted changes in its behavior. This is particularly important when modifying active workflows in production.
+
+Workflows can be regression tested with golden inputs and outputs. 
+
+### Examples
+
+Here is an example that uses a previous version of a workflow execution as the golden input/output to verify the new version of the workflow execution.
+
+``` java
 /**
- * This test demonstrates how to use execution data from the previous executed workflows as golden input and output
- * and use them to regression test the workflow definition.
- * <p>
- * Regression tests are useful ensuring any changes to the workflow definition does not change the behavior.
- */
+* This test demonstrates how to use execution data from previously executed workflows as golden input and output
+* and use them to regression test the workflow definition.
+* <p>
+* Regression tests are useful, ensuring any changes to the workflow definition do not change the behavior.
+*/
 public class RegressionTest extends AbstractWorkflowTests {
 
-    @Test
-    //Uses a previously executed successful run to verify the workflow execution, and it's output.
-    public void verifyWorkflowOutput() throws IOException, ExecutionException, InterruptedException, TimeoutException {
-        //Workflow Definition
-        WorkflowDef def = getWorkflowDef("/workflows/workflow1.json");
+   @Test
+   //Uses a previously executed successful run to verify the workflow execution, and its output.
+   public void verifyWorkflowOutput() throws IOException, ExecutionException, InterruptedException, TimeoutException {
+       //Workflow Definition
+       WorkflowDef def = getWorkflowDef("/workflows/workflow1.json");
 
-        //Golden output to verify against
-        Workflow workflow = getWorkflow("/test_data/workflow1_run.json");
+       //Golden output to verify against
+       Workflow workflow = getWorkflow("/test_data/workflow1_run.json");
 
-        WorkflowTestRequest testRequest = new WorkflowTestRequest();
-        testRequest.setInput(new HashMap<>());
-        testRequest.setName(def.getName());
-        testRequest.setVersion(def.getVersion());
-        testRequest.setWorkflowDef(def);
+       WorkflowTestRequest testRequest = new WorkflowTestRequest();
+       testRequest.setInput(new HashMap<>());
+       testRequest.setName(def.getName());
+       testRequest.setVersion(def.getVersion());
+       testRequest.setWorkflowDef(def);
 
-        Map<String, List<WorkflowTestRequest.TaskMock>> taskRefToMockOutput = new HashMap<>();
-        for (Task task : workflow.getTasks()) {
-            List<WorkflowTestRequest.TaskMock> taskRuns = new ArrayList<>();
-            WorkflowTestRequest.TaskMock mock = new WorkflowTestRequest.TaskMock();
-            mock.setStatus(TaskResult.Status.valueOf(task.getStatus().name()));
-            mock.setOutput(task.getOutputData());
-            taskRuns.add(mock);
-            taskRefToMockOutput.put(def.getTasks().get(0).getTaskReferenceName(), taskRuns);
-        }
+       Map<String, List<WorkflowTestRequest.TaskMock>> taskRefToMockOutput = new HashMap<>();
+       for (Task task : workflow.getTasks()) {
+           List<WorkflowTestRequest.TaskMock> taskRuns = new ArrayList<>();
+           WorkflowTestRequest.TaskMock mock = new WorkflowTestRequest.TaskMock();
+           mock.setStatus(TaskResult.Status.valueOf(task.getStatus().name()));
+           mock.setOutput(task.getOutputData());
+           taskRuns.add(mock);
+           taskRefToMockOutput.put(def.getTasks().get(0).getTaskReferenceName(), taskRuns);
+       }
 
-        testRequest.setTaskRefToMockOutput(taskRefToMockOutput);
-        Workflow execution = workflowClient.testWorkflow(testRequest);
-        assertNotNull(execution);
-        assertEquals(workflow.getTasks().size(), execution.getTasks().size());
-    }
+       testRequest.setTaskRefToMockOutput(taskRefToMockOutput);
+       Workflow execution = workflowClient.testWorkflow(testRequest);
+       assertNotNull(execution);
+       assertEquals(workflow.getTasks().size(), execution.getTasks().size());
+   }
 
 
 }
 ```
 
-View the [complete code here](https://github.com/orkes-io/workflow-cicd/blob/main/src/test/java/io/orkes/conductor/cicd/workflows/RegressionTest.java).
+Refer to the full [RegressionTest.java file](https://github.com/orkes-io/workflow-cicd/blob/main/src/test/java/io/orkes/conductor/cicd/workflows/RegressionTest.java) for the complete code.

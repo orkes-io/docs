@@ -61,12 +61,12 @@ const sidebars = {
         },
         {
             type: 'category',
-            label: 'Conceptual Guides',
+            label: 'Concepts',
             link: {
                 type: 'generated-index',
-                title: 'Conceptual Guides',
+                title: 'Concepts',
                 slug: '/category/conceptual-guides',
-                description: 'The Conceptual Guides focus on essential concepts for building with Conductor.',
+                description: 'Learn the essential concepts for building with Conductor.',
             },
             className: 'leftMenuHeader',
             items: [
