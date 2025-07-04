@@ -11,7 +11,7 @@ import TabItem from '@theme/TabItem';
 
 **Endpoint:** `POST /api/workflow/{workflowId}/rerun`
 
-Reruns an ongoing or terminal workflow from a specific _reRunFromTaskId_ task, or reruns a terminal workflow execution from the start, with the option to supply updated inputs. When invoked, all previous _reRunFromTaskId_ task attempts will be marked as canceled even if they have been completed successfully.
+Reruns an ongoing or terminal workflow from a specific _reRunFromTaskId_ task, or reruns a terminal workflow execution from the start, with the option to supply updated inputs.
 
 ## Path parameters
 
@@ -27,9 +27,9 @@ Format the request as an object containing the following parameters.
 | ------------------- | --------------------------------------------------------------------------------------------------------------------------------- | ------ | ------------------ |
 | reRunFromTaskId     | The unique identifier of the task to rerun the workflow from.                                                                     | string | Optional.          |
 | reRunFromWorkflowId | The unique identifier of the workflow to be rerun.                                                                                | string | Optional.          |
-| correlationId       | A unique identifier used to correlate the current workflow execution with other executions of the same workflow.                  | string | Optional.          |
-| taskInput           | The task inputs for the task identified in _reRunFromTaskId_. If unspecified, the same inputs from the previous run will be used. | object | Optional.          |
-| workflowInput       | The workflow inputs. If unspecified, the same inputs from the previous run will be used.                                          | object | Optional.          |
+| correlationId       | The unique identifier used to correlate the current workflow execution with other executions of the same workflow. <br/><br/> If unspecified, the same correlation ID from the previous run will be used.                                                                                 | string | Optional.          |
+| taskInput           | The updated task inputs for the task identified in _reRunFromTaskId_. <br/><br/> If unspecified, the same inputs from the previous run will be used.                                 | object | Optional.          |
+| workflowInput       | The updated workflow inputs. <br/><br/> If unspecified, the same inputs from the previous run will be used.                                 | object | Optional.          |
 
 **Example**
 
@@ -103,5 +103,38 @@ curl -X 'POST' \
 ```
 3163f2e3-d4a9-11ef-a114-0af1b159704e
 ```
+
+</details>
+
+
+
+<details>
+<summary>Rerun workflow from a task with updated task inputs</summary>
+
+**Request**
+
+```shell
+curl -X 'POST' \
+  'https://<YOUR-CLUSTER>/api/workflow/d069c77c-5895-11f0-881b-7e8a6dcd068a/rerun' \
+  -H 'accept: text/plain' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "reRunFromTaskId": "d06afffd-5895-11f0-881b-7e8a6dcd068a",
+  "taskInput": {
+    "name": "user2"
+  }
+}'
+```
+
+**Response**
+
+```
+d069c77c-5895-11f0-881b-7e8a6dcd068a
+```
+In the Conductor UI, the workflow execution will rerun from the specified task with the updated input.
+
+<p align="center"><img src="/content/img/SDKs/rerun_workflow-updated_task_input.png" alt="Conductor UI showing workflow in RUNNING state with the updated task input user2." width="90%" height="auto"></img></p>
+
 
 </details>
