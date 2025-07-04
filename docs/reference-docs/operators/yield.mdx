@@ -15,7 +15,7 @@ The functionality described in this document is **not available by default**. To
 
 The Yield task temporarily yields control over the workflow by pausing the execution until it is explicitly resumed using endpoints such as [sync](/reference-docs/api/task/signal-running-task-synchronously) or [async](/reference-docs/api/task/signal-running-task-asynchronously) signals, typically in response to external conditions or events.
 
-When used in workflows that run in synchronous consistency mode, and when the execution reaches the Yield task, Conductor returns a response immediately as defined by the ‘returnStrategy’ in Execute Workflow Synchronously endpoint.
+When used in workflows that run in synchronous consistency mode, and when the execution reaches the Yield task, Conductor returns a response immediately as defined by the [‘returnStrategy’ in Execute Workflow Synchronously](/content/reference-docs/api/workflow/synchronous-workflow-execution#query-parameters) endpoint.
 
 ## Task parameters
 
