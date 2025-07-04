@@ -35,7 +35,9 @@ The control structures and operations in your Conductor workflow are implemented
 - Waits in flow
   - **[Wait](../reference-docs/operators/wait)**—Pause the current workflow until a set time, duration, or signal is received.
   - **[Wait for Webhook](../reference-docs/system-tasks/wait-for-webhook)**—Pause the current workflow for an incoming webhook signal.
-  - **[Human](../reference-docs/operators/human)**–Pause the current workflow for user input before proceeding to the next task.
+  - **[Human](../reference-docs/operators/human)**–Pause the current workflow for human input before proceeding to the next task.
+  - **[Yield](../reference-docs/operators/yield)**–Temporarily yields control over the workflow by pausing the execution until it is explicitly resumed using specific endpoints, with the ability to automatically return an execute call when reached.
+
 - Dynamic tasks in flow
   - **[Dynamic](../reference-docs/operators/dynamic)**—Execute a task dynamically, like a function pointer.
 
@@ -58,6 +60,7 @@ In most common cases, you can make use of existing Conductor features instead of
 | Clean or transform JSON data                                                                 | [JSON JQ](../reference-docs/system-tasks/jq-transform)                    |
 | Modify SQL databases                                                                         | [JDBC](../reference-docs/system-tasks/jdbc)                               |
 | Execute JavaScript scripts                                                                   | [Inline](../reference-docs/system-tasks/inline)                           |
+| Send email using SendGrid integration                                                        | [SendGrid](../reference-docs/system-tasks/sendgrid)                                                              | 
 | Evaluate and retrieve data in spreadsheets                                                   | [Business Rule](../reference-docs/system-tasks/business-rule)             |
 | Get authorized using a signed JWT                                                            | [Get Signed JWT](../reference-docs/system-tasks/get-signed-jwt)           |
 | Orchestrate human input in the loop                                                          | [Human](../reference-docs/operators/human)                                |
@@ -136,8 +139,6 @@ The task configuration is part of the workflow definition. It specifies the work
 
 Although each task type has its unique configuration, all tasks share several parameters in common.
 
-
-
 * For all tasks, the configuration specifies the input parameters.
 * For custom worker tasks, the configuration contains a reference to a registered worker.
 * For system tasks and operators, the configuration includes parameters that control the task behavior. For example, the configuration for an HTTP task specifies the endpoint URL and the payload template, which will be used during task execution.
@@ -160,11 +161,25 @@ The task configurations appear in the *tasks* array of the workflow definition J
 | startDelay        | The time in seconds to wait before making the task available for worker polling. The default value is 0.                                                                                               | Optional.           |
 | onStateChange     | Configuration for publishing an event or starting another task when this task status changes.                                                                                                 | Optional.           |
 
+## Dealing with data
+
+Conductor provide several mechanisms to pass, validate, and protect data as it moves between tasks. This section covers how to pass data using dynamic references and input templates, mask sensitive values, and enforce schema validation for inputs and outputs.
 
 ### Passing data between tasks
 
-Data can be passed from one task to another, by using dynamic references in a task’s `inputParameters`. These dynamic references are formatted as JSONPath expressions. Refer to [Wiring Parameters](passing-inputs-to-task-in-conductor) to learn more.
+Using dynamic references in a task’s `inputParameters`, data can be passed from one task to another. These dynamic references are formatted as JSONPath expressions. Refer to [Wiring Parameters](/content/developer-guides/passing-inputs-to-task-in-conductor) to learn more.
 
+### Passing data using task input templates
+
+Use the task input templates in a task definition to apply default parameters to all instances of the task. Refer to [Using Task Input Templates](/content/developer-guides/task-input-templates) to learn more.
+
+### Masking data in tasks
+
+Masking parameters protects sensitive data from being exposed in workflows. It ensures that sensitive values are hidden and not displayed in the workflow definitions or executions. Refer to [Masking Parameters](/content/developer-guides/masking-parameters) to learn more.
+
+### Input/output schema validation
+
+Create schemas to define and enforce the payload structure of workflow or task inputs/outputs. Refer to [Input/Output Schema Validations](/content/developer-guides/schema-validation) to learn more.
 
 ## Task reuse
 
