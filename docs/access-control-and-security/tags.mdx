@@ -12,13 +12,13 @@ import TabItem from '@theme/TabItem';
 Formatted as `key:value`, tags can be applied to most resources in Conductor:
 * Workflows
 * Tasks
-* Secrets
-* Environment variables
-* Integrations
-* Prompts
 * User forms
 * Schedules
+* Secrets
 * Webhooks
+* Prompts
+* Environment variables
+* Integrations
 * Applications
 
 Tags are useful not only for organizing your resources, but also for bulk-sharing resource access at a group or application level.
@@ -29,7 +29,8 @@ Tags are useful not only for organizing your resources, but also for bulk-sharin
 You can add or remove multiple tags to various resources.
 
 **To add or remove a tag:**
-1. In the left navigation menu, go to **Definitions** and select **Workflow** / **Task** / **Secrets** / **Environment Variables** / **AI Prompts** / **User Forms** / **Scheduler** / **Webhook**<br/>OR go to **Integrations**<br/>OR go to **Access Control** > **Applications** depending on the resource you want to tag.
+1. In the left navigation menu, go to **Definitions** and select **Workflow** / **Task** / **User Forms** / **Scheduler** / **Secrets** / **Webhook** / **AI Prompts**  /  **Environment Variables**  / **Schemas**.
+<br/>OR go to **Integrations**<br/>OR go to **Access Control** > **Applications** depending on the resource you want to tag.
 2. Locate the specific resource.
     <p align="center"><img src="/content/img/RBAC/adding-tags-to-workflow.png" alt="Adding a tag to an existing workflow" width="90%" height="auto"></img></p>
 3. In the Actions column, select the **Tag** icon. <br/>A pop-up window for Edit Tags appears.
@@ -58,7 +59,7 @@ This feature is only available to Admins.
 **To add permissions to a group:**
 1. In the left navigation menu, go to **Access Control** > **Groups**.
 2. Select the group name or the **Edit** icon located next to the group name.
-3. In the Permissions section, select **+ Add Permission**.
+3. In the **Permissions** section, select **+ Add Permission**.
 4. Toggle to the **Tag** tab and select the tag to provide access to.
 5. Toggle the access levels for your selected resource:
     - **Read**—Users will be able to view the resource.
@@ -78,7 +79,7 @@ All users in the group now have access to all resources under the tag. You can s
 **To add permissions to an application:**
 1. In the left navigation menu, go to **Access Control** > **Applications**.
 2. Select the application name or the **Edit** icon located next to the application name.
-3. In the Permissions section, select **+ Add Permission**.
+3. In the **Permissions** section, select **+ Add Permission**.
 4. Toggle to the **Tag** tab and select the tag to provide access to.
 5. Toggle the access levels for your selected resource:
     - **Read**—The application will be able to view the resource.

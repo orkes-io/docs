@@ -9,7 +9,7 @@ import TabItem from '@theme/TabItem';
 
 # Managing Applications
 
-An application represents an application that interacts with a Conductor cluster via APIs or SDKs. The application layer in Conductor provides application-based access to resources in your cluster. 
+An application represents a non-human identity, such as a script, service, task worker, client, or CI/CD pipeline, that interacts with a Conductor server via APIs or SDKs. The application layer in Conductor provides application-based access to resources in your cluster. 
 
 Each application can also have one or more access key/secret pairs, which are used to grant access to Conductor SDK and API. Learn more about authentication in [Authentication and Access Keys](/sdks/authentication).
 
@@ -43,7 +43,7 @@ Application roles can be added by any user with access to applications. General 
 
 <TabItem value="unrestricted roles" label="Unrestricted Roles">
 
-Unrestricted roles can only be added by an Admin. Unrestricted roles include:
+Unrestricted roles can only be added by a cluster Admin. Unrestricted roles include:
 * **Unrestricted Worker**—Poll, execute updates, maintain logs, and handle any task without any constraints.
 * **Metadata Manager**—Create, update, delete, and grant permissions to any workflow or task definition in the cluster.
 * **Workflow Manager**—Manage the lifecycle of workflows within the system. Start, pause, resume, rerun, and delete any workflow execution.
@@ -68,21 +68,41 @@ Configure the application’s roles and permissions to control what your applica
     4. Select **Save**.
     The application has been created. You can proceed to add roles or permissions to the application.
 2. Add roles to the application.
-    1. In the **Application Roles** or **Unrestricted Roles** section, toggle the different application roles for your application.
+    1. In the **Application roles** or **Unrestricted roles** section, toggle the different application roles for your application.
 3. Generate access keys.
     1. In the **Access Keys** section, select **+ Create access key** to generate the Server URL, a unique Key Id and a Key Secret. The Key Secret is shown only once, so make sure to copy and store it securely.
-4. Add permissions to grant application-level access to resources.
+4. Add permissions to grant application-level access to resources, including workflows, tasks, secrets, environment variables, tags, domains, integrations, and prompts.
     1. In the **Permissions** section, select **+ Add permission**.
     2. Toggle between each resource type and select the resources to provide access to.
     3. Toggle the access levels for your selected resource:
         * **Read**—The application will be able to view the resource.
-        * **Update**—The application will be able to update the resource. The application must also have the Metadata API role to update metadata resources.
-        * **Execute**—The application will be able to execute the resource. The application must also have the Worker role to execute resources.
-        * **Delete**—The application will be able to delete the resource. The application must also have the Metadata API role to delete metadata resources.
+        * **Update**—The application will be able to update the resource. The application must also have the *Metadata API* role to update metadata resources.
+        * **Execute**—The application will be able to execute the resource. The application must also have the *Worker* role to execute resources.
+        * **Delete**—The application will be able to delete the resource. The application must also have the *Metadata API* role to delete metadata resources.
 
 :::tip
 You can grant permissions to **tags**, rather than to individual resources. Tags can be added to multiple resources, so that when you grant a permission to a tag, it instantly provides access to all tagged resources. Learn more about tags in [Managing Tags](/access-control-and-security/tags).
 :::
+
+## Editing applications
+
+You can edit an application’s name, role, or permissions anytime.
+
+**To edit an application:**
+1. In the left navigation menu, go to **Access Control** > **Applications**.
+2. Select the Application ID or the **Edit** icon located next to the application name.
+3. Update the application’s name, roles, or permissions as desired.
+
+<p align="center"><img src="/content/img/RBAC/editing-an-application.png" alt="Editing an application" width="100%" height="auto"></img></p>
+
+## Deleting applications
+
+**To delete an application from your cluster:**
+
+1. In the left navigation menu, go to **Access Control** > **Applications**.
+2. Select the **Delete** icon located next to the application name.
+3. Confirm the action by entering the application name and selecting **Confirm**.
+
 
 <br/>
 <center><iframe width="510" height="300" src="https://www.youtube.com/embed/PY34TcVzof0?si=ANSHZW6IMVDx1rI9" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="allowfullscreen"

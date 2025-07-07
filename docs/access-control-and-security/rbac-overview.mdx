@@ -22,7 +22,7 @@ Orkes Conductor provides a robust role-based access control (RBAC) mechanism for
 - Webhooks
 - Domains
 
-Get started with using Orkes’ RBAC suite by understanding what are users, groups, applications, tags, roles, and permissions.
+Get started with using Orkes’ RBAC suite by understanding users, groups, applications, tags, roles, and permissions.
 
 ## Users
 
@@ -32,7 +32,7 @@ A user represents a human user that interacts with Conductor. Users are authenti
 
 A group is a set of users. Groups are a way to quickly share permissions among multiple users.
 
-Each Conductor group can be associated with one or more roles. Groups can also be assigned a set of permissions, which provides access to specific Conductor resources. When a user is added to a group, the user automatically inherits the group's roles and permissions. Likewise, when a user is removed from a group, the roles and permissions are automatically removed from the user.
+Each Conductor group can be associated with one or more roles. Groups can also be assigned a set of permissions, which provide access to specific Conductor resources. When a user is added to a group, the user automatically inherits the group's roles and permissions. Likewise, when a user is removed from a group, the roles and permissions are automatically removed from the user.
 
 ## Applications
 
@@ -57,11 +57,11 @@ If multiple roles are granted, they will have all granted role-level permissions
 
 | Role             | Description                                                                                                                                                           |
 | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| User             | Regular user. Can only access resources that they created.                                                                                                            |
-| Read Only User   | Can access all metadata and workflows in the system as read-only. Cannot modify or execute workflows. <br/><br/> **Note:** Read Only Users cannot read secret values. |
-| Workflow Manager | Can view and execute all workflows in the system.                                                                                                                     |
-| Metadata Manager | Can read, update, and delete all metadata in the system.                                                                                                              |
 | Admin            | Superuser. Full access to the system and resources. Can manage users and groups.                                                                                      |
+| User             | Regular user. Can only access resources that they created.                                                                                                            |
+| Metadata Manager | Can read, update, and delete all metadata in the system.                                                                                                              |
+| Workflow Manager | Can view and execute all workflows in the system.                                                                                                                     |
+| Read Only User   | Can access all metadata and workflows in the system as read-only. Cannot modify or execute workflows. <br/><br/> **Note:** Read Only Users cannot read secret values. |
 
 </TabItem>
 
@@ -69,7 +69,7 @@ If multiple roles are granted, they will have all granted role-level permissions
 
 | Role                | Description                                                                                                                                                                                                                         |
 | ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Worker              | Can poll and execute tasks that it has Execute permissions for. <br/> <br/> Should be granted to a task worker application that is responsible for polling and executing a task.                                                    |
+| Worker              | Can poll and execute tasks for which it has *Execute* permissions for. <br/> <br/> Should be granted to a task worker application that is responsible for polling and executing a task.                                                    |
 | Metadata API        | Can create and manage workflow and task metadata. <br/> <br/> Should be granted to an application that is responsible for retrieving and managing workflow and task definitions, such as for testing or CI/CD integration purposes. |
 | Application API     | Can create and manage applications. <br/> <br/> Should be granted to an application that is responsible for managing other applications in the cluster.                                                                             |
 | Unrestricted Worker | Worker role with full access to poll and execute any task in the cluster. <br/> <br/> This role can only be granted by an Admin.                                                                                                    |
@@ -96,7 +96,7 @@ Besides the role-based permissions, you can add granular permissions to **groups
 
 Unlike other permission targets, **tags** and **domains** provide bulk access to multiple resources. Tags can be used to grant resources across almost every resource type. When you grant access for a tag “x”, all resources with the tag “x” will be made available to the group or application.
 
-Domain is used to grant access to all tasks under a particular domain. This is useful for mass-granting a worker application to execute all tasks under a specific domain, instead of having to add individual tasks and specifying its domain. Refer to [Routing Tasks](docs/developer-guides/task-to-domain.mdx) to learn more about domain mappings.
+A domain is used to grant access to all tasks under a particular domain. This is useful for mass-granting a worker application to execute all tasks under a specific domain, instead of having to add individual tasks and specifying its domain. Refer to [Routing Tasks](docs/developer-guides/task-to-domain.mdx) to learn more about domain mappings.
 
 ### Permission stacking
 
