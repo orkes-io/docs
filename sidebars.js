@@ -741,7 +741,11 @@ const sidebars = {
                             id: 'tutorials/agentic-interview-app',
                             label: 'Agentic Interview App',
                         },
-                        'templates/document-classifier',
+                         {
+                            type: 'doc',
+                            id: 'tutorials/document-classifier',
+                            label: 'Document Classification',
+                        },
                     ]
                 },
                 {
