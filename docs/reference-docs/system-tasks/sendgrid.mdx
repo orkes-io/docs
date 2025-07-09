@@ -98,3 +98,65 @@ The SendGrid task will return the following parameters.
 6. In **SendGrid Configuration**, select the SendGrid integration added to the cluster.
 
 <center><p><img src="/content/img/sendgrid-ui.png " alt="Adding SendGrid task" width="80%" height="auto"/></p></center>
+
+## Examples
+
+Here are some examples for using the SendGrid task.
+
+<details>
+<summary>Using the SendGrid task in a workflow</summary>
+<p>
+
+Notification workflows are common when end users must be alerted, such as for payments, alerts, or failures.
+
+Consider a scenario where an organization uses SendGrid as its email notification platform. To create a simple email notification flow using Orkes Conductor, first [create a SendGrid integration](https://orkes.io/content/integrations/email/sendgrid) in your Conductor cluster.
+
+Once the integration is created, note its name. For example, let’s use “SendGrid”.
+
+The following workflow uses this integration to send an email notification. To create the workflow in the Conductor UI:
+
+1. Go to **Definitions** > **Workflow** from the left navigation menu on your Conductor cluster.
+2. Select **+ Define workflow**.
+3. In the **Code** tab, paste the following code, replacing your SendGrid integration name and sender email:
+
+```json
+{
+ "name": "email-notification-workflow",
+ "description": "Email notification workflow using SendGrid",
+ "version": 1,
+ "tasks": [
+   {
+     "name": "sendgrid",
+     "taskReferenceName": "sendgrid_ref",
+     "inputParameters": {
+       "from": "john.doe@acme.com", //Verified sender email in SendGrid
+       "to": "${workflow.input.recipientEmail}",
+       "subject": "Your renewal failed",
+       "contentType": "text/plain",
+       "content": "Hello, This is to notify that your subscription renewal for XYZ failed. ",
+       "sendgridConfiguration": "SendGrid" // Integration name in Orkes Conductor
+     },
+     "type": "SENDGRID"
+   }
+ ],
+ "inputParameters": [
+   "recipientEmail"
+ ],
+ "schemaVersion": 2
+}
+```
+
+After saving the workflow, go to the **Run** tab, enter the recipient email address in the input parameter field, and select **Execute** to run the workflow.
+
+<center><p><img src="/content/img/email-notification-workflow-execution.gif" alt="Executing email notification workflow in Orkes Conductor" width="100%" height="auto"/></p></center>
+
+This starts the workflow and opens the workflow execution page, where you can monitor its progress. After the workflow is complete, the status changes to **Completed**.
+
+<center><p><img src="/content/img/email-notification-workflow-execution-completed.png" alt="Email notification workflow execution completed" width="100%" height="auto"/></p></center>
+
+Verify email delivery from the recipient’s inbox.
+
+<center><p><img src="/content/img/email-notification-received-via-sendgrid-task.png" alt="Email notification received via SendGrid task" width="100%" height="auto"/></p></center>
+
+</p>
+</details>
