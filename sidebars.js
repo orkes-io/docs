@@ -709,7 +709,7 @@ const sidebars = {
                           },
                         {
                             type: 'doc',
-                            id: 'templates/examples/sequential-http-tasks',
+                            id: 'tutorials/sequential-http-tasks',
                             label: 'Sequential HTTP Tasks',
                         },
                         {
