@@ -1,0 +1,375 @@
+---
+slug: "/templates/daily-scrum-automation-using-standup-bot"
+description: "Use this template to automate your daily stand-ups with Orkes Conductor."
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import Install from '@site/src/components/install.mdx';
+
+# Build a Standup Bot using Slack Webhooks in Orkes Conductor
+
+This tutorial demonstrates how to build a standup bot that automates the daily standup process using Slack webhooks and Orkes Conductor. The bot collects updates from team members via personalized Slack messages, waits for a set timeframe, and compiles the responses. Once individual updates are received or the app timeout is reached, the bot posts them to a shared team channel, streamlining your team’s standup routine.
+
+In this tutorial, you will:
+1. Create standup bot workflows in Orkes Conductor.
+2. Create a webhook to receive Slack events.
+3. Create a Slack app.
+4. Modify workflow.
+5. Run the workflow.
+
+To follow along, ensure you have access to the free [Developer Playground](https://developer.orkescloud.com/).
+
+## The standup updates workflow
+
+This tutorial includes two workflows:
+- **standup_updates_main**: The main workflow, triggered at the scheduled standup time
+- **individual_updates**: A sub workflow invoked for each employee to collect their update
+
+**Parent workflow logic:**
+
+<p align="center"><img src="/content/img/standup-bot-main-workflow.png" alt="Standup bot workflow" width="50%" height="auto"></img></p>
+
+- The **standup_updates_main** workflow begins with a [Fork/Join](https://orkes.io/content/reference-docs/operators/fork-join) task that splits into multiple parallel forks. The number of forks is determined based on the number of users the bot serves.
+- Each fork contains a [Sub Workflow](https://orkes.io/content/docs/reference-docs/sub-workflow-task) task that invokes the **individual_updates** workflow.
+- Once the forks are completed, the [Join task](https://orkes.io/content/reference-docs/operators/join) combines all the forks, and the workflow is completed.
+
+**Sub-workflow  logic:**
+
+<p align="center"><img src="/content/img/individual-updates-workflow.png" alt="Workflow for individual user updates" width="50%" height="auto"></img></p>
+
+- The **individual_updates** workflow begins with an [HTTP task](https://orkes.io/content/reference-docs/system-tasks/http) that sends a welcome message to the user asking for their scrum updates.
+- Next, a [Do While task](https://orkes.io/content/reference-docs/operators/do-while) captures the user inputs. The loop condition for the Do While task is checked using a [Wait for Webhook](https://orkes.io/content/reference-docs/system-tasks/wait-for-webhook) task that captures incoming events from Slack.
+- It is followed by a series of [JSON JQ Transform](https://orkes.io/content/reference-docs/system-tasks/jq-transform) tasks that aggregate updates from the user, convert them into CSV format, and append the update with the user’s name.
+- The final task is an HTTP task that posts the updates to a dedicated Slack channel.
+
+## Step 1: Create the standup updates workflow
+
+You’ll create two workflows:
+- **standup_updates_main**: The parent workflow.
+- **individual_updates**: The sub-workflow used to collect updates from each user.
+
+### Create the standup_updates_main
+
+**To create the workflow:**
+1. Go to [**Definitions** > **Workflow**](https://developer.orkescloud.com/workflowDef) and select **+ Define workflow**.
+2. In the **Code** tab, enter the following JSON:
+
+```JSON
+{
+ "name": "standup_updates_main",
+ "description": "standup_updates_main",
+ "version": 1,
+ "tasks": [
+   {
+     "name": "fork",
+     "taskReferenceName": "fork",
+     "inputParameters": {},
+     "type": "FORK_JOIN",
+     "forkTasks": [
+       [
+         {
+           "name": "employee_2",
+           "taskReferenceName": "employee_2",
+           "inputParameters": {
+             "user_name": "<EMPLOYEE-NAME>",
+             "user_id": "<SLACK-ID>"
+           },
+           "type": "SUB_WORKFLOW",
+           "subWorkflowParam": {
+             "name": "individual_updates"
+           }
+         }
+       ],
+       [
+         {
+           "name": "employee_1",
+           "taskReferenceName": "employee_1",
+           "inputParameters": {
+             "user_name": "<EMPLOYEE-NAME>",
+             "user_id": "<SLACK-ID>"
+           },
+           "type": "SUB_WORKFLOW",
+           "subWorkflowParam": {
+             "name": "individual_updates"
+           }
+         }
+       ]
+     ]
+   },
+   {
+     "name": "join",
+     "taskReferenceName": "join",
+     "type": "JOIN",
+     "joinOn": [
+       "employee_1",
+       "employee_2"
+     ]
+   }
+ ],
+ "schemaVersion": 2
+}
+```
+3. Select **Save** > **Confirm**.
+
+### Create the individual_updates workflow
+
+**To create the workflow:**
+1. Go to [**Definitions** > **Workflow**](https://developer.orkescloud.com/workflowDef) and select **+ Define workflow**.
+2. In the **Code** tab, enter the following JSON:
+
+```JSON
+{
+ "name": "individual_updates",
+ "description": "This workflow is used to get scrum update for user",
+ "version": 1,
+ "tasks": [
+   {
+     "name": "send_welcome_message",
+     "taskReferenceName": "send_welcome_message",
+     "inputParameters": {
+       "user_name": "${workflow.input.user_name}",
+       "http_request": {
+         "uri": "https://slack.com/api/chat.postMessage",
+         "method": "POST",
+         "connectionTimeOut": 3000,
+         "readTimeOut": 3000,
+         "body": {
+           "channel": "${workflow.input.user_id}",
+           "text": "Hello *${workflow.input.user_name}*! Good Morning. What is your scrum update for today. Send *done* to end update",
+           "as_user": true
+         },
+         "headers": {
+           "Authorization": "Bearer ${workflow.secrets.slack_standup_token}"
+         }
+       }
+     },
+     "type": "HTTP"
+   },
+   {
+     "name": "loopTask",
+     "taskReferenceName": "loopTask",
+     "inputParameters": {
+       "value": "${workflow.input.loop}"
+     },
+     "type": "DO_WHILE",
+     "loopCondition": "if ($.webhook_task['event']['text'] == \"done\" ) { false;} else {true;} ",
+     "loopOver": [
+       {
+         "name": "webhook_task",
+         "taskReferenceName": "webhook_task",
+         "inputParameters": {
+           "user_id": "${workflow.input.user_id}",
+           "matches": {
+             "$['event']['type']": "message",
+             "$['event']['user']": "${workflow.input.user_id}"
+           }
+         },
+         "type": "WAIT_FOR_WEBHOOK"
+       }
+     ]
+   },
+   {
+     "name": "jq_aggregate_updates",
+     "taskReferenceName": "jq_aggregate_updates",
+     "inputParameters": {
+       "updates": "${loopTask.output}",
+       "queryExpression": ".updates | to_entries | .[] | select(.key != \"iteration\") | .value | .webhook_task.event.text | select(. != \"done\") | select (. | startswith(\"Hello\") | not)"
+     },
+     "type": "JSON_JQ_TRANSFORM"
+   },
+   {
+     "name": "jq_convert_to_string",
+     "taskReferenceName": "jq_convert_to_string",
+     "inputParameters": {
+       "updates": "${jq_aggregate_updates.output.resultList}",
+       "queryExpression": ".updates | join(\",\")"
+     },
+     "type": "JSON_JQ_TRANSFORM"
+   },
+   {
+     "name": "append_user_name",
+     "taskReferenceName": "append_user_name",
+     "inputParameters": {
+       "user_name": "${workflow.input.user_name}",
+       "updates": "${jq_convert_to_string.output}",
+       "queryExpression": "(.user_name + \"'s update - \" + .updates.result)"
+     },
+     "type": "JSON_JQ_TRANSFORM"
+   },
+   {
+     "name": "post_updates",
+     "taskReferenceName": "post_updates",
+     "inputParameters": {
+       "http_request": {
+         "uri": "${workflow.secrets.slack_conductor_channel_url}",
+         "method": "POST",
+         "connectionTimeOut": 3000,
+         "readTimeOut": 3000,
+         "body": {
+           "text": "${append_user_name.output.result}"
+         },
+         "headers": {
+           "Content-type": "application/json"
+         }
+       }
+     },
+     "type": "HTTP"
+   }
+ ],
+ "inputParameters": [
+   "user_name",
+   "user_id"
+ ],
+ "schemaVersion": 2
+}
+```
+3. Select **Save** > **Confirm**.
+
+:::tip
+If you change the name of the **individual_updates** workflow, make sure to update the corresponding Sub Workflow task in the **standup_updates_main** to match the new name.
+:::
+
+
+## Step 2: Create a webhook
+
+The Wait for Webhook task in the **individual_updates** workflow captures the users' updates as incoming events through the Slack webhook.
+
+**To create a webhook in Conductor:**
+
+1. Go to [**Definitions** > **Webhook**](https://developer.orkescloud.com/configure-webhooks) from the left navigation menu on your Conductor cluster.
+2. Select **+ New webhook.**
+
+<p align="center"><img src="/content/img/webhook-standupbot.png" alt="Slack Webhook in Conductor for Standup bot" width="80%" height="auto"></img></p>
+
+3. In **Webhook name**, enter a unique name for the webhook.
+4. In **Workflows to receive webhook event**, select both the workflows created in the previous step.
+5. In **Source platform**, select **Slack**.
+6. Select **Save**.
+
+An unverified webhook URL is generated. The next step is to create a Slack app that sends events to the workflow through this webhook.
+
+## Step 3: Create a Slack app
+
+**To create a Slack app:**
+
+1. Sign in to [Slack API](https://api.slack.com/apps).
+2. Select **Create an App** > **From scratch**.
+3. Enter an **App name**, and select a workspace to integrate the Slack app.
+4. Select **Create App**.
+5. From the left navigation menu, go to **Features** > **Incoming Webhooks**, and turn on **Activate Incoming Webhooks**.
+6. Go to **Features** > **Event Subscriptions**, and turn on **Enable events**.
+    - In **Request URL**, enter the Webhook URL created in Conductor.
+    - In **Subscribe to bot events**, select **Add Bot User Event** and choose **message.im** event.
+    - Select **Save changes**.
+7. Go to **Features** > **App Home** > **Show Tabs**.
+    - In **Messages** Tab, enable the option *Allow users to send Slash commands and messages from the messages tab*.
+8. Enable permissions for the Slack app by going to **Feature** > **OAuth & Permissions**.
+    - In **Scopes** > **Bot Token Scopes**, select **Add an OAuth scope**.
+    - Add **chat:write** permission.
+
+The Slack app has been created.
+
+**To install the app in a Slack workspace:**
+
+1. From the [Slack API](https://api.slack.com/apps) console, go to **Settings** > **Install App**.
+2. Select **Install to \<YOUR-WORKSPACE-NAME>**.
+3. In **Where Should \<Acme Bot> post**, select the channel to install the app and select **Allow**.
+
+<p align="center"><img src="/content/img/slack-app-installation.png" alt="Installing Slack App to the workspace" width="50%" height="auto"></img></p>
+
+The Slack bot is integrated into the specified channel:
+
+<p align="center"><img src="/content/img/slack-app-installed-in-workspace-channel.png" alt="Slack app installed into the specified channel" width="70%" height="auto"></img></p>
+
+Once the app is installed in your workspace, a **Bot User OAuth Token** and a **Webhook URL** will be generated. These are to be added as secrets in Conductor.
+
+<p align="center"><img src="/content/img/generated-tokens.png" alt="Generated tokens in Slack API" width="80%" height="auto"></img></p>
+
+**To store the OAuth Token and Webhook URL as secrets in Conductor:**
+
+1. Go to [**Definitions** > **Secrets**](https://developer.orkescloud.com/secrets) from the left menu on your Conductor cluster.
+2. Select **+ Add Secret** and add the following:
+    - Enter **Secret name** as *slack_standup_token*.
+    - In **Secret** value, enter the *Bot User OAuth token* generated in the previous step.
+3. Select **Add** to save the secret.
+
+Repeat the process to create another secret, where:
+
+- **Secret name** is *slack_conductor_channel_url*.
+- **Secret value** is the *Webhook URL* generated in Slack API.
+
+:::note
+The workflow is configured to use specific secret names, so the secrets must be stored with those exact names.
+:::
+
+## Step 4: Modify workflow
+
+Make the following changes to the workflow using your employee’s Slack details:
+
+In the *standup_updates_main* workflow, replace **user_name** and **user_id** in the sub-workflow tasks with the respective employee details.  
+- **user_name**–The employee’s name.
+- **user_id**–The member ID from Slack.<br/>
+    
+**To get the Member ID:**
+Go to **Slack workspace** > Select the user profile > **View the profile** > Click on three dots > **Copy member ID**.
+
+<p align="center"><img src="/content/img/member-id-slack.png" alt="Getting member ID from Slack" width="30%" height="auto"></img></p>
+
+**To modify the workflow with these details:**
+1. Go to *standup_updates_main* workflow, and update both the Sub Workflow tasks with the user details.
+
+<p align="center"><img src="/content/img/modifying-standup-bot-main-workflow.png" alt="Modifying workflow" width="100%" height="auto"></img></p>
+
+2. Select **Save** > **Confirm**.
+
+## Step 5: Run workflow
+
+### Run workflow using Conductor UI
+
+To test the workflow, let’s run it from the Conductor UI. From your workflow definition, select **Execute**.
+
+<p align="center"><img src="/content/img/run-workflow-standup-bot.png" alt="Running workflow from Conductor UI" width="90%" height="auto"></img></p>
+
+When the workflow is triggered, the bot requests updates from users.
+
+<p align="center"><img src="/content/img/bot-collecting-updates.png" alt="Bot requesting updates from user" width="90%" height="auto"></img></p>
+
+Users must send "done" after posting updates. The bot collects these and posts them to the specified channel.
+
+<p align="center"><img src="/content/img/bot-posting-updates.png" alt="Bot posting updates to the channel" width="90%" height="auto"></img></p>
+
+Returning to the workflow execution, you can see that the particular user's branch is completed while the workflow waits for updates from the remaining users. Once all users post their updates, the workflow gets completed.
+
+<p align="center"><img src="/content/img/partially-completed-workflow.png" alt="Partially completed workflow" width="70%" height="auto"></img></p>
+
+### Scheduling workflow to run at standup time 
+
+For now, we have manually run the workflow. However, we must automate this in a production environment to run at the standup time.
+
+The Scheduler allows you to set a predefined cadence for running a workflow. Once the schedule is configured, Conductor will automatically invoke the workflow at the specified intervals, such as 9 AM PT on weekdays.
+
+**To schedule workflows:**
+
+1. Go to [**Definitions** > **Scheduler**](https://developer.orkescloud.com/scheduleDef) from the left navigation menu on your Conductor cluster.
+2. Select **+ Define Schedule**.
+3. Provide a schedule name, select the workflow name and version, and set the schedule using the cron expression. 
+4. Select **Save** > **Confirm**.
+
+Refer to [Scheduling Workflows](https://orkes.io/content/developer-guides/scheduling-workflows) documentation for more details.
+
+## Example Modifications
+
+If an employee is out of office, the workflow will not complete unless configured otherwise. To handle such cases, in the main workflow, you can mark each fork as optional, ensuring the bot does not wait indefinitely for updates when someone is unavailable.
+
+<p align="center"><img src="/content/img/forks-as-optional.png" alt="Each of the fork is marked as optional" width="70%" height="auto"></img></p>
+
+The bot’s waiting period for updates can be configured by setting a timeout for the *individual_updates* workflow. For example, to allow a 3-hour window from the scheduled time, set the workflow timeout seconds to 10800 seconds, and the timeout policy to *Timeout Workflow*.
+
+<p align="center"><img src="/content/img/workflow-timeout-for-sub-workflows.png" alt="Workflow timeout set for individual updates workflow" width="70%" height="auto"></img></p>
+
+This ensures the bot operates for 3 hours from the runtime, with the forks marked as optional. Whenever a user responds within these 3 hours, the updates will be collected and posted to the specified channel. 
+
+## Video Guide
+
+<center><iframe width="560" height="315" src="https://www.youtube.com/embed/lk6BxLM8upE?si=Y6COc-3QDXlwO7MH" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></center>
