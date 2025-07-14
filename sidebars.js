@@ -876,6 +876,12 @@ const sidebars = {
             collapsed: true,
             className: 'leftMenuHeader',
         },
+        {
+            type: 'doc',
+            label: 'Glossary',
+            id: 'glossary',
+            className: 'leftMenuHeader',
+        },
     ]
 };
 
