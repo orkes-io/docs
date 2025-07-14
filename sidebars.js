@@ -714,7 +714,7 @@ const sidebars = {
                         },
                         {
                             type: 'doc',
-                            id: 'templates/examples/api-processing-usps-example',
+                            id: 'tutorials/api-processing-usps-example',
                             label: 'API Processing',
                         },
                         'templates/examples/keep-worker-running-until-condition-true',
