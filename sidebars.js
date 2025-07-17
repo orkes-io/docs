@@ -809,7 +809,7 @@ const sidebars = {
                     items: [
                         {
                             type: 'doc',
-                            id: 'templates/examples/document-approvals',
+                            id: 'tutorials/document-approvals',
                             label: 'Document Approval',
                         },
                     ]
