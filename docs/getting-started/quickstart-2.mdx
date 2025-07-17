@@ -29,7 +29,7 @@ Follow along to build your first workflow, a conditional helloWorld flow that gr
 Use the visual workflow editor in Conductor UI to create your *helloWorld* workflow.
 
 **To create a workflow:**
-1. Log in to your Orkes cluster or the [Orkes Developer Playground](https://developer.orkescloud.com/?utm_campaign=quickstarts&utm_source=orkes-doc&utm_medium=web).
+1. Log in to your Orkes cluster or the [Developer Edition](https://developer.orkescloud.com/?utm_campaign=quickstarts&utm_source=orkes-doc&utm_medium=web).
 2. In the left navigation menu, go to **Definitions** > **Workflow**.
 3. Select **(+) Define workflow**.
 
@@ -134,8 +134,8 @@ from conductor.client.workflow.task.switch_task import SwitchTask
 
 
 def main():
-    # Set up an application in your Orkes Conductor cluster. Sign up for a Developer Playground account at https://developer.orkescloud.com. 
-    # - Set your cluster's URL as base_url (e.g., "https://developer.orkescloud.com" for Developer Playground).
+    # Set up an application in your Orkes Conductor cluster. Sign up for a Developer Edition account at https://developer.orkescloud.com. 
+    # - Set your cluster's URL as base_url (e.g., "https://developer.orkescloud.com" for Developer Edition).
     # - Use the application's Key ID and Secret here.
     conf = Configuration(base_url='_CHANGE_ME_',
                          authentication_settings=AuthenticationSettings(key_id='_CHANGE_ME_',
@@ -197,8 +197,8 @@ import java.util.Map;
 public class WorkflowAsCode {
 
     public static void main(String[] args) {
-        // Set up an application in your Orkes Conductor cluster. Sign up for a Developer Playground account at https://developer.orkescloud.com. 
-        // - Set your cluster's API URL as basePath (e.g., "https://developer.orkescloud.com/api" for Developer Playground).
+        // Set up an application in your Orkes Conductor cluster. Sign up for a Developer Edition account at https://developer.orkescloud.com. 
+        // - Set your cluster's API URL as basePath (e.g., "https://developer.orkescloud.com/api" for Developer Edition).
         // - Use the application's Key ID and Secret here.
         ApiClient client = ApiClient.builder()
                 .basePath("_CHANGE_ME_")
@@ -249,8 +249,8 @@ import {
   switchTask,
 } from "@io-orkes/conductor-javascript";
 
-// Set up an application in your Orkes Conductor cluster. Sign up for a Developer Playground account at https://developer.orkescloud.com. 
-// - Set your cluster's API URL as the serverUrl (e.g., "https://developer.orkescloud.com/api" for Developer Playground).
+// Set up an application in your Orkes Conductor cluster. Sign up for a Developer Edition account at https://developer.orkescloud.com. 
+// - Set your cluster's API URL as the serverUrl (e.g., "https://developer.orkescloud.com/api" for Developer Edition).
 // - Use the application's Key ID and Secret here.
 const config = {
   serverUrl: "_CHANGE_ME_",
@@ -308,8 +308,8 @@ using Conductor.Definition;
 using Conductor.Executor;
 using Conductor.Definition.TaskType;
 
-// Set up an application in your Orkes Conductor cluster. Sign up for a Developer Playground account at https://developer.orkescloud.com. 
-// - Set your cluster's API URL as the BasePath (e.g., "https://developer.orkescloud.com/api" for Developer Playground).
+// Set up an application in your Orkes Conductor cluster. Sign up for a Developer Edition account at https://developer.orkescloud.com. 
+// - Set your cluster's API URL as the BasePath (e.g., "https://developer.orkescloud.com/api" for Developer Edition).
 // - Use the application's Key ID and Secret here.
 var conf = new Configuration
 {
@@ -362,9 +362,9 @@ import (
 	"github.com/conductor-sdk/conductor-go/sdk/workflow/executor"
 )
 
-// Set up an application in your Orkes Conductor cluster. Sign up for a Developer Playground account at https://developer.orkescloud.com.
+// Set up an application in your Orkes Conductor cluster. Sign up for a Developer Edition account at https://developer.orkescloud.com.
 // - Use the application's Key ID and Secret here.
-// - Set your cluster's API URL as the SERVER_URL (e.g., "https://developer.orkescloud.com/api" for Developer Playground).
+// - Set your cluster's API URL as the SERVER_URL (e.g., "https://developer.orkescloud.com/api" for Developer Edition).
 const SERVER_URL = "_CHANGE_ME_"
 const KEY_ID = "_CHANGE_ME_"
 const SECRET = "_CHANGE_ME_"
@@ -425,8 +425,8 @@ This sample Clojure code demonstrates how to create, register, and execute a wor
             [io.orkes.metadata :as metadata])
   (:gen-class))
 
-; Set up an application in your Orkes Conductor cluster. Sign up for a Developer Playground account at https://developer.orkescloud.com.
-; - Set your cluster's API URL as url (e.g., "https://developer.orkescloud.com/api/" for Developer Playground).
+; Set up an application in your Orkes Conductor cluster. Sign up for a Developer Edition account at https://developer.orkescloud.com.
+; - Set your cluster's API URL as url (e.g., "https://developer.orkescloud.com/api/" for Developer Edition).
 ; - Use the application's Key ID and Secret here.
 (def options
   {:url "_CHANGE_ME_"
@@ -467,7 +467,7 @@ This sample Clojure code demonstrates how to create, register, and execute a wor
 To connect your workflow-as-code project, you must again use an application in Conductor, which is an access layer with its own permissions and access tokens. This time, the application should have the Metadata API role.
 
 :::note
-If you are using [Orkes Developer Playground](https://developer.orkescloud.com/?utm_campaign=quickstarts&utm_source=orkes-doc&utm_medium=web), you can only create one application. Use the same application as the worker project for this step.
+If you are using [Developer Edition](https://developer.orkescloud.com/?utm_campaign=quickstarts&utm_source=orkes-doc&utm_medium=web), you can only create one application. Use the same application as the worker project for this step.
 :::
 
 **To create an application for your workflow client:**
@@ -481,7 +481,7 @@ If you are using [Orkes Developer Playground](https://developer.orkescloud.com/?
 
 ``` java
 ApiClient client = ApiClient.builder()
-        .basePath("[https://SERVER_URL/api](https://SERVER_URL/api)") // e.g., “[https://developer.orkescloud.com/api](https://developer.orkescloud.com/api)” for Developer Playground
+        .basePath("[https://SERVER_URL/api](https://SERVER_URL/api)") // e.g., “[https://developer.orkescloud.com/api](https://developer.orkescloud.com/api)” for Developer Edition
         .credentials("_CHANGE_ME_", "_CHANGE_ME_")
         .build();
 ```
