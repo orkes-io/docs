@@ -17,8 +17,13 @@ Deletes an existing task definition.
 
 | Parameter | Description                                           | Type    | Required/ Optional |
 | --------- | ----------------------------------------------------- | ------- | ------------------ |
-| name      | The name of the workflow definition to be deleted.    | string  | Required.          |
+| name      | The name of the workflow definition to be deleted.<br/>**Note**: Calling this API without an existing workflow definition name returns 404.    | string  | Required.          |
 | version   | The version of the workflow definition to be deleted. | integer | Required.          |
+
+## Response
+
+- Returns 200 OK, indicating that the workflow definition has been deleted successfully.
+- Returns 404 if the specified workflow definition name does not exist.
 
 ## Examples
 
@@ -36,6 +41,6 @@ curl -X 'DELETE' \
 
 **Response**
 
-Returns 200 OK, indicating that the particular version of workflow definition has been deleted successfully.
+Returns 200 OK, indicating that the particular version of the workflow definition has been deleted successfully.
 
 </details>

@@ -24,7 +24,7 @@ Gets all the task definitions in the cluster.
 
 ## Response
 
-Returns an array containing all the task definitions in the cluster.
+Returns an array containing all the task definitions in the cluster, optionally including metadata such as tags based on the query parameters.
 
 ## Examples
 
@@ -41,6 +41,8 @@ curl -X 'GET' \
 ```
 
 **Response**
+
+Returns all task definitions with tag `team:engineering`.
 
 ```json
 [
@@ -116,6 +118,109 @@ curl -X 'GET' \
     ]
   }
 ]
+```
+
+</details>
+
+<details>
+<summary>Get all task definitions with metadata set to `true`</summary>
+
+**Request**
+
+```json
+curl -X 'GET' \
+  'https://<YOUR-CLUSTER>/api/metadata/taskdefs?access=EXECUTE&metadata=true' \
+  -H 'accept: */*' \
+  -H '
+X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+Returns an array containing all the task definitions in the cluster, including their tags metadata. For example:
+
+```json
+//truncated response
+{
+    "createTime": 1746599870085,
+    "updateTime": 1746599870085,
+    "createdBy": "john.doe@acme.com",
+    "updatedBy": "john.doe@acme.com",
+    "name": "hello_task",
+    "description": "",
+    "retryCount": 3,
+    "timeoutSeconds": 3600,
+    "inputKeys": [],
+    "outputKeys": [],
+    "timeoutPolicy": "TIME_OUT_WF",
+    "retryLogic": "FIXED",
+    "retryDelaySeconds": 60,
+    "responseTimeoutSeconds": 600,
+    "concurrentExecLimit": 0,
+    "inputTemplate": {},
+    "rateLimitPerFrequency": 0,
+    "rateLimitFrequencyInSeconds": 1,
+    "ownerEmail": "john.doe@acme.com",
+    "pollTimeoutSeconds": 3600,
+    "backoffScaleFactor": 1,
+    "totalTimeoutSeconds": 0,
+    "enforceSchema": false,
+    "overwriteTags": true,
+    "tags": [
+      {
+        "key": "tag",
+        "value": "new"
+      }
+    ]
+  }
+```
+
+</details>
+
+<details>
+<summary>Get all task definitions with metadata set to `false`</summary>
+
+**Request**
+
+```json
+curl -X 'GET' \
+  'https://<YOUR-CLUSTER>/api/metadata/taskdefs?access=EXECUTE&metadata=false' \
+  -H 'accept: */*' \
+  -H '
+X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+Returns an array containing all the task definitions in the cluster without any tag metadata. For example: 
+
+```json
+//truncated response
+{
+    "createTime": 1746599870085,
+    "updateTime": 1746599870085,
+    "createdBy": "john.doe@acme.com",
+    "updatedBy": "john.doe@acme.com",
+    "name": "hello_task",
+    "description": "",
+    "retryCount": 3,
+    "timeoutSeconds": 3600,
+    "inputKeys": [],
+    "outputKeys": [],
+    "timeoutPolicy": "TIME_OUT_WF",
+    "retryLogic": "FIXED",
+    "retryDelaySeconds": 60,
+    "responseTimeoutSeconds": 600,
+    "concurrentExecLimit": 0,
+    "inputTemplate": {},
+    "rateLimitPerFrequency": 0,
+    "rateLimitFrequencyInSeconds": 1,
+    "ownerEmail": "john.doe@acme.com",
+    "pollTimeoutSeconds": 3600,
+    "backoffScaleFactor": 1,
+    "totalTimeoutSeconds": 0,
+    "enforceSchema": false
+  }
 ```
 
 </details>

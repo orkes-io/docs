@@ -17,13 +17,13 @@ Gets a specific workflow definition from the cluster.
 
 | Parameter | Description                                          | Type   | Required/ Optional |
 | --------- | ---------------------------------------------------- | ------ | ------------------ |
-| taskType  | The name of the workflow definition to be retrieved. | string | Required.          |
+| name  | The name of the workflow definition to be retrieved. | string | Required.          |
 
 ## Query parameters
 
 | Parameter | Description                                                                             | Type    | Required/ Optional |
 | --------- | --------------------------------------------------------------------------------------- | ------- | ------------------ |
-| version   | The version of the workflow to be retrieved.                                            | integer | Optional.          |
+| version   | The version of the workflow to be retrieved. If unspecified, the latest version is retrieved.                                            | integer | Optional.          |
 | metadata  | Whether metadata (such as tags) should be included in the response. Default is _false_. | boolean | Optional.          |
 
 ## Response
@@ -45,6 +45,8 @@ curl -X 'GET' \
 ```
 
 **Response**
+
+Returns the workflow definition, without any tags metadata. For example:
 
 ```json
 {
@@ -104,6 +106,8 @@ curl -X 'GET' \
 
 **Response**
 
+Returns the workflow definition, including its tags metadata. For example:
+
 ```json
 {
   "createTime": 0,
@@ -150,6 +154,90 @@ curl -X 'GET' \
       "value": "doc"
     }
   ]
+}
+```
+
+</details>
+
+<details>
+<summary>Get a specific version of a workflow definition</summary>
+
+**Request**
+
+```bash
+curl -X 'GET' \
+  'https://<YOUR-CLUSTER>/api/metadata/workflow/api-test?version=10&metadata=false' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+Returns the workflow definition with the queried version. For example:
+
+```json
+{
+  "createTime": 1752670058073,
+  "updateTime": 1752670179823,
+  "name": "api-test",
+  "description": "Sample workflow created using API",
+  "version": 10,
+  "tasks": [
+    {
+      "name": "event",
+      "taskReferenceName": "event_ref",
+      "inputParameters": {},
+      "type": "EVENT",
+      "decisionCases": {},
+      "defaultCase": [],
+      "forkTasks": [],
+      "startDelay": 0,
+      "joinOn": [],
+      "sink": "sqs:internal_event_name",
+      "optional": false,
+      "defaultExclusiveJoinTask": [],
+      "asyncComplete": false,
+      "loopOver": [],
+      "onStateChange": {},
+      "permissive": false
+    },
+    {
+      "name": "http",
+      "taskReferenceName": "http_ref",
+      "inputParameters": {
+        "uri": "https://orkes-api-tester.orkesconductor.com/api",
+        "method": "GET",
+        "accept": "application/json",
+        "contentType": "application/json",
+        "encode": true
+      },
+      "type": "HTTP",
+      "decisionCases": {},
+      "defaultCase": [],
+      "forkTasks": [],
+      "startDelay": 0,
+      "joinOn": [],
+      "optional": false,
+      "defaultExclusiveJoinTask": [],
+      "asyncComplete": false,
+      "loopOver": [],
+      "onStateChange": {},
+      "permissive": false
+    }
+  ],
+  "inputParameters": [],
+  "outputParameters": {},
+  "failureWorkflow": "",
+  "schemaVersion": 2,
+  "restartable": false,
+  "workflowStatusListenerEnabled": false,
+  "ownerEmail": "john.doe@acme.com",
+  "timeoutPolicy": "ALERT_ONLY",
+  "timeoutSeconds": 0,
+  "variables": {},
+  "inputTemplate": {},
+  "enforceSchema": true,
+  "metadata": {}
 }
 ```
 
