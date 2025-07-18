@@ -1,0 +1,248 @@
+---
+slug: "/remote-services"
+description: "Learn how to configure remote services for HTTP and gRPC endpoints."
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+# Remote Services
+
+Remote Services in Orkes Conductor provide a centralized interface for defining, testing, and managing HTTP and gRPC service endpoints. Without additional configuration, these services can be reused across multiple workflows using built-in system tasks like [HTTP](https://orkes.io/content/reference-docs/system-tasks/http), [HTTP Poll](https://orkes.io/content/reference-docs/system-tasks/http-poll), and [gRPC].
+
+Here is an overview of how to use the service registry in Conductor workflows:
+
+1. Define a remote service 
+2. Discover or add endpoints
+3. Configure circuit breaker pattern
+4. Test endpoints
+5. Add services to workflows
+
+## Define a service 
+
+A service can be registered for use in [HTTP](https://orkes.io/content/reference-docs/system-tasks/http), [HTTP Poll](https://orkes.io/content/reference-docs/system-tasks/http-poll), and [gRPC] tasks. The configuration steps differ based on the task type.
+
+<Tabs>
+<TabItem value="HTTP services" label="HTTP services">
+
+**To define a service:**
+
+1. Go to **Definitions** > **Remote Services** from the left navigation menu on your Conductor cluster.
+2. Select **+ New service**.
+3. In **Service registry name**, enter a unique name for the service. 
+4. Set **Service type** to **HTTP**.
+5. Enter the Swagger specification URL (ending in .json) in the **Swagger URL**. For example: https://petstore.swagger.io/v2/swagger.json.  
+6. Select **Save**.
+
+<p align="center"><img src="/content/img/creating-sample-http-services.png" alt="Creating sample service registry definition for HTTP services" width="100%" height="auto"></img></p>
+
+</TabItem>
+<TabItem value="gRPC services" label="gRPC services">
+
+**To define a service:**
+
+1. Go to **Definitions** > **Remote Services** from the left navigation menu on your Conductor cluster.
+2. Select **+ New service**.
+3. In **Service registry name**, enter a unique name for the service. 
+4. Set **Service type** to **gRPC**.
+5. In **Host**, enter the service's host URL. 
+6. In **Port**, specify the port where the service is running.
+7. Select **Save**.
+
+<p align="center"><img src="/content/img/creating-sample-grpc-services.png" alt="Creating sample service registry definition for gRPC services" width="100%" height="auto"></img></p>
+
+</TabItem>
+</Tabs>
+
+## Discover or add endpoints
+
+After defining a service, you can either automatically discover its endpoints or add them manually.
+
+### a. Discover endpoints
+
+<Tabs>
+<TabItem value="HTTP services" label="HTTP services">
+
+**To automatically fetch the endpoints within the services:**
+
+1. Open your service definition.
+2. Select **Discover methods** to fetch all endpoints automatically.
+
+<p align="center"><img src="/content/img/fetching-endpoints-http-services.png" alt="Fetching endpoints from the HTTP services" width="100%" height="auto"></img></p>
+
+Once fetched, the corresponding schemas are automatically registered under [Schemas](https://orkes.io/content/developer-guides/schema-validation) in Conductor.
+
+<p align="center"><img src="/content/img/registered-schema-from-fetched-endpoints.png" alt="Schema registered from the fetched endpoints of HTTP service" width="100%" height="auto"></img></p>
+
+</TabItem>
+<TabItem value="gRPC services" label="gRPC services">
+
+Depending on the gRPC configuration, you can:
+
+- Discover endpoints automatically (if [reflection](https://grpc.io/docs/guides/reflection/) is enabled in the gRPC server).
+- Upload compiled proto descriptors (if [reflection](https://grpc.io/docs/guides/reflection/) is disabled in the gRPC server).
+
+**To automatically discover the endpoints within reflection-enabled gRPC services:**
+
+1. Open your service definition.
+2. Select **Discover methods** to fetch all endpoints automatically.
+
+<p align="center"><img src="/content/img/fetching-endpoints-grpc-services.png" alt="Fetching endpoints from the gRPC services" width="100%" height="auto"></img></p>
+
+**To generate the *compiled binary protobuf* files for reflection-disabled services:**
+
+1. [Install protoc](https://grpc.io/docs/protoc-installation/) if not already installed.
+2. Generate the *compiled binary protobuf* files using the `protoc`utility:
+
+```
+protoc --proto_path=. --descriptor_set_out=compiled.bin *.proto
+```
+
+3. Open your service registry definition in Conductor, and go to **Proto Files**.
+4. Select **+ Upload Proto File**, and upload the **_compiled.bin_** file.
+
+<p align="center"><img src="/content/img/uploading-proto-files-grpc-services.png" alt="Uploading proto files for the gRPC services" width="100%" height="auto"></img></p>
+
+Once uploaded, Conductor extracts and registers the services, making them ready for use in workflows.
+
+</TabItem>
+</Tabs>
+
+### b. Add endpoints
+
+<Tabs>
+<TabItem value="HTTP services" label="HTTP services">
+
+**To add a new endpoint to the HTTP services:**
+
+1. From your service definition, select **+ Add New Method**.
+
+<p align="center"><img src="/content/img/adding-new-methods.png" alt="Adding a new method to the service registry definition" width="100%" height="auto"></img></p>
+
+2. Enter the following endpoint parameters:
+
+| Parameter | Description | 
+| --------- | ----------- | 
+| Resource Name | The action or purpose of the endpoint. | 
+| Path | The method name for the endpoint. | 
+| Method Type | The method type for the service. Supported values:<ul><li>GET</li><li>POST</li><li>PUT</li><li>DELETE</li><li>PATCH.</li></ul> | 
+| Input Schema | Select from existing input schemas in Conductor. | 
+| Output Schema | Select from existing output schemas in Conductor. | 
+
+3. Select **Add**.
+
+</TabItem>
+
+<TabItem value="gRPC services" label="gRPC services">
+
+**To add a new endpoint to the gRPC services:**
+
+1. From your service definition, select **+ Add New Method**.
+
+<p align="center"><img src="/content/img/adding-new-methods-grpc.png" alt="Adding a new method to the service registry definition" width="100%" height="auto"></img></p>
+
+2. Enter the following endpoint parameters:
+
+| Parameter | Description | 
+| --------- | ----------- | 
+| Resource Name | The action or purpose of the endpoint. | 
+| Path | The method name for the endpoint. | 
+| Method Type | The method type for the service. Supported values:<ul><li>UNARY</li><li>SERVER_STREAMING</li><li>CLIENT_STREAMING</li><li>BIDIRECTIONAL_STREAMING</li></ul> | 
+| Input Type | Select from existing input schemas in Conductor. | 
+| Output Type | Select from existing output schemas in Conductor. | 
+
+3. Select **Add**.
+
+</TabItem>
+</Tabs>
+
+This saves the endpoint within the service definition.
+
+## Configure circuit breaker pattern for individual services
+
+Circuit breaker patterns help prevent cascading failures by halting calls to unhealthy services, thus protecting the workflows.
+
+The Circuit Breaker pattern has two circuit states:
+- **Closed** - Normal operation state where all requests pass through normally.
+- **Open** - Failure state where the requests fail fast, thus protecting the service.
+
+**To configure the circuit breaker pattern for a service:**
+
+1. Go to the **Circuit Breaker** tab in your remote service definition.
+2. Toggle on **Circuit Breaker Configuration**.
+3. Configure the following parameters:
+
+| Parameter           | Description                                                                  | Types            | 
+| ------------------- | ---------------------------------------------------------------------------- | ---------------- | 
+| Failure rate threshold | The failure rate threshold is a percentage between 0 and 100; when the failure rate equals or exceeds this value, the circuit breaker opens to block further calls. Default is 50.<br/>For example, setting the threshold to 50% means the circuit will open when half of the calls fail. Set it to 0 to disable this behavior. | Float. | 
+| Sliding window size | The size of the sliding window, which is used to record the outcome of calls when the circuit breaker is closed. The value ranges between 1 and 1000. Default is 100. | Integer. | 
+| Minimum number of calls | The minimum number of calls required within a sliding window before the circuit breaker evaluates the error rate or slow call rate. The minimum value is 1, and the maximum value should not exceed the Sliding window size. Default is 100.<br/>For example, if this value is 10, then at least 10 calls must be recorded before the failure rate can be calculated. If only 9 calls have been recorded, the Circuit Breaker will not transition to open even if all 9 calls have failed. | Integer. | 
+| Wait duration in open state | The time in ms that the circuit breaker must wait before transitioning from open to half-open. The value ranges between 1000-300000. Default is 1000. | Integer. | 
+| Permitted number of calls in half open state | The number of calls allowed while the Circuit Breaker is in the half-open state. The value ranges between 1 and 100. Default is 100. | Integer. | 
+| Slow call rate threshold | The percentage threshold for calls classified as slow. A call is considered slow if its duration exceeds the *Slow call duration threshold*.<br/>If the percentage of slow calls within the sliding window equals or exceeds this threshold, the Circuit Breaker transitions to the open state and begins short-circuiting calls.<br/>The value ranges between 0 and 100. Set to 0 to disable slow-call triggering. Default is 50. | Float/Decimal. | 
+| Slow call duration threshold | The duration threshold (in ms) above which calls are considered slow. Calls exceeding this time increase the slow call rate. The value ranges between 1000-60000. Default is 100. | Integer. |
+| Max wait duration in half open state | The maximum wait duration (in ms) the circuit breaker can remain in the half-open state before transitioning back to the open state. A value of 0 means the circuit breaker will remain half-open indefinitely until all permitted calls are completed.<br/>The value can range between 1 and 300000. Default is 1. | Integer. | 
+| Automatic transition from open to half open enabled | If set to true, the circuit breaker automatically transitions from the open state to the half-open state, and no call is required to trigger the transition. <br/>If set to false, the transition to half-open occurs only when a call is made. | N/A | 
+
+4. Select **Save**.
+
+## Test endpoints
+
+Once the endpoints are fetched or added, you can test them before adding them to your workflows.
+
+**To test registered endpoints:**
+
+1. From your service registry definition page, select the test (**▶**) icon next to the endpoint.
+2. Make the required configuration changes, and select **Execute**.
+
+<p align="center"><img src="/content/img/endpoint-testing.gif" alt="Testing endpoints" width="100%" height="auto"></img></p>
+
+The test returns the server response and generates a link to a sample workflow execution.
+
+<p align="center"><img src="/content/img/endpoint-testing-interface.png" alt="Interface for testing endpoints with sample workflow execution link" width="100%" height="auto"></img></p>
+
+## Add services to workflows
+
+Once the services are registered, you can add them to HTTP, HTTP Poll, and gRPC tasks in your workflows.
+
+**To add a service to workflows:**
+
+<Tabs>
+<TabItem value="For HTTP/HTTP Poll tasks" label="For HTTP/HTTP Poll tasks">
+
+1. Go to **Definitions** > **Workflows**.
+2. Create a new workflow or select an existing one.
+3. Add an **HTTP**/**HTTP Poll** task. 
+4. Select **Populate from remote service**s.
+5. In **Service**, select the registered service.
+6. In **Service method**, select the required endpoint.
+
+<p align="center"><img src="/content/img/adding-service-to-http-task.gif" alt="Adding the registered service to an HTTP task" width="100%" height="auto"></img></p>
+
+This auto-populates the HTTP task parameters in the workflow.
+
+7. For [HTTP Poll](https://orkes.io/content/reference-docs/system-tasks/http-poll) tasks, configure the additional parameters such as *Termination condition*, *Polling interval*, and *Polling strategy*.
+8. In the **Hedging config**, set the **Maximum attempts**, which specifies the number of parallel requests the system should make when executing the task. The system returns the response from the first successful attempt, which helps reduce tail latencies for remote services. Hedging sends multiple parallel requests; hence, use this feature only with idempotent services to prevent unintended side effects from duplicate executions.
+9. Select **Save** > **Confirm**.
+
+</TabItem>
+
+<TabItem value="For gRPC tasks" label="For gRPC taskss">
+
+1. Go to **Definitions** > **Workflows**.
+2. Create a new workflow or select an existing one.
+3. Add a **gRPC** task. 
+4. Select **Populate from remote service**s.
+5. In **Service**, select the registered service.
+6. In **Service method**, select the required endpoint.
+
+<p align="center"><img src="/content/img/adding-service-to-gRPC-task.gif" alt="Adding the registered service to a gRPC task" width="100%" height="auto"></img></p>
+
+This auto-populates the gRPC task parameters in the workflow.
+
+7. Enable/disable the fields **Use SSL** and **Trust Certificate** as per the requirement.
+8. In the **Hedging config**, set the **Maximum attempts**, which specifies the number of parallel requests the system should make when executing the task. The system returns the response from the first successful attempt, which helps reduce tail latencies for remote services. Hedging sends multiple parallel requests; hence, use this feature only with idempotent services to prevent unintended side effects from duplicate executions.
+9. Select **Save** > **Confirm**.
+
+</TabItem>
+</Tabs>
