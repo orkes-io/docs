@@ -104,17 +104,18 @@ An HTTP task can be configured manually through the UI or automatically populate
 <Tabs>
 <TabItem value="Using registered services" label="Using registered services">
 
-**To add an HTTP task using registered services:**
-
 :::info Prerequisites: 
 [Register the remote service in Orkes Conductor](/content/remote-services).
 :::
+
+**To add an HTTP task using registered services:**
 
 1. In your workflow, select the (**+**) icon and add an **HTTP** task.
 2. Select **Populate from remote services**.
 3. In **Service**, select the registered HTTP service.
 4. In **Service method**, select the required endpoint.
-5. (Optional) In **Hedging Config** > **Maximum attempts**, enter a value for parallel hedged requests to reduce latency.
+5. Select **Populate**.
+6. (Optional) In **Hedging Config** > **Maximum attempts**, enter a value for parallel hedged requests to reduce latency.
 
 <center><p><img src="/content/img/adding-service-to-http-task.gif" alt="Adding HTTP task" width="100%" height="auto"/></p></center>
 
