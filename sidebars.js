@@ -675,10 +675,11 @@ const sidebars = {
                 type: 'generated-index',
                 title: 'Orkes Templates',
                 slug: '/category/templates',
-                description: 'Templates for workflows in Orkes Conductor.',
+                description: 'Get started quickly in Orkes Conductor with these workflow templates — available only on Developer Edition (Launch Pad).',
             },
             className: 'leftMenuHeader',
             items: [
+                'templates/claims-workflow',
                 'templates/agentic-research',
                 'templates/availability-monitoring-for-http-endpoints',
             ],
