@@ -168,7 +168,7 @@ The Circuit Breaker pattern has two circuit states:
 
 **To configure the circuit breaker pattern for a service:**
 
-1. Go to the **Circuit Breaker** tab in your remote service definition.
+1. Go to the **Circuit Breaker Configuration** tab in your remote service definition.
 2. Toggle on **Circuit Breaker Configuration**.
 3. Configure the following parameters:
 
@@ -176,7 +176,7 @@ The Circuit Breaker pattern has two circuit states:
 | ------------------- | ---------------------------------------------------------------------------- | ---------------- | 
 | Failure rate threshold | The failure rate threshold is a percentage between 0 and 100; when the failure rate equals or exceeds this value, the circuit breaker opens to block further calls. Default is 50.<br/>For example, setting the threshold to 50% means the circuit will open when half of the calls fail. Set it to 0 to disable this behavior. | Float. | 
 | Sliding window size | The size of the sliding window, which is used to record the outcome of calls when the circuit breaker is closed. The value ranges between 1 and 1000. Default is 100. | Integer. | 
-| Minimum number of calls | The minimum number of calls required within a sliding window before the circuit breaker evaluates the error rate or slow call rate. The minimum value is 1, and the maximum value should not exceed the Sliding window size. Default is 100.<br/>For example, if this value is 10, then at least 10 calls must be recorded before the failure rate can be calculated. If only 9 calls have been recorded, the Circuit Breaker will not transition to open even if all 9 calls have failed. | Integer. | 
+| Minimum number of calls | The minimum number of calls required within a sliding window before the circuit breaker evaluates the error rate or slow call rate. The minimum value is 1, and the maximum value should not exceed the *Sliding window size*. Default is 100.<br/>For example, if this value is 10, then at least 10 calls must be recorded before the failure rate can be calculated. If only 9 calls have been recorded, the Circuit Breaker will not transition to open even if all 9 calls have failed. | Integer. | 
 | Wait duration in open state | The time in ms that the circuit breaker must wait before transitioning from open to half-open. The value ranges between 1000-300000. Default is 1000. | Integer. | 
 | Permitted number of calls in half open state | The number of calls allowed while the Circuit Breaker is in the half-open state. The value ranges between 1 and 100. Default is 100. | Integer. | 
 | Slow call rate threshold | The percentage threshold for calls classified as slow. A call is considered slow if its duration exceeds the *Slow call duration threshold*.<br/>If the percentage of slow calls within the sliding window equals or exceeds this threshold, the Circuit Breaker transitions to the open state and begins short-circuiting calls.<br/>The value ranges between 0 and 100. Set to 0 to disable slow-call triggering. Default is 50. | Float/Decimal. | 
@@ -213,17 +213,18 @@ Once the services are registered, you can add them to HTTP, HTTP Poll, and gRPC 
 1. Go to **Definitions** > **Workflows**.
 2. Create a new workflow or select an existing one.
 3. Add an **HTTP**/**HTTP Poll** task. 
-4. Select **Populate from remote service**s.
+4. Select **Populate from remote services**.
 5. In **Service**, select the registered service.
 6. In **Service method**, select the required endpoint.
+7. Select **Populate**. 
 
 <p align="center"><img src="/content/img/adding-service-to-http-task.gif" alt="Adding the registered service to an HTTP task" width="100%" height="auto"></img></p>
 
 This auto-populates the HTTP task parameters in the workflow.
 
-7. For [HTTP Poll](https://orkes.io/content/reference-docs/system-tasks/http-poll) tasks, configure the additional parameters such as *Termination condition*, *Polling interval*, and *Polling strategy*.
-8. In the **Hedging config**, set the **Maximum attempts**, which specifies the number of parallel requests the system should make when executing the task. The system returns the response from the first successful attempt, which helps reduce tail latencies for remote services. Hedging sends multiple parallel requests; hence, use this feature only with idempotent services to prevent unintended side effects from duplicate executions.
-9. Select **Save** > **Confirm**.
+8. For [HTTP Poll](https://orkes.io/content/reference-docs/system-tasks/http-poll) tasks, configure the additional parameters such as *Termination condition*, *Polling interval*, and *Polling strategy*.
+9. (For HTTP task) In the **Hedging config**, set the **Maximum attempts**, which specifies the number of parallel requests the system should make when executing the task. The system returns the response from the first successful attempt, which helps reduce tail latencies for remote services. Hedging sends multiple parallel requests; hence, use this feature only with idempotent services to prevent unintended side effects from duplicate executions.
+10. Select **Save** > **Confirm**.
 
 </TabItem>
 
@@ -232,17 +233,18 @@ This auto-populates the HTTP task parameters in the workflow.
 1. Go to **Definitions** > **Workflows**.
 2. Create a new workflow or select an existing one.
 3. Add a **gRPC** task. 
-4. Select **Populate from remote service**s.
+4. Select **Populate from remote services**.
 5. In **Service**, select the registered service.
 6. In **Service method**, select the required endpoint.
+7. Select **Populate**.
 
 <p align="center"><img src="/content/img/adding-service-to-gRPC-task.gif" alt="Adding the registered service to a gRPC task" width="100%" height="auto"></img></p>
 
 This auto-populates the gRPC task parameters in the workflow.
 
-7. Enable/disable the fields **Use SSL** and **Trust Certificate** as per the requirement.
-8. In the **Hedging config**, set the **Maximum attempts**, which specifies the number of parallel requests the system should make when executing the task. The system returns the response from the first successful attempt, which helps reduce tail latencies for remote services. Hedging sends multiple parallel requests; hence, use this feature only with idempotent services to prevent unintended side effects from duplicate executions.
-9. Select **Save** > **Confirm**.
+8. Enable/disable the fields **Use SSL** and **Trust Certificate** as per the requirement.
+9. In the **Hedging config**, set the **Maximum attempts**, which specifies the number of parallel requests the system should make when executing the task. The system returns the response from the first successful attempt, which helps reduce tail latencies for remote services. Hedging sends multiple parallel requests; hence, use this feature only with idempotent services to prevent unintended side effects from duplicate executions.
+10. Select **Save** > **Confirm**.
 
 </TabItem>
 </Tabs>
