@@ -677,6 +677,7 @@ const sidebars = {
             },
             className: 'leftMenuHeader',
             items: [
+                'templates/claims-workflow',
                 'templates/agentic-research',
                 'templates/availability-monitoring-for-http-endpoints',
             ],
