@@ -13,7 +13,7 @@ v5.1.0 and later
 
 **Endpoint**: `POST /api/tasks/{workflowId}/{status}/signal/sync`
 
-Signals a running [Yield task](/content/reference-docs/operators/yield) in the specified workflow synchronously with a new status and output. The request blocks execution until the signal is processed and returns the updated workflow state, based on the `returnStrategy`. This API is useful for tightly coordinated task control or integrating external events into an ongoing workflow. 
+Signals a running [Yield task](/content/reference-docs/operators/yield) in the specified workflow synchronously with a new status and output, and returns the updated workflow state, based on the `returnStrategy`. This API is useful for tightly coordinated task control or integrating external events into an ongoing workflow. 
 
 ## Path parameters
 
@@ -65,7 +65,7 @@ curl -X 'POST' \
 
 **Response**
 
-Returns a 200 OK response indicating that the task status was updated successfully and the signal was processed. The response includes the current state of the workflow, as specified by the `returnStrategy` TARGET_WORKFLOW.
+Returns a 200 OK response indicating that the task status was updated successfully and the signal was processed. The response includes the current state of the workflow, as specified by the `returnStrategy`.
 
 ```json
 //truncated response
