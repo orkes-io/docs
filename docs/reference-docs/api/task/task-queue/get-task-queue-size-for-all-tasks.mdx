@@ -6,13 +6,25 @@ description: "This API is used to retrieve the task queue size for all tasks in 
 
 # Get Task Queue Size for All Tasks
 
-**Endpoint:** `GET /tasks/queue/all`
+**Endpoint:** `GET /api/tasks/queue/all`
 
 Retrieves the task queue size for all tasks in the cluster. It only returns the size of the task queues without any associated poll data.
 
 ## Response
 
 Returns a map containing the queue size for all tasks. Each task type is represented by a key, with its corresponding queue size as the value.
+
+**Example:**
+
+```json
+{
+  "BUSINESS_RULE": 4,
+  "EVENT": 3,
+  "FORK": 0,
+  "GET_DOCUMENT": 1,
+  "GET_SIGNED_JWT": 0
+}
+```
 
 ## Examples
 
