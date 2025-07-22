@@ -6,9 +6,9 @@ description: "This API is used to retrieve the poll data for all tasks from in a
 
 # Get Poll Data for All Tasks
 
-**Endpoint:** `GET /tasks/queue/polldata/all`
+**Endpoint:** `GET /api/tasks/queue/polldata/all`
 
-Gets the last poll data for all the tasks in the task queue. The filter parameters can be used to refine the request based on your requirements.
+Gets the last poll data for all the tasks in the Conductor task queue. The filter parameters can be used to refine the request based on your requirements.
 
 ## Query parameters
 
@@ -25,7 +25,7 @@ Gets the last poll data for all the tasks in the task queue. The filter paramete
 
 Returns a map containing _queueData_ and an array of _pollData_.
 
-- **queueData**–Indicates the size of each task queue.
+- **queueData**–Indicates the size and poll count of each task. 
 - **pollData**–Includes the _queueName_ , _workerId_, and _lastPollTime_ for each task.
   - **queueName**–The name of the task queue. For predefined tasks, this returns the task type, such as _HTTP_. For user-defined tasks, it returns the name of the task definition, such as _python_worker_.
   - **workerId**–The worker name from which the task is being polled, which is the hostname of the pod where the worker is running.
@@ -75,4 +75,43 @@ curl -X 'GET' \
 
 Here _pollData_ is available only for the WAIT task as only it has been picked up by the worker and the rest of the tasks are in the queue awaiting workers.
 
+</details>
+
+<details>
+
+<summary>Get the last poll data for tasks with a worker size greater than 1 and queue size greater than 10</summary>
+
+**Request**
+
+```bash
+curl -X 'GET' \
+  'https://<YOUR-CLUSTER>/api/tasks/queue/polldata/all?workerSize=1&workerOpt=GT&queueSize=10&queueOpt=GT' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+{
+  "queueData": {
+    "WAIT": {
+      "pollerCount": 2,
+      "size": 752
+    }
+  },
+  "pollData": [
+    {
+      "queueName": "WAIT",
+      "workerId": "orkes-workers-deployment-676bf44f66-564j5",
+      "lastPollTime": 1753108836394
+    },
+    {
+      "queueName": "WAIT",
+      "workerId": "orkes-workers-deployment-676bf44f66-fjfxr",
+      "lastPollTime": 1753108836359
+    }
+  ]
+}
+```
 </details>
