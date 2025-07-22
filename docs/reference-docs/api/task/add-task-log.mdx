@@ -9,9 +9,11 @@ import TabItem from '@theme/TabItem';
 
 # Log Task Execution
 
-**Endpoint:** `POST /tasks/{taskId}/log`
+**Endpoint:** `POST /api/tasks/{taskId}/log`
 
 Logs messages or additional details to a specific task execution.
+
+You can log messages at any point in the task lifecycle, regardless of whether the task is scheduled, in progress, completed, or failed.
 
 ## Path parameters
 
@@ -29,6 +31,10 @@ Format the request to include the details to be logged for the task.
 { "message": "Log this message to the task" }
 ```
 
+## Response
+
+Returns 200 OK, indicating that the message has been logged to the task execution.
+
 ## Examples
 
 <details>
@@ -38,7 +44,7 @@ Format the request to include the details to be logged for the task.
 
 ```bash
 curl -X 'POST' \
-  'https://<YOUR_CLUSTER>/api/tasks/0c658ed7-becd-11ef-a89d-86a819bd92bf/log' \
+  'https://<YOUR-CLUSTER>/api/tasks/fd7s681d9196-6617-11f0-a1be-1a45f573e878/log' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>' \
   -H 'Content-Type: application/json' \
@@ -48,5 +54,9 @@ curl -X 'POST' \
 **Response**
 
 Returns 200 OK, indicating that the message has been logged to the task execution.
+
+To verify the logs, open your workflow execution, select the task where the message was logged using the API, and select the **Logs** tab to view the message logged. 
+
+<p align="center"><img src="/content/img/log-messages-using-api.png" alt="Log messages to task using API" width="100%" height="auto"></img></p>
 
 </details>
