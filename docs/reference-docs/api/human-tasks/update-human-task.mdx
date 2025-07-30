@@ -22,7 +22,7 @@ The invoking user should be one of the following:
 
 | Parameter | Description                                                       | Type   | Required/ Optional |
 | --------- | ----------------------------------------------------------------- | ------ | ------------------ |
-| taskId    | The unique identifier for the Human task execution to be updated. | string | Required.          |
+| taskId    | The task (execution) ID for the Human task execution to be updated. | string | Required.          |
 
 ## Query parameters
 
@@ -30,7 +30,7 @@ The invoking user should be one of the following:
 | --------- | --------------------------------------------------------------------------------------------------------- | ------- | ------------------ |
 | complete  | Whether to mark the task as complete or not. Set to false to keep the task in progress. Default is false. | boolean | Optional.          |
 
-## Response body
+## Request body
 
 Format the request as an object containing the form field inputs.
 
@@ -42,6 +42,10 @@ Format the request as an object containing the form field inputs.
 }
 ```
 
+## Response
+
+Returns 200 OK, indicating that the Human task has been updated or completed successfully.
+
 ## Examples
 
 <details>
@@ -51,13 +55,13 @@ Format the request as an object containing the form field inputs.
 
 ```shell
 curl -X 'POST' \
-  'https://<YOUR_CLUSTER>/api/human/tasks/869ed0ee-cf07-11ef-a89d-86a819bd92bf/update' \
+  'https://<YOUR-CLUSTER>/api/human/tasks/ca05f395-6d34-11f0-880f-0246e7260963/update?complete=false' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>' \
   -H 'Content-Type: application/json' \
   -d '{
-  "policyType": "travel",
-  "payout": true
+"approve":"Yes",
+"comments":"lgtm"
 }'
 ```
 
@@ -74,13 +78,13 @@ Returns 200 OK, indicating that the Human task has been updated successfully.
 
 ```shell
 curl -X 'POST' \
-  'https://<YOUR_CLUSTER>/api/human/tasks/869ed0ee-cf07-11ef-a89d-86a819bd92bf/update?complete=true' \
+  'https://<YOUR-CLUSTER>/api/human/tasks/ca05f395-6d34-11f0-880f-0246e7260963/update?complete=true' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>' \
   -H 'Content-Type: application/json' \
   -d '{
-  "policyType": "travel",
-  "payout": true
+"approve":"Yes",
+"comments":"lgtm"
 }'
 ```
 

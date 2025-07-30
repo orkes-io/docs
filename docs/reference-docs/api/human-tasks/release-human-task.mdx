@@ -22,7 +22,11 @@ The invoking user should be one of the following:
 
 | Parameter | Description                                                        | Type   | Required/ Optional |
 | --------- | ------------------------------------------------------------------ | ------ | ------------------ |
-| taskId    | The unique identifier for the Human task execution to be released. | string | Required.          |
+| taskId    | The task (execution) ID for the Human task execution to be released. | string | Required.          |
+
+## Response
+
+Returns 200 OK, indicating that the Human task has been released successfully.
 
 ## Examples
 
@@ -33,7 +37,7 @@ The invoking user should be one of the following:
 
 ```shell
 curl -X 'POST' \
-  'https://<YOUR_CLUSTER>/api/human/tasks/869ed0ee-cf07-11ef-a89d-86a819bd92bf/release' \
+  'https://<YOUR-CLUSTER>/api/human/tasks/869ed0ee-cf07-11ef-a89d-86a819bd92bf/release' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>' \
   -d ''

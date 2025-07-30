@@ -17,7 +17,7 @@ Retrieves the user form associated with a Human task using its task ID.
 
 | Parameter | Description                                         | Type   | Required/ Optional |
 | --------- | --------------------------------------------------- | ------ | ------------------ |
-| taskId    | The unique identifier for the Human task execution. | string | Required.          |
+| humantaskId    | The task (execution) ID for the Human task execution. | string | Required.          |
 
 ## Response
 
@@ -32,7 +32,7 @@ Returns the user form for the Human task.
 
 ```shell
 curl -X 'GET' \
-  'https://<YOUR_CLUSTER>/api/human/template/b5070997-d326-11ef-a7d0-3e3f9199f5b3' \
+  'https://<YOUR-CLUSTER>/api/human/template/b5070997-d326-11ef-a7d0-3e3f9199f5b3' \
   -H 'accept: application/json' \
   -H 'X-Authorization: <TOKEN>''
 ```
