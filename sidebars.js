@@ -157,8 +157,7 @@ const sidebars = {
                         'developer-guides/using-workers',
                         'developer-guides/monitoring-task-queues',
                         'developer-guides/scaling-workers',
-                        'developer-guides/task-to-domain',
-                        'developer-guides/http-proxy-worker',
+                        'developer-guides/task-to-domain'
                     ]
                 },
                 {
