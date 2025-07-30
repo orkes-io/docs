@@ -27,7 +27,12 @@ If this API is used for a Human task that is still associated with a workflow ex
 
 | Parameter | Description                                                       | Type   | Required/ Optional |
 | --------- | ----------------------------------------------------------------- | ------ | ------------------ |
-| taskId    | The unique identifier for the Human task execution to be deleted. | string | Required.          |
+| taskId    | The task (execution) ID for the Human task execution to be deleted. | string | Required.          |
+
+
+## Response
+
+Returns 200 OK, indicating that the Human task execution has been deleted.
 
 ## Examples
 
@@ -38,7 +43,7 @@ If this API is used for a Human task that is still associated with a workflow ex
 
 ```shell
 curl -X 'DELETE' \
-  'https://<YOUR_CLUSTER>/api/human/tasks/delete/7f49e3c7-ce62-11ef-a89d-86a819bd92bf' \
+  'https://<YOUR-CLUSTER>/api/human/tasks/delete/7f49e3c7-ce62-11ef-a89d-86a819bd92bf' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>'
 ```

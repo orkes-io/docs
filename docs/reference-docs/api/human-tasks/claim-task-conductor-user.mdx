@@ -11,9 +11,9 @@ import TabItem from '@theme/TabItem';
 
 **Endpoint:** `POST /api/human/tasks/{taskId}/claim`
 
-Claims an unclaimed Human task by the current Conductor user.
+Claims an unclaimed Human task by an authenticated Conductor user. The task is claimed by the Conductor user who makes the request.
 
-The invoking user should be an authenticated Conductor user who is a:
+The invoking user should be one of the following:
 
 - Cluster admin
 - Task owner of the Human task
@@ -26,7 +26,7 @@ If the Human task is not assigned to any user or group, any authorized Conductor
 
 | Parameter | Description                                                       | Type   | Required/ Optional |
 | --------- | ----------------------------------------------------------------- | ------ | ------------------ |
-| taskId    | The unique identifier for the Human task execution to be claimed. | string | Required.          |
+| taskId    | The task (execution) ID for the Human task execution to be claimed. | string | Required.          |
 
 ## Query parameters
 
@@ -37,7 +37,9 @@ If the Human task is not assigned to any user or group, any authorized Conductor
 
 ## Response
 
-Returns the Human task object.
+Returns the Human task object, which includes details such as the task state, assignee, input and output data, and user form metadata (if requested).
+
+When the query parameter `withTemplate` is set to true, the response includes the *fullTemplate* field, which contains the complete user form schema and layout definition. This field is omitted when `withTemplate` is set to false.
 
 ## Examples
 
@@ -48,7 +50,7 @@ Returns the Human task object.
 
 ```shell
 curl -X 'POST' \
-  'https://<YOUR_CLUSTER>/api/human/tasks/5569e4e8-ce6b-11ef-a89d-86a819bd92bf/claim?overrideAssignment=true' \
+  'https://<YOUR-CLUSTER>/api/human/tasks/5569e4e8-ce6b-11ef-a89d-86a819bd92bf/claim?overrideAssignment=true' \
   -H 'accept: application/json' \
   -H 'X-Authorization: <TOKEN>' \
   -d ''
@@ -163,7 +165,7 @@ curl -X 'POST' \
 
 ```shell
 curl -X 'POST' \
-  'https://<YOUR_CLUSTER>/api/human/tasks/bf46eb18-ce6c-11ef-a89d-86a819bd92bf/claim?withTemplate=false' \
+  'https://<YOUR-CLUSTER>/api/human/tasks/bf46eb18-ce6c-11ef-a89d-86a819bd92bf/claim?withTemplate=false' \
   -H 'accept: application/json' \
   -H 'X-Authorization: <TOKEN>' \
   -d ''
@@ -251,7 +253,7 @@ curl -X 'POST' \
 
 ```shell
 curl -X 'POST' \
-  'https://<YOUR_CLUSTER>/api/human/tasks/74443b41-ce6d-11ef-a89d-86a819bd92bf/claim?withTemplate=true' \
+  'https://<YOUR-CLUSTER>/api/human/tasks/74443b41-ce6d-11ef-a89d-86a819bd92bf/claim?withTemplate=true' \
   -H 'accept: application/json' \
   -H 'X-Authorization: <TOKEN>' \
   -d ''

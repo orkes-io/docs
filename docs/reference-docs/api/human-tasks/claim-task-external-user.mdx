@@ -21,7 +21,7 @@ The invoking user (such as "APP") should be a cluster admin or task owner. The p
 
 | Parameter | Description                                                       | Type   | Required/ Optional |
 | --------- | ----------------------------------------------------------------- | ------ | ------------------ |
-| taskId    | The unique identifier for the Human task execution to be claimed. | string | Required.          |
+| taskId    | The task (execution) ID for the Human task execution to be claimed. | string | Required.          |
 | userId    | The unique identifier for the user claiming the Human task.       | string | Required.          |
 
 ## Query parameters
@@ -33,7 +33,7 @@ The invoking user (such as "APP") should be a cluster admin or task owner. The p
 
 ## Response
 
-Returns the Human task object.
+Returns the Human task object, which includes details such as the task state, assignee, input and output data.
 
 ## Examples
 
@@ -44,7 +44,7 @@ Returns the Human task object.
 
 ```shell
 curl -X 'POST' \
-  'https://<YOUR_CLUSTER>/api/human/tasks/869ed0ee-cf07-11ef-a89d-86a819bd92bf/externalUser/user%40example.com?overrideAssignment=true' \
+  'https://<YOUR-CLUSTER>/api/human/tasks/869ed0ee-cf07-11ef-a89d-86a819bd92bf/externalUser/user%40example.com?overrideAssignment=true' \
   -H 'accept: application/json' \
   -H 'X-Authorization: <TOKEN>' \
   -d ''
@@ -156,7 +156,7 @@ curl -X 'POST' \
 
 ```shell
 curl -X 'POST' \
-  'https://<YOUR_CLUSTER>.io/api/human/tasks/ade63b86-ce70-11ef-88e4-ce0afa758ea1/externalUser/user%40example.com?withTemplate=false' \
+  'https://<YOUR-CLUSTER>/api/human/tasks/ade63b86-ce70-11ef-88e4-ce0afa758ea1/externalUser/user%40example.com?withTemplate=false' \
   -H 'accept: application/json' \
   -H 'X-Authorization: <TOKEN>' \
   -d ''
@@ -244,7 +244,7 @@ curl -X 'POST' \
 
 ```shell
 curl -X 'POST' \
-  'https://<YOUR_CLUSTER>.io/api/human/tasks/d9a5e0ef-ce70-11ef-88e4-ce0afa758ea1/externalUser/user%40example.com?withTemplate=true' \
+  'https://<YOUR-CLUSTER>/api/human/tasks/d9a5e0ef-ce70-11ef-88e4-ce0afa758ea1/externalUser/user%40example.com?withTemplate=true' \
   -H 'accept: application/json' \
   -H 'X-Authorization: <TOKEN>' \
   -d ''

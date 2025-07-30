@@ -23,6 +23,10 @@ After deletion, all Human tasks that make use of the deleted user form will fail
 | --------- | ---------------------------------------- | ------ | ------------------ |
 | name      | The name of the user form to be deleted. | string | Required.          |
 
+## Response
+
+Returns 200 OK, indicating that the user form has been deleted successfully.
+
 ## Examples
 
 <details>
@@ -32,7 +36,7 @@ After deletion, all Human tasks that make use of the deleted user form will fail
 
 ```shell
 curl -X 'DELETE' \
-  'https://<YOUR_CLUSTER>/api/human/template/someForm \
+  'https://<YOUR-CLUSTER>/api/human/template/someForm \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>'
 ```

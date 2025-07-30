@@ -25,7 +25,7 @@ Format the request as an object containing the user form JSON schema.
 
 ## Response
 
-Returns the updated user form.
+Returns the saved user form, including its versions.
 
 ## Examples
 
@@ -36,7 +36,7 @@ Returns the updated user form.
 
 ```shell
 curl -X 'POST' \
-  'https://<YOUR_CLUSTER>/api/human/template' \
+  'https://<YOUR-CLUSTER>/api/human/template' \
   -H 'accept: application/json' \
   -H 'X-Authorization: <TOKEN>' \
   -H 'Content-Type: application/json' \
@@ -115,7 +115,7 @@ curl -X 'POST' \
 
 ```shell
 curl -X 'POST' \
-  'https://<YOUR_CLUSTER>/api/human/template?newVersion=true' \
+  'https://<YOUR-CLUSTER>/api/human/template?newVersion=true' \
   -H 'accept: application/json' \
   -H 'X-Authorization: <TOKEN>' \
   -H 'Content-Type: application/json' \

@@ -24,7 +24,7 @@ The invoking user should be one of the following:
 
 | Parameter | Description                                                          | Type   | Required/ Optional |
 | --------- | -------------------------------------------------------------------- | ------ | ------------------ |
-| taskId    | The unique identifier for the Human task execution to be reassigned. | string | Required.          |
+| taskId    | The task (execution) ID for the Human task execution to be reassigned. | string | Required.          |
 
 ## Request body
 
@@ -33,9 +33,13 @@ Format the request as an array of assignment policy objects, in descending order
 | Parameter              | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      | Type    | Required/ Optional |
 | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------- | ------------------ |
 | assignee               | The assignee details.                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | object  | Required.          |
+| assignee. **user**     | The user or group ID for the assignee. The value depends on the user type. <ul><li>**External User**—Enter the user's email that is managed and verified in an external system.</li> <li>**External Group**—Enter the name of the group that is managed and verified in an external system.</li> <li>**Conductor User**—Enter the user’s Conductor email.</li> <li>**Conductor Group**—Enter the [Conductor group](/access-control-and-security/users-and-groups#groups) name.</li></ul> | string  | Required.          |
 | assignee. **userType** | The type of user or group that will be assigned to the task. Supported values: <ul><li>**External User**—The assignee is a user residing outside the Conductor cluster in an external system.</li> <li>**External Group**—The assignee is a group residing outside the Conductor cluster in an external system.</li> <li>**Conductor User**—The assignee is a user in the Conductor cluster.</li> <li>**Conductor Group**—The assignee is a group in the Conductor cluster.</li></ul>            | string  | Required.          |
-| assignee. **user**     | The user or group ID for the assignee. The value depends on the user type. <ul><li>**External User**—Provide the user's email that is managed and verified in an external system.</li> <li>**External Group**—Provide the name of the group that is managed and verified in an external system.</li> <li>**Conductor User**—Provide the user’s Conductor email.</li> <li>**Conductor Group**—Provide the [Conductor group](/access-control-and-security/users-and-groups#groups) name.</li></ul> | string  | Required.          |
 | slaMinutes             | The duration in minutes for which the Human task will be assigned, starting from when the task first began. Use 0 minutes for a non-expiring duration.                                                                                                                                                                                                                                                                                                                                           | integer | Required.          |
+
+## Response
+
+Returns 200 OK, indicating that the Human task has been reassigned successfully.
 
 ## Examples
 
@@ -46,7 +50,7 @@ Format the request as an array of assignment policy objects, in descending order
 
 ```shell
 curl -X 'POST' \
-  'https://<YOUR_CLUSTER>/api/human/tasks/869ed0ee-cf07-11ef-a89d-86a819bd92bf/reassign' \
+  'https://<YOUR-CLUSTER>/api/human/tasks/869ed0ee-cf07-11ef-a89d-86a819bd92bf/reassign' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>' \
   -H 'Content-Type: application/json' \
@@ -74,7 +78,7 @@ Returns 200 OK, indicating that the Human task has been reassigned successfully.
 
 ```shell
 curl -X 'POST' \
-  'https://<YOUR_CLUSTER>/api/human/tasks/869ed0ee-cf07-11ef-a89d-86a819bd92bf/reassign' \
+  'https://<YOUR-CLUSTER>/api/human/tasks/869ed0ee-cf07-11ef-a89d-86a819bd92bf/reassign' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>' \
   -H 'Content-Type: application/json' \
