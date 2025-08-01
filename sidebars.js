@@ -612,7 +612,6 @@ const sidebars = {
                             'reference-docs/system-tasks/update-secret',
                             'reference-docs/system-tasks/get-signed-jwt',
                             'reference-docs/system-tasks/update-task',
-                            'reference-docs/system-tasks/grpc',
                         {
                             type: 'category',
                             label: 'Alerting Tasks',
