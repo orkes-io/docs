@@ -555,6 +555,7 @@ const sidebars = {
             ],
         },
         {
+            className: 'leftMenuHeader',
             type: 'doc',
             id: 'proxy-for-http-workers',
             label: 'Proxy for HTTP Worker',
