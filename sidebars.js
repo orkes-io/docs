@@ -137,7 +137,6 @@ const sidebars = {
                             ],
                             collapsible: false,
                         },
-                        'developer-guides/remote-services',
                         'developer-guides/rate-limits',
                         'developer-guides/error-handling',
                         'developer-guides/debugging-workflows',
