@@ -137,7 +137,6 @@ const sidebars = {
                             ],
                             collapsible: false,
                         },
-                        'developer-guides/remote-services',
                         'developer-guides/rate-limits',
                         'developer-guides/error-handling',
                         'developer-guides/debugging-workflows',
@@ -556,6 +555,11 @@ const sidebars = {
             ],
         },
         {
+            type: 'doc',
+            id: 'proxy-for-http-workers',
+            label: 'Proxy for HTTP Worker',
+        },
+        {
             type: 'category',
             label: 'Task Reference',
             link: {
@@ -608,7 +612,6 @@ const sidebars = {
                             'reference-docs/system-tasks/update-secret',
                             'reference-docs/system-tasks/get-signed-jwt',
                             'reference-docs/system-tasks/update-task',
-                            'reference-docs/system-tasks/grpc',
                         {
                             type: 'category',
                             label: 'Alerting Tasks',

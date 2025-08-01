@@ -102,32 +102,6 @@ The HTTP Poll task will return the following parameters.
 
 ## Adding an HTTP Poll task in UI
 
-An HTTP Poll task can be configured manually through the UI or automatically populated using registered service definitions.
-
-<Tabs>
-<TabItem value="Using registered services" label="Using registered services">
-
-:::info Prerequisites: 
-[Register the remote service in Orkes Conductor](/content/remote-services).
-:::
-
-**To add an HTTP Poll task using registered services:**
-
-1. In your workflow, select the (**+**) icon and add an **HTTP Poll** task.
-2. Select **Populate from remote services**.
-3. In **Service**, select the registered HTTP service.
-4. In **Service method**, select the required endpoint.
-5. Select **Populate**.
-6. In **Termination Condition**, set the condition to be evaluated after every API invocation.
-7. Set the **Polling Interval** and **Polling Strategy**.
-
-<center><p><img src="/content/img/adding-service-to-http-poll-task.gif" alt="Adding HTTP Poll task" width="100%" height="auto"/></p></center>
-
-This method automatically fills in the HTTP Poll task parameters based on the selected service. It is recommended if you have already [registered your HTTP services](/content/remote-services) in Orkes Conductor.
-
-</TabItem>
-<TabItem value="Manually configuring an HTTP Poll task" label="Manually configuring an HTTP Poll task">
-
 **To add an HTTP Poll task:**
 
 1. In your workflow, select the (**+**) icon and add an **HTTP Poll** task.
@@ -143,8 +117,9 @@ This method automatically fills in the HTTP Poll task parameters based on the se
 
 <center><p><img src="/content/img/ui-guide-http-poll-task.png" alt="Adding HTTP Poll Task" width="100%" height="auto"/></p></center>
 
-</TabItem>
-</Tabs>
+:::note
+If you’re using a Orkes Conductor deployment behind a firewall or in a restricted network environment, you may need to configure an outbound proxy for HTTP workers. See [Configure Proxy for HTTP Workers](/content/proxy-for-http-worker) for more details.
+:::
 
 ## Examples
 

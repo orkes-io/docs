@@ -1,0 +1,156 @@
+---
+slug: "/proxy-for-http-worker"
+description: "Learn how to configure proxy settings for HTTP workers in Orkes Conductor. This guide helps secure outbound communication and meet enterprise network requirements."
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Configure Proxy for HTTP Workers
+
+Orkes Conductor lets you configure outbound proxy settings for HTTP workers, enabling secure communication in environments with restricted network access. 
+
+In enterprise environments, direct outbound internet access is often restricted. To comply with security and compliance policies, all external HTTP requests must pass through a proxy server. Orkes Conductor enables proxy configuration for [HTTP](https://orkes.io/content/reference-docs/system-tasks/http) and [HTTP Poll](https://orkes.io/content/reference-docs/system-tasks/http-poll) tasks, allowing workflows to interact with external systems while adhering to corporate networking policies.
+
+## When to use proxy configuration
+
+Enable proxy settings for HTTP workers when:
+
+- You’re running a Orkes Conductor deployment behind a firewall or proxy.
+- Your organization mandates that all outbound requests go through a proxy.
+
+## Enable proxy on HTTP workers
+
+Proxy configuration for HTTP workers depends on your deployment type:
+- For a **self-hosted Orkes Conductor deployment**, you must configure the proxy settings manually in the Conductor server configuration.
+- For **Orkes Cloud-deployed clusters**, the proxy settings must be configured via the Cloud portal.
+
+### Proxy configuration parameters
+
+Use the following properties to define proxy settings for HTTP workers:
+
+| Property | Description | Required/Optional | 
+| -------- | ----------- | ----------------- |
+| conductor.http.proxy.host | Hostname or IP address of the server. For example, proxy.mycompany.com or 192.168.1.100. | Required. |
+| conductor.http.proxy.port | Port number for the proxy server. | Required. | 
+| conductor.http.proxy.type | The proxy protocol type. Supported values:<ul><li>HTTP</li><li>HTTPS</li><li>SOCKS4</li><li>SOCKS5</li></ul>Default is HTTP. | Optional. | 
+| conductor.http.proxy.username | The username for proxy authentication.  | Optional. | 
+| conductor.http.proxy.password | The password for proxy authentication. | Optional. | 
+| conductor.http.proxy.non-proxy-hosts | Comma-separated hosts that bypass the proxy. It can be hostnames, IP addresses, or wildcard patterns. | Optional. | 
+
+### Configure HTTP proxy settings
+
+<Tabs>
+<TabItem value="Self-hosted Orkes Conductor deployment" title ="Self-hosted Orkes Conductor deployment">
+
+Add the following properties to the application configuration file  in your Conductor server configuration:
+
+```properties
+# Basic proxy configuration
+conductor.http.proxy.host=localhost
+conductor.http.proxy.port=8888
+conductor.http.proxy.type=HTTP
+conductor.http.proxy.username=testuser
+conductor.http.proxy.password=testpass
+conductor.http.proxy.non-proxy-hosts=orkes-api-tester.orkesconductor.com,*.orkesconductor.com,localhost,127.0.0.1
+```
+
+</TabItem>
+
+<TabItem value="Orkes Cloud deployed clusters" title ="Orkes Cloud deployed clusters">
+
+To configure proxy settings in Orkes Cloud-deployed clusters, update your cluster’s application properties from the Cloud Portal.
+
+You can either:
+
+- Contact your Orkes account representative to enable proxy settings for your cluster.
+- Enable it manually from your Cloud portal using the following steps. Orkes Cloud access is required to perform this action.
+
+**For Conductor version 5.0.1 and above:**
+
+1. Go to  **Clusters** from the left navigation menu on your [Orkes Cloud portal](https://cloud.orkes.io/).
+2. Select your cluster and go to **Select an Action** > **Upgrade Deployment**.
+3. In **Resource Type**, select **Conductor Server**.
+4. Select **+** button, and add the proxy configuration as key-value pairs:
+
+<center><p><img src="/content/img/enabling-proxy-for-http-workers-5x.png" alt="Enabling proxy for HTTP workers in Conductor version 5.0.1 and above" width="80%" height="auto"/></p></center>
+
+5. Select **Confirm**.
+
+**For Conductor version below v5.0.1**
+
+1. Go to  **Clusters** from the left navigation menu on your [Orkes Cloud portal](https://cloud.orkes.io/).
+2. Select your cluster and go to **Select an Action** > **Upgrade Deployment**.
+3. In **Resource Type**, select **Conductor Server**.
+4. Select **+** button, and add the proxy configuration as key-value pairs.
+5. Select **Confirm**.
+6. Again, go to **Select an Action** > **Upgrade Deployment**.
+7. In **Resource Type**, select **Conductor Workers**.
+8. Select **+** button, and add the proxy configuration as key-value pairs:
+
+<center><p><img src="/content/img/enabling-proxy-for-http-workers-4x.png" alt="Enabling proxy for HTTP workers in Conductor version below 5.0.1" width="80%" height="auto"/></p></center>
+
+9. Select **Confirm**.
+</TabItem>
+</Tabs>
+
+Once done, [create workflows](https://orkes.io/content/reference-docs/api/metadata/creating-workflow-definition) with HTTP or HTTP Poll tasks. Outbound calls from these tasks will be routed through the configured proxy.
+
+
+## Best practices
+
+### Security considerations
+
+- **Use environment variables** for sensitive credentials, such as passwords.
+- **Implement proper access controls** on configuration files.
+- **Rotate proxy credentials** regularly as per your security policy.
+- **Monitor proxy logs** for unusual activity.
+
+### Performance optimization
+
+- Use bypass rules effectively. Avoid routing internal traffic through external proxies.
+- Consider proxy caching to improve performance by storing frequently accessed resources.
+- Monitor latency to identify bottlenecks caused by proxy routing.
+
+## Examples
+
+<details>
+<summary>Enterprise environment with authentication</summary>
+
+```properties
+# Production proxy with corporate authentication
+conductor.http.proxy.host=proxy.acmecorp.com
+conductor.http.proxy.port=8080
+conductor.http.proxy.type=HTTP
+conductor.http.proxy.username=conductor-service
+conductor.http.proxy.password=${PROXY_PASSWORD}
+conductor.http.proxy.non-proxy-hosts=*.acmecorp.com,*.orkesconductor.com,localhost
+```
+
+</details>
+
+<details>
+<summary>Development environment with local proxy</summary>
+
+```properties
+# Development setup with local proxy for testing
+conductor.http.proxy.host=localhost
+conductor.http.proxy.port=8888
+conductor.http.proxy.type=HTTP
+conductor.http.proxy.non-proxy-hosts=localhost,127.0.0.1,*.local
+```
+
+</details>
+
+<details>
+<summary>Environment-specific proxy</summary>
+
+```properties
+# Use different proxies for different environments
+conductor.http.proxy.host=${PROXY_HOST:proxy.default.com}
+conductor.http.proxy.port=${PROXY_PORT:8080}
+conductor.http.proxy.username=${PROXY_USER:}
+conductor.http.proxy.password=${PROXY_PASS:}
+```
+
+</details>

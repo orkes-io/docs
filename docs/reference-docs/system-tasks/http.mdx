@@ -99,31 +99,6 @@ The HTTP task will return the following parameters.
 
 ## Adding an HTTP task in UI
 
-An HTTP task can be configured manually through the UI or automatically populated using registered service definitions.
-
-<Tabs>
-<TabItem value="Using registered services" label="Using registered services">
-
-:::info Prerequisites: 
-[Register the remote service in Orkes Conductor](/content/remote-services).
-:::
-
-**To add an HTTP task using registered services:**
-
-1. In your workflow, select the (**+**) icon and add an **HTTP** task.
-2. Select **Populate from remote services**.
-3. In **Service**, select the registered HTTP service.
-4. In **Service method**, select the required endpoint.
-5. Select **Populate**.
-6. (Optional) In **Hedging Config** > **Maximum attempts**, enter a value for parallel hedged requests to reduce latency.
-
-<center><p><img src="/content/img/adding-service-to-http-task.gif" alt="Adding HTTP task" width="100%" height="auto"/></p></center>
-
-This method automatically fills in the HTTP task parameters based on the selected service. It is recommended if you have already [registered your HTTP services](/content/remote-services) in Orkes Conductor.
-
-</TabItem>
-<TabItem value="Manually configuring an HTTP task" label="Manually configuring an HTTP task">
-
 **To add an HTTP task:**
 
 1. In your workflow, select the (**+**) icon and add an **HTTP** task.
@@ -131,16 +106,17 @@ This method automatically fills in the HTTP task parameters based on the selecte
 3. In **URL**, add the URI to be called by the HTTP task.
 4. In **Accept**, select the accept header as required by the server.
 5. In **Content-Type**, select the content type for the server.
-6. (Optional) In **Hedging Config** > **Maximum attempts**, enter a value for parallel hedged requests to reduce latency.
-7. (Optional) In **Other-headers**, add any additional HTTP headers to be sent along with the request.
-8. In **Body**, add the request body when using PUT, POST, or PATCH method.
-9. (Optional) Enable or disable **Encode** to specify if the URI needs to be encoded.
-10. (Optional) Set **Async complete** to true if the task is to be completed asynchronously.
+6. (Optional) In **Other-headers**, add any additional HTTP headers to be sent along with the request.
+7. In **Body**, add the request body when using PUT, POST, or PATCH method.
+8. (Optional) Enable or disable **Encode** to specify if the URI needs to be encoded.
+9. (Optional) Set **Async complete** to true if the task is to be completed asynchronously.
 
 <center><p><img src="/content/img/ui-guide-http-task.png" alt="Adding HTTP task" width="100%" height="auto"/></p></center>
 
-</TabItem>
-</Tabs>
+
+:::note
+If you’re using a Orkes Conductor deployment behind a firewall or in a restricted network environment, you may need to configure an outbound proxy for HTTP workers. See [Configure Proxy for HTTP Workers](/content/proxy-for-http-worker) for more details.
+:::
 
 ## Examples
 
