@@ -1,34 +1,34 @@
 ---
-slug: "/integrations/ai-llm/aws-bedrock-titan"
-description: "Learn how to integrate AWS Bedrock Titan with your Orkes Conductor cluster."
+slug: "/integrations/ai-llm/aws-bedrock-llama2"
+description: "Learn how to integrate AWS Bedrock Llama 3 with your Orkes Conductor cluster."
 ---
 
-# AWS Bedrock Titan Integration with Orkes Conductor
+# AWS Bedrock Llama3 Integration with Orkes Conductor
 
-To use system AI tasks in Orkes Conductor, you must integrate your Conductor cluster with the necessary AI providers. This guide explains how to integrate AWS Bedrock Titan with Orkes Conductor. Here’s an overview:
+To use system AI tasks in Orkes Conductor, you must integrate your Conductor cluster with the necessary AI providers. This guide explains how to integrate AWS Bedrock Llama3 with Orkes Conductor. Here’s an overview:
 
-1. Get the required credentials from AWS Bedrock Titan.
-2. Configure a new AWS Bedrock Titan integration in Orkes Conductor.
+1. Get the required credentials from AWS Bedrock Llama3.
+2. Configure a new AWS Bedrock Llama3 integration in Orkes Conductor.
 3. Add models to the integration.
 4. Set access limits to the AI model to govern which applications or groups can use them.
 
-## Step 1: Get the AWS Bedrock Titan credentials
+## Step 1: Get the AWS Bedrock Llama3 credentials
 
-To integrate AWS Bedrock Titan with Orkes Conductor, retrieve the following credentials from your AWS account:
+To integrate AWS Bedrock Llama3 with Orkes Conductor, retrieve the following credentials from your AWS account:
 
 - [AWS account ID](https://docs.aws.amazon.com/accounts/latest/reference/manage-acct-identifiers.html#FindAccountId) and **region**
 - (If assuming a role from another AWS account) [Amazon Resource Name (ARN)](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference-arns.html) and [External ID](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-user_externalid.html)
 - (If the connection is established using the access key and secret from the AWS account) [Access key and secret from AWS account](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html).
 
-## Step 2: Add an integration for AWS Bedrock Titan
+## Step 2: Add an integration for AWS Bedrock Llama3
 
-After obtaining the credentials, add an AWS Bedrock Titan integration to your Conductor cluster.
+After obtaining the credentials, add an AWS Bedrock Llama3 integration to your Conductor cluster.
 
-**To create an AWS Bedrock Titan integration:**
+**To create an AWS Bedrock Llama3 integration:**
 
 1. Go to **Integrations** from the left navigation menu on your Conductor cluster.
 2. Select **+ New integration**.
-3. In the **AI** section, choose **AWS Bedrock Titan**.
+3. In the **AI/LLM** section, choose **AWS Bedrock Llama3**.
 4. Select **+ Add** and enter the following parameters:
 
 | Parameters | Description | Required/Optional | 
@@ -43,27 +43,27 @@ After obtaining the credentials, add an AWS Bedrock Titan integration to your Co
 | Access secret | The access secret of the AWS account. | Required if the _Connection Type_ is chosen as _Access Key/Secret_. | 
 | Description | A description of your integration. | Required. | 
 
-<p align="center"><img src="/content/img/create-new-aws-bedrock-titan-integration.png" alt="AWS Bedrock Titan Integration with Orkes Conductor" width="60%" height="auto"></img></p>
+<p align="center"><img src="/content/img/create-new-aws-bedrock-llama3-integration.png" alt="AWS Bedrock Llama3 Integration with Orkes Conductor" width="60%" height="auto"></img></p>
 
 5. (Optional) Toggle the **Active** button off if you don’t want to activate the integration instantly.
 6. Select **Save**.
 
-## Step 3: Add AWS Bedrock Titan models
+## Step 3: Add AWS Bedrock Llama3 models
 
-Once you’ve integrated AWS Bedrock Titan, the next step is to configure specific models.
+Once you’ve integrated AWS Bedrock Llama3, the next step is to configure specific models.
 
-AWS Bedrock Titan has different models, such as Amazon Titan Text Premier, Amazon Titan Text Express, Amazon Titan Text Lite, and more, each designed for various use cases. Choose the model that best fits your use case.
+AWS Bedrock Llama3 has different models, such as Llama 3.2 1B Instruct, Llama 3.2 90B Instruct, and more, each designed for various use cases. Choose the model that best fits your use case.
 
-**To add a model to the AWS Bedrock Titan integration:**
+**To add a model to the AWS Bedrock Llama3 integration:**
 
 1. Go to the **Integrations** page and select the **+** button next to the integration created.
 
-<p align="center"><img src="/content/img/create-new-aws-bedrock-titan-integration-model-from-integrations-page.png" alt="Create AWS Bedrock Titan Integration Model from Listed Integrations" width="100%" height="auto"></img></p>
+<p align="center"><img src="/content/img/create-new-aws-bedrock-llama3-integration-model-from-integrations-page.png" alt="Create AWS Bedrock Llama 2 Integration Model from Listed Integrations" width="100%" height="auto"></img></p>
 
 2. Select **+ New model**.
-3. Enter the **Model name** and a **Description**. Get the complete list of [AWS Bedrock Titan models](https://docs.aws.amazon.com/bedrock/latest/userguide/titan-models.html). 
+3. Enter the **Model name** and a **Description**. Get the complete list of [AWS Bedrock Llama3 models](https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids.html). 
 
-<p align="center"><img src="/content/img/create-new-aws-bedrock-titan-integration-model.png" alt="Create AWS Bedrock Titan Integration Model" width="70%" height="auto"></img></p>
+<p align="center"><img src="/content/img/create-new-aws-bedrock-llama3-integration-model.png" alt="Create AWS Bedrock Llama 2 Integration Model" width="70%" height="auto"></img></p>
 
 This saves the model for future use in AI tasks within Orkes Conductor.
 
@@ -79,7 +79,7 @@ Once the integration is configured, set access controls to manage which applicat
 4. In the **Integration** tab, select the required AI models and toggle the necessary permissions.
 5. Select **Add Permissions**. 
 
-<p align="center"><img src="/content/img/rbac-aws-bedrock-titan-integration.png" alt="Add Permissions for Integrations" width="70%" height="auto"></img></p>
+<p align="center"><img src="/content/img/rbac-aws-bedrock-llama3-integration.png" alt="Add Permissions for Integrations" width="70%" height="auto"></img></p>
 
 The group or application can now access the AI model according to the configured permissions.
 

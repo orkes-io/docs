@@ -341,37 +341,6 @@ const sidebars = {
                     items: [
                         {
                             type: 'category',
-                            label: 'AI',
-                            link: {
-                                type: 'generated-index',
-                                title: 'AI Integrations',
-                                slug: '/category/integrations/ai'
-                            },
-                            items: [
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/ai/aws-bedrock-anthropic',
-                                    label: 'AWS Bedrock Anthropic',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/ai/aws-bedrock-cohere',
-                                    label: 'AWS Bedrock Cohere',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/ai/aws-bedrock-llama2',
-                                    label: 'AWS Bedrock Llama3',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/ai/aws-bedrock-titan',
-                                    label: 'AWS Bedrock Titan',
-                                },
-                            ],
-                        },
-                        {
-                            type: 'category',
                             label: 'AI / LLM',
                             link: {
                                 type: 'generated-index',
@@ -391,8 +360,28 @@ const sidebars = {
                                 },
                                 {
                                     type: 'doc',
+                                    id: 'integrations/ai-llm/perplexity',
+                                    label: 'Perplexity',
+                                },
+                                {
+                                    type: 'doc',
+                                    id: 'integrations/ai-llm/grok',
+                                    label: 'Grok',
+                                },
+                                {
+                                    type: 'doc',
                                     id: 'integrations/ai-llm/cohere',
                                     label: 'Cohere',
+                                },
+                                {
+                                    type: 'doc',
+                                    id: 'integrations/ai-llm/mistral',
+                                    label: 'Mistral',
+                                },
+                                {
+                                    type: 'doc',
+                                    id: 'integrations/ai-llm/anthropic-claude',
+                                    label: 'Anthropic Claude',
                                 },
                                 {
                                     type: 'doc',
@@ -406,29 +395,29 @@ const sidebars = {
                                 },
                                 {
                                     type: 'doc',
-                                    id: 'integrations/ai-llm/anthropic-claude',
-                                    label: 'Anthropic Claude',
-                                },
-                                {
-                                    type: 'doc',
                                     id: 'integrations/ai-llm/hugging-face',
                                     label: 'Hugging Face',
                                 },
                                 {
                                     type: 'doc',
-                                    id: 'integrations/ai-llm/mistral',
-                                    label: 'Mistral',
+                                    id: 'integrations/ai-llm/aws-bedrock-anthropic',
+                                    label: 'AWS Bedrock Anthropic',
                                 },
                                 {
                                     type: 'doc',
-                                    id: 'integrations/ai-llm/perplexity',
-                                    label: 'Perplexity',
+                                    id: 'integrations/ai-llm/aws-bedrock-cohere',
+                                    label: 'AWS Bedrock Cohere',
                                 },
                                 {
                                     type: 'doc',
-                                    id: 'integrations/ai-llm/grok',
-                                    label: 'Grok',
+                                    id: 'integrations/ai-llm/aws-bedrock-titan',
+                                    label: 'AWS Bedrock Titan',
                                 },
+                                {
+                                    type: 'doc',
+                                    id: 'integrations/ai-llm/aws-bedrock-llama2',
+                                    label: 'AWS Bedrock Llama3',
+                                }, 
                             ],
                         },
                         {

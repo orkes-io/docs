@@ -1,34 +1,34 @@
 ---
-slug: "/integrations/ai-llm/aws-bedrock-anthropic"
-description: "Learn how to integrate AWS Bedrock Anthropic with your Orkes Conductor cluster."
+slug: "/integrations/ai-llm/aws-bedrock-cohere"
+description: "Learn how to integrate AWS Bedrock Cohere with your Orkes Conductor cluster."
 ---
 
-# AWS Bedrock Anthropic Integration with Orkes Conductor
+# AWS Bedrock Cohere Integration with Orkes Conductor
 
-To use system AI tasks in Orkes Conductor, you must integrate your Conductor cluster with the necessary AI providers. This guide explains how to integrate AWS Bedrock Anthropic with Orkes Conductor. Here’s an overview:
+To use system AI tasks in Orkes Conductor, you must integrate your Conductor cluster with the necessary AI providers. This guide explains how to integrate AWS Bedrock Cohere with Orkes Conductor. Here’s an overview:
 
-1. Get the required credentials from AWS Bedrock Anthropic.
-2. Configure a new AWS Bedrock Anthropic integration in Orkes Conductor.
+1. Get the required credentials from AWS Bedrock Cohere.
+2. Configure a new AWS Bedrock Cohere integration in Orkes Conductor.
 3. Add models to the integration.
 4. Set access limits to the AI model to govern which applications or groups can use them.
 
-## Step 1: Get the AWS Bedrock Anthropic credentials
+## Step 1: Get the AWS Bedrock Cohere credentials
 
-To integrate AWS Bedrock Anthropic with Orkes Conductor, retrieve the following credentials from your AWS account:
+To integrate AWS Bedrock Cohere with Orkes Conductor, retrieve the following credentials from your AWS account:
 
 - [AWS account ID](https://docs.aws.amazon.com/accounts/latest/reference/manage-acct-identifiers.html#FindAccountId) and **region**
 - (If assuming a role from another AWS account) [Amazon Resource Name (ARN)](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference-arns.html) and [External ID](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-user_externalid.html)
 - (If the connection is established using the access key and secret from the AWS account) [Access key and secret from AWS account](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html).
 
-## Step 2: Add an integration for AWS Bedrock Anthropic
+## Step 2: Add an integration for AWS Bedrock Cohere
 
-After obtaining the credentials, add an AWS Bedrock Anthropic integration to your Conductor cluster.
+After obtaining the credentials, add an AWS Bedrock Cohere integration to your Conductor cluster.
 
-**To create an AWS Bedrock Anthropic integration:**
+**To create an AWS Bedrock Cohere integration:**
 
 1. Go to **Integrations** from the left navigation menu on your Conductor cluster.
 2. Select **+ New integration**.
-3. In the **AI** section, choose **AWS Bedrock Anthropic**.
+3. In the **AI/LLM** section, choose **AWS Bedrock Cohere**.
 4. Select **+ Add** and enter the following parameters:
 
 | Parameters | Description | Required/Optional | 
@@ -43,30 +43,27 @@ After obtaining the credentials, add an AWS Bedrock Anthropic integration to you
 | Access secret | The access secret of the AWS account. | Required if the _Connection Type_ is chosen as _Access Key/Secret_. | 
 | Description | A description of your integration. | Required. | 
 
-<p align="center"><img src="/content/img/create-new-aws-bedrock-anthropic-integration.png" alt="AWS Bedrock Anthropic Integration with Orkes Conductor" width="60%" height="auto"></img></p>
+<p align="center"><img src="/content/img/create-new-aws-bedrock-cohere-integration.png" alt="AWS Bedrock Cohere Integration with Orkes Conductor" width="60%" height="auto"></img></p>
 
 5. (Optional) Toggle the **Active** button off if you don’t want to activate the integration instantly.
 6. Select **Save**.
 
-## Step 3: Add AWS Bedrock Anthropic models
+## Step 3: Add AWS Bedrock Cohere models
 
-Once you’ve integrated AWS Bedrock Anthropic, the next step is to configure specific models.
+Once you’ve integrated AWS Bedrock Cohere, the next step is to configure specific models.
 
-AWS Bedrock Anthropic has different models, such as Claude, Claude 3 Sonnet, Claude 3 Haiku, and more, each designed for various use cases. Choose the model that best fits your use case.
+AWS Bedrock Cohere has different models, such as Command, Command Light, Command R, and more, each designed for various use cases. Choose the model that best fits your use case.
 
-**To add a model to the AWS Bedrock Anthropic integration:**
+**To add a model to the AWS Bedrock Cohere integration:**
 
-1. Go to the **Integrations** page and select the + button next to the integration created.
+1. Go to the **Integrations** page and select the **+** button next to the integration created.
 
-<p align="center"><img src="/content/img/create-new-aws-bedrock-anthropic-integration-model-from-integrations-page.png" alt="Create AWS Bedrock Anthropic Integration Model from Listed Integrations" width="100%" height="auto"></img></p>
+<p align="center"><img src="/content/img/create-new-aws-bedrock-cohere-integration-model-from-integrations-page.png" alt="Create AWS Bedrock Cohere Integration Model from Listed Integrations" width="100%" height="auto"></img></p>
 
 2. Select **+ New model**.
-3. Enter the **Model name** and a **Description**. Get the complete [list of AWS Bedrock Anthropic models](https://docs.aws.amazon.com/bedrock/latest/userguide/models-supported.html). 
+3. Enter the **Model name** and a **Description**. Get the complete list of [AWS Bedrock Cohere models](https://docs.aws.amazon.com/bedrock/latest/userguide/models-supported.html). 
 
-<p align="center"><img src="/content/img/create-new-aws-bedrock-anthropic-integration-model.png" alt="Create AWS Bedrock Anthropic Integration Model" width="70%" height="auto"></img></p>
-
-4. (Optional) Toggle the **Active** button off if you don’t want to activate the model instantly.
-5. Select **Save**.
+<p align="center"><img src="/content/img/create-new-aws-bedrock-cohere-integration-model.png" alt="Create AWS Bedrock Cohere Integration Model" width="70%" height="auto"></img></p>
 
 This saves the model for future use in AI tasks within Orkes Conductor.
 
@@ -82,7 +79,7 @@ Once the integration is configured, set access controls to manage which applicat
 4. In the **Integration** tab, select the required AI models and toggle the necessary permissions.
 5. Select **Add Permissions**. 
 
-<p align="center"><img src="/content/img/rbac-aws-bedrock-anthropic-integration.png" alt="Add Permissions for Integrations" width="70%" height="auto"></img></p>
+<p align="center"><img src="/content/img/rbac-aws-bedrock-cohere-integration.png" alt="Add Permissions for Integrations" width="70%" height="auto"></img></p>
 
 The group or application can now access the AI model according to the configured permissions.
 
