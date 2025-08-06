@@ -26,6 +26,10 @@ Terminates a running workflow, with the option to provide a reason for terminati
 | reason                 | The reason for termination.                                                                                                                                                                                        | string  | Optional.          |
 | triggerFailureWorkflow | If set to true, the associated compensation flow (if any) will be triggered. Default is false. <br/><br/> Learn more about compensation flows in [Handling Failures](/error-handling#workflow-compensation-flows). | boolean | Optional.          |
 
+## Response
+
+Returns 200 OK, indicating that the workflow execution has been terminated successfully.
+
 ## Examples
 
 <details>
@@ -35,13 +39,52 @@ Terminates a running workflow, with the option to provide a reason for terminati
 
 ```shell
 curl -X 'DELETE' \
-  'https://<YOUR_CLUSTER>/api/workflow/77916c63-d3e7-11ef-87b1-b2b27c52ebde?reason=transaction%20cancelled&triggerFailureWorkflow=false' \
+  'https://<YOUR-PORTAL>/api/workflow/fd7s07f3b619-6edb-11f0-b0d8-2aadd5744325?reason=Terminated%20via%20API&triggerFailureWorkflow=false' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>'
 ```
 
 **Response**
 
-Returns 200 OK, indicating that the workflow execution has been terminated successfully.
+Returns 200 OK, indicating that the workflow execution has been terminated successfully. You can view the termination reason in the Conductor UI.
+
+<p align="center">
+  <img
+    src="/content/img/terminate-workflow-example.png"
+    alt="Screenshot of Conductor UI showing terminated workflow with the termination reason."
+    width="100%"
+    height="auto"
+    style={{ paddingBottom: 40, paddingTop: 40 }}
+  />
+</p>
+
+</details>
+
+
+<details>
+<summary>Terminate a workflow execution triggering a failure workflow</summary>
+
+**Request**
+
+```shell
+curl -X 'DELETE' \
+  'https://<YOUR-PORTAL>/api/workflow/fd7s07f3b619-6edb-11f0-b0d8-2aadd5744325?reason=Terminated%20via%20API&triggerFailureWorkflow=true' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the workflow execution has been terminated successfully, triggering the failure workflow.
+
+<p align="center">
+  <img
+    src="/content/img/terminated-workflow-that-triggered-a-compensation-workflow.png"
+    alt="Screenshot of Conductor UI showing terminated workflow that triggered a compensation workflow."
+    width="100%"
+    height="auto"
+    style={{ paddingBottom: 40, paddingTop: 40 }}
+  />
+</p>
 
 </details>

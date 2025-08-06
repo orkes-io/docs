@@ -49,6 +49,10 @@ Format the request as an object containing the following parameters.
 }
 ```
 
+## Response
+
+Returns 200 OK, indicating that the workflow execution has been upgraded successfully. All new tasks before the currently running task are skipped in the execution.
+
 ## Examples
 
 <details>
@@ -77,6 +81,81 @@ Returns 200 OK, indicating that the workflow execution has been upgraded success
   <img
     src="/content/img//upgrade_workflow_api-skipped_task.png"
     alt="Screenshot of Conductor UI showing the skipped tasks in the upgraded workflow execution."
+    width="90%"
+    height="auto"
+    style={{ paddingBottom: 40, paddingTop: 40 }}
+  />
+</p>
+
+</details>
+
+<details>
+<summary>Upgrade to the next version with updated workflow input</summary>
+
+**Request**
+
+```bash
+curl -X 'POST' \
+  'https://<YOUR-CLUSTER>/api/workflow/ce5ce5d6-6ed1-11f0-880f-0246e7260963/upgrade' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "name": "someWorkflow",
+  "version": 2,
+  "workflowInput": {
+    "name": "updatedValue"
+  }
+'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the workflow execution has been upgraded successfully, and the `workflowInput` is updated in the running execution.
+
+<p align="center">
+  <img
+    src="/content/img/upgrade-workflow-with-updated-input.png"
+    alt="Screenshot of Conductor UI showing updated workflow input using upgrade workflow API."
+    width="90%"
+    height="auto"
+    style={{ paddingBottom: 40, paddingTop: 40 }}
+  />
+</p>
+
+</details>
+
+<details>
+<summary>Upgrade to the next version with updated task output for a skipped task</summary>
+
+**Request**
+
+```bash
+ curl -X 'POST' \
+  'https://<YOUR-CLUSTER>/api/workflow/b24acffe-6ed2-11f0-880f-0246e7260963/upgrade' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "name": "someWorkflow",
+  "taskOutput": {
+    "event_ref": {
+      "output": "This task execution is skipped via API call"
+    }
+  },
+  "version": 2
+}
+'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the workflow execution has been upgraded successfully.  The output for the skipped task (event_ref) is added to the execution.
+
+<p align="center">
+  <img
+    src="/content/img/skipped-task-updated-output.png"
+    alt="Screenshot of Conductor UI showing updated task output for a skipped task."
     width="90%"
     height="auto"
     style={{ paddingBottom: 40, paddingTop: 40 }}

@@ -23,8 +23,8 @@ Gets a list of execution details for a specific workflow definition based on a l
 
 | Parameter     | Description                                                                                      | Type    | Required/ Optional |
 | ------------- | ------------------------------------------------------------------------------------------------ | ------- | ------------------ |
+| includeClosed | If set to true, the response will also include workflows in a terminal state. Default is false.           | boolean | Optional.          |
 | includeTasks  | If set to true, all task execution details will be fetched in a `tasks` array. Default is false. | boolean | Optional.          |
-| includeClosed | If set to true, the response will also include terminal workflows. Default is false.             | boolean | Optional.          |
 
 ## Request body
 
@@ -53,6 +53,8 @@ curl -X 'POST' \
 ```
 
 **Response**
+
+The response includes only currently running workflow executions for each correlation ID because the `includeClosed` parameter is set to false.
 
 ```json
 {
@@ -149,6 +151,8 @@ curl -X 'POST' \
 ```
 
 **Response**
+
+The response includes both running and completed workflow executions for each correlation ID because the` includeClosed` parameter is set to true.
 
 ```json
 {

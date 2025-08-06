@@ -1,5 +1,5 @@
 ---
-sidebar_position: 16
+sidebar_position: 15
 slug: "/reference-docs/api/workflow/delete-workflow"
 description: "This API is used to permanently remove a workflow execution from your Conductor cluster"
 ---
@@ -24,6 +24,10 @@ Deletes a workflow execution from the server using the workflow (execution) ID.
 | Parameter       | Description                                                                                                                                                          | Type    | Required/ Optional |
 | --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | ------------------ |
 | archiveWorkflow | **Note:** This parameter is deprecated. There is no effect when configured. <br/><br/> If set to true, the workflow will be archived instead of permanently deleted. | boolean | Optional.          |
+
+## Response
+
+Returns 200 OK, indicating that the workflow has been deleted successfully.
 
 ## Examples
 

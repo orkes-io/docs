@@ -11,7 +11,7 @@ import TabItem from '@theme/TabItem';
 
 **Endpoint:** `POST /api/workflow/{workflowId}/restart`
 
-Restarts a terminal workflow execution from the beginning using the same input and workflow definition, with the option to use the latest definition instead. This method has no effect on ongoing workflows.
+Restarts a terminal workflow execution from the beginning using the same input and workflow definition. You can optionally restart it using the latest workflow definition. This method has no effect on ongoing workflows.
 
 ## Path parameters
 
@@ -24,6 +24,9 @@ Restarts a terminal workflow execution from the beginning using the same input a
 | Parameter            | Description                                                                                                      | Type    | Required/ Optional |
 | -------------------- | ---------------------------------------------------------------------------------------------------------------- | ------- | ------------------ |
 | useLatestDefinitions | If set to true, the restarted workflow will use the latest definition from the metadata store. Default is false. | boolean | Optional.          |
+
+## Response
+Returns 204, indicating that the workflow execution has been restarted successfully.
 
 ## Examples
 

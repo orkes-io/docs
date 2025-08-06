@@ -39,177 +39,85 @@ Returns a JSON object containing the workflow’s execution details.
 
 ```shell
 curl -X 'GET' \
-  'https://<YOUR_CLUSTER>/api/workflow/6f5aa0f1-b871-11ef-b090-be4a9a728270?includeTasks=true' \
+  'https://<YOUR-CLUSTER>/api/workflow/3791f604-6d4c-11f0-880f-0246e7260963?includeTasks=true' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>'
 ```
 
 **Response**
 
-```json
-{
-  "ownerApp": "",
-  "createTime": 1733998281080,
-  "updateTime": 1733998281080,
-  "createdBy": "user@example.com",
-  "status": "RUNNING",
-  "endTime": 0,
-  "workflowId": "6f5aa0f1-b871-11ef-b090-be4a9a728270",
-  "tasks": [],
-  "input": {},
-  "output": {},
-  "taskToDomain": {},
-  "failedReferenceTaskNames": [],
-  "workflowDefinition": {
-    "createTime": 1728528754591,
-    "updateTime": 1728529067708,
-    "name": "simple-worker-project",
-    "description": "Java worker",
-    "version": 1,
-    "tasks": [
-      {
-        "name": "simple-java-worker",
-        "taskReferenceName": "simple-java-worker_ref",
-        "inputParameters": {},
-        "type": "SIMPLE",
-        "decisionCases": {},
-        "defaultCase": [],
-        "forkTasks": [],
-        "startDelay": 0,
-        "joinOn": [],
-        "optional": false,
-        "taskDefinition": {
-          "createTime": 0,
-          "updateTime": 0,
-          "name": "simple-java-worker",
-          "retryCount": 3,
-          "timeoutSeconds": 0,
-          "inputKeys": [],
-          "outputKeys": [],
-          "timeoutPolicy": "TIME_OUT_WF",
-          "retryLogic": "FIXED",
-          "retryDelaySeconds": 60,
-          "responseTimeoutSeconds": 3600,
-          "inputTemplate": {},
-          "rateLimitPerFrequency": 0,
-          "rateLimitFrequencyInSeconds": 1,
-          "backoffScaleFactor": 1,
-          "totalTimeoutSeconds": 0,
-          "enforceSchema": false
-        },
-        "defaultExclusiveJoinTask": [],
-        "asyncComplete": false,
-        "loopOver": [],
-        "onStateChange": {},
-        "permissive": false
-      }
-    ],
-    "inputParameters": [],
-    "outputParameters": {},
-    "failureWorkflow": "",
-    "schemaVersion": 2,
-    "restartable": true,
-    "workflowStatusListenerEnabled": false,
-    "ownerEmail": "user@example.com",
-    "timeoutPolicy": "ALERT_ONLY",
-    "timeoutSeconds": 0,
-    "variables": {},
-    "inputTemplate": {},
-    "enforceSchema": true
-  },
-  "priority": 0,
-  "variables": {},
-  "lastRetriedTime": 0,
-  "failedTaskNames": [],
-  "history": [],
-  "rateLimited": false,
-  "startTime": 1733998281080,
-  "workflowVersion": 1,
-  "workflowName": "simple-worker-project"
-}
-```
-
-</details>
-
-<details>
-<summary>Get workflow without task execution details</summary>
-
-**Request**
-
-```shell
-curl -X 'GET' \
-  'https://<YOUR_CLUSTER>/api/workflow/6f5aa0f1-b871-11ef-b090-be4a9a728270?includeTasks=false' \
-  -H 'accept: */*' \
-  -H 'X-Authorization: <TOKEN>'
-```
-
-**Response**
+The task execution details are returned in the `tasks` array:
 
 ```json
 {
   "ownerApp": "",
-  "createTime": 1733998281080,
-  "updateTime": 1733998281080,
-  "createdBy": "user@example.com",
-  "status": "RUNNING",
-  "endTime": 0,
-  "workflowId": "6f5aa0f1-b871-11ef-b090-be4a9a728270",
+  "createTime": 1753883456574,
+  "updateTime": 1753883458402,
+  "createdBy": "john.doe@acme.com",
+  "updatedBy": "john.doe@acme.com",
+  "status": "COMPLETED",
+  "endTime": 1753883458400,
+  "workflowId": "3791f604-6d4c-11f0-880f-0246e7260963",
   "tasks": [
     {
-      "taskType": "simple-java-worker",
-      "status": "SCHEDULED",
+      "taskType": "LLM_TEXT_COMPLETE",
+      "status": "COMPLETED",
       "inputData": {
-        "_createdBy": "user@example.com"
+        "promptVariables": {
+          "language": "",
+          "text": ""
+        },
+        "promptName": "translate",
+        "llmProvider": "openAI",
+        "temperature": 0,
+        "model": "chatgpt-4o-latest",
+        "_createdBy": "john.doe@acme.com",
+        "prompt": "Translate the following text into .\n\n<text>\n \n</text>\n\nMake sure the translated output sounds native. Reply only with the translation and nothing else."
       },
-      "referenceTaskName": "simple-java-worker_ref",
+      "referenceTaskName": "llm_text_complete_task_ref",
       "retryCount": 0,
       "seq": 1,
-      "pollCount": 0,
-      "taskDefName": "simple-java-worker",
-      "scheduledTime": 1733998281088,
-      "startTime": 0,
-      "endTime": 0,
-      "updateTime": 0,
+      "pollCount": 1,
+      "taskDefName": "LLM_TEXT_COMPLETE",
+      "scheduledTime": 1753883456582,
+      "startTime": 1753883456663,
+      "endTime": 1753883458388,
+      "updateTime": 1753883456663,
       "startDelayInSeconds": 0,
       "retried": false,
-      "executed": false,
+      "executed": true,
       "callbackFromWorker": true,
       "responseTimeoutSeconds": 3600,
-      "workflowInstanceId": "6f5aa0f1-b871-11ef-b090-be4a9a728270",
-      "workflowType": "simple-worker-project",
-      "taskId": "6f5bd972-b871-11ef-b090-be4a9a728270",
+      "workflowInstanceId": "3791f604-6d4c-11f0-880f-0246e7260963",
+      "workflowType": "translation",
+      "taskId": "37932e85-6d4c-11f0-880f-0246e7260963",
       "callbackAfterSeconds": 0,
-      "outputData": {},
+      "workerId": "orkes-workers-deployment-7686d95698-l9rwl",
+      "outputData": {
+        "result": "It seems the text to be translated is missing. Please provide the text you'd like me to translate.",
+        "finishReason": "stop",
+        "tokenUsed": 57
+      },
       "workflowTask": {
-        "name": "simple-java-worker",
-        "taskReferenceName": "simple-java-worker_ref",
-        "inputParameters": {},
-        "type": "SIMPLE",
+        "name": "llm_text_complete_task",
+        "taskReferenceName": "llm_text_complete_task_ref",
+        "inputParameters": {
+          "llmProvider": "openAI",
+          "model": "chatgpt-4o-latest",
+          "promptName": "translate",
+          "promptVariables": {
+            "language": "",
+            "text": ""
+          },
+          "temperature": 0
+        },
+        "type": "LLM_TEXT_COMPLETE",
         "decisionCases": {},
         "defaultCase": [],
         "forkTasks": [],
         "startDelay": 0,
         "joinOn": [],
         "optional": false,
-        "taskDefinition": {
-          "createTime": 0,
-          "updateTime": 0,
-          "name": "simple-java-worker",
-          "retryCount": 3,
-          "timeoutSeconds": 0,
-          "inputKeys": [],
-          "outputKeys": [],
-          "timeoutPolicy": "TIME_OUT_WF",
-          "retryLogic": "FIXED",
-          "retryDelaySeconds": 60,
-          "responseTimeoutSeconds": 3600,
-          "inputTemplate": {},
-          "rateLimitPerFrequency": 0,
-          "rateLimitFrequencyInSeconds": 1,
-          "backoffScaleFactor": 1,
-          "totalTimeoutSeconds": 0,
-          "enforceSchema": false
-        },
         "defaultExclusiveJoinTask": [],
         "asyncComplete": false,
         "loopOver": [],
@@ -222,70 +130,49 @@ curl -X 'GET' \
       "iteration": 0,
       "subworkflowChanged": false,
       "firstStartTime": 0,
-      "queueWaitTime": 0,
+      "queueWaitTime": 81,
       "loopOverTask": false,
-      "taskDefinition": {
-        "createTime": 0,
-        "updateTime": 0,
-        "name": "simple-java-worker",
-        "retryCount": 3,
-        "timeoutSeconds": 0,
-        "inputKeys": [],
-        "outputKeys": [],
-        "timeoutPolicy": "TIME_OUT_WF",
-        "retryLogic": "FIXED",
-        "retryDelaySeconds": 60,
-        "responseTimeoutSeconds": 3600,
-        "inputTemplate": {},
-        "rateLimitPerFrequency": 0,
-        "rateLimitFrequencyInSeconds": 1,
-        "backoffScaleFactor": 1,
-        "totalTimeoutSeconds": 0,
-        "enforceSchema": false
-      }
+      "taskDefinition": null
     }
   ],
-  "input": {},
-  "output": {},
+  "input": {
+    "input": "What is your name?",
+    "language": "Arabic"
+  },
+  "output": {
+    "result": "It seems the text to be translated is missing. Please provide the text you'd like me to translate.",
+    "finishReason": "stop",
+    "tokenUsed": 57
+  },
   "taskToDomain": {},
   "failedReferenceTaskNames": [],
   "workflowDefinition": {
-    "createTime": 1728528754591,
-    "updateTime": 1728529067708,
-    "name": "simple-worker-project",
-    "description": "Java worker",
+    "createTime": 1751876511418,
+    "updateTime": 1753883441350,
+    "name": "translation",
+    "description": "translation",
     "version": 1,
     "tasks": [
       {
-        "name": "simple-java-worker",
-        "taskReferenceName": "simple-java-worker_ref",
-        "inputParameters": {},
-        "type": "SIMPLE",
+        "name": "llm_text_complete_task",
+        "taskReferenceName": "llm_text_complete_task_ref",
+        "inputParameters": {
+          "llmProvider": "openAI",
+          "model": "chatgpt-4o-latest",
+          "promptName": "translate",
+          "promptVariables": {
+            "language": "",
+            "text": ""
+          },
+          "temperature": 0
+        },
+        "type": "LLM_TEXT_COMPLETE",
         "decisionCases": {},
         "defaultCase": [],
         "forkTasks": [],
         "startDelay": 0,
         "joinOn": [],
         "optional": false,
-        "taskDefinition": {
-          "createTime": 0,
-          "updateTime": 0,
-          "name": "simple-java-worker",
-          "retryCount": 3,
-          "timeoutSeconds": 0,
-          "inputKeys": [],
-          "outputKeys": [],
-          "timeoutPolicy": "TIME_OUT_WF",
-          "retryLogic": "FIXED",
-          "retryDelaySeconds": 60,
-          "responseTimeoutSeconds": 3600,
-          "inputTemplate": {},
-          "rateLimitPerFrequency": 0,
-          "rateLimitFrequencyInSeconds": 1,
-          "backoffScaleFactor": 1,
-          "totalTimeoutSeconds": 0,
-          "enforceSchema": false
-        },
         "defaultExclusiveJoinTask": [],
         "asyncComplete": false,
         "loopOver": [],
@@ -293,18 +180,22 @@ curl -X 'GET' \
         "permissive": false
       }
     ],
-    "inputParameters": [],
+    "inputParameters": [
+      "input",
+      "language"
+    ],
     "outputParameters": {},
     "failureWorkflow": "",
     "schemaVersion": 2,
     "restartable": true,
     "workflowStatusListenerEnabled": false,
-    "ownerEmail": "user@example.com",
+    "ownerEmail": "john.doe@acme.com",
     "timeoutPolicy": "ALERT_ONLY",
     "timeoutSeconds": 0,
     "variables": {},
     "inputTemplate": {},
-    "enforceSchema": true
+    "enforceSchema": true,
+    "metadata": {}
   },
   "priority": 0,
   "variables": {},
@@ -312,8 +203,112 @@ curl -X 'GET' \
   "failedTaskNames": [],
   "history": [],
   "rateLimited": false,
-  "startTime": 1733998281080,
-  "workflowName": "simple-worker-project",
+  "startTime": 1753883456574,
+  "workflowName": "translation",
+  "workflowVersion": 1
+}
+
+```
+
+</details>
+
+<details>
+<summary>Get workflow without task execution details</summary>
+
+**Request**
+
+```shell
+curl -X 'GET' \
+  'https://<YOUR-CLUSTER>/api/workflow/3791f604-6d4c-11f0-880f-0246e7260963?includeTasks=false \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+The tasks array is empty because `includeTasks` is set to false:
+
+```json
+{
+  "ownerApp": "",
+  "createTime": 1753883456574,
+  "updateTime": 1753883458402,
+  "createdBy": "john.doe@acme.com",
+  "updatedBy": "john.doe@acme.com",
+  "status": "COMPLETED",
+  "endTime": 1753883458400,
+  "workflowId": "3791f604-6d4c-11f0-880f-0246e7260963",
+  "tasks": [],
+  "input": {
+    "input": "What is your name?",
+    "language": "Arabic"
+  },
+  "output": {
+    "result": "It seems the text to be translated is missing. Please provide the text you'd like me to translate.",
+    "finishReason": "stop",
+    "tokenUsed": 57
+  },
+  "taskToDomain": {},
+  "failedReferenceTaskNames": [],
+  "workflowDefinition": {
+    "createTime": 1751876511418,
+    "updateTime": 1753883441350,
+    "name": "translation",
+    "description": "translation",
+    "version": 1,
+    "tasks": [
+      {
+        "name": "llm_text_complete_task",
+        "taskReferenceName": "llm_text_complete_task_ref",
+        "inputParameters": {
+          "llmProvider": "openAI",
+          "model": "chatgpt-4o-latest",
+          "promptName": "translate",
+          "promptVariables": {
+            "language": "",
+            "text": ""
+          },
+          "temperature": 0
+        },
+        "type": "LLM_TEXT_COMPLETE",
+        "decisionCases": {},
+        "defaultCase": [],
+        "forkTasks": [],
+        "startDelay": 0,
+        "joinOn": [],
+        "optional": false,
+        "defaultExclusiveJoinTask": [],
+        "asyncComplete": false,
+        "loopOver": [],
+        "onStateChange": {},
+        "permissive": false
+      }
+    ],
+    "inputParameters": [
+      "input",
+      "language"
+    ],
+    "outputParameters": {},
+    "failureWorkflow": "",
+    "schemaVersion": 2,
+    "restartable": true,
+    "workflowStatusListenerEnabled": false,
+    "ownerEmail": "john.doe@acme.com",
+    "timeoutPolicy": "ALERT_ONLY",
+    "timeoutSeconds": 0,
+    "variables": {},
+    "inputTemplate": {},
+    "enforceSchema": true,
+    "metadata": {}
+  },
+  "priority": 0,
+  "variables": {},
+  "lastRetriedTime": 0,
+  "failedTaskNames": [],
+  "history": [],
+  "rateLimited": false,
+  "startTime": 1753883456574,
+  "workflowName": "translation",
   "workflowVersion": 1
 }
 ```

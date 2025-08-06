@@ -26,6 +26,10 @@ Retries a failed workflow execution from the last failed task. When invoked, the
 | resumeSubworkflowTasks | (For cases where the last failed task is a Sub Workflow task) If set to true, the parent workflow is restarted from the sub-workflow’s last failed task. If set to false, a new sub-workflow execution is created. Default is false. | boolean | Optional.          |
 | retryIfRetriedByParent | (For cases where a sub-workflow is being retried) If set to false, the sub-workflow will be prohibited from retrying if its parent workflow has been retried before. Default is true.                                                | boolean | Optional.          |
 
+## Response
+
+Returns 204 No Content, indicating that the workflow execution has been restarted successfully from the last failed task.
+
 ## Examples
 
 <details>
@@ -103,25 +107,69 @@ In the Conductor UI, the parent workflow execution will re-enter the RUNNING sta
 <details>
 <summary>Retry sub-workflow when retryIfRetriedByParent=false</summary>
 
-**Request**
+This example demonstrates how a retry attempt on a sub-workflow is blocked when:
 
-```shell
+1. A sub-workflow has failed.
+2. Its parent workflow has already been retried.
+3. A retry is attempted on the sub-workflow with `retryIfRetriedByParent=false`.
+
+Start a workflow that includes a sub-workflow. Initially, both executions are in RUNNING status.
+
+<p align="center">
+  <img
+    src="/content/img/parent-and-child-workflow-in-running-state.png"
+    alt="Both workflows in RUNNING state."
+    width="100%"
+    height="auto"
+    style={{ paddingBottom: 40, paddingTop: 40 }}
+  />
+</p>
+
+Now, let’s assume the sub workflow failed, resulting in both the sub-workflow and the parent workflow entering FAILED status.
+
+<p align="center">
+  <img
+    src="/content/img/parent-and-child-workflow-in-failed-state.png"
+    alt="Both workflows in FAILED state."
+    width="100%"
+    height="auto"
+    style={{ paddingBottom: 40, paddingTop: 40 }}
+  />
+</p>
+
+Use the following API call to retry the parent workflow:
+
+```bash
 curl -X 'POST' \
-  'https://<YOUR_CLUSTER>/api/workflow/1f920305-da0c-11ef-a114-0af1b159704e/retry?retryIfRetriedByParent=false' \
+  'https://<YOUR-CLUSTER>/api/workflow<PARENT-WORKFLOW-ID>/retry' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>' \
   -d ''
 ```
+
+The parent workflow is successfully retried and transitions to RUNNING. The previous sub-workflow execution remains FAILED.
+
+Now attempt to retry the initially failed sub-workflow using the following call with `retryIfRetriedByParent=false`:
+
+```bash
+curl -X 'POST' \
+  'https://<YOUR-CLUSTER>/api/workflow/<SUB-WORKFLOW-ID>/retry?retryIfRetriedByParent=false' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -d ''
+  ```
 
 **Response**
 
 ```json
 {
   "status": 400,
-  "message": "Parent task 1f8f6af4-da0c-11ef-a114-0af1b159704e of workflow 19c1d273-da0c-11ef-87b1-b2b27c52ebde is already retried, retrying subworkflow 1f920305-da0c-11ef-a114-0af1b159704e is prohibited because retryIfHasParent=false in retry request",
-  "instance": "orkes-conductor-deployment-64f9978cfc-r8ftz",
+  "message": "Parent task fd7sdfe33153-71df-11f0-af9d-8e9bff353733 of workflow fd7sd6e353e6-71df-11f0-9288-1a521d72d3b3 is already retried, retrying subworkflow fd7sdfe442c4-71df-11f0-af9d-8e9bff353733 is prohibited because retryIfHasParent=false in retry request",
+  "instance": "orkes-conductor-deployment-84d9984cb8-r7rrd",
   "retryable": false
 }
 ```
+
+This error confirms that Conductor blocks the retry because the parent workflow has already been retried, and `retryIfRetriedByParent=false` prohibits retrying the sub-workflow independently.
 
 </details>
