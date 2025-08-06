@@ -6,18 +6,15 @@ description: "This API is used to start a workflow execution with a given consis
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import TableNote from '@site/src/components/TableNote';
 
 # Execute Workflow Synchronously
 
-:::info Available since
-v5.1.0 and later
-:::
-
 **Endpoint**: `POST /api/workflow/execute/{name}/{version}`
 
-Starts a workflow execution synchronously, and returns a response after a specified `waitForSeconds` has passed or when a specified `waitUntilTaskRef` task completes, whichever completes first. 
+Starts a workflow execution synchronously, and returns a response after a specified *waitForSeconds* has passed or when a specified *waitUntilTaskRef* task completes, whichever completes first. Set **consistency** to **SYNCHRONOUS** to execute the workflow directly from memory without persisting the request.
 
-Set **consistency** to *SYNCHRONOUS* for the fastest in-memory start, *DURABLE* for a persisted start, or *REGION_DURABLE* to copy the start request to another region for extra resilience. If the workflow includes a [Yield task](https://orkes.io/content/reference-docs/operators/yield), the endpoint returns the response based on the `returnStrategy`. 
+If the workflow includes a [Yield task](https://orkes.io/content/reference-docs/operators/yield), the endpoint returns the response based on the `returnStrategy` parameter. 
 
 ## Path parameters
 
@@ -30,11 +27,11 @@ Set **consistency** to *SYNCHRONOUS* for the fastest in-memory start, *DURABLE* 
 
 | Parameter | Description                                                            | Type    | Required/ Optional |
 | --------- | ---------------------------------------------------------------------- | ------- | ------------------ |
-| requestId | A user-generated request ID, which can be used to track the API request. | string | Optional. | 
+| requestId | A user-generated request ID, which can be used to track the API request. | string | Optional.<br/>**Note**: For the Conductor version below v5.0.1, this field is Required. | 
 | waitUntilTaskRef | The reference name of the task to wait for before returning a response. If the workflow is incomplete, the response will return 206. | string | Optional. | 
 | waitForSeconds | The duration in seconds to wait before returning a response. Default is 10. | integer | Optional. | 
-| consistency | Specifies how the request persists and is replicated.  Supported values: <ul><li>**SYNCHRONOUS**—Executes the workflow directly from memory without persisting the request. This option offers the lowest latency but is non-durable.</li><li>**DURABLE**—The request is stored in persistence before the workflow execution. This ensures reliable execution.</li><li>**REGION_DURABLE**—The request is replicated across regions before the workflow execution. This method provides the highest level of durability and fault tolerance but may introduce additional latency.</li></ul> Default is DURABLE. | string | Optional. |
-| returnStrategy | If the workflow includes a [Yield task](https://orkes.io/content/reference-docs/operators/yield), this parameter defines the strategy for when the API returns a response. Supported values: <ul><li>**TARGET_WORKFLOW**–Returns the state of the originally triggered workflow.</li><li>**BLOCKING_WORKFLOW**–Returns the state of the workflow that is currently blocking the execution, which may be a sub-workflow.</li><li>**BLOCKING_TASK**–Returns the execution status of the task that is currently blocking workflow execution.</li><li>**BLOCKING_TASK_INPUT**–Returns the input of the task that is currently blocking workflow execution. Useful for introspecting runtime behavior or debugging.</li></ul> Default is TARGET_WORKFLOW. | string | Optional. | 
+| consistency | Specifies how the request persists and is replicated.  Supported values: <ul><li>**SYNCHRONOUS**—Executes the workflow directly from memory without persisting the request. This option offers the lowest latency but is non-durable.</li><li>**DURABLE**—The request is stored in persistence before the workflow execution. This ensures reliable execution.</li><li>**REGION_DURABLE**—The request is replicated across regions before the workflow execution. This method provides the highest level of durability and fault tolerance but may introduce additional latency.</li></ul> Default is DURABLE.<br/><TableNote title="Available since">v5.0.1 and later</TableNote>| string | Optional. |
+| returnStrategy | If the workflow includes a [Yield task](https://orkes.io/content/reference-docs/operators/yield), this parameter defines the strategy for when the API returns a response. Supported values: <ul><li>**TARGET_WORKFLOW**–Returns the state of the originally triggered workflow.</li><li>**BLOCKING_WORKFLOW**–Returns the state of the workflow that is currently blocking the execution, which may be a sub-workflow.</li><li>**BLOCKING_TASK**–Returns the execution status of the task that is currently blocking workflow execution.</li><li>**BLOCKING_TASK_INPUT**–Returns the input of the task that is currently blocking workflow execution. Useful for introspecting runtime behavior or debugging.</li></ul> Default is TARGET_WORKFLOW.<br/><TableNote title="Available since">v5.0.1 and later</TableNote> | string | Optional. | 
 
 ## Request body
 
@@ -234,6 +231,8 @@ curl -X 'POST' \
 ```
 
 **Response**
+
+Here the response is determined by the `returnStrategy=BLOCKING_TASK`, which returns the execution status of the task that is currently blocking workflow execution.
 
 ```json
 {
