@@ -12,7 +12,7 @@ import TableNote from '@site/src/components/TableNote';
 
 **Endpoint**: `POST /api/workflow/execute/{name}/{version}`
 
-Starts a workflow execution synchronously, and returns a response after a specified *waitForSeconds* has passed or when a specified *waitUntilTaskRef* task completes, whichever completes first. Set **consistency** to **SYNCHRONOUS** to execute the workflow directly from memory without persisting the request.
+Starts a workflow execution synchronously. Set *consistency* to *SYNCHRONOUS* to execute the workflow directly from memory without persisting the request.
 
 If the workflow includes a [Yield task](https://orkes.io/content/reference-docs/operators/yield), the endpoint returns the response based on the `returnStrategy` parameter. 
 
