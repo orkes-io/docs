@@ -138,3 +138,33 @@ In the Conductor UI, the workflow execution will rerun from the specified task w
 
 
 </details>
+
+<details>
+<summary>Rerun workflow with updated workflow inputs</summary>
+
+**Request**
+
+```shell
+curl -X 'POST' \
+  'https://<YOUR-CLUSTER>/api/workflow/fd7s75562f1a-71da-11f0-9288-1a521d72d3b3/rerun' \
+  -H 'accept: text/plain' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "workflowInput": {
+    "input": "Updated Workflow Input"
+  }
+}'
+```
+
+**Response**
+
+```
+fd7s75562f1a-71da-11f0-9288-1a521d72d3b3
+```
+In the Conductor UI, the workflow execution will rerun with the updated workflow input.
+
+<p align="center"><img src="/content/img/rerun-workflow-with-updated-workflow-input.png" alt="Conductor UI showing workflow in RUNNING state with the updated workflow input." width="90%" height="auto"></img></p>
+
+
+</details>

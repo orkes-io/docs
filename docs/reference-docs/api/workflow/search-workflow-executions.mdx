@@ -182,3 +182,65 @@ curl -X 'GET' \
 ```
 
 </details>
+
+<details>
+<summary>Search for workflows based on freeText</summary>
+
+**Request**
+
+```shell
+curl -X 'GET' \
+  'https://<YOUR-CLUSTER>/api/workflow/search?start=0&size=15&freeText=dubai' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+{
+  "totalHits": 2,
+  "results": [
+    {
+      "workflowType": "GetWeatherDubai",
+      "version": 2,
+      "workflowId": "fd7scb6d1b03-71db-11f0-af9d-8e9bff353733",
+      "startTime": "2025-08-05T09:08:47.318Z",
+      "updateTime": "2025-08-05T09:08:47.934Z",
+      "endTime": "2025-08-05T09:08:47.930Z",
+      "status": "COMPLETED",
+      "input": "{subWorkflowDefinition=null, workflowInput={}, subWorkflowTaskToDomain=null, subWorkflowName=GetWeatherDubai, subWorkflowPriority=null, _createdBy=john.doe@acme.com, subWorkflowVersion=2}",
+      "output": "{result={unit=Celsius, temperature=36.5, windspeed=8.6, location=Dubai, UAE, time=2025-08-05T09:00}}",
+      "executionTime": 612,
+      "failedReferenceTaskNames": "",
+      "priority": 0,
+      "failedTaskNames": [],
+      "createdBy": "john.doe@acme.com",
+      "taskToDomain": {},
+      "inputSize": 191,
+      "outputSize": 100
+    },
+    {
+      "workflowType": "SequentialHTTPWorkflow",
+      "version": 1,
+      "workflowId": "fd7s98125d99-6ed5-11f0-a7fc-a652d19b1278",
+      "startTime": "2025-08-01T12:46:50.691Z",
+      "updateTime": "2025-08-01T12:46:51.554Z",
+      "endTime": "2025-08-01T12:46:51.552Z",
+      "status": "COMPLETED",
+      "input": "{ipaddress=86.99.24.5}",
+      "output": "{zipcode=, weather=Overcast, temperature_C=23}",
+      "executionTime": 861,
+      "failedReferenceTaskNames": "",
+      "priority": 0,
+      "failedTaskNames": [],
+      "createdBy": "john.doe@acme.com",
+      "taskToDomain": {},
+      "inputSize": 22,
+      "outputSize": 46
+    }
+  ]
+}
+```
+
+</details>

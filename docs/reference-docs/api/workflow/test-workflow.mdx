@@ -504,3 +504,452 @@ curl -X 'POST' \
 ```
 </details>
 
+<details>
+<summary>Test workflow with mock Worker tasks</summary>
+
+**Request**
+
+```bash
+curl -X 'POST' \
+  'https://<YOUR-CLUSTER>/api/workflow/test' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "input":{
+  },
+  "name":"myFirstWorkflow",
+  "workflowDef": {
+   "name": "myFirstWorkflow",
+   "tasks": [
+     {
+       "name": "get-user_ref",
+       "taskReferenceName": "get-user_ref",
+       "inputParameters": {
+         "http_request": {
+           "uri": "https://randomuser.me/api/",
+           "method": "GET"
+         }
+       },
+       "type": "HTTP"
+     },
+    {
+      "name": "myTask",
+      "taskReferenceName": "myTask_ref",
+      "inputParameters": {
+        "name": "${get-user_ref.output.response.body.results[0].name.first}"
+      },
+      "type": "SIMPLE"
+    }
+   ],
+   "inputParameters": [],
+   "outputParameters": {},
+   "failureWorkflow": "",
+   "schemaVersion": 2,
+   "timeoutPolicy": "ALERT_ONLY",
+   "timeoutSeconds": 60,
+   "enforceSchema": false,
+   "metadata": {}
+  },
+  "taskRefToMockOutput": {
+    "myTask_ref": [
+      {
+        "status":"COMPLETED",
+        "output": {
+          "greet": "Hello, user."
+        }
+      }
+    ]
+  }
+}
+'
+```
+
+**Response**
+
+```json
+{
+  "ownerApp": "",
+  "createTime": 1754388755642,
+  "updateTime": 1754388755755,
+  "createdBy": "john.doe@acme.com",
+  "updatedBy": "john.doe@acme.com",
+  "status": "COMPLETED",
+  "endTime": 1754388755753,
+  "workflowId": "fd7sb548fac0-71e4-11f0-9288-1a521d72d3b3",
+  "tasks": [
+    {
+      "taskType": "HTTP",
+      "status": "COMPLETED",
+      "inputData": {
+        "asyncComplete": false,
+        "http_request": {
+          "method": "GET",
+          "uri": "https://randomuser.me/api/"
+        },
+        "_createdBy": "john.doe@acme.com"
+      },
+      "referenceTaskName": "get-user_ref",
+      "retryCount": 0,
+      "seq": 1,
+      "pollCount": 0,
+      "taskDefName": "get-user_ref",
+      "scheduledTime": 1754388755647,
+      "startTime": 1754388755647,
+      "endTime": 1754388755735,
+      "updateTime": 1754388755735,
+      "startDelayInSeconds": 0,
+      "retried": false,
+      "executed": true,
+      "callbackFromWorker": true,
+      "responseTimeoutSeconds": 0,
+      "workflowInstanceId": "fd7sb548fac0-71e4-11f0-9288-1a521d72d3b3",
+      "workflowType": "myFirstWorkflow",
+      "taskId": "fd7sb5496ff1-71e4-11f0-9288-1a521d72d3b3",
+      "callbackAfterSeconds": 0,
+      "workerId": "orkes-conductor-deployment-84d9984cb8-xltz6",
+      "outputData": {
+        "response": {
+          "headers": {
+            "access-control-allow-origin": [
+              "*"
+            ],
+            "alt-svc": [
+              "h3=\":443\"; ma=86400"
+            ],
+            "cache-control": [
+              "no-cache"
+            ],
+            "cf-cache-status": [
+              "DYNAMIC"
+            ],
+            "cf-ray": [
+              "96a5845b3fe08b7e-IAD"
+            ],
+            "content-type": [
+              "application/json; charset=utf-8"
+            ],
+            "date": [
+              "Tue, 05 Aug 2025 10:12:35 GMT"
+            ],
+            "etag": [
+              "W/\"484-kO1YzlAgk9d2d5n+2KUWpXHZ9hI\""
+            ],
+            "nel": [
+              "{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}"
+            ],
+            "report-to": [
+              "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=rye8l9H%2FaLtn7lxqmvnOWy7z8XYpEIOyWnKUlvyrHxOR%2F58mvuiElxo7cCVU7Go71f8synvh0oddYXva1%2FRGqRxSZhexncCQFrcwLk4%3D\"}]}"
+            ],
+            "server": [
+              "cloudflare"
+            ],
+            "vary": [
+              "Accept-Encoding"
+            ],
+            "x-powered-by": [
+              "Express"
+            ]
+          },
+          "reasonPhrase": "",
+          "body": {
+            "results": [
+              {
+                "gender": "female",
+                "name": {
+                  "title": "Miss",
+                  "first": "Lily",
+                  "last": "Ose"
+                },
+                "location": {
+                  "street": {
+                    "number": 8170,
+                    "name": "Nydalen Bruks vei"
+                  },
+                  "city": "Teigebyen",
+                  "state": "Nord-Trøndelag",
+                  "country": "Norway",
+                  "postcode": "8907",
+                  "coordinates": {
+                    "latitude": "45.0448",
+                    "longitude": "45.0807"
+                  },
+                  "timezone": {
+                    "offset": "+7:00",
+                    "description": "Bangkok, Hanoi, Jakarta"
+                  }
+                },
+                "email": "lily.ose@example.com",
+                "login": {
+                  "uuid": "8a0cd9d7-8278-47eb-b8f8-bd8f4d6042a9",
+                  "username": "orangepeacock863",
+                  "password": "vision",
+                  "salt": "kBGC5RpG",
+                  "md5": "3720745f719ec52621c25e123dba0f85",
+                  "sha1": "dbba3d1eaea9e42eaa4f32ef29850026082a95f8",
+                  "sha256": "9335fc32cde16b6873b1ccb7ccf197e94eb6ae97f8d5f30276058ffc63cec486"
+                },
+                "dob": {
+                  "date": "1974-05-03T21:04:16.516Z",
+                  "age": 51
+                },
+                "registered": {
+                  "date": "2022-04-23T10:58:29.469Z",
+                  "age": 3
+                },
+                "phone": "84021654",
+                "cell": "40652620",
+                "id": {
+                  "name": "FN",
+                  "value": "03057441479"
+                },
+                "picture": {
+                  "large": "https://randomuser.me/api/portraits/women/25.jpg",
+                  "medium": "https://randomuser.me/api/portraits/med/women/25.jpg",
+                  "thumbnail": "https://randomuser.me/api/portraits/thumb/women/25.jpg"
+                },
+                "nat": "NO"
+              }
+            ],
+            "info": {
+              "seed": "4b6251c18dfc582c",
+              "results": 1,
+              "page": 1,
+              "version": "1.4"
+            }
+          },
+          "statusCode": 200
+        }
+      },
+      "workflowTask": {
+        "name": "get-user_ref",
+        "taskReferenceName": "get-user_ref",
+        "inputParameters": {
+          "http_request": {
+            "uri": "https://randomuser.me/api/",
+            "method": "GET"
+          },
+          "asyncComplete": false
+        },
+        "type": "HTTP",
+        "decisionCases": {},
+        "defaultCase": [],
+        "forkTasks": [],
+        "startDelay": 0,
+        "joinOn": [],
+        "optional": false,
+        "defaultExclusiveJoinTask": [],
+        "asyncComplete": false,
+        "loopOver": [],
+        "onStateChange": {},
+        "permissive": false
+      },
+      "rateLimitPerFrequency": 0,
+      "rateLimitFrequencyInSeconds": 0,
+      "workflowPriority": 0,
+      "iteration": 0,
+      "subworkflowChanged": false,
+      "firstStartTime": 0,
+      "taskDefinition": null,
+      "loopOverTask": false,
+      "queueWaitTime": 0
+    },
+    {
+      "taskType": "myTask",
+      "status": "COMPLETED",
+      "inputData": {
+        "name": "Lily",
+        "_createdBy": "john.doe@acme.com"
+      },
+      "referenceTaskName": "myTask_ref",
+      "retryCount": 0,
+      "seq": 2,
+      "pollCount": 0,
+      "taskDefName": "myTask",
+      "scheduledTime": 1754388755738,
+      "startTime": 0,
+      "endTime": 1754388755747,
+      "updateTime": 1754388755748,
+      "startDelayInSeconds": 0,
+      "retried": false,
+      "executed": true,
+      "callbackFromWorker": true,
+      "responseTimeoutSeconds": 3600,
+      "workflowInstanceId": "fd7sb548fac0-71e4-11f0-9288-1a521d72d3b3",
+      "workflowType": "myFirstWorkflow",
+      "taskId": "fd7sb557a0c2-71e4-11f0-9288-1a521d72d3b3",
+      "callbackAfterSeconds": 0,
+      "outputData": {
+        "greet": "Hello, user."
+      },
+      "workflowTask": {
+        "name": "myTask",
+        "taskReferenceName": "myTask_ref",
+        "inputParameters": {
+          "name": "${get-user_ref.output.response.body.results[0].name.first}"
+        },
+        "type": "SIMPLE",
+        "decisionCases": {},
+        "defaultCase": [],
+        "forkTasks": [],
+        "startDelay": 0,
+        "joinOn": [],
+        "optional": false,
+        "taskDefinition": {
+          "createTime": 0,
+          "updateTime": 0,
+          "name": "myTask",
+          "retryCount": 3,
+          "timeoutSeconds": 0,
+          "inputKeys": [],
+          "outputKeys": [],
+          "timeoutPolicy": "TIME_OUT_WF",
+          "retryLogic": "FIXED",
+          "retryDelaySeconds": 60,
+          "responseTimeoutSeconds": 3600,
+          "inputTemplate": {},
+          "rateLimitPerFrequency": 0,
+          "rateLimitFrequencyInSeconds": 1,
+          "backoffScaleFactor": 1,
+          "totalTimeoutSeconds": 0,
+          "enforceSchema": false
+        },
+        "defaultExclusiveJoinTask": [],
+        "asyncComplete": false,
+        "loopOver": [],
+        "onStateChange": {},
+        "permissive": false
+      },
+      "domain": "7b5f9eff-f012-47f9-824e-7884ecc68277",
+      "rateLimitPerFrequency": 0,
+      "rateLimitFrequencyInSeconds": 1,
+      "workflowPriority": 0,
+      "iteration": 0,
+      "subworkflowChanged": false,
+      "firstStartTime": 0,
+      "taskDefinition": {
+        "createTime": 0,
+        "updateTime": 0,
+        "name": "myTask",
+        "retryCount": 3,
+        "timeoutSeconds": 0,
+        "inputKeys": [],
+        "outputKeys": [],
+        "timeoutPolicy": "TIME_OUT_WF",
+        "retryLogic": "FIXED",
+        "retryDelaySeconds": 60,
+        "responseTimeoutSeconds": 3600,
+        "inputTemplate": {},
+        "rateLimitPerFrequency": 0,
+        "rateLimitFrequencyInSeconds": 1,
+        "backoffScaleFactor": 1,
+        "totalTimeoutSeconds": 0,
+        "enforceSchema": false
+      },
+      "loopOverTask": false,
+      "queueWaitTime": 0
+    }
+  ],
+  "input": {},
+  "output": {
+    "greet": "Hello, user."
+  },
+  "taskToDomain": {
+    "*": "7b5f9eff-f012-47f9-824e-7884ecc68277"
+  },
+  "failedReferenceTaskNames": [],
+  "workflowDefinition": {
+    "createTime": 0,
+    "updateTime": 0,
+    "name": "myFirstWorkflow",
+    "version": 1,
+    "tasks": [
+      {
+        "name": "get-user_ref",
+        "taskReferenceName": "get-user_ref",
+        "inputParameters": {
+          "http_request": {
+            "uri": "https://randomuser.me/api/",
+            "method": "GET"
+          },
+          "asyncComplete": false
+        },
+        "type": "HTTP",
+        "decisionCases": {},
+        "defaultCase": [],
+        "forkTasks": [],
+        "startDelay": 0,
+        "joinOn": [],
+        "optional": false,
+        "defaultExclusiveJoinTask": [],
+        "asyncComplete": false,
+        "loopOver": [],
+        "onStateChange": {},
+        "permissive": false
+      },
+      {
+        "name": "myTask",
+        "taskReferenceName": "myTask_ref",
+        "inputParameters": {
+          "name": "${get-user_ref.output.response.body.results[0].name.first}"
+        },
+        "type": "SIMPLE",
+        "decisionCases": {},
+        "defaultCase": [],
+        "forkTasks": [],
+        "startDelay": 0,
+        "joinOn": [],
+        "optional": false,
+        "taskDefinition": {
+          "createTime": 0,
+          "updateTime": 0,
+          "name": "myTask",
+          "retryCount": 3,
+          "timeoutSeconds": 0,
+          "inputKeys": [],
+          "outputKeys": [],
+          "timeoutPolicy": "TIME_OUT_WF",
+          "retryLogic": "FIXED",
+          "retryDelaySeconds": 60,
+          "responseTimeoutSeconds": 3600,
+          "inputTemplate": {},
+          "rateLimitPerFrequency": 0,
+          "rateLimitFrequencyInSeconds": 1,
+          "backoffScaleFactor": 1,
+          "totalTimeoutSeconds": 0,
+          "enforceSchema": false
+        },
+        "defaultExclusiveJoinTask": [],
+        "asyncComplete": false,
+        "loopOver": [],
+        "onStateChange": {},
+        "permissive": false
+      }
+    ],
+    "inputParameters": [],
+    "outputParameters": {},
+    "failureWorkflow": "",
+    "schemaVersion": 2,
+    "restartable": true,
+    "workflowStatusListenerEnabled": false,
+    "timeoutPolicy": "TIME_OUT_WF",
+    "timeoutSeconds": 60,
+    "variables": {},
+    "inputTemplate": {},
+    "enforceSchema": false,
+    "metadata": {},
+    "maskedFields": []
+  },
+  "priority": 0,
+  "variables": {},
+  "lastRetriedTime": 0,
+  "failedTaskNames": [],
+  "history": [],
+  "rateLimited": false,
+  "workflowName": "myFirstWorkflow",
+  "workflowVersion": 1,
+  "startTime": 1754388755642
+}
+```
+
+</details>

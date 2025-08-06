@@ -11,7 +11,7 @@ import TabItem from '@theme/TabItem';
 
 **Endpoint:** `PUT /api/workflow/{workflowId}/skiptask/{taskReferenceName}`
 
-Skips a scheduled task in an ongoing workflow using the task reference name. The skipped task’s inputs and outputs can be updated using _skipTaskRequest_.
+Skips a scheduled task in an ongoing workflow using the task reference name. The skipped task’s inputs and outputs can be updated using the query parameters.
 
 ## Path parameters
 
@@ -22,11 +22,27 @@ Skips a scheduled task in an ongoing workflow using the task reference name. The
 
 ## Query parameters
 
-| Parameter                       | Description                                     | Type   | Required/ Optional |
-| ------------------------------- | ----------------------------------------------- | ------ | ------------------ |
-| skipTaskRequest                 | Contains the skipped task’s inputs and outputs. | object | Required.          |
-| skipTaskRequest. **taskInput**  | The skipped task’s inputs.                      | object | Optional.          |
-| skipTaskRequest. **taskOutput** | The skipped task’s outputs.                     | object | Optional.          |
+| Parameter  | Description                                     | Type   | Required/ Optional |
+| ---------- | ----------------------------------------------- | ------ | ------------------ |
+| taskInput  | The skipped task’s inputs.                      | object | Optional.          |
+| taskOutput | The skipped task’s outputs.                     | object | Optional.          |
+
+**Example**
+
+```json
+{
+  "taskInput": {
+    "someInput": "Some task input"
+  },
+  "taskOutput": {
+    "someOutput": "Some task output"
+  }
+}
+```
+
+## Response
+
+Returns 200 OK, indicating that the task has been skipped successfully.
 
 ## Examples
 
@@ -45,5 +61,51 @@ curl -X 'PUT' \
 **Response**
 
 Returns 200 OK, indicating that the task has been skipped successfully.
+
+</details>
+
+<details>
+<summary>Skip a task with updated task inputs and outputs</summary>
+
+**Request**
+
+```bash
+curl -X 'PUT' \
+  'https://<YOUR-CLUSTER>/api/workflow/fd7s06a839e9-71d6-11f0-af9d-8e9bff353733/skiptask/simple_ref' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "taskInput": {
+    "input": "Task is skipped"
+  },
+  "taskOutput": {
+    "output": "Skipped task from execution via API"
+  }
+}'
+```
+**Response**
+
+Returns 200 OK, indicating that the task has been skipped successfully. You can verify the update by reviewing the task’s input and output in the workflow execution details.
+
+<p align="center">
+  <img
+    src="/content/img/updated-task-input-for-a-skipped-task.png"
+    alt="Screenshot of Conductor UI showing updated task input for a skipped task."
+    width="90%"
+    height="auto"
+    style={{ paddingBottom: 40, paddingTop: 40 }}
+  />
+</p>
+
+<p align="center">
+  <img
+    src="/content/img/updated-task-output-for-a-skipped-task.png"
+    alt="Screenshot of Conductor UI showing updated task output for a skipped task."
+    width="90%"
+    height="auto"
+    style={{ paddingBottom: 40, paddingTop: 40 }}
+  />
+</p>
 
 </details>
