@@ -53,3 +53,209 @@ Contains the workflow inputs. Format the request body as an object containing ke
 
 By default, the API returns the workflow’s current state upon synchronous execution. If a Yield task is present, the response is governed by the specified `returnStrategy`.
 
+## Examples
+
+<details>
+<summary>Execute a workflow synchronously</summary>
+
+**Request**
+
+```bash
+curl -X 'POST' \
+  'https://<YOUR-CLUSTER>/api/workflow/execute/someWorkflow/1?waitForSeconds=10&consistency=SYNCHRONOUS' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "someKey": "someValue"
+}'
+```
+
+**Response**
+
+Returns the workflow’s current state along with its data.
+
+```json
+{
+  "responseType": "TARGET_WORKFLOW",
+  "targetWorkflowId": "fd7sd1da1255-729e-11f0-af9d-8e9bff353733",
+  "targetWorkflowStatus": "COMPLETED",
+  "workflowId": "fd7sd1da1255-729e-11f0-af9d-8e9bff353733",
+  "input": {},
+  "output": {
+    "response": {
+      "headers": {
+        "content-length": [
+          "182"
+        ],
+        "content-type": [
+          "application/json"
+        ],
+        "date": [
+          "Wed, 06 Aug 2025 08:24:49 GMT"
+        ],
+        "strict-transport-security": [
+          "max-age=15724800; includeSubDomains"
+        ]
+      },
+      "reasonPhrase": "",
+      "body": {
+        "randomString": "cwrsgqarvvoxqmyyqzse",
+        "randomInt": 1776,
+        "hostName": "orkes-api-sampler-67dfc8cf58-nfx4d",
+        "apiRandomDelay": "0 ms",
+        "sleepFor": "0 ms",
+        "statusCode": "200",
+        "queryParams": {}
+      },
+      "statusCode": 200
+    }
+  },
+  "priority": 0,
+  "variables": {},
+  "tasks": [
+    {
+      "taskType": "HTTP",
+      "status": "COMPLETED",
+      "inputData": {
+        "encode": true,
+        "method": "GET",
+        "asyncComplete": false,
+        "_createdBy": "john.doe@acme.com",
+        "uri": "https://orkes-api-tester.orkesconductor.com/api",
+        "contentType": "application/json",
+        "accept": "application/json"
+      },
+      "referenceTaskName": "http_ref",
+      "retryCount": 0,
+      "seq": 1,
+      "pollCount": 0,
+      "taskDefName": "http",
+      "scheduledTime": 1754468689963,
+      "startTime": 1754468689963,
+      "endTime": 1754468689969,
+      "updateTime": 1754468689969,
+      "startDelayInSeconds": 0,
+      "retried": false,
+      "executed": true,
+      "callbackFromWorker": true,
+      "responseTimeoutSeconds": 0,
+      "workflowInstanceId": "fd7sd1da1255-729e-11f0-af9d-8e9bff353733",
+      "workflowType": "someWorkflow",
+      "taskId": "fd7sd1da6076-729e-11f0-af9d-8e9bff353733",
+      "callbackAfterSeconds": 0,
+      "workerId": "orkes-conductor-deployment-84d9984cb8-r7rrd",
+      "outputData": {
+        "response": {
+          "headers": {
+            "content-length": [
+              "182"
+            ],
+            "content-type": [
+              "application/json"
+            ],
+            "date": [
+              "Wed, 06 Aug 2025 08:24:49 GMT"
+            ],
+            "strict-transport-security": [
+              "max-age=15724800; includeSubDomains"
+            ]
+          },
+          "reasonPhrase": "",
+          "body": {
+            "randomString": "cwrsgqarvvoxqmyyqzse",
+            "randomInt": 1776,
+            "hostName": "orkes-api-sampler-67dfc8cf58-nfx4d",
+            "apiRandomDelay": "0 ms",
+            "sleepFor": "0 ms",
+            "statusCode": "200",
+            "queryParams": {}
+          },
+          "statusCode": 200
+        }
+      },
+      "workflowTask": {
+        "name": "http",
+        "taskReferenceName": "http_ref",
+        "inputParameters": {
+          "uri": "https://orkes-api-tester.orkesconductor.com/api",
+          "method": "GET",
+          "accept": "application/json",
+          "contentType": "application/json",
+          "encode": true,
+          "asyncComplete": false
+        },
+        "type": "HTTP",
+        "decisionCases": {},
+        "defaultCase": [],
+        "forkTasks": [],
+        "startDelay": 0,
+        "joinOn": [],
+        "optional": false,
+        "defaultExclusiveJoinTask": [],
+        "asyncComplete": false,
+        "loopOver": [],
+        "onStateChange": {},
+        "permissive": false
+      },
+      "rateLimitPerFrequency": 0,
+      "rateLimitFrequencyInSeconds": 0,
+      "workflowPriority": 0,
+      "iteration": 0,
+      "subworkflowChanged": false,
+      "firstStartTime": 0,
+      "queueWaitTime": 0,
+      "loopOverTask": false,
+      "taskDefinition": null
+    }
+  ],
+  "createdBy": "john.doe@acme.com",
+  "createTime": 1754468689961,
+  "status": "COMPLETED",
+  "updateTime": 1754468689971
+}
+```
+</details>
+
+<details>
+<summary>Execute a workflow (which contains a Yield task) synchronously</summary>
+
+**Request**
+
+```bash
+curl -X 'POST' \
+  'https://<YOUR-CLUSTER>/api/workflow/execute/YieldWorkflow/1?waitForSeconds=10&consistency=SYNCHRONOUS&returnStrategy=BLOCKING_TASK' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "someKey": "someValue"
+}'
+```
+
+**Response**
+
+```json
+{
+  "responseType": "BLOCKING_TASK",
+  "targetWorkflowId": "fd7s7da03c14-729f-11f0-af9d-8e9bff353733",
+  "targetWorkflowStatus": "RUNNING",
+  "workflowId": "fd7s7da03c14-729f-11f0-af9d-8e9bff353733",
+  "input": {
+    "_createdBy": "john.doe@acme.com"
+  },
+  "output": {},
+  "taskType": "YIELD",
+  "taskId": "fd7s7da08a35-729f-11f0-af9d-8e9bff353733",
+  "referenceTaskName": "yield_ref",
+  "retryCount": 0,
+  "taskDefName": "yield",
+  "workflowType": "YieldWorkflow",
+  "priority": 0,
+  "createTime": 0,
+  "updateTime": 0,
+  "status": "IN_PROGRESS"
+}
+```
+
+</details>
