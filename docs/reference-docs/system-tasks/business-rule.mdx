@@ -6,12 +6,13 @@ description: "The Business Rule task is used to evaluate business rules defined 
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
+import TableNote from '@site/src/components/TableNote';
 
 # Business Rule
 
 The Business Rule task allows the evaluation of business rules defined in spreadsheets. Supported formats include CSV, XLS, and XLSX. If a rule file lacks these extensions, it can also be processed if the `Content-Type` indicates a supported format.
 
-The Business Rule task evaluates business rules using a specified rule file. The file can be stored locally on the web, AWS S3, Azure Blob, or elsewhere. The task supports different execution strategies, input columns, and output columns. The rules can be configured to apply various logical operations such as comparison, string, list, and date operations.
+The Business Rule task evaluates business rules using a specified rule file. The file can be stored locally on the web, AWS S3, Azure Blob, or elsewhere. The task supports different execution strategies, cache timeout, input columns, and output columns. The rules can be configured to apply various logical operations such as comparison, string, list, and date operations.
 
 ## Task parameters
 
@@ -19,8 +20,9 @@ Configure these parameters for the Business Rule task.
 
 | Parameter                              | Description                                                                                                                                                                                                                                                                                                                                                                                                                              | Required/ Optional |
 | -------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
-| inputParameter.**ruleFileLocation**  | URL of the spreadsheet to be evaluated, in CSV, XLS, or XLSX format. The file can be stored on the web, AWS S3, Azure Blob, etc.<br/><br/>**Note:**A spreadsheet without an explicitly-defined .csv, .xls, or .xlsx extension can also be processed as long as its `Content-Type` indicates a supported format, such as a Google spreadsheet published to the web.                                                                       | Required.          |
-| inputParameter.**executionStrategy** | Strategy for rule execution. Supported types:<ul><li>**FIRE_FIRST**—Uses the first rule that matches to generate the output.</li><li>**FIRE_ALL**—Uses all matching rules to generate the output, with subsequent rules overwriting previous values.</li></ul>**Note:**When you update the rule for any files, there will be a default caching period of 60 mins, causing the updated rules to reflect with a delay of up to 60 minutes. | Required.          |
+| inputParameter.**ruleFileLocation**  | URL of the spreadsheet to be evaluated, in CSV, XLS, or XLSX format. The file can be stored on the web, AWS S3, Azure Blob, etc.<br/><br/>**Note:** A spreadsheet without an explicitly-defined .csv, .xls, or .xlsx extension can also be processed as long as its `Content-Type` indicates a supported format, such as a Google spreadsheet published to the web.                                                                       | Required.          |
+| inputParameter.**executionStrategy** | Strategy for rule execution. Supported types:<ul><li>**FIRE_FIRST**—Uses the first rule that matches to generate the output.</li><li>**FIRE_ALL**—Uses all matching rules to generate the output, with subsequent rules overwriting previous values.</li></ul>**Note:** When you update the rule for any files, there will be a default caching period of 60 mins, causing the updated rules to reflect with a delay of up to 60 mins. | Required.          |
+| inputParameter.**cacheTimeoutMinutes** <TableNote title="Available since"><ul><li>v5.2.1 and later</li><li>v4.1.69 and later</li></ul></TableNote> | The cache timeout, in minutes, which is the duration for which rule files are cached. If not configured, the task uses the default timeout of 60 minutes. <br/><br/>**Note**: When multiple tasks access the same rule file, the timeout is determined by the first task that loads the file. Subsequent tasks use the same cached file until it expires. [See an example of cacheTimeoutMinutes in use](/content/reference-docs/system-tasks/business-rule#examples). | Optional. | 
 | inputParameter.**inputColumns**      | The inputs to the rule file, which can be fixed or [passed as a dynamic input](/developer-guides/passing-inputs-to-task-in-conductor). Supports string, number, boolean, null, and object/array.                                                                                                                                                                                                                       | Required.          |
 | inputParameter.**outputColumns**     | List of columns that will be present in the task output.                                                                                                                                                                                                                                                                                                                                                                                 | Required.          |
 
@@ -70,13 +72,20 @@ If the input name is "Phone":
 
 The Business Rule task supports the following operators:
 
-- **Comparison operators**: `<=`, `>=`, `=`, `<`, `>`.
-- **String operators**: Equals (=) and Not Equals (!=).
-- **List Operators**: **inList** and **!=inList**  
-  For example, `productName inList ["phone", "laptop"]` will match if _productName_ is phone or laptop.
-- **createList**  
-  For example, `createList ["A", "B", "C"]` will generate a list `["A", "B", "C"]` in output.
-- **Date comparison**: **yyyy-MM-dd**, **yyyy-MMM-dd** and **yyyy-MM-dd HH:mm:ss**.
+| Operator type | Operator/Syntax | Description | Example | 
+| ------------- | --------------- | ----------- | ------- |
+| Comparison | `<=`, `>=`, `=`, `<`, `>` | Performs numerical comparison between values. | `price >= 100` | 
+| String | `=` | Exact string match comparison. | `name = John` | 
+| String | `!=` | String inequality comparison. | `name != John` | 
+| String | `startsWith` | Check if a string begins with a specified substring | `productName startsWith "iPhone"` matches "iPhone 14", "iPhone Pro", etc. | 
+| String | `endsWith` | Checks if a string ends with a specified substring. | `fileName endsWith ".pdf"` matches "document.pdf", "report.pdf", etc. | 
+| String | `contains` | Checks if a string contains a specified substring anywhere in it. | `description contains "premium"` matches "premium quality", "our premium product", etc. | 
+| String | `matches` | Performs pattern matching using a regular expression. | `email matches "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"` validates an email address format. | 
+| String | `length` |  Compares the length of a string with a numerical value. | `password length >= 8` ensures a password has at least eight characters. | 
+| List | `inList` | Checks if a value is in a specified list. | `productName inList({"phone","laptop"})` will match if productName is a phone or laptop. | 
+| List | `!=inList` | Checks if a value is not in a specified list. | `productName !=inList({"phone","laptop"})` | 
+| Others | `createList` | Generates a list with the specified elements. | `createList({"A","B","C"})` will generate a list `{"A", "B", "C"}` in output. | 
+
 
 ## Task configuration
 
@@ -89,14 +98,17 @@ This is the task configuration for a Business Rule task.
   "inputParameters": {
     "ruleFileLocation": "https://business-rules.s3.amazonaws.com/rules.xlsx",
     "executionStrategy": "FIRE_FIRST",
+	  "cacheTimeoutMinutes":"30",
     "inputColumns": {
       "InputVariable1": "${workflow.input.InputVariable1}",
       "InputVariable2": "${workflow.input.InputVariable2}"
+      },
+    "outputColumns": [
+        "OutputVariable1"
+      ]
     },
-    "outputColumns": ["OutputVariable1"]
-  },
   "type": "BUSINESS_RULE"
-}
+  }
 ```
 
 ## Task output
@@ -282,5 +294,22 @@ Consequently, the output generated is:
   "ShippingCharges": "5$"
 }
 ```
+
+</details>
+
+<details>
+<summary>Using `cacheTimeoutMinutes`</summary>
+
+To illustrate the use of `cacheTimeoutMinutes` parameter, consider a rule file which is used by multiple Business Rule tasks.
+
+In this example, the Business Rule tasks A, B, C, and D use the same rule file `fileA`.
+
+When multiple Business Rule tasks use the same rule file, the cache timeout is determined by the first task that loads the file. All other tasks share that cached version until it expires, regardless of their own `cacheTimeoutMinutes` value.
+
+- At 10:00 AM, task A runs with `cacheTimeoutMinutes` set to 10. It downloads `fileA` and caches it for 10 minutes, until 10:10 AM.
+- At 10:05 AM, task B runs with `cacheTimeoutMinutes` set to 60. It uses the cached `fileA`.
+- At 10:08 AM, task C runs with `cacheTimeoutMinutes` set to 5 . It also uses the cached `fileA`.
+- At 10:10 AM, the cache expires.
+- At 10:15 AM, task D runs with `cacheTimeoutMinutes` set to 30. Because the previous cache has expired, it downloads `fileA` again and caches it for 30 minutes. Any task using this file within the next 30 minutes will use the cached copy.
 
 </details>
