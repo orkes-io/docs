@@ -350,6 +350,11 @@ const sidebars = {
                             items: [
                                 {
                                     type: 'doc',
+                                    id: 'integrations/ai-llm/ollama',
+                                    label: 'Ollama',
+                                },
+                                {
+                                    type: 'doc',
                                     id: 'integrations/ai-llm/azure-open-ai',
                                     label: 'Azure Open AI',
                                 },
