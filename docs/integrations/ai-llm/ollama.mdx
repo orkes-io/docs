@@ -3,9 +3,11 @@ slug: "/integrations/ai-llm/ollama"
 description: "Learn how to integrate Ollama with your Orkes Conductor cluster."
 ---
 
+# Ollama Integration with Orkes Conductor
+
 :::note
 You can use this integration in the following scenarios:
-- [Conductor is running locally](https://orkes.io/content/get-orkes-conductor#orkes-conductorlocal-setup)
+- [Conductor is running locally](https://orkes.io/content/get-orkes-conductor#orkes-conductorlocal-setup), and Ollama is running locally.
 - Conductor is running in the cloud, and your AI models are hosted on a server accessible to Ollama.
 :::
 
@@ -25,7 +27,6 @@ To integrate Ollama with Orkes Conductor, first download and run Ollama locally 
 1. Download and install the [Ollama app](https://ollama.com/download).
 2. Open the app on your device.
 3. Choose the model you want to run from the list of [supported Ollama models](https://ollama.com/library). You should have at least 8 GB of RAM available to run the 7B models, 16 GB to run the 13B models, and 32 GB to run the 33B models.
-Pull the model locally with the following command. 
 4. Pull the model locally with the following command. 
 
 ```shell
@@ -56,7 +57,7 @@ If your Conductor cluster is running in the cloud, you must host Ollama on a ser
 
 ## Step 2: Add an integration for Ollama
 
-After running Ollama locally, add an Ollama integration to your [local Conductor cluster](https://orkes.io/content/get-orkes-conductor#orkes-conductorlocal-setup) or Cloud cluster, depending upon how your Ollama is hosted.
+After running Ollama locally, add an Ollama integration to your Conductor cluster.
 
 **To create an Ollama integration:**
 
@@ -78,7 +79,7 @@ After running Ollama locally, add an Ollama integration to your [local Conductor
 
 ## Step 3: Add Ollama models
 
-Once you’ve integrated Ollama, the next step is to configure specific models. Ollama offers [access to different models](https://ollama.com/library). Choose the model that best fits your use case.
+Once you’ve integrated Ollama, the next step is to configure specific models. Add the model that you have set up on your local device.
 
 **To add a model to the Ollama integration:**
 
@@ -87,7 +88,7 @@ Once you’ve integrated Ollama, the next step is to configure specific models. 
 <p align="center"><img src="/content/img/create-new-model-for-ollama-integration.png" alt="Create new model for Ollama Integration" width="100%" height="auto"></img></p>
 
 2. Select **+ New model**.
-3. Enter the **Model name** and a **Description**. Get the complete [list of Ollama supported models](https://ollama.com/library).
+3. Enter the **Model name** and a **Description**. Add the model that you have set up on your local device.
 
 <p align="center"><img src="/content/img/creating-new-model-for-ollama-integration.png" alt="Creating new model for Ollama Integration" width="70%" height="auto"></img></p>
 
