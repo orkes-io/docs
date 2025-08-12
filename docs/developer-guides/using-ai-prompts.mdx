@@ -49,12 +49,46 @@ Here’s the JSON definition for an AI prompt:
 {
  "name": "population_prompt",
  "integrations": [
-   "Cohere:command"
+   "<YOUR-AI-PROVIDER>:<YOUR-AI-MODEL>"
  ],
  "description": "A prompt to retrieve the population of countries for specific years.",
  "template": "What is the current population of ${country}?\n\nWhat was the population in ${year}?"
 }
 ```
+### Manage AI prompt versions
+
+:::note Available since
+- 5.2.0 and later
+:::
+
+You can create and manage multiple versions of an AI prompt. By default, versioning starts at 1 and increments with each new version.
+
+**To create a new version:**
+
+After making changes to the AI prompt definition in the Conductor UI, select the ⏷ (down arrow) icon beside **Save** > **Save as new version** to create a new version. 
+
+<p align="center">
+  <img
+    src="/content/img/saving-an-ai-prompt-as-new-version.png"
+    alt="Saving an AI prompt as a new version in Orkes Conductor"
+    width="100%"
+    height="auto"
+  ></img>
+</p>
+
+**To view available versions:**
+
+- In the AI prompt editor, select the **Version** dropdown, and then choose the required version.
+
+<p align="center">
+  <img
+    src="/content/img/viewing-all-prompt-versions.png"
+    alt="Viewing all prompt versions in Orkes Conductor"
+    width="100%"
+    height="auto"
+  ></img>
+</p>
+
 
 ## Test AI prompts
 
