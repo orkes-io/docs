@@ -77,7 +77,7 @@ The Business Rule task supports the following operators:
 | Comparison | `<=`, `>=`, `=`, `<`, `>` | Performs numerical comparison between values. | `price >= 100` | 
 | String | `=` | Exact string match comparison. | `name = John` | 
 | String | `!=` | String inequality comparison. | `name != John` | 
-| String | `startsWith` | Check if a string begins with a specified substring | `productName startsWith "iPhone"` matches "iPhone 14", "iPhone Pro", etc. | 
+| String | `startsWith` | Check if a string begins with a specified substring | `productName startsWith "iPhone"` matches "iPhone 14", "iPhone 14 Pro", etc. | 
 | String | `endsWith` | Checks if a string ends with a specified substring. | `fileName endsWith ".pdf"` matches "document.pdf", "report.pdf", etc. | 
 | String | `contains` | Checks if a string contains a specified substring anywhere in it. | `description contains "premium"` matches "premium quality", "our premium product", etc. | 
 | String | `matches` | Performs pattern matching using a regular expression. | `email matches "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"` validates an email address format. | 
@@ -306,10 +306,11 @@ In this example, the Business Rule tasks A, B, C, and D use the same rule file `
 
 When multiple Business Rule tasks use the same rule file, the cache timeout is determined by the first task that loads the file. All other tasks share that cached version until it expires, regardless of their own `cacheTimeoutMinutes` value.
 
+For example:
 - At 10:00 AM, task A runs with `cacheTimeoutMinutes` set to 10. It downloads `fileA` and caches it for 10 minutes, until 10:10 AM.
 - At 10:05 AM, task B runs with `cacheTimeoutMinutes` set to 60. It uses the cached `fileA`.
 - At 10:08 AM, task C runs with `cacheTimeoutMinutes` set to 5 . It also uses the cached `fileA`.
 - At 10:10 AM, the cache expires.
-- At 10:15 AM, task D runs with `cacheTimeoutMinutes` set to 30. Because the previous cache has expired, it downloads `fileA` again and caches it for 30 minutes. Any task using this file within the next 30 minutes will use the cached copy.
+- At 10:15 AM, task D runs with `cacheTimeoutMinutes` set to 30. Because the previous cache has expired, it downloads `fileA` again and caches it for 30 minutes. Any task using this file within the next 30 minutes will use the cached version.
 
 </details>
