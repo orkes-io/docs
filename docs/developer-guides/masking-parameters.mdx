@@ -8,11 +8,17 @@ import TabItem from '@theme/TabItem';
 
 # Masking Parameters
 
-Masking parameters allows users to protect sensitive data by preventing it from being exposed in workflows. It ensures that sensitive values are hidden and not displayed in the workflow execution.
+Masking parameters help protect sensitive data by preventing it from being exposed in workflow executions. 
+
+You can mask data in a workflow definition using the following parameters:
+
+- **_secrets** 
+- **_masked**
+- **maskedFields** 
 
 ## Masking sensitive data
 
-Sensitive data can be masked using either _\_secrets_ or _\_masked_ objects in workflow definitions. Any values stored in objects with keys _\_secrets_ or _\_masked_ will be replaced with **\*\*\*** in the workflow executions. Users with execute permission for the task can read the inputs and outputs.
+When a value is masked, it is replaced with `***`, ensuring that confidential information is hidden in workflow executions. 
 
 <Tabs>
 <TabItem value="Using _secrets parameter" label="Using _secrets parameter">
@@ -27,7 +33,7 @@ For example:
 }
 ```
 
-This will be displayed in the workflow execution as follows:
+This is displayed in the workflow execution as:
 
 ```json
 {
@@ -46,7 +52,7 @@ For example:
 }
 ```
 
-This will be displayed in the workflow execution as follows:
+This is displayed in the workflow execution as:
 
 ```json
 {
@@ -55,55 +61,72 @@ This will be displayed in the workflow execution as follows:
 ```
 
 </TabItem>
+
+<TabItem value="Using maskedFields parameter" label="Using maskedFields parameter">
+
+:::info Available since
+- v5.1.18 and later
+- v4.1.68 and later
+:::
+
+The *maskedFields* parameter specifies which fields should be masked during execution. Each element in the array contains the name of a field to be masked.
+
+For example:
+
+```json
+// workflow definition
+ "maskedFields": [
+   "input1",
+   "input2"
+ ]
+```
+
+In the workflow execution, the fields are displayed as:
+
+```json
+{
+  "input1": "***",
+  "input2": "***"
+}
+```
+
+</TabItem>
 </Tabs>
 
 ### Passing sensitive data between tasks
 
-To pass sensitive data from one task's output to a subsequent task, you can configure the input parameters of the next task as follows:
+To pass sensitive data from one task's output to a subsequent task, nest the sensitive fields inside either the *_secrets* or *_masked* object in the receiving task’s  input parameters as follows:
+
+<Tabs>
+<TabItem value="Using _secrets parameter" label="Using _secrets parameter">
 
 ```json
 {
-  "_secrets": { "parameter": "${previousTaskRef.output.someOutputParameter}" }
+  "_secrets": {
+    "parameter": "${previousTaskRef.output.someOutputParameter}"
+  }
 }
 ```
 
-Example workflow definition:
+</TabItem>
+<TabItem value="Using _masked parameter" label="Using _masked parameter">
 
 ```json
 {
-  "name": "sample-workflow",
-  "description": "Workflow where masked params are passed between tasks",
-  "version": 2,
-  "tasks": [
-    {
-      "name": "simple-demo",
-      "taskReferenceName": "simple-demo_ref",
-      "type": "SIMPLE"
-    },
-    {
-      "name": "simple",
-      "taskReferenceName": "simple_ref",
-      "inputParameters": {
-        "_secrets": {
-          "parameter": "${simple-demo_ref.output.result}"
-        }
-      },
-      "type": "SIMPLE"
-    }
-  ],
-  "outputParameters": {
-    "Output": "${simple_ref.output}"
-  },
-  "schemaVersion": 2,
-  "ownerEmail": "john.doe@acme.com"
+  "masked": {
+    "parameter": "${previousTaskRef.output.someOutputParameter}"
+  }
 }
 ```
 
-This ensures that any input parameter to be hidden must be nested within the _\_secrets_ object, ensuring that it is masked adequately during the workflow execution without exposing it.
+</TabItem>
+</Tabs>
+
+See the complete example in [Passing sensitive data between tasks](/content/developer-guides/masking-parameters#examples).
 
 ## Workflow behavior with masked parameters
 
-**Behavior on restarting workflows with masked values**: When a workflow with masked values reaches a terminal state and is removed from the primary execution store:
+**Behavior on restarting workflows with masked values**: When a workflow with masked values reaches a terminal state and is removed from the primary execution:
 
 - Values with the _\_masked_ parameter are retained during archiving. If the workflow is restarted, the original data will remain accessible.
 - Values with the _\_secrets_ parameter are permanently replaced with \*\*\* during archiving. As a result, restarting the workflow might cause failures if any tasks rely on the masked data.
@@ -113,7 +136,7 @@ This ensures that any input parameter to be hidden must be nested within the _\_
 <details>
 <summary>Using _secrets parameter </summary>
 
-Consider a workflow with a task having an input masked using _\_secrets_:
+Consider a workflow with a task having an input masked using *_secrets*:
 
 ```json
      "inputParameters": {
@@ -125,9 +148,42 @@ Here’s the complete workflow definition:
 
 ```json
 {
+ "name": "workflow-with-secrets-param",
+ "description": "Sample workflow containing _secrets params",
+ "version": 1,
+ "tasks": [
+   {
+     "name": "simple",
+     "taskReferenceName": "simple_ref",
+     "inputParameters": {
+       "_secrets": "${workflow.input.somedata}"
+     },
+     "type": "SIMPLE"
+   }
+ ],
+ "inputParameters": [
+   "somedata"
+ ],
+ "schemaVersion": 2,
+ "ownerEmail": "john.doe@acme.com"
+}
+```
+
+When this workflow runs, the parameters are masked in the execution results **within the task input**, since we have defined to mask the task input using the *_secrets* parameter.
+
+<p align="center"><img src="/content/img/masked-task-input-using-secrets-parameter.png" alt="Masked task input using the _secrets parameter" width="100%" height="auto"></img></p>
+
+In the above execution, the **workflow input** is not masked.
+
+<p align="center"><img src="/content/img/unmasked-workflow-inputs-using-secrets-parameter.png" alt="Unmasked workflow input using the _secrets parameter" width="100%" height="auto"></img></p>
+
+To mask that as well, use the *maskedFields* parameter in the workflow definition. Here’s the updated workflow definition:
+
+```json
+{
   "name": "workflow-with-secrets-param",
-  "description": "Sample workflow containing _secrets params",
-  "version": 1,
+  "description": "Workflow masks workflow input using maskedFields and task input using _secrets",
+  "version": 2,
   "tasks": [
     {
       "name": "simple",
@@ -138,22 +194,32 @@ Here’s the complete workflow definition:
       "type": "SIMPLE"
     }
   ],
-  "inputParameters": ["somedata"],
+  "inputParameters": [
+    "somedata"
+  ],
   "schemaVersion": 2,
-  "ownerEmail": "john.doe@acme.com"
+  "ownerEmail": "john.doe@acme.com",
+  "maskedFields": [
+    "somedata"
+  ]
 }
 ```
 
-When this workflow runs, the parameters will be masked in the execution results.
+When the execution is rerun:
 
-<p align="center"><img src="/content/img/example-workflow-secrets-params.png" alt="Sample workflow execution with secrets parameter" width="100%" height="auto"></img></p>
+- The workflow input (*somedata*) will be masked because it is listed in *maskedFields*.
+- The task input will also be masked because it is passed under *_secrets*.
+
+<p align="center"><img src="/content/img/masked-inputs-using-secrets-parameter.png" alt="Masked inputs using the _secrets parameter" width="100%" height="auto"></img></p>
+
+This ensures that the sensitive data is masked at both the workflow and task inputs.
 
 </details>
 
 <details>
 <summary>Using _masked parameter </summary>
 
-Consider a workflow with a task having an input masked using _\_masked_:
+Consider a workflow with a task having an input parameter masked using *_masked*:
 
 ```json
      "inputParameters": {
@@ -165,27 +231,181 @@ Here’s the complete workflow definition:
 
 ```json
 {
-  "name": "workflow-with-masked-param",
-  "description": "Sample workflow containing _masked params",
+ "name": "workflow-with-masked-param",
+ "description": "Sample workflow containing _masked params",
+ "version": 1,
+ "tasks": [
+   {
+     "name": "simple",
+     "taskReferenceName": "simple_ref",
+     "inputParameters": {
+       "_masked": "${workflow.input.somedata}"
+     },
+     "type": "SIMPLE"
+   }
+ ],
+ "inputParameters": [
+   "somedata"
+ ],
+ "schemaVersion": 2,
+ "ownerEmail": "john.doe@acme.com"
+}
+```
+
+When this workflow runs, the parameters will be masked in the execution results **within the task input**, since we have defined to mask the task input using the *_masked* parameter.
+
+<p align="center"><img src="/content/img/masked-task-input-using-masked-parameter.png" alt="Masked task input using the masked parameter" width="100%" height="auto"></img></p>
+
+In the above execution, the **workflow input** is not masked.
+
+<p align="center"><img src="/content/img/unmasked-workflow-inputs-using-masked-parameter.png" alt="Unmasked workflow input using the masked parameter" width="100%" height="auto"></img></p>
+
+To mask that as well, use the *maskedFields* parameter in the workflow definition. Here’s the updated workflow definition:
+
+```json
+{
+ "name": "workflow-with-masked-param",
+ "description": "Sample workflow containing _masked params",
+ "version": 2,
+ "tasks": [
+   {
+     "name": "simple",
+     "taskReferenceName": "simple_ref",
+     "inputParameters": {
+       "_masked": "${workflow.input.somedata}"
+     },
+     "type": "SIMPLE"
+   }
+ ],
+ "inputParameters": [
+   "somedata"
+ ],
+ "schemaVersion": 2,
+"ownerEmail": "john.doe@acme.com",
+ "maskedFields": [
+   "somedata"
+ ]
+}
+```
+
+When the execution is rerun:
+
+- The workflow input (*somedata*) will be masked because it is listed in *maskedFields*.
+- The task input will also be masked because it is passed under *masked*.
+
+<p align="center"><img src="/content/img/masked-inputs-using-masked-parameter.png" alt="Masked inputs using the masked parameter" width="100%" height="auto"></img></p>
+
+This ensures that the sensitive data is masked at both the workflow and task inputs.
+
+</details>
+
+<details>
+<summary>Using maskedFields parameter</summary>
+
+Consider a workflow definition with input parameters `input1` and `input2`, and output parameter `output1`.
+
+```json
+{
+ "name": "newMaskingParam",
+ "description": "Workflow for testing new masking params",
+ "version": 1,
+ "tasks": [
+   {
+     "name": "http",
+     "taskReferenceName": "http_ref",
+     "inputParameters": {
+       "uri": "https://orkes-api-tester.orkesconductor.com/api",
+       "method": "GET",
+       "accept": "application/json",
+       "contentType": "application/json",
+       "encode": true
+     },
+     "type": "HTTP"
+   }
+ ],
+ "inputParameters": [
+   "input1",
+   "input2"
+ ],
+ "outputParameters": {
+   "output1": "${http_ref.output}"
+ },
+ "schemaVersion": 2,
+ "ownerEmail": "john.doe@acme.com",
+ "maskedFields": [
+   "input1",
+   "input2"
+ ]
+}
+```
+
+In this example, both input fields are masked using:
+
+```json
+"maskedFields": [
+   "input1",
+   "input2"
+ ]
+```
+
+After running the execution, the values for `input1` and `input2` appear as `***` in the workflow input, confirming that the masking is applied successfully.
+
+<p align="center"><img src="/content/img/execution-with-fields-masked-using-maskedfields-parameter.png" alt="Execution with fields masked using maskedfields parameter" width="100%" height="auto"></img></p>
+
+Next, update the workflow definition to mask the `input1` and `output1` parameters:
+
+```json
+//workflow definition
+"maskedFields": [
+   "input1",
+   "output1"
+ ]
+```
+
+When you rerun the execution, `input1` and `output1` are masked.
+
+<p align="center"><img src="/content/img/execution-with-fields-masked-using-maskedfields-parameter-updated.png" alt="Execution with fields masked using maskedfields parameter" width="100%" height="auto"></img></p>
+
+</details>
+
+<details>
+<summary>Passing sensitive data between tasks</summary>
+
+Consider a workflow where a sensitive value from one task’s output needs to be passed to another task. To ensure the data remains masked, nest the parameter under *_secrets* in the receiving task’s input parameters. 
+
+```json
+{
+  "name": "workflow-pass-sensitive-data",
+  "description": "Workflow passing sensitive parameters between tasks",
   "version": 1,
   "tasks": [
+    {
+      "name": "simple-demo",
+      "taskReferenceName": "simple_demo_ref",
+      "type": "SIMPLE"
+    },
     {
       "name": "simple",
       "taskReferenceName": "simple_ref",
       "inputParameters": {
-        "_masked": "${workflow.input.somedata}"
+        "_secrets": {
+          "parameter": "${simple_demo_ref.output.result}"
+        }
       },
       "type": "SIMPLE"
     }
   ],
-  "inputParameters": ["somedata"],
   "schemaVersion": 2,
   "ownerEmail": "john.doe@acme.com"
 }
 ```
 
-When this workflow runs, the parameters will be masked in the execution results.
+:::note
+You can also use the *_masked* parameter to mask the data in this scenario.
+:::
 
-<p align="center"><img src="/content/img/example-workflow-masked-params.png" alt="Sample workflow execution with masked parameter" width="100%" height="auto"></img></p>
+When this workflow runs, the sensitive data from `simple_demo_ref.output.result`, which is passed as the input parameter to the second task, is masked in the execution results because it is nested under *_secrets*.
+
+<p align="center"><img src="/content/img/passing-data-between-tasks-output.png" alt="Passing data between tasks" width="100%" height="auto"></img></p>
 
 </details>
