@@ -6,13 +6,13 @@ description: "This guide focuses on the basics of building workflows in Orkes Co
 # Overview: Workflows
 
 
-Build workflows in Conductor for a range of uses: business processes, event-driven workflows, agentic workflows, or microservice or API-driven applications.
+Build workflows in Conductor for a range of uses: event-driven workflows, agentic workflows, process automation, human-in-the-loop processes, microservice orchestration, or real-time API orchestration.
 
 
 ## Ways to create workflows
 
 In Conductor, all workflow definitions are stored as JSON. There are four ways to create a Conductor workflow:
-1. **Code**—Using Conductor SDKs, define the workflow in any programming language (Python, Java, JavaScript, C#, Go, Clojure). Learn more in [Write Workflows as Code](write-workflows-using-code).
+1. **Code**—Using Conductor SDKs, define the workflow in any programming language (Python, Java, JavaScript, C#, Go, Clojure) and register it to the Conductor server. Once registered, the JSON workflow definition is generated and saved. Learn more in [Write Workflows as Code](write-workflows-using-code).
 2. **JSON**—Write the workflow in JSON and register it to the Conductor server using the [`/api/metadata/workflow`](/reference-docs/api/metadata/creating-workflow-definition) endpoint.
 3. **Visual workflow editor**—Using Conductor UI, define your workflow visually, which is formatted as JSON under the hood.
 4. [**BPMN importer**](/content/developer-guides/convert-bpmn-to-workflows)—Convert existing BPMN files into Conductor workflows using the built-in importer. This provides an easy migration path from BPMN-based systems.
@@ -22,7 +22,7 @@ In Conductor, all workflow definitions are stored as JSON. There are four ways t
 
 With Conductor, you can create workflows statically (ahead of time) or dynamically (at runtime). 
 
-Dynamic workflows are created using the workflow-as-code approach, allowing you to write your workflow and task workers in your preferred language and execute it immediately. This is useful in cases where workflows cannot be defined ahead of time, as the number of tasks and flow control depend on real-time factors. Learn more in [Write Workflows as Code](write-workflows-using-code).
+Dynamic workflows are created using the workflow-as-code approach, allowing you to write your workflow and task workers in your preferred language and execute them immediately. This is useful in cases where workflows cannot be defined ahead of time, as the number of tasks and flow control depend on real-time factors. Learn more in [Write Workflows as Code](write-workflows-using-code).
 
 
 ### AI-powered and agentic workflows
@@ -37,9 +37,9 @@ Create event-driven workflows and seamlessly integrate with event-driven pipelin
 
 ## Workflow definition
 
-The workflow definition contains configuration parameters that define the workflow behavior, including the flow of tasks, the workflow inputs and outputs, and the workflow failure handling settings.
+A workflow definition contains configuration parameters that define the workflow behavior, including the flow of tasks, workflow inputs and outputs, schema, failure handling settings, and rate-limiting features. The most important parameter is the `tasks` array, which specifies the order and execution of the defined tasks and operators.
 
-The most important parameter is the `tasks` array, which specifies the order and execution of the defined tasks and operators.
+Here are the workflow configuration parameters:
 
 | Parameter                     | Description                                                                     | Required/ Optional              |
 | ----------------------------- | --------------------------------------------------------------------------------| ------------------------------- |
@@ -51,19 +51,19 @@ The most important parameter is the `tasks` array, which specifies the order and
 | inputParameters               | Array of workflow input keys.                                                | Optional.                       |
 | outputParameters              | JSON template used to generate the workflow output. <br/><br/> If unspecified, the workflow output will be the output of the last executed task.                                                | Optional.                       |
 | enforceSchema                 | Whether to enforce input schema validation. Set to `true` to enable validation. <br/><br/> Learn more about using schemas in [Schema Validation](schema-validation).                                | Optional.                       |
-| inputSchema                   | The input schema parameters for the workflow.                                   | Required if `enforceSchema` is set to true.          |
-| outputSchema                  | The output schema parameters for the workflow.                                 | Required if `enforceSchema` is set to true.          |
+| inputSchema                   | Name and type of the input schema to be associated with the workflow.                                  | Required if `enforceSchema` is set to true.          |
+| outputSchema                  | Name and type of the output schema to be associated with the workflow.                                 | Required if `enforceSchema` is set to true.          |
 | restartable                   | Whether the workflow can be restarted after completion. The default value is true. <br/><br/> Set to false if restarting a completed workflow causes side effects.                            | Optional.                       |
 | workflowStatusListenerEnabled | Whether to enable status callback for workflow state changes. The default value is false. <br/><br/> Learn more in [Enabling CDC](enabling-cdc-on-conductor-workflows).                            | Optional.                       |
-| workflowStatusListenerSink    | The sink where workflow state changes are sent.                                 | Required if `workflowStatusListener` is set to true. |
+| workflowStatusListenerSink    | The message broker sink where workflow state changes are sent.                                 | Required if `workflowStatusListener` is set to true. |
 | ownerEmail                    | The email ID of the workflow creator.                                          | Required.                       |
 | timeoutPolicy                 | The workflow timeout policy. <br/><br/> Learn more about workflow timeouts in [Handling Failures](/error-handling).                                                                             | Required.                       |
 | timeoutSeconds                | The timeout duration in seconds.                                                | Required.                       |
 | failureWorkflow               | The compensation workflow to trigger upon failure of the current workflow execution. Useful for cleanup, notifications, or post actions. <br/><br/> Learn more about compensation workflows in [Handling Failures](/error-handling).                                                                          | Optional.                       |
 | rateLimitConfig               | A map of the workflow rate limit configuration. <br/><br/> Learn more about workflow rate limits in [Handling Failures](/error-handling).                                         | Optional.                       |
-| rateLimitConfig. rateLimitKey             | A unique identifier to group workflow executions for rate limiting.                                                                                                         | Optional.                       |
-| rateLimitConfig. concurrentExecLimit      | The number of workflow executions that can run concurrently for a given key.                                                                           | Optional.                       |
-| maskedFields                  | The fields to mask in the workflow execution. | Optional. | 
+| rateLimitConfig. **rateLimitKey**             | A unique identifier to group workflow executions for rate limiting.                                                                                                         | Optional.                       |
+| rateLimitConfig. **concurrentExecLimit**      | The number of workflow executions that can run concurrently for a given key.                                                                           | Optional.                       |
+| maskedFields                  | An array of fields to be masked in the workflow execution.<br/>Learn more about masking fields in [Masking Parameters](/content/developer-guides/masking-parameters).| Optional. | 
 
 ### Example
 
@@ -90,6 +90,7 @@ Here is an example workflow definition JSON:
   "ownerEmail": "user@example.com",
   "timeoutPolicy": "ALERT_ONLY",
   "timeoutSeconds": 0,
-  "failureWorkflow": ""
+  "failureWorkflow": "",
+  "maskedFields": []
 }
 ```

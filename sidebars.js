@@ -95,7 +95,7 @@ const sidebars = {
                         type: 'generated-index',
                         title: 'Building Workflows',
                         slug: '/developer-guides/building-workflows',
-                        description: 'In this section, learn the basics of building Conductor workflows through various methods (via code, JSON, or UI). This includes topics on how to pass parameters in workflows securely, configure failure-handling settings for tasks and workflows, and debug workflows in development.',
+                        description: 'In this section, learn the fundamentals of building Conductor workflows through various methods (via code, JSON, or UI). This includes how to pass parameters in workflows securely, configure failure-handling settings for tasks and workflows, set rate-limiting rules, and debug workflows in development.',
                     },
                     className: 'leftMenuHeader',
                     items: [

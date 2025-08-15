@@ -77,11 +77,11 @@ The Business Rule task supports the following operators:
 | Comparison | `<=`, `>=`, `=`, `<`, `>` | Performs numerical comparison between values. | `price >= 100` | 
 | String | `=` | Exact string match comparison. | `name = John` | 
 | String | `!=` | String inequality comparison. | `name != John` | 
-| String | `startsWith` | Check if a string begins with a specified substring | `productName startsWith "iPhone"` matches "iPhone 14", "iPhone 14 Pro", etc. | 
-| String | `endsWith` | Checks if a string ends with a specified substring. | `fileName endsWith ".pdf"` matches "document.pdf", "report.pdf", etc. | 
-| String | `contains` | Checks if a string contains a specified substring anywhere in it. | `description contains "premium"` matches "premium quality", "our premium product", etc. | 
-| String | `matches` | Performs pattern matching using a regular expression. | `email matches "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"` validates an email address format. | 
-| String | `length` |  Compares the length of a string with a numerical value. | `password length >= 8` ensures a password has at least eight characters. | 
+| String | `startsWith` <br/><br/>**Available since**<ul><li>v5.2.3 and later</li><li>v4.1.72 and later</li></ul> | Checks if a string begins with a specified substring | `productName startsWith "iPhone"` matches "iPhone 14", "iPhone 14 Pro", etc. | 
+| String | `endsWith` <br/><br/>**Available since**<ul><li>v5.2.3 and later</li><li>v4.1.72 and later</li></ul> | Checks if a string ends with a specified substring. | `fileName endsWith ".pdf"` matches "document.pdf", "report.pdf", etc. | 
+| String | `contains` <br/><br/>**Available since**<ul><li>v5.2.3 and later</li><li>v4.1.72 and later</li></ul> | Checks if a string contains a specified substring anywhere in it. | `description contains "premium"` matches "premium quality", "our premium product", etc. | 
+| String | `matches` <br/><br/>**Available since**<ul><li>v5.2.3 and later</li><li>v4.1.72 and later</li></ul> | Performs pattern matching using a regular expression. | `email matches "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"` validates an email address format. | 
+| String | `length` <br/><br/>**Available since**<ul><li>v5.2.3 and later</li><li>v4.1.72 and later</li></ul> |  Compares the length of a string with a numerical value. | `password length >= 8` ensures a password has at least eight characters. | 
 | List | `inList` | Checks if a value is in a specified list. | `productName inList({"phone","laptop"})` will match if productName is a phone or laptop. | 
 | List | `!=inList` | Checks if a value is not in a specified list. | `productName !=inList({"phone","laptop"})` | 
 | Others | `createList` | Generates a list with the specified elements. | `createList({"A","B","C"})` will generate a list `{"A", "B", "C"}` in output. | 

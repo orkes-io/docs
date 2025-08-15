@@ -13,9 +13,17 @@ Workflows can be written in code, allowing the creation of dynamic workflows tha
 
 ## Creating workflows in code
 
-Here is the workflow that we are going to create using various language-specific SDKs in code:
+The workflow in the following examples performs these steps:
+
+1. **Get user details** - Retrieves the user information based on the `userId` provided as the workflow input.
+2. **Determine notification type** - Uses a Switch task to check the preferred notification method from the input and determine how to notify the user.
+3. **Send email** - If the notification preference is email, send a message to the user’s email address.
+4. **Send SMS** - If the preference is SMS, send a text message to the phone number. 
 
 <p style={{textAlign: "center"}}><img src="/content/img/user_notification_workflow.png" alt="user notification workflow" width="60%" height="auto" style={{paddingBottom: 20, paddingTop: 20}} /></p>
+
+Use the code example for your preferred language to define and register the workflow in your Conductor environment. 
+
 <Tabs>
 <TabItem value="Java" label="Java">
 
