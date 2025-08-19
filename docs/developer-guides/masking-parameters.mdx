@@ -205,7 +205,7 @@ To mask that as well, use the *maskedFields* parameter in the workflow definitio
 }
 ```
 
-When the execution is rerun:
+When the workflow is executed again:
 
 - The workflow input (*somedata*) will be masked because it is listed in *maskedFields*.
 - The task input will also be masked because it is passed under *_secrets*.
@@ -288,7 +288,7 @@ To mask that as well, use the *maskedFields* parameter in the workflow definitio
 }
 ```
 
-When the execution is rerun:
+When the workflow is executed again:
 
 - The workflow input (*somedata*) will be masked because it is listed in *maskedFields*.
 - The task input will also be masked because it is passed under *masked*.
@@ -362,7 +362,7 @@ Next, update the workflow definition to mask the `input1` and `output1` paramete
  ]
 ```
 
-When you rerun the execution, `input1` and `output1` are masked.
+When you run the execution, `input1` and `output1` are masked.
 
 <p align="center"><img src="/content/img/execution-with-fields-masked-using-maskedfields-parameter-updated.png" alt="Execution with fields masked using maskedfields parameter" width="100%" height="auto"></img></p>
 

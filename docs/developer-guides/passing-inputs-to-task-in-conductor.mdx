@@ -45,15 +45,15 @@ Depending on where the data is being referenced from, here is a non-exhaustive l
 | `${workflow.status}`                      | References the current [workflow’s status](/developer-guides/task-and-workflow-status-in-conductor). Possible values: RUNNING, PAUSED, TIMED_OUT, TERMINATED, FAILED, or COMPLETED.                                                                                                                                                                                                               |
 | `${workflow.workflowId}`                  | References the current workflow (execution) ID.                                                                                                                                                                                                                                                                                                                                                               |
 | `${workflow.parentWorkflowId}`            | (Used in sub-workflows) References the parent workflow (execution) ID.                                                                                                                                                                                                                                                                                                                                        |
-| `${workflow.parentWorkflowTaskId}`        | (Used in sub-workflows) References the task execution ID for [Sub Workflow](/reference-docs/operators/sub-workflow) task in the parent workflow.                                                                                                                                                                                                                                                  |
+| `${workflow.parentWorkflowTaskId}`        | (Used in sub-workflows) References the task execution ID for the [Sub Workflow](/reference-docs/operators/sub-workflow) task in the parent workflow.                                                                                                                                                                                                                                                  |
 | `${workflow.workflowType}`                | References the current workflow name.                                                                                                                                                                                                                                                                                                                                                             |
 | `${workflow.version}`                     | References the current workflow version.                                                                                                                                                                                                                                                                                                                                                          |
-| `${workflow.createTime}`                  | References the workflow execution time.                                                                                                                                                                                                                                                                                                                                                           |
+| `${workflow.createTime}`                  | References the start time of the workflow execution.                                                                                                                                                                                                                                                                                                                                                           |
 | `${workflow.correlationId}`               | References the current workflow’s correlation ID.                                                                                                                                                                                                                                                                                                                                                 |
 | `${workflow.taskToDomain._domainName_}`   | References the workflow’s domain name that was invoked during its execution.                                                                                                                                                                                                                                                                                                                      |
 | `${workflow.variables._someKey_}`         | References the workflow variable `someKey`, which has been set earlier in a [Set Variable](/reference-docs/operators/set-variable) task.                                                                                                                                                                                                                                                          |
 | `${workflow.env._someKey_}`               | References the [environment variable](/developer-guides/using-environment-variables) `someKey`, which has been defined previously in the Conductor cluster.                                                                                                                                                                                                                                       |
-| `${workflow.secrets._someKey_}`           | References the [secret](/developer-guides/secrets-in-conductor) `someKey`, which has been defined previously in the Conductor cluster. <br/> When inspected, the secret value will not be exposed and instead retain its reference value `${workflow.secrets.someKey}`. <br/> During execution, if the workflow doesn't have permission to read the secret, it will fail with an error saying so. |
+| `${workflow.secrets._someKey_}`           | References the [secret](/developer-guides/secrets-in-conductor) `someKey`, which has been defined previously in the Conductor cluster. <br/><br/> When inspected, the secret value will not be exposed and instead retain its reference value `${workflow.secrets.someKey}`. <br/><br/> During execution, if the workflow doesn't have permission to read the secret, it will fail with an error saying so. |
 
 ## Examples
 
@@ -171,7 +171,7 @@ The variable can be referenced in the same workflow using the following expressi
 ```
 
 :::note
-Workflow variables cannot be re-referenced across workflows, even between parent workflow and sub-workflow.
+Workflow variables cannot be re-referenced across workflows, even between a parent workflow and a sub-workflow.
 :::
 
 </details>
@@ -200,7 +200,8 @@ At runtime, the parameters will be:
 <details>
 <summary>Referencing data between parent workflow and sub-workflow​</summary>
 
-Tab: From parent workflow
+<Tabs>
+<TabItem value="From parent workflow" label="From parent workflow">
 
 To pass parameters from a parent workflow into its sub-workflow, you must declare them as input parameters for the Sub Workflow task.
 
@@ -249,7 +250,8 @@ To pass parameters from a parent workflow into its sub-workflow, you must declar
 
 If needed, these inputs can then be set as workflow variables within the sub-workflow definition itself using a Set Variable task.
 
-Tab: From sub-workflow
+</TabItem>
+<TabItem value="From sub-workflow" label="From sub-workflow">
 
 To pass parameters from a sub-workflow back to its parent workflow, you must pass them as the sub-workflow’s output parameters in the sub-workflow definition.
 
@@ -297,6 +299,8 @@ To pass parameters from a sub-workflow back to its parent workflow, you must pas
 
 In the parent workflow, these sub-workflow outputs can be referenced using the expression format `${*sub_workflow_ref*.output.*someKey*}`.
 
+</TabItem>
+</Tabs>
 </details>
 
 <details>
