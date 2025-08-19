@@ -9,8 +9,8 @@ When building workflows, you can use the built-in system tasks and operators pro
 
 ## Built-in tasks
 Here is an introduction of the built-in tasks available in Conductor.  These system tasks and operators enable you to quickly build workflows without needing to code.
-* **System tasks** are managed by Conductor and run within its JVM, allowing you to get started quickly without needing custom workers. System tasks include [AI tasks](/category/reference-docs/ai-tasks) that can be used to build AI-powered and agentic applications.
-* **Operators** are also managed by Conductor and run within its JVM. They enable you to declaratively design the workflow control flow and logic with minimal code required.
+* **[System tasks](/content/category/reference-docs/system-tasks)** are managed by Conductor and run within its JVM (Java Virtual Machine), allowing you to get started quickly without needing custom workers. System tasks include [AI tasks](/category/reference-docs/ai-tasks) that can be used to build AI-powered and agentic applications.
+* **[Operators](/content/category/reference-docs/operators)** are also managed by Conductor and run within its JVM (Java Virtual Machine). They enable you to declaratively design the workflow control flow and logic with minimal code required.
 
 ### For control flow
 
@@ -36,7 +36,7 @@ The control structures and operations in your Conductor workflow are implemented
   - **[Wait](../reference-docs/operators/wait)**—Pause the current workflow until a set time, duration, or signal is received.
   - **[Wait for Webhook](../reference-docs/system-tasks/wait-for-webhook)**—Pause the current workflow for an incoming webhook signal.
   - **[Human](../reference-docs/operators/human)**–Pause the current workflow for human input before proceeding to the next task.
-  - **[Yield](../reference-docs/operators/yield)**–Temporarily yields control over the workflow by pausing the execution until it is explicitly resumed using specific endpoints, with the ability to automatically return an execute call when reached.
+  - **[Yield](../reference-docs/operators/yield)**–Temporarily yields control over the workflow by pausing the execution until it is explicitly resumed using specific endpoints.
 
 - Dynamic tasks in flow
   - **[Dynamic](../reference-docs/operators/dynamic)**—Execute a task dynamically, like a function pointer.
@@ -78,7 +78,7 @@ In most common cases, you can make use of existing Conductor features instead of
 
 ## Custom tasks
 
-A [Worker task](../reference-docs/worker-task) can be used to implement custom logic outside the scope of Conductor’s system tasks. These tasks can be written in any programming language of your choice (Python, Java, JavaScript, C#, Go, and Clojure).
+A [Worker task](../reference-docs/worker-task) can be used to implement custom logic outside the scope of Conductor’s system tasks. These tasks can be written in any programming language of your choice (Python, Java, JavaScript, C#, Go, and Clojure). Unlike a built-in task, a Worker task requires setting up a worker outside the Conductor environment that polls for and executes the task.
 
 Refer to [Writing Workers for Conductor Workflows](/developer-guides/using-workers) for more information.
 
@@ -89,7 +89,7 @@ A task definition specifies a task’s general implementation details, like the 
 
 All task definitions are stored as JSON. These parameters can be updated in real time without needing to redeploy your application.
 
-### Example
+**Example**
 
 Here is an example task definition JSON:
 
@@ -121,26 +121,21 @@ Here is an example task definition JSON:
 }
 ```
 
+Before adding a [Worker task](/content/reference-docs/worker-task) or a [Human task](/content/reference-docs/operators/human) in a workflow, it **must be registered as a task definition** in Conductor.
 
-## Task registration
+Task definitions enable configuration of the task’s failure handling settings and RBAC governance. You may also choose to create a task definition for other system tasks if required to configure task-specific retry settings, timeout settings, rate-limit settings, and more.
 
-The following task types **must be registered as a task definition** in Conductor before they can be used in a workflow:
-* Worker tasks
-* Human tasks
-
-Task definitions enable configuration of the task’s failure handling settings, as well as RBAC governance. You may also choose to create a task definition for other system tasks if required.
-
-Task definitions can be registered via the Conductor UI or through SDK/API. Once registered, they can be referenced and used in different workflows.
+Task definitions can be registered via the Conductor UI or through SDK/[API](/content/reference-docs/api/metadata/creating-task-definitions). Once registered, they can be referenced and used in different workflows.
 
 
 ## Task configuration
 
-The task configuration is part of the workflow definition. It specifies the workflow-specific implementation details, like the task reference name, task type, task input parameters, and so on.
+The task configuration is a task’s configuration details, which are part of the workflow definition. It specifies the workflow-specific implementation details, like the task reference name, task type, task input parameters, and so on.
 
 Although each task type has its unique configuration, all tasks share several parameters in common.
 
-* For all tasks, the configuration specifies the input parameters.
-* For custom worker tasks, the configuration contains a reference to a registered worker.
+* For all tasks, the configuration specifies the input parameters for the task.
+* For custom worker tasks, the configuration contains a reference to a registered worker task definition.
 * For system tasks and operators, the configuration includes parameters that control the task behavior. For example, the configuration for an HTTP task specifies the endpoint URL and the payload template, which will be used during task execution.
 
 Refer to the [Task Reference](/category/reference-docs) to learn more about the task configuration for each task type.
@@ -148,7 +143,26 @@ Refer to the [Task Reference](/category/reference-docs) to learn more about the 
 
 ### Common configuration parameters
 
-The task configurations appear in the *tasks* array of the workflow definition JSON. Each task configuration JSON object may contain the following parameters:
+The task configurations appear in the *tasks* array of the workflow definition JSON. For example:
+
+```json
+{
+ "name": "WorkflowDefinition",
+ "description": "Workflow definition",
+ "version": 1,
+ "tasks": [], // The task configuration appears here 
+ "inputParameters": [],
+ "outputParameters": {},
+ "schemaVersion": 2,
+ "restartable": true,
+ "workflowStatusListenerEnabled": false,
+ "ownerEmail": "john.doe@acme.com",
+ "timeoutPolicy": "ALERT_ONLY",
+ "timeoutSeconds": 0,
+ "failureWorkflow": ""
+}
+```
+Each task configuration JSON object may contain the following parameters:
 
 | Parameter         | Description                                                                                 | Required/ Optional  |
 | ----------------- | ------------------------------------------------------------------------------------------- | ------------------- |
@@ -167,7 +181,7 @@ Conductor provide several mechanisms to pass, validate, and protect data as it m
 
 ### Passing data between tasks
 
-Using dynamic references in a task’s `inputParameters`, data can be passed from one task to another. These dynamic references are formatted as JSONPath expressions. Refer to [Wiring Parameters](/content/developer-guides/passing-inputs-to-task-in-conductor) to learn more.
+Using dynamic references, data can be passed from one task to another. These dynamic references are formatted as JSONPath expressions. Refer to [Wiring Parameters](/content/developer-guides/passing-inputs-to-task-in-conductor) to learn more.
 
 ### Passing data using task input templates
 
