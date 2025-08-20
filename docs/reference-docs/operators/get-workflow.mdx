@@ -25,8 +25,10 @@ Configure these parameters for the Get Workflow task.
 | inputParameters. **id** | The workflow (execution) ID of the workflow to be retrieved. It can be [passed as a dynamic input](/developer-guides/passing-inputs-to-task-in-conductor). | Required. |
 | inputParameters. **includeTasks** | Whether to retrieve the task details or not. The default value is false. | Required. |
 
+The following are generic configuration parameters that can be applied to the task and are not specific to the Get Workflow task.
 
-### Other generic parameters
+<details>
+<summary>Other generic parameters</summary>
 
 Here are other parameters for configuring the task behavior.
 
@@ -34,6 +36,7 @@ Here are other parameters for configuring the task behavior.
 | --------- | ----------- | ----------------- | 
 | optional | Whether the task is optional. The default is false. <br/> <br/> If set to true, the workflow continues to the next task even if this task is in progress or fails.| Optional. | 
 
+</details>
 
 ## Task configuration
 

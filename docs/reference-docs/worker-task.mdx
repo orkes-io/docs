@@ -24,7 +24,10 @@ For a full guide on how to use workers, refer to [Writing Workers](/developer-gu
 
 To configure the Worker task, set its `inputParameters` as needed for your worker code. The values can be [passed as a dynamic input](/developer-guides/passing-inputs-to-task-in-conductor).
 
-### Caching parameters
+The following are generic configuration parameters that can be applied to the task and are not specific to the Worker task. 
+
+<details>
+<summary>Caching parameters</summary>
 
 You can cache the task outputs using the following parameters. Refer to [Caching Task Outputs](/faqs/task-cache-output) for a full guide.
 
@@ -33,7 +36,10 @@ You can cache the task outputs using the following parameters. Refer to [Caching
 | cacheConfig.**ttlInSecond** | The time to live in seconds, which is the duration for the output to be cached. | Required if using *cacheConfig*. |
 | cacheConfig.**key** | The cache key is a unique identifier for the cached output and must be constructed exclusively from the task’s input parameters.<br/>It can be a string concatenation that contains the task’s input keys, such as `${uri}-${method}` or `re_${uri}_${method}`. | Required if using *cacheConfig*. |
 
-### Schema parameters
+</details>
+
+<details>
+<summary>Schema parameters</summary>
 
 You can enforce input/output validation for the task using the following parameters. Refer to [Schema Validation](/developer-guides/schema-validation) for a full guide.
 
@@ -43,13 +49,18 @@ You can enforce input/output validation for the task using the following paramet
 | taskDefinition.**inputSchema** | The name and type of the input schema to be associated with the task. | Required if *enforceSchema* is set to true. | 
 | taskDefinition.**outputSchema** | The name and type of the output schema to be associated with the task. | Required if *enforceSchema* is set to true.
 
-### Other generic parameters
+</details>
+
+<details>
+<summary>Other generic parameters</summary> 
 
 Here are other parameters for configuring the task behavior.
 
 | Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- | 
 | optional | Whether the task is optional. The default is false. <br/> <br/> If set to true, the workflow continues to the next task even if this task is in progress or fails.| Optional. | 
+
+</details>
 
 ## Task configuration
 
@@ -81,4 +92,4 @@ Sample worker code snippets are available in the UI for reference.
 
 ## Examples
 
-Find an [example of how to add and run a Worker task](/quickstarts/write-workers) in our Quickstart.
+Find an [example of how to add and run a Worker task](/quickstarts/write-workers) in our Quickstart guide.

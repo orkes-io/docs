@@ -18,19 +18,23 @@ Configure these parameters for the Do While task.
 | Parameter                      | Description                                                          | Required/ Optional   |
 | ------------------------------ | ------------------------------------------------------------------------------------------------------- | -------------------- |
 | evaluatorType                  | The type of evaluator used. Supported types: <ul><li>`value-param`—Evaluates a boolean input parameter in the Do While task.</li><li>`graaljs`—Evaluates JavaScript expressions and computes the value. Allows you to use ES6-compatible JavaScript.</li></ul>                                                                    | Required.          |
-| loopCondition                  | The condition that is evaluated by the Do While task after every iteration. The expression format depends on the evaluator type:<ul><li>For the `value-param` evaluator, the expression is the input parameter key.</li><li>For the `javascript` and `graaljs` evaluators, the expression is in ES6-compatible JavaScript. Refer to [Script expression](#script-expression) for more information. </li></ul> | Required, unless iterating over a list of items.          |
+| loopCondition                  | The condition that is evaluated by the Do While task after every iteration. The expression format depends on the evaluator type:<ul><li>For the `value-param` evaluator, the expression is the input parameter key.</li><li>For the `graaljs` evaluator, the expression is in ES6-compatible JavaScript. Refer to [Script expression](#script-expression) for more information. </li></ul> | Required, unless iterating over a list of items.          |
 | loopOver                       | The list of tasks to be executed as long as the condition is true.    | Required.          |
 | inputParameters. **items** | An array of items, which will be iterated over in the loop. The number of iterations is equal to the list size. You can use this to iterate without a condition. <br/><br/> Refer to [Examples](#examples) for more information on how to use the `items` parameter.            | Optional.          |
 | inputParameters. **keepLastN** | The number of iteration execution data to retain. If enabled, the default value is 2. <br/><br/> Use `keepLastN` if the number of iterations is expected to be large and not all execution data needs to be retained. Refer to [Execution data](#execution-data) for more information.         | Optional.        |
 
+The following are generic configuration parameters that can be applied to the task and are not specific to the Do While task. 
 
-### Other generic parameters
+<details>
+<summary>Other generic parameters</summary>
 
 Here are other parameters for configuring the task behavior.
 
 | Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- | 
 | optional | Whether the task is optional. The default is false. <br/> <br/> If set to true, the workflow continues to the next task even if this task is in progress or fails.| Optional. | 
+
+</details>
 
 ### Script expression
 
@@ -124,7 +128,7 @@ Each time a task in the do while loop is completed, the output is saved and inde
 1. In your workflow, select the **(+)** icon and add a **Do While** task.
 2. In **Script params**, add the parameter that will be evaluated in the expression.
 3. In **Loop condition**, select the evaluator type and enter the loop condition in the **Code** field.
-   - **Value-Param**—* Enter the parameter key you have defined in Script params.
+   - **Value-Param**— Enter the parameter key you have defined in Script params.
    - **ECMASCRIPT**—Enter a JavaScript script. Refer to [Script expression](#script-expression) for information.
 4. In your workflow, select the **(+)** icon to add tasks to the Do While loop.
 5. (Optional) If the number of iterations is expected to be large, turn off **No Limits** to set the number of iteration execution data to retain. By default, there is no limit on the execution data kept if the task size is below 300.
@@ -150,7 +154,7 @@ If `keepLastN` is used, the latest *n* iterations will be retained. In the examp
 <p><img src="/content/img/Task-References/do_while_keeplastn_iterations.png" alt="List of iterations during workflow execution where keepLastN is enabled."/></p>
 
 
-From v4.1.52 onwards, Do While executions that exceed 300 tasks across its iterations will be summarized, and the Conductor UI will only display the latest two iterations. If required, u​​se `keepLastN` to display more iterations.
+From **v4.1.52** onwards, Do While executions that exceed 300 tasks across its iterations will be summarized, and the Conductor UI will only display the latest two iterations. If required, u​​se `keepLastN` to display more iterations.
 
 <p><img src="/content/img/Task-References/do_while_summarized_iterations.png" alt="List of iterations during workflow execution where workflow is summarized."/></p>
 

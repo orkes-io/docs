@@ -21,8 +21,10 @@ Configure these parameters for the Terminate Workflow task.
 | inputParameters. **terminationReason** | The reason for terminating the workflow(s), which will provide the context of the termination. It can be [passed as a dynamic input](/developer-guides/passing-inputs-to-task-in-conductor).                              | Optional.          |
 | triggerFailureWorkflow                 | Whether the failure workflow for the terminated workflow will be triggered. Accepted values:<ul><li>`true`—The failure workflow will be triggered.</li><li>`false`—The default option. The failure workflow will not be triggered.</li></ul> | Required.          |
 
+The following are generic configuration parameters that can be applied to the task and are not specific to the Terminate Workflow task.
 
-### Other generic parameters
+<details>
+<summary>Other generic parameters</summary>
 
 Here are other parameters for configuring the task behavior.
 
@@ -30,7 +32,7 @@ Here are other parameters for configuring the task behavior.
 | --------- | ----------- | ----------------- | 
 | optional | Whether the task is optional. The default is false. <br/> <br/> If set to true, the workflow continues to the next task even if this task is in progress or fails.| Optional. | 
 
-
+</details>
 
 ## Task configuration
 
@@ -180,7 +182,7 @@ Now, let’s run this workflow.
 
 <p align="center"><img src="/content/img/running-terminate-workflow-demo.png" alt="Running terminate workflow demo" width="100%" height="auto"></img></p>
 
-Upon completion, the workflow with the ID `8c14384c-2400-11ef-ad70-52278f6d0e42` will be terminated. To view the execution of the terminated workflow, go to Executions > Workflow and search using the workflow (execution) ID.
+Upon completion, the workflow with the ID `8c14384c-2400-11ef-ad70-52278f6d0e42` will be terminated. To view the execution of the terminated workflow, go to **Executions** > **Workflow** and search using the workflow (execution) ID.
 
 <p align="center"><img src="/content/img/terminated-workflow-execution.png" alt="Execution of the terminated workflow" width="100%" height="auto"></img></p>
 

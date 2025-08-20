@@ -19,17 +19,21 @@ Configure these parameters for the Join task.
 
 | Parameter  | Description                                                                                                      | Required/ Optional |
 | ---------- | ---------------------------------------------------------------------------------------------------------------- | ------------------ |
-| joinOn     | A list of task reference names that the Join task will wait for completion before proceeding with the next task. | Required.          |
+| joinOn     | A list of task reference names that the Join task will wait for completion before proceeding with the next task. | Required for [Fork/Join](/content/reference-docs/operators/fork-join) task.          |
 | expression | The join script, which controls how the Join task completes if specified.                                        | Optional.          |
 
+The following are generic configuration parameters that can be applied to the task and are not specific to the Join task.
 
-### Other generic parameters
+<details>
+<summary>Other generic parameters</summary>
 
 Here are other parameters for configuring the task behavior.
 
 | Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- | 
 | optional | Whether the task is optional. The default is false. <br/> <br/> If set to true, the workflow continues to the next task even if this task is in progress or fails.| Optional. | 
+
+</details>
 
 ### Join script configuration
 
@@ -105,7 +109,7 @@ If a join script is used, the Join task will also return the following parameter
 **Example output**
 
 <Tabs>
-<TabItem value="no script" label="with no join script">
+<TabItem value="no script" label="With no join script">
 
 ```json
 {
@@ -122,7 +126,7 @@ If a join script is used, the Join task will also return the following parameter
 ```
 
 </TabItem>
-<TabItem value="script" label="with join script">
+<TabItem value="script" label="With join script">
 
 ```json
 {
@@ -152,10 +156,10 @@ A Join task is automatically added whenever a Fork/Join task or a Dynamic Fork t
 
 **To configure a Join task:**
 
-1. In your workflow, select the Join task.
-2. In Input joins, select the forks that are required for joining.
+1. In your workflow, select the **Join** task.
+2. In **Input joins**, select the forks that are required for joining.
 3. (Optional) Use a script to control how the Join task completes.
-   1. In Join script, check Use scripting to determine join.
+   1. In **Join script**, check Use scripting to determine join.
    2. Enter the script in the code box.
    3. If necessary, add the script parameters that will be passed into the Join task.
 

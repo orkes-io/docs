@@ -38,13 +38,18 @@ In addition, you can also configure the sub-workflow’s input in `inputParamete
 - If an idempotency strategy is configured in the sub-workflow task configuration and no idempotency key is provided, the sub-workflow task will automatically inherit the idempotency key from its parent workflow.
 :::
 
-### Other generic parameters
+The following are generic configuration parameters that can be applied to the task and are not specific to the Sub Workflow task.
+
+<details>
+<summary>Other generic parameters</summary>
 
 Here are other parameters for configuring the task behavior.
 
 | Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- | 
 | optional | Whether the task is optional. The default is false. <br/> <br/> If set to true, the workflow continues to the next task even if this task is in progress or fails.| Optional. | 
+
+</details>
 
 ## Task configuration
 
