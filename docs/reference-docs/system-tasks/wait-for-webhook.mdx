@@ -6,6 +6,7 @@ description: "The Wait for Webhook task pauses the workflow until it receives a 
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import TableNote from '@site/src/components/TableNote';
 
 # Wait For Webhook
 
@@ -27,7 +28,7 @@ Configure these parameters for the Wait for Webhook task.
 
 | Parameter                   | Description                                                                                                                                                                                                                                                                                            | Required/ Optional |
 | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------ |
-| inputParameters.**matches** | The conditions that incoming event payloads must meet to trigger the webhook. Can be string, number, boolean, null, or object/array.<br/>**Note:** When you update the matches, there will be a default caching period of 60 seconds, causing the updates to reflect with a delay of up to 60 seconds. | Required.          |
+| inputParameters.**matches** | The conditions that incoming event payloads must meet to trigger the webhook. Can be string, number, boolean, null, or object/array.<br/><TableNote title="Note">When you update the matches, there will be a default caching period of 60 seconds, causing the updates to reflect with a delay of up to 60 seconds.</TableNote> | Required.          |
 
 ### Writing custom matches​
 
@@ -74,7 +75,10 @@ The input payload for the webhook task to align with the above matches must be:
 }
 ```
 
-### Schema parameters
+The following are generic configuration parameters that can be applied to the task and are not specific to the Wait for Webhook task.
+
+<details>
+<summary>Schema parameters</summary>
 
 You can enforce input/output validation for the task using the following parameters. Refer to [Schema Validation](/developer-guides/schema-validation) for a full guide.
 
@@ -84,7 +88,10 @@ You can enforce input/output validation for the task using the following paramet
 | taskDefinition.**inputSchema** | The name and type of the input schema to be associated with the task. | Required if *enforceSchema* is set to true. | 
 | taskDefinition.**outputSchema** | The name and type of the output schema to be associated with the task. | Required if *enforceSchema* is set to true.
 
-### Other generic parameters
+</details>
+
+<details>
+<summary>Other generic parameters</summary>
 
 Here are other parameters for configuring the task behavior.
 
@@ -92,6 +99,7 @@ Here are other parameters for configuring the task behavior.
 | --------- | ----------- | ----------------- | 
 | optional | Whether the task is optional. The default is false. <br/> <br/> If set to true, the workflow continues to the next task even if this task is in progress or fails.| Optional. | 
 
+</details>
 
 ## Task configuration
 

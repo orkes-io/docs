@@ -25,7 +25,10 @@ Configure these parameters for the JDBC task.
 | inputParameters. **statement**           | The SQL statement to retrieve data from the SQL database.                                                                                                                                                                                                                             | Required.                                                    |
 | inputParameters. **parameters**          | The query parameters to be bound by the SQL statement. It can be a string, number, boolean, or null.                                                                                                                                                                                  | Required.                                                    |
 
-### Caching parameters
+The following are generic configuration parameters that can be applied to the task and are not specific to the JDBC task.
+
+<details>
+<summary>Caching parameters</summary>
 
 You can cache the task outputs using the following parameters. Refer to [Caching Task Outputs](/faqs/task-cache-output) for a full guide.
 
@@ -34,7 +37,10 @@ You can cache the task outputs using the following parameters. Refer to [Caching
 | cacheConfig.**ttlInSecond** | The time to live in seconds, which is the duration for the output to be cached. | Required if using *cacheConfig*. |
 | cacheConfig.**key** | The cache key is a unique identifier for the cached output and must be constructed exclusively from the task’s input parameters.<br/>It can be a string concatenation that contains the task’s input keys, such as `${uri}-${method}` or `re_${uri}_${method}`. | Required if using *cacheConfig*. |
 
-### Schema parameters
+</details>
+
+<details>
+<summary>Schema parameters</summary>
 
 You can enforce input/output validation for the task using the following parameters. Refer to [Schema Validation](/developer-guides/schema-validation) for a full guide.
 
@@ -44,7 +50,10 @@ You can enforce input/output validation for the task using the following paramet
 | taskDefinition.**inputSchema** | The name and type of the input schema to be associated with the task. | Required if *enforceSchema* is set to true. | 
 | taskDefinition.**outputSchema** | The name and type of the output schema to be associated with the task. | Required if *enforceSchema* is set to true.
 
-### Other generic parameters
+</details>
+
+<details>
+<summary>Other generic parameters</summary>
 
 Here are other parameters for configuring the task behavior.
 
@@ -52,6 +61,7 @@ Here are other parameters for configuring the task behavior.
 | --------- | ----------- | ----------------- | 
 | optional | Whether the task is optional. The default is false. <br/> <br/> If set to true, the workflow continues to the next task even if this task is in progress or fails.| Optional. | 
 
+</details>
 
 ## Task configuration
 
