@@ -28,8 +28,10 @@ Configure these parameters for the Start Workflow task.
 
 In addition, you can also configure the requested workflow’s input in `inputParameters.startWorkflow.input`, which will be passed to the invoked workflow.
 
+The following are generic configuration parameters that can be applied to the task and are not specific to the Start Workflow task.
 
-### Other generic parameters
+<details>
+<summary>Other generic parameters</summary>
 
 Here are other parameters for configuring the task behavior.
 
@@ -37,7 +39,7 @@ Here are other parameters for configuring the task behavior.
 | --------- | ----------- | ----------------- | 
 | optional | Whether the task is optional. The default is false. <br/> <br/> If set to true, the workflow continues to the next task even if this task is in progress or fails.| Optional. | 
 
-
+</details>
 
 ## Task configuration
 
@@ -80,7 +82,7 @@ The Start Workflow task will not return the output of the started workflow.
 
 **To add a Start Workflow task:**
 
-1. In your workflow, select the **(+)** icon and add a Start Workflow task.
+1. In your workflow, select the **(+)** icon and add a **Start Workflow** task.
 2. Enter the **Workflow name** and **Version**. If the version is unspecified, the latest version will be used.
    Once selected, the workflow’s input parameters will automatically appear if there are any pre-defined ones.
 3. (Optional) Enter the **Correlation id**.
@@ -142,7 +144,7 @@ The output shows the generated workflow (execution) ID of the started workflow.
 }
 ```
 
-To find the newly started workflow execution, go to **Executions** > **Workflow** and search for the workflow containing the Start Workflow task. Select the workflow to view the execution and select the Start Workflow task. The task details Summary tab contains newly-started workflow (execution) ID.
+To find the newly started workflow execution, go to **Executions** > **Workflow** and search for the workflow containing the Start Workflow task. Select the workflow to view the execution and select the Start Workflow task. The **Summary** tab contains the workflow execution link to the started workflow.
 
 <p align="center"><img src="/content/img/start-workflow-output-in-conductor.png" alt="Completed start workflow type" width="100%" height="auto" /></p>
 

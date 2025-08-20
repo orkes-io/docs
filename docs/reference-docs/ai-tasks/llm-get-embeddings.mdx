@@ -29,7 +29,10 @@ Configure these parameters for the LLM Get Embeddings task.
 | inputParameters.**index** | The index in your vector database where the indexed text or data was stored.<br/><br/>The terminology of the index field varies depending on the integration:<ul><li>For Weaviate, the index field indicates the collection name.</li><li>For other integrations, it denotes the index name.</li></ul> | Required. |
 | inputParameters.**embeddings** | The embeddings from which the stored data will be retrieved. This should be from the same embedding model used to create the embeddings stored in the specified index. | Required. |
 
-### Caching parameters
+The following are generic configuration parameters that can be applied to the task and are not specific to the LLM Get Embeddings task.
+
+<details>
+<summary>Caching parameters</summary>
 
 You can cache the task outputs using the following parameters. Refer to [Caching Task Outputs](/faqs/task-cache-output) for a full guide.
 
@@ -38,7 +41,10 @@ You can cache the task outputs using the following parameters. Refer to [Caching
 | cacheConfig.**ttlInSecond** | The time to live in seconds, which is the duration for the output to be cached. | Required if using *cacheConfig*. |
 | cacheConfig.**key** | The cache key is a unique identifier for the cached output and must be constructed exclusively from the task’s input parameters.<br/>It can be a string concatenation that contains the task’s input keys, such as `${uri}-${method}` or `re_${uri}_${method}`. | Required if using *cacheConfig*. |
 
-### Schema parameters
+</details>
+
+<details>
+<summary>Schema parameters</summary>
 
 You can enforce input/output validation for the task using the following parameters. Refer to [Schema Validation](/developer-guides/schema-validation) for a full guide.
 
@@ -48,13 +54,18 @@ You can enforce input/output validation for the task using the following paramet
 | taskDefinition.**inputSchema** | The name and type of the input schema to be associated with the task. | Required if *enforceSchema* is set to true. | 
 | taskDefinition.**outputSchema** | The name and type of the output schema to be associated with the task. | Required if *enforceSchema* is set to true.
 
-### Other generic parameters
+</details>
+
+<details>
+<summary>Other generic parameters</summary>
 
 Here are other parameters for configuring the task behavior.
 
 | Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- | 
 | optional | Whether the task is optional. The default is false. <br/> <br/> If set to true, the workflow continues to the next task even if this task is in progress or fails.| Optional. | 
+
+</details>
 
 ## Task configuration
 

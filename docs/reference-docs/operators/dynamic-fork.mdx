@@ -9,9 +9,11 @@ import TabItem from "@theme/TabItem";
 
 # Dynamic Fork
 
-The Dynamic Fork task is used to run tasks in parallel, with the forking behavior (such as the number of forks) determined at run-time. This contrasts with the Fork/Join task, where the forking behavior is defined at workflow creation. Like the Fork/Join task, the Dynamic Fork task is followed by a join operation that waits on the forked tasks to finish before moving to the next task. This Join task collects the outputs from each forked task.
+The Dynamic Fork task is used to run tasks in parallel, with the forking behavior (such as the number of forks) determined at run-time. This contrasts with the Fork/Join task, where the forking behavior is defined at workflow creation. 
 
-Unlike the Fork/Join task, a Dynamic Fork task can only run one task per fork. A sub-workflow can be utilized if there is a need for multiple tasks per fork.
+The Dynamic Fork task must be followed by a Join task that waits for the forked tasks to finish before moving to the next task. This Join task collects the outputs from each forked task.
+
+Unlike the Fork/Join task, a Dynamic Fork task can only run one task per fork. To run multiple tasks per fork, you can use a [Sub Workflow](/content/reference-docs/operators/sub-workflow) task inside the fork.
 
 There are two ways to run the Dynamic Fork task:
 
@@ -20,14 +22,14 @@ There are two ways to run the Dynamic Fork task:
 
 ## Task parameters
 
-Configure these parameters for the Dynamic Fork task. The input payload for the forked tasks should correspond with its expected input. For example, if the forked tasks are HTTP tasks, its input should include the method and URI.
+Configure these parameters for the Dynamic Fork task. The input payload for the forked tasks should correspond with their expected input. For example, if the forked tasks are HTTP tasks, the input should include the method and URI.
 
 **For the Fork task:**
 
 <Tabs>
 <TabItem value="Config-Different tasks" label="For different tasks">
 
-The dynamic fork executes each task in the array specified by `dynamicForkTasksParam` with its corresponding input specified by `dynamicForkTasksInputParamName`. The number of forks created at runtime depends on the array of tasks specified.
+The dynamic fork executes each task in the array specified by `dynamicForkTasksParam` with its corresponding input specified by `dynamicForkTasksInputParamName`. The number of forks created at runtime corresponds with the array size.
 
 | Parameter                              | Description                                                                                                                                                                                                                                                          | Required/ Optional |
 | -------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
@@ -40,6 +42,8 @@ The dynamic fork executes each task in the array specified by `dynamicForkTasksP
 
 <TabItem value="Config-Same task any" label="For the same task (any task type)">
 
+Configure these parameters to execute any task type except Sub Workflow tasks.
+
 The dynamic fork executes the task specified by `forkTaskName` for each element of `forkTaskInputs`. The number of forks created at runtime depends on the number of `forkTaskInputs` sent. Configure these parameters to execute any task type except Sub Workflow tasks.
 
 | Parameter                           | Description                                                                                                                                                                                                                                          | Required/ Optional |
@@ -50,6 +54,8 @@ The dynamic fork executes the task specified by `forkTaskName` for each element 
 </TabItem>
 
 <TabItem value="Config-Same task sub-workflow" label="For the same task (sub-workflows)">
+
+Configure these parameters to execute a Sub Workflow task.
 
 The dynamic fork executes the workflow specified by `forkTaskWorkflow` and `forkTaskWorkflowVersion` for each element of `forkTaskInputs`. The number of forks created at runtime depends on the number of `forkTaskInputs` sent. Configure these parameters to execute a Sub Workflow task.
 
@@ -62,17 +68,12 @@ The dynamic fork executes the workflow specified by `forkTaskWorkflow` and `fork
 </TabItem>
 </Tabs>
 
-The [Join](./join) task will run after the forked tasks. Configure the Join task as well to complete the fork-join operations.
+The [Join](./join) task will run after the forked tasks and implicitly waits for all forked tasks to complete.
 
-**For the Join task:**
+The following are generic configuration parameters that can be applied to the task and are not specific to the Dynamic Fork task.
 
-| Parameter  | Description                                                                                                      | Required/ Optional |
-| ---------- | ---------------------------------------------------------------------------------------------------------------- | ------------------ |
-| joinOn     | A list of task reference names that the Join task will wait for completion before proceeding with the next task. | Required.          |
-| expression | The join script, which controls how the Join task completes if specified.                                        | Optional.          |
-
-
-### Other generic parameters
+<details>
+<summary>Other generic parameters</summary>
 
 Here are other parameters for configuring the task behavior.
 
@@ -80,6 +81,7 @@ Here are other parameters for configuring the task behavior.
 | --------- | ----------- | ----------------- | 
 | optional | Whether the task is optional. The default is false. <br/> <br/> If set to true, the workflow continues to the next task even if this task is in progress or fails.| Optional. | 
 
+</details>
 
 ## Task configuration
 
@@ -188,7 +190,7 @@ This is the task configuration for a Dynamic Fork task.
 </Tabs>
 
 :::note
-forkTaskName and forkTaskInputs will take precedence even if dynamicForkTasksParam and dynamicForkTasksInputParamName are present in the task configuration.
+`forkTaskName` and `forkTaskInputs` will take precedence even if `dynamicForkTasksParam` and `dynamicForkTasksInputParamName` are present in the task definition.
 :::
 
 ## Adding a Dynamic Fork task in UI
@@ -199,20 +201,20 @@ forkTaskName and forkTaskInputs will take precedence even if dynamicForkTasksPar
 <TabItem value="Different tasks" label="For different tasks">
 
 1. In your workflow, select the **(+)** icon and add a **Dynamic Fork **task.
-2. In **Input parameters**, set the parameter Type for dynamicTasks and dynamicTasksInput as **Object/Array**.
-3. Configure the dynamicTask parameter as an array of task configurations.
-4. Configure the dynamicTasksInput parameter as a map of input parameters for each task.
+2. In **Input parameters**, set the parameter **Type** for `dynamicTasks` and `dynamicTasksInput` as **Object/Array**.
+3. Configure the `dynamicTask` parameter as an array of task configurations.
+4. Configure the `dynamicTasksInput` parameter as a map of input parameters for each task.
 5. Select the Join task and configure its settings to complete the fork/join operations.
 
 </TabItem>
 
 <TabItem value="Same task" label="For the same task">
 
-1. In your workflow, select the **(+)** icon and add a **Dynamic Fork **task.
+1. In your workflow, select the **(+)** icon and add a **Dynamic Fork** task.
 2. In **Input parameters**, remove all current parameters and add the following parameters and its values:
    - `forkTaskWorkflow`, `forkTaskWorkflowVersion`, and `forkTaskInputs` for Sub Workflow tasks.
    - `forkTaskName` and `forkTaskInputs` for all other task types.
-3. Select the Join task and configure its settings to complete the fork/join operations.
+3. Select the Join task and configure its settings to complete the fork/join operation.
 
 <p>
   <img
@@ -231,7 +233,7 @@ Here are some examples for using the Dynamic Fork task.
 <details>
 <summary>Running different tasks</summary>
 
-To run a different task per fork in a dynamic fork, you must use `dynamicForkTasksParam` and `dynamicForkTasksInputParamName`. Here is an example workflow of a Dynamic Fork task running different tasks.
+To run a different task per fork in a dynamic fork, you must use `dynamicForkTasksParam` and `dynamicForkTasksInputParamName`. Here is an example workflow definition of a Dynamic Fork task running different tasks.
 
 ```json
 {
@@ -309,7 +311,7 @@ To run a different task per fork in a dynamic fork, you must use `dynamicForkTas
 <details>
 <summary>Running the same task — Simple task</summary>
 
-In this example workflow, the Dynamic Fork task runs a worker task called `update_fruit_list_task` in parallel. The task input takes from the workflow input, which contains the number of new fruits.
+In this example workflow definition, the Dynamic Fork task runs a worker task called `update_fruit_list_task` in parallel. The task input takes from the workflow input, which contains an array of new fruits.
 
 ```json
 {
@@ -400,7 +402,7 @@ If simple values are used in `forkTaskInputs`, such as `"fruits" = ["apple", "or
 <details>
 <summary>Running the same task — HTTP task</summary>
 
-In this example workflow, the dynamic fork runs HTTP tasks in parallel. The provided input in `forkTaskInputs` contains the typical payload expected in a HTTP task.
+In this example, the dynamic fork runs HTTP tasks in parallel. The provided input in `forkTaskInputs` contains the typical payload expected in an HTTP task. 
 
 ```json
 {
@@ -442,7 +444,7 @@ The parameter `method` has a default value of GET and need not be specified if t
 <details>
 <summary>Running the same task — Sub Workflow task</summary>
 
-In this exampl workflow, the dynamic fork runs Sub Workflow tasks in parallel.
+In this example, the dynamic fork runs Sub Workflow tasks in parallel.
 
 ```json
 {

@@ -9,10 +9,6 @@ import TabItem from '@theme/TabItem';
 
 # Get Signed JWT
 
-:::info Available since
-- v3.3.43 and later
-:::
-
 The Get Signed JWT task is used to sign a JWT (JSON Web Token).
 
 Using the RS256 algorithm, the task ensures robust cryptographic security during JWT signing. The resulting token effectively encapsulates specified authorization scopes and incorporates a TTL (time-to-live) mechanism to enforce its expiration, thereby maintaining secure access control.
@@ -32,7 +28,10 @@ Configure these parameters for the Get Signed JWT task.
 | inputParameters. **scopes**       | The scopes associated with the JWT, defining the access permissions granted by the token. It can be a string or an array of strings. | Required.          |
 | inputParameters. **algorithm**    | The signing algorithm to use for the JWT. Currently set to RS256, which refers to the RSA signature with the SHA-256 hash algorithm. | Required.          |
 
-### Caching parameters
+The following are generic configuration parameters that can be applied to the task and are not specific to the Get Signed JWT task.
+
+<details>
+<summary>Caching parameters</summary>
 
 You can cache the task outputs using the following parameters. Refer to [Caching Task Outputs](/faqs/task-cache-output) for a full guide.
 
@@ -41,7 +40,10 @@ You can cache the task outputs using the following parameters. Refer to [Caching
 | cacheConfig.**ttlInSecond** | The time to live in seconds, which is the duration for the output to be cached. | Required if using *cacheConfig*. |
 | cacheConfig.**key** | The cache key is a unique identifier for the cached output and must be constructed exclusively from the task’s input parameters.<br/>It can be a string concatenation that contains the task’s input keys, such as `${uri}-${method}` or `re_${uri}_${method}`. | Required if using *cacheConfig*. |
 
-### Schema parameters
+</details>
+
+<details>
+<summary>Schema parameters</summary>
 
 You can enforce input/output validation for the task using the following parameters. Refer to [Schema Validation](/developer-guides/schema-validation) for a full guide.
 
@@ -51,7 +53,10 @@ You can enforce input/output validation for the task using the following paramet
 | taskDefinition.**inputSchema** | The name and type of the input schema to be associated with the task. | Required if *enforceSchema* is set to true. | 
 | taskDefinition.**outputSchema** | The name and type of the output schema to be associated with the task. | Required if *enforceSchema* is set to true.
 
-### Other generic parameters
+</details>
+
+<details>
+<summary>Other generic parameters</summary>
 
 Here are other parameters for configuring the task behavior.
 
@@ -59,10 +64,7 @@ Here are other parameters for configuring the task behavior.
 | --------- | ----------- | ----------------- | 
 | optional | Whether the task is optional. The default is false. <br/> <br/> If set to true, the workflow continues to the next task even if this task is in progress or fails.| Optional. | 
 
-
-## Task output
-
-The Get Signed JWT task will return the signed JWT in the secret variable `_secrets`. The signed JWT will be masked (`***`).
+</details>
 
 ## Task configuration
 
@@ -85,6 +87,10 @@ This is the task configuration for a Get Signed JWT task.
   "type": "GET_SIGNED_JWT"
 }
 ```
+
+## Task output
+
+The Get Signed JWT task will return the signed JWT in the secret variable `_secrets`. The signed JWT will be masked (`***`).
 
 ## Adding a Get Signed JWT task in UI
 

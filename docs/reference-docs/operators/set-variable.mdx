@@ -18,15 +18,20 @@ Variables can be initialized and updated at any point in the workflow. Once a va
 To configure the Set Variable task, set your desired variables and their respective values in `inputParameters`. The values can be set in two ways:
 
 - Hard-coded in the workflow definition, or
-- A dynamic input that is defined in real-time during workflow execution.
+- A [dynamic input](/content/developer-guides/passing-inputs-to-task-in-conductor) that is defined in real-time during workflow execution.
 
-### Other generic parameters
+The following are generic configuration parameters that can be applied to the task and are not specific to the Set Variable task.
+
+<details>
+<summary>Other generic parameters</summary>
 
 Here are other parameters for configuring the task behavior.
 
 | Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- | 
 | optional | Whether the task is optional. The default is false. <br/> <br/> If set to true, the workflow continues to the next task even if this task is in progress or fails.| Optional. | 
+
+</details>
 
 ## Task configuration
 
@@ -50,9 +55,9 @@ This is the task configuration for a Set Variable task.
 1. In your workflow, select the **(+)** icon and add a **Set Variable** task.
 2. In **Variables**, add the desired workflow variables that will be initialized or replaced with a new value.
 3. For each workflow variable, configure the following:
-   - **Key**—the variable name.
-   - **Type**—the variable type, which can be a string, number, boolean, null, or object/array.
-   - **Value**—the variable value, which can be a fixed value or a dynamic input (e.g., `${workflow.input.someKey}`).
+   - **Key**—The variable name.
+   - **Type**—The variable type, which can be a string, number, boolean, null, or object/array.
+   - **Value**—The variable value, which can be a [dynamic input](/content/developer-guides/passing-inputs-to-task-in-conductor) (for example, `${workflow.input.someKey}`) or a fixed value.
 
 <p><img src="/content/img/Task-References/set_variable_task_reference.png" alt="Screenshot of Set Variable Task in Orkes Conductor"/></p>
 
@@ -98,7 +103,7 @@ In this example workflow, a username is stored as a variable so that it can be r
 }
 ```
 
-In the example above, `set_name` is a Set Variable task that takes a variable input for `name`. In subsequent tasks, the `name` is later referenced using `${workflow.variables.name}`.
+In the example above, `set_name` is a Set Variable task that takes a dynamic input for `name`. In subsequent tasks, the `name` is later referenced using `${workflow.variables.name}`.
 
 </p>
 </details>

@@ -9,9 +9,9 @@ import TabItem from '@theme/TabItem';
 
 # Switch
 
-The Switch task is used for conditional branching logic. It represents if...then...else or switch...case statements in programming, and can be used for any situation where different tasks have to be executed based on different conditions.
+The Switch task is used for conditional branching logic. It represents `if...then...else` or `switch...case` statements in programming, and can be used when different tasks have to be executed based on different conditions.
 
-A Switch task evaluates an expression, either a simple input parameter key or a complex JavaScript expression, and matches the expression output with the name of each switch case. The appropriate tasks are executed based on the matching branch, which contains a sequence of tasks. The default branch will be executed if no matching branches are found.
+A Switch task evaluates an `expression`, either a simple input parameter key or a complex JavaScript expression, and matches the `expression` output with the name of each switch case. The appropriate tasks are executed based on the matching branch, which contains a sequence of tasks. The default branch will be executed if no matching branches are found.
 
 ## Task parameters
 
@@ -24,8 +24,10 @@ Configure these parameters for the Switch task.
 | decisionCases | A map of the possible switch cases. The keys are the possible outputs of the evaluated expression, and the values are the list of tasks to be executed in each case.                                                                                                                      | Required.          |
 | defaultCase   | The default branch. Contains the list of tasks to be executed when no matching value is found in the decision cases.                                                                                                                                                                      | Optional.          |
 
+The following are generic configuration parameters that can be applied to the task and are not specific to the Switch task. 
 
-### Other generic parameters
+<details>
+<summary>Other generic parameters</summary>
 
 Here are other parameters for configuring the task behavior.
 
@@ -33,6 +35,7 @@ Here are other parameters for configuring the task behavior.
 | --------- | ----------- | ----------------- | 
 | optional | Whether the task is optional. The default is false. <br/> <br/> If set to true, the workflow continues to the next task even if this task is in progress or fails.| Optional. | 
 
+</details>
 
 ## Task configuration
 

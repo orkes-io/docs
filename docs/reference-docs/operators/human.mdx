@@ -57,8 +57,10 @@ In addition, you should also configure Human task’s `inputParameters`, which c
 - If the field is to be filled up by the assignee, leave the value empty.
 - If the field is read-only and will be passed from somewhere in the workflow, enter a value, which can be [passed as a dynamic input](/developer-guides/passing-inputs-to-task-in-conductor).
 
+The following are generic configuration parameters that can be applied to the task and are not specific to the Human task.
 
-### Other generic parameters
+<details>
+<summary>Other generic parameters</summary>
 
 Here are other parameters for configuring the task behavior.
 
@@ -66,6 +68,7 @@ Here are other parameters for configuring the task behavior.
 | --------- | ----------- | ----------------- | 
 | optional | Whether the task is optional. The default is false. <br/> <br/> If set to true, the workflow continues to the next task even if this task is in progress or fails.| Optional. | 
 
+</details>
 
 ## Task configuration
 
@@ -134,7 +137,7 @@ The Human task will return a JSON object containing the form response.
    3. Select the **Workflow** to start and its **Version**.
    4. (Optional) Select **Additional inputs** to configure the workflow’s input parameters, correlation ID, and task-to-domain mapping.
    5. If needed, add another trigger to start another workflow.
-7. In Input parameters, configure the form fields depending on the input source:
+7. In **Input parameters**, configure the form fields depending on the input source:
    - If the field is to be filled up by the assignee, you can leave the value empty or pass in a default value that can be modified before submission.
    - If the field is read-only and will be passed from somewhere in the workflow, enter a value, which can be passed as a dynamic input.
 

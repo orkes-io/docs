@@ -9,9 +9,9 @@ import TabItem from '@theme/TabItem';
 
 # Dynamic
 
-The Dynamic task is used to execute a registered task dynamically at run-time. It is similar to a function pointer in programming, and can be used for when the decision to execute which task will only be made after the workflow has begun.
+The Dynamic task executes a registered task dynamically at run-time. It is similar to a function pointer in programming, and can be used in cases when the decision to execute which task will only be made after the workflow has begun. Unlike the [Switch](https://orkes.io/content/reference-docs/operators/switch) task, the Dynamic task offers flexibility without needing to update the workflow definition.
 
-The Dynamic task accepts as input the name of a task, which can be a system task or a custom task registered on Conductor.
+The Dynamic task accepts as input the name of a task, which can be a system task, a sub-workflow, or a custom Worker task registered on Conductor.
 
 ## Task parameters
 
@@ -20,24 +20,27 @@ Configure these parameters for the Dynamic task.
 | Parameter                          | Description                                                                                                                                                             | Required/ Optional |
 | ---------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
 | dynamicTaskNameParam               | The input parameter key whose value is used to schedule the task. For example, "taskToExecute", which will then be specified as an input parameter in the Dynamic task. | Required.          |
-| inputParameters. **taskToExecute** | The name of the task that will be executed. It can be [passed as a dynamic input](/developer-guides/passing-inputs-to-task-in-conductor).            | Required.          |
+| inputParameters. **taskToExecute** | The name of the task that will be executed. It can be [passed as a dynamic input](/developer-guides/passing-inputs-to-task-in-conductor).                               | Required.          |
+| inputParameters                    | Contains the inputs to the task that will be executed.                                                                                                                  | Required, depending on the task. | 
+
+The following are generic configuration parameters that can be applied to the task and are not specific to the Dynamic task.
+
+<details>
+<summary>Other generic parameters</summary>
+
+Here are other parameters for configuring the task behavior.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| optional | Whether the task is optional. The default is false. <br/> <br/> If set to true, the workflow continues to the next task even if this task is in progress or fails.| Optional. | 
+
+</details>
 
 ### Configuration for calling a sub-workflow
 
 If the Dynamic task to be called is a [Sub Workflow](./sub-workflow) task, then `taskToExecute` must be set to `SUB_WORKFLOW`. The `inputParameters` for the Dynamic task should also include these fields:
 
 <Tabs>
-<TabItem value="JSON" label="Using workflow JSON">
-
-```json
-// Dynamic task defintion
-
-"inputParameters": {
-  "subWorkflowDefinition":{ //subworkflow JSON definition}
-}
-```
-
-</TabItem>
 
 <TabItem value="name and version" label="Using workflow name and version">
 
@@ -51,16 +54,20 @@ If the Dynamic task to be called is a [Sub Workflow](./sub-workflow) task, then 
 ```
 
 </TabItem>
+<TabItem value="JSON" label="Using workflow definition JSON">
+
+Using the workflow definition JSON instead of the workflow name and version is useful when the sub-workflow has not been registered in the Conductor server beforehand. This option is ideal for constructing dynamic sub-workflows on the fly.
+
+```json
+// Dynamic task defintion
+
+"inputParameters": {
+  "subWorkflowDefinition":{ //subworkflow JSON definition}
+}
+```
+
+</TabItem>
 </Tabs>
-
-
-### Other generic parameters
-
-Here are other parameters for configuring the task behavior.
-
-| Parameter | Description | Required/ Optional | 
-| --------- | ----------- | ----------------- | 
-| optional | Whether the task is optional. The default is false. <br/> <br/> If set to true, the workflow continues to the next task even if this task is in progress or fails.| Optional. | 
 
 ## Task configuration
 
@@ -111,7 +118,7 @@ During execution, the Dynamic task is replaced with whatever task that is called
 **To add a Dynamic task:**
 
 1. In your workflow, select the **(+)** icon and add a **Dynamic** task.
-2. In **Task input params**, configure the task to execute by setting a value in the `taskToExecute` parameter.
+2. In **Task input params**, specify the task to execute by setting a value in the `taskToExecute` parameter.
    The value can be [passed as a dynamic input](/developer-guides/passing-inputs-to-task-in-conductor) (for example, `${workflow.input.dynamicTaskName}`).
 
 <p><img src="/content/img/Task-References/dynamic_task_reference.png" alt="Screenshot of Dynamic Task in Orkes Conductor"/></p>
