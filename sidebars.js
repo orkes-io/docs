@@ -789,8 +789,8 @@ const sidebars = {
                             id: 'tutorials/api-processing-usps-example',
                             label: 'API Processing',
                         },
-                        'templates/examples/keep-worker-running-until-condition-true',
-                        'templates/examples/rotating-secrets-that-expire',
+                        'tutorials/keep-worker-running-until-condition-true',
+                        'tutorials/rotating-secrets-that-expire',
                     ]
                 },
                 {
@@ -849,12 +849,12 @@ const sidebars = {
                     items: [
                         {
                             type: 'doc',
-                            id: 'templates/examples/custom-conductor-webhook-using-curl',
+                            id: 'tutorials/custom-conductor-webhook-using-curl',
                             label: 'cURL',
                         },
                         {
                             type: 'doc',
-                            id: 'templates/examples/incoming-webhook-using-postman',
+                            id: 'tutorials/incoming-webhook-using-postman',
                             label: 'Postman',
                         },
                         {
@@ -898,12 +898,12 @@ const sidebars = {
                     items: [
                         {
                             type: 'doc',
-                            id: 'templates/examples/finance',
-                            label: 'Loan Origination',
+                            id: 'tutorials/finance',
+                            label: 'Loan Approval Workflow',
                         },
                         {
                             type: 'doc',
-                            id: 'templates/examples/fraud-dispute',
+                            id: 'tutorials/fraud-dispute',
                             label: 'Handling Fraud Disputes',
                         },
                     ]
@@ -920,12 +920,12 @@ const sidebars = {
                     items: [
                         {
                             type: 'doc',
-                            id: 'templates/alerting/querying-orkes-data-and-triggering-opsgenie-alert',
+                            id: 'tutorials/querying-orkes-data-and-triggering-opsgenie-alert',
                             label: 'OpsGenie',
                         },
                         {
                             type: 'doc',
-                            id: 'templates/alerting/scanning-an-endpoint-and-triggering-pagerduty-alert',
+                            id: 'tutorials/scanning-an-endpoint-and-triggering-pagerduty-alert',
                             label: 'PagerDuty',
                         },
                     ],

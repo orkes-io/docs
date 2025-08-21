@@ -68,7 +68,14 @@ The dynamic fork executes the workflow specified by `forkTaskWorkflow` and `fork
 </TabItem>
 </Tabs>
 
-The [Join](./join) task will run after the forked tasks and implicitly waits for all forked tasks to complete.
+The [Join](./join) task will run after the forked tasks and implicitly waits for all forked tasks to complete. For a Dynamic Fork, no specific configuration is required, but the Join task must still be included in the workflow to complete the fork-join operation.
+
+**For the Join task:**
+
+| Parameter | Description | Required/Optional | 
+| --------- | ----------- | ----------------- | 
+| joinOn | A list of task reference names that the Join task will wait for completion before proceeding with the next task. | Required. | 
+| expression | The join script, which controls how the Join task completes if specified. | Optional. | 
 
 The following are generic configuration parameters that can be applied to the task and are not specific to the Dynamic Fork task.
 
