@@ -899,7 +899,7 @@ const sidebars = {
                         {
                             type: 'doc',
                             id: 'templates/examples/finance',
-                            label: 'Loan Origination',
+                            label: 'Loan Approval Workflow',
                         },
                         {
                             type: 'doc',
