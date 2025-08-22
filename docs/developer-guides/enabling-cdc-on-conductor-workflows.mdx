@@ -85,6 +85,83 @@ Select the integration and enter the queue name to update the workflow listener 
 </TabItem>
 </Tabs>
 
+### Using CDC with Kafka and AVRO
+
+:::info Supported since
+- v4.1.73 and later
+:::
+
+When CDC is configured with a [Kafka](/content/integrations/message-broker/apache-kafka) integration that uses the AVRO protocol, the schema name must be specified in the workflow's input. 
+
+Before referencing the schema name, save the following schema in your schema registry. 
+
+**Example Schema**
+
+```json
+{
+  "fields": [
+    {
+      "name": "_schema",
+      "type": "string"
+    },
+    {
+      "name": "workflowType",
+      "type": "string"
+    },
+    {
+      "name": "eventType",
+      "type": "string"
+    },
+    {
+      "name": "workflowInstanceId",
+      "type": "string"
+    },
+    {
+      "name": "sink",
+      "type": "string"
+    },
+    {
+      "default": null,
+      "name": "taskId",
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    {
+      "default": null,
+      "name": "workflow",
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    {
+      "default": null,
+      "name": "task",
+      "type": [
+        "null",
+        "string"
+      ]
+    }
+  ],
+  "name": "ConductorEvent",
+  "type": "record"
+}
+```
+
+Then, specify the saved schema name in `_schema` as workflow input.
+
+**Example**
+
+```json
+// workflow input
+
+{
+  "_schema": "your-schema-name"
+}
+```
+
 ## Verifying CDC events
 
 When the workflow starts, Conductor emits an event each time its state changes—for example, when it transitions from the RUNNING state to any other state. These events are delivered in real time to the configured eventing system. Verify the message delivery under the configured topic or queue name.
