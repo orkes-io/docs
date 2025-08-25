@@ -66,11 +66,10 @@ If you are using [Developer Edition](https://developer.orkescloud.com/?utm_campa
 5. Set the Key ID and Key Secret in your project.
     
     **Example** (Python)
-    ``` python
-    def main():
-        configuration = Configuration(base_url='https://developer.orkescloud.com',
-                                      authentication_settings=AuthenticationSettings(key_id='_CHANGE_ME_',
-                                                                                     key_secret='_CHANGE_ME_'))
+    ```python
+    os.environ['CONDUCTOR_SERVER_URL'] = 'https://developer.orkescloud.com/api'
+    os.environ['CONDUCTOR_AUTH_KEY'] = '<YOUR-KEY-ID>'
+    os.environ['CONDUCTOR_AUTH_SECRET'] = '<YOUR-KEY-SECRET>'
     ```
 6. (Skip this step if you are using [Developer Edition](https://developer.orkescloud.com/?utm_campaign=quickstarts&utm_source=orkes-doc&utm_medium=web)) Grant Execute permission to the application.
     1. Under Permissions, select **Add permission**.
