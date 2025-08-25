@@ -88,14 +88,14 @@ Select the integration and enter the queue name to update the workflow listener 
 ### Using CDC with Kafka and AVRO
 
 :::info Supported since
-- v4.1.73 and later
+- v4.1.74 and later
 :::
 
 When CDC is configured with a [Kafka](/content/integrations/message-broker/apache-kafka) integration that uses the AVRO protocol, the schema name must be specified in the workflow's input. 
 
 Before referencing the schema name, save the following schema in your schema registry. 
 
-**Example Schema**
+**Conductor Event Schema**
 
 ```json
 {
@@ -121,28 +121,19 @@ Before referencing the schema name, save the following schema in your schema reg
       "type": "string"
     },
     {
-      "default": null,
+      "default": "",
       "name": "taskId",
-      "type": [
-        "null",
-        "string"
-      ]
+      "type": "string"
     },
     {
-      "default": null,
+      "default": "",
       "name": "workflow",
-      "type": [
-        "null",
-        "string"
-      ]
+      "type": "string"
     },
     {
-      "default": null,
+      "default": "",
       "name": "task",
-      "type": [
-        "null",
-        "string"
-      ]
+      "type": "string"
     }
   ],
   "name": "ConductorEvent",
