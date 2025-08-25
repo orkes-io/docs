@@ -3,7 +3,13 @@ slug: "/integrations/ai-llm/ollama"
 description: "Learn how to integrate Ollama with your Orkes Conductor cluster."
 ---
 
+import TableNote from '@site/src/components/TableNote';
+
 # Ollama Integration with Orkes Conductor
+
+:::info Available since
+- v5.2.0 and later
+:::
 
 :::note
 You can use this integration in the following scenarios:
@@ -66,11 +72,13 @@ After running Ollama locally, add an Ollama integration to your Conductor cluste
 3. In the **AI/LLM** section, choose **Ollama**.
 4. Select **+ Add** and enter the following parameters:
 
-| Parameters | Description |
-| ---------- | ----------- |
-| Integration name | A name for the integration. |
-| API Endpoint | API server where Ollama is running, typically http://localhost:11434. |
-| Description | A description of the integration. | 
+| Parameters | Description | Required / Optional | 
+| ---------- | ----------- | ------------------- | 
+| Integration name | A name for the integration. | Required. | 
+| API Endpoint | API server where Ollama is running, typically http://localhost:11434. | Required. | 
+| Auth Header Name<br/><br/> <TableNote title="Available since">v5.2.6 and later</TableNote> | The name of the authentication header to include in requests. | Optional. | 
+| Auth Header <br/><br/> <TableNote title="Available since">v5.2.6 and later</TableNote> | The authentication value associated with the header. | Optional. |
+| Description | A description of the integration. | Required. | 
 
 <p align="center"><img src="/content/img/create-new-ollama-integration.png" alt="Ollama Integration with Orkes Conductor" width="70%" height="auto"></img></p>
 
