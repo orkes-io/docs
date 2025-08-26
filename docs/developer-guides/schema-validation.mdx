@@ -10,12 +10,11 @@ import TabItem from '@theme/TabItem';
 # Input/Output Schema Validation
 
 :::info Available since
-- v3.3.85 and later
 - v4.0.11 and later
 :::
 
 In Orkes Conductor, you can create schemas to define and enforce the payload structure of workflow or task inputs/outputs. Once created, schemas can be added to workflow or task definitions:
-* A **workflow-level schema** specifies what workflow inputs must be supplied.
+* A **workflow-level schema** specifies what workflow inputs/outputs must be supplied.
 * A **task-level schema** specifies the inputs/outputs that must be wired to/from the task. The task-level schema can be general across workflows (specified in the *task definition*) or unique to a specific workflow (specified in the *task configuration*).
 
 The schema is enforced at runtime. The workflow or task will fail if the inputs/outputs do not pass the validation. This behavior is the main distinction between a *task-level schema* versus non-enforceable guides like the *input keys, output keys, and input templates* in a task definition.
@@ -71,11 +70,10 @@ Here is an overview of using schemas in Conductor workflows:
 ### Step 1: Define a schema
 
 **To define a schema:**
-1. Log in to your Orkes Conductor cluster.
-2. Go to **Definitions** > **Schemas**.
-3. Select **(+) New schema** on the top right.
-    A schema editor opens.
-4. Add your schema definition in the _data_ object. Make sure to fill out at least the _$schema_, _$id_, _type_, and _properties_ parameters as outlined in the JSON Schema.
+2
+1. Go to **Definitions** > **Schemas** from the left navigation menu on your Conductor cluster.
+2. Select **(+) New schema**. A schema editor opens.
+3. Add your schema definition in the _data_ object. Make sure to fill out at least the _$schema_, _$id_, _type_, and _properties_ parameters as outlined in the JSON Schema.
 
 Learn more about [creating a JSON Schema](https://json-schema.org/learn/getting-started-step-by-step).
 
@@ -169,7 +167,7 @@ If the version is unspecified, the latest schema version will be used.
 
 1. Go to **Definitions** > **Workflow**.
 2. Select a workflow that you want to add a task-level schema to.
-3. In the Schema section of the Workflow tab, switch on the **Enforce schema** toggle.
+3. In the **Schema Validation** section of the Workflow tab, switch on the **Enforce schema** toggle.
 4. Select a schema to use as an **Input Schema** or **Output Schema**.
 5. Select a **Version** for the schema.
 6. Select **Save** > **Confirm** in the top right.
@@ -222,13 +220,15 @@ Schema validation is currently supported for the following task types:
 * [Inline](/reference-docs/system-tasks/inline)
 * [JSON JQ Transform](/reference-docs/system-tasks/jq-transform)
 * [Business Rule](/reference-docs/system-tasks/business-rule)
+* [SendGrid](/content/reference-docs/system-tasks/sendgrid)
 * [Wait For Webhook](/reference-docs/system-tasks/wait-for-webhook)
 * [JDBC](/reference-docs/system-tasks/jdbc)
 * [Update Secret](/reference-docs/system-tasks/update-secret)
 * [Get Signed JWT](/reference-docs/system-tasks/get-signed-jwt)
 * [Update Task](/reference-docs/system-tasks/update-task)
-* [Opsgenie](https://orkes.io/content/reference-docs/system-tasks/opsgenie)
+* [Opsgenie](/content/reference-docs/system-tasks/opsgenie)
 * [Query Processor](/reference-docs/system-tasks/query-processor)
+* [Yield](/content/reference-docs/operators/yield#task-configuration)
 * [LLM Text Complete](/reference-docs/ai-tasks/llm-text-complete)
 * [LLM Generate Embeddings](/reference-docs/ai-tasks/llm-generate-embeddings)
 * [LLM Get Embeddings](/reference-docs/ai-tasks/llm-get-embeddings)

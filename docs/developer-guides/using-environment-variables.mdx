@@ -49,7 +49,7 @@ Replace *variable-name* with the actual environment variable name. This expressi
   ></img>
 </p>
 
-## Sample Workflow
+## Example
 
 <details>
 <summary>Using environment variables in a workflow</summary>
@@ -95,6 +95,7 @@ The following example defines a workflow that references the stored environment 
 ```
 
 When this workflow runs, the expression `${workflow.env.sample-url}` is dynamically replaced with the actual variable value, provided that the user running the workflow has permission to access the variable.
+
 To verify that the stored variable is passed correctly, go to the workflow execution page, select the HTTP task, and check the **Input**.
 
 <p align="center">
