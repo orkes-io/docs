@@ -9,9 +9,10 @@ Some task types support caching, which saves task outputs for reuse in subsequen
 
 **To cache task output:**
 
-1. In your Orkes Conductor cluster, go to **Definitions** > **Workflow** and select a workflow.
-2. In the visual workflow editor, select a task.
-3. Turn on the **Cache output** toggle and enter the **ttlInSecond** and **key**. Refer to [Configuration](#configuration) for more information on the parameters.
+1. Go to **Definitions** > **Workflow** from the left navigation menu on your Conductor cluster.
+2. Select a workflow.
+3. In the visual workflow editor, select a task.
+4. Turn on the **Cache output** toggle and enter the **TTL (in seconds)** and **Cache key**. Refer to [Configuration](#configuration) for more information on the parameters.
 
 <p align="center">
   <img
@@ -26,10 +27,10 @@ Some task types support caching, which saves task outputs for reuse in subsequen
 
 Configure the following parameters to enable task caching.
 
-| Parameter                    | Description                                                                                                                                                                                                                                                            | Required/ Optional |
-| ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
-| cacheConfig. **ttlInSecond** | The time to live in seconds, which is the duration for the output to be cached.                                                                                                                                                                                        | Required.          |
-| cacheConfig. **key**         | The cache key is a unique identifier for the cached output and must be constructed exclusively from the task’s input parameters. <br/><br/> It can be a string concatenation that contains the task’s input keys, such as `${uri}-${method}` or `re_${uri}_${method}`. | Required.          |
+| Parameter            | Description                                                                                                                                                                                                                                                            | Required/ Optional |
+| -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
+| **TTL (in seconds)** | The time to live in seconds, which is the duration for the output to be cached.                                                                                                                                                                                        | Required.          |
+| **Cache key**        | The cache key is a unique identifier for the cached output and must be constructed exclusively from the task’s input parameters. <br/><br/> It can be a string concatenation that contains the task’s input keys, such as `${uri}-${method}` or `re_${uri}_${method}`. | Required.          |
 
 ## Example
 
@@ -150,15 +151,17 @@ Caching is currently supported for the following task types:
 - [HTTP](../reference-docs/system-tasks/http)
 - [HTTP Poll](../reference-docs/system-tasks/http-poll)
 - [Business Rule](../reference-docs/system-tasks/business-rule)
+- [SendGrid](/content/reference-docs/system-tasks/sendgrid)
 - [JDBC](../reference-docs/system-tasks/jdbc)
 - [Get Signed JWT](../reference-docs/system-tasks/get-signed-jwt)
 - [Opsgenie](../reference-docs/system-tasks/opsgenie)
-- [Text Complete](../reference-docs/ai-tasks/llm-text-complete)
-- [Generate Embeddings](../reference-docs/ai-tasks/llm-generate-embeddings)
-- [Get Embeddings](../reference-docs/ai-tasks/llm-get-embeddings)
-- [Store Embeddings](../reference-docs/ai-tasks/llm-store-embeddings.mdx)
-- [Search Index](../reference-docs/ai-tasks/llm-search-index)
-- [Index Document](../reference-docs/ai-tasks/llm-index-document)
+- [Yield](/content/reference-docs/operators/yield)
+- [LLM Text Complete](../reference-docs/ai-tasks/llm-text-complete)
+- [LLM Generate Embeddings](../reference-docs/ai-tasks/llm-generate-embeddings)
+- [LLM Store Embeddings](../reference-docs/ai-tasks/llm-store-embeddings.mdx)
+- [LLM Get Embeddings](../reference-docs/ai-tasks/llm-get-embeddings)
+- [LLLM Index Document](../reference-docs/ai-tasks/llm-index-document)
 - [Get Document](../reference-docs/ai-tasks/llm-get-document)
-- [Index Text](../reference-docs/ai-tasks/llm-index-text)
-- [Chat Complete](../reference-docs/ai-tasks/llm-chat-complete.mdx)
+- [LLM Index Text](../reference-docs/ai-tasks/llm-index-text)
+- [LLM Search Index](../reference-docs/ai-tasks/llm-search-index)
+- [LLM Chat Complete](../reference-docs/ai-tasks/llm-chat-complete.mdx)

@@ -40,16 +40,16 @@ Automatic retries are a key strategy for handling transient task failures. If a 
 You can configure retry behavior for tasks in its **task definition**. The parameters for defining a task’s retry behavior are:
 
 - Retry count
-- Retry logic
 - Retry delay seconds
 - Backoff scale factor
+- Retry logic
 
 | Parameter          | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | Required/ Optional |
 | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
 | retryCount         | The number of retry attempts if the task fails. Default value is 3.                                                                                                                                                                                                                                                                                                                                                                                                                                     | Optional.          |
-| retryLogic         | The policy that determines the retry mechanism for the tasks. Supported values: <ul><li>**`FIXED`**—Retries after a fixed interval defined by `retryDelaySeconds`.</li> <li>**`LINEAR_BACKOFF`**—Retries occur with a delay that increases linearly based on `retryDelaySeconds` x `backoffScaleFactor` x `attemptNumber`.</li><li>**`EXPONENTIAL_BACKOFF`**—Retries occur with a delay that increases exponentially based on `retryDelaySeconds` x (`backoffScaleFactor` ^ `attemptNumber`).</li></ul> | Optional.          |
-| retryDelaySeconds  | The time (in seconds) to wait before each retry attempt. This provides time for the task service to recover from any transient failure before it is retried. Default value is 60. <br/><br/> **Note:** The actual duration depends on the retry policy set in retryLogic.                                                                                                                                                                                                                               | Optional.          |
+| retryDelaySeconds  | The time (in seconds) to wait before each retry attempt. This provides time for the task service to recover from any transient failure before it is retried. Default value is 60. <br/><br/>                                                                                                                                                                                                                              | Optional.          |
 | backoffScaleFactor | The value multiplied with `retryDelaySeconds`to determine the interval for retry. Default value is 1.                                                                                                                                                                                                                                                                                                                                                                                                   | Optional.          |
+| retryLogic         | The policy that determines the retry mechanism for the tasks. Supported values: <ul><li>**`FIXED`**—Retries after a fixed interval defined by `retryDelaySeconds`.</li> <li>**`LINEAR_BACKOFF`**—Retries occur with a delay that increases linearly based on `retryDelaySeconds` x `backoffScaleFactor` x `attemptNumber`.</li><li>**`EXPONENTIAL_BACKOFF`**—Retries occur with a delay that increases exponentially based on `retryDelaySeconds` x (`backoffScaleFactor` ^ `attemptNumber`).</li></ul> Default is FIXED. | Optional.          |
 
 **Example**
 
@@ -95,16 +95,16 @@ A task timeout can occur if:
 
 You can configure timeout behavior for tasks in its **task definition** to handle the various abovementioned cases. The parameters for a task’s timeout behavior are:
 
-- Poll timeout seconds
 - Response timeout seconds
 - Timeout seconds
+- Poll timeout seconds
 - Timeout policy
 
 | Parameter              | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | Required/ Optional |
 | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------ |
-| pollTimeoutSeconds     | The maximum duration in seconds that a worker has to poll a task before it gets marked as `TIMED_OUT`. When configured with a value > 0, Conductor will wait for the task to be picked up by a worker. <br/> <br/> Useful for detecting a backlogged task queue with insufficient workers. <br/> <br/> Default value is 3600.                                                                                                                                                                          | Optional.          |
 | responseTimeoutSeconds | The maximum duration in seconds that a worker has to respond to the server with a status update before it gets marked as `TIMED_OUT`. When configured with a value > 0, Conductor will wait for the worker to return a status update, starting from when the task was picked up. <br/><br/> If a task requires more time to complete, the worker can respond with the `IN_PROGRESS` status. <br/> <br/> Default value is 600.                                                                          | Optional.          |
 | timeoutSeconds         | The maximum duration in seconds for the task to reach a terminal state before it gets marked as `TIMED_OUT`. When configured with a value > 0, Conductor will wait for the task to complete, starting from when the task was picked up. <br/><br/> Useful for governing the overall SLA for completion. <br/><br/> Default value is 3600.                                                                                                                                                              | Required.          |
+| pollTimeoutSeconds     | The maximum duration in seconds that a worker has to poll a task before it gets marked as `TIMED_OUT`. When configured with a value > 0, Conductor will wait for the task to be picked up by a worker. <br/> <br/> Useful for detecting a backlogged task queue with insufficient workers. <br/> <br/> Default value is 3600.                                                                                                                                                                          | Optional.          |
 | timeoutPolicy          | The policy for handling timeout. Supported values: <ul><li><strong>RETRY</strong>—Retries the task based on the retry configuration.</li> <li><strong>TIME_OUT_WF</strong>—The task is marked as TIMED_OUT and is terminated, which also sets the workflow status as TIMED_OUT.</li> <li><strong>ALERT_ONLY</strong>—An alert message is logged when the timeout occurs.</li></ul>**Note:** The ALERT_ONLY option should be used only when you have your own metrics monitoring system to send alerts. | Optional.          |
 
 :::note
@@ -161,7 +161,7 @@ Based on the timeout configuration in the above figure, the following sequence o
 2. The worker starts processing the task, but the worker instance dies during the execution.
 3. At 20 seconds (T1’s `responseTimeoutSeconds`), the server marks T1 as TIMED_OUT since the worker has not updated the task within the configured duration.
 4. A new instance of task T1 is scheduled based on the retry configuration.
-5. At 25 seconds, the retried instance of T1 is available for polling after the `retryDelaySeconds` (5) has elapsed.
+5. At 25 seconds, the retried instance of T1 is available for polling after the `retryDelaySeconds` set to 5 has elapsed.
 
 </details>
 
@@ -185,7 +185,7 @@ Based on the timeout configuration in the above figure, the following sequence o
 4. After 9 seconds, the worker receives T1 from the server but is still unable to finish processing the task. As such, the worker updates the server again with a callback of 9 seconds.
 5. The same cycle repeats for the next few seconds.
 6. At 30 seconds (T1 timeout), the server marks T1 as TIMED_OUT because it is not in a terminal state after first being moved to IN_PROGRESS status. The server schedules a new task based on the retry count.
-7. At 32 seconds, the worker finishes processing T1 and updates the server with COMPLETED status. The server ignores this update since T1 has already been moved to a terminal status (TIMED_OUT).
+7. At 32 seconds, the worker finishes processing T1 and updates the server with a COMPLETED status. The server ignores this update since T1 has already been moved to a terminal status (TIMED_OUT).
 
 </details>
 
@@ -194,13 +194,13 @@ Based on the timeout configuration in the above figure, the following sequence o
 
 A workflow can be configured to timeout in situations where:
 
-- The workflow has been running longer than expected and is not completed within the defined time frame. 
+- The workflow has been running longer than expected and has not been completed within the defined time frame. 
 - An external dependency required by the workflow is unresponsive or taking too long to respond. 
 - Business logic requires the workflows to be completed within a strict time limit to maintain efficiency.
 
 ### Timeout configuration​
 
-You can configure timeout behavior for workflow in its **workflow definition**. The parameters for a workflow’s timeout behavior are:
+You can configure the timeout behavior for the workflow using its **workflow definition**. The parameters for a workflow’s timeout behavior are:
 
 - Timeout seconds
 - Timeout policy
@@ -235,12 +235,12 @@ You can set a failure workflow for a workflow in its **workflow definition**. Be
 
 1. Go to **Definitions** > **Workflow**.
 2. Select the workflow that you want to add a failure workflow to.
-3. In the **Workflow** tab on the right, scroll down to **Failure workflow name** and select the failure workflow from the dropdown box.
+3. In the **Workflow** tab on the right, scroll down to **Workflow Configuration** > **Failure workflow name** and select the failure workflow from the dropdown box.
 4. Select **Save** > **Confirm save**.
 
 <p align="center">
   <img
-    src="/content/img/dev-guides/caching_task_outputs-UI_screen.png"
+    src="/content/img/failure-workflow.png"
     alt="Configuring failure workflow in UI."
     width="100%"
     height="auto"
