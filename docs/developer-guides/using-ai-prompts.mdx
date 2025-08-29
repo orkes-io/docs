@@ -28,7 +28,7 @@ In this guide, you will learn how to create, test, and use AI prompts in your wo
 | Parameter       | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
 | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | Prompt Name     | A name for the prompt.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
-| Model           | Select the AI models to use with this prompt.<br/><TableNote title="Note">Only models added here can be used for generating responses based on this template in a workflow.</TableNote> |
+| Model           | Select the AI models to use with this prompt.<br/><br/><TableNote title="Note">Only models added here can generate responses based on this prompt in a workflow.</TableNote> |
 | Description     | A description for the prompt.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
 | Prompt Template | The prompt, which can be formulated as context, instructions, or questions. The prompt can also contain variables, `${someVariable}`, which are replaced with actual values at runtime before it is sent to the AI model.<br/>**Example**<br/>**_“What is the current population of `${country}`? What was the population in `${year}`?”_**<br/>In the above prompt, `${country}` and `${year}` are variables that can be dynamically set based on the runtime data.
 
@@ -78,7 +78,7 @@ After making changes to the AI prompt definition in the Conductor UI, select the
 
 **To view available versions:**
 
-- In the AI prompt editor, select the **Version** dropdown, and then choose the required version.
+- In the AI prompt editor, select the **Version** dropdown and choose the required version.
 
 <p align="center">
   <img
@@ -151,7 +151,7 @@ Users or applications must also have access to the associated AI models used in 
 
 1. Go to **Access Control** > **Applications** or **Groups** from the left menu on your Orkes Conductor cluster.
 2. Create a new group/application or select an existing one.
-3. In the **Permissions** section, select **+ Add Permission**.
+3. In the **Permissions** section, select **+ Add permission**.
 4. In the **Prompt** tab, select the required prompt and toggle the necessary permissions.
 
 <p align="center">
@@ -220,6 +220,18 @@ Check out the quickstart template on Developer Edition for building an [agentic 
 <summary>AI-powered translator</summary>
 
 Check out the tutorial on how to build an [AI-powered language translator](/developer-guides/quickstart-ai-orchestration) that utilizes a language translation prompt.
+
+</details>
+<details>
+<summary>Agentic interview app</summary>
+
+Check out the tutorial on how to build an [agentic coding interview application](/content/tutorials/agentic-interview-app).
+
+</details>
+<details>
+<summary>Document classifier</summary>
+
+Check out the tutorial on how to build a [document classification system](/content/templates/document-classifier).
 
 </details>
 
