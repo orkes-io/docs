@@ -6,11 +6,12 @@ description: "Learn how to orchestrate AI-driven workflows with Conductor, inclu
 # AI Orchestration and Agentic Workflows
 
 With the following suite of features, Orkes Conductor enables you to efficiently build AI-powered or agentic applications that leverage AI models and vector databases:
-* **AI System Tasks**—Drag and drop common AI tasks, like storing embeddings or chat completions.
-* **AI/LLM and Vector Database Integrations**—Seamlessly connect and access dozens of AI-related integrations in a secure and governed manner.
+* **AI System Tasks**—Use predefined tasks such as storing embeddings or generating chat completions.
+* **AI/LLM and Vector Database Integrations**—Connect to multiple AI models and vector databases in a secure, governed way.
 * **AI Prompt Studio**—Refine, test, and govern prompt templates for AI models.
 
-Some common use cases for AI orchestration include:
+Some common AI use cases include:
+
 * AI agents or agentic workflows
 * RAG (retrieval augmented generation) systems
 * LLM-powered chatbots
@@ -19,8 +20,7 @@ Some common use cases for AI orchestration include:
 
 ## Orchestrating AI-powered tasks
 
-Orkes Conductor provides a variety of system AI tasks, which can execute common logic without the need to write code. Depending on the type of tasks, using these tasks may require an AI/LLM integration, a vector database integration, or an AI prompt.
-
+Orkes Conductor provides a variety of system AI tasks that can execute common logic without the need to write code. Depending on the type of task, using these tasks may require an AI/LLM integration, a vector database integration, or an AI prompt.
 
 | System AI Task     | Description                        |Prerequisites                 |
 |------------------- | ---------------------------------- |----------------------------- |
@@ -34,7 +34,7 @@ Orkes Conductor provides a variety of system AI tasks, which can execute common 
 | [LLM Text Complete](/reference-docs/ai-tasks/llm-text-complete) | Generate text from an LLM based on a defined prompt.                                  | <ul><li>Integrate an AI model</li><li>Create an AI prompt</li></ul>                     |
 | [LLM Chat Complete](/reference-docs/ai-tasks/llm-chat-complete) | Generate text from an LLM based on a user query and additional system/assistant instructions. | <ul><li>Integrate an AI model</li><li>Create an AI prompt</li></ul> |
 
-If custom logic is required, you can create an external worker instead of using the system AI tasks. To do so, follow the guide on [Using External Workers](developer-guides/using-workers) instead.
+If custom logic is required, you can create an external worker instead of using the system AI tasks. For more details, refer to the guide on [Writing Workers](developer-guides/using-workers).
 
 Once you have decided which task to use, check out the following guides to begin building AI-powered or agentic applications.
 

@@ -28,7 +28,7 @@ Each of the below metrics contains `taskType` as a tag that can be used to monit
 max(task_queue_depth{taskType=})
 ```
 **How to use the metric:**
-1. The goal should be to keep the queue depth constant (it may not be zero if the tasks are long running)
+1. The goal should be to keep the queue depth constant (it may not be zero if the tasks are long running).
 2. Configure alerts and autoscaling policies for your workers based on the increase/decrease in the queue depth in a given time period.
 
 ## No. of tasks completed per second (Counter)
@@ -52,8 +52,9 @@ max(task_queue_wait_time_seconds{quantile=, taskType=})
 **How to use the metric:**
 
 If the value is very large (more than a few seconds), check the following:
-1. No. of workers and if they are busy processing the tasks.  If so, increase the no. of workers.
-2. Check the polling interval for the worker and reduce the polling interval if needed.
+1. The number of workers and whether they are busy processing the tasks. If so, increase the number of workers.
+2. Check the worker's polling interval and reduce it if needed.
+
 :::note
-Reducing the polling interval could increase the no of API requests to the server triggering system limits.
+Reducing the polling interval could increase the number of API requests to the server, triggering system limits.
 :::

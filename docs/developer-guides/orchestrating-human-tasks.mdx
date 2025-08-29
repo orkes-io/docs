@@ -8,15 +8,15 @@ import TabItem from "@theme/TabItem";
 
 # Human Task Orchestration
 
-Business processes often involve human interaction. To augment your workflows with human interactions, Orkes Conductor offers a variety of features for real-time interfacing with human input:
+Business processes often require human input. Orkes Conductor includes features to incorporate human interaction into workflows:
 
-- At the core is Orkes’ **user form**, a reusable JSON-based schema that defines the form's fields and layout.
-- Each **Human task** is associated with a user form, which can be assigned to someone to complete.
-- The user form can be displayed on your own UI using Orkes’ **[Human Tasks API](/docs/reference-docs/api/human-tasks/index.mdx)**.
+- A **user form** is a reusable JSON-based schema that defines the form fields and layout.
+- Each **Human task** is linked to a user form, which can be assigned to a user or group.
+- The user form can be displayed on your own UI using Orkes’ **[Human Tasks API](/content/reference-docs/api/human-tasks)**.
 
-A Human task can be used for a variety of human-involved tasks, such as manual approval in an approval workflow or a booking form in an airline reservation workflow. When a workflow reaches the Human task, a form is generated based on the pre-defined user form and assigned for a user or group to fill. Once the form has been submitted, the task will be set as Complete, allowing the workflow to progress to the next step.
+A Human task can be used for activities that require manual input, such as an approval step in a workflow or a booking form in a reservation workflow. When a workflow reaches a Human task, a form is generated from the predefined user form and assigned to a user or group. Once the form is submitted, the task is marked Complete, and the workflow moves to the next step.
 
-During workflow creation, the Human task can be configured for:
+When creating a workflow, a Human task can be configured with:
 
 - **Assignment policy**—Define who can fill out the form, how long the form is assigned to them, and what to do if the assignment times out.
 - **Trigger policy**—Trigger a workflow to start if the human task state changes.
@@ -42,9 +42,9 @@ It is best practice to create forms using Orkes’ User Form studio, even if the
 
 **To create a user form on Orkes Conductor:**
 
-1. In the left navigation menu, go to **Definitions** > **User Forms**, on your Orkes Conductor cluster.
-2. Select **(+) New Form**.
-3. In Form details, provide a name for the form in **Form name**.
+1. Go to **Definitions** > **User Forms** from the left menu on your Conductor cluster.
+2. Select **+ New form**.
+3. In **Form details**, provide a name for the form in **Form name**.
 4. To build the form, drag and drop the pre-built items for **Layout** and **Components** and configure each component.
 5. Preview your form at any time by selecting **Preview** on the top right.
 6. Once the form is ready, select **Save** > **Confirm** on the top right.
@@ -58,7 +58,8 @@ It is best practice to create forms using Orkes’ User Form studio, even if the
   ></img>
 </p>
 
-#### Supported form layout and components
+<details>
+<summary>Supported form layout and components</summary>
 
 Horizontal and vertical layouts are supported for user forms.
 
@@ -77,10 +78,14 @@ Following are the pre-built form components available on Orkes Conductor:
 - Radio
 
 :::note
-You can toggle to the Code tab to create custom components for your form. However, all inputs to the form will be part of the Conductor workflow and JSON response, so the input data size should be as small as possible. Refer to [this package](https://www.npmjs.com/package/@io-orkes/human-task-material-renderers-react) for more information on Orkes-supported components.
+You can toggle to the **Code** tab to create custom components for your form. However, all inputs to the form will be part of the Conductor workflow and JSON response, so the input data size should be as small as possible. Refer to [this package](https://www.npmjs.com/package/@io-orkes/human-task-material-renderers-react) for more information on Orkes-supported components.
 :::
 
-#### Configuring form components
+</details>
+
+<details>
+
+<summary>Configuring form components</summary>
 
 **To configure a component:**
 
@@ -100,7 +105,7 @@ You can toggle to the Code tab to create custom components for your form. Howeve
 | Setting               | Applicable to                           | Description                                                                                                                                                                                                               |
 | --------------------- | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Required              | All components except Description Text. | Sets whether the form component is mandatory.                                                                                                                                                                             |
-| Read-only             | All components except Description Text. | Sets whether the form component can accept a user input. <br/><br/>If the component is read-only, the user cannot fill out the field and the value must be supplied from elsewhere, such as from the workflow parameters. |
+| Read-only             | All components except Description Text. | Sets whether the form component can accept user input. <br/><br/>If the component is read-only, the user cannot fill out the field and the value must be supplied from elsewhere, such as from the workflow parameters. |
 | Boolean default value | Boolean.                                | Sets whether the default value is true or false.                                                                                                                                                                          |
 | Items split by commas | Multiple Choice and Radio.              | Contains the list of selection items split by a comma.                                                                                                                                                                    |
 | Alignment             | Description Text.                       | Sets the alignment of the description text. Supported values: <ul> <li>Left</li> <li>Center</li> <li>Right</li> <li>Justify</li> <li>inherit</li></ul>                                                                    |
@@ -110,14 +115,16 @@ You can toggle to the Code tab to create custom components for your form. Howeve
 | Width                 | Image and Video.                        | Sets the width of the image or video.                                                                                                                                                                                     |
 | Default URL           | Image and Video.                        | Sets the default image or video displayed on the form if it is not supplied from elsewhere.                                                                                                                               |
 
+</details>
+
 ### Step 2: Define a Human task
 
 To use a Human task with your own UI, you must first define the Human task in **Definitions** > **Task**.
 
 **To define a Human task:**
 
-1. In the left navigation menu, go to **Definitions** > **Task**, on your Orkes Conductor cluster.
-2. Select **(+) Define task**.
+1. Go to **Definitions** > **Task** from the left menu on your Conductor cluster.
+2. Select **+ Define task**.
 3. In **Name**, enter a unique name for your Human task.
 4. In **Description**, enter the task description.
 5. Enter the task details, such as the rate limits, retry settings, timeout settings, and expected inputs and outputs.
@@ -127,81 +134,26 @@ Once the task is defined, you can proceed to add it to a workflow definition.
 
 ### Step 3: Configure the Human task
 
-Add the Human task to your workflow and configure its assignment policy and trigger policy. The assignment policy is governed by the following:
-
-- If not configured, the Human task will not be limited to a certain group or user and anyone can complete the form.
-- Multiple assignment policies can be added to create a multi-level assignment chain. If the first group fails to pick the assignment within the specified timeframe, the task will be escalated to the next assigned group.
-- Additional assignment policies cannot be added if the preceding assignment policy has no specified expiry timeframe.
+Add the Human task to your workflow and configure its assignment and trigger policies.
 
 **To add a Human task:**
 
 1. In your workflow, select the **(+)** icon and add a **Human** task.
-2. In Task Definition, select the task definition created in the previous step.
-3. Enter the **Task display name**, which will appear on the connected UI for the user. Use a unique human-friendly name, such as “Loan Approval” or “Booking Form”.
-4. Select the **User form template** previously created in the User Form studio and its **Version**.
-5. (Optional) Add an assignment policy to control who can fill out the form.
-   1. In Assignment policy, select **(+) New assignment**.
-   2. In Assign, select the **User type** for the assignee(s) and enter the corresponding user or group ID.
-      - **External User** or **Group**—Select this if the assignees are managed and verified in an external system, and will access your own UI to complete the task.
-      - **Conductor User** or **Group**—Select this if the assignees are Conductor users and will access Orkes Conductor to complete the task.
-        <p align="center">
-          <img
-            src="/content/img/assignment-policy-human-task.png"
-            alt=" Assignment policy of human task"
-            width="70%"
-            height="auto"
-          ></img>
-        </p>
-   3. Enter the **SLA minutes** to specify the assignment duration before it times out. Use 0 minutes to set a non-expiring assignment.
-   4. If needed, add another assignment to create a multi-level assignment chain.
-      <p align="center">
-        <img
-          src="/content/img/assignment-policy-human-task-hierarchy.png"
-          alt="Assignment policy of human task in hierarchical order"
-          width="90%"
-          height="auto"
-        ></img>
-      </p>
-   5. In **After assignments**, select the strategy for when the assignment times out.
-      - **Leave open**—The Human task execution remains open to be picked up by anyone.
-      - **Terminate**—The Human task execution is terminated and marked as deleted, and the workflow fails with the error “Task terminated as no more assignments pending and completion strategy is TERMINATE”.
-6. (Optional) Add a trigger policy to start new workflows when the state of the Human task changes. The trigger policy works based on the human task state in the **Executions > Human Tasks** list.
+2. In **Task Definition**, select the task definition created in [Step 2](/content/developer-guides/orchestrating-human-tasks#step-2-define-a-human-task).
+3. Configure the human task with the following parameters:
 
-<p align="center">
-  <img
-    src="/content/img/human-task-states.png"
-    alt="States in Human tasks based on which trigger policies can be defined"
-    width="90%"
-    height="auto"
-  ></img>
-</p>
-
-To add a trigger policy:
-
-1. In Trigger policy, select **(+) New trigger**.
-   <p align="center">
-     <img
-       src="/content/img/trigger-policy-human-task.png"
-       alt=" Trigger policy for human task"
-       width="90%"
-       height="auto"
-     ></img>
-   </p>
-2. Select the **Trigger event**, the **Workflow** to start and its **Version**.
-   - **Pending**—If the human task execution is in the pending state, the trigger workflow is executed.
-   - **Assigned**—Once the human task is assigned to a specific assignee, the trigger workflow is executed.
-   - **In progress**—Once the human task execution is in the progress state, the trigger workflow is executed.
-   - **Completed**—Once the human task execution is completed, the trigger workflow is executed.
-   - **Timed out**—Once the human task execution is timed out, the trigger workflow is executed.
-   - **Assignee changed**—Once the human task assignee changes (as per the assignment policy or if left open and picked by anyone), the trigger workflow is executed.
-   - **Claimant changed**—When the claimant of a human task changes (e.g., if the initially assigned user does not claim the task and it remains open, allowing another user to claim it), the trigger workflow is executed.
-3. (Optional) Select **Additional inputs** to configure the workflow’s input parameters, correlation ID, and task-to-domain mapping.
-4. If needed, add another trigger to start another workflow.
-5. In Input parameters, configure the form fields depending on the input source:
-   - If the field is to be filled up by the assignee, you can leave the parameter value empty or pass in a default value that can be modified before submission.
-   - If the field is read-only and will be passed from somewhere in the workflow, enter a parameter value. The value can be passed as a variable.
+| Parameter | Description                      | Required/Optional | 
+| --------- | -------------------------------- | ----------------- | 
+| Task display name | The display name for the human task that appears in the human task execution. Use a unique human-friendly name, such as “Loan Approval” or “Booking Form”.<br/><br/>**Note**: Whenever a workflow containing a human task is executed, the execution status of the human task can be viewed under **Executions** > **Human Tasks** from the left menu on your Conductor cluster. The name specified under this field can be used to identify your human task execution from the list. | Required. |
+| User form template | Select the **User form template** previously created in [Step 1](/content/developer-guides/orchestrating-human-tasks#step-1-create-a-user-form-schema) and its **Version**. | Required. |
+| Assignment policy | Add an assignment policy to control who can fill out the form. If not configured, the Human task will not be limited to a certain group or user; anyone can complete the form.<br/><br/>**To add an assignment policy:**<ol><li>Select **+ New assignment**.</li><li>In **Assign**, select the **User type** for the assignee(s) and enter the corresponding user or group ID.</li><ul><li>**External User** or **Group**—Select this if the assignees are managed and verified in an external system, and will access your own UI to complete the task.</li><li>**Conductor User** or **Group**—Select this if the assignees are Conductor users and will access Orkes Conductor to complete the task.</li></ul><li>Enter the **SLA minutes** to specify the assignment duration before it times out. Use 0 minutes to set a non-expiring assignment.</li></ol><br/>**Notes:**<ul><li>Multiple assignment policies can be added to create a multi-level assignment chain. If the first user/group fails to pick the assignment within the specified timeframe, the task will be escalated to the subsequent assignment policy in the order added here.<img src="/content/img/assignment-policy-human-task-hierarchy.png" alt="Assignment policy of human task in hierarchical order" width="100%" height="auto"></img></li><li>Additional assignment policies cannot be added if the preceding assignment policy has 0 SLA minutes.</li></ul> | Optional. |
+| After assignments | Select the action to be carried out after the assignment policy is timed out. You can select one of the following actions:<ul><li>**Leave open**—The Human task execution remains open to be picked up by anyone.</li><li>**Terminate**—The Human task execution is terminated and marked as deleted, and the workflow fails with the error “Task terminated as no more assignments pending and completion strategy is TERMINATE”.</li></ul> | Optional. |
+| Trigger policy | Add a trigger policy to start new workflows when the state of the Human task changes. The trigger policy works based on the human task state in the **Executions** > **Human Tasks** list. <img src="/content/img/human-task-states.png" alt="States in Human tasks based on which trigger policies can be defined" width="100%" height="auto"></img> **To add a trigger policy:**<ol><li>Select **+ New trigger**.</li><li>Select the **Trigger event**, the **Workflow** to start, and its **Version**.<ul><li>**Pending**—If the human task execution is in the pending state, the trigger workflow is executed.</li><li>**Assigned**—Once the human task is assigned to a specific assignee, the trigger workflow is executed.</li><li>**In progress**—Once the human task execution is in the progress state, the trigger workflow is executed.</li><li>**Completed**—Once the human task execution is completed, the trigger workflow is executed.</li><li>**Timed out**—Once the human task execution is timed out, the trigger workflow is executed.</li><li>**Assignee changed**—Once the human task assignee changes (as per the assignment policy or if left open and picked by anyone), the trigger workflow is executed.</li><li>**Claimant changed**—When the claimant of a human task changes (e.g., if the initially assigned user does not claim the task and it remains open, allowing another user to claim it), the trigger workflow is executed.<img src="/content/img/trigger-policy-human-task.png" alt=" Trigger policy for human task" width="100%" height="auto" ></img></li></ul></li><li>(Optional) Select **Additional inputs** to configure the workflow’s input parameters, correlation ID, and task-to-domain mapping.</li></ol>If needed, add another trigger to start another workflow. | Optional. |
+| Input parameters | Configure the form fields depending on the input source:<ul><li>If the field is to be filled up by the assignee, you can leave the parameter value empty or pass in a default value that can be modified before submission.</li><li>If the field is read-only and will be passed from somewhere in the workflow, enter a parameter value. The value can be passed as a variable.</li></ul> | Optional. | 
 
 Refer to the [Human task reference](docs/reference-docs/operators/human.mdx) for more information and examples on configuring the task.
+
+4. Save the workflow.
 
 <p align="center">
   <img
@@ -213,10 +165,12 @@ Refer to the [Human task reference](docs/reference-docs/operators/human.mdx) for
 </p>
 
 :::tip
-During development, you can set the assignment policy to Conductor User or Group first to test the form. Once the Human task is connected to your own UI, you can easily make the switch to External User or Group. Even after making the switch, the form can still be tested internally on Orkes Conductor using the Human Task Inbox.
+During development, you can set the assignment policy to Conductor User or Group first to test the form. Once the Human task is connected to your own UI, you can easily switch to External User or Group. Even after making the switch, the form can still be tested internally on Orkes Conductor using the Human Task Inbox. 
 :::
 
-### Step 4: Display the form on your own UI
+### Step 4: (Optional) Display the form on your own UI
+
+If you are using a custom UI for a Human task, configure it to render the form.
 
 When the Human task begins, the associated user form will be assigned to the user or group defined in the task. The user form can be displayed on your own UI so that assignees can claim and complete user forms without having to log into Orkes Conductor. These external assignees are referenced in the Human task configuration but managed and verified in an external system.
 
@@ -225,7 +179,7 @@ When the Human task begins, the associated user form will be assigned to the use
 <details>
 <summary>1. Create the UI in your preferred language.</summary>
 
-Create your own UI to display the user form as desired. Some common display options include an action inbox that contains all pending approval items or a multi-page form, with each page corresponding to one Human task on the Conductor end.
+Create your own UI to display the user form as desired. Some common display options include an action inbox containing all pending approval items or a multi-page form, each corresponding to one Human task on the Conductor end. 
 
 </details>
 
@@ -234,17 +188,17 @@ Create your own UI to display the user form as desired. Some common display opti
 
 To use a Human task with your own UI, you need to add the Human task to an application and grant Execute permission to the application.
 
-**To add the Human task to application:**
+**To add the Human task to an application:**
 
-1. Go to the application.
-   1. In the left navigation menu, go to **Access Control** > **Applications**, on your Orkes Conductor cluster.
-   2. Select an application that you will be adding your worker to. Otherwise, create an application.
-2. Grant Execute, Read, and Update permission to the application.
-   1. Under Permissions, select **Add permission**.
-   2. Select the **Task** tab and then your Human task.
-   3. Enable the **Execute**, **Read**, and **Update **toggles.
-   4. (If Task-to-domain is used) In Domain, enter the domain name used in your workflow.
-   5. Select Add Permissions.
+1. Go to **Access Control** > **Applications** from the left menu on your Conductor cluster.
+2. Select an application that you will be adding your worker to. Otherwise, create an application.
+3. In **Application roles**, enable the **Worker** role.
+4. Select **+ Create access key**.
+5. Store the generated credentials safely.
+6. In **Permissions**, select **+ Add permission**.
+7. Select the **Task** tab, search, and add your Human task created in [Step 2](/content/developer-guides/orchestrating-human-tasks#step-2-define-a-human-task).
+8. Enable the **Execute**, **Read**, and **Update** toggles.
+9. Select **Add Permissions**.
 
 The application can now execute the Human task.
 
@@ -260,7 +214,7 @@ If the assignment policy in the Human task is not yet configured, go to the Huma
 <details>
 <summary>4. Integrate the UI with Conductor.</summary>
 
-Use the Human Tasks APIs to integrate your external UI with your Conductor cluster. Get the API authentication tokens ([key and secret](https://orkes.io/content/access-control-and-security/applications#configuring-applications)) from your application account in Conductor.
+Use the [Human Tasks APIs](/content/reference-docs/api/human-tasks) to connect your external UI with the Conductor cluster. Integrate the UI using the access credentials generated for the application in the previous step.
 
 1. **Display all active Human task executions.**
    Call `GET human/tasks/search` to list Human tasks with Assigned status and Assignee as External Group or External User.
@@ -273,7 +227,7 @@ Use the Human Tasks APIs to integrate your external UI with your Conductor clust
 
 ## Testing and completing Human tasks in Orkes Conductor
 
-When defining your workflows with Human tasks, you can test and complete the task internally on Orkes Conductor without having to test it from your own UI.
+When defining your workflows with Human tasks, you can test and complete the task internally on Orkes Conductor without testing it from your own UI.
 
 **To test and complete Human tasks in Orkes Conductor:**
 
@@ -286,9 +240,9 @@ Run the workflow to trigger a Human task execution. The Human task will remain i
 
 **To run the workflow on Orkes Conductor:**
 
-1. In the left navigation menu, select **Run Workflow**.
-2. Select the desired workflow name and version and provide any input parameters as needed.
-3. On the top right, select **Run Workflow**.
+1. From your workflow, go to the **Run** tab.
+2. Enter any input parameters as needed.
+3. Select **Execute**.
 
 The workflow (execution) ID is generated. You can use it to view the execution progress and details.
 
@@ -307,8 +261,8 @@ As a Conductor user, you can also access all Human task executions on Orkes Cond
 
 Depending on your permission level, there are two tab views available on the page:
 
-- **Task inbox**—As a regular non-admin user, you get the task Inbox view, which lists all the tasks assigned to you or left open.
-- **Admin search**—If you are an admin (cluster-admin or the task creator—who created the workflow containing human tasks), you can also have another view: the admin search, which lists all human tasks within the Conductor cluster.
+- **Task inbox**—As a regular non-admin user, you get the task Inbox view, which lists all the tasks assigned to you or your group or unassigned left open ones.
+- **Admin search**—(applicable only to cluster admins or task creators—who created the workflow containing human tasks) Contains all Human tasks in the Conductor cluster.
 
 <Tabs>
 <TabItem value="claim task" label="To claim a task">
@@ -383,9 +337,15 @@ In your selected Human task, select **Skip** to bypass it. Alternatively, select
 
 ### Search Human task executions
 
-#### Task inbox
+You can search for Human task executions in Orkes Conductor. The search page provides two views based on your permissions:
 
-The task inbox view is the non-admin regular user view that lists all the tasks assigned to you or left open.
+- **Task inbox** – Lists tasks assigned to you, your group, or unassigned tasks available to claim.
+- **Admin search** – Available to cluster admins and human task creators. Lists all Human tasks in the cluster.
+
+<Tabs>
+<TabItem value="task inbox" label="Task inbox">
+
+The task inbox view is the non-admin regular user view that lists all the tasks assigned to you, your group, or left open.
 
 <p align="center">
   <img
@@ -396,12 +356,24 @@ The task inbox view is the non-admin regular user view that lists all the tasks 
   ></img>
 </p>
 
-- The executions can be filtered by task name, workflowId, start time, output/input data, and free text search. You can also filter the executions by _Available_, _Completed_, or _All_.
-- On the execution page, you can view the human task details, such as the task ID, Name (Task display name specified in the workflow definition), task state, assignee, claimant, etc.
+**Task inbox filters**
 
-#### Admin search
+| Filter | Description | 
+| ------ | ----------- |
+| Task names | Filters based on the task display name specified in the Human task definition. Multiple entries can be selected. |
+| Workflow IDs | Filters based on the workflow execution IDs. |
+| Start time | Filters based on the task execution time. | 
+| Output data search | Filters based on the output data. | 
+| Input data search | Filters based on the input data. | 
+| Full-text search    | Searches all data within the execution columns based on an “AND” and “OR” query. <p align="center"><img src="/content/img/full-text-search-human-task.png" alt="Full text view of human task executions" width="100%" height="auto"></img></p> For example, `“loan" OR "cc3d2dc-18d4-11ef-a811-8a584d19ffea"`. The search will return all results that contain either the text “loan” or the specific task ID “cc3d2dc-18d4-11ef-a811-8a584d19ffea”. To get results matching both criteria, use “AND” instead of “OR”. |
 
-If you are a cluster admin or task admin (workflow creator for the Human task), you can use **Admin search** tab in **Executions** > **Human Tasks** to filter and sort through all Human task executions for testing and debugging.
+You can also filter the executions by *Available*, *Completed*, or *All*.
+
+</TabItem>
+
+<TabItem value="admin search" label="Admin search">
+
+If you are a cluster admin or task admin (workflow creator for the Human task), you can use the **Admin search** tab in **Executions** > **Human Tasks** to filter and sort through all Human task executions for testing and debugging.
 
 <p align="center">
   <img
@@ -428,3 +400,6 @@ If you are a cluster admin or task admin (workflow creator for the Human task), 
 | Filter by actors    | Filters based on Claimant or Assignee.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
 | Actor type          | Filters based on the actor type for the selected actor. Supported values: <ul><li>Conductor User</li> <li>Conductor Group</li> <li>External User</li> <li>External Group</li> </ul>                                                                                                                                                                                                                                                                                                                                        |
 | User/Group ID       | Filters based on a particular user or group ID.                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+
+</TabItem>
+</Tabs>

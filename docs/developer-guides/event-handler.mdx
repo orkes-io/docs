@@ -32,8 +32,8 @@ Before configuring an event handler, ensure you’ve integrated the appropriate 
 | --------- | ----------- | ----------------- |
 | name | A unique name for the event handler. | Required. | 
 | description | A description of the event handler.| Optional. | 
-| event | The event queue sink in the format:<br/> **message-broker-type:integration-name:topic/queue-name**.<br/>Where,<ul><li>**message-broker-type**–The message broker type where the payload is being received. Supported types:<ul><li>amqp</li><li>sqs</li><li>azure</li><li>kafka</li><li>nats</li><li>gcp_pubsub</li><li>ibm_mq</li></ul></li><li>**integration-name**–The integration name added to the cluster.</li><li>**topic/queue-name**–The name of the queue or topic where the payload is being received.</li></ul><TableNote title="Warning">While configuring via Conductor UI, the **Event** field only lists message broker integrations configured in your cluster. Select the required integration and append the topic name or queue name. Failure to do so may result in execution errors, as the payload won't have a valid destination.</TableNote> | Required. | 
-| condition | An ECMAScript (JavaScript) function to control message processing. The function should return `true` for the message to be processed. [Learn more about filtering events](/content/developer-guides/event-handler#configuring-conditions-to-filter-events). | Required. | 
+| event | The event queue sink in the format:<br/> **message-broker-type:integration-name:topic/queue-name**.<br/>Where,<ul><li>**message-broker-type**–The message broker type from where the payload is being received. Supported types:<ul><li>amqp</li><li>sqs</li><li>azure</li><li>kafka</li><li>nats</li><li>gcp_pubsub</li><li>ibm_mq</li></ul></li><li>**integration-name**–The integration name added to the cluster.</li><li>**topic/queue-name**–The name of the queue or topic where the payload is being received.</li></ul><TableNote title="Warning">While configuring via Conductor UI, the **Event** field only lists message broker integrations configured in your cluster. Select the required integration and append the topic name or queue name. Failure to do so may result in execution errors, as the payload won't have a valid destination.</TableNote> | Required. | 
+| condition | An ECMAScript (JavaScript) function to control message processing. The function should return `true` for the event handler to process the message. [Learn more about filtering events](/content/developer-guides/event-handler#configuring-conditions-to-filter-events). | Required. | 
 | evaluatorType | The type of evaluator for the condition. Currently supports `javascript`. | Required. | 
 | actions | An array of actions to perform. Each action requires specific input parameters. Supported actions include:<ul><li>[complete_task](/content/developer-guides/event-handler#complete-task)</li><li>[terminate_workflow](/content/developer-guides/event-handler#terminate-workflow)</li><li>[update_workflow_variables](/content/developer-guides/event-handler#update-variables)</li><li>[fail_task](/content/developer-guides/event-handler#fail-task)</li><li>[start_workflow](/content/developer-guides/event-handler#start-workflow)</li></ul> | Required. |
 | active | Whether the event handler is enabled. Set to `true` to enable the event handler or `false` to disable it. | Required. |
@@ -192,7 +192,7 @@ Terminates a running workflow.
 | Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- | 
 | actions. **action** | The action to be triggered on receiving events. Set this to `terminate_workflow`. | Required. | 
-| actions. terminate_workflow. **workflowId** | The ID of the workflow to be terminated. | Required. | 
+| actions. terminate_workflow. **workflowId** | The execution ID of the workflow to be terminated. | Required. | 
 | actions. terminate_workflow. **terminationReason** |The reason for termination. | Required. | 
 
 ### Update Variables​
@@ -298,7 +298,7 @@ Marks a task as failed using one of the following methods:
 | Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- |
 | actions. **action** | The action to be triggered on receiving events. Set this to `fail_task`. | Required. | 
-| actions. complete_task. **workflowId** | The ID of the workflow that contains the task to be marked as failed. | Required if using `workflowId` and `taskRefName`method. |
+| actions. complete_task. **workflowId** | The execution ID of the workflow that contains the task to be marked as failed. | Required if using `workflowId` and `taskRefName`method. |
 | actions. complete_task. **taskRefName** | The reference name of the task to be marked as failed. | Required if using `workflowId` and `taskRefName`method. | Required if using `workflowId` and `taskRefName`method. |
 | actions. complete_task. **taskId** | The task execution ID of the task to be marked as failed. | Required if using `taskId` method. |
 | actions. complete_task. **output** | The output data to be sent along with the completion. Can be string, number, boolean, null, or object/array. | Optional. | 

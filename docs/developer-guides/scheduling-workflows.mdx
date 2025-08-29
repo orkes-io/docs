@@ -20,8 +20,8 @@ A schedule can be used for various cases, such as:
 
 Examples include:
 * Renewing a TLS certificate for infrastructure components.
-* Sending notifications ahead of account renewals.
-* Scanning of S3 or Blob storage daily to verify compliance with policies
+* Sending notifications ahead of renewals.
+* Scanning of S3 or Blob storage daily to verify compliance with policies.
 * Monitoring the health of a server, such as every 30 seconds.
 
 ## Schedule parameters
@@ -39,11 +39,11 @@ Configure these parameters when creating a schedule.
 | startworkflowRequest. **version** | The version of the workflow to run. If not specified, the latest version will be used. | Optional. | 
 | startworkflowRequest. **input** | The input parameters for the workflow, provided as a JSON object. | Optional. | 
 | startworkflowRequest. **correlationId** | A unique identifier for the workflow execution, used to correlate the current workflow instance with other workflows. | Optional. |
-| startworkflowRequest. **idempotencyKey** | A unique, user-generated key to prevent duplicate workflow executions. Idempotency data is retained for the life of the workflow execution. <br/><br/><TableNote title="Available since"><ul><li>v3.3.52 and later</li></ul></TableNote>  | Optional. | 
+| startworkflowRequest. **idempotencyKey** | A unique, user-generated key to prevent duplicate workflow executions. Idempotency data is retained throughout the life of the workflow execution.  | Optional. | 
 | startworkflowRequest. **idempotencyStrategy** | The idempotency strategy for handling duplicate requests. Supported values:<ul><li>**RETURN_EXISTING**—Return the `workflowId` of the workflow instance with the same idempotency key.</li><li>**FAIL**—Start a new workflow instance only if there are no workflow executions with the same idempotency key.</li><li>**FAIL_ON_RUNNING**—Start a new workflow instance only if there are no `RUNNING` or` PAUSED` workflows with the same idempotency key. Completed workflows can run again.</li></ul> | Required if `idempotencyKey` is used. | 
 | startworkflowRequest. **priority** | The priority of the workflow. Supports values from 0-99 and can be [passed as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor). | Optional. | 
-| scheduleStartTime | The start date and time for the schedule in [Unix timestamp format](https://www.unixtimestamp.com/) (in milliseconds). | Optional. | 
-| scheduleEndTime | The end date and time for the schedule in [Unix timestamp format](https://www.unixtimestamp.com/) (in milliseconds). | Optional. | 
+| scheduleStartTime | The start time for the schedule in [Unix timestamp format](https://www.unixtimestamp.com/) (in milliseconds). | Optional. | 
+| scheduleEndTime | The end time for the schedule in [Unix timestamp format](https://www.unixtimestamp.com/) (in milliseconds). | Optional. | 
 | taskToDomain | A mapping of task reference names to domain-specific values to [route the task to defined workers](https://orkes.io/content/developer-guides/task-to-domain). | Optional. | 
 | paused | Whether the schedule is paused upon saving. If set to `true`, the schedule will not run. Set to `false` to start the schedule immediately upon saving. Default is `false`. | Optional. |
 | runCatchupScheduleInstances | If `true`, executes any pending schedules, such as when the server starts after downtime. | Optional | 
@@ -115,19 +115,21 @@ This is the JSON schema for a workflow schedule.
 
 ## Configuring a schedule
 
+Schedules can be configured directly using the scheduler functionality, from a completed workflow execution, or through the API.
+
 <Tabs>
 <TabItem value="Using Conductor UI (Scheduler)" label="Using Conductor UI (Scheduler)">
 
-**To configure a schedule:**
+**To create a schedule:**
 
 1. Go to **Definitions** > **Scheduler** from the left menu on your Conductor cluster.
 2. Select **+ Define schedule**.
 3. Enter a **Name** and **Description**.
 4. In **Choose a template to get started**, select a cron expression template or manually enter it.  Use the _Cron Expression Help_ to verify your expression. 
-5. Select your preferred timezone for the schedule. The UI will display the next five scheduled runs in both the selected timezone and the browser’s local time.
+5. In **Select Timezone**, select your preferred timezone for the schedule. The UI will display the next five scheduled runs in both the selected timezone and the browser’s local time.
 6. Select the **Workflow name** and **Workflow version** to be scheduled.
-7. Enter any additional parameters such as **Input params**, **Correlation Id**, **Idompotency key**, and **Idempotency strategy**.
-8. In **Schedule start/end**, enter the date and local time for the schedule to start and stop running. Supports the format YYYY-MM-DD hh:mm am/pm.
+7. Enter any additional parameters such as **Input params**, **Correlation Id**, **Idempotency key**, and **Idempotency strategy**.
+8. In **Schedule start/end**, specify when the schedule begins and ends. Enter the date and local time in YYYY-MM-DD hh:mm am/pm format, or select them using the date picker.
 9. (Optional) Enable **Pause schedule** to prevent it from running upon creation. You can unpause the schedule later to resume.
 10. Select **Save** > **Confirm**.
 
@@ -147,11 +149,11 @@ You can also easily create a schedule from a completed workflow execution.<br/> 
 **To schedule a workflow from a workflow execution page:**
 1. Go to **Definitions** > **Workflow** from the left navigation menu.
 2. Select the required workflow execution.
-3. From **Actions**, choose **Create Schedule**.
+3. From **Actions**, select **Create Schedule**.
 
 <p align="center"><img src="/content/img/schedule-from-executions.png" alt="Workflow scheduling from executions" width="100%" height="auto"></img></p>
 
-This automatically fills a schedule definition with the workflow details, such as name, version, input parameters, correlation ID, idempotency key, and task-to-domain mapping. You only need to provide a name for the schedule and set the schedule time.
+This automatically fills a schedule definition with the workflow details, such as name, version, input parameters, correlation ID, idempotency key, and task-to-domain mapping. You only need to provide a name for the schedule, set cron expressions, and set the schedule time.
 
 </TabItem>
 <TabItem value="Using API" label="Using API">
@@ -184,7 +186,7 @@ Go to **Executions** > **Scheduler** from the left navigation menu.
 * Additional filtering options are available to refine your search.
 * Use **Bulk Actions** to pause, resume, restart, retry, or terminate multiple items at once.
 
-To get the scheduled workflow execution details as code in the UI, click the arrow next to the **Search** button and select **Show as Code**.
+To get the scheduled workflow execution details as code in the UI, select the arrow next to the **Search** button and select **Show as Code**.
 
 <p align="center"><img src="/content/img/show-as-code-scheduler-executions.png" alt="Show as code scheduler workflow executions" width="100%" height="auto"></img></p>
 
@@ -203,26 +205,6 @@ export const faqs = [
       "Using the crontab expression (0 */15 * ? * *), you can schedule a workflow to run every 15 minutes.",
   },
   {
-    question: 'How do I set up a crontab to schedule a workflow every 90 minutes?',
-    answer:
-      "Crontab does not directly support scheduling workflows every 90 minutes as the minute field only supports values between 0 and 59. However, you can achieve this using two separate schedules with the crontab expressions (0 0-21/3 * * ? *) and (30 1-22/3 * * ? *).",
-  },
-  {
-    question: 'Is there a limit to how many schedules you can set up with the same schedule?',
-    answer:
-      "No, there is no limit to the number of schedules you can assign to the same schedule.",
-  },
-  {
-    question: 'Is there a limit to how many schedules a user can create?',
-    answer:
-      "No, there is no restriction on the number of schedules a single user can create.",
-  },
-  {
-    question: 'Is there a limit to how many scheduled executions can run on the same cluster?',
-    answer:
-      "No, there is no limit to the number of scheduled executions that can run on the same cluster.",
-  },
-  {
     question: 'What is the smallest granularity to set up a schedule?',
     answer:
       "The scheduler supports up to a second granularity; however, this is done on a best-effort basis. A minimum of a 30-second gap is recommended as the cadence for workflow scheduling.",
@@ -238,3 +220,31 @@ export const faqs = [
       "When creating a schedule, you can choose a specific workflow version. If no version is selected, the latest version runs by default. If a version is chosen, you must manually update the schedule to use the latest version and the updated input parameters.",
   },
 ];
+
+### How do I set up a crontab to schedule a workflow every 90 minutes?
+
+Cron expression does not directly support scheduling workflows every 90 minutes, as the minute field only supports values between 0 and 59. However, you can achieve this using two separate schedules:
+
+**Schedule 1:**
+
+```json
+0 0 0/3 * * ?
+```
+
+<p align="center"><img src="/content/img/cron-expression-90-mins-scheduler-1.png" alt="How do I set up a crontab to schedule a workflow every 90 minutes?" width="70%" height="auto"></img></p>
+
+**Schedule 2:**
+
+```json
+0 30 1/3 * * ?
+```
+
+<p align="center"><img src="/content/img/cron-expression-90-mins-scheduler-2.png" alt="How do I set up a crontab to schedule a workflow every 90 minutes?" width="70%" height="auto"></img></p>
+
+With both schedules, the workflow runs every 90 minutes. For example:
+
+- The second schedule runs at 14:30 and the first schedule runs at 16:00, which is 90 minutes apart.
+- The next run for the second schedule is at 17:30, and for the first schedule, it is at 19:00, which are again 90 minutes apart.
+
+**Timeline:**
+14:30 (Schedule 2) > 16:00 (Schedule 1) > 17:30 (Schedule 2) > 19:00 (Schedule 1) ......
