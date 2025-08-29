@@ -13,7 +13,7 @@ In Conductor, tasks are executed by workers, and the Conductor server manages ta
 
 ## What is task-to-domain?
 
-Task-to-domain is a concept that allows you to route task executions to a specific pool of workers via domain mapping. The domain is an arbitrary string that can be freely defined so that you can split your task traffic by application, client type, and so on.
+Task-to-domain mapping allows you to route task executions to a specific pool of workers. The domain is an arbitrary string that can be freely defined, allowing you to split your task traffic by application, client type, and so on.
 
 To better understand the concept of routing tasks, consider an example task, `send_email`. By default, the task queue distributes this task to all available workers, as shown:
 
@@ -37,16 +37,16 @@ To route this task to a specific group of workers, you can assign it a domain wh
   />
 </p>
 
-Here, the `send_email` task has two additional sets of worker instances that listen to specific domain-based tasks. For example, all the tasks triggered with domain `dedicated_for_app_x` are sent to the workers configured with domain `dedicated_for_app_x`.
+Here, the `send_email` task has two additional sets of worker instances that listen to specific domain-based tasks. For example, all the tasks triggered with the domain `dedicated_for_app_x` are sent to the workers configured with the domain `dedicated_for_app_x`.
 
 The task-to-domain feature is useful in the following scenarios:
 
 - Ensuring that the task is routed to a worker with the appropriate permissions.
 - Load balancing or prioritizing some tasks with a set of dedicated workers.
-- Implementing unique task-related configuration by domain, such as retry policy.
+- Implementing unique task-related configuration by domain, such as a retry policy.
 - Debugging a task with a worker deployed on a local machine or a worker running a different version of the code.
 
-While these use cases can be achieved by creating separate task definitions, task-to-domain is more flexible. For example, in production environments, instead of creating new task definitions, you can use the same task definition while customizing routing based on the domain.
+While these use cases can be achieved by creating separate task definitions, task-to-domain is more flexible. For example, instead of creating new task definitions in production environments, you can use the same one while customizing routing based on the domain.
 
 ## Routing tasks using task-to-domain​
 
@@ -228,15 +228,6 @@ new TaskManager(client, workers, {
 When you start a workflow, you can specify which tasks must run on which domains.
 
 <Tabs>
-<TabItem value="Using API" label="Using API">
-
-Use the [Start Workflow Execution API](https://orkes.io/content/reference-docs/api/workflow/start-workflow-execution) to trigger the workflow by providing the `taskToDomain` as the input payload.
-
-```
-POST /api/workflow/{name}
-```
-
-</TabItem>
 <TabItem value="Using Conductor UI" label="Using Conductor UI">
 
 For running a workflow from the Conductor UI, define the following task-to-domain mapping:
@@ -257,6 +248,15 @@ For running a workflow from the Conductor UI, define the following task-to-domai
 </p>
 
 </TabItem>
+<TabItem value="Using API" label="Using API">
+
+Use the [Start Workflow Execution API](https://orkes.io/content/reference-docs/api/workflow/start-workflow-execution) to trigger the workflow by providing the `taskToDomain` as the input payload.
+
+```
+POST /api/workflow/{name}
+```
+
+</TabItem>
 </Tabs>
 
 ### RBAC configuration
@@ -265,12 +265,21 @@ While configuring groups or applications in Conductor, you can add granular perm
 
 To enable domain permissions:
 
-1. Go to **Access Control** > **Applications/Groups** in the left menu on your Conductor cluster.
+1. Go to **Access Control** > **Applications/Groups** from the left menu on your Conductor cluster.
 2. Select your application or group.
-3. Scroll down to **Permissions**, and select **(+) Add Permission**.
-4. Under the **Domain** tab, select **(+) Add**, and enter the domain name.
+3. Scroll down to **Permissions**, and select **+ Add permission**.
+4. In the **Domain** tab, select **+ Add**, and enter the domain name.
 5. Enable the **Execute** toggle.
 6. Select **Add Permissions**.
+
+<p align="center">
+  <img
+    src="/content/img/domain-permission.png"
+    alt="RBAC to Domain"
+    width="50%"
+    height="auto"
+  ></img>
+</p>
 
 The application/group can now execute all tasks under the specified domain.
 
@@ -300,7 +309,7 @@ In this configuration,
 
 - Conductor first assigns the task to workers in the `test` domain if available.
 - If no workers are active in the `test` domain, it tries the `fallback` domain.
-- If neither `test` nor `fallback` have active workers, the task is assigned to `NO_DOMAIN`.
+- If neither `test` nor  `fallback` has active workers, the task is assigned to `NO_DOMAIN`.
 
 :::note Notes
 
@@ -597,7 +606,7 @@ Once configured, start your Java application. Your worker will register and star
 
 3. Select **Run workflow**.
 
-The `hello_task` will be picked up only by the worker polling` test_domain`. You can verify this in the Conductor UI under **Executions** > **Workflows**, where the task’s domain will be shown as `test_domain`.
+The `hello_task` will be picked up only by the worker polling `test_domain`. You can verify this in the Conductor UI under **Executions** > **Workflows**, where the task’s domain will be shown as `test_domain`.
 
 <p align="center">
   <img
