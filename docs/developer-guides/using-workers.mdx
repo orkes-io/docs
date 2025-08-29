@@ -23,7 +23,7 @@ To create a worker, you can use Conductor’s polyglot SDKs. These SDKs contain 
 In Conductor, each worker should embody the microservice design pattern and follow these basic principles:
 * **Defined I/O**—Each worker executes a specific task and produces a well-defined output, given specific inputs.
 * **Statelessness**—Workers are stateless and do not implement workflow-specific logic, like deciding what task comes next.
-* **Idempotency**—Workers are meant to be idempotent and should handle cases where partially-executed tasks get rescheduled for completion.
+* **Idempotency**—Workers are meant to be idempotent and should handle cases where partially executed tasks get rescheduled for completion.
 * **Decoupled implementation**—Workers do not implement the logic to handle retries, timeouts, and other implementation details, which are handled by the Conductor server.
 
 
@@ -117,7 +117,7 @@ Get the Conductor Clojure package from [clojars](https://clojars.org/io.orkes/co
 
 In general, workers can be instantiated from classes that implement the Worker interface, or that are annotated using a WorkerTask annotation or decorator, depending on the language. 
 
-All workers must have a task definition name, which will used for reference during task polling and execution. The task definition name may be different from the name of the function or method that the worker is responsible for.
+All workers must have a task definition name, which will be used for reference during task polling and execution. The task definition name may be different from the name of the function or method that the worker is responsible for.
 
 A worker in your project may look like this:
 
@@ -375,14 +375,13 @@ All worker tasks should be registered to the Conductor server, which is done by 
 **To define a worker task:**
 
 <Tabs groupId="method">
-<TabItem value="UI" label="Using UI">
+<TabItem value="UI" label="Using Conductor UI">
 
-1. Go to your Orkes Conductor cluster.
-2. In the left navigation menu, go to **Definitions** > **Task**.
-3. Select **(+) Define task**.
-4. Enter the task details, such as the rate limits, retry settings, timeout settings, and expected inputs and outputs. <br/> The **Name** must match the task name defined previously in your code.
+1. Go to **Definitions** > **Task** from the left navigation menu on your Conductor cluster.
+2. Select **(+) Define task**.
+3. Enter the task details, such as the rate limits, retry settings, timeout settings, and expected inputs and outputs. <br/> The **Name** must match the task name defined previously in your code.
     <p align="center"><img src="/content/img/using-workers/using_workers-define_custom_task.png" alt="Define task in Orkes Conductor" width="100%" height="auto"></img></p>
-5. Select **Save** > **Confirm Save**.
+4. Select **Save** > **Confirm Save**.
 
 </TabItem>
 
@@ -408,18 +407,17 @@ For well-defined access controls, your worker application should be kept separat
 
 **To set up authorized access:**
 1. Configure an application account.
-    1. Go to your Orkes Conductor cluster.
-    2. In the left navigation menu, go to **Access Control** > **Applications**.
-    3. Create a new application or select an application to which you will be adding your worker. <br/> Ensure that the application role has **Worker** enabled.
+    1. Go to **Access Control** > **Applications** from the left navigation menu on your Conductor cluster.
+    2. Create a new application or select an application to which you will be adding your worker. <br/> Ensure that the application role has **Worker** enabled.
       <p align="center"><img src="/content/img/using-workers/using_workers-application_roles.png" alt="Add worker to application account in Orkes Conductor" width="100%" height="auto"></img></p>
 2. Get the application access key for your worker project.
-    1. Under Access Keys, select **Create access key** and store your credentials securely.
+    1. In **Access Keys**, select **Create access key** and store your credentials securely.
     2. Set the Key ID and Key Secret in your project.
 3. Grant Execute permission to the application.
-    1. Under Permissions, select **Add permission**.
+    1. In **Permissions**, select **+ Add permission**.
     2. Select the **Task** tab and then your worker task.
     3. Enable the **Execute** toggle.
-    4. (If [task-to-domain](task-to-domain) is used) In Domain, enter the domain name used in your worker code.
+    4. (If [task-to-domain](task-to-domain) is used) In **Domain**, enter the domain name used in your worker code.
     5. Select **Add Permissions**.
 
 The application account can now execute the worker task.
@@ -468,16 +466,15 @@ All custom worker tasks are denoted as [Simple tasks](/reference-docs/worker-tas
 **To add a worker task to a workflow:**
 
 <Tabs groupId="method">
-<TabItem value="UI" label="Using UI">
+<TabItem value="UI" label="Using Conductor UI">
 
-1. Go to your Orkes Conductor cluster.
-2. In the left navigation menu, go to **Definitions** > **Workflow**.
-3. Select or create a workflow.
-4. In the visual workflow editor, select the **(+)** icon to add a new task. There are two ways to add a worker task:
+1. Go to **Definitions** > **Workflow** from the left navigation menu on your Conductor cluster.
+2. Select or create a workflow.
+3. In the visual workflow editor, select the **(+)** icon to add a new task. There are two ways to add a worker task:
 * Search for your task using its task name and select to add it to the workflow.
 * Add a **Worker Task (Simple)** and enter the task name in **Task Definition**.
-5. Configure the task, such as its inputs, caching, and optionality.
-6. On the top right, select **Save** > **Confirm**.
+4. Configure the task, such as its inputs, caching, and optionality.
+5. On the top right, select **Save** > **Confirm**.
 
 <p align="center"><img src="/content/img/using-workers/using_workers-add_task_to_workflow.png" alt="Add task in Orkes Conductor" width="100%" height="auto"></img></p>
 </TabItem>
@@ -490,13 +487,14 @@ Refer to the [Create Workflow Definition](../reference-docs/api/metadata/creatin
 
 ### Run workflow
 
-Run the workflow to ensure that your worker has started successfully. If not, return to the previous steps and verify that all details have been entered correctly, such as:
+[Run the workflow](https://orkes.io/content/developer-guides/running-workflows) to ensure that your worker has started successfully. If not, return to the previous steps and verify that all details have been entered correctly, such as:
 * **Server URL, Key ID, and Key Secret**—Set in your worker project.
 * **Execute permissions**—Added for the worker task in your application account.
 * (if applicable) **Domain**—The domain in your code matches the domain used during workflow execution and in the application permissions.
 
 
 ## Advanced topics
-* Monitor task queues: [Monitoring Task Queues](https://orkes.io/content/developer-guides/monitoring-task-queues)
-* Scale up your worker instances: [Metrics for Scaling Workers](https://orkes.io/content/developer-guides/scaling-workers)
-* Implement domains for your workers to split the traffic: [Routing Tasks](https://orkes.io/content/developer-guides/task-to-domain)
+
+* [Monitoring task queues](https://orkes.io/content/developer-guides/monitoring-task-queues)
+* [Guide to Scaling Workers](https://orkes.io/content/developer-guides/scaling-workers) 
+* [Implement domains for your workers to split the traffic](https://orkes.io/content/developer-guides/task-to-domain)
