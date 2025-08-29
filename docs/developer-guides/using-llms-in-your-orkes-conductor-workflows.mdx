@@ -111,11 +111,12 @@ If you are using an [LLM Text Complete](../reference-docs/ai-tasks/llm-text-comp
 ## Step 4: Integrate a vector database
 
 You must also integrate a vector database if you are using one of the following system AI tasks:
-* [LLM Store Embeddings](../reference-docs/ai-tasks/llm-store-embeddings)
-* [LLM Index Text](../reference-docs/ai-tasks/llm-index-text)
-* [LLM Index Document](../reference-docs/ai-tasks/llm-index-document)
+
 * [LLM Get Embeddings](../reference-docs/ai-tasks/llm-get-embeddings)
+* [LLM Store Embeddings](../reference-docs/ai-tasks/llm-store-embeddings)
 * [LLM Search Index](../reference-docs/ai-tasks/llm-search-index)
+* [LLM Index Document](../reference-docs/ai-tasks/llm-index-document)
+* [LLM Index Text](../reference-docs/ai-tasks/llm-index-text)
 
 Refer to [Using Vector Databases](using-vector-databases-in-your-orkes-conductor-workflows) for more information.
 
@@ -125,9 +126,9 @@ Refer to [Using Vector Databases](using-vector-databases-in-your-orkes-conductor
 As best practice, use Orkes’ [RBAC feature](../category/access-control-and-security) to govern which applications or user groups can access the AI models, prompts, and vector databases.
 
 **To provide access to an application or group:**
-1. Go to **Access Control** > **Applications** or **Groups** from the left menu on your Orkes Conductor cluster.
+1. Go to **Access Control** > **Applications** or **Groups** from the left menu on your Conductor cluster.
 2. Create a new group/application or select an existing one.
-3. In the Permissions section, select **+ Add Permission**.
+3. In the Permissions section, select **+ Add permission**.
 4. In the **Integration** tab, select the required AI models and/or vector databases and toggle the necessary permissions.
 
     <p align="center"><img src="/content/img/add-integration-permission.png" alt="Add Permissions for Integrations" width="50%" height="auto"></img></p>
@@ -143,7 +144,7 @@ The group or application can now access the AI resources according to the config
 With the AI/LLM integration and AI prompt ready, you can add a system AI task to your workflow and configure the task for the chosen model and prompt.
 
 **To add a system AI task:**
-1. Go to **Definitions** > **Workflow** from the left menu on your Orkes Conductor cluster.
+1. Go to **Definitions** > **Workflow** from the left menu on your Conductor cluster.
 2. Create a new workflow or select an existing workflow.
 3. Add an AI task and select the desired model provider and model.
 4. Configure the remaining task parameters. If you are using an LLM Text Complete or LLM Chat Complete task, you can select the prompt template from the dropdown based on the chosen model.
@@ -170,6 +171,18 @@ Check out the quickstart template on Developer Edition for building an [agentic 
 <summary>AI-powered translator</summary>
 
 Check out the tutorial on how to build an [AI-powered language translator](/developer-guides/quickstart-ai-orchestration).
+
+</details>
+<details>
+<summary>Agentic interview app</summary>
+
+Check out the tutorial on how to build an [agentic coding interview application](/content/tutorials/agentic-interview-app).
+
+</details>
+<details>
+<summary>Document classifier</summary>
+
+Check out the tutorial on how to build a [document classification system](/content/templates/document-classifier).
 
 </details>
 
