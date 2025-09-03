@@ -10,7 +10,7 @@ To use system AI tasks in Orkes Conductor, you must integrate your Conductor clu
 1. Get the required credentials from Anthropic Claude.
 2. Configure a new Anthropic Claude integration in Orkes Conductor.
 3. Add models to the integration.
-4. Set access limits to the AI model to govern which applications or groups can use them.
+4. Set access limits to the AI model to govern which applications or groups can use it.
 
 ## Step 1: Get the Anthropic Claude credentials
 
@@ -44,12 +44,15 @@ After obtaining the credentials, add an Anthropic Claude integration to your Con
 3. In the **AI/LLM** section, choose **Anthropic Claude**.
 4. Select **+ Add** and enter the following parameters:
 
-| Parameters | Description |
-| ---------- | ----------- |
-| Integration name | A name for the integration. |
-| API Key | The API key copied previously from the Anthropic console. | 
-| API Endpoint | Use the default API endpoint for Anthropic Claude, which is https://api.anthropic.com/v1. |
-| Description | A description of the integration. | 
+| Parameters | Description | Required/Optional | 
+| ---------- | ----------- | ----------------- |
+| Integration name | A name for the integration. | Required. | 
+| API Key | The API key copied previously from the Anthropic console. | Required. | 
+| API Endpoint | Use the default API endpoint for Anthropic Claude, which is https://api.anthropic.com/v1. | Required. | 
+| Chat Completion Path | The endpoint path used for chat completions. For example, `/v1/messages`. | Optional. | 
+| Version | The API schema version date. | Optional. | 
+| Beta Features Version | Flag to enable beta features. | Optional. | 
+| Description | A description of the integration. | Required. | 
 
 <p align="center"><img src="/content/img/create-new-anthropic-claude-integration.png" alt="Anthropic Claude Integration with Orkes Conductor" width="60%" height="auto"></img></p>
 
@@ -64,7 +67,7 @@ Anthropic Claude has different models, such as Claude 3 Opus, Claude 3 Sonnet, C
 
 **To add a model to the Anthropic Claude integration:**
 
-1. Go to the **Integrations** page and select the **+** button next to the integration created.
+1. Go to **Integrations** and select the **+** button next to the integration created.
 
 <p align="center"><img src="/content/img/create-new-anthropic-claude-integration-model-from-integrations-page.png" alt="Create Anthropic Claude Integration Model from Listed Integrations" width="100%" height="auto"></img></p>
 
@@ -101,4 +104,4 @@ With the integration in place, you can now create workflows using [AI/LLM tasks]
 - [Using AI Models or LLMs](https://orkes.io/content/developer-guides/using-llms-in-your-orkes-conductor-workflows)
 - [Using Vector Databases](https://orkes.io/content/developer-guides/using-vector-databases-in-your-orkes-conductor-workflows)
 - [Using AI Prompts](https://orkes.io/content/developer-guides/creating-and-managing-gen-ai-prompt-templates)
-- [AI Orchestration Tutorials](https://orkes.io/content/developer-guides/quickstart-ai-orchestration)
+- [AI Orchestration Tutorials](https://orkes.io/content/tutorials/ai)

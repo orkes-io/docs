@@ -10,7 +10,7 @@ To use system AI tasks in Orkes Conductor, you must integrate your Conductor clu
 1. Get the required credentials from Hugging Face.
 2. Configure a new Hugging Face integration in Orkes Conductor.
 3. Add models to the integration.
-4. Set access limits to the AI model to govern which applications or groups can use them.
+4. Set access limits to the AI model to govern which applications or groups can use it.
 
 ## Step 1: Get the Hugging Face credentials
 
@@ -21,22 +21,30 @@ To integrate Hugging Face with Orkes Conductor, retrieve the API token, namespac
 **To get the API token:**
 
 1. Sign in to the [Hugging Face](https://huggingface.co/) portal.
-2. Select your account icon in the top-right corner and choose **Settings**.
+2. From your account icon in the top-right corner, select **Settings**.
 3. Go to **Access Tokens** and select **+ Create new token**.
 
 <p align="center"><img src="/content/img/view-api-keys-hf.png" alt="Get API Keys from Hugging Face platform" width="90%" height="auto"></img></p>
 
-4. Enter a **Token name** and select **Create token**.
-5. Copy and store the generated token.
+4. Enter a **Token name**, select the **Token type**, and configure **User/Org permissions**, if required.
+5. Select **Create token**.
+6. Copy and store the generated token.
 
 ### Get the namespace
 
+Hugging Face uses your username (for individual accounts) or organization name (for team accounts) as the namespace.
+
+
 **To get the namespace:**
 
-Go to the account information icon from the top right corner and copy the namespace.
-For example, the namespace is “johndoehf”.
+- You can find it in the top-right corner of your Hugging Face profile (your username).
+- Or, from the URL of your model repository:
 
-<p align="center"><img src="/content/img/get-namespace.png" alt="Get Namespace from Hugging Face platform" width="50%" height="auto"></img></p>
+```
+https://huggingface.co/acme/your-model-name
+```
+
+For example, in https://huggingface.co/acme/my-model, the namespace is **acme**.
 
 ### Create an endpoint
 
@@ -76,7 +84,7 @@ Hugging Face has different models, each designed for various use cases. Choose t
 
 **To add a model to the Hugging Face integration:**
 
-1. Go to the **Integrations** page and select the **+** button next to the integration created.
+1. Go to **Integrations** and select the **+** button next to the integration created.
 
 <p align="center"><img src="/content/img/create-new-model-for-hugging-face-integration.png" alt="Create new model for Hugging Face Integration" width="100%" height="auto"></img></p>
 
@@ -114,4 +122,4 @@ With the integration in place, you can now create workflows using [AI/LLM tasks]
 - [Using AI Models or LLMs](https://orkes.io/content/developer-guides/using-llms-in-your-orkes-conductor-workflows)
 - [Using Vector Databases](https://orkes.io/content/developer-guides/using-vector-databases-in-your-orkes-conductor-workflows)
 - [Using AI Prompts](https://orkes.io/content/developer-guides/creating-and-managing-gen-ai-prompt-templates)
-- [AI Orchestration Tutorials](https://orkes.io/content/developer-guides/quickstart-ai-orchestration)
+- [AI Orchestration Tutorials](https://orkes.io/content/tutorials/ai)
