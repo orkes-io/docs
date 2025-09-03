@@ -7,7 +7,7 @@ description: "Learn how to authenticate for programmatic access to Conductor (SD
 
 Authentication is required for programmatic access to Conductor SDKs and APIs. Every connection to Orkes Conductor requires an authorization header with a valid JSON Web Token (JWT).
 
-The JWTs are created using access keys. In Orkes Conductor, the access keys are application-based, so each project can use a different access key, which can be generated and retrieved from Conductor.
+The JWTs are created using access keys. In Orkes Conductor, the access keys are application-based, so each project can use a different access key, which can be generated and retrieved from the Conductor cluster.
 
 When using the Conductor SDKs, the authentication is handled automatically. Alternatively, you can also create a JWT using an API call.
 
@@ -22,8 +22,8 @@ Access keys are required to create a valid JWT. Before retrieving your access ke
 <details>
 <summary>To create an application</summary>
 
-1. In the left navigation menu, go to **Access Control** > **Applications**.
-2. Select **(+) Create application**.
+1. Go to **Access Control** > **Applications** from the left menu on your Conductor cluster.
+2. Select **+ Create application**.
 3. Enter the application name.
 4. Select **Save**.
    <br />
@@ -35,33 +35,17 @@ Learn more about applications in [Managing Applications](docs/access-control-and
 
 **To retrieve the access key:**
 
-1. In the left navigation menu, go to **Access Control** > **Applications**.
+1. Go to **Access Control** > **Applications** from the left menu on your Conductor cluster.
 2. Select the application name or the **Edit** icon located next to the application name.
-3. In the Access Keys section, select **(+) Create access key** to generate a unique Key Id and Key Secret.
-   <br />
-   The Key Secret is shown only once, so make sure to copy and store it securely.
+3. In the Access Keys section, select **+ Create access key** to generate a unique Key Id, Key Secret, and Server URL. 
+
+The Key Secret is shown only once, so make sure to copy and store it securely.
 
 Once the access key has been created, you can perform the following actions on the key:
 
 - **Copy**—Copy the key ID.
 - **Pause**—Temporarily restrict access to the application.
 - **Delete**—Permanently delete the key.
-
-<center>
-  <iframe
-    width="510"
-    height="300"
-    src="https://www.youtube.com/embed/f1b5vZRKn2Q?si=bIzOcN2tRbXD28Hq"
-    title="YouTube video player"
-    frameborder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowfullscreen="allowfullscreen"
-    mozallowfullscreen="mozallowfullscreen"
-    msallowfullscreen="msallowfullscreen"
-    oallowfullscreen="oallowfullscreen"
-    webkitallowfullscreen="webkitallowfullscreen"
-  ></iframe>
-</center>
 
 ## API authentication
 

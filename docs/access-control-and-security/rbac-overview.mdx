@@ -8,7 +8,7 @@ import TabItem from "@theme/TabItem";
 
 # Access Control and Security
 
-Orkes Conductor provides a robust role-based access control (RBAC) mechanism for individual users and applications that use Conductor APIs. Conductor’s RBAC ensures fine-grained access to the following metadata resources:
+Orkes Conductor provides role-based access control (RBAC) for individual users and applications that interact with Conductor APIs. RBAC ensures fine-grained access to the following metadata resources:
 
 - Workflows
 - Tasks
@@ -22,11 +22,11 @@ Orkes Conductor provides a robust role-based access control (RBAC) mechanism for
 - Webhooks
 - Domains
 
-Get started with using Orkes’ RBAC suite by understanding users, groups, applications, tags, roles, and permissions.
+To get started with RBAC, learn about users, groups, applications, tags, roles, and permissions.
 
 ## Users
 
-A user represents a human user that interacts with Conductor. Users are authenticated using SSO providers or email/password. Each user has one or more roles assigned to them.
+A user represents a human user who interacts with Conductor. Users are authenticated using SSO providers or email and password. Each user has one or more roles assigned to them.
 
 ## Groups
 
@@ -44,7 +44,7 @@ You can assign each application a set of roles and granular permissions, providi
 
 A tag is a key-value pair that can be added to any metadata resource, such as a workflow, task, schedule, secret, and so on.
 
-Tags serve as a useful shorthand for sharing permissions across many resources or users. When you grant tag permissions to a group or application, it provides access to all resources containing that tag.
+Tags make it easier to share permissions across many resources or users. When you grant tag permissions to a group or application, it provides access to all resources that contain that tag.
 
 ## Roles
 

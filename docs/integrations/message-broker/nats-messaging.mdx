@@ -9,7 +9,7 @@ To use the [Event task](https://orkes.io/content/reference-docs/system-tasks/eve
 
 1. Get the required credentials from the NATS server.
 2. Configure a new NATS Messaging integration in Orkes Conductor.
-3. Set access limits to the message broker to govern which applications or groups can use them.
+3. Set access limits to the message broker to govern which applications or groups can use it.
 
 ## Step 1: Get the NATS server credentials
 
@@ -45,7 +45,7 @@ After obtaining the credentials, add a NATS Messaging integration to your Conduc
 | Authentication Type | The preferred authentication method. Supported values:<ul><li>**With Credentials**</li><li>**Without Credentials**</li></ul> | Required. | 
 | Username | The username of the NATS server. | Required if **_Authentication Type_** is **_With Credentials_**. | 
 | Password | The password associated with the username. | Required if **_Authentication Type_** is **_With Credentials_**. | 
-| Select security protocol | The security protocol for authenticating the connection. Supported values: <ul><li>**NONE**</li><li>**JWT**–If selected, upload the **JWT Credentials file**.</li><li>**TOKEN_BASED_AUTHENTICATION**–If selected, obtain the JWT token from your NATS server using an API.</li></ul> | Required. | 
+| Select security protocol | The security protocol for authenticating the connection. Supported values: <ul><li>**NONE**</li><li>**JWT**–If selected, upload the **JWT Credentials file**.</li><li>**TOKEN_BASED_AUTHENTICATION**–If selected, obtain the JWT token from your NATS server using API.</li></ul> | Required. | 
 | Transport Layer Security | The Transport Layer Security (TLS) security mechanism. Supported values:<ul><li>**NONE**–No TLS security.</li><li>**PEM**–Uses PEM files for TLS security. If selected, upload the CA certificate PEM file.</li><li>**JKS**–Uses Java KeyStore for TLS security. If selected, upload the CA certificate JKS file.</li></ul> | Required. | 
 | Trust Store Authentication | The preferred trust store authentication type. Supported values:<ul><li>**NONE**–No TLS authentication.</li><li>**usingPassword**–Uses the trust store password for TLS authentication. If opted, enter the **Trust Store Password**.</li></ul> | Required if **_Transport Layer Security_** is **JKS**. | 
 | Description | A description of the integration. | Required. | 

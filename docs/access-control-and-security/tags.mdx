@@ -33,7 +33,7 @@ You can add or remove multiple tags to various resources.
 <br/>OR go to **Integrations**<br/>OR go to **Access Control** > **Applications** depending on the resource you want to tag.
 2. Locate the specific resource.
     <p align="center"><img src="/content/img/RBAC/adding-tags-to-workflow.png" alt="Adding a tag to an existing workflow" width="90%" height="auto"></img></p>
-3. In the Actions column, select the **Tag** icon. <br/>A pop-up window for Edit Tags appears.
+3. In the **Actions** column, select the **Tag** icon. <br/>A pop-up window for Edit Tags appears.
     <p align="center"><img src="/content/img/RBAC/editing-tags-in-conductor.png" alt="Editing a tag" width="60%" height="auto"></img></p>
 4. To create a tag, enter a tag in the `key:value` format and select **Enter.** 
 5. To remove a tag, select **x** next to the tag.
@@ -57,7 +57,7 @@ This feature is only available to Admins.
 :::
 
 **To add permissions to a group:**
-1. In the left navigation menu, go to **Access Control** > **Groups**.
+1. Go to **Access Control** > **Groups** from the left navigation menu on your Conductor cluster.
 2. Select the group name or the **Edit** icon located next to the group name.
 3. In the **Permissions** section, select **+ Add Permission**.
 4. Toggle to the **Tag** tab and select the tag to provide access to.
@@ -66,9 +66,9 @@ This feature is only available to Admins.
     - **Update**—Users will be able to update the resource.
     - **Execute**—Users will be able to execute the resource.
     - **Delete**—Users will be able to delete the resource.
-6. Select **Add Permissions**.
+6. Select **Add permissions**.
 
-All users in the group now have access to all resources under the tag. You can select the drop-down icon to view all of the tag’s resources.
+All users in the group now have access to all resources associated with the tag. You can select the drop-down icon to view all of the tagged resources.
 
 <p align="center"><img src="/content/img/RBAC/adding-tags-to-a-user-group-in-conductor.png" alt="Adding tags to a user group" width="90%" height="auto"></img></p>
 
@@ -77,7 +77,7 @@ All users in the group now have access to all resources under the tag. You can s
 <TabItem value="application-level" label="For Applications">
 
 **To add permissions to an application:**
-1. In the left navigation menu, go to **Access Control** > **Applications**.
+1. Go to **Access Control** > **Groups** from the left navigation menu on your Conductor cluster.
 2. Select the application name or the **Edit** icon located next to the application name.
 3. In the **Permissions** section, select **+ Add Permission**.
 4. Toggle to the **Tag** tab and select the tag to provide access to.
@@ -86,9 +86,9 @@ All users in the group now have access to all resources under the tag. You can s
     - **Update**—The application will be able to update the resource.
     - **Execute**—The application will be able to execute the resource.
     - **Delete**—The application will be able to delete the resource.
-6. Select **Add Permissions**.
+6. Select **Add permissions**.
 
-The application now has access to all resources under the tag. You can select the drop-down icon to view all of the tag’s resources.
+The application now has access to all resources associated with the tag. You can select the drop-down icon to view all of the tagged resources.
 
 <p align="center"><img src="/content/img/RBAC/adding-tags-to-application-in-orkes-conductor.png" alt="Adding tags to application in Conductor" width="90%" height="auto"></img></p>
 

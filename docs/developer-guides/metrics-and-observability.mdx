@@ -15,14 +15,16 @@ Orkes Conductor allows you to monitor workflow performance using tools like Prom
 Orkes Conductor uses Prometheus to capture a comprehensive set of metrics, which are readily available in your cluster deployment. On request, these metrics can be pushed to Grafana or Datadog.
 :::note Notes
 - For cloud deployments, Prometheus and Grafana/Datadog are provisioned by the Orkes team. 
-- For on-premise deployments, users must set up their own monitoring tools.
+- For on-premise deployments, you must set up your own monitoring tools.
 :::
 
 ### Accessing the dashboard 
 
 To access the dashboard, go to **Metrics** from the left navigation menu on your Conductor cluster. 
 
-Note: To enable Metrics for your cluster, please get in touch with the [Orkes team](https://orkes.io/talk-to-an-expert).
+:::note
+To enable Metrics for your cluster, please get in touch with the [Orkes team](https://orkes.io/talk-to-an-expert).
+:::
 
 <p align="center"><img src="/content/img/accessing-dashboard.png" alt="Accessing dashboard from Conductor UI" width="100%" height="auto"></img></p>
 
@@ -71,7 +73,7 @@ Alerts can be configured for any metric from your dashboard or via the *Alerting
 
 1. Go to **Alerting** > **Alert rules** from the left navigation menu on your Grafana dashboard.
 2. Select **+ New alert rule**.
-3. Create the alert based on your requirements.
+3. [Create the alert](https://grafana.com/tutorials/alerting-get-started/#create-an-alert) based on your requirements.
 </TabItem>
 </Tabs>
 

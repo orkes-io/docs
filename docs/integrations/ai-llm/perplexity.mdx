@@ -10,22 +10,27 @@ To use system AI tasks in Orkes Conductor, you must integrate your Conductor clu
 1. Get the required credentials from Perplexity.
 2. Configure a new Perplexity integration in Orkes Conductor.
 3. Add models to the integration.
-4. Set access limits to the AI model to govern which applications or groups can use them.
+4. Set access limits to the AI model to govern which applications or groups can use it.
 
 ## Step 1: Get the Perplexity credentials
 
 To integrate Perplexity with Orkes Conductor, retrieve the API key from the Perplexity console.
 
+:::info Prerequisites
+- A [Perplexity account](https://www.perplexity.ai/). 
+- Admin permissions for billing and API key management. If you’re joining an existing team, you’ll need an invitation from an Admin.
+- An [API Group](https://docs.perplexity.ai/getting-started/api-groups#what-is-an-api-group%3F) set up with billing details.
+:::
+
 **To get the API key:**
 
 1. Sign in to the [Perplexity console](https://www.perplexity.ai/).
-2. Select the **Settings** icon near your user account name in the bottom-left corner of the console.
-3. Go to **Workspaces** > **[API](https://www.perplexity.ai/account/api)**.
-4. In **API Keys**, select **+ Generate**.
+2. Select your user account icon in the bottom-left corner of the console, and select **All settings**.
+3. Go to **[API](https://www.perplexity.ai/account/api)** > **API Keys**, select **+ Create key**.
 
-<p align="center"><img src="/content/img/perplexity-api-key.png" alt="API key generation Perplexity console" width="40%" height="auto"></img></p>
+<p align="center"><img src="/content/img/perplexity-api-key.png" alt="API key generation Perplexity console" width="100%" height="auto"></img></p>
 
-5. Copy and store the generated key securely, as it is shown only once.
+4. Copy and store the generated key securely, as it is shown only once.
 
 ## Step 2: Add an integration for Perplexity
 
@@ -94,4 +99,4 @@ With the integration in place, you can now create workflows using [AI/LLM tasks]
 - [Using AI Models or LLMs](https://orkes.io/content/developer-guides/using-llms-in-your-orkes-conductor-workflows)
 - [Using Vector Databases](https://orkes.io/content/developer-guides/using-vector-databases-in-your-orkes-conductor-workflows)
 - [Using AI Prompts](https://orkes.io/content/developer-guides/creating-and-managing-gen-ai-prompt-templates)
-- [AI Orchestration Tutorials](https://orkes.io/content/developer-guides/quickstart-ai-orchestration)
+- [AI Orchestration Tutorials](https://orkes.io/content/tutorials/ai)

@@ -6,7 +6,7 @@ description: "Use this template to build a human-in-the-loop workflow for claims
 # Claims Workflow
 
 :::note  
-This template is only available on the [Developer Edition](https://developer.orkescloud.com/) in Launch Pad.   
+This template is only available in the [Developer Edition](https://developer.orkescloud.com/) on Launch Pad.   
 :::
 
 This claims workflow template automates insurance claims processing by determining coverage eligibility based on the claimant’s input. The workflow includes tasks that process customer information, validate policies, estimate damage costs, and assign human review for claims assessment and investigation.
@@ -31,12 +31,12 @@ This template utilizes the following Conductor features:
 
 ### Step 1: Import the template
 
-The claims workflow template is only available on the [Developer Edition](https://developer.orkescloud.com/) in Launch Pad. 
+The claims workflow template is only available in the [Developer Edition](https://developer.orkescloud.com/) on Launch Pad. 
 
 **To import the template:**
 
 1. Go to [Developer Edition](https://developer.orkescloud.com/) > **Launch Pad** on the left navigation menu.  
-2. In **Claims Workflow**, select **Use Template**.  
+2. In **Pre-built Workflow Templates**, select **Claims Workflow**, and then choose **Use Template**. 
 3. Select **Import**.  
 4. Log in to view the imported workflow.
 
@@ -114,6 +114,8 @@ To use these tasks, you need to set up workers locally and connect them to the C
 
 2. Enter the access key ID, secret, and server URL into the terminal when prompted. 
 
+This initiates and runs the worker.
+
 ### Step 3: Run the workflow
 
 With the workflow fully set up, give it a run.
@@ -150,7 +152,7 @@ For development purposes, you can complete the Human tasks from the Conductor UI
 
 **To complete the Human tasks in the UI:**
 
-1. Go to **Executions** > **Human Task**.  
+1. Go to **Executions** > **Human Task** from the left menu on your Conductor cluster. 
 2. Select the **Task ID** of a task to view the form.  
 3. Select **Claim** and enter the necessary inputs for each form field.  
 4. Once completed, select **Complete** to submit the form.
@@ -160,7 +162,13 @@ For development purposes, you can complete the Human tasks from the Conductor UI
 The claims workflow will terminate at different junctures, based on the claim eligibility:
 
 * If the policy type is not Auto, the workflow will terminate with the reason “Terminated because of invalid policy”, without proceeding to file a claim.  
+
+<p align="center"><img src="/content/img/claims-workflow-execution-1.gif" alt="Claims workflow execution" width="90%" height="auto"></img></p>
+
 * If the insurance assessor determines that the claim is not covered, the workflow will terminate with the reason “Policy does not cover incident”, without any payout.  
+
+<p align="center"><img src="/content/img/claims-workflow-execution-2.gif" alt="Claims workflow execution" width="90%" height="auto"></img></p>
+
 * If the damages are within the coverage limits, the workflow will terminate with the reason “Send Payment to client”.  
 * If the damages exceed the limits but the claim is still covered after further investigation, the workflow will also terminate with the reason “Send Payment to client”.
 

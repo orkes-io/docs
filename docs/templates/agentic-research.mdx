@@ -9,7 +9,7 @@ import TabItem from '@theme/TabItem';
 # Agentic Research Assistant
 
 :::note
-This template is only available on the [Developer Edition](https://developer.orkescloud.com/) in Launch Pad. 
+This template is only available in the [Developer Edition](https://developer.orkescloud.com/) on Launch Pad. 
 :::
 
 This agentic research template generates either a literature review or a research gap report based on the user query. Powered by LLMs, the workflow identifies the user’s intent from the query and compiles the latest research findings with search grounding. 
@@ -53,13 +53,13 @@ The agentic research template uses AI models. Ensure that you have API keys for 
 
 ### Step 1: Import the template
 
-The agentic research template is only available on the [Developer Edition](https://developer.orkescloud.com/) in Launch Pad. 
+The agentic research template is only available in the [Developer Edition](https://developer.orkescloud.com/) on Launch Pad. 
 
 **To import the template:**
 
-1. Log in to [Developer Edition](https://developer.orkescloud.com/).
-2. Go to **Launch Pad** on the left navigation menu.  
-3. Select **Agentic Research**, then select **Import**.  
+1. Go to [Developer Playground](https://developer.orkescloud.com/) > **Launch Pad** on the left navigation menu.
+2. In **Pre-built Workflow Templates**, select **Agentic Research**, and then choose **Use Template**. 
+3. Select **Import**.  
 4. In **Required Integrations**, select or create an integration for the following services:  
     * [OpenAI](https://platform.openai.com/settings/organization/api-keys)
     * [Perplexity](https://www.perplexity.ai/account/api)
@@ -109,7 +109,7 @@ Another [Set Variable](/reference-docs/operators/set-variable) task is used to d
 
 If the decision is *none*, meaning the user query is irrelevant, the workflow will terminate with a [Terminate](/reference-docs/operators/terminate) task. 
 
-Otherwise, the workflow will continue to a [Switch](/reference-docs/operators/switch) task, which routes to the relevant [Set Variable] task that prepares the exact configuration of the task(s) to be carried out later. This routing step is in preparation for the [Dynamic Fork](/reference-docs/operators/dynamic-fork) task later on, which requires the task configuration as input.
+Otherwise, the workflow will continue to a [Switch](/reference-docs/operators/switch) task, which routes to the relevant [Set Variable](/reference-docs/operators/set-variable) task that prepares the exact configuration of the task(s) to be carried out later. This routing step is in preparation for the [Dynamic Fork](/reference-docs/operators/dynamic-fork) task later on, which requires the task configuration as input.
 
 Next, a [Do While](/reference-docs/operators/do-while) task is used to iterate through each sub-topic and generate its research findings. Inside the loop:
 * The [Inline](/reference-docs/system-tasks/inline) task is used to track the iteration counter and set the relevant sub-topic.
@@ -477,6 +477,7 @@ The final .pdf report is created using a custom Worker task that takes the raw r
 
 2. Enter the access key ID, secret, and server URL into the terminal when prompted. 
 
+This initiates and runs the worker.
 
 ### Step 5: Run the workflow
 
