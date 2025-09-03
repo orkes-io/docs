@@ -292,7 +292,7 @@ public class SubWorkflowTest extends AbstractWorkflowTests {
 
        WorkflowTestRequest testRequest = getWorkflowTestRequest(def);
 
-       //The following are the dynamic tasks which are not present in the workflow definition but are created by dynamic fork
+       //The following are the dynamic tasks that are not present in the workflow definition but are created by a dynamic fork
        testRequest.getTaskRefToMockOutput().put("_x_test_worker_0_0", List.of(new WorkflowTestRequest.TaskMock()));
        testRequest.getTaskRefToMockOutput().put("_x_test_worker_0_1", List.of(new WorkflowTestRequest.TaskMock()));
        testRequest.getTaskRefToMockOutput().put("_x_test_worker_0_2", List.of(new WorkflowTestRequest.TaskMock()));

@@ -11,7 +11,7 @@ import TabItem from '@theme/TabItem';
 
 An application represents a non-human identity, such as a script, service, task worker, client, or CI/CD pipeline, that interacts with a Conductor server via APIs or SDKs. The application layer in Conductor provides application-based access to resources in your cluster. 
 
-Each application can also have one or more access key/secret pairs, which are used to grant access to Conductor SDK and API. Learn more about authentication in [Authentication and Access Keys](/sdks/authentication).
+Each application can also have one or more access key/secret pairs, which are used to grant access to the Conductor SDK and API. Learn more about authentication in [Authentication and Access Keys](/sdks/authentication).
 
 ## Applications as service accounts
 
@@ -20,13 +20,13 @@ In Orkes Conductor, applications are the equivalent of service accounts used in 
 - A CI/CD pipeline that creates or updates workflow definitions.
 - A background service that polls and executes tasks.
 
-Each application can have one or more access keys, which include a key ID and secret. These keys can be securely stored and used to authenticate API or SDK requests. This setup enables automated access without relying on human credentials or email-based accounts, following industry-standard service account patterns. 
+Each application can have one or more access keys, which include a key ID and a secret. These keys can be securely stored and used to authenticate API or SDK requests. This setup enables automated access without relying on human credentials or email-based accounts, following industry-standard service account patterns. 
 
 ## Application roles
 
 By default, all applications can manage workflow and task executions if they have access to the required resources. For example, an application can execute `someWorkflow` as long as **Execute** permission is granted for those resources. Likewise, an application can view workflow executions if **Read** permission is granted.
 
-Application roles grant additional access on top of this default behavior and should be selected only if your application is used for another purpose besides managing workflow executions. These additional application roles should be selected based on your application requirements. There are two categories of application roles available: 
+Application roles grant additional access on top of this default behavior and should be selected only if your application is used for another purpose besides managing workflow execution. There are two categories of application roles available: 
 
 <Tabs>
 <TabItem value="application roles" label="Application Roles">
@@ -62,8 +62,8 @@ Configure the application’s roles and permissions to control what your applica
 
 **To configure an application:**
 1. Create an application.
-    1. In the left navigation menu, go to **Access Control** > **Applications**.
-    2. Select **(+) Create application**.
+    1. Go to **Access Control** > **Applications** from the left navigation menu on your Conductor cluster.
+    2. Select **+ Create application**.
     3. Enter the application name.
     4. Select **Save**.
     The application has been created. You can proceed to add roles or permissions to the application.
@@ -89,7 +89,7 @@ You can grant permissions to **tags**, rather than to individual resources. Tags
 You can edit an application’s name, role, or permissions anytime.
 
 **To edit an application:**
-1. In the left navigation menu, go to **Access Control** > **Applications**.
+1. Go to **Access Control** > **Applications** from the left navigation menu on your Conductor cluster.
 2. Select the Application ID or the **Edit** icon located next to the application name.
 3. Update the application’s name, roles, or permissions as desired.
 
@@ -99,17 +99,9 @@ You can edit an application’s name, role, or permissions anytime.
 
 **To delete an application from your cluster:**
 
-1. In the left navigation menu, go to **Access Control** > **Applications**.
+1. Go to **Access Control** > **Applications** from the left navigation menu on your Conductor cluster.
 2. Select the **Delete** icon located next to the application name.
 3. Confirm the action by entering the application name and selecting **Confirm**.
-
-
-<br/>
-<center><iframe width="510" height="300" src="https://www.youtube.com/embed/PY34TcVzof0?si=ANSHZW6IMVDx1rI9" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="allowfullscreen"
-mozallowfullscreen="mozallowfullscreen"
-msallowfullscreen="msallowfullscreen"
-oallowfullscreen="oallowfullscreen"
-webkitallowfullscreen="webkitallowfullscreen"></iframe></center>
 
 ## Example application setup
 

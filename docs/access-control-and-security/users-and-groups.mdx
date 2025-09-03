@@ -14,43 +14,32 @@ Create and manage users and groups on your Conductor cluster to ensure secure ac
 
 ## Users
 
-A user represents a human user that interacts with Conductor. Users are authenticated using SSO providers or email/password. Each user has one or more roles assigned to them.
-
+A user represents a human user who interacts with Conductor. Users are authenticated using SSO providers or email and password. Each user has one or more roles assigned to them.
 
 ### Adding users​
 
 Users must be added to your Orkes Conductor cluster before they can sign up or log in.
 
 **To add a user to your cluster:**
-1. In the left navigation menu, go to **Access Control** > **Users**.
-2. Select **(+) Create user**.
+1. Go to **Access Control** > **Users** from the left navigation menu on your Conductor cluster.
+2. Select **+ Create user**.
 3. Enter the following details:
 
 | Parameter | Description                                                                                                                                                                                                                                                     |
 | ------ |-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | User Id | The user’s email address. This cannot be changed later.                |
 | Name | The username.                                                             |
-| Roles | The user’s role(s), which governs the basic access level for the user. The available roles are: <ul><li>**Admin**—Superuser. Full access to the system and resources. Can manage users and groups.</li> <li>**User**—Can only access resources created by them.</li> <li>**Metadata Manager**—Can read, update, and delete all metadata in the system.</li> <li>**Workflow Manager**—Can view and execute all workflows in the system.</li> <li>**Read Only User**—Can access all metadata and workflows in the system as read-only. Cannot modify or execute workflows.</li></ul>                                                                                |
+| Roles | The user role, which governs the basic access level for the user. The available roles are: <ul><li>**Admin**—Superuser. Full access to the system and resources. Can manage users and groups.</li> <li>**User**—Can only access resources created by them.</li> <li>**Metadata Manager**—Can read, update, and delete all metadata in the system.</li> <li>**Workflow Manager**—Can view and execute all workflows in the system.</li> <li>**Read Only User**—Can access all metadata and workflows in the system as read-only. Cannot modify or execute workflows.</li></ul>                                                                                |
 | Groups | The groups that the user should be part of. This provides additional group-level permissions to the user.                                               |
 
 4. Select **Save**.
-
-<br/>
-<center>
-<iframe width="510" height="300" src="https://www.youtube.com/embed/O9lj4TAqldc?si=wOxzv26EzeI5pft1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="allowfullscreen"
-mozallowfullscreen="mozallowfullscreen"
-msallowfullscreen="msallowfullscreen"
-oallowfullscreen="oallowfullscreen"
-webkitallowfullscreen="webkitallowfullscreen"></iframe>
-</center>
-
 
 ### Editing user information
 
 You can edit a user’s name, role, or group anytime.
 
 **To edit a user:**
-1. In the left navigation menu, go to **Access Control** > **Users**.
+1. Go to **Access Control** > **Users** from the left navigation menu on your Conductor cluster.
 2. Select the **Edit** button located next to the user.
 <p align="center"><img src="/content/img/RBAC/managing_users_and_groups-editing_user_information.png" alt="Editing user roles in Conductor" width="90%" height="auto"></img></p>
 3. Update the user’s name, roles, or groups as desired.
@@ -59,7 +48,7 @@ You can edit a user’s name, role, or group anytime.
 ### Deleting users
 
 **To delete a user from your cluster:**
-1. In the left navigation menu, go to **Access Control** > **Users**.
+1. Go to **Access Control** > **Users** from the left navigation menu on your Conductor cluster.
 2. Select the **Delete** icon located next to the user.
 3. Confirm the action by entering the user’s ID and selecting **Confirm**.
 
@@ -78,8 +67,8 @@ Read Only Users cannot be added to any groups.
 
 **To configure a group:**
 1. Create a group.
-    1. In the left navigation menu, go to **Access Control** > **Groups**.
-    2. Select **(+) Create group**.
+    1. Go to **Access Control** > **Groups** from the left navigation menu on your Conductor cluster.
+    2. Select **+ Create group**.
     3. Enter the following details:
 
     | Parameter | Description                                                                                                                                                                                                                                                     |
@@ -109,20 +98,12 @@ Read Only Users cannot be added to any groups.
 You can grant permissions to **tags**, rather than to individual resources. Tags can be added to multiple resources, so that when you grant a permission to a tag, it instantly provides access to all tagged resources. Learn more about tags in [Managing Tags](/access-control-and-security/tags).
 :::
 
-<br/>
-<center><iframe width="510" height="300" src="https://www.youtube.com/embed/REIRIjEvJLg?si=h28wjxj9DZi7A6bE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="allowfullscreen"
-mozallowfullscreen="mozallowfullscreen"
-msallowfullscreen="msallowfullscreen"
-oallowfullscreen="oallowfullscreen"
-webkitallowfullscreen="webkitallowfullscreen"></iframe></center>
-
-
 ### Editing group information
 
 You can edit a group’s description, default roles, members, or permissions anytime.
 
 **To edit a group:**
-1. In the left navigation menu, go to **Access Control** > **Groups**.
+1. Go to **Access Control** > **Groups** from the left navigation menu on your Conductor cluster.
 2. Select the group name or the **Edit** icon located next to the group name.
 3. Update the group’s description, roles, members, or permissions as desired.
 
@@ -130,5 +111,6 @@ You can edit a group’s description, default roles, members, or permissions any
 ### Deleting groups
 
 **To delete a group:**
-1. Select the **Delete** icon located next to the group name.
+1. Go to **Access Control** > **Groups** from the left navigation menu on your Conductor cluster.
+2. Select the **Delete** icon located next to the group name.
 2. Confirm the action by entering the group name and selecting **Confirm**.
