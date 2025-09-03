@@ -10,7 +10,7 @@ To use system AI tasks in Orkes Conductor, you must integrate your Conductor clu
 1. Get the required credentials from Weaviate.
 2. Configure a new Weaviate integration in Orkes Conductor.
 3. Add collections to the integration.
-4. Set access limits to the vector database to govern which applications or groups can use them.
+4. Set access limits to the vector database to govern which applications or groups can use it.
 
 ## Step 1: Get the Weaviate credentials
 
@@ -31,8 +31,9 @@ For Weaviate Cloud:
 
 <p align="center"><img src="/content/img/get-weaviate-endpoint.png" alt="Get Weaviate Endpoint" width="100%" height="auto"></img></p>
 
-4. Go to **Cluster details** > **API Keys**.
-5. Copy the **Admin** key.
+4. Go to **Cluster details** > **API Keys**, and select **+ Create API Key**.
+5. Enter a **Name** and select the **Role** as **admin**.
+6. Select **Create**, and copy/download the key.
 
 <p align="center"><img src="/content/img/get-weaviate-api-key.png" alt="Get Weaviate API Key" width="100%" height="auto"></img></p>
 
@@ -69,7 +70,7 @@ Once you’ve integrated Weaviate, the next step is to configure specific collec
 
 **To add a collection to the Weaviate integration:**
 
-1. Go to the **Integrations** page and select the **+** button next to the integration created.
+1. Go to **Integrations** and select the **+** button next to the integration created.
 
 <p align="center"><img src="/content/img/create-new-weaviate-integration-class.png" alt="Create Collections for Weaviate Integration" width="100%" height="auto"></img></p>
 
