@@ -159,7 +159,7 @@ A system design where task executions are grouped into queues according to their
 
 An approach that routes task executions specified under a domain name to its corresponding worker pool with the same domain name. To do so, you must map each worker pool to a specific domain beforehand, then specify the task’s domain mapping when triggering the workflow.
 
-Task-to-domain can be used to route traffic from different origins (web, desktop, mobile) to different worker pools, or to customize the same task with domain-specific business logic.
+Task-to-domain can route traffic from different origins (web, desktop, mobile) to different worker pools or customize the same task with domain-specific business logic.
 
 Related: [Developer Guide for Routing Tasks](/developer-guides/task-to-domain)
 
@@ -177,7 +177,7 @@ Webhooks enable real-time updates from source systems without the need for const
 
 A process or program that accomplishes some task logic. Workers poll the Conductor server for work to be done in its corresponding task queue.
 
-System workers are responsible for executing system tasks and are managed by Conductor. External workers can be created to handle custom logic beyond the scope of system tasks, and can run on any environment.
+System workers are responsible for executing system tasks and are managed by Conductor. External workers can be created to handle custom logic beyond the scope of system tasks and can run on any environment.
 
 Related: [Worker Task](#worker-task)
 
