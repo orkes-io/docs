@@ -60,3 +60,5 @@ All workers follow certain basic principles:
 * Each worker executes a specific task and produces corresponding well-defined outputs.
 * Workers are meant to be idempotent in order to facilitate retries and task rescheduling.
 * Workers do not implement any failure-handling logic like retries, which are managed by the Conductor server.
+
+Learn more about how workers communicate with Conductor in [Conductor Architecture](/content/conductor-architecture).

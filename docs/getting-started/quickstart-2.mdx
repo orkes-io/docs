@@ -92,7 +92,7 @@ Your first workflow has been created!
 
 Note how the code above references _myTask_ - this tells the workflow to push tasks on a queue with that name.
 Your local worker is then constantly polling for work on that queue (pointed to via the worker's _taskDefName_ field).
-To learn more about how tasks are routed see [Routing Tasks](https://orkes.io/content/developer-guides/task-to-domain).
+To learn more about how tasks are routed, see [Routing Tasks](https://orkes.io/content/developer-guides/task-to-domain).
 
 </TabItem>
 
@@ -466,10 +466,6 @@ This sample Clojure code demonstrates how to create, register, and execute a wor
 
 To connect your workflow-as-code project, you must again use an application in Conductor, which is an access layer with its own permissions and access tokens. This time, the application should have the Metadata API role.
 
-:::note
-If you are using [Developer Edition](https://developer.orkescloud.com/?utm_campaign=quickstarts&utm_source=orkes-doc&utm_medium=web), you can only create one application. Use the same application as the worker project for this step.
-:::
-
 **To create an application for your workflow client:**
 1. In the left navigation menu of the Conductor UI, go to **Access Control** > **Applications**.
 2. Select **(+) Create application** and enter a **Name** for it. For example, *myWorkflowClient* or *myApp*.
@@ -502,7 +498,7 @@ Before running the workflow, make sure that your *myTask* worker is actively pol
 <Tabs groupId="workflow-method">
 <TabItem value="visual" label="Visual workflow editor">
 
-Inside the workflow visual editor, go to the **Run** tab and select **Run workflow**.
+Inside the workflow visual editor, go to the **Run** tab and select **Execute**.
 
 <p align="center"><img src="/content/img/getting-started/getting_started-run_workflow.png" alt="Screenshot of the Run tab in the visual workflow editor in Orkes Conductor." width="100%" height="auto"></img></p>
 
