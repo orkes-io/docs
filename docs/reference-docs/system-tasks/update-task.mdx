@@ -9,14 +9,14 @@ import TabItem from '@theme/TabItem';
 
 # Update Task
 
-The Update Task is used to update the status of a [Wait](/operators/wait) task. The status of a task can be updated in two ways:
+The Update Task is used to update the status of a [Wait](/content/reference-docs/operators/wait) task and [Human](/content/reference-docs/operators/human) task.  The status of a task can be updated in two ways:
 - **Using the workflow (execution) ID and the reference name**—Update the task status by specifying the workflow (execution) ID and the task's reference name.
 - **Using the task execution ID**—Update the task status by specifying the task's execution ID.
 
  The Wait task can be updated only if the workflow is in “RUNNING” status, and the invoking user or application should have access to the task being updated. 
 
 :::note
-Using the Update Task in non-Wait signal scenarios may result in unintended side effects, as it is not designed for these use cases.
+Using the Update Task in other scenarios may result in unintended side effects, as it is not designed for such use cases.
 ::::
 
 ## Task parameters
