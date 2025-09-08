@@ -15,7 +15,7 @@ The LLM Chat Complete task processes a chat query by taking the user's input and
 :::info Prerequisites
 
 - [Integrate the required AI model](/category/integrations/ai-llm) with Orkes Conductor.
-- [Create the required AI prompt](/developer-guides/using-ai-prompts) for the task.
+- [Create the required AI prompt](/content/developer-guides/creating-and-managing-gen-ai-prompt-templates) for the task.
 :::
 
 ## Task parameters 
@@ -26,7 +26,7 @@ Configure these parameters for the LLM Chat Complete task.
 | --------- | ----------- | ----------------- |
 | inputParameters. **llmProvider** | The integration name of the LLM provider integrated with your Conductor cluster.<br/><br/>**Note:** If you haven’t configured your AI/LLM provider on your Orkes Conductor cluster, go to the **Integrations** tab and [configure your required provider](/category/integrations/ai-llm). | Required. |
 | inputParameters. **model** | The available language models within the selected LLM provider. <br/><br/>For example, If your LLM provider is Azure Open AI and you’ve configured text-davinci-003 as the language model, you can select it here. | Required. |
-| inputParameters. **instructions** | The ground rules or instructions for the chat so the model responds to only specific queries and will not deviate from the objective. Under this section, you can also save the instructions as an AI prompt and add them here. Only prompts that you have access to can be used.<br/><br/>**Note**: If you haven’t created an AI prompt for your language model, refer to the documentation on [creating AI Prompts in Orkes Conductor](/developer-guides/creating-and-managing-gen-ai-prompt-templates). | Required. |
+| inputParameters. **instructions** | Enter the ground rules or instructions for the chat so the model responds to only specific queries and will not deviate from the objective. Under this section, you can also save the instructions as an AI prompt in Orkes Conductor and add it here. <br/><br/>**Note**: If you haven’t created an AI prompt for your language model, refer to the documentation on [creating AI Prompts in Orkes Conductor](/developer-guides/creating-and-managing-gen-ai-prompt-templates). | Required. |
 | inputParameters. **promptVariables** | For prompts that involve variables, provide the input to these variables within this field. It can be string, number, boolean, null, object/array. | Optional. |
 | inputParameters. **messages** | The appropriate role and messages to complete the chat query. Supported values:<ul><li>role</li><li>message</li></ul> | Optional. |
 | inputParameters. **messages.role**| The required role for the chat completion. Available options include _user_, _assistant_, _system_, or _human_.<ul><li>The roles “user” and “human” represent the user asking questions or initiating the conversation.</li><li>The roles “assistant” and “system” refer to the model responding to the user queries.</li></ul> | Optional. |
