@@ -13,7 +13,7 @@ export const faqs = [
   {
     question: 'Is it possible to have different environments like production, staging, and review environments in Conductor?',
     answer:
-      "Yes, our clusters can be configured directly from the cloud portal as per your requirements. Our typical customers have production, UAT, and development environments. ",
+      "Yes, the clusters can be configured directly according to your requirements and can have production, UAT, and development environments.",
   },
   {
     question: 'Do you have any restrictions regarding the processing of medical data?',
@@ -23,7 +23,7 @@ export const faqs = [
   {
     question: "From a latency perspective, is it realistic to facilitate a use case where a user's journey on a website is determined by pulling data from various endpoints, evaluating the results against predefined rules, and dynamically redirecting the user to different pages based on the assessed outcomes?",
       answer:
-      "Yes, such use cases are possible with Conductor. The various steps included in such cases are: aggregating data from various endpoints, running basic rule evaluations against this data, running custom workers on the data pulled to determine their existence, use the user identifier to get the previous user details, & dynamically redirect the page for users based on the results. From an orchestration point of view and depending on the cluster configuration, inter-API communications can be managed with a latency rate of under 10s of milliseconds. Assume a max cost of 50 ms (typical P95, P75 could be < 20 ms) between steps, and each step will need to account for its own latency."
+      "Yes, such use cases are possible with Conductor. The various steps included in such cases are: aggregating data from various endpoints, running basic rule evaluations against this data, running custom workers on the data pulled to determine their existence, using the user identifier to get the previous user details, & dynamically redirecting the page for users based on the results. From an orchestration point of view and depending on the cluster configuration, inter-API communications can be managed with a latency rate of under 10 milliseconds. Assume a max cost of 50 ms (typical P95, P75 could be < 20 ms) between steps, and each step will need to account for its own latency."
   },
 ];
 
@@ -31,7 +31,7 @@ export const faqs = [
 
 Yes, it’s possible to pull data from multiple endpoints simultaneously, using [Fork/Join](https://orkes.io/content/reference-docs/operators/fork-join) task, which is the construct supported in Conductor, that can run 10s of thousands of parallel executions.
 
-### Can we start a workflow not from the start but from any steps within the workflow? 
+### Can we start a workflow not from the start, but from any step within the workflow? 
 
 The Conductor workflow always starts from step 1 and follows the sequence. However, once the workflow is executed, you can [skip a particular task from execution](https://orkes.io/content/reference-docs/api/workflow/skip-task-from-workflow). Alternatively, you can create the workflow definitions programmatically with only the required steps. 
 
@@ -43,12 +43,12 @@ Once you run a workflow and it starts the execution, and for any reason, if the 
 
 1. Restart Workflow
 
-- **Restart with Current Definitions** - Instantly restarts the same execution with the existing workflow definition.
-- **Restart with Latest Definitions** - Restarts the workflow, but if there have been any changes to the workflow definition, it will run the latest definition.
+- **Restart with Current Definitions**—Restart using the same workflow definition that was referenced in the initial execution. This is useful if the workflow definition has changed and the original definition needs to be retained.
+- **Restart with Latest Definitions**—Restart using the latest workflow definition and version. If you’ve changed the definition, you can use this option to rerun the execution with the latest version.
 
 2. Re-run Workflow
 
-Re-run Workflow takes you to the run workflow screen, where you can trigger a brand new instance of the workflow. You can also change the input parameters, correlation ID, or task to domain mapping before triggering the new execution.
+Rerun Workflow takes you to the run workflow screen, where you can trigger a brand new instance of the workflow. Before triggering the new execution, you can also change the input parameters, correlation ID, or task-to-domain mapping.
 
 ### How do you clone a workflow?
 
@@ -56,6 +56,6 @@ You can clone a workflow by navigating to **Definitions > Workflows** and clicki
 
 <p align="center"><img src="/content/img/clone-workflow.jpg" alt="Clone Workflow" width="100%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
 
-You’ll get a confirmation window with the workflow name appended with numerical 1, where you can also rename the workflow and choose the required version if needed.
+You’ll get a confirmation window with the workflow name appended with numerical 1. In this window, you can also rename the workflow and choose the required version if necessary.
 
 <p align="center"><img src="/content/img/clone-workflow-confirmation.jpg" alt="Clone Workflow Confirmation" width="50%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>

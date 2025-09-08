@@ -12,8 +12,7 @@ To learn how to scale and integrate with Conductor, it is important to understan
 
 <p align="center"><img src="/content/img/conductor-architecture.jpg" alt="Conductor architecture" width="90%" height="auto" style={{paddingBottom: 10, paddingTop: 10}} /></p>
 
-
-To recap, workflows are composed of tasks in a defined order. They can be triggered by code, an API call, a cron schedule, webhooks, or external eventing systems (AWS SQS, Kafka, and so on). 
+[To recap](/content/core-concepts), workflows are composed of tasks in a defined order. They can be triggered by code, an API call, a cron schedule, webhooks, or external eventing systems (AWS SQS, Kafka, and so on). 
 
 In Conductor, workflows are executed on a worker-task queue architecture, where each task type (HTTP, Event, Wait, and so on) has its own dedicated task queue. The key components of Conductor’s core orchestration engine include:
 * **State machine evaluator**—Orchestrates workflows by scheduling tasks to their relevant queues and assigning them to active workers when polled. Monitors each task's state and ensures it is completed, retried, or failed as required.
@@ -25,12 +24,12 @@ In Conductor, workflows are executed on a worker-task queue architecture, where 
     * Workflow APIs—Provide access to start, stop, pause, and resume workflow executions.
     * Task APIs—Provide access to manage and monitor task queues and executions.
 
-Integrations with tools like Prometheus and Datadog allow you to easily collect and monitor system performance data.
+Integrations with tools like Prometheus, Grafana, and Datadog allow you to easily collect and monitor system performance data.
 
 
 ## Worker implementation
 
-System task workers are managed by Conductor. On the other hand, external workers can be implemented in any language and can run on any environment, including bare metal, containers, or VMs, or serverless functions. Conductor offers [SDKs](/sdks) with features such as polling threads, metrics, and server communication to simplify worker creation. 
+System task workers are managed by Conductor. On the other hand, external workers can be implemented in any language and can run on any environment, including bare metal, containers, or VMs, or serverless functions. Conductor offers [SDKs](https://orkes.io/content/category/sdks) with features such as polling threads, metrics, and server communication to simplify worker creation. 
 
 
 ## Worker-server polling mechanism
@@ -45,8 +44,8 @@ By default, workers infinitely poll Conductor every 100ms. The polling interval 
 1. The application starts a workflow execution by interacting with Orkes Conductor, which returns a workflow (execution) ID. It can be used to track the workflow's progress and manage its execution.
 2. Conductor schedules the first task in the workflow to its task queue.
 3. The workers responsible for executing the first task within the workflow are polling Orkes Conductor for tasks to execute via HTTP or gRPC. When a task is scheduled, Conductor sends it to the next available worker, which then performs the required work.
-4. Periodically, the worker returns the task status to Conductor (eg IN PROGRESS, FAILED, COMPLETED, etc).
-5. Once the first task in the workflow instance is completed, the worker returns the task output to the server and Conductor schedules the next set of tasks to be performed.
+4. Periodically, the worker returns the task status to Conductor (e.g. IN PROGRESS, FAILED, COMPLETED, etc).
+5. Once the first task in the workflow instance is completed, the worker returns the task output to the server, and Conductor schedules the next set of tasks to be performed.
 
 Conductor manages and maintains the workflow state, keeping track of which tasks have been completed and which are still pending. This ensures that the workflow is executed correctly, with each task triggered precisely at the right time.
 
