@@ -1,0 +1,385 @@
+/* new css */
+
+.nw_footer {
+  margin-top: 40px;
+  margin-bottom: 0;
+  margin-left: 0;
+  padding: 0;
+  border-top: 1px solid #66696ba3;
+}
+
+.nw_footer .nw_standard-container {
+  max-width: 1300px;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.nw_footer .nw_footer_topsection {
+  padding: 20px;
+  display: flex;
+}
+
+.nw_footer .nw_footer-column {
+  grid-column-gap: 12px;
+  grid-row-gap: 12px;
+  flex-direction: column;
+  flex: 1;
+  align-items: flex-start;
+  width: auto;
+  margin-right: 0;
+  padding-right: 10px;
+  display: flex;
+}
+
+.nw_footer .orkes-logo {
+  width: 140px;
+  margin-left: 0;
+  margin-right: 10px;
+  padding-right: 0;
+}
+
+.nw_footer .w-nav-brand {
+  float: left;
+  color: #333;
+  text-decoration: none;
+  position: relative;
+}
+
+.nw_footer img {
+  vertical-align: middle;
+  max-width: 100%;
+  display: inline-block;
+  border: 0;
+  margin: 0;
+}
+
+.nw_footer .footer_navwrapper {
+  flex: 0 auto;
+  justify-content: space-around;
+  width: 100%;
+  display: flex;
+}
+
+.nw_footer .footer_navsubcolumnwrapper._40 {
+  flex: 0 auto;
+  justify-content: space-between;
+  width: 50%;
+}
+
+.nw_footer .footer_navsubcolumnwrapper {
+  flex: 0 auto;
+  width: auto;
+  display: flex;
+}
+
+.nw_footer .nw_footer-column._33 {
+  flex: 0 auto;
+  width: 33%;
+  padding-right: 0;
+}
+
+.nw_footer .nw_footerheader {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+}
+.nw_footer h2 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-size: 32px;
+  font-weight: bold;
+  line-height: 36px;
+}
+
+.nw_footer .nw_footerlinks_wrapper {
+  grid-column-gap: 12px;
+  grid-row-gap: 12px;
+  color: #98a3a6;
+  flex-direction: column;
+  align-items: flex-start;
+  display: flex;
+}
+.nw_footer .nw_footerlinks {
+  color: #677172;
+  text-decoration: none;
+  transition: transform 0.2s;
+}
+
+.nw_footer .w-inline-block {
+  max-width: 100%;
+  display: inline-block;
+}
+
+.nw_footer .footer-type {
+  font-size: 14px;
+  line-height: 20px;
+}
+.nw_footer .flex-horizontal {
+  grid-column-gap: 6px;
+  grid-row-gap: 6px;
+  justify-content: flex-start;
+  align-items: center;
+  display: flex;
+}
+.nw_footer .underline-hover {
+  text-decoration: none;
+}
+.nw_footer .rounded-hiring-tag {
+  color: #189ed3;
+  background-color: #d6f3f8;
+  border-radius: 3px;
+  flex: none;
+  height: 24px;
+  padding-left: 6px;
+  padding-right: 6px;
+  display: flex;
+}
+.nw_footer .footer-type-tag:hover,
+.nw_footer .footer-type-tag:lang(en) {
+  text-decoration: none;
+}
+
+.nw_footer .footer-type-tag {
+  align-self: center;
+  font-size: 14px;
+  line-height: 20px;
+  text-decoration: none;
+}
+.nw_footer .nw_footer-column.auto {
+  flex: 0 auto;
+  padding-right: 0;
+}
+
+.nw_footer .nw_footerdivider {
+  background-image: linear-gradient(to right, #8057ff, #1bc7ff 50%, #ed5668);
+  height: 1.5px;
+  margin: 20px;
+  padding: 0;
+}
+
+.nw_footer .nw_footerlastsection {
+  color: #677172;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px 20px;
+  display: flex;
+}
+
+.nw_footer .footer-social-icons.remove_margin {
+  margin-top: 0;
+}
+
+.nw_footer .footer-social-icons {
+  grid-column-gap: 21px;
+  grid-row-gap: 21px;
+  align-items: center;
+  margin-top: 20px;
+  display: flex;
+}
+.nw_footer .nw_footersociallinks {
+  color: #313435;
+  text-decoration: underline;
+  background-color: #0000;
+}
+
+.nw_footer .nw_socialcircularicon {
+  color: #4e5456;
+  border-radius: 200px;
+  width: 36px;
+  height: 36px;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.nw_footer a:active,
+.nw_footer a:hover {
+  outline: 0;
+}
+.nw_footer .nw_footerlinks:hover {
+  text-decoration: underline;
+  transform: translate(3px);
+}
+.nw_footer .footer-type:hover {
+  text-decoration: underline;
+}
+.nw_footer .nw_footerlinks.hiring:hover {
+  text-decoration: none;
+}
+.nw_footer .underline-hover:hover {
+  text-decoration: underline;
+}
+.nw_footer .rounded-hiring-tag:hover {
+  text-decoration: none;
+}
+.nw_footer .nw_socialcircularicon:hover {
+  transform: scale(1.1);
+  box-shadow: 1px 0 9px 1px #0000003d;
+}
+
+@media screen and (max-width: 991px) {
+  .nw_footer {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+  .nw_footer .nw_standard-container {
+    padding-left: 0;
+    padding-right: 0;
+    position: relative;
+  }
+  .nw_footer .nw_footer_topsection {
+    grid-column-gap: 40px;
+    grid-row-gap: 40px;
+    flex-direction: column;
+    padding-left: 20px;
+    padding-right: 0;
+  }
+  .nw_footer .nw_footer-column {
+    width: 20%;
+  }
+  .nw_footer .orkes-logo {
+    align-self: center;
+    width: 140px;
+    overflow: visible;
+  }
+  .nw_footer .footer_navwrapper {
+    grid-column-gap: 40px;
+    grid-row-gap: 40px;
+    flex-direction: column;
+  }
+  .nw_footer .footer_navsubcolumnwrapper._40 {
+    grid-column-gap: 20px;
+    grid-row-gap: 20px;
+    width: 100%;
+  }
+  .nw_footer .footer_navsubcolumnwrapper {
+    width: 100%;
+  }
+  .nw_footer .nw_footerheader {
+    font-size: 18px;
+  }
+  .nw_footer .nw_footer-column.auto {
+    flex: 1;
+    width: auto;
+  }
+  .nw_footer .footer-social-icons {
+    grid-column-gap: 12px;
+    grid-row-gap: 12px;
+    flex-wrap: nowrap;
+  }
+  .nw_footer .nw_socialcircularicon {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .nw_footer {
+    padding-left: 30px;
+    padding-right: 20px;
+  }
+  .nw_footer .nw_footer_topsection {
+    grid-column-gap: 20px;
+    grid-row-gap: 20px;
+    flex-direction: column;
+    align-items: stretch;
+    padding-left: 0;
+  }
+  .nw_footer .nw_footer-column {
+    grid-column-gap: 12px;
+    grid-row-gap: 12px;
+    text-align: left;
+    align-self: flex-start;
+    width: 100%;
+    margin-top: 10px;
+  }
+  .nw_footer .w-nav-brand {
+    padding-left: 10px;
+  }
+  .nw_footer .orkes-logo {
+    align-self: flex-start;
+    padding-left: 0;
+  }
+  .nw_footer .footer_navwrapper {
+    grid-column-gap: 20px;
+    grid-row-gap: 20px;
+    flex-direction: column;
+  }
+  .nw_footer .nw_footer-column._33,
+  .nw_footer .nw_footer-column._25 {
+    width: 100%;
+  }
+  .nw_footer .nw_footerlinks_wrapper {
+    grid-column-gap: 12px;
+    grid-row-gap: 12px;
+  }
+  .nw_footer .footer-type {
+    line-height: 18px;
+  }
+  .nw_footer .footer-type-tag {
+    line-height: 18px;
+  }
+  .nw_footer .nw_footerdivider {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .nw_footer .nw_footerlastsection {
+    grid-column-gap: 20px;
+    grid-row-gap: 20px;
+    text-align: right;
+    flex-flow: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .nw_footer .footer-social-icons.remove_margin {
+    grid-column-gap: 16px;
+    grid-row-gap: 16px;
+    text-align: right;
+    flex: none;
+    padding-right: 10px;
+  }
+}
+
+@media screen and (max-width: 479px) {
+  .nw_footer {
+    margin: 0 0 0 -4px;
+    padding: 20px;
+    overflow: hidden;
+  }
+  .nw_footer .nw_standard-container {
+    text-align: left;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .nw_footer .orkes-logo {
+    margin-right: 0;
+    padding-left: 0;
+  }
+  .nw_footer .footer_navsubcolumnwrapper._40 {
+    flex-direction: column;
+  }
+  .nw_footer .footer_navsubcolumnwrapper {
+    grid-column-gap: 20px;
+    grid-row-gap: 20px;
+    flex-direction: column;
+  }
+  .nw_footer .nw_footerlastsection {
+    grid-column-gap: 20px;
+    grid-row-gap: 20px;
+    text-align: left;
+    flex-wrap: wrap;
+  }
+  .nw_footer .footer-social-icons.remove_margin {
+    grid-column-gap: 24px;
+    grid-row-gap: 24px;
+    flex-wrap: wrap;
+    flex: 0 auto;
+  }
+}
