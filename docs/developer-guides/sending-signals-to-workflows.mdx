@@ -9,7 +9,13 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 
-You can manage and automate workflows by sending signals to pause, resume, terminate, restart, rerun workflows, and more. Using Conductor SDKs or APIs, you can integrate and programmatically control workflows during production and in case of failure.
+You can manage and automate workflows by sending signals to run, pause, resume, terminate, restart, rerun workflows, and more. Using Conductor SDKs or APIs, you can integrate and programmatically control workflows during production and in case of failure.
+
+## Run workflow
+
+You can run workflows programmatically using one of the following endpoints:
+* [Start Workflow Execution (Async)](/reference-docs/api/workflow/start-workflow-execution)—Start a workflow without waiting for it to be completed.
+* [Execute Workflow Synchronously](/reference-docs/api/synchronous-workflow-execution)—Start a workflow and wait for an output from the workflow.
 
 
 ## Pause workflow
