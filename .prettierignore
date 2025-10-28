@@ -1,0 +1,32 @@
+# Dependencies
+node_modules/
+yarn.lock
+package-lock.json
+
+# Build outputs
+build/
+dist/
+.next/
+out/
+
+# Docusaurus specific
+.docusaurus/
+
+# Generated files
+*.log
+*.tsbuildinfo
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+
+# Static assets (usually don't format)
+static/img/
+static/js/
+
+# Code blocks (if you have generated code)
+codeblocks/

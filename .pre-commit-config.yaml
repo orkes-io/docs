@@ -1,0 +1,87 @@
+# Pre-commit hooks configuration for Docusaurus project
+# Install with: pip install pre-commit
+# Then run: pre-commit install
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: check-merge-conflict
+        description: Check for merge conflict markers
+      - id: check-added-large-files
+        description: Prevent large files from being committed
+        args: ['--maxkb=1000']
+      - id: check-yaml
+        description: Check YAML syntax
+      - id: check-json
+        description: Check JSON syntax
+
+  # JavaScript/TypeScript linting
+  - repo: local
+    hooks:
+      - id: eslint
+        name: ESLint
+        entry: yarn lint
+        language: system
+        files: \.(js|jsx|ts|tsx|mdx)$
+        pass_filenames: false
+        always_run: false
+
+  # CSS linting
+  - repo: local
+    hooks:
+      - id: stylelint
+        name: Stylelint
+        entry: yarn lint:css
+        language: system
+        files: \.(css|scss|sass|less)$
+        pass_filenames: false
+        always_run: false
+
+  # Code formatting with Prettier
+  - repo: local
+    hooks:
+      - id: prettier
+        name: Prettier
+        entry: yarn format
+        language: system
+        files: \.(js|jsx|ts|tsx|css|json|md|mdx|yaml|yml)$
+        pass_filenames: false
+        always_run: false
+
+  # Security scanning
+  - repo: local
+    hooks:
+      - id: detect-secrets
+        name: Detect Secrets
+        entry: python -m detect_secrets scan --baseline .secrets.baseline
+        language: system
+        files: \.(js|jsx|ts|tsx|py|yaml|yml|json)$
+        pass_filenames: false
+        always_run: false
+        exclude: ^(yarn\.lock|package-lock\.json)$
+
+  # Docusaurus specific checks
+  - repo: local
+    hooks:
+      - id: docusaurus-build-check
+        name: Docusaurus build check
+        entry: yarn build
+        language: system
+        files: \.(js|jsx|ts|tsx|mdx|json)$
+        pass_filenames: false
+        always_run: false
+        stages: [pre-push]
+
+# Exclude patterns
+exclude: |
+  (?x)^(
+    \.git/.*|
+    node_modules/.*|
+    build/.*|
+    dist/.*|
+    \.docusaurus/.*|
+    yarn\.lock|
+    package-lock\.json|
+    \.secrets\.baseline
+  )$
