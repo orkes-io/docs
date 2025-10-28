@@ -15,7 +15,7 @@ The List Files task is used to retrieve a list of files from a specific location
 During execution, the task detects the input type from the URL scheme. For example, a URL starting with s3:// is treated as an AWS S3 bucket, and a URL that begins with https://github.com/ is treated as a GitHub repository. The task lists files (filtered by file type if provided) and returns the absolute paths as an array. If you specify an output location, the task also writes the list to that location.
 
 :::info Prerequisites
-If the location is not publicly available, you must create an appropriate integration with the required access keys or tokens. Integrate the following with Orkes Conductor, depending on your source:
+If the location of the file is not publicly available, you must create an appropriate integration with the required access keys or tokens. Integrate the following with Orkes Conductor, depending on your source:
 - [Git Repository]
 - [Cloud Providers]
 :::
