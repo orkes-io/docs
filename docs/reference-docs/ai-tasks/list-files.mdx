@@ -16,8 +16,8 @@ During execution, the task detects the input type from the URL scheme. For examp
 
 :::info Prerequisites
 If the location of the file is not publicly available, you must create an appropriate integration with the required access keys or tokens. Integrate the following with Orkes Conductor, depending on your source:
-- [Git Repository]
-- [Cloud Providers]
+- [Git Repository](/content/integrations/git-repository)
+- [Cloud Providers](/content/category/integrations/cloud-provider)
 :::
 
 ## Task parameters
@@ -27,7 +27,7 @@ Configure these parameters for the List Files task.
 | Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- |
 | inputParameters.**inputLocation** | The location of the files to be listed. Example based on the integration type:<ul><li>Cloud Storage<ul><li>s3://bucketname/folder</li><li>gs://path</li><li>azureblob://path</li></ul></li><li>Git Repositories<ul><li>https://github.com/owner/repo</li><li>https://gitlab.com/owner/repo</li></ul></li><li>Website Sitemap<ul><li>https://example.com/sitemap.xml (full path required)</li></ul></li><li>Single Page<ul><li>https://example.com/page.html</li></ul></li></ul>It can also be [passed as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor). | Required. | 
-| inputParameters.**integrationName** | If the location of the file to be listed is not publicly available, select the integration name of the Git Repository or Cloud Providers integrated with your Conductor cluster.<br/><br/>**Note**: If you haven’t configured any integration on your Orkes Conductor cluster, go to the **Integrations** tab and configure the [Git Repository] or required [Cloud Providers]. | Optional. |
+| inputParameters.**integrationName** | If the location of the file to be listed is not publicly available, select the integration name of the Git Repository or Cloud Providers integrated with your Conductor cluster.<br/><br/>**Note**: If you haven’t configured any integration on your Orkes Conductor cluster, go to the **Integrations** tab and configure the [Git Repository](/content/integrations/git-repository) or required [Cloud Providers](/content/category/integrations/cloud-provider). | Optional. |
 | inputParameters.**fileTypes** | The file types to be listed. If omitted, all file types are included. Supported values: <ul><li>java</li><li>xls</li><li>csv</li><li>pdf</li><li>all</li></ul> Supports multiple file types. | Optional. |
 | inputParameters.**outputLocation** | The storage location where the resulting list of files is to be stored as a text file. Each line in the file contains one absolute path. It can also be [passed as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor). | Optional. | 
 | inputParameters.**integrationNames** | A key-value map of integration types and names. Use this when multiple integrations are needed.<br/><br/>The **key** represents the type of integration (for example, git, aws, gcp, hubspot), and the **value** specifies the name of the corresponding integration. | Optional. | 

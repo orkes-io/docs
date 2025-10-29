@@ -16,8 +16,8 @@ During execution, the task extracts text content from the specified location and
 
 :::info Prerequisites
 If the location of the document is not publicly available, you must create an appropriate integration with the required access keys or tokens. Integrate the following with Orkes Conductor, depending on your source:
-- [Git Repository]
-- [Cloud Providers]
+- [Git Repository](/content/integrations/git-repository)
+- [Cloud Providers](/content/category/integrations/cloud-provider)
 :::
 
 ## Task parameters
@@ -26,7 +26,7 @@ Configure these parameters for the Parse Document task.
 
 | Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- |
-| inputParameters.**integrationName** | If the location of the document to be parsed is not publicly available, select the integration name of the Git Repository or Cloud Providers integrated with your Conductor cluster.<br/><br/>**Note**: If you haven’t configured any integration on your Orkes Conductor cluster, go to the **Integrations** tab and configure the [Git Repository] or required [Cloud Providers]. | Optional. |
+| inputParameters.**integrationName** | If the location of the document to be parsed is not publicly available, select the integration name of the Git Repository or Cloud Providers integrated with your Conductor cluster.<br/><br/>**Note**: If you haven’t configured any integration on your Orkes Conductor cluster, go to the **Integrations** tab and configure the [Git Repository](/content/integrations/git-repository) or required [Cloud Providers](/content/category/integrations/cloud-provider). | Optional. |
 | inputParameters.**url** | The URL of the document or archive to parse. Examples for URL format:<ul><li>s3://bucket/document.pdf</li><li>https://example.com/document.pdf</li><li>file:///path/to/document.pdf</li></ul> | Required. |
 | inputParameters.**mediaType** | The media type to parse. If omitted, the system automatically detects it. All documents are converted to Markdown. Supported values:<table><thead><tr><th>Parameter</th><th>Description</th></tr></thead><tbody><tr><td>`all`</td><td>Document type is automatically detected based on content and file extension.</td></tr><tr><td>`application/vnd.openxmlformats-officedocument.wordprocessingml.document`</td><td>For Word document (.docx).</td></tr><tr><td>`application/vnd.openxmlformats-officedocument.spreadsheetml.sheet`</td><td>For Excel spreadsheet (.xlsx).</td></tr><tr><td>`application/vnd.openxmlformats-officedocument.presentationml.presentation`</td><td>For PowerPoint presentation (.pptx).</td></tr><tr><td>`application/msword`</td><td>For Word document (.doc).</td></tr><tr><td>`application/vnd.ms-excel`</td><td>For Excel spreadsheet (.xls).</td></tr><tr><td>`application/vnd.ms-powerpoint`</td><td>For PowerPoint presentation (.ppt).</td></tr><tr><td>`application/pdf`</td><td>For PDF document.</td></tr><tr><td>`text/html`</td><td>For HTML files.</td></tr><tr><td>`image/jpeg`, `image/png`, `image/gif`, `image/bmp`, `image/tiff`</td><td>Image will be processed with OCR (Optical Character Recognition) to extract text content and convert to Markdown format.</td></tr><tr><td>`application/zip`, `application/x-zip-compressed`</td><td>ZIP archive will be automatically extracted and all supported documents inside will be parsed and converted to Markdown.</td></tr><tr><td>`text/plain`, `text/markdown`</td><td>Text content will be parsed and converted to Markdown format with appropriate formatting.</td></tr></tbody></table>It can also be [passed as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor). | Optional. | 
 | inputParameters.**chunkSize** | The maximum number of characters per chunk. Enter 0 for no chunking, or a value between 100 and 10,000 for semantic chunking.<br/><br/>The default value is 0, where the entire document will be returned as a single markdown output. | Optional. | 
