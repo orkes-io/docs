@@ -514,6 +514,22 @@ const sidebars = {
                         },
                         {
                             type: 'category',
+                            label: 'Cloud Providers',
+                            link: {
+                                type: 'generated-index',
+                                title: 'Cloud Providers',
+                                slug: '/category/integrations/cloud-provider'
+                            },
+                            items: [
+                                {
+                                    type: 'doc',
+                                    id: 'integrations/cloud-provider/aws',
+                                    label: 'AWS',
+                                },
+                            ],
+                        },
+                        {
+                            type: 'category',
                             label: 'RDBMS',
                             link: {
                                 type: 'generated-index',
@@ -530,7 +546,7 @@ const sidebars = {
                         },
                         {
                             type: 'category',
-                            label: 'Integrations',
+                            label: 'Email/Git',
                             link: {
                                 type: 'generated-index',
                                 title: 'Email/Git',
