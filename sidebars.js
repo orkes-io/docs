@@ -526,6 +526,11 @@ const sidebars = {
                                     id: 'integrations/cloud-provider/aws',
                                     label: 'AWS',
                                 },
+                                {
+                                    type: 'doc',
+                                    id: 'integrations/cloud-provider/gcp',
+                                    label: 'GCP',
+                                },
                             ],
                         },
                         {
