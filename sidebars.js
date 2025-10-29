@@ -335,7 +335,7 @@ const sidebars = {
                         type: 'generated-index',
                         title: 'Integrations',
                         slug: '/category/integrations',
-                        description: 'Integrate your Orkes Conductor cluster with various AI, LLMs, vector databases, message brokers, emails, and RDBMS systems.',
+                        description: 'Integrate your Orkes Conductor cluster with various AI, LLMs, vector databases, message brokers, emails, git providers, and RDBMS systems.',
                     },
                     className: 'leftMenuHeader',
                     items: [
@@ -427,17 +427,32 @@ const sidebars = {
                         },
                         {
                             type: 'category',
-                            label: 'Email',
+                            label: 'Vector Databases',
                             link: {
                                 type: 'generated-index',
-                                title: 'Email Integrations',
-                                slug: '/category/integrations/email'
+                                title: 'Vector Databases Integrations',
+                                slug: '/category/integrations/vector-databases'
                             },
                             items: [
                                 {
                                     type: 'doc',
-                                    id: 'integrations/email/sendgrid',
-                                    label: 'SendGrid Email',
+                                    id: 'integrations/vector-databases/pinecone',
+                                    label: 'Pinecone',
+                                },
+                                {
+                                    type: 'doc',
+                                    id: 'integrations/vector-databases/weaviate',
+                                    label: 'Weaviate',
+                                },
+                                {
+                                    type: 'doc',
+                                    id: 'integrations/vector-databases/postgres-vector-database',
+                                    label: 'Postgres Vector Database',
+                                },
+                                {
+                                    type: 'doc',
+                                    id: 'integrations/vector-databases/mongo-vector-database',
+                                    label: 'Mongo Vector Database',
                                 },
                             ],
                         },
@@ -499,6 +514,27 @@ const sidebars = {
                         },
                         {
                             type: 'category',
+                            label: 'Cloud Providers',
+                            link: {
+                                type: 'generated-index',
+                                title: 'Cloud Providers',
+                                slug: '/category/integrations/cloud-provider'
+                            },
+                            items: [
+                                {
+                                    type: 'doc',
+                                    id: 'integrations/cloud-provider/aws',
+                                    label: 'AWS',
+                                },
+                                {
+                                    type: 'doc',
+                                    id: 'integrations/cloud-provider/gcp',
+                                    label: 'GCP',
+                                },
+                            ],
+                        },
+                        {
+                            type: 'category',
                             label: 'RDBMS',
                             link: {
                                 type: 'generated-index',
@@ -515,32 +551,22 @@ const sidebars = {
                         },
                         {
                             type: 'category',
-                            label: 'Vector Databases',
+                            label: 'Email/Git',
                             link: {
                                 type: 'generated-index',
-                                title: 'Vector Databases Integrations',
-                                slug: '/category/integrations/vector-databases'
+                                title: 'Email/Git',
+                                slug: '/category/integrations/email'
                             },
                             items: [
                                 {
                                     type: 'doc',
-                                    id: 'integrations/vector-databases/pinecone',
-                                    label: 'Pinecone',
+                                    id: 'integrations/sendgrid',
+                                    label: 'SendGrid Email',
                                 },
                                 {
                                     type: 'doc',
-                                    id: 'integrations/vector-databases/weaviate',
-                                    label: 'Weaviate',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/vector-databases/postgres-vector-database',
-                                    label: 'Postgres Vector Database',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/vector-databases/mongo-vector-database',
-                                    label: 'Mongo Vector Database',
+                                    id: 'integrations/git',
+                                    label: 'Git Repository',
                                 },
                             ],
                         },

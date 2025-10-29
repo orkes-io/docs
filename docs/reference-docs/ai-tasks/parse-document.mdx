@@ -1,0 +1,136 @@
+---
+sidebar_position: 13
+slug: "/reference-docs/ai-tasks/parse-document"
+description: "The Parse Document task is used to extract, convert, and chunk documents from multiple sources into Markdown format optimized for LLM and semantic processing."
+---
+
+# Parse Document
+
+:::note Available Since
+- v5.2.38 and later
+:::
+
+The Parse Document task is used to parse and chunk documents from various sources such as cloud storage (S3, GCS, Azure), Git repositories, and websites. It supports multiple file types, including Office documents, PDFs, HTML, images (via OCR), ZIP archives, and text files.
+
+During execution, the task extracts text content from the specified location and converts it into Markdown format optimized for LLM processing. The Markdown format preserves headings, tables, lists, and other document structures, making it suitable for embedding generation, summarization, and semantic search workflows.
+
+:::info Prerequisites
+If the location of the document is not publicly available, you must create an appropriate integration with the required access keys or tokens. Integrate the following with Orkes Conductor, depending on your source:
+- [Git Repository](/content/integrations/git-repository)
+- [Cloud Providers](/content/category/integrations/cloud-provider)
+:::
+
+## Task parameters
+
+Configure these parameters for the Parse Document task.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- |
+| inputParameters.**integrationName** | If the location of the document to be parsed is not publicly available, select the integration name of the Git Repository or Cloud Providers integrated with your Conductor cluster.<br/><br/>**Note**: If you haven’t configured any integration on your Orkes Conductor cluster, go to the **Integrations** tab and configure the [Git Repository](/content/integrations/git-repository) or required [Cloud Providers](/content/category/integrations/cloud-provider). | Optional. |
+| inputParameters.**url** | The URL of the document or archive to parse. Examples for URL format:<ul><li>s3://bucket/document.pdf</li><li>https://example.com/document.pdf</li><li>file:///path/to/document.pdf</li></ul> | Required. |
+| inputParameters.**mediaType** | The media type to parse. If omitted, the system automatically detects it. All documents are converted to Markdown. Supported values:<table><thead><tr><th>Parameter</th><th>Description</th></tr></thead><tbody><tr><td>`all`</td><td>Document type is automatically detected based on content and file extension.</td></tr><tr><td>`application/vnd.openxmlformats-officedocument.wordprocessingml.document`</td><td>For Word document (.docx).</td></tr><tr><td>`application/vnd.openxmlformats-officedocument.spreadsheetml.sheet`</td><td>For Excel spreadsheet (.xlsx).</td></tr><tr><td>`application/vnd.openxmlformats-officedocument.presentationml.presentation`</td><td>For PowerPoint presentation (.pptx).</td></tr><tr><td>`application/msword`</td><td>For Word document (.doc).</td></tr><tr><td>`application/vnd.ms-excel`</td><td>For Excel spreadsheet (.xls).</td></tr><tr><td>`application/vnd.ms-powerpoint`</td><td>For PowerPoint presentation (.ppt).</td></tr><tr><td>`application/pdf`</td><td>For PDF document.</td></tr><tr><td>`text/html`</td><td>For HTML files.</td></tr><tr><td>`image/jpeg`, `image/png`, `image/gif`, `image/bmp`, `image/tiff`</td><td>Image will be processed with OCR (Optical Character Recognition) to extract text content and convert to Markdown format.</td></tr><tr><td>`application/zip`, `application/x-zip-compressed`</td><td>ZIP archive will be automatically extracted and all supported documents inside will be parsed and converted to Markdown.</td></tr><tr><td>`text/plain`, `text/markdown`</td><td>Text content will be parsed and converted to Markdown format with appropriate formatting.</td></tr></tbody></table>It can also be [passed as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor). | Optional. | 
+| inputParameters.**chunkSize** | The maximum number of characters per chunk. Enter 0 for no chunking, or a value between 100 and 10,000 for semantic chunking.<br/><br/>The default value is 0, where the entire document will be returned as a single markdown output. | Optional. | 
+
+The following are generic configuration parameters that can be applied to the task and are not specific to the Parse Document task.
+
+<details>
+<summary>Other generic parameters</summary>
+
+Here are other parameters for configuring the task behavior.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| optional | Whether the task is optional. The default is false. <br/> <br/> If set to true, the workflow continues to the next task even if this task is in progress or fails.| Optional. | 
+
+</details>
+
+## Task configuration
+
+This is the task configuration for a Parse  Document task.
+
+```json
+{
+     "name": "parse_document",
+     "taskReferenceName": "parse_document_ref",
+     "inputParameters": 
+     {
+       "integrationName": "<YOUR-INTEGRATION-HERE>",
+       "url": "<DOCUMENT-URL>",
+       "mediaType": "auto",
+       "chunkSize": 1024
+     },
+     "type": "PARSE_DOCUMENT"
+}
+```
+
+## Task output
+
+The Parse Document task will return the following parameters.
+
+| Parameter | Description |
+| --------- | ----------- |
+| result | Array of strings containing the parsed document text. Each element is one text segment; if *chunkSize* is 0, the array contains a single element with the full content. |
+
+## Adding a Parse Document task in UI
+
+**To add a Parse Document task:**
+
+1. In your workflow, select the (**+**) icon and add a **Parse Document** task.
+2. (Optional) For non-public URLs, in **Integration Name**, select the integration already added to the cluster from where the documents are to be parsed.
+3. In **Document URL**, enter the document URL to be parsed. 
+4. (Optional) In **Media Type**, select the document type. Use **Auto-detect** for automatically detecting based on the content and file extension. 
+5. (Optional) In **Chunking Configuration**, enter the **Chunk Size**.
+
+<center><p><img src="/content/img/parse-document-task-ui.png" alt="Parse Document Task" width="100%" height="auto"/></p></center>
+
+## Examples
+
+Here are some examples for using the Parse Document task.
+
+<details>
+<summary>Using Parse Document task</summary>
+
+To illustrate the Parse Document task, the following workflow parses a publicly available PDF.
+
+**To create a workflow definition using Conductor UI:**
+
+1. Go to **Definitions** > **Workflow**, from the left navigation menu on your Conductor cluster.
+2. Select **+ Define workflow**.
+3. In the **Code** tab, paste the following code:
+
+**Workflow definition:**
+
+```json
+{
+  "name": "parse_document_example_pdf",
+  "description": "Parse a public PDF and return text segments",
+  "version": 1,
+  "schemaVersion": 2,
+  "tasks": [
+    {
+      "name": "parse_document",
+      "taskReferenceName": "pd",
+      "type": "PARSE_DOCUMENT",
+      "inputParameters": {
+        "url": "https://www.niti.gov.in/sites/default/files/2023-02/Annual-Report-2022-2023-English_06022023_compressed.pdf",
+        "mediaType": "application/pdf",
+        "chunkSize": 1000
+      }
+    }
+  ]
+}
+```
+
+4. Select **Save** > **Confirm**.
+
+Let’s execute the workflow using the **Execute** button. 
+
+When executed, the workflow fetches the PDF from the provided URL, extracts readable text content, and divides it into smaller text segments based on the specified chunkSize. 
+
+After successful execution, the **Parse Document** task produces the following output:
+
+<center><p><img src="/content/img/parse-document-output.png" alt="Output of the parse document task" width="100%" height="auto"/></p></center>
+
+Each segment preserves the structure and order of the document, including section headers and line breaks. The extracted segments are returned in the result array and are ready for downstream processing, such as summarization, embedding generation, or indexing.
+
+</details>

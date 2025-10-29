@@ -1,0 +1,66 @@
+---
+slug: "/integrations/cloud-provider/aws"
+description: "Learn how to integrate AWS with your Orkes Conductor cluster to let tasks like List Files and Parse Document access private S3 buckets securely."
+---
+
+# AWS Integration with Orkes Conductor
+
+To use AI tasks like [List Files](/content/reference-docs/ai-tasks/list-files) and [Parse Document](/content/reference-docs/ai-tasks/parse-document) that need to access files or documents stored in AWS services such as S3, you must integrate your Conductor cluster with AWS. This integration is required when accessing private buckets or resources that aren’t publicly available. This guide explains how to integrate AWS with Orkes Conductor. Here’s an overview:
+
+1. Get the required credentials from AWS.
+2. Configure a new AWS integration in Orkes Conductor.
+3. Set access limits for the integration to govern which applications or groups can use it.
+
+## Step 1: Get the AWS credentials
+
+To integrate AWS with Orkes Conductor, retrieve the following credentials from your AWS account:
+
+- [AWS account ID](https://docs.aws.amazon.com/accounts/latest/reference/manage-acct-identifiers.html#FindAccountId) and **region**
+- (If assuming a role from another AWS account) [Amazon Resource Name (ARN)](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference-arns.html) and [External ID](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-user_externalid.html)
+- (If the connection is established using the access key and secret from the AWS account) [Access key and secret from AWS account](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html).
+
+## Step 2: Add an integration for AWS
+
+After obtaining the credentials, add an AWS integration to your Conductor cluster.
+
+**To create an AWS integration:**
+
+1. Go to **Integrations** from the left navigation menu on your Conductor cluster.
+2. Select **+ New integration**.
+3. In the **Cloud Credentials** section, choose **AWS**.
+4. Select **+ Add** and enter the following parameters:
+
+| Parameters | Description | Required/Optional | 
+| ---------- | ----------- | ----------------- | 
+| Integration name | A name for the integration. | Required. | 
+| Connection type | The connection type, depending upon how to establish the connection. Supported values:<ul><li>**Current Conductor Role**–Use the current Conductor role to establish the connection.</li><li>**Assume External Role**–Assume a role belonging to another AWS account to establish the connection. [Learn more](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-user_externalid.html).</li><li>**Access Key/Secret**–Establish the connection using the access key and secret.</li></ul> | Required. | 
+| Region | The valid AWS region where the resource is located. For example, **us-east-1**. | Required. | 
+| Account ID | The AWS account ID. | Optional. | 
+| Role ARN | The Amazon Resource Name (ARN) to set up the connection. | Required if the _Connection Type_ is chosen as _Assume External Role_. | 
+| External ID | The external ID that will assume the role, if applicable. [External ID](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-user_externalid.html) is used in an IAM role trust policy to designate the person who will assume the role. | Required if the _Connection Type_ is chosen as _Assume External Role_. | 
+| Access key | The access key of the AWS account. | Required if the _Connection Type_ is chosen as _Access Key/Secret_. | 
+| Access secret | The access secret of the AWS account. | Required if the _Connection Type_ is chosen as _Access Key/Secret_. | 
+| Description | A description of your integration. | Required. | 
+
+<p align="center"><img src="/content/img/aws-integration.png" alt="AWS Integration with Orkes Conductor" width="60%" height="auto"></img></p>
+
+5. (Optional) Toggle the **Active** button off if you don’t want to activate the integration instantly.
+6. Select **Save**.
+
+## Step 3: Set access limits to integration
+
+Once the integration is configured, set access controls to manage which [applications](https://orkes.io/content/access-control-and-security/applications) or [groups](https://orkes.io/content/access-control-and-security/users-and-groups#groups) can use the provider.
+
+**To provide access to an application or group:**
+
+1. Go to **Access Control** > **Applications** or **Groups** from the left navigation menu on your Conductor cluster.
+2. Create a new group/application or select an existing one.
+3. In the **Permissions** section, select **+ Add Permission**.
+4. In the **Integration** tab, select the required integration and toggle the necessary permissions.
+5. Select **Add Permissions**. 
+
+<p align="center"><img src="/content/img/rbac-aws-integration.png" alt="Add Permissions for Integrations" width="70%" height="auto"></img></p>
+
+The group or application can now access the provider according to the configured permissions.
+
+With the integration in place, you can now create workflows using the [List Files](/content/reference-docs/ai-tasks/list-files) task or the [Parse Document](/content/reference-docs/ai-tasks/parse-document) task.

@@ -1,0 +1,140 @@
+---
+sidebar_position: 12
+slug: "/reference-docs/ai-tasks/list-files"
+description: "The List Files task lists files from cloud storage, Git repositories, or websites to enable organized access and downstream processing."
+---
+
+# List Files
+
+:::note Available Since
+- v5.2.38 and later
+:::
+
+The List Files task is used to retrieve a list of files from a specific location. The task determines the source type from the URL scheme and lists all files at that location. It supports cloud storage buckets, Git repositories, and website sitemaps.
+
+During execution, the task detects the input type from the URL scheme. For example, a URL starting with s3:// is treated as an AWS S3 bucket, and a URL that begins with https://github.com/ is treated as a GitHub repository. The task lists files (filtered by file type if provided) and returns the absolute paths as an array. If you specify an output location, the task also writes the list to that location.
+
+:::info Prerequisites
+If the location of the file is not publicly available, you must create an appropriate integration with the required access keys or tokens. Integrate the following with Orkes Conductor, depending on your source:
+- [Git Repository](/content/integrations/git-repository)
+- [Cloud Providers](/content/category/integrations/cloud-provider)
+:::
+
+## Task parameters
+
+Configure these parameters for the List Files task.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- |
+| inputParameters.**inputLocation** | The location of the files to be listed. Example based on the integration type:<ul><li>Cloud Storage<ul><li>s3://bucketname/folder</li><li>gs://path</li><li>azureblob://path</li></ul></li><li>Git Repositories<ul><li>https://github.com/owner/repo</li><li>https://gitlab.com/owner/repo</li></ul></li><li>Website Sitemap<ul><li>https://example.com/sitemap.xml (full path required)</li></ul></li><li>Single Page<ul><li>https://example.com/page.html</li></ul></li></ul>It can also be [passed as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor). | Required. | 
+| inputParameters.**integrationName** | If the location of the file to be listed is not publicly available, select the integration name of the Git Repository or Cloud Providers integrated with your Conductor cluster.<br/><br/>**Note**: If you haven’t configured any integration on your Orkes Conductor cluster, go to the **Integrations** tab and configure the [Git Repository](/content/integrations/git-repository) or required [Cloud Providers](/content/category/integrations/cloud-provider). | Optional. |
+| inputParameters.**fileTypes** | The file types to be listed. If omitted, all file types are included. Supported values: <ul><li>java</li><li>xls</li><li>csv</li><li>pdf</li><li>all</li></ul> Supports multiple file types. | Optional. |
+| inputParameters.**outputLocation** | The storage location where the resulting list of files is to be stored as a text file. Each line in the file contains one absolute path. It can also be [passed as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor). | Optional. | 
+| inputParameters.**integrationNames** | A key-value map of integration types and names. Use this when multiple integrations are needed.<br/><br/>The **key** represents the type of integration (for example, git, aws, gcp, hubspot), and the **value** specifies the name of the corresponding integration. | Optional. | 
+
+The following are generic configuration parameters that can be applied to the task and are not specific to the List Files task.
+
+<details>
+<summary>Other generic parameters</summary>
+
+Here are other parameters for configuring the task behavior.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| optional | Whether the task is optional. The default is false. <br/> <br/> If set to true, the workflow continues to the next task even if this task is in progress or fails.| Optional. | 
+
+</details>
+
+## Task configuration
+
+This is the task configuration for a List Files task.
+
+```json
+{
+      "name": "list_files",
+      "taskReferenceName": "lf",
+      "type": "LIST_FILES",
+      "inputParameters": {
+        "inputLocation": "<YOUR-LOCATION>",
+        "fileTypes": ["<YOUR-FILE-TYPE>"]
+      }
+    }
+```
+
+## Task output
+
+The List Files task will return the following parameters.
+
+| Parameter | Description |
+| --------- | ----------- |
+| files | An array of absolute file paths listed from the input location. | 
+
+## Adding a List Files task in UI
+
+**To add a List Files task:**
+
+1. In your workflow, select the (**+**) icon and add a **List Files** task.
+2. In **Input Location**, enter the location of the files to be listed.
+3. (Optional) For private URLs, in **Integration Name**, select the integration already added to the cluster from where the files are to be listed.
+4. (Optional) In **File Types**, select the file type to be listed. Select all or leave blank to include all types.
+5. (Optional) In **Output Location**, enter an output location to store the list of files as a text file.
+6. (Optional) In **Advanced Integration Configuration**, select **+ Add Integration** when multiple integrations are needed. The **key** represents the type of integration (for example, git, aws, gcp, hubspot), and the **value** specifies the name of the corresponding integration. 
+
+<center><p><img src="/content/img/list-file-task-ui.png" alt="List Files Task" width="100%" height="auto"/></p></center>
+
+## Examples
+
+Here are some examples for using the List Files task.
+
+<details>
+<summary>Using List Files task</summary>
+
+To illustrate the use of the List Files task, consider the following workflow that lists all Markdown (.md) files from a public GitHub repository.
+
+**To create a workflow definition using Conductor UI:**
+
+1. Go to **Definitions** > **Workflow**, from the left navigation menu on your Conductor cluster.
+2. Select **+ Define workflow**.
+3. In the **Code** tab, paste the following code:
+
+**Workflow definition:**
+
+```json
+{
+ "name": "list_files_demo",
+ "description": "Simple test workflow for LIST_FILES",
+ "version": 1,
+ "tasks": [
+   {
+     "name": "list_files",
+     "taskReferenceName": "lf",
+     "inputParameters": {
+       "inputLocation": "https://github.com/conductor-oss/conductor",
+       "fileTypes": [
+         "md"
+       ],
+       "integrationNames": {},
+       "outputLocation": ""
+     },
+     "type": "LIST_FILES"
+   }
+ ],
+ "schemaVersion": 2
+}
+```
+
+4. Select **Save** > **Confirm**.
+
+Let’s execute the workflow using the **Execute** button. 
+
+When executed, this workflow connects to the specified GitHub repository, identifies all files with the .md extension, and returns a list of their absolute paths.
+
+The task output contains a key named files, which stores an array of file URLs retrieved from the repository.
+
+After successful execution, the **List Files** task produces the following output:
+
+<center><p><img src="/content/img/list-file-task-output.png" alt="Output of the list files task" width="100%" height="auto"/></p></center>
+
+Each element in the files array represents one file path from the input location. These paths can be used directly by downstream tasks for further processing.
+
+</details>
