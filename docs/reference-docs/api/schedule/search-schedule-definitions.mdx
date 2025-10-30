@@ -1,0 +1,416 @@
+# Search Schedule Definitions with Pagination
+
+**Endpoint**: `GET /api/scheduler/schedules/search`
+
+Retrieves a paginated list of schedule definitions based on the specified query parameters. You can filter results by workflow name, schedule name, sort order, and paused status.
+
+## Query parameters
+
+| Parameter | Description | Type | Required/Optional | 
+| --------- | ----------- | ---- | ----------------- | 
+| start | The index of the first record to retrieve. Used for pagination. Default is 0.<br/><br/>For example, start=0 returns results from the first record, and start=2 skips the first two records and returns results starting from the third. | integer | Optional. | 
+| size | The maximum number of records to return per page. For example, size=5 returns up to five records starting from the offset defined by `start`. Default is 100. | integer | Optional. |
+| sort | The field used to sort the results. Supported values:<ul><li>`name`</li><li>`workflowname`</li><li>`createtime`</li><li>`updatedtime`</li><li>`startworkflowrequest` (sorts by workflow name)</li></ul>If no value is specified or if the value doesn’t match one of these fields, results are sorted by `name` (schedule name) by default. | string | Optional. | 
+| workflowName | Filters the results by the specified workflow name. | string | Optional. |
+| name | Filters the results by the specified schedule name. | string | Optional. | 
+| paused | Filters results based on the schedule’s paused state. <br/><br/>Set to `true` to return only paused schedules, or `false` to return active ones. | boolean | Optional. | 
+
+## Response
+
+Returns an object that includes the total number of matching schedules (totalHits) and an array of schedule details (results).
+
+## Examples
+
+<details>
+<summary>Sort the schedule definitions by schedule name with pagination</summary>
+
+**Request**
+
+```json
+curl -X 'GET' \
+  'https://<YOUR-CLUSTER>/api/scheduler/schedules/search?start=0&size=2&sort=name' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+Since the request used `start`=0 and `size`=2, sorted by `name`, the result returned the first two definitions sorted alphabetically by schedule name.
+
+```json
+{
+  "totalHits": 10,
+  "results": [
+    {
+      "tags": [],
+      "name": "annual_upgrade",
+      "cronExpression": "0 0 12 31 JAN ?",
+      "runCatchupScheduleInstances": false,
+      "paused": true,
+      "startWorkflowRequest": {
+        "name": "update_eks_workflow_development",
+        "version": 1,
+        "correlationId": "",
+        "input": {
+          "organizationId": "",
+          "clusterName": "",
+          "cloudEnvTag": "",
+          "version": "",
+          "force": ""
+        },
+        "taskToDomain": {},
+        "priority": 0
+      },
+      "zoneId": "UTC",
+      "createTime": 1712207849301,
+      "updatedTime": 1724309841595,
+      "createdBy": "john.doe@acme.com",
+      "updatedBy": "john.doe@acme.com",
+      "queueMsgId": "annual_upgrade"
+    },
+    {
+      "tags": [
+        {
+          "key": "team",
+          "value": "docs"
+        }
+      ],
+      "name": "assignPR",
+      "cronExpression": "0 * * ? * *",
+      "runCatchupScheduleInstances": false,
+      "paused": true,
+      "startWorkflowRequest": {
+        "name": "github_pr_reviewer_assignment",
+        "version": 2,
+        "correlationId": "",
+        "input": {},
+        "taskToDomain": {},
+        "priority": 0
+      },
+      "zoneId": "UTC",
+      "createTime": 1748866217788,
+      "updatedTime": 1748866349489,
+      "createdBy": "john.doe@acme.com",
+      "updatedBy": "john.doe@acme.com",
+      "description": "Sample scheduler for running workflow every 2 mins",
+      "orgId": "0000",
+      "queueMsgId": "assignPR"
+    }
+  ]
+}
+```
+
+</details>
+
+
+<details>
+
+<summary>Sort the schedule definitions by pagination</summary>
+
+**Request**
+
+```json
+curl -X 'GET' \
+  'https://<YOUR-CLUSTER>/api/scheduler/schedules/search?start=3&size=5&sort=name' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+Since the request used `start`=3 and `size`=5, sorted by `name`, the result skipped the first three records and returned the next five schedule definitions in ascending order by schedule name.
+
+```json
+{
+  "totalHits": 10,
+  "results": [
+    {
+      "tags": [],
+      "name": "emailNurturingAutomation",
+      "cronExpression": "0 0 12 L * ?",
+      "runCatchupScheduleInstances": false,
+      "paused": true,
+      "startWorkflowRequest": {
+        "name": "emailNurturing",
+        "correlationId": "",
+        "input": {
+          "input": "open"
+        },
+        "taskToDomain": {},
+        "priority": 0
+      },
+      "zoneId": "US/Pacific",
+      "scheduleStartTime": 1741896000000,
+      "scheduleEndTime": 1743537600000,
+      "createTime": 1741854890817,
+      "updatedTime": 1753878026414,
+      "createdBy": "john.doe@acme.com",
+      "updatedBy": "john.doe@acme.com",
+      "description": "Email nurturing workflow for \"open\" event",
+      "orgId": "0000",
+      "queueMsgId": "emailNurturingAutomation"
+    },
+    {
+      "tags": [],
+      "name": "emailNurturingAutomation_1",
+      "cronExpression": "0 0 12 L * ?",
+      "runCatchupScheduleInstances": false,
+      "paused": true,
+      "startWorkflowRequest": {
+        "name": "emailNurturing",
+        "correlationId": "",
+        "input": {
+          "input": "click"
+        },
+        "taskToDomain": {},
+        "priority": 0
+      },
+      "zoneId": "US/Pacific",
+      "scheduleStartTime": 1741896000000,
+      "scheduleEndTime": 1743537600000,
+      "createTime": 1741854966363,
+      "updatedTime": 1745916513575,
+      "createdBy": "john.doe@acme.com",
+      "updatedBy": "john.doe@acme.com",
+      "description": "Email nurturing workflow for \"click\" event",
+      "orgId": "0000",
+      "queueMsgId": "emailNurturingAutomation_1"
+    },
+    {
+      "tags": [
+        {
+          "key": "delete",
+          "value": "maybe"
+        }
+      ],
+      "name": "metaMAN",
+      "cronExpression": "0 1/2 * ? * *",
+      "runCatchupScheduleInstances": false,
+      "paused": true,
+      "startWorkflowRequest": {
+        "name": "NewWorkflow_gp65l",
+        "correlationId": "",
+        "input": {
+          "": ""
+        },
+        "taskToDomain": {},
+        "priority": 0
+      },
+      "zoneId": "US/Samoa",
+      "createTime": 1724304500671,
+      "updatedTime": 1724311646839,
+      "createdBy": "john.doe@acme.com",
+      "updatedBy": "john.doe@acme.com",
+      "description": "create",
+      "queueMsgId": "metaMAN"
+    },
+    {
+      "tags": [],
+      "name": "test",
+      "cronExpression": "0 0 12 ? JAN,FEB,APR *",
+      "runCatchupScheduleInstances": false,
+      "paused": false,
+      "startWorkflowRequest": {
+        "name": "NewWorkflow_9mt7n",
+        "version": 1,
+        "correlationId": "",
+        "input": {},
+        "taskToDomain": {},
+        "priority": 0
+      },
+      "zoneId": "UTC",
+      "createTime": 1761736758411,
+      "updatedTime": 1761736758411,
+      "createdBy": "john.doe@acme.com",
+      "updatedBy": "john.doe@acme.com",
+      "description": "",
+      "orgId": "0000",
+      "queueMsgId": "test"
+    },
+    {
+      "tags": [],
+      "name": "testnaj920220sasas",
+      "cronExpression": "0 0 */2 ? * *",
+      "runCatchupScheduleInstances": false,
+      "paused": true,
+      "pausedReason": "Security Error: User not found (createdBy, updatedBy) for testnaj920220sasas",
+      "startWorkflowRequest": {
+        "name": "multiversion",
+        "correlationId": "",
+        "input": {},
+        "taskToDomain": {},
+        "priority": 0
+      },
+      "zoneId": "UTC",
+      "createTime": 1761238168442,
+      "updatedTime": 1761242400114,
+      "createdBy": "john.doe@acme.com",
+      "description": "cool",
+      "orgId": "0000",
+      "queueMsgId": "testnaj920220sasas"
+    }
+  ]
+}
+```
+
+</details>
+
+<details>
+
+<summary>Get schedule definitions with a specific workflow</summary>
+
+**Request**
+
+```json
+curl -X 'GET' \
+  'https://<YOUR-CLUSTER>/api/scheduler/schedules/search?workflowName=Monitor-HTTP-Endpoint-Availability-john' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+Retrieves schedules where the workflow name matches `Monitor-HTTP-Endpoint-Availability-john`.
+
+```json
+{
+  "totalHits": 1,
+  "results": [
+    {
+      "tags": [],
+      "name": "AutomateEndpointMonitoring",
+      "cronExpression": "0 */2 * ? * *",
+      "runCatchupScheduleInstances": false,
+      "paused": true,
+      "startWorkflowRequest": {
+        "name": "Monitor-HTTP-Endpoint-Availability-john",
+        "version": 2,
+        "correlationId": "",
+        "input": {
+          "notification_type": "SMS",
+          "endpoint_url": "https://www.orkes.io/",
+          "notification_from": "14XXXXXXXXX",
+          "notification_to": "12XXXXXXXX"
+        },
+        "taskToDomain": {},
+        "priority": 0
+      },
+      "zoneId": "US/Central",
+      "createTime": 1739347903909,
+      "updatedTime": 1740464299515,
+      "createdBy": "john.doe@acme.com",
+      "updatedBy": "john.doe@acme.com",
+      "description": "Scheduler that runs Monitor-HTTP-Endpoint-Availability workflow every 2 mins.",
+      "orgId": "0000",
+      "queueMsgId": "AutomateEndpointMonitoring"
+    }
+  ]
+}
+```
+
+</details>
+
+<details>
+
+<summary>Get schedule definitions with a specific schedule</summary>
+
+**Request**
+
+```json
+curl -X 'GET' \
+  'https://<YOUR-CLUSTER>/api/scheduler/schedules/search?start=0&size=100&name=assignPR' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+Retrieves the schedule definition with the specified schedule name (assignPR).
+
+```json
+{
+  "totalHits": 1,
+  "results": [
+    {
+      "tags": [
+        {
+          "key": "team",
+          "value": "docs"
+        }
+      ],
+      "name": "assignPR",
+      "cronExpression": "0 * * ? * *",
+      "runCatchupScheduleInstances": false,
+      "paused": true,
+      "startWorkflowRequest": {
+        "name": "github_pr_reviewer_assignment",
+        "version": 2,
+        "correlationId": "",
+        "input": {},
+        "taskToDomain": {},
+        "priority": 0
+      },
+      "zoneId": "UTC",
+      "createTime": 1748866217788,
+      "updatedTime": 1748866349489,
+      "createdBy": "john.doe@acme.com",
+      "updatedBy": "john.doe@acme.com",
+      "description": "Sample scheduler for running workflow every 2 mins",
+      "orgId": "0000",
+      "queueMsgId": "assignPR"
+    }
+  ]
+}
+```
+
+</details>
+
+<details>
+
+<summary>Get all active schedule definitions</summary>
+
+**Request**
+
+```json
+curl -X 'GET' \
+  'https://<YOUR-CLUSTER>/api/scheduler/schedules/search?start=0&size=100&paused=false' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Result**
+
+Returns all schedules that are currently active (not paused).
+
+```json
+{
+  "totalHits": 1,
+  "results": [
+    {
+      "tags": [],
+      "name": "test",
+      "cronExpression": "0 0 12 ? JAN,FEB,APR *",
+      "runCatchupScheduleInstances": false,
+      "paused": false,
+      "startWorkflowRequest": {
+        "name": "NewWorkflow_9mt7n",
+        "version": 1,
+        "correlationId": "",
+        "input": {},
+        "taskToDomain": {},
+        "priority": 0
+      },
+      "zoneId": "UTC",
+      "createTime": 1761736758411,
+      "updatedTime": 1761736758411,
+      "createdBy": "john.doe@acme.com",
+      "updatedBy": "john.doe@acme.com",
+      "description": "",
+      "orgId": "0000",
+      "queueMsgId": "test"
+    }
+  ]
+}
+```
+
+</details>
