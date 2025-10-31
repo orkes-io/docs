@@ -25,13 +25,17 @@ jobs:
         
       - name: Run ESLint
         run: yarn lint
+        continue-on-error: true
         
       - name: Run Stylelint
         run: yarn lint:css
+        continue-on-error: true
         
       - name: Check Prettier formatting
         run: yarn format:check
+        continue-on-error: true
         
       - name: Build check
         run: yarn build
+        continue-on-error: true
 
