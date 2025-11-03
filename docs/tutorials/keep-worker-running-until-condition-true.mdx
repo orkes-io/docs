@@ -8,15 +8,73 @@ import TabItem from "@theme/TabItem";
 import Install from "@site/src/components/install.mdx";
 import CodeBlock from "@theme/CodeBlock";
 
-# Running a Worker Until Condition is met
+# Running a Worker Until a Condition is met
 
-## Introduction - Custom Poll Worker
+This tutorial demonstrates how to create a **custom polling worker** that runs continuously until a specific condition is met.
 
-We can use a worker and keep it running until a condition is met. This is similar to the [HTTP Poll](/content/reference-docs/system-tasks/http-poll) task, where
-you can poll an HTTP endpoint until a specific condition is met. Having a worker do the same is useful
-when you don't have an endpoint to call directly from Conductor.
+You’ll implement this pattern using the Orkes Conductor SDK and learn how to keep a worker active by setting `callbackAfterSeconds`, allowing Conductor to requeue it automatically until your logic determines that completion has been reached.
 
-## Code Sample
+This approach is useful when:
+
+- Your workflow depends on an external condition or background job.
+- You need to monitor progress without repeatedly invoking APIs.
+- You want the worker itself to decide when a task is complete.
+
+:::info Prerequisites:
+- Access to free [Developer Edition](https://developer.orkescloud.com/).
+- Familiarity with Java and [Conductor’s worker SDK](https://orkes.io/content/developer-guides/using-workers).
+- Basic understanding of [task lifecycle statuses](https://orkes.io/content/developer-guides/task-and-workflow-status-in-conductor#task-status).
+:::
+
+## The polling workflow
+
+Use the following workflow definition to create a workflow in Orkes Conductor.
+
+**To create a workflow:**
+
+1. Go to **Definitions** > **Workflow** from the left navigation menu on your Conductor cluster.
+2. Select **+ Define workflow**.
+3. In the **Code** tab, paste the following code:
+
+```json
+{
+  "name": "poll-until-condition-workflow",
+  "description": "This example shows how we can use a worker and keep it running until a condition is true.",
+  "version": 1,
+  "tasks": [
+    {
+      "name": "poll-until-condition-matches-full-worker",
+      "taskReferenceName": "poll-until-condition-matches-full-worker",
+      "type": "SIMPLE",
+      "inputParameters": {
+        "pollCounter": "${workflow.input.pollCounter}",
+        "pollIntervalSeconds": "${workflow.input.pollIntervalSeconds}"
+      }
+    }
+  ],
+  "inputParameters": [
+    "pollCounter",
+    "pollIntervalSeconds"
+  ],
+  "schemaVersion": 2
+}
+```
+
+4. Select **Save** > **Confirm**.
+
+Next, create an application in Orkes Conductor. This application provides the access keys (key and secret) that your SDK uses to authenticate and run the workflow.
+
+**To create an application:**
+
+1. Go to **Access Control** > **Applications** from the left navigation menu on your Conductor cluster.
+2. [Create an application](https://orkes.io/content/access-control-and-security/applications#configuring-applications) and get the access keys. 
+3. [Assign EXECUTE permission](https://orkes.io/content/access-control-and-security/applications#configuring-applications:~:text=Add%20permissions%20to%20grant%20application%2Dlevel%20access%20to%20resources%2C%20including%20workflows%2C%20tasks%2C%20secrets%2C%20environment%20variables%2C%20tags%2C%20domains%2C%20integrations%2C%20and%20prompts.) to the workflow created in the previous step.
+
+Once done, [authenticate the SDK project](https://orkes.io/content/sdks/authentication#sdk-authentication) with the generated access keys.
+
+## Implement the custom worker
+
+Use the Java SDK to create a worker that keeps running until a condition is met. Create a file named `PollUntilConditionMeetsWorker.java` and add the following code:
 
 <CodeBlock language="java" title={ <div ><i>Complete source file on Github:</i> <a href="https://github.com/conductor-sdk/orkes-java-springboot2-example/blob/main/src/main/java/io/orkes/example/banking/workers/PollUntilConditionMeetsWorker.java">.../workers/PollUntilConditionMeetsWorker.java</a></div>}>
 {`  @Override
@@ -55,6 +113,22 @@ when you don't have an endpoint to call directly from Conductor.
 
 </CodeBlock>
 
+This worker uses the `callbackAfterSeconds` attribute to control re-execution.
+
+Here’s how it works:
+
+- The worker tracks the current iteration in its output data.
+- On each execution, it increments the iteration count.
+- If the `currentIteration` is less than `pollCounter`, it sets the task status to **IN_PROGRESS**.
+- Conductor automatically re-queues the task after the configured `pollIntervalSeconds`.
+- When the condition is met (iteration reaches pollCounter), the task is marked **COMPLETED**.
+
+This approach maintains the worker’s state across polls without requiring an external data store. 
+
+:::info Note
+Such workers can be implemented in any language supported by Orkes Conductor SDKs.
+:::
+
 <center>
   <iframe
     width="560"
@@ -70,44 +144,3 @@ when you don't have an endpoint to call directly from Conductor.
     webkitallowfullscreen="webkitallowfullscreen"
   ></iframe>
 </center>
-
-In this example worker, we use the `callbackAfterSeconds` attribute to keep the worker in progress
-until a condition is met. This can be any arbitrary condition that our code defines.
-
-Specifically, this example waits for the poll count to reach the input parameter `pollCounter`.
-
-When you return a task as `IN_PROGRESS` with a `callbackAfterSeconds` value set, Conductor
-will schedule the same task instance to be polled exactly after the `callbackAfterSeconds` value.
-
-We are leveraging the output data to hold the context across polls, and once it reaches the desired state, we exit `IN_PROGRESS`
-and mark the task as `COMPLETED`.
-
-Go ahead and try this in our Developer Edition environment. 
-
-```json
-{
-  "name": "poll-until-condition-workflow",
-  "description": "This example shows how we can use a worker and keep it running until a condition is true.",
-  "version": 1,
-  "tasks": [
-    {
-      "name": "poll-until-condition-matches-full-worker",
-      "taskReferenceName": "poll-until-condition-matches-full-worker",
-      "type": "SIMPLE",
-      "inputParameters": {
-        "pollCounter": "${workflow.input.pollCounter}",
-        "pollIntervalSeconds": "${workflow.input.pollIntervalSeconds}"
-      }
-    }
-  ],
-  "inputParameters": [
-    "pollCounter",
-    "pollIntervalSeconds"
-  ],
-  "schemaVersion": 2
-}
-```
-
-:::tip Language agnostic
-Such workers can be implemented in any of the languages.
-:::
