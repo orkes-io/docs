@@ -30,6 +30,8 @@ This approach is useful when:
 
 Use the following workflow definition to create a workflow in Orkes Conductor.
 
+## Step 1: Create a workflow in Orkes Conductor
+
 **To create a workflow:**
 
 1. Go to **Definitions** > **Workflow** from the left navigation menu on your Conductor cluster.
@@ -64,6 +66,8 @@ Use the following workflow definition to create a workflow in Orkes Conductor.
 
 Next, create an application in Orkes Conductor. This application provides the access keys (key and secret) that your SDK uses to authenticate and run the workflow.
 
+## Step 2: Create an application in Orkes Conductor
+
 **To create an application:**
 
 1. Go to **Access Control** > **Applications** from the left navigation menu on your Conductor cluster.
@@ -72,7 +76,7 @@ Next, create an application in Orkes Conductor. This application provides the ac
 
 Once done, [authenticate the SDK project](https://orkes.io/content/sdks/authentication#sdk-authentication) with the generated access keys.
 
-## Implement the custom worker
+## Step 3: Create a worker
 
 Use the Java SDK to create a worker that keeps running until a condition is met. Create a file named `PollUntilConditionMeetsWorker.java` and add the following code:
 
