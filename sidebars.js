@@ -946,11 +946,6 @@ const sidebars = {
                     items: [
                         {
                             type: 'doc',
-                            id: 'tutorials/querying-orkes-data-and-triggering-opsgenie-alert',
-                            label: 'OpsGenie',
-                        },
-                        {
-                            type: 'doc',
                             id: 'tutorials/scanning-an-endpoint-and-triggering-pagerduty-alert',
                             label: 'PagerDuty',
                         },
