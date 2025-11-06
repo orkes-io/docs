@@ -10,15 +10,22 @@ repos:
         description: Check for merge conflict markers
       - id: check-added-large-files
         description: Prevent large files from being committed
-        args: ['--maxkb=1000']
+        args: ["--maxkb=1000"]
       - id: check-yaml
         description: Check YAML syntax
       - id: check-json
         description: Check JSON syntax
 
-  # JavaScript/TypeScript linting
+  # JavaScript/TypeScript linting - auto-fix
   - repo: local
     hooks:
+      - id: eslint-fix
+        name: ESLint (auto-fix)
+        entry: yarn lint:fix
+        language: system
+        files: \.(js|jsx|ts|tsx|mdx)$
+        pass_filenames: false
+        always_run: false
       - id: eslint
         name: ESLint
         entry: yarn lint
@@ -27,9 +34,16 @@ repos:
         pass_filenames: false
         always_run: false
 
-  # CSS linting
+  # CSS linting - auto-fix
   - repo: local
     hooks:
+      - id: stylelint-fix
+        name: Stylelint (auto-fix)
+        entry: yarn lint:css:fix
+        language: system
+        files: \.(css|scss|sass|less)$
+        pass_filenames: false
+        always_run: false
       - id: stylelint
         name: Stylelint
         entry: yarn lint:css

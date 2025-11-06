@@ -9,33 +9,32 @@ jobs:
   lint:
     name: Lint Code
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'yarn'
-          
-      - name: Install dependencies
+          node-version: "20"
+          cache: "yarn"
+
+      - name: Install   dependencies
         run: yarn install --frozen-lockfile
-        
+
       - name: Run ESLint
         run: yarn lint
         continue-on-error: true
-        
+
       - name: Run Stylelint
         run: yarn lint:css
         continue-on-error: true
-        
+
       - name: Check Prettier formatting
         run: yarn format:check
         continue-on-error: true
-        
+
       - name: Build check
         run: yarn build
         continue-on-error: true
-
