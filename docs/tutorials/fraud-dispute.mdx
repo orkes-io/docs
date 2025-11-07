@@ -3,74 +3,902 @@ slug: "/templates/examples/fraud-dispute"
 description: "Check out this template for an example Conductor workflow on handling fraud disputes."
 ---
 
-# Building Applications to handle fraud disputes using Conductor
+# Build a Fraud Dispute Resolution Workflow with Orkes Conductor
 
-In the modern digital era, where everything is being digitalized, including transactions, the rate of fraudulent transactions is growing at an alarming rate. Therefore, the number of requests to be addressed by the bank is also increasing. Situations like these are to be handled quickly, and conventional manual human interventions can cause delays. However, a microservice orchestration platform like Conductor can create workflows to handle such situations, aiding in quickly resolving customer issues. 
+In this tutorial, you’ll build a fraud dispute resolution workflow using Orkes Conductor. This workflow combines automated validation, AI-based risk scoring, and human review to determine whether a reported fraud case should be approved or rejected.
 
-This documentation deals with a sample workflow through which you can make use of Conductor in settling a fraud dispute transaction. 
+The workflow mimics real-world fraud handling processes in financial institutions, where initial validation and risk scoring are automated, and every dispute undergoes a human review for verification and final decision-making.
 
-## Sample Workflow - Fraud Dispute Flow
+## The fraud dispute workflow
 
-Let’s see another sample workflow on settling a credit card fraud dispute transaction. This workflow can be achieved by executing each block as tasks/microservices.
+In this tutorial, you’ll build a workflow where:
 
-<center><img src="https://raw.githubusercontent.com/conductor-sdk/conductor-examples/main/finance/images/illustration_of_fraud_dispute_flow.png"
-alt="Fraud dispute flow for credit card transaction dispute" width="100%" height="auto" style={{paddingBottom: 20}} /></center>
+- A customer submits a fraud dispute request, including transaction details and supporting documentation.
+- The system validates the input for correctness.
+- An AI model analyzes the case details and classifies them into low, medium, or high risk.
+- Based on the classification:
+    - Low and medium-risk disputes are referred to human reviewers for a decision.
+    - High-risk cases are routed to fraud investigators.
+- Each case resolution triggers a customer notification via email.
 
-Let’s see how this can be achieved using a sample workflow created with Conductor. 
+Here’s how the workflow looks like:
 
-:::note
-This workflow is for visualization purposes only.
+<p align="center"><img src="/content/img/fraud-dispute-workflow.png" alt="Fraud dispute resolution workflow in Orkes Conductor" width="80%" height="auto"></img></p>
+
+Follow along using the free [Developer Edition](https://developer.orkescloud.com/). If you don’t have an account yet, sign up to get started.
+
+## Step 1: Create an OpenAI integration in Orkes Conductor
+
+This workflow uses OpenAI to analyze dispute data and generate a risk classification (low, medium, or high).
+
+:::info Prerequisites
+- [An OpenAI API key](https://platform.openai.com/api-keys)
 :::
 
-<center><img src="https://raw.githubusercontent.com/conductor-sdk/conductor-examples/main/finance/images/fraud_dispute_workflow_created_in_conductor.png"
-alt="Transaction dispute workflow created in Conductor" width="100%" height="auto" style={{paddingBottom: 20}} /></center>
+**To create an OpenAI integration:**
 
-The workflow begins when a customer dispute is raised regarding the credit card transaction.
+1. Go to [**Integrations**](https://developer.orkescloud.com/integrations) from the left navigation menu on your Conductor cluster.
+2. Select **+ New integration**.
+3. In the **AI/LLM** section, choose **[OpenAI](https://orkes.io/content/integrations/ai-llm/open-ai#step-2-add-an-integration-for-openai)**.
+4. Select **+ Add** and enter a name for the integration, API key, and a description.
+5. Select **Save**.
 
-1. The initial step is fetching the transaction details. Let’s say we fetch the details using the SIMPLE task **fetch_transaction_details**.
-2. Next, we need to check the credit eligibility of the transaction using the SWITCH task **eligibility**.
-3. If the transaction is not eligible, the process is to notify the customer and the workflow ends here. This is evaluated by the switch case no, and the customer is notified via email using the SIMPLE task **notify_cx**. Finally, the workflow is terminated using the terminate task **ends**.
-4. On the other hand, if the transaction is eligible, then the eligibility task gets executed using the switch case **defaultCase**. (Here, we’ve considered the default case of the SWITCH task to be yes).
-5. The next step is getting the customer details and it is executed using the SIMPLE task **get_cx_details**.
-6. Once we have the customer details, we need to check whether they are high-value customers from a banking perspective. It is executed using the SWITCH task **high_value_cx**. 
-7. If it is not a high-value customer, the workflow proceeds as shown below.
+## Step 2: Create a SendGrid integration in Orkes Conductor
 
-<center><img src="https://raw.githubusercontent.com/conductor-sdk/conductor-examples/main/finance/images/workflow_proceeding_if_not_a_high_valued_customer.png"
-alt="The path of the workflow if the customer is not a high-valued one" width="70%" height="auto" style={{paddingBottom: 20}} /></center>
+In this tutorial, we’ll use SendGrid to send emails. To do that, you must set up a SendGrid integration in your Orkes Conductor cluster.
 
-8. The bank will assign an agent for resolution, notify the customer via email, wait for the agent to resolve the issue, decide if the charges will be reversed, and the workflow ends. Let us indicate this entire process using another workflow **assign_agent**. And it is called into the original workflow using the concept of SUB WORKFLOW. Here’s what the **assign_agent** workflow looks like:
+:::info Prerequisites
+- [A SendGrid API key](https://app.sendgrid.com/settings/api_keys)
+- [A verified sender email in SendGrid](https://www.twilio.com/docs/sendgrid/ui/sending-email/sender-verification)
+:::
 
-<center><img src="https://raw.githubusercontent.com/conductor-sdk/conductor-examples/main/finance/images/sub_workflow_for_assigning_agents.png"
-alt="The illustration of sub-workflow assign_agents" width="90%" height="auto" style={{paddingBottom: 20}} /></center>
+**To create a SendGrid integration:**
+1. Go to [**Integrations**](https://developer.orkescloud.com/integrations) from the left navigation menu on your Conductor cluster.
+2. Select **+ New integration**.
+3. In the **Integrations** section, choose [**SendGrid Email**](https://orkes.io/content/integrations/email/sendgrid#step-2-add-an-integration-for-sendgrid-email).
+4. Select **+ Add** and enter a name for the integration, API key, and a description.
+5. Select **Save**.
 
-9. This workflow is called into the original workflow using the concept of SUB WORKFLOW.
+## Step 3: Create a user form in Orkes Conductor
 
-<center><img src="https://raw.githubusercontent.com/conductor-sdk/conductor-examples/main/finance/images/calling_sub_workflow_within_a_workflow.png"
-alt="Including a sub-workflow inside a workflow" width="90%" height="auto" style={{paddingBottom: 20}} /></center>
+The workflow uses a Human task in Orkes Conductor for manual review. Reviewers can complete approvals either through the Conductor UI or an external interface, such as an internal investigation portal.
 
-So, if it is not a high-value customer, the workflow ends using this **assign_agent** sub-workflow.
+In this tutorial, you’ll use the Conductor UI to complete approvals. For this, a user form is to be created in Conductor. To support this, you’ll create **three separate user forms**—one each for **low**, **medium**, and **high** risk disputes.
 
-10. If it is a high-value customer, the workflow proceeds using the switch case **defaultCase**. (Here, we’ve considered the default case of the SWITCH task to be yes).
-11. Next, we check if the transaction amount is less than the average monthly balance. It is evaluated using the SWITCH task **transaction_amount < monthly_balance**. 
-12. If the transaction amount is not less than the monthly balance, the switch task proceeds with case **no**, and the workflow proceeds in the same manner as mentioned above in Step 7. 
+**To create a user form:**
+1. Go to [**Definitions** > **User Forms**](https://developer.orkescloud.com/human/templates) from the left navigation menu on your Conductor cluster.
+2. Select **+ New form.**
+3. In the **Code** tab, paste the following code:
 
-<center><img src="https://raw.githubusercontent.com/conductor-sdk/conductor-examples/main/finance/images/workflow_proceeding_if_transaction_amount_is_less_than_balance.png"
-alt="The path of the workflow if transaction amount is less than balance" width="70%" height="auto" style={{paddingBottom: 20}} /></center>
+<details>
+<summary>View code</summary>
 
-13. This entire process is also evaluated using the same sub-workflow **assign_agent**. You cannot use the same reference name. Hence it is denoted using **assign_agent_1**.
+```json
+{
+ "name": "FraudDisputeReviewHigh",
+ "version": 1,
+ "jsonSchema": {
+   "$schema": "http://json-schema.org/draft-07/schema",
+   "properties": {
+     "transactionId": {
+       "type": "string"
+     },
+     "amount": {
+       "type": "number"
+     },
+     "currency": {
+       "type": "string"
+     },
+     "reportedAt": {
+       "type": "string"
+     },
+     "reason": {
+       "type": "string"
+     },
+     "customerEmail": {
+       "type": "string"
+     },
+     "riskSummary": {
+       "type": "string"
+     },
+     "notes": {
+       "type": "string"
+     },
+     "reviewDecision": {
+       "type": "string",
+       "enum": [
+         "approve",
+         "reject"
+       ]
+     }
+   },
+   "required": [
+     "notes",
+     "reviewDecision"
+   ]
+ },
+ "templateUI": {
+   "type": "VerticalLayout",
+   "elements": [
+     {
+       "type": "Group",
+       "elements": [
+         {
+           "type": "Control",
+           "scope": "#/properties/transactionId",
+           "label": "Transaction ID",
+           "options": {
+             "readonly": true
+           }
+         },
+         {
+           "type": "Control",
+           "scope": "#/properties/amount",
+           "label": "Amount",
+           "options": {
+             "readonly": true
+           }
+         },
+         {
+           "type": "Control",
+           "scope": "#/properties/currency",
+           "label": "Currency",
+           "options": {
+             "readonly": true
+           }
+         },
+         {
+           "type": "Control",
+           "scope": "#/properties/reportedAt",
+           "label": "Reported At",
+           "options": {
+             "readonly": true
+           }
+         },
+         {
+           "type": "Control",
+           "scope": "#/properties/reason",
+           "label": "Customer Reason",
+           "options": {
+             "readonly": true,
+             "multi": true
+           }
+         },
+         {
+           "type": "Control",
+           "scope": "#/properties/customerEmail",
+           "label": "Customer Email",
+           "options": {
+             "readonly": true
+           }
+         },
+         {
+           "type": "Control",
+           "scope": "#/properties/riskSummary",
+           "label": "Risk (Label & Score)",
+           "options": {
+             "readonly": true
+           }
+         }
+       ]
+     },
+     {
+       "type": "Group",
+       "elements": [
+         {
+           "type": "Control",
+           "scope": "#/properties/notes",
+           "label": "Investigation Summary",
+           "options": {
+             "multi": true
+           }
+         },
+         {
+           "type": "Control",
+           "scope": "#/properties/reviewDecision",
+           "label": "Final Decision",
+           "options": {}
+         }
+       ]
+     }
+   ]
+ }
+}
+```
 
-<center><img src="https://raw.githubusercontent.com/conductor-sdk/conductor-examples/main/finance/images/calling_same_sub_workflow_within_a_workflow.png"
-alt="Including same sub-workflow inside workflow" width="90%" height="auto" style={{paddingBottom: 20}} /></center>
+</details>
 
-14. If the transaction amount is less than the average monthly balance, it is evaluated using the switch case **defaultCase**. (Here, we’ve considered the default case of the SWITCH task to be yes).
-15. Now, the charges need to be reversed, the customer is to be notified, and the workflow ends. The reversing charge process is handled via SIMPLE task **reverse_charges**.
-16. The customer is notified using the SIMPLE task **notify_cx**, and the workflow terminates here via the terminate task **task_ends_here**.
+4. Select **Save** > **Confirm**.
 
-## Advantages
+Your user form looks like this:
 
-The advantages of using Conductor for these use cases are:
-* Conductor has an in-built option for retry so that if something goes wrong, then Conductor automatically retries the operation.
-* Conductor is scalable, so that you can use this to scale per your requirements.
-* When something goes wrong, you can debug that particular block alone, making it easier to fix issues rather than debugging the entire code.
-* If long workflows are to be created, then concepts like sub-workflow make the process less cluttered and easy to manage.
-* Future additions can be seamlessly integrated using additional tasks/workflows as and when required, thus making your existing processes future-proof. 
+<p align="center"><img src="/content/img/fraud-dispute-user-form.png" alt="Fraud dispute reviewer form in Orkes Conductor" width="100%" height="auto"></img></p>
+
+Next, repeat the same steps to create two additional user forms for **medium** and **low** risk disputes using the following code:
+
+<details>
+<summary>View code for FraudDisputeReviewMedium</summary>
+
+```json
+{
+ "name": "FraudDisputeReviewMedium",
+ "version": 1,
+ "jsonSchema": {
+   "$schema": "http://json-schema.org/draft-07/schema",
+   "properties": {
+     "transactionId": {
+       "type": "string"
+     },
+     "amount": {
+       "type": "number"
+     },
+     "currency": {
+       "type": "string"
+     },
+     "reportedAt": {
+       "type": "string"
+     },
+     "reason": {
+       "type": "string"
+     },
+     "customerEmail": {
+       "type": "string"
+     },
+     "riskSummary": {
+       "type": "string"
+     },
+     "reviewDecision": {
+       "type": "string",
+       "enum": [
+         "approve",
+         "reject"
+       ]
+     },
+     "notes": {
+       "type": "string"
+     }
+   },
+   "required": [
+     "reviewDecision"
+   ]
+ },
+ "templateUI": {
+   "type": "VerticalLayout",
+   "elements": [
+     {
+       "type": "Group",
+       "elements": [
+         {
+           "type": "Control",
+           "scope": "#/properties/transactionId",
+           "label": "Transaction ID",
+           "options": {
+             "readonly": true
+           }
+         },
+         {
+           "type": "Control",
+           "scope": "#/properties/amount",
+           "label": "Amount",
+           "options": {
+             "readonly": true
+           }
+         },
+         {
+           "type": "Control",
+           "scope": "#/properties/currency",
+           "label": "Currency",
+           "options": {
+             "readonly": true
+           }
+         },
+         {
+           "type": "Control",
+           "scope": "#/properties/reportedAt",
+           "label": "Reported At",
+           "options": {
+             "readonly": true
+           }
+         },
+         {
+           "type": "Control",
+           "scope": "#/properties/reason",
+           "label": "Customer Reason",
+           "options": {
+             "readonly": true,
+             "multi": true
+           }
+         },
+         {
+           "type": "Control",
+           "scope": "#/properties/customerEmail",
+           "label": "Customer Email",
+           "options": {
+             "readonly": true
+           }
+         },
+         {
+           "type": "Control",
+           "scope": "#/properties/riskSummary",
+           "label": "Risk (Label & Score)",
+           "options": {
+             "readonly": true
+           }
+         }
+       ]
+     },
+     {
+       "type": "Group",
+       "elements": [
+         {
+           "type": "Control",
+           "scope": "#/properties/reviewDecision",
+           "label": "Decision",
+           "options": {}
+         },
+         {
+           "type": "Control",
+           "scope": "#/properties/notes",
+           "label": "Notes (optional)",
+           "options": {
+             "multi": true
+           }
+         }
+       ]
+     }
+   ]
+ }
+}
+```
+</details>
+
+<details>
+<summary>View code for FraudDisputeReviewLow</summary>
+
+```json
+{
+ "name": "FraudDisputeReviewLow",
+ "version": 1,
+ "jsonSchema": {
+   "$schema": "http://json-schema.org/draft-07/schema",
+   "properties": {
+     "transactionId": {
+       "type": "string"
+     },
+     "amount": {
+       "type": "number"
+     },
+     "currency": {
+       "type": "string"
+     },
+     "reportedAt": {
+       "type": "string"
+     },
+     "reason": {
+       "type": "string"
+     },
+     "customerEmail": {
+       "type": "string"
+     },
+     "riskSummary": {
+       "type": "string"
+     },
+     "reviewDecision": {
+       "type": "string",
+       "enum": [
+         "approve",
+         "reject"
+       ]
+     },
+     "notes": {
+       "type": "string"
+     }
+   },
+   "required": [
+     "reviewDecision"
+   ]
+ },
+ "templateUI": {
+   "type": "VerticalLayout",
+   "elements": [
+     {
+       "type": "Group",
+       "elements": [
+         {
+           "type": "Control",
+           "scope": "#/properties/transactionId",
+           "label": "Transaction ID",
+           "options": {
+             "readonly": true
+           }
+         },
+         {
+           "type": "Control",
+           "scope": "#/properties/amount",
+           "label": "Amount",
+           "options": {
+             "readonly": true
+           }
+         },
+         {
+           "type": "Control",
+           "scope": "#/properties/currency",
+           "label": "Currency",
+           "options": {
+             "readonly": true
+           }
+         },
+         {
+           "type": "Control",
+           "scope": "#/properties/reportedAt",
+           "label": "Reported At",
+           "options": {
+             "readonly": true
+           }
+         },
+         {
+           "type": "Control",
+           "scope": "#/properties/reason",
+           "label": "Customer Reason",
+           "options": {
+             "readonly": true,
+             "multi": true
+           }
+         },
+         {
+           "type": "Control",
+           "scope": "#/properties/customerEmail",
+           "label": "Customer Email",
+           "options": {
+             "readonly": true
+           }
+         },
+         {
+           "type": "Control",
+           "scope": "#/properties/riskSummary",
+           "label": "Risk (Label & Score)",
+           "options": {
+             "readonly": true
+           }
+         }
+       ]
+     },
+     {
+       "type": "Group",
+       "elements": [
+         {
+           "type": "Control",
+           "scope": "#/properties/reviewDecision",
+           "label": "Decision",
+           "options": {}
+         },
+         {
+           "type": "Control",
+           "scope": "#/properties/notes",
+           "label": "Notes (optional)",
+           "options": {
+             "multi": true
+           }
+         }
+       ]
+     }
+   ]
+ }
+}
+```
+</details>
+
+## Step 4: Create an AI prompt in Orkes Conductor
+
+The workflow uses an LLM Text Complete task in Orkes Conductor to classify the fraud dispute risk level using OpenAI. The task uses an AI prompt to facilitate this.
+
+**To create an AI prompt:**
+
+1. Go to [**Definitions** > **AI Prompts**](https://developer.orkescloud.com/ai_prompts) from the left navigation menu on your Conductor cluster.
+2. Select **+ Add AI prompt**.
+3. In the **Code** tab, paste the following code:
+
+```json
+{
+ "name": "fraud_scoring_prompt",
+ "template": "You are a fraud risk analyst at a bank. Your job is to assess how likely the following customer dispute is genuine fraud vs. a misunderstanding.\n\nCONTEXT (runtime values):\n- Transaction ID: ${transactionId}\n- Amount: ${amount} ${currency}\n- Reported At: ${reportedAt}\n- Customer Reason: ${reason}\n\nINSTRUCTIONS:\n1) Use ONLY the context above. Do not invent facts. If a field is missing, treat it as null.\n2) Score fraud likelihood on a 0–100 scale.\n   - Base thresholds:\n     • low    : score < 50\n     • medium : 50–79\n     • high   : ≥ 80\n3) Heuristics (apply additively, but keep score in [0,100]):\n   - Strong indicators → push higher: terms like “unauthorized”, “unknown”, “card not present/card-not-present/CNP”, “skimming”, “phished”, “hacked”, reported within 48h, unusually large amount.\n   - Benign indicators → push lower: duplicate charge, service/quality issue, very small amount (< 20), very old (reported > 90 days later), vague/short reason (< 20 chars).\n4) Rationale must cite SPECIFIC evidence from the context (e.g., keywords, timing, amount). Keep it to one short sentence.\n5) OUTPUT MUST BE STRICT JSON. No prose before or after. Numbers must be numbers (not strings). No trailing commas.\n\nOUTPUT FORMAT (exact keys, exact order):\n{\n  \"score\": <number 0-100>,\n  \"label\": \"low|medium|high\",\n  \"rationale\": \"<one short sentence citing evidence>\"\n}\n\nNOW PRODUCE ONLY THE JSON OBJECT.",
+ "description": "Generates a fraud risk assessment (score, label, rationale) based on transaction details and customer-provided reason for dispute.\n",
+ "variables": [
+   "reportedAt",
+   "reason",
+   "amount",
+   "currency",
+   "transactionId"
+ ],
+ "integrations": [
+   "<YOUR-AI-PROVIDER>:<YOUR-LLM-MODEL>"
+ ],
+ "tags": [],
+ "version": 1
+}
+```
+
+4. Select **Save** > **Confirm Save**.
+
+Update the **Model(s)** drop-down with the OpenAI integration created in [Step 1](/content/templates/examples/fraud-dispute#step-1-create-an-openai-integration-in-orkes-conductor), and save the changes.
+
+<p align="center"><img src="/content/img/ai-prompt-for-fraud-dispute.gif" alt="Updating ai prompt with the integrated model" width="100%" height="auto"></img></p>
+
+## Step 5: Create a workflow in Orkes Conductor
+
+Orkes Conductor lets you define workflows as JSON, through [SDKs](https://orkes.io/content/category/sdks), [APIs](https://orkes.io/content/category/ref-docs/api), or the UI. 
+
+**To create a workflow using Conductor UI:**
+1. Go to [**Definitions** > **Workflow**](https://developer.orkescloud.com/workflowDef) from the left navigation menu on your Conductor cluster.
+2. Select **+ Define workflow**.
+3. In the **Code** tab, paste the following code:
+
+<details>
+<summary>View code</summary>
+
+```json
+{
+ "name": "fraud_dispute",
+ "description": "Semi-automated fraud dispute flow with LLM scoring and risk-tier human review plus SendGrid notification.",
+ "version": 1,
+ "tasks": [
+   {
+     "name": "validate_minimal",
+     "taskReferenceName": "validate_minimal",
+     "inputParameters": {
+       "payload": "${workflow.input}",
+       "queryExpression": "def trim: sub(\"^\\\\s+\";\"\")|sub(\"\\\\s+$\";\"\"); .payload as $p | def num(n): ((n // 0) | tonumber); { ok: ((($p.transactionId // \"\" | tostring | length) > 0) and (num($p.amount) > 0) and (($p.reason // \"\" | tostring | trim | length) >= 10) and (($p.customerEmail // \"\" | tostring | trim | length) > 3)), errors: [ if (($p.transactionId // \"\" | tostring | length) == 0) then {code:\"MISSING\", field:\"transactionId\"} else empty end, if (num($p.amount) <= 0) then {code:\"INVALID\", field:\"amount\"} else empty end, if (($p.reason // \"\" | tostring | trim | length) < 10) then {code:\"TOO_SHORT\", field:\"reason\"} else empty end, if (($p.customerEmail // \"\" | tostring | trim | length) <= 3) then {code:\"MISSING\", field:\"customerEmail\"} else empty end ], validated: { customerId: ($p.customerId // null), transactionId: ($p.transactionId | tostring | trim), amount: (num($p.amount)), currency: (($p.currency // null) | if . == null then null else (tostring | ascii_upcase | trim) end), reportedAt: ($p.reportedAt // null), reason: (($p.reason // \"\") | tostring | trim), customerEmail: (($p.customerEmail // \"\") | tostring | trim) } }"
+     },
+     "type": "JSON_JQ_TRANSFORM"
+   },
+   {
+     "name": "route_on_validation",
+     "taskReferenceName": "route_on_validation",
+     "inputParameters": {
+       "switchCaseValue": "${validate_minimal.output.result.ok}"
+     },
+     "type": "SWITCH",
+     "decisionCases": {
+       "false": [
+         {
+           "name": "validation_failed_payload",
+           "taskReferenceName": "validation_failed_payload",
+           "inputParameters": {
+             "errors": "${validate_minimal.output.result.errors}",
+             "queryExpression": "{ status: \"validation_failed\", errors: .errors }"
+           },
+           "type": "JSON_JQ_TRANSFORM"
+         },
+         {
+           "name": "notify_validation_fail",
+           "taskReferenceName": "notify_validation_fail",
+           "inputParameters": {
+             "from": "<YOUR-SENDGRID-VERIFIED-SENDER-EMAIL>",
+             "to": "${workflow.input.customerEmail}",
+             "subject": "ABC Bank: Fraud Dispute Submission Incomplete",
+             "contentType": "text/plain",
+             "content": "Dear Customer,\n\nWe were unable to process your fraud dispute request because some required information appears to be missing or incomplete.\n\nPlease review your submission and ensure all details are provided before resubmitting your request. This will help us process your case as quickly as possible.\n\nBest regards,\nFraud Investigation Team",
+             "sendgridConfiguration": "<YOUR-SENDGRID-UNTEGRATION>"
+           },
+           "type": "SENDGRID"
+         },
+           {
+           "name": "end_fail",
+           "taskReferenceName": "end_fail",
+           "inputParameters": {
+             "terminationStatus": "COMPLETED",
+             "workflowOutput": {},
+             "terminationReason": "Validation failed."
+           },
+           "type": "TERMINATE"
+         }
+       ]
+     },
+     "defaultCase": [],
+     "evaluatorType": "value-param",
+     "expression": "switchCaseValue"
+   },
+   {
+     "name": "score_via_llm",
+     "taskReferenceName": "score_via_llm",
+     "inputParameters": {
+       "llmProvider": "<YOUR-LLM-PRVIDER>",
+       "model": "<YOUR-LLM-MODEL>",
+       "promptName": "fraud_scoring_prompt",
+       "promptVariables": {
+         "amount": "${workflow.input.amount}",
+         "currency": "${workflow.input.currency}",
+         "reportedAt": "${workflow.input.reportedAt}",
+         "reason": "${workflow.input.reason}",
+         "transactionId": "${workflow.input.transactionId}"
+       },
+       "temperature": 0.2,
+       "maxTokens": "200"
+     },
+     "type": "LLM_TEXT_COMPLETE"
+   },
+   {
+     "name": "risk_switch",
+     "taskReferenceName": "risk_switch",
+     "inputParameters": {
+       "switchCaseValue": "${score_via_llm.output.result.label}"
+     },
+     "type": "SWITCH",
+     "decisionCases": {
+       "low": [
+         {
+           "name": "human_review_low",
+           "taskReferenceName": "human_review_low",
+           "inputParameters": {
+             "__humanTaskDefinition": {
+               "displayName": "Low risk - Fraud dispute",
+               "userFormTemplate": {
+                 "name": "FraudDisputeReviewLow",
+                 "version": 1
+               }
+             },
+             "transactionId": "${workflow.input.transactionId}",
+             "amount": "${workflow.input.amount}",
+             "currency": "${workflow.input.currency}",
+             "reportedAt": "${workflow.input.reportedAt}",
+             "reason": "${workflow.input.reason}",
+             "customerEmail": "${workflow.input.customerEmail}",
+             "riskSummary": "${score_via_llm.output.result.rationale}"
+           },
+           "type": "HUMAN"
+         },
+         {
+           "name": "set_vars_low",
+           "taskReferenceName": "set_vars_low",
+           "inputParameters": {
+             "reviewDecision": "${human_review_low.output.reviewDecision}",
+             "notes": "${human_review_low.output.notes}"
+           },
+           "type": "SET_VARIABLE"
+         }
+       ],
+       "medium": [
+         {
+           "name": "human_review_medium",
+           "taskReferenceName": "human_review_medium",
+           "inputParameters": {
+             "__humanTaskDefinition": {
+               "displayName": "Medium risk - Fraud dispute",
+               "userFormTemplate": {
+                 "name": "FraudDisputeReviewMedium",
+                 "version": 1
+               }
+             },
+             "transactionId": "${workflow.input.transactionId}",
+             "amount": "${workflow.input.amount}",
+             "currency": "${workflow.input.currency}",
+             "reportedAt": "${workflow.input.reportedAt}",
+             "reason": "${workflow.input.reason}",
+             "customerEmail": "${workflow.input.customerEmail}",
+             "riskSummary": "${score_via_llm.output.result.rationale}"
+           },
+           "type": "HUMAN"
+         },
+         {
+           "name": "set_vars_medium",
+           "taskReferenceName": "set_vars_medium",
+           "inputParameters": {
+             "reviewDecision": "${human_review_medium.output.reviewDecision}",
+             "notes": "${human_review_medium.output.notes}"
+           },
+           "type": "SET_VARIABLE"
+         }
+       ],
+       "high": [
+         {
+           "name": "human_review_high",
+           "taskReferenceName": "human_review_high",
+           "inputParameters": {
+             "__humanTaskDefinition": {
+               "displayName": "High risk - Fraud dispute",
+               "userFormTemplate": {
+                 "name": "FraudDisputeReviewHigh",
+                 "version": 1
+               }
+             },
+             "transactionId": "${workflow.input.transactionId}",
+             "amount": "${workflow.input.amount}",
+             "currency": "${workflow.input.currency}",
+             "reportedAt": "${workflow.input.reportedAt}",
+             "reason": "${workflow.input.reason}",
+             "customerEmail": "${workflow.input.customerEmail}",
+             "riskSummary": "${score_via_llm.output.result.rationale}"
+           },
+           "type": "HUMAN"
+         },
+         {
+           "name": "set_vars_high",
+           "taskReferenceName": "set_vars_high",
+           "inputParameters": {
+             "reviewDecision": "${human_review_high.output.reviewDecision}",
+             "notes": "${human_review_high.output.notes}"
+           },
+           "type": "SET_VARIABLE"
+         }
+       ]
+     },
+     "defaultCase": [],
+     "evaluatorType": "value-param",
+     "expression": "switchCaseValue"
+   },
+   {
+     "name": "action_switch",
+     "taskReferenceName": "action_switch",
+     "inputParameters": {
+       "switchCaseValue": "${workflow.variables.reviewDecision}"
+     },
+     "type": "SWITCH",
+     "decisionCases": {
+       "approve": [
+         {
+           "name": "finalize_approve",
+           "taskReferenceName": "finalize_approve",
+           "inputParameters": {
+             "transactionId": "${workflow.input.transactionId}",
+             "queryExpression": "{ finalStatus: \"APPROVED\" }"
+           },
+           "type": "JSON_JQ_TRANSFORM"
+         }
+       ],
+       "reject": [
+         {
+           "name": "finalize_reject",
+           "taskReferenceName": "finalize_reject",
+           "inputParameters": {
+             "queryExpression": "{ finalStatus: \"REJECTED\" }"
+           },
+           "type": "JSON_JQ_TRANSFORM"
+         }
+       ]
+     },
+     "defaultCase": [],
+     "evaluatorType": "value-param",
+     "expression": "switchCaseValue"
+   },
+   {
+     "name": "final_status",
+     "taskReferenceName": "final_status",
+     "inputParameters": {
+       "approve": "${finalize_approve.output.result.finalStatus}",
+       "reject": "${finalize_reject.output.result.finalStatus}",
+       "queryExpression": "{ status: (.approve // .reject ) }"
+     },
+     "type": "JSON_JQ_TRANSFORM"
+   },
+   {
+     "name": "notify_sendgrid",
+     "taskReferenceName": "notify_sendgrid",
+     "inputParameters": {
+       "from": "<YOUR-SENDGRID-VERIFIER-SENDER-EMAIL>",
+       "to": "${workflow.input.customerEmail}",
+       "subject": "ABC Bank: Your fraud dispute update",
+       "contentType": "text/plain",
+       "content": "Dear Customer,\n\nWe’ve completed the review of your fraud dispute for Transaction ID: ${workflow.input.transactionId}.\n\nFinal Decision: ${final_status.output.result.status}\n\nThank you for your patience.\n\nBest regards,\nFraud Investigation Team",
+       "sendgridConfiguration": "<YOUR-SENDGRID-INTEGRATION>"
+     },
+     "type": "SENDGRID"
+   }
+ ],
+ "inputParameters": [
+   "transactionId",
+   "amount",
+   "currency",
+   "reportedAt",
+   "reason",
+   "customerId",
+   "customerEmail"
+ ],
+ "schemaVersion": 2
+}
+```
+</details>
+
+4. Select **Save** > **Confirm**.
+
+Next, replace all placeholder values with your actual data and integrations.
+
+5. Select the **LLM Text Complete** task, and update the *LLM provider* and *Model* with your configurations created in [Step 1](/content/templates/examples/fraud-dispute#step-1-create-an-openai-integration-in-orkes-conductor).
+
+<p align="center"><img src="/content/img/updating-llm-text-complete-task-fraud-dispute.png" alt="Updating LLM Text Complete task with AI integration" width="100%" height="auto"></img></p>
+
+6. Select the **SendGrid (_notify_validation_fail_)** task and update the following parameters:
+        - Set the **From** email to the verified sender address configured in [Step 2](/content/templates/examples/fraud-dispute#step-2-create-a-sendgrid-integration-in-orkes-conductor).
+        - Set the **SendGrid Configuration** to the integration name created in [Step 2](/content/templates/examples/fraud-dispute#step-2-create-a-sendgrid-integration-in-orkes-conductor).
+
+<p align="center"><img src="/content/img/updating-sendgrid-task-fraud-dispute.png" alt="Updating SendGrid task with email and integration details" width="100%" height="auto"></img></p>
+
+7. Update the *notify_sendgrid* task with the same email and integration values.
+8. Select **Save** > **Confirm**.
+
+## Step 6: Execute workflow 
+
+**To test the workflow:**
+1. From your workflow definition, go to the **Run** tab.
+2. Set the input parameter. For example:
+
+```json
+{
+  "transactionId": "",
+  "amount": 0,
+  "currency": "USD",
+  "reportedAt": "2025-11-06T10:00:00Z",
+  "reason": "short",
+  "customerEmail": "<YOUR-RECIPINET-EMAIL-FOR-TESTING>",
+  "customerId": "C1234"
+}
+```
+
+:::tip 
+The input parameters are represented here with dummy values for demonstration. In a real implementation, these can be dynamically received through an API call using [Webhook](https://orkes.io/content/reference-docs/system-tasks/wait-for-webhook) or [HTTP](https://orkes.io/content/reference-docs/system-tasks/http) tasks in Orkes Conductor.
+:::
+
+<p align="center"><img src="/content/img/executing-fraud-dispute-workflow.png" alt="Executing loan approval workflow" width="100%" height="auto"></img></p>
+
+3. Select **Execute**.
+
+This initiates the workflow and takes you to the workflow execution page. Since the transaction ID and amount are invalid, the validation fails, causing the workflow to terminate and notify the customer to resubmit with correct details.
+
+:::tip
+In this example, validation is simulated using a [JSON JQ Transform](https://orkes.io/content/reference-docs/system-tasks/jq-transform) task for basic checks. In a production setup, you can replace this step with an API call to your internal payment or dispute validation system.
+:::
+
+<p align="center"><img src="/content/img/validation-failed-flow.png" alt="Validation failed flow" width="60%" height="auto"></img></p>
+
+The user receives an email as follows:
+
+<p align="center"><img src="/content/img/validation-failed-email.png" alt="Email received by the user on validation failed" width="80%" height="auto"></img></p>
+
+Now, let’s rerun the workflow for a low-risk case. Here’s the updated workflow input:
+
+```json
+{
+ "reportedAt": "2025-11-06T10:00:00Z",
+ "reason": "Customer reported a duplicate charge on card ending 4321",
+ "amount": 120.5,
+ "customerEmail": "<YOUR-RECIPINET-EMAIL-FOR-TESTING>",
+ "customerId": "CUST_0091",
+ "currency": "USD",
+ "transactionId": "TXN1001"
+}
+```
+
+This initiates the workflow and takes you to the workflow execution page. The LLM classifies the dispute as low risk. The Conductor UI receives a human task, which anyone on the team can claim, review the case, and marks it as approved or rejected.
+
+### Completing the Human task
+
+The workflow is running, and the Human task is available to claim.
+
+<p align="center"><img src="/content/img/human-task-in-execution-stage-fraud-dispute.png" alt="Fraud dispute workflow execution" width="100%" height="auto"></img></p>
+
+**To complete the Human tasks in the UI:**
+
+1. Go to **Executions** > **Human Task**.
+2. Select the **Task ID** to view the form.
+3. Select **Claim**.
+4. Review the dispute details, select the approval status, and leave comments.
+5. Select **Complete** to submit the form.
+
+<p align="center"><img src="/content/img/approving-human-task-fraud-dispute.gif" alt="Reviewer approving a human task" width="100%" height="auto"></img></p>
+
+:::tip
+In this example, no assignment policy has been configured, so any user in the cluster can claim the task. In a production environment, each Human task (low, medium, and high) should be assigned to designated users or user groups. [Learn more about configuring assignment policies for Human tasks in Orkes Conductor](https://orkes.io/content/developer-guides/orchestrating-human-tasks#step-3-configure-the-human-task).
+:::
+
+Once the reviewer approves the dispute, the workflow is completed, and the user receives an update email via SendGrid.
+
+<p align="center"><img src="/content/img/fraud-dispute-email.png" alt="Fraud dispute email received via SendGrid" width="100%" height="auto"></img></p>
+
+## Workflow modifications
+
+This fraud dispute workflow can be extended by:
+
+- Adding new validation rules (e.g., suspicious location or IP checks).
+- Adjusting the thresholds for low, medium, and high risk classification in the prompt.
+- Customizing reviewer assignment policies for SLA management.
+- Integrating third-party fraud detection APIs for deeper analysis.
+- Customizing the email templates for escalation or partial refund cases.
