@@ -17,7 +17,7 @@ In this tutorial, you’ll build a workflow where:
 - The system validates the input for correctness.
 - An AI model analyzes the case details and classifies them into low, medium, or high risk.
 - Based on the classification:
-    - Low- and medium-risk disputes are referred to human reviewers for a decision.
+    - Low and medium-risk disputes are referred to human reviewers for a decision.
     - High-risk cases are routed to fraud investigators.
 - Each case resolution triggers a customer notification via email.
 
@@ -867,11 +867,11 @@ Now, let’s rerun the workflow for a low-risk case. Here’s the updated workfl
 }
 ```
 
-This initiates the workflow and takes you to the workflow execution page. The LLM classifies the dispute as low risk. The Conductor UI receives a human task, which anyone on the team can claim, reviews the case, and marks it as approved or rejected.
+This initiates the workflow and takes you to the workflow execution page. The LLM classifies the dispute as low risk. The Conductor UI receives a human task, which anyone on the team can claim, review the case, and marks it as approved or rejected.
 
 ### Completing the Human task
 
-The workflow is running, and the Human task is assigned to the reviewer.
+The workflow is running, and the Human task is available to claim.
 
 <p align="center"><img src="/content/img/human-task-in-execution-stage-fraud-dispute.png" alt="Fraud dispute workflow execution" width="100%" height="auto"></img></p>
 
