@@ -16,7 +16,17 @@ To use system AI tasks in Orkes Conductor, you must integrate your Conductor clu
 
 ## Step 1: Get the OpenAI credentials
 
-To integrate OpenAI with Orkes Conductor, retrieve the API key from the OpenAI platform. Two types of keys can be generated:
+To integrate OpenAI with Orkes Conductor, retrieve the following credentials from the OpenAI platform:
+
+- API key
+- Base URL
+- (Optional) Organization ID
+
+The base URL is set as https://api.openai.com. 
+
+### To retrieve the API key
+
+Two types of keys can be generated:
 
 - **User account key**–Tied to your individual account. This key can make requests on behalf of the selected project.
 - **Service account key**–Linked to a bot user (service account) that is added to the project.
@@ -68,6 +78,18 @@ To integrate OpenAI with Orkes Conductor, retrieve the API key from the OpenAI p
 </TabItem>
 </Tabs>
 
+### To retrieve the organization ID
+
+An organization ID is a unique identifier that represents your organization or team account within OpenAI’s platform.
+
+**To get the organization ID:**
+
+1. Sign in to the [OpenAI platform](https://platform.openai.com/).
+2. Go to **Settings** > **Organization** > **[General](https://platform.openai.com/settings/organization/general)**.
+3. Copy the **Organization ID**.
+
+<p align="center"><img src="/content/img/organization-id.png" alt="Retreving the organization ID from the OpenAI API platform" width="100%" height="auto"></img></p>
+
 ## Step 2: Add an integration for OpenAI
 
 After obtaining the credentials, add an OpenAI integration to your Conductor cluster.
@@ -82,7 +104,9 @@ After obtaining the credentials, add an OpenAI integration to your Conductor clu
 | Parameters | Description |
 | ---------- | ----------- |
 | Integration name | A name for the integration. |
-| API Key | The API key copied previously from the OpenAI platform.
+| API Key | The API key copied previously from the OpenAI platform. | 
+| Base URL | The base URL for the API request. By default, this is set as https://api.openai.com. | 
+| Organization ID | The organization ID copied previously from the OpenAI platform. | 
 | Description | A description of the integration. | 
 
 <p align="center"><img src="/content/img/create-new-open-ai-integration.png" alt="OpenAI Integration with Orkes Conductor" width="70%" height="auto"></img></p>
