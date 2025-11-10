@@ -7,20 +7,11 @@ description: "This guide focuses on the basics of running workflows in Orkes Con
 
 You can run a Conductor workflow in several ways:
 
-* From the Conductor UI
-* Using a schedule
-* From a webhook
-* From an event
-* Using Conductor APIs (sending signals)
-* Using Conductor SDKs (workflow as code)
-
-The Conductor UI is typically used to run workflows during development and testing. In production, workflows can be triggered from a cron schedule, a webhook event, an event from message brokers like Kafka, or using our APIs/SDKs. The API suite contains various endpoints for starting, pausing, terminating workflows, and more. The SDK approach to running workflows is suitable for dynamic workflows.
-
-
-## Learn more
-
-```mdx-code-block
-import DocCardList from '@theme/DocCardList';
-
-<DocCardList />
-```
+| Method | Description | Learn more | 
+| ------ | ----------- | ---------- | 
+| From the Conductor UI | Run workflows manually during development and testing. The UI lets you provide input parameters and view execution results in real time. | [Run workflows from UI](/content/how-to-videos/run-workflow). | 
+| Using Conductor APIs | Run workflows programmatically in two ways: asynchronously to start a workflow without waiting for it to complete, or synchronously to start a workflow and wait for its output. | <ul><li>[Start Workflow Execution (Asynchronous)](https://orkes.io/content/reference-docs/api/workflow/start-workflow-execution)</li><li>[Start Workflow Execution (Synchronous)](https://orkes.io/content/reference-docs/api/workflow/synchronous-workflow-execution)</li></ul> | 
+| Using Conductor SDKs (workflow as code) | Define and run workflows directly in your application code. Ideal for dynamic workflow orchestration. | [Using Conductor SDKs](/content/category/sdks). | 
+| Using a schedule | Automate workflow runs on a defined interval using cron expressions. | [Schedule workflows](/content/developer-guides/scheduling-workflows). |
+| From a webhook | Trigger workflows automatically in response to webhook requests from external systems. | [Trigger workflows from webhooks](/content/developer-guides/webhook-integration). | 
+| From an event | Start workflows in response to events from message brokers. | [Run workflows from events](/content/developer-guides/event-handler). |

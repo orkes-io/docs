@@ -26,7 +26,7 @@ Configure these parameters for the Sub Workflow task.
 | subWorkflowParam                          | A map that includes the sub-workflow’s configuration, such as the name, version, task-to-domain mapping, idempotency key, and priority.                                                                                                                                                                                                                                                                                                                                                          | Required.                             |
 | subWorkflowParam. **name**                | The name of the workflow to be executed. This workflow should have a pre-existing definition in Conductor.                                                                                                                                                                                                                                                                                                                                                                                       | Required.                             |
 | subWorkflowParam. **version**             | The version of the workflow to be executed. If unspecified or set to 0, the latest version will be used.                                                                                                                                                                                                                                                                                                                                                                                         | Required.                             |
-| subWorkflowParam. **workflowDefinition** <br/><br/><TableNote title="Available since"><ul><li>v5.2.21 and later</li></ul></TableNote>| If the workflow doesn’t have a pre-existing definition in Conductor, enter the definition of the workflow to execute as the sub-workflow. You can [pass it as a variable string](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor) (from workflow input, variables, etc) or as an object or array. The passed workflow definition executes, but isn’t saved on the **Workflow** > **Definitions** page. | Optional. | 
+| subWorkflowParam. **workflowDefinition** <br/><br/><TableNote title="Available since"><ul><li>v5.2.21 and later</li></ul></TableNote>| If the workflow doesn’t have a pre-existing definition in Conductor, enter the definition of the workflow to execute as the sub-workflow.<br/><br/> You can [pass it as a variable string](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor) (from workflow input, variables, etc) or as an object or array. The passed workflow definition executes, but isn’t saved on the **Workflow** > **Definitions** page. For an example, see [Using the `workflowDefinition` parameter in a Sub Workflow task](/content/reference-docs/operators/sub-workflow#examples). | Optional. | 
 | subWorkflowParam. **taskToDomain**        | A map of sub-workflow tasks to specific domains. The keys are the task reference names and the values are the domain names. If unspecified, the taskToDomain of the executing parent workflow will take over.                       | Optional.                             |
 | subWorkflowParam. **priority**            | The priority of the subworkflow. Supports values from 0-99 and can be [passed as a dynamic input](/developer-guides/passing-inputs-to-task-in-conductor).<br/>If set, this **priority** overrides the parent workflow’s **priority**. If not, it inherits the parent workflow’s **priority**.                                                                                                                                                                                 | Optional.                             |
 | subWorkflowParam. **idempotencyKey**      | A unique, user-generated key to prevent duplicate workflow executions. Idempotency data is retained for the life of the workflow execution.                                                                                                                                                                                                                                                                                                                                                      | Optional.                             |
@@ -129,7 +129,7 @@ Let’s say you have a very long workflow, “payment_for_subscription”, which
   />
 </p>
 
-To add this “payment_for_subscription” workflow to a larger subscription workflow, it would be possible to copy and paste the workflow JSON definition over. However, whenever the “payment_for_subscription” workflow is updated, it will not be reflected in the workflow where you have added it. A better way to handle this is to call the “payment_for_subscription” workflow as a sub-workflow in the wider subscription workflow so that any updates to this workflow get reflected in all its parent workflows.
+To add this “payment_for_subscription” workflow to a larger subscription workflow, it would be possible to copy and paste the workflow JSON definition over. However, whenever the “payment_for_subscription” workflow is updated, it will not be reflected in the workflow where you have added it. A better approach is to call the “payment_for_subscription” workflow as a sub-workflow within the broader subscription workflow, ensuring that any updates to this workflow are reflected in all its parent workflows.
 
 You can add this as a sub-workflow in your required workflow whenever a payment flow is to be implemented:
 
@@ -144,6 +144,104 @@ You can add this as a sub-workflow in your required workflow whenever a payment 
 </p>
 
 This is a subscription workflow with multiple instances where the payment flow is to be implemented. Here, the previously-created payment workflow is added as sub-workflows.
+
+</p>
+</details>
+
+<details>
+<summary>Using the `workflowDefinition parameter`in a Sub Workflow task</summary>
+<p>
+
+This example demonstrates how to dynamically execute a workflow definition passed as an input, without requiring it to be registered on the **Workflow** > **Definitions** page.
+
+In this example, the parent workflow uses a Sub Workflow task and passes the entire workflow definition as a variable (as workflow input) . The sub-workflow definition includes a single-step workflow with an HTTP task.
+
+**To create the parent workflow definition:**
+
+1. Go to **Definitions** > **Workflow** from the left navigation menu on your Conductor cluster.
+2. Select **+ Define workflow**.
+3. In the **Code** tab, paste the following code:
+
+```json
+{
+ "name": "SubWorkflowExample",
+ "description": "Using the `workflowDefinition parameter` in a Sub Workflow task",
+ "version": 1,
+ "tasks": [
+   {
+     "name": "run_dynamic_subworkflow",
+     "taskReferenceName": "run_dynamic_subworkflow_ref",
+     "inputParameters": {},
+     "type": "SUB_WORKFLOW",
+     "subWorkflowParam": {
+       "workflowDefinition": "${workflow.input.dynamicWorkflow}"
+     }
+   }
+ ],
+ "inputParameters": [
+   "dynamicWorkflow"
+ ],
+ "schemaVersion": 2
+}
+```
+
+4. Select **Save** > **Confirm**.
+
+Run the workflow by dynamically passing the workflow definition. 
+
+**To run the workflow:**
+
+1. Go to the **Run** tab.
+2. In **Input Params**, enter the following workflow definition:
+
+```json
+{
+ "name": "WorkflowCalledAsSubWorkflow",
+ "description": "Example",
+ "version": 1,
+ "tasks": [
+   {
+     "name": "http",
+     "taskReferenceName": "http_ref",
+     "type": "HTTP",
+     "inputParameters": {
+       "uri": "https://orkes-api-tester.orkesconductor.com/api",
+       "method": "GET",
+       "accept": "application/json",
+       "contentType": "application/json",
+       "encode": true
+     }
+   }
+ ],
+ "schemaVersion": 2
+}
+```
+
+3. Select **Execute**.
+
+On viewing the execution, verify that the workflow definition was correctly passed by inspecting the input of the Sub Workflow task.
+
+<p align="center">
+  <img
+    src="/content/img/inspecting-sub-workflow-input.png"
+    alt="Inspecting Sub Worlflow's input parameter"
+    width="100%"
+    height="auto"
+    style={{ paddingBottom: 40, paddingTop: 40 }}
+  />
+</p>
+
+Here, the workflow isn’t saved in your cluster but executes dynamically at runtime. You can view the sub-workflow execution from **Summary** > **Subworkflow ID**.
+
+<p align="center">
+  <img
+    src="/content/img/sub-workflow-execution-id.png"
+    alt="Viewing sub-workflow execution that was passed dynamically"
+    width="100%"
+    height="auto"
+    style={{ paddingBottom: 40, paddingTop: 40 }}
+  />
+</p>
 
 </p>
 </details>
