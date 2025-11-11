@@ -132,6 +132,10 @@ To use a Human task with your own UI, you must first define the Human task in **
 
 Once the task is defined, you can proceed to add it to a workflow definition.
 
+:::note
+The Human task created acts as a resource identifier for access control in Orkes Conductor. When added to an application/group, Orkes Conductor uses this name to apply role-based access control (RBAC) permissions to control who can access or modify the task. For more information, see [Role-based Access Control (RBAC) in Orkes Conductor](https://orkes.io/content/category/access-control-and-security).
+:::
+
 ### Step 3: Configure the Human task
 
 Add the Human task to your workflow and configure its assignment and trigger policies.
