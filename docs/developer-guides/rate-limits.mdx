@@ -29,7 +29,7 @@ You can configure rate limit behavior for tasks in its **task definition**. The 
 | --------------------------- | ---------------------------------------------------------------------------------------------------- | ------------------ |
 | rateLimitPerFrequency       | The maximum number of task executions that can be scheduled in a given duration. Default value is 0. | Optional.          |
 | rateLimitFrequencyInSeconds | The frequency window (in seconds) for the rate limit.                                                | Optional.          |
-| concurrentExecLimit         | The number of task executions that can be executed concurrently. Default value is 0.                 | Optional.          |
+| concurrentExecLimit         | The number of task executions that can be executed concurrently. Default value is 0. <br/><br/>For example, if you have 1000 task executions waiting in the queue and 1000 workers polling this queue for tasks, but if you have set `concurrentExecLimit` to 10, only 10 tasks would be given to workers (which would lead to starvation). If any of the workers finish execution, a new task(s) will be removed from the queue while still keeping the current execution count to 10.                 | Optional.          |
 
 :::note
 To configure tasks with no rate limits, set `rateLimitPerFrequency` and `concurrentExecLimit` to 0.
@@ -40,14 +40,16 @@ To configure tasks with no rate limits, set `rateLimitPerFrequency` and `concurr
 ```json
 // task definition
 {
-  "name": "someTaskDefName",
-  "rateLimitPerFrequency": 0,
-  "rateLimitFrequencyInSeconds": 1,
-  "concurrentExecLimit": 0
+ "name": "someTaskDefName",
+ "rateLimitPerFrequency": 12,
+ "rateLimitFrequencyInSeconds": 5,
+ "concurrentExecLimit": 0
 }
-
 ```
 
+For example, let’s set `rateLimitFrequencyInSeconds`=5, and `rateLimitPerFrequency`=12. This means our frequency window is 5 seconds in duration, and for each frequency window, the Conductor would only give 12 tasks to workers. So, in a given minute, the Conductor would only give 12*(60/5) = 144 tasks to workers, irrespective of the number of workers polling for the task.
+
+Unlike `concurrentExecLimit`, rate limiting doesn't consider the tasks already in progress or a terminal state. Even if all the previous tasks are executed within 1 sec or would take a few days, the new tasks are still given to workers at configured frequency, 144 tasks per minute in the above example.
 
 ## Workflow rate limits
 

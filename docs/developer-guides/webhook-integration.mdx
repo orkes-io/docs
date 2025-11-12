@@ -37,14 +37,18 @@ This guide explains how to integrate Webhook with Orkes Conductor. Here’s an o
 
 Webhook payloads can trigger workflows in different ways, depending on your use case:
 
-1. **If a workflow must wait for a specific webhook event**–Create a workflow that includes a [Wait for Webhook](https://orkes.io/content/reference-docs/system-tasks/wait-for-webhook) task with input matches defined based on the expected webhook payload. Proceed to [Step 1](/content/developer-guides/webhook-integration#step-1-create-a-workflow).
+1. **If a workflow must wait for a specific webhook event**–Create a workflow that includes a [Wait for Webhook](https://orkes.io/content/reference-docs/system-tasks/wait-for-webhook) task with input matches defined based on the expected webhook payload. Proceed to [Step 1](/content/developer-guides/webhook-integration#step-1-optional--create-a-workflow-with-wait-for-webhook-task).
 2. **If a webhook event must trigger a new workflow**–Configure the webhook to start a separate workflow when the event is received. In this case, you can skip Step 1, and proceed directly to [Step 2](/content/developer-guides/webhook-integration#step-2-create-a-webhook).
-3. **If you need both behaviors**–Configure the webhook to send its payload to the workflow containing a Wait for Webhook task while also triggering a separate workflow.
+3. **If you need both behaviors**–Configure the webhook to send its payload to the workflow containing a Wait for Webhook task while also triggering a separate workflow. Proceed to [Step 1](/content/developer-guides/webhook-integration#step-1-optional--create-a-workflow-with-wait-for-webhook-task)
 :::
 
-## Step 1: Create a workflow
+## Step 1: (Optional ) Create a workflow with Wait for webhook task
 
-To create a workflow:
+:::note
+Follow this step only **if your workflow must wait for a specific webhook event**. 
+:::
+
+**To create a workflow:**
 
 1. Go to **Definitions** > **Workflow** from the left menu on your Orkes Conductor cluster.
 2. Select **+ Define workflow**.
@@ -123,7 +127,7 @@ Once the URLs are verified (using the respective verification method), the URL s
 
 The incoming webhook payload triggers the workflow in different ways, depending on your configuration:
 
-1. **If the workflow is waiting for a specific webhook event**–After you run the workflow, it pauses at the Wait for Webhook task. When the expected event is received, the workflow continues automatically.
+1. **If the workflow is waiting for a specific webhook event**–After you run the workflow, it pauses at the Wait for Webhook task. When the expected event is received, the workflow continues automatically. Refer to an example [waiting for a cURL request](https://orkes.io/content/templates/examples/custom-conductor-webhook-using-curl).
 2. **If the webhook is configured to start a workflow**–Conductor can automatically start the workflow when a webhook event is received. The event payload will be passed as input to the specified workflow.
 3. **If both options are configured**–When you configure both **Workflow to receive webhook event** and **Start workflow when webhook event comes**, Conductor sends the webhook payload to both workflows.
 
@@ -132,3 +136,7 @@ To verify that the webhook events have been received by Conductor, open the webh
 <p align="center"><img src="/content/img/webhook-execution-history.png" alt="Verifying Webhook execution in Orkes Conductor" width="100%" height="auto"></img></p>
 
 This includes details such as the event ID, whether the headers are matched, the triggered workflow (execution) IDs, and the timestamp of when the event was received.
+
+You can also use the search option to filter results based on these parameters.
+
+<p align="center"><img src="/content/img/filter-webhook-exeuctions.png" alt="Filtering Webhook execution in Orkes Conductor" width="100%" height="auto"></img></p>
