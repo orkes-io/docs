@@ -38,7 +38,7 @@ The Conductor server collects the following metrics via Prometheus, which can be
 
 ### Workflow metrics​
 
-| Metrics | Decsription | Tags | 
+| Metrics | Description | Tags | 
 | ------- | ----------- | ---- |
 | workflow_completed_seconds | Timer indicating the average time taken to complete the workflows. | workflowName, quantile |
 | workflow_completed_seconds_count | Counter indicating the number of workflows completed per second. Apply the FAILED filter to get the failed workflows. | workflowName | 
@@ -47,7 +47,7 @@ The Conductor server collects the following metrics via Prometheus, which can be
 
 ### Task metrics​
 
-| Metrics | Decsription | Tags | 
+| Metrics | Description | Tags | 
 | ------- | ----------- | ---- |
 | task_completed_seconds | Timer indicating the average time taken to complete the task. | taskType, quantile | 
 | task_completed_seconds_count | Counter indicating the number of tasks completed per second. Apply the FAILED filter to get the failed tasks. | taskType | 
