@@ -142,7 +142,7 @@ is displayed during execution as
 
 Resolved secret values are always masked, regardless of the context. This ensures that the underlying secret value is never exposed in any part of the workflow execution.
 
-:::note
+:::info Note
 Secrets used inside task expressions such as in [INLINE scripts](https://orkes.io/content/reference-docs/system-tasks/inline) or [JSON JQ TRANSFORM expressions](https://orkes.io/content/reference-docs/system-tasks/jq-transform), are also masked during execution. When a secret is referenced or resolved inside an expression, its value is replaced with *** in task inputs, task outputs, and the execution details.
 :::
 

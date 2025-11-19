@@ -22,6 +22,10 @@ Configure these parameters for the JSON JQ Transform task.
 | inputParameters                     | JSON object containing the configuration data for task execution. Supports string, number, boolean, null, and object/array. | Required.          |
 | inputParameters.**queryExpression** | A string representing a JQ (JSON Query) expression. This expression is used to transform the JSON data.                     | Required.          |
 
+:::info Note
+If your JSON JQ Transform expression references a workflow secret (such as `${workflow.secrets.<secret-name>}`), the resolved value is automatically masked in the task output. For details on masking behavior, see [Masking Parameters](/content/developer-guides/masking-parameters#masking-secret-references-and-secret-values).
+:::
+
 The following are generic configuration parameters that can be applied to the task and are not specific to the JSON JQ Transform task.
 
 <details>
