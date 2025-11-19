@@ -21,6 +21,10 @@ Configure these parameters for the Inline task.
 | inputParameters. **evaluatorType** | The type of evaluator used. Supported types:<ul><li>`graaljs` - Evaluates the JavaScript expression and computes the value.</li></ul> | Required.          |
 | inputParameters                    | The parameters for evaluating the script. Any property can be accessed as `$.value` for the expression to evaluate.                   | Required.          |
 
+:::info Note
+If your Inline expression references a workflow secret (such as `${workflow.secrets.<secret-name>}`), the resolved value is masked in the task output. For details on masking behavior, see [Masking Parameters](/content/developer-guides/masking-parameters#masking-secret-references-and-secret-values).
+:::
+
 The following are generic configuration parameters that can be applied to the task and are not specific to the Inline task.
 
 <details>

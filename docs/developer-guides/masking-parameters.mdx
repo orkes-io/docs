@@ -124,12 +124,35 @@ To pass sensitive data from one task's output to a subsequent task, nest the sen
 
 See the complete example in [Passing sensitive data between tasks](/content/developer-guides/masking-parameters#examples).
 
+### Masking secret references and secret values
+
+Fields that reference workflow secrets using the `${workflow.secrets.<secretName>}` syntax are masked during execution. When these expressions are resolved, their values are replaced with *** anywhere they appear, including workflow inputs, task inputs, task outputs, and the execution JSON.
+
+For example,
+
+```json
+ "apiKey": "${workflow.secrets.my_api_key}"
+```
+
+is displayed during execution as 
+
+```json
+"apiKey": "***"
+```
+
+Resolved secret values are always masked, regardless of the context. This ensures that the underlying secret value is never exposed in any part of the workflow execution.
+
+:::info Note
+Secrets used inside task expressions such as in [INLINE scripts](https://orkes.io/content/reference-docs/system-tasks/inline) or [JSON JQ TRANSFORM expressions](https://orkes.io/content/reference-docs/system-tasks/jq-transform), are also masked during execution. When a secret is referenced or resolved inside an expression, its value is replaced with *** in task inputs, task outputs, and the execution details.
+:::
+
 ## Workflow behavior with masked parameters
 
 **Behavior on restarting workflows with masked values**: When a workflow with masked values reaches a terminal state and is removed from the primary execution:
 
 - Values with the _\_masked_ parameter are retained during archiving. If the workflow is restarted, the original data will remain accessible.
 - Values with the _\_secrets_ parameter are permanently replaced with \*\*\* during archiving. As a result, restarting the workflow might cause failures if any tasks rely on the masked data.
+* Values within the _maskedFields_ parameter are permanently replaced with *** during archiving. As a result, restarting the workflow might cause failures if any tasks rely on the masked data.
 
 ## Examples
 
@@ -407,5 +430,59 @@ You can also use the *_masked* parameter to mask the data in this scenario.
 When this workflow runs, the sensitive data from `simple_demo_ref.output.result`, which is passed as the input parameter to the second task, is masked in the execution results because it is nested under *_secrets*.
 
 <p align="center"><img src="/content/img/passing-data-between-tasks-output.png" alt="Passing data between tasks" width="100%" height="auto"></img></p>
+
+</details>
+
+<details>
+<summary>Masking secret references in workflow definitions</summary>
+
+The following workflow calls an external payments API. The HTTP task sends an Authorization header that uses a secret stored as `payment_api_token` in the workflow secrets.
+
+Store the API token as a secret in Conductor by navigating to **Definitions** > **Secrets**.
+
+<p align="center"><img src="/content/img/payment-api-token-secret.png" alt="Secret stored in Orkes Conductor" width="100%" height="auto"></img></p>
+
+Next, create the workflow under **Definitions** > **Workflow** using the following definition:
+
+```json
+{
+  "name": "charge_customer",
+  "description": "Charge a customer using an external payments API",
+  "version": 1,
+  "tasks": [
+    {
+      "name": "charge_payment",
+      "taskReferenceName": "charge_payment_ref",
+      "type": "HTTP",
+      "inputParameters": {
+        "uri": "https://payments.example.com/api/charge",
+        "method": "POST",
+        "headers": {
+          "Authorization": "Bearer ${workflow.secrets.payment_api_token}",
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "customerId": "${workflow.input.customerId}",
+          "amount": "${workflow.input.amount}",
+          "currency": "USD"
+        }
+      }
+    }
+  ],
+  "inputParameters": [
+    "customerId",
+    "amount"
+  ],
+  "schemaVersion": 2
+}
+```
+
+In this workflow, the Authorization header retrieves its value from the secret using `"Authorization": "Bearer ${workflow.secrets.payment_api_token}"`.
+
+During execution, the task input appears as:
+
+<p align="center"><img src="/content/img/secret-masked.png" alt="Secret masked in Orkes Conductor" width="100%" height="auto"></img></p>
+
+The Authorization header value is masked because it resolves from `${workflow.secrets.payment_api_token}`. Any occurrence of this secret value elsewhere is also masked automatically.
 
 </details>
