@@ -17,7 +17,7 @@ In Orkes Conductor, you can create schemas to define and enforce the payload str
 * A **workflow-level schema** specifies what workflow inputs/outputs must be supplied.
 * A **task-level schema** specifies the inputs/outputs that must be wired to/from the task. The task-level schema can be general across workflows (specified in the *task definition*) or unique to a specific workflow (specified in the *task configuration*).
 
-The schema is enforced at runtime. The workflow or task will fail if the inputs/outputs do not pass the validation. This behavior is the main distinction between a *task-level schema* versus non-enforceable guides like the *input keys, output keys, and input templates* in a task definition.
+The schema is enforced at runtime. The workflow or task will fail if the inputs/outputs do not pass the validation. This behavior is the primary distinction between a task-level schema and non-validated elements, such as *input keys*, *output keys*, and *input templates* defined within a task.
 
 
 ## Schema formats
@@ -60,7 +60,7 @@ Currently, schemas can be defined in the [JSON Schema](https://json-schema.org/s
 To enforce validation for input/output payloads, schemas can be added to:
 * **A workflow definition**—Enforce workflow inputs/outputs.
 * **A task definition**—Enforce task inputs/outputs for all instances of the task.
-* **A task configuration**—Enforce task inputs/outputs for a specific workflow.
+* **A task configuration**—Enforce task inputs/outputs for a specific task in a workflow.
 
 Here is an overview of using schemas in Conductor workflows:
 1. Define a schema for a task’s or workflow’s inputs/outputs.
@@ -70,9 +70,9 @@ Here is an overview of using schemas in Conductor workflows:
 ### Step 1: Define a schema
 
 **To define a schema:**
-2
+
 1. Go to **Definitions** > **Schemas** from the left navigation menu on your Conductor cluster.
-2. Select **(+) New schema**. A schema editor opens.
+2. Select **+ New schema**. A schema editor opens.
 3. Add your schema definition in the _data_ object. Make sure to fill out at least the _$schema_, _$id_, _type_, and _properties_ parameters as outlined in the JSON Schema.
 
 Learn more about [creating a JSON Schema](https://json-schema.org/learn/getting-started-step-by-step).
@@ -89,7 +89,7 @@ If the version is unspecified, the latest schema version will be used.
 
 1. Go to **Definitions** > **Task**.
 2. Select a task definition that you want to add a schema to.
-3. In the Schema section, select a schema to use as an **Input Schema** or **Output Schema**.
+3. In the **Schema** section, select a schema to use as an **Input Schema** or **Output Schema**.
 4. Select a **Version** for the schema.
 5. Switch on the **Enforce schema** toggle.
 6. Select **Save** in the top right.
@@ -121,7 +121,7 @@ If the version is unspecified, the latest schema version will be used.
 1. Go to **Definitions** > **Workflow**.
 2. Select a workflow that you want to add a task-level schema to.
 3. In the visual workflow editor, select a task.
-4. In the Schema section, switch on the **Enforce schema** toggle.
+4. In the **Schema** section, switch on the **Enforce schema** toggle.
 5. Select a schema to use as an **Input Schema** or **Output Schema**.
 6. Select a **Version** for the schema.
 7. Select **Save** > **Confirm** in the top right.
@@ -167,7 +167,7 @@ If the version is unspecified, the latest schema version will be used.
 
 1. Go to **Definitions** > **Workflow**.
 2. Select a workflow that you want to add a task-level schema to.
-3. In the **Schema Validation** section of the Workflow tab, switch on the **Enforce schema** toggle.
+3. In the **Workflow Schema** section of the Workflow tab, switch on the **Enforce schema** toggle.
 4. Select a schema to use as an **Input Schema** or **Output Schema**.
 5. Select a **Version** for the schema.
 6. Select **Save** > **Confirm** in the top right.
@@ -238,3 +238,366 @@ Schema validation is currently supported for the following task types:
 * [Get Document](/reference-docs/ai-tasks/llm-get-document)
 * [LLM Index Text](/reference-docs/ai-tasks/llm-index-text)
 * [LLM Chat Complete](/reference-docs/ai-tasks/llm-chat-complete)
+
+## Examples
+
+Here are some examples for using the Schema definition in workflows.
+
+<details>
+<summary>Applying a schema in a task definition</summary>
+
+The following example demonstrates how to define a schema and apply it directly to a task definition, and utilize it in a workflow.
+
+**Step 1: Create a schema definition in Orkes Conductor**
+
+**To create a schema:**
+
+1. Go to **Definitions** > **Schemas** from the left navigation menu on your Conductor cluster.
+2. Select **+ New schema**.
+3. In the **Code** tab, paste the following schema:
+
+```json
+{
+  "name": "productSchema",
+  "version": 1,
+  "type": "JSON",
+  "data": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+      "productId": {
+        "type": "integer"
+      }
+    },
+    "required": ["productId"]
+  }
+}
+```
+
+4. Select **Save**.
+
+Next, attach the schema to a task definition.
+
+**Step 2: Add schema to task definition**
+
+**To add the schema to a task definition:**
+
+1. Go to **Definitions** > **Task** from the left navigation menu on your Conductor cluster.
+2. Select an existing task, or create a new one.
+3. In the **Schema** section, select the created schema (`productSchema`) to use as the **Input Schema**.
+
+<p align="center"><img src="/content/img/enforcing-input-schema-for-a-task-definition.png" alt="Enforcing schema to a task definition" width="100%" height="auto"></img></p>
+
+4. Select a **Version** for the schema.
+5. Switch on the **Enforce schema** toggle.
+6. Select **Save** in the top right.
+
+Note the task name (`my_Task` here), as it is to be updated in the workflow.
+
+Next, create a workflow definition to use this task definition.
+
+**Step 3: Add the task to a workflow definition**
+
+**To add the task to a workflow definition:**
+
+1. Go to **Definitions** > **Workflow** from the left navigation menu on your Conductor cluster.
+2. Select **+ Define workflow** and paste the following code in the **Code** tab:
+
+```json
+{
+ "name": "schema_task_definition_example",
+ "description": "Example",
+ "version": 1,
+ "tasks": [
+   {
+     "name": "my_Task",
+     "taskReferenceName": "my_Task_ref",
+     "inputParameters": {
+       "productId": "${workflow.input.productId}"
+     },
+     "type": "SIMPLE"
+   }
+ ],
+ "inputParameters": [
+   "productId"
+ ],
+ "schemaVersion": 2
+}
+```
+
+3. Select **Save** > **Confirm**.
+4. Select the task and update its **Task Definition** to the one created in Step 2. This step ensures that the schema is actually applied.
+
+<p align="center"><img src="/content/img/update-task-definition-in-workflow.png" alt="Updating task definition in a workflow" width="100%" height="auto"></img></p>
+
+5. Save the workflow.
+
+Next, run the workflow.
+
+**Step 4: Run the workflow**
+
+1. Go to the **Run** tab, and enter a valid integer as the **Input params**. For example:
+
+```json
+{
+  "productId": 25
+}
+```
+
+2. Select **Execute**.
+
+The workflow begins execution. Since the task is a SIMPLE worker task and no worker is registered for this example, the task remains **SCHEDULED**. For demonstration purposes, manually mark the task as completed from the Conductor UI.
+
+<p align="center"><img src="/content/img/completing-workflow.gif" alt="Completing task manually from Conductor UI" width="100%" height="auto"></img></p>
+
+:::tip 
+See the documentation on [using Workers for more details on running Worker tasks](https://orkes.io/content/developer-guides/using-workers).
+:::
+
+The workflow completes successfully. This indicates that the input matched the schema and validation passed.
+
+Let’s see what happens if the schema definition is not correct. For example, if the input does not match the required type, the workflow fails immediately at the task execution stage.
+
+Rerun the same workflow with an invalid `productId`, for example:
+
+```json
+{
+  "productId": "abc"
+}
+```
+
+The workflow execution now fails. Because the input does not match the schema (expected integer), the task fails schema validation. 
+
+<p align="center"><img src="/content/img/schema-validation-failed-for-task-definition.png" alt="Schema validation failed for the task definition" width="100%" height="auto"></img></p>
+
+</details>
+
+<details>
+<summary>Applying a schema in a task configuration</summary>
+
+The following example demonstrates how to define a schema and apply it at the task configuration level within a workflow.
+
+Unlike task-definition level schemas, a task-configuration schema applies only to that specific task instance within the workflow.
+
+**Step 1: Create a schema definition in Orkes Conductor**
+
+**To create a schema:**
+
+1. Go to **Definitions** > **Schemas** from the left navigation menu on your Conductor cluster.
+2. Select **+ New schema**.
+3. In the **Code** tab, paste the following schema:
+
+```json
+{
+  "name": "itemSchema",
+  "version": 1,
+  "type": "JSON",
+  "data": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+      "productId": { "type": "integer" },
+      "productName": { "type": "string" }
+    },
+    "required": ["productId", "productName"]
+  }
+}
+```
+
+4. Select **Save**.
+
+Next, attach the schema to a task inside a workflow.
+
+**Step 2: Add the schema to a task configuration**
+
+**To add the schema to a task configuration:**
+
+1. Go to **Definitions** > **Workflow** from the left navigation menu on your Conductor cluster.
+2. Select **+ Define workflow** and paste the following code in the **Code** tab:
+
+```json
+{
+  "name": "schema_task_config_example",
+  "description": "Example",
+  "version": 1,
+  "tasks": [
+    {
+      "name": "validate_item",
+      "taskReferenceName": "validate_item_ref",
+      "type": "INLINE",
+      "inputParameters": {
+        "productId": "${workflow.input.productId}",
+        "productName": "${workflow.input.productName}",
+        "expression": "true",
+        "evaluatorType": "graaljs"
+      }
+    }
+  ],
+  "inputParameters": [
+    "productId",
+    "productName"
+  ],
+  "schemaVersion": 2
+}
+```
+
+3. Select **Save** > **Confirm**.
+4. Open the workflow in the visual editor and select the `validate_item` task.
+5. In the **Schema** section, switch on the **Enforce schema** toggle.
+6. Select the created schema (`itemSchema`) to use as the **Input Schema**.
+
+<p align="center"><img src="/content/img/enforcing-schema-in-task-configuration.png" alt="Enforcing schema validation to a task configuration" width="100%" height="auto"></img></p>
+
+7. Select a **Version** for the schema.
+8. Select **Save** > **Confirm** in the top right.
+
+Next, run the workflow.
+
+**Step 3: Run the workflow**
+
+1. Go to the **Run** tab, and enter a valid input as the **Input params**. For example:
+
+```json
+{
+ "productId": 100,
+ "productName": "iPhone 17 Pro"
+}
+```
+
+2. Select **Execute**.
+
+The workflow runs, and the Inline task executes immediately. The workflow completes successfully because the input matches the schema.
+
+<p align="center"><img src="/content/img/successful-execution-task-configuration.png" alt="Successful workflow execution" width="100%" height="auto"></img></p>
+
+Let’s see what happens if the schema definition is not correct. For example, if the input does not match the required type, the workflow fails immediately at the task execution stage.
+
+Rerun the same workflow with an invalid input, for example:
+
+```json
+{
+  "productId": "abc",
+  "productName": "Book"
+}
+```
+
+The workflow execution now fails. Because the input does not match the schema (expected integer), the task fails schema validation. 
+
+<p align="center"><img src="/content/img/schema-validation-failed-for-task-configuration.png" alt="Schema validation failed for a task configuration" width="100%" height="auto"></img></p>
+
+Because `productId` is defined in the schema as an integer, providing a string value causes the input to violate the schema. During execution, Conductor validates the task inputs against the schema attached to the task configuration. When the validator checks `$.productId`, it detects that a string was provided where an integer is required.
+
+As a result, schema validation fails before the Inline task can run. Conductor immediately marks the task with the status **Failed_with_terminal_error**, which indicates that the task cannot proceed or be retried automatically. Since this task is part of a workflow and its failure is terminal, the workflow also transitions to the **Failed** state.
+
+</details>
+
+<details>
+<summary>Applying a schema in a workflow definition</summary>
+
+The following example demonstrates how to define a schema and apply it at the workflow definition level.
+
+A workflow-level schema validates the workflow input payload itself, before any tasks begin execution.
+
+**Step 1: Create a schema definition in Orkes Conductor**
+
+**To create a schema:**
+
+1. Go to **Definitions** > **Schemas** from the left navigation menu on your Conductor cluster.
+2. Select **+ New schema**.
+3. In the **Code** tab, paste the following schema:
+
+```json
+{
+  "name": "customerSchema",
+  "version": 1,
+  "type": "JSON",
+  "data": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+      "customerId": {
+        "type": "string"
+      }
+    },
+    "required": ["customerId"]
+  }
+}
+```
+
+4. Select **Save**.
+
+This schema enforces that all workflow runs must provide a `customerId` of type string.
+
+**Step 2: Add the schema to a workflow definition**
+
+**To add the schema to a workflow definition:**
+
+1. Go to **Definitions** > **Workflow** from the left navigation menu on your Conductor cluster.
+2. Select **+ Define workflow** and paste the following code in the **Code** tab:
+
+```json
+{
+ "name": "schema_workflow_definition_example",
+ "description": "Workflow-level schema validation example",
+ "version": 1,
+ "tasks": [
+   {
+     "name": "log_customer",
+     "taskReferenceName": "log_customer_ref",
+     "type": "INLINE",
+     "inputParameters": {
+       "customerId": "${workflow.input.customerId}",
+       "expression": "true",
+       "evaluatorType": "graaljs"
+     }
+   }
+ ],
+ "inputParameters": [
+   "customerId"
+ ],
+ "schemaVersion": 2
+}
+```
+
+3. Select **Save** > **Confirm**.
+4. In the **Workflow Schema** section of the **Workflow** tab, switch on the **Enforce schema** toggle.
+
+<p align="center"><img src="/content/img/enforcing-input-schema-for-a-workflow-definition.png" alt="Enforcing schema validation to a workflow definition" width="100%" height="auto"></img></p>
+
+5. In **Input Schema**, select the schema (`customerSchema`) created in the previous step.
+6. Select a **Version** for the schema.
+7. Select **Save** > **Confirm** in the top right.
+
+Next, run the workflow.
+
+**Step 3: Run the workflow**
+
+1. Go to the **Run** tab, and enter a valid integer `customerId` as the **Input params**. For example:
+
+```json
+{
+  "customerId": "CUST-001"
+}
+```
+
+2. Select **Execute**.
+
+Since the workflow input matches the required schema (string type), validation is successful. The Inline task executes immediately, and the workflow completes successfully.
+
+<p align="center"><img src="/content/img/successful-execution-workflow-definition.png" alt="Successful workflow execution" width="100%" height="auto"></img></p>
+
+Let’s see what happens if the schema definition is not correct. 
+
+Rerun the same workflow with an invalid input, for example:
+
+```json
+{
+  "customerId": 123
+}
+```
+
+Execution does not begin because workflow-level validation runs first. When Conductor detects that the `customerId` is expected to be a string but an integer was passed, it blocks the workflow from starting and surfaces the following error immediately:
+
+<p align="center"><img src="/content/img/schema-validation-failed-for-workflow-definition.png" alt="Schema validation failed for a workflow definition" width="100%" height="auto"></img></p>
+
+</details>
