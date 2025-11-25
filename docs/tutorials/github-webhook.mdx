@@ -121,7 +121,7 @@ GitHub’s personal access token is used to authenticate the GitHub API request 
 
 1. Log in to [GitHub](https://github.com/login).
 2. Select your profile in the upper-right corner and then select **Settings**.
-3. Select **Developer settings** > **Personal access tokens** > **Tokens (classic) **from the left menu.
+3. Select **Developer settings** > **Personal access tokens** > **Tokens (classic)** from the left menu.
 4. Select **Generate new token** > **Generate new token (classic).**
 
 <p align="center"><img src="/content/img/generating-pat.png" alt="Generating personal access token from GitHub" width="100%" height="auto" /></p>
@@ -142,7 +142,7 @@ Now that you have the token, the next step is to store it as a secret in Conduct
 **To create a secret:**
 
 1. Go to [**Definitions** > **Secret**](https://developer.orkescloud.com/secrets) from the left navigation menu on your Conductor cluster.
-2. Select** + Add secret**.
+2. Select **+ Add secret**.
 3. In **Secret name**, enter ***ghp_your_github_token***.
 4. In **Secret value**, paste the GitHub token copied previously.
 5. Select **Add**.
@@ -310,7 +310,7 @@ Go to your workflow definition and switch to the **Code** tab. Replace the exist
 Save the workflow. This saves the workflow as a new version, i.e., version 2. It introduces two key enhancements:
 
 - An additional [HTTP task](https://orkes.io/content/reference-docs/system-tasks/http) to fetch the list of files changed in the pull request using the GitHub API.
-- A [JSON JQ Transform task](https://orkes.io/content/reference-docs/system-tasks/jq-transform) to analyze those files and determine the appropriate reviewer based on the file type. It checks if any of the changed files end with .md. If yes, the workflow assigns the PR to a **documentation reviewer**. Otherwise, it assigns a **code reviewer**.
+- A [JSON JQ Transform task](https://orkes.io/content/reference-docs/system-tasks/jq-transform) to analyze those files and determine the appropriate reviewer based on the file type. It checks if any of the changed files end with `.md`. If yes, the workflow assigns the PR to a **documentation reviewer**. Otherwise, it assigns a **code reviewer**.
 
 <p align="center"><img src="/content/img/github-workflow-versions.png" alt="2 versions of the github workflow" width="70%" height="auto" /></p>
 
@@ -356,5 +356,5 @@ This dynamic PR reviewer workflow can be extended by:
 
 - Sending notifications to Slack using a Slack webhook when a PR is opened or a reviewer is assigned.
 - Prefer Microsoft Teams? You can use a Microsoft Teams webhook to post similar notifications directly to a designated channel.
-- Sending notifications to Slack using a Slack webhook when a PR is opened or a reviewer is assigned.
+- Replacing the JSON JQ Transform task with a Switch task as your routing logic grows to support multiple reviewer groups or more complex branching.
 - Adding approval or QA steps before merging to include additional verification in the process.
