@@ -1,0 +1,360 @@
+---
+slug: "/tutorials/github-webhook"
+description: "Learn how to trigger workflows on PR events, assign reviewers through the GitHub API, and extend the flow with dynamic routing and notifications."
+---
+
+# Build a GitHub Pull Request Reviewer Assignment Workflow
+
+This tutorial explains how to automate pull request (PR) reviewer assignment using GitHub webhooks and Orkes Conductor. When a new PR is opened, GitHub sends an event to Conductor, which then assigns the appropriate reviewer through the GitHub API.
+
+While GitHub Marketplace offers handy plugins, such as [auto-assign reviewer by files](https://github.com/marketplace/actions/auto-assign-reviewer-by-files), they come with limitations: rigid logic, minimal observability, and a lack of ownership. Owning your automation with an orchestration platform like Orkes Conductor means you’re in control: you write the logic, observe every task, and extend workflows to any system your team uses, from Slack to Jira to custom APIs.
+
+## The PR reviewer assignment workflow
+
+To illustrate how pull request automation works, let’s consider a repository that receives a high volume of contributions. We’ll automate this flow using [GitHub webhooks](https://docs.github.com/en/webhooks/about-webhooks) and Orkes Conductor. 
+
+Here’s an overview of the system we are going to build:
+
+1. Create a PR reviewer assignment workflow in Conductor.
+2. Get an access token from the GitHub account.
+3. Store the GitHub token as a secret in Conductor.
+4. Create a webhook in Conductor.
+5. Configure a webhook in GitHub.
+6. Modify and run the workflow.
+7. Submit a PR in the GitHub repository.
+
+Follow the tutorial using the free [Orkes Developer Edition](https://developer.orkescloud.com/). Sign up for an account to get started.
+
+## Step 1: Create a PR reviewer assignment workflow 
+
+Orkes Conductor lets you define workflows as JSON, through [SDKs](https://orkes.io/content/category/sdks), [APIs](https://orkes.io/content/category/ref-docs/api), or the UI.
+
+In this tutorial, we will create the workflow using Conductor UI.
+
+**To create the workflow:**
+
+1. Go to [**Definitions** > **Workflow**](https://developer.orkescloud.com/workflowDef) from the left navigation menu on your Conductor cluster. 
+2. Select **+ Define workflow**.
+3. Select the **Code** tab on the right and paste the following code:
+
+```json
+{
+ "name": "github_pr_reviewer_assignment",
+ "description": "Assign reviewers when a PR is opened",
+ "version": 1,
+ "tasks": [
+   {
+     "name": "wait_for_pr_open",
+     "taskReferenceName": "waitForPR",
+     "inputParameters": {
+       "matches": {
+         "$['action']": "opened"
+       }
+     },
+     "type": "WAIT_FOR_WEBHOOK"
+   },
+   {
+     "name": "assign_reviewers",
+     "taskReferenceName": "assignReviewers",
+     "inputParameters": {
+       "http_request": {
+         "method": "POST",
+         "uri": "${waitForPR.output.pull_request.url}/requested_reviewers",
+         "headers": {
+           "Authorization": "token ${workflow.secrets.ghp_your_github_token}",
+           "Accept": "application/vnd.github.v3+json"
+         },
+         "body": {
+           "reviewers": [
+             "<GITHUB-ID>"
+           ]
+         }
+       }
+     },
+     "type": "HTTP"
+   }
+ ],
+ "schemaVersion": 2
+}
+```
+
+4. Select **Save** > **Confirm**. 
+
+Your workflow will look like this:
+
+<p align="center"><img src="/content/img/github-pr-reviewer-assignment-workflow.png" alt="The GitHub PR Reviewer Assignment Workflow" width="50%" height="auto" /></p>
+
+- The workflow begins with a [Wait for Webhook task](https://orkes.io/content/reference-docs/system-tasks/wait-for-webhook) that listens for incoming webhook events from GitHub. 
+- When a pull request is opened, this task captures the event and passes it on to the next step: an [HTTP task](https://orkes.io/content/reference-docs/system-tasks/http) that sends a POST request to the GitHub API to assign a reviewer.
+
+### Using the Wait for Webhook task
+
+Let’s examine how the input matches must be defined for a Wait for Webhook task. The input matches are the conditions that incoming payloads must meet to trigger the webhook.
+
+As evident from the [sample GitHub webhook payload](https://docs.github.com/en/webhooks/webhook-events-and-payloads#example-webhook-delivery), the payload for new PRs is `"action": "opened"`. So you need to configure the [input matches for the Wait for Webhook task](https://orkes.io/content/reference-docs/system-tasks/wait-for-webhook#writing-custom-matches) to match this condition:  
+
+```json
+// workflow definition
+     "name": "wait_for_pr_open",
+     "taskReferenceName": "waitForPR",
+     "inputParameters": {
+       "matches": {
+         "$['action']": "opened"
+       }
+     },
+     "type": "WAIT_FOR_WEBHOOK",
+```
+
+This ensures the event triggers only for new pull request events.
+
+:::tip
+If you are setting up a webhook for any other action, refer to the [sample payload in the GitHub documentation](https://docs.github.com/en/webhooks/webhook-events-and-payloads) and configure the input matches accordingly.
+:::
+
+Now that the workflow is set up, the next step is to get the personal access token from your GitHub account.
+
+## Step 2: Get an access token from the GitHub account
+
+GitHub’s personal access token is used to authenticate the GitHub API request via the HTTP task.
+
+**To get the token:**
+
+1. Log in to [GitHub](https://github.com/login).
+2. Select your profile in the upper-right corner and then select **Settings**.
+3. Select **Developer settings** > **Personal access tokens** > **Tokens (classic) **from the left menu.
+4. Select **Generate new token** > **Generate new token (classic).**
+
+<p align="center"><img src="/content/img/generating-pat.png" alt="Generating personal access token from GitHub" width="100%" height="auto" /></p>
+
+5. Enter a **Note** for the token, which is a name used to identify the token.
+6. Set a token **Expiration**.
+7. In **Select scopes**, select **repo**.
+
+<p align="center"><img src="/content/img/assigning-scope-for-pat.png" alt="Assigning scope for personal access token" width="100%" height="auto" /></p>
+
+8. Select **Generate token**.
+9. Copy and store the token securely, as it will only be displayed once.
+
+Now that you have the token, the next step is to store it as a secret in Conductor.
+
+## Step 3: Store the GitHub token as a secret in Conductor
+
+**To create a secret:**
+
+1. Go to [**Definitions** > **Secret**](https://developer.orkescloud.com/secrets) from the left navigation menu on your Conductor cluster.
+2. Select** + Add secret**.
+3. In **Secret name**, enter ***ghp_your_github_token***.
+4. In **Secret value**, paste the GitHub token copied previously.
+5. Select **Add**.
+
+<p align="center"><img src="/content/img/saving-pat-as-secret.png" alt="Saving personal access token as a secret in Orkes Conductor" width="100%" height="auto" /></p>
+
+Your token is now securely stored with Conductor. Returning to your workflow, you can verify that this secret authorizes the GitHub request within the HTTP task.
+
+<p align="center"><img src="/content/img/authorizing-request-using-stored-secret.png" alt="Authorizing API request using stored secret" width="100%" height="auto" /></p>
+
+## Step 4: Create a webhook in Conductor
+
+The next step is to create a webhook in Conductor that will listen for events coming from GitHub.
+
+**To create a webhook:**
+
+1. Go to [**Definitions** > **Webhook**](https://developer.orkescloud.com/configure-webhooks) from the left navigation menu on your Conductor cluster.
+2. Select **+ New webhook.**
+3. Configure the following parameters:
+    - In **Webhook name**, enter a unique name for the webhook.
+    - In **Workflows to receive Webhook event**, select the workflow created in [Step 1](/content/tutorials/github-webhook#step-1-create-a-pr-reviewer-assignment-workflow).
+    - Select the **Source platform** as **GitHub**.
+    - In **Secret**, enter a random secret key, which will be used to authenticate the webhook connection in GitHub. Make sure to note this value.
+4. Select **Save**.
+
+<p align="center"><img src="/content/img/github-webhook-conductor.png" alt="Creating a GitHub webhook in Conductor" width="80%" height="auto" /></p>
+
+An unverified webhook URL will be generated, which you will copy to the GitHub webhook.
+
+## Step 5: Configure a webhook in GitHub
+
+:::info Prerequisites
+You must have a GitHub repository where PR assignment automation will be applied.
+:::
+
+You now need to configure a GitHub webhook to send events to your Conductor webhook. Create this webhook in the same repository where you want to automate PR reviewer assignment.
+
+**To create a webhook in GitHub:**
+
+1. Go to **Settings** from your GitHub repository.
+2. Go to **Code and automation** > **Webhooks** from the left menu.
+
+<p align="center"><img src="/content/img/github-webhook-repository.png" alt="Creating a GitHub webhook in GitHub repository" width="100%" height="auto" /></p>
+
+3. Select **Add webhook**.
+4. In **Payload URL**, paste the webhook URL generated in [Step 4](/content/tutorials/github-webhook#step-4-create-a-webhook-in-conductor).
+5. Set the **Content type** as **application/json**.
+6. In **Secret**, enter the secret value configured for the Conductor webhook in [Step 4](/content/tutorials/github-webhook#step-4-create-a-webhook-in-conductor).
+7. In **SSL verification**, switch on **Enable SSL verification**.
+8. In **Which events would you like to trigger this webhook**, select **Let me select individual events** > **Pull requests**.
+9. Select **Add webhook**.
+
+This saves the webhook and sends a sample event to Conductor, which verifies the webhook URL in Conductor.
+
+<p align="center"><img src="/content/img/github-webhook-verified.png" alt="GitHub webhook verified in Conductor" width="100%" height="auto" /></p>
+
+## Step 6: Modify and run the workflow
+
+Before executing the workflow, update it with the GitHub ID of the reviewer you want to assign the pull request to. This user must have write access to the repository.
+
+To modify the workflow, go back to your workflow definition and select the HTTP task. Replace `<GITHUB-ID>` with the actual GitHub username of the intended reviewer.
+
+<p align="center"><img src="/content/img/modify-github-workflow.png" alt="Modifying GitHub workflow" width="100%" height="auto" /></p>
+
+Once updated, select **Execute** to start the execution. It will now run and wait for incoming events from GitHub.
+
+## Step 7: Submit a PR in the GitHub repository
+
+To test the setup, have another user open a sample pull request in your GitHub repository.
+
+This action triggers the webhook and sends a payload to your Conductor workflow. Once received, the workflow executes the HTTP task to assign the pull request to the specified reviewer.
+
+<p align="center"><img src="/content/img/submitting-pr.gif" alt="Creating a PR on the repository" width="100%" height="auto" /></p>
+
+:::info Note
+The PR may appear as a self-requested review if the reviewer is the same GitHub user who owns the repository and created the webhook.
+:::
+
+To confirm everything is working as expected, head to **Executions** > **Workflow** in your Conductor cluster and select your workflow. In the HTTP task, review the workflow execution details, including the event payload.
+
+<p align="center"><img src="/content/img/github-workflow-introspection.png" alt="Inspecting the workflow execution" width="100%" height="auto" /></p>
+
+You have now automated the PR assignment process. 
+
+Up next, let’s take it a step further by enhancing the workflow to **assign reviewers dynamically** based on the type of changes introduced in the pull request.
+
+## Dynamically assign reviewers based on the files changed
+
+The basic version of our workflow assigns the same reviewer for every pull request. However, real-world projects are more nuanced: some PRs update code, while others update documentation.
+
+To make the process smarter, we can dynamically assign reviewers based on the type of changes in the PR.
+
+In this scenario, let’s assume:
+
+- All documentation updates are made using markdown files (.md).
+- Code changes affect other file types, such as .js, .py, etc.
+
+To implement this logic, we’ll use [Conductor’s versioning capability](https://orkes.io/content/faqs/workflow-versioning). Versioning enables you to maintain multiple versions of the same workflow, allowing for easy iteration without impacting existing executions.
+
+Go to your workflow definition and switch to the **Code** tab. Replace the existing definition with the following:
+
+```json
+{
+ "name": "github_pr_reviewer_assignment",
+ "description": "Assign reviewers when a PR is opened",
+ "version": 2,
+ "tasks": [
+   {
+     "name": "wait_for_pr_open",
+     "taskReferenceName": "waitForPR",
+     "inputParameters": {
+       "matches": {
+         "$['action']": "opened"
+       }
+     },
+     "type": "WAIT_FOR_WEBHOOK"
+   },
+   {
+     "name": "fetch_files_changed",
+     "taskReferenceName": "fetchChanged",
+     "inputParameters": {
+       "http_request": {
+         "method": "GET",
+         "uri": "${waitForPR.output.pull_request.url}/files",
+         "headers": {
+           "Authorization": "token ${workflow.secrets.ghp_your_github_token}",
+           "Accept": "application/vnd.github.v3+json"
+         }
+       }
+     },
+     "type": "HTTP"
+   },
+   {
+     "name": "determine_reviewers",
+     "taskReferenceName": "determineReviewers",
+     "inputParameters": {
+       "source": "${fetchChanged.output.response.body}",
+       "queryExpression": "if any(.source[]; .filename | test(\".*\\\\.md$\")) then [\"<DOC-REVIEWER>\"] else [\"<CODE-REVIEWER>\"] end"
+     },
+     "type": "JSON_JQ_TRANSFORM"
+   },
+   {
+     "name": "assign_reviewers",
+     "taskReferenceName": "assignReviewers",
+     "inputParameters": {
+       "http_request": {
+         "method": "POST",
+         "uri": "${waitForPR.output.pull_request.url}/requested_reviewers",
+         "headers": {
+           "Authorization": "token ${workflow.secrets.ghp_your_github_token}",
+           "Accept": "application/vnd.github.v3+json"
+         },
+         "body": {
+           "reviewers": "${determineReviewers.output.resultList[0]}"
+         }
+       }
+     },
+     "type": "HTTP"
+   }
+ ],
+ "schemaVersion": 2
+}
+```
+
+Save the workflow. This saves the workflow as a new version, i.e., version 2. It introduces two key enhancements:
+
+- An additional [HTTP task](https://orkes.io/content/reference-docs/system-tasks/http) to fetch the list of files changed in the pull request using the GitHub API.
+- A [JSON JQ Transform task](https://orkes.io/content/reference-docs/system-tasks/jq-transform) to analyze those files and determine the appropriate reviewer based on the file type. It checks if any of the changed files end with .md. If yes, the workflow assigns the PR to a **documentation reviewer**. Otherwise, it assigns a **code reviewer**.
+
+<p align="center"><img src="/content/img/github-workflow-versions.png" alt="2 versions of the github workflow" width="70%" height="auto" /></p>
+
+Before running the workflow:
+
+- In the JSON JQ Transform task, update the placeholders with the actual GitHub usernames of your doc and code reviewers. Ensure these users are added as collaborators on the GitHub repository.
+
+<p align="center"><img src="/content/img/updating-github-workflow.png" alt="Updating reviewer details in the JSON JQ Transform task" width="100%" height="auto" /></p>
+
+- In your Conductor webhook, make sure to include version 2 of the workflow.
+
+<p align="center"><img src="/content/img/updating-github-webhook.png" alt="Updating GitHub Webhook in Orkes Conductor" width="60%" height="auto" /></p>
+
+Save the changes, then run the workflow and have another random user submit a pull request with a .py file.
+
+<p align="center"><img src="/content/img/code-pr.gif" alt="Submitting a code PR" width="100%" height="auto" /></p>
+
+The PR is automatically assigned to reviewer *acme* (code reviewer). Rerun the workflow and submit a PR that includes a .md file.
+
+<p align="center"><img src="/content/img/doc-pr.gif" alt="Submitting a doc PR" width="100%" height="auto" /></p>
+
+This time, the PR is assigned to *JohnDoe* (doc reviewer). 
+
+With this dynamic routing in place, reviewer assignment is now fully automated based on the nature of the PR, making your review process faster, smarter, and scalable.
+
+## Automate using Scheduler
+
+So far, we’ve manually triggered the workflow for testing purposes. However, in a real-world production setup, pull requests should be automatically processed as they arrive without requiring manual intervention.
+
+To achieve this, you can use [Orkes Conductor’s Scheduler](https://orkes.io/content/developer-guides/scheduling-workflows), which supports cron-based triggers for running workflows at defined intervals.
+
+For this use case, running the workflow every minute is typically sufficient. You can configure this by setting up a schedule with the following cron expression:
+
+```json
+0 * * ? * *
+```
+
+Once set up, Conductor will continuously poll for new PR events and process them as they arrive, fully automated and production-ready.
+
+## Workflow modifications
+
+This dynamic PR reviewer workflow can be extended by:
+
+- Sending notifications to Slack using a Slack webhook when a PR is opened or a reviewer is assigned.
+- Prefer Microsoft Teams? You can use a Microsoft Teams webhook to post similar notifications directly to a designated channel.
+- Sending notifications to Slack using a Slack webhook when a PR is opened or a reviewer is assigned.
+- Adding approval or QA steps before merging to include additional verification in the process.
