@@ -893,10 +893,15 @@ const sidebars = {
                             id: `tutorials/daily-scrum-automation-using-standup-bot`,
                             label: 'Slack Webhook',
                         },
-                                                {
+                        {
                             type: 'doc',
                             id: `tutorials/sendgrid-webhook`,
                             label: 'SendGrid Webhook',
+                        },
+                        {
+                            type: 'doc',
+                            id: `tutorials/github-webhook`,
+                            label: 'GitHub Webhook',
                         },
                     ]
                 },
