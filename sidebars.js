@@ -903,6 +903,11 @@ const sidebars = {
                             id: `tutorials/github-webhook`,
                             label: 'GitHub Webhook',
                         },
+                        {
+                            type: 'doc',
+                            id: `tutorials/stripe-webhook`,
+                            label: 'Stripe Webhook',
+                        },
                     ]
                 },
                 {
