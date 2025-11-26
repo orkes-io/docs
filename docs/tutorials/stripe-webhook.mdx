@@ -162,7 +162,7 @@ You now need to configure a Stripe webhook.
 
 1. [Log in to your Stripe account](https://dashboard.stripe.com/).
 2. Go to **Developers** > **Webhooks** from the left menu.
-3. Select** + Add destination.** 
+3. Select **+ Add destination.** 
 4. In **Events from**, select **Your account**.
 5. In **Events**, search and select **checkout.session.completed**.
 
@@ -243,7 +243,7 @@ This payment confirmation workflow can be extended by:
 - Automating using workflow scheduler that schedules the workflow to run at regular intervals.
 - Sending a Slack notification when a payment succeeds so internal teams are notified instantly.
 - Using a JSON JQ Transform task to extract additional fields from the Stripe event, such as customer metadata, product details, or coupon information, and process downstream accordingly.
-- Replacing the Inline task with a Switch task to route different payment event types, for example, routing payment_intent.succeeded and checkout.session.completed to different email templates.
+- Replacing the Inline task with a Switch task to route different payment event types, for example, `routing payment_intent.succeeded` and `checkout.session.completed` to different email templates.
 - Adding logic to detect refunded or failed payments and trigger follow-up workflows for customer communication or internal review.
 - Triggering additional downstream tasks such as creating an invoice, updating a CRM, registering the order in an internal system, or provisioning access to a purchased service.
 - Introducing a Human task step if manual verification is required for certain payments, such as high-risk transactions.
