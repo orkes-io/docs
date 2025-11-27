@@ -103,7 +103,7 @@ To match all message events from Microsoft Teams, the Wait for Webhook task can 
 }
 ```
 
-This ensures that the task completes whenever Microsoft Teams sends a message event to the configured webhook, and the workflow is waiting on the Wait for Webhook task.
+This ensures that the task completes whenever Microsoft Teams sends a message event to the configured channel, and the workflow is waiting on the Wait for Webhook task.
 
 ## Step 2: Create a webhook in Conductor
 
@@ -164,7 +164,7 @@ Once done, go to the **Run** tab and select **Execute** to start the execution. 
 
 Now test from Teams:
 
-1. In the channel where you added the outgoing webhook:
+1. In the channel where you added the outgoing webhook, enter:
 
 ` @YourWebhookName Customer reports payment failure on order 1234`
 
@@ -174,7 +174,7 @@ Now test from Teams:
 
 This sends the event to the Conductor webhook, allowing the Wait for Webhook task to complete successfully.
 
-Go to **Executions** > **Workflow** to review the run and check the Wait for Webhook task’s output to verify that the message was received and processed correctly.
+Go to **Executions** > **Workflow** to review the execution and check the Wait for Webhook task’s output to verify that the message was received and processed correctly.
 
 <p align="center"><img src="/content/img/teams-workflow-instrospection.png" alt="Introspecting workflow output" width="100%" height="auto" /></p>
 
