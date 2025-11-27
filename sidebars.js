@@ -908,6 +908,11 @@ const sidebars = {
                             id: `tutorials/stripe-webhook`,
                             label: 'Stripe Webhook',
                         },
+                        {
+                            type: 'doc',
+                            id: `tutorials/microsoft-teams-webhook`,
+                            label: 'Microsoft Teams Webhook',
+                        },
                     ]
                 },
                 {
