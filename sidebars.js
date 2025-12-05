@@ -839,10 +839,15 @@ const sidebars = {
                             id: 'tutorials/agentic-interview-app',
                             label: 'Agentic Interview App',
                         },
-                         {
+                        {
                             type: 'doc',
                             id: 'tutorials/document-classifier',
                             label: 'Document Classification',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'tutorials/question-answering-with-embeddings',
+                            label: 'Question Answering Workflow',
                         },
                     ]
                 },
