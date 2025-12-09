@@ -14,6 +14,7 @@ Retrieves a paginated list of schedule definitions based on the specified query 
 | workflowName | Filters the results by the specified workflow name. | string | Optional. |
 | name | Filters the results by the specified schedule name. | string | Optional. | 
 | paused | Filters results based on the schedule’s paused state. <br/><br/>Set to `true` to return only paused schedules, or `false` to return active ones. | boolean | Optional. | 
+| freeText | The text to search for. Default is `*`. | string | Optional. | 
 
 ## Response
 
@@ -408,6 +409,61 @@ Returns all schedules that are currently active (not paused).
       "description": "",
       "orgId": "0000",
       "queueMsgId": "test"
+    }
+  ]
+}
+```
+
+</details>
+
+<details>
+
+<summary>Search schedule definitions by freeText</summary>
+
+**Request**
+
+```json
+curl -X 'GET' \
+  'https://<YOUR-CLUSTER>/api/scheduler/schedules/search?start=0&size=100&freeText=annual' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+Returns all schedules that contain the text `annual`.
+
+```json
+{
+  "totalHits": 1,
+  "results": [
+    {
+      "tags": [],
+      "name": "annual_upgrade",
+      "cronExpression": "0 0 12 31 JAN ?",
+      "runCatchupScheduleInstances": false,
+      "paused": true,
+      "startWorkflowRequest": {
+        "name": "update_eks_workflow_development",
+        "version": 1,
+        "correlationId": "",
+        "input": {
+          "organizationId": "",
+          "clusterName": "",
+          "cloudEnvTag": "",
+          "version": "",
+          "force": ""
+        },
+        "taskToDomain": {},
+        "priority": 0
+      },
+      "zoneId": "UTC",
+      "createTime": 1712207849301,
+      "updatedTime": 1765194189117,
+      "createdBy": "john.doe@acme.com",
+      "updatedBy": "john.doe@acme.com",
+      "orgId": "0000",
+      "queueMsgId": "annual_upgrade"
     }
   ]
 }
