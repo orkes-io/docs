@@ -1,11 +1,11 @@
 ---
 slug: "/developer-guides/mcp-gateway"
-description: "Expose workflows and internal APIs as MCP tools using Orkes Conductor’s MCP Gateway, allowing AI agents to trigger automated actions."
+description: "Expose workflows as MCP tools using Orkes Conductor’s MCP Gateway, allowing AI agents to trigger automated actions."
 ---
 
-# MCP Gateway:  Expose APIs as MCP tools 
+# MCP Gateway:  Expose Workflows as MCP tools 
 
-Using Conductor’s MCP Gateway, you can expose any internal APIs as MCP tools for AI agents. Each MCP tool corresponds to a workflow that can perform multi-step operations, coordinate internal systems, and return structured output that AI agents can understand and process. This design allows agents to trigger business actions without manual intervention.
+Using Conductor’s MCP Gateway, you can expose any workflows as MCP tools for AI agents. Each MCP tool corresponds to a workflow that can perform multi-step operations, coordinate internal systems, and return structured output that AI agents can understand and process. This design allows agents to trigger business actions without manual intervention.
 
 MCP tools are defined as **routes** within a **service**. Each route is associated with a workflow that runs when an agent submits a tool request through the Model Context Protocol. **Authentication settings** determine which clients can invoke MCP tools and how they are authorized.
 

@@ -3,28 +3,9 @@ slug: "/developer-guides/mcp-api-gateway"
 description: "Learn how Orkes Conductor’s Gateway exposes workflows as APIs and MCP tools, enabling secure, scalable access for applications and AI agents."
 ---
 
-# MCP/API Gateway
+# Gateway
 
-Orkes Conductor’s MCP/API Gateway lets you expose any workflow as APIs or MCP tools. The gateway enables you to expose a workflow so that it can be called by either traditional API clients or AI agents that support the Model Context Protocol. 
-
-With this, you can:
-
-* Expose workflows as APIs
-* Expose APIs as MCP tools 
-
-## API Gateway: Expose workflows as APIs 
-
-Use the API Gateway when you want client applications to call workflows through standard API requests. This is suitable for backend systems, UI applications, and integrations that require REST-style interfaces.
-
-Each route becomes an HTTP endpoint. When a request is made to the endpoint, Conductor runs the workflow mapped to the route and returns the workflow output as the API response.
-
-## MCP Gateway: Expose APIs as MCP tools 
-
-Use the MCP Gateway when you want AI agents to call APIs through the Model Context Protocol. This is suitable for systems like Claude and other MCP-compatible tools that invoke structured actions as part of their reasoning.
-
-Each MCP service exposes routes as tools. When an AI agent calls a tool, Conductor runs the workflow mapped to the route and returns the workflow output as a structured MCP response.
-
-## MCP/API Gateway Guides
+Orkes Conductor’s Gateway lets you expose any workflow as APIs or MCP tools.
 
 ```mdx-code-block
 import DocCardList from '@theme/DocCardList';

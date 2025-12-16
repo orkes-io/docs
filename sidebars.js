@@ -262,7 +262,7 @@ const sidebars = {
                 },
                 {
                     type: 'category',
-                    label: 'MCP/API Gateway',
+                    label: 'Gateway',
                     link: {
                         type: 'doc',
                         id: 'developer-guides/gateway/overview',
@@ -282,7 +282,7 @@ const sidebars = {
                         {
                             type: 'doc',
                             id: 'developer-guides/gateway/gateway-metrics',
-                            label: 'API/MCP Gateway Metrics',
+                            label: 'Gateway Metrics',
                         },
                     ]
                 },
