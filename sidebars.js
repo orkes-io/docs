@@ -884,10 +884,10 @@ const sidebars = {
                 },
                 {
                     type: 'category',
-                    label: 'MCP/API Gateway',
+                    label: 'Gateway',
                     link: {
                         type: 'generated-index',
-                        title: 'MCP/API Gateway',
+                        title: 'Gateway',
                         description: 'Explore tutorials for exposing workflows as APIs or MCP tools with Orkes Conductor Gateway.',
                         slug: '/tutorials/mcp'
                     },
@@ -900,7 +900,7 @@ const sidebars = {
                         {
                             type: 'doc',
                             id: 'tutorials/ticket-service-tutorial',
-                            label: 'Build a Ticket Service using MCP Gateway',
+                            label: 'y',
                         },
                     ]
                 },
