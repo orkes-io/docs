@@ -262,6 +262,32 @@ const sidebars = {
                 },
                 {
                     type: 'category',
+                    label: 'MCP/API Gateway',
+                    link: {
+                        type: 'doc',
+                        id: 'developer-guides/gateway/overview',
+                    },
+                    className: 'leftMenuHeader',
+                    items: [
+                        {
+                            type: 'doc',
+                            id: 'developer-guides/gateway/api-gateway',
+                            label: 'API Gateway',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'developer-guides/gateway/mcp-gateway',
+                            label: 'MCP Gateway',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'developer-guides/gateway/gateway-metrics',
+                            label: 'API/MCP Gateway Metrics',
+                        },
+                    ]
+                },
+                {
+                    type: 'category',
                     label: 'Access Control and Security',
                     link: {
                         type: 'doc',
