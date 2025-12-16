@@ -262,7 +262,7 @@ const sidebars = {
                 },
                 {
                     type: 'category',
-                    label: 'MCP/API Gateway',
+                    label: 'Gateway',
                     link: {
                         type: 'doc',
                         id: 'developer-guides/gateway/overview',
@@ -282,7 +282,7 @@ const sidebars = {
                         {
                             type: 'doc',
                             id: 'developer-guides/gateway/gateway-metrics',
-                            label: 'API/MCP Gateway Metrics',
+                            label: 'Gateway Metrics',
                         },
                     ]
                 },
@@ -833,6 +833,11 @@ const sidebars = {
                           },
                         {
                             type: 'doc',
+                            id: 'tutorials/create-workflows-using-ai-agent-claude',
+                            label: 'Using Claude',
+                        },
+                        {
+                            type: 'doc',
                             id: 'tutorials/sequential-http-tasks',
                             label: 'Sequential HTTP Tasks',
                         },
@@ -879,18 +884,23 @@ const sidebars = {
                 },
                 {
                     type: 'category',
-                    label: 'MCP',
+                    label: 'Gateway',
                     link: {
                         type: 'generated-index',
-                        title: 'MCP',
-                        description: 'Explore tutorials for connecting AI agents to Orkes Conductor using the MCP server.',
+                        title: 'Gateway',
+                        description: 'Explore tutorials for exposing workflows as APIs or MCP tools with Orkes Conductor Gateway.',
                         slug: '/tutorials/mcp'
                     },
                     items: [
+                            {
+                            type: 'doc',
+                            id: 'tutorials/feedback-tutorial',
+                            label: 'Build a Feedback API using API Gateway',
+                        },
                         {
                             type: 'doc',
-                            id: 'tutorials/create-workflows-using-ai-agent-claude',
-                            label: 'Using Claude',
+                            id: 'tutorials/ticket-service-tutorial',
+                            label: 'y',
                         },
                     ]
                 },
