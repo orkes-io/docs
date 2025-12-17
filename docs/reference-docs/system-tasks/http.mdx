@@ -23,6 +23,7 @@ Configure these parameters for the HTTP task.
 | inputParameters.**method**        | The HTTP method. Supported methods:<ul><li>GET</li><li>HEAD</li><li>POST</li><li>PUT</li><li>PATCH</li><li>DELETE</li><li>OPTIONS</li><li>TRACE</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | Required.                         |
 | inputParameters.**accept**        | The accept header required by the server. The default value is `application/json`. Supported types: <ul><li>application/java-archive</li><li>application/EDI-X12</li><li>application/EDIFACT</li><li>application/javascript</li><li>application/octet-stream</li><li>application/ogg</li><li>application/pdf</li><li>application/xhtml+xml</li><li>application/x-shockwave-flash</li><li>application/json</li><li>application/ld+json</li><li>application/xml</li><li>application/zip</li><li>application/x-www-form-urlencoded</li><li>audio/mpeg</li><li>audio/x-ms-wma</li><li>audio/vnd.rn-realaudio</li><li>audio/x-wav</li><li>image/gif</li><li>image/jpeg</li><li>image/png</li><li>image/tiff</li><li>image/vnd.microsoft.icon</li><li>image/x-icon</li><li>image/vnd.djvu</li><li>image/svg+xml</li></ul>Any other headers can be [passed as a dynamic input](/developer-guides/passing-inputs-to-task-in-conductor). | Optional.                         |
 | inputParameters.**contentType**   | The content type for the server. The default value is `application/json`. Supported types: <ul><li>application/java-archive</li><li>application/EDI-X12</li><li>application/EDIFACT</li><li>application/javascript</li><li>application/octet-stream</li><li>application/ogg</li><li>application/pdf</li><li>application/xhtml+xml</li><li>application/x-shockwave-flash</li><li>application/json</li><li>application/ld+json</li><li>application/xml</li><li>application/zip</li><li>application/x-www-form-urlencoded</li><li>audio/mpeg</li><li>audio/x-ms-wma</li><li>audio/vnd.rn-realaudio</li><li>audio/x-wav</li><li>image/gif</li><li>image/jpeg</li><li>image/png</li><li>image/tiff</li><li>image/vnd.microsoft.icon</li><li>image/x-icon</li><li>image/vnd.djvu</li><li>image/svg+xml</li></ul>It can be [passed as a dynamic input](/developer-guides/passing-inputs-to-task-in-conductor).                       | Optional.                         |
+| inputParameters.**hedgingConfig**.**maxAttempts** | The maximum number of parallel requests to send. The system will use the response from the first successful attempt, helping reduce tail latencies in remote services. <br/>**Note:** Hedging makes parallel requests, so use it only for idempotent services. | Optional. | 
 | inputParameters.**headers**       | A map of additional HTTP headers to be sent along with the request. Supported types:<ul><li>Accept-Language</li><li>Authorization</li><li>Cache Control</li><li>Content-MD5</li><li>From</li><li>If-Match</li><li>If-Modified-Since</li><li>If-None-Match</li><li>Max-Forwards</li><li>Pragma</li><li>If-Range</li><li>If-Unmodified-Since</li><li>Proxy-Authorization</li><li>Range</li><li>Warning</li><li>x-api-key</li><li>Accept-Charset</li><li>Accept-Encoding</li><li>Accept-Control-Request-Headers</li><li>Accept-Control-Request-Method</li><li>Content-Transfer-Encoding</li><li>Expect</li><li>Transfer-Encoding</li><li>Trailer</li></ul>                                                                                                                                                                                                                                                                                          | Optional.                         |
 | inputParameters.**body**          | The request body for POST, PUT, or PATCH methods. Can be text or parameters such as string, number, boolean, null, or object/array.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | Required for POST, PUT, or PATCH. |
 | inputParameters.**encode**        | Determines whether the URI needs encoding. When set to `true`, the Conductor will automatically encode the query parameters before sending the HTTP request. Set this to `false` if the URI is already encoded. The default value is true.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | Optional.                         |
@@ -61,7 +62,7 @@ Here are other parameters for configuring the task behavior.
 
 | Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- | 
-| optional | Whether the task is optional. <br/><br/>If set to` true`, any task failure is ignored, and the workflow continues with the task status updated to `COMPLETED_WITH_ERRORS`. However, the task must reach a terminal state. If the task remains incomplete, the workflow waits until it reaches a terminal state before proceeding. | Optional. | 
+| optional | Whether the task is optional. <br/><br/>If set to`true`, any task failure is ignored, and the workflow continues with the task status updated to `COMPLETED_WITH_ERRORS`. However, the task must reach a terminal state. If the task remains incomplete, the workflow waits until it reaches a terminal state before proceeding. | Optional. | 
 | asyncComplete | Whether the task is completed asynchronously. The default value is false.<ul><li>**false**—Task status is set to COMPLETED upon successful execution.</li><li>**true**—Task status is kept as IN_PROGRESS until an external event marks it as complete.</li></ul> | Optional. | 
 
 </details>
@@ -109,6 +110,34 @@ The HTTP task will return the following parameters.
 
 ## Adding an HTTP task in UI
 
+An HTTP task can be configured manually through the UI or automatically populated using registered service definitions.
+
+<Tabs>
+
+<TabItem value="Using registered services" label="Using registered services">
+
+:::info Prerequisites
+[Register the remote service in Orkes Conductor](https://orkes.io/content/remote-services).
+:::
+
+**To add an HTTP task using registered services:**
+
+1. In your workflow, select the (**+**) icon and add an **HTTP** task.
+2. Select **Populate from remote services**.
+3. In **Service**, select the registered HTTP service.
+4. In **Host**, select the required host for the service.
+5. In **Service method**, select the required endpoint.
+6. Select **Populate**.
+7. (Optional) In **Hedging Config** > **Maximum attempts**, enter a value for parallel hedged requests to reduce latency.
+
+<p align="center"><img src="/content/img/adding-service-to-http-task.gif" alt="Adding the registered service to an HTTP task" width="100%" height="auto"></img></p>
+
+This method automatically fills in the HTTP task parameters based on the selected service. It is recommended if you have already registered your HTTP services in Orkes Conductor.
+
+</TabItem>
+
+<TabItem value="Manually configuring an HTTP task" label="Manually configuring an HTTP tasks">
+
 **To add an HTTP task:**
 
 1. In your workflow, select the (**+**) icon and add an **HTTP** task.
@@ -116,12 +145,16 @@ The HTTP task will return the following parameters.
 3. In **URL**, add the URI to be called by the HTTP task.
 4. In **Accept**, select the accept header as required by the server.
 5. In **Content-Type**, select the content type for the server.
-6. (Optional) In **Other-headers**, add any additional HTTP headers to be sent along with the request.
-7. In **Body**, add the request body when using PUT, POST, or PATCH method.
-8. (Optional) Enable or disable **Encode** to specify if the URI needs to be encoded.
-9. (Optional) Set **Async complete** to true if the task is to be completed asynchronously.
+6. (Optional) In **Hedging Config** > **Maximum attempts**, enter a value for parallel hedged requests to reduce latency.
+7. (Optional) In **Other-headers**, add any additional HTTP headers to be sent along with the request.
+8. In **Body**, add the request body when using PUT, POST, or PATCH method.
+9. (Optional) Enable or disable **Encode** to specify if the URI needs to be encoded.
+10. (Optional) Set **Async complete** to true if the task is to be completed asynchronously.
 
 <center><p><img src="/content/img/ui-guide-http-task.png" alt="Adding HTTP task" width="100%" height="auto"/></p></center>
+
+</TabItem>
+</Tabs>
 
 ## Examples
 

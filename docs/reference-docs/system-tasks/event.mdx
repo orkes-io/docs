@@ -51,7 +51,7 @@ Here are other parameters for configuring the task behavior.
 
 | Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- | 
-| optional | Whether the task is optional. <br/><br/>If set to` true`, any task failure is ignored, and the workflow continues with the task status updated to `COMPLETED_WITH_ERRORS`. However, the task must reach a terminal state. If the task remains incomplete, the workflow waits until it reaches a terminal state before proceeding. | Optional. |
+| optional | Whether the task is optional. <br/><br/>If set to`true`, any task failure is ignored, and the workflow continues with the task status updated to `COMPLETED_WITH_ERRORS`. However, the task must reach a terminal state. If the task remains incomplete, the workflow waits until it reaches a terminal state before proceeding. | Optional. |
 | asyncComplete | Whether the task is completed asynchronously. The default value is false.<ul><li>**false**—Task status is set to COMPLETED upon successful execution.</li><li>**true**—Task status is kept as IN_PROGRESS until an external event marks it as complete.</li></ul><TableNote title="Available since">v4.1.40 and later</TableNote> | Optional. | 
 
 </details>

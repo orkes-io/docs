@@ -64,7 +64,7 @@ Here are other parameters for configuring the task behavior.
 
 | Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- | 
-| optional | Whether the task is optional. <br/><br/>If set to` true`, any task failure is ignored, and the workflow continues with the task status updated to `COMPLETED_WITH_ERRORS`. However, the task must reach a terminal state. If the task remains incomplete, the workflow waits until it reaches a terminal state before proceeding. | Optional. | 
+| optional | Whether the task is optional. <br/><br/>If set to`true`, any task failure is ignored, and the workflow continues with the task status updated to `COMPLETED_WITH_ERRORS`. However, the task must reach a terminal state. If the task remains incomplete, the workflow waits until it reaches a terminal state before proceeding. | Optional. | 
 
 </details>
 
@@ -112,6 +112,35 @@ The HTTP Poll task will return the following parameters.
 
 ## Adding an HTTP Poll task in UI
 
+An HTTP Poll task can be configured manually through the UI or automatically populated using registered service definitions.
+
+<Tabs>
+
+<TabItem value="Using registered services" label="Using registered services">
+
+:::info Prerequisites
+[Register the remote service in Orkes Conductor](https://orkes.io/content/remote-services).
+:::
+
+**To add an HTTP task using registered services:**
+
+1. In your workflow, select the (**+**) icon and add an **HTTP Poll** task.
+2. Select **Populate from remote services**.
+3. In **Service**, select the registered HTTP service.
+4. In **Host**, select the required host for the service.
+5. In **Service method**, select the required endpoint.
+6. Select **Populate**.
+7. In **Termination Condition**, set the condition to be evaluated after every API invocation.
+8. Set the **Polling Interval** and **Polling Strategy**.
+
+<p align="center"><img src="/content/img/adding-service-to-http-poll-task.gif" alt="Adding the registered service to an HTTP Poll task" width="100%" height="auto"></img></p>
+
+This method automatically fills in the HTTP Poll task parameters based on the selected service. It is recommended if you have already registered your HTTP services in Orkes Conductor.
+
+</TabItem>
+
+<TabItem value="Manually configuring an HTTP Poll task" label="Manually configuring an HTTP Poll task">
+
 **To add an HTTP Poll task:**
 
 1. In your workflow, select the (**+**) icon and add an **HTTP Poll** task.
@@ -126,6 +155,9 @@ The HTTP Poll task will return the following parameters.
 10. (Optional) Enable or disable **Encode** to specify if the URI needs to be encoded.
 
 <center><p><img src="/content/img/ui-guide-http-poll-task.png" alt="Adding HTTP Poll Task" width="100%" height="auto"/></p></center>
+
+</TabItem>
+</Tabs>
 
 ## Examples
 

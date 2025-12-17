@@ -1,0 +1,144 @@
+---
+sidebar_position: 13
+slug: "/reference-docs/system-tasks/grpc"
+description: "The gRPC task invokes remote endpoints in gRPC services and allows communication with backend systems using the gRPC protocol."
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# gRPC
+
+The gRPC task invokes remote endpoints in gRPC services and allows communication with backend systems using the gRPC protocol. 
+
+The gRPC task constructs a request using the specified method, host, and request body, and sends it to the gRPC server. The task captures the response and makes it available for use in workflows.
+
+## Task parameters
+
+Configure these parameters for the gRPC task.
+
+| Parameter                         | Description                                                                                                                          | Required/ Optional |
+| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ | ------------------ |
+| inputParameters.**method** | The gRPC method to invoke within the service. | Required. | 
+| inputParameters.**host** | The hostname or IP address of the gRPC server. | Required. | 
+| inputParameters.**port** | The port on which the gRPC server is running. | Required. | 
+| inputParameters.**request** | A JSON object representing the request payload. | Required. | 
+| inputParameters.**methodType** | The gRPC method type. Supported values:<ul><li>UNARY</li><li>CLIENT_STREAMING</li><li>SERVER_STREAMING</li><li>BIDI_STREAMING</li></ul> | Required. | 
+| inputParameters.**useSSL** | Determines the connection security. Set to *true* to secure the connection using SSL. | Optional. | 
+| inputParameters.**trustCert** | Specifies whether the client should trust the server’s certificate. Set to *true* to allow connections to servers with self-signed or unverified certificates. | Optional. |  
+| inputParameters.**hedgingConfig**.**maxAttempts** | The maximum number of parallel requests to send. The system uses the response from the first successful attempt, helping reduce tail latencies in remote services.<br/><br/>**Note**: Hedging makes parallel requests, so use it only for idempotent services. | Optional. | 
+| inputParameters.**headers** | A map of additional headers to be sent along with the request. Supported types:<ul><li>Accept-Language</li><li>Authorization</li><li>Cache Control</li><li>Content-MD5</li><li>From</li><li>If-Match</li><li>If-Modified-Since</li><li>If-None-Match</li><li>Max-Forwards</li><li>Pragma</li><li>If-Range</li><li>If-Unmodified-Since</li><li>Proxy-Authorization</li><li>Range</li><li>Warning</li><li>x-api-key</li><li>Accept-Charset</li><li>Accept-Encoding</li><li>Accept-Control-Request-Headers</li><li>Accept-Control-Request-Method</li><li>Content-Transfer-Encoding</li><li>Expect</li><li>Transfer-Encoding</li><li>Trailer</li></ul> | Optional. | 
+| inputParameters.**inputType** | The input schema for the request. [Learn more about using schemas in Conductor](https://orkes.io/content/developer-guides/schema-validation#using-schemas).<ul><li>If you’re using a [registered service](https://orkes.io/content/remote-services), this value is the schema name automatically registered when fetching the service definition.</li><li>If you’re configuring the task manually, enter the name of the input schema you want to associate with the task.</li></ul> | Optional. | 
+| inputParameters.**outputType** | The output schema for the response. [Learn more about using schemas in Conductor](https://orkes.io/content/developer-guides/schema-validation#using-schemas).<ul><li>If you’re using a [registered service](https://orkes.io/content/remote-services), this value is the schema name automatically registered when fetching the service definition.</li><li>If you’re configuring the task manually, enter the name of the output schema you want to associate with the task.</li></ul> | Optional. | 
+
+The following are generic configuration parameters that can be applied to the task and are not specific to the gRPC task.
+
+<details>
+<summary>Caching parameters</summary>
+
+You can cache the task outputs using the following parameters. Refer to [Caching Task Outputs](/faqs/task-cache-output) for a full guide.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| cacheConfig.**ttlInSecond** | The time to live in seconds, which is the duration for the output to be cached. | Required if using *cacheConfig*. |
+| cacheConfig.**key** | The cache key is a unique identifier for the cached output and must be constructed exclusively from the task’s input parameters.<br/>It can be a string concatenation that contains the task’s input keys, such as `${uri}-${method}` or `re_${uri}_${method}`. | Required if using *cacheConfig*. |
+
+</details>
+
+<details>
+<summary>Other generic parameters</summary>
+
+Here are other parameters for configuring the task behavior.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| optional | Whether the task is optional. <br/><br/>If set to `true`, any task failure is ignored, and the workflow continues with the task status updated to `COMPLETED_WITH_ERRORS`. However, the task must reach a terminal state. If the task remains incomplete, the workflow waits until it reaches a terminal state before proceeding. | Optional. | 
+
+</details>
+
+## Task configuration
+
+This is the task configuration for a gRPC task.
+
+```json
+  { 
+     "name": "gRPC",
+     "taskReferenceName": "gRPC_ref",
+     "type": "GRPC",
+     "inputParameters": {
+       "method": "hello.proto",
+       "host": "grpcb.in",
+       "port": 9000,
+       "methodType": "SERVER_STREAMING",
+       "useSSL": true,
+       "trustCert": true,
+       "hedgingConfig": {
+         "maxAttempts": 4
+       },
+       "inputType": "<INPUT-SCHEMA>",
+       "outputType": "<OUTPUT-SCHEMA>",
+       "request": {
+         "key": "value"
+       },
+       "headers": {
+         "x-api-key": "${workflow.secrets.api}"
+       }
+     }
+   }
+```
+
+## Task output
+
+The gRPC task returns the server’s response as task output, making it available for use in subsequent workflow steps. The structure of the output depends on the response of the gRPC method.
+
+## Adding a gRPC task in UI
+
+gRPC task parameters can be automatically populated using registered services or configured manually through the UI.
+
+<Tabs>
+
+<TabItem value="Using registered services" label="Using registered services">
+
+:::info Prerequisites
+[Register the remote service in Orkes Conductor](https://orkes.io/content/remote-services).
+:::
+
+**To add a gRPC task using registered services:**
+
+1. In your workflow, select the (**+**) icon and add a **gRPC** task.
+2. Select **Populate from remote services**.
+3. In **Service**, select the registered service.
+4. In **Host:Port**, select the host and port for the service.
+5. In **Service method**, select the required endpoint.
+6. Select **Populate**.
+7. (Optional) In **Hedging Config** > **Maximum attempts**, enter a value for parallel hedged requests to reduce latency.
+8. (Optional) Enable **Use SSL** if the connection should be secured using TLS.
+9. (Optional) Enable **Trust Certificate** to allow trusting the server’s certificate.
+
+<p align="center"><img src="/content/img/adding-service-to-grpc-task.gif" alt="Adding the registered service to a gRPC task" width="100%" height="auto"></img></p>
+
+This method automatically populates gRPC task parameters based on the selected service. 
+
+</TabItem>
+
+<TabItem value="Manually configuring a gRPC task " label="Manually configuring a gRPC task ">
+
+**To add a gRPC task manually:**
+
+1. In your workflow, select the (**+**) icon and add a **gRPC** task.
+2. In **Method name**, enter the name of the method to invoke.
+3. In **Host**, enter the hostname or IP address of the gRPC server.
+4. In **Port**, enter the port where the gRPC server is running.
+5. In **Request**, provide a JSON object representing the request payload.
+6. In **Method type**, select one of the following: *UNARY*, *SERVER_STREAMING*, *CLIENT_STREAMING*, or *BIDI_STREAMING*.
+7. (Optional) Enable **Use SSL** if the connection should be secured using TLS.
+8. (Optional) Enable **Trust Certificate** to allow trusting the server’s certificate.
+9. (Optional) In **Hedging Config** > **Maximum attempts**, enter a value for parallel hedged requests to reduce latency.
+10. (Optional) In **Header**, add any additional headers to be sent along with the request.
+11. (Optional) In **Input type**, select the input schema for the request.
+12. (Optional) In **Output type**, select the output schema for the request.
+
+<p align="center"><img src="/content/img/grpc-task.png" alt="Adding a gRPC task in Conductor UI" width="100%" height="auto"></img></p>
+
+</TabItem>
+</Tabs>
