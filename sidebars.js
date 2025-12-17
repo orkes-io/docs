@@ -900,7 +900,7 @@ const sidebars = {
                         {
                             type: 'doc',
                             id: 'tutorials/ticket-service-tutorial',
-                            label: 'y',
+                            label: 'Build a Ticket Service using MCP Gateway',
                         },
                     ]
                 },
