@@ -1,0 +1,97 @@
+---
+slug: "/developer-guides/build-workflows-using-ui"
+description: "Learn how to build workflows using Conductor UI."
+---
+
+# Build Workflows Using Conductor UI
+
+Orkes Conductor workflows can be built using various methods, including [SDKs](https://orkes.io/content/category/sdks), [APIs](https://orkes.io/content/reference-docs/api/metadata/creating-workflow-definition), [BPMN imports](https://orkes.io/content/developer-guides/convert-bpmn-to-workflows), and the Conductor UI. In Conductor UI, you can build workflows using two approaches:
+
+1. Visual workflow builder 
+2. Assistant
+
+## Using visual workflow builder
+
+The visual workflow builder lets you design workflows directly in the Conductor UI by adding and configuring tasks on a canvas.
+
+You can use the visual workflow builder to:
+
+- Drag and drop tasks to define workflow execution order.
+- Configure task and workflow inputs/outputs and other parameters.
+- Version workflows.
+- Run workflows visually.
+
+This approach is well-suited for users who prefer a low-code and visual experience.
+
+### Create workflows using visual workflow builder
+
+**To create workflows visually using Conductor UI:**
+
+1. Go to **Definitions** > **Workflows** from the left navigation menu on your Conductor cluster.
+2. Select **+ Define workflow**.
+3. In the visual section on the left side, select** + **icon on **Start**. This action lists the available tasks in Conductor. 
+4. Select a task to add it to the workflow.
+
+<p align="center"><img src="/content/img/build-workflow-using-conductor-ui.png" alt="Build workflows using Visual Workflow Builder" width="100%" height="auto"/></p>
+
+5. Add additional tasks in the required sequence to complete the workflow.
+6. Once done, select each task to configure its parameters. When you select a task, the task configuration form opens on the right side of the screen.
+
+<p align="center"><img src="/content/img/task-configuration-form-ui.png" alt="Configuring task parameters using Conductor UI" width="100%" height="auto"/></p>
+
+7. After configuring tasks, switch to the Workflow tab. Configure the workflow level parameters.
+
+<p align="center"><img src="/content/img/workflow-configuration-form-ui.png" alt="Configuring workflow parameters using Conductor UI" width="100%" height="auto"/></p>
+
+8. Select **Save**.
+
+After saving the workflow, you can use the UI tools to zoom in or out, fit the workflow to the screen, enable drag mode, export the workflow as an image, show descriptions, and search for tasks.
+
+<p align="center"><img src="/content/img/workflow-ui-options.gif" alt="UI workflow configuration features" width="100%" height="auto"/></p>
+
+Once saved, [run workflows using Conductor UI](https://orkes.io/content/how-to-videos/run-workflow).
+
+## Using assistant
+
+Orkes Conductor’s Assistant lets you create workflows by describing the workflow logic in natural language. Instead of manually adding tasks, you provide a prompt that explains what the workflow should do, and the assistant generates a workflow definition.
+
+You can use the assistant to:
+
+- Create workflows from scratch using natural language prompts
+- Modify workflows by adding, updating, or removing tasks
+- Run workflows with test data and debug failures
+- Generate custom workers in Python, Java, JavaScript, or Go
+- Assist with integration configuration for external services
+- Analyze failed executions and suggest fixes
+- Clone workflows to create variants for testing purposes
+
+In addition to workflow creation, the Assistant can also help explain concepts and features, recommend best practices, interpret error messages, and assist with discovering and reusing existing workflows, integrations, and workers.
+
+### Create workflows using Assistant
+
+You can access the Assistant in multiple ways to create workflows.
+
+**To create workflows using Assistant:**
+
+**Option 1: From Laundpad**
+
+1. Log in to your Conductor cluster.
+2. Go to the **Launchpad** and enter your prompt.
+
+<p align="center"><img src="/content/img/create-workflows-using-assistant.gif" alt="Create workflows using Assistant" width="100%" height="auto"/></p>
+
+**Option 2: From Workflow Definitions page**
+
+1. Log in to your Conductor cluster.
+2. Go to **Definitions** > **Workflow**, and select **+ Define workflow**.
+3. Select the **Assistant** tab.
+
+<p align="center"><img src="/content/img/assistant-in-workflow-definition-tab.png" alt="Create workflows using Assistant from Workflow Definitions tab" width="100%" height="auto"/></p>
+
+4. Enter a prompt describing the workflow logic. The assistant generates the workflow based on your input.
+5. Review the generated workflow.
+6. Use additional prompts to refine the workflow, such as running the workflow, fixing issues, or adding more tasks.
+
+:::info Notes
+If you access the **Assistant** from other areas of the UI, it starts in general help mode. To create or modify workflows, always navigate to the **Workflow Definitions** page.
+:::
