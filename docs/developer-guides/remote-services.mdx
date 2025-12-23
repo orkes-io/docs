@@ -261,6 +261,10 @@ This auto-populates the HTTP task parameters in the workflow.
 10. (For HTTP task) In the **Hedging config**, set the **Maximum attempts**, which specifies the number of parallel requests the system should make when executing the task. The system returns the response from the first successful attempt, which helps reduce tail latencies for remote services. Hedging sends multiple parallel requests; hence, use this feature only with idempotent services to prevent unintended side effects from duplicate executions.
 11. Select **Save** > **Confirm**.
 
+:::info Note
+A registered HTTP service can be reused across both HTTP and HTTP Poll tasks. Global service settings apply to both task types. However, circuit breaker configuration is applied only when the service is used with an HTTP task.
+:::
+
 </TabItem>
 
 <TabItem value="For gRPC tasks" label="For gRPC tasks">
