@@ -886,6 +886,10 @@ const sidebars = {
                             type: 'doc',
                             id: 'tutorials/question-answering-with-embeddings',
                             label: 'Question Answering Workflow',
+                        },{
+                            type: 'doc',
+                            id: 'tutorials/document-retrieval',
+                            label: 'Document Retrieval Workflow',
                         },
                     ]
                 },
