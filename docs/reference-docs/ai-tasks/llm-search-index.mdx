@@ -9,7 +9,7 @@ import TabItem from '@theme/TabItem';
 
 # LLM Search Index
 
-The LLM Search Index task is used to search a vector database or repository of vector embeddings of already processed and indexed documents to get the closest match. This task is typically used in scenarios where you need to retrieve or manipulate data stored in a database using a natural language query.
+The LLM Search Index task is used to search a vector database or repository of vector embeddings of already processed and indexed documents to get the closest match. This task is typically used in scenarios where you need to retrieve the data stored in a database using a natural language query.
 
 The LLM Search Index task takes a query, which can be a question, statement, or request made in natural language. This query is processed to generate a vector representation, which is then used to search the vector database. The task returns a list of documents with vectors similar to the query vector, providing the closest matches based on the degree of similarity.
 
@@ -28,8 +28,8 @@ Configure these parameters for the LLM Search Index task.
 | --------- | ----------- | ----------------- |
 | inputParameters.**vectorDB** | The vector database to retrieve the data.<br/><br/>**Note**: If you haven’t configured the vector database on your Orkes Conductor cluster, navigate to the **Integrations** tab and [configure your required provider](/category/integrations/vector-databases). | Required. | 
 | inputParameters.**index** | The index in your vector database where the text or data will be stored.<br/><br/>The terminology of the index field varies depending on the integration:<ul><li>For Weaviate, the index field indicates the collection name.</li><li>For other integrations, it denotes the index name.</li></ul> | Required. |
-| inputParameters.**namespace** | Namespaces are separate isolated environments within the database to manage and organize vector data effectively. Choose from the available namespace configured within the chosen vector database.<br/><br/>The usage and terminology of the namespace field vary depending on the integration:<ul><li>For Pinecone, the namespace field is applicable.</li><li>For Weaviate, the namespace field is not applicable.</li><li>For MongoDB, the namespace field is referred to as “Collection” in MongoDB.</li><li>For Postgres, the namespace field is referred to as “Table” in Postgres.</li></ul> | Required. | 
-| inputParameters.**embeddingModelProvider** | The LLM provider for the embeddings.<br/><br/>**Note**: If you haven’t configured your AI/LLM provider on your Orkes console, navigate to the **Integrations** tab and [configure your required provider](/category/integrations/ai-llm). | Required. |
+| inputParameters.**namespace** | Namespaces are separate isolated environments within the database to manage and organize vector data effectively. Enter the namespace the task will utilize. <br/><br/>The usage and terminology of the namespace field vary depending on the integration:<ul><li>For Pinecone, the namespace field is applicable.</li><li>For Weaviate, the namespace field is not applicable.</li><li>For MongoDB, the namespace field is referred to as “Collection” in MongoDB.</li><li>For Postgres, the namespace field is referred to as “Table” in Postgres.</li></ul> | Required. | 
+| inputParameters.**embeddingModelProvider** | The LLM provider for the embeddings.<br/><br/>**Note**: If you haven’t configured your AI/LLM provider on your Orkes Conductor cluster, navigate to the **Integrations** tab and [configure your required provider](/category/integrations/ai-llm). | Required. |
 | inputParameters.**embeddingModel** | The embedding model provided by the selected LLM provider. | Required. |
 | inputParameters.**query** | The search query. A query typically refers to a question, statement, or request made in natural language that is used to search, retrieve, or manipulate data stored in a database. | Required. |
 | inputParameters.**maxResults** | The maximum number of results to return. Provide a non-zero integer between 1 and 10000. | Required. |
@@ -79,18 +79,19 @@ This is the task configuration for an LLM Search Index task.
 
 ```json
 {
-  "name": "llm_search_index_task",
-  "taskReferenceName": "llm_search_index_task_ref",
-  "inputParameters": {
-    "vectorDB": "pineconedb",
-    "namespace": "myNewModel",
-    "index": "test",
-    "llmProvider": "azure_openai",
-    "embeddingModel": "text-davinci-003",
-    "query": "What is an LLM model?",
-    "dimensions": "${workflow.input.dimensions}"
-  },
-  "type": "LLM_SEARCH_INDEX"
+     "name": "llm_search_index",
+     "taskReferenceName": "llm_search_index_ref",
+     "inputParameters": {
+       "vectorDB": "Pinecone",
+       "index": "doc",
+       "namespace": "docs",
+       "embeddingModelProvider": "openAI",
+       "embeddingModel": "text-embedding-3-large",
+       "query": "${workflow.input.query}",
+       "maxResults": 1000,
+       "dimensions": 3024
+     },
+     "type": "LLM_SEARCH_INDEX"
 }
 ```
 
@@ -112,8 +113,9 @@ The LLM Search Index task will return the following parameters.
 **To add an LLM Search Index task:**
 
 1. In your workflow, select the (**+**) icon and add an **LLM Search Index** task.
-2. Choose the **Vector database**, **Index**, **Namespace**, **Embedding model provider**, and **Embedding model**.
-3. In **Query**, enter the text to be queried.
+2. In **Vector Database Configuration**, select the **Vector database**, **Index**, and **Namespace** to retrieve the embeddings.
+3. In **Embedding Model**, select the **Embedding model provider**, and **Embedding model** to generate the embeddings.
+4. In **Search Parameter**, enter the **Query**, **Max Results**, and **Dimensions**.
 
 <center><p><img src="/content/img/llm-search-index-ui-method.png" alt="LLM Search Index Task - UI" width="80%" height="auto"/></p></center>
 
