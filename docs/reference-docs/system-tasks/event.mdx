@@ -10,9 +10,9 @@ import TableNote from '@site/src/components/TableNote';
 
 # Event
 
-The Event task is used to publish events into eventing systems. It supports various message brokers, including AMQP, Amazon MSK, AWS SQS, Azure Service Bus, Confluent Kafka, Apache Kafka, NATS Messaging, GCP Pub/Sub, and IBM MQ.
+The Event task is used to publish events into message brokers. It supports various message brokers, including AMQP, Amazon MSK, AWS SQS, Azure Service Bus, Confluent Kafka, Apache Kafka, NATS Messaging, GCP Pub/Sub, and IBM MQ.
 
-An Event task publishes a message to an event queue or topic. The specific eventing system used depends on the configured sink. The sink parameter defines the message broker type, integration name, and queue/topic name. The task execution payload is sent to this sink, and Conductor automatically appends additional system input parameters to the payload.
+An Event task publishes a message to an event queue or topic. The specific message broker used depends on the configured sink. The sink parameter defines the message broker type, integration name, and queue/topic name. The task execution payload is sent to this sink, and Conductor automatically appends additional system input parameters to the payload.
 
 :::info Prerequisites
 
@@ -26,39 +26,12 @@ Configure these parameters for the Event task.
 
 | Parameter       | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | Required/ Optional |
 | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
-| sink            | The event queue sink in the format: <br/>**message-broker-type:integration-name:topic/queue-name**<br/>Where,<ul><li>**message-broker-type**—The message broker type where the payload is being sent. Supported types:<ul><li>amqp</li><li>sqs</li><li>azure</li><li>kafka</li><li>nats</li><li>gcp_pubsub</li><li>ibm_mq</li></ul></li><li>**integration-name**—The integration name added to the cluster.</li><li>**topic/queue-name** Name—The name of the queue or topic where the payload is being sent.</li></ul> | Required.          |
-| inputParameters | The input parameters for the Event task, which can be [passed as a dynamic input](/developer-guides/passing-inputs-to-task-in-conductor) or a fixed value. These parameters determine the payload sent to the event sink during task execution.                                                                                                                                                                                                           | Optional.          |
+| sink            | The event queue sink in the format: <br/>**message-broker-type:integration-name:topic/queue-name**<br/>Where,<ul><li>**message-broker-type**—The message broker type where the payload is being sent. Supported types:<ul><li>amqp</li><li>sqs</li><li>azure</li><li>kafka</li><li>nats</li><li>gcp_pubsub</li><li>ibm_mq</li></ul></li><li>**integration-name**—The integration name added to the cluster.</li><li>**topic/queue-name**—The name of the queue or topic where the payload is being sent.</li></ul> | Required.          |
+| inputParameters | The input parameters for the Event task, which can be [passed as a dynamic variable](/developer-guides/passing-inputs-to-task-in-conductor) or a fixed value. These parameters determine the payload sent to the event sink during task execution.                                                                                                                                                                                                           | Optional.          |
 
-The following are generic configuration parameters that can be applied to the task and are not specific to the Event task.
+### System-appended input payloads
 
-<details>
-<summary>Schema parameters</summary>
-
-You can enforce input/output validation for the task using the following parameters. Refer to [Schema Validation](/developer-guides/schema-validation) for a full guide.
-
-| Parameter | Description | Required/ Optional | 
-| --------- | ----------- | ----------------- | 
-| taskDefinition.**enforceSchema** | Whether to enforce schema validation for task inputs/outputs. Set to *true* to enable validation. | Optional. | 
-| taskDefinition.**inputSchema** | The name and type of the input schema to be associated with the task. | Required if *enforceSchema* is set to true. | 
-| taskDefinition.**outputSchema** | The name and type of the output schema to be associated with the task. | Required if *enforceSchema* is set to true.
-
-</details>
-
-<details>
-<summary>Other generic parameters</summary>
-
-Here are other parameters for configuring the task behavior.
-
-| Parameter | Description | Required/ Optional | 
-| --------- | ----------- | ----------------- | 
-| optional | Whether the task is optional. <br/><br/>If set to`true`, any task failure is ignored, and the workflow continues with the task status updated to `COMPLETED_WITH_ERRORS`. However, the task must reach a terminal state. If the task remains incomplete, the workflow waits until it reaches a terminal state before proceeding. | Optional. |
-| asyncComplete | Whether the task is completed asynchronously. The default value is false.<ul><li>**false**—Task status is set to COMPLETED upon successful execution.</li><li>**true**—Task status is kept as IN_PROGRESS until an external event marks it as complete.</li></ul><TableNote title="Available since">v4.1.40 and later</TableNote> | Optional. | 
-
-</details>
-
-### Additional system inputs to payload​
-
-Conductor automatically adds the following parameters to the payload. Ensure that these fields are not present in the payload, as they will be overwritten during execution.
+During workflow execution, Conductor automatically adds the following parameters to the payload sent to the message broker. Ensure that these fields are not present in the input payload, as they will be overwritten at runtime.
 
 - **workflowInstanceId**–Workflow (execution) ID from where this event was sent.
 - **workflowType**–Name of the workflow definition.
@@ -95,23 +68,52 @@ The execution will produce the following input parameters:
 }
 ```
 
+The following are generic configuration parameters that can be applied to the task and are not specific to the Event task.
+
+<details>
+<summary>Schema parameters</summary>
+
+You can enforce input/output validation for the task using the following parameters. Refer to [Schema Validation](/developer-guides/schema-validation) for a full guide.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| taskDefinition.**enforceSchema** | Whether to enforce schema validation for task inputs/outputs. Set to *true* to enable validation. | Optional. | 
+| taskDefinition.**inputSchema** | The name and type of the input schema to be associated with the task. | Required if *enforceSchema* is set to true. | 
+| taskDefinition.**outputSchema** | The name and type of the output schema to be associated with the task. | Required if *enforceSchema* is set to true.
+
+</details>
+
+<details>
+<summary>Other generic parameters</summary>
+
+Here are other parameters for configuring the task behavior.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| optional | Whether the task is optional. <br/><br/>If set to`true`, any task failure is ignored, and the workflow continues with the task status updated to `COMPLETED_WITH_ERRORS`. However, the task must reach a terminal state. If the task remains incomplete, the workflow waits until it reaches a terminal state before proceeding. | Optional. |
+| asyncComplete | Whether the task is completed asynchronously. The default value is false.<ul><li>**false**—Task status is set to COMPLETED upon successful execution.</li><li>**true**—Task status is kept as IN_PROGRESS until an external event marks it as complete.</li></ul><TableNote title="Available since">v4.1.40 and later</TableNote> | Optional. | 
+
+</details>
+
 ## Task configuration
 
 This is the task configuration for an Event task.
 
 ```json
 {
-  "name": "event",
-  "taskReferenceName": "event_ref",
-  "type": "EVENT",
-  "sink": "messaging-type:integration-name:queue-or-topic-name",
-  "inputParameters": {}
+     "name": "event",
+     "taskReferenceName": "event_ref",
+     "type": "EVENT",
+     "sink": "message-broker-type:integration-name:topic/queue-name",
+     "inputParameters": {
+       "someKey": "someValue"
+     }
 }
 ```
 
 ## Task output
 
-The task output mirrors the payload sent during execution, including system-appended parameters. For example:
+The task output mirrors the payload sent during execution, including system-appended parameters, and additional metadata. For example:
 
 ```json
 {
@@ -130,7 +132,7 @@ The task output mirrors the payload sent during execution, including system-appe
 **To add an Event task:**
 
 1. In your workflow, select the (**+**) icon and add an **Event** task.
-2. In **Sink**, select the required integration and append the topic/queue name. Failure to do so may result in execution errors, as the payload won't have a valid destination.
+2. In **Destination** > **Sink**, select the required integration from the drop-down list, then manually append the topic or queue name. The drop-down lists only the integration name. If you do not append a valid topic or queue, the task fails because the payload has no destination.
 3. (Optional) Add any additional input parameters.
 
 <center><p><img src="/content/img/ui-guide-event-task.png" alt="Adding event task" width="1024" height="auto"/></p></center>
@@ -140,7 +142,7 @@ The task output mirrors the payload sent during execution, including system-appe
 Here are some examples for using the Event task.
 
 <details>
-<summary>Using an Event task in a workflow</summary>
+<summary>Using an Event task to publish events to AWS SQS</summary>
 
 In this example, we will integrate AWS SQS with Orkes Conductor to publish messages to an SQS queue.
 
@@ -229,5 +231,118 @@ Next, verify the message delivery in the SQS console.
 <center><p><img src="/content/img/queue-attribute.png" alt="Attribute containing the task and workflow execution ID" width="70%" height="auto"/></p></center>
 
 That’s it, you have sent the message to the SQS queue. You can extend this workflow based on your requirements by customizing the Event task’s input to suit your use case.
+
+</details>
+
+<details>
+<summary>Using an Event task to publish events to Confluent Kafka</summary>
+
+In this example, we’ll integrate Confluent Kafka with Orkes Conductor to publish messages to a Kafka topic.
+
+1. Integrate Confluent Kafka with Orkes Conductor.
+2. Create a Workflow with an Event task.
+3. Run Workflow.
+4. Verify message delivery in the Confluent portal.
+
+**Step 1: Integrate Confluent Kafka with Orkes Conductor**
+
+Get the configuration credentials and [integrate Kafka as a message broker in Conductor cluster](/integrations/message-broker/confluent-kafka).
+
+<center><p><img src="/content/img/confluent-kafka-integration.png" alt="Confluent Kafka sample integration" width="100%" height="auto"/></p></center>
+
+**Step 2: Create a Workflow with an Event task**
+
+This step involves creating a workflow with an Event task. Here, we utilize the Kafka topic as a sink for the event.
+
+For testing purposes, we can quickly build a workflow using Conductor UI.
+
+**To create a workflow:**
+
+1. Go to **Definitions** > **Workflow**, and select **+ Define Workflow**.
+2. Add an Event task with the Sink `kafka_confluent:confluent-kafka-test:topic_0`.
+3. In **Input parameters**, add the following parameters:
+
+   - **\_schema**—Set it to the topic name, including the schema subject.<br/>To locate the schema subject name from Confluent console:
+     - Go to **Home** > **Environment** > [Choose your environment].
+     - Under **Schema Registry**, find the subject name.
+     <p align="center"><img src="/content/img/subject-name-confluent.png" alt="Identifying subject name in Confluent Kafka" width="80%" height="auto"/></p>
+     - Add this subject name as the input parameter: `"_schema": "topic_0-value"`
+   - Add all fields in the topic’s schema as the input parameters as well.
+
+     - Locate the schema for your topic by navigating to the **Schema** sub-tab from your topic and selecting **Evolve schema**.
+     <p align="center"><img src="/content/img/schema-confluent.png" alt="Identifying Schema parameters" width="80%" height="auto"/></p>
+     For example, The topic here is `topic_0`, which has the following schema:
+
+     ```json
+     {
+       "doc": "Sample schema to help you get started.",
+       "fields": [
+         {
+           "doc": "The string is a unicode character sequence.",
+           "name": "my_field3",
+           "type": "string"
+         }
+       ],
+       "name": "sampleRecord",
+       "namespace": "com.mycorp.mynamespace", //Use a unique `name` and `namespace` to avoid any conflicts.
+       "type": "record"
+     }
+     ```
+
+     Ensure that each field in the schema is mapped as input parameters in the Event task.
+
+     So, in this example, the input parameters (including the schema fields and schema subject name) are as follows :
+
+     ```json
+      "inputParameters": {
+      "_schema": "topic_0-value",
+      "my_field3": "Some-Value-71gfy"
+      },
+     ```
+
+Here’s the complete workflow definition JSON:
+
+```json
+{
+  "name": "Confluent-Kafka-workflow",
+  "description": "Sample Workflow for Confluent Kafka Integration",
+  "version": 1,
+  "tasks": [
+    {
+      "name": "event",
+      "taskReferenceName": "event_ref",
+      "inputParameters": {
+        "_schema": "topic_0-value",
+        "my_field3": "Some-Value-71gfy"
+      },
+      "type": "EVENT",
+      "sink": "kafka_confluent:confluent-kafka-test:topic_name"
+    }
+  ],
+  "schemaVersion": 2,
+  "ownerEmail": "john.doe@acme.com"
+}
+```
+
+4. Save the workflow.
+
+**Step 3: Run Workflow**
+
+1. Go to **Run Workflow** from the left menu on the Conductor cluster.
+2. Select the **Workflow name** and **Version**.
+3. Enter the input parameters.
+4. Click **Run Workflow**.
+
+<p align="center"><img src="/content/img/running-kafka-workflow-from-ui.png" alt="Identifying Schema parameters" width="80%" height="auto"/></p>
+
+Once started, you can track execution progress in **Executions** > **Workflow** in the Conductor UI.
+
+**Step 4: Verify message delivery in the Confluent portal**
+
+After successful execution, verify the message's delivery in the Confluent portal.
+
+1. From your cluster details page, navigate to **Topics** in the left menu.
+2. In the **Messages** tab, verify that the message is consumed successfully.
+<p align="center"><img src="/content/img/verifying-confluent.png" alt="Verifying the consumed message from Confluent Kafka" width="100%" height="auto"/></p>
 
 </details>
