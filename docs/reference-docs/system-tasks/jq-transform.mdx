@@ -313,7 +313,7 @@ This takes you to the workflow execution page. Once completed, it returns the fo
 
 **How the JSON JQ Transform task works in this workflow**
 
-The HTTP task returns a JSON response that includes an array. Each entry includes fields such as `created_at`, `author`, and `title`, along with many other fields.
+The HTTP task via the Hacker News API returns a verbose JSON response that includes an array. Each entry contains many fields, such as timestamps, author details, URLs, and metadata.
 
 <center>
   <p>
@@ -325,6 +325,12 @@ The HTTP task returns a JSON response that includes an array. Each entry include
     />
   </p>
 </center>
+
+In this workflow, the JSON JQ Transform task reduces that response to a simplified structure that includes only:
+
+- When the story was created (`occurred_at`)
+- Who created it (`member.hn`)
+- The story title (`title`)
 
 The JSON JQ Transform task applies this JQ expression:
 
