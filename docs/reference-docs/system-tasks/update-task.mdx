@@ -9,14 +9,15 @@ import TabItem from '@theme/TabItem';
 
 # Update Task
 
-The Update Task is used to update the status of a [Wait](/content/reference-docs/operators/wait) task and [Human](/content/reference-docs/operators/human) task.  The status of a task can be updated in two ways:
+The Update Task is used to update the status of both [Wait](/content/reference-docs/operators/wait) tasks and [Human](/content/reference-docs/operators/human) tasks. The status of a task can be updated in two ways:
+
 - **Using the workflow (execution) ID and the reference name**—Update the task status by specifying the workflow (execution) ID and the task's reference name.
 - **Using the task execution ID**—Update the task status by specifying the task's execution ID.
 
  The Wait task can be updated only if the workflow is in “RUNNING” status, and the invoking user or application should have access to the task being updated. 
 
 :::note
-Using the Update Task in other scenarios may result in unintended side effects, as it is not designed for such use cases.
+Using the Update Task in scenarios other than its intended use may result in unintended side effects, as it is not designed for such purposes.
 ::::
 
 ## Task parameters
@@ -25,12 +26,12 @@ Configure these parameters for the Update Task.
 
 | Parameter                       | Description                                                                                                                                                                                                                                                                                      | Required/ Optional                                         |
 | ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------- |
-| inputParameters.**taskStatus**  | The status of the task to be updated. Supported values:<ul><li>FAILED_WITH_TERMINAL_ERROR</li><li>FAILED</li><li>COMPLETED</li></ul>It can be [passed as a dynamic input](/developer-guides/passing-inputs-to-task-in-conductor).                                       | Required.                                                  |
-| inputParameters.**workflowId**  | The execution ID of the workflow containing the task to be updated. It can be [passed as a dynamic input](/developer-guides/passing-inputs-to-task-in-conductor). The default value is `${workflow.workflowId}`.                                                              | Required if updating using `workflowId` and `taskRefName`. |
-| inputParameters.**taskRefName** | The reference name of the task to be updated. It can be [passed as a dynamic input](/developer-guides/passing-inputs-to-task-in-conductor).                                                                                                                                   | Required if updating using `workflowId` and `taskRefName`. |
-| inputParameters.**taskId**      | The execution ID of the task to be updated. It can be [passed as a dynamic input](/developer-guides/passing-inputs-to-task-in-conductor).                                                                                                                                     | Required if updating using `taskId`.                       |
+| inputParameters.**taskStatus**  | The status of the task to be updated. Supported values:<ul><li>FAILED_WITH_TERMINAL_ERROR</li><li>FAILED</li><li>COMPLETED</li></ul>It can be [passed as a dynamic variable](/developer-guides/passing-inputs-to-task-in-conductor).                                       | Required.                                                  |
+| inputParameters.**workflowId**  | The execution ID of the workflow containing the task to be updated. It can be [passed as a dynamic variable](/developer-guides/passing-inputs-to-task-in-conductor).                                                             | Required if updating using *workflowId* and *taskRefName*. |
+| inputParameters.**taskRefName** | The reference name of the task to be updated. It can be [passed as a dynamic variable](/developer-guides/passing-inputs-to-task-in-conductor).                                                                                                                                   | Required if updating using *workflowId* and *taskRefName*. |
+| inputParameters.**taskId**      | The execution ID of the task to be updated. It can be [passed as a dynamic variable](/developer-guides/passing-inputs-to-task-in-conductor).                                                                                                                                     | Required if updating using *taskId*.                       |
 | inputParameters.**taskOutput**  | A key-value map that will be updated as the new task output. Supports string, number, boolean, null, and object/array.                                                                                                                                                                           | Optional.                                                  |
-| inputParameters.**mergeOutput** | Determines whether the output will be merged with the existing task output. The default value is `false`. Accepted values:<ul><li>`true`—The output generated by this task (taskOutput) will be combined with the existing task output.</li><li>`false`—The output will not be merged.</li></ul> | Optional.                                                  |
+| inputParameters.**mergeOutput** | Determines whether the output will be merged with the existing task output. The default value is `false`. Accepted values:<ul><li>`true`—The output generated by this task (`taskOutput`) will be combined with the existing task output.</li><li>`false`—The output will not be merged.</li></ul> | Optional.                                                  |
 
 The following are generic configuration parameters that can be applied to the task and are not specific to the Update task.
 
@@ -63,7 +64,7 @@ Here are other parameters for configuring the task behavior.
 This is the task configuration for an Update Task.
 
 <Tabs>
-<TabItem value="Using workflowId and taskRefName" label="Using workflowId and taskRefName">
+<TabItem value="Using workflowId and taskRefName" label="Using `workflowId` and `taskRefName`">
 
 ```json
 {
@@ -83,7 +84,7 @@ This is the task configuration for an Update Task.
 ```
 
 </TabItem>
-<TabItem value="Using taskId" label="Using taskId">
+<TabItem value="Using taskId" label="Using `taskId`">
 
 ```json
 {
@@ -131,29 +132,77 @@ Here are some examples for using the Update Task.
 <summary>Using Update Task in a workflow</summary>
 <p>
 
-To demonstrate the Update Task, consider the following workflow in a running state.
+To demonstrate the Update Task, consider the following workflow, which contains a Wait task.
+
+**To create a workflow:**
+
+1. Go to **Definitions** > **Workflow**, from the left navigation menu on your Conductor cluster.
+2. Select **+ Define workflow**.
+3. In the **Code** tab, paste the following workflow definition:
+
+```json
+{
+ "name": "WaitTest",
+ "description": "Test",
+ "version": 1,
+ "tasks": [
+   {
+     "name": "wait",
+     "taskReferenceName": "wait_ref",
+     "inputParameters": {},
+     "type": "WAIT"
+   }
+ ],
+ "schemaVersion": 2
+}
+```
+
+4. Save the workflow.
+5. Select **Execute** to run the workflow.
+
+This workflow waits indefinitely for an external signal to complete the Wait task.
 
 <center><p><img src="/content/img/update-task.png" alt="Workflow in running state" width="80%" height="auto"/></p></center>
 
-Let’s update this task with the following workflow containing an update task.
+Note the workflow ID and task reference name.
+
+Let’s update the Wait task with the following workflow, which includes an Update Task. Create another workflow using the following definition:
 
 ```json
-// task configuration
-
+{
+ "name": "WorkflowToUpdateWaitTask",
+ "description": "Sample demo workflow",
+ "version": 1,
+ "tasks": [
    {
      "name": "update_task",
      "taskReferenceName": "update_task_ref",
      "inputParameters": {
        "taskStatus": "COMPLETED",
        "mergeOutput": false,
-       "workflowId": "c7a49124-1f4c-11f0-853e-523c761f9110",
-       "taskRefName": "wait_ref"
+       "workflowId": "${workflow.input.workflowId}",
+       "taskRefName": "${workflow.input.taskRef}"
      },
      "type": "UPDATE_TASK"
    }
+ ],
+ "inputParameters": [
+   "workflowId",
+   "taskRef"
+ ],
+ "schemaVersion": 2
+}
 ```
 
-Now, run the workflow. Once the execution is successful, check the workflow containing the Wait task to verify that the task status has been updated successfully.
+Now, run the workflow from the **Run** tab by entering the input parameters. For example:
+
+<center><p><img src="/content/img/run-workflow-update-task-example.png" alt="Running workflow" width="60%" height="auto"/></p></center>
+
+Replace the values with those noted from the workflow that contains the Wait task. Select **Execute** to run the workflow. Once completed, it returns the updated task ID.
+
+<center><p><img src="/content/img/update-task-output.png" alt="Update task output" width="60%" height="auto"/></p></center>
+
+Finally, verify that the Wait task status is updated successfully in the initial workflow execution.
 
 <center><p><img src="/content/img/completed-workflow-using-update-task.png" alt="Completed workflow using update task" width="80%" height="auto"/></p></center>
 

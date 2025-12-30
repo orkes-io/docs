@@ -8,7 +8,7 @@ description: "The SendGrid task is used to send emails using SendGrid platform."
 
 The SendGrid task is used to send emails through the SendGrid platform. Use this task in workflows when you need to programmatically deliver emails such as alerts, confirmations, or updates.
 
-The task uses a pre-configured SendGrid integration for authentication and delivery. Upon execution, it connects to the SendGrid API and sends the email as defined in the task configuration, which includes the sender and recipient email addresses, email subject, and message body.
+The task uses a pre-configured SendGrid integration for authentication and delivery. When the task runs, it connects to the SendGrid API and sends the email based on the task configuration, including the sender and recipient addresses, subject, and message body.
 
 :::info Prerequisites
 - [Integrate SendGrid](/content/integrations/email/sendgrid) with Orkes Conductor.
@@ -25,7 +25,7 @@ Configure these parameters for the SendGrid task.
 | inputParameters.**subject** | The email subject. | Required. | 
 | inputParameters.**contentType** | The type of email content. Supported values:<ul><li>**text/plain**</li><li>**text/html**</li></ul> | Required. | 
 | inputParameters.**content** | The email body. | Required. | 
-| inputParameters.**sendgridConfiguration** | The name of the SendGrid integration that is configured in your cluster. | Required. |
+| inputParameters.**sendgridConfiguration** | The name of the SendGrid integration that is configured in your Orkes Conductor cluster. | Required. |
 
 The following are generic configuration parameters that can be applied to the task and are not specific to the SendGrid task.
 
@@ -103,9 +103,10 @@ The SendGrid task will return the following parameters.
 1. In your workflow, select the (**+**) icon and add a **SendGrid** task.
 2. In **From**, enter the [verified SendGrid sender email](https://www.twilio.com/docs/sendgrid/for-developers/sending-email/sender-identity).
 3. In **To**, enter the recipient’s email address.
-4. In **Content Type**, select the type of email content as *text/plain* or *text/html*.
-5. In **Content**, enter the email body.
-6. In **SendGrid Configuration**, select the SendGrid integration added to the cluster.
+4. In **Subject**, enter the email subject.
+5. In **Content Type**, select the type of email content as *text/plain* or *text/html*.
+6. In **Content**, enter the email body.
+7. In **SendGrid Configuration**, select the SendGrid integration added to the cluster.
 
 <center><p><img src="/content/img/sendgrid-ui.png " alt="Adding SendGrid task" width="80%" height="auto"/></p></center>
 
@@ -121,9 +122,11 @@ Notification workflows are common when end users must be alerted, such as for pa
 
 Consider a scenario where an organization uses SendGrid as its email notification platform. To create a simple email notification flow using Orkes Conductor, first [create a SendGrid integration](https://orkes.io/content/integrations/email/sendgrid) in your Conductor cluster.
 
-Once the integration is created, note its name. For example, let’s use “SendGrid”.
+Once the integration is created, note its name. For example, let’s use an integration named “SendGrid”.
 
-The following workflow uses this integration to send an email notification. To create the workflow in the Conductor UI:
+The following workflow uses this integration to send an email notification. 
+
+**To create the workflow using Conductor UI:**
 
 1. Go to **Definitions** > **Workflow** from the left navigation menu on your Conductor cluster.
 2. Select **+ Define workflow**.
@@ -160,11 +163,7 @@ After saving the workflow, go to the **Run** tab, enter the recipient email addr
 
 <center><p><img src="/content/img/email-notification-workflow-execution.gif" alt="Executing email notification workflow in Orkes Conductor" width="100%" height="auto"/></p></center>
 
-This starts the workflow and opens the workflow execution page, where you can monitor its progress. After the workflow is complete, the status changes to **Completed**.
-
-<center><p><img src="/content/img/email-notification-workflow-execution-completed.png" alt="Email notification workflow execution completed" width="100%" height="auto"/></p></center>
-
-Verify email delivery from the recipient’s inbox.
+After the workflow completes successfully, verify that the email is delivered to the recipient’s inbox.
 
 <center><p><img src="/content/img/email-notification-received-via-sendgrid-task.png" alt="Email notification received via SendGrid task" width="100%" height="auto"/></p></center>
 

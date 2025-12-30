@@ -22,7 +22,7 @@ Configure these parameters for the Inline task.
 | inputParameters                    | The parameters for evaluating the script. Any property can be accessed as `$.value` for the expression to evaluate.                   | Required.          |
 
 :::info Note
-If your Inline expression references a workflow secret (such as `${workflow.secrets.<secret-name>}`), the resolved value is masked in the task output. For details on masking behavior, see [Masking Parameters](/content/developer-guides/masking-parameters#masking-secret-references-and-secret-values).
+If your Inline expression references a workflow secret (such as `${workflow.secrets.<secret-name>}`), the resolved value is masked in the task output. For details on masking behavior, see [Masking Parameters](https://orkes.io/content/developer-guides/masking-parameters#masking-secret-references-and-secret-values).
 :::
 
 The following are generic configuration parameters that can be applied to the task and are not specific to the Inline task.
@@ -82,7 +82,7 @@ The Inline task will return the following parameters.
 **To add an Inline task:**
 
 1. In your workflow, select the (**+**) icon and add an **Inline** task.
-2. In **Script params**, add the parameters that will be evaluated in the expression.
+2. In **Script Parameters**, add the parameters that will be evaluated in the expression.
 3. Enter the expression to be evaluated in the **Code** section. The JSON definition offers a concise string representation of the script, whereas the UI representation typically incorporates formatted indentation and line breaks to enhance user readability.
 
 <center>
@@ -103,17 +103,13 @@ Here are some examples for using the Inline task.
 <details>
 <summary>Using the Inline task in a workflow</summary>
 
-An Inline task can be used for simple scripting logic that does not require a dedicated custom worker. In this example workflow, the Inline task is used to reverse a string based on the user input.
+An Inline task can be used for simple scripting logic that does not require a dedicated custom worker. This example builds a workflow that takes a string as input, reverses it using an Inline task, and returns the reversed value in the workflow output.
 
-```javascript
-// the expression evaluated in the Inline task
+**To create a workflow:**
 
-(function () {
-  return $.input_string.split("").reverse().join("");
-})();
-```
-
-Here is the full workflow definition containing the Inline task.
+1. Go to **Definitions** > **Workflow**, from the left navigation menu on your Conductor cluster.
+2. Select **+ Define workflow**.
+3. In the **Code** tab, paste the following workflow definition:
 
 ```json
 {
@@ -132,10 +128,38 @@ Here is the full workflow definition containing the Inline task.
       "type": "INLINE"
     }
   ],
-  "inputParameters": ["in_str"],
-  "outputParameters": {},
-  "failureWorkflow": ""
+  "inputParameters": [
+    "in_str"
+  ],
+  "schemaVersion": 2
 }
 ```
+
+4. Select **Save** > **Confirm**.
+
+**To run the workflow:**
+
+1. Go to the **Run** tab, and enter the **Input params**. For example:
+
+```json
+{
+  "in_str": "Orkes"
+}
+```
+
+2. Select **Execute**.
+
+This takes you to the workflow execution page. Once the execution is completed, verify that the string is reversed.
+
+<center>
+  <p>
+    <img
+      src="/content/img/inline-task-example-output.png"
+      alt="Workflow output"
+      width="100%"
+      height="auto"
+    />
+  </p>
+</center>
 
 </details>
