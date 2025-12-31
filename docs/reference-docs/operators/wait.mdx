@@ -30,7 +30,7 @@ Configure these parameters for the Wait task.
 | Parameter                     | Description                                                                                                                                                                                                                                                                                                                                                                       | Required/ Optional               |
 | ----------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- |
 | inputParameters               | The input parameters for the Wait task, which can be [passed as a dynamic variable](/developer-guides/passing-inputs-to-task-in-conductor) or a fixed value. These parameters include those required for the Wait task to complete, which depend on the wait type:<ul><li>`until` for the until wait type</li><li>`duration` for the duration wait type</li></ul> | Required.                        |
-| inputParameters. **until**    | The datetime and timezone in one of the following formats:<ul><li>yyyy-MM-dd HH:mm z</li><li>yyyy-MM-dd HH:mm</li><li>yyyy-MM-dd</li></ul>For example, 2024-04-30 15:20 GMT+04:00.                                                                                                                                                                                                | Required for `until` wait type.    |
+| inputParameters. **until**    | The datetime and timezone in one of the following formats:<ul><li>yyyy-MM-dd HH:mm z</li><li>yyyy-MM-dd HH:mm</li><li>yyyy-MM-dd</li></ul>For example, 2026-04-30 15:20 GMT+04:00.                                                                                                                                                                                                | Required for `until` wait type.    |
 | inputParameters. **duration** | The wait duration in the format `x days y hours z minutes aa seconds`. The accepted units in this field are:<ul><li>**days**, or **d** for days</li><li>**hours**, **hrs**, or **h** for hours</li><li>**minutes**, **mins**, or **m** for minutes</li><li>**seconds**, **secs**, or **s** for seconds</li></ul>                                                                  | Required for `duration` wait type. |
 
 The following are generic configuration parameters that can be applied to the task and are not specific to the Wait task.
@@ -159,7 +159,7 @@ Now, the wait timestamp can be defined at runtime. When running the workflow, yo
 // workflow inputs
 
 {
-  "waitUntil": "2024-04-23 15:46 GMT+04:00"
+  "waitUntil": "2026-12-25 09:00 GMT+04:00"
 }
 ```
 
