@@ -11,8 +11,8 @@ import TabItem from '@theme/TabItem';
 
 The Wait task is used when the workflow needs to be paused before continuing. It is a no-op task used when the workflow needs to wait:
 
-- Until a certain timestamp;
-- For a certain duration; or
+- Until a certain timestamp
+- For a certain duration, or
 - For an external trigger.
 
 The Wait task will remain `IN PROGRESS` until a certain point. There are three wait types for the Wait task:
@@ -29,7 +29,7 @@ Configure these parameters for the Wait task.
 
 | Parameter                     | Description                                                                                                                                                                                                                                                                                                                                                                       | Required/ Optional               |
 | ----------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- |
-| inputParameters               | The input parameters for the Wait task, which can be [passed as a dynamic input](/developer-guides/passing-inputs-to-task-in-conductor) or a fixed value. These parameters include those required for the Wait task to complete, which depend on the wait type:<ul><li>`until` for the until wait type</li><li>`duration` for the duration wait type</li></ul> | Required.                        |
+| inputParameters               | The input parameters for the Wait task, which can be [passed as a dynamic variable](/developer-guides/passing-inputs-to-task-in-conductor) or a fixed value. These parameters include those required for the Wait task to complete, which depend on the wait type:<ul><li>`until` for the until wait type</li><li>`duration` for the duration wait type</li></ul> | Required.                        |
 | inputParameters. **until**    | The datetime and timezone in one of the following formats:<ul><li>yyyy-MM-dd HH:mm z</li><li>yyyy-MM-dd HH:mm</li><li>yyyy-MM-dd</li></ul>For example, 2024-04-30 15:20 GMT+04:00.                                                                                                                                                                                                | Required for `until` wait type.    |
 | inputParameters. **duration** | The wait duration in the format `x days y hours z minutes aa seconds`. The accepted units in this field are:<ul><li>**days**, or **d** for days</li><li>**hours**, **hrs**, or **h** for hours</li><li>**minutes**, **mins**, or **m** for minutes</li><li>**seconds**, **secs**, or **s** for seconds</li></ul>                                                                  | Required for `duration` wait type. |
 
@@ -48,19 +48,19 @@ Here are other parameters for configuring the task behavior.
 
 ## Task configuration
 
-This is the task configuration for a Switch task.
+This is the task configuration for a Wait task.
 
 <Tabs>
 <TabItem value="until" label="until">
 
 ```json
 {
-  "name": "wait",
-  "taskReferenceName": "wait_ref",
-  "type": "WAIT",
-  "inputParameters": {
-    "until": "2024-04-30 15:20 GMT+04:00"
-  }
+     "name": "wait",
+     "taskReferenceName": "wait_ref",
+     "type": "WAIT",
+     "inputParameters": {
+       "until": "2026-01-15 17:00 GMT+04:00"
+     }
 }
 ```
 
@@ -111,9 +111,7 @@ Here are some examples for using the Wait task.
 <details>
 <summary>Until wait type</summary>
 
-<p>
-The following task is configured to wait until Dec 25, 2026, 9AM.
-</p>
+This example configures a Wait task to pause execution until December 25, 2026, at 9:00 AM (GMT+04:00).
 
 ```json
 // Wait task configuration
@@ -128,7 +126,9 @@ The following task is configured to wait until Dec 25, 2026, 9AM.
 }
 ```
 
-To pass the Wait task parameter as a dynamic input, you can define a workflow input parameter and use it in the Wait task.
+**Passing the until value as a variable**
+
+To define the wait time at runtime, add a workflow input parameter:
 
 ```json
 // workflow nputs
@@ -138,7 +138,7 @@ To pass the Wait task parameter as a dynamic input, you can define a workflow in
 ],
 ```
 
-The Wait task can reference the workflow input parameter using `${workflow.input.variableName}`, replacing `variableName` with the actual variable name.
+The Wait task can reference that workflow input parameter using `${workflow.input.waitUntil}`.
 
 ```json
 // Wait task configuration
@@ -153,7 +153,7 @@ The Wait task can reference the workflow input parameter using `${workflow.input
 }
 ```
 
-Now, the wait timestamp can be defined at runtime. When running the workflow, you can pass the a specific value as the input:
+Now, the wait timestamp can be defined at runtime. When running the workflow, you can pass a specific value as the input:
 
 ```json
 // workflow inputs
@@ -163,14 +163,14 @@ Now, the wait timestamp can be defined at runtime. When running the workflow, yo
 }
 ```
 
-Based on the input, the workflow waits until 03:46 PM on 23 April 2024.
+Based on the input, the workflow waits until 9:00 AM on December 25, 2026.
 
 </details>
 
 <details>
 <summary>Duration wait type</summary>
 
-The following task is configured to wait for 28 days.
+This example configures a Wait task to pause execution for a fixed duration.
 
 ```json
 // Wait task configuration
@@ -185,9 +185,13 @@ The following task is configured to wait for 28 days.
 }
 ```
 
+When the workflow reaches the wait task, it waits for 28 days and then resumes execution.
+
 <p align="center"><img src="/content/img/wait-for-28-days.png" alt="Wait for 28 days" width="70%" height="auto"></img></p>
 
-To pass the Wait task parameter as a variable, you can define a workflow input parameter and use it in the Wait task.
+**Passing the duration value as a variable**
+
+To define the wait time at runtime, add a workflow input parameter:
 
 ```json
 // workflow inputs
@@ -197,7 +201,7 @@ To pass the Wait task parameter as a variable, you can define a workflow input p
 ],
 ```
 
-The Wait task can reference the workflow input parameter using `${workflow.input.variableName}`, replacing `variableName` with the actual variable name.
+The Wait task can reference that workflow input parameter using `${workflow.input.waitDuration}`.
 
 ```json
 // Wait task configuration
@@ -212,7 +216,7 @@ The Wait task can reference the workflow input parameter using `${workflow.input
 }
 ```
 
-Now, the wait duration can be defined at runtime. When running the workflow, you can pass the a specific value as the input:
+Now, the wait duration can be defined at runtime. When running the workflow, you can pass a specific value as the input:
 
 ```json
 // workflow inputs
@@ -222,16 +226,16 @@ Now, the wait duration can be defined at runtime. When running the workflow, you
 }
 ```
 
-Based on the input, the workflow waits for 1 minute 2 seconds.
+Based on the input, the workflow waits for 1 minute and 2 seconds.
 
 </details>
 
 <details>
 <summary>Signal wait type</summary>
 
-You can configure the wait type to be signal, which can come from an event handler, direct API call, or webhook.
+You can configure the wait type to be a signal, which can be triggered by an event handler, a direct API call, or a webhook.
 
-Here’s a snippet of a Wait task awaiting an external signal from an API call:
+Here’s a snippet of a Wait task awaiting an external signal:
 
 ```json
 {
@@ -242,7 +246,7 @@ Here’s a snippet of a Wait task awaiting an external signal from an API call:
 }
 ```
 
-Once the workflow is run, the Wait task will be in an “In Progress” state. Once the external signal is ready, you can manually mark the task as completed either [using API](/reference-docs/api/task/update-task-status-in-workflow) or from UI, as shown below:
+Once the workflow is run, the Wait task will be in an “In Progress” state. You can manually mark the task as completed either using the [Update Task Status in a Workflow API](https://orkes.io/content/reference-docs/api/task/update-task-status-in-workflow) or from the Conductor UI, as shown below:
 
 <p align="center"><img src="/content/img/wait-for-signal.png" alt="Wait type configured as signal" width="70%" height="auto"></img></p>
 
