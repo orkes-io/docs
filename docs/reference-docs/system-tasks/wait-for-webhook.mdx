@@ -28,11 +28,11 @@ Configure these parameters for the Wait for Webhook task.
 
 | Parameter                   | Description                                                                                                                                                                                                                                                                                            | Required/ Optional |
 | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------ |
-| inputParameters.**matches** | The conditions that incoming event payloads must meet to trigger the webhook. Can be string, number, boolean, null, or object/array.<br/><TableNote title="Note">When you update the matches, there will be a default caching period of 60 seconds, causing the updates to reflect with a delay of up to 60 seconds.</TableNote> | Required.          |
+| inputParameters.**matches** | The conditions that incoming event payloads must meet to trigger the webhook. Can be string, number, boolean, null, or object/array.<br/><br/><TableNote title="Note"> When you update the matches, a default caching period of 60 seconds is applied, causing the updates to take effect with a delay of up to 60 seconds.</TableNote> | Required.          |
 
 ### Writing custom matches​
 
-In the example below, the matches are described as follows:
+In the example below, the input matches for a Wait for Webhook task are defined as follows:
 
 ```json
 "matches":
@@ -41,9 +41,9 @@ In the example below, the matches are described as follows:
 }
 ```
 
-Any custom JSON path based on the incoming event payload can be defined to write matches accordingly. This configuration means that the incoming event payload must have a JSON path `event.type`, and it must be a message to match the webhook event with this task.
+This configuration requires the incoming event payload to have a JSON path `event.type`, and it must be a `message`.
 
-The input payload for the webhook task to align with the above matches must be:
+To satisfy this condition, the webhook request body sent to Conductor must include:
 
 ```json
 "inputParameters": {
@@ -53,7 +53,7 @@ The input payload for the webhook task to align with the above matches must be:
 }
 ```
 
-Multiple matches can also be added within the `matches` section. All the matches will be calculated as AND operations within the matches.
+You can define multiple match conditions within the `matches` object. All conditions are evaluated using the logical AND operator.
 
 ```json
    "matches" : {
@@ -64,7 +64,7 @@ Multiple matches can also be added within the `matches` section. All the matches
 
 For example, the configuration above will match the webhook event payload where `event.type` is `message` AND `event.text` is `hello`.
 
-The input payload for the webhook task to align with the above matches must be:
+To satisfy this condition, the webhook request body sent to Conductor must include:
 
 ```json
 "inputParameters": {
@@ -121,7 +121,7 @@ This is the task configuration for a Wait for Webhook task.
 
 ## Task output
 
-During execution, the task processes incoming webhook events based on the configured criteria. The task will return parameters depending on the specific event payload received, such as the event identifier, event type, and event data containing relevant details.
+During execution, the task processes incoming webhook events based on the configured criteria. The task will return parameters based on the specific event payload received, including the event identifier, event type, and event data containing relevant details.
 
 ## Adding a Wait for Webhook task in UI
 
@@ -326,7 +326,7 @@ To ensure the request is matched, send the Postman request with a payload that a
 
 <center><p><img src="/content/img/postman-request.png" alt="Sending Postman request" width="100%" height="auto"/></p></center>
 
-Make sure the request includes the same headers as set in the Conductor webhook.
+Ensure the request includes the same headers as set in the Conductor webhook.
 
 <center><p><img src="/content/img/headers-matches.png" alt="Configuring matching headers in Postman" width="100%" height="auto"/></p></center>
 
