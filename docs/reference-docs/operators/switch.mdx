@@ -22,7 +22,7 @@ Configure these parameters for the Switch task.
 | evaluatorType | The type of evaluator used. Supported types: <ul><li>`value-param`—Evaluates a specific input parameter in the Switch task.</li><li>`graaljs`—Evaluates JavaScript expressions and computes the value. Allows you to use ES6-compatible JavaScript.</li></ul>                             | Required.          |
 | expression    | The expression that is evaluated by the Switch task. The expression format depends on the evaluator type:<ul><li>For the `value-param` evaluator, the expression is the input parameter key.</li><li>For the `graaljs` evaluator, the expression is the JavaScript expression. </li></ul> | Required.          |
 | decisionCases | A map of the possible switch cases. The keys are the possible outputs of the evaluated expression, and the values are the list of tasks to be executed in each case.                                                                                                                      | Required.          |
-| defaultCase   | The default branch. Contains the list of tasks to be executed when no matching value is found in the decision cases.                                                                                                                                                                      | Optional.          |
+| defaultCase   | The default branch. Contains the list of tasks to be executed when no matching value is found in the decision cases.                                                                                                                                                                      | Required.          |
 
 The following are generic configuration parameters that can be applied to the task and are not specific to the Switch task. 
 
@@ -46,26 +46,19 @@ This is the task configuration for a Switch task.
 
 ```json
 {
-  "name": "switch",
-  "taskReferenceName": "switch_ref",
-  "inputParameters": {
-    "switchCaseValue": "${workflow.input}"
-  },
-  "type": "SWITCH",
-  "decisionCases": {
-    "caseName1": [
-      {// task configuration}
-    ],
-    "caseName2": [
-      {// task configuration},
-      {// task configuration}
-    ]
-  },
-  "defaultCase": [
-    {// task configuration}
-  ],
-  "evaluatorType": "value-param",
-  "expression": "switchCaseValue"
+     "name": "switch",
+     "taskReferenceName": "switch_ref",
+     "inputParameters": {
+       "switchCaseValue": "${workflow.input}"
+     },
+     "type": "SWITCH",
+     "decisionCases": {
+       "switch_case": [],
+       "switch_case_1": []
+     },
+     "defaultCase": [],
+     "evaluatorType": "value-param",
+     "expression": "switchCaseValue"
 }
 ```
 
@@ -121,103 +114,362 @@ You can access the output of the Switch task in subsequent tasks by referring to
 3. In **Evaluate**, select the evaluator type and enter the expression.
    - **Value-Param**—Ensure that the expression value matches the parameter key you have defined in Script params.
    - **ECMASCRIPT**—Enter a JavaScript script.
-4. In **Switch cases**, label the cases with the relevant parameter values.
+4. In **Switch cases**, add different cases, and label them with the relevant parameter values.
 5. In your workflow, select the **(+)** icon to add tasks to each switch case.
 6. (Optional) Add tasks to the default case.
 
-<p><img src="/content/img/Task-References/switch_task_reference.png" alt="Screenshot of Switch Task in Orkes Conductor"/></p>
+<p><img src="/content/img/ui-guide-switch-task.png" alt="Screenshot of Switch Task in Orkes Conductor"/></p>
 
 ## Examples
 
 Here are some examples for using the Switch task.
 
 <details>
-<summary>Nested switch case</summary>
+<summary>Using the Switch task with `value-param` in a workflow</summary>
 <p>
-Similar to any programming language, you can use other operators inside a switch case, such as nested switches, loops, forks, and so on.
+
+A Switch task can be used to route workflow execution based on a direct input value. This example builds a workflow that routes an order based on its status using the `value-param` evaluator type.
+
+**To create a workflow:**
+
+1. Go to **Definitions** > **Workflow**, from the left navigation menu on your Conductor cluster.
+2. Select **+ Define workflow**.
+3. In the **Code** tab, paste the following workflow definition:
 
 ```json
 {
-  "name": "switch",
-  "taskReferenceName": "switch_ref",
-  "inputParameters": {
-    "switchCaseValue": "${workflow.input.shipping}"
-  },
-  "type": "SWITCH",
-  "decisionCases": {
-    "fedex": [
-      {// task configuration}
-    ],
-    "ups": [
-      {// task configuration
-        "name": "nestedSwitch",
-        "taskReferenceName": "nestedSwitch_ref",
-        "inputParameters": {
-          "deliveryType": "${workflow.input.delivery}"
-        },
-        "type": "SWITCH",
-        "decisionCases": {
-            "same_day": [      {// task configuration}],
-            "regular": [      {// task configuration}]
-        },
-        "defaultCase": [],
-        "evaluatorType": "graaljs",
-        "expression": "$.deliveryType == 'same-day' ? 'same_day' : 'regular'",
-      }
-    ]
-  }
-  "defaultCase": [],
-  "evaluatorType": "value-param",
-  "expression": "switchCaseValue"
+  "name": "Switch_Value_Param_Demo",
+  "description": "Routes orders based on order status using a value-param Switch task.",
+  "version": 1,
+  "schemaVersion": 2,
+  "inputParameters": [
+    "status"
+  ],
+  "tasks": [
+    {
+      "name": "route_by_order_status",
+      "taskReferenceName": "route_by_order_status_ref",
+      "type": "SWITCH",
+      "inputParameters": {
+        "orderStatus": "${workflow.input.status}"
+      },
+      "evaluatorType": "value-param",
+      "expression": "orderStatus",
+      "decisionCases": {
+        "APPROVED": [
+          {
+            "name": "approved_inline",
+            "taskReferenceName": "approved_inline_ref",
+            "type": "INLINE",
+            "inputParameters": {
+              "evaluatorType": "graaljs",
+              "expression": "(function () { return { result: 'Order approved' }; })();"
+            }
+          }
+        ],
+        "REJECTED": [
+          {
+            "name": "rejected_inline",
+            "taskReferenceName": "rejected_inline_ref",
+            "type": "INLINE",
+            "inputParameters": {
+              "evaluatorType": "graaljs",
+              "expression": "(function () { return { result: 'Order rejected' }; })();"
+            }
+          }
+        ]
+      },
+      "defaultCase": [
+        {
+          "name": "unknown_status_inline",
+          "taskReferenceName": "unknown_status_inline_ref",
+          "type": "INLINE",
+          "inputParameters": {
+            "evaluatorType": "graaljs",
+            "expression": "(function () { return { result: 'Unknown order status' }; })();"
+          }
+        }
+      ]
+    }
+  ]
 }
 ```
 
-</p>
-</details>
-<details>
-<summary>JavaScript expressions​</summary>
-<p>
-When using `javascript` or `graaljs` as the evaluator type, the `expression` can be a JavaScript expression that returns a string. Within the `expression`, the Switch task input parameter is available as a dynamic input inside the $ scope.
+4. Select **Save** > **Confirm**.
 
-**Input parameters for a javascript or graaljs evaluator type:**
+**To run the workflow:**
+
+1. Go to the **Run** tab, and enter the **Input params**. For example:
 
 ```json
-   "inputParameters" : {
-     "shippingType": "${workflow.input.shipping}"
-   }
+{
+  "status": "APPROVED"
+}
 ```
 
-**Expression for a javascript or graaljs evaluator type:**
+2. Select **Execute**.
 
-```javascript
-(function () {
-  if ($.shippingType == "EXPRESS") {
-    return "FEDEX";
-  }
-  return "USPS";
-})();
-```
+This takes you to the workflow execution page. Since the status input is set to `APPROVED`, the workflow executes the `APPROVED` switch case and runs the corresponding Inline task.
+
+<p><img src="/content/img/value-param-example.png" alt="Evaluating the output of a Switch task execution in Conductor"/></p>
 
 </p>
 </details>
+
 <details>
-<summary>JavaScript expression that evaluates a datetime string</summary>
+<summary>Using the Switch task with `graaljs` in a workflow</summary>
 <p>
-The script below returns `OLDER` or `NEWER` depending on whether the input date is older than one month.
 
-```javascript
-(function () {
-  const date = new Date($.timestamp);
-  const currentDate = new Date();
+A Switch task can evaluate computed logic using the `graaljs` evaluator type. This example builds a workflow that compares an input timestamp with the current date and routes execution based on whether the timestamp is older than one month.
 
-  // Subtract one month from the current date
-  currentDate.setMonth(currentDate.getMonth() - 1);
-  if (date < currentDate) {
-    return "OLDER";
-  }
-  return "NEWER";
-})();
+**To create a workflow:**
+
+1. Go to **Definitions** > **Workflow**, from the left navigation menu on your Conductor cluster.
+2. Select **+ Define workflow**.
+3. In the **Code** tab, paste the following workflow definition:
+
+```json
+{
+  "name": "Switch_Graaljs_Datetime_Demo",
+  "description": "Routes execution based on whether an input timestamp is older than one month using a graaljs Switch task.",
+  "version": 1,
+  "schemaVersion": 2,
+  "inputParameters": [
+    "timestamp"
+  ],
+  "tasks": [
+    {
+      "name": "route_by_timestamp_age",
+      "taskReferenceName": "route_by_timestamp_age_ref",
+      "type": "SWITCH",
+      "inputParameters": {
+        "timestamp": "${workflow.input.timestamp}"
+      },
+      "evaluatorType": "graaljs",
+      "expression": "(function () { const date = new Date($.timestamp); const currentDate = new Date(); currentDate.setMonth(currentDate.getMonth() - 1); if (date < currentDate) { return 'OLDER'; } return 'NEWER'; })();",
+      "decisionCases": {
+        "OLDER": [
+          {
+            "name": "older_inline",
+            "taskReferenceName": "older_inline_ref",
+            "type": "INLINE",
+            "inputParameters": {
+              "evaluatorType": "graaljs",
+              "expression": "(function () { return { result: 'Timestamp is older than one month' }; })();"
+            }
+          }
+        ],
+        "NEWER": [
+          {
+            "name": "newer_inline",
+            "taskReferenceName": "newer_inline_ref",
+            "type": "INLINE",
+            "inputParameters": {
+              "evaluatorType": "graaljs",
+              "expression": "(function () { return { result: 'Timestamp is within the last month' }; })();"
+            }
+          }
+        ]
+      },
+      "defaultCase": []
+    }
+  ]
+}
 ```
+
+4. Select **Save** > **Confirm**.
+
+**To run the workflow:**
+
+1. Go to the **Run** tab, and enter the **Input params**. For example:
+
+```json
+{
+  "timestamp": "2025-10-01T10:00:00Z"
+}
+```
+
+2. Select **Execute**.
+
+This takes you to the workflow execution page. If the input timestamp is more than one month old, the workflow executes the `OLDER` switch case; otherwise, it executes the `NEWER` switch case.
+
+<p><img src="/content/img/graaljs-example.png" alt="Evaluating the output of a Switch task execution in Conductor"/></p>
+
+</p>
+</details>
+
+<details>
+<summary>Using a nested Switch task in a workflow</summary>
+<p>
+
+A Switch task can be used to route workflow execution based on conditions. This example creates a workflow that routes orders based on the shipping provider. If the provider is `ups`, the workflow uses a nested Switch task to route the order further based on the delivery type.
+
+**To create a workflow:**
+
+1. Go to **Definitions** > **Workflow**, from the left navigation menu on your Conductor cluster.
+2. Select **+ Define workflow**.
+3. In the **Code** tab, paste the following workflow definition:
+
+```json
+{
+  "name": "Nested_Switch_Demo",
+  "description": "Routes orders by shipping provider and delivery type using nested Switch tasks and Inline tasks.",
+  "version": 1,
+  "schemaVersion": 2,
+  "inputParameters": ["shipping", "delivery"],
+  "tasks": [
+    {
+      "name": "route_by_shipping_provider",
+      "taskReferenceName": "route_by_shipping_provider_ref",
+      "type": "SWITCH",
+      "inputParameters": {
+        "shipping": "${workflow.input.shipping}"
+      },
+      "evaluatorType": "value-param",
+      "expression": "shipping",
+      "decisionCases": {
+        "fedex": [
+          {
+            "name": "set_fedex_result",
+            "taskReferenceName": "set_fedex_result_ref",
+            "type": "INLINE",
+            "inputParameters": {
+              "evaluatorType": "graaljs",
+              "expression": "(function () { return { carrier: 'FEDEX' }; })();"
+            }
+          },
+          {
+            "name": "store_result_fedex",
+            "taskReferenceName": "store_result_fedex_ref",
+            "type": "SET_VARIABLE",
+            "inputParameters": {
+              "shippingResult": "${set_fedex_result_ref.output.result}"
+            }
+          }
+        ],
+        "ups": [
+          {
+            "name": "route_ups_by_delivery_type",
+            "taskReferenceName": "route_ups_by_delivery_type_ref",
+            "type": "SWITCH",
+            "inputParameters": {
+              "deliveryType": "${workflow.input.delivery}"
+            },
+            "evaluatorType": "graaljs",
+            "expression": "$.deliveryType == 'same-day' ? 'same_day' : 'regular'",
+            "decisionCases": {
+              "same_day": [
+                {
+                  "name": "set_ups_same_day_result",
+                  "taskReferenceName": "set_ups_same_day_result_ref",
+                  "type": "INLINE",
+                  "inputParameters": {
+                    "evaluatorType": "graaljs",
+                    "expression": "(function () { return { carrier: 'UPS', service: 'SAME_DAY' }; })();"
+                  }
+                },
+                {
+                  "name": "store_result_ups_same_day",
+                  "taskReferenceName": "store_result_ups_same_day_ref",
+                  "type": "SET_VARIABLE",
+                  "inputParameters": {
+                    "shippingResult": "${set_ups_same_day_result_ref.output.result}"
+                  }
+                }
+              ],
+              "regular": [
+                {
+                  "name": "set_ups_regular_result",
+                  "taskReferenceName": "set_ups_regular_result_ref",
+                  "type": "INLINE",
+                  "inputParameters": {
+                    "evaluatorType": "graaljs",
+                    "expression": "(function () { return { carrier: 'UPS', service: 'REGULAR' }; })();"
+                  }
+                },
+                {
+                  "name": "store_result_ups_regular",
+                  "taskReferenceName": "store_result_ups_regular_ref",
+                  "type": "SET_VARIABLE",
+                  "inputParameters": {
+                    "shippingResult": "${set_ups_regular_result_ref.output.result}"
+                  }
+                }
+              ]
+            },
+            "defaultCase": [
+              {
+                "name": "set_ups_default_result",
+                "taskReferenceName": "set_ups_default_result_ref",
+                "type": "INLINE",
+                "inputParameters": {
+                  "evaluatorType": "graaljs",
+                  "expression": "(function () { return { carrier: 'UPS', service: 'UNKNOWN' }; })();"
+                }
+              },
+              {
+                "name": "store_result_ups_default",
+                "taskReferenceName": "store_result_ups_default_ref",
+                "type": "SET_VARIABLE",
+                "inputParameters": {
+                  "shippingResult": "${set_ups_default_result_ref.output.result}"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "defaultCase": [
+        {
+          "name": "set_unsupported_result",
+          "taskReferenceName": "set_unsupported_result_ref",
+          "type": "INLINE",
+          "inputParameters": {
+            "evaluatorType": "graaljs",
+            "expression": "(function () { return { error: 'Unsupported shipping provider' }; })();"
+          }
+        },
+        {
+          "name": "store_result_unsupported",
+          "taskReferenceName": "store_result_unsupported_ref",
+          "type": "SET_VARIABLE",
+          "inputParameters": {
+            "shippingResult": "${set_unsupported_result_ref.output.result}"
+          }
+        }
+      ]
+    }
+  ],
+  "outputParameters": {
+    "shippingResult": "${workflow.variables.shippingResult}",
+    "shippingCaseSelected": "${route_by_shipping_provider_ref.output.selectedCase}"
+  }
+}
+```
+
+4. Select **Save** > **Confirm**.
+
+**To run the workflow:**
+
+1. Go to the **Run** tab, and enter the **Input params**. For example:
+
+```json
+{
+  "shipping": "ups",
+  "delivery": "same-day"
+}
+```
+
+2. Select **Execute**.
+
+This takes you to the workflow execution page. Since the shipping input is set to `ups` and the delivery type is `same-day`, the workflow executes the `ups `nested switch case followed by the `same-day` Switch case.
+
+<p><img src="/content/img/nested-switch-example.png" alt="Evaluating the output of a Switch task execution in Conductor"/></p>
+
+- The outer Switch evaluates the shipping input to determine the shipping provider.
+- Since the value is `ups`, the workflow enters a nested Switch that evaluates the `delivery` input.
+- Because the delivery type is `same-day`, the nested Switch routes execution to the `same_day` branch.
+- The selected branch sets the routing result in a workflow variable, allowing the workflow to complete with an output.
 
 </p>
 </details>
