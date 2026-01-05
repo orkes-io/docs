@@ -327,23 +327,11 @@ In this workflow, the workflow input `qty` sets the maximum number of loop itera
 
 ```json
 {
-  "active": true
+  "qty": 3
 }
 ```
 
 2. Select **Execute**.
-
-This takes you to the workflow execution page. As long as the input parameter `active` remains `true`, the workflow continues to execute the HTTP task followed by the Wait task (5 seconds) and repeats the loop.
-
-<p><img src="/content/img/do-while-value-param.png" alt="Workflow output"/></p>
-
-Now, rerun the workflow with the following input parameter:
-
-```json
-{
-  "qty": 3
-}
-```
 
 This takes you to the workflow execution page. Since `qty` is set to 3, the Do While loop executes three iterations and then completes. On the Do While task output, verify that iteration is 3, and that the task outputs for each iteration are stored under 1, 2, and 3.
 
@@ -388,7 +376,7 @@ The Do While task output is returned as follows:
 </details>
 
 <details>
-<summary>Iterate over a list of items</summary>
+<summary>Iterate over a list of `items`</summary>
 
 A Do While task can iterate over a list of items when you provide `items` in `inputParameters`. When `items` is used, the loop runs once for each item, and you do not need a loop condition. The current item is available in each iteration as `${do_while_ref.output.item}`.
 
@@ -443,23 +431,11 @@ The number of iterations will be equal to the list size. If `“items”=[“a�
 
 In this workflow, the Do While task executes once for each value in the items and passes the current item to the loop task using `${do_while_ref.output.item}`.
 
-Here, it runs three iterations (one per item in items). When the above Do While task has been executed successfully, the input to the first iteration of the HTTP loop task will look like this:
-
-<p><img src="/content/img/do-while-value-param.png" alt="Workflow output"/></p>
-
-Now, rerun the workflow with the following input parameter:
-
-```json
-{
-  "qty": 3
-}
-```
-
-This takes you to the workflow execution page. Since `qty` is set to 3, the Do While loop executes three iterations and then completes. On the Do While task output, verify that iteration is 3, and that the task outputs for each iteration are stored under 1, 2, and 3.
+Here, it runs three iterations (one per item in `items`). When the above Do While task has been executed successfully, the input to the first iteration of the HTTP loop task will look like this:
 
 <p><img src="/content/img/do-while-example.png" alt="Workflow output"/></p>
 
-In each iteration, the HTTP task receives a different value for someInput (a, then b, then c). After the final iteration, verify that the Do While task output shows iteration: 3 and item: "c".
+In each iteration, the HTTP task receives a different value for `someInput` (a, then b, then c). After the final iteration, verify that the Do While task output shows iteration: 3 and item: "c".
 
 ```json
 {
