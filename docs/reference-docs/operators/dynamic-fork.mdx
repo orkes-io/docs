@@ -68,15 +68,11 @@ The dynamic fork executes the workflow specified by `forkTaskWorkflow` and `fork
 </TabItem>
 </Tabs>
 
-The [Join](./join) task will run after the forked tasks and implicitly waits for all forked tasks to complete. For a Dynamic Fork, no specific configuration is required, but the Join task must still be included in the workflow to complete the fork-join operation.
+The [Join](./join) task will run after the forked tasks and implicitly waits for all forked tasks to complete.
 
 **For the Join task:**
 
-A Join task must follow a Dynamic Fork task to complete the fork-join operation.
-
-- The Join task implicitly waits for all dynamically created forks.
-- You can set `joinOn` to an empty array.
-- The Join task must still include the required schema fields.
+For a Dynamic Fork, no specific configuration is required, but the Join task must still be included in the workflow to complete the fork-join operation.
 
 **Required Join task configuration**
 
