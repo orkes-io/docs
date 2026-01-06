@@ -9,9 +9,9 @@ import TabItem from '@theme/TabItem';
 
 # Yield
 
-The Yield task temporarily yields control over the workflow by pausing the execution until it is explicitly resumed using endpoints such as [sync](/reference-docs/api/task/signal-running-task-synchronously) or [async](/reference-docs/api/task/signal-running-task-asynchronously) signals, typically in response to external conditions or events.
+The Yield task temporarily yields control of the workflow by pausing execution until it is explicitly resumed using [synchronous](/reference-docs/api/task/signal-running-task-synchronously) or [asynchronous](/reference-docs/api/task/signal-running-task-asynchronously) signal endpoints, typically in response to external conditions or events.
 
-When used in workflows that run in synchronous consistency mode, and when the execution reaches the Yield task, Conductor returns a response immediately as defined by the ‘returnStrategy’ in [Execute Workflow Synchronously](/content/reference-docs/api/workflow/synchronous-workflow-execution#query-parameters) endpoint.
+When a workflow runs in synchronous consistency mode, and execution reaches a Yield task, Conductor immediately returns a response based on the `returnStrategy` in the [Execute Workflow Synchronously](/content/reference-docs/api/workflow/synchronous-workflow-execution#query-parameters) endpoint.
 
 ## Task parameters
 
@@ -19,7 +19,7 @@ Configure these parameters for the Yield task.
 
 | Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- | 
-| inputParameters | The input parameters for the Yield task, which can be fixed or [passed as a dynamic input](/developer-guides/passing-inputs-to-task-in-conductor). | Required. | 
+| inputParameters | The input parameters for the Yield task, which can be fixed or [passed as a dynamic variable](/developer-guides/passing-inputs-to-task-in-conductor). | Required. | 
 
 The following are generic configuration parameters that can be applied to the task and are not specific to the Yield task.
 
@@ -76,7 +76,7 @@ This is the task configuration for a Yield task.
 
 ## Task output
 
-The task returns the output passed through the [sync](/content/reference-docs/api/task/signal-running-task-synchronously) or [async](/content/reference-docs/api/task/signal-running-task-asynchronously) signal endpoints. This output can include updated values provided by an external system, allowing workflows to continue with new data injected mid-execution. For example:
+The task returns the output passed through the [synchronous](/reference-docs/api/task/signal-running-task-synchronously) or [asynchronous](/reference-docs/api/task/signal-running-task-asynchronously) signal endpoints. This output can include updated values provided by an external system, allowing workflows to continue with new data injected mid-execution. For example:
 
 ```json
 {
@@ -101,7 +101,7 @@ Here are some examples for using the Yield task.
 <summary>Using the Yield task in a workflow</summary>
 <p>
 
-To demonstrate the Yield task, consider the following workflow that contains a Yield task:
+The following example workflow demonstrates how the Yield task pauses execution until it is signaled.
 
 ```json
 {

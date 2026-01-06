@@ -11,7 +11,8 @@ import TabItem from '@theme/TabItem';
 
 A Join task is used in conjunction with a [Fork Join](/reference-docs/operators/fork-join) or [Dynamic Fork](/reference-docs/operators/dynamic-fork) task to join all the tasks within the forks.
 
-In the Fork/Join task, the Join task waits for a list of forked tasks to be completed before proceeding with the next task. However, when used with a Dynamic Fork task, it implicitly waits for all forked tasks to complete.
+- With **Fork/Join**, the Join task waits for a **predefined set of forked tasks**.
+- With **Dynamic Fork**, the Join task **implicitly waits for all dynamically created forks**, unless controlled by a join script.
 
 ## Task parameters
 
@@ -19,35 +20,18 @@ Configure these parameters for the Join task.
 
 | Parameter  | Description                                                                                                      | Required/ Optional |
 | ---------- | ---------------------------------------------------------------------------------------------------------------- | ------------------ |
-| joinOn     | A list of task reference names that the Join task will wait for completion before proceeding with the next task. | Required.          |
+| joinOn     | A list of task reference names that the Join task will wait for completion before proceeding with the next task.<br/><br/>For Dynamic Fork workflows, `joinOn` is typically set to an empty array. | Required.          |
 | expression | The join script, which controls how the Join task completes if specified.                                        | Optional.          |
-
-The following are generic configuration parameters that can be applied to the task and are not specific to the Join task.
-
-<details>
-<summary>Other generic parameters</summary>
-
-Here are other parameters for configuring the task behavior.
-
-| Parameter | Description | Required/ Optional | 
-| --------- | ----------- | ----------------- | 
-| optional | Whether the task is optional. <br/><br/>If set to`true`, any task failure is ignored, and the workflow continues with the task status updated to `COMPLETED_WITH_ERRORS`. However, the task must reach a terminal state. If the task remains incomplete, the workflow waits until it reaches a terminal state before proceeding. | Optional. | 
-
-</details>
 
 ### Join script configuration
 
-The join script is an optional configuration that will control how the join task completes. You can pass script parameters into the Join task’s `inputParameters`. For the join script to work well, the forked tasks should be set as optional.
+A join script is optional and allows custom control over when the Join task completes. Script parameters can be passed through the Join task’s input parameters.
 
-```json
-"inputParameters": {
-  "key": "value"
-}
-```
+For predictable behavior, tasks referenced by the join script should be marked as optional.
 
 **Example join script**
 
-```json
+```shell
 (function(){
 let results = {};
 let pendingJoinsFound = false;
@@ -73,9 +57,20 @@ if($.joinOn){
 })();
 ```
 
-In the example script, there is a variable called `$.joinOn`, which is an array containing the task references and output data of each joined task. The script is designed to check if the status of the tasks to be joined is COMPLETED. If any pending joins are found, the script changes the status of the pending join tasks to the required status (IN_PROGRESS in the example script).
+In the example script, there is a variable called `$.joinOn`, which is an array containing the task references and output data of each joined task. The script is designed to check if the status of the tasks to be joined is COMPLETED.  If any pending joins are found, the script changes the status of the pending join tasks to the required status (IN_PROGRESS in the example script). The example script can be modified to suit your use case.
 
-The example script can be modified to suit your use case.
+The following are generic configuration parameters that can be applied to the task and are not specific to the Join task.
+
+<details>
+<summary>Other generic parameters</summary>
+
+Here are other parameters for configuring the task behavior.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| optional | Whether the task is optional. <br/><br/>If set to`true`, any task failure is ignored, and the workflow continues with the task status updated to `COMPLETED_WITH_ERRORS`. However, the task must reach a terminal state. If the task remains incomplete, the workflow waits until it reaches a terminal state before proceeding. | Optional. | 
+
+</details>
 
 ## Task configuration
 
@@ -98,18 +93,9 @@ This is the task configuration for a Join task.
 
 The Join task output depends on whether a join script is used.
 
-If no join script is used, the Join task will return a map where the keys are task reference names of the tasks being joined and the values are the corresponding outputs of those tasks. The tasks get joined by the order of completion.
+### Without a join script
 
-If a join script is used, the Join task will also return the following parameters.
-
-| Parameter | Description                                                                                                      |
-| --------- | ---------------------------------------------------------------------------------------------------------------- |
-| joinOn    | A list of task reference names that the Join task will wait for completion before proceeding with the next task. |
-
-**Example output**
-
-<Tabs>
-<TabItem value="no script" label="With no join script">
+If no join script is used, the Join task returns a map where the keys are the task reference names of the tasks being joined and the values are the corresponding outputs of those tasks. The tasks are completed in the order they are joined.
 
 ```json
 {
@@ -125,8 +111,13 @@ If a join script is used, the Join task will also return the following parameter
 }
 ```
 
-</TabItem>
-<TabItem value="script" label="With join script">
+### With a join script
+
+If a join script is used, the output will also return the following parameters.
+
+| Parameter | Description                                                                                                      |
+| --------- | ---------------------------------------------------------------------------------------------------------------- |
+| joinOn    | A list of task reference names that the Join task will wait for completion before proceeding with the next task. |
 
 ```json
 {
@@ -147,21 +138,18 @@ If a join script is used, the Join task will also return the following parameter
 }
 ```
 
-</TabItem>
-</Tabs>
-
 ## Configuring a Join task in UI
 
 A Join task is automatically added whenever a Fork/Join task or a Dynamic Fork task is added.
 
 **To configure a Join task:**
 
-1. In your workflow, select the **Join** task.
+1. In your workflow, which contains either a Fork or Dynamic Fork task, select the **Join** task.
 2. In **Input joins**, select the forks that are required for joining.
 3. (Optional) Use a script to control how the Join task completes.
-   1. In **Join script**, check Use scripting to determine join.
+   1. In **Join script**, enable **Use scripting to determine join**.
    2. Enter the script in the code box.
-   3. If necessary, add the script parameters that will be passed into the Join task.
+   3. If necessary, add the **Script Parameters** that will be passed into the Join task.
 
 <p><img src="/content/img/ui-guide-join-task.png" alt="Adding Join task" /></p>
 
@@ -193,116 +181,231 @@ In this example, the Join task waits for all forks to complete. The task will wa
 <summary>Ignore one fork</summary>
 <p>
 
-In this example, the Fork task spawns three tasks, an email_notification task, an sms_notification task, and a http_notification task. Email and SMS are usually the best-effort delivery systems. However, in the case of an HTTP-based notification, you get a return code, and you can retry until it succeeds or eventually give up.
+In this example workflow, email, SMS, and HTTP notifications are triggered in parallel using a Fork/Join task. The workflow continues only after the email and SMS notifications are complete, while ignoring the HTTP fork.
 
-When you set up a notification workflow, you may decide to continue after sending an email and SMS notification. In that case, you can choose to joinOn those specific tasks only. Meanwhile, the http_notification task will continue to execute but will not block the rest of the workflow from proceeding.
+**To create a workflow:**
 
-```json
-// task configurations
-
-[
-  {
-    "name": "fork_join",
-    "taskReferenceName": "my_fork_join_ref",
-    "type": "FORK_JOIN",
-    "forkTasks": [
-      [
-        {
-          "name": "email_notification",
-          "taskReferenceName": "email_notification_ref",
-          "type": "SIMPLE"
-        }
-      ],
-      [
-        {
-          "name": "sms_notification",
-          "taskReferenceName": "sms_notification_ref",
-          "type": "SIMPLE"
-        }
-      ],
-      [
-        {
-          "name": "http_notification",
-          "taskReferenceName": "http_notification_ref",
-          "type": "SIMPLE"
-        }
-      ]
-    ]
-  },
-  {
-    "name": "notification_join",
-    "taskReferenceName": "notification_join_ref",
-    "type": "JOIN",
-    "joinOn": ["email_notification_ref", "sms_notification_ref"]
-  }
-]
-```
-
-This is the output of notification_join. The output is a map, where the keys are the reference names of tasks being joined and the corresponding values are the outputs of those tasks.
+1. Go to **Definitions** > **Workflow**, from the left navigation menu on your Conductor cluster.
+2. Select **+ Define workflow**.
+3. In the **Code** tab, paste the following workflow definition:
 
 ```json
-// Join task output
-
 {
-  "email_notification_ref": {
-    "email_sent_at": "2021-11-06T07:37:17+0000",
-    "email_sent_to": "test@example.com"
-  },
-  "sms_notification_ref": {
-    "sms_sent_at": "2021-11-06T07:37:17+0129",
-    "sms_sent_to": "+1-xxx-xxx-xxxx"
+  "name": "ForkJoin_Notifications",
+  "description": "Runs multiple notification branches in parallel using a Fork/Join task.",
+  "version": 1,
+  "schemaVersion": 2,
+  "tasks": [
+    {
+      "name": "notifications_fork",
+      "taskReferenceName": "notifications_fork_ref",
+      "type": "FORK_JOIN",
+      "inputParameters": {},
+      "forkTasks": [
+        [
+          {
+            "name": "email_payload",
+            "taskReferenceName": "email_payload_ref",
+            "type": "INLINE",
+            "inputParameters": {
+              "evaluatorType": "graaljs",
+              "expression": "(function () { return { channel: 'email', to: 'test@example.com', message: 'Email sent' }; })();"
+            }
+          }
+        ],
+        [
+          {
+            "name": "sms_payload",
+            "taskReferenceName": "sms_payload_ref",
+            "type": "INLINE",
+            "inputParameters": {
+              "evaluatorType": "graaljs",
+              "expression": "(function () { return { channel: 'sms', to: '+1-xxx-xxx-xxxx', message: 'SMS sent' }; })();"
+            }
+          }
+        ],
+        [
+          {
+            "name": "http_notification",
+            "taskReferenceName": "http_notification_ref",
+            "type": "HTTP",
+            "inputParameters": {
+              "uri": "https://orkes-api-tester.orkesconductor.com/api",
+              "method": "GET",
+              "accept": "application/json",
+              "contentType": "application/json",
+              "encode": true
+            }
+          }
+        ]
+      ]
+    },
+    {
+      "name": "notifications_join",
+      "taskReferenceName": "notifications_join_ref",
+      "type": "JOIN",
+      "inputParameters": {},
+      "joinOn": [
+        "email_payload_ref",
+        "sms_payload_ref"
+      ]
+    }
+  ],
+  "outputParameters": {
+    "joinedOutputs": "${notifications_join_ref.output}"
   }
 }
 ```
+
+4. Select **Save** > **Confirm**.
+
+**To run the workflow:**
+
+1. Go to the **Run** tab.
+2. Select **Execute**.
+
+Each fork runs tasks for each notification type (email, SMS, HTTP) in parallel, meaning that they are run independently. 
+
+<p><img src="/content/img/fork-join-example-execution.png" alt="Workflow execution"/></p>
+
+Although three forks are running in parallel, only two forks are required to continue with the workflow. The parameter `joinOn` is defined so that only email and SMS tasks are joined, leaving the HTTP task as optional for completing the Join task.
+
+```json
+// Join task configuration
+{
+     "name": "notifications_join",
+     "taskReferenceName": "notifications_join_ref",
+     "inputParameters": {},
+     "joinOn": [
+       "email_payload_ref",
+       "sms_payload_ref"
+     ],
+     "type": "JOIN"
+}
+```
+
+This workflow is completed when the email and SMS notifications are sent and does not depend on the HTTP notification status.
+
+This is the output of `notification_join`. The output is a map, where the keys are the reference names of tasks being joined, and the corresponding values are the outputs of those tasks.
+
+<p><img src="/content/img/fork-join-output.png" alt="Output of a join task execution"/></p>
+
+Outputs from the HTTP branch are excluded because it is not specified in the `joinOn` parameter.
 
 </p>
 </details>
 
 <details>
-<summary>Example with a join script</summary>
+<summary>Using a join script</summary>
 
-Consider a Fork/Join task with two forks, each containing a sub-workflow.
+In this example, a Fork/Join task runs two branches in parallel. One branch waits for 5 seconds, and the other waits for 30 seconds. Both forked tasks are marked as `optional`. A Join task uses a join script to control when the workflow can proceed by explicitly checking the completion status of the forked tasks.
 
-<p align="center"><img src="/content/img/join-task-example-using-script.png" alt="Join task example" width="70%"
-                       height="auto"/></p>
+**To create a workflow:**
 
-Both forked tasks are marked as optional and the Join task is joined using the following join script.
+1. Go to **Definitions** > **Workflow**, from the left navigation menu on your Conductor cluster.
+2. Select **+ Define workflow**.
+3. In the **Code** tab, paste the following workflow definition:
+
+```json
+{
+ "name": "Join_With_Script_Demo",
+ "description": "Uses a join script to control completion of parallel tasks.",
+ "version": 1,
+ "tasks": [
+   {
+     "name": "fork_tasks",
+     "taskReferenceName": "fork_tasks_ref",
+     "inputParameters": {},
+     "type": "FORK_JOIN",
+     "forkTasks": [
+       [
+         {
+           "name": "wait_short",
+           "taskReferenceName": "wait_short_ref",
+           "inputParameters": {
+             "duration": "5 seconds"
+           },
+           "type": "WAIT"
+         }
+       ],
+       [
+         {
+           "name": "wait_long",
+           "taskReferenceName": "wait_long_ref",
+           "inputParameters": {
+             "duration": "30 seconds"
+           },
+           "type": "WAIT"
+         }
+       ]
+     ]
+   },
+   {
+     "name": "join_with_script",
+     "taskReferenceName": "join_with_script_ref",
+     "inputParameters": {},
+     "type": "JOIN",
+     "joinOn": [
+       "wait_short_ref",
+       "wait_long_ref"
+     ],
+     "expression": "(function(){\n  let pending = false;\n  let results = {};\n\n  $.joinOn.forEach((ref) => {\n    if ($[ref] && $[ref].status !== 'COMPLETED') {\n      pending = true;\n      results[ref] = $[ref].status;\n    }\n  });\n\n  if (pending) {\n    return {\n      status: 'IN_PROGRESS',\n      reasonForIncompletion: 'Waiting for forked tasks',\n      outputData: {\n        pendingTasks: results\n      }\n    };\n  }\n\n  return true;\n})();"
+   }
+ ],
+ "schemaVersion": 2
+}
+```
+
+4. Select **Save** > **Confirm**.
+
+Both forked tasks are marked as `optional` and the Join task is joined using the following script:
 
 ```javascript
-(function () {
-  let results = {};
-  let pendingJoinsFound = false;
-  if ($.joinOn) {
-    $.joinOn.forEach((element) => {
-      if ($[element] && $[element].status !== "COMPLETED") {
-        results[element] = $[element].status;
-        pendingJoinsFound = true;
-      }
-    });
-    if (pendingJoinsFound) {
-      return {
-        status: "IN_PROGRESS",
-        reasonForIncompletion: "Pending",
-        outputData: {
-          scriptResults: results,
-        },
-      };
-    }
-    return true; // To complete the join, return true OR an object with status = 'COMPLETED' like above.
-  }
+(function(){
+ let pending = false;
+ let results = {};
+
+
+ $.joinOn.forEach((ref) => {
+   if ($[ref] && $[ref].status !== 'COMPLETED') {
+     pending = true;
+     results[ref] = $[ref].status;
+   }
+ });
+
+
+ if (pending) {
+   return {
+     status: 'IN_PROGRESS',
+     reasonForIncompletion: 'Waiting for forked tasks',
+     outputData: {
+       pendingTasks: results
+     }
+   };
+ }
+
+
+ return true;
 })();
 ```
 
-This script ensures that the Join task is completed only if all the forks are completed. If any pending joins are found, the script will return the Join task status to IN_PROGRESS. Only after the forked tasks are completed, then the script will complete the Join task.
+This script ensures that the Join task is completed only if all the forks are completed. If any pending joins are found, the script will return the Join task status to `IN_PROGRESS`. Only once the forked tasks are completed, the script completes the Join task.
 
-If the workflow is run, you can see that the join has not been completed and is waiting for the second fork to complete. Based on the script, the join task will remain in the in-progress state until the pending joins are completed.
+**To run the workflow:**
 
-<p align="center"><img src="/content/img/join-task-in-progress-state.png" alt="Join task not completed and returned to in progress state" width="80%"
-                       height="auto"/></p>
+1. Go to the **Run** tab.
+2. Select **Execute**.
 
-The join task is completed after the issue with the second forked task is fixed.
+On the workflow execution page, you can observe the following behavior:
 
-<p align="center"><img src="/content/img/join-task-completed-state.png" alt="Join task completed" width="60%"
-                       height="auto"/></p>
+- The forked branch with the 5-second Wait task completes first (*wait_short*).
+- The Join task remains **IN_PROGRESS** while the 30-second Wait task is still running.
+
+<p align="center"><img src="/content/img/join-task-in-progress-state.png" alt="Join task not completed and returned to in progress state" width="100%" height="auto"/></p>
+
+- After the 30-second Wait task completes, the join script evaluates successfully, and the Join task completes.
+- The workflow finishes only after both forked tasks have completed.
+
+<p align="center"><img src="/content/img/join-task-completed-state.png" alt="Join task completed" width="70%"height="auto"/></p>
 
 </details>

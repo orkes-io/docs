@@ -9,7 +9,7 @@ import TabItem from '@theme/TabItem';
 
 # Dynamic
 
-The Dynamic task executes a registered task dynamically at run-time. It is similar to a function pointer in programming, and can be used in cases when the decision to execute which task will only be made after the workflow has begun. Unlike the [Switch](https://orkes.io/content/reference-docs/operators/switch) task, the Dynamic task offers flexibility without needing to update the workflow definition.
+The Dynamic task executes a registered task dynamically at runtime. It is similar to a function pointer in programming and can be used in cases where the decision to execute a task will only be made after the workflow has begun. Unlike the [Switch](/content/reference-docs/operators/switch) task, the Dynamic task offers flexibility without requiring updates to the workflow definition.
 
 The Dynamic task accepts as input the name of a task, which can be a system task, a sub-workflow, or a custom Worker task registered on Conductor.
 
@@ -20,7 +20,7 @@ Configure these parameters for the Dynamic task.
 | Parameter                          | Description                                                                                                                                                             | Required/ Optional |
 | ---------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
 | dynamicTaskNameParam               | The input parameter key whose value is used to schedule the task. For example, "taskToExecute", which will then be specified as an input parameter in the Dynamic task. | Required.          |
-| inputParameters. **taskToExecute** | The name of the task that will be executed. It can be [passed as a dynamic input](/developer-guides/passing-inputs-to-task-in-conductor).                               | Required.          |
+| inputParameters. **taskToExecute** | The name of the task that will be executed. It can be [passed as a dynamic variable](/developer-guides/passing-inputs-to-task-in-conductor).                               | Required.          |
 | inputParameters                    | Contains the inputs to the task that will be executed.                                                                                                                  | Required, depending on the task. | 
 
 The following are generic configuration parameters that can be applied to the task and are not specific to the Dynamic task.
@@ -59,7 +59,7 @@ If the Dynamic task to be called is a [Sub Workflow](./sub-workflow) task, then 
 Using the workflow definition JSON instead of the workflow name and version is useful when the sub-workflow has not been registered in the Conductor server beforehand. This option is ideal for constructing dynamic sub-workflows on the fly.
 
 ```json
-// Dynamic task defintion
+// Dynamic task definition
 
 "inputParameters": {
   "subWorkflowDefinition":{ //subworkflow JSON definition}
@@ -119,9 +119,9 @@ During execution, the Dynamic task is replaced with whatever task that is called
 
 1. In your workflow, select the **(+)** icon and add a **Dynamic** task.
 2. In **Task input params**, specify the task to execute by setting a value in the `taskToExecute` parameter.
-   The value can be [passed as a dynamic input](/developer-guides/passing-inputs-to-task-in-conductor) (for example, `${workflow.input.dynamicTaskName}`).
+   The value can be [passed as a dynamic variable](/developer-guides/passing-inputs-to-task-in-conductor) (for example, `${workflow.input.dynamicTaskName}`).
 
-<p><img src="/content/img/Task-References/dynamic_task_reference.png" alt="Screenshot of Dynamic Task in Orkes Conductor"/></p>
+<p><img src="/content/img/ui-guide-dynamic-task.png" alt="Screenshot of Dynamic Task in Orkes Conductor"/></p>
 
 ## Examples
 
@@ -130,42 +130,179 @@ Here are some examples for using the Dynamic task.
 <details>
 <summary>Using the Dynamic task in a workflow</summary>
 
-In this example workflow, shipments are made with different couriers depending on the shipping address. The decision can only be made during run-time when the address is received, and the subsequent shipping task could be either `ship_via_fedex` and `ship_via_ups`. A Dynamic task can be used in this workflow so that the shipping task can be decided in realtime.
+A Dynamic task executes a task type at runtime based on an input value. This example builds a workflow that dynamically executes the HTTP system task.
+
+**To create a workflow:**
+
+1. Go to **Definitions** > **Workflow**, from the left navigation menu on your Conductor cluster.
+2. Select **+ Define workflow**.
+3. In the **Code** tab, paste the following workflow definition:
 
 ```json
 {
-  "name": "Shipping_Flow",
-  "description": "Ships smartly based on the shipping address",
+  "name": "Dynamic_HTTP_Demo",
+  "description": "Dynamically executes the HTTP system task using a Dynamic task.",
+  "version": 1,
+  "schemaVersion": 2,
+  "inputParameters": [
+    "taskType"
+  ],
   "tasks": [
     {
-      "name": "shipping_info",
-      "taskReferenceName": "shipping_info_ref",
-      "inputParameters": {},
-      "type": "SIMPLE"
-    },
-    {
-      "name": "shipping_task",
-      "taskReferenceName": "shipping_task_ref",
-      "inputParameters": {
-        "taskToExecute": "${shipping_info.output.shipping_service}"
-      },
+      "name": "dynamic_http_task",
+      "taskReferenceName": "dynamic_http_task_ref",
       "type": "DYNAMIC",
+      "inputParameters": {
+        "taskToExecute": "${workflow.input.taskType}",
+        "uri": "https://orkes-api-tester.orkesconductor.com/api",
+        "method": "GET",
+        "accept": "application/json",
+        "contentType": "application/json",
+        "encode": true
+      },
       "dynamicTaskNameParam": "taskToExecute"
     }
   ]
 }
 ```
 
-In the workflow, the `shipping_info` task generates an output that is used to determine which task is run in the Dynamic `shipping_task` task. The line `"taskToExecute": "${shipping_info.output.shipping_service}"` reads the `shipping_service` output from `shipping_info`. Here is the visual diagram of the same workflow:
+4. Select **Save** > **Confirm**.
 
-<p align="center"><img src="/content/img/dynamic-task-example.png" alt="Dynamic Task Example" width="50%" height="auto"></img></p>
 
-During workflow execution, if the `shipping_info` task output is `"shipping_service": "ship_via_fedex"`, the Dynamic `shipping_task` task will be replaced with the `ship_via_fedex` task:
+**To run the workflow:**
 
-<p align="center"><img src="/content/img/ship-via-fedex.jpg" alt="Ship Via Fedex" width="50%" height="auto"></img></p>
+1. Go to the **Run** tab, and enter the **Input params**. For example:
 
-If the `shipping_info` task output is `"shipping_service": "ship_via_ups"`, the Dynamic `shipping_task` task will be replaced with the `ship_via_ups` task:
+```json
+{
+  "taskType": "HTTP"
+}
+```
 
-<p align="center"><img src="/content/img/ship-via-ups.jpg" alt="Ship Via UPS" width="50%" height="auto"></img></p>
+2. Select **Execute**.
+
+This takes you to the workflow execution page. You can verify that:
+- The Dynamic task is replaced at runtime with the HTTP task.
+- The HTTP task completes successfully.
+- The task output contains the HTTP response.
+
+<p><img src="/content/img/dynamic-task-output.png" alt="Task output of a Dynamic task"/></p>
+
+</details>
+
+
+<details>
+<summary>Using the Dynamic task to execute a sub-workflow</summary>
+
+A Dynamic task can execute a sub-workflow at runtime when the sub-workflow name is determined after the workflow starts. This example builds a parent workflow that executes a sub-workflow dynamically using the `SUB_WORKFLOW` task type.
+
+Before you begin, create the workflows to be called as Sub Workflows.
+
+**To create a workflow:**
+
+1. Go to **Definitions** > **Workflow**, from the left navigation menu on your Conductor cluster.
+2. Select **+ Define workflow**.
+3. In the **Code** tab, paste the following workflow definition:
+
+```json
+{
+  "name": "ship_via_fedex",
+  "description": "Sub-workflow that simulates FedEx shipping.",
+  "version": 1,
+  "schemaVersion": 2,
+  "tasks": [
+    {
+      "name": "fedex_http",
+      "taskReferenceName": "fedex_http_ref",
+      "type": "HTTP",
+      "inputParameters": {
+        "uri": "https://orkes-api-tester.orkesconductor.com/api",
+        "method": "GET",
+        "accept": "application/json",
+        "contentType": "application/json",
+        "encode": true
+      }
+    }
+  ]
+}
+```
+
+4. Select **Save** > **Confirm**.
+
+Repeat the steps and create another workflow for UPS using the following code:
+
+```json
+{
+  "name": "ship_via_ups",
+  "description": "Sub-workflow that simulates UPS shipping.",
+  "version": 1,
+  "schemaVersion": 2,
+  "tasks": [
+    {
+      "name": "ups_http",
+      "taskReferenceName": "ups_http_ref",
+      "type": "HTTP",
+      "inputParameters": {
+        "uri": "https://orkes-api-tester.orkesconductor.com/api",
+        "method": "GET",
+        "accept": "application/json",
+        "contentType": "application/json",
+        "encode": true
+      }
+    }
+  ]
+}
+```
+
+Next, create the parent workflow that includes a Dynamic task, which will call any of these workflows.
+
+```json
+{
+  "name": "Dynamic_Subworkflow_Demo",
+  "description": "Dynamically executes a sub-workflow based on runtime input.",
+  "version": 1,
+  "schemaVersion": 2,
+  "inputParameters": [
+    "carrierWorkflow"
+  ],
+  "tasks": [
+    {
+      "name": "dynamic_subworkflow",
+      "taskReferenceName": "dynamic_subworkflow_ref",
+      "type": "DYNAMIC",
+      "inputParameters": {
+        "taskToExecute": "SUB_WORKFLOW",
+        "subWorkflowName": "${workflow.input.carrierWorkflow}",
+        "subworkflowVersion": 1
+      },
+      "dynamicTaskNameParam": "taskToExecute"
+    }
+  ]
+}
+```
+
+In this workflow, the Dynamic task schedules a sub-workflow by setting `taskToExecute` to `SUB_WORKFLOW` and providing the sub-workflow name as input.
+
+**To run the workflow:**
+
+1. Go to the **Run** tab, and enter the **Input params**. For example:
+
+```json
+{
+  "carrierWorkflow": "ship_via_fedex"
+}
+```
+
+2. Select **Execute**.
+
+This takes you to the workflow execution page. You can verify that:
+- The Dynamic task is replaced at runtime with a sub-workflow execution.
+- The executed sub-workflow name matches the value passed in `carrierWorkflow`.
+
+<p><img src="/content/img/dynamic-workflow-called-as-sub-workflow.png" alt="Task output of a Dynamic task"/></p>
+
+- The sub-workflow’s HTTP task completes successfully.
+
+<p><img src="/content/img/sub-workflow-dynamically-executed.png" alt="Task output of a HTTP task executed via Sub Workflow"/></p>
 
 </details>

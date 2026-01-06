@@ -9,7 +9,7 @@ import TabItem from '@theme/TabItem';
 
 # Do While
 
-The Do While task iterates through a sequence of tasks as long as a given condition is true. The sequence of tasks gets executed before the condition is checked, even for the first iteration, just like a regular `do .. while` statement in programming.
+The Do While task executes a sequence of tasks repeatedly as long as a condition evaluates to true. The looped tasks are executed at least once, and the condition is evaluated after each iteration, similar to a `do..while` statement in programming.
 
 ## Task parameters
 
@@ -21,7 +21,7 @@ Configure these parameters for the Do While task.
 | loopCondition                  | The condition that is evaluated by the Do While task after every iteration. The expression format depends on the evaluator type:<ul><li>For the `value-param` evaluator, the expression is the input parameter key.</li><li>For the `graaljs` evaluator, the expression is in ES6-compatible JavaScript. Refer to [Script expression](#script-expression) for more information. </li></ul> | Required, unless iterating over a list of items.          |
 | loopOver                       | The list of tasks to be executed as long as the condition is true.    | Required.          |
 | inputParameters. **items** | An array of items, which will be iterated over in the loop. The number of iterations is equal to the list size. You can use this to iterate without a condition. <br/><br/> Refer to [Examples](#examples) for more information on how to use the `items` parameter.            | Optional.          |
-| inputParameters. **keepLastN** | The number of iteration execution data to retain. If enabled, the default value is 2. <br/><br/> Use `keepLastN` if the number of iterations is expected to be large and not all execution data needs to be retained. Refer to [Execution data](#execution-data) for more information.         | Optional.        |
+| inputParameters. **keepLastN** | The number of iterations of execution data to retain. If enabled, the default value is 2.<br/><br/> Use `keepLastN` if the number of iterations is expected to be large and not all execution data needs to be retained. Refer to the [Execution data](#execution-data) for more information.         | Optional.        |
 
 The following are generic configuration parameters that can be applied to the task and are not specific to the Do While task. 
 
@@ -84,10 +84,7 @@ The Do While task will return the following parameters.
 | iteration | The number of iterations. <br/><br/> If the Do While task is in progress, `iteration` will show the current iteration number. When completed, `iteration` will show the final number of iterations. |
 | item      | (If `items` is used as an input parameter) Contains the value of the last item specified in the `items` array. |
 
-
-
-In addition, an object will be created for each iteration, keyed by its iteration number (e.g., 1, 2, 3), and will contain the task outputs for all of the `loopOver` tasks. If `keepLastN` is specified, only outputs for the last _n_ iterations will be stored.
-
+Additionally, an object will be created for each iteration, keyed by its iteration number (e.g., 1, 2, 3), and will contain the task outputs for all `loopOver` tasks. If keepLastN is specified, only outputs for the last n iterations will be stored.
 
 **Example output**
 
@@ -125,6 +122,34 @@ In addition, an object will be created for each iteration, keyed by its iteratio
 
 Each time a task in the do while loop is completed, the output is saved and indexed by the iteration value. This makes it possible for the condition to check the output of a specific task iteration using `$.TaskName[’iteration’]['loopTask']`, replacing `TaskName` with the actual Do While task reference name and `loopTask` with the loop task reference name.
 
+## Execution
+
+When a Do While loop is executed, each task in the loop will have its `taskReferenceName` concatenated with \_\_i, with i as the iteration number starting at 1.  If one of the loop tasks fails, the Do While task status will be set as FAILED, and upon retry, the iteration number will restart from 1.
+
+If an exception occurs during evaluation of the `loopCondition`, the task is set to CANCELED.
+
+### Execution data
+
+During execution, each iteration execution can be accessed from the dropdown box in the Conductor UI for the Do While task and all its loop tasks.
+
+<p><img src="/content/img/do-while-iterations.png" alt="List of iterations during workflow execution."/></p>
+
+If `keepLastN` is used, the latest **n** iterations will be retained. In the example below, where `keepLastN=2`, the latest two iterations are accessible from the dropdown box in the UI.
+
+<p><img src="/content/img/do-while-keeplastn-iterations.png" alt="List of iterations during workflow execution where keepLastN is enabled."/></p>
+
+From **v4.1.52** onwards, Do While executions that exceed 300 tasks across their iterations will be summarized, and the Conductor UI will only display the latest two iterations. If required, u​​se `keepLastN` to display more iterations.
+
+<p><img src="/content/img/do-while-summarized-iterations.png" alt="List of iterations during workflow execution where workflow is summarized."/></p>
+
+:::info Notes
+Here are several considerations to keep in mind when using the Do While task:
+
+- **Branching**: Within a Do While task, branching using Switch, Fork/Join, and Dynamic Fork tasks is supported. However, the Do While task may not execute as expected if the branching crosses outside its scope, since the loop tasks will be executed within the scope.
+- **Nested loops**: Nested Do While tasks are not supported. To achieve a similar functionality as a nested loop, you can use a [Sub Workflow](./sub-workflow) task inside the Do While task.
+- **Isolation group execution**: Isolation group execution is not supported. However, the domain is supported for loop tasks inside the Do While task.
+:::
+
 ## Adding a Do While task in UI
 
 **To add a Do While task:**
@@ -135,33 +160,10 @@ Each time a task in the do while loop is completed, the output is saved and inde
    - **Value-Param**— Enter the parameter key you have defined in Script params.
    - **ECMASCRIPT**—Enter a JavaScript script. Refer to [Script expression](#script-expression) for information.
 4. In your workflow, select the **(+)** icon to add tasks to the Do While loop.
-5. (Optional) If the number of iterations is expected to be large, turn off **No Limits** to set the number of iteration execution data to retain. By default, there is no limit on the execution data kept if the task size is below 300.
+5. (Optional) If the number of iterations is expected to be large, turn off **No Limits** to set the number of iterations for which execution data to retain. By default, there is no limit on the execution data kept if the task size is below 300.
+6. (Optional) Use the **Sample scripts** to insert example JavaScript expressions for ECMASCRIPT evaluation.
 
-<p><img src="/content/img/Task-References/do_while_task_reference.png" alt="Screenshot of Do While Task in Orkes Conductor"/></p>
-
-## Execution
-
-When a Do While loop is executed, each task in the loop will have its `taskReferenceName` concatenated with \_\_i, with i as the iteration number starting at 1.  If one of the loop tasks fails, the Do While task status will be set as FAILED, and upon retry, the iteration number will restart from 1.
-
-If an exception occurs during evaluation of the `loopCondition`, the task is set to CANCELED.
-
-
-### Execution data
-
-During execution, each iteration execution can be accessed from the dropdown box in the Conductor UI for the Do While task and all its loop tasks.
-
-<p><img src="/content/img/Task-References/do_while_iterations.png" alt="List of iterations during workflow execution."/></p>
-
-
-If `keepLastN` is used, the latest *n* iterations will be retained. In the example below where `keepLastN=2`, the latest two iterations are accessible from the dropdown box in the UI.
-
-<p><img src="/content/img/Task-References/do_while_keeplastn_iterations.png" alt="List of iterations during workflow execution where keepLastN is enabled."/></p>
-
-
-From **v4.1.52** onwards, Do While executions that exceed 300 tasks across its iterations will be summarized, and the Conductor UI will only display the latest two iterations. If required, u​​se `keepLastN` to display more iterations.
-
-<p><img src="/content/img/Task-References/do_while_summarized_iterations.png" alt="List of iterations during workflow execution where workflow is summarized."/></p>
-
+<p><img src="/content/img/ui-guide-do-while-task.png" alt="Screenshot of Do While Task in Orkes Conductor"/></p>
 
 ## Examples
 
@@ -170,238 +172,270 @@ Here are some examples for using the Do While task.
 <details>
 <summary>Using `value-param` evaluator</summary>
 
+A Do While task can be used to repeatedly execute a set of tasks as long as a condition evaluates to true. This example builds a workflow that executes an HTTP task followed by a Wait task while a boolean input remains `true`, using the `value-param` evaluator type.
+
 When using the `value-param` evaluator, the input key (such as `state` in the example below) must be a boolean value.
+
+**To create a workflow:**
+
+1. Go to **Definitions** > **Workflow**, from the left navigation menu on your Conductor cluster.
+2. Select **+ Define workflow**.
+3. In the **Code** tab, paste the following workflow definition:
 
 ```json
 {
-  "name": "do_while",
-  "taskReferenceName": "do_while_ref",
-  "inputParameters": {
-    "state": "${workflow.input.active}"
-  },
-  "type": "DO_WHILE",
-  "loopCondition": "state",
-  "loopOver": [
-    {
-      "name": "http",
-      "taskReferenceName": "http_ref",
-      "inputParameters": {
-        "uri": "https://orkes-api-tester.orkesconductor.com/api",
-        "method": "GET",
-        "accept": "application/json",
-        "contentType": "application/json",
-        "encode": true
-      },
-      "type": "HTTP"
-    },
-    {
-      "name": "wait",
-      "taskReferenceName": "wait_ref",
-      "inputParameters": {},
-      "type": "WAIT"
-    }
-  ],
-  "evaluatorType": "value-param"
+ "name": "Do_While_Value_Param_Demo",
+ "description": "Executes HTTP and Wait tasks repeatedly while a boolean input is true.",
+ "version": 1,
+ "tasks": [
+   {
+     "name": "do_while",
+     "taskReferenceName": "do_while_ref",
+     "inputParameters": {
+       "state": "${workflow.input.active}"
+     },
+     "type": "DO_WHILE",
+     "loopCondition": "state",
+     "loopOver": [
+       {
+         "name": "http",
+         "taskReferenceName": "http_ref",
+         "inputParameters": {
+           "uri": "https://orkes-api-tester.orkesconductor.com/api",
+           "method": "GET",
+           "accept": "application/json",
+           "contentType": "application/json",
+           "encode": true
+         },
+         "type": "HTTP"
+       },
+       {
+         "name": "wait",
+         "taskReferenceName": "wait_ref",
+         "inputParameters": {
+           "duration": "5 seconds"
+         },
+         "type": "WAIT"
+       }
+     ],
+     "evaluatorType": "value-param"
+   }
+ ],
+ "inputParameters": [
+   "active"
+ ],
+ "schemaVersion": 2
 }
 ```
+
+4. Select **Save** > **Confirm**.
+
+**To run the workflow:**
+
+1. Go to the **Run** tab, and enter the **Input params**. For example:
+
+```json
+{
+  "active": true
+}
+```
+
+2. Select **Execute**.
+
+This takes you to the workflow execution page. As long as the input parameter `active` remains `true`, the workflow continues to execute the HTTP task followed by the Wait task (5 seconds) and repeats the loop.
+
+<p><img src="/content/img/do-while-value-param.png" alt="Workflow output"/></p>
+
+Now, rerun the workflow with the following input parameter:
+
+```json
+{
+ "active": false
+}
+```
+
+Since the workflow input `active` is set to `false`, the loop stops after the first iteration and the workflow completes.
+
+<p><img src="/content/img/do-while-value-param-no-iteration.png" alt="Workflow output"/></p>
+
 </details>
 
 <details>
 <summary>Using `graaljs` evaluator</summary>
-<p>
+
+A Do While task can evaluate a JavaScript expression as the loop condition using the `graaljs` evaluator type. This example builds a workflow that runs a set of tasks a fixed number of times by comparing the Do While task’s iteration value with a workflow input.
+
+**To create a workflow:**
+
+1. Go to **Definitions** > **Workflow**, from the left navigation menu on your Conductor cluster.
+2. Select **+ Define workflow**.
+3. In the **Code** tab, paste the following workflow definition:
 
 ```json
 {
-  "name": "do_while",
-  "taskReferenceName": "do_while_ref",
-  "inputParameters": {
-    "number": "${workflow.input.qty}"
-  },
-  "type": "DO_WHILE",
-  "loopCondition": "(function () {\n  if ($.do_while_ref['iteration'] < $.number) {\n    return true;\n  }\n  return false;\n})();",
-  "loopOver": [
-    {
-      "name": "first task",
-      "taskReferenceName": "first_task",
-      "inputParameters": {
-        "http_request": {
-          "uri": "http://localhost:8082",
-          "method": "POST"
-        }
-      },
-      "type": "HTTP"
-    },
-    {
-      "name": "second task",
-      "taskReferenceName": "second_task",
-      "inputParameters": {
-        "http_request": {
-          "uri": "http://localhost:8082",
-          "method": "POST"
-        }
-      },
-      "type": "HTTP"
-    }
-  ]
-  "evaluatorType": "graaljs"
+ "name": "Do_While_Graaljs_Demo",
+ "description": "Executes tasks repeatedly until the iteration count reaches the configured limit.",
+ "version": 1,
+ "tasks": [
+   {
+     "name": "do_while",
+     "taskReferenceName": "do_while_ref",
+     "inputParameters": {
+       "number": "${workflow.input.qty}"
+     },
+     "type": "DO_WHILE",
+     "loopCondition": "(function () { if ($.do_while_ref['iteration'] < $.number) { return true; } return false; })();",
+     "loopOver": [
+       {
+         "name": "first_task",
+         "taskReferenceName": "first_task_ref",
+         "inputParameters": {
+           "uri": "https://orkes-api-tester.orkesconductor.com/api",
+           "method": "GET",
+           "accept": "application/json",
+           "contentType": "application/json",
+           "encode": true
+         },
+         "type": "HTTP"
+       },
+       {
+         "name": "wait",
+         "taskReferenceName": "wait_ref",
+         "inputParameters": {
+           "duration": "5 seconds"
+         },
+         "type": "WAIT"
+       }
+     ],
+     "evaluatorType": "graaljs"
+   }
+ ],
+ "inputParameters": [
+   "qty"
+ ],
+ "schemaVersion": 2
 }
 ```
 
-When executed successfully, the above Do While task will produce the following execution JSON, assuming three iterations occurred:
+4. Select **Save** > **Confirm**.
+
+In this workflow, the workflow input `qty` sets the maximum number of loop iterations. After each iteration, the loop condition compares the current iteration count with the quantity to determine whether the loop should continue.
+
+**To run the workflow:**
+
+1. Go to the **Run** tab, and enter the **Input params**. For example:
 
 ```json
 {
-  "taskType": "DO_WHILE",
-  "outputData": {
-    "iteration": 3,
-    "1": {
-      "first_task": {
-        "response": {},
-        "headers": {
-          "Content-Type": "application/json"
-        }
-      },
-      "second_task": {
-        "response": {},
-        "headers": {
-          "Content-Type": "application/json"
-        }
-      }
-    },
-    "2": {
-      "first_task": {
-        "response": {},
-        "headers": {
-          "Content-Type": "application/json"
-        }
-      },
-      "second_task": {
-        "response": {},
-        "headers": {
-          "Content-Type": "application/json"
-        }
-      }
-    },
-    "3": {
-      "first_task": {
-        "response": {},
-        "headers": {
-          "Content-Type": "application/json"
-        }
-      },
-      "second_task": {
-        "response": {},
-        "headers": {
-          "Content-Type": "application/json"
-        }
-      }
-    }
-  }
+  "qty": 3
 }
 ```
 
-</p>
+2. Select **Execute**.
+
+This takes you to the workflow execution page. Since `qty` is set to 3, the Do While loop executes three iterations and then completes. On the Do While task output, verify that iteration is 3, and that the task outputs for each iteration are stored under 1, 2, and 3.
+
+<p><img src="/content/img/do-while-graal.png" alt="Workflow output"/></p>
+
+The Do While task output is returned as follows:
+
+```json
+// truncated output
+{
+ "1": {
+   "first_task_ref": {
+     "response": {
+       "headers": {
+.
+.
+.
+   "wait_ref": {}
+ },
+ "2": {
+   "first_task_ref": {
+     "response": {
+       "headers": {
+.
+.
+.
+   "wait_ref": {}
+ },
+ "3": {
+   "first_task_ref": {
+     "response": {
+       "headers": {
+.
+.
+.
+   "wait_ref": {}
+ },
+ "iteration": 3
+}
+```
+
 </details>
 
 <details>
-<summary>Using the iteration key in a loop task</summary>
-<p>
-Sometimes, you may want to use the Do While iteration value/counter inside your loop tasks. In this example, an API call is made to a GitHub repository to get all stargazers and each iteration increases the pagination.
+<summary>Iterate over a list of `items`</summary>
 
-The Do While task’s `taskReferenceName` is "get_all_stars_loop_ref". To evaluate the current iteration, the parameter `$.get_all_stars_loop_ref['iteration']` is used in the `loopCondition`. In the HTTP task embedded in the loop, `${get_all_stars_loop_ref.output.iteration}` is used to define which page of results the API should return.
-
-```json
-{
-  "name": "get_all_stars",
-  "taskReferenceName": "get_all_stars_loop_ref",
-  "inputParameters": {
-    "stargazers": "4000"
-  },
-  "type": "DO_WHILE",
-  "loopCondition": "if ($.get_all_stars_loop_ref['iteration'] < Math.ceil($.stargazers/100)) { true; } else { false; }",
-  "loopOver": [
-    {
-      "name": "100_stargazers",
-      "taskReferenceName": "hundred_stargazers_ref",
-      "inputParameters": {
-        "counter": "${get_all_stars_loop_ref.output.iteration}",
-        "http_request": {
-          "uri": "https://api.github.com/repos/conductor-oss/conductor/stargazers?page=${get_all_stars_loop_ref.output.iteration}&per_page=100",
-          "method": "GET",
-          "headers": {
-            "Authorization": "token ${workflow.input.gh_token}",
-            "Accept": "application/vnd.github.v3.star+json"
-          }
-        }
-      },
-      "type": "HTTP"
-    }
-  ]
-}
-```
-
-</p>
-</details>
-
-<details>
-<summary>Iterate over a list of items</summary>
-<p>
-It is possible to iterate over a list of items as long as the Do While task has `items` as an input parameter. The parameter name 'items' is required and cannot be substituted with another name.
+A Do While task can iterate over a list of items when you provide `items` in `inputParameters`. When `items` is used, the loop runs once for each item, and you do not need a loop condition. The current item is available in each iteration as `${do_while_ref.output.item}`.
 
 The number of iterations will be equal to the list size. If `“items”=[“a”,“b”,“c”]`, the loop tasks will be executed three times; if `“items”=[]`, the Do While task will be marked as completed without executing the loop tasks.
 
-Each item in the list is passed into each iteration of the loop task using `${do_while_ref.output.item}`.
+**To create a workflow:**
+
+1. Go to **Definitions** > **Workflow**, from the left navigation menu on your Conductor cluster.
+2. Select **+ Define workflow**.
+3. In the **Code** tab, paste the following workflow definition:
 
 ```json
 {
-  "name": "do_while",
-  "taskReferenceName": "do_while_ref",
-  "inputParameters": {
-    "items": ["a", "b", "c"]
-  },
-  "type": "DO_WHILE",
-  "loopCondition": "",
-  "loopOver": [
+  "name": "Do_While_Items_Demo",
+  "description": "Iterates over a list of items and passes each item into the loop task.",
+  "version": 1,
+  "schemaVersion": 2,
+  "tasks": [
     {
-      "name": "http",
-      "taskReferenceName": "http_ref",
+      "name": "do_while",
+      "taskReferenceName": "do_while_ref",
+      "type": "DO_WHILE",
       "inputParameters": {
-        "uri": "https://orkes-api-tester.orkesconductor.com/api",
-        "method": "GET",
-        "accept": "application/json",
-        "contentType": "application/json",
-        "encode": true,
-        "body": {
-          "someInput": "${do_while_ref.output.item}"
-        },
-        "headers": {}
+        "items": ["a", "b", "c"]
       },
-      "type": "HTTP"
+      "evaluatorType": "value-param",
+      "loopCondition": "",
+      "loopOver": [
+        {
+          "name": "http",
+          "taskReferenceName": "http_ref",
+          "type": "HTTP",
+          "inputParameters": {
+            "uri": "https://orkes-api-tester.orkesconductor.com/api",
+            "method": "GET",
+            "accept": "application/json",
+            "contentType": "application/json",
+            "encode": true,
+            "body": {
+              "someInput": "${do_while_ref.output.item}"
+            }
+          }
+        }
+      ]
     }
-  ],
-  "evaluatorType": "value-param"
+  ]
 }
 ```
 
-When the above Do While task has been executed successfully, the input to the first iteration of the HTTP loop task will look like this:
+4. Select **Save** > **Confirm**.
+5. Select **Execute**.
 
-```json
-{
- "encode": true,
- "headers": {},
- "method": "GET",
- "asyncComplete": false,
- "_createdBy": "john.doe@acme.com",
- "body": {
-   "someInput": "a"
- },
- "uri": "https://orkes-api-tester.orkesconductor.com/api",
- "contentType": "application/json",
- "accept": "application/json"
-}
-```
+In this workflow, the Do While task executes once for each value in the items and passes the current item to the loop task using `${do_while_ref.output.item}`.
 
-Meanwhile, the output for the Do While task itself will contain the outputs for every iteration:
+Here, it runs three iterations (one per item in `items`). When the above Do While task has been executed successfully, the input to the first iteration of the HTTP loop task will look like this:
+
+<p><img src="/content/img/do-while-example.png" alt="Workflow output"/></p>
+
+In each iteration, the HTTP task receives a different value for `someInput` (a, then b, then c). After the final iteration, verify that the Do While task output shows iteration: 3 and item: "c".
 
 ```json
 {
@@ -447,14 +481,4 @@ Meanwhile, the output for the Do While task itself will contain the outputs for 
 }
 ```
 
-
-</p>
 </details>
-
-## Limitations
-
-There are several limitations for the Do While task:
-
-- **Branching**—Within a Do While task, branching using Switch, Fork/Join, Dynamic Fork tasks are supported. However, the Do While task may not execute as expected if the branching crosses outside its scope, since the loop tasks will be executed within the scope.
-- **Nested loops**—Nested Do While tasks are not supported. To achieve a similar functionality as a nested loop, you can use a [Sub Workflow](./sub-workflow) task inside the Do While task.
-- **Isolation group execution**—Isolation group execution is not supported. However, domain is supported for loop tasks inside the Do While task.
