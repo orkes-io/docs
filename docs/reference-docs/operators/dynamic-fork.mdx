@@ -9,7 +9,7 @@ import TabItem from "@theme/TabItem";
 
 # Dynamic Fork
 
-The Dynamic Fork task is used to run tasks in parallel, with the forking behavior (such as the number of forks) determined at run-time. This contrasts with the Fork/Join task, where the forking behavior is defined at workflow creation. 
+The Dynamic Fork task is used to run tasks in parallel, with the forking behavior (such as the number of forks) determined at runtime. This contrasts with the [Fork/Join](/content/reference-docs/operators/fork-join) task, where the forking behavior is defined at the time of workflow creation.
 
 The Dynamic Fork task must be followed by a Join task that waits for the forked tasks to finish before moving to the next task. This Join task collects the outputs from each forked task.
 
@@ -34,9 +34,9 @@ The dynamic fork executes each task in the array specified by `dynamicForkTasksP
 | Parameter                              | Description                                                                                                                                                                                                                                                          | Required/ Optional |
 | -------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
 | dynamicForkTasksParam                  | The input parameter key whose value will be used to schedule each task on a different fork. For example, "dynamicTasks", which will then be specified as an input parameter in the Dynamic Fork task.                                                                | Required.          |
-| inputParameters. **dynamicTasks**      | An array of tasks that will run in parallel. Each array element is a task configuration that corresponds to a separate fork branch. It can be [passed as a dynamic input](/developer-guides/passing-inputs-to-task-in-conductor).                    | Required.          |
+| inputParameters. **dynamicTasks**      | An array of tasks that will run in parallel. Each array element is a task configuration that corresponds to a separate fork branch. It can be [passed as a variable](/developer-guides/passing-inputs-to-task-in-conductor).                    | Required.          |
 | dynamicForkTasksInputParamName         | The input parameter key whose value will be used to pass the required input parameters for each forked task. For example, "dynamicTasksInput", which will then be specified as an input parameter in the Dynamic Fork task.                                          | Required.          |
-| inputParameters. **dynamicTasksInput** | A map where the keys are the task reference names for each fork and the values are the input parameters that will be passed into its matching task. It can be [passed as a dynamic input](/developer-guides/passing-inputs-to-task-in-conductor). | Required.          |
+| inputParameters. **dynamicTasksInput** | A map where the keys are the task reference names for each fork and the values are the input parameters that will be passed into its matching task. It can be [passed as a variable](/developer-guides/passing-inputs-to-task-in-conductor). | Required.          |
 
 </TabItem>
 
@@ -48,8 +48,8 @@ The dynamic fork executes the task specified by `forkTaskName` for each element 
 
 | Parameter                           | Description                                                                                                                                                                                                                                          | Required/ Optional |
 | ----------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
-| inputParameters. **forkTaskName**   | The name of the task that will be executed in each fork. It can be [passed as a dynamic input](/developer-guides/passing-inputs-to-task-in-conductor).                                                                            | Required.          |
-| inputParameters. **forkTaskInputs** | An array of JSON inputs for each forked branch. The number of array elements determines the number of branches in the dynamic fork. It can be [passed as a dynamic input](/developer-guides/passing-inputs-to-task-in-conductor). | Required.          |
+| inputParameters. **forkTaskName**   | The name of the task that will be executed in each fork. It can be [passed as a variable](/developer-guides/passing-inputs-to-task-in-conductor).                                                                            | Required.          |
+| inputParameters. **forkTaskInputs** | An array of JSON inputs for each forked branch. The number of array elements determines the number of branches in the dynamic fork. It can be [passed as a variable](/developer-guides/passing-inputs-to-task-in-conductor). | Required.          |
 
 </TabItem>
 
@@ -61,9 +61,9 @@ The dynamic fork executes the workflow specified by `forkTaskWorkflow` and `fork
 
 | Parameter                                    | Description                                                                                                                                                                                                                                          | Required/ Optional |
 | -------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
-| inputParameters. **forkTaskWorkflow**        | The name of the workflow that will be executed in each fork. It can be [passed as a dynamic input](/developer-guides/passing-inputs-to-task-in-conductor).                                                                        | Required.          |
+| inputParameters. **forkTaskWorkflow**        | The name of the workflow that will be executed in each fork. It can be [passed as a variable](/developer-guides/passing-inputs-to-task-in-conductor).                                                                        | Required.          |
 | inputParameters. **forkTaskWorkflowVersion** | The version of the workflow to be executed. If unspecified, the latest version will be used.                                                                                                                                                         | Required.          |
-| inputParameters. **forkTaskInputs**          | An array of JSON inputs for each forked branch. The number of array elements determines the number of branches in the dynamic fork. It can be [passed as a dynamic input](/developer-guides/passing-inputs-to-task-in-conductor). | Required.          |
+| inputParameters. **forkTaskInputs**          | An array of JSON inputs for each forked branch. The number of array elements determines the number of branches in the dynamic fork. It can be [passed as a variable](/developer-guides/passing-inputs-to-task-in-conductor). | Required.          |
 
 </TabItem>
 </Tabs>
@@ -72,10 +72,23 @@ The [Join](./join) task will run after the forked tasks and implicitly waits for
 
 **For the Join task:**
 
-| Parameter | Description | Required/Optional | 
-| --------- | ----------- | ----------------- | 
-| joinOn | A list of task reference names that the Join task will wait for completion before proceeding with the next task. | Required. | 
-| expression | The join script, which controls how the Join task completes if specified. | Optional. | 
+A Join task must follow a Dynamic Fork task to complete the fork-join operation.
+
+- The Join task implicitly waits for all dynamically created forks.
+- You can set `joinOn` to an empty array.
+- The Join task must still include the required schema fields.
+
+**Required Join task configuration**
+
+```json
+{
+  "name": "join",
+  "taskReferenceName": "join_ref",
+  "type": "JOIN",
+  "inputParameters": {},
+  "joinOn": []
+}
+```
 
 The following are generic configuration parameters that can be applied to the task and are not specific to the Dynamic Fork task.
 
@@ -208,10 +221,9 @@ This is the task configuration for a Dynamic Fork task.
 <TabItem value="Different tasks" label="For different tasks">
 
 1. In your workflow, select the **(+)** icon and add a **Dynamic Fork **task.
-2. In **Input parameters**, set the parameter **Type** for `dynamicTasks` and `dynamicTasksInput` as **Object/Array**.
-3. Configure the `dynamicTask` parameter as an array of task configurations.
-4. Configure the `dynamicTasksInput` parameter as a map of input parameters for each task.
-5. Select the Join task and configure its settings to complete the fork/join operations.
+2. In **Input parameters**, configure the `dynamicTask` parameter as an array of task configurations.
+3. In **Input parameters**, configure the `dynamicTasksInput` parameter as a map of input parameters for each task.
+4. Include the **Join** task to complete the fork/join operation.
 
 </TabItem>
 
@@ -221,11 +233,11 @@ This is the task configuration for a Dynamic Fork task.
 2. In **Input parameters**, remove all current parameters and add the following parameters and its values:
    - `forkTaskWorkflow`, `forkTaskWorkflowVersion`, and `forkTaskInputs` for Sub Workflow tasks.
    - `forkTaskName` and `forkTaskInputs` for all other task types.
-3. Select the Join task and configure its settings to complete the fork/join operation.
+3. Include the **Join** task to complete the fork/join operation.
 
 <p>
   <img
-    src="/content/img/Task-References/dynamic_fork_task_reference.png"
+    src="/content/img/ui-guide-dynamic-fork.png"
     alt="Screenshot of Dynamic Fork Task in Orkes Conductor"
   />
 </p>
@@ -240,17 +252,27 @@ Here are some examples for using the Dynamic Fork task.
 <details>
 <summary>Running different tasks</summary>
 
+A Dynamic Fork task can be used to run multiple tasks in parallel when the set of tasks is determined at runtime. This example builds a workflow that dynamically forks into three parallel branches, each running a different task type, and then waits for all branches to complete before continuing.
+
 To run a different task per fork in a dynamic fork, you must use `dynamicForkTasksParam` and `dynamicForkTasksInputParamName`. Here is an example workflow definition of a Dynamic Fork task running different tasks.
+
+**To create a workflow:**
+
+1. Go to **Definitions** > **Workflow**, from the left navigation menu on your Conductor cluster.
+2. Select **+ Define workflow**.
+3. In the **Code** tab, paste the following workflow definition:
 
 ```json
 {
   "name": "DynamicForkExample",
   "description": "This workflow runs different tasks in a dynamic fork.",
   "version": 1,
+  "schemaVersion": 2,
   "tasks": [
     {
       "name": "fork_join_dynamic",
       "taskReferenceName": "fork_join_dynamic_ref",
+      "type": "FORK_JOIN_DYNAMIC",
       "inputParameters": {
         "dynamicTasks": [
           {
@@ -258,7 +280,7 @@ To run a different task per fork in a dynamic fork, you must use `dynamicForkTas
             "taskReferenceName": "task1",
             "type": "INLINE",
             "inputParameters": {
-              "expression": "(function () {\n  return $.input;\n})();",
+              "expression": "(function () { return $.input; })();",
               "evaluatorType": "graaljs"
             }
           },
@@ -269,16 +291,19 @@ To run a different task per fork in a dynamic fork, you must use `dynamicForkTas
             "inputParameters": {
               "method": "GET",
               "connectionTimeOut": 3000,
-              "readTimeOut": "3000",
+              "readTimeOut": 3000,
               "accept": "application/json",
               "contentType": "application/json",
               "encode": true
             }
           },
           {
-            "name": "x_test_worker_0",
-            "taskReferenceName": "simple_ref",
-            "type": "SIMPLE"
+            "name": "wait",
+            "taskReferenceName": "task3",
+            "type": "WAIT",
+            "inputParameters": {
+              "duration": "5 seconds"
+            }
           }
         ],
         "dynamicTasksInput": {
@@ -289,36 +314,120 @@ To run a different task per fork in a dynamic fork, you must use `dynamicForkTas
             "uri": "https://orkes-api-tester.orkesconductor.com/api"
           },
           "task3": {
-            "input": {
-              "someKey": "someValue"
-            }
+            "duration": "5 seconds"
           }
         }
       },
-      "type": "FORK_JOIN_DYNAMIC",
       "dynamicForkTasksParam": "dynamicTasks",
       "dynamicForkTasksInputParamName": "dynamicTasksInput"
     },
     {
       "name": "join",
       "taskReferenceName": "join_ref",
-      "inputParameters": {},
       "type": "JOIN",
+      "inputParameters": {},
       "joinOn": []
     }
-  ],
-  "inputParameters": [],
-  "outputParameters": {},
-  "schemaVersion": 2
+  ]
 }
 ```
+
+4. Select **Save** > **Confirm**.
+
+**To run the workflow:**
+
+1. Go to the **Run** tab.
+2. Select **Execute**.
+
+This takes you to the workflow execution page.
+
+- The Dynamic Fork task creates three parallel branches at runtime.
+- Each branch executes a different task:
+  - An Inline task that echoes the input value.
+  - An HTTP task that calls the API tester endpoint.
+  - A Wait task that pauses execution for five seconds.
+- The Join task waits for all forked tasks to complete before finishing the workflow.
+
+You can verify the execution by inspecting the completed tasks and their outputs on the workflow execution page.
+
+<p><img src="/content/img/dynamic-fork-different-tasks.png" alt="Example execution of a workflow with Dynamic Fork/Join running different tasks"/></p>
 
 </details>
 
 <details>
-<summary>Running the same task — Simple task</summary>
+<summary>Running the same task: HTTP task</summary>
 
-In this example workflow definition, the Dynamic Fork task runs a worker task called `update_fruit_list_task` in parallel. The task input takes from the workflow input, which contains an array of new fruits.
+In this example, the dynamic fork runs HTTP tasks in parallel. The provided input in `forkTaskInputs` contains the typical payload expected in an HTTP task. 
+
+**To create a workflow:**
+
+1. Go to **Definitions** > **Workflow**, from the left navigation menu on your Conductor cluster.
+2. Select **+ Define workflow**.
+3. In the **Code** tab, paste the following workflow definition:
+
+```json
+{
+  "name": "dynamic_workflow_array_http",
+  "description": "Runs HTTP tasks in parallel using a Dynamic Fork task.",
+  "version": 1,
+  "schemaVersion": 2,
+  "tasks": [
+    {
+      "name": "dynamic_fork_http",
+      "taskReferenceName": "dynamic_fork_http_ref",
+      "type": "FORK_JOIN_DYNAMIC",
+      "inputParameters": {
+        "forkTaskName": "HTTP",
+        "forkTaskInputs": [
+          {
+            "uri": "https://orkes-api-tester.orkesconductor.com/api",
+            "accept": "application/json",
+            "contentType": "application/json",
+            "encode": true
+          },
+          {
+            "uri": "https://orkes-api-tester.orkesconductor.com/api",
+            "method": "GET",
+            "accept": "application/json",
+            "contentType": "application/json",
+            "encode": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "join",
+      "taskReferenceName": "join_ref",
+      "type": "JOIN",
+      "inputParameters": {},
+      "joinOn": []
+    }
+  ]
+}
+```
+
+4. Select **Save** > **Confirm**.
+
+**To run the workflow:**
+
+1. Go to the **Run** tab.
+2. Select **Execute**.
+
+This takes you to the workflow execution page.
+
+- The Dynamic Fork task creates one fork per element in `forkTaskInputs`.
+- Each fork executes the HTTP system task using the corresponding input payload.
+- The Join task completes after all forked HTTP tasks complete.
+
+To verify, open the forked HTTP task instances under the Dynamic Fork task and confirm that each task completed successfully and returned a response.
+
+<center><p><img src="/content/img/dynamic-fork-same-tasks.png" alt="Example execution of a workflow with Dynamic Fork/Join running same tasks" width="40%" height="auto"/></p></center>
+</details>
+
+<details>
+<summary>Running the same task: Worker task</summary>
+
+In this example workflow, the Dynamic Fork task runs a worker task named `update_fruit_list_task` in parallel. The task input is taken from the workflow input parameter fruits, which is an array. Each array element results in one forked task execution.
 
 ```json
 {
@@ -343,13 +452,15 @@ In this example workflow definition, the Dynamic Fork task runs a worker task ca
       "joinOn": []
     }
   ],
-  "inputParameters": ["fruits"],
+  "inputParameters": [
+    "fruits"
+  ],
   "outputParameters": {},
   "schemaVersion": 2
 }
 ```
 
-Here, `forkTaskInputs` is a dynamic array that determines the number of forks. At run-time, if the input payload for “fruits” contains three JSON objects, there will be three forks created:
+Here, `forkTaskInputs` is an array input that determines how many forks are created at runtime. For example, if `fruits` contains three objects, the Dynamic Fork task creates three parallel executions of the task.
 
 ```json
 // workflow input payload
@@ -372,7 +483,7 @@ Here, `forkTaskInputs` is a dynamic array that determines the number of forks. A
 }
 ```
 
-During execution, Conductor will insert an additional parameter called `index` into each JSON object, which is used to represent its array index.
+During execution, Conductor inserts an additional parameter called `__index` into each JSON object, which represents its array index.
 
 ```json
 // one input instance for the Dynamic Fork task at run-time
@@ -386,14 +497,14 @@ During execution, Conductor will insert an additional parameter called `index` i
 
 <p align="center">
   <img
-    src="/content/img/Task-References/dynamic_fork_task-fruit_example_input_UI.png"
+    src="/content/img/dynamic-fork-task-fruit-example-input-UI.png"
     alt="UI screenshot of one input instance for the Dynamic Fork task at run-time"
     width="70%"
     height="auto"
   />
 </p>
 
-If simple values are used in `forkTaskInputs`, such as `"fruits" = ["apple", "orange", "kiwi"]`, Conductor will set each array element in a parameter called `input`, like so:
+If `forkTaskInputs` contains simple values (for example, ["apple", "orange", "kiwi"]), Conductor  will set each array element in a parameter called `input`, and still adds `__index`:
 
 ```json
 // one input instance for the Dynamic Fork task at run-time
@@ -403,85 +514,4 @@ If simple values are used in `forkTaskInputs`, such as `"fruits" = ["apple", "or
   "__index": 0 // index of the element in the source array
 }
 ```
-
-</details>
-
-<details>
-<summary>Running the same task — HTTP task</summary>
-
-In this example, the dynamic fork runs HTTP tasks in parallel. The provided input in `forkTaskInputs` contains the typical payload expected in an HTTP task. 
-
-```json
-{
-  "name": "dynamic_workflow_array_http",
-  "description": "Dynamic workflow array - run HTTP tasks",
-  "tasks": [
-    {
-      "name": "dynamic_workflow_array_http",
-      "taskReferenceName": "dynamic_workflow_array_http_ref",
-      "inputParameters": {
-        "forkTaskName": "HTTP",
-        "forkTaskInputs": [
-          {
-            "uri": "https://orkes-api-tester.orkesconductor.com/get"
-          },
-          {
-            "uri": "https://orkes-api-tester.orkesconductor.com/get",
-            "method": "GET"
-          }
-        ]
-      },
-      "type": "FORK_JOIN_DYNAMIC"
-    },
-    {
-      "name": "dynamic_workflow_array_http_join",
-      "taskReferenceName": "dynamic_workflow_array_http_join_ref",
-      "type": "JOIN"
-    }
-  ]
-}
-```
-
-:::tip
-The parameter `method` has a default value of GET and need not be specified if the HTTP call is GET.
-:::
-
-</details>
-
-<details>
-<summary>Running the same task — Sub Workflow task</summary>
-
-In this example, the dynamic fork runs Sub Workflow tasks in parallel.
-
-```json
-{
-  "name": "dynamic_workflow_array_sub_workflow",
-  "description": "Dynamic workflow array - run sub workflow tasks",
-  "tasks": [
-    {
-      "name": "dynamic_workflow_array_sub_workflow",
-      "taskReferenceName": "dynamic_workflow_array_sub_workflow_ref",
-      "inputParameters": {
-        "forkTaskWorkflow": "extract_user",
-        "forkTaskWorkflowVersion": "1",
-        "forkTaskInputs": [
-          {
-            "input": "value1"
-          },
-          {
-            "input": "value2"
-          }
-        ]
-      },
-      "type": "FORK_JOIN_DYNAMIC"
-    },
-    {
-      "name": "dynamic_workflow_array_sub_workflow_join",
-      "taskReferenceName": "dynamic_workflow_array_sub_workflow_join_ref",
-      "type": "JOIN"
-    }
-  ]
-}
-```
-
 </details>
