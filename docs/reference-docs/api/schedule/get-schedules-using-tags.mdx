@@ -5,7 +5,7 @@ description: "This API is used to retrieve the schedules associated with a speci
 
 # Get Schedules By Tag
 
-**Endpoint**: `GET /api/scheduler/schedules/tag`
+**Endpoint**: `GET /api/scheduler/schedules/tags`
 
 Retrieves schedules using a specific tag.
 
@@ -17,7 +17,7 @@ Retrieves schedules using a specific tag.
 
 ## Response
 
-Returns an array of schedule details.
+Returns an array of schedule details, including the tags.
 
 ## Examples
 
@@ -38,6 +38,12 @@ curl -X 'GET' \
 ```json
 [
   {
+    "tags": [
+      {
+        "key": "team",
+        "value": "docs"
+      }
+    ],
     "name": "assignPR",
     "cronExpression": "0 * * ? * *",
     "runCatchupScheduleInstances": false,
@@ -52,7 +58,7 @@ curl -X 'GET' \
     },
     "zoneId": "UTC",
     "createTime": 1748866217788,
-    "updatedTime": 1748866349489,
+    "updatedTime": 1765195763230,
     "createdBy": "john.doe@acme.com",
     "updatedBy": "john.doe@acme.com",
     "description": "Sample scheduler for running workflow every 2 mins",
