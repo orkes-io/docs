@@ -290,7 +290,7 @@ This is the output of `notification_join`. The output is a map, where the keys a
 
 <p><img src="/content/img/fork-join-output.png" alt="Output of a join task execution"/></p>
 
-Outputs from the HTTP branch are excluded because the HTTP notification is not specified in the `joinOn` parameter.
+Outputs from the HTTP branch are excluded because it is not specified in the `joinOn` parameter.
 
 </p>
 </details>
@@ -389,7 +389,7 @@ Both forked tasks are marked as `optional` and the Join task is joined using the
 })();
 ```
 
-This script ensures that the Join task is completed only if all the forks are completed. If any pending joins are found, the script will return the Join task status to `IN_PROGRESS`. Only after the forked tasks are completed will the script complete the Join task.
+This script ensures that the Join task is completed only if all the forks are completed. If any pending joins are found, the script will return the Join task status to `IN_PROGRESS`. Only once the forked tasks are completed, the script completes the Join task.
 
 **To run the workflow:**
 
