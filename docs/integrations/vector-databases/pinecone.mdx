@@ -22,7 +22,7 @@ To integrate Pinecone with Orkes Conductor, retrieve the API key, project ID, an
 
 1. Sign in to the [Pinecone Console](https://app.pinecone.io/), and select your organization.
 2. Select an existing project or create a new one.
-3. Go to **API keys** from the left navigation menu and select **+ Create API key**.
+3. Go to **API keys** from the left navigation menu and select **+ API key**.
 4. Copy the API key generated.
 
 <p align="center"><img src="/content/img/create-api-key-from-pinecone-db.png" alt="API Key creation from Pinecone Console" width="70%" height="auto"></img></p>
@@ -46,7 +46,7 @@ Create a Pinecone index for the integration.
 
 4. Enter an index name.
 5. [Configure the index parameters](https://docs.pinecone.io/guides/indexes/create-an-index).
-6. Select **Create index** and note the **Environment**. The Environment parameter is required when adding the Pinecone integration to Conductor.
+6. Select **Create index** and note the **Region**, which is the environment. This parameter is required when adding the Pinecone integration to Conductor.
 
 <p align="center"><img src="/content/img/get-environment-name.png" alt="Get environment name from Pinecone console" width="100%" height="auto"></img></p>
 
@@ -68,7 +68,7 @@ After obtaining the credentials, add a Pinecone integration to your Conductor cl
 | Integration name | A name for the integration. |
 | API Key |  The API key copied previously from the Pinecone console. |
 | Project name | The project ID from the Pinecone console. | 
-| Environment | The index environment from the Pinecone console. | 
+| Environment | The index region from the Pinecone console. | 
 | Description | A description of the integration. | 
 
 <p align="center"><img src="/content/img/create-new-pinecone-integration.png" alt="Pinecone Integration with Orkes Conductor" width="60%" height="auto"></img></p>
