@@ -19,16 +19,12 @@ To integrate Mistral with Orkes Conductor, retrieve the API key and endpoint fro
 **To get the API key:**
 
 1. Sign in to the [Mistral console](https://console.mistral.ai/).
-2. Go to [**API** > **API Keys**](https://console.mistral.ai/api-keys) from the left menu.
-3. Select **Create new key**.
+2. Go to [**API Keys**](https://console.mistral.ai/api-keys) > **Create new key**.
 
 <p align="center"><img src="/content/img/generating-api-keys-from-mistral.png" alt="API key creation from Mistral" width="100%" height="auto"></img></p>
 
 4. Enter a **Key name**.
 5. (Optional) Set an **Expiration** for the key.
-
-<p align="center"><img src="/content/img/generating-key-mistral.png" alt="API key generation from Mistral" width="50%" height="auto"></img></p>
-
 6. Select **Create new key**.
 7. Copy and store the generated key.
 
@@ -59,9 +55,7 @@ After obtaining the credentials, add a Mistral integration to your Conductor clu
 
 ## Step 3: Add  Mistral models
 
-Once you’ve integrated Mistral, the next step is to configure specific models.
-
-Mistral has different models, such as Mistral 7B, Mixtral 8x7B, Mixtral 8x22B, and more, each designed for various use cases, such as text completion and embedding generation. Choose the model that best fits your use case.
+Once you’ve integrated Mistral, the next step is to configure specific models. Mistral has different models, each designed for various use cases. Choose the model that best fits your use case.
 
 **To add a model to the Mistral integration:**
 
@@ -70,12 +64,13 @@ Mistral has different models, such as Mistral 7B, Mixtral 8x7B, Mixtral 8x22B, a
 <p align="center"><img src="/content/img/create-new-mistral-integration-model-from-integrations-page.png" alt="Create Mistral Integration Model from Listed Integrations" width="100%" height="auto"></img></p>
 
 2. Select **+ New model.**
-3. Enter the **Model name** and a **Description**. Get the complete [list of Mistral models](https://docs.mistral.ai/getting-started/models/). 
+3. Enter the **Model name**. The name must exactly match the Mistral model name. For a complete list, see the [Mistral documentation](https://docs.mistral.ai/getting-started/models).
+4. Provide a **Description**. 
 
 <p align="center"><img src="/content/img/create-new-mistral-integration-model.png" alt="Create Mistral Integration Model" width="70%" height="auto"></img></p>
 
-4. (Optional) Toggle the **Active** button off if you don’t want to activate the model instantly.
-5. Select **Save**.
+5. (Optional) Toggle the **Active** button off if you don’t want to activate the model instantly.
+6. Select **Save**.
 
 This saves the model for future use in AI tasks within Orkes Conductor.
 

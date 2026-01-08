@@ -14,7 +14,7 @@ To use system AI tasks in Orkes Conductor, you must integrate your Conductor clu
 
 ## Step 1: Get the Google Vertex AI credentials
 
-To integrate Google Vertex AI with Orkes Conductor, retrieve the project ID and service account JSON from the Google Cloud console.
+To integrate Google Vertex AI with Orkes Conductor, retrieve the project ID and service account JSON from the Google Cloud console. You must also enable the Vertex AI API for the selected GCP project.
 
 ### Get the project ID
 
@@ -91,9 +91,7 @@ After obtaining the credentials, add a Google Vertex AI integration to your Cond
 
 ## Step 3: Add Google Vertex AI models
 
-Once you’ve integrated Google Vertex AI, the next step is to configure specific models.
-
-Google Vertex AI has different models, such as Bison, Gecko, and more, each designed for various use cases. Choose the model that best fits your use case.
+Once you’ve integrated Google Vertex AI, the next step is to configure specific models. Google Vertex AI has different models, each designed for various use cases. Choose the model that best fits your use case.
 
 **To add a model to the Google Vertex AI integration:**
 
@@ -102,12 +100,13 @@ Google Vertex AI has different models, such as Bison, Gecko, and more, each desi
 <p align="center"><img src="/content/img/create-new-model-for-vertex-ai-integration.png" alt="Create new model for Vertex AI Integration" width="100%" height="auto"></img></p>
 
 2. Select **+ New model**.
-3. Enter the **Model name** and a **Description**. Get the complete [list of Vertex AI models](https://cloud.google.com/vertex-ai/generative-ai/docs/model-garden/available-models). 
+3. Enter the **Model name**. The name must exactly match the Vertex AI model name. For a complete list, see the [Vertex AI documentation](https://cloud.google.com/model-garden).
+4. Provide a **Description**. 
 
 <p align="center"><img src="/content/img/creating-new-model-for-vertex-ai-integration.png" alt="Creating new model for Vertex AI Integration" width="60%" height="auto"></img></p>
 
-4. (Optional) Toggle the **Active** button off if you don’t want to activate the model instantly.
-5. Select **Save**.
+5. (Optional) Toggle the **Active** button off if you don’t want to activate the model instantly.
+6. Select **Save**.
 
 This saves the model for future use in AI tasks within Orkes Conductor.
 
