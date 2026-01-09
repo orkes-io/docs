@@ -452,9 +452,9 @@ const sidebars = {
                                 },
                                 {
                                     type: 'doc',
-                                    id: 'integrations/ai-llm/aws-bedrock-llama2',
+                                    id: 'integrations/ai-llm/aws-bedrock-llama',
                                     label: 'AWS Bedrock Llama3',
-                                }, 
+                                },
                             ],
                         },
                         {

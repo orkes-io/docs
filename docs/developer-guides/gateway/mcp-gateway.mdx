@@ -456,32 +456,23 @@ Next, you can connect this MCP service to your preferred AI tool as an MCP tool.
 
 Use this as the MCP server endpoint when you configure your AI tool.
 
-For example, you can use tools like [MCP Inspecto](https://modelcontextprotocol.io/docs/tools/inspector) for testing and debugging your MCP endpoints before integrating them with an AI tool.
+For example, you can use tools like [Orkes MCP Workbench](https://www.mcp-workbench.ai/) for testing and debugging your MCP endpoints before integrating them with an AI tool.
 
-### Verify using MCP Inspector
+### Verify using Orkes MCP Workbench
 
-**To test the endpoint in MCP Inspector:**
+**To test the endpoint in Orkes MCP Workbench:**
 
-1. [Install MCP Inspector](https://modelcontextprotocol.io/docs/tools/inspector).
-2. Run MCP Inspector in UI mode using the following command:
+1. Access [Orkes MCP Workbench](https://www.mcp-workbench.ai/).
+2. In **Connections**, select **+ Add.**
+3. In **URL**, enter the **MCP Tool Remote Endpoint** copied from Conductor.
+4. In **Type**, select **Streamable HTTP (Stateless)**.
 
-```shell
-npx @modelcontextprotocol/inspector
-```
-
-The server will start, and the UI will be accessible at http://localhost:6274.
-
-3. In **Transport Type**, select **Streamable HTTP**.
-4. In **URL**, enter the **MCP Tool Remote Endpoint** copied from Conductor.
-
-<p align="center"><img src="/content/img/dev-guides/gateway/mcp-inspector-ui.png" alt="MCP Inspector UI" width="100%" height="auto"/></p>
+<p align="center"><img src="/content/img/dev-guides/gateway/orkes-mcp-workbench-ui.png" alt="MCP Inspector UI" width="100%" height="auto"/></p>
 
 5. Leave authentication empty if the service uses no authentication. If the service requires authentication, provide the required key.
-6. Select **Connect**.
+6. Select **Save**, and then select **Connect**.
 
-If the connection is successful, the tools become visible.
-
-7. Select **List Tools** to view the available tools.
+If the connection is successful, the tools exposed by the service become visible. In **Select Tool**, all available tools from the service are listed. 
 
 <p align="center"><img src="/content/img/dev-guides/gateway/api-listed-as-mcp-tool.png" alt="APIs listed as MCP tools" width="100%" height="auto"/></p>
 

@@ -14,11 +14,11 @@ To use system AI tasks in Orkes Conductor, you must integrate your Conductor clu
 
 ## Step 1: Get the AWS Bedrock Anthropic credentials
 
-To integrate AWS Bedrock Anthropic with Orkes Conductor, retrieve the following credentials from your AWS account:
+To integrate AWS Bedrock Anthropic with Orkes Conductor, retrieve **one** of the following credential sets from your AWS account, depending on how you choose to connect to Conductor:
 
-- [AWS account ID](https://docs.aws.amazon.com/accounts/latest/reference/manage-acct-identifiers.html#FindAccountId) and **region**
-- (If assuming a role from another AWS account) [Amazon Resource Name (ARN)](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference-arns.html) and [External ID](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-user_externalid.html)
-- (If the connection is established using the access key and secret from the AWS account) [Access key and secret from AWS account](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html).
+- [AWS account ID](https://docs.aws.amazon.com/accounts/latest/reference/manage-acct-identifiers.html#FindAccountId) and **region** - Use this option when assuming a role from the same AWS account.
+- [Amazon Resource Name (ARN)](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference-arns.html) and [External ID](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-user_externalid.html) - Use this option when authenticating directly with AWS access keys.
+- [Access key and secret from AWS account](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html) - Use this option when assuming a role from a different AWS account.
 
 ## Step 2: Add an integration for AWS Bedrock Anthropic
 
@@ -50,9 +50,7 @@ After obtaining the credentials, add an AWS Bedrock Anthropic integration to you
 
 ## Step 3: Add AWS Bedrock Anthropic models
 
-Once you’ve integrated AWS Bedrock Anthropic, the next step is to configure specific models.
-
-AWS Bedrock Anthropic has different models, such as Claude, Claude 3 Sonnet, Claude 3 Haiku, and more, each designed for various use cases. Choose the model that best fits your use case.
+Once you’ve integrated AWS Bedrock Anthropic, the next step is to configure specific models. AWS Bedrock Anthropic has different models, each designed for various use cases. Choose the model that best fits your use case.
 
 **To add a model to the AWS Bedrock Anthropic integration:**
 
@@ -61,12 +59,13 @@ AWS Bedrock Anthropic has different models, such as Claude, Claude 3 Sonnet, Cla
 <p align="center"><img src="/content/img/create-new-aws-bedrock-anthropic-integration-model-from-integrations-page.png" alt="Create AWS Bedrock Anthropic Integration Model from Listed Integrations" width="100%" height="auto"></img></p>
 
 2. Select **+ New model**.
-3. Enter the **Model name** and a **Description**. Get the complete [list of AWS Bedrock Anthropic models](https://docs.aws.amazon.com/bedrock/latest/userguide/models-supported.html). 
+3. Enter the **Model name**. The name must exactly match the AWS Bedrock Anthropic model name. For a complete list, see the [AWS Bedrock Anthropic documentation](https://docs.aws.amazon.com/bedrock/latest/userguide/models-supported.html).
+4. Provide a **Description**. 
 
 <p align="center"><img src="/content/img/create-new-aws-bedrock-anthropic-integration-model.png" alt="Create AWS Bedrock Anthropic Integration Model" width="70%" height="auto"></img></p>
 
-4. (Optional) Toggle the **Active** button off if you don’t want to activate the model instantly.
-5. Select **Save**.
+5. (Optional) Toggle the **Active** button off if you don’t want to activate the model instantly.
+6. Select **Save**.
 
 This saves the model for future use in AI tasks within Orkes Conductor.
 

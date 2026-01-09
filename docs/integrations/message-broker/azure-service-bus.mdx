@@ -13,7 +13,7 @@ To use the [Event task](https://orkes.io/content/reference-docs/system-tasks/eve
 
 ## Step 1: Get the Azure Service Bus credentials
 
-To integrate Azure Service Bus with Orkes Conductor, retrieve the following credentials from your Azure portal:
+To integrate Azure Service Bus with Orkes Conductor, retrieve **one** of the following credential sets from your Azure portal, depending on how you choose to connect to Conductor:
 
 - (If the connection is established using the connection string from the Azure portal) [Endpoint](https://learn.microsoft.com/en-us/azure/connectors/connectors-create-api-servicebus?tabs=consumption#get-connection-string-for-service-bus-namespace)
 - (If the connection is established via the Password Less method) [Namespace](https://learn.microsoft.com/en-us/azure/service-bus-messaging/service-bus-quickstart-topics-subscriptions-portal#create-a-namespace-in-the-azure-portal)
@@ -34,7 +34,7 @@ After obtaining the credentials, add an Azure Service Bus integration to your Co
 | Integration name | A name for the integration. | Required. | 
 | Connection Type | The connection type to establish the connection. Supported values:<ul><li>**Connection String**</li><li>**Password Less**</li></ul> | Required. | 
 | Endpoint | The endpoint of the service bus. | Required if **_Connection Type_** is **Connection String**. | 
-| Namespace | The namespace of the service bus. | Required if **_Connection Type_** is **Connection String**. | 
+| Namespace | The namespace of the service bus. | Required if **_Connection Type_** is **Password Less**. | 
 | Description | A description of the integration. | Required. | 
 
 <p align="center"><img src="/content/img/integration-azure-service-bus.png" alt="Azure Service Bus Integration with Orkes Conductor" width="50%" height="auto"/></p>

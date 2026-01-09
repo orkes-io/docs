@@ -288,7 +288,7 @@ You can also get the OpenAPI documentation for the service. Go to **APIs** > **S
 
 <p align="center"><img src="/content/img/ticket-service-details.gif" alt="OpenAPI documentation of the service" width="100%" height="auto"></img></p>
 
-## Step 8: Verify using MCP Inspector
+## Step 8: Verify using Orkes MCP Workbench
 
 Next, you can connect this MCP service to your preferred AI tool as an MCP tool. You need the MCP endpoint URL for this.
 
@@ -299,29 +299,19 @@ Next, you can connect this MCP service to your preferred AI tool as an MCP tool.
 
 <p align="center"><img src="/content/img/mcp-endoint-ticket-service.png" alt="MCP Tool Remote Endpoint from Conductor" width="100%" height="auto"></img></p>
 
-Use this as the MCP server endpoint when you configure your AI tool. Let’s verify this using MCP Inspector before plugging into an AI agent.
+Use this as the MCP server endpoint when you configure your AI tool. Let’s verify this using Orkes MCP Workbench before plugging into an AI agent.
 
 **To test the MCP tool:**
 
-1. Install [MCP Inspector](https://modelcontextprotocol.io/docs/tools/inspector).
-2. Run MCP Inspector in UI mode using the following command:
+1. Access [Orkes MCP Workbench](https://www.mcp-workbench.ai/).
+2. In **Connections**, select **+ Add**.
+3. In **URL**, enter the **MCP Tool Remote Endpoint** copied from Conductor.
+4. In **Type**, select **Streamable HTTP (Stateless)**.
+5. Select **Save**, and then select **Connect**.
+6. Once the connection is successful, select **POST_create** from **Select Tool**, and enter the required parameters.
+7. Select **Run Tool**. 
 
-```shell
-npx @modelcontextprotocol/inspector
-```
-
-3. Open the UI at http://localhost:6274.
-4. In **Transport Type**, select **Streamable HTTP**.
-5. In **URL**, enter the **MCP Tool Remote Endpoint** copied from Conductor.
-6. Select **Connect**.
-7. Once the connection is successful, select **List tools** to view the routes.
-
-<p align="center"><img src="/content/img/mcp-inspector-configuration.png" alt="MCP Inspector configuration" width="100%" height="auto"></img></p>
-
-8. Select the **POST_create** tool, and enter the parameters.
-9. Select **Run Tool**.
-
-<p align="center"><img src="/content/img/testing-using-mcp-inspector.gif" alt="Testing from MCP Inspector" width="100%" height="auto"></img></p>
+<p align="center"><img src="/content/img/testing-using-orkes-mcp-workbench.gif" alt="Testing from MCP Inspector" width="100%" height="auto"></img></p>
 
 This returns the tool result status as success and returns the ticket ID. To verify the workflow execution in Conductor, go to **Executions** > **Workflow**. Open the latest run of **_create_ticket_wf_**, and review the **Input/Output** tab to confirm the ticket ID.
 

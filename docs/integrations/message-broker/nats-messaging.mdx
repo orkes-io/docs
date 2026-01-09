@@ -35,6 +35,12 @@ After obtaining the credentials, add a NATS Messaging integration to your Conduc
 | Integration name | A name for the integration. | Required. | 
 | Server | The NATS server URL. | Required. | 
 | Connection Type | The preferred connection type. Supported values:<ul><li>**Default**–Standard NATS connection.</li><li>**Jetstream**–Advanced NATS connection with streaming capabilities.</li></ul> | Required. | 
+| Authentication Type | The preferred authentication method. Supported values:<ul><li>**With Credentials**</li><li>**Without Credentials**</li></ul> | Required. | 
+| Username | The username of the NATS server. | Required if **_Authentication Type_** is **_With Credentials_**. | 
+| Password | The password associated with the username. | Required if **_Authentication Type_** is **_With Credentials_**. | 
+| Select security protocol | The security protocol for authenticating the connection. Supported values: <ul><li>**NONE**</li><li>**JWT**–If selected, upload the **JWT Credentials file**.</li><li>**TOKEN_BASED_AUTHENTICATION**–If selected, obtain the JWT token from your NATS server using API.</li></ul> | Required. | 
+| Transport Layer Security | The Transport Layer Security (TLS) security mechanism. Supported values:<ul><li>**NONE**–No TLS security.</li><li>**PEM**–Uses PEM files for TLS security. If selected, upload the CA certificate PEM file.</li><li>**JKS**–Uses Java KeyStore for TLS security. If selected, upload the CA certificate JKS file.</li></ul> | Required. | 
+| Trust Store Authentication | The preferred trust store authentication type. Supported values:<ul><li>**NONE**–No TLS authentication.</li><li>**usingPassword**–Uses the trust store password for TLS authentication. If opted, enter the **Trust Store Password**.</li></ul> | Required if **_Transport Layer Security_** is **JKS**. | 
 | Connection Mechanism | The connection mechanism for the Jetstream connection. Supported values:<ul><li>**With stream**–The regular approach in a Jetstream connection, where each stream defines how the messages are stored and the retention limits.</li><li>**With consumer**–The mechanism that acts as an interface for clients to consume a subset of messages stored in a stream.</li></ul> | Required if the **_Connection Type_** is **Jetstream**. | 
 | Stream name | The name of the stream for Jetstream connection. | Required if:<ul><li>**_Connection Type_** is **JetStream**</li><li>**_Connection Mechanism_** is **With consumer**.</li></ul> | 
 | Consumer name | The name of the consumer for Jetstream connection. | Required if:<ul><li>**_Connection Type_** is **JetStream**</li><li>**_Connection Mechanism_** is **With consumer**.</li></ul> | 
@@ -42,12 +48,6 @@ After obtaining the credentials, add a NATS Messaging integration to your Conduc
 | Batch Count | The batch size for each poll. Default is 100. | Required if:<ul><li>**_Connection Type_** is **JetStream**</li><li>**_Connection Mechanism_** is **With consumer**.</li><li>**_Consumer Type_** is **Pull**.</li></ul> | 
 | Pull Period | The polling interval in milliseconds. Default is 500.| Required if:<ul><li>**_Connection Type_** is **JetStream**</li><li>**_Connection Mechanism_** is **With consumer**.</li><li>**_Consumer Type_** is **Pull**.</li></ul> | 
 | Pull batch wait time | The wait time, in milliseconds, for each batch fetch. | Required if:<ul><li>**_Connection Type_** is **JetStream**</li><li>**_Connection Mechanism_** is **With consumer**.</li><li>**_Consumer Type_** is **Pull**.</li></ul> | 
-| Authentication Type | The preferred authentication method. Supported values:<ul><li>**With Credentials**</li><li>**Without Credentials**</li></ul> | Required. | 
-| Username | The username of the NATS server. | Required if **_Authentication Type_** is **_With Credentials_**. | 
-| Password | The password associated with the username. | Required if **_Authentication Type_** is **_With Credentials_**. | 
-| Select security protocol | The security protocol for authenticating the connection. Supported values: <ul><li>**NONE**</li><li>**JWT**–If selected, upload the **JWT Credentials file**.</li><li>**TOKEN_BASED_AUTHENTICATION**–If selected, obtain the JWT token from your NATS server using API.</li></ul> | Required. | 
-| Transport Layer Security | The Transport Layer Security (TLS) security mechanism. Supported values:<ul><li>**NONE**–No TLS security.</li><li>**PEM**–Uses PEM files for TLS security. If selected, upload the CA certificate PEM file.</li><li>**JKS**–Uses Java KeyStore for TLS security. If selected, upload the CA certificate JKS file.</li></ul> | Required. | 
-| Trust Store Authentication | The preferred trust store authentication type. Supported values:<ul><li>**NONE**–No TLS authentication.</li><li>**usingPassword**–Uses the trust store password for TLS authentication. If opted, enter the **Trust Store Password**.</li></ul> | Required if **_Transport Layer Security_** is **JKS**. | 
 | Description | A description of the integration. | Required. | 
 
 <p align="center"><img src="/content/img/integration-nats-messaging.png" alt="NATS Messaging Integration with Orkes Conductor" width="50%" height="auto"/></p>

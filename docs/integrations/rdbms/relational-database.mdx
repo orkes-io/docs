@@ -7,7 +7,7 @@ description: "Learn how to integrate Relational Databases with your Orkes Conduc
 
 To use a [JDBC](https://orkes.io/content/reference-docs/system-tasks/jdbc) task in Orkes Conductor, you must integrate your Conductor cluster with the necessary relational database providers. 
 
-The choice of database depends on your use case—whether for transaction processing, analytical queries, or data warehousing. It also varies based on required functionalities such as indexing, partitioning, and replication, as well as data management needs like integrity enforcement, concurrency control, and recovery.
+The choice of database depends on your use case, whether for transaction processing, analytical queries, or data warehousing. It also varies based on required functionalities, such as indexing, partitioning, and replication, as well as data management needs, including integrity enforcement, concurrency control, and recovery.
 
 :::note
 Orkes Conductor currently supports integration with PostgreSQL.
@@ -64,7 +64,7 @@ Once you’ve integrated a Relational Database, the next step is to configure sp
 <p align="center"><img src="/content/img/create-new-relational-database-integration-table-from-integrations-page.png" alt="Create Relational Database Integration Table from Listed Integrations" width="100%" height="auto"></img></p>
 
 2. Select **+ New Table**.
-3. Enter the **Table name** and a **Description**. 
+3. Enter the **Table name** and a **Description**. The table must already exist in the connected PostgreSQL database.
 
 <p align="center"><img src="/content/img/create-new-relational-database-integration-table.png" alt="Create Relational Database Integration Table" width="60%" height="auto"></img></p>
 

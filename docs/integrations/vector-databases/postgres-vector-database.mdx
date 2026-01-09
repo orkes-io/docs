@@ -14,7 +14,7 @@ To use LLM embedding tasks in Orkes Conductor, you must integrate your Conductor
 
 ## Step 1: Get the pgvector credentials
 
-Set up [pgvector](https://github.com/pgvector/pgvector?tab=readme-ov-file) and retrieve the following database credentials:
+**Set up [pgvector](https://github.com/pgvector/pgvector?tab=readme-ov-file) along with an index**, and retrieve the following database credentials:
 
 - Database username
 - Password
@@ -36,7 +36,7 @@ After obtaining the credentials, add a Postgres Vector Database integration to y
 | Integration name | A name for the integration. |
 | Postgres Database User | The database username. |
 | Postgres Database Password | The password associated with the database username. |
-| Postgres Database URL |The database URL, which is the JDBC connection string for the postgres database. | 
+| Postgres Database URL |The database URL, which is the JDBC connection string for the postgres database. For example: `jdbc:database://url/databaseName`. | 
 | Embedding dimensions | The number of dimensions in the embeddings. The embedding dimensions often depend on the AI model used to generate the embeddings. | 
 | Distance metric | The distance metric, which is a metric to measure the similarity or distance between vectors. Supported values:<ul><li>Cosine Similarity</li><li>Euclidean Distance</li><li>Inner Product</li></ul> |
 | Indexing method | The indexing method. Supported methods:<ul><li>hnsv (Hierarchical Navigable Small World graphs)</li><li>ivfflat (Inverted File Flat)</li></ul> |
@@ -60,7 +60,7 @@ Once you’ve integrated Postgres Vector Database, the next step is to configure
 <p align="center"><img src="/content/img/create-new-pgvector-integration-index.png" alt="Create Indexes for Postgres Integration" width="100%" height="auto"></img></p>
 
 2. Select **+ New Index**.
-3. Enter the **Index name** and a **Description**. 
+3. Enter the **Index name** and a **Description**. The index must already exist in the connected Postgres database.
 
 <p align="center"><img src="/content/img/create-new-postgres-integration-index-model.png" alt="Create Indexes for Postgres Integration Model" width="60%" height="auto"></img></p>
 

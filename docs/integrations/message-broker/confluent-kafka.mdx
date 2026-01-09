@@ -21,7 +21,8 @@ To integrate Confluent Kafka with Orkes Conductor, retrieve the following creden
 
 - API keys
 - Bootstrap server
-- Schema registry URL
+- Schema registry URL (Only if integrating with a Schema registry for AVRO protocol)
+- Consumer Group ID
 
 ### Get the API keys
 
@@ -45,10 +46,6 @@ To integrate Confluent Kafka with Orkes Conductor, retrieve the following creden
 3. Copy the **Bootstrap server**.
 
 <p align="center"><img src="/content/img/getting-bootstrap-token.png" alt="Getting Bootstrap token from Confluent Cloud" width="100%" height="auto"/></p>
-
-4. Go to **Topics** and identify the **Topic name** to use for this integration.
-
-<p align="center"><img src="/content/img/topics.png" alt="Topics in Confluent Cloud" width="100%" height="auto"/></p>
 
 ### Get the Schema registry server
 
@@ -82,12 +79,12 @@ After obtaining the credentials, add a Confluent Kafka integration to your Condu
 | Connection Security | The security mechanism for connecting to the Kafka cluster. Supported values:<ul><li>**SASL_SSL / PLAIN**–Secure connection using SASL (Simple Authentication and Security Layer) with SSL encryption.</li><li>**SASL_SSL / SCRAM-SHA-256 / JKS**–Secure connection using SASL with SCRAM-SHA-256 authentication and SSL encryption. </li></ul> | Required. | 
 | Choose Trust Store file | Upload the Java JKS trust store file with CAs. | Required if **_Connection Security_** is **SASL_SSL / SCRAM-SHA-256 / JKS**. | 
 | Trust Store Password | The password for the trust store file. | Required if **_Connection Security_** is **SASL_SSL / SCRAM-SHA-256 / JKS**. | 
-| Username | The username to authenticate with the Kafka cluster.<br/>**Note**: For AVRO configuration, use the previously-copied API key as the username. | Required. | 
-| Password | The password associated with the username.<br/>**Note**: For AVRO configuration, use the previously-copied API secret as the password. | Required. | 
+| Username | The username to authenticate with the Kafka cluster.<br/><br/>**Note**: For AVRO configuration, use the [previously-copied API key](/content/integrations/message-broker/confluent-kafka#get-the-api-keys) as the username. | Required. | 
+| Password | The password associated with the username.<br/><br/>**Note**: For AVRO configuration, use the [previously-copied API secret](/content/integrations/message-broker/confluent-kafka#get-the-api-keys) as the password. | Required. | 
 | Schema Registry URL | The Schema Registry URL copied from the Confluent Kafka console. | Required if **_Sending Protocol_** is **AVRO**. | 
 | Schema Registry Auth Type | The authentication mechanism for connecting to the schema registry. Supported values:<ul><li>**Password in URL**</li><li>**Schema Registry User Info (Key/Password)**</li><li>**NONE**</li></ul> | Required if **_Sending Protocol_** is **AVRO**. | 
-| Schema Registry API Key | The schema registry API key obtained from the schema registry server. | Required if<ul><li>**_Sending Protocol_** is **AVRO**.</li><li>**_Schema Registry Auth Type_** is **Schema Registry User Info (Key/Password)**.</li></ul> | 
-| Schema Registry API Secret | The schema registry API secret obtained from the schema registry server. |  Required if<ul><li>**_Sending Protocol_** is **AVRO**.</li><li>**_Schema Registry Auth Type_** is **Schema Registry User Info (Key/Password)**.</li></ul> | 
+| Schema Registry API Key | The [schema registry API key](/content/integrations/message-broker/confluent-kafka#get-the-schema-registry-server) obtained from the schema registry server. | Required if<ul><li>**_Sending Protocol_** is **AVRO**.</li><li>**_Schema Registry Auth Type_** is **Schema Registry User Info (Key/Password)**.</li></ul> | 
+| Schema Registry API Secret | The [schema registry API secret](/content/integrations/message-broker/confluent-kafka#get-the-schema-registry-server) obtained from the schema registry server. |  Required if<ul><li>**_Sending Protocol_** is **AVRO**.</li><li>**_Schema Registry Auth Type_** is **Schema Registry User Info (Key/Password)**.</li></ul> | 
 | Value Subject Name Strategy | The strategy for constructing the subject name under which the AVRO schema will be registered in the schema registry. Supported values:<ul><li>**io.confluent.kafka.serializers.subject.TopicNameStrategy**</li><li>**io.confluent.kafka.serializers.subject.RecordNameStrategy**</li><li>**io.confluent.kafka.serializers.subject.TopicRecordNameStrategy**</li></ul> | Required if **_Sending Protocol_** is **AVRO**. | 
 | Consumer Group ID | The Consumer Group ID from Kafka. This unique identifier helps manage message processing, load balancing, and fault tolerance within consumer groups. | Required. | 
 | Description | A description of the integration. | Required. | 

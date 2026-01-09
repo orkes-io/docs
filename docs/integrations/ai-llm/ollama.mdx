@@ -76,7 +76,7 @@ After running Ollama locally, add an Ollama integration to your Conductor cluste
 | ---------- | ----------- | ------------------- | 
 | Integration name | A name for the integration. | Required. | 
 | API Endpoint | API server where Ollama is running, typically http://localhost:11434. | Required. | 
-| Auth Header Name<br/><br/> <TableNote title="Available since">v5.2.6 and later</TableNote> | The name of the authentication header to include in requests. | Optional. | 
+| Auth Header Name<br/><br/> <TableNote title="Available since">v5.2.6 and later</TableNote> | The name of the authentication header to include in requests. The name of the authentication header to include in requests. Required only when Ollama is exposed behind a secured endpoint or proxy. | Optional. | 
 | Auth Header <br/><br/> <TableNote title="Available since">v5.2.6 and later</TableNote> | The authentication value associated with the header. | Optional. |
 | Description | A description of the integration. | Required. | 
 
@@ -96,12 +96,13 @@ Once you’ve integrated Ollama, the next step is to configure specific models. 
 <p align="center"><img src="/content/img/create-new-model-for-ollama-integration.png" alt="Create new model for Ollama Integration" width="100%" height="auto"></img></p>
 
 2. Select **+ New model**.
-3. Enter the **Model name** and a **Description**. Add the model that you have set up on your local device.
+3. Enter the **Model name**. The model name must exactly match the Ollama model identifier locally set on the device, including any version or tag (for example, *mistral* or *mistral-latest*).
+4. Provide a **Description**. 
 
 <p align="center"><img src="/content/img/creating-new-model-for-ollama-integration.png" alt="Creating new model for Ollama Integration" width="70%" height="auto"></img></p>
 
-4. (Optional) Toggle the **Active** button off if you don’t want to activate the model instantly.
-5. Select **Save**.
+5. (Optional) Toggle the **Active** button off if you don’t want to activate the model instantly.
+6. Select **Save**.
 
 This saves the model for future use in AI tasks within Orkes Conductor.
 

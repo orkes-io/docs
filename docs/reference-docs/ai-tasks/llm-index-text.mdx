@@ -34,7 +34,7 @@ Configure these parameters for the LLM Index Text task.
 | inputParameters.**embeddingModel** | The embedding model provided by the selected LLM provider to generate the embeddings. | Required. |
 | inputParameters.**dimensions** | The size of the vector, which is the number of elements in the vector. | Optional. | 
 | inputParameters.**text** | The text to be indexed. | Required. |
-| inputParameters.**docId** | A unique ID to identify the document where the indexed text will be stored. | Optional. |
+| inputParameters.**docId** | A unique ID to identify the document where the indexed text will be stored. | Required. |
 
 The following are generic configuration parameters that can be applied to the task and are not specific to the LLM Index Text task.
 
@@ -108,6 +108,6 @@ There is no output. The LLM Index Text task will store the indexed data in the s
 2. In **Vector Database Configuration**, select the **Vector database**, **Index**, and **Namespace** to store the indexed text.
 3. In **Embedding Model**, select the **Embedding model provider**, **Embedding model**, and **Dimensions** to generate the embeddings.
 4. Enter the **Text** to be indexed.
-5. (Optional) Enter an arbitrary **Doc ID** to store the indexed text.
+5. Enter an arbitrary **Doc ID** to store the indexed text.
 
 <center><p><img src="/content/img/llm-index-text-ui-method.png" alt="LLM Index Text Task - UI" width="80%" height="auto"/></p></center>

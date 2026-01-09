@@ -14,7 +14,7 @@ To use system AI tasks in Orkes Conductor, you must integrate your Conductor clu
 
 ## Step 1: Get the Google Gemini AI credentials
 
-To integrate Google Gemini AI with Orkes Conductor, retrieve the project ID and service account JSON from the Google Cloud console.
+To integrate Google Gemini AI with Orkes Conductor, retrieve the project ID and service account JSON from the Google Cloud console. You must also enable the Gemini API for the selected GCP project.
 
 ### Get the project ID
 
@@ -90,9 +90,7 @@ After obtaining the credentials, add a Google Gemini AI integration to your Cond
 
 ## Step 3: Add Google Gemini AI models
 
-Once you’ve integrated Google Gemini AI, the next step is to configure specific models.
-
-Google Gemini AI has different models, such as Gemini 2.0 Flash, Gemini 1.5 Flash, and more, each designed for various use cases. Choose the model that best fits your use case.
+Once you’ve integrated Google Gemini AI, the next step is to configure specific models. Google Gemini AI has different models, each designed for various use cases. Choose the model that best fits your use case.
 
 **To add a model to the Google Gemini AI integration:**
 
@@ -101,12 +99,13 @@ Google Gemini AI has different models, such as Gemini 2.0 Flash, Gemini 1.5 Flas
 <p align="center"><img src="/content/img/create-new-google-gemini-ai-integration-model-from-integrations-page.png" alt="Create Google Gemini AI Integration Model from Listed Integrations" width="100%" height="auto"></img></p>
 
 2. Select **+ New model**.
-3. Enter the **Model name** and a **Description**. Get the complete [list of Gemini AI models](https://ai.google.dev/gemini-api/docs/models/gemini#model-variations).
+3. Enter the **Model name**. The name must exactly match the Gemini AI model name. For a complete list, see the [Gemini AI documentation](https://ai.google.dev/gemini-api/docs/models/gemini#model-variations).
+4. Provide a **Description**. 
 
 <p align="center"><img src="/content/img/create-new-google-gemini-ai-integration-model.png" alt="Create Google Gemini AI Integration Model" width="60%" height="auto"></img></p>
 
-4. (Optional) Toggle the **Active** button off if you don’t want to activate the model instantly.
-5. Select **Save**.
+5. (Optional) Toggle the **Active** button off if you don’t want to activate the model instantly.
+6. Select **Save**.
 
 This saves the model for future use in AI tasks within Orkes Conductor.
 

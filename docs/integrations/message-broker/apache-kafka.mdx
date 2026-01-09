@@ -20,7 +20,8 @@ To integrate Kafka with Orkes Conductor, retrieve the following credentials from
 
 - API keys
 - Bootstrap server
-- Schema registry URL 
+- Schema registry URL (Only if integrating with a Schema registry for AVRO protocol)
+- Consumer Group ID
 
 The configuration steps vary depending on the type of Kafka cluster to be integrated.
 
@@ -39,7 +40,8 @@ To integrate Confluent Kafka with Orkes Conductor, retrieve the following creden
 
 - API keys
 - Bootstrap server
-- Schema registry URL
+- Schema registry URL (Only if integrating with a Schema registry for AVRO protocol)
+- Consumer Group ID
 
 **To retrieve the API keys:**
 
@@ -59,10 +61,6 @@ To integrate Confluent Kafka with Orkes Conductor, retrieve the following creden
 3. Copy the **Bootstrap server**.
 
 <p align="center"><img src="/content/img/getting-bootstrap-token.png" alt="Getting Bootstrap token from Confluent Cloud" width="100%" height="auto"/></p>
-
-4. Go to **Topics** and identify the **Topic name** to use for this integration.
-
-<p align="center"><img src="/content/img/topics.png" alt="Topics in Confluent Cloud" width="100%" height="auto"/></p>
 
 The Schema registry server, API key, and secret are only required if you are integrating with a schema registry (for AVRO protocol).
 
@@ -104,9 +102,9 @@ After obtaining the credentials, add an Apache Kafka integration to your Conduct
 | Integration name | A name for the integration. | Required. | – |
 | Bootstrap Server | The bootstrap server of the Kafka cluster. | Required. | – |
 | Sending Protocol | The sending protocol for the integration. Supported values:<ul><li>**String**–Sends messages as plain string data.</li><li>**AVRO**–Serializes messages using AVRO. To use a schema registry, select AVRO.</li></ul> | Required. | AVRO protocol is not supported for Amazon MSK clusters. | 
-| Connection Security | The security mechanism for connecting to the Kafka cluster. Supported values:<ul><li>**SASL_SSL / PLAIN**–Secure connection using SASL (Simple Authentication and Security Layer) with SSL encryption. </li><li>**SASL_SSL / SCRAM-SHA-256 / JKS**–Secure connection using SASL with SCRAM-SHA-256 authentication and SSL encryption.</li><li>**SASL_SSL/SCRAM-SHA-512**–Secure connection using SASL with SCRAM-SHA-512 authentication and SSL encryption.</li><li>**SASL_PLAINTEXT**–Basic authentication mechanism in Kafka without data encryption during transit.</li><li>**PLAINTEXT**–Plain text connection without any encryption or authentication.</li></ul> | Required. | Amazon MSK supports only **SASL_SSL/SCRAM-SHA-512**. | 
-| Username | The username to authenticate with the Kafka cluster.<br/>For AVRO configuration, use the API key copied previously as the username. | Required (except for **PLAINTEXT**)| – | 
-| Password | The password associated with the username.<br/>For AVRO configuration, use the API secret copied previously as the password. | Required (except for **PLAINTEXT**) | – | 
+| Connection Security | The security mechanism for connecting to the Kafka cluster. Supported values:<ul><li>**SASL_SSL / PLAIN**–Secure connection using SASL (Simple Authentication and Security Layer) with SSL encryption. </li><li>**SASL_SSL / SCRAM-SHA-256 / JKS**–Secure connection using SASL with SCRAM-SHA-256 authentication and SSL encryption.</li><li>**SASL_SSL/SCRAM-SHA-512**–Secure connection using SASL with SCRAM-SHA-512 authentication and SSL encryption.</li><li>**SASL_PLAINTEXT**–Basic authentication mechanism in Kafka without data encryption during transit.</li><li>**PLAINTEXT**–Plain text connection without any encryption or authentication.</li></ul> | Required. | <ul><li>Amazon MSK supports only **SASL_SSL/SCRAM-SHA-512**.</li><li>Confluent Kaka supports only **SASL_SSL / PLAIN** and **SASL_SSL / SCRAM-SHA-256 / JKS**.</li></ul> | 
+| Username | The username to authenticate with the Kafka cluster.<br/><br/>For AVRO configuration, use the API key copied from Step 1 as the username. | Required (except for **PLAINTEXT**)| – | 
+| Password | The password associated with the username.<br/><br/>For AVRO configuration, use the API secret copied from Step 1 as the password. | Required (except for **PLAINTEXT**) | – | 
 | Truststore type | If SSL encryption is enabled, select the trust store type. Supported values:<ul><li>**NONE**</li><li>**JKS**–If chosen, upload the Java JKS trust store file with CAs.</li><li>**PEM**–If chosen, upload the PEM certificate file</li></ul>| Required for connection types **SASL_SSL / PLAIN** and **SASL_PLAINTEXT.** | Not supported for Amazon MSK clusters. | 
 | Trust Store Password | The password for the trust store. | Required if **Truststore type** is **JKS**. | Not supported for Amazon MSK clusters. | 
 | Select Sasl mechanism | The SASL mechanism to connect to the Kafka cluster. Supported values:<ul><li>**SASL_SSL/SCRAM-SHA-512**–Secure connection using SASL with SCRAM-SHA-512 authentication and SSL encryption.</li><li>**PLAIN**– Basic authentication mechanism without encryption, used for non-secure connections.</li></ul> | Required if **_Connection Security_** is **SASL_PLAINTEXT**. | – | 
