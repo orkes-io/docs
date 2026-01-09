@@ -13,11 +13,11 @@ To use the [Event task](https://orkes.io/content/reference-docs/system-tasks/eve
 
 ## Step 1: Get the AWS SQS credentials
 
-To integrate [AWS SQS](https://docs.aws.amazon.com/sqs/) with Orkes Conductor, retrieve the following credentials from your AWS account:
+To integrate [AWS SQS](https://docs.aws.amazon.com/sqs/) with Orkes Conductor, retrieve **one** of the following credential sets from your AWS account, depending on how you choose to connect to Conductor:
 
-- [AWS account ID](https://docs.aws.amazon.com/accounts/latest/reference/manage-acct-identifiers.html#FindAccountId) and region
-- (If assuming a role from another AWS account) [Amazon Resource Name (ARN)](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference-arns.html) and [External ID](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-user_externalid.html)
-- (If the connection is established using the access key and secret from the AWS account) [Access key and secret from AWS account](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html).
+- [AWS account ID](https://docs.aws.amazon.com/accounts/latest/reference/manage-acct-identifiers.html#FindAccountId) and **region** - Use this option when assuming a role from the same AWS account.
+- [Amazon Resource Name (ARN)](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference-arns.html) and [External ID](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-user_externalid.html) - Use this option when authenticating directly with AWS access keys.
+- [Access key and secret from AWS account](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html) - Use this option when assuming a role from a different AWS account.
 
 ## Step 2: Add an integration for AWS SQS
 
