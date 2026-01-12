@@ -6,12 +6,12 @@ description: "Use this template to build a human-in-the-loop workflow for claims
 # Claims Workflow
 
 :::note  
-This template is only available in the [Developer Edition](https://developer.orkescloud.com/) on Launch Pad.   
+This template is available only in the [Developer Edition](https://developer.orkescloud.com/) on Launch Pad.   
 :::
 
 This claims workflow template automates insurance claims processing by determining coverage eligibility based on the claimant’s input. The workflow includes tasks that process customer information, validate policies, estimate damage costs, and assign human review for claims assessment and investigation.
 
-This template serves as a quickstart for building business process automation flows with human inputs, reviews, or approvals involved.
+This template provides a quick start for building business process automation workflows that incorporate human inputs, reviews, or approvals.
 
 ## Conductor features used
 
@@ -31,7 +31,7 @@ This template utilizes the following Conductor features:
 
 ### Step 1: Import the template
 
-The claims workflow template is only available in the [Developer Edition](https://developer.orkescloud.com/) on Launch Pad. 
+The claims workflow template is available only in the [Developer Edition](https://developer.orkescloud.com/) on Launch Pad. 
 
 **To import the template:**
 
@@ -40,19 +40,19 @@ The claims workflow template is only available in the [Developer Edition](https:
 3. Select **Import**.  
 4. Log in to view the imported workflow.
 
-The `insurance_claim`  workflow is now imported and ready for use.
+The `insurance_claim`  workflow is now imported and ready to use.
 
 <p align="center"><img src="/content/img/tutorial/claims_workflow-split.jpg" alt="Claims Workflow." width="auto" height="auto"></img></p>
 
 
 #### Understand the workflow logic
 
-This section explains the workflow logic and how to execute it.
+This section explains the workflow logic and execution flow.
 
 **Workflow inputs:**
 
-* firstName—The claimant’s first name.  
-* lastName–The claimant’s last name.
+* `firstName`: The claimant’s first name.  
+* `lastName`: The claimant’s last name.
 
 **Example input payload:**
 
@@ -65,19 +65,19 @@ This section explains the workflow logic and how to execute it.
 
 **Workflow logic:**
 
-* The workflow begins with a [Worker task](/reference-docs/worker-task) that retrieves the claimant’s insurance policies for claims matching later on.  
-* Next, the [Inline task](/reference-docs/system-tasks/inline) is used to extract the claimant’s policy types (Home, Auto, etc.) as options for the claimant to choose in the next task, which is a Human task.  
-* The first [Human task](/reference-docs/operators/human) is meant for the claimant, who must fill out the claim details like the incident location, the policy type to claim under, and the description of the incident.  
-* The workflow continues to a [Switch task](/reference-docs/operators/switch) that evaluates if the claim falls under the Auto policy type.  
+* The workflow begins with a [Worker task](/reference-docs/worker-task) that retrieves the claimant’s insurance policies.
+* Next, the [Inline task](/reference-docs/system-tasks/inline) extracts the claimant’s policy types (Home, Auto, etc.) as options for the claimant to choose in the next Human task.
+* The first [Human task](/reference-docs/operators/human)  is intended for the claimant, who must fill out the claim details, including the incident location, the policy type under which the claim is being made, and a description of the incident.
+* The workflow continues to a [Switch task](/reference-docs/operators/switch) that evaluates whether the selected policy type is Auto.  
   * If the policy type is anything other than Auto, the [Terminate task](/reference-docs/operators/terminate) ends the workflow with the reason “Terminated because of invalid policy”.  
 * If the policy type is Auto, the workflow proceeds to another [Worker task](/reference-docs/worker-task) that creates a claim for the claimant, containing details like the claim number, description, customer ID, and so on.  
-* Next, the second [Human task](/reference-docs/operators/human) is meant for the insurance assessor, who reviews the claimant’s coverage eligibility based on the claim details provided.  
-* The [Switch task](/reference-docs/operators/switch) then routes the workflow based on the coverage outcome in the previous task (Not Covered, Partially Covered, Full Coverage).  
+* Next, the second [Human task](/reference-docs/operators/human) is intended for the insurance assessor, who reviews the claimant’s coverage eligibility based on the provided claim details. 
+* The [Switch task](/reference-docs/operators/switch) then routes the workflow based on the coverage outcome in the previous task, such as Not Covered, Partially Covered, or Full Coverage. 
   * If the outcome is Not Covered, the [Terminate task](/reference-docs/operators/terminate) ends the workflow with the reason “Policy does not cover incident”.  
 * If there is at least partial coverage, the workflow continues to an [Inline task](/reference-docs/system-tasks/inline) that estimates the total damages based on predefined costs.  
 * The [Switch task](/reference-docs/operators/switch) then evaluates if the damages exceed the total coverage amount.  
   * If the damages are within the limits, the workflow terminates with the reason “Send Payment to client”.  
-* If the damages exceed the coverage amount, the workflow continues to another [Human task](/reference-docs/operators/human), which the claimant must fill out with additional incident details for further investigation.  
+* If the damages exceed the coverage amount, the workflow proceeds to another [Human task](/reference-docs/operators/human), which the claimant must complete with additional incident details for further investigation.
 * Finally, another [Switch task](/reference-docs/operators/switch) routes the workflow based on the investigation outcome.  
   * If the damages are not covered upon further investigation, the workflow terminates with the reason “Terminated after investigation. Incident not covered”.   
   * If the damages are covered upon further investigation, the workflow terminates with the reason “Send Payment to client”. 
@@ -90,17 +90,16 @@ This section explains the workflow logic and how to execute it.
 
 :::
 
-The workflow contains tasks for retrieving a policy based on the customer’s details and for creating a claim.
+The workflow contains tasks for retrieving a policy based on the customer’s details and for creating a claim. The final .pdf report is created using a custom Worker task that generates a file from raw report content and a supplied file name.
 
-The final .pdf report is created using a custom Worker task that takes the raw report content and generates a file based on the supplied file name. 
-
-To use these tasks, you need to set up workers locally and connect them to the Conductor server with access credentials.
+To utilize these tasks, you must set up workers locally and connect them to the Conductor server using access credentials.
 
 **To retrieve the access credentials:**
 
 1. Go to **Definitions** > **Workflow** and select the `insurance_claim` workflow.  
 2. In the **Workflow** tab on the right-hand panel, select **Get Access Keys**. 
-    <p align="center"><img src="/content/img/tutorial/claims_workflow-get_access_keys.png" alt="Screenshot of Conductor UI where you can get the access keys." width="90%" height="auto"></img></p>
+
+<p align="center"><img src="/content/img/tutorial/claims_workflow-get_access_keys.png" alt="Screenshot of Conductor UI where you can get the access keys." width="90%" height="auto"></img></p>
 
 3. Copy the key ID, secret, and server URL and store them securely.
 
@@ -118,10 +117,10 @@ This initiates and runs the worker.
 
 ### Step 3: Run the workflow
 
-With the workflow fully set up, give it a run.
+With the workflow fully set up, run it.
 
 :::tip  
-Check out the test data for the workflow in the [GitHub readme](https://github.com/conductor-oss/awesome-conductor-apps/tree/main/typescript/claims-workflow#test-data-pre-filled).  
+Refer to the test data for the workflow in the [GitHub README](https://github.com/conductor-oss/awesome-conductor-apps/tree/main/typescript/claims-workflow#test-data-pre-filled).  
 :::
 
 **To run the workflow:**
@@ -147,7 +146,7 @@ Check out the test data for the workflow in the [GitHub readme](https://github.c
 To complete the workflow fully, try completing the Human tasks as the workflow progresses. The inputs to these Human tasks will affect the trajectory of the workflow, as shown in the [workflow logic](#understand-the-workflow-logic).
 
 :::note  
-For development purposes, you can complete the Human tasks from the Conductor UI. In production, these Human tasks will be displayed on an external UI, like a claims portal or an internal business site, for the relevant users to fill out.  
+For development purposes, you can complete the Human tasks from the Conductor UI. In production, you can switch the Human tasks to be displayed on your own UI, such as a claims portal or an internal business site, for the relevant users to complete. [Learn more](https://orkes.io/content/developer-guides/orchestrating-human-tasks#step-4-optional-display-the-form-on-your-own-ui).
 :::
 
 **To complete the Human tasks in the UI:**
@@ -159,7 +158,7 @@ For development purposes, you can complete the Human tasks from the Conductor UI
 
 ## Workflow output
 
-The claims workflow will terminate at different junctures, based on the claim eligibility:
+ The claims workflow can terminate at different points based on claim eligibility:
 
 * If the policy type is not Auto, the workflow will terminate with the reason “Terminated because of invalid policy”, without proceeding to file a claim.  
 
@@ -174,7 +173,7 @@ The claims workflow will terminate at different junctures, based on the claim el
 
 ## Workflow modifications
 
-This template provides a starting point for customizing the workflow to your needs. You can modify the workflow by:
+This template serves as a starting point for customizing the workflow to meet your specific needs. You can modify the workflow by:
 
-* Routing the Human tasks to specific groups or users, by configuring the [Human](/reference-docs/operators/human) task in the workflow definition.  
+* Routing the Human tasks to specific groups or users by configuring the [Human](/reference-docs/operators/human) task in the workflow definition.  
 * Triggering a payment workflow upon successful review of the claim. This can be implemented using a [Sub Workflow](/reference-docs/operators/sub-workflow) or [Start Workflow](/reference-docs/operators/start-workflow) task.

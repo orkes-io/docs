@@ -10,10 +10,10 @@ import Install from '@site/src/components/install.mdx';
 # HTTP Endpoint Monitoring
 
 :::note
-This template is only available in the [Developer Edition](https://developer.orkescloud.com/) on Launch Pad.
+This template is available only in the [Developer Edition](https://developer.orkescloud.com/) on Launch Pad.
 :::
 
-This endpoint monitoring template checks the health of a specified HTTP endpoint and sends an email alert if the endpoint is unreachable or returns an unexpected status code.
+This endpoint monitoring template checks the health of a specified HTTP endpoint and sends an email alert if the endpoint is unreachable or returns an unexpected status code  (anything other than HTTP 200).
 
 This template serves as a quickstart for building monitoring workflows. You can use this as a foundation and extend it with features such as alternative notification channels, and more.
 
@@ -39,7 +39,7 @@ This template uses SendGrid integration. Ensure that you obtain the [SendGrid AP
 
 ### Step 1: Import the template
 
-The endpoint monitoring template is available only on the [Developer Edition](https://developer.orkescloud.com/) initial Launch Pad.
+The endpoint monitoring template is available only in the [Developer Edition](https://developer.orkescloud.com/) initial Launch Pad.
 
 **To import the template:**
 
@@ -64,9 +64,9 @@ This section explains the workflow logic and how to execute it.
 
 **Workflow inputs:**
 
-- **URL**–The HTTP(S) endpoint to be monitored using the workflow.
-- **sender_email**–The sender email address to display the alert.
-- **customer_email**–The recipient email address for alert notifications.
+- **URL**: The HTTP(S) endpoint to be monitored using the workflow.
+- **sender_email**: The sender email address to display the alert.
+- **customer_email**:The recipient email address for alert notifications.
 
 **Example input payload:**
 
@@ -81,9 +81,9 @@ This section explains the workflow logic and how to execute it.
 **Workflow logic:**
 
 - The workflow begins with an [HTTP task](https://orkes.io/content/reference-docs/system-tasks/http) that sends a GET request to the specified endpoint.
-- Next, the [Switch task](https://orkes.io/content/reference-docs/operators/switch) evaluates the HTTP status code to determine if the response indicates a success or failure.
+- Next, the [Switch task](https://orkes.io/content/reference-docs/operators/switch) evaluates the HTTP status code to determine if the response indicates a success (200) or failure.
   - If the response status code is **200**, a [Set Variable task](https://orkes.io/content/reference-docs/operators/set-variable) sets a success flag, and the workflow completes.
-  - For any other response or failure (e.g., DNS error), the [Switch task](https://orkes.io/content/reference-docs/operators/switch) sends execution to the **defaultCase** path.
+  - For any other response or failure (e.g., DNS error), the [Switch task](https://orkes.io/content/reference-docs/operators/switch) routes the execution to the **defaultCase** path.
 - In the **defaultCase** path, a [SendGrid task](https://orkes.io/content/reference-docs/system-tasks/sendgrid) sends an email notification using the provided sender and recipient addresses. The subject and message content indicate that the endpoint health check failed.
 - After sending the alert, a [Terminate task](https://orkes.io/content/reference-docs/operators/terminate) ends the workflow with the reason “**did not receive 200 status code**.”
 
@@ -108,7 +108,7 @@ For the SendGrid integration to work, the [sender email must be verified](https:
 
 4. Select **Save**.
 
-This saves the sender to your SendGrid portal and sends a verification email. Once the sender clicks the verification link, the sender’s status is updated to ‘verified’ within the SendGrid portal.
+This saves the sender to your SendGrid portal and sends a verification email. Once the verification link in the email is clicked, the sender’s status is updated to *verified* in the SendGrid portal.
 
 <p align="center"><img src="/content/img/sender-verified.jpg" alt="Sender verified in SendGrid portal" width="100%" height="auto"></img></p>
 
@@ -147,8 +147,8 @@ The user receives an alert email through SendGrid.
 
 ## Workflow modifications
 
-This template provides a starting point for customizing the workflow to your needs.  You can add additional steps, such as:
+This template serves as a starting point for customizing the workflow to meet your specific needs.  You can add additional steps, such as:
 
-- Add a different provider (like Opsgenie for incident notifications, Slack/Microsoft Teams notification, or integrate with Jira/Zendesk via API ).
-- Modify email content based on your requirements and next steps.
+- Add a different provider (such as Opsgenie for incident notifications, Slack/Microsoft Teams notifications, or integrate with Jira/Zendesk via API).
+- Modify the email content according to your requirements and next steps.
 - Add any escalation steps.
