@@ -1,0 +1,75 @@
+---
+sidebar_position: 2
+slug: "/reference-docs/api/tags/get-all-tags-grouped"
+description: "This API is used to get all tags grouped by resource type in a cluster"
+---
+
+# List Tags Grouped by Resource Type
+
+**Endpoint**: `GET /api/metadata/tags/grouped`
+
+Retrieves all tags grouped by resource type, along with the number of resources associated with each tag.
+
+## Response
+
+Returns a list of tag entries. Each entry represents a unique combination of tag key, tag value, and resource type, along with the count of resources associated with that combination.
+
+| Parameter | Description | 
+| --------- | ----------- |
+| tagKey | The key of the tag. | 
+| tagValue | The value of the tag. | 
+| resourceType | The resource type the tag is associated with. For example: `WORKFLOW_DEF`, `TASK_DEF`, etc. | 
+| countPerResourceType | The number of resources of the given type that have this tag. | 
+
+## Examples
+
+<details>
+<summary>Get all tags grouped by resource type</summary>
+
+**Request**
+
+```shell
+curl -X 'GET' \
+  'https://<YOUR-CLUSTER>/api/metadata/tags/grouped' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+[
+  {
+    "tagKey": "team",
+    "tagValue": "blog",
+    "resourceType": "TASK_DEF",
+    "countPerResourceType": 1
+  },
+  {
+    "tagKey": "team",
+    "tagValue": "docs",
+    "resourceType": "SECRET_NAME",
+    "countPerResourceType": 1
+  },
+  {
+    "tagKey": "team",
+    "tagValue": "docs",
+    "resourceType": "TASK_DEF",
+    "countPerResourceType": 1
+  },
+  {
+    "tagKey": "team",
+    "tagValue": "docs",
+    "resourceType": "WEBHOOK",
+    "countPerResourceType": 1
+  },
+  {
+    "tagKey": "team",
+    "tagValue": "docs",
+    "resourceType": "WORKFLOW_DEF",
+    "countPerResourceType": 1
+  }
+]
+```
+
+</details>
