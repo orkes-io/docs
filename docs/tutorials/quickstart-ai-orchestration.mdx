@@ -225,7 +225,7 @@ Get the JWT access token by calling the Authentication API (`/api/token`). Use t
 
 ``` shell
 curl -X 'POST' \
-  'https://<YOUR_CLUSTER_URL>/api/token' \
+  'https://<YOUR-CLUSTER>/api/token' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -263,7 +263,7 @@ The endpoint will return the workflow ID. To retrieve the workflow output, use t
 
 ``` shell
 curl -X 'GET' \
-'https://<YOUR_CLUSTER_URL>/api/workflow/<WORKFLOW_ID>/status?includeOutput=true&includeVariables=false' \
+'https://<YOUR-CLUSTER>/api/workflow/<WORKFLOW_ID>/status?includeOutput=true&includeVariables=false' \
 -H 'accept: */*' \
 -H 'X-Authorization: <TOKEN>'
 ```
@@ -290,7 +290,7 @@ Call the endpoint using the workflow name `translator`.
 
 ``` shell
 curl -X 'POST' \
-  'https://<YOUR_CLUSTER_URL>/api/workflow/execute/translator' \
+  'https://<YOUR-CLUSTER>/api/workflow/execute/translator' \
   -H 'accept: application/json' \
   -H 'waitForSeconds: 60' \
   -H 'X-Authorization: <TOKEN>' \
