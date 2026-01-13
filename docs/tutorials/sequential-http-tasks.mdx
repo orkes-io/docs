@@ -3,9 +3,6 @@ slug: "/templates/examples/sequential-http-tasks"
 description: "Use this tutorial to build a sequential HTTP workflow to learn how to chain multiple HTTP system tasks."
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
 # Build a Sequential HTTP Workflow with Orkes Conductor
 
 In this tutorial, you’ll build a sequential HTTP workflow in Orkes Conductor. You’ll learn how to chain multiple HTTP system tasks so that [the output from one task becomes the input to the next](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor). 
@@ -14,7 +11,7 @@ This pattern is useful for real-world scenarios where tasks must run in a specif
 
 ## The sequential HTTP workflow
 
-In this tutorial, you’ll build a workflow that runs two HTTP tasks in order. The first task fetches location details based on an IP address, and the second uses that information to retrieve weather data.
+In this tutorial, you’ll build a workflow that runs two [HTTP tasks](/content/reference-docs/system-tasks/http) in order. The first task fetches location details based on an IP address, and the second uses that information to retrieve weather data.
 
 Here’s what the workflow looks like:
 
@@ -24,12 +21,7 @@ Follow along using the free [Developer Edition](https://developer.orkescloud.com
 
 ## Step 1: Create a workflow in Orkes Conductor
 
-Orkes Conductor lets you define workflows as JSON, through [SDKs](https://orkes.io/content/category/sdks), [APIs](https://orkes.io/content/category/ref-docs/api), or the [UI](http://orkes.io/content/developer-guides/build-workflows-using-ui). 
-
-Use the provided JSON below to create the workflow quickly, or build the workflow from scratch.
-
-<Tabs>
-<TabItem value="Create workflow using the provided JSON via Conductor UI" label="Create workflow using the provided JSON via Conductor UI">
+Orkes Conductor lets you define workflows as JSON, through [SDKs](https://orkes.io/content/category/sdks), [APIs](https://orkes.io/content/category/ref-docs/api), or the [UI](http://orkes.io/content/developer-guides/build-workflows-using-ui). Use the provided JSON below to create the workflow using the Conductor UI.
 
 **To create a workflow using Conductor UI:**
 
@@ -52,27 +44,24 @@ Use the provided JSON below to create the workflow quickly, or build the workflo
          "method": "GET"
        }
      },
-     "type": "HTTP",
-     "retryCount": 3
+     "type": "HTTP"
    },
    {
      "name": "get_weather",
      "taskReferenceName": "get_weather_ref",
      "inputParameters": {
        "http_request": {
-         "uri": "https://wttr.in/${get_IP_ref.output.response.body.zip}?format=j1",
+         "uri": "https://wttr.in/${get_IP_ref.output.response.body.lat},${get_IP_ref.output.response.body.lon}?format=j1",
          "method": "GET"
        }
      },
-     "type": "HTTP",
-     "retryCount": 3
+     "type": "HTTP"
    }
  ],
  "inputParameters": [
    "ipaddress"
  ],
  "outputParameters": {
-   "zipcode": "${get_IP_ref.output.response.body.zip}",
    "weather": "${get_weather_ref.output.response.body.current_condition[0].weatherDesc[0].value}",
    "temperature_C": "${get_weather_ref.output.response.body.current_condition[0].temp_C}"
  },
@@ -81,37 +70,6 @@ Use the provided JSON below to create the workflow quickly, or build the workflo
 ```
 
 4. Select **Save** > **Confirm**.
-
-</TabItem>
-
-<TabItem value="Build it from scratch using Conductor UI" label="Build it from scratch using Conductor UI">
-
-Build it from scratch yourself
-
-1. Go to [**Definitions** > **Workflow**](https://developer.orkescloud.com/workflowDef) from the left navigation menu on your Conductor cluster.
-2. Select **+ Define workflow**.
-3. Enter a name and description for the workflow.
-4. Add your first task:
-    - Add an [HTTP task](https://orkes.io/content/reference-docs/system-tasks/http) and rename it to *get_IP*.
-    - Select **Method** as **GET**, and set the **URL** as http://ip-api.com/json/${workflow.input.ipaddress}?fields=status,message,country,countryCode,region,regionName,city,zip,lat,lon,timezone,offset,isp,org,as,query.
-5. Add your second task:
-    - Add another [HTTP task](https://orkes.io/content/reference-docs/system-tasks/http)and rename it to *get_weather*.
-    - Select **Method** as **GET**, and set the **URL** as https://wttr.in/${get_IP_ref.output.response.body.zip}?format=j1.
-6. In the **Workflow** tab, set the **Input parameters** to *ipaddress*.
-7. In the **Workflow** tab, set the following **Output parameters**:
-
-| Parameter | Value | 
-| --------- | ----- |
-| zipcode | `${get_IP_ref.output.response.body.zip}` |
-| weather | `${get_weather_ref.output.response.body.current_condition[0].weatherDesc[0].value}` | 
-| temperature_C | `${get_weather_ref.output.response.body.current_condition[0].temp_C}` | 
-
-<p align="center"><img src="/content/img/sequential-http-workflow-input-output.png" alt="Setting up workflow inputs and outputs" width="100%" height="auto"></img></p>
-
-8. Select **Save** > **Confirm**.
-
-</TabItem>
-</Tabs>
 
 ## Step 2: Execute workflow 
 
@@ -135,6 +93,6 @@ Want to personalize your test run? Replace with your own public IP address. You 
 
 This initiates the workflow and takes you to the workflow execution page.
 
-Once the workflow is completed, check the **Workflow Input/Output** tab to see the result, which includes the ZIP code, weather condition, and temperature for the given IP address.
+Once the workflow is completed, check the **Workflow Input/Output** tab to see the result, which includes the weather condition and temperature for the given IP address.
 
 <p align="center"><img src="/content/img/sequential-http-workflow-output.png" alt="Workflow output returning the ZIP code, weather, and temperature for the given IP address" width="100%" height="auto"></img></p>

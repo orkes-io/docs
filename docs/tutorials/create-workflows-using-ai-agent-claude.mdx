@@ -8,7 +8,7 @@ import TabItem from "@theme/TabItem";
 
 # Create Workflows using AI Agents (Conductor MCP Server + Claude)
 
-This tutorial demonstrates how to connect **Claude** to **Orkes Conductor** using the [**Conductor MCP server**](https://github.com/conductor-oss/conductor-mcp), allowing Claude to act as an AI agent that creates, executes, and modifies workflows based on natural language prompts without writing any code manually.
+This tutorial demonstrates how to connect **Claude** to **Orkes Conductor** using the [**Conductor MCP server**](https://github.com/conductor-oss/conductor-mcp), enabling Claude to act as an AI agent that creates, executes, and modifies workflows based on natural language prompts without writing any code manually.
 
 In this tutorial, you will learn how to:
 1. Install the Conductor MCP server using PyPi
@@ -41,7 +41,7 @@ pip install conductor-mcp
 2. Select **+ Create application** to create a new one or select an existing one.
 3. If you are creating a new one, enter a **Name** for your application.
 4. Select **Save**.
-5. In **Application roles**, enable **Worker** and **Metadata API**.
+5. In **Application roles**, enable **Worker** and **Metadata API**. The Worker role allows the MCP server to execute tasks, and the Metadata API role allows it to create and update workflow and task definitions in Conductor.
 6. Select **+ Create access key**.
 
 <p align="center"><img src="/content/img/conductor-access-key.png" alt="Generating access keys from Orkes Conductor" width="100%" height="auto"></img></p>
@@ -67,7 +67,7 @@ Save the file and note down its file path.
 In this tutorial, we are using Claude as the AI agent. Claude will launch and manage the MCP server using the Claude configuration.
 
 :::info Prerequisite:
-- Download [Claude Desktop](https://claude.ai/download) for macOS or Windows. Linux is not supported.
+- Download [Claude Desktop](https://claude.ai/download) for macOS or Windows.
 :::
 
 <Tabs>
@@ -93,14 +93,14 @@ In this tutorial, we are using Claude as the AI agent. Claude will launch and ma
       "command": "conductor-mcp",
       "args": [
         "--config",
-        "ABSOLUTE_PATH_TO_conductor-config.json"
+        "<ABSOLUTE_PATH_TO_conductor-config.json>"
       ]
     }
   }
 }
 ```
 
-Replace **ABSOLUTE_PATH_TO_conductor-config.json** with the config file path saved in [Step 3](/content/tutorials/create-workflows-using-ai-agent-claude#step-3-create-a-config-file-with-conductor-keys). 
+Replace `<ABSOLUTE_PATH_TO_conductor-config.json>` with the config file path saved in [Step 3](/content/tutorials/create-workflows-using-ai-agent-claude#step-3-create-a-config-file-with-conductor-keys). 
 
 5. Save the file.
 6. Quit and restart the Claude application.
@@ -124,10 +124,10 @@ which conductor-mcp
 {
   "mcpServers": {
     "conductor": {
-      "command": "ABSOLUTE_PATH_TO_conductor-mcp_BINARY",
+      "command": "<ABSOLUTE_PATH_TO_conductor-mcp_BINARY>",
       "args": [
         "--config",
-        "ABSOLUTE_PATH_TO_conductor-config.json"
+        "<ABSOLUTE_PATH_TO_conductor-config.json>"
       ]
     }
   }

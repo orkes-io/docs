@@ -18,19 +18,19 @@ This approach is useful when:
 
 - Your workflow depends on an external condition or background job.
 - You need to monitor progress without repeatedly invoking APIs.
-- You want the worker itself to decide when a task is complete.
+- You want the workers themselves to decide when a task is complete.
 
 :::info Prerequisites:
-- Access to free [Developer Edition](https://developer.orkescloud.com/).
+- Access to free [Orkes Developer Edition](https://developer.orkescloud.com/).
 - Familiarity with Java and [Conductor’s worker SDK](https://orkes.io/content/developer-guides/using-workers).
 - Basic understanding of [task lifecycle statuses](https://orkes.io/content/developer-guides/task-and-workflow-status-in-conductor#task-status).
 :::
 
 ## The polling workflow
 
-Use the following workflow definition to create a workflow in Orkes Conductor.
+Use the following workflow definition to create a workflow in Orkes Conductor. The workflow contains a single task. The repeated execution is controlled entirely by the worker logic.
 
-## Step 1: Create a workflow in Orkes Conductor
+### Step 1: Create a workflow in Orkes Conductor
 
 **To create a workflow:**
 
@@ -66,7 +66,7 @@ Use the following workflow definition to create a workflow in Orkes Conductor.
 
 Next, create an application in Orkes Conductor. This application provides the access keys (key and secret) that your SDK uses to authenticate and run the workflow.
 
-## Step 2: Create an application in Orkes Conductor
+### Step 2: Create an application in Orkes Conductor
 
 **To create an application:**
 
@@ -76,7 +76,7 @@ Next, create an application in Orkes Conductor. This application provides the ac
 
 Once done, [authenticate the SDK project](https://orkes.io/content/sdks/authentication#sdk-authentication) with the generated access keys.
 
-## Step 3: Create a worker
+### Step 3: Create a worker
 
 Use the Java SDK to create a worker that keeps running until a condition is met. Create a file named `PollUntilConditionMeetsWorker.java` and add the following code:
 
@@ -124,13 +124,13 @@ Here’s how it works:
 - The worker tracks the current iteration in its output data.
 - On each execution, it increments the iteration count.
 - If the `currentIteration` is less than `pollCounter`, it sets the task status to **IN_PROGRESS**.
-- Conductor automatically re-queues the task after the configured `pollIntervalSeconds`.
-- When the condition is met (iteration reaches pollCounter), the task is marked **COMPLETED**.
+- Conductor automatically requeues the task after the configured `pollIntervalSeconds`.
+- When the condition is met (the iteration reaches `pollCounter`), the task is marked as **COMPLETED**.
 
 This approach maintains the worker’s state across polls without requiring an external data store. 
 
 :::info Note
-Such workers can be implemented in any language supported by Orkes Conductor SDKs.
+Workers can be implemented in any language supported by Orkes Conductor SDKs.
 :::
 
 <center>

@@ -867,7 +867,7 @@ const sidebars = {
                         {
                             type: 'doc',
                             id: 'tutorials/api-processing-usps-example',
-                            label: 'API Processing',
+                            label: 'API Orchestration',
                         },
                         'tutorials/keep-worker-running-until-condition-true',
                         'tutorials/rotating-secrets-that-expire',
