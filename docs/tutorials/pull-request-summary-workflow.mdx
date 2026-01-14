@@ -30,17 +30,17 @@ Here is the workflow that you’ll build in this tutorial:
 
 **Workflow input:**
 
-- **pullRequestDescription** - The pull request description written by an engineer.
+- **pullRequestDescription**: The pull request description written by an engineer.
 
 **Workflow logic:**
 
 - The workflow has a single [LLM Chat Complete](https://orkes.io/content/reference-docs/ai-tasks/llm-chat-complete) task that processes the pull request description using a predefined AI prompt.
-- The AI prompt instructs the language model to focus on what changed and why the change matters, while avoiding code-level or implementation-specific details.
+- The [AI prompt](https://orkes.io/content/developer-guides/creating-and-managing-gen-ai-prompt-templates) instructs the language model to focus on what changed and why the change matters, while avoiding code-level or implementation-specific details.
 - The workflow then returns the generated summary as the final output.
 
 **Workflow output:**
 
-- **summary** - A concise, stakeholder-friendly summary of the pull request.
+- **summary**: A concise, stakeholder-friendly summary of the pull request.
 
 ## Step 1: Integrate an AI model provider
 
@@ -53,10 +53,10 @@ Add an OpenAI integration to your Conductor cluster, then add the required model
 1. Get your OpenAI API Key from [OpenAI’s platform](https://platform.openai.com/settings/organization/api-keys).
 2. Go to **[Integrations](https://developer.orkescloud.com/integrations)** from the left navigation menu on your Conductor cluster.
 3. Select **+ New integration**.
-4. Create the integration by providing the following details:
-    - **Integration name**—“openAI”
-    - **API Key**—`<YOUR_OPENAI_API_KEY>`
-    - **Description**—“OpenAI Integration”
+4. Create the integration by providing the following mandatory parameters:
+    - **Integration name**: “openAI”
+    - **API Key**: `<YOUR_OPENAI_API_KEY>`
+    - **Description**: “OpenAI Integration”
 5. Ensure that the **Active** toggle is switched on, then select **Save**.
 
 The OpenAI integration has been added. The next step is to add a specific model.
@@ -158,7 +158,7 @@ In this step, you create a workflow that uses the AI prompt to generate a stakeh
      "taskReferenceName": "generate_pr_summary_ref",
      "inputParameters": {
        "llmProvider": "<YOUR-LLM-PROVIDER>",
-       "model": "<YOUR-LLM-MODEL",
+       "model": "<YOUR-LLM-MODEL>",
        "instructions": "<YOUR-AI-PROMPT>",
        "messages": [
          {
