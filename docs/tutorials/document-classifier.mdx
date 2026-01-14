@@ -17,11 +17,11 @@ In this tutorial, you will:
 3. Create a workflow to classify text-based PDFs.
 4. Run the workflow and verify classification results.
 
-To follow along, ensure you have access to the free [Developer Edition](https://developer.orkescloud.com/).
+To follow along, ensure you have access to the free [Orkes Developer Edition](https://developer.orkescloud.com/).
 
-## The document classifier workflow
+## The document classification workflow
 
-Here is the document classifier workflow that you’ll build in this tutorial:
+Here is the document classification workflow that you’ll build in this tutorial:
 
 <p align="center">
   <img
@@ -33,10 +33,10 @@ Here is the document classifier workflow that you’ll build in this tutorial:
 </p>
 
 **Workflow input:**
-- **document_url**–The HTTP URL of the document file to classify.
+- **document_url**: The HTTP URL of the document file to classify. The workflow supports PDFs that contain scanned images, such as scanned passports or IDs. Text is extracted using OCR before classification.
 
 **Workflow logic:**
-- The workflow begins with a [Switch task](https://orkes.io/content/reference-docs/operators/switch) that evaluates whether the input URL is a PDF using ECMAScript. 
+- The workflow begins with a [Switch task](https://orkes.io/content/reference-docs/operators/switch) that checks whether the input URL ends with .pdf using an ECMAScript expression.
 - If the input file is not a PDF:
   - An [Inline task](https://orkes.io/content/reference-docs/system-tasks/inline) generates an error message about the unsupported file type. 
   - A [Terminate task](https://orkes.io/content/reference-docs/operators/terminate) terminates the workflow with an error message on the unsupported file type.
@@ -55,10 +55,10 @@ To begin with, we will use OpenAI’s gpt-4o model to service the document class
 1. Get your OpenAI API Key from [OpenAI’s platform](https://platform.openai.com/settings/organization/api-keys).
 2. Go to **[Integrations](https://developer.orkescloud.com/integrations)** from the left navigation menu on your Conductor cluster.
 3. Select **+ New integration**.
-4. Create the integration by providing the following details:
-    - **Integration name**—“openAI”
-    - **API Key**—\<YOUR_OPENAI_API_KEY\>
-    - **Description**—“OpenAI Integration”
+4. Create the integration by providing the following mandatory parameters:
+    - **Integration name**: “openAI”
+    - **API Key**: \<YOUR_OPENAI_API_KEY\>
+    - **Description**: “OpenAI Integration”
 5. Ensure that the **Active** toggle is switched on, then select **Save**.
 
 The OpenAI integration is added. The next step is to add a specific model.
@@ -228,7 +228,7 @@ With the integration and prompt ready, let’s create the workflow.
  "document_url": "<YOUR-DOCUMENT-URL-IN-PDF-FORMAT>"
 }
 ```
-The document must be accessible via an HTTP URL and end with *.pdf*
+The document must be accessible via an HTTP URL and end with *.pdf*.
 
 3. Select **Execute**.
 
