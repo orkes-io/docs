@@ -7,7 +7,7 @@ description: "Build a simple RAG workflow in Conductor using stored embeddings a
 
 This tutorial demonstrates how to build a question-answering workflow in Orkes Conductor using embeddings generated from text provided directly as workflow input.
 
-The workflow converts raw text supplied to the workflow into embedding vectors, stores those vectors in a vector database, retrieves relevant content at query time, and answers a user’s question using the retrieved context. This is a simple and realistic example of retrieval augmented generation (RAG).
+The workflow converts the raw text supplied to it into embedding vectors, stores those vectors in a vector database, retrieves relevant content at query time, and answers a user’s question using the retrieved context. This is a simple and realistic example of retrieval augmented generation (RAG).
 
 Unlike document-based retrieval workflows, this example embeds text passed directly through workflow input rather than indexing content from external documents or URLs.
 
@@ -31,9 +31,9 @@ Here is the RAG workflow that you’ll build in this tutorial:
 
 **Workflow input:**
 
-- **text** - The document text that will be converted to embeddings.
-- **docId** - A unique identifier for the document ID to be stored in the Pinecone database.
-- **queryText** - The question that the workflow must answer using the retrieved context.
+- **text**: The document text that will be converted to embeddings.
+- **docId**: A unique identifier for the document ID to be stored in the Pinecone database.
+- **queryText**: The question that the workflow must answer using the retrieved context.
 
 **Workflow logic:**
 
@@ -48,6 +48,8 @@ Here is the RAG workflow that you’ll build in this tutorial:
 
 This workflow is best suited for scenarios where the content to be queried is already available as text, rather than stored in external documents that need to be ingested and indexed.
 
+In this example, the workflow uses the embedding generated from the input text both to store the document in the vector database and to retrieve similar content. This is done to keep the example simple and focused on the end-to-end flow. 
+
 ## Step 1: Integrate an AI model provider
 
 Add an OpenAI integration to your Conductor cluster, then add the required model.
@@ -59,10 +61,10 @@ Add an OpenAI integration to your Conductor cluster, then add the required model
 1. Get your OpenAI API Key from [OpenAI’s platform](https://platform.openai.com/settings/organization/api-keys).
 2. Go to **[Integrations](https://developer.orkescloud.com/integrations)** from the left navigation menu on your Conductor cluster.
 3. Select **+ New integration**.
-4. Create the integration by providing the following details:
-    - **Integration name**—“openAI”
-    - **API Key**—`<YOUR_OPENAI_API_KEY>`
-    - **Description**—“OpenAI Integration”
+4. Create the integration by providing the following mandatory parameters:
+    - **Integration name**: “openAI”
+    - **API Key**: `<YOUR_OPENAI_API_KEY>`
+    - **Description**: “OpenAI Integration”
 5. Ensure that the **Active** toggle is switched on, then select **Save**.
 
 The OpenAI integration has been added. The next step is to add a specific model.
@@ -142,11 +144,11 @@ The **text-embedding-3-large model** generates vectors with a dimension of **307
 1. Go to **[Integrations](https://developer.orkescloud.com/integrations)** from the left navigation menu on your Conductor cluster.
 2. Select **+ New integration**.
 3. Create the integration by providing the following details:
-    - **Integration name**—Enter Pinecone.
-    - **API Key**—`<YOUR-PINECONE-API-KEY>`.
-    - **Project name**—`<YOUR-PINECONE-PROJECT-NAME>`.
-    - **Environment**—Your index’s region name.
-    - **Description**—An optional description.
+    - **Integration name**: Enter Pinecone.
+    - **API Key**: `<YOUR-PINECONE-API-KEY>`.
+    - **Project name**: `<YOUR-PINECONE-PROJECT-NAME>`.
+    - **Environment**: Your index’s region name.
+    - **Description**: An optional description.
 4. Ensure that the **Active** toggle is switched on, then select **Save**.
 
 ### Add indexes
