@@ -68,7 +68,7 @@ Your workflow looks like this:
 
 In this workflow, you define the backend logic that the API Gateway will execute when a request is received.
 
-The workflow accepts a rating and comment as input, processes the values using a simple Inline task, and returns a formatted confirmation message. This minimal design keeps the focus on API Gateway configuration while still demonstrating how workflow input and output are handled.
+The workflow accepts a rating and comment as input, processes the values using a simple Inline task, and returns a formatted confirmation message.
 
 The workflow is now ready. The next step is to define a schema that validates incoming API requests.
 
@@ -114,6 +114,10 @@ The next step is to create an application with permission to execute the workflo
 
 ## Step 3: Create an application
 
+:::info Note
+Skip the step if you are using Orkes Developer Edition. If you are using Orkes Developer Edition, you do not need to create a separate application, as it has a **Default Orkes Application**, which is automatically available and has permission to execute workflows.
+:::
+
 Applications act as service accounts that control which workflows the API Gateway can execute.
 
 **To create an application:**
@@ -139,7 +143,7 @@ Authentication settings define how clients are authorized to access the API. You
 1. Go to **APIs** > **Authentication**, from the left navigation menu on your Conductor cluster.
 2. Select **+ New authentication**.
 3. Enter a unique name as the **ID** and select **Authentication Type** as **No Authentication**.
-4. In **Application**, select the application created in the previous step.
+4. In **Application**, select the application created in the previous step. If you are using Orkes Developer Edition, use the application **Default Orkes Application** here.
 
 <p align="center"><img src="/content/img/auth-settings-for-feedback-service.png" alt="Auth configuration for feedback service" width="100%" height="auto"></img></p>
 
