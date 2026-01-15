@@ -9,29 +9,33 @@ import TabItem from '@theme/TabItem';
 
 # Managing Tags
 
-Formatted as `key:value`, tags can be applied to most resources in Conductor:
+Tags use the `key:value` format and can be applied to most resources in Conductor:
+
 * Workflows
 * Tasks
 * User forms
+* Event Handlers
 * Schedules
 * Secrets
 * Webhooks
-* Event Handlers
 * Prompts
 * Environment variables
 * Integrations
 * Applications
+* API/MCP Gateway 
 
-Tags are useful not only for organizing your resources, but also for bulk-sharing resource access at a group or application level.
-
+Tags can be used for organizing your resources, and for bulk-sharing resource access at a group or application level.
 
 ## Assigning tags to resources
 
 You can add or remove multiple tags to various resources.
 
 **To add or remove a tag:**
-1. In the left navigation menu, go to **Definitions** and select **Workflow** / **Task** / **User Forms** / **Event Handler** / **Scheduler** / **Secrets** / **Webhook** / **AI Prompts**  /  **Environment Variables**.
-<br/>OR go to **Integrations**<br/>OR go to **Access Control** > **Applications** depending on the resource you want to tag.
+1. In the left navigation menu, go to one of the following locations based on the resource you want to tag:
+    - **Definitions** > **Workflow** / **Task** / **User Forms** / **Event Handler** / **Scheduler** / **Secrets** / **Webhook** / **AI Prompts**  /  **Environment Variables**
+    - **Integrations**
+    - **APIs** > **Services**
+    - **Access Control** > **Applications** 
 2. Locate the specific resource.
     <p align="center"><img src="/content/img/RBAC/adding-tags-to-workflow.png" alt="Adding a tag to an existing workflow" width="90%" height="auto"></img></p>
 3. In the **Actions** column, select the **Tag** icon. <br/>A pop-up window for Edit Tags appears.
@@ -40,15 +44,13 @@ You can add or remove multiple tags to various resources.
 5. To remove a tag, select **x** next to the tag.
 6. Once tagged, select **Save**.
 
-
 ## Bulk-access to resources using tags
 
-Tags simplify permission management for large teams or projects. After tagging individual resources, you can use the tags to bulk-share resource access at a group- or application-level.
-
+Tags simplify permission management for large teams or projects. After tagging individual resources, you can use the tags to bulk-share resource access at a group or application level.
 
 ### Granting tag permissions
 
-You can grant tag permissions to groups or to applications. When granting tag permissions, ensure that the relevant resources contain the specific tag (such as team:engineering).
+You can grant tag permissions to groups or to applications. When granting tag permissions, ensure that the target resources already have the specified tag.
 
 <Tabs>
 <TabItem value="group-level" label="For Groups">
@@ -63,10 +65,10 @@ This feature is only available to Admins.
 3. In the **Permissions** section, select **+ Add Permission**.
 4. Toggle to the **Tag** tab and select the tag to provide access to.
 5. Toggle the access levels for your selected resource:
-    - **Read**—Users will be able to view the resource.
-    - **Update**—Users will be able to update the resource.
-    - **Execute**—Users will be able to execute the resource.
-    - **Delete**—Users will be able to delete the resource.
+    - **Read**: Users will be able to view the resource.
+    - **Update**: Users will be able to update the resource.
+    - **Execute**: Users will be able to execute the resource.
+    - **Delete**: Users will be able to delete the resource.
 6. Select **Add permissions**.
 
 All users in the group now have access to all resources associated with the tag. You can select the drop-down icon to view all of the tagged resources.
@@ -80,13 +82,13 @@ All users in the group now have access to all resources associated with the tag.
 **To add permissions to an application:**
 1. Go to **Access Control** > **Groups** from the left navigation menu on your Conductor cluster.
 2. Select the application name or the **Edit** icon located next to the application name.
-3. In the **Permissions** section, select **+ Add Permission**.
+3. In the **Permissions** section, select **+ Add permission**.
 4. Toggle to the **Tag** tab and select the tag to provide access to.
 5. Toggle the access levels for your selected resource:
-    - **Read**—The application will be able to view the resource.
-    - **Update**—The application will be able to update the resource.
-    - **Execute**—The application will be able to execute the resource.
-    - **Delete**—The application will be able to delete the resource.
+    - **Read**: The application will be able to view the resource.
+    - **Update**: The application will be able to update the resource.
+    - **Execute**: The application will be able to execute the resource.
+    - **Delete**: The application will be able to delete the resource.
 6. Select **Add permissions**.
 
 The application now has access to all resources associated with the tag. You can select the drop-down icon to view all of the tagged resources.

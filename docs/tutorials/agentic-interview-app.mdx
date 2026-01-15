@@ -31,13 +31,13 @@ When you run the application, it automatically registers and runs the following 
 
 <p align="center"><img src="/content/img/agentic-interview-workflow.jpg" alt="Agentic interview workflow" width="100%" height="auto"></img></p>
 
-After collecting the candidate details, the app proceeds to generate questions. It uses a secondary workflow, the *Core Interview Loop*, to create and process a sequence of three LeetCode-style programming challenges. This is done using the [Start Workflow task](https://orkes.io/content/reference-docs/operators/start-workflow) in Conductor, where a new workflow instance is separately run.
+After collecting the candidate details, the app proceeds to generate questions. It uses a secondary workflow, the *Core Interview Loop*, to create and process a sequence of three LeetCode-style programming challenges. This is accomplished using the [Start Workflow task](https://orkes.io/content/reference-docs/operators/start-workflow) in Conductor, which runs a new workflow instance separately.
 
 <p align="center"><img src="/content/img/core-interview-loop-workflow.jpg" alt="Core Interview Loop workflow" width="50%" height="auto"></img></p>
 
 :::info Prerequisites
 To follow along, ensure you have access to the following:
-- A free account on [Developer Edition](https://developer.orkescloud.com/)
+- A free account on [Orkes Developer Edition](https://developer.orkescloud.com/)
 - An [OpenAI account](https://platform.openai.com/)
 - A [Google Cloud project](https://console.cloud.google.com/)
 - A [SendGrid account](https://login.sendgrid.com/)
@@ -65,6 +65,10 @@ Since the application interacts with multiple tools, you must set up environment
 - OpenAI
 - Google Cloud
 - SendGrid
+
+:::note 
+Ensure all environment variables are set in the same terminal session used to start the backend server.
+:::
 
 ### Orkes Conductor access key and secret
 
@@ -99,7 +103,7 @@ Next, generate the API key from the OpenAI platform.
 1. Log in to the [OpenAI platform](https://platform.openai.com/).
 2. Go to **Dashboard** from the top navigation menu and select **[API keys](https://platform.openai.com/api-keys)** from the left menu.
 3. Select **+ Create new secret key**.
-4. Enter a **Name** for the key, and select **Create secret key**.
+4. Enter a **Name** for the key, and then select **Create secret key**.
 5. Copy and store the generated key.
 
 Return to your project and set the environment variable:
@@ -110,7 +114,7 @@ export OPENAI_API_KEY=<YOUR_OPENAI_KEY>
 
 ### Google authentication credentials
 
-Google authentication credentials are required to access Google APIs. The interview transcription is generated using Google Docs API. 
+Google authentication credentials are required to access Google APIs. The interview transcription is generated using the Google Docs API. 
 
 #### Generate a service account key
 
@@ -212,7 +216,7 @@ export SEND_GRID_API_KEY=<YOUR_SEND_GRID_API_KEY>
 
 Finally, update the workflow definition JSON to use this sender email. Go to the **python/interview_agentic_app/resources/interviewAgenticWorkflow.json** file.
 
-- In line 878, replace the **from.email** value:
+Search and replace `<SENDGRID_VERIFIED_SENDER_EMAIL>` with your verified sender email in the following two instances: 
 
 ```json
 //workflow JSON
@@ -222,8 +226,6 @@ Finally, update the workflow definition JSON to use this sender email. Go to the
                 },
                 "subject": "Thank you ${workflow.variables.name} for interviewing with Orkes",
 ```
-
-- In line 996, replace the **from.email** value:
 
 ```json
 //workflow JSON 
@@ -263,7 +265,9 @@ cd workflow
 python app.py
 ```
 
-In your Developer Edition, the OpenAI integration, AI prompts, and workflow definitions are auto-generated without—no extra configuration required.
+By default, the backend server runs on http://localhost:5000.
+
+In your Conductor cluster, the OpenAI integration, AI prompts, and workflow definitions are auto-generated and do not require any additional modifications.
 
 <p align="center"><img src="/content/img/playground-resources.jpg" alt="Created resources in playground" width="70%" height="auto"></img></p>
 
@@ -301,7 +305,7 @@ When the interview begins, the *Interview Agentic Workflow* is triggered first. 
 
 <p align="center"><img src="/content/img/workflows-triggered.jpg" alt="Workflows triggered by the interview app" width="100%" height="auto"></img></p>
 
-Once the interview is completed, a thank-you email with feedback and scores is sent to the candidate via the SendGrid API.
+Once the interview is completed, a thank-you email with feedback and scores is sent to the candidate via SendGrid.
 
 <p align="center"><img src="/content/img/thank-you-email.jpg" alt="Thank you email received instantly on completing the interview" width="50%" height="auto"></img></p>
 

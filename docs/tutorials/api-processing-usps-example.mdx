@@ -3,9 +3,6 @@ slug: "/templates/examples/api-processing-usps-example"
 description: "Check out this API prcoessing template for an example Conductor workflow on shipping services."
 ---
 
-import Tabs from "@theme/Tabs";
-import TabItem from "@theme/TabItem";
-
 # Build an API Orchestration Workflow with Orkes Conductor
 
 In this tutorial, you’ll build an API orchestration workflow using Orkes Conductor that takes a city name as input, retrieves real-time weather data, analyzes the temperature, and returns a simple travel suggestion.
@@ -16,7 +13,9 @@ This is a common pattern for API orchestration where external services are queri
 
 In this tutorial, you’ll build a workflow that includes two HTTP tasks and one JSON JQ Transform task.
 
-The first HTTP task fetches the city’s coordinates based on user input using a free API. The second HTTP task uses those coordinates to retrieve the city's current weather. The JSON JQ Transform task evaluates the current weather data returned by the API and generates travel suggestions.
+The first [HTTP task](/content/reference-docs/system-tasks/http) fetches the city’s coordinates based on user input using a free API. The second HTTP task uses those coordinates to retrieve the city's current weather. The [JSON JQ Transform task](/content/reference-docs/system-tasks/jq-transform) evaluates the current weather data returned by the API and generates travel suggestions.
+
+This example assumes the geocoding API returns at least one result for the provided city name. If the city cannot be resolved, the workflow may fail. Ensure to provide the exact city name.
 
 Here’s what the workflow looks like:
 
@@ -26,12 +25,7 @@ Follow along using the free [Developer Edition](https://developer.orkescloud.com
 
 ## Step 1: Create a workflow in Orkes Conductor
 
-Orkes Conductor lets you define workflows as JSON, through [SDKs](https://orkes.io/content/category/sdks), [APIs](https://orkes.io/content/category/ref-docs/api), or the [UI](http://orkes.io/content/developer-guides/build-workflows-using-ui). 
-
-Use the provided JSON below to create the workflow quickly, or build the workflow from scratch.
-
-<Tabs>
-<TabItem value ="Create workflow using the provided JSON via Conductor UI" label="Create workflow using the provided JSON via Conductor UI">
+Orkes Conductor lets you define workflows as JSON, through [SDKs](https://orkes.io/content/category/sdks), [APIs](https://orkes.io/content/category/ref-docs/api), or the [UI](http://orkes.io/content/developer-guides/build-workflows-using-ui). Use the provided JSON below to create the workflow quickly using the Conductor UI.
 
 **To create a workflow using Conductor UI:**
 
@@ -93,39 +87,6 @@ Use the provided JSON below to create the workflow quickly, or build the workflo
 
 4. Select **Save** > **Confirm**.
 
-</TabItem>
-
-<TabItem value ="Build it from scratch using Conductor UI" label="Build it from scratch using Conductor UI">
-
-Build it from scratch yourself
-
-1. Go to [**Definitions** > **Workflow**](https://developer.orkescloud.com/workflowDef) from the left navigation menu on your Conductor cluster.
-2. Select **+ Define workflow**.
-3. Enter a name and description for the workflow.
-4. Add your first task:
-    - Add an [HTTP task](https://orkes.io/content/reference-docs/system-tasks/http) and rename it to *get_coordinates*.
-    - Select **Method** as **GET**, and set the **URL** as https://geocoding-api.open-meteo.com/v1/search?name=${workflow.input.city}&count=1.
-5. Add your second task:
-    - Add another [HTTP task](https://orkes.io/content/reference-docs/system-tasks/http) and rename it to *get_weather*.
-    - Select **Method** as **GET**, and set the **URL** as https://api.open-meteo.com/v1/forecast?latitude=${get_coordinates.output.response.body.results[0].latitude}&longitude=${get_coordinates.output.response.body.results[0].longitude}&current_weather=true.
-6. Add your third task:
-    - Add a [JSON JQ Transform task](https://orkes.io/content/reference-docs/system-tasks/jq-transform) and rename it to *get_coordinates*.
-    - In **Script Params**, add a parameter with **Key** as *input*, **Value** as `{ "temperature": "${get_weather.output.response.body.current_weather.temperature}" }`, and **Type** as *Object/Array*.
-    - Set the **JQ expression** as `if (.input.temperature > 30) then {suggestion: \"Too hot.\"} elif (.input.temperature < 10) then {suggestion: \"Too cold. Be ready for shivers.\"} else {suggestion: \"Weather is good. You can travel now.\"} end`.
-7. In the **Workflow** tab, set the **Input parameters** to *city*.
-8. In the **Workflow** tab, set the following **Output parameters**:
-
-| Parameter | Value | 
-| --------- | ----- |
-| city | `${workflow.input.city}` | 
-| temperature | `${get_weather.output.response.body.current_weather.temperature}` | 
-| suggestion | `${set_suggestion.output.result.suggestion}` | 
-
-9. Select **Save** > **Confirm**.
-
-</TabItem>
-</Tabs>
-
 ## Step 2: Execute workflow 
 
 **To test the workflow:**
@@ -143,6 +104,6 @@ Build it from scratch yourself
 
 This initiates the workflow and takes you to the workflow execution page.
 
-Once the workflow is completed, check the **Workflow Input/Output** tab to view the city’s current weather and travel suggestions.
+Once the workflow is completed, check the **Workflow Input/Output** tab to view the city’s current weather and travel suggestions. The temperature returned by the weather API is in degrees Celsius.
 
 <p align="center"><img src="/content/img/tutorial/weather-suggestion-output.png" alt="Workflow output" width="100%" height="auto"></img></p>

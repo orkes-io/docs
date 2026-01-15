@@ -9,12 +9,12 @@ import TabItem from '@theme/TabItem';
 # Build an AI-Powered Translator with Orkes Conductor
 
 This tutorial demonstrates how to build an AI-powered translation workflow using Conductor’s [AI Orchestration](/ai-orchestration) features. In this tutorial, you will use the Conductor UI to accomplish the following:
+
 1. Integrate the required AI models with your cluster. OpenAI will be used in this tutorial.
 2. Create a prompt to instruct the model.
-3. Build the translation workflow using a Text Complete task.
+3. Build the translation workflow.
 
-After creating the translation workflow, we will run through a basic example for deploying it to production via Conductor API. Using this translation workflow, you can quickly develop stand-alone translation tools or ship your product’s in-app translation feature.
-
+After creating the translation workflow, we will run through a basic example for deploying it to production via the Conductor API. Using this translation workflow, you can quickly develop stand-alone translation tools or ship your product’s in-app translation feature.
 
 ## The translation workflow
 
@@ -32,15 +32,15 @@ To begin, we will use OpenAI’s gpt-4o model to service the translation task. A
 
 **To add an OpenAI integration:**
 1. Get your OpenAI API Key from [OpenAI’s platform](https://platform.openai.com/settings/organization/api-keys).
-2. In Conductor, go to **Integrations** and select **+ New Integration**.
+2. In Conductor, go to **Integrations** and select **+ New integration**.
 3. In the **AI/LLM** section, select **+ Add** for OpenAI.
-4. Create the integration by providing the following details:
-    * **Integration name**—“openai”
-    * **API Key**—\<YOUR_OPENAI_API_KEY\>
-    * **Description**—“OpenAI Integration”
+4. Create the integration by providing the following mandatory parameters:
+    * **Integration name**:“openai”
+    * **API Key**:\<YOUR_OPENAI_API_KEY\>
+    * **Description**:“OpenAI Integration”
 5. Ensure that the **Active** toggle is switched on, then select **Save**.
 
-Refer to the [AI/LLM Integration Guides](/category/integrations/ai-llm) for information on how to integrate with other providers.
+Refer to the [AI/LLM Integration Guides](/category/integrations/ai-llm) for information on integrating with other providers.
 
 
 ### Add gpt-4o models
@@ -54,19 +54,18 @@ Refer to the [AI/LLM Integration Guides](/category/integrations/ai-llm) for info
 3. Enter the model name “gpt-4o” and an optional description like “OpenAI’s gpt-4o model”. 
 4. Ensure that the **Active** toggle is switched on, then select **Save**.
 
-Repeat the procedure to add more OpenAI models so that you can test and compare between different models. For example, let’s add “chatgpt-4o-latest”. You can refer to [OpenAI’s documentation](https://platform.openai.com/docs/models) for the full list of available models.
-
+Repeat the procedure to add more OpenAI models, allowing you to test and compare them with different models. For example, let’s add “chatgpt-4o-latest”. 
 
 ## Step 2: Create the AI prompt for translation
 
-Once your integration is added, let’s craft and test the prompt for your AI model in Orkes’ AI Prompt Studio. This is where we will verify that the translation feature can work as expected.
+Once your integration is added, let’s create and test the AI prompt in Orkes Conductor. This is where we will verify that the translation feature can work as expected.
 
 <p align="center"><img src="/content/img/tutorial/ai_orch_quickstart-ai_prompt_interface.png" alt="Orkes Concductor AI Prompt interface." width="100%" height="auto"></img></p>
 
-### Craft the prompt
+### Create the prompt
 
-**To craft the prompt:**
-1. Go to **Definitions** > **AI Prompts** and select **+ Add AI Prompt**.
+**To create the prompt:**
+1. Go to **Definitions** > **AI Prompts** and select **+ Add AI prompt**.
 2. In the **Code** tab, enter the following JSON:
 
   ```json
@@ -87,23 +86,7 @@ Once your integration is added, let’s craft and test the prompt for your AI mo
   ```
 3. Select **Save**.
 
-Your prompt should have the following details:
-* **Prompt Name**—“translate”
-* **Model**—“​openai:gpt-4o” and “openai:chatgpt-4o-latest” and any other models you have created.
-* **Description**—“​Translate text from any source language to any target language.”
-* **Prompt Template**—
-  ```
-    Translate the following text into ${language}.
-
-    <text>
-    ${text} 
-    </text>
-
-    Reply only with the translation and nothing else.
-  ```
-
-`${language}` and `${text}` are prompt variables that will be substituted with actual inputs at runtime. Modify your prompt as you wish.
-
+`${language}` and `${text}` are prompt variables that will be substituted with actual inputs at runtime. 
 
 ### Test the prompt
 
@@ -121,7 +104,7 @@ In your prompt, use the right-side interface to test it out with one of its asso
 
 #### Test cases
 
-When testing, some things to look out for include whether the translation is accurate and native-sounding and whether the model will behave even with unexpected inputs. To test the translation accuracy and naturalness, progress from basic sentences to more idiomatic or symbolic language to slang and jargon.
+When testing, verify that translations are both accurate and native-sounding, and that the model behaves correctly when given unexpected input. Start with simple sentences, then gradually test more complex language, including idioms, symbols, slang, and domain-specific jargon.
 
 To test with unexpected inputs, here are some edge cases:
 * Instruct the model to complete tasks outside the scope of translation. The model should translate the instructions instead of responding to the instructions.
@@ -163,8 +146,6 @@ With the integration and prompt ready, let’s create the translation workflow.
 
 ``` json
 {
-  "createTime": 1740553073168,
-  "updateTime": 1740566722521,
   "name": "translator",
   "description": "Translates a given input into a specified language",
   "version": 1,
@@ -199,35 +180,16 @@ With the integration and prompt ready, let’s create the translation workflow.
 
 3. Select **Save**.
 
+The workflow is now complete. To test run it, select the **Run** tab, enter the workflow inputs, and select **Execute**.
 
-<details>
-<summary>Build it from scratch yourself</summary>
+<p align="center"><img src="/content/img/translator-workflow-output.png" alt="Workflow output" width="100%" height="auto"></img></p>
 
-1. Enter a name and description for the workflow.
-2. Add an LLM Text Complete task and rename it to reflect its utility, like “translate”.
-3. Select the LLM provider, model, and prompt template for the task.
-4. Set the LLM parameters. In the JSON example above, the temperature is set to 0.2.
-5. Add the necessary workflow inputs. The minimal required inputs for a translation workflow are the text to be translated and the target language:
-    * "input-text”
-    * "target-language"
-6. Wire up the prompt variables, `${language}` and `${text}`, to the workflow.
-
-    In the JSON example above, the “language” parameter will reference the value of the workflow input “target-language”, `${workflow.input.target-language}`. Likewise, the “text” parameter will reference the value of the workflow input “input-text”, `${workflow.input.input-text}`. 
-
-7. Set the workflow output.
-
-    In the JSON example above, the translation result is extracted from the LLM Text Complete task output “result” parameter, `${translate_ref.output.result}`.
-
-</details>
-
-The workflow is now complete. To test run it, select the **Run** tab, enter the workflow inputs, and select **Run Workflow**.
-
-Done! The translation workflow can now be used in production.
-
+Done! The translation workflow is now ready for production use.
 
 ## Invoke workflow from the terminal
 
-Now that your translation workflow is ready, you can deploy it to production. One method of running the workflow in production is via Conductor API. Here’s an overview:
+Now that your translation workflow is ready, you can deploy it to production. One method of running the workflow in production is via the Conductor API. Here’s an overview:
+
 1. Grant your application with access to the translation workflow resources.
 2. Retrieve the Conductor access key for the application.
 3. Generate the JWT access token to connect to the API server.
@@ -236,7 +198,7 @@ Now that your translation workflow is ready, you can deploy it to production. On
 
 ### Step 1: Grant your application with access
 
-In production, it is best practice to use Orkes’ [RBAC feature](/category/access-control-and-security) to limit what resources your applications can access. In this case, the application should be allowed to read and execute the translation workflow and its associated AI models and prompts.
+In production, it is best practice to use Orkes’ [RBAC feature](/category/access-control-and-security) to limit what resources your applications can access. In this case, the application should be allowed to read and execute the translation workflow, along with its associated AI models and prompts.
 
 **To provide access:**
 1. Go to **Access Control** > **Applications**.
@@ -263,7 +225,7 @@ Get the JWT access token by calling the Authentication API (`/api/token`). Use t
 
 ``` shell
 curl -X 'POST' \
-  'https://<YOUR_CLUSTER_URL>/api/token' \
+  'https://<YOUR-CLUSTER>/api/token' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -287,20 +249,21 @@ This endpoint will start the workflow without waiting for its output. Call the e
 
 ``` shell
 curl -X 'POST' \
-  'https://<YOUR_CLUSTER_URL>/api/workflow/translator' \
+  'https://<YOUR-CLUSTER>/api/workflow/translator?priority=0' \
   -H 'accept: text/plain' \
   -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
   -d '{
     "input-text": "The house is red.",
     "target-language": "Spanish"
   }'
 ```
 
-The endpoint will return the workflow (execution) ID. To retrieve the workflow output, use the workflow (execution) ID to make the following API call:
+The endpoint will return the workflow ID. To retrieve the workflow output, use the workflow ID to make the following API call:
 
 ``` shell
 curl -X 'GET' \
-'https://<YOUR_CLUSTER_URL>/api/workflow/<WORKFLOW_ID>/status?includeOutput=true&includeVariables=false' \
+'https://<YOUR-CLUSTER>/api/workflow/<WORKFLOW_ID>/status?includeOutput=true&includeVariables=false' \
 -H 'accept: */*' \
 -H 'X-Authorization: <TOKEN>'
 ```
@@ -321,13 +284,13 @@ The endpoint will return a JSON body containing the workflow output.
 
 <TabItem value="execute-workflow-synchronously" label="Execute Workflow Synchronously">
 
-This endpoint will start the workflow and wait for its output. In the request below, the server will wait for up to 60 seconds before returning with the workflow output. 
+This endpoint initiates the workflow and waits for its output. In the request below, the server will wait for up to 60 seconds before returning with the workflow output. 
 
 Call the endpoint using the workflow name `translator`.
 
 ``` shell
 curl -X 'POST' \
-  'https://<YOUR_CLUSTER_URL>/api/workflow/execute/translator' \
+  'https://<YOUR-CLUSTER>/api/workflow/execute/translator' \
   -H 'accept: application/json' \
   -H 'waitForSeconds: 60' \
   -H 'X-Authorization: <TOKEN>' \

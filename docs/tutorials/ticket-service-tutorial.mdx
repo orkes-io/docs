@@ -80,7 +80,7 @@ Your workflow looks like this:
 
 <p align="center"><img src="/content/img/create-ticket-workflow.png" alt="Ticket workflow" width="60%" height="auto"></img></p>
 
-The workflow accepts ticket details as input, generates a mock ticket ID using an Inline task, and formats the output using a JSON JQ Transform task. This minimal design keeps the focus on the MCP Gateway configuration while demonstrating how workflows return structured output to AI agents.
+The workflow accepts ticket details as input, generates a mock ticket ID using an Inline task, and formats the output using a JSON JQ Transform task.
 
 :::note 
 We are mocking the ticket ID creation process for demonstration purposes. However, you can modify the workflow to create an actual ticket in any of your ticketing systems.
@@ -156,6 +156,10 @@ The next step is to create an application with permission to execute the workflo
 
 ## Step 3: Create an application
 
+:::info Note
+Skip the step if you are using Orkes Developer Edition. If you are using Orkes Developer Edition, you do not need to create a separate application, as it has a **Default Orkes Application**, which is automatically available and has permission to execute workflows.
+:::
+
 Applications act as service accounts that control which workflows the MCP Gateway can execute.
 
 **To create an application:**
@@ -181,7 +185,7 @@ Authentication settings define how MCP clients are authorized to access the tool
 1. Go to **APIs** > **Authentication**, from the left navigation menu on your Conductor cluster.
 2. Select **+ New authentication**.
 3. Enter a unique name as the **ID** and select **Authentication Type** as **No Authentication**.
-4. In **Application**, select the application created in the previous step.
+4. In **Application**, select the application created in the previous step. If you are using Orkes Developer Edition, use the application **Default Orkes Application** here.
 
 <p align="center"><img src="/content/img/auth-settings-for-ticket-service.png" alt="Auth configuration for ticket service" width="100%" height="auto"></img></p>
 
@@ -241,8 +245,7 @@ You can test the route directly from the Conductor UI.
 
 1. Go to the **APIs** > **Services**, and select the service.
 2. In **Routes**, select the play icon next to the route to test.
-3. In **Path Parameters**, enter a sample `user-id`.
-4. In **Body**, enter the request payload as defined in the workflow. For example:
+3. In **Body**, enter the request payload as defined in the workflow. For example:
 
 ```json
 {
@@ -255,8 +258,8 @@ You can test the route directly from the Conductor UI.
 }
 ```
 
-5. Select **Test Route**.
-6. Review the **Response** to verify the route works as expected. 
+4. Select **Test Route**.
+5. Review the **Response** to verify the route works as expected. 
 
 <p align="center"><img src="/content/img/testing-ticket-service.gif" alt="Testing route from Conductor UI" width="100%" height="auto"></img></p>
 

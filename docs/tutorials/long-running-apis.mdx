@@ -11,18 +11,21 @@ By the end, you'll have a fully functional workflow that orchestrates long-runni
 
 ## Understanding the challenge
 
-When an API takes longer than 60 seconds to respond, a standard HTTP request can fail with a timeout.
+When an API takes longer than 60 seconds to respond, a standard HTTP request can timeout and fail.
 
 Conductor provides two easy ways to handle such cases:
 
-1. **Method 1: Using the [HTTP Poll task](https://orkes.io/content/reference-docs/system-tasks/http-poll)** – Triggers the API and polls its status endpoint until completion.
+1. **Method 1: Using the [HTTP Poll task](https://orkes.io/content/reference-docs/system-tasks/http-poll)** – Triggers the API and periodically polls its status until the job completes.
 2. **Method 2: Using async complete** – Triggers the API and marks the HTTP task complete later through a callback.
 
 Both approaches let you handle long-running APIs natively within Conductor.
 
 :::info Prerequisites:
-- You must have access to an Orkes Conductor cluster. Use the free [Developer Edition](https://developer.orkescloud.com/) to get started.
-- Ensure that your API either exposes a status endpoint that you can query for progress or sends a callback once processing is complete.
+Before you begin, ensure that you have the following:
+- Access to an Orkes Conductor cluster. Use the free [Developer Edition](https://developer.orkescloud.com/) to get started.
+- An API that either:
+  - Exposes a status endpoint that can be polled for progress, or
+  - Sends a callback when processing is complete.
 :::
 
 ## Method 1: Handle long-running APIs using an HTTP Poll task
