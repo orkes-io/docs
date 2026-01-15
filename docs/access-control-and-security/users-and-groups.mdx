@@ -9,8 +9,7 @@ description: "Manage the users and groups on your Conductor cluster to provide t
 This feature is only available to Admins.
 :::
 
-Create and manage users and groups on your Conductor cluster to ensure secure access.
-
+Create and manage users and groups to control access to resources in your Conductor cluster.
 
 ## Users
 
@@ -29,7 +28,7 @@ Users must be added to your Orkes Conductor cluster before they can sign up or l
 | ------ |-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | User Id | The user’s email address. This cannot be changed later.                |
 | Name | The username.                                                             |
-| Roles | The user role, which governs the basic access level for the user. The available roles are: <ul><li>**Admin**—Superuser. Full access to the system and resources. Can manage users and groups.</li> <li>**User**—Can only access resources created by them.</li> <li>**Metadata Manager**—Can read, update, and delete all metadata in the system.</li> <li>**Workflow Manager**—Can view and execute all workflows in the system.</li> <li>**Read Only User**—Can access all metadata and workflows in the system as read-only. Cannot modify or execute workflows.</li></ul>                                                                                |
+| Roles | The user role, which governs the basic access level for the user. The available roles are: <ul><li>**Admin**: Superuser. Full access to the system and resources. Can manage users and groups.</li> <li>**User**: Regular user with permissions to create workflow definitions, task definitions, applications, integrations, secrets, and user forms. Has full API Gateway access, including view and management permissions. Can search workflows.</li> <li>**Metadata Manager**: Can manage all workflow and task definitions in the cluster, including performing any action regardless of workflow or task ownership. Can view and manage API Gateway configurations. Can create integrations and secrets.</li> <li>**Workflow Manager**: Can view, execute, and manage all workflow executions in the system, including start, pause, resume, rerun, retry, restart, terminate, and delete actions. Has execute and read access to workflow and task definitions.</li> <li>**Read Only User**: Can view applications, metadata, workflows, API gateway, and search workflows.</li></ul>                                                                                |
 | Groups | The groups that the user should be part of. This provides additional group-level permissions to the user.                                               |
 
 4. Select **Save**.
@@ -75,7 +74,7 @@ Read Only Users cannot be added to any groups.
     | ------ |-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
     | Name | A name to identify your group. For example, “Engineering”. This cannot be changed later.                                                                     |
     | Description | A description of the group.                                        |
-    | Default group role | Optional. The role(s) that all group members will inherit, on top of their individually defined role(s). The available roles are: <ul><li>**Admin**—Superuser. Full access to the system and resources. Can manage users and groups.</li> <li>**User**—Can only access resources that they created.</li> <li>**Metadata Manager**—Can read, update, and delete all metadata in the system.</li> <li>**Workflow Manager**—Can view and execute all workflows in the system.</li> <li>**Read Only User**—Can access all metadata and workflows in the system as read-only. Cannot modify or execute workflows.</li></ul>                           |
+    | Default group role | Optional. Roles that all group members inherit in addition to their individually assigned roles. The available roles are: <ul><li>**Admin**: Superuser. Full access to the system and resources. Can manage users and groups.</li> <li>**User**: Regular user group with permissions to create workflow definitions, task definitions, applications, integrations, secrets, and user forms. Has full API Gateway access, including view and management permissions. Can search workflows.</li> <li>**Metadata Manager**: Can manage all workflow and task definitions in the cluster, including performing any action regardless of workflow or task ownership. Can view and manage API Gateway configurations. Can create integrations and secrets.</li> <li>**Workflow Manager**: Can view, execute, and manage all workflow executions in the system, including start, pause, resume, rerun, retry, restart, terminate, and delete actions. Has execute and read access to workflow and task definitions.</li> <li>**Read Only User**: Can view applications, metadata, workflows, API gateway, and search workflows.</li></ul>                           |
     4. Select **Save**.<br/>The group has been created. You can proceed to add members or permissions to the group.
 
 <p align="center"><img src="/content/img/RBAC/managing_users_and_groups-editing_group_information.png" alt="Group configuration screen in Conductor UI." width="90%" height="auto"></img></p>
@@ -87,10 +86,10 @@ Read Only Users cannot be added to any groups.
     <p align="center"><img src="/content/img/RBAC/managing_users_and_groups-adding_group_permissions.png" alt="Granting access to specific tasks and workflows" width="90%" height="auto"></img></p>
     2. Toggle between each resource type and select the resources to provide access to.
     3. Toggle the access levels for your selected resource:
-        * **Read**—Users will be able to view the resource.
-        * **Update**—Users will be able to update the resource.
-        * **Execute**—Users will be able to execute the resource.
-        * **Delete**—Users will be able to delete the resource.
+        * **Read**: Users will be able to view the resource.
+        * **Update**: Users will be able to update the resource.
+        * **Execute**: Users will be able to execute the resource.
+        * **Delete**: Users will be able to delete the resource.
 
   All group members will now have these roles and permissions, on top of their existing user-based permissions.
 
