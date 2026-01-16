@@ -1004,6 +1004,16 @@ const sidebars = {
                             id: 'tutorials/document-approvals',
                             label: 'Document Approval',
                         },
+                                                {
+                            type: 'doc',
+                            id: 'tutorials/document-classifier',
+                            label: 'Document Classification',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'tutorials/document-retrieval',
+                            label: 'Document Retrieval Workflow',
+                        },
                     ]
                 },
                 {
