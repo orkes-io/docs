@@ -23,6 +23,12 @@ Configure these parameters for the Join task.
 | joinOn     | A list of task reference names that the Join task will wait for completion before proceeding with the next task.<br/><br/>For Dynamic Fork workflows, `joinOn` is typically set to an empty array. | Required.          |
 | expression | The join script, which controls how the Join task completes if specified.                                        | Optional.          |
 
+:::info Notes
+When a Join task is used after a [Switch](https://orkes.io/content/reference-docs/operators/switch) task, the Join task evaluates the completion of the Switch task itself, not the tasks executed within each switch branch. This can cause the Join task to complete before all branch tasks have finished.
+
+In such cases, use a task such as [Set Variable](https://orkes.io/content/reference-docs/operators/set-variable) at the end of each relevant switch branch, and configure the Join task to join on those tasks. In workflows with nested Switch tasks, place the Join task after the **outermost** Switch task so the workflow proceeds only after all required branches complete.
+:::
+
 ### Join script configuration
 
 A join script is optional and allows custom control over when the Join task completes. Script parameters can be passed through the Join task’s input parameters.
