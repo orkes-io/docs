@@ -20,14 +20,8 @@ Configure these parameters for the Join task.
 
 | Parameter  | Description                                                                                                      | Required/ Optional |
 | ---------- | ---------------------------------------------------------------------------------------------------------------- | ------------------ |
-| joinOn     | A list of task reference names that the Join task will wait for completion before proceeding with the next task.<br/><br/>For Dynamic Fork workflows, `joinOn` is typically set to an empty array. | Required.          |
+| joinOn     | A list of task reference names that the Join task will wait for completion before proceeding with the next task.<br/><br/>For Dynamic Fork workflows, `joinOn` is typically set to an empty array.<br/><br/>**Notes**: When a Join task is used after a [Switch](https://orkes.io/content/reference-docs/operators/switch) task, the Join task can complete when the Switch task completes, even if the tasks within the switch branches have not finished. To handle this, add a task such as [Set Variable](https://orkes.io/content/reference-docs/operators/set-variable) at the end of the outermost Switch task and configure the Join task to join on that task. This ensures the Join task waits until all switch branch execution is complete before the workflow continues. | Required.          |
 | expression | The join script, which controls how the Join task completes if specified.                                        | Optional.          |
-
-:::info Notes
-When a Join task is used after a [Switch](https://orkes.io/content/reference-docs/operators/switch) task, the Join task evaluates the completion of the Switch task itself, not the tasks executed within each switch branch. This can cause the Join task to complete before all branch tasks have finished.
-
-In such cases, use a task such as [Set Variable](https://orkes.io/content/reference-docs/operators/set-variable) at the end of each relevant switch branch, and configure the Join task to join on those tasks. In workflows with nested Switch tasks, place the Join task after the **outermost** Switch task so the workflow proceeds only after all required branches complete.
-:::
 
 ### Join script configuration
 
