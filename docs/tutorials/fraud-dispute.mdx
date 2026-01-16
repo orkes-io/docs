@@ -19,13 +19,13 @@ In this tutorial, you’ll build a workflow where:
 - Based on the classification:
     - Low and medium-risk disputes are referred to human reviewers for a decision.
     - High-risk cases are routed to fraud investigators.
-- Each case resolution triggers a customer notification via email.
+- Each case resolution triggers an email notification to the customer.
 
 Here’s how the workflow looks like:
 
 <p align="center"><img src="/content/img/fraud-dispute-workflow.png" alt="Fraud dispute resolution workflow in Orkes Conductor" width="80%" height="auto"></img></p>
 
-Follow along using the free [Developer Edition](https://developer.orkescloud.com/). If you don’t have an account yet, sign up to get started.
+Follow along using the free [Orkes Developer Edition](https://developer.orkescloud.com/). If you don’t have an account yet, sign up to get started.
 
 ## Step 1: Create an OpenAI integration in Orkes Conductor
 
@@ -63,7 +63,7 @@ In this tutorial, we’ll use SendGrid to send emails. To do that, you must set 
 
 The workflow uses a Human task in Orkes Conductor for manual review. Reviewers can complete approvals either through the Conductor UI or an external interface, such as an internal investigation portal.
 
-In this tutorial, you’ll use the Conductor UI to complete approvals. For this, a user form is to be created in Conductor. To support this, you’ll create **three separate user forms**—one each for **low**, **medium**, and **high** risk disputes.
+In this tutorial, you’ll use the Conductor UI to complete approvals. For this, a user form is to be created in Conductor. To support this, you’ll create **three separate user forms**, one each for **low**, **medium**, and **high** risk disputes.
 
 **To create a user form:**
 1. Go to [**Definitions** > **User Forms**](https://developer.orkescloud.com/human/templates) from the left navigation menu on your Conductor cluster.
@@ -841,7 +841,7 @@ The input parameters are represented here with dummy values for demonstration. I
 
 3. Select **Execute**.
 
-This initiates the workflow and takes you to the workflow execution page. Since the transaction ID and amount are invalid, the validation fails, causing the workflow to terminate and notify the customer to resubmit with correct details.
+This initiates the workflow and takes you to the workflow execution page. Since the transaction ID and amount are invalid, the validation fails, causing the workflow to terminate and notifying the customer to resubmit with correct details.
 
 :::tip
 In this example, validation is simulated using a [JSON JQ Transform](https://orkes.io/content/reference-docs/system-tasks/jq-transform) task for basic checks. In a production setup, you can replace this step with an API call to your internal payment or dispute validation system.
@@ -867,7 +867,7 @@ Now, let’s rerun the workflow for a low-risk case. Here’s the updated workfl
 }
 ```
 
-This initiates the workflow and takes you to the workflow execution page. The LLM classifies the dispute as low risk. The Conductor UI receives a human task, which anyone on the team can claim, review the case, and marks it as approved or rejected.
+This initiates the workflow and takes you to the workflow execution page. The LLM classifies the dispute as low risk. The Conductor UI receives a human task, which anyone on the team can claim, review the case, and mark it as approved or rejected.
 
 ### Completing the Human task
 
