@@ -203,3 +203,11 @@ Since task workers typically perform a unit of work as part of a larger workflow
 - Across various workflows.
 
 When reusing tasks, it's important to think of situations that a multi-tenant system faces. By default, all the work assigned to this worker goes into the same task queue. This could result in your worker not being polled quickly if there is a noisy neighbor in the ecosystem. You can tackle this situation by scaling up the number of workers to handle the task load, or even using [task-to-domain](task-to-domain) to route the task load into separate queues.
+
+Learn how to configure input/output parameters to be used in workflows.
+
+```mdx-code-block
+import DocCardList from '@theme/DocCardList';
+
+<DocCardList />
+```
