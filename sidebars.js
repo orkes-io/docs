@@ -550,52 +550,6 @@ const sidebars = {
         },
         {
             type: 'category',
-            label: 'Conductor Clients & SDKs',
-            link: {
-                type: 'doc',
-                id: 'sdks/sdk-index',
-            },
-            className: 'leftMenuHeader',
-            items: [
-                {
-                    type: 'doc',
-                    id: 'sdks/authentication',
-                    label: 'Authentication',
-                },
-                {
-                    type: 'doc',
-                    id: 'sdks/python',
-                    label: 'Python',
-                },
-                {
-                    type: 'doc',
-                    id: 'sdks/java',
-                    label: 'Java',
-                },
-                {
-                    type: 'doc',
-                    id: 'sdks/javascript',
-                    label: 'JavaScript',
-                },
-                {
-                    type: 'doc',
-                    id: 'sdks/csharp',
-                    label: 'C#',
-                },
-                {
-                    type: 'doc',
-                    id: 'sdks/golang',
-                    label: 'Go',
-                },
-                {
-                    type: 'doc',
-                    id: 'sdks/clojure',
-                    label: 'Clojure',
-                },
-            ],
-        },
-        {
-            type: 'category',
             label: 'Task Reference',
             link: {
                 type: 'generated-index',
@@ -799,6 +753,52 @@ const sidebars = {
                     ]
                 },
             ]
+        },
+        {
+            type: 'category',
+            label: 'Conductor Clients & SDKs',
+            link: {
+                type: 'doc',
+                id: 'sdks/sdk-index',
+            },
+            className: 'leftMenuHeader',
+            items: [
+                {
+                    type: 'doc',
+                    id: 'sdks/authentication',
+                    label: 'Authentication',
+                },
+                {
+                    type: 'doc',
+                    id: 'sdks/python',
+                    label: 'Python',
+                },
+                {
+                    type: 'doc',
+                    id: 'sdks/java',
+                    label: 'Java',
+                },
+                {
+                    type: 'doc',
+                    id: 'sdks/javascript',
+                    label: 'JavaScript',
+                },
+                {
+                    type: 'doc',
+                    id: 'sdks/csharp',
+                    label: 'C#',
+                },
+                {
+                    type: 'doc',
+                    id: 'sdks/golang',
+                    label: 'Go',
+                },
+                {
+                    type: 'doc',
+                    id: 'sdks/clojure',
+                    label: 'Clojure',
+                },
+            ],
         },
         {
             type: 'category',
