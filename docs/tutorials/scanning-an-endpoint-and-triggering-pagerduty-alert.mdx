@@ -27,15 +27,15 @@ Here’s how the workflow looks like:
 
 <p align="center"><img src="/content/img/alerting-workflow.png" alt="Alerting workflow in Orkes Conductor" width="60%" height="auto"></img></p>
 
-Follow along using the free [Developer Edition](https://developer.orkescloud.com/). If you don’t have an account yet, sign up to get started.
+Follow along using the free [Orkes Developer Edition](https://developer.orkescloud.com/). If you don’t have an account yet, sign up to get started.
 
 ## Step 1: Create workflows in Orkes Conductor
 
 Orkes Conductor lets you define workflows as JSON, through [SDKs](https://orkes.io/content/category/sdks), [APIs](https://orkes.io/content/category/ref-docs/api), or the [UI](http://orkes.io/content/developer-guides/build-workflows-using-ui). 
 
 In this tutorial, you will create two workflows:
-1. **seed_failure** – A workflow that intentionally fails on each run, used to simulate a failure event.
-2. **alert_workflow** – A workflow that monitors the first one for failures and triggers a PagerDuty alert.
+1. **seed_failure**: A workflow that intentionally fails on each run, used to simulate a failure event.
+2. **alert_workflow**: A workflow that monitors the first one for failures and triggers a PagerDuty alert.
 
 **To create a workflow using Conductor UI:**
 
@@ -167,7 +167,7 @@ The workflows are ready. The next step is to create a PagerDuty integration to r
 4. Enter a **Name** and [create a new service](https://support.pagerduty.com/main/docs/services-and-integrations#create-a-service).
 5. When prompted for an integration, select **Events API V2**.
 6. Select **Create Service**.
-7. Copy the **Integration Key** and the **Integration URL (Alert Events**) and store them securely.
+7. Copy the **Integration Key** and the **Integration URL** and store them securely.
 
 <p align="center"><img src="/content/img/pagerduty-integration.png" alt="Configuring integration in PagerDuty" width="100%" height="auto"></img></p>
 
@@ -195,7 +195,7 @@ The secret is referenced in the workflow as `${workflow.secrets.orkes_pagerduty_
 
 Next, modify the workflow to suit your requirements.
 
-Open the alert_workflow definition. In the *trigger_pagerduty* task, replace the `<PAGERDUTY-URL>` placeholder with the **Integration URL (Alert Events)** you copied from PagerDuty.
+Open the alert_workflow definition. In the *trigger_pagerduty* task, replace the `<PAGERDUTY-URL>` placeholder with the **Integration URL** you copied from PagerDuty.
 
 <p align="center"><img src="/content/img/modifying-pagerduty-workflow.png" alt="Modifying PagerDuty workflow" width="100%" height="auto"></img></p>
 
