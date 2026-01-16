@@ -240,7 +240,7 @@ After confirming the workflow works as expected, switch the Stripe webhook from 
 
 This payment confirmation workflow can be extended by:
 
-- Automating using workflow scheduler that schedules the workflow to run at regular intervals.
+- Automating using a [workflow scheduler](https://orkes.io/content/developer-guides/scheduling-workflows) that schedules the workflow to run at regular intervals.
 - Sending a Slack notification when a payment succeeds so internal teams are notified instantly.
 - Using a JSON JQ Transform task to extract additional fields from the Stripe event, such as customer metadata, product details, or coupon information, and process downstream accordingly.
 - Replacing the Inline task with a Switch task to route different payment event types, for example, `routing payment_intent.succeeded` and `checkout.session.completed` to different email templates.

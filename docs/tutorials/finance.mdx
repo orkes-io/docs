@@ -18,7 +18,7 @@ In this tutorial, you’ll build a workflow where:
 - The system validates the application for completeness and data accuracy.
 - Based on conditions:
     - Approval is automated if the loan amount is $10,000 or less, and the customer receives an approval email.
-    - If the loan amount is greater than $10,000, the application is sent for manual review.
+    - If the loan amount exceeds $10,000, the application is sent for manual review.
         - If approved, the customer receives an approval email.
         - If rejected, the customer receives a rejection email.
 
@@ -28,7 +28,7 @@ Here’s how the workflow looks like:
 
 <p align="center"><img src="/content/img/tutorial/loan-approval-workflow.png" alt="Loan approval workflow in Orkes Conductor" width="80%" height="auto"></img></p>
 
-Follow along using the free [Developer Edition](https://developer.orkescloud.com/). If you don’t have an account yet, sign up to get started.
+Follow along using the free [Orkes Developer Edition](https://developer.orkescloud.com/). If you don’t have an account yet, sign up to get started.
 
 ## Step 1: Create an OpenAI integration in Orkes Conductor
 
@@ -468,7 +468,7 @@ Now, let’s rerun the workflow for a loan over $10,000. Here’s the updated wo
 }
 ```
 
-This initiates the workflow and takes you to the workflow execution page. Since the loan amount is over $ 10,000, it goes into manual approval.
+This initiates the workflow and takes you to the workflow execution page. Since the loan amount is less than $10,000, it is automatically approved, and the user receives an email via SendGrid.
 
 ### Completing the Human task
 

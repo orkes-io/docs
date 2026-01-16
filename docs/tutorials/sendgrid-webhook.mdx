@@ -157,7 +157,7 @@ Since the webhook is designed to trigger workflow on "opened" or "clicked" event
 
 For testing purposes, we’ll start with an **open** event. 
 
-1. Go to the **Run** tab and enter the input parameter.
+1. From the workflow definition, go to the **Run** tab and enter the input parameter.
 
 ```json
 {
@@ -174,7 +174,7 @@ The workflow is now running and waiting for events from SendGrid.
 To test incoming events, create a Single Send in SendGrid and send it to a test recipient.
 
 :::info Prerequisites
-- [The sender email should be verified](https://www.twilio.com/docs/sendgrid/ui/sending-email/sender-verification).
+- [The sender's email should be verified](https://www.twilio.com/docs/sendgrid/ui/sending-email/sender-verification).
 - [A recipient list must be created](https://www.twilio.com/docs/sendgrid/ui/managing-contacts/create-and-manage-contacts), and it should include at least one email address you have access to.
 :::
 

@@ -17,7 +17,7 @@ In this tutorial, you’ll build a workflow where:
         - If **approved**, it proceeds to **Reviewer 2**.
         - If **rejected**, the user is notified by email to revise and resubmit based on the feedback.
 - If **Reviewer 2** approves, the user receives an approval email.
-- If **Reviewer 2** rejects, the user gets an email with reviewer feedback.
+- If **Reviewer 2** rejects, the user receives an email with the reviewer's feedback.
 
 The workflow is configured so that if the assigned reviewer does not act on the task within the SLA period of 24 hours, the task automatically becomes available for anyone to claim and complete. Learn more about [how assignment policies work for Human tasks](https://orkes.io/content/developer-guides/orchestrating-human-tasks#step-3-configure-the-human-task).
 
@@ -25,7 +25,7 @@ Here’s how the workflow looks like:
 
 <p align="center"><img src="/content/img/tutorial/doc-approval-workflow.png" alt="Doc approval workflow in Orkes Conductor" width="80%" height="auto"></img></p>
 
-Follow along using the free [Developer Edition](https://developer.orkescloud.com/). If you don’t have an account yet, sign up to get started.
+Follow along using the free [Orkes Developer Edition](https://developer.orkescloud.com/). If you don’t have an account yet, sign up to get started.
 
 ## Step 1: Create a SendGrid integration in Orkes Conductor
 
