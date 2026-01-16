@@ -160,7 +160,6 @@ const sidebars = {
                     className: 'leftMenuHeader',
                     items: [
                         'developer-guides/using-workers',
-                        'developer-guides/monitoring-task-queues',
                         'developer-guides/scaling-workers',
                         'developer-guides/task-to-domain'
                     ]
