@@ -18,7 +18,7 @@ In this tutorial, you will:
 4. Modify workflow.
 5. Run the workflow.
 
-To follow along, ensure you have access to the free [Developer Edition](https://developer.orkescloud.com/).
+To follow along, ensure you have access to the free [Orkes Developer Edition](https://developer.orkescloud.com/).
 
 ## The standup updates workflow
 
@@ -38,7 +38,7 @@ This tutorial includes two workflows:
 
 <p align="center"><img src="/content/img/individual-updates-workflow.png" alt="Workflow for individual user updates" width="50%" height="auto"></img></p>
 
-- The **individual_updates** workflow begins with an [HTTP task](https://orkes.io/content/reference-docs/system-tasks/http) that sends a welcome message to the user asking for their scrum updates.
+- The **individual_updates** workflow begins with an [HTTP task](https://orkes.io/content/reference-docs/system-tasks/http) that sends a welcome message to the user, asking for their scrum updates.
 - Next, a [Do While task](https://orkes.io/content/reference-docs/operators/do-while) captures the user inputs. The loop condition for the Do While task is checked using a [Wait for Webhook](https://orkes.io/content/reference-docs/system-tasks/wait-for-webhook) task that captures incoming events from Slack.
 - It is followed by a series of [JSON JQ Transform](https://orkes.io/content/reference-docs/system-tasks/jq-transform) tasks that aggregate updates from the user, convert them into CSV format, and append the update with the user’s name.
 - The final task is an HTTP task that posts the updates to a dedicated Slack channel.
@@ -272,11 +272,11 @@ The Slack app has been created.
 
 **To install the app in a Slack workspace:**
 
-1. From the [Slack API](https://api.slack.com/apps) console, go to **Settings** > **Install App**.
+1. Go to **Settings** > **Install App**.
 2. Select **Install to \<YOUR-WORKSPACE-NAME>**.
-3. In **Where Should \<Acme Bot> post**, select the channel to install the app and select **Allow**.
+3. In **Channel for webhook**, select the channel to install the app and select **Allow**.
 
-<p align="center"><img src="/content/img/slack-app-installation.png" alt="Installing Slack App to the workspace" width="50%" height="auto"></img></p>
+<p align="center"><img src="/content/img/slack-app-installation.png" alt="Installing Slack App to the workspace" width="80%" height="auto"></img></p>
 
 The Slack bot is integrated into the specified channel:
 
@@ -289,7 +289,7 @@ Once the app is installed in your workspace, a **Bot User OAuth Token** and a **
 **To store the OAuth Token and Webhook URL as secrets in Conductor:**
 
 1. Go to [**Definitions** > **Secrets**](https://developer.orkescloud.com/secrets) from the left menu on your Conductor cluster.
-2. Select **+ Add Secret** and add the following:
+2. Select **+ Add secret** and add the following:
     - Enter **Secret name** as *slack_standup_token*.
     - In **Secret** value, enter the *Bot User OAuth token* generated in the previous step.
 3. Select **Add** to save the secret.
@@ -335,7 +335,7 @@ When the workflow is triggered, the bot requests updates from users.
 
 <p align="center"><img src="/content/img/bot-collecting-updates.png" alt="Bot requesting updates from user" width="90%" height="auto"></img></p>
 
-Users must send "done" after posting updates. The bot collects these and posts them to the specified channel.
+After submitting their updates, users must send a separate “done” message. The bot collects these messages and posts them to the specified channel.
 
 <p align="center"><img src="/content/img/bot-posting-updates.png" alt="Bot posting updates to the channel" width="90%" height="auto"></img></p>
 
