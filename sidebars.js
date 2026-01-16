@@ -302,295 +302,295 @@ const sidebars = {
                         },
                     ]
                 },
+            ],
+        },
+        {
+            type: 'category',
+            label: 'Integrations',
+            link: {
+                type: 'generated-index',
+                title: 'Integrations',
+                slug: '/category/integrations',
+                description: 'Integrate your Orkes Conductor cluster with various AI, LLMs, vector databases, message brokers, emails, git providers, and RDBMS systems.',
+            },
+            className: 'leftMenuHeader',
+            items: [
                 {
                     type: 'category',
-                    label: 'Conductor Clients & SDKs',
+                    label: 'AI / LLM',
                     link: {
-                        type: 'doc',
-                        id: 'sdks/sdk-index',
+                        type: 'generated-index',
+                        title: 'AI / LLM Integrations',
+                        slug: '/category/integrations/ai-llm',
                     },
-                    className: 'leftMenuHeader',
                     items: [
                         {
                             type: 'doc',
-                            id: 'sdks/authentication',
-                            label: 'Authentication',
+                            id: 'integrations/ai-llm/ollama',
+                            label: 'Ollama',
                         },
                         {
                             type: 'doc',
-                            id: 'sdks/python',
-                            label: 'Python',
+                            id: 'integrations/ai-llm/azure-open-ai',
+                            label: 'Azure Open AI',
                         },
                         {
                             type: 'doc',
-                            id: 'sdks/java',
-                            label: 'Java',
+                            id: 'integrations/ai-llm/open-ai',
+                            label: 'Open AI',
                         },
                         {
                             type: 'doc',
-                            id: 'sdks/javascript',
-                            label: 'JavaScript',
+                            id: 'integrations/ai-llm/perplexity',
+                            label: 'Perplexity',
                         },
                         {
                             type: 'doc',
-                            id: 'sdks/csharp',
-                            label: 'C#',
+                            id: 'integrations/ai-llm/grok',
+                            label: 'Grok',
                         },
                         {
                             type: 'doc',
-                            id: 'sdks/golang',
-                            label: 'Go',
+                            id: 'integrations/ai-llm/cohere',
+                            label: 'Cohere',
                         },
                         {
                             type: 'doc',
-                            id: 'sdks/clojure',
-                            label: 'Clojure',
-                        }
-                    ]
+                            id: 'integrations/ai-llm/mistral',
+                            label: 'Mistral',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'integrations/ai-llm/anthropic-claude',
+                            label: 'Anthropic Claude',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'integrations/ai-llm/vertex-ai',
+                            label: 'Google Vertex AI',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'integrations/ai-llm/google-gemini-ai',
+                            label: 'Google Gemini AI',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'integrations/ai-llm/hugging-face',
+                            label: 'Hugging Face',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'integrations/ai-llm/aws-bedrock-anthropic',
+                            label: 'AWS Bedrock Anthropic',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'integrations/ai-llm/aws-bedrock-cohere',
+                            label: 'AWS Bedrock Cohere',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'integrations/ai-llm/aws-bedrock-titan',
+                            label: 'AWS Bedrock Titan',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'integrations/ai-llm/aws-bedrock-llama',
+                            label: 'AWS Bedrock Llama3',
+                        },
+                    ],
                 },
                 {
                     type: 'category',
-                    label: 'Integrations',
+                    label: 'Vector Databases',
                     link: {
                         type: 'generated-index',
-                        title: 'Integrations',
-                        slug: '/category/integrations',
-                        description: 'Integrate your Orkes Conductor cluster with various AI, LLMs, vector databases, message brokers, emails, git providers, and RDBMS systems.',
+                        title: 'Vector Databases Integrations',
+                        slug: '/category/integrations/vector-databases',
                     },
-                    className: 'leftMenuHeader',
                     items: [
                         {
-                            type: 'category',
-                            label: 'AI / LLM',
-                            link: {
-                                type: 'generated-index',
-                                title: 'AI / LLM Integrations',
-                                slug: '/category/integrations/ai-llm'
-                            },
-                            items: [
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/ai-llm/ollama',
-                                    label: 'Ollama',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/ai-llm/azure-open-ai',
-                                    label: 'Azure Open AI',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/ai-llm/open-ai',
-                                    label: 'Open AI',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/ai-llm/perplexity',
-                                    label: 'Perplexity',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/ai-llm/grok',
-                                    label: 'Grok',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/ai-llm/cohere',
-                                    label: 'Cohere',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/ai-llm/mistral',
-                                    label: 'Mistral',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/ai-llm/anthropic-claude',
-                                    label: 'Anthropic Claude',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/ai-llm/vertex-ai',
-                                    label: 'Google Vertex AI',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/ai-llm/google-gemini-ai',
-                                    label: 'Google Gemini AI',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/ai-llm/hugging-face',
-                                    label: 'Hugging Face',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/ai-llm/aws-bedrock-anthropic',
-                                    label: 'AWS Bedrock Anthropic',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/ai-llm/aws-bedrock-cohere',
-                                    label: 'AWS Bedrock Cohere',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/ai-llm/aws-bedrock-titan',
-                                    label: 'AWS Bedrock Titan',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/ai-llm/aws-bedrock-llama',
-                                    label: 'AWS Bedrock Llama3',
-                                },
-                            ],
+                            type: 'doc',
+                            id: 'integrations/vector-databases/pinecone',
+                            label: 'Pinecone',
                         },
                         {
-                            type: 'category',
-                            label: 'Vector Databases',
-                            link: {
-                                type: 'generated-index',
-                                title: 'Vector Databases Integrations',
-                                slug: '/category/integrations/vector-databases'
-                            },
-                            items: [
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/vector-databases/pinecone',
-                                    label: 'Pinecone',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/vector-databases/weaviate',
-                                    label: 'Weaviate',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/vector-databases/postgres-vector-database',
-                                    label: 'Postgres Vector Database',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/vector-databases/mongo-vector-database',
-                                    label: 'Mongo Vector Database',
-                                },
-                            ],
+                            type: 'doc',
+                            id: 'integrations/vector-databases/weaviate',
+                            label: 'Weaviate',
                         },
                         {
-                            type: 'category',
-                            label: 'Message Broker',
-                            link: {
-                                type: 'generated-index',
-                                title: 'Message Broker Integrations',
-                                slug: '/category/integrations/message-broker'
-                            },
-                            items: [
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/message-broker/amqp',
-                                    label: 'AMQP',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/message-broker/amazon-msk',
-                                    label: 'Amazon MSK',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/message-broker/confluent-kafka',
-                                    label: 'Confluent Kafka',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/message-broker/apache-kafka',
-                                    label: 'Apache Kafka',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/message-broker/nats-messaging',
-                                    label: 'NATS Messaging',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/message-broker/aws-sqs',
-                                    label: 'AWS SQS',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/message-broker/azure-service-bus',
-                                    label: 'Azure Service Bus',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/message-broker/gcp-pub-sub',
-                                    label: 'GCP Pub Sub',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/message-broker/ibm-mq',
-                                    label: 'IBM MQ',
-                                },
-                            ],
+                            type: 'doc',
+                            id: 'integrations/vector-databases/postgres-vector-database',
+                            label: 'Postgres Vector Database',
                         },
                         {
-                            type: 'category',
-                            label: 'Cloud Providers',
-                            link: {
-                                type: 'generated-index',
-                                title: 'Cloud Providers',
-                                slug: '/category/integrations/cloud-provider'
-                            },
-                            items: [
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/cloud-provider/aws',
-                                    label: 'AWS',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/cloud-provider/gcp',
-                                    label: 'GCP',
-                                },
-                            ],
-                        },
-                        {
-                            type: 'category',
-                            label: 'RDBMS',
-                            link: {
-                                type: 'generated-index',
-                                title: 'RDBMS Integrations',
-                                slug: '/category/integrations/rdbms'
-                            },
-                            items: [
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/rdbms/relational-database',
-                                    label: 'Relational Database',
-                                },
-                            ],
-                        },
-                        {
-                            type: 'category',
-                            label: 'Email/Git',
-                            link: {
-                                type: 'generated-index',
-                                title: 'Email/Git',
-                                slug: '/category/integrations/email'
-                            },
-                            items: [
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/sendgrid',
-                                    label: 'SendGrid Email',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/git',
-                                    label: 'Git Repository',
-                                },
-                            ],
+                            type: 'doc',
+                            id: 'integrations/vector-databases/mongo-vector-database',
+                            label: 'Mongo Vector Database',
                         },
                     ],
+                },
+                {
+                    type: 'category',
+                    label: 'Message Broker',
+                    link: {
+                        type: 'generated-index',
+                        title: 'Message Broker Integrations',
+                        slug: '/category/integrations/message-broker',
+                    },
+                    items: [
+                        {
+                            type: 'doc',
+                            id: 'integrations/message-broker/amqp',
+                            label: 'AMQP',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'integrations/message-broker/amazon-msk',
+                            label: 'Amazon MSK',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'integrations/message-broker/confluent-kafka',
+                            label: 'Confluent Kafka',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'integrations/message-broker/apache-kafka',
+                            label: 'Apache Kafka',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'integrations/message-broker/nats-messaging',
+                            label: 'NATS Messaging',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'integrations/message-broker/aws-sqs',
+                            label: 'AWS SQS',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'integrations/message-broker/azure-service-bus',
+                            label: 'Azure Service Bus',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'integrations/message-broker/gcp-pub-sub',
+                            label: 'GCP Pub Sub',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'integrations/message-broker/ibm-mq',
+                            label: 'IBM MQ',
+                        },
+                    ],
+                },
+                {
+                    type: 'category',
+                    label: 'Cloud Providers',
+                    link: {
+                        type: 'generated-index',
+                        title: 'Cloud Providers',
+                        slug: '/category/integrations/cloud-provider',
+                    },
+                    items: [
+                        {
+                            type: 'doc',
+                            id: 'integrations/cloud-provider/aws',
+                            label: 'AWS',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'integrations/cloud-provider/gcp',
+                            label: 'GCP',
+                        },
+                    ],
+                },
+                {
+                    type: 'category',
+                    label: 'RDBMS',
+                    link: {
+                        type: 'generated-index',
+                        title: 'RDBMS Integrations',
+                        slug: '/category/integrations/rdbms',
+                    },
+                    items: [
+                        {
+                            type: 'doc',
+                            id: 'integrations/rdbms/relational-database',
+                            label: 'Relational Database',
+                        },
+                    ],
+                },
+                {
+                    type: 'category',
+                    label: 'Email/Git',
+                    link: {
+                        type: 'generated-index',
+                        title: 'Email/Git',
+                        slug: '/category/integrations/email',
+                    },
+                    items: [
+                        {
+                            type: 'doc',
+                            id: 'integrations/sendgrid',
+                            label: 'SendGrid Email',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'integrations/git',
+                            label: 'Git Repository',
+                        },
+                    ],
+                },
+            ],
+        },
+        {
+            type: 'category',
+            label: 'Conductor Clients & SDKs',
+            link: {
+                type: 'doc',
+                id: 'sdks/sdk-index',
+            },
+            className: 'leftMenuHeader',
+            items: [
+                {
+                    type: 'doc',
+                    id: 'sdks/authentication',
+                    label: 'Authentication',
+                },
+                {
+                    type: 'doc',
+                    id: 'sdks/python',
+                    label: 'Python',
+                },
+                {
+                    type: 'doc',
+                    id: 'sdks/java',
+                    label: 'Java',
+                },
+                {
+                    type: 'doc',
+                    id: 'sdks/javascript',
+                    label: 'JavaScript',
+                },
+                {
+                    type: 'doc',
+                    id: 'sdks/csharp',
+                    label: 'C#',
+                },
+                {
+                    type: 'doc',
+                    id: 'sdks/golang',
+                    label: 'Go',
+                },
+                {
+                    type: 'doc',
+                    id: 'sdks/clojure',
+                    label: 'Clojure',
                 },
             ],
         },
