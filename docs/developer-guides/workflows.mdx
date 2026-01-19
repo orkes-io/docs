@@ -5,35 +5,46 @@ description: "This guide focuses on the basics of building workflows in Orkes Co
 
 # Overview: Workflows
 
+A workflow coordinates tasks to execute business logic. In Conductor, you can build workflows for process automation, event-driven processing, agentic orchestration, microservice orchestration, real-time API orchestration, and human approval flows.
 
-Build workflows in Conductor for a range of uses: event-driven workflows, agentic workflows, process automation, human-in-the-loop processes, microservice orchestration, or real-time API orchestration.
-
+A workflow defines how tasks run, in what order, and under which conditions. Conductor manages task execution, retries, state, and failure handling so you can focus on business logic instead of orchestration code.
 
 ## Ways to create workflows
 
-In Conductor, all workflow definitions are stored as JSON. There are four ways to create a Conductor workflow:
-1. **Code**—Using Conductor SDKs, define the workflow in any programming language (Python, Java, JavaScript, C#, Go, Clojure) and register it to the Conductor server. Once registered, the JSON workflow definition is generated and saved. Learn more in [Write Workflows as Code](write-workflows-using-code).
-2. **API**—Write the workflow in JSON and register it to the Conductor server using the [`/api/metadata/workflow`](/reference-docs/api/metadata/creating-workflow-definition) endpoint.
-3. **[Visual workflow builder](/content/developer-guides/build-workflows-using-ui)**—Using Conductor UI, define your workflow visually, which is formatted as JSON under the hood.
-4. [**BPMN importer**](/content/developer-guides/convert-bpmn-to-workflows)—Convert existing BPMN files into Conductor workflows using the built-in importer. This provides an easy migration path from BPMN-based systems.
+In Conductor, all workflows are stored and executed as JSON workflow definitions. You can create a workflow using any of the following methods:
 
+1. **Code**: Using Conductor SDKs, define the workflow in any programming language (Python, Java, JavaScript, C#, Go, Clojure) and register it with the Conductor server. Once registered, Conductor generates and saves the JSON workflow definition. Learn more in [Write Workflows as Code](/content/developer-guides/write-workflows-using-code).
+2. **API**: Write the workflow in JSON and register it to the Conductor server using the [`/api/metadata/workflow`](/reference-docs/api/metadata/creating-workflow-definition) endpoint.
+3. **Conductor UI**: Using the Conductor UI, you can design workflows in two ways:
+    - [**Visual workflow builder**](/content/developer-guides/build-workflows-using-ui#create-workflows-using-visual-workflow-builder): Define your workflow visually, which is formatted as JSON under the hood.
+    - [**Assistant**](/content/developer-guides/build-workflows-using-ui#using-assistant): Use a prompt-based interface to create workflows by describing them in natural language. The assistant generates the workflow definition for you.
+4. **BPMN importer**: [Convert existing BPMN (Business Process Model and Notation) files into Conductor workflows](/content/developer-guides/convert-bpmn-to-workflows) using the built-in importer. This provides an easy migration path from BPMN-based systems.
 
 ### Static vs dynamic workflows
 
-With Conductor, you can create workflows statically (ahead of time) or dynamically (at runtime). 
-
-Dynamic workflows are created using the workflow-as-code approach, allowing you to write your workflow and task workers in your preferred language and execute them immediately. This is useful in cases where workflows cannot be defined ahead of time, as the number of tasks and flow control depend on real-time factors. Learn more in [Write Workflows as Code](write-workflows-using-code).
-
+You can create workflows statically (ahead of time) or dynamically (at runtime). Dynamic workflows are created using the workflow-as-code approach, allowing you to write your workflow and task workers in your preferred language and execute them immediately. This is useful when you can't define workflows ahead of time because the number of tasks and flow control depend on real-time factors. Learn more in [Write Workflows as Code](write-workflows-using-code).
 
 ### AI-powered and agentic workflows
 
-An agentic workflow is an AI-driven process where the sequence of tasks are dynamically executed with minimal human interaction to achieve a particular goal. Using Conductor’s suite of [AI Orchestration](ai-orchestration.mdx) and [human-in-the-loop](orchestrating-human-tasks) features, you can rapidly build agentic or AI-powered workflows that are auditable, scalable, and safely embedded with human oversight. Learn more in [Advanced Workflows](advanced-workflows). 
+Agentic workflows use AI-driven decision-making to determine which tasks to execute and when. Task execution can adapt dynamically with minimal human intervention while still allowing oversight when required.
 
+Conductor’s AI orchestration capabilities let you build agentic workflows that are auditable, scalable, and safe to operate in production environments. Learn more in [AI Orchestration and Agentic Workflows](/content/ai-orchestration). 
+
+### Human in the loop
+
+Human-in-the-loop workflows include tasks that require manual input, review, or approval. These workflows combine automated steps with human decision points, making them suitable for approval flows, exception handling, and review-based processes. Learn more in [Human Task Orchestration](/content/developer-guides/orchestrating-human-tasks).
 
 ### Event-driven workflows
 
-Create event-driven workflows and seamlessly integrate with event-driven pipelines with Conductor’s suite of features: webhooks, event handlers, message broker integrations, and more. Learn more in [Advanced Workflows](advanced-workflows). 
+Event-driven workflows start or progress based on external events. Conductor supports event-driven patterns through features such as webhooks, event handlers, and message broker integrations. Learn more in [Eventing](/content/eventing). 
 
+### Gateway
+
+You can expose and trigger Conductor workflows through the Gateway, enabling workflows to act as real-time APIs or Model Context Protocol (MCP) tools.  Learn more in [Gateway](/content/developer-guides/mcp-api-gateway).
+
+### Remote Services
+
+Remote services provide a centralized way to define and manage HTTP and gRPC endpoints that can be reused across workflows.  Learn more in [Remote Services](/content/remote-services).
 
 ## Workflow definition
 
@@ -45,7 +56,7 @@ Here are the workflow configuration parameters:
 | ----------------------------- | --------------------------------------------------------------------------------| ------------------------------- |
 | name                          | Workflow name. <ul><li>For v4.0.1 and prior: Only letters, digits, hyphens (-), and underscores (\_) are allowed.</li> <li>For v4.0.2 and later: Only letters, digits, spaces, hyphens (-), underscores (\_), and certain special characters (`<`, `>`, `{`, `}`, `#`) are allowed.</li></ul>**Note**: It is recommended to use alphanumeric characters for workflow names. While special characters are allowed for backward compatibility, they are not fully supported and may cause unexpected behavior. | Required.                       |
 | description                   | ​Workflow description.                                              | Required.                       |
-| version                       | Workflow version.                                             | Optional.                       |
+| version                       | The version number of the workflow. Increment the version when making breaking changes to the workflow definition. Learn more in [Versioning Workflows](/content/developer-guides/versioning-workflows).                                           | Optional.                       |
 | schemaVersion                 | The current Conductor Schema version. Must be 2.                       | Required.                       |
 | tasks                         | Array of [task configuration](tasks#task-configuration) objects. This defines the flow of tasks in the workflow.                                       | Required.                                              |
 | inputParameters               | Array of workflow input keys.                                                | Optional.                       |
@@ -55,12 +66,12 @@ Here are the workflow configuration parameters:
 | outputSchema                  | Name and type of the output schema to be associated with the workflow.                                 | Required if `enforceSchema` is set to true.          |
 | restartable                   | Whether the workflow can be restarted after completion. The default value is true. <br/><br/> Set to false if restarting a completed workflow causes side effects.                            | Optional.                       |
 | workflowStatusListenerEnabled | Whether to enable status callback for workflow state changes. The default value is false. <br/><br/> Learn more in [Enabling CDC](enabling-cdc-on-conductor-workflows).                            | Optional.                       |
-| workflowStatusListenerSink    | The message broker sink where workflow state changes are sent.                                 | Required if `workflowStatusListener` is set to true. |
-| ownerEmail                    | The email ID of the workflow creator.                                          | Required.                       |
-| timeoutPolicy                 | The workflow timeout policy. <br/><br/> Learn more about workflow timeouts in [Handling Failures](/error-handling).                                                                             | Required.                       |
-| timeoutSeconds                | The timeout duration in seconds.                                                | Required.                       |
-| failureWorkflow               | The compensation workflow to trigger upon failure of the current workflow execution. Useful for cleanup, notifications, or post actions. <br/><br/> Learn more about compensation workflows in [Handling Failures](/error-handling).                                                                          | Optional.                       |
-| rateLimitConfig               | A map of the workflow rate limit configuration. <br/><br/> Learn more about workflow rate limits in [Handling Failures](/error-handling).                                         | Optional.                       |
+| workflowStatusListenerSink    | The message broker sink where workflow state changes are sent.                                 | Required if `workflowStatusListenerEnabled` is set to true. |
+| ownerEmail                    | The email address of the workflow creator.                                          | Required.                       |
+| timeoutPolicy                 | The workflow timeout policy. <br/><br/> Learn more about workflow timeouts in [Handling Failures](/content/error-handling#workflow-timeouts).                                                                             | Required.                       |
+| timeoutSeconds                | The timeout duration in seconds.<br/><br/>Learn more about workflow timeouts in [Handling Failures](/content/error-handling#workflow-timeouts).                                                | Required.                       |
+| failureWorkflow               | The compensation workflow to trigger upon failure of the current workflow execution. Useful for cleanup, notifications, or post actions. <br/><br/> Learn more about compensation workflows in [Handling Failures](/content/error-handling#workflow-compensation-flows).                                                                          | Optional.                       |
+| rateLimitConfig               | A map of the workflow rate limit configuration. <br/><br/> Learn more about workflow rate limits in [Workflow rate limits](/content/rate-limits#workflow-rate-limits).                                         | Optional.                       |
 | rateLimitConfig. **rateLimitKey**             | A unique identifier to group workflow executions for rate limiting.                                                                                                         | Optional.                       |
 | rateLimitConfig. **concurrentExecLimit**      | The number of workflow executions that can run concurrently for a given key.                                                                           | Optional.                       |
 | maskedFields                  | An array of fields to be masked in the workflow execution.<br/>Learn more about masking fields in [Masking Parameters](/content/developer-guides/masking-parameters).| Optional. | 
@@ -94,6 +105,8 @@ Here is an example workflow definition JSON:
   "maskedFields": []
 }
 ```
+
+Get started by choosing how you want to build workflows, using code, API,  the Conductor UI, or by converting existing BPMN definitions.
 
 ```mdx-code-block
 import DocCardList from '@theme/DocCardList';
