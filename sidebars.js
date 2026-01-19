@@ -21,7 +21,7 @@ const sidebars = {
             className: 'leftMenuHeader',
         },
         {
-            type: 'category', 
+            type: 'category',
             label: 'Getting Started',
             link: {
                 type: 'doc',
@@ -61,10 +61,10 @@ const sidebars = {
         },
         {
             type: 'category',
-            label: 'Concepts',
+            label: 'Conceptual Guides',
             link: {
                 type: 'generated-index',
-                title: 'Concepts',
+                title: 'Conceptual Guides',
                 slug: '/category/conceptual-guides',
                 description: 'Learn the essential concepts for building with Conductor.',
             },
@@ -118,34 +118,25 @@ const sidebars = {
                             collapsible: false,
                         },
                         {
-                            type: 'doc',
-                            id: 'developer-guides/tasks-in-workflows',
-                            label: "Tasks",
-                        },
-                        {
                             type: 'category',
-                            label: 'Inputs/Outputs',
+                            label: 'Tasks',
                             link: {
-                                type: 'generated-index',
-                                title: 'Inputs/Outputs',
-                                description: 'Learn how to configure input/output parameters to be used in workflows.',
-                                slug: '/inputs-outputs'
+                                type: 'doc',
+                                id: 'developer-guides/tasks-in-workflows',
                             },
+                            className: 'leftMenuHeader',
                             items: [
                                 'developer-guides/passing-inputs-to-task-in-conductor',
                                 'developer-guides/masking-parameters',
                                 'developer-guides/task-input-templates',
-                                'developer-guides/schema-validation',
-                                'developer-guides/secrets-in-conductor',
-                                'developer-guides/using-environment-variables',
                                 'developer-guides/caching-task-outputs',
-                            ],
-                            collapsible: false,
+                            ]
                         },
-                        'developer-guides/remote-services',
+                        'developer-guides/schema-validation',
+                        'developer-guides/secrets-in-conductor',
+                        'developer-guides/using-environment-variables',
                         'developer-guides/rate-limits',
                         'developer-guides/error-handling',
-                        'developer-guides/debugging-workflows',
                     ]
                 },
                 {
@@ -162,68 +153,6 @@ const sidebars = {
                         'developer-guides/using-workers',
                         'developer-guides/scaling-workers',
                         'developer-guides/task-to-domain'
-                    ]
-                },
-                {
-                    type: 'category',
-                    label: 'Advanced Workflows',
-                    link: {
-                        type: 'generated-index',
-                        title: 'Advanced Workflows',
-                        description: 'Learn how to build more advanced workflows with AI orchestration, human-in-the-loops,event-driven systems, and webhooks, human-in-the-loops.',
-                        slug: 'developer-guides/advanced-workflows'
-                    },
-                    className: 'leftMenuHeader',
-                    items: [
-                        {
-                            type: 'category',
-                            label: 'AI Orchestration and Agentic Workflows',
-                            link: {
-                                type: 'doc',
-                                id: 'developer-guides/ai-orchestration',
-                            },
-                            items: [
-                                'developer-guides/using-llms-in-your-orkes-conductor-workflows',
-                                'developer-guides/using-vector-databases-in-your-orkes-conductor-workflows',
-                                'developer-guides/using-ai-prompts',
-                            ],
-                            collapsible: false,
-                        },
-                        'developer-guides/orchestrating-human-tasks',
-                        {
-                            type: 'category',
-                            label: 'Eventing',
-                            link: {
-                                type: 'generated-index',
-                                title: 'Eventing',
-                                description: 'Learn how to connect and use Conductor with external eventing systems.',
-                                slug: '/eventing'
-                            },
-                            items: [
-                                'developer-guides/event-handler',
-                                {
-                                    type: 'doc',
-                                    id: 'developer-guides/enabling-cdc-on-conductor-workflows',
-                                    label: "Enabling CDC"
-                                },
-                                'developer-guides/webhook-integration'
-                            ],
-                            collapsible: false,
-                        },
-                    ]
-                },
-                {
-                    type: 'category',
-                    label: 'Run Workflows',
-                    link: {
-                        type: 'doc',
-                        id: 'developer-guides/running-workflows'
-                    },
-                    className: 'leftMenuHeader',
-                    items: [
-                        'developer-guides/running-workflows-in-ui',
-                        'developer-guides/scheduling-workflows',
-                        'developer-guides/sending-signals-to-workflows',
                     ]
                 },
                 {
@@ -251,7 +180,21 @@ const sidebars = {
                 },
                 {
                     type: 'category',
-                    label: 'Test and Monitor Workflows',
+                    label: 'Run Workflows',
+                    link: {
+                        type: 'doc',
+                        id: 'developer-guides/running-workflows'
+                    },
+                    className: 'leftMenuHeader',
+                    items: [
+                        'developer-guides/running-workflows-in-ui',
+                        'developer-guides/scheduling-workflows',
+                        'developer-guides/sending-signals-to-workflows',
+                    ]
+                },
+                {
+                    type: 'category',
+                    label: 'Test,Monitor, and Debug Workflows',
                     link: {
                         type: 'generated-index',
                         title: 'Testing and Monitoring Workflows',
@@ -261,9 +204,55 @@ const sidebars = {
                     className: 'leftMenuHeader',
                     items: [
                         'developer-guides/unit-and-regression-tests',
+                        'developer-guides/debugging-workflows',
                         'developer-guides/metrics-and-observability',
                         'developer-guides/integration-with-cicd'
                     ]
+                },
+                {
+                    type: 'category',
+                    label: 'AI Orchestration and Agentic Workflows',
+                    className: 'leftMenuHeader',
+                    link: {
+                        type: 'doc',
+                        id: 'developer-guides/ai-orchestration'
+                    },
+                    items: [
+                        'developer-guides/using-llms-in-your-orkes-conductor-workflows',
+                        'developer-guides/using-vector-databases-in-your-orkes-conductor-workflows',
+                        'developer-guides/using-ai-prompts'
+                    ],
+                },
+                {
+                    type: 'doc',
+                    id: 'developer-guides/orchestrating-human-tasks',
+                    label: "Human in the Loop",
+                    className: 'leftMenuHeader',
+                },
+                {
+                    type: 'category',
+                    label: 'Eventing',
+                    className: 'leftMenuHeader',
+                    link: {
+                        type: 'generated-index',
+                        title: 'Eventing',
+                        slug: '/eventing'
+                    },
+                    items: [
+                        'developer-guides/event-handler',
+                        {
+                            type: 'doc',
+                            id: 'developer-guides/enabling-cdc-on-conductor-workflows',
+                            label: 'Enabling CDC'
+                        },
+                        'developer-guides/webhook-integration',
+                    ],
+                },
+                {
+                    type: 'doc',
+                    id: 'developer-guides/remote-services',
+                    label: "Remote Services",
+                    className: 'leftMenuHeader',
                 },
                 {
                     type: 'category',
@@ -313,293 +302,247 @@ const sidebars = {
                         },
                     ]
                 },
+            ],
+        },
+        {
+            type: 'category',
+            label: 'Integrations',
+            link: {
+                type: 'generated-index',
+                title: 'Integrations',
+                slug: '/category/integrations',
+                description: 'Integrate your Orkes Conductor cluster with various AI, LLMs, vector databases, message brokers, emails, git providers, and RDBMS systems.',
+            },
+            className: 'leftMenuHeader',
+            items: [
                 {
                     type: 'category',
-                    label: 'Conductor Clients & SDKs',
+                    label: 'AI / LLM',
                     link: {
-                        type: 'doc',
-                        id: 'sdks/sdk-index',
+                        type: 'generated-index',
+                        title: 'AI / LLM Integrations',
+                        slug: '/category/integrations/ai-llm',
                     },
-                    className: 'leftMenuHeader',
                     items: [
                         {
                             type: 'doc',
-                            id: 'sdks/authentication',
-                            label: 'Authentication',
+                            id: 'integrations/ai-llm/ollama',
+                            label: 'Ollama',
                         },
                         {
                             type: 'doc',
-                            id: 'sdks/python',
-                            label: 'Python',
+                            id: 'integrations/ai-llm/azure-open-ai',
+                            label: 'Azure Open AI',
                         },
                         {
                             type: 'doc',
-                            id: 'sdks/java',
-                            label: 'Java',
+                            id: 'integrations/ai-llm/open-ai',
+                            label: 'Open AI',
                         },
                         {
                             type: 'doc',
-                            id: 'sdks/javascript',
-                            label: 'JavaScript',
+                            id: 'integrations/ai-llm/perplexity',
+                            label: 'Perplexity',
                         },
                         {
                             type: 'doc',
-                            id: 'sdks/csharp',
-                            label: 'C#',
+                            id: 'integrations/ai-llm/grok',
+                            label: 'Grok',
                         },
                         {
                             type: 'doc',
-                            id: 'sdks/golang',
-                            label: 'Go',
+                            id: 'integrations/ai-llm/cohere',
+                            label: 'Cohere',
                         },
                         {
                             type: 'doc',
-                            id: 'sdks/clojure',
-                            label: 'Clojure',
-                        }
-                    ]
+                            id: 'integrations/ai-llm/mistral',
+                            label: 'Mistral',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'integrations/ai-llm/anthropic-claude',
+                            label: 'Anthropic Claude',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'integrations/ai-llm/vertex-ai',
+                            label: 'Google Vertex AI',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'integrations/ai-llm/google-gemini-ai',
+                            label: 'Google Gemini AI',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'integrations/ai-llm/hugging-face',
+                            label: 'Hugging Face',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'integrations/ai-llm/aws-bedrock-anthropic',
+                            label: 'AWS Bedrock Anthropic',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'integrations/ai-llm/aws-bedrock-cohere',
+                            label: 'AWS Bedrock Cohere',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'integrations/ai-llm/aws-bedrock-titan',
+                            label: 'AWS Bedrock Titan',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'integrations/ai-llm/aws-bedrock-llama',
+                            label: 'AWS Bedrock Llama3',
+                        },
+                    ],
                 },
                 {
                     type: 'category',
-                    label: 'Integrations',
+                    label: 'Vector Databases',
                     link: {
                         type: 'generated-index',
-                        title: 'Integrations',
-                        slug: '/category/integrations',
-                        description: 'Integrate your Orkes Conductor cluster with various AI, LLMs, vector databases, message brokers, emails, git providers, and RDBMS systems.',
+                        title: 'Vector Databases Integrations',
+                        slug: '/category/integrations/vector-databases',
                     },
-                    className: 'leftMenuHeader',
                     items: [
                         {
-                            type: 'category',
-                            label: 'AI / LLM',
-                            link: {
-                                type: 'generated-index',
-                                title: 'AI / LLM Integrations',
-                                slug: '/category/integrations/ai-llm'
-                            },
-                            items: [
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/ai-llm/ollama',
-                                    label: 'Ollama',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/ai-llm/azure-open-ai',
-                                    label: 'Azure Open AI',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/ai-llm/open-ai',
-                                    label: 'Open AI',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/ai-llm/perplexity',
-                                    label: 'Perplexity',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/ai-llm/grok',
-                                    label: 'Grok',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/ai-llm/cohere',
-                                    label: 'Cohere',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/ai-llm/mistral',
-                                    label: 'Mistral',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/ai-llm/anthropic-claude',
-                                    label: 'Anthropic Claude',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/ai-llm/vertex-ai',
-                                    label: 'Google Vertex AI',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/ai-llm/google-gemini-ai',
-                                    label: 'Google Gemini AI',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/ai-llm/hugging-face',
-                                    label: 'Hugging Face',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/ai-llm/aws-bedrock-anthropic',
-                                    label: 'AWS Bedrock Anthropic',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/ai-llm/aws-bedrock-cohere',
-                                    label: 'AWS Bedrock Cohere',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/ai-llm/aws-bedrock-titan',
-                                    label: 'AWS Bedrock Titan',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/ai-llm/aws-bedrock-llama',
-                                    label: 'AWS Bedrock Llama3',
-                                },
-                            ],
+                            type: 'doc',
+                            id: 'integrations/vector-databases/pinecone',
+                            label: 'Pinecone',
                         },
                         {
-                            type: 'category',
-                            label: 'Vector Databases',
-                            link: {
-                                type: 'generated-index',
-                                title: 'Vector Databases Integrations',
-                                slug: '/category/integrations/vector-databases'
-                            },
-                            items: [
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/vector-databases/pinecone',
-                                    label: 'Pinecone',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/vector-databases/weaviate',
-                                    label: 'Weaviate',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/vector-databases/postgres-vector-database',
-                                    label: 'Postgres Vector Database',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/vector-databases/mongo-vector-database',
-                                    label: 'Mongo Vector Database',
-                                },
-                            ],
+                            type: 'doc',
+                            id: 'integrations/vector-databases/weaviate',
+                            label: 'Weaviate',
                         },
                         {
-                            type: 'category',
-                            label: 'Message Broker',
-                            link: {
-                                type: 'generated-index',
-                                title: 'Message Broker Integrations',
-                                slug: '/category/integrations/message-broker'
-                            },
-                            items: [
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/message-broker/amqp',
-                                    label: 'AMQP',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/message-broker/amazon-msk',
-                                    label: 'Amazon MSK',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/message-broker/confluent-kafka',
-                                    label: 'Confluent Kafka',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/message-broker/apache-kafka',
-                                    label: 'Apache Kafka',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/message-broker/nats-messaging',
-                                    label: 'NATS Messaging',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/message-broker/aws-sqs',
-                                    label: 'AWS SQS',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/message-broker/azure-service-bus',
-                                    label: 'Azure Service Bus',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/message-broker/gcp-pub-sub',
-                                    label: 'GCP Pub Sub',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/message-broker/ibm-mq',
-                                    label: 'IBM MQ',
-                                },
-                            ],
+                            type: 'doc',
+                            id: 'integrations/vector-databases/postgres-vector-database',
+                            label: 'Postgres Vector Database',
                         },
                         {
-                            type: 'category',
-                            label: 'Cloud Providers',
-                            link: {
-                                type: 'generated-index',
-                                title: 'Cloud Providers',
-                                slug: '/category/integrations/cloud-provider'
-                            },
-                            items: [
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/cloud-provider/aws',
-                                    label: 'AWS',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/cloud-provider/gcp',
-                                    label: 'GCP',
-                                },
-                            ],
+                            type: 'doc',
+                            id: 'integrations/vector-databases/mongo-vector-database',
+                            label: 'Mongo Vector Database',
+                        },
+                    ],
+                },
+                {
+                    type: 'category',
+                    label: 'Message Broker',
+                    link: {
+                        type: 'generated-index',
+                        title: 'Message Broker Integrations',
+                        slug: '/category/integrations/message-broker',
+                    },
+                    items: [
+                        {
+                            type: 'doc',
+                            id: 'integrations/message-broker/amqp',
+                            label: 'AMQP',
                         },
                         {
-                            type: 'category',
-                            label: 'RDBMS',
-                            link: {
-                                type: 'generated-index',
-                                title: 'RDBMS Integrations',
-                                slug: '/category/integrations/rdbms'
-                            },
-                            items: [
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/rdbms/relational-database',
-                                    label: 'Relational Database',
-                                },
-                            ],
+                            type: 'doc',
+                            id: 'integrations/message-broker/amazon-msk',
+                            label: 'Amazon MSK',
                         },
                         {
-                            type: 'category',
-                            label: 'Email/Git',
-                            link: {
-                                type: 'generated-index',
-                                title: 'Email/Git',
-                                slug: '/category/integrations/email'
-                            },
-                            items: [
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/sendgrid',
-                                    label: 'SendGrid Email',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'integrations/git',
-                                    label: 'Git Repository',
-                                },
-                            ],
+                            type: 'doc',
+                            id: 'integrations/message-broker/confluent-kafka',
+                            label: 'Confluent Kafka',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'integrations/message-broker/apache-kafka',
+                            label: 'Apache Kafka',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'integrations/message-broker/nats-messaging',
+                            label: 'NATS Messaging',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'integrations/message-broker/aws-sqs',
+                            label: 'AWS SQS',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'integrations/message-broker/azure-service-bus',
+                            label: 'Azure Service Bus',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'integrations/message-broker/gcp-pub-sub',
+                            label: 'GCP Pub Sub',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'integrations/message-broker/ibm-mq',
+                            label: 'IBM MQ',
+                        },
+                    ],
+                },
+                {
+                    type: 'category',
+                    label: 'Cloud Providers',
+                    link: {
+                        type: 'generated-index',
+                        title: 'Cloud Providers',
+                        slug: '/category/integrations/cloud-provider',
+                    },
+                    items: [
+                        {
+                            type: 'doc',
+                            id: 'integrations/cloud-provider/aws',
+                            label: 'AWS',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'integrations/cloud-provider/gcp',
+                            label: 'GCP',
+                        },
+                    ],
+                },
+                {
+                    type: 'category',
+                    label: 'RDBMS',
+                    link: {
+                        type: 'generated-index',
+                        title: 'RDBMS Integrations',
+                        slug: '/category/integrations/rdbms',
+                    },
+                    items: [
+                        {
+                            type: 'doc',
+                            id: 'integrations/rdbms/relational-database',
+                            label: 'Relational Database',
+                        },
+                    ],
+                },
+                {
+                    type: 'category',
+                    label: 'Email/Git',
+                    link: {
+                        type: 'generated-index',
+                        title: 'Email/Git',
+                        slug: '/category/integrations/email',
+                    },
+                    items: [
+                        {
+                            type: 'doc',
+                            id: 'integrations/sendgrid',
+                            label: 'SendGrid Email',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'integrations/git',
+                            label: 'Git Repository',
                         },
                     ],
                 },
@@ -646,19 +589,19 @@ const sidebars = {
                         keywords: ['reference', 'operators', 'tasks', 'system', 'system-tasks']
                     },
                     items: [
-                            'reference-docs/system-tasks/event',
-                            'reference-docs/system-tasks/http',
-                            'reference-docs/system-tasks/http-poll',
-                            'reference-docs/system-tasks/inline',
-                            'reference-docs/system-tasks/jq-transform',
-                            'reference-docs/system-tasks/business-rule',
-                            'reference-docs/system-tasks/sendgrid',
-                            'reference-docs/system-tasks/wait-for-webhook',
-                            'reference-docs/system-tasks/jdbc',
-                            'reference-docs/system-tasks/update-secret',
-                            'reference-docs/system-tasks/get-signed-jwt',
-                            'reference-docs/system-tasks/update-task',
-                            'reference-docs/system-tasks/grpc',
+                        'reference-docs/system-tasks/event',
+                        'reference-docs/system-tasks/http',
+                        'reference-docs/system-tasks/http-poll',
+                        'reference-docs/system-tasks/inline',
+                        'reference-docs/system-tasks/jq-transform',
+                        'reference-docs/system-tasks/business-rule',
+                        'reference-docs/system-tasks/sendgrid',
+                        'reference-docs/system-tasks/wait-for-webhook',
+                        'reference-docs/system-tasks/jdbc',
+                        'reference-docs/system-tasks/update-secret',
+                        'reference-docs/system-tasks/get-signed-jwt',
+                        'reference-docs/system-tasks/update-task',
+                        'reference-docs/system-tasks/grpc',
                         {
                             type: 'category',
                             label: 'Alerting Tasks',
@@ -667,11 +610,11 @@ const sidebars = {
                                 title: 'Alerting Tasks',
                                 description: 'Reference documentation for system alerting tasks in Orkes Conductor. These system tasks are meant for monitoring and triggering alerts based on specific conditions.',
                                 slug: '/category/reference-docs/alerting-tasks',
-                                keywords: ['reference',  'tasks', 'system', 'system-tasks','alerting-tasks']
+                                keywords: ['reference', 'tasks', 'system', 'system-tasks', 'alerting-tasks']
                             },
                             items: [
-                                    'reference-docs/system-tasks/opsgenie',
-                                    'reference-docs/system-tasks/query-processor',
+                                'reference-docs/system-tasks/opsgenie',
+                                'reference-docs/system-tasks/query-processor',
                             ]
                         },
                         {
@@ -682,7 +625,7 @@ const sidebars = {
                                 title: 'AI Tasks',
                                 description: 'Reference documentation for system AI tasks in Orkes Conductor. These system tasks are meant for building AI-powered or agentic components in workflows.',
                                 slug: '/category/reference-docs/ai-tasks',
-                                keywords: ['reference', 'operators', 'tasks', 'system', 'system-tasks','ai-tasks']
+                                keywords: ['reference', 'operators', 'tasks', 'system', 'system-tasks', 'ai-tasks']
                             },
                             items: [
                                 {
@@ -722,14 +665,14 @@ const sidebars = {
                         slug: '/reference-docs/api/metadata',
                         description: 'Manage task and workflow definitions in Orkes Conductor with this suite of APIs.'
                     },
-                        items: [
-                                {
-                                    type: 'autogenerated',
-                                    dirName: 'reference-docs/api/metadata'
-                                }
-                            ]
-                 },
-                 {
+                    items: [
+                        {
+                            type: 'autogenerated',
+                            dirName: 'reference-docs/api/metadata'
+                        }
+                    ]
+                },
+                {
                     type: 'category',
                     label: 'Tasks',
                     link: {
@@ -738,14 +681,14 @@ const sidebars = {
                         slug: '/reference-docs/api/task',
                         description: `Manage task executions in Orkes Conductor with this suite of APIs.`
                     },
-                        items: [
-                                {
-                                    type: 'autogenerated',
-                                    dirName: 'reference-docs/api/task'
-                                }
-                            ]
-                 },
-                 {
+                    items: [
+                        {
+                            type: 'autogenerated',
+                            dirName: 'reference-docs/api/task'
+                        }
+                    ]
+                },
+                {
                     type: 'category',
                     label: 'Workflows',
                     link: {
@@ -754,14 +697,14 @@ const sidebars = {
                         slug: '/reference-docs/api/workflow',
                         description: `Manage workflow executions in Orkes Conductor with this suite of APIs`
                     },
-                        items: [
-                                {
-                                    type: 'autogenerated',
-                                    dirName: 'reference-docs/api/workflow'
-                                }
-                            ]
-                 },
-                 {
+                    items: [
+                        {
+                            type: 'autogenerated',
+                            dirName: 'reference-docs/api/workflow'
+                        }
+                    ]
+                },
+                {
                     type: 'category',
                     label: 'Tags',
                     link: {
@@ -770,14 +713,14 @@ const sidebars = {
                         slug: '/reference-docs/api/tags',
                         description: `Manage tags in Orkes Conductor with this suite of APIs`
                     },
-                        items: [
-                                {
-                                    type: 'autogenerated',
-                                    dirName: 'reference-docs/api/tags'
-                                }
-                            ]
-                 },
-                 {
+                    items: [
+                        {
+                            type: 'autogenerated',
+                            dirName: 'reference-docs/api/tags'
+                        }
+                    ]
+                },
+                {
                     type: 'category',
                     label: 'Schedule',
                     link: {
@@ -786,30 +729,76 @@ const sidebars = {
                         slug: '/reference-docs/api/schedule',
                         description: `Manage automated Schedules in Orkes Conductor with this suite of APIs`
                     },
-                        items: [
-                                {
-                                    type: 'autogenerated',
-                                    dirName: 'reference-docs/api/schedule'
-                                }
-                            ]
-                 },
-                 {
+                    items: [
+                        {
+                            type: 'autogenerated',
+                            dirName: 'reference-docs/api/schedule'
+                        }
+                    ]
+                },
+                {
                     type: 'category',
                     label: 'Human Task',
                     link: {
                         type: 'generated-index',
                         title: 'Human Task',
                         slug: '/reference-docs/api/human-tasks',
-                        description:'Manage Human tasks in Orkes Conductor with this suite of APIs'
+                        description: 'Manage Human tasks in Orkes Conductor with this suite of APIs'
                     },
-                        items: [
-                                {
-                                    type: 'autogenerated',
-                                    dirName: 'reference-docs/api/human-tasks'
-                                }
-                            ]
-                 },
+                    items: [
+                        {
+                            type: 'autogenerated',
+                            dirName: 'reference-docs/api/human-tasks'
+                        }
+                    ]
+                },
             ]
+        },
+        {
+            type: 'category',
+            label: 'Conductor Clients & SDKs',
+            link: {
+                type: 'doc',
+                id: 'sdks/sdk-index',
+            },
+            className: 'leftMenuHeader',
+            items: [
+                {
+                    type: 'doc',
+                    id: 'sdks/authentication',
+                    label: 'Authentication',
+                },
+                {
+                    type: 'doc',
+                    id: 'sdks/python',
+                    label: 'Python',
+                },
+                {
+                    type: 'doc',
+                    id: 'sdks/java',
+                    label: 'Java',
+                },
+                {
+                    type: 'doc',
+                    id: 'sdks/javascript',
+                    label: 'JavaScript',
+                },
+                {
+                    type: 'doc',
+                    id: 'sdks/csharp',
+                    label: 'C#',
+                },
+                {
+                    type: 'doc',
+                    id: 'sdks/golang',
+                    label: 'Go',
+                },
+                {
+                    type: 'doc',
+                    id: 'sdks/clojure',
+                    label: 'Clojure',
+                },
+            ],
         },
         {
             type: 'category',
@@ -852,7 +841,7 @@ const sidebars = {
                             type: 'doc',
                             id: 'tutorials/long-running-apis',
                             label: 'Long-Running APIs',
-                          },
+                        },
                         {
                             type: 'doc',
                             id: 'tutorials/create-workflows-using-ai-agent-claude',
@@ -924,7 +913,7 @@ const sidebars = {
                         slug: '/tutorials/mcp'
                     },
                     items: [
-                            {
+                        {
                             type: 'doc',
                             id: 'tutorials/feedback-tutorial',
                             label: 'Build a Feedback API using API Gateway',
@@ -1003,7 +992,7 @@ const sidebars = {
                             id: 'tutorials/document-approvals',
                             label: 'Document Approval',
                         },
-                                                {
+                        {
                             type: 'doc',
                             id: 'tutorials/document-classifier',
                             label: 'Document Classification',
@@ -1037,7 +1026,7 @@ const sidebars = {
                         },
                     ]
                 },
-                               {
+                {
                     type: 'category',
                     label: 'Application Alerts',
                     link: {
