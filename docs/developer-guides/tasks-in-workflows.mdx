@@ -26,8 +26,8 @@ Use these operators as control structures for managing the execution flow in you
 | Looping flow | <ul><li>[Do While](../reference-docs/operators/do-while): Execute tasks repeatedly, like a _do…while…_ statement.</li></ul> |
 | Parallel flows | <ul><li>[Fork](../reference-docs/operators/fork-join): Execute a static number of tasks in parallel.</li><li>[Dynamic Fork](../reference-docs/operators/dynamic-fork): Execute a dynamic number of tasks in parallel.</li><li>[Join](../reference-docs/operators/join): Join the forks after a Fork or Dynamic Fork before proceeding to the next task.</li><li>[Start Workflow](../reference-docs/operators/start-workflow): Asynchronously start another workflow.</li></ul> | 
 | Jumps or state changes in flow | <ul><li>[Terminate](../reference-docs/operators/terminate): Terminate the current workflow, like a _return_ statement.</li><li>[Sub Workflow](../reference-docs/operators/sub-workflow): Synchronously start another workflow, like a subroutine.</li><li>[Terminate Workflow](../reference-docs/operators/terminate-workflow.mdx): Terminate another ongoing workflow.</li></ul> | 
-| State querying | <ul><li>Get Workflow](../reference-docs/operators/get-workflow): Get the execution details of another ongoing workflow.</li></ul> | 
-| Waits in flow | <ul><li>[Wait](../reference-docs/operators/wait): Pause the current workflow until a set time, duration, or signal is received.</li><li>[Wait for Webhook](../reference-docs/system-tasks/wait-for-webhook): Pause the current workflow for an incoming webhook signal.</li><li>[Yield](../reference-docs/operators/yield): Temporarily yields control over the workflow by pausing the execution until it is explicitly resumed using specific endpoints.</li></ul> | 
+| State querying | <ul><li>[Get Workflow](../reference-docs/operators/get-workflow): Get the execution details of another ongoing workflow.</li></ul> | 
+| Waits in flow | <ul><li>[Wait](../reference-docs/operators/wait): Pause the current workflow until a set time, duration, or signal is received.</li><li>[Human](/content/reference-docs/operators/human): Pause the current workflow for human input before proceeding to the next task.</li><li>[Yield](../reference-docs/operators/yield): Temporarily yields control over the workflow by pausing the execution until it is explicitly resumed using specific endpoints.</li></ul> | 
 | Dynamic tasks in flow | <ul><li>[Dynamic](../reference-docs/operators/dynamic): Execute a task dynamically, like a function pointer.</li></ul> 
 | For assigning variables | <ul><li>[Set Variable](../reference-docs/operators/set-variable): Define shared variables at the workflow level that can be accessed or overwritten by subsequent tasks in the workflow.</li></ul> | 
 
@@ -41,7 +41,7 @@ In most common cases, you can make use of existing Conductor tasks instead of cr
 | Call an API or HTTP endpoint                                                                 | [HTTP](../reference-docs/system-tasks/http)                               |
 | Poll an API or HTTP endpoint                                                                 | [HTTP Poll](../reference-docs/system-tasks/http-poll)                     |
 | Execute JavaScript scripts                                                                   | [Inline](../reference-docs/system-tasks/inline)                           |
-| Clean or transform JSON data                                                                 | [JSON JQ](../reference-docs/system-tasks/jq-transform)                    |
+| Clean or transform JSON data                                                                 | [JSON JQ Transform](../reference-docs/system-tasks/jq-transform)                    |
 | Evaluate and retrieve data in spreadsheets                                                   | [Business Rule](../reference-docs/system-tasks/business-rule)             |
 | Send email using SendGrid integration                                                        | [SendGrid](../reference-docs/system-tasks/sendgrid)                                                              | 
 | Pause the current workflow for an incoming webhook signal.                                   | [Wait for Webhook](../reference-docs/system-tasks/wait-for-webhook)
@@ -164,7 +164,7 @@ Each task configuration JSON object may contain the following parameters:
 
 | Parameter         | Description                                                                                 | Required/ Optional  |
 | ----------------- | ------------------------------------------------------------------------------------------- | ------------------- |
-| name              | Name of the task. The default value is the same as the task type. <br/><br/> The name can be changed to something descriptive. To use a given task definition, the task name here must match the task definition name (case-sensitive).<br/><br/>**Note**: It is recommended to use alphanumeric characters for task names. While special characters are allowed for backward compatibility, they are not fully supported and may cause unexpected behavior. | Required.             |
+| name              | Name of the task. The default value is the same as the task type. <br/><br/>The name can be changed to something descriptive, like “getUsers”. To use a given task definition, the task name here must match the task definition name (case-sensitive).<br/><br/>**Note**: It is recommended to use alphanumeric characters for task names. While special characters are allowed for backward compatibility, they are not fully supported and may cause unexpected behavior. | Required.             |
 | taskReferenceName | Reference name for the task. <br/><br/> Must be a unique value in a given workflow.                                                                                                    | Required.           |
 | type              | The task type. For example, HTTP, SIMPLE.                                              | Required.           |
 | inputParameters   | Map of the task’s input parameters.                                                    | Depends on the task type. |
@@ -208,8 +208,6 @@ You can address this situation by:
 ## Task lifecycle
 
 Understanding the lifecycle of a task helps you debug and monitor your workflows effectively. Learn more in [Task State Transitions](/content/developer-guides/task-and-workflow-status-in-conductor#task-state-transitions). 
-
-Learn how to configure input/output parameters to be used in workflows.
 
 ## Common pitfalls to avoid
 
