@@ -32,7 +32,7 @@ To configure caching, add the `cacheConfig` object to your task configuration:
 
 Before a task is scheduled, the server checks if there is cached output for the given task definition name by matching the cache key. If a match is found, the task is not scheduled, and the cached output is used to complete it.
 
-If no cached output is found, the task is scheduled as usual. When the task is completed successfully, the output is cached against the cache key for the duration specified.
+If no cached output is found, the task is scheduled as usual. When the task completes successfully, the output is cached under the specified cache key for the specified duration.
 
 ## Enable caching in the UI
 
@@ -121,7 +121,7 @@ To include workflow inputs in the cache key, first pass them to the task's `inpu
 
 ### Cache output using variables from previous tasks
 
-The following example shows how to use a variable from a Set Variable task in the cache key:
+The following example shows how to use a variable from a [Set Variable](/content/reference-docs/operators/set-variable) task in the cache key:
 
 ```json
 // workflow definition
