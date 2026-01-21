@@ -5,11 +5,7 @@ description: "Learn how to configure environment variables for global use across
 
 # Using Environment Variables
 
-:::info Available since
-- v3.3.9 and later
-:::
-
-In Orkes Conductor, environment variables help manage frequently used values across multiple workflows. By storing these variables globally in Conductor, you can reuse them in workflows to improve efficiency and maintainability.
+In Orkes Conductor, environment variables help manage frequently used values across multiple workflows. These variables are stored at the cluster level and can be reused across workflows to improve maintainability.
 
 ## Creating environment variables
 
@@ -18,9 +14,9 @@ In Orkes Conductor, environment variables help manage frequently used values acr
 1. Go to **Definitions** > **Environment Variables** from the left navigation menu on the Conductor cluster.
 2. Select **+ New environment variable**.
 3. Enter the following details:
-  - **Name**–A unique identifier for the variable. This name will be used to reference the variable in workflow definitions.
-  - **Value**–The value to be stored as the variable.
-  - **Value Type**–Select *Plain Text* or *JSON*.
+  - **Name**: A unique identifier for the variable. This name will be used to reference the variable in workflow definitions.
+  - **Value**: The value to be stored as the variable.
+  - **Value Type**: Select *Plain Text* or *JSON*.
 4. Select **Add** to save the variable.
 
 ### Using environment variables in workflow
@@ -31,6 +27,12 @@ To use an environment variable in a workflow, use the following expression:
 ${workflow.env.variable-name}
 ```
 Replace *variable-name* with the actual environment variable name. This expression dynamically retrieves the variable during workflow execution.
+
+If the environment variable is a JSON value and you want to use it as an object, append `.$` to explicitly parse it as JSON:
+
+```
+${workflow.env.variable-name.$}
+```
 
 ## Updating environment variables
 
@@ -103,6 +105,69 @@ To verify that the stored variable is passed correctly, go to the workflow execu
     src="/content/img/sample-environment-variable-used.png"
     alt="Verifying sample environment variable used in workflow definition"
     width="100%"
+    height="auto"
+  ></img>
+</p>
+
+</p>
+</details>
+
+<details>
+<summary>Using JSON environment variables in a workflow</summary>
+<p>
+
+This example shows how to use a JSON environment variable in a workflow. Assume the following environment variable is stored in Orkes Conductor:
+
+<p align="center">
+  <img
+    src="/content/img/env-variable-stored-as-json.png"
+    alt="Environment variable stored as JSON"
+    width="50%"
+    height="auto"
+  ></img>
+</p>
+
+The following workflow references the stored JSON environment variable and explicitly parses it.
+
+```json
+{
+  "name": "json-env-example",
+  "description": "Workflow demonstrating use of a JSON environment variable",
+  "version": 1,
+  "tasks": [
+    {
+      "name": "http",
+      "taskReferenceName": "http_ref",
+      "inputParameters": {
+        "uri": "${workflow.env.api-config.$.baseUrl}",
+        "method": "GET",
+        "connectionTimeOut": "${workflow.env.api-config.$.timeout}",
+        "readTimeOut": "${workflow.env.api-config.$.timeout}",
+        "accept": "application/json",
+        "contentType": "application/json",
+        "encode": true
+      },
+      "type": "HTTP"
+    }
+  ],
+  "schemaVersion": 2
+}
+```
+
+In this example:
+
+- `${workflow.env.api-config.$}` parses the environment variable as a JSON object.
+- Individual fields are accessed using standard JSON path notation.
+
+Run the workflow.
+
+To verify that the stored variable is passed correctly, open the workflow execution, select the HTTP task, and confirm that the resolved values appear in the **Input** tab.
+
+<p align="center">
+  <img
+    src="/content/img/env-variable-parsed-as-json-in-workflow.png"
+    alt="Environment variable parsed as JSON in workflow"
+    width="50%"
     height="auto"
   ></img>
 </p>
