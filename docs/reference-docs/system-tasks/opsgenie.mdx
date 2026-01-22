@@ -50,19 +50,6 @@ You can cache the task outputs using the following parameters. Refer to [Caching
 
 </details>
 
-<details>
-<summary>Schema parameters</summary>
-
-You can enforce input/output validation for the task using the following parameters. Refer to [Schema Validation](/developer-guides/schema-validation) for a full guide.
-
-| Parameter | Description | Required/ Optional | 
-| --------- | ----------- | ----------------- | 
-| taskDefinition.**enforceSchema** | Whether to enforce schema validation for task inputs/outputs. Set to *true* to enable validation. | Optional. | 
-| taskDefinition.**inputSchema** | The name and type of the input schema to be associated with the task. | Required if *enforceSchema* is set to true. | 
-| taskDefinition.**outputSchema** | The name and type of the output schema to be associated with the task. | Required if *enforceSchema* is set to true.
-
-</details>
-
 ## Task configuration
 
 This is the task configuration for an Opsgenie task.

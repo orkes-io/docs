@@ -9,20 +9,20 @@ import Install from '@site/src/components/install.mdx';
 
 # Write Workflows Using Code
 
-Workflows can be written in code, allowing the creation of dynamic workflows that can't be pre-defined. Support for defining workflows using code is part of all the supported SDKs.
+You can write workflows in code to create dynamic workflows that can't be predefined. Support for defining workflows in code is part of all the supported SDKs.
 
-## Creating workflows in code
+## Create workflows in code
 
 The workflow in the following examples performs these steps:
 
-1. **Get user details** - Retrieves the user information based on the `userId` provided as the workflow input.
-2. **Determine notification type** - Uses a Switch task to check the preferred notification method from the input and determine how to notify the user.
-3. **Send email** - If the notification preference is email, send a message to the user’s email address.
-4. **Send SMS** - If the preference is SMS, send a text message to the phone number. 
+1. **Get user details**: Retrieves the user information based on the `userId` provided as the workflow input.
+2. **Determine notification type**: Uses a Switch task to check the preferred notification method from the input and determine how to notify the user.
+3. **Send email**: If the notification preference is email, send a message to the user’s email address.
+4. **Send SMS**: If the preference is SMS, send a text message to the phone number. 
 
 <p style={{textAlign: "center"}}><img src="/content/img/user_notification_workflow.png" alt="user notification workflow" width="60%" height="auto" style={{paddingBottom: 20, paddingTop: 20}} /></p>
 
-Use the code example for your preferred language to define and register the workflow in your Conductor environment. 
+Select your preferred language and use the code example to define and register the workflow in your Conductor environment.
 
 <Tabs>
 <TabItem value="Java" label="Java">

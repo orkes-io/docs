@@ -5,7 +5,7 @@ description: "Learn how to configure task input templates and use them in workfl
 
 # Using Task Input Templates​
 
-Task input templates are default parameters included in a task definition that will be applied to all instances of the task. Whenever the task is used in a workflow, the template values are automatically supplied to the task configuration. These values can be overridden in the workflow using task input parameters.
+Task input templates are default parameters included in a task definition that are applied to all instances of the task. When you use the task in a workflow, the system automatically populates the task configuration with the template values. You can override these values in the workflow using task input parameters.
 
 ## Configuring task input template
 
@@ -14,12 +14,11 @@ Task input templates are part of a task definition, and you can create them when
 **To create a task definition:**
 
 1. Go to **Definitions > Task** from the left menu on your Conductor cluster.
-2. Select an existing task definition or create a new task using **(+) Define task**.
+2. Select an existing task definition or create a new task using **+ Define task**.
 3. Configure the required [task parameters](/content/reference-docs/api/metadata/creating-task-definitions#request-body).
 4. In **Task input template**, select **+ Add parameter**. 
-5. Enter the template parameters as key-value pairs. 
-6. In **Type**, select the parameter type. Supports string, number, boolean, null, and object/array.
-7. Select **Save** > **Confirm Save**.
+5. Enter the template parameters as key-value pairs. Supports string, number, boolean, null, and object/array.
+6. Select **Save** > **Confirm Save**.
 
 <p align="center"><img src="/content/img/task-input-template-in-task-definition.png" alt="Task input template in task definition" width="100%"
                        height="auto"/></p>
@@ -27,8 +26,8 @@ Task input templates are part of a task definition, and you can create them when
 ```json
 // Example of a task input template in a task definition JSON
  "inputTemplate": {
-   "key": "value"
- },
+   "someKey": "someValue"
+ }
 ```
 
 ## Adding task input templates in workflow definitions
@@ -36,11 +35,11 @@ Task input templates are part of a task definition, and you can create them when
 **To include a task input template in a workflow:**
 
 1. Go to **Definitions** > **Workflow** from the left menu on your Conductor cluster.
-2. Select an existing task definition or create a new task using **(+) Define workflow**.
+2. Select an existing workflow definition or create a new one using **+ Define workflow**.
 3. Configure the required [workflow parameters](https://orkes.io/content/reference-docs/api/metadata/creating-workflow-definition#input-payload).
 4. In your workflow, select the (+) icon and add a task that uses the definition you created earlier, such as a [Worker task](https://orkes.io/content/reference-docs/worker-task). There are two ways to add this task.
     - Select the (+) icon and search for your task using its task name (created previously) and add it.
-    - Add a **Simple** task and search for your task name (created previously) in the **Task Definition** field. This will add your task definition to the workflow.
+    - Add a **Worker** task and search for your task name (created previously) in the **Task Definition** field. This will add your task definition to the workflow.
 
 When a task definition is added to the workflow, the parameters supplied via the task input template are automatically included.
 
@@ -49,7 +48,7 @@ When a task definition is added to the workflow, the parameters supplied via the
 
 If you provide the same value as an input parameter to the task, the template values get overridden by the task input parameter. 
 
-For example, a parameter `key` with the value `value` has been supplied through a task input template. If the same `key` is defined as input parameters to the task, those values override the ones from the template.
+For example, a parameter `someKey` with the value `someValue` has been supplied through a task input template. If the same `someKey` is defined as an input parameter to the task, those values override the values from the template.
 
 <p align="center"><img src="/content/img/overriding-values.png" alt="Overriding task input template parameters from Workflow definition" width="90%"
                        height="auto"/></p>
@@ -59,89 +58,3 @@ Use the **Override All** button to replace the task input parameters with the te
 :::note
 Task input templates are only part of the task definition and will not appear in the workflow definition JSON. However, the values are passed into the workflow during execution. 
 :::
-
-## Examples
-
-<details>
-
-<summary>Using task input templates in a workflow</summary>
-
-To illustrate the use of task input templates in a workflow definition, let’s create a task definition.
-
-**To create a task definition:**
-
-1. Go to **Definitions** > **Task** from the left navigation menu on your Conductor cluster.
-2. Select **+ Define task**.
-3. In the **Code** tab, paste the following code:
-
-```json
-{
- "name": "sample-task",
- "description": "Sample task for demonstrating the use of task input templates",
- "retryCount": 3,
- "timeoutSeconds": 3600,
- "inputKeys": [],
- "outputKeys": [],
- "timeoutPolicy": "TIME_OUT_WF",
- "retryLogic": "FIXED",
- "retryDelaySeconds": 60,
- "responseTimeoutSeconds": 600,
- "concurrentExecLimit": 0,
- "inputTemplate": {
-   "someKey": "someValue"
- },
- "rateLimitPerFrequency": 0,
- "rateLimitFrequencyInSeconds": 1,
- "pollTimeoutSeconds": 3600,
- "backoffScaleFactor": 1,
- "totalTimeoutSeconds": 0,
- "enforceSchema": false
-}
-```
-
-4. Select **Save** > **Confirm Save**.
-
-This creates the task definition with the following task input templates.
-
-<p align="center"><img src="/content/img/task-input-template.png" alt="Task input template in a task definition" width="90%" height="auto"/></p>
-
-Next, create a workflow definition containing a [Worker task](https://orkes.io/content/reference-docs/worker-task) that uses the task definition you just created.
-
-**To create a workflow definition:**
-
-1. Go to **Definitions** > **Workflow** from the left navigation menu on your Conductor cluster.
-2. Select **+ Define workflow**.
-3. In the **Code** tab, paste the following code:
-
-```json
-{
- "name": "SampleWorkflow",
- "description": "Sample workflow demonstrating the use of task input templates",
- "version": 1,
- "tasks": [
-   {
-     "name": "sample-task",
-     "taskReferenceName": "simple_ref",
-     "type": "SIMPLE"
-   }
- ],
- "inputParameters": [],
- "outputParameters": {},
- "schemaVersion": 2,
- "restartable": true,
- "workflowStatusListenerEnabled": false,
- "timeoutPolicy": "ALERT_ONLY",
- "timeoutSeconds": 0,
- "failureWorkflow": ""
-}
-```
-
-5. Select **Save** > **Confirm**.
-
-When a task definition is added to the workflow, the parameters supplied via the task input template are automatically included in the workflow. 
-
-<p align="center"><img src="/content/img/task-input-templates-in-a-workflow.png" alt="Task input template in a workflow definition" width="90%" height="auto"/></p>
-
-This ensures that whenever you need specific parameters for a task, they can be already defined using the task input template, and consistently applied without requiring you to re-enter them each time you use the same task definition. This helps you save time and reduce errors when reusing tasks across workflows.
-
-</details>

@@ -5,14 +5,44 @@ description: "Learn how to cache task outputs for quick access."
 
 # Caching Task Outputs
 
-Some task types support caching, which saves task outputs for reuse in subsequent task executions. This feature can be configured in the task configuration.
+You can cache task outputs to reuse them in subsequent workflow executions. When you enable caching, the system stores the task output for a specified duration and reuses it when the same task runs again with matching input parameters. This feature can be configured in the **task configuration**.
+
+## Parameters
+
+Configure the following parameters to enable task caching in your task configuration.
+
+| Parameter            | Description                                                                                                                                                                                                                                                            | Required/ Optional |
+| -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
+| cacheConfig.**key**        | The cache key is a unique identifier for the cached output and must be constructed exclusively from the task’s input parameters. <br/><br/> It can be a string concatenation that contains the task’s input keys, such as `${uri}-${method}` or `re_${uri}_${method}`. | Required.          |
+| cacheConfig.**ttlInSecond**| The time to live in seconds, which is the duration for the output to be cached.                                                                                                                                                                                        | Required.          |
+
+## Configuration
+
+To configure caching, add the `cacheConfig` object to your task configuration:
+
+```json
+// task configuration    
+"cacheConfig": {
+       "key": "someKey",
+       "ttlInSecond": "2500"
+     }
+```
+
+## Task behavior with caching
+
+Before a task is scheduled, the server checks if there is cached output for the given task definition name by matching the cache key. If a match is found, the task is not scheduled, and the cached output is used to complete it.
+
+If no cached output is found, the task is scheduled as usual. When the task completes successfully, the output is cached under the specified cache key for the specified duration.
+
+## Enable caching in the UI
 
 **To cache task output:**
 
 1. Go to **Definitions** > **Workflow** from the left navigation menu on your Conductor cluster.
 2. Select a workflow.
-3. In the visual workflow builder, select a task.
-4. Turn on the **Cache output** toggle and enter the **TTL (in seconds)** and **Cache key**. Refer to [Configuration](#configuration) for more information on the parameters.
+3. In the visual workflow editor, select the task you want to cache.
+4. Turn on the **Cache output** toggle.
+5. Enter the **Cache key** and  **TTL (in seconds).** 
 
 <p align="center">
   <img
@@ -23,18 +53,12 @@ Some task types support caching, which saves task outputs for reuse in subsequen
   ></img>
 </p>
 
-## Configuration
-
-Configure the following parameters to enable task caching.
-
-| Parameter            | Description                                                                                                                                                                                                                                                            | Required/ Optional |
-| -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
-| **TTL (in seconds)** | The time to live in seconds, which is the duration for the output to be cached.                                                                                                                                                                                        | Required.          |
-| **Cache key**        | The cache key is a unique identifier for the cached output and must be constructed exclusively from the task’s input parameters. <br/><br/> It can be a string concatenation that contains the task’s input keys, such as `${uri}-${method}` or `re_${uri}_${method}`. | Required.          |
 
 ## Example
 
-Here is a straightforward example of task caching using the task’s input keys, `url` and `mediaType`.
+### Cache output using task input parameters
+
+The following example shows how to cache task output using the task's input parameters `url` and `mediaType`.
 
 ```json
 // workflow definition
@@ -63,7 +87,9 @@ Here is a straightforward example of task caching using the task’s input keys,
 }
 ```
 
-In advanced cases where other parameters (such as workflow inputs or global variables) must be included in the `cacheConfig.key`, you must pass these parameters into the task’s `inputParameters` first.
+### Cache output using workflow inputs
+
+To include workflow inputs in the cache key, first pass them to the task's `inputParameters`. The following example passes `userId` from the workflow input to the task:
 
 ```json
 {
@@ -93,7 +119,9 @@ In advanced cases where other parameters (such as workflow inputs or global vari
 }
 ```
 
-Here is an example of using a workflow variable as the cacheKey:
+### Cache output using variables from previous tasks
+
+The following example shows how to use a variable from a [Set Variable](/content/reference-docs/operators/set-variable) task in the cache key:
 
 ```json
 // workflow definition
@@ -137,15 +165,9 @@ Here is an example of using a workflow variable as the cacheKey:
 }
 ```
 
-## Task behavior with caching
-
-Before a task is scheduled, the server checks if there is cached output for the given task definition name by matching the cache key. If a match is found, the task is not scheduled, and the cached output is used to complete it.
-
-If no cached output is found, the task is scheduled as usual. When the task is completed successfully, the output is cached against the cache key for the duration specified.
-
 ## Supported tasks
 
-Caching is currently supported for the following task types:
+Caching is available for the following task types:
 
 - [Worker (Simple)](../reference-docs/worker-task)
 - [HTTP](../reference-docs/system-tasks/http)
@@ -154,6 +176,7 @@ Caching is currently supported for the following task types:
 - [SendGrid](/content/reference-docs/system-tasks/sendgrid)
 - [JDBC](../reference-docs/system-tasks/jdbc)
 - [Get Signed JWT](../reference-docs/system-tasks/get-signed-jwt)
+- [gRPC](../reference-docs/system-tasks/grpc)
 - [Opsgenie](../reference-docs/system-tasks/opsgenie)
 - [Yield](/content/reference-docs/operators/yield)
 - [LLM Text Complete](../reference-docs/ai-tasks/llm-text-complete)
@@ -165,3 +188,4 @@ Caching is currently supported for the following task types:
 - [LLM Index Text](../reference-docs/ai-tasks/llm-index-text)
 - [LLM Search Index](../reference-docs/ai-tasks/llm-search-index)
 - [LLM Chat Complete](../reference-docs/ai-tasks/llm-chat-complete.mdx)
+- [Chunk Text](../reference-docs/ai-tasks/chunk-text)
