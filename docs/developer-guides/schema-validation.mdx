@@ -102,12 +102,12 @@ If the version is unspecified, the latest schema version will be used.
 {
 ...
   "inputSchema": {
-    "name": "itemSchema",
+    "name": "mySchema",
     "version": 1,
     "type": "JSON"
   },
   "outputSchema": {
-    "name": "outputSchema",
+    "name": "mySchema",
     "type": "JSON"
   }
   "enforceSchema": true
@@ -119,8 +119,8 @@ If the version is unspecified, the latest schema version will be used.
 <TabItem value="Task-configuration" label="Task configuration">
 
 1. Go to **Definitions** > **Workflow**.
-2. Select a workflow that you want to add a task-level schema to.
-3. In the visual workflow builder, select a task.
+2. Select a workflow.
+3. In the visual workflow builder, select a task that you want to add a task-level schema to.
 4. Select a schema to use as an **Input Schema** or **Output Schema**.
 5. Select a **Version** for the schema.
 6. Select **Save** > **Confirm** in the top right.
@@ -128,35 +128,31 @@ If the version is unspecified, the latest schema version will be used.
 <p align="center"><img src="/content/img/adding-schema-to-task-configuration.png" alt="Screenshot of adding a schema to a task configuration in the workflow definition." width="100%" height="auto"></img></p>
 
 ``` json
+
 // workflow definition
 
 {
 ...
-  "tasks": [
-    {
-      "name": "getItem",
-      "taskReferenceName": "getItem_ref",
-      "inputParameters": {
-        "productId": 1,
-        "productName": "toy"
-      },
-      "type": "SIMPLE",
-      "taskDefinition": {
-        "inputSchema": {
-          "createTime": 0,
-          "updateTime": 0,
-          "name": "itemSchema",
-          "type": "JSON"
-        },
-        "outputSchema": {
-          "name": "outputSchema",
-          "version": 1,
-          "type": "JSON"
-        },
-        "enforceSchema": true
-      }
-    }
-  ]
+     {
+     "name": "poll-until-condition-matches-full-worker",
+     "taskReferenceName": "poll-until-condition-matches-full-worker",
+     "inputParameters": {
+       "pollCounter": "${workflow.input.pollCounter}",
+       "pollIntervalSeconds": "${workflow.input.pollIntervalSeconds}"
+     },
+     "type": "SIMPLE",
+     "taskDefinition": {
+       "inputSchema": {
+         "name": "mySchema",
+         "type": "JSON"
+       },
+       "outputSchema": {
+         "name": "mySchema",
+         "type": "JSON"
+       },
+       "enforceSchema": true
+     }
+   }
 }
 ```
 
@@ -165,7 +161,7 @@ If the version is unspecified, the latest schema version will be used.
 <TabItem value="Workflow-definition" label="Workflow definition">
 
 1. Go to **Definitions** > **Workflow**.
-2. Select a workflow that you want to add a task-level schema to.
+2. Select a workflow that you want to add a workflow-level schema to.
 3. Go to **Schema and Parameters** >  **Workflow Schema** section of the **Workflow** tab.
 4. Select a schema to use as an **Input Schema** or **Output Schema**.
 5. Select a **Version** for the schema.
@@ -178,12 +174,14 @@ If the version is unspecified, the latest schema version will be used.
 
 {
 ...
-  "inputSchema": {
-    "name": "itemSchema",
-    "version": 1,
-    "type": "JSON"
-  },
-  "enforceSchema": true
+"inputSchema": {
+   "name": "mySchema",
+   "type": "JSON"
+ },
+ "outputSchema": {
+   "name": "mySchema",
+   "type": "JSON"
+ }
 }
 ```
 
@@ -211,7 +209,8 @@ If a task does not pass its schema validation, it will fail with a terminal erro
 
 ## Supported tasks
 
-Schema validation is currently supported for the following task types:
+Schema validation at the task-configuration level  is currently supported for the following task types:
+
 * [Worker (Simple)](/reference-docs/worker-task)
 * [Yield](/content/reference-docs/operators/yield#task-configuration)
 
@@ -332,7 +331,7 @@ See the documentation on [using Workers for more details on running Worker tasks
 
 The workflow completes successfully. This indicates that the input matched the schema and validation passed.
 
-Let’s see what happens if the schema definition is not correct. For example, if the input does not match the required type, the workflow fails immediately at the task execution stage.
+Let’s see what happens if the schema validation is not correct. For example, if the input does not match the required type, the workflow fails immediately at the task execution stage.
 
 Rerun the same workflow with an invalid `productId`, for example:
 
@@ -416,7 +415,7 @@ Next, attach the schema to a task inside a workflow.
 
 3. Select **Save** > **Confirm**.
 4. Open the workflow in the visual editor and select the Worker task.
-5. Select the created schema (`itemSchema`) to use as the **Input Schema**.
+5. Select the created schema (`productSchema`) to use as the **Input Schema**.
 
 <p align="center"><img src="/content/img/enforcing-schema-in-task-configuration.png" alt="Enforcing schema validation to a task configuration" width="100%" height="auto"></img></p>
 
@@ -448,7 +447,7 @@ See the documentation on [using Workers for more details on running Worker tasks
 
 The workflow completes successfully. This indicates that the input matched the schema and validation passed.
 
-Let’s see what happens if the schema definition is not correct. For example, if the input does not match the required type, the workflow fails immediately at the task execution stage.
+Let’s see what happens if the schema validation is not correct. For example, if the input does not match the required type, the workflow fails immediately at the task execution stage.
 
 Rerun the same workflow with an invalid `productId`, for example:
 
@@ -464,7 +463,7 @@ The workflow execution now fails. Because the input does not match the schema (e
 
 Because `productId` is defined in the schema as an integer, providing a string value causes the input to violate the schema. During execution, Conductor validates the task inputs against the schema attached to the task configuration. When the validator checks `$.productId`, it detects that a string was provided where an integer is required.
 
-As a result, schema validation fails before the Inline task can run. Conductor immediately marks the task with the status **Failed_with_terminal_error**, which indicates that the task cannot proceed or be retried automatically. Since this task is part of a workflow and its failure is terminal, the workflow also transitions to the **Failed** state.
+As a result, schema validation fails before the task can run. Conductor immediately marks the task with the status **Failed_with_terminal_error**, which indicates that the task cannot proceed or be retried automatically. Since this task is part of a workflow and its failure is terminal, the workflow also transitions to the **Failed** state.
 
 </details>
 
