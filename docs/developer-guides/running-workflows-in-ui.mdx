@@ -6,6 +6,7 @@ description: "This guide shows you how to run Conductor workflows from UI."
 # Running Workflows in UI​
 
 You can run workflows from the Conductor UI in the following places:
+
 * _(before v5.1.2)_ **Run Workflow** in the left navigation menu
 * _(before v5.1.2)_ The **Run** tab in a workflow definition’s visual diagram editor
 
@@ -56,7 +57,7 @@ The **Run Workflow** page has a panel for the workflow run history.
 
 The workflow run history contains all workflow executions initiated from the UI. You can select the **Execution name** or **Execution link** to jump to the execution details screen.
 
-You can also select the **Restore Form Values** button to load a past execution’s configuration values into the UI form and rerun the workflow.
+You can also select the **Restore Form Values** button to load the configuration values from a past execution into the UI form and rerun the workflow.
 
 <p align="center"><img src="/content/img/dev-guides/run_in_ui-restore_form_values.gif" alt="Restore a previous workflow execution configuration to run it again." width="100%" height="auto"></img></p>
 
@@ -73,12 +74,12 @@ If you want to test the behavior of single tasks inside a workflow, you can use 
 3. In the workflow diagram, select a task that you want to test.  
 4. Select **Test Task** in the right-side panel.  
    <center><p><img src="/content/img/dev-guides/test_task-ui.png" alt="Test Task UI" width="90%" height="auto"/></p></center>
-5. Using either the **Form** or **JSON** display, enter the input parameters for the task.  
+5. Enter the task's input parameters using either the **Form** or **JSON** display.  
 6. (Optional) Enter the **Domain** for the task if [task-to-domain](/developer-guides/task-to-domain) is used.  
 7. Select **Run Test**.
 
 <center><p><img src="/content/img/dev-guides/test_task.gif" alt="Test Task Procedure." width="90%" height="auto"/></p></center>
 
-Once completed, the task output will appear. These tests are essentially single-task workflows, and you can select the workflow (execution) ID to view the full execution details.
+Once the task is completed, the output will appear. These tests are essentially single-task workflows, and you can select the workflow (execution) ID to view the full execution details.
 
 <center><p><img src="/content/img/dev-guides/test_task-view_execution.gif" alt="View execution after testing task." width="90%" height="auto"/></p></center>
