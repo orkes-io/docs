@@ -152,7 +152,7 @@ def startTaskRunnerWorkers():
     ]
 ```
 
-In this example, we configure the `SimpleWorker` to listen for tasks with the `test` domain by implementing the `get_domain()` method. [See additional examples](https://github.com/conductor-sdk/conductor-python/tree/main/docs/worker#task-domains).
+In this example, we configure the `SimpleWorker` to listen for tasks with the `test` domain by implementing the `get_domain()` method. [See additional examples](https://github.com/conductor-oss/python-sdk/blob/main/docs/WORKER.md).
 
 </TabItem>
 <TabItem value="JavaScript" label="JavaScript">
@@ -263,7 +263,7 @@ POST /api/workflow/{name}
 
 While configuring groups or applications in Conductor, you can add granular permissions to access specific resources. This includes granting permission to specific domains and allowing applications or groups to execute all tasks under that domain by eliminating the need to configure access for individual tasks.
 
-To enable domain permissions:
+**To enable domain permissions:**
 
 1. Go to **Access Control** > **Applications/Groups** from the left menu on your Conductor cluster.
 2. Select your application or group.

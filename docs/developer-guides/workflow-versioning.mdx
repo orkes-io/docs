@@ -2,11 +2,12 @@
 slug: "/faqs/workflow-versioning"
 description: "In Conductor, workflow versioning enables changes to be safely made and managed during production."
 ---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 # Managing Workflow Versions
 
-In Orkes Conductor, you can create, edit, run, and delete workflow versions.
-
+In Orkes Conductor, you can create, edit, run, and delete workflow versions. Each workflow can have multiple versions, allowing you to evolve workflows safely over time.
 
 ## Creating new workflow versions
 
@@ -25,14 +26,36 @@ By default, the workflow version starts from 1 and increments with each new vers
 
 **To create a new version:**
 
+<Tabs>
+<TabItem value="Using workflow JSON" label="Using workflow JSON">
+
+Increment the version number in the JSON code and save the workflow.
+
+```json
+{
+  "name": "newWorkflow",
+  "description": "Sample Description",
+  "version": <VERSION-NUMBER>,
+  "tasks": [
+    //list of tasks
+   ]
+}
+```
+
+</TabItem>
+
+<TabItem value="Using Conductor UI" label="Using Conductor UI">
+
 After making changes to the workflow definition in the Conductor UI, select the ⏷ (down arrow) icon beside Save > **Save as new version** to create a new version. The keyboard shortcut is **Ctrl**+**S**+**N**.
 
-<p align="center"><img src="/content/img/dev-guides/workflow_versions-save_new.png" alt="Screenshot of the Orkes Conductor UI, showing the Save as new version button." width="100%" height="auto"></img></p>
+<p align="center"><img src="/content/img/save-workflow-as-new-version.png" alt="Screenshot of the Orkes Conductor UI, showing the Save as new version button." width="100%" height="auto"></img></p>
 
-You can view all versions of a workflow in the visual workflow builder in **Definitions** > **Workflow**.
+You can view all versions of a workflow in **Definitions** > **Workflow** using the version dropdown in the visual workflow editor.
 
-<p align="center"><img src="/content/img/dev-guides/workflow_versions-dropdown_view.png" alt="Screenshot of the Orkes Conductor UI, showing the version dropdown view in the visual workflow builder." width="100%" height="auto"></img></p>
+<p align="center"><img src="/content/img/viewing-different-workflow-versions.png" alt="Screenshot of the Orkes Conductor UI, showing the version dropdown view in the visual workflow builder." width="60%" height="auto"></img></p>
 
+</TabItem>
+</Tabs>
 
 ## Editing workflow versions
 
@@ -42,18 +65,29 @@ Each workflow version can be edited and saved separately, allowing you to update
 1. Go to **Definitions** > **Workflow** and select the desired workflow.
 2. From the version dropdown in the top right corner, select the desired version.
 
-<p align="center"><img src="/content/img/dev-guides/workflow_versions-dropdown_view.png" alt="Screenshot of the Orkes Conductor UI, showing the version dropdown view in the visual workflow builder." width="100%" height="auto"></img></p>
+<p align="center"><img src="/content/img/viewing-different-workflow-versions.png" alt="Screenshot of the Orkes Conductor UI, showing the version dropdown view in the visual workflow builder." width="80%" height="auto"></img></p>
 
-You can make the necessary changes in that workflow version and proceed to save it.
-
+3. Make the required changes and save.
 
 ## Running workflow versions
 
-While running a workflow, you should specify which version to use. The latest version will run by default if a version is not specified.
+When running a workflow, you can specify which version to execute. If no version is specified, the latest version runs by default.
 
+**To run a workflow from its workflow definition:**
 
-<p align="center"><img src="/content/img/dev-guides/workflow_versions-run_version.png" alt="Screenshot of the Run tab in the Orkes Conductor UI, with the version dropdown selection in the visual workflow builder." width="100%" height="auto"></img></p>
+1. Select the required workflow version from the version dropdown.
+2. Select **Execute**.
 
+<p align="center"><img src="/content/img/run-workflow-from-definitions-page.gif" alt="Running workflows from a workflow definition page" width="100%" height="auto"></img></p>
+
+**To run workflows the from workflow executions/definitions page:**
+
+1. Go to **Executions** > **Workflow** or **Definitions** > **Workflow**.
+2. Select **Run Workflow** from the top-right corner.
+3. Select the **Workflow name** and **Version**.
+4. Select **Run Workflow**.
+
+<p align="center"><img src="/content/img/running-different-workflow-versions.png" alt="Running different workflow versions" width="60%" height="auto"></img></p>
 
 Learn more about managing workflow versions at runtime: [Workflow Versions at Runtime](/developer-guides/workflow-version-behavior-on-execution)
 
@@ -64,9 +98,7 @@ You can delete workflow versions that are no longer needed. All currently runnin
 
 **To delete a workflow version:**
 1. Go to **Definitions** > **Workflow** and select the desired workflow.
-2. From the version dropdown in the top right corner, select the version to be deleted.
+2. From the version dropdown in the top-right corner, select the version to delete.
 3. Select **Delete** > **Confirm**.
 
-
-
-<p align="center"><img src="/content/img/dev-guides/workflow_versions-delete.png" alt="Screenshot of the Orkes Conductor UI, showing the Delete button in the visual workflow builder." width="100%" height="auto"></img></p>
+<p align="center"><img src="/content/img/delete-workflow-versions.png" alt="Screenshot of the Orkes Conductor UI, showing the Delete button in the visual workflow builder." width="100%" height="auto"></img></p>

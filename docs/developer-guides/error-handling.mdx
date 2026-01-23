@@ -26,14 +26,14 @@ To deal with workflow failures post-execution, refer to [Debugging Workflows](/d
 
 ## Message delivery guarantees
 
-Conductor guarantees at least once message delivery, meaning all messages are persistent and will be delivered to task workers one or more times. In the event of failure, the message will be delivered more than once. This semantic ensures that:
+Conductor guarantees at least once message delivery, meaning all messages are persistent and will be delivered to task workers one or more times. In the event of failure, the message will be delivered more than once. This semantics ensures that:
 
 1. If a workflow has started, it will run to completion as long as all its tasks are completed.
 2. If a task worker fails due to restarts, crashes, or other issues, the message will be redelivered to another worker node that is alive and responding.
 
 ## Task retries
 
-Automatic retries are a key strategy for handling transient task failures. If a task fails to complete, the Conductor server will make the task available for polling again after a given duration.
+Automatic retries are a key strategy for handling transient task failures. If a task fails to complete, the Conductor server will make it available for polling again after a specified duration.
 
 ### Retry configuration
 
@@ -49,7 +49,7 @@ You can configure retry behavior for tasks in its **task definition**. The param
 | retryCount         | The number of retry attempts if the task fails. Default value is 3.                                                                                                                                                                                                                                                                                                                                                                                                                                     | Optional.          |
 | retryDelaySeconds  | The time (in seconds) to wait before each retry attempt. This provides time for the task service to recover from any transient failure before it is retried. Default value is 60. <br/><br/>                                                                                                                                                                                                                              | Optional.          |
 | backoffScaleFactor | The value multiplied with `retryDelaySeconds`to determine the interval for retry. Default value is 1.                                                                                                                                                                                                                                                                                                                                                                                                   | Optional.          |
-| retryLogic         | The policy that determines the retry mechanism for the tasks. Supported values: <ul><li>**`FIXED`**—Retries after a fixed interval defined by `retryDelaySeconds`.</li> <li>**`LINEAR_BACKOFF`**—Retries occur with a delay that increases linearly based on `retryDelaySeconds` x `backoffScaleFactor` x `attemptNumber`.</li><li>**`EXPONENTIAL_BACKOFF`**—Retries occur with a delay that increases exponentially based on `retryDelaySeconds` x (`backoffScaleFactor` ^ `attemptNumber`).</li></ul> Default is FIXED. | Optional.          |
+| retryLogic         | The policy that determines the retry mechanism for the tasks. Supported values: <ul><li>**`FIXED`**: Retries after a fixed interval defined by `retryDelaySeconds`.</li> <li>**`LINEAR_BACKOFF`**: Retries occur with a delay that increases linearly based on `retryDelaySeconds` x `backoffScaleFactor` x `attemptNumber`.</li><li>**`EXPONENTIAL_BACKOFF`**: Retries occur with a delay that increases exponentially based on `retryDelaySeconds` x (`backoffScaleFactor` ^ `attemptNumber`).</li></ul> Default is FIXED. | Optional.          |
 
 **Example**
 
@@ -81,14 +81,14 @@ Based on the retry configuration in the above figure, the following sequence of 
 1. Worker (W1) polls the Conductor server for task T1 and receives the task.
 2. After processing the task, the worker determines that the task execution is a failure and reports to the server with a `FAILED` status after 10 seconds.
 3. The server will persist this failed execution of T1.
-4. A new task T1 execution is created and scheduled for polling. Based on the retry configuration, the task will be available for polling after 5 seconds
+4. A new task execution T1 is created and scheduled for polling. Based on the retry configuration, the task will be available for polling after 5 seconds.
 
 ## Task timeouts
 
 A task timeout can occur if:
 
 - There are no workers available for a given task type. This could be due to longer-than-expected system downtime or a system misconfiguration.
-- The worker receives the message but dies before completely processing the task, so the task never reaches completion.
+- The worker receives the message but dies before fully processing the task, so the task never completes.
 - The worker has completed the task but could not communicate with the Conductor server due to network failures, the server being down, or other issues.
 
 ### Timeout configuration
@@ -105,7 +105,7 @@ You can configure timeout behavior for tasks in its **task definition** to handl
 | responseTimeoutSeconds | The maximum duration in seconds that a worker has to respond to the server with a status update before it gets marked as `TIMED_OUT`. When configured with a value > 0, Conductor will wait for the worker to return a status update, starting from when the task was picked up. <br/><br/> If a task requires more time to complete, the worker can respond with the `IN_PROGRESS` status. <br/> <br/> Default value is 600.                                                                          | Optional.          |
 | timeoutSeconds         | The maximum duration in seconds for the task to reach a terminal state before it gets marked as `TIMED_OUT`. When configured with a value > 0, Conductor will wait for the task to complete, starting from when the task was picked up. <br/><br/> Useful for governing the overall SLA for completion. <br/><br/> Default value is 3600.                                                                                                                                                              | Required.          |
 | pollTimeoutSeconds     | The maximum duration in seconds that a worker has to poll a task before it gets marked as `TIMED_OUT`. When configured with a value > 0, Conductor will wait for the task to be picked up by a worker. <br/> <br/> Useful for detecting a backlogged task queue with insufficient workers. <br/> <br/> Default value is 3600.                                                                                                                                                                          | Optional.          |
-| timeoutPolicy          | The policy for handling timeout. Supported values: <ul><li><strong>RETRY</strong>—Retries the task based on the retry configuration.</li> <li><strong>TIME_OUT_WF</strong>—The task is marked as TIMED_OUT and is terminated, which also sets the workflow status as TIMED_OUT.</li> <li><strong>ALERT_ONLY</strong>—An alert message is logged when the timeout occurs.</li></ul>**Note:** The ALERT_ONLY option should be used only when you have your own metrics monitoring system to send alerts. | Optional.          |
+| timeoutPolicy          | The policy for handling timeout. Supported values: <ul><li><strong>RETRY</strong>: Retries the task based on the retry configuration.</li> <li><strong>TIME_OUT_WF</strong>: The task is marked as TIMED_OUT and is terminated, which also sets the workflow status as TIMED_OUT.</li> <li><strong>ALERT_ONLY</strong>: An alert message is logged when the timeout occurs.</li></ul>**Note:** The ALERT_ONLY option should be used only when you have your own metrics monitoring system to send alerts. | Optional.          |
 
 :::note
 To configure tasks that never timeout, set `timeOutSeconds` and `pollTimeoutSeconds` to 0.
@@ -180,7 +180,7 @@ Based on the timeout configuration in the above figure, the following sequence o
 Based on the timeout configuration in the above figure, the following sequence of events will occur when a task cannot be completed within the given duration:
 
 1. At 0 seconds, a worker polls the Conductor server for task T1 and receives the task. T1 is marked as IN_PROGRESS by the server.
-2. The worker starts processing the task but is unable to complete it within the response timeout. The worker updates the server with T1 set to an IN_PROGRESS status and a callback of 9 seconds.
+2. The worker starts processing the task, but is unable to complete it within the response timeout. The worker updates the server with T1 set to an IN_PROGRESS status and a callback of 9 seconds.
 3. The server puts T1 back in the queue but makes it invisible and the worker continues to poll for the task but does not receive T1 for 9 seconds.
 4. After 9 seconds, the worker receives T1 from the server but is still unable to finish processing the task. As such, the worker updates the server again with a callback of 9 seconds.
 5. The same cycle repeats for the next few seconds.
@@ -229,7 +229,7 @@ When triggered, the failure workflow receives the failed workflow details, such 
 
 ### Setting a failure workflow
 
-You can set a failure workflow for a workflow in its **workflow definition**. Before setting the failure workflow, ensure that you have created it first.
+You can set a failure workflow for a workflow in its **workflow definition**. Before setting the failure workflow, ensure it has been created.
 
 **To set a failure workflow:**
 

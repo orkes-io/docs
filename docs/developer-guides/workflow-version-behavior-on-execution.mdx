@@ -10,7 +10,6 @@ import TabItem from '@theme/TabItem';
 
 Learn how workflow versioning works during runtime and how to upgrade a currently running workflow.
 
-
 ## General runtime behavior
 
 Each workflow execution runs based on the snapshot of the workflow definition and version at the start of the execution. To get a better understanding, take a look at the following illustration:
@@ -24,23 +23,20 @@ When the workflow definition is updated but with the same version V1, all previo
 
 When a new workflow version V2 is added at T2, all new executions from that point will also execute based on the latest version V2, unless V1 is explicitly specified.
 
-
 ### Behavior during restarts
 
 By default, all workflow restarts, retries, and task reruns will also be executed based on the snapshot of the workflow definition and version at the start of the *first* execution attempt. 
-
 
 <p align="center"><img src="/content/img/dev-guides/Restarting-workflows-at-runtime-v2.jpg" alt="Behavior of Workflow Version during restarts." width="100%"
                        height="auto"/></p>
 
 In the illustration above, if a V1 execution is restarted after a new version V2 has been created, the restarted execution will still be based on the definition at T1. This is true even if the V1 execution is restarted after the V1 definition itself has been updated.
 
-There is also an option to restart the execution based on the latest definitions rather than the definitions at the initial execution time. In this case, the V1 execution will restart using the definition at T2 instead. 
+There is also an option to restart execution using the latest definitions rather than those at the initial execution time. In this case, the V1 execution will restart using the definition at T2 instead. 
 
-Learn more about recovering from failures in [Debugging Workflows](https://orkes.io/content/developer-guides/debugging-workflows#recovering-from-failures).
+Learn more about [workflow restarts and retries](https://orkes.io/content/developer-guides/debugging-workflows#recovering-from-failures).
 
-
-## **Upgrading running workflows**
+## Upgrading running workflows
 
 Since all workflow executions are based on the snapshot of their definition at the start of the execution, any changes to the definition will not impact currently running executions. If necessary, running workflows can be upgraded to the latest definitions using Conductor UI or API.
 
