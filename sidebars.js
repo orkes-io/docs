@@ -197,8 +197,8 @@ const sidebars = {
                     label: 'Test,Monitor, and Debug Workflows',
                     link: {
                         type: 'generated-index',
-                        title: 'Testing and Monitoring Workflows',
-                        description: 'Learn the best practices for testing and monitoring Conductor workflows, including unit tests, regression tests, logging, cluster metrics, and CI/CD.',
+                        title: 'Testing, Monitoring, and Debugging Workflows',
+                        description: 'Learn the best practices for testing, monitoring, and debugging Conductor workflows, including unit tests, regression tests, logging, cluster metrics, and CI/CD.',
                         slug: '/developer-guides/deploying-workflows'
                     },
                     className: 'leftMenuHeader',
