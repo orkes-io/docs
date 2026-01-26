@@ -12,14 +12,12 @@ import Install from '@site/src/components/install.mdx';
 
 Using Orkes Conductor’s visual workflow diagrams, you can quickly inspect and debug workflow executions during development. All viewable workflow executions are listed in **Executions** > **Workflow**.
 
-
 <p align="center"><img src="/content/img/workflow-executions.png" alt="Workflow Executions page" width="90%" height="auto"/></p>
-
 
 From this introspection dashboard, you can troubleshoot terminal errors and failures during execution.
 
 :::note
-Refer to [Handling Failures](/developer-guides/error-handling) for information on native failure-handling features that automatically resolve transient failures.
+Refer to [Handling Failures](/content/error-handling) for information on native failure-handling features that automatically resolve transient failures.
 :::
 
 
@@ -71,37 +69,35 @@ Here are some example queries:
 
 ### API search
 
-You can conduct searches via the [Search Workflow Executions](/reference-docs/api/workflow/search-workflow-executions) API (GET /api/workflow/search) as well. To help format your API search query, you can select the **⏷** (down arrow) icon beside Search > **Show as Code** to get the same search request as an API call.
+You can conduct searches via the [Search Workflow Executions](/reference-docs/api/workflow/search-workflow-executions) API (GET /api/workflow/search) as well. To help format your API search query, you can select the **⏷** (down arrow) icon beside **Search** > **Show as Code** to get the same search request as an API call.
 
 <p align="center"><img src="/content/img/show-as-code-in-workflow-search.png" alt="Show as code option in Workflow Search" width="90%" height="auto"/></p>
-
 
 Currently, you can get the workflow search query in cURL and JavaScript.
 
 <p align="center"><img src="/content/img/workflow-search-in-code.png" alt="Workflow search data in code" width="90%" height="auto"/></p>
 
 
-
 ## Inspecting a workflow execution
 
 In **Executions** > **Workflow**, select a specific execution to view the details. Here is an example of the execution details:
 
-<p align="center"><img src="/content/img/dev-guides/workflow_executions-workflow_tabs.png" alt="Sample Workflow Executions page, with the different tab views." width="90%" height="auto"/></p>
+<p align="center"><img src="/content/img/workflow-execution-tabs.png" alt="Sample Workflow Executions page, with the different tab views." width="90%" height="auto"/></p>
 
 
 The introspection dashboard consists of the following tabs:
-* **Diagram**—Visual diagram representation of the workflow’s task sequence and status, with zoom, search, and download functionalities.
-* **Task List**—List of details for all tasks in the workflow, with an option to filter by task status.
-* **Timeline**—Chronological timeline of task execution duration, with zoom functionality for granularity.
-* **Workflow Introspection**—Visual breakdown of Conductor’s internal system operations during the workflow execution. Provides a timeline and detailed table to analyze scheduling, decision steps, and execution overhead.
-* **Summary**—Summary of key workflow details like workflowId, status, version, start/end time, duration, and reason for incompletion.
-* **Workflow Input/Output**—Display for the workflow inputs and outputs.
-* **JSON**—The full workflow execution JSON.
-* **Variables**—Display for the workflow variables (created using the [Set Variable](/reference-docs/operators/set-variable) task).
-* **Task-to-domain**—Display for the task-to-domain mappings used in the workflow execution.
+* **Diagram**: Visual diagram representation of the workflow’s task sequence and status, with zoom, search, and download functionalities.
+* **Task List**: List of details for all tasks in the workflow, with an option to filter by task status.
+* **Timeline**: Chronological timeline of task execution duration, with zoom functionality for granularity.
+* **Workflow Introspection**: Visual breakdown of Conductor’s internal system operations during the workflow execution. Provides a timeline and detailed table to analyze scheduling, decision steps, and execution overhead.
+* **Summary**: Summary of key workflow details like workflowId, status, version, start/end time, duration, and reason for incompletion (if any).
+* **Workflow Input/Output**: Display for the workflow inputs and outputs.
+* **JSON**: The full workflow execution JSON.
+* **Variables**: Display for the workflow variables (created using the [Set Variable](/reference-docs/operators/set-variable) task).
+* **Task-to-domain**: Display for the task-to-domain mappings used in the workflow execution.
+* **Assistant**: AI-based Conductor Agent that helps debug workflow execution using natural language prompts.
 
 Each tab provides details that can help debug workflow issues.
-
 
 ### Diagram tab
 
@@ -110,46 +106,41 @@ The **Diagram** tab visually represents task statuses in different colors:
 * Red: Failed task
 * Orange: Task completed with errors
 
-Refer to [Workflow and Task Status](/content/developer-guides/task-and-workflow-status-in-conductor) for more information on the task status.
-
 <p align="center"><img src="/content/img/types-of-errors.png" alt="Different types of errors in a failed workflow" width="80%" height="auto"/></p>
 
-Selecting a task from the diagram opens a right-hand panel showcasing the task details.
-
+Refer to [Workflow and Task Status](/content/developer-guides/task-and-workflow-status-in-conductor) for more information on the task status.
 
 ## Inspecting a task execution
 
-The task details dashboard consists of the following tabs:
-* **Summary**—Summary of key task details like task type, status, retry count, duration, worker, reason for incompletion, and more.
-* **Input**—Display for the task inputs.
-* **Output**—Display for the task outputs.
-* **Logs**—Logs for the task (if supplied by the task).
-* **JSON**—The task execution JSON.
-* **Definition**—The task definition used at runtime.
+Selecting a task from the diagram opens a right-hand panel showcasing the task details. The task details dashboard consists of the following tabs:
 
+* **Summary**: Summary of key task details like task type, status, retry count, duration, worker, reason for incompletion, and more.
+* **Input**: Display for the task inputs.
+* **Output**: Display for the task outputs.
+* **Logs**: Logs for the task (if supplied by the task).
+* **JSON**: The task execution JSON.
+* **Definition**: The task definition used at runtime.
 
-<p align="center"><img src="/content/img/dev-guides/workflow_executions-task_tabs.png" alt="Sample Workflow Executions page, with the task tab details." width="90%" height="auto"/></p>
-
+<p align="center"><img src="/content/img/debugging-task-executions.png" alt="Sample Workflow Executions page, with the task tab details." width="90%" height="auto"/></p>
 
 If the task has been retried multiple times, you can select an attempt from the dropdown bar and view the details for a specific attempt.
 
-<p align="center"><img src="/content/img/dev-guides/workflow_executions-task_attempts.png" alt="Task attempt dropdown selection." width="90%" height="auto"/></p>
+<p align="center"><img src="/content/img/retry-attempts-debugging.png" alt="Task attempt dropdown selection." width="90%" height="auto"/></p>
 
 
 ### Debugging a failed task execution
 
 To debug a failed task, you can try inspecting the following areas:
-* **Reason for incompletion**—Located in the task’s Summary tab, it captures exceptions thrown by the worker or task, like “Failed to invoke HTTP endpoint”.
-* **Worker**—Located in the task’s Summary tab, it captures the worker instance that polled for the task. This is useful for digging out logs that aren’t captured in Conductor.
-* **Task inputs**—Verify if the task’s inputs were correctly provided and computed.
-* **Task outputs**—Verify if the task’s outputs were correctly provided and computed, and compare them with any task inputs that reference these outputs.
-
+* **Reason for incompletion**: Located in the task’s Summary tab, it captures exceptions thrown by the worker or task, like “Failed to invoke HTTP endpoint”.
+* **Worker**: Located in the task’s Summary tab, it captures the worker instance that polled for the task. This is useful for digging out logs that aren’t captured in Conductor.
+* **Task inputs**: Verify if the task’s inputs were correctly provided and computed.
+* **Task outputs**: Verify if the task’s outputs were correctly provided and computed, and compare them with any task inputs that reference these outputs.
 
 ## Recovering from failures
 
 Once the issues regarding the workflow failure are resolved, you can retry the failed workflows using the **Actions** button in the top-right corner of the page.
 
-<p align="center"><img src="/content/img/dev-guides/workflow_executions-recovering_from_failure.png" alt="Workflow Recovery Options" width="80%" height="auto"></img></p>
+<p align="center"><img src="/content/img/recovering-from-failures.png" alt="Workflow Recovery Options" width="80%" height="auto"></img></p>
 
 | Action | Description                                                                                          |
 | ------ |-----------------------------------------------------------------------------------------------------|
