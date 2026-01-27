@@ -32,8 +32,10 @@ To use a Human task in a workflow, you must first create a user form. User Forms
 
 User forms define the structure of Human task forms and can be completed in the following ways:
 
-- **Conductor UI**: The form is rendered and completed directly in the Orkes Conductor UI by Conductor users or groups.
-- **Your own UI**: The same form schema is rendered in a custom UI using the [Human Tasks APIs](/content/reference-docs/api/human-tasks), allowing external users to complete the task.
+- **Conductor UI**: The form is rendered and completed directly in the Orkes Conductor UI.
+- **Your own UI**: The same form schema is rendered in a custom UI using the [Human Tasks APIs](/content/reference-docs/api/human-tasks).
+
+It is a best practice to create user forms in Conductor UI, even if the form is displayed on your own UI. With the user form schema stored on Conductor, any changes can be instantly reflected on the frontend without any additional development effort.
 
 **To create a user form on Orkes Conductor:**
 
@@ -316,7 +318,7 @@ You can also filter the executions by *Available*, *Completed*, or *All*.
 
 <TabItem value="admin search" label="Admin search">
 
-If you are a cluster admin or task admin (workflow creator for the Human task), you can use the **Admin search** tab in **Executions** > **Human Tasks** to filter and sort through all Human task executions for testing and debugging.
+If you are a cluster admin or workflow creator for the Human task, you can use the **Admin search** tab in **Executions** > **Human Tasks** to filter and sort through all Human task executions for testing and debugging.
 
 <p align="center">
   <img
