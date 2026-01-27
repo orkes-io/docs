@@ -172,15 +172,19 @@ When the Human task begins, the associated user form will be assigned to the use
 
 **To display the form on your own UI:**
 
+1. Create the UI in your preferred language.
+2. Add the Human task to an application account and grant permissions for execution.
+3. Configure the Human task for external form assignment.
+4. Integrate the UI with Conductor.
+
 <details>
-<summary>1. Create the UI in your preferred language.</summary>
+<summary>Steps to display the form on your own UI</summary>
+
+**1. Create the UI in your preferred language.**
 
 Create your own UI to display the user form as desired. Some common display options include an action inbox containing all pending approval items or a multi-page form, each corresponding to one Human task on the Conductor end. 
 
-</details>
-
-<details>
-<summary>2. Add the Human task to an application and grant permissions for execution.</summary>
+**2. Add the Human task to an application and grant permissions for execution.**
 
 To use a Human task with your own UI, you need to add the Human task to an application and grant Execute permission to the application.
 
@@ -198,17 +202,11 @@ To use a Human task with your own UI, you need to add the Human task to an appli
 
 The application can now execute the Human task.
 
-</details>
-
-<details>
-<summary>3. Configure the Human task for external form assignment.</summary>
+**3. Configure the Human task for external form assignment.**
 
 If the assignment policy in the Human task is not yet configured, go to the Human task in your workflow definition and ensure that the **User type** for the assignee(s) is set as **External User** or **Group**.
 
-</details>
-
-<details>
-<summary>4. Integrate the UI with Conductor.</summary>
+**4. Integrate the UI with Conductor.**
 
 Use the [Human Tasks APIs](/content/reference-docs/api/human-tasks) to connect your external UI with the Conductor cluster. Integrate the UI using the access credentials generated for the application in the previous step.
 
