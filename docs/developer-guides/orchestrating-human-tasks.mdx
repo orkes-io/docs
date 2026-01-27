@@ -8,11 +8,13 @@ import TabItem from "@theme/TabItem";
 
 # Human Task Orchestration
 
-Human tasks allow workflows to pause and wait for manual input from users. In Orkes Conductor, a Human task is linked to a user form that defines the data to be collected and the users or groups who can complete it. 
+Human tasks allow workflows to pause and wait for manual input from users. In Orkes Conductor, a Human task is linked to a user form that defines the data to be collected and is assigned to a user or group to complete it. 
+
+Human tasks can be configured with assignment and trigger policies to control ownership, escalation, and downstream workflow behavior. 
 
 When a workflow reaches a Human task, Conductor generates a form from the associated user form schema and assigns it based on the configured assignment policy. Once the form is submitted, the task completes and the workflow continues. 
 
-Human tasks can be configured with assignment and trigger policies to control ownership, escalation, and downstream workflow behavior. During development, you can test Human tasks directly in Orkes Conductor before integrating them with your own UI.
+During development, you can test Human tasks directly in Orkes Conductor before integrating them with your own UI.
 
 ## Orchestrating human-involved tasks
 
@@ -25,11 +27,12 @@ Human tasks can be configured with assignment and trigger policies to control ow
 
 ### Step 1: Create a user form schema
 
-To use a Human task in a workflow, you must first create a user form for it. User Forms in Orkes Conductor let you define form schemas using JSON or pre-built components. Once created, these forms can be safely versioned as well.
+To use a Human task in a workflow, you must first create a user form. User Forms in Orkes Conductor let you define form schemas using JSON or pre-built components. These forms are versioned and can be reused across workflows.
 
-:::tip
-It is best practice to create forms using Orkes’ User Form feature, even if the form is displayed on your own UI. With the user form schema stored on Conductor, any changes can be instantly reflected on the frontend without any additional development effort.
-:::
+User forms define the structure of Human task forms and can be completed in the following ways:
+
+- **Conductor UI**: The form is rendered and completed directly in the Orkes Conductor UI by Conductor users or groups.
+- **Your own UI**: The same form schema is rendered in a custom UI using the [Human Tasks APIs](/content/reference-docs/api/human-tasks), allowing external users to complete the task.
 
 **To create a user form on Orkes Conductor:**
 
@@ -166,7 +169,7 @@ During development, you can set the assignment policy to Conductor User or Group
 
 ### Step 4: (Optional) Display the form on your own UI
 
-If you are using a custom UI for a Human task, configure it to render the form.
+**If you are using a custom UI for a Human task, configure it to render the form.**
 
 When the Human task begins, the associated user form will be assigned to the user or group defined in the task. The user form can be displayed on your own UI so that assignees can claim and complete user forms without having to log into Orkes Conductor. These external assignees are referenced in the Human task configuration but managed and verified in an external system.
 
