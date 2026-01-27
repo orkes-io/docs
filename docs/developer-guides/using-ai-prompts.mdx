@@ -7,7 +7,7 @@ import TableNote from '@site/src/components/TableNote';
 
 # Using AI Prompts
 
-To effectively use system AI tasks in workflows, you must provide clear and structured instructions called prompts that define the model’s behavior and output. Orkes Conductor allows you to create, manage, and securely share AI prompts within your organization. 
+To effectively use AI tasks in workflows, you must provide clear and structured instructions called prompts that define the model’s behavior and output. Orkes Conductor allows you to create, manage, and securely share AI prompts within your organization. 
 
 In Orkes Conductor, AI prompts are reusable and can include variables, allowing you to customize the input to AI models based on runtime data.  This approach acts like parameterized API calls, where variables in the prompt are replaced with actual values during workflow execution. It ensures flexibility, reusability, and consistency when integrating AI models into complex workflows.
 
@@ -22,7 +22,7 @@ In this guide, you will learn how to create, test, and use AI prompts in your wo
 **To create an AI prompt:**
 
 1. Go to **Definitions** > **AI Prompts** from the left navigation menu on your Conductor cluster.
-2. Select **+ Add AI Prompt**.
+2. Select **+ Add AI prompt**.
 3. Enter the following details:
 
 | Parameter       | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
@@ -109,7 +109,7 @@ In the AI prompt’s testing interface, define the following parameters:
 
 | Parameter            | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Select model to test | Select an AI model for testing. |
+| Select model to test | Select an AI model for testing. Only the models added to the prompt configuration get listed here. |
 | Temperature          | Set the temperature based on your requirements. Temperature is a parameter that controls the randomness of the model’s output.<ul><li>Higher temperatures, such as 1.0, produce random and more creative responses. Useful in generating creative content.</li><li>Lower temperature produces a more stable and focused response. Useful in situations like text classification, where consistency is important.</li></ul> | 
 | Stop words           | Enter the stop words to be filtered out or given less importance during the text generation process. This ensures the generated text is coherent and contextually relevant.<br/>Stop words tend to be common words like “and”, “a”, “the”, etc., that are necessary for sentence structure but do not contribute significant meaning. | 
 | TopP                 | Set the topP parameter based on your requirements. TopP is a parameter to control the randomness of the model’s output. This parameter defines a probability threshold and then chooses tokens whose cumulative probability exceeds this threshold. | 
@@ -180,9 +180,7 @@ AI prompts can be used in workflows with the following LLM tasks:
 2. Select **+ Define workflow**.
 3. In the visual workflow builder, select **Start** and add the **LLM Text Complete**/**LLM Chat Complete** task.
 4. Select the required AI provider and model. Ensure it matches the models associated with the prompt.
-5. Select the created AI prompt.
-  - For **LLM Text Complete** task, select the prompt in the **Prompt template** field.
-  - For **LLM Chat Complete** task, select the prompt in the **Instructions** field.
+5. Select the created AI prompt, in the **Prompt Name** field.
 
 <p align="center">
   <img
@@ -207,31 +205,19 @@ AI prompts can be used in workflows with the following LLM tasks:
 7. Set the **Temperature**, **Stop words**, **Stop words Type**, **TopP**, and **Token Limit**. 
 8. Select **Save** > **Confirm**.
 
-
 ## Examples
 
 <details>
 <summary>Agentic research assistant</summary>
 
-Check out the quickstart template on Developer Edition for building an [agentic research assistant](/templates/agentic-research) that uses five different prompts.
+Check out the quickstart template on Developer Edition for building an [agentic research assistant](/templates/agentic-research) that uses multiple prompts.
 
 </details>
+
 <details>
-<summary>AI-powered translator</summary>
+<summary>AI tutorials</summary>
 
-Check out the tutorial on how to build an [AI-powered language translator](/developer-guides/quickstart-ai-orchestration) that utilizes a language translation prompt.
-
-</details>
-<details>
-<summary>Agentic interview app</summary>
-
-Check out the tutorial on how to build an [agentic coding interview application](/content/tutorials/agentic-interview-app).
-
-</details>
-<details>
-<summary>Document classifier</summary>
-
-Check out the tutorial on how to build a [document classification system](/content/templates/document-classifier).
+Explore the [AI tutorials](/content/tutorials/ai) section for step-by-step, end-to-end examples that use different AI tasks and integrations.
 
 </details>
 

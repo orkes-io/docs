@@ -3,38 +3,40 @@ slug: "/ai-orchestration"
 description: "Learn how to orchestrate AI-driven workflows with Conductor, including RAG systems and agentic workflows."
 ---
 
-# AI Orchestration and Agentic Workflows
+# AI Orchestration 
 
-With the following suite of features, Orkes Conductor enables you to efficiently build AI-powered or agentic applications that leverage AI models and vector databases:
-* **AI System Tasks**—Use predefined tasks such as storing embeddings or generating chat completions.
-* **AI/LLM and Vector Database Integrations**—Connect to multiple AI models and vector databases in a secure, governed way.
-* **AI Prompt Studio**—Refine, test, and govern prompt templates for AI models.
+Orkes Conductor provides features to build applications that use AI models and vector databases in workflows. These applications can range from simple AI-powered tasks to agentic workflows where decisions are made dynamically based on model output.
 
-Some common AI use cases include:
+Key features include:
+
+* **AI Tasks**: Use predefined system tasks to generate text, create embeddings, and retrieve results from vector databases.
+* **AI/LLM and Vector Database Integrations**: Connect to multiple AI models and vector databases in a secure, governed way.
+* **AI Prompt Studio**: Create, refine, test, and govern prompt templates for AI models.
+
+You can use these features to build:
 
 * AI agents or agentic workflows
 * RAG (retrieval augmented generation) systems
 * LLM-powered chatbots
-* AI classifiers
-
 
 ## Orchestrating AI-powered tasks
 
-Orkes Conductor provides a variety of system AI tasks that can execute common logic without the need to write code. Depending on the type of task, using these tasks may require an AI/LLM integration, a vector database integration, or an AI prompt.
+Orkes Conductor provides a variety of AI tasks that can execute common logic without the need to write code. Depending on the task type, these tasks may require an AI/LLM integration, a vector database integration, or an AI prompt.
 
-| System AI Task     | Description                        |Prerequisites                 |
+| AI Task     | Description                        |Prerequisites                 |
 |------------------- | ---------------------------------- |----------------------------- |
-| [LLM Get Document](/reference-docs/ai-tasks/llm-get-document)  | Retrieve text or JSON content from a URL.                                           | NA                  |
+| [LLM Text Complete](/reference-docs/ai-tasks/llm-text-complete) | Generate text from an LLM based on a defined prompt.                                  | <ul><li>Integrate an AI model</li><li>Create an AI prompt</li></ul>                     |
 | [LLM Generate Embeddings](/reference-docs/ai-tasks/llm-generate-embeddings) | Generate text embeddings.                                          | <ul><li>Integrate an AI model</li></ul> |
 | [LLM Store Embeddings](/reference-docs/ai-tasks/llm-store-embeddings) | Store text embeddings in a vector database.                                   | <ul><li>Integrate an AI model</li> <li>Integrate a vector database</li></ul>            |
-| [LLM Index Text](/reference-docs/ai-tasks/llm-index-text)      | Generate and store text embeddings in a vector database.                              | <ul><li>Integrate an AI model</li> <li>Integrate a vector database</li></ul>            |
-| [LLM Index Document](/reference-docs/ai-tasks/llm-index-document)  | Chunk, generate, and store text embeddings in a vector database.                    | <ul><li>Integrate an AI model</li> <li>Integrate a vector database</li></ul>            |
 | [LLM Get Embeddings](/reference-docs/ai-tasks/llm-get-embeddings) | Retrieve data from a vector database.                                            | <ul><li>Integrate a vector database</li></ul> |
+| [LLM Index Document](/reference-docs/ai-tasks/llm-index-document)  | Chunk, generate, and store text embeddings in a vector database.                    | <ul><li>Integrate an AI model</li> <li>Integrate a vector database</li></ul>            |
+| [LLM Get Document](/reference-docs/ai-tasks/llm-get-document)  | Retrieve text or JSON content from a URL.                                           | NA                  |
+| [LLM Index Text](/reference-docs/ai-tasks/llm-index-text)      | Generate and store text embeddings in a vector database.                              | <ul><li>Integrate an AI model</li> <li>Integrate a vector database</li></ul>            |
 | [LLM Search Index](/reference-docs/ai-tasks/llm-search-index)  | Retrieve data from a vector database based on a search query.                           | <ul><li>Integrate an AI model</li> <li>Integrate a vector database</li></ul>            |
-| [LLM Text Complete](/reference-docs/ai-tasks/llm-text-complete) | Generate text from an LLM based on a defined prompt.                                  | <ul><li>Integrate an AI model</li><li>Create an AI prompt</li></ul>                     |
 | [LLM Chat Complete](/reference-docs/ai-tasks/llm-chat-complete) | Generate text from an LLM based on a user query and additional system/assistant instructions. | <ul><li>Integrate an AI model</li><li>Create an AI prompt</li></ul> |
-
-If custom logic is required, you can create an external worker instead of using the system AI tasks. For more details, refer to the guide on [Writing Workers](developer-guides/using-workers).
+| [Chunk Text](/reference-docs/ai-tasks/chunk-text) | Divide text into smaller segments (chunks) based on the document type. | NA | 
+| [List Files](/reference-docs/ai-tasks/list-files) | Retrieve files from a specific storage location. | <ul><li>Integrate cloud providers for private files</li></ul> | 
+| [Parse Document](/reference-docs/ai-tasks/parse-document) | Retrieves, parses,  and chunk documents from various storage locations. | <ul><li>Integrate cloud providers for private files</li></ul> | 
 
 Once you have decided which task to use, check out the following guides to begin building AI-powered or agentic applications.
 

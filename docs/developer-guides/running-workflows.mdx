@@ -5,13 +5,18 @@ description: "This guide focuses on the basics of running workflows in Orkes Con
 
 # Running Workflows
 
-You can run a Conductor workflow in several ways:
+You can run Conductor workflows during development, testing, and production. Choose the method that best fits your use case:
 
-| Method | Description | Learn more | 
-| ------ | ----------- | ---------- | 
-| From the Conductor UI | Run workflows manually during development and testing. The UI lets you provide input parameters and view execution results in real time. | [Run workflows from UI](/content/how-to-videos/run-workflow). | 
-| Using Conductor APIs | Run workflows programmatically in two ways: asynchronously to start a workflow without waiting for it to complete, or synchronously to start a workflow and wait for its output. | <ul><li>[Start Workflow Execution (Asynchronous)](https://orkes.io/content/reference-docs/api/workflow/start-workflow-execution)</li><li>[Start Workflow Execution (Synchronous)](https://orkes.io/content/reference-docs/api/workflow/synchronous-workflow-execution)</li></ul> | 
-| Using Conductor SDKs (workflow as code) | Define and run workflows directly in your application code. Ideal for dynamic workflow orchestration. | [Using Conductor SDKs](/content/category/sdks). | 
-| Using a schedule | Automate workflow runs on a defined interval using cron expressions. | [Schedule workflows](/content/developer-guides/scheduling-workflows). |
-| From a webhook | Trigger workflows automatically in response to webhook requests from external systems. | [Trigger workflows from webhooks](/content/developer-guides/webhook-integration). | 
-| From an event | Start workflows in response to events from message brokers. | [Run workflows from events](/content/developer-guides/event-handler). |
+- For manual testing and debugging, use the Conductor UI
+- For production environments, use the Conductor APIs or SDKs
+- For recurring flows, use schedules
+- For event-driven workflows, use webhooks or message brokers
+
+| Method | Description | Related documentation | 
+| ------ | ----------- | --------------------- | 
+| Conductor UI| Run workflows manually during development and testing. The UI lets you provide input parameters and view execution results in real time. | [Run workflows from the UI](/content/how-to-videos/run-workflow) | 
+| Conductor APIs | Run workflows programmatically in two ways: asynchronously to start a workflow without waiting for it to complete, or synchronously to start a workflow and wait for its output. | <ul><li>[Start workflow execution (asynchronous)](/content/reference-docs/api/workflow/start-workflow-execution)</li><li>[Start workflow execution (synchronous)](/content/reference-docs/api/workflow/synchronous-workflow-execution)</li></ul> | 
+| Conductor SDKs (Workflow as code) | Define and run workflows directly in your application code. Ideal for dynamic workflow orchestration. | [Using Conductor SDKs](/content/category/sdks) | 
+| Schedules | Automate workflow runs on a defined interval using cron expressions. | [Schedule workflows](/content/developer-guides/scheduling-workflows) |
+| Webhooks | Trigger workflows automatically in response to webhook requests from external systems. | [Trigger workflows from webhooks](/content/developer-guides/webhook-integration) | 
+| Events | Start workflows in response to events from message brokers. | [Run workflows from events](/content/developer-guides/event-handler) |

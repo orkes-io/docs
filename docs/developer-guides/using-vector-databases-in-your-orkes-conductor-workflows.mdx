@@ -5,7 +5,7 @@ description: "Learn how to use vector databases in Orkes' system LLM tasks, incl
 
 # Using Vector Databases
 
-This guide provides an overview of vector databases and how Orkes Conductor makes it easy to use them for system AI tasks in workflows. 
+This guide provides an overview of vector databases and how Orkes Conductor makes it easy to use them for AI tasks in workflows. 
 
 :::tip
 If you are already familiar with vector databases, skip the overview and proceed to the [configuration steps](/content/developer-guides/using-vector-databases-in-your-orkes-conductor-workflows#configuring-vector-databases).
@@ -25,8 +25,7 @@ A namespace is a logical grouping or category of embeddings within a vector data
 
 ### Indexes
 
-Indexes are hierarchical structures built on embeddings in a vector database to optimize retrieval and query performance, similar to tables in a relational database. Each namespace can contain multiple indexes. Indexes help you quickly locate and retrieve embeddings based on their similarity to a given query vector. Vendors use different terminology—Pinecone refers to them as "indexes," while Weaviate calls them "collections."
-
+Indexes are hierarchical structures built on embeddings in a vector database to optimize retrieval and query performance, similar to tables in a relational database. Indexes help you quickly locate and retrieve embeddings based on their similarity to a given query vector. Vendors use different terminology, Pinecone / Postgres Vector Database / Mongo Vector Database refers to them as "indexes," while Weaviate calls them "collections."
 ## Configuring vector databases​
 
 :::info Prerequisites
@@ -80,8 +79,8 @@ Once the vector database integration is added, you can begin adding indexes/coll
 
 1. In **Integrations**, select the + icon next to your newly-created integration.
 2. For Pinecone, Postgres Vector Database, or Mongo Vector Database, select **+ New Index**.
-3. For Weavite, select **+ New Collection**.
-4. Enter the index/collectional name and an optional description. 
+3. For Weaviate, select **+ New Collection**.
+4. Enter the index or collection name and an optional description. 
 5. (Optional) Toggle the **Active** button off if you don’t want to activate it instantly.
 6. Select **Save**.
 
@@ -104,7 +103,7 @@ The group or application can now access the vector databases according to the co
 
 ## Step 4: Use vector databases in workflows
 
-Vector databases can be used in workflows with the following system AI tasks:
+Vector databases can be used in workflows with the following AI tasks:
 
 - [LLM Get Embeddings](https://orkes.io/content/reference-docs/ai-tasks/llm-get-embeddings)
 - [LLM Store Embeddings](https://orkes.io/content/reference-docs/ai-tasks/llm-store-embeddings)
@@ -128,6 +127,15 @@ Refer to the [AI Task Reference](https://orkes.io/content/category/reference-doc
 :::
 
 6. Select **Save** > **Confirm**.
+
+## Examples
+
+<details>
+<summary>AI tutorials</summary>
+
+Explore the [AI tutorials](/content/tutorials/ai) section for step-by-step, end-to-end examples that use different AI tasks and vector database integrations.
+
+</details>
 
 ## More resources
 
