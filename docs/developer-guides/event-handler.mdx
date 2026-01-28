@@ -8,7 +8,7 @@ import TableNote from '@site/src/components/TableNote';
 
 # Using Event Handlers
 
-Event handlers in Orkes Conductor listen for messages from external systems (like Kafka, SQS, or AMQP) and trigger workflow actions based on configurable conditions. You can use them to:
+Event handlers in Orkes Conductor listen for messages from message brokers and trigger workflow actions based on configurable conditions. Once the messages from message brokers are received, you can use them to:
 
 - Start a new workflow
 - Terminate a workflow
@@ -19,20 +19,23 @@ Event handlers in Orkes Conductor listen for messages from external systems (lik
 ## Configuring event handlers
 
 :::info Prerequisites
-Before configuring an event handler, ensure you’ve integrated the appropriate [message broker](https://orkes.io/content/category/integrations/message-broker) with your Conductor cluster.
+Before configuring an event handler, ensure the following:
+- A supported [message broker](/content/category/integrations/message-broker) is integrated with your Conductor cluster.
+- The target queue or topic already exists in the message broker.
+- Conductor has permission to consume messages from the configured queue or topic.
 :::
 
 **To configure an event handler:**
 
 1. Go to **Definitions** > **Event Handler** from the left menu on your Conductor cluster.
 2. Select **+ Define event handler**.
-3. Enter the event handler parameters:
+3. Configure the event handler parameters:
 
 | Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- |
 | name | A unique name for the event handler. | Required. | 
 | description | A description of the event handler.| Optional. | 
-| event | The event queue sink in the format:<br/> **message-broker-type:integration-name:topic/queue-name**.<br/>Where,<ul><li>**message-broker-type**–The message broker type from where the payload is being received. Supported types:<ul><li>amqp</li><li>sqs</li><li>azure</li><li>kafka</li><li>nats</li><li>gcp_pubsub</li><li>ibm_mq</li></ul></li><li>**integration-name**–The integration name added to the cluster.</li><li>**topic/queue-name**–The name of the queue or topic where the payload is being received.</li></ul><TableNote title="Warning">While configuring via Conductor UI, the **Event** field only lists message broker integrations configured in your cluster. Select the required integration and append the topic name or queue name. Failure to do so may result in execution errors, as the payload won't have a valid destination.</TableNote> | Required. | 
+| event | The event queue sink in the format:<br/> **message-broker-type:integration-name:topic/queue-name**.<br/>Where,<ul><li>**message-broker-type**: The message broker type from where the payload is being received. Supported types:<ul><li>amqp</li><li>sqs</li><li>azure</li><li>kafka</li><li>nats</li><li>gcp_pubsub</li><li>ibm_mq</li></ul></li><li>**integration-name**: The integration name added to the cluster.</li><li>**topic/queue-name**: The name of the queue or topic where the payload is being received.</li></ul><TableNote title="Warning">When configuring via the Conductor UI, the **Event** field lists only message broker integrations configured in your cluster. Select the required integration and append the topic name or queue name. Failure to do so may result in execution errors, as the payload won't have a valid destination.</TableNote> | Required. | 
 | condition | An ECMAScript (JavaScript) function to control message processing. The function should return `true` for the event handler to process the message. [Learn more about filtering events](/content/developer-guides/event-handler#configuring-conditions-to-filter-events). | Required. | 
 | evaluatorType | The type of evaluator for the condition. Currently supports `javascript`. | Required. | 
 | actions | An array of actions to perform. Each action requires specific input parameters. Supported actions include:<ul><li>[complete_task](/content/developer-guides/event-handler#complete-task)</li><li>[terminate_workflow](/content/developer-guides/event-handler#terminate-workflow)</li><li>[update_workflow_variables](/content/developer-guides/event-handler#update-variables)</li><li>[fail_task](/content/developer-guides/event-handler#fail-task)</li><li>[start_workflow](/content/developer-guides/event-handler#start-workflow)</li></ul> | Required. |
@@ -88,19 +91,19 @@ The following expressions can be used in **condition** with the indicated result
 
 ## Configuring actions 
 
-Multiple actions can be triggered based on the events received. Below are the actions and their configuration details.
+Actions are executed only after the `condition` evaluates to `true`. Multiple actions can be triggered based on the events received. Below are the actions and their configuration details. 
 
 ### Complete Task​
 
 Mark a task as complete using one of the following methods:
 
-* Using `workflowId` and `TaskRefName`.
+* Using `workflowId` and `taskRefName`.
 * Using `taskId`.
 
 **Example Payload**
 
 <Tabs>
-<TabItem value="Using workflowId and TaskRefName" label="Using workflowId and TaskRefName">
+<TabItem value="Using workflowId and taskRefName" label="Using workflowId and taskRefName">
 
 ```json
 {
@@ -156,7 +159,7 @@ Mark a task as complete using one of the following methods:
 | Parameter | Description | Required/ Optional |
 | --------- | ----------- | ----------------- |
 | actions. **action** | The action to be triggered on receiving events. Set this to `complete_task`.| Required.|
-| actions. complete_task. **workflowId** | The ID of the workflow that contains the task to be completed. | Required if using `workflowId` and `taskRefName`method. |
+| actions. complete_task. **workflowId** | The workflow execution ID that contains the task to be completed. | Required if using `workflowId` and `taskRefName`method. |
 | actions. complete_task. **taskRefName** | The reference name of the task to be marked as completed. | Required if using `workflowId` and `taskRefName`method. |
 | actions. complete_task. **taskId** | The task execution ID of the task to be marked as completed. | Required if using `taskId`method. |
 | actions. complete_task. **output** | The output data to be sent along with the completion. Can be string, number, boolean, null, or object/array. | Optional. | 
@@ -228,7 +231,7 @@ Updates variables in a running workflow. Useful for controlling inputs in a long
 | Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- | 
 | actions. **action** | The action to be triggered on receiving events. Set this to `update_workflow_variables`.| Required. | 
-| actions. update_workflow_variables. **workflowId** | The ID of the workflow whose variables need to be updated. | Required. | 
+| actions. update_workflow_variables. **workflowId** | The execution ID of the workflow whose variables need to be updated. | Required. | 
 | actions. update_workflow_variables. **appendArray** | If set to `true`, all list (array) variables in the workflow are appended with new values instead of being replaced. This can be used to collect data from a series of events into a single workflow. | Optional. | 
 | actions. update_workflow_variables. **variables** | The variables to be updated in the workflow. Can be string, number, boolean, null, or object/array. | Required.| 
 
@@ -236,13 +239,13 @@ Updates variables in a running workflow. Useful for controlling inputs in a long
 
 Marks a task as failed using one of the following methods:
 
-* Using `workflowId` and `TaskRefName`.
+* Using `workflowId` and `taskRefName`.
 * Using `taskId`. 
 
 **Example Payload**
 
 <Tabs>
-<TabItem value="Using workflowId and TaskRefName" label="Using workflowId and TaskRefName">
+<TabItem value="Using workflowId and taskRefName" label="Using workflowId and taskRefName">
 
 ```json
 {
@@ -298,10 +301,10 @@ Marks a task as failed using one of the following methods:
 | Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- |
 | actions. **action** | The action to be triggered on receiving events. Set this to `fail_task`. | Required. | 
-| actions. complete_task. **workflowId** | The execution ID of the workflow that contains the task to be marked as failed. | Required if using `workflowId` and `taskRefName`method. |
-| actions. complete_task. **taskRefName** | The reference name of the task to be marked as failed. | Required if using `workflowId` and `taskRefName`method. | Required if using `workflowId` and `taskRefName`method. |
-| actions. complete_task. **taskId** | The task execution ID of the task to be marked as failed. | Required if using `taskId` method. |
-| actions. complete_task. **output** | The output data to be sent along with the completion. Can be string, number, boolean, null, or object/array. | Optional. | 
+| actions. fail_task. **workflowId** | The execution ID of the workflow that contains the task to be marked as failed. | Required if using `workflowId` and `taskRefName`method. |
+| actions. fail_task. **taskRefName** | The reference name of the task to be marked as failed. | Required if using `workflowId` and `taskRefName`method. | Required if using `workflowId` and `taskRefName`method. |
+| actions. fail_task. **taskId** | The task execution ID of the task to be marked as failed. | Required if using `taskId` method. |
+| actions. fail_task. **output** | The output data to be sent along with the completion. Can be string, number, boolean, null, or object/array. | Optional. | 
 
 ### Start Workflow
 
@@ -346,6 +349,6 @@ Starts a new workflow instance.
 | actions. start_workflow. **version** | The version of the workflow to be executed. If unspecified, the latest version will be used. | Required. | 
 | actions. start_workflow. **correlationId** | A unique identifier for the workflow execution, used to correlate the current workflow instance with other workflows. | Optional. | 
 | actions. start_workflow. **idempotencyKey** |A unique, user-generated key to prevent duplicate workflow executions. Idempotency data is retained for the life of the workflow execution.| Optional. | 
-| actions. start_workflow. **idempotencyStrategy** | The idempotency strategy for handling duplicate requests. Supported values:<ul><li>`RETURN_EXISTING`—Return the `workflowId` of the workflow instance with the same idempotency key.</li> <li>`FAIL`—Start a new workflow instance only if there are no workflow executions with the same idempotency key.</li> <li>`FAIL_ON_RUNNING`—Start a new workflow instance only if there are no RUNNING or PAUSED workflows with the same idempotency key. Completed workflows can run again.</li></ul> | Required if `idempotencyKey` is used. | 
+| actions. start_workflow. **idempotencyStrategy** | The idempotency strategy for handling duplicate requests. Supported values:<ul><li>`RETURN_EXISTING`: Return the `workflowId` of the workflow instance with the same idempotency key.</li> <li>`FAIL`: Start a new workflow instance only if there are no workflow executions with the same idempotency key.</li> <li>`FAIL_ON_RUNNING`: Start a new workflow instance only if there are no RUNNING or PAUSED workflows with the same idempotency key. Completed workflows can run again.</li></ul> | Required if `idempotencyKey` is used. | 
 | actions. start_workflow. **input** | The input data to be passed to the new workflow. Can be string, number, boolean, null, or object/array. | Optional. | 
 | actions. start_workflow. **taskToDomain** | A mapping of task reference names to domain-specific values to [route the task to defined workers](https://orkes.io/content/developer-guides/task-to-domain). | Optional. | 
