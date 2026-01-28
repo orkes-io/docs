@@ -3,20 +3,23 @@ slug: "/glossary"
 description: "The glossary contains common technical terms used in the Orkes Conductor documentation."
 ---
 
-
 # Orkes Conductor Glossary
-Here are some common technical terms used in the Orkes Conductor documentation.
 
+Here are some common technical terms used in the Orkes Conductor documentation.
 
 ## AI Agent
 
-An autonomous software entity that perceives its environment, reasons about its goals, and takes actions. An AI agent is typically an LLM equipped with a set of tools (e.g., function calling via APIs) and memory (e.g., context window via database access). 
+In Orkes Conductor, an AI agent is implemented as a workflow that uses a large language model (LLM) to make decisions at runtime. The agent reasons over workflow state and inputs, selects actions, and invokes tools or services through the workflow execution. 
 
-The LLM should be capable of instruction-driven reasoning, which can be prompted with techniques such as Reason & Act (ReAct), Chain-of-Thought (CoT), or Tree-of-thoughts (ToT). 
+Instruction-driven reasoning techniques such as Reason and Act (ReAct), Chain-of-Thought (CoT), or Tree-of-Thoughts (ToT) can be used to guide the agent’s decision-making within the workflow.
+
+## AI Prompts
+
+A set of instructions and context used in Orkes Conductor workflows to guide the behavior and output of a large language model.
 
 ## Agentic Workflow
 
-A multi-step, dynamic process that orchestrates multiple services, tasks, AI agents, and even humans-in-the-loop within a dynamic control graph. Unlike a typical workflow, an agentic workflow involves an LLM that dynamically chooses execution paths at runtime.
+A multi-step, dynamic process that orchestrates multiple services, tasks, AI agents, and even humans-in-the-loop within a dynamic control graph. Unlike a typical workflow, an agentic workflow in Conductor involves an LLM that dynamically chooses execution paths at runtime.
 
 An agentic workflow is flexible and can be used for many scenarios:
 
@@ -26,7 +29,7 @@ An agentic workflow is flexible and can be used for many scenarios:
 
 ## Application
 
-(In the context of Conductor) An access layer for external systems to interact with a Conductor server via APIs or SDKs. It is similar to a service account, where a system’s ability to access Conductor resources is governed by permissions.
+(In the context of Conductor) An access layer for external systems to interact with a Conductor server via APIs or SDKs. It is similar to a service account, in which permissions govern a system’s access to Conductor resources.
 
 An application access layer can be used in a variety of ways:
 
@@ -36,24 +39,29 @@ An application access layer can be used in a variety of ways:
 
 ## Asynchronous Execution
 
-Starts a workflow and returns the workflow (execution) ID to the system immediately. This ID can be used to check on the workflow progress and result.
+Starts a Conductor workflow and returns the workflow (execution) ID to the system immediately. This ID can be used to check on the workflow progress and result.
 
 Related: [Synchronous Execution](#synchronous-execution)
 
 ## Change Data Capture (CDC)
 
-A method for identifying changes in a source database and replicating them in real time to other systems. Change Data Capture (CDC) follows a three-step extract-transform-load process, where the relevant data is extracted, transformed into the required format for the target system, and then loaded into the system.
+In Orkes Conductor, Change Data Capture (CDC) is a pattern that streams workflow state changes to external eventing systems such as Kafka or other message brokers. When CDC is enabled on a workflow, Conductor emits events whenever the workflow state changes, so downstream systems can react in real time, enabling responsive, decoupled architectures.  ￼
 
-CDC provides a real-time stream of data changes, which ensures consistent replication across data-dependent systems.
+## Conductor Cluster
+
+A deployment of the Orkes Conductor platform that hosts definitions, configurations, and executions. A Conductor cluster provides the runtime environment where workflows are executed and managed.
 
 ## Correlation ID
 
-A unique identifier that links together a related set of workflow executions. A correlation ID enables you to trace a single transaction or user across different workflows. For example, it can be used to link an order in a *purchase* workflow with its subsequent refund in the *refundOrder* workflow.
+In Orkes Conductor, a correlation ID is a unique identifier used to associate related workflow executions. It enables tracing a single transaction or business process across multiple workflows. For example, a correlation ID can link an order processed in a purchase workflow with a corresponding refund handled by a separate refund workflow.
 
 ## Directed Acyclic Graph (DAG)
 
 A type of graph where its vertices are connected in one direction and without any repeating cycles. All Conductor workflows are directed acyclic graphs (DAGs), providing a clear map of the workflow and its progress through different states.
 
+## Environment Variables
+
+In Orkes Conductor, an environment variable is a configuration value stored at the cluster level and made available to workflows at runtime. Environment variables are commonly used to externalize configuration, such as service endpoints or default settings, without hardcoding values in workflow definitions.
 
 ## Event-Driven
 
@@ -63,27 +71,31 @@ Event-driven architecture facilitates loose coupling between services and respon
 
 ## Event Handler
 
-A module that either listens for specific events in an event-driven system. This can be a piece of code, as simple as a callback function, or in Conductor, a JSON configuration. As implied by its name, the event handler reacts to particular events and triggers subsequent actions like starting a workflow or updating a workflow variable.
+A module that either listens for specific events in an event-driven system. This can be a piece of code, as simple as a callback function, or in Conductor, a JSON configuration. As its name implies, the event handler reacts to specific events and triggers subsequent actions, such as starting a workflow or updating a workflow variable.
+
+## Gateway
+
+Gateway enables exposing any Conductor workflow as APIs or MCP tools.  Workflows can be exposed as HTTP APIs via the API Gateway or as MCP tools via the MCP Gateway for AI agent integration.
 
 ## Idempotency
 
-A property where an operation executed multiple times will not affect the result beyond the initial execution. Idempotency prevents any unwanted side effects or duplicate results. For example, if an API call to delete a resource occurs repeatedly, it does not create any side effects. Or if the same event message is sent multiple times, subsequent messages will not trigger the service again.
+A property where an operation executed multiple times will not affect the result beyond the initial execution. Idempotency prevents any unwanted side effects or duplicate results. For example, if the same event message is sent multiple times, subsequent messages will not trigger the service again.
 
 In Conductor, workflows can be made idempotent to prevent duplicate workflow executions. Upon duplicate requests, the Conductor server can return the initial workflow execution ID or fail the request.
 
 ## JSON Web Token (JWT)
 
-An open standard for securely transmitting information between two systems, often used for web-based authentication. The JSON web token (JWT) is stateless and self-contained, carrying all the necessary information for authentication, like the user’s claims and permissions, in a JSON format.
+An open standard for securely transmitting information between two systems, often used for web-based authentication. The JSON web token (JWT) is stateless and self-contained, carrying all the necessary information for authentication, like the user’s claims and permissions, in a JSON format. In Orkes Conductor, a JSON Web Token (JWT) is used for authentication and authorization when accessing Conductor APIs and services.
 
 Each JWT is also signed using cryptography to ensure that a third party cannot alter its contents. A signed JWT can be used for client-to-server or server-to-server communication.
 
 ## JDBC (Java Database Connectivity)
 
-An API that enables connectivity to any database management system (DBMS) like PostgreSQL. JDBC enables applications to easily query, update, add, or delete data.
+An API that enables connectivity between any database management system (DBMS) like PostgreSQL and Conductor workflows. JDBC enables applications to easily query, update, add, or delete data.
 
 ## LLM (Large Language Model)
 
-An AI model that is trained on vast amounts of data and can comprehend and generate natural language as a result. An LLM (large language model) is built on deep learning architectures. It can be used in chatbots or as virtual assistants for a variety of tasks like text generation, translation, question answering, and code generation.
+An AI model trained on large volumes of data that can understand and generate natural language using deep learning architectures. In Orkes Conductor, LLMs are used within workflows to perform tasks such as text generation, translation, question answering, and reasoning. Orkes Conductor supports integrations with multiple LLM providers.
 
 ## Operator
 
@@ -95,37 +107,47 @@ The process of coordinating distributed software components, systems, agents, an
 
 Orchestration facilitates state tracking and reliable execution of interdependent tasks.
 
+## RBAC (Role Based Access Control)
+
+Role-Based Access Control (RBAC) is the authorization model used to control access to platform resources. RBAC assigns permissions to roles, and roles to users or applications, determining which actions can be performed on workflows, metadata, and other Conductor resources.
+
+## Remote Services
+
+A centrally managed HTTP or gRPC service endpoint in Orkes Conductor. Remote services allow workflows to reuse external service configurations across system tasks like HTTP, HTTP Poll, and gRPC without redefining endpoint details each time.
+
 ## Retrieval Augmented Generation (RAG)
 
-An AI technique that supplements an LLM with external knowledge, enhancing its final output (grounded generation). With RAG, relevant information is retrieved from a database based on the user query and supplemented to the LLM.
+An AI technique that supplements an LLM with external knowledge, enhancing its final output (grounded generation). With RAG, relevant information is retrieved from a database based on the user query and supplemented to the LLM. RAG can be implemented within Conductor workflows by retrieving relevant data from external data sources and providing it as context to the LLM during execution.
 
 ## Rate Limits
 
-A method to control the number of network requests made to a server at any given time. 
+A method to control the number of network requests made to a server at any given time.
 
 By rate limiting workflows or their tasks, you can prevent task workers from being overloaded by requests and also gracefully handle external limits set by a service provider.
 
-## Server
+## Secrets
 
-A computer program that provides a service to other programs or users. 
+In Orkes Conductor, a secret is a securely stored value used to manage sensitive information such as API keys, passwords, or tokens. Secrets can be referenced by workflows at runtime without exposing their values in workflow definitions or configuration files.
 
-The Conductor server stores all workflow metadata resources, like the workflow definition, task definition, and integrations, and manages workflow executions, enabling users to build workflows and applications to run workflows.
+## Schema Definitions
+
+In Orkes Conductor, a schema definition specifies the expected structure and validation rules for data used in Conductor tasks and workflows. Schema definitions are used to validate inputs or outputs at runtime, helping ensure that data passed through workflows conforms to the required format.
 
 ## Sub-Workflow
 
-A workflow that executes within another workflow (usually referred to as the parent workflow). 
+A workflow that executes within another workflow (usually referred to as the parent workflow).
 
 Sub-workflows promote modularity and reusability of common processes across different workflows. For example, a notification workflow can be used as a sub-workflow across CI/CD pipelines or system monitoring workflows.
 
 ## Synchronous Execution
 
-Starts a workflow and returns the workflow output either once the workflow has reached a terminal state or when a certain duration has elapsed.
+Starts a workflow and returns its output either once the workflow has reached a terminal state or when a certain duration has elapsed.
 
 Related: [Asynchronous Execution](#asynchronous-execution)
 
 ## System Task
 
-A built-in task type in Conductor that provides common logic without coding required, like calling an HTTP endpoint, publishing an event message, or calling an LLM.
+A built-in task type in Conductor that provides common logic without any coding requirement, like calling an HTTP endpoint, publishing an event message, or calling an LLM.
 
 ## Task
 
@@ -145,12 +167,6 @@ A configuration that is general to a specific task type or name, and applies to 
 
 Related: [Task](#task), [Task Configuration](#task-configuration)
 
-## Task Routing
-
-A strategy that distributes task executions for a particular task to different worker pools. Task routing optimizes resource allocation and usage across different scenarios. In Conductor, task routing is accomplished using a task-to-domain approach.
-
-Related: [Task-to-Domain](#task-to-domain)
-
 ## Task Queue
 
 A system design where task executions are grouped into queues according to their task type or name (HTTP, Event, *some_custom_task*) and domain (if applicable), and get completed by task workers in a first-in-first-out manner.
@@ -163,9 +179,13 @@ Task-to-domain can route traffic from different origins (web, desktop, mobile) t
 
 Related: [Developer Guide for Routing Tasks](/developer-guides/task-to-domain)
 
+## User Form
+
+A reusable, JSON-based form schema used by Human tasks to collect input from users. User forms define the structure, fields, and validation rules for human interaction and can be rendered and completed in the Orkes Conductor UI or integrated into a custom UI.
+
 ## Vector Database
 
-Stores data in the form of vectors, which are arrays of numbers that represent text, images, or audio. These vectors are stored in a multi-dimensional vector space and are clustered together based on similarity. With this form of storage, vector databases are suited for low-latency storage and retrieval of unstructured data. 
+Stores data in the form of vectors, which are arrays of numbers that represent text, images, or audio. These vectors are stored in a multi-dimensional vector space and are clustered together based on similarity. With this form of storage, vector databases are suited for low-latency storage and retrieval of unstructured data.
 
 ## Webhook
 
