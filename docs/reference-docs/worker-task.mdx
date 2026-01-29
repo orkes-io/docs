@@ -9,12 +9,12 @@ import TabItem from "@theme/TabItem";
 
 # Worker Task
 
-A Worker task (Simple task) is used to run custom logic implemented in any language. The custom logic can be deployed anywhere, and the Worker task requires an external worker for polling. A worker is a service you run that polls Conductor for tasks, executes them, and returns the results.
+A Worker task (Simple task) is used to run custom logic implemented in any language. The custom logic can be deployed anywhere, and the Worker task requires an external worker for polling. A worker is a service you run that polls Conductor for Worker tasks, executes them, and returns the results.
 
 :::info Prerequisites
 Before adding a Worker task to a workflow, you should complete the following:
 
-- Create and run a worker process that polls Conductor and executes your task. 
+- Create and run a worker that polls Conductor and executes the Worker task. 
 - Create the task definition in Conductor (UI or API) so the workflow can reference it by name. The Worker task name in your workflow must match the Task Definition name you created in Conductor.
 
 For a full guide on how to use workers, refer to [Writing Workers](/developer-guides/using-workers).
