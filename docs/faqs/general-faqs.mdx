@@ -9,7 +9,7 @@ export const setupFaqs = [
   {
     question: 'What setup options are available for Orkes Conductor?',
     answer:
-      'You can use Developer Edition for quick prototyping in a browser-based sandbox, or run a full local stack via Docker for local development and testing. The Docker-based local setup is positioned for enterprise customers and requires an Orkes Cloud subscription plus an authorization token from Orkes.',
+      'You can use Developer Edition for quick prototyping in a browser-based sandbox, deploy Orkes Conductor on cloud clusters for production-grade environments, or run a full local stack via Docker for local development and testing. The Docker-based local setup is positioned for enterprise customers and requires an Orkes Cloud subscription plus an authorization token from Orkes.',
   },
   {
     question: 'Is Developer Edition free, and do I need to install anything?',
@@ -126,7 +126,7 @@ export const runWorkflowFaqs =
   {
     question: 'Can a workflow publish events to message brokers?',
     answer:
-      'Yes. The Event system task publishes to message brokers, including AMQP, Kafka (including Confluent/Amazon MSK), AWS SQS, Azure Service Bus, NATS, GCP Pub/Sub, and IBM MQ.',
+      'Yes. The Event task publishes to message brokers, including AMQP, Kafka (including Confluent/Amazon MSK), AWS SQS, Azure Service Bus, NATS, GCP Pub/Sub, and IBM MQ.',
   },
 ]
 
@@ -193,12 +193,17 @@ export const workflowExecFaqs =
   {
     question: 'Can I upgrade a running workflow to a newer version?',
     answer:
-      'Yes. There is an API that upgrades a running workflow to a different version. The execution continues from the last running task, and tasks that appear earlier in the new definition are marked as skipped.',
+      'Yes. Use the API `POST /api/workflow/{workflowId}/upgrade` to upgrade a running workflow to a different version. The execution continues from the last running task, and tasks that appear earlier in the new definition are marked as skipped.',
   },
   {
     question: 'How do I prevent duplicate workflow executions (idempotency)?',
     answer:
       'Start workflow requests and schedules can include an idempotency key to prevent duplicates. Webhook-triggered workflows can also use an idempotency key (often derived from a workflow input value), so retries return the existing execution instead of creating a new one.',
+  },
+    {
+    question: 'Can I execute a workflow only up to a particular task for testing?',
+    answer:
+      'Not currently. As a workaround, add a Wait task in the workflow to pause execution at the point you want, so you can test up to that step before continuing.',
   },
 ]
 
