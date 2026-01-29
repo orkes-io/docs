@@ -8,7 +8,7 @@ import TabItem from '@theme/TabItem';
 
 # Enabling CDC (Change Data Capture)
 
-In Orkes Conductor, Change Data Capture (CDC) allows you to send [workflow state changes](https://orkes.io/content/developer-guides/task-and-workflow-status-in-conductor#workflow-status) to external eventing systems such as Kafka. This enables downstream systems to react to workflow state changes in real time, making it easier to build responsive and decoupled architectures.
+In Orkes Conductor, Change Data Capture (CDC) allows you to send [workflow state changes](https://orkes.io/content/developer-guides/task-and-workflow-status-in-conductor#workflow-status) to external message brokers such as Kafka. This enables downstream systems to react to workflow state changes in real time, making it easier to build responsive and decoupled architectures.
 
 ## Configuring CDC parameters 
 
@@ -30,7 +30,7 @@ You can configure CDC using the workflow JSON definition or Conductor UI.
 | Parameter | Description | 
 | --------- | ----------- | 
 | workflowStatusListenerEnabled | Set to `true` to enable CDC. | 
-| workflowStatusListenerSink | The event sink in the format:<br/> **message-broker-type:integration-name:topic/queue-name**<br/>where,<ul><li>**message-broker-type**–The message broker type where the payloads are sent. Supported types:<ul><li>amqp</li><li>sqs</li><li>azure</li><li>kafka</li><li>nats</li><li>gcp_pubsub</li><li>Ibm_mq</li></ul></li><li>**integration-name**–The message broker integration name added to the cluster.</li><li>**topic/queue-name**–The queue name or topic name where the payloads are sent.</li></ul>
+| workflowStatusListenerSink | The event sink in the format:<br/> **message-broker-type:integration-name:topic/queue-name**<br/>where,<ul><li>**message-broker-type**: The message broker type where the payloads are sent. Supported types:<ul><li>amqp</li><li>sqs</li><li>azure</li><li>kafka</li><li>nats</li><li>gcp_pubsub</li><li>Ibm_mq</li></ul></li><li>**integration-name**: The message broker integration name added to the cluster.</li><li>**topic/queue-name**: The queue name or topic name where the payloads are sent.</li></ul>
 
 **Example**
 
@@ -64,7 +64,7 @@ You can configure CDC using the workflow JSON definition or Conductor UI.
 4. In **Workflow listener sink**, select the required integration already added to the cluster.
 5. Enter the topic or queue name manually into the sink.
 
-For example, if you have added an AMQP integration named amqp-test, it appears in the drop-down list of available integrations as follows:
+For example, if you have added an AMQP integration named `amqp-test`, it appears in the drop-down list of available integrations as follows:
 
 <p align="center">
   <img
@@ -156,12 +156,4 @@ Then, specify the saved schema name in `_schema` as workflow input.
 
 ## Verifying CDC events
 
-When the workflow starts, Conductor emits an event each time its state changes—for example, when it transitions from the RUNNING state to any other state. These events are delivered in real time to the configured eventing system. Verify the message delivery under the configured topic or queue name.
-
-
-
-
-
-
-
-
+When the workflow starts, Conductor emits an event each time its state changes, for example, when it transitions from the RUNNING state to any other state. These events are delivered to the configured message brokers in real time. Verify the message delivery under the configured topic or queue name.

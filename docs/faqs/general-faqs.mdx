@@ -3,59 +3,232 @@ slug: "/faqs/general-faqs"
 description: "Get answers to frequently asked questions about using Orkes Conductor."
 ---
 
-# General FAQs
-
-<FAQStructuredData faqs={faqs} />
-
 import FAQStructuredData from '../../src/theme/FAQStructuredData';
 
-export const faqs = [
+export const setupFaqs = [
   {
-    question: 'Is it possible to have different environments like production, staging, and review environments in Conductor?',
+    question: 'What setup options are available for Orkes Conductor?',
     answer:
-      "Yes, the clusters can be configured directly according to your requirements and can have production, UAT, and development environments.",
+      'You can use Developer Edition for quick prototyping in a browser-based sandbox, deploy Orkes Conductor on cloud clusters for production-grade environments, or run a full local stack via Docker for local development and testing. The Docker-based local setup is positioned for enterprise customers and requires an Orkes Cloud subscription plus an authorization token from Orkes.',
+  },
+  {
+    question: 'Is Developer Edition free, and do I need to install anything?',
+    answer:
+      'Developer Edition is a free sandbox environment that lets you start building and running workflows immediately, with no installation required.',
+  },
+  {
+    question: 'Can I run Orkes Conductor locally using Docker? What do I need?',
+    answer:
+      'Yes. Orkes provides Docker containers (including a standalone container intended for local development and testing) that include the full Orkes stack. Prerequisites include Docker, an Orkes Cloud subscription, and an authorization token provided by Orkes.',
+  },
+  {
+    question:
+      'Is it possible to have multiple environments, such as production, staging, and review, in Conductor?',
+    answer:
+      'Yes, the clusters can be configured directly according to your requirements and can have production, UAT, and development environments.',
   },
   {
     question: 'Do you have any restrictions regarding the processing of medical data?',
     answer:
-      "We offer deployment models that include running the entire workload from a customer's isolated cloud account, which is audited for compliance like HIPAA. Additionally, we can provision on-prem clusters that operate outside of a cloud stack.",
-  },
-  {
-    question: "From a latency perspective, is it realistic to facilitate a use case where a user's journey on a website is determined by pulling data from various endpoints, evaluating the results against predefined rules, and dynamically redirecting the user to different pages based on the assessed outcomes?",
-      answer:
-      "Yes, such use cases are possible with Conductor. The various steps included in such cases are: aggregating data from various endpoints, running basic rule evaluations against this data, running custom workers on the data pulled to determine their existence, using the user identifier to get the previous user details, & dynamically redirecting the page for users based on the results. From an orchestration point of view and depending on the cluster configuration, inter-API communications can be managed with a latency rate of under 10 milliseconds. Assume a max cost of 50 ms (typical P95, P75 could be < 20 ms) between steps, and each step will need to account for its own latency."
+      "We offer deployment models that run the entire workload from a customer's isolated cloud account, which is HIPAA-compliant. Additionally, we can provision on-prem clusters that operate outside of a cloud stack.",
   },
 ];
 
-### Is it possible to pull data from multiple endpoints simultaneously rather than sequentially?
+export const authFaqs = 
+[
+  {
+    question: 'What is an “application” in Orkes Conductor?',
+    answer:
+      'An application represents a non-human identity (for example: a service, script, task worker, CI/CD pipeline) that interacts with Conductor via APIs or SDKs. Applications are the basis for application-level access control and hold access key/secret pairs for programmatic authentication.',
+  },
+  {
+    question: 'How do I authenticate to the Orkes Conductor API?',
+    answer:
+      'Programmatic API access uses a JWT. You generate a JWT using your application key/secret (via the token API) and then pass the token on requests using the X-Authorization header. SDKs typically handle authentication automatically when configured with the application key/secret.',
+  },
+  {
+    question: 'What is the user-based JWT token (Copy Token), and when should I use it?',
+    answer:
+      'Orkes Conductor provides a user-based JWT token for quick testing without creating an application. It’s valid only for your current session and has the same access as your user account, and it should never be used in production.',
+  },
+  {
+    question: 'Why can I authenticate successfully but still not access a workflow/task?',
+    answer:
+      'Because authentication is not authorization, even with a valid JWT, access to resources is still controlled by the application’s roles and granular permissions. Ensure the application is configured with the correct roles and explicit permissions for the workflows, tasks, secrets, and other resources it needs.',
+  },
+  {
+    question: 'What’s the difference between a user and an application?',
+    answer:
+      'A user is a human identity that logs in to Conductor and is assigned roles. An application is a non-human identity (service account) used for API/SDK access, with its own roles, permissions, and access keys.',
+  },
+  {
+    question: 'How do groups help manage access control?',
+    answer:
+      'A group is a set of users. Users inherit group roles/permissions when added to a group, which makes it easier to manage access for teams. Groups can also be granted granular permissions (read, update, execute, delete) over specific resource types.',
+  },
+  {
+    question: 'What are tags, and why should I use them?',
+    answer:
+      'Tags use a key:value format and can be applied to many resource types (workflows, tasks, schedules, secrets, webhooks, integrations, and more). They’re useful both for organizing resources and for bulk-sharing access, since permissions can be granted to a tag to cover all tagged resources.',
+  },
+]
 
-Yes, it’s possible to pull data from multiple endpoints simultaneously, using [Fork/Join](https://orkes.io/content/reference-docs/operators/fork-join) task, which is the construct supported in Conductor, that can run 10s of thousands of parallel executions.
+export const workflowFaqs = 
+[
+  {
+    question: 'What’s the difference between a workflow definition and a workflow execution?',
+    answer:
+      'A workflow definition is the blueprint: task order, data flow, and runtime behavior settings. A workflow execution is a runtime instance created when a workflow is started with inputs, and it has its own unique ID and state (for example RUNNING or COMPLETED).',
+  },
+  {
+    question: 'What are system tasks, operators, and worker tasks?',
+    answer:
+      'Conductor provides built-in system tasks and operators that are managed by Conductor and can be used without writing workers. Worker tasks are for custom logic and must be executed by your own worker code.',
+  },
+]
 
-### Can we start a workflow not from the start, but from any step within the workflow? 
+export const workerFaqs = 
+[
+  {
+    question: 'Where can custom workers run, and what languages can I use?',
+    answer:
+      'Workers can be implemented in any language and deployed anywhere (containers, VMs, bare metal). A single workflow can also be polyglot, with workers implemented in different languages.',
+  },
+  {
+    question: 'What happens if a worker isn’t running when a workflow reaches a worker task?',
+    answer:
+      'A worker task can’t execute until the worker is connected and polling. If the worker isn’t available, the task remains in the Scheduled state until a worker comes online to service it.',
+  },
+  {
+    question: 'Should I separate worker applications from workflow client applications?',
+    answer:
+      'Yes, Orkes recommends keeping the worker application separate from the workflow client application to support well-defined access controls.',
+  },
+  {
+    question: 'How can I route tasks to specific worker pools?',
+    answer:
+      'Use task-to-domain mapping to route tasks to specific sets of workers using domain labels. Domains are arbitrary strings that let you split traffic by application, client type, or other criteria.',
+  },
+]
 
-The Conductor workflow always starts from step 1 and follows the sequence. However, once the workflow is executed, you can [skip a particular task from execution](https://orkes.io/content/reference-docs/api/workflow/skip-task-from-workflow). Alternatively, you can create the workflow definitions programmatically with only the required steps. 
+export const runWorkflowFaqs = 
+[
+  {
+    question: 'What are the main ways to run workflows in development vs production?',
+    answer:
+      'Common options include: using the UI for manual testing/debugging, using APIs/SDKs for production runs, using schedules for recurring workflows, and using webhooks or message brokers for event-driven workflows.',
+  },
+  {
+    question: 'Can I schedule workflows, and can one workflow have multiple schedules?',
+    answer:
+      'Yes. The scheduler triggers workflows using cron expressions, and a single workflow can be associated with multiple schedules.',
+  },
+  {
+    question: 'Can a workflow publish events to message brokers?',
+    answer:
+      'Yes. The Event task publishes to message brokers, including AMQP, Kafka (including Confluent/Amazon MSK), AWS SQS, Azure Service Bus, NATS, GCP Pub/Sub, and IBM MQ.',
+  },
+]
 
-### What is the difference between restarting and rerunning a workflow?
+export const dataFaqs = 
+[
+  {
+    question: 'How do I pass data between tasks (dynamic variables / parameter wiring)?',
+    answer:
+      'Many workflow/task parameters can be dynamically referenced from workflow inputs, previous task outputs, workflow variables, environment variables, and secrets. These references use dot-notation expressions modeled after JSONPath-style syntax.',
+  },
+  {
+    question: 'How are secrets masked during workflow execution?',
+    answer:
+      'When you reference a secret using ${workflow.secrets.<secretName>}, Conductor masks resolved secret values as *** anywhere they appear (inputs, outputs, and execution JSON) so the underlying value is not exposed.',
+  },
+  {
+    question: 'How do environment variables work, and how do I reference them?',
+    answer:
+      'Environment variables are stored at the cluster level and can be reused across workflows. You reference them using ${workflow.env.variable-name} (and .$ if you need a JSON value parsed as JSON). Workflow variables set by tasks (like Set Variable) are scoped to the workflow, not global.',
+  },
+]
 
-Once you run a workflow and it starts the execution, and for any reason, if the workflow fails/or is manually terminated, you can restart or re-run it.
+export const perfFaqs = 
+[
+  {
+    question: 'From a latency perspective, is it realistic to facilitate a use case where a user’s journey on a website is determined by pulling data from various endpoints, evaluating the results against predefined rules, and dynamically redirecting the user to different pages based on the assessed outcomes?',
+    answer:
+      'Yes, such use cases are possible with Conductor. The various steps in such cases include: aggregating data from multiple endpoints, running basic rule evaluations against this data, running custom workers on the data pulled to determine their existence, using the user identifier to retrieve previous user details, & dynamically redirecting the page for users based on the results. From an orchestration perspective, depending on the cluster configuration, inter-API communication can be managed with a latency of under 10 milliseconds. Assume a max cost of 50 ms (typical P95, P75 could be < 20 ms) between steps, and each step will need to account for its own latency.',
+  },
+  {
+    question: 'Is it possible to pull data from multiple endpoints simultaneously rather than sequentially?',
+    answer:
+      'Yes, it’s possible to pull data from multiple endpoints simultaneously using a Fork/Join task, which is the construct supported in Conductor and can run 10s of thousands of parallel executions.',
+  },
+  {
+    question: 'How do rate limits work for tasks and workflows?',
+    answer:
+      'Rate limits can be configured in task/workflow definitions, and Conductor handles enforcement automatically. Tasks beyond the configured limit are placed into PENDING until capacity frees up; workflow rate limits control concurrent executions and queue additional runs.',
+  },
+  {
+    question: 'Can I cache task outputs for repeated executions?',
+    answer:
+      'Yes. When caching is enabled, the server checks for cached output before scheduling the task; if a cache match is found, the task is completed using the cached output instead of being scheduled again (until the TTL expires).',
+  },
+  {
+    question: 'How do I orchestrate long-running APIs without HTTP timeouts?',
+    answer:
+      'Use Conductor’s built-in patterns for long-running calls: HTTP Poll (start the job, then poll the status until completion) or async complete (start the job, return an immediate acknowledgment, and complete the task later via a callback).',
+  },
+]
 
-<p align="center"><img src="/content/img/rerun-and-restart.png" alt="Rerun Vs Restart" width="100%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+export const workflowExecFaqs = 
+[
+  {
+    question: 'Can we start a workflow not from the start, but from any step within the workflow?',
+    answer:
+      'The Conductor workflow always starts from step 1 and follows the sequence. However, once the workflow is executed, you can use the API `PUT /api/workflow/{workflowId}/skiptask/{taskReferenceName}` to skip a particular task from execution. Alternatively, you can create the workflow definitions programmatically with only the required steps.',
+  },
+  {
+    question: 'What is the difference between restarting and rerunning a workflow?',
+    answer:
+      'Once you run a workflow and it starts the execution, and for any reason, if the workflow fails/or is manually terminated, you can restart or re-run it. Restart continues the same workflow execution, and you can choose to restart with current definitions (use the exact workflow definition that was used in the original run, which is helpful if the definition has changed but you want to keep the original behavior) or restart with latest definitions (use the most recent workflow definition and version, which is useful when you want the restart to pick up your latest changes). Re-run starts a brand-new workflow instance, and before you trigger it you can update the input parameters, correlation ID, or task-to-domain mapping.',
+  },
+  {
+    question: 'Can I upgrade a running workflow to a newer version?',
+    answer:
+      'Yes. Use the API `POST /api/workflow/{workflowId}/upgrade` to upgrade a running workflow to a different version. The execution continues from the last running task, and tasks that appear earlier in the new definition are marked as skipped.',
+  },
+  {
+    question: 'How do I prevent duplicate workflow executions (idempotency)?',
+    answer:
+      'Start workflow requests and schedules can include an idempotency key to prevent duplicates. Webhook-triggered workflows can also use an idempotency key (often derived from a workflow input value), so retries return the existing execution instead of creating a new one.',
+  },
+    {
+    question: 'Can I execute a workflow only up to a particular task for testing?',
+    answer:
+      'Not currently. As a workaround, add a Wait task in the workflow to pause execution at the point you want, so you can test up to that step before continuing.',
+  },
+]
 
-1. Restart Workflow
+# General FAQs
 
-- **Restart with Current Definitions**—Restart using the same workflow definition that was referenced in the initial execution. This is useful if the workflow definition has changed and the original definition needs to be retained.
-- **Restart with Latest Definitions**—Restart using the latest workflow definition and version. If you’ve changed the definition, you can use this option to rerun the execution with the latest version.
+## Setup, environments, and compliance
+<FAQStructuredData faqs={setupFaqs} />
 
-2. Re-run Workflow
+## Authentication and access control
+<FAQStructuredData faqs={authFaqs} />
 
-Rerun Workflow takes you to the run workflow screen, where you can trigger a brand new instance of the workflow. Before triggering the new execution, you can also change the input parameters, correlation ID, or task-to-domain mapping.
+## Workflow basics and building blocks
+<FAQStructuredData faqs={workflowFaqs} />
 
-### How do you clone a workflow?
+## Workers and task routing
+<FAQStructuredData faqs={workerFaqs} />
 
-You can clone a workflow by navigating to **Definitions > Workflows** and clicking on the "Clone" button towards the right end of the workflow name.
+## Running, triggering, and scheduling workflows
+<FAQStructuredData faqs={runWorkflowFaqs} />
 
-<p align="center"><img src="/content/img/clone-workflow.jpg" alt="Clone Workflow" width="100%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+## Data, secrets, and configuration
+<FAQStructuredData faqs={dataFaqs} />
 
-You’ll get a confirmation window with the workflow name appended with numerical 1. In this window, you can also rename the workflow and choose the required version if necessary.
+## Performance, scale, and orchestration patterns
+<FAQStructuredData faqs={perfFaqs} />
 
-<p align="center"><img src="/content/img/clone-workflow-confirmation.jpg" alt="Clone Workflow Confirmation" width="50%" height="auto" style={{paddingBottom: 40, paddingTop: 40}} /></p>
+## Workflow execution control and lifecycle
+<FAQStructuredData faqs={workflowExecFaqs} />
