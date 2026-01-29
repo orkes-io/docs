@@ -901,7 +901,7 @@ const sidebars = {
                             id: 'tutorials/pull-request-summary-workflow',
                             label: 'Pull Request Summary Workflow',
                         },
-                                                {
+                        {
                             type: 'doc',
                             id: 'tutorials/text-indexing-workflow',
                             label: 'Text Indexing and Search Workflow',
@@ -1060,7 +1060,11 @@ const sidebars = {
                 description: 'Frequently-asked questions about Orkes Conductor.',
             },
             items: [
-                'faqs/general-faqs',
+                {
+                    type: 'doc',
+                    id: 'faqs/general-faqs',
+                    label: 'General FAQs',
+                },
             ],
             collapsible: true,
             collapsed: true,
