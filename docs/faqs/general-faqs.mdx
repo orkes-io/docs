@@ -183,12 +183,12 @@ export const workflowExecFaqs =
   {
     question: 'Can we start a workflow not from the start, but from any step within the workflow?',
     answer:
-      'The Conductor workflow always starts from step 1 and follows the sequence. However, once the workflow is executed, you can skip a particular task from execution. Alternatively, you can create the workflow definitions programmatically with only the required steps.',
+      'The Conductor workflow always starts from step 1 and follows the sequence. However, once the workflow is executed, you can use the API `PUT /api/workflow/{workflowId}/skiptask/{taskReferenceName}` to skip a particular task from execution. Alternatively, you can create the workflow definitions programmatically with only the required steps.',
   },
   {
     question: 'What is the difference between restarting and rerunning a workflow?',
     answer:
-      'Once you run a workflow and it starts the execution, and for any reason, if the workflow fails/or is manually terminated, you can restart or re-run it.',
+      'Once you run a workflow and it starts the execution, and for any reason, if the workflow fails/or is manually terminated, you can restart or re-run it. Restart continues the same workflow execution, and you can choose to restart with current definitions (use the exact workflow definition that was used in the original run, which is helpful if the definition has changed but you want to keep the original behavior) or restart with latest definitions (use the most recent workflow definition and version, which is useful when you want the restart to pick up your latest changes). Re-run starts a brand-new workflow instance, and before you trigger it you can update the input parameters, correlation ID, or task-to-domain mapping.',
   },
   {
     question: 'Can I upgrade a running workflow to a newer version?',
