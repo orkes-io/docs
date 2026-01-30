@@ -5,48 +5,48 @@ description: "The key components of Conductor’s core orchestration engine incl
 
 # Conductor Architecture and Worker Polling
 
-
 To learn how to scale and integrate with Conductor, it is important to understand its system architecture and worker polling mechanism.
+
+Before you read this article, you should understand:
+- [What Orkes Conductor is](/content/category/getting-started)
+- [Core concepts](/content/core-concepts)
 
 ## System architecture
 
 <p align="center"><img src="/content/img/conductor-architecture.jpg" alt="Conductor architecture" width="90%" height="auto" style={{paddingBottom: 10, paddingTop: 10}} /></p>
 
-[To recap](/content/core-concepts), workflows are composed of tasks in a defined order. They can be triggered by code, an API call, a cron schedule, webhooks, or external eventing systems (AWS SQS, Kafka, and so on). 
+In Conductor, a workflow contains tasks in a defined order. You can trigger workflows by code, an API call, a cron schedule, webhooks, or external eventing systems such as AWS SQS and Kafka.
 
 In Conductor, workflows are executed on a worker-task queue architecture, where each task type (HTTP, Event, Wait, and so on) has its own dedicated task queue. The key components of Conductor’s core orchestration engine include:
-* **State machine evaluator**—Orchestrates workflows by scheduling tasks to their relevant queues and assigning them to active workers when polled. Monitors each task's state and ensures it is completed, retried, or failed as required.
-* **Task queues**—Distributed queues for each task type, where tasks are completed on a first-in-first-out basis.
-* **Task workers**—Poll the Conductor server via HTTP or gRPC for tasks, execute tasks, and update the server on the task status. Each worker is responsible for carrying out a specific task type.
-* **Data stores** (Postgres or Redis)—High-availability persistence stores that maintain workflow and task metadata, task queues, and execution history
-* **APIs**—REST APIs for programmatic access to the Conductor server. 
-    * Metadata APIs—Provide access to create and manage workflow and task metadata.
-    * Workflow APIs—Provide access to start, stop, pause, and resume workflow executions.
-    * Task APIs—Provide access to manage and monitor task queues and executions.
 
-Integrations with tools like Prometheus, Grafana, and Datadog allow you to easily collect and monitor system performance data.
+* **State machine evaluator**: Orchestrates workflows by scheduling tasks to their relevant queues and assigning them to active workers when polled. Monitors each task's state and ensures it is completed, retried, or failed as required.
+* **Task queues**: Distributed queues for each task type, where tasks are completed on a first-in-first-out basis.
+* **Task workers**: Poll the Conductor server via HTTP or gRPC for tasks, execute tasks, and update the server on the task status. Each worker is responsible for carrying out a specific task type.
+* **Data stores** (Postgres or Redis): High-availability persistence stores that maintain workflow and task metadata, task queues, and execution history
+* **APIs**: REST APIs for programmatic access to the Conductor server. 
 
+Integrations with tools such as Prometheus, Grafana, and Datadog enable you to collect and monitor system performance data easily.
 
 ## Worker implementation
 
 System task workers are managed by Conductor. On the other hand, external workers can be implemented in any language and can run on any environment, including bare metal, containers, or VMs, or serverless functions. Conductor offers [SDKs](https://orkes.io/content/category/sdks) with features such as polling threads, metrics, and server communication to simplify worker creation. 
 
-
 ## Worker-server polling mechanism
 
-Each worker declares beforehand what task(s) it can execute, and the Conductor server will assign tasks to workers accordingly. At runtime, task workers poll the Conductor server to receive and execute scheduled work. Conductor passes task inputs to the worker for execution and collects the outputs, continuing the process according to the workflow definition. 
+Each worker declares beforehand which tasks it can execute, and the Conductor server assigns tasks to workers accordingly. At runtime, task workers poll the Conductor server to receive and execute scheduled work. Conductor passes task inputs to the worker for execution and collects the outputs, continuing the process according to the workflow definition. 
 
 By default, workers infinitely poll Conductor every 100ms. The polling interval value for each type of worker can be adjusted accordingly based on factors like workload. Here is the polling mechanism in detail:
 
 <p align="center"><img src="/content/img/conceptual-guides/Worker-Interaction-Diagram.jpg" alt="Worker-server interaction with Conductor." width="90%" height="auto" style={{paddingBottom: 5, paddingTop: 5}} /></p>
 
+The following sequence describes how workers poll Conductor and execute workflow tasks:
 
 1. The application starts a workflow execution by interacting with Orkes Conductor, which returns a workflow (execution) ID. It can be used to track the workflow's progress and manage its execution.
 2. Conductor schedules the first task in the workflow to its task queue.
 3. The workers responsible for executing the first task within the workflow are polling Orkes Conductor for tasks to execute via HTTP or gRPC. When a task is scheduled, Conductor sends it to the next available worker, which then performs the required work.
-4. Periodically, the worker returns the task status to Conductor (e.g. IN PROGRESS, FAILED, COMPLETED, etc).
-5. Once the first task in the workflow instance is completed, the worker returns the task output to the server, and Conductor schedules the next set of tasks to be performed.
+4. Periodically, the worker returns the task status to the Conductor (e.g., IN PROGRESS, FAILED, COMPLETED, etc.).
+5. Once the first task in the workflow execution is completed, the worker returns the task output to the server, and Conductor schedules the next set of tasks to be performed.
 
 Conductor manages and maintains the workflow state, keeping track of which tasks have been completed and which are still pending. This ensures that the workflow is executed correctly, with each task triggered precisely at the right time.
 
-Using the workflow (execution) ID, the application can check the Conductor server for the workflow status at any time. This is particularly useful for asynchronous or long-running workflows, as it allows the application to monitor the workflow's progress and take appropriate action, such as pausing or terminating the workflow if needed.
+Using the workflow ID, the application can check the Conductor server for the workflow status at any time. This is particularly useful for asynchronous or long-running workflows, as it enables the application to monitor their progress and take appropriate action, such as pausing or terminating them if needed.
