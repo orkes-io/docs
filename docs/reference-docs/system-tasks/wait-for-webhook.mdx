@@ -30,7 +30,7 @@ Configure these parameters for the Wait for Webhook task.
 | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------ |
 | inputParameters.**matches** | The conditions that incoming event payloads must meet to trigger the webhook. Can be string, number, boolean, null, or object/array.<br/><br/><TableNote title="Note"> When you update the matches, a default caching period of 60 seconds is applied, causing the updates to take effect with a delay of up to 60 seconds.</TableNote> | Required.          |
 
-### Writing custom matches​
+### Writing input matches​
 
 In the example below, the input matches for a Wait for Webhook task are defined as follows:
 
@@ -74,6 +74,10 @@ To satisfy this condition, the webhook request body sent to Conductor must inclu
     }
 }
 ```
+
+:::info
+You can use any webhook testing tool (for example, [Webhook.site](https://webhook.site/)) to temporarily capture and view the incoming payload. Use the captured JSON paths to configure `inputMatches`. Most providers document their webhook payloads, but a capture tool can help you validate the payload.
+:::
 
 The following are generic configuration parameters that can be applied to the task and are not specific to the Wait for Webhook task.
 
