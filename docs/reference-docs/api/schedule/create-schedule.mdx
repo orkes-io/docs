@@ -1,0 +1,78 @@
+---
+sidebar_position: 1
+slug: "/reference-docs/api/schedule/create-schedule"
+description: "This API is used to create a workflow schedule."
+---
+
+# Create Schedule
+
+**Endpoint**: `POST /api/scheduler/schedules`
+
+Creates a new schedule with the specified name. If a schedule with the same name already exists, this operation updates the existing schedule.
+
+## Request body
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| name | The name of the schedule. Must be alphanumeric and can include underscores. | string | Required. |
+| description | A description of the schedule. | string | Optional. | 
+| cronExpression | A 6-field string defining the cadence using cron syntax. An asterisk `*` denotes a blank entry.<br/><br/>```* * * * * *```<br/><br/>The fields, from left to right, are: **Second** (0-59), **Minute** (0-59), **Hour** (0-23), **Day of Month** (1-31), **Month** (1-12 or JAN-DEC), **Day of Week** (1-7 or MON-SUN). For more configuration details, refer [Using cron expression](/content/developer-guides/scheduling-workflows#using-cron-expression). | string | Required. |
+| zoneId | The timezone in which the schedule runs. For example `UTC`or `Asia/Dubai`. | string | Required. | 
+| startWorkflowRequest | A JSON object containing the details of the workflow to be scheduled. | object | Required. | 
+| startWorkflowRequest. **name** | The name of the workflow to run. The creator of the schedule must have execute permission for this workflow. | string | Required. | 
+| startWorkflowRequest. **version** | The version of the workflow to run. If not specified, the latest version will be used. | string | Optional. | 
+| startWorkflowRequest. **input** | The input parameters for the workflow, provided as a JSON object. | object | Optional. | 
+| startWorkflowRequest. **correlationId** | A unique identifier for the workflow execution, used to correlate the current workflow instance with other workflows. | string | Optional. | 
+| startWorkflowRequest. **idempotencyKey** | A unique, user-generated key to prevent duplicate workflow executions. Idempotency data is retained throughout the life of the workflow execution. | string | Optional. | 
+| startWorkflowRequest. **idempotencyStrategy** | The idempotency strategy for handling duplicate requests. Supported values:<ul><li>**RETURN_EXISTING**: Return the workflowId of the workflow instance with the same idempotency key.</li>**FAIL**: Start a new workflow instance only if there are no workflow executions with the same idempotency key.<li></li><li>**FAIL_ON_RUNNING**: Start a new workflow instance only if there are no RUNNING or PAUSED workflows with the same idempotency key. Completed workflows can run again.</li></ul> | string (enum) | Required if `idempotencyKey` is used. | 
+| startWorkflowRequest. **priority** | The priority of the workflow. Supports values from 0-99. | string | Optional. | 
+| startWorkflowRequest. **taskToDomain** | A mapping of task reference names to domain-specific values to route the task to defined workers. | object | Optional. | 
+| scheduleStartTime | The start time for the schedule in Unix timestamp format (in milliseconds), based on the local timezone. | number (long/int64) | Optional. | 
+| scheduleEndTime | The end time for the schedule in Unix timestamp format (in milliseconds), based on the local timezone. | number (long/int64) | Optional. | 
+| paused | Whether the schedule is paused upon saving. If set to `true`, the schedule will not run. Set to `false` to start the schedule immediately upon saving. Default is `false`. | boolean | Optional. | 
+| runCatchupScheduleInstances | If `true`, executes any pending schedules, such as when the server starts after downtime. | boolean | Optional. | 
+
+## Response
+
+Returns 200 OK, indicating that the schedule has been created successfully.
+
+## Examples
+
+<details>
+<summary>Create a new schedule</summary>
+
+**Request**
+
+```bash
+curl -X 'POST' \
+  'https://<YOUR-CLUSTER>/api/scheduler/schedules' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "paused": false,
+  "runCatchupScheduleInstances": false,
+  "name": "assignPRSchedule",
+  "description": "Schedule for automating PR assignment workflow.",
+  "cronExpression": "0 0 * ? * *",
+  "scheduleStartTime": 1770354000000,
+  "scheduleEndTime": 1774933200000,
+  "startWorkflowRequest": {
+    "name": "github_pr_reviewer_assignment",
+    "version": "",
+    "input": {},
+    "correlationId": "",
+    "idempotencyKey": "123",
+    "idempotencyStrategy": "RETURN_EXISTING",
+    "taskToDomain": {},
+    "priority": ""
+  },
+  "zoneId": "Asia/Dubai"
+}'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the schedule has been created successfully.
+
+</details>
