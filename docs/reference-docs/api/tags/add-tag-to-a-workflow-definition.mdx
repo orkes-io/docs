@@ -1,0 +1,56 @@
+---
+sidebar_position: 9
+slug: "/reference-docs/api/tags/add-tag-to-a-workflow-definition"
+description: "This API is used to add tag to a workflow definition."
+---
+
+# Add Tag to a Workflow Definition
+
+**Endpoint**: `POST /api/metadata/workflow/{name}/tags`
+
+Adds a tag to a workflow definition. To add multiple tags, make separate API calls for each tag. If a tag with the same key already exists, this operation will update its value.
+
+## Path Parameters
+
+| Parameter | Description                                      | Type   | Required/ Optional |
+| --------- | ------------------------------------------------ | ------ | ------------------ |
+| name | The name of the workflow definition to which the tags are to be added.| string | Required. | 
+
+## Request Body
+
+The request body should be a JSON object with `key` and `value` fields.
+
+| Parameter | Description                                      | Type   | Required/ Optional |
+| --------- | ------------------------------------------------ | ------ | ------------------ |
+| key       | The tag key.                                     | string | Required.         |
+| value     | The tag value.                                   | string | Required.         |
+
+## Response
+
+- Returns 200 OK, indicating that the tag has been added to the workflow definition.
+- Returns 404 if the workflow definition does not exist.
+
+## Examples
+
+<details>
+<summary>Add a single tag to a workflow definition</summary>
+
+**Request**
+
+```bash
+curl -X 'POST' \
+  'https://<YOUR-CLUSTER>/api/metadata/workflow/SampleDemo/tags' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "key": "env",
+  "value": "testing"
+}'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the tag has been added to the workflow definition.
+
+</details>
