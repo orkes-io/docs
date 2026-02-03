@@ -1,0 +1,88 @@
+---
+sidebar_position: 6
+slug: "/reference-docs/api/tags/replace-tags-in-a-task-definition" 
+description: "This API is used to replace tags in a task definition."
+---
+
+# Replace Tags in a Task Definition
+
+**Endpoint**: `PUT /api/metadata/task/{taskName}/tags`
+
+Replaces all existing tags in a task definition with the new tags provided in the request. If the task definition has multiple tags, they will all be replaced with the tags specified in the request body.
+
+## Path Parameters
+
+| Parameter | Description                                      | Type   | Required/ Optional |
+| --------- | ------------------------------------------------ | ------ | ------------------ |
+| taskName | The name of the task definition in which the tags are to be replaced.| string | Required. | 
+
+## Request Body
+
+The request body should be an array of tag objects.
+
+| Parameter | Description                                      | Type   | Required/ Optional |
+| --------- | ------------------------------------------------ | ------ | ------------------ |
+| key       | The tag key.                                     | string | Required.         |
+| value     | The tag value.                                   | string | Required.         |
+
+## Response
+
+- Returns 200 OK, indicating that the tag has been replaced in the task definition.
+- Returns 404 if the task definition does not exist.
+
+## Examples
+
+<details>
+<summary>Replace a tag from a task definition</summary>
+
+**Request**
+
+```bash
+curl -X 'PUT' \
+  'https://<YOUR-CLUSTER>/api/metadata/task/simple/tags' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '[
+  {
+    "key": "environment",
+    "value": "testing"
+  }
+]'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the tag has been replaced in the task definition.
+
+</details>
+
+<details>
+<summary>Replace with multiple tags in a task definition</summary>
+
+**Request**
+
+```bash
+curl -X 'PUT' \
+  'https://<YOUR-CLUSTER>/api/metadata/task/simple/tags' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '[
+  {
+    "key": "env",
+    "value": "prod"
+  },
+  {
+    "key": "team",
+    "value": "backend"
+  }
+]
+]'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the tags have been replaced in the task definition.
+
+</details>

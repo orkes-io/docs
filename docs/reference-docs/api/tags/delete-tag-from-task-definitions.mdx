@@ -1,0 +1,54 @@
+---
+sidebar_position: 3
+slug: "/reference-docs/api/tags/delete-tag-from-task-definition"
+description: "This API is used to remove a tag from a task definition."
+---
+
+# Delete Tag from Task Definition
+
+**Endpoint**: `DELETE /api/metadata/task/{taskName}/tags`
+
+Removes a specific tag from a task definition based on the provided key-value pair.
+
+## Path Parameters
+
+| Parameter | Description                                      | Type   | Required/ Optional |
+| --------- | ------------------------------------------------ | ------ | ------------------ |
+| taskName | The name of the task definition from which the tag is to be removed. | string | Required. | 
+
+## Request Body
+
+| Parameter | Description                                      | Type   | Required/ Optional |
+| --------- | ------------------------------------------------ | ------ | ------------------ |
+| key | The tag key. | string | Required. | 
+| value | The tag value. | string | Required. | 
+
+## Response
+
+- Returns 200 OK, indicating that the tag has been removed from the task definition.
+- Returns 404 if the specified tag (key-value pair) does not exist for the task definition, or if the task definition itself does not exist.
+
+## Examples
+
+<details>
+<summary>Delete a tag from a task definition</summary>
+
+**Request**
+
+```bash
+curl -X 'DELETE' \
+  'https://<YOUR-CLUSTER>/api/metadata/task/hello_task/tags' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "key": "team",
+  "value": "engineering"
+}'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the tag has been removed from the task definition.
+
+</details>

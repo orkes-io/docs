@@ -38,7 +38,7 @@ Returns the task definition and includes the metadata if queried.
 
 ```bash
 curl -X 'GET' \
-  '<YOUR_CLUSTER>/api/metadata/taskdefs/simple?metadata=false' \
+  'https://<YOUR-CLUSTER>/api/metadata/taskdefs/hello_task?metadata=false' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>'
 ```
@@ -49,16 +49,16 @@ Returns the task definition, without any tags metadata. For example:
 
 ```json
 {
-  "createTime": 1736398189156,
-  "updateTime": 1736398211995,
+  "createTime": 1746599870085,
+  "updateTime": 1746599870085,
   "createdBy": "john.doe@acme.com",
   "updatedBy": "john.doe@acme.com",
-  "name": "simple",
-  "description": "test",
+  "name": "hello_task",
+  "description": "",
   "retryCount": 3,
   "timeoutSeconds": 3600,
   "inputKeys": [],
-  "outputKeys": ["someOutputParameter"],
+  "outputKeys": [],
   "timeoutPolicy": "TIME_OUT_WF",
   "retryLogic": "FIXED",
   "retryDelaySeconds": 60,
@@ -84,7 +84,7 @@ Returns the task definition, without any tags metadata. For example:
 
 ```bash
 curl -X 'GET' \
-  'https://<YOUR_CLUSTER>/api/metadata/taskdefs/simple?metadata=true' \
+  'https://<CLUSTER>/api/metadata/taskdefs/hello_task?metadata=true' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>'
 ```
@@ -95,16 +95,16 @@ Returns the task definition, including its tags metadata. For example:
 
 ```json
 {
-  "createTime": 1736398189156,
-  "updateTime": 1736398211995,
+  "createTime": 1746599870085,
+  "updateTime": 1746599870085,
   "createdBy": "john.doe@acme.com",
   "updatedBy": "john.doe@acme.com",
-  "name": "simple",
-  "description": "test",
+  "name": "hello_task",
+  "description": "",
   "retryCount": 3,
   "timeoutSeconds": 3600,
   "inputKeys": [],
-  "outputKeys": ["someOutputParameter"],
+  "outputKeys": [],
   "timeoutPolicy": "TIME_OUT_WF",
   "retryLogic": "FIXED",
   "retryDelaySeconds": 60,
@@ -119,7 +119,12 @@ Returns the task definition, including its tags metadata. For example:
   "totalTimeoutSeconds": 0,
   "enforceSchema": false,
   "overwriteTags": true,
-  "tags": []
+  "tags": [
+    {
+      "key": "tag",
+      "value": "new"
+    }
+  ]
 }
 ```
 

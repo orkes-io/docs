@@ -1,0 +1,58 @@
+---
+sidebar_position: 10
+slug: "/reference-docs/api/tags/replace-tags-in-a-workflow-definition" 
+description: "This API is used to replace tags in a workflow definition."
+---
+
+# Replace Tags in a Workflow Definition
+
+**Endpoint**: `PUT /api/metadata/workflow/{name}/tags`
+
+Replaces all existing tags in a workflow definition with the new tag provided in the request. If the workflow definition has multiple tags, they will all be replaced with the tag specified in the request body.
+
+## Path Parameters
+
+| Parameter | Description                                      | Type   | Required/ Optional |
+| --------- | ------------------------------------------------ | ------ | ------------------ |
+| name | The name of the workflow definition in which the tags are to be replaced.| string | Required. | 
+
+## Request Body
+
+The request body should be an array of tag objects.
+
+| Parameter | Description                                      | Type   | Required/ Optional |
+| --------- | ------------------------------------------------ | ------ | ------------------ |
+| key       | The tag key.                                     | string | Required.         |
+| value     | The tag value.                                   | string | Required.         |
+
+## Response
+
+- Returns 200 OK, indicating that the tag has been replaced in the workflow definition.
+- Returns 404 if the workflow definition does not exist.
+
+## Examples
+
+<details>
+<summary>Replace a tag from a workflow definition</summary>
+
+**Request**
+
+```bash
+curl -X 'PUT' \
+  'https://<YOUR-CLUSTER>/api/metadata/workflow/SampleDemo/tags' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '[
+  {
+    "key": "env",
+    "value": "prod"
+  }
+]'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the tag has been replaced in the workflow definition.
+
+</details>

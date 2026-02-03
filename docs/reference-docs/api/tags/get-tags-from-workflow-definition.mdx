@@ -1,0 +1,55 @@
+---
+sidebar_position: 8
+slug: "/reference-docs/api/tags/get-tags-from-workflow-definition"
+description: "This API is used to get tags from a workflow definition."
+---
+
+# Get Tags from a Workflow Definition
+
+**Endpoint**: `GET /api/metadata/workflow/{name}/tags`
+
+Retrieves the tags associated with a workflow definition.
+
+## Path Parameters
+
+| Parameter | Description                                      | Type   | Required/ Optional |
+| --------- | ------------------------------------------------ | ------ | ------------------ |
+| name | The name of the workflow definition from which the tags are to be retrieved.| string | Required. | 
+
+## Response
+
+Returns a JSON array of tag objects associated with the workflow definition. Each object includes:
+
+- key (string): The tag key.
+- value (string): The tag value.
+
+Returns an empty array `[]` if no tags are associated with the workflow definition.
+
+## Examples
+
+<details>
+<summary>Get tags from a workflow definition</summary>
+
+**Request**
+
+```bash
+curl -X 'GET' \
+  'https://<YOUR-CLUSTER>/api/metadata/workflow/stripe_webhook/tags' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+Returns a JSON array of tag objects associated with the workflow definition.
+
+```json
+[
+  {
+    "key": "environment",
+    "value": "testing"
+  }
+]
+```
+
+</details>

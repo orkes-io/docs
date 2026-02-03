@@ -1,0 +1,54 @@
+---
+sidebar_position: 7
+slug: "/reference-docs/api/tags/delete-tag-from-workflow-definition"
+description: "This API is used to remove a tag from a workflow definition."
+---
+
+# Delete Tag from Workflow Definition
+
+**Endpoint**: `DELETE /api/metadata/workflow/{name}/tags`
+
+Removes a specific tag from a workflow definition based on the provided key-value pair.
+
+## Path Parameters
+
+| Parameter | Description                                      | Type   | Required/ Optional |
+| --------- | ------------------------------------------------ | ------ | ------------------ |
+| name | The name of the workflow definition from which the tag is to be removed. | string | Required. | 
+
+## Request Body
+
+| Parameter | Description                                      | Type   | Required/ Optional |
+| --------- | ------------------------------------------------ | ------ | ------------------ |
+| key | The tag key. | string | Required. | 
+| value | The tag value. | string | Required. | 
+
+## Response
+
+- Returns 200 OK, indicating that the tag has been removed from the workflow definition.
+- Returns 404 if the specified tag (key-value pair) does not exist for the workflow definition, or if the workflow definition itself does not exist.
+
+## Examples
+
+<details>
+<summary>Delete a tag from a workflow definition</summary>
+
+**Request**
+
+```bash
+curl -X 'DELETE' \
+  'https://<YOUR-CLUSTER>/api/metadata/workflow/insurance-claim/tags' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "key": "team",
+  "value": "finance"
+}'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the tag has been removed from the workflow definition.
+
+</details>

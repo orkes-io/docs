@@ -1,0 +1,59 @@
+---
+sidebar_position: 4
+slug: "/reference-docs/api/tags/get-tags-from-task-definition"
+description: "This API is used to get tags from a task definition."
+---
+
+# Get Tags from a Task Definition
+
+**Endpoint**: `GET /api/metadata/task/{taskName}/tags`
+
+Retrieves the tags associated with a task definition.
+
+## Path Parameters
+
+| Parameter | Description                                      | Type   | Required/ Optional |
+| --------- | ------------------------------------------------ | ------ | ------------------ |
+| taskName | The name of the task definition from which the tags are to be retrieved.| string | Required. | 
+
+## Response
+
+Returns a JSON array of tag objects associated with the task definition. Each object includes:
+
+- key (string): The tag key.
+- value (string): The tag value.
+
+Returns an empty array `[]` if no tags are associated with the task definition.
+
+## Examples
+
+<details>
+<summary>Get tags from a task definition</summary>
+
+**Request**
+
+```bash
+curl -X 'GET' \
+  'https://<YOUR-CLUSTER>/api/metadata/task/sample-api-test/tags' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+Returns a JSON array of tag objects associated with the task definition.
+
+```json
+[
+  {
+    "key": "team",
+    "value": "apac"
+  },
+  {
+    "key": "team",
+    "value": "engineering"
+  }
+]
+```
+
+</details>
