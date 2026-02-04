@@ -1,0 +1,68 @@
+---
+sidebar_position: 2
+slug: "/reference-docs/api/schedule/get-schedule"
+description: "This API is used to get a workflow schedule."
+---
+
+# Get Schedule
+
+**Endpoint**: `GET /api/scheduler/schedules/{name}`
+
+Retrieves the details of a specified schedule.
+
+## Path parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| name | The name of the schedule to retrieve. | string | Required. | 
+
+## Response
+
+- Returns 200 OK with the schedule details, including the cron expression, workflow configuration, timezone, start/end times, and metadata such as creation and update information.
+- Returns 404 if the schedule does not exist.
+
+## Examples
+
+<details>
+<summary>Get a schedule</summary>
+
+**Request**
+
+```bash
+curl -X 'GET' \
+  'https://<YOUR-CLUSTER>/api/scheduler/schedules/assignPRSchedule' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+{
+  "name": "assignPRSchedule",
+  "cronExpression": "0 0 * ? * *",
+  "runCatchupScheduleInstances": false,
+  "paused": true,
+  "startWorkflowRequest": {
+    "name": "github_pr_reviewer_assignment",
+    "correlationId": "",
+    "input": {},
+    "taskToDomain": {},
+    "priority": 0,
+    "idempotencyKey": "123",
+    "idempotencyStrategy": "RETURN_EXISTING"
+  },
+  "zoneId": "Asia/Dubai",
+  "scheduleStartTime": 1770354000000,
+  "scheduleEndTime": 1774933200000,
+  "createTime": 1770118062620,
+  "updatedTime": 1770118646394,
+  "createdBy": "john.doe@acme.com",
+  "updatedBy": "john.doe@acme.com",
+  "description": "Schedule for automating PR assignment workflow.",
+  "orgId": "0000",
+  "queueMsgId": "assignPRSchedule"
+}
+```
+
+</details>

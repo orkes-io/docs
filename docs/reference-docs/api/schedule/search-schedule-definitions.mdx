@@ -1,3 +1,9 @@
+---
+sidebar_position: 10
+slug: "/reference-docs/api/schedule/search-schedule-definitions"
+description: "This API is used to search schedule with pagination support."
+---
+
 # Search Schedule Definitions with Pagination
 
 **Endpoint**: `GET /api/scheduler/schedules/search`
@@ -8,13 +14,13 @@ Retrieves a paginated list of schedule definitions based on the specified query 
 
 | Parameter | Description | Type | Required/Optional | 
 | --------- | ----------- | ---- | ----------------- | 
-| start | The index of the first record to retrieve. Used for pagination. Default is 0.<br/><br/>For example, start=0 returns results from the first record, and start=2 skips the first two records and returns results starting from the third. | integer | Optional. | 
-| size | The maximum number of records to return per page. For example, size=5 returns up to five records starting from the offset defined by `start`. Default is 100. | integer | Optional. |
-| sort | The field used to sort the results. Supported values:<ul><li>`name`</li><li>`workflowname`</li><li>`createtime`</li><li>`updatedtime`</li><li>`startworkflowrequest` (sorts by workflow name)</li></ul>If no value is specified or if the value doesn’t match one of these fields, results are sorted by `name` (schedule name) by default. | string | Optional. | 
+| start | The index of the first record to retrieve. Used for pagination. Default is 0.<br/><br/>For example, `start=0` returns results from the first record, and `start=2` skips the first two records and returns results starting from the third. | integer | Optional. | 
+| size | The maximum number of records to return per page. For example, `size=5` returns up to five records starting from the offset defined by `start`. Default is 100. | integer | Optional. |
+| sort | The field to sort results by. Results are sorted in ascending order. Supported values:<ul><li>`name`: Schedule name</li><li>`workflowname`: Workflow name</li><li>`createtime`: Creation timestamp</li><li>`updatedtime`: Last update timestamp</li><li>`startworkflowrequest`: Workflow name</li></ul>If no value is specified or if the value doesn’t match one of these fields, results are sorted by `name` by default. | string | Optional. | 
 | workflowName | Filters the results by the specified workflow name. | string | Optional. |
 | name | Filters the results by the specified schedule name. | string | Optional. | 
 | paused | Filters results based on the schedule’s paused state. <br/><br/>Set to `true` to return only paused schedules, or `false` to return active ones. | boolean | Optional. | 
-| freeText | The text to search for. Default is `*`. | string | Optional. | 
+| freeText | Free text search across schedule names. Default is `*`. | string | Optional. | 
 
 ## Response
 
@@ -106,7 +112,7 @@ Since the request used `start`=0 and `size`=2, sorted by `name`, the result retu
 
 <details>
 
-<summary>Sort the schedule definitions by pagination</summary>
+<summary>Retrieve paginated schedule definitions sorted by name</summary>
 
 **Request**
 

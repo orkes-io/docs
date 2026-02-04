@@ -1,0 +1,52 @@
+---
+sidebar_position: 8
+slug: "/reference-docs/api/schedule/get-tags-from-schedule"
+description: "This API is used to retrieve tags from a workflow schedule."
+---
+
+# Get Tags from a Schedule
+
+**Endpoint**: `GET /api/scheduler/schedules/{name}/tags`
+
+Retrieves the tags associated with a schedule.
+
+## Path parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| name | The name of the schedule from which the tags are to be retrieved. | string | Required. | 
+
+## Response
+
+Returns an array of tag objects, each containing a key-value pair.
+
+## Examples
+
+<details>
+<summary>Get tags from a schedule</summary>
+
+**Request**
+
+```bash
+curl -X 'GET' \
+  'https://<YOUR-CLUSTER>/api/scheduler/schedules/assignPRSchedule/tags' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+[
+  {
+    "key": "backend",
+    "value": "PR"
+  },
+  {
+    "key": "dev",
+    "value": "automation"
+  }
+]
+```
+
+</details>

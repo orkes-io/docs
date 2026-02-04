@@ -34,17 +34,17 @@ Configure these parameters when creating a schedule.
 | description | A description of the schedule. | Optional. | 
 | cronExpression | A 6-field string defining the cadence using cron syntax. For configuration details, refer [Using cron expression](/content/developer-guides/scheduling-workflows#using-cron-expression). | Required. |
 | zoneId | The timezone in which the schedule runs. Default is **UTC**. | Required. |
-| startworkflowRequest | A JSON object containing the details of the workflow to be scheduled. | Required. |
-| startworkflowRequest. **name** | The name of the workflow to run. The creator of the schedule must have execute permission for this workflow. | Required. | 
-| startworkflowRequest. **version** | The version of the workflow to run. If not specified, the latest version will be used. | Optional. | 
-| startworkflowRequest. **input** | The input parameters for the workflow, provided as a JSON object. | Optional. | 
-| startworkflowRequest. **correlationId** | A unique identifier for the workflow execution, used to correlate the current workflow instance with other workflows. | Optional. |
-| startworkflowRequest. **idempotencyKey** | A unique, user-generated key to prevent duplicate workflow executions. Idempotency data is retained throughout the life of the workflow execution.  | Optional. | 
-| startworkflowRequest. **idempotencyStrategy** | The idempotency strategy for handling duplicate requests. Supported values:<ul><li>**RETURN_EXISTING**: Return the `workflowId` of the workflow instance with the same idempotency key.</li><li>**FAIL**: Start a new workflow instance only if there are no workflow executions with the same idempotency key.</li><li>**FAIL_ON_RUNNING**: Start a new workflow instance only if there are no `RUNNING` or` PAUSED` workflows with the same idempotency key. Completed workflows can run again.</li></ul> | Required if `idempotencyKey` is used. | 
-| startworkflowRequest. **priority** | The priority of the workflow. Supports values from 0-99 and can be [passed as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor). | Optional. | 
-| scheduleStartTime | The start time for the schedule in [Unix timestamp format](https://www.unixtimestamp.com/) (in milliseconds). | Optional. | 
-| scheduleEndTime | The end time for the schedule in [Unix timestamp format](https://www.unixtimestamp.com/) (in milliseconds). | Optional. | 
-| taskToDomain | A mapping of task reference names to domain-specific values to [route the task to defined workers](https://orkes.io/content/developer-guides/task-to-domain). | Optional. | 
+| startWorkflowRequest | A JSON object containing the details of the workflow to be scheduled. | Required. |
+| startWorkflowRequest. **name** | The name of the workflow to run. The creator of the schedule must have execute permission for this workflow. | Required. | 
+| startWorkflowRequest. **version** | The version of the workflow to run. If not specified, the latest version will be used. | Optional. | 
+| startWorkflowRequest. **input** | The input parameters for the workflow, provided as a JSON object. | Optional. | 
+| startWorkflowRequest. **correlationId** | A unique identifier for the workflow execution, used to correlate the current workflow instance with other workflows. | Optional. |
+| startWorkflowRequest. **idempotencyKey** | A unique, user-generated key to prevent duplicate workflow executions. Idempotency data is retained throughout the life of the workflow execution.  | Optional. | 
+| startWorkflowRequest. **idempotencyStrategy** | The idempotency strategy for handling duplicate requests. Supported values:<ul><li>**RETURN_EXISTING**: Return the `workflowId` of the workflow instance with the same idempotency key.</li><li>**FAIL**: Start a new workflow instance only if there are no workflow executions with the same idempotency key.</li><li>**FAIL_ON_RUNNING**: Start a new workflow instance only if there are no `RUNNING` or` PAUSED` workflows with the same idempotency key. Completed workflows can run again.</li></ul> | Required if `idempotencyKey` is used. | 
+| startWorkflowRequest. **priority** | The priority of the workflow. Supports values from 0-99 and can be [passed as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor). | Optional. | 
+| startWorkflowRequest. **taskToDomain** | A mapping of task reference names to domain-specific values to [route the task to defined workers](https://orkes.io/content/developer-guides/task-to-domain). | Optional. | 
+| scheduleStartTime | The start time for the schedule in [Unix timestamp format](https://www.unixtimestamp.com/) (in milliseconds), based on the local timezone. | Optional. | 
+| scheduleEndTime | The end time for the schedule in [Unix timestamp format](https://www.unixtimestamp.com/) (in milliseconds), based on the local timezone. | Optional. | 
 | paused | Whether the schedule is paused upon saving. If set to `true`, the schedule will not run. Set to `false` to start the schedule immediately upon saving. Default is `false`. | Optional. |
 | runCatchupScheduleInstances | If `true`, executes any pending schedules, such as when the server starts after downtime. | Optional | 
 

@@ -1,0 +1,42 @@
+---
+sidebar_position: 4
+slug: "/reference-docs/api/schedule/resume-schedule"
+description: "This API is used to resume a paused workflow schedule."
+---
+
+# Resume Schedule
+
+**Endpoint**: `GET /api/scheduler/schedules/{name}/resume`
+
+Resumes a paused schedule.
+
+## Path parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| name | The name of the schedule to resume. | string | Required. | 
+
+## Response
+
+- Returns 200 OK, indicating that the schedule has been resumed. 
+- Returns 404 if the schedule is already running or does not exist.
+
+## Examples
+
+<details>
+<summary>Resume a schedule</summary>
+
+**Request**
+
+```bash
+curl -X 'GET' \
+  'https://<YOUR-CLUSTER>/api/scheduler/schedules/assignPRSchedule/resume' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the schedule has been resumed.
+
+</details>

@@ -1,0 +1,41 @@
+---
+sidebar_position: 5
+slug: "/reference-docs/api/schedule/delete-schedule"
+description: "This API is used to delete a workflow schedule."
+---
+
+# Delete Schedule
+
+**Endpoint**: `DELETE /api/scheduler/schedules/{name}`
+
+Deletes a schedule.
+
+## Path parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| name | The name of the schedule to delete. | string | Required. | 
+
+## Response
+
+Returns 200 OK, indicating that the schedule has been deleted.
+
+## Examples
+
+<details>
+<summary>Delete a schedule</summary>
+
+**Request**
+
+```bash
+curl -X 'DELETE' \
+  'https://<YOUR-CLUSTER>/api/scheduler/schedules/assignPR' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the schedule has been deleted.
+
+</details>

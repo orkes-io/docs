@@ -1,0 +1,42 @@
+---
+sidebar_position: 3
+slug: "/reference-docs/api/schedule/pause-schedule"
+description: "This API is used to pause a running workflow schedule."
+---
+
+# Pause Schedule
+
+**Endpoint**: `GET /api/scheduler/schedules/{name}/pause`
+
+Pauses a currently running schedule.
+
+## Path parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| name | The name of the schedule to pause. | string | Required. | 
+
+## Response
+
+- Returns 200 OK, indicating that the schedule is paused. If the schedule is already paused, it returns 200 OK with no change to the schedule state.
+- Returns 404 if the schedule does not exist.
+
+## Examples
+
+<details>
+<summary>Pause a schedule</summary>
+
+**Request**
+
+```bash
+curl -X 'GET' \
+  'https://<YOUR-CLUSTER>/api/scheduler/schedules/assignPRSchedule/pause' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the schedule is paused.
+
+</details>

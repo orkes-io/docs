@@ -1,0 +1,86 @@
+---
+sidebar_position: 7
+slug: "/reference-docs/api/schedule/delete-tags-from-schedule"
+description: "This API is used to delete tags from a workflow schedule."
+---
+
+# Delete Tags from a Schedule
+
+**Endpoint**: `DELETE /api/scheduler/schedules/{name}/tags`
+
+Deletes tags from a schedule.
+
+## Path parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| name | The name of the schedule from which the tags are to be deleted. | string | Required. | 
+
+## Request Body
+
+The request body should be an array of tag objects.
+
+| Parameter | Description                                      | Type   | Required/ Optional |
+| --------- | ------------------------------------------------ | ------ | ------------------ |
+| key       | The tag key to be removed.                                    | string | Required.         |
+| value     | The tag value to be removed.                                   | string | Required.         |
+
+## Response
+
+Returns 200 OK, indicating that tags have been deleted from the schedule.
+
+## Examples
+
+<details>
+<summary>Delete a single tag from a schedule</summary>
+
+**Request**
+
+```bash
+curl -X 'DELETE' \
+  'https://<YOUR-CLUSTER>/api/scheduler/schedules/assignPRSchedule/tags' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '[
+  {
+    "key": "dev",
+    "value": "automation"
+  }
+]'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the tag has been deleted from the schedule.
+
+</details>
+
+<details>
+<summary>Delete multiple tags from a schedule</summary>
+
+**Request**
+
+```bash
+curl -X 'DELETE' \
+  'https://<YOUR-CLUSTER>/api/scheduler/schedules/assignPRSchedule/tags' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '[
+  {
+    "key": "dev",
+    "value": "automation"
+  },
+{
+    "key": "backend",
+    "value": "PR"
+  }
+]'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the tags have been deleted from the schedule.
+
+</details>

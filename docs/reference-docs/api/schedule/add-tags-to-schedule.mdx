@@ -1,0 +1,101 @@
+---
+sidebar_position: 6
+slug: "/reference-docs/api/schedule/add-tags-to-schedule"
+description: "This API is used to add tags to a workflow schedule."
+---
+
+# Add Tags to a Schedule
+
+**Endpoint**: `PUT /api/scheduler/schedules/{name}/tags`
+
+Adds tags to a schedule. You can add a single tag or multiple tags in one request. If a tag with the same key already exists, this operation will update its value.
+
+## Path parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| name | The name of the schedule to which the tags are to be added. | string | Required. | 
+
+## Request Body
+
+The request body should be an array of tag objects.
+
+| Parameter | Description                                      | Type   | Required/ Optional |
+| --------- | ------------------------------------------------ | ------ | ------------------ |
+| key       | The tag key.                                     | string | Required.         |
+| value     | The tag value.                                   | string | Required.         |
+
+**Example for adding multiple tags in a single request:**
+
+```json
+[
+  {
+    "key": "dev",
+    "value": "automation"
+  },
+  {
+    "key": "backend",
+    "value": "PR"
+  }
+]
+```
+
+## Response
+
+Returns 200 OK, indicating that tags have been added to the schedule.
+
+## Examples
+
+<details>
+<summary>Add a single tag to a schedule</summary>
+
+**Request**
+
+```bash
+curl -X 'PUT' \
+  'https://<YOUR-CLUSTER>/api/scheduler/schedules/assignPRSchedule/tags' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '[
+  {
+    "key": "dev",
+    "value": "automation"
+  }
+]'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the tag has been added to the schedule.
+
+</details>
+
+<details>
+<summary>Add multiple tags to a schedule</summary>
+
+**Request**
+
+```bash
+curl -X 'PUT' \
+  'https://<YOUR-CLUSTER>/api/scheduler/schedules/assignPRSchedule/tags' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '[
+  {
+    "key": "dev",
+    "value": "automation"
+  },
+  {
+    "key": "backend",
+    "value": "PR"
+  }
+]'
+```
+
+**Response**
+
+Returns 200 OK, indicating that tags have been added to the schedule. 
+
+</details>
