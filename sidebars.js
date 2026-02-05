@@ -709,7 +709,7 @@ const sidebars = {
                     label: 'Tags',
                     link: {
                         type: 'generated-index',
-                        title: 'Schedule',
+                        title: 'Tags',
                         slug: '/reference-docs/api/tags',
                         description: `Manage tags in Orkes Conductor with this suite of APIs`
                     },
