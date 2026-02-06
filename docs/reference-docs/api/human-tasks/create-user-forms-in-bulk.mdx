@@ -1,0 +1,475 @@
+---
+sidebar_position: 14
+slug: "/reference-docs/api/human-tasks/create-user-forms-bulk"
+description: "This API is used to create Human task user forms in bulk."
+---
+
+# Create User Forms in Bulk
+
+**Endpoint**: `POST /api/human/template/bulk`
+
+Creates multiple user form templates in the Conductor server in a single request. You can also update existing forms as new versions by setting `newVersion=true`.
+
+## Query parameters
+
+| Parameter  | Description                                                                                                                                                                                                  | Type   | Required/ Optional |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------ | ------------------ |
+| newVersion | Whether to save the user form as a new version. Default is `false`.<br/><br/>If the version number is specified in the request body, it will take precedence even if `newVersion` is set to `false`. | string | Required.          |
+
+## Request body
+
+Format the request as an array of JSON objects, where each object contains a user form definition.
+
+| Parameter | Description                                                          | Type   | Required/ Optional |
+| --------- | -------------------------------------------------------------------- | ------ | ------------------ |
+| name | The name of the user form template. | string | Required. | 
+| jsonSchema | The JSON schema defining the form's data structure and validation rules. | object | Required. | 
+| templateUI | The UI configuration that defines how the form should be rendered. [Supported form layout and components](/content/developer-guides/orchestrating-human-tasks#step-1-create-a-user-form-schema). | object | Required. | 
+| createdBy | The user who created the form. | string | Optional. | 
+| updatedBy | The user who last updated the form. | string | Optional. | 
+| version | The version number to assign. If specified, it takes precedence over the `newVersion` query parameter. | integer | Optional. | 
+
+## Response
+
+Returns an array of created or updated user forms with their assigned version numbers and timestamps.
+
+## Examples
+
+<details>
+<summary>Create multiple user forms</summary>
+
+**Request**
+
+```shell
+curl -X 'POST' \
+  'https://<YOUR-CLUSTER>/api/human/template/bulk?newVersion=false' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '[
+  {
+    "createdBy": "USER:john.doe@acme.com",
+    "name": "EmployeeOnboarding",
+    "jsonSchema": {
+      "$schema": "http://json-schema.org/draft-07/schema",
+      "properties": {
+        "employee_name": {
+          "type": "string"
+        },
+        "department": {
+          "type": "string",
+          "enum": ["Engineering", "Sales", "Marketing"]
+        }
+      }
+    },
+    "templateUI": {
+      "type": "VerticalLayout",
+      "elements": [
+        {
+          "type": "Control",
+          "scope": "#/properties/employee_name",
+          "label": "Employee Name"
+        }
+      ]
+    }
+  },
+  {
+    "createdBy": "USER:john.doe@acme.com",
+    "name": "ExpenseApproval",
+    "jsonSchema": {
+      "$schema": "http://json-schema.org/draft-07/schema",
+      "properties": {
+        "expense_amount": {
+          "type": "number"
+        },
+        "approved": {
+          "type": "string",
+          "enum": ["Yes", "No"]
+        }
+      }
+    },
+    "templateUI": {
+      "type": "VerticalLayout",
+      "elements": [
+        {
+          "type": "Control",
+          "scope": "#/properties/expense_amount",
+          "label": "Amount"
+        }
+      ]
+    }
+  }
+]'
+```
+
+**Response**
+
+```json
+[
+  {
+    "createTime": 1770296073419,
+    "updateTime": 1770296073419,
+    "createdBy": "USER:john.doe@acme.com",
+    "updatedBy": "USER:john.doe@acme.com",
+    "name": "EmployeeOnboarding",
+    "version": 1,
+    "jsonSchema": {
+      "$schema": "http://json-schema.org/draft-07/schema",
+      "properties": {
+        "employee_name": {
+          "type": "string"
+        },
+        "department": {
+          "type": "string",
+          "enum": [
+            "Engineering",
+            "Sales",
+            "Marketing"
+          ]
+        }
+      }
+    },
+    "templateUI": {
+      "type": "VerticalLayout",
+      "elements": [
+        {
+          "type": "Control",
+          "scope": "#/properties/employee_name",
+          "label": "Employee Name"
+        }
+      ]
+    }
+  },
+  {
+    "createTime": 1770296073442,
+    "updateTime": 1770296073442,
+    "createdBy": "USER:john.doe@acme.com",
+    "updatedBy": "USER:john.doe@acme.com",
+    "name": "ExpenseApproval",
+    "version": 1,
+    "jsonSchema": {
+      "$schema": "http://json-schema.org/draft-07/schema",
+      "properties": {
+        "expense_amount": {
+          "type": "number"
+        },
+        "approved": {
+          "type": "string",
+          "enum": [
+            "Yes",
+            "No"
+          ]
+        }
+      }
+    },
+    "templateUI": {
+      "type": "VerticalLayout",
+      "elements": [
+        {
+          "type": "Control",
+          "scope": "#/properties/expense_amount",
+          "label": "Amount"
+        }
+      ]
+    }
+  }
+]
+```
+
+</details>
+
+<details>
+<summary>Update multiple forms as new versions</summary>
+
+**Request**
+
+```shell
+curl -X 'POST' \
+  'https://<YOUR-CLUSTER>/api/human/template/bulk?newVersion=true' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '[
+  {
+    "createdBy": "USER:john.doe@acme.com",
+    "name": "EmployeeOnboarding",
+    "jsonSchema": {
+      "$schema": "http://json-schema.org/draft-07/schema",
+      "properties": {
+        "employee_name": {
+          "type": "string"
+        },
+        "department": {
+          "type": "string",
+          "enum": ["Engineering", "Sales", "Marketing", "HR", "Finance"]
+        },
+        "start_date": {
+          "type": "string",
+          "format": "date"
+        },
+        "equipment_required": {
+          "type": "boolean"
+        }
+      }
+    },
+    "templateUI": {
+      "type": "VerticalLayout",
+      "elements": [
+        {
+          "type": "Control",
+          "scope": "#/properties/employee_name",
+          "label": "Employee Name"
+        },
+        {
+          "type": "Control",
+          "scope": "#/properties/department",
+          "label": "Department"
+        },
+        {
+          "type": "Control",
+          "scope": "#/properties/start_date",
+          "label": "Start Date"
+        },
+        {
+          "type": "Control",
+          "scope": "#/properties/equipment_required",
+          "label": "Equipment Required?"
+        }
+      ]
+    }
+  },
+  {
+    "createdBy": "USER:john.doe@acme.com",
+    "name": "ExpenseApproval",
+    "jsonSchema": {
+      "$schema": "http://json-schema.org/draft-07/schema",
+      "properties": {
+        "expense_amount": {
+          "type": "number"
+        },
+        "category": {
+          "type": "string",
+          "enum": ["Travel", "Meals", "Supplies", "Software"]
+        },
+        "receipt_url": {
+          "type": "string"
+        },
+        "approved": {
+          "type": "string",
+          "enum": ["Yes", "No"]
+        },
+        "approver_comments": {
+          "type": "string"
+        }
+      }
+    },
+    "templateUI": {
+      "type": "VerticalLayout",
+      "elements": [
+        {
+          "type": "Group",
+          "label": "Expense Information",
+          "elements": [
+            {
+              "type": "Control",
+              "scope": "#/properties/expense_amount",
+              "label": "Amount ($)",
+              "options": {
+                "readonly": true
+              }
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/category",
+              "label": "Category",
+              "options": {
+                "readonly": true
+              }
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/receipt_url",
+              "label": "Receipt URL",
+              "options": {
+                "readonly": true
+              }
+            }
+          ]
+        },
+        {
+          "type": "Group",
+          "label": "Approval Decision",
+          "elements": [
+            {
+              "type": "Control",
+              "scope": "#/properties/approved",
+              "label": "Approve?"
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/approver_comments",
+              "label": "Comments"
+            }
+          ]
+        }
+      ]
+    }
+  }
+]'
+```
+
+**Response**
+
+```json
+[
+  {
+    "createTime": 1770296139078,
+    "updateTime": 1770296139078,
+    "createdBy": "USER:john.doe@acme.com",
+    "updatedBy": "USER:john.doe@acme.com",
+    "name": "EmployeeOnboarding",
+    "version": 2,
+    "jsonSchema": {
+      "$schema": "http://json-schema.org/draft-07/schema",
+      "properties": {
+        "employee_name": {
+          "type": "string"
+        },
+        "department": {
+          "type": "string",
+          "enum": [
+            "Engineering",
+            "Sales",
+            "Marketing",
+            "HR",
+            "Finance"
+          ]
+        },
+        "start_date": {
+          "type": "string",
+          "format": "date"
+        },
+        "equipment_required": {
+          "type": "boolean"
+        }
+      }
+    },
+    "templateUI": {
+      "type": "VerticalLayout",
+      "elements": [
+        {
+          "type": "Control",
+          "scope": "#/properties/employee_name",
+          "label": "Employee Name"
+        },
+        {
+          "type": "Control",
+          "scope": "#/properties/department",
+          "label": "Department"
+        },
+        {
+          "type": "Control",
+          "scope": "#/properties/start_date",
+          "label": "Start Date"
+        },
+        {
+          "type": "Control",
+          "scope": "#/properties/equipment_required",
+          "label": "Equipment Required?"
+        }
+      ]
+    }
+  },
+  {
+    "createTime": 1770296139089,
+    "updateTime": 1770296139089,
+    "createdBy": "USER:john.doe@acme.com",
+    "updatedBy": "USER:john.doe@acme.com",
+    "name": "ExpenseApproval",
+    "version": 2,
+    "jsonSchema": {
+      "$schema": "http://json-schema.org/draft-07/schema",
+      "properties": {
+        "expense_amount": {
+          "type": "number"
+        },
+        "category": {
+          "type": "string",
+          "enum": [
+            "Travel",
+            "Meals",
+            "Supplies",
+            "Software"
+          ]
+        },
+        "receipt_url": {
+          "type": "string"
+        },
+        "approved": {
+          "type": "string",
+          "enum": [
+            "Yes",
+            "No"
+          ]
+        },
+        "approver_comments": {
+          "type": "string"
+        }
+      }
+    },
+    "templateUI": {
+      "type": "VerticalLayout",
+      "elements": [
+        {
+          "type": "Group",
+          "label": "Expense Information",
+          "elements": [
+            {
+              "type": "Control",
+              "scope": "#/properties/expense_amount",
+              "label": "Amount ($)",
+              "options": {
+                "readonly": true
+              }
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/category",
+              "label": "Category",
+              "options": {
+                "readonly": true
+              }
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/receipt_url",
+              "label": "Receipt URL",
+              "options": {
+                "readonly": true
+              }
+            }
+          ]
+        },
+        {
+          "type": "Group",
+          "label": "Approval Decision",
+          "elements": [
+            {
+              "type": "Control",
+              "scope": "#/properties/approved",
+              "label": "Approve?"
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/approver_comments",
+              "label": "Comments"
+            }
+          ]
+        }
+      ]
+    }
+  }
+]
+```
+
+</details>
