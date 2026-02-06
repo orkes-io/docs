@@ -1,50 +1,57 @@
 ---
 sidebar_position: 13
 slug: "/reference-docs/api/human-tasks/save-task-ui-template"
-description: "This API is used to save a Human task user form."
+description: "This API is used to create a Human task user form."
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Save User Form
+# Create User Form 
 
 **Endpoint:** `POST /api/human/template`
 
-Saves a user form in the Conductor server.
+Creates a user form in the Conductor server. You can also update existing forms as new versions by setting `newVersion=true`.
 
 ## Query parameters
 
 | Parameter  | Description                                                                                                                                                                                                  | Type   | Required/ Optional |
 | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------ | ------------------ |
-| newVersion | Whether to save the user form as a new version. Default is false. <br/><br/> **Note:** If the version number is specified in the request body, it will take precedence even if _newVersion_ is set to false. | string | Required.          |
+| newVersion | Whether to save the user form as a new version. Default is `false`.<br/><br/>If the version number is specified in the request body, it will take precedence even if `newVersion` is set to `false`. | string | Required.          |
 
 ## Request body
 
 Format the request as an object containing the user form JSON schema.
 
+| Parameter | Description                                                          | Type   | Required/ Optional |
+| --------- | -------------------------------------------------------------------- | ------ | ------------------ |
+| name | The name of the user form template. | string | Required. | 
+| jsonSchema | The JSON schema defining the form's data structure and validation rules. | object | Required. | 
+| templateUI | The UI configuration that defines how the form should be rendered. [Supported form layout and components](/content/developer-guides/orchestrating-human-tasks#step-1-create-a-user-form-schema). | object | Required. | 
+| createdBy | The user who created the form. | string | Optional. | 
+| updatedBy | The user who last updated the form. | string | Optional. | 
+| version | The version number to assign. If specified, it takes precedence over the `newVersion` query parameter. | integer | Optional. | 
+
 ## Response
 
-Returns the saved user form, including its versions.
+Returns the created or updated user form with its assigned version number and timestamps.
 
 ## Examples
 
 <details>
-<summary>Save a user form</summary>
+<summary>Create a user form</summary>
 
 **Request**
 
 ```shell
 curl -X 'POST' \
-  'https://<YOUR-CLUSTER>/api/human/template' \
+  'https://<YOUR-CLUSTER>/api/human/template?newVersion=false' \
   -H 'accept: application/json' \
   -H 'X-Authorization: <TOKEN>' \
   -H 'Content-Type: application/json' \
   -d '{
-  "createTime": 1736938081924,
-  "updateTime": 1736938081924,
-  "createdBy": "USER:user@example.com",
-  "updatedBy": "USER:user@example.com",
+  "createdBy": "USER:john.doe@acme.com",
+"updatedBy": "USER:john.doe@acme.com",
   "name": "someForm",
   "jsonSchema": {
     "$schema": "http://json-schema.org/draft-07/schema",
@@ -77,10 +84,10 @@ curl -X 'POST' \
 
 ```json
 {
-  "createTime": 1736938081924,
-  "updateTime": 1736938081924,
-  "createdBy": "USER:user@example.com",
-  "updatedBy": "USER:user@example.com",
+  "createTime": 1770293776993,
+  "updateTime": 1770293776993,
+  "createdBy": "USER:john.doe@acme.com",
+  "updatedBy": "USER:john.doe@acme.com",
   "name": "someForm",
   "version": 1,
   "jsonSchema": {
@@ -88,7 +95,11 @@ curl -X 'POST' \
     "properties": {
       "vegetable": {
         "type": "string",
-        "enum": ["potatoes", "carrots", "celery"]
+        "enum": [
+          "potatoes",
+          "carrots",
+          "celery"
+        ]
       }
     }
   },
@@ -120,10 +131,8 @@ curl -X 'POST' \
   -H 'X-Authorization: <TOKEN>' \
   -H 'Content-Type: application/json' \
   -d '{
-  "createTime": 1736938081924,
-  "updateTime": 1736938081924,
-  "createdBy": "USER:user@example.com",
-  "updatedBy": "USER:user@example.com",
+  "createdBy": "USER:john.doe@acme.com",
+"updatedBy": "USER:john.doe@acme.com",
   "name": "someForm",
   "jsonSchema": {
     "$schema": "http://json-schema.org/draft-07/schema",
@@ -133,9 +142,7 @@ curl -X 'POST' \
         "enum": [
           "potatoes",
           "carrots",
-          "celery",
-          "apple",
-          "banana"
+          "celery"
         ]
       }
     }
@@ -146,7 +153,7 @@ curl -X 'POST' \
       {
         "type": "Control",
         "scope": "#/properties/vegetable",
-        "label": "Pick a vegetable or fruit",
+        "label": "Pick any one",
         "options": {}
       }
     ]
@@ -158,10 +165,10 @@ curl -X 'POST' \
 
 ```json
 {
-  "createTime": 1736938081924,
-  "updateTime": 1736938081924,
-  "createdBy": "USER:user@example.com",
-  "updatedBy": "USER:user@example.com",
+  "createTime": 1770294080864,
+  "updateTime": 1770294080864,
+  "createdBy": "USER:john.doe@acme.com",
+  "updatedBy": "USER:john.doe@acme.com",
   "name": "someForm",
   "version": 2,
   "jsonSchema": {
@@ -169,7 +176,11 @@ curl -X 'POST' \
     "properties": {
       "vegetable": {
         "type": "string",
-        "enum": ["potatoes", "carrots", "celery", "apple", "banana"]
+        "enum": [
+          "potatoes",
+          "carrots",
+          "celery"
+        ]
       }
     }
   },
@@ -179,7 +190,7 @@ curl -X 'POST' \
       {
         "type": "Control",
         "scope": "#/properties/vegetable",
-        "label": "Pick one",
+        "label": "Pick any one",
         "options": {}
       }
     ]
