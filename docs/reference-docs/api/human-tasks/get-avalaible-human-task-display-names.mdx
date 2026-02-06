@@ -1,0 +1,88 @@
+---
+sidebar_position: 11
+slug: "/reference-docs/api/human-tasks/get-available-human-tasks-display-names"
+description: "This API is used to retrieve a list of Human task display names available to the user."
+---
+
+# Get Available Human Tasks Display Names
+
+**Endpoint**: `GET /api/human/tasks/getTaskDisplayNames`
+
+Retrieves a list of Human task display names available to the user. Use this endpoint to populate dropdown menus or filters in your application.
+
+## Query parameters
+
+| Parameter | Description                                                       | Type   | Required/ Optional |
+| --------- | ----------------------------------------------------------------- | ------ | ------------------ |
+| searchType | The type of search. Supported values:<ul><li>`ADMIN`: Returns all Human task display names in the cluster. Must be used by cluster admins. Other users cannot retrieve any data when called.</li><li>`INBOX`: Returns Human task display names assigned to the requesting user.</li></ul> | string | Required.          |
+
+## Response
+
+Returns an array of Human task display names as strings.
+
+When `searchType` is set as `ADMIN`, the response returns all the Human task display names available in the cluster.
+
+When `searchType` is set to `INBOX`, the response returns all the Human task display names available to the requesting user.
+
+## Examples
+
+<details>
+<summary>Get all available Human task display names for ADMIN search</summary>
+
+**Request**
+
+```shell
+curl -X 'GET' \
+  'https://<YOUR-CLUSTER>/api/human/tasks/getTaskDisplayNames?searchType=ADMIN' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+Returns an array of all Human task display names available in the cluster. 
+
+```json
+[
+  "Approval",
+  "Approve Claim",
+  "Design Work Intake",
+  "High risk - Fraud dispute",
+  "LoanApproval",
+  "Low risk - Fraud dispute",
+  "Medium risk - Fraud dispute",
+  "Pick your assets",
+  "Reviewer 1",
+  "Reviewer2",
+  "sample",
+  "test",
+  "which veggie"
+]
+```
+
+</details>
+
+<details>
+<summary>Get all available Human task display names for INBOX search</summary>
+
+**Request**
+
+```shell
+curl -X 'GET' \
+  'https://<YOUR-CLUSTER>/api/human/tasks/getTaskDisplayNames?searchType=INBOX' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+Returns an array of Human task display names assigned to the requesting user.
+
+```json
+[
+  "Approval",
+  "Medium risk - Fraud dispute"
+]
+```
+
+</details>
