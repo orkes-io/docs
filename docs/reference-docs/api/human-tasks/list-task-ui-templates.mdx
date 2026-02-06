@@ -7,7 +7,7 @@ description: "This API is used to retrieve a list of Human task user forms store
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Get User Forms
+# Get All User Forms
 
 **Endpoint:** `GET /api/human/template`
 
@@ -20,11 +20,11 @@ Add the following query parameters only if a particular user form is to be retri
 | Parameter | Description                                   | Type    | Required/ Optional |
 | --------- | --------------------------------------------- | ------- | ------------------ |
 | name      | The user form name to be retrieved.           | string  | Optional.          |
-| version   | The version of the user form to be retrieved. | integer | Optional.          |
+| version   | The version of the user form to be retrieved. If not specified, all the versions will be retrieved. | integer | Optional.          |
 
 ## Response
 
-Returns an array of user form details.
+Returns an array of user form details. Returns 404 if an invalid user form name is provided.
 
 ## Examples
 
@@ -35,12 +35,14 @@ Returns an array of user form details.
 
 ```shell
 curl -X 'GET' \
-  'https://<YOUR-CLUSTER>/api/human/template? \
+  'https://<YOUR-CLUSTER>/api/human/template' \
   -H 'accept: application/json' \
   -H 'X-Authorization: <TOKEN>'
 ```
 
 **Response**
+
+Returns an array of all user forms with their complete schema and configuration.
 
 ```json
 [
@@ -171,67 +173,139 @@ curl -X 'GET' \
 
 ```shell
 curl -X 'GET' \
-  'https://<YOUR-CLUSTER>/api/human/template?name=someForm \
+  'https://<YOUR-CLUSTER>/api/human/template?name=Approval' \
   -H 'accept: application/json' \
   -H 'X-Authorization: <TOKEN>'
 ```
 
 **Response**
 
+Returns an array of all versions of the user form "Approval".
+
 ```json
 [
   {
-    "createTime": 1736938788768,
-    "updateTime": 1736938788768,
-    "createdBy": "USER:user@example.com",
-    "updatedBy": "USER:user@example.com",
-    "name": "someForm",
+    "createTime": 1770288366174,
+    "updateTime": 1770288366174,
+    "createdBy": "USER:john.doe@acme.com",
+    "updatedBy": "USER:john.doe@acme.com",
+    "name": "Approval",
     "version": 2,
     "jsonSchema": {
       "$schema": "http://json-schema.org/draft-07/schema",
       "properties": {
-        "vegetable": {
+        "paperUrl": {
+          "type": "string"
+        },
+        "approve": {
           "type": "string",
-          "enum": ["potatoes", "carrots", "celery", "apple", "banana"]
+          "enum": [
+            "Yes",
+            " No"
+          ]
+        },
+        "comments": {
+          "type": "string"
+        },
+        "improvementNotes": {
+          "type": "string"
         }
-      }
+      },
+      "required": [
+        "approve",
+        "comments"
+      ]
     },
     "templateUI": {
       "type": "VerticalLayout",
       "elements": [
         {
+          "type": "VerticalLayout",
+          "elements": [
+            {
+              "type": "Control",
+              "scope": "#/properties/paperUrl",
+              "label": "Review doc",
+              "options": {
+                "readonly": true
+              }
+            }
+          ]
+        },
+        {
           "type": "Control",
-          "scope": "#/properties/vegetable",
-          "label": "Pick a vegetable or fruit",
+          "scope": "#/properties/approve",
+          "label": "Approve document",
           "options": {}
+        },
+        {
+          "type": "Control",
+          "scope": "#/properties/comments",
+          "label": "Comments"
+        },
+        {
+          "type": "Control",
+          "scope": "#/properties/improvementNotes",
+          "label": "Improvement Feedback"
         }
       ]
     }
   },
   {
-    "createTime": 1736938081924,
-    "updateTime": 1736940939545,
-    "createdBy": "USER:user@example.com",
-    "updatedBy": "USER:user@example.com",
-    "name": "someForm",
+    "createTime": 1740572078291,
+    "updateTime": 1768558337481,
+    "createdBy": "USER:john.doe@acme.com",
+    "updatedBy": "USER:john.doe@acme.com",
+    "name": "Approval",
     "version": 1,
     "jsonSchema": {
       "$schema": "http://json-schema.org/draft-07/schema",
       "properties": {
-        "vegetable": {
+        "paperUrl": {
+          "type": "string"
+        },
+        "approve": {
           "type": "string",
-          "enum": ["potatoes", "carrots"]
+          "enum": [
+            "Yes",
+            " No"
+          ]
+        },
+        "comments": {
+          "type": "string"
         }
-      }
+      },
+      "required": [
+        "approve",
+        "comments"
+      ]
     },
     "templateUI": {
       "type": "VerticalLayout",
       "elements": [
         {
+          "type": "VerticalLayout",
+          "elements": [
+            {
+              "type": "Control",
+              "scope": "#/properties/paperUrl",
+              "label": "Review doc",
+              "options": {
+                "readonly": true
+              }
+            }
+          ]
+        },
+        {
           "type": "Control",
-          "scope": "#/properties/vegetable",
-          "label": "Pick one",
+          "scope": "#/properties/approve",
+          "label": "Approve document",
           "options": {}
+        },
+        {
+          "type": "Control",
+          "scope": "#/properties/comments",
+          "label": "Comments"
         }
       ]
     }
@@ -242,45 +316,78 @@ curl -X 'GET' \
 </details>
 
 <details>
-<summary>Get one version of a user form</summary>
+<summary>Get a specific version of a user form</summary>
 
 **Request**
 
 ```shell
 curl -X 'GET' \
-  'https://<YOUR-CLUSTER>/api/human/template?name=someForm&version=2 \
+  'https://<YOUR-CLUSTER>/api/human/template?name=Approval&version=1' \
   -H 'accept: application/json' \
   -H 'X-Authorization: <TOKEN>'
 ```
 
 **Response**
 
+Returns version 1 of the user form "Approval".
+
 ```json
 [
   {
-    "createTime": 1736938788768,
-    "updateTime": 1736938788768,
-    "createdBy": "USER:user@example.com",
-    "updatedBy": "USER:user@example.com",
-    "name": "someForm",
-    "version": 2,
+    "createTime": 1740572078291,
+    "updateTime": 1768558337481,
+    "createdBy": "USER:john.doe@acme.com",
+    "updatedBy": "USER:john.doe@acme.com",
+    "name": "Approval",
+    "version": 1,
     "jsonSchema": {
       "$schema": "http://json-schema.org/draft-07/schema",
       "properties": {
-        "vegetable": {
+        "paperUrl": {
+          "type": "string"
+        },
+        "approve": {
           "type": "string",
-          "enum": ["potatoes", "carrots", "celery", "apple", "banana"]
+          "enum": [
+            "Yes",
+            " No"
+          ]
+        },
+        "comments": {
+          "type": "string"
         }
-      }
+      },
+      "required": [
+        "approve",
+        "comments"
+      ]
     },
     "templateUI": {
       "type": "VerticalLayout",
       "elements": [
         {
+          "type": "VerticalLayout",
+          "elements": [
+            {
+              "type": "Control",
+              "scope": "#/properties/paperUrl",
+              "label": "Review doc",
+              "options": {
+                "readonly": true
+              }
+            }
+          ]
+        },
+        {
           "type": "Control",
-          "scope": "#/properties/vegetable",
-          "label": "Pick a vegetable or fruit",
+          "scope": "#/properties/approve",
+          "label": "Approve document",
           "options": {}
+        },
+        {
+          "type": "Control",
+          "scope": "#/properties/comments",
+          "label": "Comments"
         }
       ]
     }
