@@ -10,16 +10,17 @@ import TabItem from '@theme/TabItem';
 
 *Estimated time: 8min*
 
-In Conductor, workflow definitions are stored as JSON. These workflows can be created using a UI-based or code-based approach:
-* **Visual workflow builder**—Using the Conductor UI, define and execute your workflow visually.
-* **Workflow as code**—Using the Conductor SDKs, define and execute your workflow in your preferred language.
+In Conductor, workflow definitions are stored as JSON. These workflows can be created using a code-based approach or a UI-based approach:
+
+* **Workflow as code**: Using the Conductor SDKs, define and execute your workflow in your preferred language.
+* **Visual workflow editor**: Using the Conductor UI, define and execute your workflow visually.
 
 In this quickstart, you will use your preferred option to:
+
 * Create and register a workflow definition consisting of a system task, a custom task, and an operator.
 * Test run the workflow.
 
-
-### Create and register workflow
+## Create and register a workflow
 
 Follow along to build your first workflow, a conditional helloWorld flow that greets users based on their location.
 
@@ -29,9 +30,9 @@ Follow along to build your first workflow, a conditional helloWorld flow that gr
 Use the visual workflow builder in Conductor UI to create your *helloWorld* workflow.
 
 **To create a workflow:**
-1. Log in to your Orkes cluster or the [Developer Edition](https://developer.orkescloud.com/?utm_campaign=quickstarts&utm_source=orkes-doc&utm_medium=web).
+1. Log in to your Conductor cluster or the [Developer Edition](https://developer.orkescloud.com/?utm_campaign=quickstarts&utm_source=orkes-doc&utm_medium=web).
 2. In the left navigation menu, go to **Definitions** > **Workflow**.
-3. Select **(+) Define workflow**.
+3. Select **+ Define workflow**.
 
 <p align="center"><img src="/content/img/getting-started/getting_started-visual_workflow_editor.png" alt="Screenshot of visual workflow builder in Orkes Conductor." width="100%" height="auto"></img></p>
 
@@ -100,8 +101,7 @@ To learn more about how tasks are routed, see [Routing Tasks](https://orkes.io/c
 
 Code your Hello World workflow using Conductor SDKs.
 
-
-#### Step 1: Create your workflow in code
+### Step 1: Create your workflow in code
 
 Create a project for your workflow client where you can define, register, and execute workflows programmatically. To get started quickly, download one of our sample workflow as code projects in your preferred language:
 
@@ -462,16 +462,16 @@ This sample Clojure code demonstrates how to create, register, and execute a wor
 </TabItem>
 </Tabs>
 
-#### Step 2: Get access credentials for your workflow client
+### Step 2: Get access credentials for your workflow client
 
 To connect your workflow-as-code project, you must again use an application in Conductor, which is an access layer with its own permissions and access tokens. This time, the application should have the Metadata API role.
 
 **To create an application for your workflow client:**
 1. In the left navigation menu of the Conductor UI, go to **Access Control** > **Applications**.
-2. Select **(+) Create application** and enter a **Name** for it. For example, *myWorkflowClient* or *myApp*.
+2. Select **+ Create application** and enter a **Name** for it. For example, *myWorkflowClient* or *myApp*.
 3. Enable the **Metadata API** application role, which allows the application to create and manage workflows and tasks.
-4. Select **(+) Create access key** and store the generated credentials securely.
-5. Set the Key ID and Key Secret in your project.
+4. Select **+ Create access key** and store the generated credentials securely.
+5. Set the Server URL, Key ID, and Key Secret in your project.
 
 **Example** (Java)
 
@@ -487,7 +487,7 @@ The application account can now create, manage, and execute the workflow.
 </TabItem>
 </Tabs>
 
-### Run workflow
+## Run workflow
 
 Let’s give your first workflow a test run. 
 
@@ -498,7 +498,7 @@ Before running the workflow, make sure that your *myTask* worker is actively pol
 <Tabs groupId="workflow-method">
 <TabItem value="visual" label="Visual workflow builder">
 
-Inside the workflow visual editor, go to the **Run** tab and select **Execute**.
+Inside the workflow visual builder, go to the **Run** tab and select **Execute**.
 
 <p align="center"><img src="/content/img/getting-started/getting_started-run_workflow.png" alt="Screenshot of the Run tab in the visual builder editor in Orkes Conductor." width="100%" height="auto"></img></p>
 

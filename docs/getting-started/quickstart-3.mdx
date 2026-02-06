@@ -11,13 +11,13 @@ Orkes Conductor provides comprehensive views into each workflow execution, enabl
 
 The workflow introspection dashboard can be found in **Executions** > **Workflow**, where each workflow execution is identified by a workflow ID.
 
-## Try it out
+## Try it out with your workflow
 
 Check out the execution of the helloWorld workflow you’ve just run. If successful, the workflow should have a Completed status, with each task highlighted in green. Otherwise, the workflow diagram will highlight the failed task in red.
 
 <p align="center"><img src="/content/img/getting-started/getting_started-failed_task_introspection.png" alt="Screenshot of the workflow execution screen showing the failed task in red." width="100%" height="auto"></img></p>
 
-However, a workflow can still successfully run to completion, even with the wrong logic. You can check if the data have been correctly passed between tasks by selecting a task, followed by its **Input** or **Output** tab.
+However, a workflow can still successfully run to completion, even with the wrong logic. You can check if the data has been correctly passed between tasks by selecting a task, followed by inspecting its **Input** or **Output** tab.
 
 Here’s a successful workflow execution, for example.
 
@@ -29,10 +29,12 @@ You might also be interested in how long each task took to complete to find the 
 
 <p align="center"><img src="/content/img/getting-started/getting_started-timeline_introspection.png" alt="Screenshot of Timeline tab in the workflow execution screen." width="100%" height="auto"></img></p>
 
+With the workflow tested and debugged, it can be deployed to production via code, API, or cron schedules.
+
 ## What’s next?
 
 Congratulations! You have successfully created, executed, and debugged a Conductor workflow within 15 minutes. Gain deeper mastery by exploring each topic in detail:
 * Code with Conductor: [SDK Guides](https://orkes.io/content/category/sdks)
 * Build more complex workflows, using LLM chaining, human-in-workflows, eventing, secrets, and more: [Build Workflows](https://orkes.io/content/developer-guides/building-workflows)
 * Run workflows at production-level: [Run Workflows](https://orkes.io/content/developer-guides/running-workflows)
-* Debug and monitor workflows by exploring both the execution dashboard and metrics dashboard in greater detail. [Deploy and Monitor Workflows](https://orkes.io/content/developer-guides/deploying-workflows)
+* Debug and monitor workflows by exploring both the execution dashboard and metrics dashboard in greater detail. [Testing, Monitoring, and Debugging Workflows](https://orkes.io/content/developer-guides/deploying-workflows)

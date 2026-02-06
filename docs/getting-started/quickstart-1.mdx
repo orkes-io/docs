@@ -20,10 +20,9 @@ In this quickstart, you will:
 2. Integrate the worker with Conductor.
 3.  Deploy the worker from your local machine.
 
+## Download a worker project
 
-### Download a worker project
-
-Begin by creating a task worker that polls the Conductor server for scheduled tasks at regular intervals. To get started quickly,  download one of our sample *myTask* worker projects in your preferred language:
+Begin by creating a task worker that polls the Conductor server for scheduled tasks at regular intervals. To get started quickly,  download one of our sample `myTask` worker projects in your preferred language:
 
 ``` shell
 gh repo clone conductor-oss/conductor-apps
@@ -36,18 +35,21 @@ gh repo clone conductor-oss/conductor-apps
 * [Go](https://github.com/conductor-oss/conductor-apps/tree/main/go/developer-guides/using-workers) 
 * [Clojure](https://github.com/conductor-oss/conductor-apps/tree/main/clojure/developer-guides/using-workers)
 
-### Integrate the worker with Conductor
+## Integrate the worker with Conductor
 
 To connect your task worker with the Conductor server, you must:
 
 1. Register your worker by creating a task definition
 2. Create a worker application and grant it Execute permission
 
+### Register worker
+
 **To register your worker:**
-1. Log in to your Orkes cluster or [Developer Edition](https://developer.orkescloud.com/?utm_campaign=quickstarts&utm_source=orkes-doc&utm_medium=web).
+
+1. Log in to your Conductor cluster or [Developer Edition](https://developer.orkescloud.com/?utm_campaign=quickstarts&utm_source=orkes-doc&utm_medium=web).
 1. In the left navigation menu of the Conductor UI, go to **Definitions** > **Task**.
-2. Select **(+) Define task**.
-3. Enter the **Name** for the task, which must match the task definition name in your worker code. This must be *myTask* if you are using the sample worker project downloaded in the previous step.
+2. Select **+ Define task**.
+3. Enter the **Name** for the task, which must match the task definition name in your worker code. This must be `myTask` if you are using the sample worker project downloaded in the previous step.
 4. Select **Save** > **Confirm Save**.
 
 The task is now saved to the Conductor server, which facilitates the routing of the task to the correct worker pool during workflow execution.
@@ -58,12 +60,15 @@ Finally, your worker requires programmatic access to the Conductor server. This 
 If you are using [Developer Edition](https://developer.orkescloud.com/?utm_campaign=quickstarts&utm_source=orkes-doc&utm_medium=web), you can only create one application with the Admin role enabled.
 :::
 
+### Create a worker application
+
 **To create an application for your worker:**
+
 1. In the left navigation menu of the Conductor UI, go to **Access Control** > **Applications**.
-2. Select **(+) Create application** and enter a **Name** for it. For example, *myApp *or* myWorkerApp*.
+2. Select **+ Create application** and enter a **Name** for it. For example, *myApp *or* myWorkerApp*.
 3. Enable the **Worker** application role, which allows the application to poll and update tasks.
-4. Select **(+) Create access key** and store the generated credentials securely.
-5. Set the Key ID and Key Secret in your project.
+4. Select **+ Create access key** and store the generated credentials securely.
+5. Set the Server URL,  Key ID, and Key Secret in your project.
     
     **Example** (Python)
     ```python
@@ -72,8 +77,8 @@ If you are using [Developer Edition](https://developer.orkescloud.com/?utm_campa
     os.environ['CONDUCTOR_AUTH_SECRET'] = '<YOUR-KEY-SECRET>'
     ```
 6. (Skip this step if you are using [Developer Edition](https://developer.orkescloud.com/?utm_campaign=quickstarts&utm_source=orkes-doc&utm_medium=web)) Grant Execute permission to the application.
-    1. Under Permissions, select **Add permission**.
-    2. Select the **Task** tab and then your worker task “myTask”.
+    1. Under **Permissions**, select **Add permission**.
+    2. Select the **Task** tab and then your worker task `myTask`.
     3. Enable the **Execute** toggle.
     4. Select **Add Permissions**.
 

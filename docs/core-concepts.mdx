@@ -5,14 +5,16 @@ description: "In Orkes Conductor, the three core concepts for orchestrating appl
 
 # Core Concepts
 
-Orkes Conductor orchestrates the execution flow of distributed application components—including APIs, events, functions, AI models, databases, and other systems. Here are the core concepts you need to know to understand Conductor:
+Orkes Conductor orchestrates the execution flow of distributed application components, including APIs, events, functions, AI models, databases, and other systems. Here are the core concepts you need to know to understand Conductor:
 
 * Workflows  
 * Tasks   
 * Workers
 
 ## Workflows
+
 A workflow is a sequence of tasks with a defined order and execution. Each workflow encapsulates a specific process, such as:
+
 * Classifying documents
 * Ordering from a self-checkout service
 * Upgrading cloud infrastructure
@@ -21,37 +23,47 @@ A workflow is a sequence of tasks with a defined order and execution. Each workf
 
 In Conductor, workflows can refer to the workflow definition or execution.
 
-
 ### Workflow Definition
+
 The workflow definition describes the flow of the application. Think of it as a blueprint specifying how it should execute at runtime. The workflow definition includes:
+
 * The workflow’s input/output keys.
 * A collection of [task configurations](#task-configuration) that specify the task order and data flow until the workflow is completed.
 * The workflow's runtime behavior, such as the timeout policy and compensation flow.
 
 ### Workflow Execution
-A workflow execution is the execution instance of a workflow definition. Whenever a workflow definition is invoked with a given input, a new workflow execution with a unique ID is created. The workflow is governed by a [defined state](/developer-guides/task-and-workflow-status-in-conductor) (like RUNNING or COMPLETED), which makes it intuitive to track the workflow.
+
+A workflow execution is the execution instance of a workflow definition. Whenever a workflow definition is invoked with a given input, a new workflow execution with a unique ID is created. The workflow is governed by a [defined state](/content/developer-guides/task-and-workflow-status-in-conductor) (e.g., RUNNING or COMPLETED), making it intuitive to track.
 
 ## Tasks
-A task is the basic building block of a Conductor workflow. They are reusable and modular, representing steps in your application like processing data files, calling an AI model, or executing some logic. Tasks are categorized into three types, enabling you to flexibly build workflows with low-code, all-code, or a combination of both:
-* [System tasks](/category/reference-docs/system-tasks)—Built-in tasks designed for common uses like calling an HTTP endpoint, invoking an AI model, or listening for events from external systems. System tasks are managed by Conductor, allowing you to get started without having to write custom workers.
-* [Operators](/category/reference-docs/operators)—Control flow primitives, similar to programming language constructs like loops, switch cases, or fork/join blocks. Operator tasks are also managed by Conductor.
-* [Worker tasks](/reference-docs/worker-task)—Custom code in your application. Also known as Simple tasks, Worker tasks are implemented by custom task workers that run in a separate environment from Conductor.
+
+A task is the basic building block of a Conductor workflow. They are reusable and modular, representing steps in your application, such as processing data files, calling an AI model, or executing logic. Tasks are categorized into three types, enabling you to flexibly build workflows with low-code, all-code, or a combination of both:
+
+* [System tasks](/category/reference-docs/system-tasks): Built-in tasks designed for common uses like calling an HTTP endpoint, invoking an AI model, or listening for events from external systems. System tasks are managed by Conductor, allowing you to get started without having to write custom workers.
+* [Operators](/category/reference-docs/operators): Control flow primitives, similar to programming language constructs like loops, switch cases, or fork/join blocks. Operator tasks are also managed by Conductor.
+* [Worker tasks](/reference-docs/worker-task): Custom code in your application. Worker tasks are implemented by custom task workers that run in a separate environment from Conductor.
+
+In Conductor, tasks can refer to the task definition, task configuration,  or task execution.
 
 ### Task Definition
+
 A task definition defines the task’s default parameters, such as input/output schemas, timeouts, and retries. This provides reusability and modularity across workflows.
 
 ### Task Configuration
+
 Stored in the workflow definition, the task configuration is the workflow-specific blueprint that describes:
+
 * The order and control flow of tasks.
 * How data is passed from one task to another through task inputs and outputs.
 * Other workflow-specific behavior, like optionality, caching, and schema enforcement.
 
-
 ### Task Execution
+
 During runtime, when an input is passed into a configured task, a task execution object is created. This object has a unique ID and represents the result of the task operation, including the task status, start time, and inputs/outputs.
 
 ## Workers
-Workers execute tasks in a Conductor workflow. Each type of worker implements the core functionality of each task and handles the logic as defined in their configuration, maintaining complex logic in a modular, reusable way.
+
+Workers execute tasks in a Conductor workflow. Each worker type implements the core functionality of each task and handles the logic as defined in its configuration, maintaining complex logic in a modular, reusable way.
 
 System tasks and operators are executed by Conductor workers, while custom worker tasks are executed by external workers. External workers can be hosted anywhere and implemented in any language.
 
@@ -61,4 +73,4 @@ All workers follow certain basic principles:
 * Workers are meant to be idempotent in order to facilitate retries and task rescheduling.
 * Workers do not implement any failure-handling logic like retries, which are managed by the Conductor server.
 
-Learn more about how workers communicate with Conductor in [Conductor Architecture](/content/conductor-architecture).
+Learn more about how workers communicate with Conductor in [Conductor Architecture and Worker Polling](/content/conductor-architecture).
