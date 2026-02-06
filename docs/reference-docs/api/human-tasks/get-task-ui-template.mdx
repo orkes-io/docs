@@ -1,27 +1,24 @@
 ---
-sidebar_position: 9
+sidebar_position: 16
 slug: "/reference-docs/api/human-tasks/get-task-ui-template"
 description: "This API is used to retrieve the user form used in a Human task based on its task ID."
 ---
-
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 # Get User Form by Task ID
 
 **Endpoint:** `GET /api/human/template/{humanTaskId}`
 
-Retrieves the user form associated with a Human task using its task ID.
+Retrieves the user form associated with a Human task using its task execution ID.
 
 ## Path parameters
 
 | Parameter | Description                                         | Type   | Required/ Optional |
 | --------- | --------------------------------------------------- | ------ | ------------------ |
-| humantaskId    | The task (execution) ID for the Human task execution. | string | Required.          |
+| humanTaskId    | The task ID of the Human task execution. | string | Required.          |
 
 ## Response
 
-Returns the user form for the Human task.
+Returns the user form for the Human task. Returns 400 if an invalid task is provided.
 
 ## Examples
 
@@ -32,44 +29,71 @@ Returns the user form for the Human task.
 
 ```shell
 curl -X 'GET' \
-  'https://<YOUR-CLUSTER>/api/human/template/b5070997-d326-11ef-a7d0-3e3f9199f5b3' \
+  'https://<YOUR-CLUSTER>/api/human/template/71d22e49-027b-11f1-913a-226156badb04' \
   -H 'accept: application/json' \
-  -H 'X-Authorization: <TOKEN>''
+  -H 'X-Authorization: <TOKEN>'
 ```
 
 **Response**
 
+Returns the user form associated with the specified Human task.
+
 ```json
 {
-  "createTime": 1736409506524,
-  "updateTime": 1736409506524,
-  "createdBy": "USER:user@example.com",
-  "updatedBy": "USER:user@example.com",
-  "name": "formSubmission",
+  "createTime": 1740572078291,
+  "updateTime": 1768558337481,
+  "createdBy": "USER:john.doe@acme.com",
+  "updatedBy": "USER:john.doe@acme.com",
+  "name": "Approval",
   "version": 1,
   "jsonSchema": {
     "$schema": "http://json-schema.org/draft-07/schema",
     "properties": {
-      "enterAssets": {
+      "paperUrl": {
         "type": "string"
       },
-      "Confirm approval": {
-        "type": "boolean"
+      "approve": {
+        "type": "string",
+        "enum": [
+          "Yes",
+          " No"
+        ]
+      },
+      "comments": {
+        "type": "string"
       }
-    }
+    },
+    "required": [
+      "approve",
+      "comments"
+    ]
   },
   "templateUI": {
     "type": "VerticalLayout",
     "elements": [
       {
-        "type": "Control",
-        "scope": "#/properties/enterReason",
-        "label": "Enter reason for approval"
+        "type": "VerticalLayout",
+        "elements": [
+          {
+            "type": "Control",
+            "scope": "#/properties/paperUrl",
+            "label": "Review doc",
+            "options": {
+              "readonly": true
+            }
+          }
+        ]
       },
       {
         "type": "Control",
-        "scope": "#/properties/Confirm",
+        "scope": "#/properties/approve",
+        "label": "Approve document",
         "options": {}
+      },
+      {
+        "type": "Control",
+        "scope": "#/properties/comments",
+        "label": "Comments"
       }
     ]
   }

@@ -1,11 +1,8 @@
 ---
-sidebar_position: 12
+sidebar_position: 18
 slug: "/reference-docs/api/human-tasks/delete-task-ui-template"
 description: "This API is used to delete a Human task user form based on its name."
 ---
-
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 # Delete User Form
 
@@ -25,7 +22,7 @@ After deletion, all Human tasks that make use of the deleted user form will fail
 
 ## Response
 
-Returns 200 OK, indicating that the user form has been deleted successfully.
+Returns 200 OK, indicating that the user form has been deleted successfully. Returns 500 if a user form does not exist.
 
 ## Examples
 
@@ -36,7 +33,7 @@ Returns 200 OK, indicating that the user form has been deleted successfully.
 
 ```shell
 curl -X 'DELETE' \
-  'https://<YOUR-CLUSTER>/api/human/template/someForm \
+  'https://<YOUR-CLUSTER>/api/human/template/ExpenseApproval' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>'
 ```

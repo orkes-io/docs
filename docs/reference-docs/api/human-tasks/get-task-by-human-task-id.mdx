@@ -1,0 +1,239 @@
+---
+sidebar_position: 2
+slug: "/reference-docs/api/human-tasks/get-conductor-task-by-human-task-id"
+description: "This API is used to get the task execution details using the Human task execution ID."
+---
+
+# Get Conductor Task by Human Task ID
+
+**Endpoint**: `GET /api/human/tasks/{taskId}/conductorTask`
+
+Gets the Conductor task execution details, including task definition, workflow metadata, and Human task context using the Human task ID.
+
+The invoking user should be one of the following:
+
+- Cluster admin
+- Task owner of the Human task
+- Task assignee
+- Task claimant
+- User with READ or UPDATE permission for the Human task definition
+
+## Path parameters
+
+| Parameter | Description                                         | Type   | Required/ Optional |
+| --------- | --------------------------------------------------- | ------ | ------------------ |
+| taskId    | The task ID of the Human task execution. | string | Required.          |
+
+## Response
+
+Returns the complete Conductor task execution details for the specified Human task, including the task definition (retry policies, timeouts, rate limits), workflow execution metadata (workflow ID, instance details), task status, input/output data, execution timing information, and Human task-specific context (assignment details, action logs, user form template).
+
+Returns 400 if an invalid execution ID is provided.
+
+## Examples
+
+<details>
+<summary>Get Conductor task details for a Human task</summary>
+
+**Request**
+
+```shell
+curl -X 'GET' \
+  'https://<YOUR-CLUSTER>/api/human/tasks/52e8b4b3-02a1-11f1-913a-226156badb04/conductorTask' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+{
+  "taskType": "HUMAN",
+  "status": "IN_PROGRESS",
+  "inputData": {
+    "paperUrl": "documents.pdf",
+    "__humanTaskProcessContext": {
+      "state": "ASSIGNED",
+      "lastUpdated": 1770302732960,
+      "humanTaskTriggerLog": [],
+      "humanTaskActionLogs": [
+        {
+          "id": "8a2ee7b2-cc98-4b37-b727-77086f365fe1",
+          "state": "ASSIGNED",
+          "stateStart": 1770302732960,
+          "assignee": {
+            "userType": "CONDUCTOR_USER",
+            "user": "john.doe@acme.com"
+          },
+          "action": "ASSIGNMENT",
+          "actedBy": "system"
+        }
+      ],
+      "assigneeIndex": 0,
+      "skippedAssigneeIndexes": [],
+      "assignmentsCompleted": false
+    },
+    "comments": "",
+    "__humanTaskDefinition": {
+      "assignments": [
+        {
+          "slaMinutes": 1,
+          "assignee": {
+            "userType": "CONDUCTOR_USER",
+            "user": "john.doe@acme.com"
+          }
+        },
+        {
+          "slaMinutes": 0,
+          "assignee": {
+            "userType": "EXTERNAL_USER",
+            "user": "bob"
+          }
+        }
+      ],
+      "userFormTemplate": {
+        "name": "LoanApproval",
+        "version": 1
+      },
+      "assignmentCompletionStrategy": "LEAVE_OPEN",
+      "displayName": "LoanApproval"
+    },
+    "approve": "",
+    "monthly_debt": 1100,
+    "loan_amount": 80000,
+    "employment_status": "employment-doc.pdf",
+    "_createdBy": "john.doe@acme.com",
+    "annual_income": 75000,
+    "payment_history": "bank-statement.pdf"
+  },
+  "referenceTaskName": "human_ref",
+  "retryCount": 0,
+  "seq": 4,
+  "pollCount": 0,
+  "taskDefName": "human",
+  "scheduledTime": 1770302732923,
+  "startTime": 1770302732916,
+  "endTime": 0,
+  "updateTime": 1770302732968,
+  "startDelayInSeconds": 0,
+  "retried": false,
+  "executed": false,
+  "callbackFromWorker": true,
+  "responseTimeoutSeconds": 0,
+  "workflowInstanceId": "51ee75ce-02a1-11f1-913a-226156badb04",
+  "workflowType": "LoanApprovalWorkflow",
+  "taskId": "52e8b4b3-02a1-11f1-913a-226156badb04",
+  "callbackAfterSeconds": 0,
+  "outputData": {},
+  "workflowTask": {
+    "name": "human",
+    "taskReferenceName": "human_ref",
+    "inputParameters": {
+      "__humanTaskDefinition": {
+        "assignmentCompletionStrategy": "LEAVE_OPEN",
+        "assignments": [
+          {
+            "assignee": {
+              "user": "john.doe@acme.com",
+              "userType": "CONDUCTOR_USER"
+            },
+            "slaMinutes": 1
+          },
+          {
+            "assignee": {
+              "user": "bob",
+              "userType": "EXTERNAL_USER"
+            },
+            "slaMinutes": 0
+          }
+        ],
+        "displayName": "LoanApproval",
+        "userFormTemplate": {
+          "name": "LoanApproval",
+          "version": 1
+        }
+      },
+      "loan_amount": "${workflow.input.loan_amount}",
+      "annual_income": "${workflow.input.annual_income}",
+      "monthly_debt": "${workflow.input.monthly_debt}",
+      "employment_status": "${workflow.input.employment_status}",
+      "payment_history": "${workflow.input.payment_history}",
+      "paperUrl": "${workflow.input.documents}",
+      "approve": "",
+      "comments": ""
+    },
+    "type": "HUMAN",
+    "decisionCases": {},
+    "defaultCase": [],
+    "forkTasks": [],
+    "startDelay": 0,
+    "joinOn": [],
+    "optional": false,
+    "taskDefinition": {
+      "createTime": 1721640240094,
+      "updateTime": 1721640240094,
+      "createdBy": "john.doe@acme.com",
+      "updatedBy": "john.doe@acme.com",
+      "name": "human",
+      "description": "generic human task",
+      "retryCount": 3,
+      "timeoutSeconds": 3600,
+      "inputKeys": [],
+      "outputKeys": [],
+      "timeoutPolicy": "TIME_OUT_WF",
+      "retryLogic": "FIXED",
+      "retryDelaySeconds": 60,
+      "responseTimeoutSeconds": 600,
+      "concurrentExecLimit": 0,
+      "inputTemplate": {},
+      "rateLimitPerFrequency": 0,
+      "rateLimitFrequencyInSeconds": 1,
+      "ownerEmail": "john.doe@acme.com",
+      "pollTimeoutSeconds": 3600,
+      "backoffScaleFactor": 1,
+      "totalTimeoutSeconds": 0,
+      "enforceSchema": false
+    },
+    "defaultExclusiveJoinTask": [],
+    "asyncComplete": false,
+    "loopOver": [],
+    "onStateChange": {},
+    "permissive": false
+  },
+  "rateLimitPerFrequency": 0,
+  "rateLimitFrequencyInSeconds": 0,
+  "workflowPriority": 0,
+  "iteration": 0,
+  "subworkflowChanged": false,
+  "firstStartTime": 0,
+  "loopOverTask": false,
+  "taskDefinition": {
+    "createTime": 1721640240094,
+    "updateTime": 1721640240094,
+    "createdBy": "john.doe@acme.com",
+    "updatedBy": "john.doe@acme.com",
+    "name": "human",
+    "description": "generic human task",
+    "retryCount": 3,
+    "timeoutSeconds": 3600,
+    "inputKeys": [],
+    "outputKeys": [],
+    "timeoutPolicy": "TIME_OUT_WF",
+    "retryLogic": "FIXED",
+    "retryDelaySeconds": 60,
+    "responseTimeoutSeconds": 600,
+    "concurrentExecLimit": 0,
+    "inputTemplate": {},
+    "rateLimitPerFrequency": 0,
+    "rateLimitFrequencyInSeconds": 1,
+    "ownerEmail": "john.doe@acme.com",
+    "pollTimeoutSeconds": 3600,
+    "backoffScaleFactor": 1,
+    "totalTimeoutSeconds": 0,
+    "enforceSchema": false
+  },
+  "queueWaitTime": -7
+}
+```
+
+</details>

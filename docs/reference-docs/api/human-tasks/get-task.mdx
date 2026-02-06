@@ -4,9 +4,6 @@ slug: "/reference-docs/api/human-tasks/get-task"
 description: "This API is used to retrieve a Human task and its details based on its task ID."
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
 # Get Human Task
 
 **Endpoint:** `GET /api/human/tasks/{taskId}`
@@ -25,19 +22,21 @@ The invoking user should be one of the following:
 
 | Parameter | Description                                         | Type   | Required/ Optional |
 | --------- | --------------------------------------------------- | ------ | ------------------ |
-| taskId    | The task (execution) ID for the Human task execution. | string | Required.          |
+| taskId    | The task ID of the Human task execution. | string | Required.          |
 
 ## Query parameters
 
 | Parameter    | Description                                                                        | Type    | Required/ Optional |
 | ------------ | ---------------------------------------------------------------------------------- | ------- | ------------------ |
-| withTemplate | Whether to include the task’s user form details in the response. Default is false. | boolean | Optional.          |
+| withTemplate | Whether to include the task’s user form details in the response. Default is `false`. | boolean | Optional.          |
 
 ## Response
 
-Returns the Human task object, which includes details such as the task state, assignee, input and output data, and user form metadata (if requested).
+Returns the Human task object, including the task state, assignee, input and output data, and user-form metadata (if requested).
 
-When the query parameter `withTemplate` is set to true, the response includes the *fullTemplate* field, which contains the complete user form schema and layout definition. This field is omitted when `withTemplate` is set to false.
+When the query parameter `withTemplate` is set to `true`, the response includes the `fullTemplate` field, which contains the complete user form schema and layout definition. This field is omitted when `withTemplate` is set to `false`.
+
+Returns 404 if an invalid task execution ID is provided.
 
 ## Examples
 
@@ -55,7 +54,7 @@ curl -X 'GET' \
 
 **Response**
 
-Here, the response contains a *fullTemplate* field. This field includes the complete user form schema and layout definition.
+Here, the response contains a `fullTemplate` field. This field includes the complete user form schema and layout definition.
 
 ```json
 {
@@ -216,7 +215,7 @@ curl -X 'GET' \
 
 **Response**
 
-Here, the response does not include the *fullTemplate* field because *withTemplate* is set to false. Only the form metadata, such as name and version, is returned.
+Here, the response does not include the `fullTemplate` field because `withTemplate` is set to `false`. Only the form metadata, such as name and version, is returned.
 
 
 ```json

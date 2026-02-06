@@ -9,21 +9,28 @@ import TabItem from '@theme/TabItem';
 
 # Setting Up Orkes Conductor
 
-You can set up Orkes Conductor using one of the following options:
+You can get started with Orkes Conductor using one of the following options, depending on your use case:
 
-- **Developer Edition**–Launch a browser-based sandbox for quick prototyping and testing.
-- **Local Setup using Docker**–Run a full Conductor stack locally using Docker containers.
+- **Developer Edition**: A browser-based sandbox for quick prototyping and testing.
+- **Orkes Cloud**: A fully managed, enterprise-grade Conductor deployment.
+- **Local setup with Docker**: Run Orkes Conductor locally using Docker for development and testing.
 
 ## Developer Edition
 
-For quick testing, use the [Developer Edition](https://developer.orkescloud.com/). This free sandbox environment lets you start building and running workflows instantly—no installation required.
+For quick testing and experimentation, use the [Developer Edition](https://developer.orkescloud.com/). This free, browser-based sandbox lets you start building and running workflows instantly, with no installation required.
 
+## Orkes Cloud
 
-## Orkes Conductor—Local Setup​
+Orkes Cloud is the fully managed, enterprise version of Orkes Conductor. It provides dedicated Conductor instances and can be deployed in one of the following ways:
 
-Orkes Cloud is the fully managed enterprise version of Orkes Conductor. You can deploy dedicated Conductor clusters on your preferred cloud provider.
+- **Orkes-hosted**, where Orkes manages the infrastructure.
+- **Customer-hosted**, where Orkes Cloud runs within your cloud environment, such as AWS, Azure, or GCP.
 
-For enterprise customers to conduct local development and testing, Orkes provides Docker containers via the [orkesio organization on DockerHub](https://hub.docker.com/orgs/orkesio/repositories). These containers include all Orkes Conductor features and **require an Orkes Cloud subscription**.
+Orkes Cloud includes enterprise capabilities such as security, scalability, observability, and operational management. For details, see https://orkes.io/cloud. 
+
+## Local setup with Docker
+
+For enterprise customers to conduct local development and testing, Orkes provides Docker containers via the [orkesio organization on DockerHub](https://hub.docker.com/orgs/orkesio/repositories). These images allow you to run Orkes Conductor locally using Docker and **require an Orkes Cloud subscription**.
 
 :::note
 The `orkes-conductor-standalone` container is ideal for local development and testing. It includes the full Orkes stack, with a persistent store, server, and system workers. To download it, you'll need an authorization token from the Orkes team.

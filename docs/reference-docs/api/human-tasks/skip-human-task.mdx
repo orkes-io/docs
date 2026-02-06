@@ -1,0 +1,54 @@
+---
+sidebar_position: 7
+slug: "/reference-docs/api/human-tasks/skip-human-task"
+description: "This API is used to skip an assigned Human task."
+---
+
+# Skip Human Task
+
+**Endpoint**: `POST /api/human/tasks/{taskId}/skip`
+
+Skips an assigned Human task. Use this endpoint if an existing assignment needs to be skipped before it is claimed.
+
+The invoking user should be one of the following:
+
+- Cluster admin
+- Task owner of the Human task
+- Task claimant
+
+## Path parameters
+
+| Parameter | Description                                                        | Type   | Required/ Optional |
+| --------- | ------------------------------------------------------------------ | ------ | ------------------ |
+| taskId    | The task ID of the Human task execution to be skipped. | string | Required.          |
+
+## Query parameters
+
+| Parameter | Description                                                        | Type   | Required/ Optional |
+| --------- | ------------------------------------------------------------------ | ------ | ------------------ |
+| reason    | A reason for skipping the task. | string | Optional.          |
+
+## Response
+
+Returns 200 OK, indicating that the Human task has been skipped successfully. Returns 400  if an invalid task execution ID is provided or if the Human task has no assignee.
+
+## Examples
+
+<details>
+<summary>Skip an assigned Human task</summary>
+
+**Request**
+
+```shell
+curl -X 'POST' \
+  'https://<YOUR-CLUSTER>/api/human/tasks/9f860711-0265-11f1-913a-226156badb04/skip?reason=P0%20priority' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -d ''
+```
+
+**Response**
+
+Returns 200 OK, indicating that the Human task has been skipped successfully.
+
+</details>
