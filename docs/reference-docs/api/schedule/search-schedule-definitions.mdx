@@ -35,7 +35,7 @@ Returns an object that includes the total number of matching schedules (totalHit
 
 ```json
 curl -X 'GET' \
-  'https://<YOUR-CLUSTER>/api/scheduler/schedules/search?start=0&size=2&sort=name' \
+  'https://<YOUR-SERVER-URL>/api/scheduler/schedules/search?start=0&size=2&sort=name' \
   -H 'accept: application/json' \
   -H 'X-Authorization: <TOKEN>'
 ```
@@ -118,7 +118,7 @@ Since the request used `start`=0 and `size`=2, sorted by `name`, the result retu
 
 ```json
 curl -X 'GET' \
-  'https://<YOUR-CLUSTER>/api/scheduler/schedules/search?start=3&size=5&sort=name' \
+  'https://<YOUR-SERVER-URL>/api/scheduler/schedules/search?start=3&size=5&sort=name' \
   -H 'accept: application/json' \
   -H 'X-Authorization: <TOKEN>'
 ```
@@ -270,7 +270,7 @@ Since the request used `start`=3 and `size`=5, sorted by `name`, the result skip
 
 ```json
 curl -X 'GET' \
-  'https://<YOUR-CLUSTER>/api/scheduler/schedules/search?workflowName=Monitor-HTTP-Endpoint-Availability-john' \
+  'https://<YOUR-SERVER-URL>/api/scheduler/schedules/search?workflowName=Monitor-HTTP-Endpoint-Availability-john' \
   -H 'accept: application/json' \
   -H 'X-Authorization: <TOKEN>'
 ```
@@ -325,7 +325,7 @@ Retrieves schedules where the workflow name matches `Monitor-HTTP-Endpoint-Avail
 
 ```json
 curl -X 'GET' \
-  'https://<YOUR-CLUSTER>/api/scheduler/schedules/search?start=0&size=100&name=assignPR' \
+  'https://<YOUR-SERVER-URL>/api/scheduler/schedules/search?start=0&size=100&name=assignPR' \
   -H 'accept: application/json' \
   -H 'X-Authorization: <TOKEN>'
 ```
@@ -380,7 +380,7 @@ Retrieves the schedule definition with the specified schedule name (assignPR).
 
 ```json
 curl -X 'GET' \
-  'https://<YOUR-CLUSTER>/api/scheduler/schedules/search?start=0&size=100&paused=false' \
+  'https://<YOUR-SERVER-URL>/api/scheduler/schedules/search?start=0&size=100&paused=false' \
   -H 'accept: application/json' \
   -H 'X-Authorization: <TOKEN>'
 ```
@@ -430,7 +430,7 @@ Returns all schedules that are currently active (not paused).
 
 ```json
 curl -X 'GET' \
-  'https://<YOUR-CLUSTER>/api/scheduler/schedules/search?start=0&size=100&freeText=annual' \
+  'https://<YOUR-SERVER-URL>/api/scheduler/schedules/search?start=0&size=100&freeText=annual' \
   -H 'accept: application/json' \
   -H 'X-Authorization: <TOKEN>'
 ```

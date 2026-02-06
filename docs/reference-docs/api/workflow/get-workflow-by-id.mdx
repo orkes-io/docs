@@ -39,7 +39,7 @@ Returns a JSON object containing the workflow’s execution details.
 
 ```shell
 curl -X 'GET' \
-  'https://<YOUR-CLUSTER>/api/workflow/3791f604-6d4c-11f0-880f-0246e7260963?includeTasks=true' \
+  'https://<YOUR-SERVER-URL>/api/workflow/3791f604-6d4c-11f0-880f-0246e7260963?includeTasks=true' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>'
 ```
@@ -219,7 +219,7 @@ The task execution details are returned in the `tasks` array:
 
 ```shell
 curl -X 'GET' \
-  'https://<YOUR-CLUSTER>/api/workflow/3791f604-6d4c-11f0-880f-0246e7260963?includeTasks=false \
+  'https://<YOUR-SERVER-URL>/api/workflow/3791f604-6d4c-11f0-880f-0246e7260963?includeTasks=false \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>'
 ```

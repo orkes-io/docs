@@ -85,7 +85,7 @@ Here _pollData_ is available only for the WAIT task as only it has been picked u
 
 ```bash
 curl -X 'GET' \
-  'https://<YOUR-CLUSTER>/api/tasks/queue/polldata/all?workerSize=1&workerOpt=GT&queueSize=10&queueOpt=GT' \
+  'https://<YOUR-SERVER-URL>/api/tasks/queue/polldata/all?workerSize=1&workerOpt=GT&queueSize=10&queueOpt=GT' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>'
 ```

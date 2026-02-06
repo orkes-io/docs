@@ -225,7 +225,7 @@ Get the JWT access token by calling the Authentication API (`/api/token`). Use t
 
 ``` shell
 curl -X 'POST' \
-  'https://<YOUR-CLUSTER>/api/token' \
+  'https://<YOUR-SERVER-URL>/api/token' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -249,7 +249,7 @@ This endpoint will start the workflow without waiting for its output. Call the e
 
 ``` shell
 curl -X 'POST' \
-  'https://<YOUR-CLUSTER>/api/workflow/translator?priority=0' \
+  'https://<YOUR-SERVER-URL>/api/workflow/translator?priority=0' \
   -H 'accept: text/plain' \
   -H 'X-Authorization: <TOKEN>' \
   -H 'Content-Type: application/json' \
@@ -263,7 +263,7 @@ The endpoint will return the workflow ID. To retrieve the workflow output, use t
 
 ``` shell
 curl -X 'GET' \
-'https://<YOUR-CLUSTER>/api/workflow/<WORKFLOW_ID>/status?includeOutput=true&includeVariables=false' \
+'https://<YOUR-SERVER-URL>/api/workflow/<WORKFLOW_ID>/status?includeOutput=true&includeVariables=false' \
 -H 'accept: */*' \
 -H 'X-Authorization: <TOKEN>'
 ```
@@ -290,7 +290,7 @@ Call the endpoint using the workflow name `translator`.
 
 ``` shell
 curl -X 'POST' \
-  'https://<YOUR-CLUSTER>/api/workflow/execute/translator' \
+  'https://<YOUR-SERVER-URL>/api/workflow/execute/translator' \
   -H 'accept: application/json' \
   -H 'waitForSeconds: 60' \
   -H 'X-Authorization: <TOKEN>' \

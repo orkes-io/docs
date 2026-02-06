@@ -55,7 +55,7 @@ Returns 200 OK, indicating that the task status was successfully updated and the
 
 ```json
 curl -X 'POST' \
-  'https://<YOUR-CLUSTER>/api/tasks/ea866cbb-29ab-11f0-8259-1a170f75b9fc/FAILED_WITH_TERMINAL_ERROR/signal/sync?returnStrategy=TARGET_WORKFLOW' \
+  'https://<YOUR-SERVER-URL>/api/tasks/ea866cbb-29ab-11f0-8259-1a170f75b9fc/FAILED_WITH_TERMINAL_ERROR/signal/sync?returnStrategy=TARGET_WORKFLOW' \
   -H 'accept: application/json' \
   -H 'X-Authorization: <TOKEN>' \
   -d '{
@@ -113,7 +113,7 @@ Returns a 200 OK response indicating that the task status was updated successful
 
 ```json
 curl -X 'POST' \
-  'https://<YOUR-CLUSTER>/api/tasks/fd7s71db5e9c-4a9e-11f0-8f25-26000e13d725/COMPLETED/signal/sync?returnStrategy=BLOCKING_WORKFLOW' \
+  'https://<YOUR-SERVER-URL>/api/tasks/fd7s71db5e9c-4a9e-11f0-8f25-26000e13d725/COMPLETED/signal/sync?returnStrategy=BLOCKING_WORKFLOW' \
   -H 'accept: application/json' \
   -H 'X-Authorization: <TOKEN>' \
   -H 'Content-Type: application/json' \
@@ -174,7 +174,7 @@ Returns a 200 OK response indicating that the task status was updated successful
 
 ```json
 curl -X 'POST' \
-  'https:<YOUR-CLUSTER>/api/tasks/fd7s71db5e9c-4a9e-11f0-8f25-26000e13d725/COMPLETED/signal/sync?returnStrategy=BLOCKING_TASK' \
+  'https:<YOUR-SERVER-URL>/api/tasks/fd7s71db5e9c-4a9e-11f0-8f25-26000e13d725/COMPLETED/signal/sync?returnStrategy=BLOCKING_TASK' \
   -H 'accept: application/json' \
   -H 'X-Authorization: <TOKEN>' \
   -H 'Content-Type: application/json' \
@@ -227,7 +227,7 @@ Returns a 200 OK response indicating that the task status was updated successful
 
 ```json
 curl -X 'POST' \
-  'https://<YOUR-CLUSTER>/api/tasks/fd7s71db5e9c-4a9e-11f0-8f25-26000e13d725/COMPLETED/signal/sync?returnStrategy=BLOCKING_TASK_INPUT' \
+  'https://<YOUR-SERVER-URL>/api/tasks/fd7s71db5e9c-4a9e-11f0-8f25-26000e13d725/COMPLETED/signal/sync?returnStrategy=BLOCKING_TASK_INPUT' \
   -H 'accept: application/json' \
   -H 'X-Authorization: <YOUR-TOKEN>' \
   -H 'Content-Type: application/json' \

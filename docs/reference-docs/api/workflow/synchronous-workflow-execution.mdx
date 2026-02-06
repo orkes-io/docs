@@ -59,7 +59,7 @@ By default, the API returns the workflow’s current state upon synchronous exec
 
 ```bash
 curl -X 'POST' \
-  'https://<YOUR-CLUSTER>/api/workflow/execute/someWorkflow/1?waitForSeconds=10&consistency=SYNCHRONOUS' \
+  'https://<YOUR-SERVER-URL>/api/workflow/execute/someWorkflow/1?waitForSeconds=10&consistency=SYNCHRONOUS' \
   -H 'accept: application/json' \
   -H 'X-Authorization: <TOKEN>' \
   -H 'Content-Type: application/json' \
@@ -221,7 +221,7 @@ Returns the workflow’s current state along with its data.
 
 ```bash
 curl -X 'POST' \
-  'https://<YOUR-CLUSTER>/api/workflow/execute/YieldWorkflow/1?waitForSeconds=10&consistency=SYNCHRONOUS&returnStrategy=BLOCKING_TASK' \
+  'https://<YOUR-SERVER-URL>/api/workflow/execute/YieldWorkflow/1?waitForSeconds=10&consistency=SYNCHRONOUS&returnStrategy=BLOCKING_TASK' \
   -H 'accept: application/json' \
   -H 'X-Authorization: <TOKEN>' \
   -H 'Content-Type: application/json' \

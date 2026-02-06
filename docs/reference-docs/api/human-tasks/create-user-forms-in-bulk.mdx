@@ -42,7 +42,7 @@ Returns an array of created or updated user forms with their assigned version nu
 
 ```shell
 curl -X 'POST' \
-  'https://<YOUR-CLUSTER>/api/human/template/bulk?newVersion=false' \
+  'https://<YOUR-SERVER-URL>/api/human/template/bulk?newVersion=false' \
   -H 'accept: application/json' \
   -H 'X-Authorization: <TOKEN>' \
   -H 'Content-Type: application/json' \
@@ -185,7 +185,7 @@ curl -X 'POST' \
 
 ```shell
 curl -X 'POST' \
-  'https://<YOUR-CLUSTER>/api/human/template/bulk?newVersion=true' \
+  'https://<YOUR-SERVER-URL>/api/human/template/bulk?newVersion=true' \
   -H 'accept: application/json' \
   -H 'X-Authorization: <TOKEN>' \
   -H 'Content-Type: application/json' \

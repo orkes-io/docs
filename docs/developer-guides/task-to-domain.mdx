@@ -419,7 +419,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ConductorConfig {
 
 
-   private static final String CONDUCTOR_SERVER = "http://<YOUR-CLUSTER>/api";
+   private static final String CONDUCTOR_SERVER = "http://<YOUR-SERVER-URL>/api";
    private static final String KEY = "<YOUR-ACCESS-KEY>";
    private static final String SECRET = "<YOUR-ACCESS-SECRET>";
 
@@ -582,7 +582,7 @@ To connect your Java Spring Boot worker to a Conductor cluster, you must generat
 Then update the following lines in your worker code with your credentials:
 
 ```json
-   private static final String CONDUCTOR_SERVER = "http://<YOUR-CLUSTER>/api";
+   private static final String CONDUCTOR_SERVER = "http://<YOUR-SERVER-URL>/api";
    private static final String KEY = "<YOUR-ACCESS-KEY>";
    private static final String SECRET = "<YOUR-ACCESS-SECRET>";
 ```
@@ -666,7 +666,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class ConductorClientTest {
 
-    private static final String CONDUCTOR_SERVER = "http://<YOUR-CLUSTER>/api";
+    private static final String CONDUCTOR_SERVER = "http://<YOUR-SERVER-URL>/api";
     private static final String KEY = "<YOUR-ACCESS-KEY>";
     private static final String SECRET = "<YOUR-ACCESS-SECRET>";
 

@@ -38,7 +38,7 @@ Returns 200 OK, indicating that tags have been deleted from the schedule.
 
 ```bash
 curl -X 'DELETE' \
-  'https://<YOUR-CLUSTER>/api/scheduler/schedules/assignPRSchedule/tags' \
+  'https://<YOUR-SERVER-URL>/api/scheduler/schedules/assignPRSchedule/tags' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>' \
   -H 'Content-Type: application/json' \
@@ -63,7 +63,7 @@ Returns 200 OK, indicating that the tag has been deleted from the schedule.
 
 ```bash
 curl -X 'DELETE' \
-  'https://<YOUR-CLUSTER>/api/scheduler/schedules/assignPRSchedule/tags' \
+  'https://<YOUR-SERVER-URL>/api/scheduler/schedules/assignPRSchedule/tags' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>' \
   -H 'Content-Type: application/json' \

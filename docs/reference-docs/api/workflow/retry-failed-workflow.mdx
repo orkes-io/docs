@@ -39,7 +39,7 @@ Returns 204 No Content, indicating that the workflow execution has been restarte
 
 ```shell
 curl -X 'POST' \
-   'https://<YOUR-CLUSTER>/api/workflow/2ce9207f-d4a6-11ef-87b1-b2b27c52ebde/retry' \
+   'https://<YOUR-SERVER-URL>/api/workflow/2ce9207f-d4a6-11ef-87b1-b2b27c52ebde/retry' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>' \
   -d ''
@@ -141,7 +141,7 @@ Use the following API call to retry the parent workflow:
 
 ```bash
 curl -X 'POST' \
-  'https://<YOUR-CLUSTER>/api/workflow<PARENT-WORKFLOW-ID>/retry' \
+  'https://<YOUR-SERVER-URL>/api/workflow<PARENT-WORKFLOW-ID>/retry' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>' \
   -d ''
@@ -153,7 +153,7 @@ Now attempt to retry the initially failed sub-workflow using the following call 
 
 ```bash
 curl -X 'POST' \
-  'https://<YOUR-CLUSTER>/api/workflow/<SUB-WORKFLOW-ID>/retry?retryIfRetriedByParent=false' \
+  'https://<YOUR-SERVER-URL>/api/workflow/<SUB-WORKFLOW-ID>/retry?retryIfRetriedByParent=false' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>' \
   -d ''

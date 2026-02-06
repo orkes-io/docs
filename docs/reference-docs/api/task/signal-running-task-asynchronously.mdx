@@ -48,7 +48,7 @@ Returns 200 OK, indicating that the task has been signaled successfully. The res
 
 ```json
 curl -X 'POST' \
-  'https://<YOUR-CLUSTER>/api/tasks/fd7s71db5e9c-4a9e-11f0-8f25-26000e13d725/COMPLETED/signal' \
+  'https://<YOUR-SERVER-URL>/api/tasks/fd7s71db5e9c-4a9e-11f0-8f25-26000e13d725/COMPLETED/signal' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>' \
   -H 'Content-Type: application/json' \

@@ -47,7 +47,7 @@ Returns 404 if an invalid task execution ID is provided.
 
 ```shell
 curl -X 'GET' \
-  'https://<YOUR-CLUSTER>/api/human/tasks/fd7s46d9ace7-6c82-11f0-a7fc-a652d19b1278?withTemplate=true \
+  'https://<YOUR-SERVER-URL>/api/human/tasks/fd7s46d9ace7-6c82-11f0-a7fc-a652d19b1278?withTemplate=true \
   -H 'accept: application/json' \
   -H 'X-Authorization: <TOKEN>'
 ```
@@ -208,7 +208,7 @@ Here, the response contains a `fullTemplate` field. This field includes the comp
 
 ```shell
 curl -X 'GET' \
-  'https://<YOUR-CLUSTER>/api/human/tasks/fd7s46d9ace7-6c82-11f0-a7fc-a652d19b1278?withTemplate=false \
+  'https://<YOUR-SERVER-URL>/api/human/tasks/fd7s46d9ace7-6c82-11f0-a7fc-a652d19b1278?withTemplate=false \
   -H 'accept: application/json' \
   -H 'X-Authorization: <TOKEN>'
 ```

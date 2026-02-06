@@ -33,7 +33,7 @@ When `searchType` is set to `INBOX`, the response returns all the Human task dis
 
 ```shell
 curl -X 'GET' \
-  'https://<YOUR-CLUSTER>/api/human/tasks/getTaskDisplayNames?searchType=ADMIN' \
+  'https://<YOUR-SERVER-URL>/api/human/tasks/getTaskDisplayNames?searchType=ADMIN' \
   -H 'accept: application/json' \
   -H 'X-Authorization: <TOKEN>'
 ```
@@ -69,7 +69,7 @@ Returns an array of all Human task display names available in the cluster.
 
 ```shell
 curl -X 'GET' \
-  'https://<YOUR-CLUSTER>/api/human/tasks/getTaskDisplayNames?searchType=INBOX' \
+  'https://<YOUR-SERVER-URL>/api/human/tasks/getTaskDisplayNames?searchType=INBOX' \
   -H 'accept: application/json' \
   -H 'X-Authorization: <TOKEN>'
 ```

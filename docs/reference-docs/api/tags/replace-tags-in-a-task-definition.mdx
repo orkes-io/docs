@@ -39,7 +39,7 @@ The request body should be an array of tag objects.
 
 ```bash
 curl -X 'PUT' \
-  'https://<YOUR-CLUSTER>/api/metadata/task/simple/tags' \
+  'https://<YOUR-SERVER-URL>/api/metadata/task/simple/tags' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>' \
   -H 'Content-Type: application/json' \
@@ -64,7 +64,7 @@ Returns 200 OK, indicating that the tag has been replaced in the task definition
 
 ```bash
 curl -X 'PUT' \
-  'https://<YOUR-CLUSTER>/api/metadata/task/simple/tags' \
+  'https://<YOUR-SERVER-URL>/api/metadata/task/simple/tags' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>' \
   -H 'Content-Type: application/json' \

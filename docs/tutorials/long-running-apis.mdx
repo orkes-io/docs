@@ -201,7 +201,7 @@ Next, send a POST request with the status set to COMPLETED. After the callback, 
 
 ```json
 curl -X 'POST' \
-  'https://<YOUR-CLUSTER>/api/tasks/3e1fdfe3-b891-11f0-a6d8-bab93c002033/invokeLongRunningAPI/COMPLETED' \
+  'https://<YOUR-SERVER-URL>/api/tasks/3e1fdfe3-b891-11f0-a6d8-bab93c002033/invokeLongRunningAPI/COMPLETED' \
   -H 'accept: text/plain' \
   -H 'X-Authorization: <TOKEN>' \
   -H 'Content-Type: application/json' \

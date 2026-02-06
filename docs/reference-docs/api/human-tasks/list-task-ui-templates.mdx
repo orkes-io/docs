@@ -32,7 +32,7 @@ Returns an array of user form details. Returns 404 if an invalid user form name 
 
 ```shell
 curl -X 'GET' \
-  'https://<YOUR-CLUSTER>/api/human/template' \
+  'https://<YOUR-SERVER-URL>/api/human/template' \
   -H 'accept: application/json' \
   -H 'X-Authorization: <TOKEN>'
 ```
@@ -170,7 +170,7 @@ Returns an array of all user forms with their complete schema and configuration.
 
 ```shell
 curl -X 'GET' \
-  'https://<YOUR-CLUSTER>/api/human/template?name=Approval' \
+  'https://<YOUR-SERVER-URL>/api/human/template?name=Approval' \
   -H 'accept: application/json' \
   -H 'X-Authorization: <TOKEN>'
 ```
@@ -319,7 +319,7 @@ Returns an array of all versions of the user form "Approval".
 
 ```shell
 curl -X 'GET' \
-  'https://<YOUR-CLUSTER>/api/human/template?name=Approval&version=1' \
+  'https://<YOUR-SERVER-URL>/api/human/template?name=Approval&version=1' \
   -H 'accept: application/json' \
   -H 'X-Authorization: <TOKEN>'
 ```
