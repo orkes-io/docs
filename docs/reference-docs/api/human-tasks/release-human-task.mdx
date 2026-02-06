@@ -1,5 +1,5 @@
 ---
-sidebar_position: 5
+sidebar_position: 6
 slug: "/reference-docs/api/human-tasks/release-human-task"
 description: "This API is used to release a previously-claimed Human task so that someone else can claim it."
 ---
@@ -22,11 +22,11 @@ The invoking user should be one of the following:
 
 | Parameter | Description                                                        | Type   | Required/ Optional |
 | --------- | ------------------------------------------------------------------ | ------ | ------------------ |
-| taskId    | The task (execution) ID for the Human task execution to be released. | string | Required.          |
+| taskId    | The task ID of the Human task execution to be released. | string | Required.          |
 
 ## Response
 
-Returns 200 OK, indicating that the Human task has been released successfully.
+Returns 200 OK, indicating that the Human task has been released successfully. Returns 400  if an invalid task execution ID is provided or if the Human task is in the ASSIGNED state.
 
 ## Examples
 
@@ -37,7 +37,7 @@ Returns 200 OK, indicating that the Human task has been released successfully.
 
 ```shell
 curl -X 'POST' \
-  'https://<YOUR-CLUSTER>/api/human/tasks/869ed0ee-cf07-11ef-a89d-86a819bd92bf/release' \
+  'https://<YOUR-CLUSTER>/api/human/tasks/d9de569a-025f-11f1-913a-226156badb04/release' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>' \
   -d ''
