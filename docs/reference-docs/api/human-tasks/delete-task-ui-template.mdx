@@ -25,7 +25,7 @@ After deletion, all Human tasks that make use of the deleted user form will fail
 
 ## Response
 
-Returns 200 OK, indicating that the user form has been deleted successfully.
+Returns 200 OK, indicating that the user form has been deleted successfully. Returns 500 if a user form does not exist.
 
 ## Examples
 
@@ -36,7 +36,7 @@ Returns 200 OK, indicating that the user form has been deleted successfully.
 
 ```shell
 curl -X 'DELETE' \
-  'https://<YOUR-CLUSTER>/api/human/template/someForm \
+  'https://<YOUR-CLUSTER>/api/human/template/ExpenseApproval' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>'
 ```
