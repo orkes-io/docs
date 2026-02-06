@@ -13,7 +13,7 @@ The workflow introspection dashboard can be found in **Executions** > **Workflow
 
 ## Try it out with your workflow
 
-Check out the execution of the helloWorld workflow you’ve just run. If successful, the workflow should have a Completed status, with each task highlighted in green. Otherwise, the workflow diagram will highlight the failed task in red.
+Check out the execution of the *helloWorld* workflow you’ve just run. If successful, the workflow should have a Completed status, with each task highlighted in green. Otherwise, the workflow diagram will highlight the failed task in red.
 
 <p align="center"><img src="/content/img/getting-started/getting_started-failed_task_introspection.png" alt="Screenshot of the workflow execution screen showing the failed task in red." width="100%" height="auto"></img></p>
 
@@ -23,7 +23,7 @@ Here’s a successful workflow execution, for example.
 
 <p align="center"><img src="/content/img/getting-started/getting_started-input_introspection.png" alt="Screenshot of Task Input tab in the workflow execution screen." width="100%" height="auto"></img></p>
 
-However, the workflow should have flowed through the United States path instead of the defaultCase path, because the user’s location was the United States. Inspecting the Switch task input, we can deduce that the input had not been correctly passed from the get-user task to the Switch task. This sort of visibility into the workflow execution enables you to quickly pinpoint and fix any errors.
+However, the workflow should have flowed through the United States path instead of the *defaultCase* path, because the user’s location was the United States. Inspecting the Switch task input, we can deduce that the input had not been correctly passed from the `get-user` task to the Switch task. This sort of visibility into the workflow execution enables you to quickly pinpoint and fix any errors.
 
 You might also be interested in how long each task took to complete to find the bottlenecks in your execution performance. To inspect this, go to **Timeline** in the top navigation bar.
 
