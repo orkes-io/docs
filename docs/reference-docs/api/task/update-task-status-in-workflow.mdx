@@ -1,11 +1,8 @@
 ---
-sidebar_position: 2
+sidebar_position: 3
 slug: "/reference-docs/api/task/update-task-status-in-workflow"
 description: "This API is used to update the status of a task during a workflow execution."
 ---
-
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 # Update Task Status in Workflow
 
@@ -41,7 +38,7 @@ Format the request to include any additional parameters, such as task output dat
 
 ## Response
 
-Returns the task execution ID of the updated task.
+Returns the task execution ID of the updated task. Returns 404 if the path parameters are invalid or if the task is not in a running state.
 
 ## Examples
 
@@ -52,19 +49,19 @@ Returns the task execution ID of the updated task.
 
 ```bash
 curl -X 'POST' \
-  'https://<YOUR_CLUSTER>/api/tasks/3e1baeeb-bdfa-11ef-88e4-ce0afa758ea1/wait_ref/FAILED' \
+  'https://<YOUR-SERVER-URL>/api/tasks/e4c9ed4b-0588-11f1-8b8d-6219b54da7fe/http_ref/COMPLETED' \
   -H 'accept: text/plain' \
   -H 'X-Authorization: <TOKEN>' \
   -H 'Content-Type: application/json' \
   -d '{
- "taskOutput": "Add this as task output"
+  "taskOutput": "Add this as task output"
 }'
 ```
 
 **Response**
 
 ```json
-3e1c723c-bdfa-11ef-88e4-ce0afa758ea1
+e4cb73f4-0588-11f1-8b8d-6219b54da7fe
 ```
 
 </details>

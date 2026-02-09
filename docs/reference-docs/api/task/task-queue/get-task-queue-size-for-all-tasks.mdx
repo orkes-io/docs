@@ -12,7 +12,7 @@ Retrieves the task queue size for all tasks in the cluster. It only returns the 
 
 ## Response
 
-Returns a map containing the queue size for all tasks. Each task type is represented by a key, with its corresponding queue size as the value.
+Returns a map where each key is a task type or task queue name, and each value is the number of tasks currently in that queue.
 
 **Example:**
 
@@ -35,7 +35,7 @@ Returns a map containing the queue size for all tasks. Each task type is represe
 
 ```bash
 curl -X 'GET' \
-  'https://<YOUR_CLUSTER>/api/tasks/queue/all' \
+  'https://<YOUR-SERVER-URL>/api/tasks/queue/all' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>'
 ```

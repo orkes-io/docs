@@ -1,5 +1,5 @@
 ---
-sidebar_position: 4
+sidebar_position: 5
 slug: "/reference-docs/api/task/signal-running-task-synchronously"
 description: "This API is used to update the task status and output of a Yield task synchronously."
 ---
@@ -9,7 +9,6 @@ description: "This API is used to update the task status and output of a Yield t
 :::info Available since
 v5.1.0 and later
 :::
-
 
 **Endpoint**: `POST /api/tasks/{workflowId}/{status}/signal/sync`
 
@@ -26,7 +25,8 @@ Signals a running [Yield task](/content/reference-docs/operators/yield) in the s
 
 | Parameter | Description                                 | Type   | Required/ Optional |
 | --------- | ------------------------------------------- | ------ | ------------------ |
-| returnStrategy | The strategy that determines what response the API returns. Supported values:<ul><li>**TARGET_WORKFLOW**–Returns the full execution state of the originally triggered workflow. Use this when monitoring the overall workflow status or managing orchestration at the top level.</li><li>**BLOCKING_WORKFLOW**–Returns the state of the workflow that is currently blocking the original workflow execution. This may be a sub workflow. Use when signaling Yield tasks in nested workflows.</li><li>**BLOCKING_TASK**–Returns the execution status of the task that is currently blocking workflow execution. Best for real-time status checks.</li><li>**BLOCKING_TASK_INPUT**–Returns the input payload of the task that is currently blocking workflow execution. Ideal for debugging or runtime inspection.</li></ul> The default is TARGET_WORKFLOW. | string | Optional. |
+| returnStrategy | The strategy that determines what response the API returns. Supported values:<ul><li>**TARGET_WORKFLOW**: Returns the full execution state of the originally triggered workflow. Use this when monitoring the overall workflow status or managing orchestration at the top level.</li><li>**BLOCKING_WORKFLOW**: Returns the state of the workflow that is currently blocking the original workflow execution. This may be a sub workflow. Use when signaling Yield tasks in nested workflows.</li><li>**BLOCKING_TASK**: Returns the execution status of the task that is currently blocking workflow execution. Best for real-time status checks.</li><li>**BLOCKING_TASK_INPUT**: Returns the input payload of the task that is currently blocking workflow execution. Ideal for debugging or runtime inspection.</li></ul> The default is TARGET_WORKFLOW. | string | Optional. |
+| timeoutMillis | The timeout in milliseconds after which the task times out. Default is 5000. | integer | Optional. | 
 
 ## Request body
 
@@ -44,7 +44,12 @@ Format the request to include any additional parameters, such as task output.
 
 ## Response
 
-Returns 200 OK, indicating that the task status was successfully updated and the signal was processed. The response payload structure depends on the `returnStrategy` specified in the request.
+Returns 200 OK, indicating that the task status was successfully updated and the signal was processed. The response payload structure depends on the `returnStrategy` specified:
+
+- `TARGET_WORKFLOW`: Full execution state of the originally triggered workflow
+- `BLOCKING_WORKFLOW`: State of the workflow currently blocking execution (may be a sub workflow)
+- `BLOCKING_TASK`: Execution status of the task currently blocking workflow execution
+- `BLOCKING_TASK_INPUT`: Input payload of the task currently blocking workflow execution
 
 ## Examples
 
@@ -53,7 +58,7 @@ Returns 200 OK, indicating that the task status was successfully updated and the
 
 **Request**
 
-```json
+```shell
 curl -X 'POST' \
   'https://<YOUR-SERVER-URL>/api/tasks/ea866cbb-29ab-11f0-8259-1a170f75b9fc/FAILED_WITH_TERMINAL_ERROR/signal/sync?returnStrategy=TARGET_WORKFLOW' \
   -H 'accept: application/json' \
@@ -111,7 +116,7 @@ Returns a 200 OK response indicating that the task status was updated successful
 
 **Request**
 
-```json
+```shell
 curl -X 'POST' \
   'https://<YOUR-SERVER-URL>/api/tasks/fd7s71db5e9c-4a9e-11f0-8f25-26000e13d725/COMPLETED/signal/sync?returnStrategy=BLOCKING_WORKFLOW' \
   -H 'accept: application/json' \
@@ -172,7 +177,7 @@ Returns a 200 OK response indicating that the task status was updated successful
 
 **Request**
 
-```json
+```shell
 curl -X 'POST' \
   'https:<YOUR-SERVER-URL>/api/tasks/fd7s71db5e9c-4a9e-11f0-8f25-26000e13d725/COMPLETED/signal/sync?returnStrategy=BLOCKING_TASK' \
   -H 'accept: application/json' \
@@ -225,11 +230,11 @@ Returns a 200 OK response indicating that the task status was updated successful
 
 **Request**
 
-```json
+```shell
 curl -X 'POST' \
   'https://<YOUR-SERVER-URL>/api/tasks/fd7s71db5e9c-4a9e-11f0-8f25-26000e13d725/COMPLETED/signal/sync?returnStrategy=BLOCKING_TASK_INPUT' \
   -H 'accept: application/json' \
-  -H 'X-Authorization: <YOUR-TOKEN>' \
+  -H 'X-Authorization: <TOKEN>' \
   -H 'Content-Type: application/json' \
   -d '{
   "additionalProp1": {}

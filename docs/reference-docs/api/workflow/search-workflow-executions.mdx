@@ -41,7 +41,7 @@ Returns the total number of results in _totalHits_ and a list of workflow execut
 
 ```shell
 curl -X 'GET' \
-  'https://<YOUR_CLUSTER>/api/workflow/search?start=0&size=100&freeText=%2A&query=workflowType%3DsomeWorkflow' \
+  'https://<YOUR-SERVER-URL>/api/workflow/search?start=0&size=100&freeText=%2A&query=workflowType%3DsomeWorkflow' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>'
 ```
@@ -81,7 +81,7 @@ curl -X 'GET' \
 
 ```shell
 curl -X 'GET' \
-  'https://<YOUR_CLUSTER>/api/workflow/search?start=0&size=100&freeText=%2A&query=status%20IN%20%28RUNNING%29%20AND%20workflowType%3DcompensationWorkflow' \
+  'https://<YOUR-SERVER-URL>/api/workflow/search?start=0&size=100&freeText=%2A&query=status%20IN%20%28RUNNING%29%20AND%20workflowType%3DcompensationWorkflow' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>'
 ```

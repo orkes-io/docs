@@ -1,19 +1,14 @@
 ---
-sidebar_position: 2
+sidebar_position: 1
 slug: "/reference-docs/api/task/add-task-log"
 description: "This API is used to log messages associated with a specific task."
 ---
-
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 # Log Task Execution
 
 **Endpoint:** `POST /api/tasks/{taskId}/log`
 
-Logs messages or additional details to a specific task execution.
-
-You can log messages at any point in the task lifecycle, regardless of whether the task is scheduled, in progress, completed, or failed.
+Logs messages or additional details to a specific task execution. You can log messages at any point in the task lifecycle, regardless of whether the task is scheduled, in progress, completed, or failed.
 
 ## Path parameters
 
@@ -23,12 +18,12 @@ You can log messages at any point in the task lifecycle, regardless of whether t
 
 ## Request body
 
-Format the request to include the details to be logged for the task.
+Format the request as a JSON string containing the log message.
 
 **Example**
 
 ```json
-{ "message": "Log this message to the task" }
+"Log this message to the task"
 ```
 
 ## Response
@@ -44,18 +39,18 @@ Returns 200 OK, indicating that the message has been logged to the task executio
 
 ```bash
 curl -X 'POST' \
-  'https://<YOUR-SERVER-URL>/api/tasks/fd7s681d9196-6617-11f0-a1be-1a45f573e878/log' \
+  'https://<YOUR-SERVER-URL>/api/tasks/65fc73fe-0586-11f1-8b8d-6219b54da7fe/log' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>' \
   -H 'Content-Type: application/json' \
-  -d '{"message": "Log this message to the task"}'
+  -d '"Log this message to the task"'
 ```
 
 **Response**
 
 Returns 200 OK, indicating that the message has been logged to the task execution.
 
-To verify the logs, open your workflow execution, select the task where the message was logged using the API, and select the **Logs** tab to view the message logged. 
+To verify the logs, open your workflow execution, select the task where the message was logged via the API, and select the **Logs** tab to view the message. 
 
 <p align="center"><img src="/content/img/log-messages-using-api.png" alt="Log messages to task using API" width="100%" height="auto"></img></p>
 

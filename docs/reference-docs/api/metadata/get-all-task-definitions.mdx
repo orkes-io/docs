@@ -35,7 +35,7 @@ Returns an array containing all the task definitions in the cluster, optionally 
 
 ```bash
 curl -X 'GET' \
-  'https://<YOUR_CLUSTER>/api/metadata/taskdefs?access=READ&metadata=false&tagKey=team&tagValue=engineering' \
+  'https://<YOUR-SERVER-URL>/api/metadata/taskdefs?access=READ&metadata=false&tagKey=team&tagValue=engineering' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>'
 ```

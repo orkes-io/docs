@@ -39,7 +39,7 @@ Returns the workflow definition and includes the metadata if queried.
 
 ```bash
 curl -X 'GET' \
-  'https://<YOUR_CLUSTER>/api/metadata/workflow/api-test?metadata=false' \
+  'https://<YOUR-SERVER-URL>/api/metadata/workflow/api-test?metadata=false' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>'
 ```
@@ -99,7 +99,7 @@ Returns the workflow definition, without any tags metadata. For example:
 
 ```bash
 curl -X 'GET' \
-  'https://<YOUR_CLUSTER>/api/metadata/workflow/api-test?metadata=true' \
+  'https://<YOUR-SERVER-URL>/api/metadata/workflow/api-test?metadata=true' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>'
 ```

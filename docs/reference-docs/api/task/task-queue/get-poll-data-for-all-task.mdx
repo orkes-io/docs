@@ -8,7 +8,7 @@ description: "This API is used to retrieve the poll data for all tasks from in a
 
 **Endpoint:** `GET /api/tasks/queue/polldata/all`
 
-Gets the last poll data for all the tasks in the Conductor task queue. The filter parameters can be used to refine the request based on your requirements.
+Gets the last poll data for all the tasks in the Conductor task queue. The filter parameters can be used to refine the request based on your requirements. Multiple filters are applied with AND logic and can be combined (worker + queue + lastPoll).
 
 ## Query parameters
 
@@ -19,19 +19,19 @@ Gets the last poll data for all the tasks in the Conductor task queue. The filte
 | queueSize        | The total number of tasks in the queue waiting to be executed.                                                                    | integer | Optional.                               |
 | queueOpt         | Option to filter based on the queue size. Supported values:<ul><li>**GT** (Greater than)</li><li>**LT** (Less than)</li></ul>     | string  | Required if _queueSize_ is used.        |
 | lastPollTimeSize | The last polled time in [Unix timestamp format](https://www.unixtimestamp.com/).                                                  | integer | Optional.                               |
-| lastPollTimeOpt  | Option to filter based on the last poll time. Supported values:<ul><li>**GT** (Greater than)</li><li>**LT** (Less than)</li></ul> | string  | Required if _lassPollTimeSize_ is used. |
+| lastPollTimeOpt  | Option to filter based on the last poll time. Supported values:<ul><li>**GT** (Greater than)</li><li>**LT** (Less than)</li></ul> | string  | Required if _lastPollTimeSize_ is used. |
 
 ## Response
 
 Returns a map containing _queueData_ and an array of _pollData_.
 
-- **queueData**–Indicates the size and poll count of each task. 
-- **pollData**–Includes the _queueName_ , _workerId_, and _lastPollTime_ for each task.
-  - **queueName**–The name of the task queue. For predefined tasks, this returns the task type, such as _HTTP_. For user-defined tasks, it returns the name of the task definition, such as _python_worker_.
-  - **workerId**–The worker name from which the task is being polled, which is the hostname of the pod where the worker is running.
-  - **lastPollTime**–The last polled time in [Unix timestamp format](https://www.unixtimestamp.com/).
+- **queueData**: Indicates the size and poll count of each task. 
+- **pollData**: Includes the _queueName_, _workerId_, and _lastPollTime_ for each task.
+  - **queueName**: The name of the task queue. For predefined tasks, this returns the task type, such as _HTTP_. For user-defined tasks, it returns the task definition name, such as _python_worker_.
+  - **workerId**: The worker name from which the task is being polled, which is the hostname of the pod where the worker is running.
+  - **lastPollTime**: The last polled time in [Unix timestamp format](https://www.unixtimestamp.com/).
 
-If a worker has not picked up the task, no _pollData_ will be available and the array will be empty.
+If a worker has not picked up the task, no *pollData* will be available, and the array will be empty.
 
 ## Examples
 
@@ -42,7 +42,7 @@ If a worker has not picked up the task, no _pollData_ will be available and the 
 
 ```bash
 curl -X 'GET' \
-  'https://<YOUR_CLUSTER>/api/tasks/queue/polldata/all?queueSize=7&queueOpt=GT' \
+  'https://<YOUR-SERVER-URL>/api/tasks/queue/polldata/all?queueSize=7&queueOpt=GT' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>'
 ```
@@ -73,13 +73,13 @@ curl -X 'GET' \
 }
 ```
 
-Here _pollData_ is available only for the WAIT task as only it has been picked up by the worker and the rest of the tasks are in the queue awaiting workers.
+Here, *pollData* is available only for the WAIT task, as it is the only one the worker has picked up, while the rest of the tasks are in the queue awaiting workers.
 
 </details>
 
 <details>
 
-<summary>Get the last poll data for tasks with a worker size greater than 1 and queue size greater than 10</summary>
+<summary>Get the last poll data for tasks with a worker size greater than 1 and a queue size greater than 10</summary>
 
 **Request**
 

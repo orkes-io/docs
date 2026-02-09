@@ -4,7 +4,7 @@ slug: "/reference-docs/api/task/task-queue/get-task-queue-size-for-individual-ta
 description: "This API is used to retrieve the task queue size for a specific task in your Conductor cluster."
 ---
 
-# Get Task Queue Size for Individual Tasks
+# Get Task Queue Size for a Task Type
 
 **Endpoint:** `GET /api/tasks/queue/sizes`
 
@@ -14,11 +14,11 @@ Gets the task queue size for a specified task type. The queue size represents th
 
 | Parameter | Description                                                                                                                                                                                                 | Type   | Required/ Optional |
 | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ | ------------------ |
-| taskType  | The type of the task to be queried. For predefined tasks, this indicates the task type, such as _HTTP_. For user-defined tasks, it corresponds to the name of the task definition, such as _python_worker_. | string | Required.          |
+| taskType  | The type of the task to be queried. For predefined tasks, this indicates the task type, such as _HTTP_. For user-defined tasks, it corresponds to the task definition name, such as _python_worker_. | string | Required.          |
 
 ## Response
 
-Returns the queue size of the specified task type.
+Returns a JSON object containing the task type as the key and its queue size as the value.
 
 ## Examples
 
@@ -29,7 +29,7 @@ Returns the queue size of the specified task type.
 
 ```bash
 curl -X 'GET' \
-  'https://<YOUR_CLUSTER>/api/tasks/queue/sizes?taskType=HTTP' \
+  'https://<YOUR-SERVER-URL>/api/tasks/queue/sizes?taskType=HTTP' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>'
 ```
@@ -39,6 +39,28 @@ curl -X 'GET' \
 ```json
 {
   "HTTP": 3
+}
+```
+
+</details>
+
+<details>
+<summary>Get task queue for a custom Worker task</summary>
+
+**Request**
+
+```bash
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/tasks/queue/sizes?taskType=simple-java-worker' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+{
+  "simple-java-worker": 1
 }
 ```
 

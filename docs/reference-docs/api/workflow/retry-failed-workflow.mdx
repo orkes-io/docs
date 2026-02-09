@@ -62,7 +62,7 @@ In the Conductor UI, the workflow execution will re-enter the RUNNING status, an
 
 ```shell
 curl -X 'POST' \
-  'https://<YOUR_CLUSTER>/api/workflow/35831168-50da-11f0-bb6c-9aabfb2793e8/retry?resumeSubworkflowTasks=true' \
+  'https://<YOUR-SERVER-URL>/api/workflow/35831168-50da-11f0-bb6c-9aabfb2793e8/retry?resumeSubworkflowTasks=true' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>' \
   -d ''
@@ -86,7 +86,7 @@ In the Conductor UI, both the parent workflow and sub-workflow execution will re
 
 ```shell
 curl -X 'POST' \
-  'https://<YOUR_CLUSTER>/api/workflow/35831168-50da-11f0-bb6c-9aabfb2793e8/retry?resumeSubworkflowTasks=false' \
+  'https://<YOUR-SERVER-URL>/api/workflow/35831168-50da-11f0-bb6c-9aabfb2793e8/retry?resumeSubworkflowTasks=false' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>' \
   -d ''
