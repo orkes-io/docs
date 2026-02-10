@@ -1,0 +1,41 @@
+---
+sidebar_position: 5
+slug: "/reference-docs/api/schema/delete-schema"
+description: "This API is used to delete a schema."
+---
+
+# Delete Schema
+
+**Endpoint**: `DELETE /api/schema/{name}`
+
+Deletes a schema. This operation deletes all versions of the specified schema.
+
+## Path parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| name | The name of the schema to delete.| string | Required. | 
+
+## Response
+
+Returns 200 OK, indicating that the schema has been deleted. Returns 500 if an invalid schema name is provided.
+
+## Examples
+
+<details>
+<summary>Delete a schema</summary>
+
+**Request**
+
+```shell
+curl -X 'DELETE' \
+  'https://<YOUR-SERVER-URL>/api/schema/productSchema' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the schema has been deleted.
+
+</details>
