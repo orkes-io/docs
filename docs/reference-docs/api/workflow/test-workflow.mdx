@@ -26,7 +26,7 @@ Format the request as an object containing the following parameters.
 | subWorkflowTestRequest | The sub-workflow test request for mocking outputs in the sub-workflow’s Worker tasks. | object | Required if there are sub-workflows containing Worker tasks. |
 | correlationId | A unique identifier used to correlate the current workflow execution with other executions of the same workflow. | string | Optional. |
 | idempotencyKey | A unique, user-generated key to prevent duplicate workflow executions. Idempotency data is retained for the life of the workflow execution. | string | Optional. |
-| idempotencyStrategy | The idempotency strategy for handling duplicate requests. Supported values: `RETURN_EXISTING`—Return the `workflowId` of the workflow instance with the same idempotency key. `FAIL`—Start a new workflow instance only if there are no workflow executions with the same idempotency key. `FAIL_ON_RUNNING`—Start a new workflow instance only if there are no RUNNING or PAUSED workflows with the same idempotency key. Completed workflows can run again. | string | Required if `idempotencyKey` is used. |
+| idempotencyStrategy | The idempotency strategy for handling duplicate requests. Supported values:<ul><li>`RETURN_EXISTING`: Return the `workflowId` of the workflow instance with the same idempotency key.</li><li>`FAIL`: Start a new workflow instance only if there are no workflow executions with the same idempotency key.</li><li>`FAIL_ON_RUNNING`: Start a new workflow instance only if there are no RUNNING or PAUSED workflows with the same idempotency key. Completed workflows can run again.</li></ul> | string | Required if `idempotencyKey` is used. |
 | taskToDomain | A mapping of task reference names to domain-specific values to [route the task to defined workers](/developer-guides/task-to-domain). | object | Optional. |
 
 ## Response
@@ -41,305 +41,221 @@ Returns the execution JSON of the tested workflow.
 **Request**
 
 ``` shell
-curl -X 'POST' \  
-  'https://<YOUR-SERVER-URL>/api/workflow/test' \  
-  -H 'accept: application/json' \  
-  -H 'X-Authorization: <TOKEN>' \  
-  -H 'Content-Type: application/json' \  
-  -d '{  
-  "input":{  
-  },  
-  "name":"myFirstWorkflow"  
+curl -X 'POST' \
+  'https://<YOUR-SERVER-URL>/api/workflow/test' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "name":"http",
+"version":1
 }'
 ```
 
 **Response**  
+
+The workflow execution details are returned, showing the test execution of the `http` workflow using the workflow definition already stored in the Conductor server.
+
 ``` json
-{  
-  "ownerApp": "",  
-  "createTime": 1751451778421,  
-  "updateTime": 1751451778421,  
-  "createdBy": "john.doe@acme.org",  
-  "status": "RUNNING",  
-  "endTime": 0,  
-  "workflowId": "xuve8671eccf-572e-11f0-88ec-d6ddc94c13ef",  
-  "tasks": [  
-    {  
-      "taskType": "HTTP",  
-      "status": "COMPLETED",  
-      "inputData": {  
-        "asyncComplete": false,  
-        "http_request": {  
-          "method": "GET",  
-          "uri": "https://randomuser.me/api/"  
-        },  
-        "_createdBy": "john.doe@acme.org"  
-      },  
-      "referenceTaskName": "get-user_ref",  
-      "retryCount": 0,  
-      "seq": 1,  
-      "pollCount": 0,  
-      "taskDefName": "get-user_ref",  
-      "scheduledTime": 1751451778432,  
-      "startTime": 1751451778432,  
-      "endTime": 1751451778526,  
-      "updateTime": 1751451778527,  
-      "startDelayInSeconds": 0,  
-      "retried": false,  
-      "executed": false,  
-      "callbackFromWorker": true,  
-      "responseTimeoutSeconds": 0,  
-      "workflowInstanceId": "xuve8671eccf-572e-11f0-88ec-d6ddc94c13ef",  
-      "workflowType": "myFirstWorkflow",  
-      "taskId": "xuve8672fe40-572e-11f0-88ec-d6ddc94c13ef",  
-      "callbackAfterSeconds": 0,  
-      "workerId": "orkes-conductor-deployment-56f8cc55d7-vpp2b",  
-      "outputData": {  
-        "response": {  
-          "headers": {  
-            "access-control-allow-origin": [  
-              "*"  
-            ],  
-            "alt-svc": [  
-              "h3=\":443\"; ma=86400"  
-            ],  
-            "cache-control": [  
-              "no-cache"  
-            ],  
-            "cf-cache-status": [  
-              "DYNAMIC"  
-            ],  
-            "cf-ray": [  
-              "958d6ccf9aae586e-IAD"  
-            ],  
-            "content-type": [  
-              "application/json; charset=utf-8"  
-            ],  
-            "date": [  
-              "Wed, 02 Jul 2025 10:22:58 GMT"  
-            ],  
-            "etag": [  
-              "W/\"4a2-tk8I/PRwxFw9JQTMdSS+wm7E0bQ\""  
-            ],  
-            "nel": [  
-              "{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}"  
-            ],  
-            "report-to": [  
-              "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=nDTPfNJfvzBjlnJfw9vs5Aqe7L15Qkk0nVILlcc57SN5FayOxbjFVJ0nhZAHyXXQHV4418qHT8RLyL7f7jIxPmNTob5YrxkTnHN9qNg%3D\"}]}"  
-            ],  
-            "server": [  
-              "cloudflare"  
-            ],  
-            "vary": [  
-              "Accept-Encoding"  
-            ],  
-            "x-powered-by": [  
-              "Express"  
-            ]  
-          },  
-          "reasonPhrase": "",  
-          "body": {  
-            "results": [  
-              {  
-                "gender": "female",  
-                "name": {  
-                  "title": "Ms",  
-                  "first": "Dima",  
-                  "last": "Lahaije"  
-                },  
-                "location": {  
-                  "street": {  
-                    "number": 7492,  
-                    "name": "Anna Bijnsplantsoen"  
-                  },  
-                  "city": "Swifterbant",  
-                  "state": "Flevoland",  
-                  "country": "Netherlands",  
-                  "postcode": "5773 LZ",  
-                  "coordinates": {  
-                    "latitude": "37.1763",  
-                    "longitude": "75.5849"  
-                  },  
-                  "timezone": {  
-                    "offset": "+9:00",  
-                    "description": "Tokyo, Seoul, Osaka, Sapporo, Yakutsk"  
-                  }  
-                },  
-                "email": "dima.lahaije@example.com",  
-                "login": {  
-                  "uuid": "36ceb0c1-da39-4ea9-96f6-c3c702eee72a",  
-                  "username": "happyrabbit279",  
-                  "password": "xavier",  
-                  "salt": "QoJ5OLvA",  
-                  "md5": "568ca8f8f9c035c2e6caa45b6e156627",  
-                  "sha1": "0ff00fc6d7e17c0ead9df5a6a592a0e734079b8c",  
-                  "sha256": "be1ff4d0fae6057ef4c1f9760dadaa240cbfb5703607756557b8490c7dc93c48"  
-                },  
-                "dob": {  
-                  "date": "1987-06-21T15:12:32.557Z",  
-                  "age": 38  
-                },  
-                "registered": {  
-                  "date": "2011-08-16T22:31:15.413Z",  
-                  "age": 13  
-                },  
-                "phone": "(019) 8941641",  
-                "cell": "(06) 12207399",  
-                "id": {  
-                  "name": "BSN",  
-                  "value": "68021733"  
-                },  
-                "picture": {  
-                  "large": "https://randomuser.me/api/portraits/women/0.jpg",  
-                  "medium": "https://randomuser.me/api/portraits/med/women/0.jpg",  
-                  "thumbnail": "https://randomuser.me/api/portraits/thumb/women/0.jpg"  
-                },  
-                "nat": "NL"  
-              }  
-            ],  
-            "info": {  
-              "seed": "1a3441a1e1b842f3",  
-              "results": 1,  
-              "page": 1,  
-              "version": "1.4"  
-            }  
-          },  
-          "statusCode": 200  
-        }  
-      },  
-      "workflowTask": {  
-        "name": "get-user_ref",  
-        "taskReferenceName": "get-user_ref",  
-        "inputParameters": {  
-          "http_request": {  
-            "uri": "https://randomuser.me/api/",  
-            "method": "GET"  
-          },  
-          "asyncComplete": false  
-        },  
-        "type": "HTTP",  
-        "startDelay": 0,  
-        "optional": false,  
-        "permissive": false  
-      },  
-      "rateLimitPerFrequency": 0,  
-      "rateLimitFrequencyInSeconds": 0,  
-      "workflowPriority": 0,  
-      "iteration": 0,  
-      "subworkflowChanged": false,  
-      "firstStartTime": 0,  
-      "queueWaitTime": 0,  
-      "taskDefinition": null,  
-      "loopOverTask": false  
-    }  
-  ],  
-  "input": {},  
-  "output": {},  
-  "taskToDomain": {  
-    "*": "c090050d-d137-4fd3-8ee6-faa03cdb6b01"  
-  },  
-  "failedReferenceTaskNames": [],  
-  "workflowDefinition": {  
-    "createTime": 0,  
-    "updateTime": 1738752086362,  
-    "name": "myFirstWorkflow",  
-    "description": "Hello World workflow that greets a user. Uses a Switch task, HTTP task, and Simple task.",  
-    "version": 1,  
-    "tasks": [  
-      {  
-        "name": "get-user_ref",  
-        "taskReferenceName": "get-user_ref",  
-        "inputParameters": {  
-          "http_request": {  
-            "uri": "https://randomuser.me/api/",  
-            "method": "GET"  
-          },  
-          "asyncComplete": false  
-        },  
-        "type": "HTTP",  
-        "optional": false,  
-        "permissive": false  
-      },  
-      {  
-        "name": "user-criteria_ref",  
-        "taskReferenceName": "user-criteria_ref",  
-        "inputParameters": {  
-          "switchCaseValue": "${get-user_ref.output.response.body.results[0].location.country}"  
-        },  
-        "type": "SWITCH",  
-        "decisionCases": {  
-          "United States": [  
-            {  
-              "name": "myTask",  
-              "taskReferenceName": "myTask_ref",  
-              "inputParameters": {  
-                "name": "${get-user_ref.output.response.body.results[0].name.first}"  
-              },  
-              "type": "SIMPLE",  
-              "optional": false,  
-              "taskDefinition": {  
-                "createTime": 1733473913843,  
-                "updateTime": 1733473913843,  
-                "createdBy": "john.doe@acme.org",  
-                "updatedBy": "john.doe@acme.org",  
-                "name": "myTask",  
-                "description": "the actual java worker task",  
-                "retryCount": 3,  
-                "timeoutSeconds": 3600,  
-                "inputKeys": [],  
-                "outputKeys": [],  
-                "timeoutPolicy": "TIME_OUT_WF",  
-                "retryLogic": "FIXED",  
-                "retryDelaySeconds": 60,  
-                "responseTimeoutSeconds": 600,  
-                "concurrentExecLimit": 0,  
-                "inputTemplate": {},  
-                "rateLimitPerFrequency": 0,  
-                "rateLimitFrequencyInSeconds": 1,  
-                "ownerEmail": "john.doe@acme.org",  
-                "pollTimeoutSeconds": 3600,  
-                "backoffScaleFactor": 1,  
-                "totalTimeoutSeconds": 0,  
-                "enforceSchema": false  
-              },  
-              "permissive": false  
-            }  
-          ]  
-        },  
-        "evaluatorType": "value-param",  
-        "expression": "switchCaseValue",  
-        "permissive": false  
-      }  
-    ],  
-    "inputParameters": [],  
-    "outputParameters": {},  
-    "failureWorkflow": "",  
-    "schemaVersion": 2,  
-    "restartable": true,  
-    "workflowStatusListenerEnabled": false,  
-    "ownerEmail": "john.doe@acme.org",  
-    "timeoutPolicy": "TIME_OUT_WF",  
-    "timeoutSeconds": 60,  
-    "variables": {},  
-    "inputTemplate": {},  
-    "enforceSchema": false,  
-    "metadata": {}  
-  },  
-  "priority": 0,  
-  "variables": {},  
-  "lastRetriedTime": 0,  
-  "failedTaskNames": [],  
-  "history": [],  
-  "rateLimited": false,  
-  "workflowName": "myFirstWorkflow",  
-  "workflowVersion": 1,  
-  "startTime": 1751451778421  
-}  
+{
+  "ownerApp": "",
+  "createTime": 1770709155763,
+  "updateTime": 1770709155814,
+  "createdBy": "john.doe@acme.com",
+  "updatedBy": "john.doe@acme.com",
+  "status": "COMPLETED",
+  "endTime": 1770709155804,
+  "workflowId": "99cda0e3-0653-11f1-9b1b-c6f35360b671",
+  "tasks": [
+    {
+      "taskType": "HTTP",
+      "status": "COMPLETED",
+      "inputData": {
+        "encode": true,
+        "method": "GET",
+        "asyncComplete": false,
+        "_createdBy": "john.doe@acme.com",
+        "uri": "https://orkes-api-tester.orkesconductor.com/api",
+        "contentType": "application/json",
+        "accept": "application/json"
+      },
+      "referenceTaskName": "http_ref",
+      "retryCount": 0,
+      "seq": 1,
+      "pollCount": 0,
+      "taskDefName": "http",
+      "scheduledTime": 1770709155775,
+      "startTime": 1770709155775,
+      "endTime": 1770709155797,
+      "updateTime": 1770709155802,
+      "startDelayInSeconds": 0,
+      "retried": false,
+      "executed": true,
+      "callbackFromWorker": true,
+      "responseTimeoutSeconds": 0,
+      "workflowInstanceId": "99cda0e3-0653-11f1-9b1b-c6f35360b671",
+      "workflowType": "http",
+      "taskId": "99ceb25c-0653-11f1-9b1b-c6f35360b671",
+      "callbackAfterSeconds": 0,
+      "workerId": "orkes-conductor-deployment-584f9458c9-c2ttq",
+      "outputData": {
+        "response": {
+          "headers": {
+            "content-length": [
+              "182"
+            ],
+            "content-type": [
+              "application/json"
+            ],
+            "date": [
+              "Tue, 10 Feb 2026 07:39:15 GMT"
+            ],
+            "strict-transport-security": [
+              "max-age=15724800; includeSubDomains"
+            ]
+          },
+          "reasonPhrase": "",
+          "body": {
+            "randomString": "hjacazkrqrwqrukjjemd",
+            "randomInt": 4075,
+            "hostName": "orkes-api-sampler-67dfc8cf58-4lt28",
+            "apiRandomDelay": "0 ms",
+            "sleepFor": "0 ms",
+            "statusCode": "200",
+            "queryParams": {}
+          },
+          "statusCode": 200
+        }
+      },
+      "workflowTask": {
+        "name": "http",
+        "taskReferenceName": "http_ref",
+        "inputParameters": {
+          "uri": "https://orkes-api-tester.orkesconductor.com/api",
+          "method": "GET",
+          "accept": "application/json",
+          "contentType": "application/json",
+          "encode": true,
+          "asyncComplete": false
+        },
+        "type": "HTTP",
+        "decisionCases": {},
+        "defaultCase": [],
+        "forkTasks": [],
+        "startDelay": 0,
+        "joinOn": [],
+        "optional": false,
+        "defaultExclusiveJoinTask": [],
+        "asyncComplete": false,
+        "loopOver": [],
+        "onStateChange": {},
+        "permissive": false
+      },
+      "rateLimitPerFrequency": 0,
+      "rateLimitFrequencyInSeconds": 0,
+      "workflowPriority": 0,
+      "iteration": 0,
+      "subworkflowChanged": false,
+      "firstStartTime": 0,
+      "loopOverTask": false,
+      "taskDefinition": null,
+      "queueWaitTime": 0
+    }
+  ],
+  "input": {},
+  "output": {
+    "response": {
+      "headers": {
+        "content-length": [
+          "182"
+        ],
+        "content-type": [
+          "application/json"
+        ],
+        "date": [
+          "Tue, 10 Feb 2026 07:39:15 GMT"
+        ],
+        "strict-transport-security": [
+          "max-age=15724800; includeSubDomains"
+        ]
+      },
+      "reasonPhrase": "",
+      "body": {
+        "randomString": "hjacazkrqrwqrukjjemd",
+        "randomInt": 4075,
+        "hostName": "orkes-api-sampler-67dfc8cf58-4lt28",
+        "apiRandomDelay": "0 ms",
+        "sleepFor": "0 ms",
+        "statusCode": "200",
+        "queryParams": {}
+      },
+      "statusCode": 200
+    }
+  },
+  "taskToDomain": {
+    "*": "5b88f704-f090-47cc-9854-b8841ae4780f"
+  },
+  "failedReferenceTaskNames": [],
+  "workflowDefinition": {
+    "createTime": 1770651831951,
+    "updateTime": 1770707162316,
+    "name": "http",
+    "description": "http",
+    "version": 1,
+    "tasks": [
+      {
+        "name": "http",
+        "taskReferenceName": "http_ref",
+        "inputParameters": {
+          "uri": "https://orkes-api-tester.orkesconductor.com/api",
+          "method": "GET",
+          "accept": "application/json",
+          "contentType": "application/json",
+          "encode": true,
+          "asyncComplete": false
+        },
+        "type": "HTTP",
+        "decisionCases": {},
+        "defaultCase": [],
+        "forkTasks": [],
+        "startDelay": 0,
+        "joinOn": [],
+        "optional": false,
+        "defaultExclusiveJoinTask": [],
+        "asyncComplete": false,
+        "loopOver": [],
+        "onStateChange": {},
+        "permissive": false
+      }
+    ],
+    "inputParameters": [],
+    "outputParameters": {},
+    "failureWorkflow": "",
+    "schemaVersion": 2,
+    "restartable": true,
+    "workflowStatusListenerEnabled": false,
+    "ownerEmail": "john.doe@acme.com",
+    "timeoutPolicy": "ALERT_ONLY",
+    "timeoutSeconds": 0,
+    "variables": {},
+    "inputTemplate": {},
+    "enforceSchema": true,
+    "metadata": {},
+    "maskedFields": []
+  },
+  "priority": 0,
+  "variables": {},
+  "lastRetriedTime": 0,
+  "failedTaskNames": [],
+  "history": [],
+  "rateLimited": false,
+  "startTime": 1770709155763,
+  "workflowName": "http",
+  "workflowVersion": 1
+}
 ```
 
 </details>
-
-
 
 <details>
 <summary>Test workflow using local workflow definition</summary>
@@ -347,159 +263,177 @@ curl -X 'POST' \
 **Request**
 
 ``` shell
-curl -X 'POST' \  
-  'https://<YOUR-SERVER-URL>/api/workflow/test' \  
-  -H 'accept: application/json' \  
-  -H 'X-Authorization: <TOKEN>' \  
-  -H 'Content-Type: application/json' \  
-  -d '{  
-  "input":{  
-  },  
-  "name":"myFirstWorkflow",  
-  "workflowDef": {  
-   "name": "myFirstWorkflow",  
-   "tasks": [  
-     {  
-       "name": "get-user_ref",  
-       "taskReferenceName": "get-user_ref",  
-       "inputParameters": {  
-         "http_request": {  
-           "uri": "https://randomuser.me/api/",  
-           "method": "GET"  
-         }  
-       },  
-       "type": "HTTP"  
-     }  
-   ],  
-   "inputParameters": [],  
-   "outputParameters": {},  
-   "failureWorkflow": "",  
-   "schemaVersion": 2,  
-   "timeoutPolicy": "ALERT_ONLY",  
-   "timeoutSeconds": 60,  
-   "enforceSchema": false,  
-   "metadata": {}  
-  }  
+curl -X 'POST' \
+  'https://<YOUR-SERVER-URL>/api/workflow/test' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+"name":"myFirstWorkflow",
+  "workflowDef": {
+   "name": "myFirstWorkflow",
+   "tasks": [
+     {
+       "name": "get-user_ref",
+       "taskReferenceName": "get-user_ref",
+       "inputParameters": {
+         "http_request": {
+           "uri": "https://randomuser.me/api/",
+           "method": "GET"
+         }
+       },
+       "type": "HTTP"
+     }
+   ],
+   "inputParameters": [],
+   "outputParameters": {},
+   "failureWorkflow": "",
+   "schemaVersion": 2,
+   "timeoutPolicy": "ALERT_ONLY",
+   "timeoutSeconds": 60,
+   "enforceSchema": false,
+   "metadata": {}
+  }
 }'
-
 ```
 
 **Response**  
+
+The workflow execution details are returned, showing the test execution using the local workflow definition provided in the request body.
+
 ``` json
-{  
-  "ownerApp": "",  
-  "createTime": 1751452731985,  
-  "updateTime": 1751452731985,  
-  "createdBy": "john.doe@acme.org",  
-  "status": "RUNNING",  
-  "endTime": 0,  
-  "workflowId": "xuvebed04062-5730-11f0-960b-2a4c8832f3d6",  
-  "tasks": [  
-    {  
-      "taskType": "HTTP",  
-      "status": "SCHEDULED",  
-      "inputData": {  
-        "asyncComplete": false,  
-        "http_request": {  
-          "method": "GET",  
-          "uri": "https://randomuser.me/api/"  
-        },  
-        "_createdBy": "john.doe@acme.org"  
-      },  
-      "referenceTaskName": "get-user_ref",  
-      "retryCount": 0,  
-      "seq": 1,  
-      "pollCount": 0,  
-      "taskDefName": "get-user_ref",  
-      "scheduledTime": 1751452731988,  
-      "startTime": 0,  
-      "endTime": 0,  
-      "updateTime": 0,  
-      "startDelayInSeconds": 0,  
-      "retried": false,  
-      "executed": false,  
-      "callbackFromWorker": true,  
-      "responseTimeoutSeconds": 0,  
-      "workflowInstanceId": "xuvebed04062-5730-11f0-960b-2a4c8832f3d6",  
-      "workflowType": "myFirstWorkflow",  
-      "taskId": "xuvebed0b593-5730-11f0-960b-2a4c8832f3d6",  
-      "callbackAfterSeconds": 0,  
-      "outputData": {},  
-      "workflowTask": {  
-        "name": "get-user_ref",  
-        "taskReferenceName": "get-user_ref",  
-        "inputParameters": {  
-          "http_request": {  
-            "uri": "https://randomuser.me/api/",  
-            "method": "GET"  
-          },  
-          "asyncComplete": false  
-        },  
-        "type": "HTTP",  
-        "startDelay": 0,  
-        "optional": false,  
-        "permissive": false  
-      },  
-      "rateLimitPerFrequency": 0,  
-      "rateLimitFrequencyInSeconds": 0,  
-      "workflowPriority": 0,  
-      "iteration": 0,  
-      "subworkflowChanged": false,  
-      "firstStartTime": 0,  
-      "queueWaitTime": 0,  
-      "loopOverTask": false,  
-      "taskDefinition": null  
-    }  
-  ],  
-  "input": {},  
-  "output": {},  
-  "taskToDomain": {  
-    "*": "b88168d3-a760-446b-a399-583f2c226898"  
-  },  
-  "failedReferenceTaskNames": [],  
-  "workflowDefinition": {  
-    "createTime": 0,  
-    "updateTime": 0,  
-    "name": "myFirstWorkflow",  
-    "version": 1,  
-    "tasks": [  
-      {  
-        "name": "get-user_ref",  
-        "taskReferenceName": "get-user_ref",  
-        "inputParameters": {  
-          "http_request": {  
-            "uri": "https://randomuser.me/api/",  
-            "method": "GET"  
-          },  
-          "asyncComplete": false  
-        },  
-        "type": "HTTP",  
-        "optional": false,  
-        "permissive": false  
-      }  
-    ],  
-    "inputParameters": [],  
-    "outputParameters": {},  
-    "failureWorkflow": "",  
-    "schemaVersion": 2,  
-    "restartable": true,  
-    "workflowStatusListenerEnabled": false,  
-    "timeoutPolicy": "TIME_OUT_WF",  
-    "timeoutSeconds": 60,  
-    "variables": {},  
-    "inputTemplate": {},  
-    "enforceSchema": false,  
-    "metadata": {}  
-  },  
-  "priority": 0,  
-  "variables": {},  
-  "lastRetriedTime": 0,  
-  "failedTaskNames": [],  
-  "history": [],  
-  "rateLimited": false,  
-  "workflowName": "myFirstWorkflow",  
-  "workflowVersion": 1,  
-  "startTime": 1751452731985  
+{
+  "ownerApp": "",
+  "createTime": 1770714098807,
+  "updateTime": 1770714098807,
+  "createdBy": "john.doe@acme.com",
+  "status": "RUNNING",
+  "endTime": 0,
+  "workflowId": "1c164561-065f-11f1-9c6e-ba084417949a",
+  "tasks": [
+    {
+      "taskType": "HTTP",
+      "status": "SCHEDULED",
+      "inputData": {
+        "asyncComplete": false,
+        "http_request": {
+          "method": "GET",
+          "uri": "https://randomuser.me/api/"
+        },
+        "_createdBy": "john.doe@acme.com"
+      },
+      "referenceTaskName": "get-user_ref",
+      "retryCount": 0,
+      "seq": 1,
+      "pollCount": 0,
+      "taskDefName": "get-user_ref",
+      "scheduledTime": 1770714098817,
+      "startTime": 0,
+      "endTime": 0,
+      "updateTime": 1770714098817,
+      "startDelayInSeconds": 0,
+      "retried": false,
+      "executed": false,
+      "callbackFromWorker": true,
+      "responseTimeoutSeconds": 0,
+      "workflowInstanceId": "1c164561-065f-11f1-9c6e-ba084417949a",
+      "workflowType": "myFirstWorkflow",
+      "taskId": "1c17cc0a-065f-11f1-9c6e-ba084417949a",
+      "callbackAfterSeconds": 0,
+      "outputData": {},
+      "workflowTask": {
+        "name": "get-user_ref",
+        "taskReferenceName": "get-user_ref",
+        "inputParameters": {
+          "http_request": {
+            "uri": "https://randomuser.me/api/",
+            "method": "GET"
+          },
+          "asyncComplete": false
+        },
+        "type": "HTTP",
+        "decisionCases": {},
+        "defaultCase": [],
+        "forkTasks": [],
+        "startDelay": 0,
+        "joinOn": [],
+        "optional": false,
+        "defaultExclusiveJoinTask": [],
+        "asyncComplete": false,
+        "loopOver": [],
+        "onStateChange": {},
+        "permissive": false
+      },
+      "rateLimitPerFrequency": 0,
+      "rateLimitFrequencyInSeconds": 0,
+      "workflowPriority": 0,
+      "iteration": 0,
+      "subworkflowChanged": false,
+      "firstStartTime": 0,
+      "loopOverTask": false,
+      "taskDefinition": null,
+      "queueWaitTime": 0
+    }
+  ],
+  "input": {},
+  "output": {},
+  "taskToDomain": {
+    "*": "d12d9688-2241-4746-8354-3e3420ad1035"
+  },
+  "failedReferenceTaskNames": [],
+  "workflowDefinition": {
+    "createTime": 0,
+    "updateTime": 0,
+    "name": "myFirstWorkflow",
+    "version": 1,
+    "tasks": [
+      {
+        "name": "get-user_ref",
+        "taskReferenceName": "get-user_ref",
+        "inputParameters": {
+          "http_request": {
+            "uri": "https://randomuser.me/api/",
+            "method": "GET"
+          },
+          "asyncComplete": false
+        },
+        "type": "HTTP",
+        "decisionCases": {},
+        "defaultCase": [],
+        "forkTasks": [],
+        "startDelay": 0,
+        "joinOn": [],
+        "optional": false,
+        "defaultExclusiveJoinTask": [],
+        "asyncComplete": false,
+        "loopOver": [],
+        "onStateChange": {},
+        "permissive": false
+      }
+    ],
+    "inputParameters": [],
+    "outputParameters": {},
+    "failureWorkflow": "",
+    "schemaVersion": 2,
+    "restartable": true,
+    "workflowStatusListenerEnabled": false,
+    "timeoutPolicy": "ALERT_ONLY",
+    "timeoutSeconds": 60,
+    "variables": {},
+    "inputTemplate": {},
+    "enforceSchema": false,
+    "metadata": {},
+    "maskedFields": []
+  },
+  "priority": 0,
+  "variables": {},
+  "lastRetriedTime": 0,
+  "failedTaskNames": [],
+  "history": [],
+  "rateLimited": false,
+  "startTime": 1770714098807,
+  "workflowName": "myFirstWorkflow",
+  "workflowVersion": 1
 }
 ```
 </details>
@@ -516,8 +450,6 @@ curl -X 'POST' \
   -H 'X-Authorization: <TOKEN>' \
   -H 'Content-Type: application/json' \
   -d '{
-  "input":{
-  },
   "name":"myFirstWorkflow",
   "workflowDef": {
    "name": "myFirstWorkflow",
@@ -567,16 +499,18 @@ curl -X 'POST' \
 
 **Response**
 
+The workflow execution details are returned with the Worker task (`myTask_ref`) showing the mocked output instead of executing the actual worker.
+
 ```json
 {
   "ownerApp": "",
-  "createTime": 1754388755642,
-  "updateTime": 1754388755755,
+  "createTime": 1770709472215,
+  "updateTime": 1770709472298,
   "createdBy": "john.doe@acme.com",
   "updatedBy": "john.doe@acme.com",
   "status": "COMPLETED",
-  "endTime": 1754388755753,
-  "workflowId": "fd7sb548fac0-71e4-11f0-9288-1a521d72d3b3",
+  "endTime": 1770709472296,
+  "workflowId": "566c403f-0654-11f1-9b1b-c6f35360b671",
   "tasks": [
     {
       "taskType": "HTTP",
@@ -594,125 +528,53 @@ curl -X 'POST' \
       "seq": 1,
       "pollCount": 0,
       "taskDefName": "get-user_ref",
-      "scheduledTime": 1754388755647,
-      "startTime": 1754388755647,
-      "endTime": 1754388755735,
-      "updateTime": 1754388755735,
+      "scheduledTime": 1770709472239,
+      "startTime": 1770709472239,
+      "endTime": 1770709472260,
+      "updateTime": 1770709472272,
       "startDelayInSeconds": 0,
       "retried": false,
       "executed": true,
       "callbackFromWorker": true,
       "responseTimeoutSeconds": 0,
-      "workflowInstanceId": "fd7sb548fac0-71e4-11f0-9288-1a521d72d3b3",
+      "workflowInstanceId": "566c403f-0654-11f1-9b1b-c6f35360b671",
       "workflowType": "myFirstWorkflow",
-      "taskId": "fd7sb5496ff1-71e4-11f0-9288-1a521d72d3b3",
+      "taskId": "566dedf8-0654-11f1-9b1b-c6f35360b671",
       "callbackAfterSeconds": 0,
-      "workerId": "orkes-conductor-deployment-84d9984cb8-xltz6",
+      "workerId": "orkes-conductor-deployment-584f9458c9-c2ttq",
       "outputData": {
         "response": {
           "headers": {
-            "access-control-allow-origin": [
-              "*"
-            ],
             "alt-svc": [
               "h3=\":443\"; ma=86400"
-            ],
-            "cache-control": [
-              "no-cache"
             ],
             "cf-cache-status": [
               "DYNAMIC"
             ],
             "cf-ray": [
-              "96a5845b3fe08b7e-IAD"
+              "9cb9fb5988ce64aa-IAD"
             ],
             "content-type": [
-              "application/json; charset=utf-8"
+              "application/json"
             ],
             "date": [
-              "Tue, 05 Aug 2025 10:12:35 GMT"
-            ],
-            "etag": [
-              "W/\"484-kO1YzlAgk9d2d5n+2KUWpXHZ9hI\""
+              "Tue, 10 Feb 2026 07:44:32 GMT"
             ],
             "nel": [
               "{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}"
             ],
             "report-to": [
-              "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=rye8l9H%2FaLtn7lxqmvnOWy7z8XYpEIOyWnKUlvyrHxOR%2F58mvuiElxo7cCVU7Go71f8synvh0oddYXva1%2FRGqRxSZhexncCQFrcwLk4%3D\"}]}"
+              "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=PaWZxyT4tdHG8P904rkHOK6srGgtcJGmRjB7LOoCgJEld4SBbrL5%2FcNwC9JsnjvboDLBQxqk5GQpZkC9T2cRTmlTPMkFVYwUtSbBRu8%3D\"}]}"
             ],
             "server": [
               "cloudflare"
-            ],
-            "vary": [
-              "Accept-Encoding"
-            ],
-            "x-powered-by": [
-              "Express"
             ]
           },
           "reasonPhrase": "",
           "body": {
-            "results": [
-              {
-                "gender": "female",
-                "name": {
-                  "title": "Miss",
-                  "first": "Lily",
-                  "last": "Ose"
-                },
-                "location": {
-                  "street": {
-                    "number": 8170,
-                    "name": "Nydalen Bruks vei"
-                  },
-                  "city": "Teigebyen",
-                  "state": "Nord-Trøndelag",
-                  "country": "Norway",
-                  "postcode": "8907",
-                  "coordinates": {
-                    "latitude": "45.0448",
-                    "longitude": "45.0807"
-                  },
-                  "timezone": {
-                    "offset": "+7:00",
-                    "description": "Bangkok, Hanoi, Jakarta"
-                  }
-                },
-                "email": "lily.ose@example.com",
-                "login": {
-                  "uuid": "8a0cd9d7-8278-47eb-b8f8-bd8f4d6042a9",
-                  "username": "orangepeacock863",
-                  "password": "vision",
-                  "salt": "kBGC5RpG",
-                  "md5": "3720745f719ec52621c25e123dba0f85",
-                  "sha1": "dbba3d1eaea9e42eaa4f32ef29850026082a95f8",
-                  "sha256": "9335fc32cde16b6873b1ccb7ccf197e94eb6ae97f8d5f30276058ffc63cec486"
-                },
-                "dob": {
-                  "date": "1974-05-03T21:04:16.516Z",
-                  "age": 51
-                },
-                "registered": {
-                  "date": "2022-04-23T10:58:29.469Z",
-                  "age": 3
-                },
-                "phone": "84021654",
-                "cell": "40652620",
-                "id": {
-                  "name": "FN",
-                  "value": "03057441479"
-                },
-                "picture": {
-                  "large": "https://randomuser.me/api/portraits/women/25.jpg",
-                  "medium": "https://randomuser.me/api/portraits/med/women/25.jpg",
-                  "thumbnail": "https://randomuser.me/api/portraits/thumb/women/25.jpg"
-                },
-                "nat": "NO"
-              }
-            ],
+            "results": [],
             "info": {
-              "seed": "4b6251c18dfc582c",
+              "seed": "d3adb33f",
               "results": 1,
               "page": 1,
               "version": "1.4"
@@ -750,15 +612,15 @@ curl -X 'POST' \
       "iteration": 0,
       "subworkflowChanged": false,
       "firstStartTime": 0,
-      "taskDefinition": null,
       "loopOverTask": false,
+      "taskDefinition": null,
       "queueWaitTime": 0
     },
     {
       "taskType": "myTask",
       "status": "COMPLETED",
       "inputData": {
-        "name": "Lily",
+        "name": null,
         "_createdBy": "john.doe@acme.com"
       },
       "referenceTaskName": "myTask_ref",
@@ -766,18 +628,18 @@ curl -X 'POST' \
       "seq": 2,
       "pollCount": 0,
       "taskDefName": "myTask",
-      "scheduledTime": 1754388755738,
+      "scheduledTime": 1770709472265,
       "startTime": 0,
-      "endTime": 1754388755747,
-      "updateTime": 1754388755748,
+      "endTime": 1770709472285,
+      "updateTime": 1770709472294,
       "startDelayInSeconds": 0,
       "retried": false,
       "executed": true,
       "callbackFromWorker": true,
       "responseTimeoutSeconds": 3600,
-      "workflowInstanceId": "fd7sb548fac0-71e4-11f0-9288-1a521d72d3b3",
+      "workflowInstanceId": "566c403f-0654-11f1-9b1b-c6f35360b671",
       "workflowType": "myFirstWorkflow",
-      "taskId": "fd7sb557a0c2-71e4-11f0-9288-1a521d72d3b3",
+      "taskId": "5673ba65-0654-11f1-9b1b-c6f35360b671",
       "callbackAfterSeconds": 0,
       "outputData": {
         "greet": "Hello, user."
@@ -820,13 +682,14 @@ curl -X 'POST' \
         "onStateChange": {},
         "permissive": false
       },
-      "domain": "7b5f9eff-f012-47f9-824e-7884ecc68277",
+      "domain": "9b030f7c-3424-4463-a17a-2d710019a1ec",
       "rateLimitPerFrequency": 0,
       "rateLimitFrequencyInSeconds": 1,
       "workflowPriority": 0,
       "iteration": 0,
       "subworkflowChanged": false,
       "firstStartTime": 0,
+      "loopOverTask": false,
       "taskDefinition": {
         "createTime": 0,
         "updateTime": 0,
@@ -846,7 +709,6 @@ curl -X 'POST' \
         "totalTimeoutSeconds": 0,
         "enforceSchema": false
       },
-      "loopOverTask": false,
       "queueWaitTime": 0
     }
   ],
@@ -855,7 +717,7 @@ curl -X 'POST' \
     "greet": "Hello, user."
   },
   "taskToDomain": {
-    "*": "7b5f9eff-f012-47f9-824e-7884ecc68277"
+    "*": "9b030f7c-3424-4463-a17a-2d710019a1ec"
   },
   "failedReferenceTaskNames": [],
   "workflowDefinition": {
@@ -932,7 +794,7 @@ curl -X 'POST' \
     "schemaVersion": 2,
     "restartable": true,
     "workflowStatusListenerEnabled": false,
-    "timeoutPolicy": "TIME_OUT_WF",
+    "timeoutPolicy": "ALERT_ONLY",
     "timeoutSeconds": 60,
     "variables": {},
     "inputTemplate": {},
@@ -946,9 +808,9 @@ curl -X 'POST' \
   "failedTaskNames": [],
   "history": [],
   "rateLimited": false,
+  "startTime": 1770709472215,
   "workflowName": "myFirstWorkflow",
-  "workflowVersion": 1,
-  "startTime": 1754388755642
+  "workflowVersion": 1
 }
 ```
 

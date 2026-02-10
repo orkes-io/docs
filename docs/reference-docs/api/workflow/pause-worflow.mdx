@@ -4,9 +4,6 @@ slug: "/reference-docs/api/workflow/pause-worflow"
 description: "This API is used to pause a running workflow execution."
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
 # Pause Workflow
 
 **Endpoint:** `PUT /api/workflow/{workflowId}/pause`
@@ -17,11 +14,13 @@ Pauses an ongoing workflow execution. Any currently running tasks will be comple
 
 | Parameter  | Description                                    | Type   | Required/ Optional |
 | ---------- | ---------------------------------------------- | ------ | ------------------ |
-| workflowId | The execution ID of the workflow to be paused. | string | Required.          |
+| workflowId | The execution ID of the workflow to pause. | string | Required.          |
 
 ## Response
 
 Returns 200 OK, indicating that the workflow execution has paused successfully.
+
+Returns 400 if an invalid workflow execution ID is provided.
 
 ## Examples
 
