@@ -1,0 +1,74 @@
+---
+sidebar_position: 4
+slug: "/reference-docs/api/schema/get-schema-by-name-and-version"
+description: "This API is used to get a specific version of a schema definition."
+---
+
+# Get Schema by Name and Version
+
+**Endpoint**: `GET /api/schema/{name}/{version}`
+
+Retrieves a schema definition by its name and version.
+
+## Path parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| name | The name of the schema to retrieve.| string | Required. | 
+| version | The version to retrieve. | integer | Required. | 
+
+## Response
+
+Returns a schema object containing the specified version of the schema definition. Returns 404 if an invalid path parameter is provided.
+
+## Examples
+
+<details>
+<summary>Get a schema by name and version</summary>
+
+**Request**
+
+```shell
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/schema/itemSchema/2' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+{
+  "createTime": 1770719857291,
+  "updateTime": 1770719857291,
+  "createdBy": "john.doe@acme.com",
+  "updatedBy": "john.doe@acme.com",
+  "name": "itemSchema",
+  "version": 2,
+  "type": "JSON",
+  "data": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://example.com/product.schema.json",
+    "type": "object",
+    "properties": {
+      "productId": {
+        "description": "The unique identifier for a product",
+        "type": "integer"
+      },
+      "productName": {
+        "description": "Name of the product",
+        "type": "string"
+      },
+      "productType": {
+        "description": "Type of the product",
+        "type": "string"
+      }
+    },
+    "required": [
+      "productId"
+    ]
+  }
+}
+```
+
+</details>
