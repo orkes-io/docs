@@ -35,7 +35,7 @@ Returns an array containing all the task definitions in the cluster, optionally 
 
 ```bash
 curl -X 'GET' \
-  'https://<YOUR_CLUSTER>/api/metadata/taskdefs?access=READ&metadata=false&tagKey=team&tagValue=engineering' \
+  'https://<YOUR-SERVER-URL>/api/metadata/taskdefs?access=READ&metadata=false&tagKey=team&tagValue=engineering' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>'
 ```
@@ -129,7 +129,7 @@ Returns all task definitions with tag `team:engineering`.
 
 ```json
 curl -X 'GET' \
-  'https://<YOUR-CLUSTER>/api/metadata/taskdefs?access=EXECUTE&metadata=true' \
+  'https://<YOUR-SERVER-URL>/api/metadata/taskdefs?access=EXECUTE&metadata=true' \
   -H 'accept: */*' \
   -H '
 X-Authorization: <TOKEN>'
@@ -184,7 +184,7 @@ Returns an array containing all the task definitions in the cluster, including t
 
 ```json
 curl -X 'GET' \
-  'https://<YOUR-CLUSTER>/api/metadata/taskdefs?access=EXECUTE&metadata=false' \
+  'https://<YOUR-SERVER-URL>/api/metadata/taskdefs?access=EXECUTE&metadata=false' \
   -H 'accept: */*' \
   -H '
 X-Authorization: <TOKEN>'

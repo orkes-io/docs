@@ -36,7 +36,7 @@ Returns an array containing all the workflow definitions in the cluster, optiona
 
 ```bash
 curl -X 'GET' \
-  'https://<YOUR_CLUSTER>/api/metadata/workflow?access=READ&metadata=false&tagKey=api&tagValue=doc' \
+  'https://<YOUR-SERVER-URL>/api/metadata/workflow?access=READ&metadata=false&tagKey=api&tagValue=doc' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>'
 ```
@@ -105,7 +105,7 @@ Returns all workflow definitions with tag `api:doc`.
 
 ```json
 curl -X 'GET' \
-  'https://<YOUR-CLUSTER>/api/metadata/workflow?access=READ&metadata=true&short=false' \
+  'https://<YOUR-SERVER-URL>/api/metadata/workflow?access=READ&metadata=true&short=false' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>'
 ```
@@ -175,7 +175,7 @@ Returns an array containing all the workflow definitions in the cluster, includi
 
 ```json
 curl -X 'GET' \
-  'https://<YOUR-CLUSTER>/api/metadata/workflow?access=READ&metadata=false&short=false' \
+  'https://<YOUR-SERVER-URL>/api/metadata/workflow?access=READ&metadata=false&short=false' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>
 ```
@@ -238,7 +238,7 @@ Returns an array containing all the workflow definitions in the cluster without 
 
 ```json
 curl -X 'GET' \
-  'https://<YOUR-CLUSTER>/api/metadata/workflow?access=READ&metadata=false&name=http&short=false' \
+  'https://<YOUR-SERVER-URL>/api/metadata/workflow?access=READ&metadata=false&name=http&short=false' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>'
 ```
@@ -308,7 +308,7 @@ Returns the queried workflow definition JSON.
 
 ```json
 curl -X 'GET' \
-  'https://<YOUR-CLUSTER>/api/metadata/workflow?access=READ&metadata=false&short=true' \
+  'https://<YOUR-SERVER-URL>/api/metadata/workflow?access=READ&metadata=false&short=true' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>'
 ```
@@ -351,7 +351,7 @@ Returns an array of all workflow definitions in the cluster, including only thei
 
 ```json
 curl -X 'GET' \
-  'https://<YOUR-CLUSTER>/api/metadata/workflow?access=READ&metadata=false&short=false' \
+  'https://<YOUR-SERVER-URL>/api/metadata/workflow?access=READ&metadata=false&short=false' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>'
 ```

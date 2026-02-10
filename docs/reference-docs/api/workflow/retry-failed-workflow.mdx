@@ -4,9 +4,6 @@ slug: "/reference-docs/api/workflow/retry-failed-workflow"
 description: "This API is used to retry a failed workflow execution from the last failed task."
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
 # Retry Failed Workflow
 
 **Endpoint:** `POST /api/workflow/{workflowId}/retry`
@@ -17,18 +14,20 @@ Retries a failed workflow execution from the last failed task. When invoked, the
 
 | Parameter  | Description                                            | Type   | Required/ Optional |
 | ---------- | ------------------------------------------------------ | ------ | ------------------ |
-| workflowId | The execution ID of the failed workflow to be retried. | string | Required.          |
+| workflowId | The execution ID of the failed workflow to retry. | string | Required.          |
 
 ## Query parameters
 
 | Parameter              | Description                                                                                                                                                                                                                          | Type    | Required/ Optional |
 | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------- | ------------------ |
-| resumeSubworkflowTasks | (For cases where the last failed task is a Sub Workflow task) If set to true, the parent workflow is restarted from the sub-workflow’s last failed task. If set to false, a new sub-workflow execution is created. Default is false. | boolean | Optional.          |
-| retryIfRetriedByParent | (For cases where a sub-workflow is being retried) If set to false, the sub-workflow will be prohibited from retrying if its parent workflow has been retried before. Default is true.                                                | boolean | Optional.          |
+| resumeSubworkflowTasks | (For cases where the last failed task is a Sub Workflow task) If set to `true`, the parent workflow is restarted from the sub-workflow’s last failed task. If set to `false`, a new sub-workflow execution is created. Default is `false`. | boolean | Optional.          |
+| retryIfRetriedByParent | (For cases where a sub-workflow is being retried) If set to `false`, the sub-workflow will be prohibited from retrying if its parent workflow has been retried before. Default is `true`.                                       | boolean | Optional.          |
 
 ## Response
 
-Returns 204 No Content, indicating that the workflow execution has been restarted successfully from the last failed task.
+Returns 204, indicating that the workflow execution has been restarted successfully from the last failed task.
+
+Returns 400 if an invalid workflow execution is provided.
 
 ## Examples
 
@@ -39,7 +38,7 @@ Returns 204 No Content, indicating that the workflow execution has been restarte
 
 ```shell
 curl -X 'POST' \
-   'https://<YOUR-CLUSTER>/api/workflow/2ce9207f-d4a6-11ef-87b1-b2b27c52ebde/retry' \
+   'https://<YOUR-SERVER-URL>/api/workflow/2ce9207f-d4a6-11ef-87b1-b2b27c52ebde/retry' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>' \
   -d ''
@@ -47,7 +46,7 @@ curl -X 'POST' \
 
 **Response**
 
-Returns 204 No Content, indicating that the workflow execution has been restarted successfully from the last failed task.
+Returns 204, indicating that the workflow execution has been restarted successfully from the last failed task. 
 
 In the Conductor UI, the workflow execution will re-enter the RUNNING status, and the last failed task will be re-attempted.
 
@@ -62,7 +61,7 @@ In the Conductor UI, the workflow execution will re-enter the RUNNING status, an
 
 ```shell
 curl -X 'POST' \
-  'https://<YOUR_CLUSTER>/api/workflow/35831168-50da-11f0-bb6c-9aabfb2793e8/retry?resumeSubworkflowTasks=true' \
+  'https://<YOUR-SERVER-URL>/api/workflow/35831168-50da-11f0-bb6c-9aabfb2793e8/retry?resumeSubworkflowTasks=true' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>' \
   -d ''
@@ -70,7 +69,7 @@ curl -X 'POST' \
 
 **Response**
 
-Returns 204 No Content, indicating that the workflow execution has been restarted successfully from the last failed task.
+Returns 204, indicating that the workflow execution has been restarted successfully from the last failed task.
 
 In the Conductor UI, both the parent workflow and sub-workflow execution will re-enter the RUNNING status.
 
@@ -86,7 +85,7 @@ In the Conductor UI, both the parent workflow and sub-workflow execution will re
 
 ```shell
 curl -X 'POST' \
-  'https://<YOUR_CLUSTER>/api/workflow/35831168-50da-11f0-bb6c-9aabfb2793e8/retry?resumeSubworkflowTasks=false' \
+  'https://<YOUR-SERVER-URL>/api/workflow/35831168-50da-11f0-bb6c-9aabfb2793e8/retry?resumeSubworkflowTasks=false' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>' \
   -d ''
@@ -94,7 +93,7 @@ curl -X 'POST' \
 
 **Response**
 
-Returns 204 No Content, indicating that the workflow execution has been restarted successfully from the last failed task.
+Returns 204, indicating that the workflow execution has been restarted successfully from the last failed task.
 
 In the Conductor UI, the parent workflow execution will re-enter the RUNNING status, and a new sub-workflow execution instance will be created.
 
@@ -141,7 +140,7 @@ Use the following API call to retry the parent workflow:
 
 ```bash
 curl -X 'POST' \
-  'https://<YOUR-CLUSTER>/api/workflow<PARENT-WORKFLOW-ID>/retry' \
+  'https://<YOUR-SERVER-URL>/api/workflow<PARENT-WORKFLOW-ID>/retry' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>' \
   -d ''
@@ -153,7 +152,7 @@ Now attempt to retry the initially failed sub-workflow using the following call 
 
 ```bash
 curl -X 'POST' \
-  'https://<YOUR-CLUSTER>/api/workflow/<SUB-WORKFLOW-ID>/retry?retryIfRetriedByParent=false' \
+  'https://<YOUR-SERVER-URL>/api/workflow/<SUB-WORKFLOW-ID>/retry?retryIfRetriedByParent=false' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>' \
   -d ''

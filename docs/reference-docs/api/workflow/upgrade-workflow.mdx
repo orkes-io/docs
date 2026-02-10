@@ -4,22 +4,17 @@ slug: "/reference-docs/api/workflow/upgrade-workflow"
 description: "This API is used to upgrade a currently running workflow to a different version."
 ---
 
-import Tabs from "@theme/Tabs";
-import TabItem from "@theme/TabItem";
-
 # Upgrade Workflow
 
 **Endpoint:** `POST /api/workflow/{workflowId}/upgrade`
 
-Upgrades a running workflow to a different version.
-
-The workflow execution will continue from its last running task, even when it has been upgraded. In other words, all the tasks in the upgraded definition prior to the currently running task will be marked as skipped.
+Upgrades a running workflow to a different version. The workflow execution will continue from its last running task, even after an upgrade. In other words, all the tasks in the upgraded definition before the currently running task will be marked as skipped.
 
 ## Path parameters
 
 | Parameter  | Description                                      | Type   | Required/ Optional |
 | ---------- | ------------------------------------------------ | ------ | ------------------ |
-| workflowId | The execution ID of the workflow to be upgraded. | string | Required.          |
+| workflowId | The execution ID of the workflow to upgrade. | string | Required.          |
 
 ## Request body
 
@@ -53,21 +48,23 @@ Format the request as an object containing the following parameters.
 
 Returns 200 OK, indicating that the workflow execution has been upgraded successfully. All new tasks before the currently running task are skipped in the execution.
 
+Returns 400 if an invalid task execution ID is provided.
+
 ## Examples
 
 <details>
-<summary>Upgrade to the next version</summary>
+<summary>Upgrade a running workflow to the next version</summary>
 
 **Request**
 
 ```shell
 curl -X 'POST' \
-  'https://<YOUR_CLUSTER>/api/workflow/77916c63-d3e7-11ef-87b1-b2b27c52ebde/upgrade' \
+  'https://<YOUR-SERVER-URL>/api/workflow/56acdfb6-05ae-11f1-8b8d-6219b54da7fe/upgrade' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>' \
   -H 'Content-Type: application/json' \
   -d '{
-  "name": "someWorkflow",
+  "name": "DemoWorkflow",
   "taskOutput": {},
   "version": 2
 }'
@@ -96,7 +93,7 @@ Returns 200 OK, indicating that the workflow execution has been upgraded success
 
 ```bash
 curl -X 'POST' \
-  'https://<YOUR-CLUSTER>/api/workflow/ce5ce5d6-6ed1-11f0-880f-0246e7260963/upgrade' \
+  'https://<YOUR-SERVER-URL>/api/workflow/ce5ce5d6-6ed1-11f0-880f-0246e7260963/upgrade' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>' \
   -H 'Content-Type: application/json' \
@@ -132,7 +129,7 @@ Returns 200 OK, indicating that the workflow execution has been upgraded success
 
 ```bash
  curl -X 'POST' \
-  'https://<YOUR-CLUSTER>/api/workflow/b24acffe-6ed2-11f0-880f-0246e7260963/upgrade' \
+  'https://<YOUR-SERVER-URL>/api/workflow/b24acffe-6ed2-11f0-880f-0246e7260963/upgrade' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>' \
   -H 'Content-Type: application/json' \

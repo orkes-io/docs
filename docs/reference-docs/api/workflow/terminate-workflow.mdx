@@ -4,9 +4,6 @@ slug: "/reference-docs/api/workflow/terminate-workflow"
 description: "This API is used to terminate a workflow execution with a termination reason."
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
 # Terminate Workflow
 
 **Endpoint:** `DELETE /api/workflow/{workflowId}`
@@ -17,18 +14,20 @@ Terminates a running workflow, with the option to provide a reason for terminati
 
 | Parameter  | Description                                        | Type   | Required/ Optional |
 | ---------- | -------------------------------------------------- | ------ | ------------------ |
-| workflowId | The execution ID of the workflow to be terminated. | string | Required.          |
+| workflowId | The execution ID of the workflow to terminate. | string | Required.          |
 
 ## Query parameters
 
 | Parameter              | Description                                                                                                                                                                                                        | Type    | Required/ Optional |
 | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------- | ------------------ |
 | reason                 | The reason for termination.                                                                                                                                                                                        | string  | Optional.          |
-| triggerFailureWorkflow | If set to true, the associated compensation flow (if any) will be triggered. Default is false. <br/><br/> Learn more about compensation flows in [Handling Failures](/error-handling#workflow-compensation-flows). | boolean | Optional.          |
+| triggerFailureWorkflow | If set to `true`, the associated compensation flow (if any) will be triggered. Default is `false`. <br/><br/> Learn more about compensation flows in [Handling Failures](/error-handling#workflow-compensation-flows). | boolean | Optional.          |
 
 ## Response
 
 Returns 200 OK, indicating that the workflow execution has been terminated successfully.
+
+Returns 400 if an invalid workflow execution ID is provided.
 
 ## Examples
 
@@ -39,7 +38,7 @@ Returns 200 OK, indicating that the workflow execution has been terminated succe
 
 ```shell
 curl -X 'DELETE' \
-  'https://<YOUR-PORTAL>/api/workflow/fd7s07f3b619-6edb-11f0-b0d8-2aadd5744325?reason=Terminated%20via%20API&triggerFailureWorkflow=false' \
+  'https://<YOUR-SERVER-URL>/api/workflow/fd7s07f3b619-6edb-11f0-b0d8-2aadd5744325?reason=Terminated%20via%20API&triggerFailureWorkflow=false' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>'
 ```

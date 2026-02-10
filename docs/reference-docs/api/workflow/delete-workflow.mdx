@@ -4,10 +4,7 @@ slug: "/reference-docs/api/workflow/delete-workflow"
 description: "This API is used to permanently remove a workflow execution from your Conductor cluster"
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
-# Delete Workflow
+# Delete Workflow Execution
 
 **Endpoint:** `DELETE /api/workflow/{workflowId}/remove`
 
@@ -17,7 +14,7 @@ Deletes a workflow execution from the server using the workflow (execution) ID.
 
 | Parameter  | Description                                     | Type   | Required/ Optional |
 | ---------- | ----------------------------------------------- | ------ | ------------------ |
-| workflowId | The execution ID of the workflow to be deleted. | string | Required.          |
+| workflowId | The execution ID of the workflow to delete. | string | Required.          |
 
 ## Query parameters
 
@@ -38,7 +35,7 @@ Returns 200 OK, indicating that the workflow has been deleted successfully.
 
 ```shell
 curl -X 'DELETE' \
-  'https://<YOUR_CLUSTER>/api/workflow/373eabef-b846-11ef-b090-be4a9a728270/remove' \
+  'https://<YOUR-SERVER-URL>/api/workflow/373eabef-b846-11ef-b090-be4a9a728270/remove' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>'
 ```

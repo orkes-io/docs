@@ -42,7 +42,7 @@ Returns the created or updated user form with its assigned version number and ti
 
 ```shell
 curl -X 'POST' \
-  'https://<YOUR-CLUSTER>/api/human/template?newVersion=false' \
+  'https://<YOUR-SERVER-URL>/api/human/template?newVersion=false' \
   -H 'accept: application/json' \
   -H 'X-Authorization: <TOKEN>' \
   -H 'Content-Type: application/json' \
@@ -123,7 +123,7 @@ curl -X 'POST' \
 
 ```shell
 curl -X 'POST' \
-  'https://<YOUR-CLUSTER>/api/human/template?newVersion=true' \
+  'https://<YOUR-SERVER-URL>/api/human/template?newVersion=true' \
   -H 'accept: application/json' \
   -H 'X-Authorization: <TOKEN>' \
   -H 'Content-Type: application/json' \

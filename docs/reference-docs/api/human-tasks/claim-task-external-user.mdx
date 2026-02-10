@@ -43,7 +43,7 @@ Returns 400  if an invalid task execution ID is provided or if the Human task is
 
 ```shell
 curl -X 'POST' \
-  'https://<YOUR-CLUSTER>/api/human/tasks/c310c684-01c8-11f1-913a-226156badb04/externalUser/abc?overrideAssignment=false&withTemplate=false' \
+  'https://<YOUR-SERVER-URL>/api/human/tasks/c310c684-01c8-11f1-913a-226156badb04/externalUser/abc?overrideAssignment=false&withTemplate=false' \
   -H 'accept: application/json' \
   -H 'X-Authorization: <TOKEN>' \
   -d ''
@@ -168,7 +168,7 @@ Returns the claimed task with state changed to `IN_PROGRESS` and the external us
 
 ```shell
 curl -X 'POST' \
-  'https://<YOUR-CLUSTER>/api/human/tasks/bd8cb644-01ca-11f1-8b8d-6219b54da7fe/externalUser/abc?overrideAssignment=true&withTemplate=false' \
+  'https://<YOUR-SERVER-URL>/api/human/tasks/bd8cb644-01ca-11f1-8b8d-6219b54da7fe/externalUser/abc?overrideAssignment=true&withTemplate=false' \
   -H 'accept: application/json' \
   -H 'X-Authorization: <TOKEN>' \
   -d ''
@@ -293,7 +293,7 @@ Returns the claimed task where the external user "abc" has overridden the existi
 
 ```shell
 curl -X 'POST' \
-  'https://<YOUR-CLUSTER>/api/human/tasks/35400d3d-01cb-11f1-8b8d-6219b54da7fe/externalUser/abc?overrideAssignment=false&withTemplate=false' \
+  'https://<YOUR-SERVER-URL>/api/human/tasks/35400d3d-01cb-11f1-8b8d-6219b54da7fe/externalUser/abc?overrideAssignment=false&withTemplate=false' \
   -H 'accept: application/json' \
   -H 'X-Authorization: <TOKEN>' \
   -d ''

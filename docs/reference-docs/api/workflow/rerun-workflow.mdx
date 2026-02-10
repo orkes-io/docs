@@ -1,23 +1,20 @@
 ---
 sidebar_position: 11
 slug: "/reference-docs/api/workflow/rerun-workflow"
-description: "This API is used to rerun a workflow from a specific task using on an updated workflow input if needed."
+description: "This API is used to rerun a workflow from a specific task using an updated workflow input if needed."
 ---
-
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 # Rerun Workflow
 
 **Endpoint:** `POST /api/workflow/{workflowId}/rerun`
 
-Reruns an ongoing or terminal workflow from a specific _reRunFromTaskId_ task, or reruns a terminal workflow execution from the start, with the option to supply updated inputs.
+Reruns an ongoing or terminal workflow from a specific `reRunFromTaskId` task, or reruns a terminal workflow execution from the start, with the option to supply updated inputs. 
 
 ## Path parameters
 
 | Parameter  | Description                                   | Type   | Required/ Optional |
 | ---------- | --------------------------------------------- | ------ | ------------------ |
-| workflowId | The execution ID of the workflow to be rerun. | string | Required.          |
+| workflowId | The execution ID of the workflow to rerun. | string | Required.          |
 
 ## Request body
 
@@ -26,7 +23,7 @@ Format the request as an object containing the following parameters.
 | Parameter           | Description                                                                                                                       | Type   | Required/ Optional |
 | ------------------- | --------------------------------------------------------------------------------------------------------------------------------- | ------ | ------------------ |
 | reRunFromTaskId     | The unique identifier of the task to rerun the workflow from.                                                                     | string | Optional.          |
-| reRunFromWorkflowId | The unique identifier of the workflow to be rerun.                                                                                | string | Optional.          |
+| reRunFromWorkflowId | The unique identifier of the workflow to rerun.                                                                                | string | Optional.          |
 | correlationId       | The unique identifier used to correlate the current workflow execution with other executions of the same workflow. <br/><br/> If unspecified, the same correlation ID from the previous run will be used.                                                                                 | string | Optional.          |
 | taskInput           | The updated task inputs for the task identified in _reRunFromTaskId_. <br/><br/> If unspecified, the same inputs from the previous run will be used.                                 | object | Optional.          |
 | workflowInput       | The updated workflow inputs. <br/><br/> If unspecified, the same inputs from the previous run will be used.                                 | object | Optional.          |
@@ -53,7 +50,7 @@ Format the request as an object containing the following parameters.
 
 ## Response
 
-Returns the supplied _workflowId_.
+Returns the supplied `workflowId`. Reuters 400 if an invalid workflow execution ID is provided.
 
 ## Examples
 
@@ -64,7 +61,7 @@ Returns the supplied _workflowId_.
 
 ```shell
 curl -X 'POST' \
-  'https://<YOUR-CLUSTER>/api/workflow/3163f2e3-d4a9-11ef-a114-0af1b159704e/rerun' \
+  'https://<YOUR-SERVER-URL>/api/workflow/3163f2e3-d4a9-11ef-a114-0af1b159704e/rerun' \
   -H 'accept: text/plain' \
   -H 'X-Authorization: <TOKEN>' \
   -H 'Content-Type: application/json' \
@@ -89,7 +86,7 @@ curl -X 'POST' \
 
 ```shell
 curl -X 'POST' \
-  'https://<YOUR_CLUSTER>/api/workflow/3163f2e3-d4a9-11ef-a114-0af1b159704e/rerun' \
+  'https://<YOUR-SERVER-URL>/api/workflow/3163f2e3-d4a9-11ef-a114-0af1b159704e/rerun' \
   -H 'accept: text/plain' \
   -H 'X-Authorization: <TOKEN>' \
   -H 'Content-Type: application/json' \
@@ -115,7 +112,7 @@ curl -X 'POST' \
 
 ```shell
 curl -X 'POST' \
-  'https://<YOUR-CLUSTER>/api/workflow/d069c77c-5895-11f0-881b-7e8a6dcd068a/rerun' \
+  'https://<YOUR-SERVER-URL>/api/workflow/d069c77c-5895-11f0-881b-7e8a6dcd068a/rerun' \
   -H 'accept: text/plain' \
   -H 'X-Authorization: <TOKEN>' \
   -H 'Content-Type: application/json' \
@@ -146,7 +143,7 @@ In the Conductor UI, the workflow execution will rerun from the specified task w
 
 ```shell
 curl -X 'POST' \
-  'https://<YOUR-CLUSTER>/api/workflow/fd7s75562f1a-71da-11f0-9288-1a521d72d3b3/rerun' \
+  'https://<YOUR-SERVER-URL>/api/workflow/fd7s75562f1a-71da-11f0-9288-1a521d72d3b3/rerun' \
   -H 'accept: text/plain' \
   -H 'X-Authorization: <TOKEN>' \
   -H 'Content-Type: application/json' \

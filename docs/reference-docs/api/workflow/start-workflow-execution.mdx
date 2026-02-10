@@ -4,20 +4,17 @@ slug: "/reference-docs/api/workflow/start-workflow-execution"
 description: "This API is used to start a workflow execution and immediately generates a workflow (execution) ID."
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
-# Start Workflow Execution (Async)
+# Execute Workflow Asynchronously
 
 **Endpoint:** `POST /api/workflow/{name}`
 
-Starts a workflow execution asynchronously. This method returns immediately with the workflow (execution) ID without waiting for the workflow to be completed.
+Starts a workflow execution asynchronously. This method returns immediately with the workflow execution ID, without waiting for the workflow to complete.
 
 ## Path parameters
 
 | Parameter | Description                             | Type   | Required/ Optional |
 | --------- | --------------------------------------- | ------ | ------------------ |
-| name      | The name of the workflow to be executed. | string | Required.          |
+| name      | The name of the workflow to execute. | string | Required.          |
 
 ## Query parameters
 
@@ -32,7 +29,7 @@ Starts a workflow execution asynchronously. This method returns immediately with
 | Parameter         | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | Type   | Required/ Optional                            |
 | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ | --------------------------------------------- |
 | X-Idempotency-key | A unique, user-generated key to prevent duplicate workflow executions. Idempotency data is retained for the life of the workflow execution.                                                                                                                                                                                                                                                                                                                                                             | string | Optional.                                     |
-| X-on-conflict     | The idempotency strategy for handling duplicate requests. Supported values: <ul><li>**RETURN_EXISTING**—Return the _workflowId_ of the workflow instance with the same idempotency key.</li> <li>**FAIL**—Start a new workflow instance only if there are no workflow executions with the same idempotency key.</li> <li>**FAIL_ON_RUNNING**—Start a new workflow instance only if there are no RUNNING or PAUSED workflows with the same idempotency key. Completed workflows can run again.</li></ul> | string | Required if _X-Idempotency-key_ is specified. |
+| X-on-conflict     | The idempotency strategy for handling duplicate requests. Supported values: <ul><li>**RETURN_EXISTING**: Return the _workflowId_ of the workflow instance with the same idempotency key.</li> <li>**FAIL**: Start a new workflow instance only if there are no workflow executions with the same idempotency key.</li> <li>**FAIL_ON_RUNNING**: Start a new workflow instance only if there are no RUNNING or PAUSED workflows with the same idempotency key. Completed workflows can run again.</li></ul> | string | Required if _X-Idempotency-key_ is specified. |
 
 ## Request body
 
@@ -49,7 +46,7 @@ Contains the workflow inputs. Format the request as an object containing key-val
 
 ## Response
 
-Returns the workflow (execution) ID of the started workflow.
+Returns the workflow execution ID of the started workflow. Returns 404 if an invalid workflow name is provided.
 
 ## Examples
 
@@ -60,18 +57,17 @@ Returns the workflow (execution) ID of the started workflow.
 
 ```shell
 curl -X 'POST' \
-  'https://<YOUR_CLUSTER>/api/workflow/compensationWorkflow?priority=0' \
+  'https://<YOUR-SERVER-URL>/api/workflow/DemoWorkflow?priority=0' \
   -H 'accept: text/plain' \
   -H 'X-Authorization: <TOKEN>' \
-  -d '{
-    "input1": "someValue"
-  }'
+  -H 'Content-Type: application/json' \
+  -d '{"input1": "someValue"}'
 ```
 
 **Response**
 
 ```
-c0933afc-d3f4-11ef-87b1-b2b27c52ebde
+86e6cce1-0599-11f1-913a-226156badb04
 ```
 
 </details>

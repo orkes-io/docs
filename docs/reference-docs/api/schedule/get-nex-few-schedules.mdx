@@ -32,7 +32,7 @@ Returns an array of Unix timestamps (in milliseconds) representing the next sche
 
 ```bash
 curl -X 'GET' \
-  'https://<YOUR-CLUSTER>/api/scheduler/nextFewSchedules?cronExpression=0%200%2012%2031%20JAN%20%3F&limit=3' \
+  'https://<YOUR-SERVER-URL>/api/scheduler/nextFewSchedules?cronExpression=0%200%2012%2031%20JAN%20%3F&limit=3' \
   -H 'accept: application/json' \
   -H 'X-Authorization: <TOKEN>'
 ```

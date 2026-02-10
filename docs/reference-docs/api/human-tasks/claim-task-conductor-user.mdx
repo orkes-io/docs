@@ -49,7 +49,7 @@ Returns 400  if an invalid task execution ID is provided or if the Human task is
 
 ```shell
 curl -X 'POST' \
-  'https://<YOUR-CLUSTER>/api/human/tasks/9dbdd974-01c2-11f1-913a-226156badb04/claim?overrideAssignment=false&withTemplate=false' \
+  'https://<YOUR-SERVER-URL>/api/human/tasks/9dbdd974-01c2-11f1-913a-226156badb04/claim?overrideAssignment=false&withTemplate=false' \
   -H 'accept: application/json' \
   -H 'X-Authorization: <TOKEN>' \
   -d ''
@@ -174,7 +174,7 @@ Returns the claimed task with state changed to `IN_PROGRESS` and the claimant in
 
 ```shell
 curl -X 'POST' \
-  'https://<YOUR-CLUSTER>/api/human/tasks/8af5f139-01c5-11f1-913a-226156badb04/claim?overrideAssignment=true&withTemplate=false' \
+  'https://<YOUR-SERVER-URL>/api/human/tasks/8af5f139-01c5-11f1-913a-226156badb04/claim?overrideAssignment=true&withTemplate=false' \
   -H 'accept: application/json' \
   -H 'X-Authorization: <TOKEN>' \
   -d ''
@@ -299,7 +299,7 @@ Returns the claimed task where john.doe@acme.com has overridden the original ass
 
 ```shell
 curl -X 'POST' \
-  'https://<YOUR-CLUSTER>/api/human/tasks/8af5f139-01c5-11f1-913a-226156badb04/claim?overrideAssignment=false&withTemplate=false' \
+  'https://<YOUR-SERVER-URL>/api/human/tasks/8af5f139-01c5-11f1-913a-226156badb04/claim?overrideAssignment=false&withTemplate=false' \
   -H 'accept: application/json' \
   -H 'X-Authorization: <TOKEN>' \
   -d ''
@@ -424,7 +424,7 @@ Returns the claimed task without the `fullTemplate` field since `withTemplate` i
 
 ```shell
 curl -X 'POST' \
-  'https://<YOUR-CLUSTER>/api/human/tasks/59ce2c3c-01c6-11f1-8b8d-6219b54da7fe/claim?overrideAssignment=false&withTemplate=true' \
+  'https://<YOUR-SERVER-URL>/api/human/tasks/59ce2c3c-01c6-11f1-8b8d-6219b54da7fe/claim?overrideAssignment=false&withTemplate=true' \
   -H 'accept: application/json' \
   -H 'X-Authorization: <TOKEN>' \
   -d ''

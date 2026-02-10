@@ -50,7 +50,7 @@ Returns 200 OK if the Human task has been updated or completed successfully. Ret
 
 ```shell
 curl -X 'POST' \
-  'https://<YOUR-CLUSTER>/api/human/tasks/update/taskRef?workflowId=ca04d4c8-027a-11f1-913a-226156badb04&taskRefName=human_ref&complete=false' \
+  'https://<YOUR-SERVER-URL>/api/human/tasks/update/taskRef?workflowId=ca04d4c8-027a-11f1-913a-226156badb04&taskRefName=human_ref&complete=false' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>' \
   -H 'Content-Type: application/json' \
@@ -73,7 +73,7 @@ Returns 200 OK, indicating that the Human task’s output has been updated succe
 
 ```shell
 curl -X 'POST' \
-  'https://<YOUR-CLUSTER>/api/human/tasks/update/taskRef?workflowId=ca04d4c8-027a-11f1-913a-226156badb04&taskRefName=human_ref&complete=true' \
+  'https://<YOUR-SERVER-URL>/api/human/tasks/update/taskRef?workflowId=ca04d4c8-027a-11f1-913a-226156badb04&taskRefName=human_ref&complete=true' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>' \
   -H 'Content-Type: application/json' \

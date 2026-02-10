@@ -50,7 +50,7 @@ To add multiple tags in a single request, include multiple key-value pairs in th
 
 ```bash
 curl -X 'POST' \
-  'https://<YOUR-CLUSTER>/api/metadata/task/simple/tags' \
+  'https://<YOUR-SERVER-URL>/api/metadata/task/simple/tags' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>' \
   -H 'Content-Type: application/json' \
@@ -74,7 +74,7 @@ Returns 200 OK, indicating that the tag has been added to the task definition.
 
 ```bash
 curl -X 'POST' \
-  'https://<YOUR-CLUSTER>/api/metadata/task/simple/tags' \
+  'https://<YOUR-SERVER-URL>/api/metadata/task/simple/tags' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>' \
   -H 'Content-Type: application/json' \

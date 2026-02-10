@@ -53,7 +53,7 @@ Returns 200 OK, indicating that tags have been added to the schedule.
 
 ```bash
 curl -X 'PUT' \
-  'https://<YOUR-CLUSTER>/api/scheduler/schedules/assignPRSchedule/tags' \
+  'https://<YOUR-SERVER-URL>/api/scheduler/schedules/assignPRSchedule/tags' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>' \
   -H 'Content-Type: application/json' \
@@ -78,7 +78,7 @@ Returns 200 OK, indicating that the tag has been added to the schedule.
 
 ```bash
 curl -X 'PUT' \
-  'https://<YOUR-CLUSTER>/api/scheduler/schedules/assignPRSchedule/tags' \
+  'https://<YOUR-SERVER-URL>/api/scheduler/schedules/assignPRSchedule/tags' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>' \
   -H 'Content-Type: application/json' \

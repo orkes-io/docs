@@ -29,7 +29,7 @@ Returns an array of schedule objects, where each object represents a configured 
 
 ```bash
 curl -X 'GET' \
-  'https://<YOUR-CLUSTER>/api/scheduler/schedules' \
+  'https://<YOUR-SERVER-URL>/api/scheduler/schedules' \
   -H 'accept: application/json' \
   -H 'X-Authorization: <TOKEN>'
 ```
@@ -132,7 +132,7 @@ curl -X 'GET' \
 
 ```bash
 curl -X 'GET' \
-  'https://<YOUR-CLUSTER>/api/scheduler/schedules?workflowName=emailNurturing' \
+  'https://<YOUR-SERVER-URL>/api/scheduler/schedules?workflowName=emailNurturing' \
   -H 'accept: application/json' \
   -H 'X-Authorization: <TOKEN>'
 ```

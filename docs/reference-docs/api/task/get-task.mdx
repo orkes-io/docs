@@ -4,9 +4,6 @@ slug: "/reference-docs/api/task/get-task"
 description: "This API is used to retrieve the current state and details of a specific task."
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
 # Get Task by ID
 
 **Endpoint:** `GET /api/tasks/{taskId}`
@@ -21,7 +18,7 @@ Gets a task's execution details using its task execution ID.
 
 ## Response
 
-Returns a JSON object containing the task's execution details.
+Returns a JSON object containing the task's execution details. Returns 400 if an invalid task execution ID is provided.
 
 ## Examples
 
@@ -32,7 +29,7 @@ Returns a JSON object containing the task's execution details.
 
 ```bash
 curl -X 'GET' \
-  'https://<YOUR_CLUSTER>/api/tasks/6f207c78-bdf2-11ef-88e4-ce0afa758ea1' \
+  'https://<YOUR-CLUSTER>/api/tasks/65fc73fe-0586-11f1-8b8d-6219b54da7fe' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>'
 ```
@@ -41,40 +38,83 @@ curl -X 'GET' \
 
 ```json
 {
-  "taskType": "WAIT",
-  "status": "IN_PROGRESS",
+  "taskType": "HTTP",
+  "status": "COMPLETED",
   "inputData": {
-    "_createdBy": "john.doe@acme.com"
+    "encode": true,
+    "method": "GET",
+    "asyncComplete": false,
+    "_createdBy": "john.doe@acme.com",
+    "uri": "https://orkes-api-tester.orkesconductor.com/api",
+    "contentType": "application/json",
+    "accept": "application/json"
   },
-  "referenceTaskName": "wait_ref",
+  "referenceTaskName": "http_ref",
   "retryCount": 0,
   "seq": 1,
-  "pollCount": 1,
-  "taskDefName": "wait",
-  "scheduledTime": 1734697335733,
-  "startTime": 1734697335733,
-  "endTime": 0,
-  "updateTime": 0,
+  "pollCount": 0,
+  "taskDefName": "http",
+  "scheduledTime": 1770621022006,
+  "startTime": 1770621022006,
+  "endTime": 1770621022070,
+  "updateTime": 1770621022078,
   "startDelayInSeconds": 0,
   "retried": false,
-  "executed": false,
+  "executed": true,
   "callbackFromWorker": true,
   "responseTimeoutSeconds": 0,
-  "workflowInstanceId": "0c645656-becd-11ef-a89d-86a819bd92bf",
-  "workflowType": "test-workflow",
-  "taskId": "0c658ed7-becd-11ef-a89d-86a819bd92bf",
-  "callbackAfterSeconds": 2147483647,
-  "outputData": {},
+  "workflowInstanceId": "1f610b08-0586-11f1-8b8d-6219b54da7fe",
+  "workflowType": "DemoWorkflow",
+  "taskId": "65fc73fe-0586-11f1-8b8d-6219b54da7fe",
+  "callbackAfterSeconds": 0,
+  "workerId": "orkes-conductor-deployment-f4bb6bd9b-fkpdb",
+  "outputData": {
+    "response": {
+      "headers": {
+        "content-length": [
+          "182"
+        ],
+        "content-type": [
+          "application/json"
+        ],
+        "date": [
+          "Mon, 09 Feb 2026 07:10:22 GMT"
+        ],
+        "strict-transport-security": [
+          "max-age=15724800; includeSubDomains"
+        ]
+      },
+      "reasonPhrase": "",
+      "body": {
+        "randomString": "uwxvtuowbfsbcpteoazh",
+        "randomInt": 2646,
+        "hostName": "orkes-api-sampler-67dfc8cf58-q2hhh",
+        "apiRandomDelay": "0 ms",
+        "sleepFor": "0 ms",
+        "statusCode": "200",
+        "queryParams": {}
+      },
+      "statusCode": 200
+    }
+  },
   "workflowTask": {
-    "inputParameters": {},
-    "type": "SIMPLE",
+    "name": "http",
+    "taskReferenceName": "http_ref",
+    "inputParameters": {
+      "uri": "https://orkes-api-tester.orkesconductor.com/api",
+      "method": "GET",
+      "accept": "application/json",
+      "contentType": "application/json",
+      "encode": true,
+      "asyncComplete": false
+    },
+    "type": "HTTP",
     "decisionCases": {},
     "defaultCase": [],
     "forkTasks": [],
     "startDelay": 0,
     "joinOn": [],
     "optional": false,
-    "rateLimited": false,
     "defaultExclusiveJoinTask": [],
     "asyncComplete": false,
     "loopOver": [],
@@ -87,9 +127,9 @@ curl -X 'GET' \
   "iteration": 0,
   "subworkflowChanged": false,
   "firstStartTime": 0,
-  "queueWaitTime": 0,
   "loopOverTask": false,
-  "taskDefinition": null
+  "taskDefinition": null,
+  "queueWaitTime": 0
 }
 ```
 

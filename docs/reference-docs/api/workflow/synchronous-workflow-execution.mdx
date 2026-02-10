@@ -4,8 +4,6 @@ slug: "/reference-docs/api/workflow/synchronous-workflow-execution"
 description: "This API is used to start a workflow execution with a given consistency."
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 import TableNote from '@site/src/components/TableNote';
 
 # Execute Workflow Synchronously
@@ -20,7 +18,7 @@ If the workflow includes a [Yield task](https://orkes.io/content/reference-docs/
 
 | Parameter | Description                             | Type   | Required/ Optional |
 | --------- | --------------------------------------- | ------ | ------------------ |
-| name      | The name of the workflow to be executed. | string | Required.          |
+| name      | The name of the workflow to execute. | string | Required.          |
 | version | The workflow version. If unspecified, the latest version will be used. | integer | Required. | 
 
 ## Query parameters
@@ -30,8 +28,8 @@ If the workflow includes a [Yield task](https://orkes.io/content/reference-docs/
 | requestId | A user-generated request ID, which can be used to track the API request. | string | Optional.<br/>**Note**: For the Conductor version below v5.0.1, this field is Required. | 
 | waitUntilTaskRef | The reference name of the task to wait for before returning a response. If the workflow is incomplete, the response will return 206. | string | Optional. | 
 | waitForSeconds | The duration in seconds to wait before returning a response. Default is 10. | integer | Optional. | 
-| consistency | Specifies how the request persists and is replicated.  Supported values: <ul><li>**SYNCHRONOUS**—Executes the workflow directly from memory without persisting the request. The workflow is evaluated with minimal state synchronization during execution. This mode provides the lowest latency but is non-durable.</li><li>**DURABLE**—The request is stored in persistence before the workflow execution. Workflow state is synchronized during execution.</li><li>**REGION_DURABLE**—The request is replicated across regions before the workflow execution. This method provides the highest level of durability and fault tolerance but may introduce additional latency.</li></ul> Default is DURABLE.<br/><TableNote title="Available since">v5.0.1 and later</TableNote>| string | Optional. |
-| returnStrategy | If the workflow includes a [Yield task](https://orkes.io/content/reference-docs/operators/yield), this parameter defines the strategy for when the API returns a response. Supported values: <ul><li>**TARGET_WORKFLOW**–Returns the state of the originally triggered workflow.</li><li>**BLOCKING_WORKFLOW**–Returns the state of the workflow that is currently blocking the execution, which may be a sub-workflow.</li><li>**BLOCKING_TASK**–Returns the execution status of the task that is currently blocking workflow execution.</li><li>**BLOCKING_TASK_INPUT**–Returns the input of the task that is currently blocking workflow execution. Useful for introspecting runtime behavior or debugging.</li></ul> Default is TARGET_WORKFLOW.<br/><TableNote title="Available since">v5.0.1 and later</TableNote> | string | Optional. | 
+| consistency | Specifies how the request persists and is replicated.  Supported values: <ul><li>**SYNCHRONOUS**: Executes the workflow directly from memory without persisting the request. The workflow is evaluated with minimal state synchronization during execution. This mode provides the lowest latency but is non-durable.</li><li>**DURABLE**: The request is stored in persistence before the workflow execution. Workflow state is synchronized during execution.</li><li>**REGION_DURABLE**: The request is replicated across regions before the workflow execution. This method provides the highest level of durability and fault tolerance but may introduce additional latency.</li></ul> Default is DURABLE.<br/><TableNote title="Available since">v5.0.1 and later</TableNote>| string | Optional. |
+| returnStrategy | If the workflow includes a [Yield task](https://orkes.io/content/reference-docs/operators/yield), this parameter defines the strategy for when the API returns a response. Supported values: <ul><li>**TARGET_WORKFLOW**: Returns the state of the originally triggered workflow.</li><li>**BLOCKING_WORKFLOW**: Returns the state of the workflow that is currently blocking the execution, which may be a sub-workflow.</li><li>**BLOCKING_TASK**: Returns the execution status of the task that is currently blocking workflow execution.</li><li>**BLOCKING_TASK_INPUT**: Returns the input of the task that is currently blocking workflow execution. Useful for introspecting runtime behavior or debugging.</li></ul> Default is TARGET_WORKFLOW.<br/><TableNote title="Available since">v5.0.1 and later</TableNote> | string | Optional. | 
 
 ## Request body
 
@@ -48,7 +46,16 @@ Contains the workflow inputs. Format the request body as an object containing ke
 
 ## Response
 
-By default, the API returns the workflow’s current state upon synchronous execution. If a Yield task is present, the response is governed by the specified `returnStrategy`.
+By default, the API returns the workflow's current state along with its data, including:
+
+- Workflow execution status
+- Input and output data
+- Task execution details
+- Workflow metadata
+
+For workflows with Yield tasks, the response format is determined by the `returnStrategy` parameter.
+
+Returns 404 if an invalid workflow name is provided.
 
 ## Examples
 
@@ -59,7 +66,7 @@ By default, the API returns the workflow’s current state upon synchronous exec
 
 ```bash
 curl -X 'POST' \
-  'https://<YOUR-CLUSTER>/api/workflow/execute/someWorkflow/1?waitForSeconds=10&consistency=SYNCHRONOUS' \
+  'https://<YOUR-SERVER-URL>/api/workflow/execute/someWorkflow/1?waitForSeconds=10&consistency=SYNCHRONOUS' \
   -H 'accept: application/json' \
   -H 'X-Authorization: <TOKEN>' \
   -H 'Content-Type: application/json' \
@@ -221,7 +228,7 @@ Returns the workflow’s current state along with its data.
 
 ```bash
 curl -X 'POST' \
-  'https://<YOUR-CLUSTER>/api/workflow/execute/YieldWorkflow/1?waitForSeconds=10&consistency=SYNCHRONOUS&returnStrategy=BLOCKING_TASK' \
+  'https://<YOUR-SERVER-URL>/api/workflow/execute/YieldWorkflow/1?waitForSeconds=10&consistency=SYNCHRONOUS&returnStrategy=BLOCKING_TASK' \
   -H 'accept: application/json' \
   -H 'X-Authorization: <TOKEN>' \
   -H 'Content-Type: application/json' \
@@ -232,7 +239,7 @@ curl -X 'POST' \
 
 **Response**
 
-Here the response is determined by the `returnStrategy=BLOCKING_TASK`, which returns the execution status of the task that is currently blocking workflow execution.
+Here, the response is determined by `returnStrategy=BLOCKING_TASK`, which returns the execution status of the task currently blocking workflow execution.
 
 ```json
 {

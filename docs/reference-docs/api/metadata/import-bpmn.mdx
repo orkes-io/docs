@@ -50,7 +50,7 @@ When a workflow already exists with a different checksum and *overwrite* is *fal
 
 ```bash
 curl -X 'POST' \
-  'https://<YOUR-CLUSTER>/api/metadata/workflow-importer/import-bpm?overwrite=true' \
+  'https://<YOUR-SERVER-URL>/api/metadata/workflow-importer/import-bpm?overwrite=true' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>' \
   -H 'Content-Type: application/json' \

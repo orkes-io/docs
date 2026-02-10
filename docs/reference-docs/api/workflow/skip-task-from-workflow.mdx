@@ -4,20 +4,17 @@ slug: "/reference-docs/api/workflow/skip-task-from-workflow"
 description: "This API is used to skip a specific task in a currently running workflow."
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
 # Skip Task in Workflow Execution
 
 **Endpoint:** `PUT /api/workflow/{workflowId}/skiptask/{taskReferenceName}`
 
-Skips a scheduled task in an ongoing workflow using the task reference name. The skipped task’s inputs and outputs can be updated using the query parameters.
+Skips a pending task in an ongoing workflow using the task reference name. The skipped task’s inputs and outputs can be updated using the query parameters.
 
 ## Path parameters
 
 | Parameter         | Description                                                                    | Type   | Required/ Optional |
 | ----------------- | ------------------------------------------------------------------------------ | ------ | ------------------ |
-| workflowId        | The execution ID of the running workflow that contains the task to be skipped. | string | Required.          |
+| workflowId        | The execution ID of the running workflow that contains the task to skip.       | string | Required.          |
 | taskReferenceName | The reference name of the task to be skipped.                                  | string | Required.          |
 
 ## Query parameters
@@ -42,7 +39,9 @@ Skips a scheduled task in an ongoing workflow using the task reference name. The
 
 ## Response
 
-Returns 200 OK, indicating that the task has been skipped successfully.
+- Returns 200, indicating that the task has been skipped successfully.
+- Returns 500 if the task has already been processed.
+- Returns 400 if an invalid workflow execution ID is provided.
 
 ## Examples
 
@@ -53,9 +52,11 @@ Returns 200 OK, indicating that the task has been skipped successfully.
 
 ```shell
 curl -X 'PUT' \
-  'https://<YOUR_CLUSTER>o/api/workflow/18f871a1-d3f8-11ef-a114-0af1b159704e/skiptask/someTask_ref' \
+  'https://<YOUR-SERVER-URL>/api/workflow/9002f320-0663-11f1-9b1b-c6f35360b671/skiptask/simple_ref' \
   -H 'accept: */*' \
-  -H 'X-Authorization: <TOKEN>'
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{}'
 ```
 
 **Response**
@@ -71,7 +72,7 @@ Returns 200 OK, indicating that the task has been skipped successfully.
 
 ```bash
 curl -X 'PUT' \
-  'https://<YOUR-CLUSTER>/api/workflow/fd7s06a839e9-71d6-11f0-af9d-8e9bff353733/skiptask/simple_ref' \
+  'https://<YOUR-SERVER-URL>/api/workflow/fd7s06a839e9-71d6-11f0-af9d-8e9bff353733/skiptask/simple_ref' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>' \
   -H 'Content-Type: application/json' \
