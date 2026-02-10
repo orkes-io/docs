@@ -11,24 +11,26 @@ import TabItem from '@theme/TabItem';
 
 **Endpoint:** `GET /api/workflow/{workflowId}`
 
-Gets a workflow’s execution details using its workflow (execution) ID.
+Gets a workflow’s execution details using its workflow execution ID.
 
 ## Path parameters
 
 | Parameter  | Description                                                       | Type   | Required/ Optional |
 | ---------- | ----------------------------------------------------------------- | ------ | ------------------ |
-| workflowId | The execution ID of the workflow whose details are to be fetched. | string | Required.          |
+| workflowId | The execution ID of the workflow to fetch.                        | string | Required.          |
 
 ## Query parameters
 
 | Parameter    | Description                                                                                                                             | Type    | Required/ Optional |
 | ------------ | --------------------------------------------------------------------------------------------------------------------------------------- | ------- | ------------------ |
-| includeTasks | If set to true, all task execution details will be fetched in a `tasks` array. Default is true.                                         | boolean | Optional.          |
+| includeTasks | If set to `true`, all task execution details will be fetched in a `tasks` array. Default is `true`.                                        | boolean | Optional.          |
 | summarize    | **Note:** This parameter is deprecated. There is no effect when configured. <br/><br/> Whether the workflow details will be summarized. | boolean | Optional.          |
 
 ## Response
 
-Returns a JSON object containing the workflow’s execution details.
+Returns a JSON object containing the workflow's execution details, including workflow status, inputs, outputs, task execution information (if `includeTasks=true`), and the workflow definition.
+
+Returns 400 if an invalid task execution ID is provided.
 
 ## Examples
 
