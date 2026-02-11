@@ -1,0 +1,103 @@
+---
+sidebar_position: 5
+slug: "/reference-docs/api/environment-variables/add-tags-to-environment-variable"
+description: "This API is used to add tags to an environment variable."
+---
+
+# Add Tags to an Environment Variable
+
+**Endpoint**: `PUT /api/environment/{name}/tags`
+
+Adds tags to an environment variable. You can add a single tag or multiple tags in one request. If a tag with the same key already exists, this operation will update its value.
+
+## Path parameters
+
+| Parameter | Description                                                       | Type   | Required/ Optional |
+| --------- | ----------------------------------------------------------------- | ------ | ------------------ |
+| key | The name of the environment variable to which the tags are to be added. | string | Required. | 
+
+## Request Body
+
+The request body should be an array of tag objects.
+
+| Parameter | Description                                                       | Type   | Required/ Optional |
+| --------- | ----------------------------------------------------------------- | ------ | ------------------ |
+| key | The tag key. | string | Required. | 
+| value | The tag value. | string | Required. | 
+
+**Example for adding multiple tags in a single request:**
+
+```json
+[
+  {
+    "key": "dev",
+    "value": "automation"
+  },
+  {
+    "key": "backend",
+    "value": "PR"
+  }
+]
+```
+
+## Response
+
+Returns 200 OK, indicating that tags have been added to the environment variable.
+
+## Examples 
+
+<details>
+<summary>Add a single tag to an environment variable</summary>
+
+**Request**
+
+```json
+curl -X 'PUT' \
+  'https://<YOUR-SERVER-URL>/api/environment/sampleKey/tags' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <HEADER>' \
+  -H 'Content-Type: application/json' \
+  -d '[
+  {
+    "key": "dev",
+    "value": "automation"
+  }
+]
+'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the tag has been added to the environment variable.
+
+</details>
+
+<details>
+<summary>Add multiple tags to an environment variable</summary>
+
+**Request**
+
+```shell
+curl -X 'PUT' \
+  'https://<YOUR-SERVER-URL>/api/environment/sampleKey/tags' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '[
+  {
+    "key": "dev",
+    "value": "automation"
+  },
+  {
+    "key": "backend",
+    "value": "PR"
+  }
+]
+'
+```
+
+**Response**
+
+Returns 200 OK, indicating that tags have been added to the environment variable. 
+
+</details>

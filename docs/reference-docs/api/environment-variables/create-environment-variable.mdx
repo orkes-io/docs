@@ -1,0 +1,99 @@
+---
+sidebar_position: 1
+slug: "/reference-docs/api/environment-variables/create-environment-variable"
+description: "This API is used to create a new or update an existing environment variable."
+---
+
+# Create/Update Environment Variable
+
+**Endpoint**: `PUT /api/environment/{key}`
+
+Creates or updates an environment variable. The requesting user must have either an **Admin** or **Metadata** role. 
+
+## Path parameters
+
+| Parameter | Description                                                       | Type   | Required/ Optional |
+| --------- | ----------------------------------------------------------------- | ------ | ------------------ |
+| key | A unique identifier for the variable. This name will be used to reference the variable in workflow definitions | string | Required. | 
+
+## Request body
+
+Format the request body as plain text or a JSON string. The request body must contain the raw value of the environment variable.
+
+**Example (Plain text):**
+
+```text
+keyValue
+```
+
+**Example (JSON string):**
+
+```json
+{"endpoint": "https://api.example.com", "timeout": 60}
+```
+
+## Response
+
+Returns 200, indicating that the environment variable has been created or updated successfully.
+
+## Examples
+
+<details>
+<summary>Create a plain-text environment variable</summary>
+
+**Request**
+
+```shell
+curl -X 'PUT' \
+  'https://<YOUR-SERVER-URL>/api/environment/keyName' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: text/plain' \
+  -d 'keyValue'
+```
+
+**Response**
+
+Returns 200, indicating that the environment variable has been created successfully.
+
+</details>
+
+<details>
+<summary>Create a JSON-based environment variable</summary>
+
+**Request**
+
+```shell
+curl -X 'PUT' \
+  'https://<YOUR-SERVER-URL>/api/environment/url' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: text/plain' \
+  -d '{ "baseUrl": "https://orkes-api-tester.orkesconductor.com/api", "timeout": 5000 }'
+```
+
+**Response**
+
+Returns 200, indicating that the environment variable has been created successfully.
+
+</details>
+
+<details>
+<summary>Update an existing environment variable</summary>
+
+**Request**
+
+```shell
+curl -X 'PUT' \
+  'https://<YOUR-SERVER-URL>/api/environment/keyName' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: text/plain' \
+  -d 'updatedKeyValue'
+```
+
+**Response**
+
+Returns 200, indicating that the environment variable has been updated successfully.
+
+</details>
