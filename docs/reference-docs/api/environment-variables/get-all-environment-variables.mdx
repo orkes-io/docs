@@ -1,0 +1,50 @@
+---
+sidebar_position: 3
+slug: "/reference-docs/api/environment-variables/get-all-environment-variables"
+description: "This API is used to get all environment variables."
+---
+
+# Get All Environment Variables
+
+**Endpoint**: `GET /api/environment`
+
+Retrieves all environment variables from your Conductor cluster. 
+
+## Response
+
+Returns an array of objects containing all environment variables with their names and values.
+
+## Examples
+
+<details>
+<summary>Get all environment variables</summary>
+
+**Request**
+
+```shell
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/environment' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+[
+  {
+    "name": "uri-for-http-task-testing-env",
+    "value": "https://xyz.com/api"
+  },
+  {
+    "name": "url",
+    "value": "{ \"baseUrl\": \"https://orkes-api-tester.orkesconductor.com/api\", \"timeout\": 5000 }"
+  },
+  {
+    "name": "sampleKey",
+    "value": "sampleValue"
+  }
+]
+```
+
+</details>

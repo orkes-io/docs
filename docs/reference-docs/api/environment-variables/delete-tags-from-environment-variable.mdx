@@ -1,0 +1,86 @@
+---
+sidebar_position: 7
+slug: "/reference-docs/api/environment-variables/delete-tags-from-environment-variable"
+description: "This API is used to delete tags from an environment variable."
+---
+
+# Delete Tags from an Environment Variable
+
+**Endpoint**: `DELETE /api/environment/{name}/tags`
+
+Deletes tags from an environment variable.
+
+## Path parameters
+
+| Parameter | Description                                                       | Type   | Required/ Optional |
+| --------- | ----------------------------------------------------------------- | ------ | ------------------ |
+| key | The name of the environment variable from which the tags are to be deleted. | string | Required. | 
+
+## Request Body
+
+The request body should be an array of tag objects.
+
+| Parameter | Description                                                       | Type   | Required/ Optional |
+| --------- | ----------------------------------------------------------------- | ------ | ------------------ |
+| key | The tag key. | string | Required. | 
+| value | The tag value. | string | Required. | 
+
+## Response
+
+Returns 200 OK, indicating that tags have been deleted from the environment variable.
+
+## Examples 
+
+<details>
+<summary>Delete a single tag from an environment variable</summary>
+
+**Request**
+
+```shell
+curl -X 'DELETE' \
+  'https://<YOUR-SERVER-URL>/api/environment/sampleKey/tags' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '[
+  {
+    "key": "dev",
+    "value": "automation"
+  }
+]'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the tag has been deleted from the environment variable.
+
+</details>
+
+<details>
+<summary>Delete multiple tags from an environment variable</summary>
+
+**Request**
+
+```shell
+curl -X 'DELETE' \
+  'https://<YOUR-SERVER-URL>/api/environment/sampleKey/tags' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '[
+  {
+    "key": "backend",
+    "value": "PR"
+  },
+{
+    "key": "env",
+    "value": "prod"
+  }
+]'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the tags have been deleted from the environment variable.
+
+</details>

@@ -1,0 +1,43 @@
+---
+sidebar_position: 4
+slug: "/reference-docs/api/environment-variables/delete-environment-variable"
+description: "This API is used to delete an environment variable."
+---
+
+# Delete Environment Variable
+
+**Endpoint**: `DELETE /api/environment/{key}`
+
+Deletes an environment variable. The requesting user must have either an **Admin** or **Metadata** role. 
+
+## Path parameters
+
+| Parameter | Description                                                       | Type   | Required/ Optional |
+| --------- | ----------------------------------------------------------------- | ------ | ------------------ |
+| key | The name of the environment variable to delete. | string | Required. | 
+
+## Response
+
+Returns the value of the environment variable that was deleted.
+
+## Examples
+
+<details>
+<summary>Delete an environment variable</summary>
+
+**Request**
+
+```shell
+curl -X 'DELETE' \
+  'https://<YOUR-SERVER-URL>/api/environment/url' \
+  -H 'accept: text/plain' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+{ "baseUrl": "https://orkes-api-tester.orkesconductor.com/api", "timeout": 5000 }
+```
+
+</details>

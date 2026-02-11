@@ -1,0 +1,43 @@
+---
+sidebar_position: 2
+slug: "/reference-docs/api/environment-variables/get-environment-value-by-key"
+description: "This API is used to retrieve the environment variable value by its key."
+---
+
+# Get Environment Value by Key
+
+**Endpoint**: `GET /api/environment/{key}`
+
+Retrieves the value of an environment variable by its key.
+
+## Path parameters
+
+| Parameter | Description                                                       | Type   | Required/ Optional |
+| --------- | ----------------------------------------------------------------- | ------ | ------------------ |
+| key | The environment variable key to retrieve. | string | Required. | 
+
+## Response
+
+Returns the value associated with the retrieved key.
+
+## Examples
+
+<details>
+<summary>Get an environment variable by key</summary>
+
+**Request**
+
+```shell
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/environment/sampleKey' \
+  -H 'accept: text/plain' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+sampleValue
+```
+
+</details>

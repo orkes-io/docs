@@ -1,0 +1,42 @@
+---
+sidebar_position: 6
+slug: "/reference-docs/api/schema/delete-schema-version"
+description: "This API is used to delete a specific version of the schema."
+---
+
+# Delete Schema Version
+
+**Endpoint**: `DELETE /api/schema/{name}/{version}`
+
+Deletes a specific version of the schema from the Conductor server by its name. 
+
+## Path parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| name | The name of the schema to delete.| string | Required. | 
+|version | The version of the schema to delete. | integer | Required. | 
+
+## Response
+
+Returns 200 OK, indicating that the specific schema version has been deleted. Returns 500 if an invalid path parameter is provided.
+
+## Examples
+
+<details>
+<summary>Delete a specific version of a schema</summary>
+
+**Request**
+
+```shell
+curl -X 'DELETE' \
+  'https://<YOUR-SERVER-URL>/api/schema/itemSchema/2' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the specific version of the schema has been deleted.
+
+</details>

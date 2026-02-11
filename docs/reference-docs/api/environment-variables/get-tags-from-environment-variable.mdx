@@ -1,0 +1,52 @@
+---
+sidebar_position: 6
+slug: "/reference-docs/api/environment-variables/get-tags-from-environment-variable"
+description: "This API is used to retrieve tags from an environment variable."
+---
+
+# Get Tags from an Environment Variable
+
+**Endpoint**: `GET /api/environment/{name}/tags`
+
+Retrieves the tags associated with an environment variable.
+
+## Path parameters
+
+| Parameter | Description                                                       | Type   | Required/ Optional |
+| --------- | ----------------------------------------------------------------- | ------ | ------------------ |
+| key | The name of the environment variable from which the tags are to be retrieved. | string | Required. | 
+
+## Response
+
+Returns an array of tag objects, each containing a key-value pair.
+
+## Examples 
+
+<details>
+<summary>Get tags from an environment variable</summary>
+
+**Request**
+
+```shell
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/environment/sampleKey/tags' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+[
+  {
+    "key": "backend",
+    "value": "PR"
+  },
+  {
+    "key": "dev",
+    "value": "automation"
+  }
+]
+```
+
+</details>

@@ -1,0 +1,69 @@
+---
+sidebar_position: 3
+slug: "/reference-docs/api/schema/get-schema-by-name"
+description: "This API is used to get the latest version of a schema definition."
+---
+
+# Get Schema by Name 
+
+**Endpoint**: `GET /api/schema/{name}`
+
+Retrieves the latest version of a schema definition by its name.
+
+## Path parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| name | The name of the schema to retrieve.| string | Required. | 
+
+## Response
+
+Returns a schema object containing the latest version of the specified schema. Returns 404 if an invalid schema name is provided.
+
+## Examples
+
+<details>
+<summary>Get the latest version of a schema</summary>
+
+**Request**
+
+```shell
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/schema/FeedbackSchema' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+{
+  "createTime": 1767678326224,
+  "updateTime": 1767678326224,
+  "createdBy": "john.doe@acme.com",
+  "updatedBy": "john.doe@acme.com",
+  "name": "FeedbackSchema",
+  "version": 1,
+  "type": "JSON",
+  "data": {
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "type": "object",
+    "properties": {
+      "rating": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 5
+      },
+      "comment": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "rating",
+      "comment"
+    ]
+  }
+}
+```
+
+</details>
