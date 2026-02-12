@@ -1,7 +1,7 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
 
-import { themes as prismThemes } from 'prism-react-renderer';
+import { themes as prismThemes } from "prism-react-renderer";
 
 const baseUrlName = "/content";
 /** @type {import('@docusaurus/types').Config} */
@@ -23,16 +23,7 @@ const config = {
       async: true,
     },
     {
-      src: baseUrlName + "/js/cookie-consent.js",
-    },
-    {
-      src: baseUrlName + "/js/apollo.js",
-    },
-    {
       src: baseUrlName + "/js/leadMagic.js",
-    },
-    {
-      src: "https://player.vimeo.com/api/player.js",
     },
   ],
   plugins: [
