@@ -1,0 +1,52 @@
+---
+sidebar_position: 6
+slug: "/reference-docs/api/applications/delete-access-key"
+description: "This API is used to delete an access key from an application."
+---
+
+# Delete Access Key
+
+**Endpoint**: `DELETE /api/applications/{applicationId}/accessKeys/{keyId}`
+
+Deletes an existing access key from an application in your Conductor cluster. 
+
+:::warning
+Deleting an access key is permanent and cannot be undone. Any applications using this key will lose access immediately.
+:::
+
+## Path parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| applicationId | The unique ID of the application for which the access key will be deleted. | string | Required. |
+| keyId | The access key ID to be deleted. | string | Required. |
+
+## Response
+
+Returns a message indicating that the specified application key has been deleted.
+
+Returns 404 if an invalid path parameter is provided.
+
+## Examples
+
+<details>
+<summary>Delete an access key from the application</summary>
+
+**Request**
+
+```shell
+curl -X 'DELETE' \
+  'https://<YOUR-SERVER-URL>/api/applications/243a8a88-9f77-48b2-9429-76793a123344/accessKeys/dea0f780-0739-11f1-9b1b-c6f35360b671' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+{
+  "message": "Deleted Access key 'dea0f780-0739-11f1-9b1b-c6f35360b671'"
+}
+```
+
+</details>

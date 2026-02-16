@@ -1,0 +1,99 @@
+---
+sidebar_position: 14
+slug: "/reference-docs/api/applications/add-tag-to-application"
+description: "This API is used to add tags to an application."
+---
+
+# Add Tag to Application
+
+**Endpoint**: `PUT /api/applications/{id}/tags`
+
+Adds tags to an application. You can add a single tag or multiple tags in one request. If a tag with the same key already exists, this operation will update its value.
+
+## Path parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| id | The unique identifier of the application to which the tags are to be added. | string | Required. |
+
+## Request body
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| key | The tag key. | string | Required. | 
+| value | The tag value. | string | Required. | 
+
+**Example for adding multiple tags in a single request:**
+
+```json
+[
+  {
+    "key": "dev",
+    "value": "automation"
+  },
+  {
+    "key": "backend",
+    "value": "PR"
+  }
+]
+```
+
+## Response
+
+Returns 200 OK, indicating that tags have been added to the application.
+
+## Examples
+
+<details>
+<summary>Add a single tag to an application</summary>
+
+**Request**
+
+```shell
+curl -X 'PUT' \
+  'https://<YOUR-SERVER-URL>/api/applications/bcd1886f-3e98-4f28-ba49-1174f6482f15/tags' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '[
+  {
+    "key": "someKey",
+    "value": "someValue"
+  }
+]'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the tag has been added to the application.
+
+</details>
+
+<details>
+<summary>Add multiple tags to an application</summary>
+
+**Request**
+
+```shell
+curl -X 'PUT' \
+  'https://<YOUR-SERVER-URL>/api/applications/bcd1886f-3e98-4f28-ba49-1174f6482f15/tags' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '[
+   {
+    "key": "dev",
+    "value": "automation"
+  },
+  {
+    "key": "backend",
+    "value": "PR"
+  }
+]'
+```
+
+**Response**
+
+Returns 200 OK, indicating that tags have been added to the application. 
+
+</details>

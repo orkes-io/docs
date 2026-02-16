@@ -1,0 +1,63 @@
+---
+sidebar_position: 1
+slug: "/reference-docs/api/applications/create-application"
+description: "This API is used to create an application."
+---
+
+# Create Application
+
+**Endpoint**: `POST /api/applications`
+
+Creates a new [application](/content/category/access-control-and-security#applications) in your Conductor cluster. 
+
+## Request body
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| name | The name of the application.  | string | Required. |
+
+## Response
+
+Returns the newly created application object with following fields.
+
+| Parameter | Description | 
+| --------- | ----------- |
+| id | Unique identifier for the application. | 
+| name | Name of the application. | 
+| createdBy | Email of the user who created the application. | 
+| updatedBy | Email of the user who last updated the application. | 
+| createTime | Creation timestamp in Unix time (milliseconds). | 
+| updateTime | Last update timestamp in Unix time (milliseconds). | 
+
+## Examples
+
+<details>
+<summary>Create a new application</summary>
+
+**Request**
+
+```shell
+curl -X 'POST' \
+  'https://<YOUR-SERVER-URL>/api/applications' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "name": "SampleApplication"
+}'
+```
+
+**Response**
+
+```json
+{
+  "id": "243a8a88-9f77-48b2-9429-76793a123344",
+  "name": "SampleApplication",
+  "createdBy": "john.doe@acme.com",
+  "updatedBy": "john.doe@acme.com",
+  "createTime": 1770797022913,
+  "updateTime": 1770797022913
+}
+```
+
+</details>

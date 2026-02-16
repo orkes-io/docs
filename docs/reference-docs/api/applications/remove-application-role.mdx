@@ -1,0 +1,43 @@
+---
+sidebar_position: 7
+slug: "/reference-docs/api/applications/remove-application-role"
+description: "This API is used to remove a role from an existing application."
+---
+
+# Remove Role from Application
+
+**Endpoint**: `DELETE /api/applications/{applicationId}/roles/{role}`
+
+Removes an existing role from an application in your Conductor cluster.
+
+## Path parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| applicationId | The unique ID of the application from which the role will be deleted. | string | Required. |
+| role | The role to remove from the application. Supported values:<ul><li>`WORKER`</li><li>`METADATA_API`</li><li>`APPLICATION_CREATOR`</li></ul>The following roles can only be granted by a cluster Admin:<ul><li>`UNRESTRICTED_WORKER`</li><li>`METADATA_MANAGER`</li><li>`WORKFLOW_MANAGER`</li><li>`APPLICATION_MANAGER`</li><li>`ADMIN`</li></ul>For detailed role descriptions, see [Assign Role to Application](/content/reference-docs/api/applications/assign-role-to-application#path-parameters). | string | Required. |
+
+## Response
+
+- Returns 200 OK, indicating that the role is removed from the application.
+- Returns 404 if an invalid application ID is provided.
+
+## Examples
+
+<details>
+<summary>Remove a role from an application</summary>
+
+**Request**
+
+```shell
+curl -X 'DELETE' \
+  'https://<YOUR-SERVER-URL>/api/applications/243a8a88-9f77-48b2-9429-76793a123344/roles/WORKER' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the role is removed from the application.
+
+</details>

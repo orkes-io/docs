@@ -1,0 +1,62 @@
+---
+sidebar_position: 10
+slug: "/reference-docs/api/applications/get-application-access-keys"
+description: "This API is used to retrieve all access keys for an application."
+---
+
+# Get Application Access Keys
+
+**Endpoint**: `GET /api/applications/{id}/accessKeys`
+
+Retrieves all access keys for an application from your Conductor cluster.
+
+## Path parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| id | The unique identifier of the application whose access keys will be retrieved. | string | Required. |
+
+## Response
+
+Returns an array containing the following access key details:
+
+| Parameter | Description|
+| --------- | ---------- |
+| id | The access key ID. | 
+| createdAt | Creation timestamp in Unix time (milliseconds). | 
+| status | The status of the access key. Can be `ACTIVE` or `INACTIVE`. | 
+
+Returns 404 if an invalid application ID is provided.
+
+## Examples
+
+<details>
+<summary>Get an application’s access keys</summary>
+
+**Request**
+
+```shell
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/applications/db66991f-206f-4695-8fe9-f5d53976c9a8/accessKeys' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+[
+  {
+    "id": "deb14bc8-f081-11f0-bba8-b670bc6a0f4a",
+    "createdAt": 1768310102690,
+    "status": "ACTIVE"
+  },
+  {
+    "id": "614ed5d3-035c-11f1-913a-226156badb04",
+    "createdAt": 1770383073037,
+    "status": "ACTIVE"
+  }
+]
+```
+
+</details>

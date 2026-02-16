@@ -1,0 +1,61 @@
+---
+sidebar_position: 11
+slug: "/reference-docs/api/applications/get-application-by-id"
+description: "This API is used to retrieve an application's details using its application ID."
+---
+
+# Get Application by ID
+
+**Endpoint**: `GET /api/applications/{id}`
+
+Retrieves an application's details using its application ID from your Conductor cluster.
+
+## Path parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| id | The unique identifier of the application. | string | Required. |
+
+## Response
+
+Returns an array containing the following access key details:
+
+| Parameter | Description|
+| --------- | ---------- |
+| id | The application ID. | 
+| name | The application name. | 
+| createdBy | Email of the user who created the application. | 
+| updatedBy | Email of the user who last updated the application. | 
+| createTime | Creation timestamp in Unix time (milliseconds). | 
+| updateTime | Last update timestamp in Unix time (milliseconds). |
+
+Returns 404 if an invalid application ID is provided.
+
+## Examples
+
+<details>
+<summary>Get an application using its ID</summary>
+
+**Request**
+
+```shell
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/applications/db66991f-206f-4695-8fe9-f5d53976c9a8' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+{
+  "id": "db66991f-206f-4695-8fe9-f5d53976c9a8",
+  "name": "AGENTIC-INTERVIEW",
+  "createdBy": "john.doe@acme.com",
+  "updatedBy": "john.doe@acme.com",
+  "createTime": 1768310094272,
+  "updateTime": 1768310094272
+}
+```
+
+</details>
