@@ -1,0 +1,48 @@
+---
+sidebar_position: 13
+slug: "/reference-docs/api/applications/get-application-tags"
+description: "This API is used to retrieve the tags associated with an application."
+---
+
+# Get Tags from Application
+
+**Endpoint**: `GET /api/applications/{id}/tags`
+
+Retrieves the tags associated with an application.
+
+## Path parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| id | The unique identifier of the application from which the tags are to be retrieved. | string | Required. |
+
+## Response
+
+Returns an array of tag objects, each containing a key-value pair. Returns an empty array if the application has no tags.
+
+## Examples
+
+<details>
+<summary>Get tags from an application</summary>
+
+**Request**
+
+```shell
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/applications/db66991f-206f-4695-8fe9-f5d53976c9a8/tags' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+[
+  {
+    "key": "dev",
+    "value": "automation"
+  }
+]
+```
+
+</details>
