@@ -1,0 +1,87 @@
+---
+sidebar_position: 15
+slug: "/reference-docs/api/applications/delete-tag-application"
+description: "This API is used to delete tags from an application."
+---
+
+# Delete Tag from Application
+
+**Endpoint**: `DELETE /api/applications/{id}/tags`
+
+Deletes tags from an application.
+
+## Path parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| id | The unique identifier of the application from which the tags are to be deleted. | string | Required. |
+
+## Request body
+
+The request body should be an array of tag objects.
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| key | The tag key to be removed. | string | Required. | 
+| value | The tag value to be removed.| string | Required. | 
+
+## Response
+
+Returns 200 OK, indicating that tags have been deleted from the application.
+
+## Examples
+
+<details>
+<summary>Delete a single tag from an application</summary>
+
+**Request**
+
+```shell
+curl -X 'DELETE' \
+  'https://<YOUR-SERVER-URL>/api/applications/db66991f-206f-4695-8fe9-f5d53976c9a8/tags' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '[
+  {
+    "key": "dev",
+    "value": "automation"
+  }
+]'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the tag has been deleted from the application.
+
+</details>
+
+<details>
+<summary>Delete multiple tags from an application</summary>
+
+**Request**
+
+```shell
+curl -X 'DELETE' \
+  'https://<YOUR-SERVER-URL>/api/applications/bcd1886f-3e98-4f28-ba49-1174f6482f15/tags' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '[
+  {
+    "key": "dev",
+    "value": "automation"
+  },
+{
+    "key": "backend",
+    "value": "PR"
+  }
+]
+'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the tags have been deleted from the application.
+
+</details>
