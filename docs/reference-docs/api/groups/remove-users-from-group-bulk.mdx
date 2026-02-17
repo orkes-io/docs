@@ -1,0 +1,62 @@
+---
+sidebar_position: 4
+slug: "/reference-docs/api/groups/remove-users-from-group-bulk"
+description: "This API is used to add an individual user to an existing group."
+---
+
+# Remove Users from Group in Bulk
+
+**Endpoint**: `DELETE /api/groups/{groupId}/users`
+
+Remove users from an existing group in bulk. The invoking user must be an **Admin** to the Conductor cluster.
+
+## Path parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| groupId | The name of the group.  | string | Required. |
+
+## Request body
+
+Format the request body as an array of user email IDs. Each user must already be a member of the group.
+
+**Example**
+
+```json
+[
+  "user1@example.com",
+  "user2@example.com",
+  "user3@example.com"
+]
+```
+
+## Response
+
+- Returns 200 OK when the users have been successfully removed from the group.
+- Returns 404 if an invalid group name or user ID is provided.
+- Returns 403 if a non-admin invokes the API.
+
+## Examples
+
+<details>
+<summary>Remove users from a group in bulk</summary>
+
+**Request**
+
+```shell
+curl -X 'DELETE' \
+  'https://<YOUR-SERVER-URL>/api/groups/TechWriters/users' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '[
+  "john.doe@acme.com",
+"jane.doe@acme.com"
+]'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the users have been removed from the group.
+
+</details>

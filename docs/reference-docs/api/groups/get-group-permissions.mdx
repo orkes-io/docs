@@ -1,0 +1,169 @@
+---
+sidebar_position: 6
+slug: "/reference-docs/api/groups/get-group-permissions"
+description: "This API is used to retrieve a group's permission over other resources."
+---
+
+# Get Group Permission over Resources
+
+**Endpoint**: `GET /api/groups/{groupId}/permissions`
+
+Retrieves the permissions that a group has over resources such as workflows, tasks, secrets, environment variables, tags, domains, integrations, and prompts. The invoking user must be an **Admin** to the Conductor cluster.
+
+## Path parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| groupId | The name of the group from which permissions are to be retrieved.  | string | Required. |
+
+## Response
+
+- Returns the group's granted access permissions.
+- Returns 403 if a non-admin invokes the API.
+
+## Examples
+
+<details>
+<summary>Get permissions for a group</summary>
+
+**Request**
+
+```shell
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/groups/TechWriters/permissions' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+{
+  "grantedAccess": [
+    {
+      "target": {
+        "type": "TASK_DEF",
+        "id": "BUSINESS_RULE"
+      },
+      "access": [
+        "EXECUTE"
+      ]
+    },
+    {
+      "target": {
+        "type": "WORKFLOW_SCHEDULE",
+        "id": "assignPRScheduleaaa"
+      },
+      "access": [
+        "EXECUTE"
+      ],
+      "tag": "dev:automation"
+    },
+    {
+      "target": {
+        "type": "ENV_VARIABLE",
+        "id": "sampleKey"
+      },
+      "access": [
+        "EXECUTE"
+      ]
+    },
+    {
+      "target": {
+        "type": "DOMAIN",
+        "id": "sampleDomain"
+      },
+      "access": [
+        "EXECUTE"
+      ]
+    },
+    {
+      "target": {
+        "type": "SECRET_NAME",
+        "id": "my_token"
+      },
+      "access": [
+        "UPDATE"
+      ]
+    },
+    {
+      "target": {
+        "type": "APPLICATION",
+        "id": "bcd1886f-3e98-4f28-ba49-1174f6482f15kj"
+      },
+      "access": [
+        "EXECUTE"
+      ],
+      "tag": "dev:automation"
+    },
+    {
+      "target": {
+        "type": "INTEGRATION",
+        "id": "SendGrid"
+      },
+      "access": [
+        "EXECUTE"
+      ]
+    },
+    {
+      "target": {
+        "type": "APPLICATION",
+        "id": "app:bcd1886f-3e98-4f28-ba49-1174f6482f15kj"
+      },
+      "access": [
+        "EXECUTE"
+      ],
+      "tag": "dev:automation"
+    },
+    {
+      "target": {
+        "type": "WORKFLOW_SCHEDULE",
+        "id": "assignPRSchedule"
+      },
+      "access": [
+        "EXECUTE"
+      ],
+      "tag": "dev:automation"
+    },
+    {
+      "target": {
+        "type": "PROMPT",
+        "id": "Document-Retrieval"
+      },
+      "access": [
+        "EXECUTE"
+      ]
+    },
+    {
+      "target": {
+        "type": "ENV_VARIABLE",
+        "id": "sampleKeyk"
+      },
+      "access": [
+        "EXECUTE"
+      ],
+      "tag": "dev:automation"
+    },
+    {
+      "target": {
+        "type": "WORKFLOW_DEF",
+        "id": "Agentic_Security_Example"
+      },
+      "access": [
+        "EXECUTE"
+      ]
+    },
+    {
+      "target": {
+        "type": "TAG",
+        "id": "dev:automation"
+      },
+      "access": [
+        "EXECUTE"
+      ]
+    }
+  ]
+}
+```
+
+</details>

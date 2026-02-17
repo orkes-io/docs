@@ -1,0 +1,44 @@
+---
+sidebar_position: 5
+slug: "/reference-docs/api/groups/remove-users-from-group"
+description: "This API is used to remove an individual user from an existing group."
+---
+
+# Remove Single User from Group
+
+**Endpoint**: `DELETE /api/groups/{groupId}/users/{userId}`
+
+Removes an individual user from an existing group in your Conductor cluster. The invoking user must be an **Admin** to the Conductor cluster.
+
+## Path parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| groupId | The name of the group.  | string | Required. |
+| userId | The email ID of the user to remove from the group. The user must already be a member of the group. | string | Required. | 
+
+## Response
+
+- Returns 200 OK, indicating that the user has been removed from the group. 
+- Returns 404 if an invalid group name or user ID is provided.
+- Returns 403 if a non-admin invokes the API.
+
+## Examples
+
+<details>
+<summary>Remove an individual user from the group</summary>
+
+**Request**
+
+```shell
+curl -X 'DELETE' \
+  'https://<YOUR-SERVER-URL>/api/groups/TechWriters/users/john.doe%40acme.com' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the user has been removed from the group.
+
+</details>

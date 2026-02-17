@@ -1,0 +1,75 @@
+---
+sidebar_position: 10
+slug: "/reference-docs/api/groups/get-group"
+description: "This API is used to retrieve the details of a specific group using its group ID."
+---
+
+# Get Group by ID
+
+**Endpoint**: `GET /api/groups/{id}`
+
+Retrieves details of a specific group from your Conductor cluster. The invoking user must be an **Admin** to the Conductor cluster.
+
+## Path parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| id | The name of the group. | string | Required. | 
+
+## Response
+
+- Returns the group object containing its ID, description, assigned roles with permissions, default access configuration, and contact information.
+- Returns 404 if an invalid group ID is provided.
+- Returns 403 if a non-admin invokes the API.
+
+## Examples
+
+<details>
+<summary>Get a group’s details using its group ID</summary>
+
+**Request**
+
+```shell
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/groups/TechWriters' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+{
+  "id": "TechWriters",
+  "description": "A dedicated group for testing for tech writers",
+  "roles": [
+    {
+      "name": "METADATA_MANAGER",
+      "permissions": [
+        {
+          "name": "METADATA_MANAGEMENT"
+        },
+        {
+          "name": "METADATA_VIEW"
+        },
+        {
+          "name": "CREATE_SECRET"
+        },
+        {
+          "name": "CREATE_INTEGRATION"
+        },
+        {
+          "name": "API_GATEWAY_MANAGEMENT"
+        },
+        {
+          "name": "API_GATEWAY_VIEW"
+        }
+      ]
+    }
+  ],
+  "defaultAccess": {},
+  "contactInformation": {}
+}
+```
+
+</details>
