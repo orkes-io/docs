@@ -1,0 +1,132 @@
+---
+sidebar_position: 8
+slug: "/reference-docs/api/groups/get-all-groups"
+description: "This API is used to get all schedules."
+---
+
+# Get All Groups
+
+**Endpoint**: `GET /api/groups`
+
+Retrieves all groups from your Conductor cluster. The invoking user must be an **Admin** to the Conductor cluster.
+
+## Response
+
+Returns an array of group objects, where each object contains the group's ID, description, assigned roles with their permissions, default access configuration, and contact information.
+
+Returns 403 if a non-admin invokes the API.
+
+## Examples
+
+<details>
+<summary>Get all groups</summary>
+
+**Request**
+
+```shell
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/groups' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+[
+  {
+    "id": "Engineers",
+    "description": "Engineering",
+    "roles": [
+      {
+        "name": "ADMIN",
+        "permissions": [
+          {
+            "name": "AUTHORIZATION_MANAGEMENT"
+          },
+          {
+            "name": "WORKFLOW_SEARCH"
+          },
+          {
+            "name": "PUBLISHER_MANAGEMENT"
+          },
+          {
+            "name": "API_GATEWAY_VIEW"
+          },
+          {
+            "name": "API_GATEWAY_MANAGEMENT"
+          },
+          {
+            "name": "WORKFLOW_MANAGEMENT"
+          },
+          {
+            "name": "PROMPT_MANAGEMENT"
+          },
+          {
+            "name": "EVENT_HANDLER_MANAGEMENT"
+          },
+          {
+            "name": "USER_MANAGEMENT"
+          },
+          {
+            "name": "PERMISSION_MANAGEMENT"
+          },
+          {
+            "name": "METADATA_VIEW"
+          },
+          {
+            "name": "ADMIN_MANAGEMENT"
+          },
+          {
+            "name": "METADATA_MANAGEMENT"
+          },
+          {
+            "name": "APPLICATION_MANAGEMENT"
+          },
+          {
+            "name": "BULK_MANAGEMENT"
+          },
+          {
+            "name": "SCHEDULE_MANAGEMENT"
+          }
+        ]
+      }
+    ],
+    "defaultAccess": {},
+    "contactInformation": {}
+  },
+  {
+    "id": "TechWriters",
+    "description": "A dedicated group for testing for tech writers",
+    "roles": [
+      {
+        "name": "METADATA_MANAGER",
+        "permissions": [
+          {
+            "name": "API_GATEWAY_VIEW"
+          },
+          {
+            "name": "API_GATEWAY_MANAGEMENT"
+          },
+          {
+            "name": "CREATE_INTEGRATION"
+          },
+          {
+            "name": "CREATE_SECRET"
+          },
+          {
+            "name": "METADATA_VIEW"
+          },
+          {
+            "name": "METADATA_MANAGEMENT"
+          }
+        ]
+      }
+    ],
+    "defaultAccess": {},
+    "contactInformation": {}
+  }
+]
+```
+
+</details>

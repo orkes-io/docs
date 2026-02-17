@@ -1,0 +1,47 @@
+---
+sidebar_position: 7
+slug: "/reference-docs/api/groups/delete-group"
+description: "This API is used to delete a group from the Conductor cluster."
+---
+
+# Delete Group
+
+**Endpoint**: `DELETE /api/groups/{id}`
+
+Deletes a group permanently from the Conductor cluster. The invoking user must be an **Admin** to the Conductor cluster.
+
+## Path parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| id | The name of the group to delete. | string | Required. |
+
+## Response
+
+- Returns 200 OK, with a message that the group has been deleted.
+- Returns 404 if an invalid group ID is provided.
+- Returns 403 if a non-admin invokes the API.
+
+## Examples
+
+<details>
+<summary>Delete a group</summary>
+
+**Request**
+
+```shell
+curl -X 'DELETE' \
+  'https://<YOUR-SERVER-URL>/api/groups/Writers' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+{
+  "message": "Deleted group 'Writers'"
+}
+```
+
+</details>

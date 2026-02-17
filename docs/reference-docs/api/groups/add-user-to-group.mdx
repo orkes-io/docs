@@ -1,0 +1,45 @@
+---
+sidebar_position: 3
+slug: "/reference-docs/api/groups/add-user-to-group"
+description: "This API is used to add an individual user to an existing group."
+---
+
+# Add Single User to Group
+
+**Endpoint**: `POST /api/groups/{groupId}/users/{userId}`
+
+Adds an individual user to an existing group in your Conductor cluster. The invoking user must be an **Admin** to the Conductor cluster.
+
+## Path parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| groupId | The name of the group.  | string | Required. |
+| userId | The email ID of the user to add to the group. The user must already exist in the Conductor cluster. | string | Required. |
+
+## Response
+
+- Returns 200 OK, indicating that the user has been added to the group. 
+- Returns 404 if an invalid group name or user ID is provided.
+- Returns 403 if a non-admin invokes the API.
+
+## Examples
+
+<details>
+<summary>Add an individual user to the group</summary>
+
+**Request**
+
+```shell
+curl -X 'POST' \
+  'https://<YOUR-SERVER-URL>/api/groups/TechWriters/users/john.doe%40acme.com' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>' \
+  -d ''
+```
+
+**Response**
+
+Returns 200 OK, indicating that the user has been added to the group.
+
+</details>

@@ -1,0 +1,174 @@
+---
+sidebar_position: 1
+slug: "/reference-docs/api/groups/create-group"
+description: "This API is used to create or update a group."
+---
+
+# Create/Update Groups
+
+**Endpoint**: `PUT /api/groups/{id}`
+
+Creates or updates a [group](/content/category/access-control-and-security#groups) in your Conductor cluster. The invoking user must be an **Admin** to the Conductor cluster.
+
+## Path parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| id | The name of the group.  | string | Required. |
+
+## Request body
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| description | A description of the group. | string | Required. | 
+| roles | The role to assign for the group. Supported values:<ul><li>`ADMIN`: Superuser. Full access to the system and resources. Can manage users and groups.</li><li>`USER`: Regular user group with permissions to create workflow definitions, task definitions, applications, integrations, secrets, and user forms. Has full API Gateway access, including view and management permissions. Can search workflows.</li><li>`METADATA_MANAGER`: Can manage all workflow and task definitions in the cluster, including performing any action regardless of workflow or task ownership. Can view and manage API Gateway configurations. Can create integrations and secrets.</li><li>`WORKFLOW_MANAGER`: Can view, execute, and manage all workflow executions in the system, including start, pause, resume, rerun, retry, restart, terminate, and delete actions. Has execute and read access to workflow and task definitions.</li><li>`USER_READ_ONLY`: Can view applications, metadata, workflows, API gateway, and search workflows.</li></ul> | array | Required. | 
+
+## Response
+
+Returns the created or updated group object with its ID, description, and roles. Returns 403 if a non-admin invokes the API.
+
+## Examples
+
+<details>
+<summary>Create a new group</summary>
+
+**Request**
+
+```shell
+curl -X 'PUT' \
+  'https://<YOUR-SERVER-URL>/api/groups/TechWriters' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "description": "A dedicated group for testing",
+  "roles": [
+    "ADMIN"
+  ]
+}'
+```
+
+**Response**
+
+```json
+{
+  "id": "TechWriters",
+  "description": "A dedicated group for testing",
+  "roles": [
+    {
+      "name": "ADMIN",
+      "permissions": [
+        {
+          "name": "AUTHORIZATION_MANAGEMENT"
+        },
+        {
+          "name": "WORKFLOW_SEARCH"
+        },
+        {
+          "name": "PUBLISHER_MANAGEMENT"
+        },
+        {
+          "name": "API_GATEWAY_VIEW"
+        },
+        {
+          "name": "API_GATEWAY_MANAGEMENT"
+        },
+        {
+          "name": "WORKFLOW_MANAGEMENT"
+        },
+        {
+          "name": "PROMPT_MANAGEMENT"
+        },
+        {
+          "name": "EVENT_HANDLER_MANAGEMENT"
+        },
+        {
+          "name": "USER_MANAGEMENT"
+        },
+        {
+          "name": "PERMISSION_MANAGEMENT"
+        },
+        {
+          "name": "METADATA_VIEW"
+        },
+        {
+          "name": "ADMIN_MANAGEMENT"
+        },
+        {
+          "name": "METADATA_MANAGEMENT"
+        },
+        {
+          "name": "APPLICATION_MANAGEMENT"
+        },
+        {
+          "name": "BULK_MANAGEMENT"
+        },
+        {
+          "name": "SCHEDULE_MANAGEMENT"
+        }
+      ]
+    }
+  ],
+  "defaultAccess": {},
+  "contactInformation": {}
+}
+```
+
+</details>
+
+<details>
+<summary>Update an existing group</summary>
+
+**Request**
+
+```shell
+curl -X 'PUT' \
+  'https://<YOUR-SERVER-URL>/api/groups/TechWriters' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "description": "A dedicated group for testing for tech writers",
+  "roles": [
+    "METADATA_MANAGER"
+  ]
+}'
+```
+
+**Response**
+
+```json
+{
+  "id": "TechWriters",
+  "description": "A dedicated group for testing for tech writers",
+  "roles": [
+    {
+      "name": "METADATA_MANAGER",
+      "permissions": [
+        {
+          "name": "API_GATEWAY_VIEW"
+        },
+        {
+          "name": "API_GATEWAY_MANAGEMENT"
+        },
+        {
+          "name": "CREATE_INTEGRATION"
+        },
+        {
+          "name": "CREATE_SECRET"
+        },
+        {
+          "name": "METADATA_VIEW"
+        },
+        {
+          "name": "METADATA_MANAGEMENT"
+        }
+      ]
+    }
+  ],
+  "defaultAccess": {},
+  "contactInformation": {}
+}
+```
+
+</details>
