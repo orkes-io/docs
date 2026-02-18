@@ -1,0 +1,71 @@
+---
+sidebar_position: 5
+slug: "/reference-docs/api/users/get-user-permissions"
+description: "This API is used to retrieve a user's permission over other resources."
+---
+
+# Get User Permission over Resources
+
+**Endpoint**: `GET /api/users/{userId}/permissions`
+
+Retrieves the permissions that a user has over any resources. The invoking user must be an **Admin** to the Conductor cluster.
+
+## Path parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| userId      | The email address of the user whose permissions are to be retrieved.     | string | Required           |
+
+## Response
+
+- Returns an object containing the user's granted access permissions over resources.
+- Returns 403 if a non-admin invokes the API.
+
+## Examples
+
+<details>
+<summary>Get a user’s permission over resources</summary>
+
+**Request**
+
+```shell
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/users/john.doe%40acme.com/permissions' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+{
+  "grantedAccess": [
+    {
+      "target": {
+        "type": "INTEGRATION_PROVIDER",
+        "id": "azure_fk"
+      },
+      "access": [
+        "DELETE",
+        "UPDATE",
+        "READ"
+      ]
+    },
+    {
+      "target": {
+        "type": "WORKFLOW_DEF",
+        "id": "azure"
+      },
+      "access": [
+        "DELETE",
+        "UPDATE",
+        "READ",
+        "CREATE",
+        "EXECUTE"
+      ]
+    }
+  ]
+}
+```
+
+</details>
