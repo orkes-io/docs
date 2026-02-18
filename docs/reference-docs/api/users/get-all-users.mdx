@@ -1,0 +1,339 @@
+---
+sidebar_position: 3
+slug: "/reference-docs/api/users/get-all-users"
+description: "This API is used to get all users."
+---
+
+# Get All Users
+
+**Endpoint**: `GET /api/users`
+
+Retrieves all users from your Conductor cluster. The invoking user must be an **Admin** to the Conductor cluster.
+
+## Query parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| apps      | Whether to include application users in the results. Default is `false`. | string | Required           |
+
+## Response
+
+Returns an array of user objects. Each object contains the user's ID, name, assigned roles with their permissions, group memberships, and contact information.
+
+Returns 403 if a non-admin invokes the API.
+
+## Examples
+
+<details>
+<summary>Get all users (excluding application users)</summary>
+
+**Request**
+
+```shell
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/users?apps=false' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+[
+  {
+    "id": "john.doe@acme.com",
+    "name": "John Doe",
+    "roles": [
+      {
+        "name": "ADMIN",
+        "permissions": [
+          {
+            "name": "METADATA_MANAGEMENT"
+          },
+          {
+            "name": "ADMIN_MANAGEMENT"
+          },
+          {
+            "name": "METADATA_VIEW"
+          },
+          {
+            "name": "PERMISSION_MANAGEMENT"
+          },
+          {
+            "name": "USER_MANAGEMENT"
+          },
+          {
+            "name": "EVENT_HANDLER_MANAGEMENT"
+          },
+          {
+            "name": "PROMPT_MANAGEMENT"
+          },
+          {
+            "name": "WORKFLOW_MANAGEMENT"
+          },
+          {
+            "name": "API_GATEWAY_MANAGEMENT"
+          },
+          {
+            "name": "API_GATEWAY_VIEW"
+          },
+          {
+            "name": "PUBLISHER_MANAGEMENT"
+          },
+          {
+            "name": "WORKFLOW_SEARCH"
+          },
+          {
+            "name": "AUTHORIZATION_MANAGEMENT"
+          },
+          {
+            "name": "SCHEDULE_MANAGEMENT"
+          },
+          {
+            "name": "BULK_MANAGEMENT"
+          },
+          {
+            "name": "APPLICATION_MANAGEMENT"
+          }
+        ]
+      }
+    ],
+    "groups": [
+      {
+        "id": "TechWriters",
+        "description": "A dedicated group for testing for tech writers",
+        "roles": [
+          {
+            "name": "METADATA_MANAGER",
+            "permissions": [
+              {
+                "name": "CREATE_SECRET"
+              },
+              {
+                "name": "CREATE_INTEGRATION"
+              },
+              {
+                "name": "API_GATEWAY_MANAGEMENT"
+              },
+              {
+                "name": "API_GATEWAY_VIEW"
+              },
+              {
+                "name": "METADATA_MANAGEMENT"
+              },
+              {
+                "name": "METADATA_VIEW"
+              }
+            ]
+          }
+        ],
+        "defaultAccess": {},
+        "contactInformation": {}
+      }
+    ],
+    "uuid": "f0c48a60-4310-4b96-8926-e5d1dc3f8a6e",
+    "contactInformation": {},
+    "applicationUser": false,
+    "orkesWorkersApp": false,
+    "orkesApiGateway": false,
+    "orkesApp": false
+  }
+  ]
+```
+
+</details>
+
+<details>
+<summary>Get all users (including application users)</summary>
+
+When `apps=true`, the response includes both human users and application users. Application users can be identified by `"applicationUser": true` in the response object, and their `id` field is prefixed with `app:`.
+
+**Request**
+
+```shell
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/users?apps=true' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+[
+  {
+    "id": "app:db66991f-206f-4695-8fe9-f5d53976c9a8",
+    "name": "AGENTIC-INTERVIEW",
+    "roles": [
+      {
+        "name": "METADATA_MANAGER",
+        "permissions": [
+          {
+            "name": "API_GATEWAY_MANAGEMENT"
+          },
+          {
+            "name": "CREATE_INTEGRATION"
+          },
+          {
+            "name": "CREATE_SECRET"
+          },
+          {
+            "name": "METADATA_VIEW"
+          },
+          {
+            "name": "METADATA_MANAGEMENT"
+          },
+          {
+            "name": "API_GATEWAY_VIEW"
+          }
+        ]
+      },
+      {
+        "name": "ADMIN",
+        "permissions": [
+          {
+            "name": "API_GATEWAY_VIEW"
+          },
+          {
+            "name": "API_GATEWAY_MANAGEMENT"
+          },
+          {
+            "name": "WORKFLOW_MANAGEMENT"
+          },
+          {
+            "name": "PROMPT_MANAGEMENT"
+          },
+          {
+            "name": "EVENT_HANDLER_MANAGEMENT"
+          },
+          {
+            "name": "USER_MANAGEMENT"
+          },
+          {
+            "name": "PERMISSION_MANAGEMENT"
+          },
+          {
+            "name": "METADATA_VIEW"
+          },
+          {
+            "name": "ADMIN_MANAGEMENT"
+          },
+          {
+            "name": "METADATA_MANAGEMENT"
+          },
+          {
+            "name": "APPLICATION_MANAGEMENT"
+          },
+          {
+            "name": "BULK_MANAGEMENT"
+          },
+          {
+            "name": "SCHEDULE_MANAGEMENT"
+          },
+          {
+            "name": "AUTHORIZATION_MANAGEMENT"
+          },
+          {
+            "name": "WORKFLOW_SEARCH"
+          },
+          {
+            "name": "PUBLISHER_MANAGEMENT"
+          }
+        ]
+      },
+      {
+        "name": "WORKER",
+        "permissions": []
+      },
+      {
+        "name": "METADATA_API",
+        "permissions": [
+          {
+            "name": "CREATE_TASK_DEF"
+          },
+          {
+            "name": "CREATE_WORKFLOW_DEF"
+          },
+          {
+            "name": "CREATE_USER_FORM_TEMPLATE"
+          }
+        ]
+      }
+    ],
+    "groups": [],
+    "contactInformation": {},
+    "orkesWorkersApp": false,
+    "orkesApiGateway": false,
+    "applicationUser": true,
+    "orkesApp": false
+  },
+  {
+    "id": "john.doe@acme.com",
+    "name": "John Doe",
+    "roles": [
+      {
+        "name": "ADMIN",
+        "permissions": [
+          {
+            "name": "API_GATEWAY_VIEW"
+          },
+          {
+            "name": "API_GATEWAY_MANAGEMENT"
+          },
+          {
+            "name": "WORKFLOW_MANAGEMENT"
+          },
+          {
+            "name": "PROMPT_MANAGEMENT"
+          },
+          {
+            "name": "EVENT_HANDLER_MANAGEMENT"
+          },
+          {
+            "name": "USER_MANAGEMENT"
+          },
+          {
+            "name": "PERMISSION_MANAGEMENT"
+          },
+          {
+            "name": "METADATA_VIEW"
+          },
+          {
+            "name": "ADMIN_MANAGEMENT"
+          },
+          {
+            "name": "METADATA_MANAGEMENT"
+          },
+          {
+            "name": "APPLICATION_MANAGEMENT"
+          },
+          {
+            "name": "BULK_MANAGEMENT"
+          },
+          {
+            "name": "SCHEDULE_MANAGEMENT"
+          },
+          {
+            "name": "AUTHORIZATION_MANAGEMENT"
+          },
+          {
+            "name": "WORKFLOW_SEARCH"
+          },
+          {
+            "name": "PUBLISHER_MANAGEMENT"
+          }
+        ]
+      }
+    ],
+    "groups": [],
+    "uuid": "528f53fa-3f64-4a2d-9b5c-f68facad5c8e",
+    "contactInformation": {},
+    "orkesWorkersApp": false,
+    "orkesApiGateway": false,
+    "applicationUser": false,
+    "orkesApp": false
+  }
+]
+```
+
+</details>

@@ -1,0 +1,57 @@
+---
+sidebar_position: 6
+slug: "/reference-docs/api/users/check-user-permissions"
+description: "This API is used to check a user's permission over other resources."
+---
+
+# Check User Permission over Resources
+
+**Endpoint**: `GET /api/users/{userId}/checkPermissions`
+
+For a specific resource, check whether a user has each of the following permissions: READ, EXECUTE, DELETE, CREATE, and UPDATE. The invoking user must be an **Admin** to the Conductor cluster.
+
+## Path parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| userId      | The email address of the user whose permissions are to be retrieved.   | string | Required           |
+
+## Query parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| type      | The resource type to check permissions against. Supported values:<ul><li>`WORKFLOW`</li><li>`WORKFLOW_DEF`</li><li>`WORKFLOW_SCHEDULE`</li><li>`EVENT_HANDLER`</li><li>`TASK_DEF`</li><li>`TASK_REF_NAME`</li><li>`TASK_ID`</li><li>`APPLICATION`</li><li>`USER`</li><li>`SECRET_NAME`</li><li>`ENV_VARIABLE`</li><li>`TAG`</li><li>`DOMAIN`</li><li>`INTEGRATION_PROVIDER`</li><li>`INTEGRATION`</li><li>`PROMPT`</li><li>`USER_FORM_TEMPLATE`</li><li>`SCHEMA`</li><li>`WEBHOOK`</li><li>`API_GATEWAY_SERVICE`</li><li>`API_GATEWAY_SERVICE_ROUTE`</li></ul> | string | Required. | 
+| id | The name or identifier of the specific resource to check permissions against. | string | Required. | 
+
+## Response
+
+- Returns an object containing the user's granted access permissions over resources.
+- Returns 403 if a non-admin invokes the API.
+
+## Examples
+
+<details>
+<summary>Check a user’s permission over a resource</summary>
+
+**Request**
+
+```shell
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/users/john.doe%40acme.com/checkPermissions?type=WORKFLOW_DEF&id=azure' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+{
+  "READ": true,
+  "EXECUTE": true,
+  "DELETE": true,
+  "CREATE": true,
+  "UPDATE": true
+}
+```
+
+</details>
