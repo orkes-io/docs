@@ -1,0 +1,97 @@
+---
+sidebar_position: 6
+slug: "/reference-docs/api/schedule/bulk-resume-schedule"
+description: "This API is used to resume schedules in bulk."
+---
+
+# Resume Schedules in Bulk
+
+**Endpoint**: `PUT /api/scheduler/bulk/resume`
+
+Resumes one or more paused schedules in bulk.
+
+## Request body
+
+Format the request body as an array of strings containing the schedule names. For example, `["schedule-name-1", "schedule-name-2"]`.
+
+## Response
+
+| Parameter | Description | 
+| --------- | ----------- | 
+| bulkSuccessfulResults | Names of schedules that were successfully resumed. | 
+| bulkErrorResults | Names of schedules that failed to resume, with corresponding error messages. | 
+
+## Examples
+
+<details>
+<summary>Resume schedules in bulk</summary>
+
+**Request**
+
+```bash
+curl -X 'PUT' \
+  'https://<YOUR-SERVER-URL>/api/scheduler/bulk/resume' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '[
+  "assignPRSchedule",
+  "AutomateEndpointMonitoring",
+"emailNurturingAutomation",
+"userCreated"
+]
+'
+```
+
+**Response**
+
+```json
+{
+  "bulkErrorResults": {},
+  "bulkSuccessfulResults": [
+    "assignPRSchedule",
+    "AutomateEndpointMonitoring",
+    "emailNurturingAutomation",
+    "userCreated"
+  ]
+}
+```
+
+</details>
+
+<details>
+<summary>Resume schedules in bulk: partial failure</summary>
+
+**Request**
+
+```bash
+curl -X 'PUT' \
+  'https://<YOUR-SERVER-URL>/api/scheduler/bulk/resume' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '[
+  "assignPRSchedule",
+  "AutomateEndpointMonitorings",
+"emailNurturingAutomations",
+"userCreated"
+]
+'
+```
+
+**Response**
+
+```json
+{
+  "bulkErrorResults": {
+    "AutomateEndpointMonitorings": "Schedule 'AutomateEndpointMonitorings' not found",
+    "emailNurturingAutomations": "Schedule 'emailNurturingAutomations' not found"
+  },
+  "bulkSuccessfulResults": [
+    "assignPRSchedule",
+    "userCreated"
+  ]
+}
+```
+
+</details>

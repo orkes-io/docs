@@ -1,0 +1,95 @@
+---
+sidebar_position: 5
+slug: "/reference-docs/api/schedule/bulk-pause-schedule"
+description: "This API is used to pause schedules in bulk."
+---
+
+# Pause Schedules in Bulk
+
+**Endpoint**: `PUT /api/scheduler/bulk/pause`
+
+Pauses one or more running schedules in bulk.
+
+## Request body
+
+Format the request body as an array of strings containing the schedule names. For example, `["schedule-name-1", "schedule-name-2"]`.
+
+## Response
+
+| Parameter | Description | 
+| --------- | ----------- | 
+| bulkSuccessfulResults | Names of schedules that were successfully paused. | 
+| bulkErrorResults | Names of schedules that failed to pause, with corresponding error messages. | 
+
+## Examples
+
+<details>
+<summary>Pause schedules in bulk</summary>
+
+**Request**
+
+```bash
+curl -X 'PUT' \
+  'https://<YOUR-SERVER-URL>/api/scheduler/bulk/pause' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '[
+  "assignPRSchedule",
+  "AutomateEndpointMonitoring",
+"emailNurturingAutomation",
+"userCreated"
+]'
+```
+
+**Response**
+
+```json
+{
+  "bulkErrorResults": {},
+  "bulkSuccessfulResults": [
+    "assignPRSchedule",
+    "AutomateEndpointMonitoring",
+    "emailNurturingAutomation",
+    "userCreated"
+  ]
+}
+```
+
+</details>
+
+<details>
+<summary>Pause schedules in bulk: partial failure</summary>
+
+**Request**
+
+```bash
+curl -X 'PUT' \
+  'https://<YOUR-SERVER-URL>/api/scheduler/bulk/pause' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '[
+  "assignPRSchedule",
+  "AutomateEndpointMonitoring",
+"emailNurturingAutomation",
+"userCreateds"
+]'
+```
+
+**Response**
+
+```json
+{
+  "bulkErrorResults": {
+    "userCreateds": "Schedule 'userCreateds' not found"
+  },
+  "bulkSuccessfulResults": [
+    "assignPRSchedule",
+    "AutomateEndpointMonitoring",
+    "emailNurturingAutomation"
+  ]
+}
+```
+
+</details>
