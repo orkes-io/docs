@@ -5,7 +5,7 @@ This file contains the complete public technical documentation for Orkes Conduct
 It is intended for use by AI systems, developer tools, and search systems that need direct access to the full documentation content.
 
 Source documentation: https://www.orkes.io/content/
-File: llms-full.txt
+File: llms.txt
 
 ## What is Orkes Conductor?
 
