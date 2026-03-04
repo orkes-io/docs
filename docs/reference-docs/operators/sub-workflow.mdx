@@ -33,8 +33,6 @@ Configure these parameters for the Sub Workflow task.
 | subWorkflowParam. **idempotencyStrategy** | The idempotency strategy for handling duplicate requests. Supported values:<ul><li>`RETURN_EXISTING`—Return the `workflowId` of the workflow instance with the same idempotency key.</li> <li>`FAIL`—Start a new workflow instance only if there are no workflow executions with the same idempotency key.</li> <li>`FAIL_ON_RUNNING`—Start a new workflow instance only if there are no RUNNING or PAUSED workflows with the same idempotency key. Completed workflows can run again.</li></ul> | Required if `idempotencyKey` is used. |
 | **inputParameter**                        | Defines the input parameters for the sub-workflow. Inputs can reference parent workflow input parameters or outputs from preceding tasks and are passed directly to the invoked sub-workflow. | Optional. |
 
-
-
 :::note Notes
 
 - If you are defining the sub-workflow’s input parameters from the parent workflow, you need to add them as an input parameter in the parent workflow and then call the same input parameters inside the sub-workflow definition.
@@ -113,7 +111,7 @@ In addition to the execution ID, the output of the sub-workflow itself is also i
 To view the sub-workflow tasks within the parent workflow, select **Expand** to display them in the visual diagram editor.
 <p>
   <img
-    src="/content/img/Task-References/sub_workflow_task_reference.png"
+    src="/content/img/ui-guide-sub-workflow-task.png"
     alt="Screenshot of Sub Workflow Task in Orkes Conductor"
   />
 </p>
