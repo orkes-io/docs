@@ -1,4 +1,4 @@
-# Orkes Conductor Documentation — Full Export
+# Orkes Conductor Documentation
 
 This file contains the complete public technical documentation for Orkes Conductor in a machine-readable text format.
 
