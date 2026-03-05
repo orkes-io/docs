@@ -1,0 +1,52 @@
+---
+sidebar_position: 19
+slug: "/reference-docs/api/human-tasks/get-tags-from-user-form"
+description: "This API is used to get tags from a Human task user form."
+---
+
+# Get Tags from a User Form
+
+**Endpoint**: `GET /api/human/template/{name}/tags`
+
+Retrieves the tags associated with a user form.
+
+## Path parameters
+
+| Parameter | Description                              | Type   | Required/ Optional |
+| --------- | ---------------------------------------- | ------ | ------------------ |
+| name      | The name of the user form from which the tags are to be retrieved. | string | Required.          |
+
+## Response
+
+Returns an array of tag objects, each containing a key-value pair.
+
+## Examples
+
+<details>
+<summary>Get tags from a user form</summary>
+
+**Request**
+
+```shell
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/human/template/EmployeeOnboarding/tags' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+[
+  {
+    "key": "backend",
+    "value": "PR"
+  },
+  {
+    "key": "dev",
+    "value": "automation"
+  }
+]
+```
+
+</details>
