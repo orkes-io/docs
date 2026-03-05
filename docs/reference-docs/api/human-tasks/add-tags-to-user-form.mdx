@@ -1,0 +1,102 @@
+---
+sidebar_position: 18
+slug: "/reference-docs/api/human-tasks/add-tags-to-user-form"
+description: "This API is used to add tags to a Human task user form."
+---
+
+# Add Tags to User Form
+
+**Endpoint**: `PUT /api/human/template/{name}/tags`
+
+Adds tags to a user form. You can add a single tag or multiple tags in one request. If a tag with the same key already exists, this operation will update its value.
+
+## Path parameters
+
+| Parameter | Description                              | Type   | Required/ Optional |
+| --------- | ---------------------------------------- | ------ | ------------------ |
+| name      | The name of the user form to which the tags are to be added. | string | Required.          |
+
+## Request body
+
+The request body should be an array of tag objects.
+
+| Parameter | Description                              | Type   | Required/ Optional |
+| --------- | ---------------------------------------- | ------ | ------------------ |
+| key | The tag key. | string | Required. | 
+| value | The tag value. | string | Required. | 
+
+**Example for adding multiple tags in a single request:**
+
+```json
+[
+  {
+    "key": "dev",
+    "value": "automation"
+  },
+  {
+    "key": "backend",
+    "value": "PR"
+  }
+]
+```
+
+## Response
+
+Returns 200 OK, indicating that tags have been added to the user form.
+
+## Examples
+
+<details>
+<summary>Add a single tag to a user form</summary>
+
+**Request**
+
+```shell
+curl -X 'PUT' \
+  'https://<YOUR-SERVER-URL>/api/human/template/EmployeeOnboarding/tags' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '[
+  {
+    "key": "prod",
+    "value": "env"
+  }
+]'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the tag has been added to the user form.
+
+</details>
+
+<details>
+<summary>Add multiple tags to a user form</summary>
+
+**Request**
+
+```shell
+curl -X 'PUT' \
+  'https://<YOUR-SERVER-URL>/api/human/template/EmployeeOnboarding/tags' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '[
+  {
+    "key": "dev",
+    "value": "automation"
+  },
+  {
+    "key": "backend",
+    "value": "PR"
+  }
+]
+'
+```
+
+**Response**
+
+Returns 200 OK, indicating that tags have been added to the user form.
+
+</details>

@@ -1,0 +1,86 @@
+---
+sidebar_position: 20
+slug: "/reference-docs/api/human-tasks/delete-tags-from-user-form"
+description: "This API is used to delete tags from a Human task user form."
+---
+
+# Delete Tags from User Form
+
+**Endpoint**: `DELETE /api/human/template/{name}/tags`
+
+Deletes tags from a user form.
+
+## Path parameters
+
+| Parameter | Description                              | Type   | Required/ Optional |
+| --------- | ---------------------------------------- | ------ | ------------------ |
+| name      | The name of the user form from which the tags are to be deleted. | string | Required.          |
+
+## Request body
+
+The request body should be an array of tag objects.
+
+| Parameter | Description                              | Type   | Required/ Optional |
+| --------- | ---------------------------------------- | ------ | ------------------ |
+| key | The tag key to be removed. | string | Required. | 
+| value | The tag value to be removed. | string | Required. | 
+
+## Response
+
+Returns 200 OK, indicating that tags have been deleted from the user form.
+
+## Examples
+
+<details>
+<summary>Delete a single tag from a user form</summary>
+
+**Request**
+
+```shell
+curl -X 'DELETE' \
+  'https://<YOUR-SERVER-URL>/api/human/template/EmployeeOnboarding/tags' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <token>' \
+  -H 'Content-Type: application/json' \
+  -d '[
+  {
+    "key": "backend",
+    "value": "PR"
+  }
+]'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the tag has been deleted from the user form.
+
+</details>
+
+<details>
+<summary>Delete multiple tags from a user form</summary>
+
+**Request**
+
+```shell
+curl -X 'DELETE' \
+  'https://<YOUR-SERVER-URL>/api/human/template/EmployeeOnboarding/tags' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '[
+  {
+    "key": "dev",
+    "value": "automation"
+  },
+{
+    "key": "env",
+    "value": "prod"
+  }
+]'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the tags have been deleted from the user form.
+
+</details>
