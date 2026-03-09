@@ -135,7 +135,11 @@ const sidebars = {
                         'developer-guides/schema-validation',
                         'developer-guides/secrets-in-conductor',
                         'developer-guides/using-environment-variables',
-                        'developer-guides/idempotency',
+                        {
+                            type: 'doc',
+                            id: 'developer-guides/idempotency',
+                            label: "Idempotency"
+                        },
                         'developer-guides/rate-limits',
                         'developer-guides/error-handling',
                     ]
