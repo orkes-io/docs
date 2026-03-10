@@ -160,27 +160,27 @@ const config = {
             items: [
               {
                 label: "Platform",
-                to: "https://www.orkes.io/platform",
+                href: "https://www.orkes.io/platform",
               },
               {
                 label: "Careers",
-                to: "https://www.orkes.io/careers",
+                href: "https://www.orkes.io/careers",
               },
               {
                 label: "Partners",
-                to: "https://orkesio.partnerportal.io/sign-in",
+                href: "https://orkesio.partnerportal.io/sign-in",
               },
               {
                 label: "About Us",
-                to: "https://www.orkes.io/about-us",
+                href: "https://www.orkes.io/about-us",
               },
               {
                 label: "Legal Hub",
-                to: "https://orkes.io/legal",
+                href: "https://orkes.io/legal",
               },
               {
                 label: "Security",
-                to: "https://orkes.io/security",
+                href: "https://orkes.io/security",
               },
             ],
           },
@@ -189,15 +189,15 @@ const config = {
             items: [
               {
                 label: "Cloud",
-                to: "https://cloud.orkes.io/",
+                href: "https://cloud.orkes.io/",
               },
               {
                 label: "Platform",
-                to: "https://orkes.io/platform",
+                href: "https://orkes.io/platform",
               },
               {
                 label: "Support",
-                to: "https://orkeshelp.zendesk.com/auth/v2/login/",
+                href: "https://orkeshelp.zendesk.com/auth/v2/login/",
               },
             ],
           },
@@ -206,15 +206,15 @@ const config = {
             items: [
               {
                 label: "Blogs",
-                to: "https://www.orkes.io/blog/",
+                href: "https://www.orkes.io/blog/",
               },
               {
                 label: "Events",
-                to: "https://www.orkes.io/events/",
+                href: "https://www.orkes.io/events/",
               },
               {
                 label: "Case Studies",
-                to: "https://www.orkes.io/customers",
+                href: "https://www.orkes.io/customers",
               },
             ],
           },
@@ -252,7 +252,7 @@ const config = {
             items: [
               {
                 label: "Orkes vs Camunda",
-                to: "https://www.orkes.io/compare/orkes-conductor-vs-camunda-bpmn",
+                href: "https://www.orkes.io/compare/orkes-conductor-vs-camunda-bpmn",
               },
               {
                 label: "Orkes vs BPMN",
