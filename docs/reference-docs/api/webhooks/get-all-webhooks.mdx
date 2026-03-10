@@ -1,0 +1,62 @@
+---
+sidebar_position: 5
+slug: "/reference-docs/api/webhooks/get-all-webhooks"
+description: "This API is used to retrieve all webhook definitions."
+---
+
+# Get All Webhooks
+
+**Endpoint**: `GET /api/metadata/webhook`
+
+Retrieves all webhook definitions from the Conductor cluster.
+
+## Response
+
+Returns 200 OK with an array of webhook objects, including parameters such as `id`, `name`, `sourcePlatform`, `verifier`, `webhookExecutionHistory`, and more.
+
+## Examples
+
+<details>
+<summary>Get all webhooks</summary>
+
+**Request**
+
+```bash
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/metadata/webhook' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+[
+  {
+    "name": "Microsoft Teams",
+    "id": "fd7s65d350d6-cb68-11f0-ad52-1a3dbaec0535",
+    "receiverWorkflowNamesToVersions": {
+      "ms_teams_message_ticket": 1
+    },
+    "urlVerified": true,
+    "sourcePlatform": "Microsoft Teams",
+    "verifier": "HMAC_BASED",
+    "headerKey": "Authorization",
+    "secretValue": "***",
+    "createdBy": "john.doe@acme.com",
+    "webhookExecutionHistory": [
+      {
+        "eventId": "fd7s71ff5869-cb69-11f0-8389-dacbc68a58cc",
+        "matched": true,
+        "workflowIds": [
+          "fd7s67b9a53e-cb69-11f0-8389-dacbc68a58cc"
+        ],
+        "payload": "{...}",
+        "timeStamp": 1764231419304
+      }
+    ]
+  }
+]
+```
+
+</details>

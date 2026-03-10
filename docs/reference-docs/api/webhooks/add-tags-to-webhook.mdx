@@ -1,0 +1,105 @@
+---
+sidebar_position: 6
+slug: "/reference-docs/api/webhooks/add-tags-to-webhook"
+description: "This API is used to add tags to a webhook definition.."
+---
+
+# Add Tags to Webhook
+
+**Endpoint**: `PUT /api/metadata/webhook/{id}/tags`
+
+Adds tags to a webhook. You can add a single tag or multiple tags in one request. This operation updates any existing tags with the provided ones.
+
+## Path parameters
+
+| Paramaeter | Description | Type | Required |
+| ---------- | ----------- | ---- | -------- |
+| id | The unique identifier of the webhook to which the tags are to be added. | string | Required. |
+
+## Response
+
+Returns 200 OK with an array of webhook objects, including parameters such as `id`, `name`, `sourcePlatform`, `verifier`, `webhookExecutionHistory`, and more.
+
+## Request body
+
+The request body should be an array of tag objects.
+
+| Paramaeter | Description | Type | Required |
+| ---------- | ----------- | ---- | -------- |
+| key | The tag key. | string | Required. |
+| value | The tag value. | string | Required. |
+
+**Example for adding multiple tags in a single request:**
+
+```json
+[
+  {
+    "key": "dev",
+    "value": "automation"
+  },
+  {
+    "key": "backend",
+    "value": "PR"
+  }
+]
+```
+## Response
+
+Returns 200 OK, indicating that the tags have been added to the webhook.
+
+## Examples
+
+<details>
+<summary>Add a single tag to a webhook</summary>
+
+**Request**
+
+```bash
+curl -X 'PUT' \
+  'https://<YOUR-SERVER-URL>/api/metadata/webhook/897f37a7-f2a4-11f0-97ee-8e75126ccff4/tags' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '[
+  {
+    "key": "platform",
+    "value": "Jira"
+  }
+]'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the tags have been added to the webhook.
+
+</details>
+
+<details>
+<summary>Add multiple tags to a webhook</summary>
+
+**Request**
+
+```bash
+curl -X 'PUT' \
+  'https://<YOUR-SERVER-URL>/api/metadata/webhook/897f37a7-f2a4-11f0-97ee-8e75126ccff4/tags' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '[
+  {
+    "key": "dev",
+    "value": "automation"
+  },
+  {
+    "key": "backend",
+    "value": "PR"
+  }
+]
+'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the tags have been added to the webhook.
+
+</details>
