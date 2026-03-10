@@ -109,27 +109,27 @@ const config = {
         },
         items: [
           {
-            href: "/content/",
+            to: "/content/",
             position: "left",
             label: "Home",
           },
           {
-            href: "/content/quickstarts",
+            to: "/content/quickstarts",
             position: "left",
             label: "Getting Started",
           },
           {
-            href: "/content/category/sdks",
+            to: "/content/category/sdks",
             position: "left",
             label: "SDKs",
           },
           {
-            href: "/content/category/reference-docs",
+            to: "/content/category/reference-docs",
             position: "left",
             label: "Task Reference",
           },
           {
-            href: "/content/category/ref-docs/api",
+            to: "/content/category/ref-docs/api",
             position: "left",
             label: "API Reference",
           },
