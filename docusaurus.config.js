@@ -202,7 +202,7 @@ const config = {
             ],
           },
           {
-            title: "Community",
+            title: "Resources",
             items: [
               {
                 label: "Blogs",
