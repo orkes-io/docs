@@ -1,0 +1,89 @@
+---
+sidebar_position: 2
+slug: "/reference-docs/api/webhooks/update-webhook"
+description: "This API is used to update a webhook definition."
+---
+
+# Update Webhook
+
+**Endpoint**: `PUT /api/metadata/webhook`
+
+Updates an existing webhook definition. 
+
+## Path parameters
+
+| Paramaeter | Description | Type | Required |
+| ---------- | ----------- | ---- | -------- |
+| id | The unique identifier of the webhook to update. | string | Required. |
+
+## Request body
+
+Format the request body as an array with the following parameters:
+
+| Paramaeter | Description | Type | Required |
+| ---------- | ----------- | ---- | -------- |
+| name | The updated name of the webhook. |  string | Required. | 
+| receiverWorkflowNamesToVersions | Map of workflow names to versions that receive the incoming webhook event. If the webhook is only used to start a workflow, this object can be empty.<br/><br/>For example: `"receiverWorkflowNamesToVersions": { "<WORKFLOW-NAME>": <WORKFLOW-VERSION> }` | object | Optional. | 
+| sourcePlatform | The platform that sends webhook requests to Conductor. Supported values:<ul><li>`Github`</li><li>`Microsoft Teams`</li><li>`SendGrid`</li><li>`Slack`</li><li>`Stripe`</li><li>`Custom`</li></ul>This value determines the verification method and the security fields required for the webhook. | string | Required. | 
+|  verifier | The verification method used to validate incoming webhook requests. Supported values:<ul><li>`SIGNATURE_BASED`: For GitHub</li><li>`HMAC_BASED`: For Microsoft Teams</li><li>`SENDGRID` : For SendGrid</li><li>`SLACK_BASED`: For Slack</li><li>`STRIPE`: For Stripe</li><li>`HEADER_BASED`: For Custom</li></ul> | string | Required. |  
+| headerKey | The header key used to verify incoming webhook requests. Supported values:<ul><li>`X-Hub-Signature-256`: For GitHub</li><li>`Authorization`: For Microsoft Teams</li><li>`Stripe-Signature`: For Stripe</li></ul> | string | Required for *GitHub*, *Microsoft Teams*, and *Stripe*. Not applicable for other platforms. | 
+| secretValue | The secret value used to verify incoming webhook requests. Supported platforms:<ul><li>**GitHub**: Enter an arbitrary **Secret** key. You’ll reuse this same value when you configure the webhook in GitHub.</li><li>**Microsoft Teams**: Leave the **Security token** empty for now. This can be added once you get the security token from Microsoft Teams webhook.</li><li>**SendGrid**: Leave the **Verification key** empty for now. This can be added once you get the verification key from SendGrid webhook.</li><li>**Stripe**: Leave the **Endpoint secret** empty for now. This can be added once you get the endpoint secret from Stripe webhook.</li></ul> | string | Required for *GitHub*, *Microsoft Teams*, *SendGrid*, and *Stripe*. Not applicable for other platforms. | 
+| headers | The key-value pairs of headers used to validate incoming webhook requests. | object | Required for *Custom*. | 
+| workflowsToStart | Map of workflows configured to start when the webhook event is received.<br/><br/>For example: `"workflowsToStart": { "<WORKFLOW-NAME>": <WORKFLOW-VERSION> }` | object | Optional. | 
+| workflowsToStart.**idempotencyKey** | The idempotency key to prevent duplicate workflow executions for the same webhook event. Supports variables from the workflow input, for example, `${workflow.input.someKey}`. | string | Optional. | 
+| workflowsToStart.**idempotencyStrategy** | The strategy to use when a workflow with the same idempotency key already exists. Supported values: <ul><li>`RETURN_EXISTING`: Return the `workflowId` of the workflow instance with the same idempotency key.</li><li>`FAIL`: Start a new workflow instance only if there are no workflow executions with the same idempotency key.</li><li>`FAIL_ON_RUNNING`: Start a new workflow instance only if there are no RUNNING or PAUSED workflows with the same idempotency key. Completed workflows can run again.</li></ul> | string | Optional. | 
+
+## Response
+
+Returns 200 OK with the updated webhook object.
+
+## Examples
+
+<details>
+<summary>Update a webhook</summary>
+
+**Request**
+
+```bash
+curl -X 'PUT' \
+  'https://<YOUR-SERVER-URL>/api/metadata/webhook/dbe38f11-d0fd-4b1b-b6c8-5e6a72840dea' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "name": "updatedName",
+  "id": "dbe38f11-d0fd-4b1b-b6c8-5e6a72840dea",
+  "receiverWorkflowNamesToVersions": {
+    "http": 1
+  },
+  "urlVerified": false,
+  "sourcePlatform": "Custom",
+  "verifier": "HEADER_BASED",
+  "headers": {
+    "Some-key-4rhnv": "Some-val-xvdhu"
+  },
+  "secretValue": "***"
+}'
+```
+
+**Response**
+
+```json
+{
+  "name": "updatedName",
+  "id": "dbe38f11-d0fd-4b1b-b6c8-5e6a72840dea",
+  "receiverWorkflowNamesToVersions": {
+    "http": 1
+  },
+  "urlVerified": false,
+  "sourcePlatform": "Custom",
+  "verifier": "HEADER_BASED",
+  "headers": {
+    "Some-key-4rhnv": "Some-val-xvdhu"
+  },
+  "secretValue": "***",
+  "createdBy": "john.doe@acme.com"
+}
+```
+
+</details>

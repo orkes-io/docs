@@ -1,0 +1,43 @@
+---
+sidebar_position: 4
+slug: "/reference-docs/api/webhooks/delete-webhook"
+description: "This API is used to delete a webhook definition."
+---
+
+# Delete Webhook 
+
+**Endpoint**: `DELETE /api/metadata/webhook/{id}`
+
+Deletes a webhook by its ID.
+
+## Path parameters
+
+| Paramaeter | Description | Type | Required |
+| ---------- | ----------- | ---- | -------- |
+| id | The unique identifier of the webhook to delete. | string | Required. |
+
+## Response
+
+Returns 200 OK, indicating that the webhook has been deleted successfully.
+
+Returns 404 if an invalid webhook ID is provided.
+
+## Examples
+
+<details>
+<summary>Delete a webhook</summary>
+
+**Request**
+
+```bash
+curl -X 'DELETE' \
+  'https://<YOUR-SERVER-URL>/api/metadata/webhook/8dbbddbf-e22b-4635-9fcb-c9e03965ac2e' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the webhook has been deleted successfully.
+
+</details>

@@ -1,0 +1,48 @@
+---
+sidebar_position: 7
+slug: "/reference-docs/api/webhooks/get-tags-from-webhook"
+description: "This API is used to retrieve tags from a webhook definition.."
+---
+
+# Get Tags from Webhook
+
+**Endpoint**: `GET /api/metadata/webhook/{id}/tags`
+
+Retrieves the tags associated with a webhook.
+
+## Path parameters
+
+| Paramaeter | Description | Type | Required |
+| ---------- | ----------- | ---- | -------- |
+| id | The unique identifier of the webhook from which the tags are to be retrieved. | string | Required. |
+
+## Response
+
+Returns an array of tag objects, each containing a key-value pair.
+
+## Examples
+
+<details>
+<summary>Get tags from a webhook</summary>
+
+**Request**
+
+```bash
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/metadata/webhook/897f37a7-f2a4-11f0-97ee-8e75126ccff4/tags' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+[
+  {
+    "key": "frontend",
+    "value": "PR"
+  }
+]
+```
+
+</details>
