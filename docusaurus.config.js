@@ -112,6 +112,7 @@ const config = {
             to: "/content/",
             position: "left",
             label: "Home",
+            exact: true,
           },
           {
             to: "/content/quickstarts",
