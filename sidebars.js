@@ -66,7 +66,7 @@ const sidebars = {
                 type: 'generated-index',
                 title: 'Conceptual Guides',
                 slug: '/category/conceptual-guides',
-                description: 'Learn the essential concepts for building with Conductor.',
+                description: 'Learn the core concepts behind Orkes Conductor, including workflow architecture, worker polling, task states, and DAG-based workflow orchestration.',
             },
             className: 'leftMenuHeader',
             items: [
@@ -82,7 +82,7 @@ const sidebars = {
                 type: 'generated-index',
                 title: 'Developer Guides',
                 slug: '/category/developer-guides',
-                description: 'The Developer Guides focus on how to use Orkes Conductor UI and SDK to build orchestrated workflows and applications.',
+                description: 'Explore developer guides for building, running, and managing workflows in Orkes Conductor, covering workers, workflow execution, monitoring, eventing, and orchestration patterns.',
             },
             className: 'leftMenuHeader',
             collapsible: true,
@@ -95,7 +95,7 @@ const sidebars = {
                         type: 'generated-index',
                         title: 'Building Workflows',
                         slug: '/developer-guides/building-workflows',
-                        description: 'In this section, learn the fundamentals of building Conductor workflows through various methods. It covers core workflow concepts, task configuration, parameter wiring and masking, input and output validation, secrets and environment variables, caching task outputs, error handling, and rate limits.',
+                        description: 'Learn the fundamentals of building workflows in Orkes Conductor, including workflow structure, task configuration, parameter wiring, validation, secrets, error handling, and rate limits.',
                     },
                     className: 'leftMenuHeader',
                     items: [
@@ -150,7 +150,7 @@ const sidebars = {
                     link: {
                         type: 'generated-index',
                         title: 'Task Workers and Queues',
-                        description: 'Learn how to configure, manage, and optimize task workers and queues to execute tasks efficiently and improve workflow performance in Conductor.',
+                        description: 'Learn how to configure and manage task workers and queues, including writing workers, scaling them, and routing tasks to the appropriate workers.',
                         slug: '/workers'
                     },
                     className: 'leftMenuHeader',
@@ -166,7 +166,7 @@ const sidebars = {
                     link: {
                         type: 'generated-index',
                         title: 'Versioning Workflows',
-                        description: 'Workflow versioning is the ability to manage different versions of a workflow. This feature allows you to edit a workflow safely without disrupting ongoing or scheduled workflow executions in production. Learn how to manage multiple workflow versions in Orkes Conductor and understand its behavior at runtime.',
+                        description: 'Learn how to manage multiple workflow versions and understand how different versions behave during workflow execution.',
                         slug: '/developer-guides/versioning-workflows'
                     },
                     className: 'leftMenuHeader',
@@ -203,7 +203,7 @@ const sidebars = {
                     link: {
                         type: 'generated-index',
                         title: 'Testing, Monitoring, and Debugging Workflows',
-                        description: 'Learn the best practices for testing, monitoring, and debugging Conductor workflows, including unit tests, regression tests, logging, cluster metrics, and CI/CD.',
+                        description: 'Learn best practices for testing, monitoring, and debugging workflows, including unit and regression testing, observability metrics, debugging executions, and CI/CD integration.',
                         slug: '/developer-guides/deploying-workflows'
                     },
                     className: 'leftMenuHeader',
@@ -241,6 +241,7 @@ const sidebars = {
                     link: {
                         type: 'generated-index',
                         title: 'Eventing',
+                        description: 'Learn how workflows interact with external systems using event handlers, webhooks, and CDC for event-driven automation.',
                         slug: '/eventing'
                     },
                     items: [
@@ -316,7 +317,7 @@ const sidebars = {
                 type: 'generated-index',
                 title: 'Integrations',
                 slug: '/category/integrations',
-                description: 'Integrate your Orkes Conductor cluster with various AI, LLMs, vector databases, message brokers, emails, git providers, and RDBMS systems.',
+                description: 'Learn how to connect Conductor with AI providers, vector databases, message brokers, cloud platforms, databases, and external services.',
             },
             className: 'leftMenuHeader',
             items: [
@@ -327,6 +328,7 @@ const sidebars = {
                         type: 'generated-index',
                         title: 'AI / LLM Integrations',
                         slug: '/category/integrations/ai-llm',
+                        description: 'Learn how to connect your Conductor cluster to AI and LLM providers and configure models for use in AI-powered workflows.',
                     },
                     items: [
                         {
@@ -413,6 +415,7 @@ const sidebars = {
                         type: 'generated-index',
                         title: 'Vector Databases Integrations',
                         slug: '/category/integrations/vector-databases',
+                        description: 'Learn how to connect vector databases to use embeddings and retrieval features in AI workflows.',
                     },
                     items: [
                         {
@@ -444,6 +447,7 @@ const sidebars = {
                         type: 'generated-index',
                         title: 'Message Broker Integrations',
                         slug: '/category/integrations/message-broker',
+                        description: 'Learn how to connect message brokers to publish events and trigger workflows from external systems.',
                     },
                     items: [
                         {
@@ -500,6 +504,7 @@ const sidebars = {
                         type: 'generated-index',
                         title: 'Cloud Providers',
                         slug: '/category/integrations/cloud-provider',
+                        description: 'Learn how to connect cloud providers to allow workflows to access cloud resources such as storage buckets and files.',
                     },
                     items: [
                         {
@@ -521,6 +526,7 @@ const sidebars = {
                         type: 'generated-index',
                         title: 'RDBMS Integrations',
                         slug: '/category/integrations/rdbms',
+                        description: 'Learn how to connect relational databases so workflows can query and manage data using database integrations.',
                     },
                     items: [
                         {
@@ -537,6 +543,7 @@ const sidebars = {
                         type: 'generated-index',
                         title: 'Email/Git',
                         slug: '/category/integrations/email',
+                        description: 'Learn how to integrate email providers and Git repositories so workflows can send emails and access files stored in source control.',
                     },
                     items: [
                         {
@@ -559,7 +566,7 @@ const sidebars = {
             link: {
                 type: 'generated-index',
                 title: 'Task Reference',
-                description: 'Reference documentation for tasks in Orkes Conductor',
+                description: 'Reference documentation for all tasks, including behavior, configuration options, and examples.',
                 slug: '/category/reference-docs',
                 keywords: ['reference', 'operators', 'tasks', 'system', 'system-tasks']
             },
@@ -573,7 +580,7 @@ const sidebars = {
                     link: {
                         type: 'generated-index',
                         title: 'Operators',
-                        description: 'Reference documentation for operators in Orkes Conductor. Operators are control flow primitives, similar to programming constructs like loops, if/else, or fork/joins.',
+                        description: 'Learn how operators control workflow execution using built-in constructs such as branching, conditions, and loops.',
                         slug: '/category/reference-docs/operators',
                         keywords: ['reference', 'operators', 'tasks', 'system', 'system-tasks']
                     },
@@ -589,7 +596,7 @@ const sidebars = {
                     link: {
                         type: 'generated-index',
                         title: 'System Tasks',
-                        description: 'Reference documentation for system tasks in Orkes Conductor. Designed for common use cases like HTTP calls, system tasks are built-in tasks managed and run in Conductor, allowing you to get started quickly without needing custom workers.',
+                        description: 'Learn how system tasks execute common workflow logic directly on Conductor servers without requiring external workers.',
                         slug: '/category/reference-docs/system-tasks',
                         keywords: ['reference', 'operators', 'tasks', 'system', 'system-tasks']
                     },
@@ -613,7 +620,7 @@ const sidebars = {
                             link: {
                                 type: 'generated-index',
                                 title: 'Alerting Tasks',
-                                description: 'Reference documentation for system alerting tasks in Orkes Conductor. These system tasks are meant for monitoring and triggering alerts based on specific conditions.',
+                                description: 'Alerting tasks send notifications from workflows through external services such as messaging or incident management platforms.',
                                 slug: '/category/reference-docs/alerting-tasks',
                                 keywords: ['reference', 'tasks', 'system', 'system-tasks', 'alerting-tasks']
                             },
@@ -628,7 +635,7 @@ const sidebars = {
                             link: {
                                 type: 'generated-index',
                                 title: 'AI Tasks',
-                                description: 'Reference documentation for system AI tasks in Orkes Conductor. These system tasks are meant for building AI-powered or agentic components in workflows.',
+                                description: 'AI tasks are built-in system tasks used to integrate AI models and vector databases for AI-powered workflows.',
                                 slug: '/category/reference-docs/ai-tasks',
                                 keywords: ['reference', 'operators', 'tasks', 'system', 'system-tasks', 'ai-tasks']
                             },
@@ -649,7 +656,7 @@ const sidebars = {
             link: {
                 type: 'generated-index',
                 title: 'API Reference',
-                description: 'API reference documentation for Orkes Conductor.',
+                description: 'Explore the REST APIs used to programmatically manage workflows, tasks, metadata, and other resources in Conductor.',
                 slug: '/category/ref-docs/api',
                 keywords: ['reference', 'apis', 'api']
             },
@@ -668,7 +675,7 @@ const sidebars = {
                         type: 'generated-index',
                         title: 'Metadata',
                         slug: '/reference-docs/api/metadata',
-                        description: 'Manage task and workflow definitions in Orkes Conductor with this suite of APIs.'
+                        description: 'Use the Metadata APIs to create, update, delete, and retrieve workflow and task definitions programmatically.'
                     },
                     items: [
                         {
@@ -684,7 +691,7 @@ const sidebars = {
                         type: 'generated-index',
                         title: 'Tasks',
                         slug: '/reference-docs/api/task',
-                        description: `Manage task executions in Orkes Conductor with this suite of APIs.`
+                        description: `Use the Task APIs to manage task executions, retrieve task details, update task status, and log task messages programmatically.`
                     },
                     items: [
                         {
@@ -700,7 +707,7 @@ const sidebars = {
                         type: 'generated-index',
                         title: 'Workflows',
                         slug: '/reference-docs/api/workflow',
-                        description: `Manage workflow executions in Orkes Conductor with this suite of APIs`
+                        description: `Manage workflow executions using APIs, including starting workflows, retrieving execution details, updating variables, and controlling running workflows.`
                     },
                     items: [
                         {
@@ -716,7 +723,7 @@ const sidebars = {
                         type: 'generated-index',
                         title: 'Applications',
                         slug: '/reference-docs/api/applications',
-                        description: `Manage applications in Orkes Conductor with this suite of APIs`
+                        description: `Learn how to manage applications, access keys, and roles using the Applications APIs.`
                     },
                     items: [
                         {
@@ -732,7 +739,7 @@ const sidebars = {
                         type: 'generated-index',
                         title: 'Groups',
                         slug: '/reference-docs/api/groups',
-                        description: `Manage groups in Orkes Conductor with this suite of APIs`
+                        description: `Learn how to manage groups, users, and permissions using the Groups APIs.`
                     },
                     items: [
                         {
@@ -748,7 +755,7 @@ const sidebars = {
                         type: 'generated-index',
                         title: 'Users',
                         slug: '/reference-docs/api/users',
-                        description: `Manage users in Orkes Conductor with this suite of APIs`
+                        description: `Learn how to create and manage users, retrieve user details, and check user permissions using the Users APIs.`
                     },
                     items: [
                         {
@@ -764,7 +771,7 @@ const sidebars = {
                         type: 'generated-index',
                         title: 'Tags',
                         slug: '/reference-docs/api/tags',
-                        description: `Manage tags in Orkes Conductor with this suite of APIs`
+                        description: `Learn how to manage tags for task and workflow definitions, including listing, grouping, adding, replacing, and deleting tags using the Tags APIs.`
                     },
                     items: [
                         {
@@ -780,7 +787,7 @@ const sidebars = {
                         type: 'generated-index',
                         title: 'Secrets',
                         slug: '/reference-docs/api/secrets',
-                        description: `Manage secrets in Orkes Conductor with this suite of APIs`
+                        description: `Learn how to create and manage secrets, retrieve secret values, check secret availability, and manage secret tags using the Secrets APIs.`
                     },
                     items: [
                         {
@@ -796,7 +803,7 @@ const sidebars = {
                         type: 'generated-index',
                         title: 'Schedule',
                         slug: '/reference-docs/api/schedule',
-                        description: `Manage automated Schedules in Orkes Conductor with this suite of APIs`
+                        description: `Learn how to create and manage workflow schedules, control schedule execution, search schedules, and manage schedule tags using the Schedule APIs.`
                     },
                     items: [
                         {
@@ -812,7 +819,7 @@ const sidebars = {
                         type: 'generated-index',
                         title: 'Input/Output Schema Validation',
                         slug: '/reference-docs/api/schema',
-                        description: `Manage Schemas in Orkes Conductor with this suite of APIs`
+                        description: `Learn how to create and manage schema definitions, retrieve schema versions, and delete schemas using the Schema APIs.`
                     },
                     items: [
                         {
@@ -828,7 +835,7 @@ const sidebars = {
                         type: 'generated-index',
                         title: 'Environment Variables',
                         slug: '/reference-docs/api/environment-variables',
-                        description: `Manage Environment Variables in Orkes Conductor with this suite of APIs`
+                        description: `Learn how to create and manage environment variables, retrieve their values, and manage environment variable tags using the Environment Variables APIs.`
                     },
                     items: [
                         {
@@ -844,7 +851,7 @@ const sidebars = {
                         type: 'generated-index',
                         title: 'Human Task',
                         slug: '/reference-docs/api/human-tasks',
-                        description: 'Manage Human tasks in Orkes Conductor with this suite of APIs'
+                        description: 'Learn how to manage human task executions, assign and update tasks, search tasks, and create or manage user forms using the Human Task APIs.'
                     },
                     items: [
                         {
@@ -860,7 +867,7 @@ const sidebars = {
                         type: 'generated-index',
                         title: 'Webhook',
                         slug: '/reference-docs/api/webhooks',
-                        description: 'Manage Webhooks in Orkes Conductor with this suite of APIs'
+                        description: 'Learn how to create and manage webhook definitions, retrieve webhook configurations, and manage webhook tags using the Webhook APIs.'
                     },
                     items: [
                         {
