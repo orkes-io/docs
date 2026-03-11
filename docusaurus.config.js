@@ -7,7 +7,7 @@ const baseUrlName = "/content";
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "Orkes Conductor Documentation",
-  tagline: "Platform for building scalable reliable distributed systems",
+  tagline: "The Agentic Workflow Orchestration Platform",
   url: "https://orkes.io",
   baseUrl: baseUrlName + "/",
   onBrokenLinks: "warn",
@@ -79,7 +79,7 @@ const config = {
         {
           name: "keywords",
           content:
-            "microservices,orchestration,event-driven,workflow,automation,bpmn",
+            "microservices,orchestration,event-driven,workflow,automation,bpmn,agenticai,aiorchestration",
         },
       ],
       colorMode: {
@@ -101,24 +101,38 @@ const config = {
         },
       },
       navbar: {
-        title: "Conductor Docs",
         logo: {
           alt: "Orkes Conductor",
           src: "img/branding/orkes-logo-purple-4x.png",
           srcDark: "img/branding/orkes-logo-purple-inverted-4x.png",
+          href: "https://orkes.io",
         },
         items: [
           {
-            type: "doc",
-            docId: "getting-started/quickstart-index",
+            to: "/content/",
+            position: "left",
+            label: "Home",
+            exact: true,
+          },
+          {
+            to: "/content/quickstarts",
             position: "left",
             label: "Getting Started",
           },
           {
-            href: "https://orkes.io",
-            label: "orkes.io",
-            target: "_orkes_io",
+            to: "/content/category/sdks",
             position: "left",
+            label: "SDKs",
+          },
+          {
+            to: "/content/category/reference-docs",
+            position: "left",
+            label: "Task Reference",
+          },
+          {
+            to: "/content/category/ref-docs/api",
+            position: "left",
+            label: "API Reference",
           },
           {
             href: "https://github.com/conductor-oss/conductor",
@@ -143,57 +157,115 @@ const config = {
         },
         links: [
           {
-            title: "Docs",
+            title: "Company",
             items: [
               {
-                label: "Core Concepts",
-                to: "/content/core-concepts",
+                label: "Platform",
+                href: "https://www.orkes.io/platform",
               },
               {
-                label: "Getting Started",
-                to: "/content/getting-started/first-workflow-application",
+                label: "Careers",
+                href: "https://www.orkes.io/careers",
               },
               {
-                label: "SDKs",
-                to: "/content/category/sdks",
+                label: "Partners",
+                href: "https://orkesio.partnerportal.io/sign-in",
               },
               {
-                label: "Access Control & Security",
-                to: "/content/category/access-control-and-security",
+                label: "About Us",
+                href: "https://www.orkes.io/about-us",
               },
               {
-                label: "Developer Guide",
-                to: "/content/category/developer-guides",
+                label: "Legal Hub",
+                href: "https://orkes.io/legal",
+              },
+              {
+                label: "Security",
+                href: "https://orkes.io/security",
               },
             ],
           },
           {
-            title: "Community",
+            title: "Product",
             items: [
               {
-                label: "Stack Overflow",
-                href: "https://stackoverflow.com/questions/tagged/netflix-conductor",
+                label: "Cloud",
+                href: "https://cloud.orkes.io/",
               },
               {
-                label: "Slack Community",
-                href: "https://join.slack.com/t/orkes-conductor/shared_invite/zt-3dpcskdyd-W895bJDm8psAV7viYG3jFA",
+                label: "Platform",
+                href: "https://orkes.io/platform",
               },
               {
-                label: "Twitter",
-                href: "https://twitter.com/orkesio",
+                label: "Support",
+                href: "https://orkeshelp.zendesk.com/auth/v2/login/",
               },
             ],
           },
           {
-            title: "More",
+            title: "Resources",
             items: [
               {
-                label: "Blog",
-                to: "https://orkes.io/blog/",
+                label: "Blogs",
+                href: "https://www.orkes.io/blog/",
               },
               {
-                label: "GitHub",
-                href: "https://github.com/conductor-oss/conductor",
+                label: "Events",
+                href: "https://www.orkes.io/events/",
+              },
+              {
+                label: "Case Studies",
+                href: "https://www.orkes.io/customers",
+              },
+            ],
+          },
+          {
+            title: "Use Cases",
+            items: [
+              {
+                label: "Microservices Workflow Orchestration",
+                href: "https://www.orkes.io/use-cases/microservices-orchestration",
+              },
+              {
+                label: "Realtime API Orchestration",
+                href: "https://www.orkes.io/use-cases/api-orchestration",
+              },
+              {
+                label: "Event Driven Architecture",
+                href: "https://www.orkes.io/use-cases/event-driven-architecture",
+              },
+              {
+                label: "Agentic Workflows",
+                href: "https://www.orkes.io/use-cases/agentic-workflows",
+              },
+              {
+                label: "Human Workflow Orchestration",
+                href: "https://www.orkes.io/use-cases/human-workflow-orchestration",
+              },
+              {
+                label: "Process Orchestration",
+                href: "https://www.orkes.io/use-cases/process-orchestration",
+              },
+            ],
+          },
+          {
+            title: "Compare",
+            items: [
+              {
+                label: "Orkes vs Camunda",
+                href: "https://www.orkes.io/compare/orkes-conductor-vs-camunda-bpmn",
+              },
+              {
+                label: "Orkes vs BPMN",
+                href: "https://www.orkes.io/bpmn-switch",
+              },
+              {
+                label: "Orkes vs LangChain",
+                href: "https://www.orkes.io/compare/orkes-conductor-vs-langchain",
+              },
+              {
+                label: "Orkes vs Temporal",
+                href: "https://www.orkes.io/compare/orkes-conductor-vs-temporal",
               },
             ],
           },
