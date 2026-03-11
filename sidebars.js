@@ -931,7 +931,7 @@ const sidebars = {
                 type: 'generated-index',
                 title: 'Orkes Templates',
                 slug: '/category/templates',
-                description: 'Get started quickly in Orkes Conductor with these workflow templates — available only on Developer Edition (Launch Pad).',
+                description: 'Explore ready-to-use workflow templates for common orchestration use cases.',
             },
             className: 'leftMenuHeader',
             items: [
@@ -947,7 +947,7 @@ const sidebars = {
                 type: 'generated-index',
                 title: 'Tutorials',
                 slug: '/category/tutorials',
-                description: 'Tutorials for workflows in Orkes Conductor.',
+                description: 'Learn how to build and run workflows using step-by-step tutorials for common orchestration use cases.',
             },
             className: 'leftMenuHeader',
             items: [
@@ -957,7 +957,7 @@ const sidebars = {
                     link: {
                         type: 'generated-index',
                         title: 'General',
-                        description: 'Explore our basic tutorials to get started with using Orkes Conductor.',
+                        description: 'Explore beginner-friendly tutorials that walk you through building workflows and applications with Orkes Conductor',
                         slug: '/general-templates'
                     },
                     items: [
@@ -991,7 +991,7 @@ const sidebars = {
                     link: {
                         type: 'generated-index',
                         title: 'AI Tutorials',
-                        description: 'Explore tutorials for AI orchestration and agentic workflows.',
+                        description: 'Explore tutorials for building AI-powered and agentic workflows with Conductor.',
                         slug: '/tutorials/ai'
                     },
                     items: [
@@ -1038,7 +1038,7 @@ const sidebars = {
                     link: {
                         type: 'generated-index',
                         title: 'Gateway',
-                        description: 'Explore tutorials for exposing workflows as APIs or MCP tools with Orkes Conductor Gateway.',
+                        description: 'Explore tutorials for exposing workflows as APIs and MCP tools using the Conductor Gateway.',
                         slug: '/tutorials/mcp'
                     },
                     items: [
@@ -1060,7 +1060,7 @@ const sidebars = {
                     link: {
                         type: 'generated-index',
                         title: 'Webhooks',
-                        description: 'Explore tutorials on using webhook integrations in Conductor workflows.',
+                        description: 'Explore tutorials that demonstrate how to trigger and process workflows using webhook integrations in Conductor.',
                         slug: '/webhook-templates'
                     },
                     items: [
@@ -1112,7 +1112,7 @@ const sidebars = {
                     link: {
                         type: 'generated-index',
                         title: 'Documents',
-                        description: 'Explore tutorials for document related uses cases.',
+                        description: 'Explore tutorials for building document processing and approval workflows using Conductor.',
                         slug: '/document-templates'
                     },
                     items: [
@@ -1139,7 +1139,7 @@ const sidebars = {
                     link: {
                         type: 'generated-index',
                         title: 'Finance',
-                        description: 'Explore tutorials for finance use cases.',
+                        description: 'Explore tutorials for building finance workflows such as payments, approvals, and financial processing using Conductor.',
                         slug: '/finance-templates'
                     },
                     items: [
@@ -1161,7 +1161,7 @@ const sidebars = {
                     link: {
                         type: 'generated-index',
                         title: 'Application Alerts',
-                        description: 'Explore tutorials for alerting use cases with Conductor.',
+                        description: 'Explore tutorials for building alerting workflows that monitor events and trigger notifications.',
                         slug: '/category/templates/alerting'
                     },
                     items: [
@@ -1181,7 +1181,7 @@ const sidebars = {
                 type: 'generated-index',
                 title: 'FAQs',
                 slug: '/category/faqs',
-                description: 'Frequently-asked questions about Orkes Conductor.',
+                description: 'Explore frequently asked questions about Conductor, including common concepts, usage guidance, and troubleshooting.',
             },
             items: [
                 {
