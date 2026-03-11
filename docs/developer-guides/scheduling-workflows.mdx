@@ -133,6 +133,10 @@ Schedules can be configured directly using the scheduler functionality, from a c
 9. (Optional) Enable **Pause schedule** to prevent it from running upon creation. You can unpause the schedule later to resume.
 10. Select **Save** > **Confirm**.
 
+Once created, and if the schedule is active (not paused), you can also view the next run time.
+
+<p align="center"><img src="/content/img/next-run-time-for-workflow-schedule.png" alt="Next run time of a Schedule" width="100%" height="auto"></img></p>
+
 Upon schedule creation, you can perform the following actions:
 
 <p align="center"><img src="/content/img/actions-on-scheduler.png" alt="Actions that can carried on a Schedule" width="100%" height="auto"></img></p>
@@ -158,7 +162,7 @@ This automatically populates a schedule definition with workflow details, includ
 </TabItem>
 <TabItem value="Using API" label="Using API">
 
-Use the following API to create a new schedule:
+Use the [Create Schedule API](/content/reference-docs/api/schedule/create-schedule) to create a new schedule:
 
 ```json
 POST /api/scheduler/schedules

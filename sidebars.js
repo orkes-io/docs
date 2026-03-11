@@ -660,7 +660,6 @@ const sidebars = {
                 slug: '/category/ref-docs/api',
                 keywords: ['reference', 'apis', 'api']
             },
-            collapsed: false,
             className: 'leftMenuHeader',
             items: [
                 {
