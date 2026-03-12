@@ -29,7 +29,7 @@ Configure these parameters for the List Files task.
 | inputParameters.**inputLocation** | The location of the files to be listed. Example based on the integration type:<ul><li>Cloud Storage<ul><li>s3://bucketname/folder</li><li>gs://path</li><li>azureblob://path</li></ul></li><li>Git Repositories<ul><li>https://github.com/owner/repo</li><li>https://gitlab.com/owner/repo</li></ul></li><li>Website Sitemap<ul><li>https://example.com/sitemap.xml (full path required)</li></ul></li><li>Single Page<ul><li>https://example.com/page.html</li></ul></li></ul>It can also be [passed as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor). | Required. | 
 | inputParameters.**integrationName** | If the location of the file to be listed is not publicly available, select the integration name of the Git Repository or Cloud Providers integrated with your Conductor cluster.<br/><br/>**Note**: If you haven’t configured any integration on your Orkes Conductor cluster, go to the **Integrations** tab and configure the [Git Repository](/content/integrations/git-repository) or required [Cloud Providers](/content/category/integrations/cloud-provider). | Optional. |
 | inputParameters.**fileTypes** | The file types to be listed. If omitted, all file types are included. Supported values: <ul><li>java</li><li>xls</li><li>csv</li><li>pdf</li><li>all</li></ul> Supports multiple file types. | Optional. |
-| inputParameters.**outputLocation** | The storage location where the resulting list of files is to be stored as a text file. Each line in the file contains one absolute path. It can also be [passed as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor). | Optional. | 
+| inputParameters.**outputLocation** | The storage location where the resulting file list is saved as a text file, with each line in the text file containing one absolute file path. <br/>For example:<ul><li>s3://bucketname/filename.txt</li><li>gs://bucketname/filename.txt</li><li>azureblob://container/filename.txt</li></ul>It can also be [passed as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor).<br/><br/>**Note**: Cloud storage output requires a corresponding integration with write permissions. Use `integrationNames` parameter (e.g., `{"aws": "my-integration"}`) to add any additional integration configurations. | Optional. | 
 | inputParameters.**integrationNames** | A key-value map of integration types and names. Use this when multiple integrations are needed.<br/><br/>The **key** represents the type of integration (for example, git, aws, gcp, hubspot), and the **value** specifies the name of the corresponding integration. | Optional. | 
 
 The following are generic configuration parameters that can be applied to the task and are not specific to the List Files task.
@@ -78,7 +78,7 @@ The List Files task will return the following parameters.
 3. (Optional) For private URLs, in **Integration Name**, select the integration already added to the cluster from where the files are to be listed.
 4. (Optional) In **File Types**, select the file type to be listed. Select all or leave blank to include all types.
 5. (Optional) In **Output Location**, enter an output location to store the list of files as a text file.
-6. (Optional) In **Advanced Integration Configuration**, select **+ Add Integration** when multiple integrations are needed. The **key** represents the type of integration (for example, git, aws, gcp, hubspot), and the **value** specifies the name of the corresponding integration. 
+6. (Optional) In **Advanced Integration Configuration**, select **+ Add Integration** when multiple integrations are needed. The **key** represents the type of integration (for example, git, aws, gcp), and the **value** specifies the name of the corresponding integration. 
 
 <center><p><img src="/content/img/list-file-task-ui.png" alt="List Files Task" width="100%" height="auto"/></p></center>
 
@@ -127,7 +127,7 @@ To illustrate the use of the List Files task, consider the following workflow th
 
 Let’s execute the workflow using the **Execute** button. 
 
-When executed, this workflow connects to the specified GitHub repository, identifies all files with the .md extension, and returns a list of their absolute paths.
+When executed, this workflow connects to the specified GitHub repository, identifies all files with the `.md` extension, and returns a list of their absolute paths.
 
 The task output contains a key named files, which stores an array of file URLs retrieved from the repository.
 
@@ -136,5 +136,143 @@ After successful execution, the **List Files** task produces the following outpu
 <center><p><img src="/content/img/list-file-task-output.png" alt="Output of the list files task" width="100%" height="auto"/></p></center>
 
 Each element in the files array represents one file path from the input location. These can be used directly by downstream tasks for further processing.
+
+</details>
+
+<details>
+<summary>List files from a private GitHub repository</summary>
+
+In this example, we will:
+1. Create a Git Repository integration in Orkes Conductor.
+2. Create a workflow that uses the List Files task.
+3. Run the workflow and verify the output.
+
+**Step 1: Create a Git Repository integration in Orkes Conductor**
+
+Create a [Git Repository](/content/integrations/git-repository) integration using a personal access token with read access to the private repository from which the files are to be listed.
+
+**Step 2: Create a workflow in Orkes Conductor**
+
+**To create a workflow using Conductor UI:**
+
+1. Go to **Definitions** > **Workflow** from the left navigation menu on your Conductor cluster.
+2. Select **+ Define workflow**.
+3. In the **Code** tab on the right panel, paste the following code:
+
+```json
+{
+ "name": "Listing Files - GitHub",
+ "description": "Workflow to list files from a private GitHub repository.",
+ "version": 1,
+ "tasks": [
+   {
+     "name": "list_files",
+     "taskReferenceName": "list_files_ref",
+     "inputParameters": {
+       "inputLocation": "<YOUR-GITHUB-PRIVATE-REPO-URL>",
+       "fileTypes": [
+         "md"
+       ],
+       "integrationName": "<YOUR-GITHUB-INTEGRATION-NAME>"
+     },
+     "type": "LIST_FILES"
+   }
+ ],
+ "schemaVersion": 2
+}
+```
+
+4. Replace `<YOUR-GITHUB-PRIVATE-REPO-URL>` with your private repository URL and `<YOUR-GITHUB-INTEGRATION-NAME>` with the integration name created in Step 1.
+
+<center><p><img src="/content/img/replace-github-credentials.png" alt="Replacing GitHub credentials in the workflow" width="100%" height="auto"/></p></center>
+
+5. Select **Save** > **Confirm**.
+
+**Step 3: Run the workflow and verify the output**
+
+Select the **Execute** button from the workflow definition page. This takes you to the workflow execution page. Once the workflow is successfully completed, select the **Workflow Input/Output** to verify the output.
+
+<center><p><img src="/content/img/list-files-from-private-git-output.png" alt="Workflow Output" width="100%" height="auto"/></p></center>
+
+The output will contain a `files` array with the absolute paths of all listed `.md` files.
+
+</details>
+
+<details>
+<summary>List files from a private GitHub repository and store them in an AWS S3 bucket</summary>
+
+In this example, we will:
+1. Create a Git Repository integration in Orkes Conductor.
+2. Create an AWS integration in Orkes Conductor.
+3. Create a workflow that uses the List Files task.
+4. Run the workflow and verify the output.
+
+**Step 1: Create a Git Repository integration in Orkes Conductor**
+
+Create a [Git Repository](/content/integrations/git-repository) integration using a personal access token with read access to the private repository from which the files are to be listed.
+
+**Step 2: Create an AWS integration in Orkes Conductor**
+
+Create an [AWS integration](/content/integrations/cloud-provider/aws) with the connection type as **Access Key/Secret**. Ensure that the access key has write access to the S3 bucket. Note the S3 URI where the output text file will be stored using the List Files task.
+
+**Step 3: Create a workflow in Orkes Conductor**
+
+**To create a workflow using Conductor UI:**
+
+1. Go to **Definitions** > **Workflow** from the left navigation menu on your Conductor cluster.
+2. Select **+ Define workflow**.
+3. In the **Code** tab on the right panel, paste the following code:
+
+```json
+{
+ "name": "Listing Files - GitHub + AWS",
+ "description": "Workflow to list files from a private GitHub repository and store them in a private AWS S3 bucket text file.",
+ "version": 1,
+ "tasks": [
+   {
+     "name": "list_files",
+     "taskReferenceName": "list_files_ref",
+     "inputParameters": {
+       "inputLocation": "<YOUR-GITHUB-PRIVATE-REPO-URL>",
+       "fileTypes": [
+         "md"
+       ],
+       "integrationName": "<YOUR-GITHUB-INTEGRATION-NAME>",
+       "outputLocation": "<YOUR-S3-BUCKET-TXT-FILE-LOCATION>",
+       "integrationNames": {
+         "aws": "<YOUR-AWS-INTEGRATION-NAME>"
+       }
+     },
+     "type": "LIST_FILES"
+   }
+ ],
+ "schemaVersion": 2
+}
+```
+
+4. Replace the following:
+
+<center><p><img src="/content/img/replace-aws-git-credentials.png" alt="Replacing GitHub and AWS credentials in the workflow" width="100%" height="auto"/></p></center>
+
+  - `<YOUR-GITHUB-INTEGRATION-NAME>` with the integration name created in Step 1.
+  - `<YOUR-GITHUB-PRIVATE-REPO-URL>` with your private repository URL from which files are to be listed.
+  - `<YOUR-S3-BUCKET-TXT-FILE-LOCATION>` with the S3 URI. For example: `s3://<YOUR-BUCKET-NAME>/<TXT-FILE-NAME>.txt`.
+  - `<YOUR-AWS-INTEGRATION-NAME>` with the AWS integration name created in Step 2.
+
+5. Select **Save** > **Confirm**.
+
+**Step 4: Run the workflow and verify the output**
+
+Select the **Execute** button from the workflow definition page. This takes you to the workflow execution page. 
+
+When executed, this workflow connects to the specified GitHub repository, lists all `.md` files, and writes the file list to an S3 bucket. Each line in the file contains one absolute file path.
+
+Once the workflow is successfully completed, select the **Workflow Input/Output** to verify the output. The task output contains a key named `files`, which stores an array of file URLs retrieved from the repository.
+
+<center><p><img src="/content/img/list-files-aws-output.png" alt="Workflow Output" width="100%" height="auto"/></p></center>
+
+Accessing the S3 bucket confirms that the output text file has been written, with each line containing one absolute file path.
+
+<center><p><img src="/content/img/output-location-s3.png" alt="Verifying S3 Output Location" width="60%" height="auto"/></p></center>
 
 </details>
