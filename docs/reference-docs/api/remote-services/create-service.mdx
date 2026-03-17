@@ -1,0 +1,139 @@
+---
+sidebar_position: 1
+slug: "/reference-docs/api/remote-services/create-service"
+description: "Learn how to create a service definition."
+---
+
+# Create Service
+
+**Endpoint**: `POST /api/registry/service`
+
+Creates a service in the registry. If a service with the same name already exists, it is overwritten.
+
+## Request body
+
+Format the request body as an array with the following parameters:
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| name | A unique identifier for the service. | string | Required. | 
+| type | The service type. Supported values:<ol><li>`HTTP`</li><li>`gRPC`</li></ol> | enum | Required. | 
+| serviceURI | Base URI of the service. Supported types:<ol><li>For HTTP services: Enter the Swagger specification URL (ending in .json). For example: `https://petstore.swagger.io/v2/swagger.json`.</li><li>For gRPC services: Enter the service's host URL in the format `host:port`.</li></ol> | string | Required. | 
+| servers. **url** | Additional host URL for the service. | string | Optional. | 
+| servers. **type** | URL type. Supported values:<ol><li>`OPENAPI_SPEC`</li><li>`USER_DEFINED`</li></ol> | enum | Optional. | 
+| authMetadata. **key** | The HTTP header name for authentication. For example, `Authorization`. | string | Optional. | 
+| authMetadata. **value** | The HTTP header value for authentication. For example, `Bearer <token>`. | string | Optional. | 
+| circuitBreakerEnabled | Whether the circuit breaker is active for this service. Defaults to `false`. | boolean | Optional. | 
+| config.circuitBreakerConfig. **failureRateThreshold** | The failure rate threshold is a percentage between 0 and 100; when the failure rate equals or exceeds this value, the circuit breaker opens to block further calls. Default is 50.<br/><br/>For example, setting the threshold to 50 means the circuit will open when half of the calls fail. Set it to 0 to disable this behavior. | float | Optional. | 
+| config.circuitBreakerConfig. **slidingWindowSize** | The size of the sliding window, which is used to record the outcome of calls when the circuit breaker is closed. The value ranges between 1 and 1000. Default is 100. | integer | Optional. | 
+| config.circuitBreakerConfig. **minimumNumberOfCalls** | The minimum number of calls required within a sliding window before the circuit breaker evaluates the error rate or slow call rate. The minimum value is 1, and the maximum value should not exceed the *Sliding window size*. Default is 100.<br/><br/>For example, if this value is 10, then at least 10 calls must be recorded before the failure rate can be calculated. If only 9 calls have been recorded, the Circuit Breaker will not transition to open even if all 9 calls have failed. | integer | Optional. | 
+| config.circuitBreakerConfig. **waitDurationInOpenState** | The time in ms that the circuit breaker must wait before transitioning from open to half-open. The value ranges between 1000-300000. Default is 1000. | integer | Optional. | 
+| config.circuitBreakerConfig. **permittedNumberOfCallsInHalfOpenState** | The number of calls allowed while the Circuit Breaker is in the half-open state. The value ranges between 1 and 100. Default is 100. | integer | Optional. | 
+| config.circuitBreakerConfig. **slowCallRateThreshold** | The percentage threshold for calls classified as slow. A call is considered slow if its duration exceeds the *Slow call duration threshold*.<br/><br/>If the percentage of slow calls within the sliding window equals or exceeds this threshold, the Circuit Breaker transitions to the open state and begins short-circuiting calls.<br/><br/>The value ranges between 0 and 100. Set to 0 to disable slow-call triggering. Default is 50. | float | Optional. | 
+| config.circuitBreakerConfig. **slowCallDurationThreshold** | The duration threshold (in ms) above which calls are considered slow. Calls exceeding this time increase the slow call rate. The value ranges between 1000-60000. Default is 100. | integer | Optional. | 
+| config.circuitBreakerConfig. **maxWaitDurationInHalfOpenState** | The maximum wait duration (in ms) the circuit breaker can remain in the half-open state before transitioning back to the open state. A value of 0 means the circuit breaker will remain half-open indefinitely until all permitted calls are completed. | integer | Optional. | 
+| config.circuitBreakerConfig. **automaticTransitionFromOpenToHalfOpenEnabled** | If set to `true`, the circuit breaker automatically transitions from the open state to the half-open state, and no call is required to trigger the transition. Default is `true`.<br/><br/>If set to `false`, the transition to half-open occurs only when a call is made. | boolean | Optional. | 
+
+## Response
+
+Returns 200 OK, indicating that the service was created successfully.
+
+## Examples
+
+<details>
+<summary>Create an HTTP service</summary>
+
+**Request**
+
+```bash
+curl -X 'POST' \
+  'https://<YOUR-SERVER-URL>/api/registry/service' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "name": "petstore",
+  "type": "HTTP",
+  "serviceURI": "https://petstore.swagger.io/v2",
+  "servers": [
+    {
+      "url": "https://petstore.swagger.io/v2/swagger.json",
+      "type": "OPENAPI_SPEC"
+    }
+  ]
+}'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the service was created successfully.
+
+</details>
+
+<details>
+<summary>Create a gRPC service</summary>
+
+**Request**
+
+```bash
+curl -X 'POST' \
+  'https://<YOUR-SERVER-URL>/api/registry/service' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "name": "grpcbin",
+  "type": "gRPC",
+  "serviceURI": "grpcb.in:9000"
+}'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the service was created successfully.
+
+</details>
+
+<details>
+<summary>Create an HTTP service with Circuit Breaker enabled</summary>
+
+**Request**
+
+```bash
+curl -X 'POST' \
+  'https://<YOUR-SERVER-URL>/api/registry/service' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "name": "petstore-cb",
+  "type": "HTTP",
+  "serviceURI": "https://petstore.swagger.io/v2",
+  "servers": [
+    {
+      "url": "https://petstore.swagger.io/v2/swagger.json",
+      "type": "OPENAPI_SPEC"
+    }
+  ],
+  "circuitBreakerEnabled": true,
+  "config": {
+    "circuitBreakerConfig": {
+      "failureRateThreshold": 50.0,
+      "slidingWindowSize": 100,
+      "minimumNumberOfCalls": 100,
+      "waitDurationInOpenState": 1000,
+      "permittedNumberOfCallsInHalfOpenState": 100,
+      "slowCallRateThreshold": 50.0,
+      "slowCallDurationThreshold": 100,
+      "automaticTransitionFromOpenToHalfOpenEnabled": true,
+      "maxWaitDurationInHalfOpenState": 1
+    }
+  }
+}'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the service was created successfully.
+
+</details>

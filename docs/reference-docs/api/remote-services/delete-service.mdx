@@ -1,0 +1,41 @@
+---
+sidebar_position: 3
+slug: "/reference-docs/api/remote-services/delete-service"
+description: "Learn how to delete a service."
+---
+
+# Delete Service
+
+**Endpoint**: `DELETE /api/registry/service/{name}`
+
+Deletes a service.
+
+## Path parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| name | The name of the service to delete. | string | Required. | 
+
+## Response
+
+Returns 200 OK, indicating that the service has been deleted.
+
+## Examples
+
+<details>
+<summary>Delete a service</summary>
+
+**Request**
+
+```bash
+curl -X 'DELETE' \
+  'https://<YOUR-SERVER-URL>/api/registry/service/payment-service' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the service has been deleted.
+
+</details>
