@@ -1,0 +1,85 @@
+---
+sidebar_position: 4
+slug: "/reference-docs/api/remote-services/get-all-services"
+description: "Learn how to retrieve all services."
+---
+
+# Get All Services
+
+**Endpoint**: `GET /api/registry/service`
+
+Retrieves all services from your Conductor cluster. 
+
+## Response
+
+Returns an array of service objects, each including its type, base URI, registered methods, circuit breaker settings, server URLs, and authentication metadata.
+
+## Examples
+
+<details>
+<summary>Get all services</summary>
+
+**Request**
+
+```bash
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/registry/service' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+[
+  {
+    "name": "petstore",
+    "type": "HTTP",
+    "serviceURI": "https://petstore.swagger.io/v2/swagger.json",
+    "methods": [],
+    "config": {
+      "circuitBreakerConfig": {
+        "failureRateThreshold": 50,
+        "slidingWindowSize": 100,
+        "minimumNumberOfCalls": 100,
+        "waitDurationInOpenState": 1000,
+        "permittedNumberOfCallsInHalfOpenState": 100,
+        "slowCallRateThreshold": 50,
+        "slowCallDurationThreshold": 100,
+        "automaticTransitionFromOpenToHalfOpenEnabled": true,
+        "maxWaitDurationInHalfOpenState": 1
+      }
+    },
+    "circuitBreakerEnabled": false,
+    "servers": [
+      {
+        "url": "https://petstore.swagger.io/v2/swagger.json",
+        "type": "OPENAPI_SPEC"
+      }
+    ]
+  },
+  {
+    "name": "grpcbin",
+    "type": "gRPC",
+    "serviceURI": "grpcb.in:9000",
+    "methods": [],
+    "config": {
+      "circuitBreakerConfig": {
+        "failureRateThreshold": 50,
+        "slidingWindowSize": 100,
+        "minimumNumberOfCalls": 100,
+        "waitDurationInOpenState": 1000,
+        "permittedNumberOfCallsInHalfOpenState": 100,
+        "slowCallRateThreshold": 50,
+        "slowCallDurationThreshold": 100,
+        "automaticTransitionFromOpenToHalfOpenEnabled": true,
+        "maxWaitDurationInHalfOpenState": 1
+      }
+    },
+    "circuitBreakerEnabled": false,
+    "servers": []
+  }
+]
+```
+
+</details>
