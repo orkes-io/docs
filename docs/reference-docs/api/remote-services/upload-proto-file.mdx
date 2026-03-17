@@ -1,0 +1,50 @@
+---
+sidebar_position: 11
+slug: "/reference-docs/api/remote-services/upload-proto-file"
+description: "Learn how to upload a compiled binary protobuf file to a gRPC service."
+---
+
+# Upload Proto File to gRPC Service
+
+**Endpoint**: `POST /api/registry/service/protos/{registryName}/{filename}`
+
+Uploads a compiled binary protobuf file to a gRPC service. Once uploaded, Conductor extracts and registers the service endpoints, making them available for use in workflows.
+
+## Path parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| registryName | The name of the gRPC service to upload the proto file to. | string | Required. | 
+| filename | The name of the proto file to upload. | string | Required. | 
+
+## Request body
+
+**Content-Type**: `application/octet-stream`
+
+Upload the compiled binary protobuf file (`.bin`) generated using the `protoc` utility.
+
+## Response
+
+Returns a 200 OK, indicating that the proto file has been uploaded successfully.
+
+## Examples
+
+<details>
+<summary>Upload a proto file to a gRPC service</summary>
+
+**Request**
+
+```bash
+curl -X 'POST' \
+  'https://<YOUR-SERVER-URL>/api/registry/service/protos/grpc-service/hello.bin' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/octet-stream' \
+  --data-binary '@hello.bin'
+```
+
+**Response**
+
+Returns a 200 OK, indicating that the proto file has been uploaded successfully.
+
+</details>
