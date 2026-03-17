@@ -1,0 +1,53 @@
+---
+sidebar_position: 9
+slug: "/reference-docs/api/remote-services/open-circuit-breaker"
+description: "Learn how to manually force the circuit breaker to the open state, blocking all requests to the service."
+---
+
+# Open Circuit Breaker 
+
+**Endpoint**: `POST /api/registry/service/{name}/circuit-breaker/open`
+
+Manually forces the circuit breaker to the open state, blocking all requests to the service. 
+
+:::info Note
+The circuit breaker is initialized only after at least one request has been made to the service. If the service does not exist or the circuit breaker has not been initialized yet, this endpoint returns 404.
+:::
+
+## Path parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| name | The name of the service whose circuit breaker is to be opened. | string | Required. | 
+
+## Response
+
+Returns a 200 OK with the circuit breaker status, including the service name, previous and current states, transition timestamp, and a status message.
+
+## Examples
+
+<details>
+<summary>Open circuit breaker</summary>
+
+**Request**
+
+```bash
+curl -X 'POST' \
+  'https://<YOUR-SERVER-URL>/api/registry/service/petstore/circuit-breaker/open' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+{
+  "service": "petstore",
+  "previousState": "CLOSED",
+  "currentState": "OPEN",
+  "transitionTimestamp": 0,
+  "message": "Circuit breaker transitioned from CLOSED to OPEN"
+}
+```
+
+</details>

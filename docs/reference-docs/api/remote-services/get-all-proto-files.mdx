@@ -1,0 +1,54 @@
+---
+sidebar_position: 14
+slug: "/reference-docs/api/remote-services/get-all-proto-files"
+description: "Learn how to retrieve all compiled binary protobuf files from a gRPC service."
+---
+
+# Get All Proto Files from gRPC Service
+
+**Endpoint**: `GET /api/registry/service/protos/{registryName}`
+
+Retrieves all compiled binary protobuf files from a gRPC service.
+
+## Path parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| registryName | The name of the gRPC service to retrieve the proto files from. | string | Required. | 
+
+## Response
+
+Returns a 200 OK, with an array of proto file objects, each including the service name, filename, and file data.
+
+## Examples
+
+<details>
+<summary>Get all proto files from a gRPC service</summary>
+
+**Request**
+
+```bash
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/registry/service/protos/grpc-service' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+[
+  {
+    "serviceName": "grpc-service",
+    "filename": "hello.bin",
+    "data": "xxxxxx"
+  },
+  {
+    "serviceName": "grpc-service",
+    "filename": "hello1.bin",
+    "data": "xxxxxxxxxx"
+  }
+]
+```
+
+</details>

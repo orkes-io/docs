@@ -1,0 +1,68 @@
+---
+sidebar_position: 2
+slug: "/reference-docs/api/remote-services/get-service"
+description: "Learn how to retrieve a service."
+---
+
+# Get Service
+
+**Endpoint**: `GET /api/registry/service/{name}`
+
+Retrieves the details of a specific service.
+
+## Path parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| name | The name of the service to retrieve. | string | Required. | 
+
+## Response
+
+Returns a 200 OK response with service details, including its type, base URI, circuit breaker settings, server URLs, and authentication metadata.
+
+## Examples
+
+<details>
+<summary>Get a service</summary>
+
+**Request**
+
+```bash
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/registry/service/payment-service' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+{
+  "name": "payment-service",
+  "type": "HTTP",
+  "serviceURI": "https://payments.internal/api",
+  "methods": [],
+  "requestParams": [],
+  "config": {
+    "circuitBreakerConfig": {
+      "failureRateThreshold": 60,
+      "slidingWindowSize": 100,
+      "minimumNumberOfCalls": 100,
+      "waitDurationInOpenState": 5000,
+      "permittedNumberOfCallsInHalfOpenState": 100,
+      "slowCallRateThreshold": 50,
+      "slowCallDurationThreshold": 100,
+      "automaticTransitionFromOpenToHalfOpenEnabled": true,
+      "maxWaitDurationInHalfOpenState": 1
+    }
+  },
+  "circuitBreakerEnabled": true,
+  "servers": [],
+  "authMetadata": {
+    "key": "Authorization",
+    "value": "Bearer eyJhbGci..."
+  }
+}
+```
+
+</details>

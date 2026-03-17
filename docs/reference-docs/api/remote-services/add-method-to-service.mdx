@@ -1,0 +1,68 @@
+---
+sidebar_position: 6
+slug: "/reference-docs/api/remote-services/add-method-to-service"
+description: "Learn how to add a method to a service."
+---
+
+# Add Method to Service
+
+**Endpoint**: `POST /api/registry/service/{registryName}/methods`
+
+Adds a method to a registered service.
+
+## Path parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| name | The name of the service to add the method to. | string | Required. | 
+
+## Request body
+
+Format the request body as an array with the following parameters:
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| operationName | The action or purpose of the method. | string | Required. | 
+| description | A description of the method. | string | Optional. | 
+| methodName | The method name for the endpoint. | string | Optional. | 
+| methodType | The method type. Supported values for HTTP:<ul><li>`GET`</li><li>`POST`</li><li>`PUT`</li><li>`DELETE`</li><li>`PATCH`</li></ul> Supported values for gRPC:<ul><li>`UNARY`</li><li>`SERVER_STREAMING`</li><li>`CLIENT_STREAMING`</li><li>`BIDIRECTIONAL_STREAMING`</li></ul> | string | Optional. | 
+| accept | The accept header required by the HTTP server. For example, `application/json`. | string | Optional. | 
+| requestContentType | The request content-type for the HTTP server. For example, `application/json`. | string | Optional. | 
+| responseContentType | The response content-type for the HTTP server. For example, `application/json`. | string | Optional. | 
+| inputType | The input schema for the service. | string | Optional. | 
+| outputType | The output schema for the service. | string | Optional. | 
+| deprecated | Whether this method is deprecated. | boolean | Optional. | 
+
+## Response
+
+Returns 200 OK, indicating that the method has been added successfully.
+
+## Examples
+
+<details>
+<summary>Add a method to a service</summary>
+
+**Request**
+
+```bash
+curl -X 'POST' \
+  'https://<YOUR-SERVER-URL>/api/registry/service/petstore/methods' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "operationName": "getPetById",
+  "methodName": "/pet/{petId}",
+  "methodType": "GET",
+  "requestContentType": "application/json",
+  "responseContentType": "application/json",
+  "description": "Returns a single pet",
+  "deprecated": false
+}'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the method has been added successfully.
+
+</details>

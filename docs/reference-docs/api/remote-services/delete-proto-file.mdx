@@ -1,0 +1,42 @@
+---
+sidebar_position: 13
+slug: "/reference-docs/api/remote-services/delete-proto-file"
+description: "Learn how to delete a compiled binary protobuf file from a gRPC service."
+---
+
+# Delete Proto File from gRPC Service
+
+**Endpoint**: `DELETE /api/registry/service/protos/{registryName}/{filename}`
+
+Deletes a compiled binary protobuf file from a gRPC service.
+
+## Path parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| registryName | The name of the gRPC service to delete the proto file from. | string | Required. | 
+| filename | The name of the proto file to delete. | string | Required. | 
+
+## Response
+
+Returns a 200 OK, indicating that the compiled binary protobuf file has been deleted successfully.
+
+## Examples
+
+<details>
+<summary>Delete a proto file from a gRPC service</summary>
+
+**Request**
+
+```bash
+curl -X 'DELETE' \
+  'https://<YOUR-SERVER-URL>/api/registry/service/protos/grpc-service/hello.bin' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+Returns a 200 OK, indicating that the compiled binary protobuf file has been deleted successfully.
+
+</details>

@@ -1,0 +1,49 @@
+---
+sidebar_position: 7
+slug: "/reference-docs/api/remote-services/remove-method-from-service"
+description: "Learn how to remove a method from a service."
+---
+
+# Remove Method from Service
+
+**Endpoint**: `DELETE /api/registry/service/{registryName}/methods`
+
+Removes a method from a registered service.
+
+## Path parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| name | The name of the service to remove the method from. | string | Required. | 
+
+## Query parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| serviceName | The operation name of the method to remove. For example, `getPetById`. | string | Required. | 
+| method | The path of the method to remove. For example, `/pet/{petId}`. | string | Required. | 
+| methodType | The method type of the method to remove. For example, `GET`. | string | Required. | 
+
+## Response
+
+Returns 200 OK, indicating that the method has been removed successfully.
+
+## Examples
+
+<details>
+<summary>Remove a method from a service</summary>
+
+**Request**
+
+```bash
+curl -X 'DELETE' \
+  'https://<YOUR-SERVER-URL>/api/registry/service/petstore/methods?serviceName=getPetById&method=%2Fpet%2F%7BpetId%7D&methodType=GET' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the method has been removed successfully.
+
+</details>
