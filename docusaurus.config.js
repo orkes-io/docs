@@ -135,6 +135,11 @@ const config = {
             label: "API Reference",
           },
           {
+            href: "https://orkes.io/academy/",
+            label: "Academy",
+            position: "right",
+          },
+          {
             href: "https://github.com/conductor-oss/conductor",
             label: "GitHub",
             target: "_orkes_io",
@@ -208,6 +213,14 @@ const config = {
               {
                 label: "Blogs",
                 href: "https://www.orkes.io/blog/",
+              },
+              {
+                label: "Academy",
+                href: "https://orkes.io/academy/",
+              },
+              {
+                label: "Video Guides",
+                href: "https://www.youtube.com/@orkesio",
               },
               {
                 label: "Events",
