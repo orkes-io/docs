@@ -14,11 +14,11 @@ Tests a workflow using mock data and blocks until the workflow completes or reac
 
 | Parameter | Description | Type | Required/ Optional |
 | --------- | ----------- | ---- | ------------------ |
-| requestId | Identifier for this test request. Auto-generated if not provided. In most cases, this does not need to be set explicitly. | string | Optional. | 
-| waitUntilTaskRef | Task reference name to block until that task completes. | string | Optional. | 
-| waitForSeconds | Maximum seconds to wait before returning. Default is 10. | integer | Optional. | 
-| consistency | Consistency model for the workflow execution. Supported values:<ul><li>`SYNCHRONOUS`</li><li>`DURABLE`</li><li>`REGION_DURABLE`</li></ul> Default is `DURABLE`. | string | Optional. | 
-| returnStrategy | Determines what is returned in the response. Supported values:<ul><li>`TARGET_WORKFLOW`</li><li>`BLOCKING_WORKFLOW`</li><li>`BLOCKING_TASK`</li><li>`BLOCKING_TASK_INPUT`</li></ul>Default is `TARGET_WORKFLOW`. | string | Optional. | 
+| requestId | A user-generated request ID, which can be used to track the API request. Auto-generated if not provided. In most cases, this does not need to be set explicitly. | string | Optional. | 
+| waitUntilTaskRef | The reference name of the task to wait for before returning a response. | string | Optional. | 
+| waitForSeconds | The duration in seconds to wait before returning a response. Default is 10. | integer | Optional. | 
+| consistency | Specifies how the workflow start request is persisted and replicated before execution begins.  Supported values:<ul><li>`SYNCHRONOUS`: Executes the workflow directly from memory without persisting the request. The workflow is evaluated with minimal state synchronization during execution. This mode provides the lowest latency but is non-durable.</li><li>`DURABLE`: The request is stored in persistence before the workflow execution. Workflow state is synchronized during execution.</li><li>`REGION_DURABLE`: The request is replicated across regions before the workflow execution. This method provides the highest level of durability and fault tolerance but may introduce additional latency.</li></ul> Default is `DURABLE`. | string | Optional. | 
+| returnStrategy | Determines what is returned in the response. Supported values:<ul><li>`TARGET_WORKFLOW`: Returns the state of the originally triggered workflow.</li><li>`BLOCKING_WORKFLOW`: Returns the state of the workflow that is currently blocking the execution, which may be a sub-workflow.</li><li>`BLOCKING_TASK`: Returns the execution status of the task that is currently blocking workflow execution.</li><li>`BLOCKING_TASK_INPUT`: Returns the input of the task that is currently blocking workflow execution. Useful for introspecting runtime behavior or debugging.</li></ul>Default is `TARGET_WORKFLOW`. | string | Optional. | 
 
 ## Request body
 
