@@ -169,12 +169,12 @@ const moreResoucesData = [
     ctaLabel: "Read blogs",
   },
   {
-    title: "Video Guides",
+    title: "Academy",
     description:
-      "Watch step-by-step tutorials and feature demos to help you get started with Conductor.",
+      "Learn workflow orchestration with hands-on labs, structured paths, and certification from Orkes.",
     logo: "/content/img/svg/more-resources/video-guide.svg",
-    url: "https://www.youtube.com/channel/UCI7sk4DD6F6r9CWg9gHRlVg",
-    ctaLabel: "Explore video guides",
+    url: "https://orkes.io/academy/",
+    ctaLabel: "Explore courses",
   },
   {
     title: "Developer Events",
