@@ -13,6 +13,10 @@ The Yield task temporarily yields control of the workflow by pausing execution u
 
 When a workflow runs in synchronous consistency mode, and execution reaches a Yield task, Conductor immediately returns a response based on the `returnStrategy` in the [Execute Workflow Synchronously](/content/reference-docs/api/workflow/synchronous-workflow-execution#query-parameters) endpoint.
 
+:::info Note
+To achieve similar immediate-return behavior on a [Wait task](/content/reference-docs/operators/wait) with a duration, set `yield: true` in the Wait task's `inputParameters`. Unlike the Yield task, the Wait task continues running in the background for the specified duration. 
+:::
+
 ## Task parameters
 
 Configure these parameters for the Yield task.

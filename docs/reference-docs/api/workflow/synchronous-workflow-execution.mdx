@@ -55,6 +55,8 @@ By default, the API returns the workflow's current state along with its data, in
 
 For workflows with Yield tasks, the response format is determined by the `returnStrategy` parameter.
 
+For workflows containing a Wait task with a `duration` set, the response is held until `waitForSeconds` expires. Set `yield: true` in the Wait task's `inputParameters` to return an immediate response instead. [Learn more](/content/reference-docs/operators/wait).
+
 Returns 404 if an invalid workflow name is provided.
 
 ## Examples
