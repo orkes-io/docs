@@ -51,7 +51,6 @@ Returns 200 OK, indicating that the task status was successfully updated and the
 - `BLOCKING_TASK`: Execution status of the task currently blocking workflow execution
 - `BLOCKING_TASK_INPUT`: Input payload of the task currently blocking workflow execution
 
-For workflows containing a Wait task with a `duration` set after receiving a signal, the server holds the connection open until `timeoutMillis` expires. Set `yield: true` in the WAIT task's `inputParameters` to return an immediate response instead. [Learn more](/content/reference-docs/operators/wait).
 
 ## Examples
 
