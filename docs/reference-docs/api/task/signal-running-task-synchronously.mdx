@@ -12,7 +12,7 @@ v5.1.0 and later
 
 **Endpoint**: `POST /api/tasks/{workflowId}/{status}/signal/sync`
 
-Signals a running [Yield task](/content/reference-docs/operators/yield) in the specified workflow synchronously with a new status and output, and returns the updated workflow state, based on the `returnStrategy`. This API is useful for tightly coordinated task control or integrating external events into an ongoing workflow. 
+Signals a running [Wait](/content/reference-docs/operators/wait) or [Yield](/content/reference-docs/operators/yield) task in the specified workflow synchronously with a new status and output, and returns the updated workflow state, based on the `returnStrategy`. This API is useful for tightly coordinated task control or integrating external events into an ongoing workflow. 
 
 ## Path parameters
 
@@ -50,6 +50,7 @@ Returns 200 OK, indicating that the task status was successfully updated and the
 - `BLOCKING_WORKFLOW`: State of the workflow currently blocking execution (may be a sub workflow)
 - `BLOCKING_TASK`: Execution status of the task currently blocking workflow execution
 - `BLOCKING_TASK_INPUT`: Input payload of the task currently blocking workflow execution
+
 
 ## Examples
 

@@ -17,9 +17,9 @@ The Wait task is used when the workflow needs to be paused before continuing. It
 
 The Wait task will remain `IN PROGRESS` until a certain point. There are three wait types for the Wait task:
 
-- **Until**—Used to wait until a specified date and time, including the timezone.
-- **Duration**—Used to wait until a specified duration in the format: x hours x days x minutes x seconds.
-- **Signal**—Used to wait for an external signal.
+- **Until**: Used to wait until a specified date and time, including the timezone.
+- **Duration**: Used to wait until a specified duration in the format: x hours x days x minutes x seconds.
+- **Signal**: Used to wait for an external signal.
 
 External signals can come from an event handler, direct API call, or a webhook. For example, the [Update Task](/reference-docs/system-tasks/update-task) or [task update API](/reference-docs/api/task/update-task-status-in-workflow) can be used to explicitly to mark the Wait task as `COMPLETED`.
 
@@ -32,6 +32,12 @@ Configure these parameters for the Wait task.
 | inputParameters               | The input parameters for the Wait task, which can be [passed as a dynamic variable](/developer-guides/passing-inputs-to-task-in-conductor) or a fixed value. These parameters include those required for the Wait task to complete, which depend on the wait type:<ul><li>`until` for the until wait type</li><li>`duration` for the duration wait type</li></ul> | Required.                        |
 | inputParameters. **until**    | The datetime and timezone in one of the following formats:<ul><li>yyyy-MM-dd HH:mm z</li><li>yyyy-MM-dd HH:mm</li><li>yyyy-MM-dd</li></ul>For example, 2026-04-30 15:20 GMT+04:00.                                                                                                                                                                                                | Required for `until` wait type.    |
 | inputParameters. **duration** | The wait duration in the format `x days y hours z minutes aa seconds`. The accepted units in this field are:<ul><li>**days**, or **d** for days</li><li>**hours**, **hrs**, or **h** for hours</li><li>**minutes**, **mins**, or **m** for minutes</li><li>**seconds**, **secs**, or **s** for seconds</li></ul>                                                                  | Required for `duration` wait type. |
+| inputParameters. **yield**<br/><br/>**Available since**: v5.2.95 and later | When set to `true`, the [synchronous API](/content/reference-docs/api/workflow/synchronous-workflow-execution) returns immediately instead of holding the HTTP connection open for the full duration. The duration timer still runs in the background—the workflow is not skipped. Default is `false`.                               | Optional. | 
+
+:::info Note
+**When to use `yield: true`:**
+If you are [executing a workflow synchronously](/content/reference-docs/api/workflow/synchronous-workflow-execution) or [sending a signal to a running task synchronously](/content/reference-docs/api/task/signal-running-task-synchronously), and the next task is a long-running WAIT with a duration (for example, 1 hour), your HTTP client would normally be blocked for the full duration. Set `yield: true` to receive an immediate response while the WAIT continues running in the background.	
+:::
 
 The following are generic configuration parameters that can be applied to the task and are not specific to the Wait task.
 
@@ -249,5 +255,26 @@ Here’s a snippet of a Wait task awaiting an external signal:
 Once the workflow is run, the Wait task will be in an “In Progress” state. You can manually mark the task as completed either using the [Update Task Status in a Workflow API](https://orkes.io/content/reference-docs/api/task/update-task-status-in-workflow) or from the Conductor UI, as shown below:
 
 <p align="center"><img src="/content/img/wait-for-signal.png" alt="Wait type configured as signal" width="70%" height="auto"></img></p>
+
+</details>
+
+<details>
+<summary>Using `yield: true` with a duration wait</summary>
+
+This example configures a Wait task to pause execution for 1 hour while allowing the synchronous API to return immediately.
+
+```json
+{
+  "name": "wait",
+  "taskReferenceName": "wait_ref",
+  "type": "WAIT",
+  "inputParameters": {
+    "duration": "1 hour",
+    "yield": true
+  }
+}
+```
+
+When the workflow reaches this task, the 1-hour timer starts in the background. If you are [executing the workflow synchronously](/content/reference-docs/api/workflow/synchronous-workflow-execution) or [sending a signal to a running task synchronously](/content/reference-docs/api/task/signal-running-task-synchronously), the response is returned immediately instead of holding the HTTP connection open for the full hour.
 
 </details>
