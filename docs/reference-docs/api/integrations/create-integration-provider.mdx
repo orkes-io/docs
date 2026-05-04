@@ -1,0 +1,163 @@
+---
+sidebar_position: 1
+slug: "/reference-docs/api/integrations/create-integration-provider"
+description: "Learn how to create or update an integration provider."
+---
+
+# Create or Update Integration Provider
+
+**Endpoint**: `POST /api/integrations/provider/{name}`
+
+Creates a new integration provider or updates an existing one in the Conductor cluster.
+
+## Path Parameters
+
+| Parameter | Description                                      | Type   | Required/ Optional |
+| --------- | ------------------------------------------------ | ------ | ------------------ |
+| name | A unique name for the integration provider. | string | Required. | 
+
+## Request Body
+
+Format the request body as a JSON object with the following parameters:
+
+| Parameter | Description                                      | Type   | Required/ Optional |
+| --------- | ------------------------------------------------ | ------ | ------------------ |
+| type | The integration type. Cannot be changed after creation. Supported values:<ul><li>ollama</li><li>azure_openai</li><li>openai</li><li>perplexity</li><li>grok</li><li>cohere</li><li>mistral</li><li>anthropic</li><li>vertex_ai</li><li>vertex_ai_gemini</li><li>huggingface</li><li>aws_bedrock_anthropic</li><li>aws_bedrock_cohere</li><li>aws_bedrock_titan</li><li>pineconedb</li><li>weaviatedb</li><li>pgvectordb</li><li>mongovectordb</li><li>amqp</li><li>kafka</li><li>nats</li><li>aws_sqs</li><li>azure_service_bus</li><li>gcp_pubsub</li><li>ibm_mq</li><li>aws</li><li>gcp</li><li>relational_db</li><li>sendgrid</li><li>git</li></ul> | string | Optional. | 
+| category | The category of the integration. Supported values:<ul><li>AI_MODEL: For [AI/LLM](/content/category/integrations/ai-llm) integrations.</li><li>VECTOR_DB: For [Vector database](/content/category/integrations/vector-databases) integrations.</li><li>MESSAGE_BROKER: For [message broker](/content/category/integrations/message-broker) integrations.</li><li>CLOUD: For [cloud provider](/content/category/integrations/cloud-provider) integrations.</li><li>RELATIONAL_DB: For [relational database](/content/category/integrations/rdbms) integrations.</li><li>GIT: For [Git repository](/content/integrations/git-repository) integrations.</li><li>EMAIL: For [email provider](/content/integrations/email/sendgrid) integrations.</li></ul> | string | Optional. | 
+| description | A description for the integration. | string | Optional. | 
+| enabled | Whether the integration is active and available for use. | boolean | Optional. | 
+| configuration | A key-value map of provider-specific configuration, such as API keys and endpoints. Keys and required values vary by integration type. See [Configuration keys by integration type](/content/reference-docs/api/integrations/create-integration-provider#configuration-keys-by-integration-type). | object | Optional. \ 
+
+### Configuration keys by integration type
+
+The `configuration` object is a key-value map of provider-specific configuration, such as API keys and endpoints. Keys and required values vary by integration type.
+
+| Parameter | Required keys | Optional keys | 
+| --------- | ------------- | ------------- | 
+| [ollama](/content/integrations/ai-llm/ollama#step-2-add-an-integration-for-ollama) | endpoint | header, api_key | 
+| [azure_openai](/content/integrations/ai-llm/azure-open-ai#step-3-add-an-integration-for-azure-openai) | api_key, endpoint | - | 
+| [openai](/content/integrations/ai-llm/open-ai#step-2-add-an-integration-for-openai) | api_key | endpoint,organizationId | 
+| [perplexity](/content/integrations/ai-llm/perplexity#step-2-add-an-integration-for-perplexity) | api_key | – | 
+| [grok](/content/integrations/ai-llm/grok#step-2-add-an-integration-for-grok) | api_key | - | 
+| [cohere](/content/integrations/ai-llm/cohere#step-2-add-an-integration-for-cohere) | api_key, endpoint | – | 
+| [mistral](/content/integrations/ai-llm/mistral#step-2-add-an-integration-for-mistral) | api_key, endpoint | – | 
+| [anthropic](/content/integrations/ai-llm/anthropic-claude#step-2-add-an-integration-for-anthropic-claude) | api_key, endpoint | completionsPath, version, betaVersion | 
+| [vertex_ai](/content/integrations/ai-llm/vertex-ai#step-2-add-an-integration-for-google-vertex-ai) | projectName, environment, publisher, file | – | 
+| [vertex_ai_gemini](/content/integrations/ai-llm/google-gemini-ai#step-2-add-an-integration-for-google-gemini-ai) | projectName, environment, file | – | 
+| [huggingface](/content/integrations/ai-llm/hugging-face#step-2-add-an-integration-for-hugging-face) | api_key, namespace | – | 
+| [aws_bedrock_anthropic](/content/integrations/ai-llm/aws-bedrock-anthropic#step-2-add-an-integration-for-aws-bedrock-anthropic) | connectionType, region<br/>Based on the `connectionType` value, the following additional keys may be required:<ul><li>ACCESS_KEY: Requires user (access key) and api_key (access secret).</li><li>EXTERNAL_ROLE: Requires roleArn and externalId.</li><li>CONDUCTOR_ROLE: No additional keys required.</li></ul> | awsAccountId | 
+| [aws_bedrock_cohere](/content/integrations/ai-llm/aws-bedrock-cohere#step-2-add-an-integration-for-aws-bedrock-cohere) | connectionType, region<br/>Based on the `connectionType` value, the following additional keys may be required:<ul><li>ACCESS_KEY: Requires user (access key) and api_key (access secret).</li><li>EXTERNAL_ROLE: Requires roleArn and externalId.</li><li>CONDUCTOR_ROLE: No additional keys required.</li></ul> | awsAccountId | 
+| [aws_bedrock_titan](/content/integrations/ai-llm/aws-bedrock-cohere#step-2-add-an-integration-for-aws-bedrock-titan) | connectionType, region<br/>Based on the `connectionType` value, the following additional keys may be required:<ul><li>ACCESS_KEY: Requires user (access key) and api_key (access secret).</li><li>EXTERNAL_ROLE: Requires roleArn and externalId.</li><li>CONDUCTOR_ROLE: No additional keys required.</li></ul> | awsAccountId | 
+| [pineconedb](/content/integrations/vector-databases/pinecone#step-2-add-an-integration-for-pinecone) | api_key, projectName, environment | – | 
+| [weaviatedb](/content/integrations/vector-databases/weaviate#step-2-add-an-integration-for-weaviate) | api_key, endpoint | – | 
+| [pgvectordb](/content/integrations/vector-databases/postgres-vector-database#step-2-add-an-integration-for-postgres-vector-database) | user, password, datasourceURL, dimensions, distance_metric, indexing_method | inverted_list_count | 
+| [mongovectordb](/content/integrations/vector-databases/mongo-vector-database#step-2-add-an-integration-for-mongo-vector-database) | endpoint, namespace, dimensions, distance_metric | inverted_list_count | 
+| [amqp](/content/integrations/message-broker/amqp#step-2-add-an-integration-for-amqp) | protocol, user, password, endpoint, port, namespace | – | 
+| [kafka](/content/integrations/message-broker/apache-kafka#step-2-add-an-integration-for-apache-kafka) | endpoint, connectionType, protocol | groupId | 
+| [nats](/content/integrations/message-broker/nats-messaging#step-2-add-an-integration-for-nats-messaging) | endpoint, connectionType, authenticationType, protocol, tls | – | 
+| [aws_sqs](/content/integrations/message-broker/aws-sqs#step-2-add-an-integration-for-aws-sqs) | connectionType, region<br/>Based on the `connectionType` value, the following additional keys may be required:<ul><li>ACCESS_KEY: Requires user (access key) and api_key (access secret).</li><li>EXTERNAL_ROLE: Requires roleArn and externalId.</li><li>CONDUCTOR_ROLE: No additional keys required.</li></ul> | awsAccountId | 
+| [azure_service_bus](/content/integrations/message-broker/azure-service-bus#step-2-add-an-integration-for-azure-service-bus) | connectionType | endpoint, namespace | 
+| [gcp_pubsub](/content/integrations/message-broker/gcp-pub-sub#step-2-add-an-integration-for-gcp-pub-sub) | projectName, location, file | – | 
+| [ibm_mq](/content/integrations/message-broker/ibm-mq#step-2-add-an-integration-for-ibm-mq) | endpoint, port, queueManager, channel, protocol, pubSubMethod, authenticationType, tls | – | 
+| [aws](/content/integrations/cloud-provider/aws#step-2-add-an-integration-for-aws) | connectionType, region<br/>Based on the `connectionType` value, the following additional keys may be required:<ul><li>ACCESS_KEY: Requires user (access key) and api_key (access secret).</li><li>EXTERNAL_ROLE: Requires roleArn and externalId.</li><li>CONDUCTOR_ROLE: No additional keys required.</li></ul> | awsAccountId | 
+| [gcp](/content/integrations/cloud-provider/gcp#step-2-add-an-integration-for-gcp) | projectName, environment, file | – | 
+| [relational_db](/content/integrations/rdbms/relational-database#step-2-add-an-integration-for-relational-database) | jdbcDriver, user, password, datasourceURL | – | 
+| [sendgrid](/content/integrations/email/sendgrid#step-2-add-an-integration-for-sendgrid-email) | api_key | – | 
+| [git](/content/integrations/git-repository#step-2-add-an-integration-for-git-repository) | user, api_key | – | 
+
+For example, if you are adding an Anthropic Claude integration, the configuration looks like this:
+
+```json
+{
+      "name": "<YOUR-INTEGRATION-NAME>",
+      "type": "anthropic",
+      "category": "AI_MODEL",
+      "description": "<YOUR-DESCRIPTION>",
+      "enabled": true,
+      "configuration": {
+        "api_key": "<YOUR-API-KEY>",
+        "endpoint": "https://api.anthropic.com/v1"
+      }
+    }
+```
+
+### Usage notes
+
+- **Create**: If no provider exists with the `name`, a new one is created and the caller is automatically granted full access.
+- **Update**: If a provider with the `name` already exists, it is updated.
+- **Type immutability**: The `type` field cannot be changed after the provider is created. Attempting to change it returns a `400` error.
+- **Pinecone**: For `type: pineconedb`, the `projectName` is auto-resolved from the Pinecone control plane. The `api_key` and `environment` fields are required in `configuration`.
+- **OAuth2**: If the provider has OAuth2 token fields and `oAuth2AuthCode` is present in `configuration`, the authorization code is exchanged for tokens automatically.
+- **HuggingFace**: Any model entries discovered in the configuration are automatically registered as integration models.
+- **Secrets**: Configuration keys of type PASSWORD are saved to the configured secrets backend (e.g., AWS Secrets Manager, Azure Key Vault) rather than stored in plain text.
+
+## Response
+
+| Status | Description | 
+| ------ | ----------- | 
+| 200 OK | Indicates that the integration is created/updated successfully. | 
+| 400 Bad Request | Returns for an invalid input. For example, attempting to change the `type` of an existing integration. | 
+| 403 Forbidden | Indicates that the authenticated user does not have permission to update one or more integrations. | 
+| 404 | The `type` is not a recognized integration on this server. | 
+
+## Examples
+
+<details>
+<summary>Create a new integration provider</summary>
+
+The following request creates a new OpenAI integration provider.
+
+**Request**
+
+```shell
+curl -X 'POST' \
+  'https://<YOUR-SERVER-URL>/api/integrations/provider/openAI-marketing' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "type": "openai",
+  "category": "AI_MODEL",
+  "description": "OpenAI account for the marketing team",
+  "configuration": {
+    "api_key": "sk-..."
+  },
+  "enabled": true
+}'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the integration is created successfully.
+
+</details>
+
+<details>
+<summary>Update an existing integration provider</summary>
+
+The following request updates an existing OpenAI integration provider to disable it.
+
+**Request**
+
+```shell
+curl -X 'POST' \
+  'https://<YOUR-SERVER-URL>/api/integrations/provider/openAI-marketing' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "type": "openai",
+  "category": "AI_MODEL",
+  "description": "OpenAI account for the marketing team",
+  "configuration": {
+    "api_key": "sk-..."
+  },
+  "enabled": false
+}'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the integration is updated successfully.
+
+</details>
