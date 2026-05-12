@@ -1,0 +1,156 @@
+---
+title: "OpenAI Integration with Orkes Conductor"
+description: "Learn how to integrate OpenAI so workflows can use GPT models through Conductor AI tasks."
+---
+
+# OpenAI Integration with Orkes Conductor
+
+To use system AI tasks in Orkes Conductor, you must integrate your Conductor cluster with the necessary AI/LLM providers. This guide explains how to integrate OpenAI with Orkes Conductor. Here’s an overview:
+
+1. Get the required credentials from OpenAI.
+2. Configure a new OpenAI integration in Orkes Conductor.
+3. Add models to the integration.
+4. Set access limits to the AI model to govern which applications or groups can use it.
+
+## Step 1: Get the OpenAI credentials
+
+To integrate OpenAI with Orkes Conductor, retrieve the following credentials from the OpenAI platform:
+
+- API key
+- Base URL
+- (Optional) Organization ID
+
+The base URL is set as https://api.openai.com. 
+
+### To retrieve the API key
+
+Two types of keys can be generated:
+
+- **User account key**–Tied to your individual account. This key can make requests on behalf of the selected project.
+- **Service account key**–Linked to a bot user (service account) that is added to the project.
+
+=== "Using user account"
+
+    **To get the API key:**
+
+    1. Sign in to the [OpenAI platform](https://platform.openai.com/).
+    2. Go to **Dashboard** > **[API keys](https://platform.openai.com/api-keys)** from the left menu and select **+ Create new secret key**.
+
+    <p align="center"><img src="/content/img/create-new-api-key.png" alt="Create new API Keys in OpenAI API platform" width="100%" height="auto"></img></p>
+
+    3. In **Owned by**, select **You**.
+
+    <p align="center"><img src="/content/img/generating-api-token-user-account.png" alt="Create new API Keys in OpenAI API platform" width="40%" height="auto"></img></p>
+
+    4. Configure the following parameters:
+
+    - **Name**–A name for your secret.
+    - **Project**–Select the required project. 
+    - **Permissions**–Select the required permissions. Supported values: *All*, *Restricted*, and *Read only*.
+
+    5. Select **Create secret key**.
+    6. Copy and store the generated key securely, as it is shown only once.
+
+=== "Using service account"
+
+    **To get the API key:**
+
+    1. Sign in to the [OpenAI platform](https://platform.openai.com/).
+    2. Go to **Dashboard** > **[API keys](https://platform.openai.com/api-keys)** from the left menu and select **+ Create new secret key**.
+
+    <p align="center"><img src="/content/img/create-new-api-key.png" alt="Create new API Keys in OpenAI API platform" width="100%" height="auto"></img></p>
+
+    3. In **Owned by**, select **Service account**.
+
+    <p align="center"><img src="/content/img/generating-api-token-service-account.png" alt="Create new API Keys in OpenAI API platform" width="40%" height="auto"></img></p>
+
+    4. Configure the following parameters:
+
+    - **Service Key Name**–A name for your service account key.
+    - **Project**–Select the required project. 
+
+    5. Select **Create secret key**.
+    6. Copy and store the generated key securely, as it is shown only once.
+
+
+### To retrieve the organization ID
+
+An organization ID is a unique identifier that represents your organization or team account within OpenAI’s platform.
+
+**To get the organization ID:**
+
+1. Sign in to the [OpenAI platform](https://platform.openai.com/).
+2. Go to **Settings** > **Organization** > **[General](https://platform.openai.com/settings/organization/general)**.
+3. Copy the **Organization ID**.
+
+<p align="center"><img src="/content/img/organization-id.png" alt="Retreving the organization ID from the OpenAI API platform" width="100%" height="auto"></img></p>
+
+## Step 2: Add an integration for OpenAI
+
+After obtaining the credentials, add an OpenAI integration to your Conductor cluster.
+
+**To create an OpenAI integration:**
+
+1. Go to **Integrations** > **Connections and Resources** from the left navigation menu on your Conductor cluster.
+2. Select **+ New integration**.
+3. In the **AI/LLM** section, choose **OpenAI**.
+4. Select **+ Add** and enter the following parameters:
+
+| Parameters | Description |
+| ---------- | ----------- |
+| Integration name | A name for the integration. |
+| API Key | The API key copied previously from the OpenAI platform. | 
+| Base URL | The base URL for the API request. By default, this is set as https://api.openai.com. | 
+| Organization ID | The organization ID copied previously from the OpenAI platform. | 
+| Description | A description of the integration. | 
+
+<p align="center"><img src="/content/img/create-new-open-ai-integration.png" alt="OpenAI Integration with Orkes Conductor" width="70%" height="auto"></img></p>
+
+5. (Optional) Toggle the **Active** button off if you don’t want to activate the integration instantly.
+6. Select **Save**.
+
+## Step 3: Add OpenAI models
+
+Once you’ve integrated OpenAI, the next step is to configure specific models. OpenAI has different models, each designed for various use cases. Choose the model that best fits your use case.
+
+**To add a model to the OpenAI integration:**
+
+1. Go to **Integrations** and select the **+** button next to the integration created.
+
+<p align="center"><img src="/content/img/create-new-model-for-open-ai-integration.png" alt="Create new model for OpenAI Integration" width="100%" height="auto"></img></p>
+
+2. Select **+ New model**.
+3. Enter the **Model name**. The name must exactly match the OpenAI model name. For a complete list, see the [OpenAI documentation](https://platform.openai.com/docs/models).
+4. Provide a **Description**. 
+
+<p align="center"><img src="/content/img/creating-new-model-for-open-ai-integration.png" alt="Creating new model for OpenAI Integration" width="70%" height="auto"></img></p>
+
+5. (Optional) Toggle the **Active** button off if you don’t want to activate the model instantly.
+6. Select **Save**.
+
+This saves the model for future use in AI tasks within Orkes Conductor.
+
+## Step 4: Set access limits to integration
+
+Once the integration is configured, set access controls to manage which [applications](https://orkes.io/content/access-control-and-security/applications) or [groups](https://orkes.io/content/access-control-and-security/users-and-groups#groups) can use the models.
+
+**To provide access to an application or group:**
+
+1. Go to **Access Control** > **Applications** or **Groups** from the left navigation menu on your Conductor cluster.
+2. Create a new group/application or select an existing one.
+3. In the **Permissions** section, select **+ Add Permission**.
+4. In the **Integration** tab, select the required AI models and toggle the necessary permissions.
+5. Select **Add Permissions**. 
+
+<p align="center"><img src="/content/img/add-integration-permission-for-azure-open-ai.png" alt="Add Permissions for Azure OpenAI Integration" width="70%" height="auto"></img></p>
+
+The group or application can now access the AI model according to the configured permissions.
+
+With the integration in place, you can now create workflows using [AI/LLM tasks](https://orkes.io/content/category/reference-docs/ai-tasks).
+
+## More resources
+
+- [Using AI Models or LLMs](https://orkes.io/content/developer-guides/using-llms-in-your-orkes-conductor-workflows)
+- [Using Vector Databases](https://orkes.io/content/developer-guides/using-vector-databases-in-your-orkes-conductor-workflows)
+- [Using AI Prompts](https://orkes.io/content/developer-guides/creating-and-managing-gen-ai-prompt-templates)
+- [AI Orchestration Tutorials](https://orkes.io/content/tutorials/ai)

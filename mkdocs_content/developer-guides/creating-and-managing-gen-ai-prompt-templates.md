@@ -1,0 +1,223 @@
+---
+title: "Using AI Prompts"
+description: "Learn how to create and manage prompt templates with variables and reuse them in AI tasks across workflows in Orkes Conductor."
+---
+
+# Using AI Prompts
+
+To effectively use AI tasks in workflows, you must provide clear and structured instructions called prompts that define the model’s behavior and output. Orkes Conductor allows you to create, manage, and securely share AI prompts within your organization. 
+
+In Orkes Conductor, AI prompts are reusable and can include variables, allowing you to customize the input to AI models based on runtime data.  This approach acts like parameterized API calls, where variables in the prompt are replaced with actual values during workflow execution. It ensures flexibility, reusability, and consistency when integrating AI models into complex workflows.
+
+In this guide, you will learn how to create, test, and use AI prompts in your workflows.
+
+## Create AI prompts
+
+!!! info "Prerequisites"
+    - Integrate the required AI/LLM provider with Orkes Conductor. Refer to the [Integration Guides](https://orkes.io/content/category/integrations/ai-llm) for detailed steps.
+
+**To create an AI prompt:**
+
+1. Go to **Definitions** > **AI Prompts** from the left navigation menu on your Conductor cluster.
+2. Select **+ Add AI prompt**.
+3. Enter the following details:
+
+| Parameter       | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Prompt Name     | A name for the prompt.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| Model           | Select the AI models to use with this prompt.<br/><br/><span class="table-note"><strong>Note:</strong> Only models added here can generate responses based on this prompt in a workflow.</span> |
+| Description     | A description for the prompt.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| Prompt Template | The prompt, which can be formulated as context, instructions, or questions. The prompt can also contain variables, `${someVariable}`, which are replaced with actual values at runtime before it is sent to the AI model.<br/>**Example**<br/>**_“What is the current population of `${country}`? What was the population in `${year}`?”_**<br/>In the above prompt, `${country}` and `${year}` are variables that can be dynamically set based on the runtime data.
+
+4. Select **Save** > **Confirm Save**.
+
+<p align="center">
+  <img
+    src="/content/img/create-ai-prompts.png"
+    alt="Creating AI Prompts"
+    width="100%"
+    height="auto"
+  ></img>
+</p>
+
+Here’s the JSON definition for an AI prompt:
+
+```json
+{
+ "name": "population_prompt",
+ "integrations": [
+   "<YOUR-AI-PROVIDER>:<YOUR-AI-MODEL>"
+ ],
+ "description": "A prompt to retrieve the population of countries for specific years.",
+ "template": "What is the current population of ${country}?\n\nWhat was the population in ${year}?"
+}
+```
+### Manage AI prompt versions
+
+!!! note "Available since"
+    - 5.2.0 and later
+
+You can create and manage multiple versions of an AI prompt. By default, versioning starts at 1 and increments with each new version.
+
+**To create a new version:**
+
+After making changes to the AI prompt definition in the Conductor UI, select the ⏷ (down arrow) icon beside **Save** > **Save as new version** to create a new version. 
+
+<p align="center">
+  <img
+    src="/content/img/saving-an-ai-prompt-as-new-version.png"
+    alt="Saving an AI prompt as a new version in Orkes Conductor"
+    width="100%"
+    height="auto"
+  ></img>
+</p>
+
+**To view available versions:**
+
+- In the AI prompt editor, select the **Version** dropdown and choose the required version.
+
+<p align="center">
+  <img
+    src="/content/img/viewing-all-prompt-versions.png"
+    alt="Viewing all prompt versions in Orkes Conductor"
+    width="100%"
+    height="auto"
+  ></img>
+</p>
+
+
+## Test AI prompts
+
+After creating an AI prompt, test it to ensure it produces the expected results.
+
+### Test parameters
+
+In the AI prompt’s testing interface, define the following parameters:
+
+<p align="center">
+  <img
+    src="/content/img/prompt-test.png"
+    alt="Testing AI Prompts"
+    width="100%"
+    height="auto"
+  ></img>
+</p>
+
+| Parameter            | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Select model to test | Select an AI model for testing. Only the models added to the prompt configuration get listed here. |
+| Temperature          | Set the temperature based on your requirements. Temperature is a parameter that controls the randomness of the model’s output.<ul><li>Higher temperatures, such as 1.0, produce random and more creative responses. Useful in generating creative content.</li><li>Lower temperature produces a more stable and focused response. Useful in situations like text classification, where consistency is important.</li></ul> | 
+| Stop words           | Enter the stop words to be filtered out or given less importance during the text generation process. This ensures the generated text is coherent and contextually relevant.<br/>Stop words tend to be common words like “and”, “a”, “the”, etc., that are necessary for sentence structure but do not contribute significant meaning. | 
+| TopP                 | Set the topP parameter based on your requirements. TopP is a parameter to control the randomness of the model’s output. This parameter defines a probability threshold and then chooses tokens whose cumulative probability exceeds this threshold. | 
+
+**Example of using the TopP parameter**
+
+Suppose you want to complete the sentence: “She walked into the room and saw a __.” The model considers the following top four words based on their probabilities:
+
+- Cat - 35%
+- Dog - 25%
+- Book - 15%
+- Chair - 10%
+
+If you set the topP parameter to 0.70, the model selects tokens until their cumulative probability reaches or exceeds 70%. Here's how it works:
+
+- Adding "Cat" (35%) to the cumulative probability.
+- Adding "Dog" (25%) to the cumulative probability, totaling 60%.
+- Adding "Book" (15%) to the cumulative probability, now at 75%.
+
+At this point, the cumulative probability is 75%, exceeding the specified topP value of 70%. Therefore, the model will randomly select one of the tokens from the list of "Cat," "Dog," and "Book" to complete the sentence because these tokens collectively account for approximately 75% of the probability.
+
+**To test an AI prompt:**
+
+1. Define the variables in the testing interface.
+2. Select **Test**.
+3. Refine the prompt and test it again. When the results align with your expectations, save the prompt.
+
+The AI prompt is now ready for use in workflows. Next, provide access to the prompt for the required groups or applications.
+
+## Set access limits to AI prompts
+
+In your Orkes Conductor cluster, you can assign specific permissions to various applications or groups to access different resources, including AI prompts. This lets you control which teams or applications can use a particular prompt in their workflows. 
+
+!!! note
+    Users or applications must also have access to the associated AI models used in the prompt.
+
+**To provide access to an application or group:**
+
+1. Go to **Access Control** > **Applications** or **Groups** from the left menu on your Orkes Conductor cluster.
+2. Create a new group/application or select an existing one.
+3. In the **Permissions** section, select **+ Add permission**.
+4. In the **Prompt** tab, select the required prompt and toggle the necessary permissions.
+
+<p align="center">
+  <img
+    src="/content/img/rbac-for-prompts.png"
+    alt="RBAC for prompts"
+    width="80%"
+    height="auto"
+  ></img>
+</p>
+
+5. Select **Add Permissions**. 
+
+The group or application can now access the prompt according to the configured permissions.
+
+## Use AI prompts in workflows
+
+AI prompts can be used in workflows with the following LLM tasks:
+
+- [LLM Text Complete task](https://orkes.io/content/reference-docs/ai-tasks/llm-text-complete)
+- [LLM Chat Complete task](https://orkes.io/content/reference-docs/ai-tasks/llm-chat-complete)
+
+**To use AI prompts in workflows:**
+
+1. Go to **Definitions** > **Workflow** from the left navigation menu on your Orkes Conductor cluster.
+2. Select **+ Define workflow**.
+3. In the visual workflow builder, select **Start** and add the **LLM Text Complete**/**LLM Chat Complete** task.
+4. Select the required AI provider and model. Ensure it matches the models associated with the prompt.
+5. Select the created AI prompt, in the **Prompt Name** field.
+
+<p align="center">
+  <img
+    src="/content/img/LLM-Chat-vs-Text-complete.jpg"
+    alt="Using AI prompts in a workflow"
+    width="100%"
+    height="auto"
+  ></img>
+</p>
+
+6. If the prompt contains variables, [map them to corresponding variables](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor) in the workflow. For example:
+
+```json
+//workflow definition
+
+"promptVariables": {
+"input": "${workflow.input.input}",
+"language": "${workflow.input.language}"
+}
+```
+
+7. Set the **Temperature**, **Stop words**, **Stop words Type**, **TopP**, and **Token Limit**. 
+8. Select **Save** > **Confirm**.
+
+## Examples
+
+<details>
+<summary>Agentic research assistant</summary>
+
+Check out the agentic research assistant quickstart template in Developer Edition for an example that uses multiple prompts.
+
+</details>
+
+<details>
+<summary>AI tutorials</summary>
+
+Explore the [AI tutorials](/content/tutorials/ai) section for step-by-step, end-to-end examples that use different AI tasks and integrations.
+
+</details>
+
+## More resources
+
+- [Using AI Models or LLMs](https://orkes.io/content/developer-guides/using-llms-in-your-orkes-conductor-workflows)
+- [Using Vector Databases](https://orkes.io/content/developer-guides/using-vector-databases-in-your-orkes-conductor-workflows)
+- [AI Task Reference](https://orkes.io/content/category/reference-docs/ai-tasks)

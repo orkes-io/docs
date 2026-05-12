@@ -1,0 +1,111 @@
+---
+title: "Weaviate Integration with Orkes Conductor"
+description: "Learn how to integrate Weaviate so workflows can store and retrieve embeddings for AI tasks in Orkes Conductor."
+---
+
+# Weaviate Integration with Orkes Conductor
+
+To use LLM embedding tasks in Orkes Conductor, you must integrate your Conductor cluster with the necessary vector database providers. This guide explains how to integrate Weaviate with Orkes Conductor. Here’s an overview:
+
+1. Get the required credentials from Weaviate.
+2. Configure a new Weaviate integration in Orkes Conductor.
+3. Add collections to the integration.
+4. Set access limits to the vector database to govern which applications or groups can use it.
+
+## Step 1: Get the Weaviate credentials
+
+To integrate Weaviate with Orkes Conductor, retrieve the API key and endpoint from the Weaviate Console. 
+
+!!! info "Prerequisites"
+    For Weaviate Cloud:
+    1. Sign up for [Weaviate Cloud](https://console.weaviate.cloud/dashboard).
+    2. [Create a cluster](https://weaviate.io/developers/wcs/quickstart#create-a-weaviate-cluster).
+    3. [Create a collection](https://weaviate.io/developers/wcs/tools/collections-tool#create-a-collection) within the cluster.
+    
+    When creating a collection, set the vector dimension to match the output dimension of your embedding model. Common default values are: OpenAI `text-embedding-3-small`: 1536, `text-embedding-3-large`: 3072, and Cohere `embed-english-v3.0`: 1024. 
+    
+
+**To get the API key and endpoint:**
+
+1. Sign in to the [Weaviate Console](https://console.weaviate.cloud/dashboard).
+2. Select your cluster and copy the **REST Endpoint**.
+
+<p align="center"><img src="/content/img/get-weaviate-endpoint.png" alt="Get Weaviate Endpoint" width="100%" height="auto"></img></p>
+
+3. Go to **API Keys**, and select **+ API Key**.
+4. Enter a **Name** and select the **Role** as **admin**.
+5. Select **Create**, and copy/download the key.
+
+<p align="center"><img src="/content/img/get-weaviate-api-key.png" alt="Get Weaviate API Key" width="100%" height="auto"></img></p>
+
+!!! note
+    If you are using Weaviate locally, [set up a local instance](https://weaviate.io/developers/weaviate/quickstart/local) and retrieve the API key and endpoint.
+
+## Step 2: Add an integration for Weaviate
+
+After obtaining the credentials, add a Weaviate integration to your Conductor cluster.
+
+**To create a Weaviate integration:**
+
+1. Go to **Integrations** > **Connections and Resources** from the left navigation menu on your Conductor cluster.
+2. Select **+ New integration**.
+3. In the **Vector Databases** section, choose **Weaviate**.
+4. Select **+ Add** and enter the following parameters:
+
+|  Parameters | Description |
+| ---------- | ----------- | 
+| Integration name | A name for the integration. |
+| API Key | The API key from the Weaviate cluster. |
+| Endpoint | The REST Endpoint from the Weaviate cluster. |
+| Description | A description of the integration. |
+
+<p align="center"><img src="/content/img/create-new-weaviate-integration.png" alt="Weaviate Integration with Orkes Conductor" width="60%" height="auto"></img></p>
+
+5. (Optional) Toggle the **Active** button off if you don’t want to activate the integration instantly.
+6. Select **Save**.
+
+## Step 3: Add Weaviate collections
+
+Once you’ve integrated Weaviate, the next step is to configure specific collections.
+
+**To add a collection to the Weaviate integration:**
+
+1. Go to **Integrations** and select the **+** button next to the integration created.
+
+<p align="center"><img src="/content/img/create-new-weaviate-integration-class.png" alt="Create Collections for Weaviate Integration" width="100%" height="auto"></img></p>
+
+2. Select **+ New Collection**.
+3. Enter the **Collection name** and a **Description**. 
+
+<p align="center"><img src="/content/img/create-new-weaviate-integration-class-model.png" alt="Create New Collection for Weaviate Integration Model" width="60%" height="auto"></img></p>
+
+4. (Optional) Toggle the **Active** button off if you don’t want to activate the collection instantly.
+5. Select **Save**.
+
+This saves the collections for future use in AI tasks within Orkes Conductor.
+
+## Step 4: Set access limits to integration
+
+Once the integration is configured, set access controls to manage which [applications](https://orkes.io/content/access-control-and-security/applications) or [groups](https://orkes.io/content/access-control-and-security/users-and-groups#groups) can use the databases.
+
+**To provide access to an application or group:**
+
+1. Go to **Access Control** > **Applications** or **Groups** from the left navigation menu on your Conductor cluster.
+2. Create a new group/application or select an existing one.
+3. In the **Permissions** section, select **+ Add Permission**.
+4. In the **Integration** tab, select the required vector database providers and toggle the necessary permissions.
+5. Select **Add Permissions**. 
+
+<p align="center"><img src="/content/img/add-integration-permission-for-weaviate-db.png" alt="Add Permissions for Weaviate Database Integration" width="70%" height="auto"></img></p>
+
+The group or application can now access the vector database according to the configured permissions.
+With the integration in place, you can now create workflows using [AI/LLM tasks](https://orkes.io/content/category/reference-docs/ai-tasks).
+
+!!! info
+    To store data in a vector database, an embedding is to be generated by an AI model. You must also integrate an [AI model provider](https://orkes.io/content/category/integrations/ai-llm) of your choice to use this integration in workflows.
+
+## More resources
+
+- [AI Orchestration](https://orkes.io/content/ai-orchestration)
+- [Using AI Models or LLMs](https://orkes.io/content/developer-guides/using-llms-in-your-orkes-conductor-workflows)
+- [Using Vector Databases](https://orkes.io/content/developer-guides/using-vector-databases-in-your-orkes-conductor-workflows)

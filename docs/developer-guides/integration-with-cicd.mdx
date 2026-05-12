@@ -3,120 +3,123 @@ slug: "/developer-guides/integration-with-cicd"
 description: "Learn best practices for integrating workflows into CI/CD pipelines, including testing workflow definitions and deploying updates through automated pipelines."
 ---
 
-import Tabs from "@theme/Tabs";
-import TabItem from "@theme/TabItem";
-import Install from "@site/src/components/install.mdx";
-
 # CI/CD Best Practices
 
-Conductor resources and metadata are the core part of your application and should be versioned, controlled, and released similarly to the code. 
+Treat Conductor metadata like application code. Workflow definitions, task definitions, user forms, event handlers, webhooks, schemas, prompts, schedules, and worker code should be versioned, reviewed, tested, and promoted through controlled environments.
 
-When moving Conductor resources across different environments, there are three main components involved:
-
-* **Workflow definitions** (maintained as JSON or as code)  
-* **Other metadata**, like task definitions, user forms, event handlers, webhooks, AI prompts, schemas, and so on (maintained as JSON)  
-* **Worker implementation** used by the workflows (in code)
+:::tip 5-minute path
+Store workflow and metadata JSON in Git, run workflow tests in CI, deploy through API or SDK with scoped credentials, and promote changes by version instead of editing production manually.
+:::
 
 ## CI/CD for Conductor workflows and resources
 
-Similar to any CI/CD pipeline, this is the general process for managing Conductor resources across releases:
+A production pipeline usually manages three artifact types:
 
-1. Download the resource JSONs to a version control system.  
-2. (For workflow definitions) Run tests on the changes.  
-3. Deploy the resource JSONs to the target environment using a pipeline or script.
+| Artifact | Stored as | Tested how | Deployed how |
+| -------- | --------- | ---------- | ------------ |
+| Workflow definitions | JSON or workflow-as-code | Workflow unit/regression tests | Metadata API or SDK |
+| Metadata resources | JSON | Schema/lint checks and targeted integration tests | Resource-specific API or SDK |
+| Workers | Application code | Normal service unit/integration tests | Your container/app deployment pipeline |
 
-The exact steps depend on your own CI/CD implementation, but this guide will showcase some general procedures to accomplish this.
+Recommended flow:
 
-### Step 1: Download resource JSONs 
+1. Export or generate metadata into source control.
+2. Review changes in a pull request.
+3. Run workflow unit/regression tests.
+4. Deploy to a non-production cluster.
+5. Run integration tests with real workers or controlled mocks.
+6. Promote to production with a scoped application identity.
 
-Use the Conductor UI to download each JSON individually, or the API to download the JSONs in bulk.
+### Step 1: Download resource JSONs
 
-<Tabs>
-<TabItem value="ui" label="Conductor UI">
+Use APIs or SDKs for repeatable export. The UI is useful for one-off inspection, but CI should use scripted export so the same resources are captured every time.
 
-**To download each JSON:**
+Common APIs:
 
-1. Go to **Definitions** > **Workflows** or **Task** or **User Forms** or **Event Handler** or **Webhook** or **AI Prompts** or **Schemas** in the left navigation menu.  
-2. Select the desired resource.  
-3. Retrieve the JSON in one of the following ways:  
-    * Select **Download** to download the .json file, or  
-    * Go to the **Code** tab and copy the JSON into a file.  
-4. Save the files to your version control system.
+| Resource | API |
+| -------- | --- |
+| Workflow definitions | [Get All Workflow Definitions](/reference-docs/api/metadata/get-all-workflow-definitions) |
+| Task definitions | [Get All Task Definitions](/reference-docs/api/metadata/get-all-task-definitions) |
+| User forms | [Get User Forms](/reference-docs/api/human-tasks/list-task-ui-templates) |
+| Workflow update | [Update Workflow Definitions](/reference-docs/api/metadata/update-workflow-definitions) |
+| Task update | [Update Task Definitions](/reference-docs/api/metadata/update-task-definitions) |
 
-</TabItem>
-<TabItem value="api" label="API">
+Keep exported files organized by resource type and environment-neutral names.
 
-
-:::info Prerequisites
-
-You must generate an access token to authenticate your API requests. Refer to [Authentication](/sdks/authentication) for more information.
-
-:::
-
-* To retrieve the workflow definition JSONs, you can use the [Get All Workflow Definitions](/reference-docs/api/metadata/get-all-workflow-definitions) API, which allows you to filter based on [tags](/access-control-and-security/tags) or a specific workflow.  
-* To retrieve the task definition JSONs, you can use the [Get All Task Definitions](/reference-docs/api/metadata/get-all-task-definitions) API, which also allows you to filter based on [tags](/access-control-and-security/tags).  
-* To retrieve the user form JSONs, you can use the [Get User Forms](/reference-docs/api/human-tasks/list-task-ui-templates) API.
-
-Refer to the **API Docs** on your Conductor UI for more details on the available API endpoints.
-
-</TabItem>
-</Tabs>
-
-Once the resources are updated in your version control system, you can open a PR and begin testing.
+```text
+conductor/
+  workflows/
+    order_fulfillment.json
+  tasks/
+    charge_card.json
+  schemas/
+    order_input_v1.json
+  forms/
+    approval_form_v1.json
+```
 
 ### Step 2: Test workflow definitions
 
-As part of the CI pipeline, workflow definitions should be maintained as independent units that can be unit and integration-tested before being released to the production environment.
+Run [Unit and Regression Tests](/developer-guides/unit-and-regression-tests) before registering workflow changes.
 
-For a guide on testing Conductor workflows, refer to [Unit and Regression Tests](/developer-guides/unit-and-regression-tests).
+At minimum, test:
+
+- One happy path.
+- Every switch branch that changes behavior.
+- Retryable and terminal failure paths.
+- Schema validation for external inputs.
+- Output compatibility for downstream callers.
+
+For worker code, use the normal test stack for that language and include idempotency tests for side-effecting operations.
 
 ### Step 3: Deploy changes to the target environment
 
-When deploying the changes to your target environment, it is crucial to assess what resources are being modified and the deployment scope. For example, the deployment will only target resources grouped under a specific tag, a file name prefix, etc.
+Use a scoped application identity for deployment. It should have only the metadata permissions needed by the pipeline.
 
-Once you have determined the deployment scope, map the resources to the endpoints you need to call to deploy the changes. For example, use the [Update Workflow Definition](/reference-docs/api/metadata/update-workflow-definitions) API to update the workflow definition JSONs.
+Example deployment script for workflow definitions:
 
-:::tip
-Refer to the **API Docs** on your Conductor UI for the full list of available API endpoints for updating the different resources.
-:::
+```bash
+set -euo pipefail
 
-You can use pipelines or deployment scripts to push the changes in an automated fashion.
+TOKEN_RESPONSE=$(curl -sS -X POST "$CONDUCTOR_SERVER_URL/token" \
+  -H "Content-Type: application/json" \
+  -d "{\"keyId\":\"$CONDUCTOR_AUTH_KEY\",\"keySecret\":\"$CONDUCTOR_AUTH_SECRET\"}")
 
-**Example deployment script**
+TOKEN=$(printf "%s" "$TOKEN_RESPONSE" | sed -n 's/.*"token":"\([^"]*\)".*/\1/p')
 
-The following script cycles through all the workflow definitions in the current folder and uploads them to the Conductor server.
-
-To use the script, you must inject `CONDUCTOR_AUTH_KEY`, `CONDUCTOR_AUTH_KEY`, and `CONDUCTOR_AUTH_SECRET` (ending in /api) variables with the appropriate values in your deployment pipeline. Refer to [Authentication](/sdks/authentication) for a guide on retrieving your Orkes access tokens.
-
-``` shell
-export response=`curl -s -X POST $CONDUCTOR_SERVER_URL/token -H 'Content-Type:application/json' -d '{
-	"keyId": "'"$CONDUCTOR_AUTH_KEY"'",
-	"keySecret": "'"$CONDUCTOR_AUTH_SECRET"'"
-}'`
-
-if [[ "$response" != *'token'* ]]; then
- echo "Unable to generate the auth header.  Please check KEY, SECRET and CONDUCTOR_SERVER_URL variables"
- echo "Server response:"
- echo $response
- exit 1
+if [ -z "$TOKEN" ]; then
+  echo "Unable to generate an auth token"
+  exit 1
 fi
 
-export token=`echo $response | cut -d '"' -f4`
-
-for FILE in main/resources/workflows/*;
- do
-   echo "Deploying @$FILE";
-
-   curl -X POST $CONDUCTOR_SERVER_URL/metadata/workflow?overwrite=true          -H "X-Authorization: $token"          -H "accept: */*"          -H "Content-Type: application/json"          -d @$FILE
- done
+for FILE in conductor/workflows/*.json; do
+  echo "Deploying $FILE"
+  curl -sS -X PUT "$CONDUCTOR_SERVER_URL/metadata/workflow" \
+    -H "X-Authorization: $TOKEN" \
+    -H "Content-Type: application/json" \
+    -d @"$FILE"
+done
 ```
 
-Refer to the full source code in [.../src/deploy_workflows.sh](https://github.com/orkes-io/workflow-cicd/blob/main/src/deploy_workflows.sh#L8-L32).
+Production notes:
+
+- Do not print tokens, keys, or secrets in CI logs.
+- Prefer versioned workflow changes over in-place edits when behavior changes.
+- Deploy metadata before worker code only when old workers can still handle the new definition.
+- Deploy worker code before metadata only when new workers can handle old definitions.
+- Tag resources by team, application, and environment so deployments can target the intended scope.
+- Keep rollback plans explicit: previous workflow version, previous metadata JSON, and worker image tag.
 
 ## CI/CD for workers
 
-Workers are application-specific code deployed in a non-Conductor environment. They should be maintained, tested, and released as any other code released to production. Here are some best practices for maintaining workers:
+Workers are application services. Build, test, deploy, and roll them back using the same production discipline as other services.
 
-* Keep worker deployments and maintenance separate from the workflows.  
-* Unit test workers based on the expected inputs and outputs, similar to any other application code.  
-* Workers are the unit of scale for your workflows. You can either deploy each worker in an independent container or group a set of workers to be scaled up/down together.
+Worker deployment checklist:
+
+- Unit-test business logic.
+- Integration-test Conductor polling and task completion.
+- Verify idempotency for side effects.
+- Configure timeouts, retries, and response timeouts in task definitions.
+- Use application credentials with only required task/domain permissions.
+- Expose metrics and logs with task type, task ID, workflow ID, and worker ID.
+- Scale based on queue depth, queue wait time, and downstream capacity.

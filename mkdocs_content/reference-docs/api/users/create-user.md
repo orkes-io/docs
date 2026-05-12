@@ -1,0 +1,261 @@
+---
+title: "Create/Update User"
+description: "Use the Orkes Conductor users API to create/Update User. Includes endpoint details, authentication, parameters, request bodies, response behavior, and examples."
+---
+
+# Create/Update User
+
+## Quick reference
+
+Use this users endpoint to create/Update User. It is intended for automation scripts, CI/CD jobs, backend services, and internal tools that need to manage Orkes Conductor programmatically.
+
+- **Method and path**: `PUT` `/api/users/{id}`
+- **Authentication**: Requires Orkes Conductor API credentials with permission for the target resource.
+- **Inputs**: Use the path parameters, query parameters, and request body fields documented below.
+- **Output**: Returns the Conductor API response for the requested operation. Check the response examples and status codes before wiring the endpoint into production automation.
+- **Operational note**: Treat API calls as part of your deployment or runtime control plane. Log request IDs, handle 4xx/5xx responses, and avoid embedding secrets in workflow definitions or source code.
+
+
+**Endpoint**: `PUT /api/users/{id}`
+
+Creates or updates a [user](/content/category/access-control-and-security#users) in your Conductor cluster. The invoking user must be an **Admin** to the Conductor cluster.
+
+## Path parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| id        | The user's email address.                      | string | Required           |
+
+## Request body
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| name      | A display name for the user.                   | string | Required.          |
+| roles     | The role to assign for the user. Supported values:<ul><li>`ADMIN`: Superuser. Full access to the system and resources. Can manage users and groups.</li><li>`USER`: Regular user group with permissions to create workflow definitions, task definitions, applications, integrations, secrets, and user forms. Has full API Gateway access, including view and management permissions. Can search workflows.</li><li>`METADATA_MANAGER`: Can manage all workflow and task definitions in the cluster, including performing any action regardless of workflow or task ownership. Can view and manage API Gateway configurations. Can create integrations and secrets.</li><li>`WORKFLOW_MANAGER`: Can view, execute, and manage all workflow executions in the system, including start, pause, resume, rerun, retry, restart, terminate, and delete actions. Has execute and read access to workflow and task definitions.</li><li>`USER_READ_ONLY`: Can view applications, metadata, workflows, API gateway, and search workflows.</li></ul> | string | Required. | 
+| groups    | The groups that the user should be part of. This provides additional group-level permissions to the user. | string | Optional. | 
+
+## Response
+
+Returns the created or updated user object, including the user's id, name, roles, and groups. Returns 403 if the invoking user is not an Admin.
+
+## Examples
+
+<details>
+<summary>Create a new user</summary>
+
+**Request**
+
+```shell
+curl -X 'PUT' \
+  'https://<YOUR-SERVER-URL>/api/users/user%40example.com' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "name": "John Doe",
+  "roles": [
+    "ADMIN"
+  ]
+}'
+```
+
+**Response**
+
+```json
+{
+  "id": "user@example.com",
+  "name": "John Doe",
+  "roles": [
+    {
+      "name": "ADMIN",
+      "permissions": [
+        {
+          "name": "METADATA_MANAGEMENT"
+        },
+        {
+          "name": "ADMIN_MANAGEMENT"
+        },
+        {
+          "name": "METADATA_VIEW"
+        },
+        {
+          "name": "PERMISSION_MANAGEMENT"
+        },
+        {
+          "name": "USER_MANAGEMENT"
+        },
+        {
+          "name": "EVENT_HANDLER_MANAGEMENT"
+        },
+        {
+          "name": "PROMPT_MANAGEMENT"
+        },
+        {
+          "name": "WORKFLOW_MANAGEMENT"
+        },
+        {
+          "name": "API_GATEWAY_MANAGEMENT"
+        },
+        {
+          "name": "API_GATEWAY_VIEW"
+        },
+        {
+          "name": "PUBLISHER_MANAGEMENT"
+        },
+        {
+          "name": "WORKFLOW_SEARCH"
+        },
+        {
+          "name": "AUTHORIZATION_MANAGEMENT"
+        },
+        {
+          "name": "SCHEDULE_MANAGEMENT"
+        },
+        {
+          "name": "BULK_MANAGEMENT"
+        },
+        {
+          "name": "APPLICATION_MANAGEMENT"
+        }
+      ]
+    }
+  ],
+  "groups": [],
+  "uuid": "20d6f75b-38ba-48a4-aedd-5a1acc65c15f",
+  "contactInformation": {},
+  "applicationUser": false,
+  "orkesWorkersApp": false,
+  "orkesApiGateway": false,
+  "orkesApp": false
+}
+```
+
+</details>
+
+<details>
+<summary>Update an existing user</summary>
+
+**Request**
+
+```shell
+curl -X 'PUT' \
+  'https://<YOUR-SERVER-URL>/api/users/user%40example.com' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "name": "John Doe",
+  "roles": [
+    "ADMIN"
+  ],
+  "groups": [
+    "TechWriters"
+  ]
+
+}'
+```
+
+**Response**
+
+```json
+{
+  "id": "user@example.com",
+  "name": "John Doe",
+  "roles": [
+    {
+      "name": "ADMIN",
+      "permissions": [
+        {
+          "name": "API_GATEWAY_VIEW"
+        },
+        {
+          "name": "API_GATEWAY_MANAGEMENT"
+        },
+        {
+          "name": "WORKFLOW_MANAGEMENT"
+        },
+        {
+          "name": "PROMPT_MANAGEMENT"
+        },
+        {
+          "name": "EVENT_HANDLER_MANAGEMENT"
+        },
+        {
+          "name": "USER_MANAGEMENT"
+        },
+        {
+          "name": "PERMISSION_MANAGEMENT"
+        },
+        {
+          "name": "METADATA_VIEW"
+        },
+        {
+          "name": "ADMIN_MANAGEMENT"
+        },
+        {
+          "name": "METADATA_MANAGEMENT"
+        },
+        {
+          "name": "APPLICATION_MANAGEMENT"
+        },
+        {
+          "name": "BULK_MANAGEMENT"
+        },
+        {
+          "name": "SCHEDULE_MANAGEMENT"
+        },
+        {
+          "name": "AUTHORIZATION_MANAGEMENT"
+        },
+        {
+          "name": "WORKFLOW_SEARCH"
+        },
+        {
+          "name": "PUBLISHER_MANAGEMENT"
+        }
+      ]
+    }
+  ],
+  "groups": [
+    {
+      "id": "TechWriters",
+      "description": "A dedicated group for testing for tech writers",
+      "roles": [
+        {
+          "name": "METADATA_MANAGER",
+          "permissions": [
+            {
+              "name": "API_GATEWAY_MANAGEMENT"
+            },
+            {
+              "name": "CREATE_INTEGRATION"
+            },
+            {
+              "name": "CREATE_SECRET"
+            },
+            {
+              "name": "METADATA_VIEW"
+            },
+            {
+              "name": "METADATA_MANAGEMENT"
+            },
+            {
+              "name": "API_GATEWAY_VIEW"
+            }
+          ]
+        }
+      ],
+      "defaultAccess": {},
+      "contactInformation": {}
+    }
+  ],
+  "uuid": "20d6f75b-38ba-48a4-aedd-5a1acc65c15f",
+  "contactInformation": {},
+  "orkesWorkersApp": false,
+  "orkesApiGateway": false,
+  "applicationUser": false,
+  "orkesApp": false
+}
+```
+
+</details>

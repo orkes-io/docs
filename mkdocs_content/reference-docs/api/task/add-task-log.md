@@ -1,0 +1,56 @@
+---
+title: "Log Task Execution"
+description: "Use the Orkes Conductor tasks API to log Task Execution. Includes endpoint details, authentication, parameters, request bodies, response behavior, and examples."
+---
+
+# Log Task Execution
+
+**Endpoint:** `POST /api/tasks/{taskId}/log`
+
+Logs messages or additional details to a specific task execution. You can log messages at any point in the task lifecycle, regardless of whether the task is scheduled, in progress, completed, or failed.
+
+## Path parameters
+
+| Parameter | Description                                      | Type   | Required/ Optional |
+| --------- | ------------------------------------------------ | ------ | ------------------ |
+| taskId    | The execution ID of the task to log the message. | string | Required.          |
+
+## Request body
+
+Format the request as a JSON string containing the log message.
+
+**Example**
+
+```json
+"Log this message to the task"
+```
+
+## Response
+
+Returns 200 OK, indicating that the message has been logged to the task execution.
+
+## Examples
+
+<details>
+<summary>Log messages to a task execution</summary>
+
+**Request**
+
+```bash
+curl -X 'POST' \
+  'https://<YOUR-SERVER-URL>/api/tasks/65fc73fe-0586-11f1-8b8d-6219b54da7fe/log' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '"Log this message to the task"'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the message has been logged to the task execution.
+
+To verify the logs, open your workflow execution, select the task where the message was logged via the API, and select the **Logs** tab to view the message. 
+
+<p align="center"><img src="/content/img/log-messages-using-api.png" alt="Log messages to task using API" width="100%" height="auto"></img></p>
+
+</details>

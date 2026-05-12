@@ -2,103 +2,67 @@
 slug: "/faqs/workflow-versioning"
 description: "Learn how workflow versioning allows you to safely update workflows and manage multiple workflow versions in production."
 ---
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 # Managing Workflow Versions
 
-In Orkes Conductor, you can create, edit, run, and delete workflow versions. Each workflow can have multiple versions, allowing you to evolve workflows safely over time.
+Workflow versions let you evolve a workflow without breaking existing executions or clients. This page is kept at its original URL for compatibility; the current full guide is [Versioning Workflows](/content/developer-guides/versioning-workflows).
+
+:::tip 5-minute path
+Create a new version for behavior changes, pin callers when stable behavior matters, let running executions finish on their original snapshot, and use restart/rerun deliberately when recovering old executions.
+:::
 
 ## Creating new workflow versions
 
-By default, the workflow version starts from 1 and increments with each new version.
-
-``` json
-{
-  "name": "newWorkflow",
-  "description": "Sample Description",
-  "version": 1,
-  "tasks": [
-    //list of tasks
-   ]
-}
-```
-
-**To create a new version:**
-
-<Tabs>
-<TabItem value="Using workflow JSON" label="Using workflow JSON">
-
-Increment the version number in the JSON code and save the workflow.
+The workflow `version` field identifies the definition version.
 
 ```json
 {
-  "name": "newWorkflow",
-  "description": "Sample Description",
-  "version": <VERSION-NUMBER>,
-  "tasks": [
-    //list of tasks
-   ]
+  "name": "order_fulfillment",
+  "description": "Fulfill customer orders",
+  "version": 2,
+  "schemaVersion": 2,
+  "tasks": []
 }
 ```
 
-</TabItem>
-
-<TabItem value="Using Conductor UI" label="Using Conductor UI">
-
-After making changes to the workflow definition in the Conductor UI, select the ⏷ (down arrow) icon beside Save > **Save as new version** to create a new version. The keyboard shortcut is **Ctrl**+**S**+**N**.
-
-<p align="center"><img src="/content/img/save-workflow-as-new-version.png" alt="Screenshot of the Orkes Conductor UI, showing the Save as new version button." width="100%" height="auto"></img></p>
-
-You can view all versions of a workflow in **Definitions** > **Workflow** using the version dropdown in the visual workflow editor.
-
-<p align="center"><img src="/content/img/viewing-different-workflow-versions.png" alt="Screenshot of the Orkes Conductor UI, showing the version dropdown view in the visual workflow builder." width="60%" height="auto"></img></p>
-
-</TabItem>
-</Tabs>
+Create a new version when task order, branching, input/output contract, retries, compensation behavior, or downstream side effects change. Small metadata-only edits can often stay on the same version, but production behavior changes should usually be versioned.
 
 ## Editing workflow versions
 
-Each workflow version can be edited and saved separately, allowing you to update and run multiple versions of the same workflow in production.
+Each version can be edited independently. Treat edits to an existing version carefully because new executions that explicitly request that version may pick up the changed definition.
 
-**To edit a previous workflow version:**
-1. Go to **Definitions** > **Workflow** and select the desired workflow.
-2. From the version dropdown in the top right corner, select the desired version.
+Safer production pattern:
 
-<p align="center"><img src="/content/img/viewing-different-workflow-versions.png" alt="Screenshot of the Orkes Conductor UI, showing the version dropdown view in the visual workflow builder." width="80%" height="auto"></img></p>
-
-3. Make the required changes and save.
+1. Create a new version.
+2. Test it with representative inputs.
+3. Move callers or schedules to the new version.
+4. Keep the old version available while older clients or executions still need it.
 
 ## Running workflow versions
 
-When running a workflow, you can specify which version to execute. If no version is specified, the latest version runs by default.
+If a start request omits the version, Conductor uses the latest version. If the caller specifies a version, Conductor starts that version.
 
-**To run a workflow from its workflow definition:**
+```json
+{
+  "name": "order_fulfillment",
+  "version": 2,
+  "input": {
+    "orderId": "ORD-1001"
+  }
+}
+```
 
-1. Select the required workflow version from the version dropdown.
-2. Select **Execute**.
+Pin versions for API clients, schedules, and mission-critical automations when surprise behavior changes would be risky. Use latest only when callers intentionally track the newest definition.
 
-<p align="center"><img src="/content/img/run-workflow-from-definitions-page.gif" alt="Running workflows from a workflow definition page" width="100%" height="auto"></img></p>
-
-**To run workflows the from workflow executions/definitions page:**
-
-1. Go to **Executions** > **Workflow** or **Definitions** > **Workflow**.
-2. Select **Run Workflow** from the top-right corner.
-3. Select the **Workflow name** and **Version**.
-4. Select **Run Workflow**.
-
-<p align="center"><img src="/content/img/running-different-workflow-versions.png" alt="Running different workflow versions" width="60%" height="auto"></img></p>
-
-Learn more about managing workflow versions at runtime: [Workflow Versions at Runtime](/developer-guides/workflow-version-behavior-on-execution)
-
+Learn more about runtime behavior in [Workflow Versioning and Upgrades at Runtime](/developer-guides/workflow-version-behavior-on-execution).
 
 ## Deleting workflow versions
 
-You can delete workflow versions that are no longer needed. All currently running executions for the deleted version will continue to completion, but no new executions can be invoked. All new versions added afterward will continue incrementing from the latest version.
+Delete old versions only when no clients, schedules, tests, or operational runbooks need them. Running executions that already started from a deleted version continue from their execution snapshot, but no new execution can start from the deleted version.
 
-**To delete a workflow version:**
-1. Go to **Definitions** > **Workflow** and select the desired workflow.
-2. From the version dropdown in the top-right corner, select the version to delete.
-3. Select **Delete** > **Confirm**.
+Before deleting, check:
 
-<p align="center"><img src="/content/img/delete-workflow-versions.png" alt="Screenshot of the Orkes Conductor UI, showing the Delete button in the visual workflow builder." width="100%" height="auto"></img></p>
+- API clients that specify a version.
+- Schedules pinned to the version.
+- Regression tests that use the version.
+- Recovery procedures that restart old executions.

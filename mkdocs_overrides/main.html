@@ -1,0 +1,256 @@
+{% extends "base.html" %}
+
+{% block site_meta %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  {% set site_meta_desc = page.meta.description if page and page.meta and page.meta.description else config.site_description %}
+  {% if site_meta_desc %}
+    <meta name="description" content="{{ site_meta_desc }}">
+  {% endif %}
+  {% if page and page.url %}
+    {% if page.url == "index.html" or page.url.endswith("/index.html") %}
+      {% set site_meta_path = page.url[:-10] %}
+    {% elif page.url.endswith(".html") %}
+      {% set site_meta_path = page.url[:-5] %}
+    {% else %}
+      {% set site_meta_path = page.url %}
+    {% endif %}
+    <link rel="canonical" href="{{ config.site_url }}{{ site_meta_path }}">
+  {% else %}
+    <link rel="canonical" href="{{ config.site_url }}">
+  {% endif %}
+  {% if page.previous_page %}
+    <link rel="prev" href="{{ page.previous_page.url | url }}">
+  {% endif %}
+  {% if page.next_page %}
+    <link rel="next" href="{{ page.next_page.url | url }}">
+  {% endif %}
+  <link rel="icon" href="{{ config.theme.favicon | url }}">
+  <meta name="generator" content="mkdocs-{{ mkdocs_version }}, mkdocs-material-9.7.5">
+{% endblock %}
+
+{% block htmltitle %}
+  {% if page and not page.is_homepage %}
+    {% set resolved_title = page.meta.title if page.meta and page.meta.title else page.title %}
+    <title>{{ resolved_title | striptags }} | Orkes Docs</title>
+  {% else %}
+    <title>Orkes Conductor Docs</title>
+  {% endif %}
+{% endblock %}
+
+{% block extrahead %}
+  <!-- Preconnect for faster font loading -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  {% set resolved_title = page.meta.title if page and page.meta and page.meta.title else page.title if page and page.title else "" %}
+  {% set page_title = resolved_title ~ " | Orkes Docs" if resolved_title else "Orkes Conductor Docs" %}
+  {% set page_desc = page.meta.description if page and page.meta and page.meta.description else config.site_description %}
+  {% if page and page.url %}
+    {% if page.url == "index.html" or page.url.endswith("/index.html") %}
+      {% set page_path = page.url[:-10] %}
+    {% elif page.url.endswith(".html") %}
+      {% set page_path = page.url[:-5] %}
+    {% else %}
+      {% set page_path = page.url %}
+    {% endif %}
+  {% else %}
+    {% set page_path = "" %}
+  {% endif %}
+  {% set page_url = config.site_url ~ page_path %}
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="{{ config.site_name }}" />
+  <meta property="og:url" content="{{ page_url }}" />
+  <meta property="og:title" content="{{ page_title }}" />
+  <meta property="og:description" content="{{ page_desc }}" />
+  <meta property="og:image" content="{{ config.site_url }}img/og-conductor.png" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="{{ page_title }}" />
+  <meta name="twitter:description" content="{{ page_desc }}" />
+  <meta name="twitter:image" content="{{ config.site_url }}img/og-conductor.png" />
+
+  <!-- SEO description and canonical are emitted in site_meta. -->
+
+  <!-- Structured Data: Orkes Conductor -->
+  {% if page and page.url != '404.html' %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://orkes.io/#organization",
+        "name": "Orkes",
+        "url": "https://orkes.io",
+        "logo": "{{ config.site_url }}img/branding/orkes-logo-purple-4x.png"
+      },
+      {
+        "@type": "WebSite",
+        "@id": "{{ config.site_url }}#website",
+        "name": "Orkes Conductor Documentation",
+        "url": "{{ config.site_url }}",
+        "publisher": { "@id": "https://orkes.io/#organization" }
+      },
+      {
+        "@type": "SoftwareApplication",
+        "@id": "{{ config.site_url }}#orkes-conductor",
+        "name": "Orkes Conductor",
+        "alternateName": ["Conductor", "Conductor OSS", "Netflix Conductor"],
+        "applicationCategory": "DeveloperApplication",
+        "applicationSubCategory": "Agentic workflow engine",
+        "operatingSystem": "Cloud, Kubernetes, Docker, JVM",
+        "description": "{{ config.site_description }}",
+        "url": "{{ config.site_url }}",
+        "publisher": { "@id": "https://orkes.io/#organization" },
+        "maintainer": { "@id": "https://orkes.io/#organization" },
+        "programmingLanguage": ["Java", "Python", "Go", "JavaScript", "TypeScript", "C#", "Ruby", "Rust"],
+        "keywords": ["agentic workflow engine", "durable execution", "AI agent orchestration", "LLM orchestration", "microservice orchestration", "workflow automation", "MCP", "human in the loop"],
+        "isBasedOn": {
+          "@type": "SoftwareSourceCode",
+          "name": "Conductor OSS",
+          "codeRepository": "https://github.com/conductor-oss/conductor",
+          "license": "https://www.apache.org/licenses/LICENSE-2.0"
+        }
+      }
+    ]
+  }
+  </script>
+  {% endif %}
+
+  <!-- Structured Data: BreadcrumbList -->
+  {% if page and page.url %}
+  {% set parts = page_path.rstrip("/").split("/") %}
+  {% if parts | length > 0 and parts[0] != "" %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "{{ config.site_url }}"
+      }{% for part in parts if part != "" %},
+      {
+        "@type": "ListItem",
+        "position": {{ loop.index + 1 }},
+        "name": "{{ part | replace('-', ' ') | replace('.html', '') | capitalize }}",
+        "item": "{{ config.site_url }}{{ parts[:loop.index] | join('/') }}"
+      }{% endfor %}
+    ]
+  }
+  </script>
+  {% endif %}
+  {% endif %}
+
+  <!-- Structured Data: TechArticle -->
+  {% if page and page.url and page.url != 'index.html' and page.url != '404.html' %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "{{ resolved_title }}",
+    "description": "{{ page_desc }}",
+    "url": "{{ page_url }}",
+    "mainEntityOfPage": "{{ page_url }}",
+    "publisher": { "@id": "https://orkes.io/#organization" },
+    "author": { "@id": "https://orkes.io/#organization" }
+  }
+  </script>
+  {% endif %}
+
+  <!-- Structured Data: FAQPage (homepage only) -->
+  {% if page and page.url == 'index.html' %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do I run Orkes Conductor?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Use Developer Edition to start quickly, or follow the setup guide to connect to Orkes Cloud."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can Orkes Conductor orchestrate AI agents and LLMs?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Orkes Conductor supports native AI tasks, LLM providers, vector databases, and human-in-the-loop workflows."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I replay or retry workflows?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Orkes Conductor preserves execution state so you can retry failed tasks, rerun from a task, or restart workflows."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is Orkes Conductor compatible with Conductor OSS?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Orkes Conductor is built on Conductor and keeps compatibility with the core engine and APIs."
+        }
+      }
+    ]
+  }
+  </script>
+  {% endif %}
+  <!-- Header social icons -->
+  <style>
+    .md-header__social {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-left: 1rem;
+    }
+    .md-header__social a {
+      display: flex;
+      align-items: center;
+      transition: opacity 0.2s;
+      opacity: 0.85;
+    }
+    .md-header__social a:hover {
+      opacity: 1;
+    }
+    .md-header__social svg {
+      width: 1.3rem;
+      height: 1.3rem;
+    }
+  </style>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      var source = document.querySelector(".md-header__source");
+      if (!source) return;
+      var container = document.createElement("div");
+      container.className = "md-header__social";
+      container.innerHTML =
+        '<a href="https://join.slack.com/t/orkes-conductor/shared_invite/zt-3dpcskdyd-W895bJDm8psAV7viYG3jFA" target="_blank" rel="noopener" title="Join Slack" aria-label="Join Slack">' +
+          '<svg viewBox="0 0 448 512" role="img" aria-hidden="true">' +
+            '<path fill="#E01E5A" d="M94.12 315.1c0 25.9-21.16 47.06-47.06 47.06S0 341 0 315.1c0-25.9 21.16-47.06 47.06-47.06h47.06v47.06zm23.72 0c0-25.9 21.16-47.06 47.06-47.06s47.06 21.16 47.06 47.06v117.84c0 25.9-21.16 47.06-47.06 47.06s-47.06-21.16-47.06-47.06V315.1z"/>' +
+            '<path fill="#36C5F0" d="M164.9 126.12c-25.9 0-47.06-21.16-47.06-47.06S139 32 164.9 32s47.06 21.16 47.06 47.06v47.06H164.9zm0 23.72c25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06H47.06C21.16 244.96 0 223.8 0 197.9s21.16-47.06 47.06-47.06H164.9z"/>' +
+            '<path fill="#2EB67D" d="M353.88 197.9c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06h-47.06V197.9zm-23.72 0c0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06V79.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06V197.9z"/>' +
+            '<path fill="#ECB22E" d="M283.1 386.88c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06v-47.06h47.06zm0-23.72c-25.9 0-47.06-21.16-47.06-47.06 0-25.9 21.16-47.06 47.06-47.06h117.84c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06H283.1z"/>' +
+          '</svg>' +
+        '</a>' +
+        '<a href="https://www.youtube.com/@orkesio" target="_blank" rel="noopener" title="YouTube" aria-label="YouTube">' +
+          '<svg viewBox="0 0 576 512" role="img" aria-hidden="true">' +
+            '<path fill="#FF0000" d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305z"/>' +
+            '<path fill="#FFFFFF" d="M232.145 337.591V175.185l142.739 81.205-142.739 81.201z"/>' +
+          '</svg>' +
+        '</a>';
+      source.parentNode.insertBefore(container, source.nextSibling);
+    });
+  </script>
+{% endblock %}

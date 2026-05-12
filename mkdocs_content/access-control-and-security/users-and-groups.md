@@ -1,0 +1,101 @@
+---
+title: "Managing Users and Groups"
+description: "Learn how to create and manage users and groups to assign roles and control access to cluster resources in Orkes Conductor."
+---
+
+# Managing Users and Groups
+
+!!! info
+    This feature is only available to Admins.
+
+Users and groups control human access to an Orkes Conductor cluster. Use users for individual identities and groups for team-level permissions that should apply consistently across workflows, tasks, secrets, environment variables, tags, domains, integrations, prompts, and gateway services.
+
+!!! tip "5-minute path"
+    Add users, place them in groups, grant resource permissions to the group, and use tags when the same permission should apply to many resources.
+
+## Users
+
+A user represents a human identity that signs in through SSO or email/password. Users can have direct roles, group memberships, and resource permissions inherited from groups.
+
+Use direct user roles sparingly. For production clusters, prefer groups so access can be reviewed and changed at the team level.
+
+| Field | Purpose |
+| ----- | ------- |
+| User Id | The user's email address or identity-provider user ID. This cannot be changed later. |
+| Name | Display name shown in access-control views. |
+| Roles | Cluster-level role assigned directly to the user. |
+| Groups | Groups whose roles and resource permissions the user inherits. |
+
+### Adding users
+
+Add users before they can sign in to the cluster.
+
+1. Open **Access Control** > **Users**.
+2. Create a user with the user's ID, name, role, and groups.
+3. Save the user.
+
+Use the lowest role that lets the user do their job:
+
+| Role | Typical use |
+| ---- | ----------- |
+| Admin | Cluster administration, user/group management, and unrestricted access. |
+| User | General builders who create and run workflow resources they are allowed to access. |
+| Metadata Manager | Teams that manage workflow and task definitions across the cluster. |
+| Workflow Manager | Operators who manage workflow executions across the cluster. |
+| Read Only User | Auditors and viewers who need read access only. |
+
+### Editing user information
+
+Edit a user when their team, role, or display name changes. Group membership changes take effect through inherited group permissions.
+
+### Deleting users
+
+Delete users when they no longer need cluster access. Before deleting, check whether they own workflows, applications, schedules, secrets, or other resources that should be transferred.
+
+## Groups
+
+Groups are the preferred way to grant access to teams. A user added to a group inherits the group's roles and permissions; removing the user removes those inherited permissions.
+
+!!! note
+    Read Only Users cannot be added to groups.
+
+Design groups around operational responsibilities, not individual projects. For example:
+
+| Group | Common permissions |
+| ----- | ------------------ |
+| `workflow-builders` | Read/update workflow and task definitions in a namespace or tag. |
+| `workflow-operators` | Read/execute workflows and retry, rerun, pause, resume, or terminate executions. |
+| `worker-services` | Execute specific task definitions or domains through application identities. |
+| `security-admins` | Manage secrets, environment variables, users, groups, and applications. |
+
+### Configuring groups
+
+Configure a group with a clear name, optional default role, members, and resource permissions.
+
+| Setting | Purpose |
+| ------- | ------- |
+| Name | Stable group identifier. Choose a name that maps to a team or responsibility. |
+| Description | Human-readable reason for the group. |
+| Default group role | Optional cluster-level role inherited by every member. |
+| Members | Users who inherit the group's roles and permissions. |
+| Permissions | Resource-level access for workflows, tasks, secrets, environment variables, tags, domains, integrations, prompts, and other resources. |
+
+Permission levels are:
+
+| Permission | Allows |
+| ---------- | ------ |
+| Read | View the resource and related metadata. |
+| Update | Modify the resource configuration. |
+| Execute | Run workflows, poll/complete tasks, or use executable resources. |
+| Delete | Delete the resource. |
+
+!!! tip
+    Grant permissions to [tags](/content/access-control-and-security/tags) when many resources should share the same access policy. Tag-based access reduces one-off grants and makes permission reviews easier.
+
+### Editing group information
+
+Edit a group to update its description, default roles, members, or permissions. Treat group changes as production-impacting changes because they can immediately expand or restrict access for every member.
+
+### Deleting groups
+
+Delete a group only after confirming no users, applications, or operational processes depend on its permissions. Removing a group removes its inherited access from all members.

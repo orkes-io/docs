@@ -1,0 +1,88 @@
+---
+title: "Terminate Workflow API"
+description: "Use the Orkes Conductor workflows API to terminate Workflow API. Includes endpoint details, authentication, parameters, request bodies, response behavior, and."
+---
+
+# Terminate Workflow
+
+**Endpoint:** `DELETE /api/workflow/{workflowId}`
+
+Terminates a running workflow, with the option to provide a reason for termination and/or trigger a failure workflow.
+
+## Path parameters
+
+| Parameter  | Description                                        | Type   | Required/ Optional |
+| ---------- | -------------------------------------------------- | ------ | ------------------ |
+| workflowId | The execution ID of the workflow to terminate. | string | Required.          |
+
+## Query parameters
+
+| Parameter              | Description                                                                                                                                                                                                        | Type    | Required/ Optional |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------- | ------------------ |
+| reason                 | The reason for termination.                                                                                                                                                                                        | string  | Optional.          |
+| triggerFailureWorkflow | If set to `true`, the associated compensation flow (if any) will be triggered. Default is `false`. <br/><br/> Learn more about compensation flows in [Handling Failures](/content/error-handling#workflow-compensation-flows). | boolean | Optional.          |
+
+## Response
+
+Returns 200 OK, indicating that the workflow execution has been terminated successfully.
+
+Returns 400 if an invalid workflow execution ID is provided.
+
+## Examples
+
+<details>
+<summary>Terminate a workflow execution</summary>
+
+**Request**
+
+```shell
+curl -X 'DELETE' \
+  'https://<YOUR-SERVER-URL>/api/workflow/fd7s07f3b619-6edb-11f0-b0d8-2aadd5744325?reason=Terminated%20via%20API&triggerFailureWorkflow=false' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the workflow execution has been terminated successfully. You can view the termination reason in the Conductor UI.
+
+<p align="center">
+  <img
+    src="/content/img/terminate-workflow-example.png"
+    alt="Screenshot of Conductor UI showing terminated workflow with the termination reason."
+    width="100%"
+    height="auto"
+    style="padding-bottom: 40px; padding-top: 40px;"
+  />
+</p>
+
+</details>
+
+
+<details>
+<summary>Terminate a workflow execution triggering a failure workflow</summary>
+
+**Request**
+
+```shell
+curl -X 'DELETE' \
+  'https://<YOUR-PORTAL>/api/workflow/fd7s07f3b619-6edb-11f0-b0d8-2aadd5744325?reason=Terminated%20via%20API&triggerFailureWorkflow=true' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the workflow execution has been terminated successfully, triggering the failure workflow.
+
+<p align="center">
+  <img
+    src="/content/img/terminated-workflow-that-triggered-a-compensation-workflow.png"
+    alt="Screenshot of Conductor UI showing terminated workflow that triggered a compensation workflow."
+    width="100%"
+    height="auto"
+    style="padding-bottom: 40px; padding-top: 40px;"
+  />
+</p>
+
+</details>

@@ -1,0 +1,818 @@
+---
+title: "Update Variable"
+description: "Use the Orkes Conductor workflows API to update Variable. Includes endpoint details, authentication, parameters, request bodies, response behavior, and."
+---
+
+# Update Variable
+
+**Endpoint:** `POST /api/workflow/{workflowId}/variables`
+
+Updates workflow variables for a running workflow. This method is similar to the [Set Variable](/content/reference-docs/operators/set-variable) task, except the variables can be updated anytime in real time.
+
+This endpoint is useful when a workflow variable needs to be updated based on an external trigger. For example, terminating a long-running loop based on a condition stored in the workflow variable.
+
+## **Path parameters**
+
+| Parameter  | Description                       | Type   | Required/ Optional |
+| ---------- | --------------------------------- | ------ | ------------------ |
+| workflowId | The execution ID of the workflow, which contains the variables to update. | string | Required.          |
+
+## Request body
+
+Contains the updated workflow variables. Format the request as an object containing key-value pairs.
+
+**Example**
+
+```json
+{
+  "someKey": "someValue",
+  "anotherKey": {}
+}
+```
+
+## Response
+
+Returns the current workflow execution JSON, which contains the updated variable.
+
+Returns 400 if an invalid workflow execution ID is provided.
+
+## Examples
+
+<details>
+<summary>Update a variable to terminate a loop</summary>
+
+**Request**
+
+```shell
+curl -X 'POST' \
+  'https://<YOUR-SERVER-URL>/api/workflow/e4d3d63e-05ac-11f1-913a-226156badb04/variables' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "loopCondition": false
+  }'
+```
+
+**Response**
+
+The workflow execution details are returned with the updated `loopCondition` variable set to `false` in the `variables` field. The loop will terminate after the current iteration completes.
+
+```json
+{
+  "ownerApp": "",
+  "createTime": 1770637555679,
+  "updateTime": 0,
+  "createdBy": "john.doe@acme.com",
+  "updatedBy": "john.doe@acme.com",
+  "status": "RUNNING",
+  "endTime": 0,
+  "workflowId": "e4d3d63e-05ac-11f1-913a-226156badb04",
+  "tasks": [
+    {
+      "taskType": "SET_VARIABLE",
+      "status": "COMPLETED",
+      "inputData": {
+        "loopCondition": true,
+        "counter": 0,
+        "_createdBy": "john.doe@acme.com"
+      },
+      "referenceTaskName": "set_var_ref",
+      "retryCount": 0,
+      "seq": 1,
+      "pollCount": 0,
+      "taskDefName": "set_initial_variable",
+      "scheduledTime": 1770637555694,
+      "startTime": 1770637555689,
+      "endTime": 1770637555702,
+      "updateTime": 1770637555711,
+      "startDelayInSeconds": 0,
+      "retried": false,
+      "executed": true,
+      "callbackFromWorker": true,
+      "responseTimeoutSeconds": 0,
+      "workflowInstanceId": "e4d3d63e-05ac-11f1-913a-226156badb04",
+      "workflowType": "test_variable_update",
+      "taskId": "e4d55ce7-05ac-11f1-913a-226156badb04",
+      "callbackAfterSeconds": 0,
+      "outputData": {},
+      "workflowTask": {
+        "name": "set_initial_variable",
+        "taskReferenceName": "set_var_ref",
+        "inputParameters": {
+          "loopCondition": true,
+          "counter": 0
+        },
+        "type": "SET_VARIABLE",
+        "decisionCases": {},
+        "defaultCase": [],
+        "forkTasks": [],
+        "startDelay": 0,
+        "joinOn": [],
+        "optional": false,
+        "defaultExclusiveJoinTask": [],
+        "asyncComplete": false,
+        "loopOver": [],
+        "onStateChange": {},
+        "permissive": false
+      },
+      "rateLimitPerFrequency": 0,
+      "rateLimitFrequencyInSeconds": 0,
+      "workflowPriority": 0,
+      "iteration": 0,
+      "subworkflowChanged": false,
+      "firstStartTime": 0,
+      "loopOverTask": false,
+      "taskDefinition": null,
+      "queueWaitTime": -5
+    },
+    {
+      "taskType": "DO_WHILE",
+      "status": "IN_PROGRESS",
+      "inputData": {
+        "loopCondition": true,
+        "_createdBy": "john.doe@acme.com"
+      },
+      "referenceTaskName": "loop_ref",
+      "retryCount": 0,
+      "seq": 2,
+      "pollCount": 0,
+      "taskDefName": "loop_task",
+      "scheduledTime": 1770637555711,
+      "startTime": 1770637555706,
+      "endTime": 0,
+      "updateTime": 1770637587536,
+      "startDelayInSeconds": 0,
+      "retried": false,
+      "executed": false,
+      "callbackFromWorker": true,
+      "responseTimeoutSeconds": 0,
+      "workflowInstanceId": "e4d3d63e-05ac-11f1-913a-226156badb04",
+      "workflowType": "test_variable_update",
+      "taskId": "e4d7f507-05ac-11f1-913a-226156badb04",
+      "callbackAfterSeconds": 0,
+      "outputData": {
+        "1": {
+          "wait_ref": {}
+        },
+        "2": {
+          "wait_ref": {}
+        },
+        "3": {
+          "wait_ref": {}
+        },
+        "4": {
+          "wait_ref": {}
+        },
+        "iteration": 4
+      },
+      "workflowTask": {
+        "name": "loop_task",
+        "taskReferenceName": "loop_ref",
+        "inputParameters": {
+          "loopCondition": "${workflow.variables.loopCondition}"
+        },
+        "type": "DO_WHILE",
+        "decisionCases": {},
+        "defaultCase": [],
+        "forkTasks": [],
+        "startDelay": 0,
+        "joinOn": [],
+        "optional": false,
+        "taskDefinition": {
+          "createTime": 1767601912104,
+          "updateTime": 1767601912104,
+          "createdBy": "john.doe@acme.com",
+          "updatedBy": "john.doe@acme.com",
+          "name": "loop_task",
+          "description": "",
+          "retryCount": 3,
+          "timeoutSeconds": 3600,
+          "inputKeys": [],
+          "outputKeys": [],
+          "timeoutPolicy": "TIME_OUT_WF",
+          "retryLogic": "FIXED",
+          "retryDelaySeconds": 60,
+          "responseTimeoutSeconds": 600,
+          "concurrentExecLimit": 0,
+          "inputTemplate": {},
+          "rateLimitPerFrequency": 0,
+          "rateLimitFrequencyInSeconds": 1,
+          "ownerEmail": "john.doe@acme.com",
+          "pollTimeoutSeconds": 3600,
+          "backoffScaleFactor": 1,
+          "totalTimeoutSeconds": 0,
+          "enforceSchema": false
+        },
+        "defaultExclusiveJoinTask": [],
+        "asyncComplete": false,
+        "loopCondition": "if ($.loopCondition == true) { true; } else { false; }",
+        "loopOver": [
+          {
+            "name": "wait_task",
+            "taskReferenceName": "wait_ref",
+            "inputParameters": {
+              "duration": "10s"
+            },
+            "type": "WAIT",
+            "decisionCases": {},
+            "defaultCase": [],
+            "forkTasks": [],
+            "startDelay": 0,
+            "joinOn": [],
+            "optional": false,
+            "taskDefinition": {
+              "createTime": 0,
+              "updateTime": 0,
+              "name": "wait_task",
+              "retryCount": 1000000,
+              "timeoutSeconds": 0,
+              "inputKeys": [],
+              "outputKeys": [],
+              "timeoutPolicy": "RETRY",
+              "retryLogic": "FIXED",
+              "retryDelaySeconds": 60,
+              "responseTimeoutSeconds": 0,
+              "inputTemplate": {},
+              "rateLimitPerFrequency": 0,
+              "rateLimitFrequencyInSeconds": 1,
+              "pollTimeoutSeconds": 0,
+              "backoffScaleFactor": 1,
+              "totalTimeoutSeconds": 0,
+              "enforceSchema": false
+            },
+            "defaultExclusiveJoinTask": [],
+            "asyncComplete": false,
+            "loopOver": [],
+            "onStateChange": {},
+            "permissive": false
+          }
+        ],
+        "onStateChange": {},
+        "permissive": false
+      },
+      "rateLimitPerFrequency": 0,
+      "rateLimitFrequencyInSeconds": 1,
+      "workflowPriority": 0,
+      "iteration": 4,
+      "subworkflowChanged": false,
+      "firstStartTime": 0,
+      "loopOverTask": true,
+      "taskDefinition": {
+        "createTime": 1767601912104,
+        "updateTime": 1767601912104,
+        "createdBy": "john.doe@acme.com",
+        "updatedBy": "john.doe@acme.com",
+        "name": "loop_task",
+        "description": "",
+        "retryCount": 3,
+        "timeoutSeconds": 3600,
+        "inputKeys": [],
+        "outputKeys": [],
+        "timeoutPolicy": "TIME_OUT_WF",
+        "retryLogic": "FIXED",
+        "retryDelaySeconds": 60,
+        "responseTimeoutSeconds": 600,
+        "concurrentExecLimit": 0,
+        "inputTemplate": {},
+        "rateLimitPerFrequency": 0,
+        "rateLimitFrequencyInSeconds": 1,
+        "ownerEmail": "john.doe@acme.com",
+        "pollTimeoutSeconds": 3600,
+        "backoffScaleFactor": 1,
+        "totalTimeoutSeconds": 0,
+        "enforceSchema": false
+      },
+      "queueWaitTime": -5
+    },
+    {
+      "taskType": "WAIT",
+      "status": "COMPLETED",
+      "inputData": {
+        "duration": "10s",
+        "_createdBy": "john.doe@acme.com"
+      },
+      "referenceTaskName": "wait_ref__1",
+      "retryCount": 0,
+      "seq": 3,
+      "pollCount": 2,
+      "taskDefName": "wait_task",
+      "scheduledTime": 1770637555715,
+      "startTime": 1770637555715,
+      "endTime": 1770637565834,
+      "updateTime": 1770637565847,
+      "startDelayInSeconds": 0,
+      "retried": false,
+      "executed": true,
+      "callbackFromWorker": true,
+      "responseTimeoutSeconds": 0,
+      "workflowInstanceId": "e4d3d63e-05ac-11f1-913a-226156badb04",
+      "workflowType": "test_variable_update",
+      "taskId": "e4d954a5-05ac-11f1-913a-226156badb04",
+      "callbackAfterSeconds": 0,
+      "workerId": "orkes-workers-deployment-7848795756-786kl",
+      "outputData": {},
+      "workflowTask": {
+        "name": "wait_task",
+        "taskReferenceName": "wait_ref",
+        "inputParameters": {
+          "duration": "10s"
+        },
+        "type": "WAIT",
+        "decisionCases": {},
+        "defaultCase": [],
+        "forkTasks": [],
+        "startDelay": 0,
+        "joinOn": [],
+        "optional": false,
+        "taskDefinition": {
+          "createTime": 0,
+          "updateTime": 0,
+          "name": "wait_task",
+          "retryCount": 1000000,
+          "timeoutSeconds": 0,
+          "inputKeys": [],
+          "outputKeys": [],
+          "timeoutPolicy": "RETRY",
+          "retryLogic": "FIXED",
+          "retryDelaySeconds": 60,
+          "responseTimeoutSeconds": 0,
+          "inputTemplate": {},
+          "rateLimitPerFrequency": 0,
+          "rateLimitFrequencyInSeconds": 1,
+          "pollTimeoutSeconds": 0,
+          "backoffScaleFactor": 1,
+          "totalTimeoutSeconds": 0,
+          "enforceSchema": false
+        },
+        "defaultExclusiveJoinTask": [],
+        "asyncComplete": false,
+        "loopOver": [],
+        "onStateChange": {},
+        "permissive": false
+      },
+      "rateLimitPerFrequency": 0,
+      "rateLimitFrequencyInSeconds": 0,
+      "workflowPriority": 0,
+      "iteration": 1,
+      "subworkflowChanged": false,
+      "firstStartTime": 0,
+      "loopOverTask": true,
+      "taskDefinition": {
+        "createTime": 0,
+        "updateTime": 0,
+        "name": "wait_task",
+        "retryCount": 1000000,
+        "timeoutSeconds": 0,
+        "inputKeys": [],
+        "outputKeys": [],
+        "timeoutPolicy": "RETRY",
+        "retryLogic": "FIXED",
+        "retryDelaySeconds": 60,
+        "responseTimeoutSeconds": 0,
+        "inputTemplate": {},
+        "rateLimitPerFrequency": 0,
+        "rateLimitFrequencyInSeconds": 1,
+        "pollTimeoutSeconds": 0,
+        "backoffScaleFactor": 1,
+        "totalTimeoutSeconds": 0,
+        "enforceSchema": false
+      },
+      "queueWaitTime": 0
+    },
+    {
+      "taskType": "WAIT",
+      "status": "COMPLETED",
+      "inputData": {
+        "duration": "10s",
+        "_createdBy": "john.doe@acme.com"
+      },
+      "referenceTaskName": "wait_ref__2",
+      "retryCount": 0,
+      "seq": 4,
+      "pollCount": 2,
+      "taskDefName": "wait_task",
+      "scheduledTime": 1770637566412,
+      "startTime": 1770637566412,
+      "endTime": 1770637576504,
+      "updateTime": 1770637576521,
+      "startDelayInSeconds": 0,
+      "retried": false,
+      "executed": true,
+      "callbackFromWorker": true,
+      "responseTimeoutSeconds": 0,
+      "workflowInstanceId": "e4d3d63e-05ac-11f1-913a-226156badb04",
+      "workflowType": "test_variable_update",
+      "taskId": "eb39905b-05ac-11f1-913a-226156badb04",
+      "callbackAfterSeconds": 0,
+      "workerId": "orkes-workers-deployment-7848795756-786kl",
+      "outputData": {},
+      "workflowTask": {
+        "name": "wait_task",
+        "taskReferenceName": "wait_ref",
+        "inputParameters": {
+          "duration": "10s"
+        },
+        "type": "WAIT",
+        "decisionCases": {},
+        "defaultCase": [],
+        "forkTasks": [],
+        "startDelay": 0,
+        "joinOn": [],
+        "optional": false,
+        "taskDefinition": {
+          "createTime": 0,
+          "updateTime": 0,
+          "name": "wait_task",
+          "retryCount": 1000000,
+          "timeoutSeconds": 0,
+          "inputKeys": [],
+          "outputKeys": [],
+          "timeoutPolicy": "RETRY",
+          "retryLogic": "FIXED",
+          "retryDelaySeconds": 60,
+          "responseTimeoutSeconds": 0,
+          "inputTemplate": {},
+          "rateLimitPerFrequency": 0,
+          "rateLimitFrequencyInSeconds": 1,
+          "pollTimeoutSeconds": 0,
+          "backoffScaleFactor": 1,
+          "totalTimeoutSeconds": 0,
+          "enforceSchema": false
+        },
+        "defaultExclusiveJoinTask": [],
+        "asyncComplete": false,
+        "loopOver": [],
+        "onStateChange": {},
+        "permissive": false
+      },
+      "rateLimitPerFrequency": 0,
+      "rateLimitFrequencyInSeconds": 0,
+      "workflowPriority": 0,
+      "iteration": 2,
+      "subworkflowChanged": false,
+      "firstStartTime": 0,
+      "loopOverTask": true,
+      "taskDefinition": {
+        "createTime": 0,
+        "updateTime": 0,
+        "name": "wait_task",
+        "retryCount": 1000000,
+        "timeoutSeconds": 0,
+        "inputKeys": [],
+        "outputKeys": [],
+        "timeoutPolicy": "RETRY",
+        "retryLogic": "FIXED",
+        "retryDelaySeconds": 60,
+        "responseTimeoutSeconds": 0,
+        "inputTemplate": {},
+        "rateLimitPerFrequency": 0,
+        "rateLimitFrequencyInSeconds": 1,
+        "pollTimeoutSeconds": 0,
+        "backoffScaleFactor": 1,
+        "totalTimeoutSeconds": 0,
+        "enforceSchema": false
+      },
+      "queueWaitTime": 0
+    },
+    {
+      "taskType": "WAIT",
+      "status": "COMPLETED",
+      "inputData": {
+        "duration": "10s",
+        "_createdBy": "john.doe@acme.com"
+      },
+      "referenceTaskName": "wait_ref__3",
+      "retryCount": 0,
+      "seq": 5,
+      "pollCount": 2,
+      "taskDefName": "wait_task",
+      "scheduledTime": 1770637577412,
+      "startTime": 1770637577412,
+      "endTime": 1770637587512,
+      "updateTime": 1770637587522,
+      "startDelayInSeconds": 0,
+      "retried": false,
+      "executed": true,
+      "callbackFromWorker": true,
+      "responseTimeoutSeconds": 0,
+      "workflowInstanceId": "e4d3d63e-05ac-11f1-913a-226156badb04",
+      "workflowType": "test_variable_update",
+      "taskId": "f1c7ea6e-05ac-11f1-8b8d-6219b54da7fe",
+      "callbackAfterSeconds": 0,
+      "workerId": "orkes-workers-deployment-7848795756-786kl",
+      "outputData": {},
+      "workflowTask": {
+        "name": "wait_task",
+        "taskReferenceName": "wait_ref",
+        "inputParameters": {
+          "duration": "10s"
+        },
+        "type": "WAIT",
+        "decisionCases": {},
+        "defaultCase": [],
+        "forkTasks": [],
+        "startDelay": 0,
+        "joinOn": [],
+        "optional": false,
+        "taskDefinition": {
+          "createTime": 0,
+          "updateTime": 0,
+          "name": "wait_task",
+          "retryCount": 1000000,
+          "timeoutSeconds": 0,
+          "inputKeys": [],
+          "outputKeys": [],
+          "timeoutPolicy": "RETRY",
+          "retryLogic": "FIXED",
+          "retryDelaySeconds": 60,
+          "responseTimeoutSeconds": 0,
+          "inputTemplate": {},
+          "rateLimitPerFrequency": 0,
+          "rateLimitFrequencyInSeconds": 1,
+          "pollTimeoutSeconds": 0,
+          "backoffScaleFactor": 1,
+          "totalTimeoutSeconds": 0,
+          "enforceSchema": false
+        },
+        "defaultExclusiveJoinTask": [],
+        "asyncComplete": false,
+        "loopOver": [],
+        "onStateChange": {},
+        "permissive": false
+      },
+      "rateLimitPerFrequency": 0,
+      "rateLimitFrequencyInSeconds": 0,
+      "workflowPriority": 0,
+      "iteration": 3,
+      "subworkflowChanged": false,
+      "firstStartTime": 0,
+      "loopOverTask": true,
+      "taskDefinition": {
+        "createTime": 0,
+        "updateTime": 0,
+        "name": "wait_task",
+        "retryCount": 1000000,
+        "timeoutSeconds": 0,
+        "inputKeys": [],
+        "outputKeys": [],
+        "timeoutPolicy": "RETRY",
+        "retryLogic": "FIXED",
+        "retryDelaySeconds": 60,
+        "responseTimeoutSeconds": 0,
+        "inputTemplate": {},
+        "rateLimitPerFrequency": 0,
+        "rateLimitFrequencyInSeconds": 1,
+        "pollTimeoutSeconds": 0,
+        "backoffScaleFactor": 1,
+        "totalTimeoutSeconds": 0,
+        "enforceSchema": false
+      },
+      "queueWaitTime": 0
+    },
+    {
+      "taskType": "WAIT",
+      "status": "IN_PROGRESS",
+      "inputData": {
+        "duration": "10s",
+        "_createdBy": "john.doe@acme.com"
+      },
+      "referenceTaskName": "wait_ref__4",
+      "retryCount": 0,
+      "seq": 6,
+      "pollCount": 1,
+      "taskDefName": "wait_task",
+      "scheduledTime": 1770637587529,
+      "startTime": 1770637587529,
+      "endTime": 0,
+      "updateTime": 1770637587529,
+      "startDelayInSeconds": 0,
+      "retried": false,
+      "executed": false,
+      "callbackFromWorker": true,
+      "responseTimeoutSeconds": 0,
+      "workflowInstanceId": "e4d3d63e-05ac-11f1-913a-226156badb04",
+      "workflowType": "test_variable_update",
+      "taskId": "f7cfc352-05ac-11f1-913a-226156badb04",
+      "callbackAfterSeconds": 10,
+      "outputData": {},
+      "workflowTask": {
+        "name": "wait_task",
+        "taskReferenceName": "wait_ref",
+        "inputParameters": {
+          "duration": "10s"
+        },
+        "type": "WAIT",
+        "decisionCases": {},
+        "defaultCase": [],
+        "forkTasks": [],
+        "startDelay": 0,
+        "joinOn": [],
+        "optional": false,
+        "taskDefinition": {
+          "createTime": 0,
+          "updateTime": 0,
+          "name": "wait_task",
+          "retryCount": 1000000,
+          "timeoutSeconds": 0,
+          "inputKeys": [],
+          "outputKeys": [],
+          "timeoutPolicy": "RETRY",
+          "retryLogic": "FIXED",
+          "retryDelaySeconds": 60,
+          "responseTimeoutSeconds": 0,
+          "inputTemplate": {},
+          "rateLimitPerFrequency": 0,
+          "rateLimitFrequencyInSeconds": 1,
+          "pollTimeoutSeconds": 0,
+          "backoffScaleFactor": 1,
+          "totalTimeoutSeconds": 0,
+          "enforceSchema": false
+        },
+        "defaultExclusiveJoinTask": [],
+        "asyncComplete": false,
+        "loopOver": [],
+        "onStateChange": {},
+        "permissive": false
+      },
+      "rateLimitPerFrequency": 0,
+      "rateLimitFrequencyInSeconds": 0,
+      "workflowPriority": 0,
+      "iteration": 4,
+      "subworkflowChanged": false,
+      "firstStartTime": 0,
+      "loopOverTask": true,
+      "taskDefinition": {
+        "createTime": 0,
+        "updateTime": 0,
+        "name": "wait_task",
+        "retryCount": 1000000,
+        "timeoutSeconds": 0,
+        "inputKeys": [],
+        "outputKeys": [],
+        "timeoutPolicy": "RETRY",
+        "retryLogic": "FIXED",
+        "retryDelaySeconds": 60,
+        "responseTimeoutSeconds": 0,
+        "inputTemplate": {},
+        "rateLimitPerFrequency": 0,
+        "rateLimitFrequencyInSeconds": 1,
+        "pollTimeoutSeconds": 0,
+        "backoffScaleFactor": 1,
+        "totalTimeoutSeconds": 0,
+        "enforceSchema": false
+      },
+      "queueWaitTime": 0
+    }
+  ],
+  "input": {},
+  "output": {},
+  "taskToDomain": {},
+  "failedReferenceTaskNames": [],
+  "workflowDefinition": {
+    "createTime": 1770637553293,
+    "updateTime": 0,
+    "name": "test_variable_update",
+    "description": "TEST",
+    "version": 1,
+    "tasks": [
+      {
+        "name": "set_initial_variable",
+        "taskReferenceName": "set_var_ref",
+        "inputParameters": {
+          "loopCondition": true,
+          "counter": 0
+        },
+        "type": "SET_VARIABLE",
+        "decisionCases": {},
+        "defaultCase": [],
+        "forkTasks": [],
+        "startDelay": 0,
+        "joinOn": [],
+        "optional": false,
+        "defaultExclusiveJoinTask": [],
+        "asyncComplete": false,
+        "loopOver": [],
+        "onStateChange": {},
+        "permissive": false
+      },
+      {
+        "name": "loop_task",
+        "taskReferenceName": "loop_ref",
+        "inputParameters": {
+          "loopCondition": "${workflow.variables.loopCondition}"
+        },
+        "type": "DO_WHILE",
+        "decisionCases": {},
+        "defaultCase": [],
+        "forkTasks": [],
+        "startDelay": 0,
+        "joinOn": [],
+        "optional": false,
+        "taskDefinition": {
+          "createTime": 1767601912104,
+          "updateTime": 1767601912104,
+          "createdBy": "john.doe@acme.com",
+          "updatedBy": "john.doe@acme.com",
+          "name": "loop_task",
+          "description": "",
+          "retryCount": 3,
+          "timeoutSeconds": 3600,
+          "inputKeys": [],
+          "outputKeys": [],
+          "timeoutPolicy": "TIME_OUT_WF",
+          "retryLogic": "FIXED",
+          "retryDelaySeconds": 60,
+          "responseTimeoutSeconds": 600,
+          "concurrentExecLimit": 0,
+          "inputTemplate": {},
+          "rateLimitPerFrequency": 0,
+          "rateLimitFrequencyInSeconds": 1,
+          "ownerEmail": "john.doe@acme.com",
+          "pollTimeoutSeconds": 3600,
+          "backoffScaleFactor": 1,
+          "totalTimeoutSeconds": 0,
+          "enforceSchema": false
+        },
+        "defaultExclusiveJoinTask": [],
+        "asyncComplete": false,
+        "loopCondition": "if ($.loopCondition == true) { true; } else { false; }",
+        "loopOver": [
+          {
+            "name": "wait_task",
+            "taskReferenceName": "wait_ref",
+            "inputParameters": {
+              "duration": "10s"
+            },
+            "type": "WAIT",
+            "decisionCases": {},
+            "defaultCase": [],
+            "forkTasks": [],
+            "startDelay": 0,
+            "joinOn": [],
+            "optional": false,
+            "taskDefinition": {
+              "createTime": 0,
+              "updateTime": 0,
+              "name": "wait_task",
+              "retryCount": 1000000,
+              "timeoutSeconds": 0,
+              "inputKeys": [],
+              "outputKeys": [],
+              "timeoutPolicy": "RETRY",
+              "retryLogic": "FIXED",
+              "retryDelaySeconds": 60,
+              "responseTimeoutSeconds": 0,
+              "inputTemplate": {},
+              "rateLimitPerFrequency": 0,
+              "rateLimitFrequencyInSeconds": 1,
+              "pollTimeoutSeconds": 0,
+              "backoffScaleFactor": 1,
+              "totalTimeoutSeconds": 0,
+              "enforceSchema": false
+            },
+            "defaultExclusiveJoinTask": [],
+            "asyncComplete": false,
+            "loopOver": [],
+            "onStateChange": {},
+            "permissive": false
+          }
+        ],
+        "onStateChange": {},
+        "permissive": false
+      }
+    ],
+    "inputParameters": [],
+    "outputParameters": {},
+    "schemaVersion": 2,
+    "restartable": true,
+    "workflowStatusListenerEnabled": false,
+    "ownerEmail": "john.doe@acme.com",
+    "timeoutPolicy": "ALERT_ONLY",
+    "timeoutSeconds": 0,
+    "variables": {
+      "loopCondition": true,
+      "counter": 0,
+      "_createdBy": "john.doe@acme.com"
+    },
+    "inputTemplate": {},
+    "enforceSchema": true,
+    "metadata": {},
+    "maskedFields": []
+  },
+  "priority": 0,
+  "variables": {
+    "loopCondition": false,
+    "counter": 0,
+    "_createdBy": "john.doe@acme.com"
+  },
+  "lastRetriedTime": 0,
+  "failedTaskNames": [],
+  "history": [],
+  "rateLimited": false,
+  "startTime": 1770637555679,
+  "workflowName": "test_variable_update",
+  "workflowVersion": 1
+}
+```
+</details>

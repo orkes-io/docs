@@ -1,0 +1,150 @@
+---
+slug: "/developer-guides/versioning-workflows"
+description: "Learn how workflow versions are selected, how definition snapshots affect running executions, and how to upgrade or restart workflows safely."
+---
+
+# Versioning Workflows
+
+Workflow versions let you evolve a workflow definition without surprising running executions or callers that are pinned to an older version. The key rule is simple: **a workflow execution runs from the definition snapshot it started with**.
+
+## TL;DR
+
+- New workflow executions use the latest workflow version unless a specific version is requested.
+- Running executions keep the workflow definition snapshot they started with.
+- Updating an existing version affects new executions of that version, not executions that are already running.
+- Creating a new version lets old and new definitions run side by side.
+- Restart, retry, rerun, and upgrade operations do not all handle definition changes the same way.
+- Deleting a workflow version prevents new executions for that version, but does not stop executions that are already running.
+
+## When to create a new version
+
+Use a new version when a workflow change can alter the contract or behavior that callers, workers, or operators depend on.
+
+| Change | Recommended action | Why |
+| --- | --- | --- |
+| Add optional inputs, update descriptions, or make a backward-compatible fix | Update the same version | Existing running executions keep their snapshot; new executions pick up the compatible change. |
+| Add required inputs, remove outputs, reorder major steps, or change failure behavior | Create a new version | Callers can migrate deliberately and older callers can keep using the previous version. |
+| Run old and new behavior at the same time | Create a new version | Start requests can pin the exact version while you migrate traffic. |
+| Hotfix a production version without changing its contract | Update the same version | Future executions get the fix without forcing every caller to change the requested version. |
+| Replace the workflow with a materially different process | Create a new version | The version number becomes a clear operational boundary. |
+
+## How versions are selected
+
+Conductor selects a workflow definition at execution start.
+
+| Start behavior | Definition used |
+| --- | --- |
+| Start without a version | Latest available version for the workflow name. |
+| Start with a specific version | That exact workflow name and version. |
+| Start after updating the same version | The updated definition for new executions only. |
+| Start after creating a higher version | The new highest version, unless an older version is explicitly requested. |
+
+For API-driven starts, include `version` when you need deterministic behavior:
+
+```json
+{
+  "name": "order_fulfillment",
+  "version": 2,
+  "input": {
+    "orderId": "A-123"
+  }
+}
+```
+
+If the caller omits `version`, new executions use the latest registered version.
+
+## Creating and updating versions
+
+A workflow starts at version `1`. To create another version, register the same workflow name with a higher `version` value.
+
+```json
+{
+  "name": "order_fulfillment",
+  "description": "Fulfill an order",
+  "version": 2,
+  "schemaVersion": 2,
+  "ownerEmail": "team@example.com",
+  "tasks": [
+    {
+      "name": "validate_order",
+      "taskReferenceName": "validate_order",
+      "type": "SIMPLE",
+      "inputParameters": {
+        "orderId": "${workflow.input.orderId}"
+      }
+    }
+  ]
+}
+```
+
+To update an existing version, register the workflow with the same `name` and `version`. New executions of that version use the updated definition. Existing running executions continue with the definition snapshot they already have.
+
+In the UI, create a new version from the workflow editor with **Save > Save as new version**. Use the version selector only when you need to inspect, edit, run, or delete a specific version.
+
+## Runtime behavior
+
+Each execution is bound to a workflow definition snapshot when it starts. Later definition changes do not rewrite the execution graph for workflows that are already running.
+
+In this example:
+
+1. A workflow starts on version V1 at T1 and keeps the V1 definition snapshot from T1.
+2. A new version V2 is added at T2. New executions without an explicit version now use V2.
+3. V1 is updated at T3. New executions that explicitly request V1 use the updated V1 definition, while older V1 executions continue from their T1 snapshot.
+
+This behavior is what makes versioning safe for long-running workflows: a workflow that has already started does not change underneath the execution.
+
+## Restarts, retries, reruns, and upgrades
+
+Restarts and upgrades are the area where most production mistakes happen. Choose the operation based on whether you want to preserve the original execution definition or move to a newer definition.
+
+| Operation | Applies to | Definition behavior | Use when |
+| --- | --- | --- | --- |
+| Retry | Failed workflow or failed task | Uses the execution's existing definition snapshot. | The definition is still valid and the failure was transient. |
+| Restart with current definitions | Terminal workflow execution | Restarts from the beginning using the original execution definition snapshot. | You want to repeat the original workflow behavior exactly. |
+| Restart with latest definitions | Terminal workflow execution | Restarts from the beginning using the latest workflow definition. | You want a terminal execution to pick up a fixed or newer definition. |
+| Rerun | Ongoing or terminal workflow execution | Reruns from a selected task, optionally with updated input. | You need to resume from a specific point or correct input. |
+| Upgrade Workflow API | Running workflow execution | Moves the running execution to another workflow version and continues from the last running task. Earlier tasks in the upgraded definition are skipped. | You need a running execution to continue on a newer version without starting over. |
+
+Use [Restart Workflow](/content/reference-docs/api/workflow/restart-workflow) for terminal workflows. Use [Upgrade Workflow](/content/reference-docs/api/workflow/upgrade-workflow) only when the running execution can safely continue from its current point in the newer definition.
+
+## Migrating running workflows
+
+Changing a workflow definition does not automatically migrate executions that are already running. Pick one of these paths:
+
+| Goal | Recommended path |
+| --- | --- |
+| Keep running executions stable | Do nothing. They continue with their start-time snapshot. |
+| Apply a fix to future executions only | Update the existing version or create a new version, then start new executions. |
+| Re-execute a completed or terminated execution on the latest definition | Use restart with latest definitions. |
+| Move an in-progress execution to a newer version | Use the Upgrade Workflow API. |
+| Skip work already completed after a restart | Use the [Skip Task API](/content/reference-docs/api/workflow/skip-task-from-workflow) only when skipping that task is safe for your business process. |
+
+Before upgrading a running workflow, check whether the new definition changed task reference names, required inputs, output contracts, compensation behavior, or human approval steps. If those changed, restarting or starting a new execution is usually easier to reason about than upgrading in place.
+
+## Deleting versions
+
+Delete a workflow version only when no new execution should be allowed to start on that version.
+
+- Already-running executions for the deleted version continue to completion.
+- New executions cannot be started for the deleted version.
+- Future versions continue incrementing from the latest registered version number.
+
+In the UI, open **Definitions > Workflow**, select the workflow version from the version selector, then choose **Delete**.
+
+## Best practices
+
+- Treat workflow versions as production contracts. Create a new version for breaking changes.
+- Pin critical API callers or scheduled jobs to a specific version when deterministic behavior matters.
+- Use the latest version only when callers are expected to move forward automatically.
+- Keep task reference names stable when you expect to restart, rerun, skip, or upgrade executions.
+- Test new versions with representative input before moving traffic.
+- Document which services or schedules start each workflow version.
+- Avoid repeatedly mutating the same production version unless the change is backward-compatible.
+
+## Related pages
+
+- [Executing Workflows](/content/developer-guides/running-workflows)
+- [Search / Query Executions](/content/developer-guides/debugging-workflows#recovering-from-failures)
+- [Restart Workflow API](/content/reference-docs/api/workflow/restart-workflow)
+- [Rerun Workflow API](/content/reference-docs/api/workflow/rerun-workflow)
+- [Upgrade Workflow API](/content/reference-docs/api/workflow/upgrade-workflow)

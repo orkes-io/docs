@@ -5,148 +5,84 @@ description: "Learn how to build workflows in Orkes Conductor using the visual w
 
 # Build Workflows Using Conductor UI
 
-Orkes Conductor workflows can be built using various methods, including [SDKs](https://orkes.io/content/category/sdks), [APIs](https://orkes.io/content/reference-docs/api/metadata/creating-workflow-definition), [BPMN imports](https://orkes.io/content/developer-guides/convert-bpmn-to-workflows), and the Conductor UI. In Conductor UI, you can build workflows using two approaches:
+This page is kept at its original URL for compatibility. For production workflow design paths, start with [Workflows](/content/developer-guides/workflows) and [Write Workflows Using Code](/content/developer-guides/write-workflows-using-code).
 
-1. Visual workflow builder 
-2. Assistant
+Use the UI when visual modeling, review, or debugging is useful. Use workflow-as-code or metadata APIs when definitions should be generated, tested, reviewed, and deployed from CI/CD.
+
+:::tip 5-minute path
+Create a workflow, add tasks, configure task inputs and workflow outputs, save a version, run a test execution, then export or deploy the definition through your normal release process.
+:::
 
 ## Using visual workflow builder
 
-The visual workflow builder lets you design workflows directly in the Conductor UI by adding and configuring tasks on a canvas.
+The visual workflow builder lets you create and inspect workflow graphs without hand-authoring every JSON field.
 
-You can use the visual workflow builder to:
+Use it for:
 
-- Drag and drop tasks to define workflow execution order.
-- Configure task and workflow inputs/outputs and other parameters.
-- Version workflows.
-- Run workflows visually.
-
-This approach is well-suited for users who prefer a low-code and visual experience.
+- Prototyping new workflow shapes.
+- Reviewing task order and branching with non-code stakeholders.
+- Inspecting task configuration while debugging.
+- Creating a first version before moving the definition into source control.
 
 ### Create workflows using visual workflow builder
 
-**To create workflows visually using Conductor UI:**
+Recommended workflow-building sequence:
 
-1. Go to **Definitions** > **Workflows** from the left navigation menu on your Conductor cluster.
-2. Select **+ Define workflow**.
-3. In the visual section on the left side, select **+** icon on **Start**. This action lists the available tasks in Conductor. 
-4. Select a task to add it to the workflow.
+1. Define the workflow name, version, owner, and expected input parameters.
+2. Add tasks in execution order.
+3. Set each task's `taskReferenceName` to a stable unique value.
+4. Wire task inputs from workflow input, prior task output, variables, secrets, or environment variables.
+5. Configure retries, timeouts, rate limits, and optional behavior.
+6. Configure workflow output parameters.
+7. Save and run a test execution.
+8. Export or register the definition through CI/CD for production use.
 
-<p align="center"><img src="/content/img/build-workflow-using-conductor-ui.png" alt="Build workflows using Visual Workflow Builder" width="100%" height="auto"/></p>
+Production checklist:
 
-5. Add additional tasks in the required sequence to complete the workflow.
-6. Once done, select each task to configure its parameters. When you select a task, the task configuration form opens on the right side of the screen.
-
-<p align="center"><img src="/content/img/task-configuration-form-ui.png" alt="Configuring task parameters using Conductor UI" width="100%" height="auto"/></p>
-
-7. After configuring tasks, switch to the **Workflow** tab, and configure the workflow level parameters.
-
-<p align="center"><img src="/content/img/workflow-configuration-form-ui.png" alt="Configuring workflow parameters using Conductor UI" width="100%" height="auto"/></p>
-
-8. Select **Save**.
-
-After saving the workflow, you can use the UI tools to zoom in or out, fit the workflow to the screen, enable drag mode, export the workflow as an image, show descriptions, and search for tasks.
-
-<p align="center"><img src="/content/img/workflow-ui-options.gif" alt="UI workflow configuration features" width="100%" height="auto"/></p>
-
-Once saved, [run workflows using Conductor UI](https://orkes.io/content/how-to-videos/run-workflow).
+- Use [schema validation](/content/developer-guides/schema-validation) for externally supplied inputs.
+- Use [masked parameters](/content/developer-guides/masking-parameters) for sensitive values.
+- Keep complex business logic in [workers](/content/developer-guides/using-workers), not long inline scripts.
+- Create a new [workflow version](/content/developer-guides/versioning-workflows) for behavior changes.
 
 ## Using assistant
 
-Orkes Conductor’s Assistant is an AI-powered chat interface for building, debugging, and exploring workflows in Conductor. It offers different tools depending on which page you open it from.
+The Assistant can help create, explain, debug, and search workflows when enabled for your cluster. Treat generated workflow definitions like any other production change: review the JSON, test the behavior, and deploy through your normal process.
 
 :::info
-The Assistant is available on request only and is powered by Claude and OpenAI models. To enable it for your cluster, contact your Orkes representative. To try it out for free, sign up for our free [Developer Edition](https://developer.orkescloud.com/).
+Assistant availability depends on your Orkes environment. Contact your Orkes representative if it is not enabled.
 :::
 
 ### Accessing the Assistant
 
-You can open the Assistant from:
+Assistant capabilities depend on where it is opened:
 
-- **Launchpad**: Enter a prompt directly after logging in.
-
-<p align="center"><img src="/content/img/create-workflows-using-assistant.gif" alt="Create workflows using Assistant" width="100%" height="auto"/></p>
-
-- **Workflow Definitions page**: Go to **Definitions** > **Workflow**, select **+ Define workflow** or open an existing workflow, then select the **Assistant** tab.
-
-<p align="center"><img src="/content/img/assistant-in-workflow-definition-tab.png" alt="Create workflows using Assistant from Workflow Definitions tab" width="100%" height="auto"/></p>
-
-- **Executions list page**: Go to **Executions** > **Workflow** to search and filter past runs using natural language.
-
-<p align="center"><img src="/content/img/assistant-in-workflow-executions.png" alt="Debug workflows using Assistant from Workflow Executions tab" width="100%" height="auto"/></p>
-
-- **Execution details page**: Open a specific execution for AI-assisted debugging and failure analysis.
-
-<p align="center"><img src="/content/img/debugging-using-assistant.png" alt="Debug workflows using Assistant from Workflow Executions tab" width="100%" height="auto"/></p>
+| Context | Common use |
+| ------- | ---------- |
+| Workflow builder | Generate or modify workflow definitions, add tasks, explain configuration, and create worker scaffolds. |
+| Execution details | Explain failures, compare runs, inspect inputs/outputs, and suggest recovery actions. |
+| Execution search | Query past executions using natural language. |
+| Workflow definitions | Search the workflow catalog and summarize workflow structure. |
 
 ### Capabilities by context
 
-The Assistant activates different tools depending on where you open it.
+The Assistant is most useful for exploration and first drafts. It should not replace engineering review for production behavior, permissions, data contracts, or failure handling.
 
 #### Workflow Builder
 
-When accessed from the workflow building (Go to **Definitions** > **Workflow**, select **+ Define workflow**) page, the Assistant has full access to workflow building tools.
-
-**Build and modify workflows**
-
-- Create a new workflow from a natural language description
-- Add tasks
-- Update or remove existing tasks
-- Configure task parameters and workflow-level settings
-- Validate and save workflows
-
-**Test and run**
-
-- Run a workflow with test input data
-- Save and test in a single step
-
-**Generate workers**
-
-- Generate custom worker code in Java, Python, JavaScript, or Go
-- Deploy Python workers to Kubernetes directly from the chat
-
-**Configure integrations**
-
-- Discover configured integrations, including AI models, vector databases, message brokers, and external APIs
-- Configure a new integration mid-conversation where credentials are stored securely and never sent to the AI model
-- Add integration tasks for AI model completions, vector database operations, message broker events, and more
-
-**Clone workflows**
-
-- Clone an existing workflow to create a test variant
+Use the Assistant to draft workflows, add tasks, update configuration, generate worker examples, and explain task wiring. After generation, verify the workflow definition, task names, schemas, and failure behavior.
 
 #### Execution details
 
-When accessed from a particular workflow execution (Go to **Executions** > **Workflow**, select **a particular execution**), the Assistant helps you understand what happened:
-
-- Analyze why a task or workflow failed
-- Explain errors in plain language and suggest fixes
-- Compare the current execution against other runs
-- Inspect task inputs and outputs
+Use Assistant output as debugging guidance. Confirm root cause by inspecting the actual task input, output, status, retry count, and failure reason in the execution data.
 
 ### Execution search
 
-When accessed from the Workflow Executions (Go to **Executions** > **Workflow**) page, the Assistant lets you query past runs in natural language; for example:
-
-- "Show me all failed executions from the last 24 hours."
-- "Find executions for order-processing-workflow that failed with a timeout."
-
-You can filter by workflow name, status, time range, or correlation ID.
+Use natural-language queries to find relevant executions, then open specific workflow IDs for authoritative execution details.
 
 #### Workflow search
 
-When accessed from the Workflow Definitions (Go to **Definitions** > **Workflow**) page, the Assistant helps you explore your workflow catalog:
-
-- List and search workflows by name or pattern
-- View execution history for a specific workflow
-- Get a summary of a workflow's structure and purpose
+Use workflow search to explore definitions, identify ownership, and find examples before creating a new workflow.
 
 #### General help
 
-When opened from any other area of the UI, the Assistant answers questions about Conductor concepts, explains features, and points you to documentation. 
-
-:::info Tips
-- Conversations are preserved within a session; you can iterate on a workflow across multiple messages.
-- When the Assistant needs an integration that isn't configured yet, it will pause and prompt you to provide credentials before continuing.
-:::
-y
+For implementation details, prefer the specific developer guide or API reference linked from the Assistant response.

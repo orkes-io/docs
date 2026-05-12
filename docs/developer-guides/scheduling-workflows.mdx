@@ -1,295 +1,218 @@
 ---
 slug: "/developer-guides/scheduling-workflows"
-description: "Learn how to schedule workflows using cron expressions to trigger workflow executions automatically at defined intervals."
+description: "Schedule Orkes Conductor workflows with cron expressions, fixed inputs, timezones, idempotency, monitoring, and production-safe permissions."
 ---
-
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-import Install from '@site/src/components/install.mdx';
-import TableNote from '@site/src/components/TableNote';
 
 # Scheduling Workflows
 
-The Scheduler allows you to trigger a workflow at a specific schedule. You can configure workflows to run at any desired frequency using cron expressions. A single workflow can be associated with multiple schedules. If there are many schedules, ensure the server has sufficient capacity to handle the load. 
+Use schedules when time should start the workflow. A schedule creates workflow executions on a cron cadence, in a selected timezone, with a fixed workflow name and input payload.
 
-A schedule can be used for various cases, such as:
-* Running a workflow at a fixed cadence, such as every hour.
-* Running the same workflow at various cadences using different fixed inputs.
-* Scheduling a workflow to run between specific dates.
-* Running the workflow once at a future date.
+Schedules are best for recurring automation: nightly reconciliation, certificate renewals, compliance scans, cleanup jobs, report generation, reminders, and periodic health checks. If an external event should start the workflow, use [webhooks](/content/developer-guides/webhook-integration), [event handlers](/content/developer-guides/event-handler), or a [gateway](/content/developer-guides/mcp-api-gateway) instead.
 
-Examples include:
-* Renewing a TLS certificate for infrastructure components.
-* Sending notifications ahead of renewals.
-* Scanning of S3 or Blob storage daily to verify compliance with policies.
-* Monitoring the health of a server, such as every 30 seconds.
+:::tip 5-minute path
+Create a schedule, choose the cron cadence and timezone, select the workflow name, provide fixed input, decide whether to run the latest or a specific workflow version, then monitor the resulting scheduled executions.
+:::
 
-Non-admin users can only view and interact with schedules they have READ access to. Creators are automatically granted full access to schedules they create.
+## When to use schedules
+
+| Need | Use a schedule? | Better option |
+| ---- | --------------- | ------------- |
+| Run a workflow every hour, day, week, or month | Yes | Not applicable |
+| Run a workflow once in a future time window | Yes | Start manually if it should run immediately |
+| Run the same workflow with different fixed inputs at different cadences | Yes | Create one schedule per cadence/input set |
+| React to a webhook from another system | No | [Webhook Integration](/content/developer-guides/webhook-integration) |
+| React to a queue, topic, or CDC event | No | [Event Handler](/content/developer-guides/event-handler) |
+| Return an immediate response to an API caller | No | [Synchronous Workflow Execution](/content/reference-docs/api/workflow/synchronous-workflow-execution) |
 
 ## Schedule parameters
 
-Configure these parameters when creating a schedule.
+Most schedules only need a name, cron expression, timezone, workflow name, and input. Use the [Create Schedule API](/content/reference-docs/api/schedule/create-schedule) for the full request schema.
 
-| Parameter | Description | Required/ Optional |
-| --------- | ----------- | ----------------- | 
-| name | The name of the schedule. Must be alphanumeric and can include underscores. Renaming an existing schedule creates a new one. | Required. | 
-| description | A description of the schedule. | Optional. | 
-| cronExpression | A 6-field string defining the cadence using cron syntax. For configuration details, refer [Using cron expression](/content/developer-guides/scheduling-workflows#using-cron-expression). | Required. |
-| zoneId | The timezone in which the schedule runs. Default is **UTC**. | Required. |
-| startWorkflowRequest | A JSON object containing the details of the workflow to be scheduled. | Required. |
-| startWorkflowRequest. **name** | The name of the workflow to run. The creator of the schedule must have execute permission for this workflow. | Required. | 
-| startWorkflowRequest. **version** | The version of the workflow to run. If not specified, the latest version will be used. | Optional. | 
-| startWorkflowRequest. **input** | The input parameters for the workflow, provided as a JSON object. | Optional. | 
-| startWorkflowRequest. **correlationId** | A unique identifier for the workflow execution, used to correlate the current workflow instance with other workflows. | Optional. |
-| startWorkflowRequest. **idempotencyKey** | A unique, user-generated key to prevent duplicate workflow executions. Idempotency data is retained throughout the life of the workflow execution.  | Optional. | 
-| startWorkflowRequest. **idempotencyStrategy** | The idempotency strategy for handling duplicate requests. Supported values:<ul><li>**RETURN_EXISTING**: Return the `workflowId` of the workflow instance with the same idempotency key.</li><li>**FAIL**: Start a new workflow instance only if there are no workflow executions with the same idempotency key.</li><li>**FAIL_ON_RUNNING**: Start a new workflow instance only if there are no `RUNNING` or` PAUSED` workflows with the same idempotency key. Completed workflows can run again.</li></ul> | Required if `idempotencyKey` is used. | 
-| startWorkflowRequest. **priority** | The priority of the workflow. Supports values from 0-99 and can be [passed as a variable](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor). | Optional. | 
-| startWorkflowRequest. **taskToDomain** | A mapping of task reference names to domain-specific values to [route the task to defined workers](https://orkes.io/content/developer-guides/task-to-domain). | Optional. | 
-| scheduleStartTime | The start time for the schedule in [Unix timestamp format](https://www.unixtimestamp.com/) (in milliseconds), based on the local timezone. | Optional. | 
-| scheduleEndTime | The end time for the schedule in [Unix timestamp format](https://www.unixtimestamp.com/) (in milliseconds), based on the local timezone. | Optional. | 
-| paused | Whether the schedule is paused upon saving. If set to `true`, the schedule will not run. Set to `false` to start the schedule immediately upon saving. Default is `false`. | Optional. |
-| runCatchupScheduleInstances | If `true`, executes any pending schedules, such as when the server starts after downtime. | Optional | 
+| Parameter | Use it for |
+| --------- | ---------- |
+| `name` | Stable schedule identifier. Renaming creates a different schedule. |
+| `description` | Human-readable purpose, owner, or runbook context. |
+| `cronExpression` | The cadence. Conductor uses 6-field Quartz cron with seconds first. |
+| `zoneId` | The timezone used to interpret the cron expression. Use `UTC` unless a business process requires local time. |
+| `startWorkflowRequest.name` | Workflow definition to run. The schedule creator must have EXECUTE permission on it. |
+| `startWorkflowRequest.version` | Workflow version to run. Omit it to use the latest version, or set it when the schedule must stay pinned. |
+| `startWorkflowRequest.input` | Fixed input passed to each workflow execution. |
+| `startWorkflowRequest.correlationId` | Correlates executions created by the schedule. |
+| `startWorkflowRequest.idempotencyKey` and `idempotencyStrategy` | Prevents duplicate executions when schedule creation or trigger delivery is retried. |
+| `startWorkflowRequest.taskToDomain` | Routes worker tasks to a domain-specific worker pool. |
+| `scheduleStartTime` and `scheduleEndTime` | Limits when the schedule is active. |
+| `paused` | Saves the schedule without running it until resumed. |
+| `runCatchupScheduleInstances` | Runs missed schedule instances after downtime when catch-up is desired. |
 
-### Using cron expression
+## Using cron expression
 
-The `cronExpression` defines the cadence of the scheduler using a 6-field string. An asterisk (`*`) denotes a blank entry.
+Conductor schedules use Quartz cron syntax with six fields:
 
-```json
-* * * * * *
+```text
+second minute hour day-of-month month day-of-week
 ```
 
-The terms, listed from left to right, are as follows:
-* **Second**: Allowed values are 0-59.
-* **Minute**: Allowed values are 0-59.
-* **Hour**: Allowed values are 0-23.
-* **Day of Month**: Allowed values are 1-31.
-* **Month**: Allowed values are 1-12 or JAN-DEC.
-* **Day of Week**: Allowed values are 1-7 or MON-SUN.
+Examples:
 
-You can also use macros for common schedules, such as: 
-* **@yearly** or **@annually**: Executes once a year at Midnight on January 1st (0 0 0 1 1 *).
-* **@monthly**: Executes once a month at midnight on the first day of the month (0 0 0 1 * *).
-* **@weekly**: Executes once a week at midnight on Sunday (0 0 0 * * 0).
-* **@daily** or **@midnight**: Executes once a day at midnight (0 0 0 * * *).
-* **@hourly**: Executes once every hour (0 0 * * * *).
+| Cadence | Expression |
+| ------- | ---------- |
+| Every hour | `0 0 * ? * *` |
+| Every 15 minutes | `0 */15 * ? * *` |
+| Every day at 2:00 AM UTC | `0 0 2 ? * *` |
+| Every Monday at 9:00 AM | `0 0 9 ? * MON` |
+| First day of every month at midnight | `0 0 0 1 * ?` |
 
-:::info Note
-Orkes Conductor uses Quartz cron syntax, which is a 6-field format with seconds as the first field. This differs from standard 5-field cron syntax.
+Quartz also supports common macros:
+
+| Macro | Meaning |
+| ----- | ------- |
+| `@yearly` or `@annually` | Once a year at midnight on January 1 |
+| `@monthly` | Once a month at midnight on the first day of the month |
+| `@weekly` | Once a week at midnight on Sunday |
+| `@daily` or `@midnight` | Once a day at midnight |
+| `@hourly` | Once every hour |
+
+:::info
+Quartz cron is not the same as standard 5-field Unix cron. The first field is seconds, and `?` is commonly used for "no specific value" in either day-of-month or day-of-week.
 :::
 
-When the schedule triggers the workflow, the following fields are automatically injected as input to the workflow:
+When a schedule starts a workflow, Conductor injects scheduler metadata into the workflow input:
 
 ```json
 {
-   "_executedTime": <EPOCH EXECUTED TIME>,
-   "_startedByScheduler": "<SCHEDULE NAME>",
-   "_executionId": "<SCHEDULE EXECUTION ID>",
-   "_scheduledTime": <EPOCH SCHEDULED TIME>
+  "_executedTime": 1735606800000,
+  "_startedByScheduler": "nightly_reconciliation",
+  "_executionId": "schedule-execution-id",
+  "_scheduledTime": 1735606800000
 }
 ```
 
 ## Schedule configuration
 
-This is the JSON schema for a workflow schedule.
+This minimal request creates a daily schedule that starts a workflow at 2:00 AM UTC:
 
 ```json
 {
- "paused": false,
- "runCatchupScheduleInstances": false,
- "name": "schedule_a",
- "description": "Sample schedule",
- "cronExpression": "0 0 * ? * *",
- "scheduleStartTime": 1735606800000,
- "scheduleEndTime": 1738285200000,
- "startWorkflowRequest": {
-   "name": "demo-feb",
-   "version": "",
-   "input": {
-     "id": "xyz"
-   },
-   "correlationId": "45",
-   "idempotencyKey": "8",
-   "idempotencyStrategy": "RETURN_EXISTING",
-   "taskToDomain": {
-     "task_x": "test"
-   },
-   "priority": 0
- },
- "zoneId": "UTC"
+  "name": "nightly_reconciliation",
+  "description": "Run account reconciliation every day at 2:00 AM UTC.",
+  "cronExpression": "0 0 2 ? * *",
+  "zoneId": "UTC",
+  "paused": false,
+  "runCatchupScheduleInstances": false,
+  "startWorkflowRequest": {
+    "name": "reconcile_accounts",
+    "input": {
+      "region": "us"
+    },
+    "correlationId": "nightly_reconciliation"
+  }
 }
+```
+
+For API usage, send the schedule definition to:
+
+```http
+POST /api/scheduler/schedules
 ```
 
 ## Configuring a schedule
 
-Schedules can be configured directly using the scheduler functionality, from a completed workflow execution, or through the API.
+You can create schedules from the Scheduler UI, from a completed workflow execution, or through the API.
 
-<Tabs>
-<TabItem value="Using Conductor UI (Scheduler)" label="Using Conductor UI (Scheduler)">
+### Create from Scheduler
 
-**To create a schedule:**
-
-1. Go to **Definitions** > **Scheduler** from the left menu on your Conductor cluster.
+1. Go to **Definitions** > **Scheduler**.
 2. Select **+ Define schedule**.
-3. Enter a **Name** and **Description**.
-4. In **Choose a template to get started**, select a cron expression template or manually enter it.  Use the _Cron Expression Help_ to verify your expression. 
-5. In **Select Timezone**, select your preferred timezone for the schedule. The UI will display the next five scheduled runs in both the selected timezone and the browser’s local time.
-6. Select the **Workflow name** and **Workflow version** to be scheduled.
-7. Enter any additional parameters such as **Input params**, **Correlation Id**, **Idempotency key**, **Idempotency strategy**, and **Task to domain mapping**.
-8. In **Schedule start/end**, specify when the schedule begins and ends. Enter the date and local time in YYYY-MM-DD hh:mm am/pm format, or select them using the date picker.
-9. (Optional) Enable **Pause schedule** to prevent it from running upon creation. You can unpause the schedule later to resume.
-10. Select **Save** > **Confirm**.
+3. Enter a schedule name and description.
+4. Choose a cron template or enter a cron expression.
+5. Select the timezone.
+6. Select the workflow name and version.
+7. Enter fixed workflow input, correlation ID, idempotency settings, or task-to-domain mapping if needed.
+8. Set start and end times if the schedule should only run inside a window.
+9. Save as active, or enable **Pause schedule** if it should not run yet.
 
-This saves the schedule. The schedule definitions page lists the following functionalities in the Conductor UI:
+### Create from a workflow execution
 
-<p align="center"><img src="/content/img/actions-on-scheduler.png" alt="Actions that can carried on a Schedule" width="100%" height="auto"></img></p>
+Use this when a completed execution has the exact workflow, input, and task-to-domain mapping you want to reuse.
 
-* **Pause**: Pause the schedule, useful for situations like maintenance. Resume it once you're ready.
-* **Clone**: Duplicate the schedule, allowing you to reuse existing schedule settings easily.
-* **Add/Edit Tags**: Add new tags or modify existing ones for the schedule.
-* **Delete**: Permanently remove the schedule from the Conductor cluster.
-* If the schedule is active (not paused), you can view the next run time:
+1. Go to **Executions** > **Workflow**.
+2. Open the completed execution.
+3. Select **Actions** > **Create Schedule**.
+4. Add the schedule name, cron expression, timezone, and active window.
 
-<p align="center"><img src="/content/img/next-run-time-for-workflow-schedule.png" alt="Next run time of a Schedule" width="100%" height="auto"></img></p>
+### Create through the API
 
-* Use the **Quick filters** option to filter between active and inactive schedules.
-* Use the **Quick search** to search by schedule name or tag. To search using tags, use the format `tagKey:tagValue`; for example; `team:marketing`.
+Use the API when schedules are managed through deployment automation, platform tooling, or tenant provisioning:
 
-</TabItem>
-<TabItem value="Using Conductor UI (Workflow Execution)" label="Conductor UI (Workflow Execution)">
+- [Create Schedule](/content/reference-docs/api/schedule/create-schedule)
+- [Get All Schedules](/content/reference-docs/api/schedule/get-all-schedules)
+- [Pause Schedule](/content/reference-docs/api/schedule/pause-schedule)
+- [Resume Schedule](/content/reference-docs/api/schedule/resume-schedule)
+- [Delete Schedule](/content/reference-docs/api/schedule/delete-schedule)
 
-You can also easily create a schedule from a completed workflow execution.<br/> <br/>
-**To schedule a workflow from a workflow execution page:**
-1. Go to **Executions** > **Workflow** from the left navigation menu.
-2. Select the required workflow execution.
-3. From **Actions**, select **Create Schedule**.
+## Monitoring scheduled executions
 
-<p align="center"><img src="/content/img/schedule-from-executions.png" alt="Workflow scheduling from executions" width="100%" height="auto"></img></p>
+Go to **Executions** > **Scheduler** to inspect scheduled runs. Use this view to see schedule name, workflow name, workflow ID, scheduled time, execution time, status, failure reason, and error details.
 
-This automatically populates a schedule definition with workflow details, including name, version, input parameters, correlation ID, idempotency key, and task-to-domain mapping. You only need to provide a name for the schedule, set cron expressions, and set the schedule time.
-
-</TabItem>
-<TabItem value="Using API" label="Using API">
-
-Use the [Create Schedule API](/content/reference-docs/api/schedule/create-schedule) to create a new schedule:
-
-```json
-POST /api/scheduler/schedules
-```
-</TabItem>
-</Tabs>
-
-:::tip
-For non-admin users to access schedules created by an admin, they must be granted permissions to the required schedules and workflows. This can be done using user groups and tags. Here’s how:
-1. Add the necessary tag to the schedule and workflow to which non-admins need access.
-2. Create a user group and [grant execute and read access to the tag](https://orkes.io/content/access-control-and-security/tags#granting-tag-permissions).
-
-**Example**: A data engineering team needs to manage ETL schedules:
-
-- Tag the ETL workflow and its schedules with the tag `data-etl`
-- Create a "Data Engineers" user group
-- Grant the group execute and read permissions on the `data-etl` tag
-
-This ensures the group members have the necessary permissions to interact with the tagged schedule and workflows.
-:::
-
-## Monitoring scheduled executions​
-
-**To monitor the scheduled executions:**
-
-Go to **Executions** > **Scheduler** from the left navigation menu.
-<p align="center"><img src="/content/img/scheduler-executions.jpg" alt="Scheduler Executions View" width="100%" height="auto"></img></p>
-
-* The execution page displays the details for all scheduled executions, including scheduled time, execution time, execution ID, schedule name, workflow name, workflow ID, status, failure reason, and error details. 
-* You can view the workflow execution by directly clicking the workflow ID.
-* Additional filtering options are available to refine your search.
-* Use **Bulk Actions** to pause, resume, restart, retry, or terminate multiple items at once.
-
-To get the scheduled workflow execution details as code in the UI, select the arrow next to the **Search** button and select **Show as Code**.
-
-<p align="center"><img src="/content/img/show-as-code-scheduler-executions.png" alt="Show as code scheduler workflow executions" width="100%" height="auto"></img></p>
-
-This will display the execution search data in cURL and JavaScript.
-
-<p align="center"><img src="/content/img/scheduler-execution-search-data-code.png" alt="Scheduler search execution search data in code" width="100%" height="auto"></img></p>
+For debugging, open the workflow execution from the scheduled execution row. For automation, use the [Search Schedule Executions API](/content/reference-docs/api/schedule/search-schedule-executions).
 
 ## Troubleshooting schedules
 
-**Auto-pause on permission loss**
+| Problem | What to check |
+| ------- | ------------- |
+| Schedule did not run | Confirm it is not paused, the current time is inside the start/end window, and the cron expression matches the selected timezone. |
+| Workflow did not start | Confirm the schedule creator still has EXECUTE permission on the workflow and the workflow version exists. |
+| Schedule auto-paused | Retrieve the schedule and check `pausedReason`. A security error usually means the creator lost permission on the workflow. |
+| Wrong run time | Check `zoneId`. Prefer `UTC` for infrastructure schedules and use local zones only for business-time schedules. |
+| Duplicate workflow executions | Add an idempotency key and strategy if retry behavior could create duplicate starts. |
+| Missed runs after downtime | Decide whether `runCatchupScheduleInstances` should be enabled for this schedule. |
 
-Orkes Conductor automatically pauses a schedule if the schedule creator loses EXECUTE permission on the associated workflow. This is a security measure to prevent unauthorized workflow executions.
+To resolve a schedule paused by permission loss:
 
-**Identifying an auto-paused schedule**
+1. Restore EXECUTE permission on the workflow for the schedule creator.
+2. Resume the schedule manually or through the API.
 
-To confirm a schedule was paused due to a permission loss, retrieve the schedule using the API:
+## Production notes
 
+- Pin `startWorkflowRequest.version` when the schedule must keep using a known workflow definition.
+- Leave version unset only when "always run latest" is intentional.
+- Use idempotency keys for schedules that trigger side effects.
+- Give schedules descriptive names that include owner, cadence, and purpose.
+- Tag schedules and workflows together so RBAC can grant teams the right READ and EXECUTE access.
+- Avoid very high-frequency schedules unless workers, rate limits, and downstream systems are sized for the load.
+
+## Frequently asked questions
+
+### How do I set up a crontab to schedule a workflow every 15 minutes?
+
+Use this Quartz cron expression:
+
+```text
+0 */15 * ? * *
 ```
-GET /api/scheduler/schedules/{name}
-```
 
-In the response, check the `pausedReason` field. If the schedule was auto-paused due to a security violation, the value will follow this format:
+### What is the smallest granularity to set up a schedule?
 
-```
-Security Error: <message>
-```
+The scheduler supports second-level granularity on a best-effort basis. For production schedules, use at least a 30-second gap unless the workflow and downstream systems are designed for higher frequency.
 
-**Resolving an auto-paused schedule**
+### Can I get a summary of schedules that ran during a period?
 
-**To resume the schedule:**
+Yes. Use **Executions** > **Scheduler** and filter by time range, or use the [Search Schedule Executions API](/content/reference-docs/api/schedule/search-schedule-executions).
 
-1. Restore EXECUTE permission on the workflow for the schedule's creator.
-2. Manually resume the schedule.
+### What happens if the workflow definition changes after a schedule is created?
 
-<FAQStructuredData faqs={faqs} />
-
-import FAQStructuredData from '../../src/theme/FAQStructuredData';
-
-export const faqs = [
-  {
-    question: 'How do I set up a crontab to schedule a workflow every 15 minutes?',
-    answer:
-      "Using the crontab expression (0 */15 * ? * *), you can schedule a workflow to run every 15 minutes.",
-  },
-  {
-    question: 'What is the smallest granularity to set up a schedule?',
-    answer:
-      "The scheduler supports up to a second granularity; however, this is done on a best-effort basis. A minimum of a 30-second gap is recommended as the cadence for workflow scheduling.",
-  },
-  {
-    question: 'Can I get a summary view of all the schedules that ran in a given period, like last month, last week, etc.?',
-    answer:
-      "Yes. From the Scheduler executions page, you can leverage the time filtering options. You can provide the start and end times to view the schedules that ran within the stipulated period. In addition, the Lookback (days) field can give the number of schedules that ran on the specified days.",
-  },
-  {
-    question: 'A schedule is created for a workflow for version 1. The workflow definition for that version changed later and now has new or updated input parameters. The schedule should also pass in the updated input parameter. Is there a way to find this?',
-    answer:
-      "When creating a schedule, you can choose a specific workflow version. If no version is selected, the latest version runs by default. If a version is chosen, you must manually update the schedule to use the latest version and the updated input parameters.",
-  },
-];
+If the schedule is pinned to a workflow version, it keeps using that version. If no version is set, the schedule runs the latest version. Update the schedule when workflow inputs or behavior change.
 
 ### How do I set up a crontab to schedule a workflow every 90 minutes?
 
-Cron expression does not directly support scheduling workflows every 90 minutes, as the minute field only supports values between 0 and 59. However, you can achieve this using two separate schedules:
+Cron does not directly support 90-minute intervals because the minute field only supports values from 0 to 59. Use two schedules:
 
-**Schedule 1:**
-
-```json
+```text
 0 0 0/3 * * ?
 ```
 
-<p align="center"><img src="/content/img/cron-expression-90-mins-scheduler-1.png" alt="How do I set up a crontab to schedule a workflow every 90 minutes?" width="70%" height="auto"></img></p>
-
-**Schedule 2:**
-
-```json
+```text
 0 30 1/3 * * ?
 ```
 
-<p align="center"><img src="/content/img/cron-expression-90-mins-scheduler-2.png" alt="How do I set up a crontab to schedule a workflow every 90 minutes?" width="70%" height="auto"></img></p>
-
-With both schedules, the workflow runs every 90 minutes. For example:
-
-- The second schedule runs at 14:30 and the first schedule runs at 16:00, which is 90 minutes apart.
-- The next run for the second schedule is at 17:30, and for the first schedule, it is at 19:00, which are again 90 minutes apart.
-
-**Timeline:**
-14:30 (Schedule 2) > 16:00 (Schedule 1) > 17:30 (Schedule 2) > 19:00 (Schedule 1) ......
+Together, these run the workflow every 90 minutes: 14:30, 16:00, 17:30, 19:00, and so on.

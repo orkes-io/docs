@@ -1,0 +1,96 @@
+---
+title: "Quickstart 1: Write a Worker"
+description: "Learn how to write custom workers in Orkes Conductor to execute workflow tasks and implement business logic in distributed workflow orchestration systems."
+---
+
+# Quickstart 1: Write a Worker
+
+*Estimated time: 5min*
+
+As you will have learned in [Core Concepts](/content/core-concepts), the core units of every Conductor workflow are tasks and operators. All code is executed by workers - system tasks are serviced by internal Conductor workers (a.k.a. system tasks/workers), and any custom tasks must be serviced by workers of your own hosting.
+<p align="center"><img src="/content/img/getting-started/getting_started-worker-diagram.jpg" alt="Diagram of system workers (i.e. inline tasks, http tasks) and customer workers." width="100%" height="auto"></img></p>
+
+Custom workers can be deployed anywhere: container, VM, or bare metal.
+
+In this quickstart, you will:
+1. Download a worker project.
+2. Integrate the worker with Conductor.
+3.  Deploy the worker from your local machine.
+
+## Download a worker project
+
+Begin by creating a task worker that polls the Conductor server for scheduled tasks at regular intervals. To get started quickly,  download one of our sample `myTask` worker projects in your preferred language:
+
+``` shell
+gh repo clone conductor-oss/conductor-apps
+```
+
+* [Python](https://github.com/conductor-oss/conductor-apps/tree/main/python/developer-guides/using-workers)
+* [Java](https://github.com/conductor-oss/conductor-apps/tree/main/java/developer-guides/using-workers) 
+* [JavaScript](https://github.com/conductor-oss/conductor-apps/tree/main/javascript/developer-guides/using-workers) 
+* [C#](https://github.com/conductor-oss/conductor-apps/tree/main/csharp/developer-guides/using-workers) 
+* [Go](https://github.com/conductor-oss/conductor-apps/tree/main/go/developer-guides/using-workers) 
+
+## Integrate the worker with Conductor
+
+To connect your task worker with the Conductor server, you must:
+
+1. Register your worker by creating a task definition
+2. Create a worker application and grant it Execute permission
+
+### Register worker
+
+**To register your worker:**
+
+1. Log in to your Conductor cluster or [Developer Edition](https://developer.orkescloud.com/?utm_campaign=quickstarts&utm_source=orkes-doc&utm_medium=web).
+1. In the left navigation menu of the Conductor UI, go to **Definitions** > **Task**.
+2. Select **+ Define task**.
+3. Enter the **Name** for the task, which must match the task definition name in your worker code. This must be `myTask` if you are using the sample worker project downloaded in the previous step.
+4. Select **Save** > **Confirm Save**.
+
+The task is now saved to the Conductor server, which facilitates the routing of the task to the correct worker pool during workflow execution.
+
+Finally, your worker requires programmatic access to the Conductor server. This can be done by creating an application in Conductor, which is an access layer with its own permissions and access tokens.
+
+!!! note
+    If you are using [Developer Edition](https://developer.orkescloud.com/?utm_campaign=quickstarts&utm_source=orkes-doc&utm_medium=web), you can only create one application with the Admin role enabled.
+
+### Create a worker application
+
+**To create an application for your worker:**
+
+1. In the left navigation menu of the Conductor UI, go to **Access Control** > **Applications**.
+2. Select **+ Create application** and enter a **Name** for it. For example, *myApp *or* myWorkerApp*.
+3. Enable the **Worker** application role, which allows the application to poll and update tasks.
+4. Select **+ Create access key** and store the generated credentials securely.
+5. Set the Server URL,  Key ID, and Key Secret in your project.
+    
+    **Example** (Python)
+    ```python
+    os.environ['CONDUCTOR_SERVER_URL'] = 'https://developer.orkescloud.com/api'
+    os.environ['CONDUCTOR_AUTH_KEY'] = '<YOUR-KEY-ID>'
+    os.environ['CONDUCTOR_AUTH_SECRET'] = '<YOUR-KEY-SECRET>'
+    ```
+6. (Skip this step if you are using [Developer Edition](https://developer.orkescloud.com/?utm_campaign=quickstarts&utm_source=orkes-doc&utm_medium=web)) Grant Execute permission to the application.
+    1. Under **Permissions**, select **Add permission**.
+    2. Select the **Task** tab and then your worker task `myTask`.
+    3. Enable the **Execute** toggle.
+    4. Select **Add Permissions**.
+
+The application account can now execute the worker task. 
+
+## Start the worker
+
+Using the command line, launch the worker so that it begins polling the Conductor server. The commands depend on your language and project configuration. You can follow the README instructions in the sample worker project to start it.
+
+**Example** (Python)
+
+``` python
+python3 -m venv venv
+source venv/bin/activate
+pip3 install -r requirements.txt
+python3 main.py
+```
+
+
+Later, when you run a workflow containing this worker, the task should run to completion. But first, let’s build a workflow using this task in Quickstart 2.

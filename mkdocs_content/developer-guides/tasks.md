@@ -1,0 +1,173 @@
+---
+title: "Tasks in Workflows"
+description: "Understand tasks in Orkes Conductor workflows, including system tasks, operators, and custom worker tasks used to build and control workflow execution."
+---
+
+# Tasks in Workflows
+
+Tasks are the building blocks of Conductor workflows. A task can call an API, run custom code, branch, loop, wait, call an LLM, publish an event, or pause for human review.
+
+Use Conductor to coordinate durable execution. Use worker code for complex business logic that belongs in application services.
+
+!!! tip "5-minute path"
+    Use an operator for control flow, a system task for platform-managed work, an AI task for model/vector operations, a Human task for review, and a Worker task when the step needs custom code or private dependencies.
+
+## Choose a task type
+
+| Need | Use |
+| ---- | --- |
+| Branch, loop, wait, fork, join, terminate, or call sub-workflows | [Operators](/content/category/reference-docs/operators) |
+| Call HTTP/gRPC APIs, transform JSON, publish events, send email, query data | [System tasks](/content/category/reference-docs/system-tasks) |
+| Call LLMs, create embeddings, parse documents, or search vector stores | [AI tasks](/content/category/reference-docs/ai-tasks) |
+| Pause for approval, review, escalation, or external form completion | [Human task](/content/reference-docs/operators/human) |
+| Run custom business logic in your own runtime | [Worker task](/content/reference-docs/worker-task) |
+
+## Built-in tasks
+
+Built-in tasks are executed by Conductor. They are useful when the step can be described through configuration instead of custom service code.
+
+Common built-in tasks:
+
+| Category | Examples |
+| -------- | -------- |
+| Control flow | Switch, Do While, Fork, Dynamic Fork, Join, Wait, Human, Sub Workflow, Start Workflow, Terminate |
+| Service calls | HTTP, HTTP Poll, gRPC, JDBC |
+| Data transformation | Inline, JSON JQ Transform, Business Rule |
+| Events and notifications | Event, SendGrid, Opsgenie, Wait for Webhook |
+| Platform operations | Set Variable, Update Secret, Update Task, Query Processor |
+| AI operations | Text Complete, Chat Complete, Generate Embeddings, Search Index, Parse Document, MCP tasks |
+
+Start with built-in tasks when they cover the behavior. Move to workers when the step requires code, internal dependencies, strong typing, test harnesses, or deployment isolation.
+
+## Custom worker tasks
+
+A [Worker task](/content/reference-docs/worker-task) is a SIMPLE task executed by an external worker process. Workers poll Conductor, run your code, and return task output.
+
+Use worker tasks when you need to:
+
+- Call internal systems not reachable from Conductor.
+- Run domain logic in Python, Java, Go, C#, JavaScript, TypeScript, or another runtime.
+- Use private libraries, databases, or network access.
+- Perform compute-heavy or long-running work outside the Conductor server.
+- Keep business logic tested and deployed with the owning application.
+
+Before a worker task can run, register a task definition and start a worker that polls the task name. See [Writing Workers for Conductor Workflows](/content/developer-guides/using-workers).
+
+## Task definitions and task configurations
+
+Task definitions and task configurations are different things.
+
+| Concept | Where it lives | What it controls |
+| ------- | -------------- | ---------------- |
+| Task definition | Metadata registry | Shared task-level settings such as retries, timeouts, rate limits, schemas, input templates, and RBAC resource identity. |
+| Task configuration | Workflow definition | One task instance in one workflow: task reference name, type, input mapping, optional flag, async completion, and task-specific fields. |
+
+### Task definition
+
+Task definitions are shared across workflows. Changing a task definition can affect every workflow that uses that task.
+
+Example task definition:
+
+```json
+{
+  "name": "calculate_fx",
+  "description": "Calculates currency exchange",
+  "retryCount": 3,
+  "retryLogic": "EXPONENTIAL_BACKOFF",
+  "retryDelaySeconds": 30,
+  "responseTimeoutSeconds": 60,
+  "timeoutSeconds": 300,
+  "timeoutPolicy": "TIME_OUT_WF",
+  "concurrentExecLimit": 20,
+  "rateLimitPerFrequency": 10,
+  "rateLimitFrequencyInSeconds": 1,
+  "ownerEmail": "finance@example.com"
+}
+```
+
+### Task configuration
+
+Task configuration appears in the workflow `tasks` array and must have a unique `taskReferenceName`.
+
+```json
+{
+  "name": "calculate_fx",
+  "taskReferenceName": "calculate_fx",
+  "type": "SIMPLE",
+  "inputParameters": {
+    "fromCurrency": "${workflow.input.fromCurrency}",
+    "toCurrency": "${workflow.input.toCurrency}",
+    "amount": "${workflow.input.amount}"
+  }
+}
+```
+
+### Common configuration parameters
+
+| Parameter | Purpose |
+| --------- | ------- |
+| `name` | Task name. For worker tasks, this must match the task definition and worker task type. |
+| `taskReferenceName` | Unique reference name used by expressions and execution history. |
+| `type` | Task type, such as `SIMPLE`, `HTTP`, `SWITCH`, or `HUMAN`. |
+| `inputParameters` | Values passed into the task. Can use expressions. |
+| `optional` | Lets the workflow continue after a terminal task failure. |
+| `asyncComplete` | Keeps the task `IN_PROGRESS` until an external signal completes it. |
+| `startDelay` | Delays task scheduling by seconds. |
+| `onStateChange` | Publishes events when the task state changes. |
+
+## Dealing with data
+
+Conductor provides several mechanisms for task data:
+
+| Need | Use |
+| ---- | --- |
+| Pass workflow input or prior task output to a task | [Parameter Mapping](/content/developer-guides/passing-inputs-to-task-in-conductor) |
+| Apply default task inputs | [Parameter Mapping](/content/developer-guides/passing-inputs-to-task-in-conductor#task-input-templates) |
+| Hide sensitive values | [Parameter Mapping](/content/developer-guides/passing-inputs-to-task-in-conductor#masking-sensitive-mapped-values) |
+| Enforce input/output contracts | [Parameter Mapping](/content/developer-guides/passing-inputs-to-task-in-conductor#schema-validation) |
+| Store reusable non-secret values | [Environment Variables](/content/developer-guides/using-environment-variables) |
+| Store credentials | [Secrets](/content/developer-guides/secrets-in-conductor) |
+
+## Task reuse
+
+Task definitions are reusable. You can use the same task definition:
+
+- Multiple times in one workflow with different `taskReferenceName` values.
+- Across many workflows.
+- Across tenants or teams with [task-to-domain](/content/developer-guides/task-to-domain) routing.
+
+When a task is reused heavily, treat its task definition like a shared API contract. Review retry, timeout, schema, and rate-limit changes before rollout.
+
+## Task lifecycle
+
+Task status changes are the main debugging signal in a workflow execution. See [Task and Workflow Status](/content/developer-guides/task-and-workflow-status-in-conductor#task-state-transitions) for the full transition model.
+
+Common statuses:
+
+| Status | Meaning |
+| ------ | ------- |
+| `SCHEDULED` | Task is ready for workers or Conductor execution. |
+| `IN_PROGRESS` | Worker or system task has started. |
+| `COMPLETED` | Task completed successfully. |
+| `FAILED` | Task failed and may retry based on policy. |
+| `FAILED_WITH_TERMINAL_ERROR` | Task failed and should not retry. |
+| `TIMED_OUT` | Task exceeded its timeout. |
+
+## Common pitfalls to avoid
+
+- Do not reuse the same `taskReferenceName` within a workflow.
+- Do not put complex business logic into Inline scripts when it belongs in tested worker code.
+- Configure task timeouts and response timeouts so work does not hang indefinitely.
+- Treat task-definition changes as shared production changes.
+- Use task domains or rate limits when a shared task queue has noisy-neighbor risk.
+- Keep worker tasks idempotent because retries and redelivery can repeat execution.
+
+
+## In this section
+
+- [Parameter Mapping](/content/developer-guides/passing-inputs-to-task-in-conductor)
+- [Caching Task Outputs](/content/faqs/task-cache-output)
+- [Rate Limits](/content/rate-limits)
+- [Writing Workers for Conductor Workflows](/content/developer-guides/using-workers)
+- [Guide to Scaling Workers](/content/developer-guides/scaling-workers)
+- [Routing Tasks](/content/developer-guides/task-to-domain)

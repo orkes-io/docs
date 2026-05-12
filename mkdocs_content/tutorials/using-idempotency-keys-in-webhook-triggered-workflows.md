@@ -1,0 +1,293 @@
+---
+title: "Using Variable Idempotency Keys in Webhook-Triggered Workflows"
+description: "Learn how to build reliable webhook-triggered workflows using idempotency keys to prevent duplicate executions in Orkes Conductor."
+---
+
+# Using Variable Idempotency Keys in Webhook-Triggered Workflows
+
+This tutorial demonstrates how to use a workflow input variable as an idempotency key in a webhook-triggered workflow in Orkes Conductor. Using an idempotency key ensures that repeated webhook events do not trigger duplicate workflow executions.
+
+The tutorial uses Jira ticket creation as an example to show how idempotency prevents duplicate side effects when webhook events are retried or duplicated.
+
+This approach is useful for integrating alerting systems, bug reporters, or internal tools with downstream systems where duplicate processing must be avoided.
+
+In this tutorial, you will:
+
+1. Generate an API token in Jira.
+2. Save the token as a secret in Orkes Conductor.
+3. Create the ticket automation flow.
+4. Create a webhook in Orkes Conductor.
+5. Test the workflow using cURL
+
+!!! info "Prerequisites"
+    To follow along, make sure you have access to the following:
+    - A free account in [Developer Edition](https://developer.orkescloud.com/).
+    - An [Atlassian account](https://id.atlassian.com/) with access to [Jira](https://www.atlassian.com/software/jira) with permission to create tickets.
+
+## Ticket automation workflow
+
+You’ll create an automation that:
+
+- Accepts bug reports via a [custom webhook](https://orkes.io/content/developer-guides/webhook-integration).
+- Triggers a Conductor workflow to create a Jira ticket.
+- Prevents duplicate ticket creation for the same bug report using idempotency keys.
+
+Here is the ticket automation workflow that you’ll build in this tutorial:
+
+<p align="center"><img src="/content/img/ticket-automation-workflow.png" alt="Ticket automation workflow in Orkes Conductor" width="50%" height="auto"></img></p>
+
+## Concept: Variable idempotency keys in webhook workflows
+
+Webhooks are often retried by the source system. Without protection, each retry can start a new workflow and create duplicate side effects, such as multiple Jira tickets for the same bug.
+
+Orkes Conductor prevents this by allowing you to configure an idempotency key in a Conductor webhook. An idempotency key is a value that uniquely identifies an event.
+
+In this tutorial, the webhook uses a workflow input variable (`bug_id`) as the idempotency key. If a webhook event arrives with a `bug_id` that was already processed, Conductor does not start a new workflow execution. Instead, it returns the existing execution.
+
+## Step 1: Generate an API token
+
+This tutorial uses Jira to create tickets from event payloads received through a custom webhook. To authenticate the workflow against Jira, generate an API token from your Atlassian account. This token enables API access to Jira.
+
+**To generate an API token:**
+
+1. Log in to the [Atlassian account](https://id.atlassian.com/).
+2. Go to  **Security** > **[API tokens](https://id.atlassian.com/manage-profile/security/api-tokens)**.
+3. Select **Create API token**.
+
+<p align="center"><img src="/content/img/api-token-atlassion.png" alt="Creating API token from Atlassian account" width="100%" height="auto"></img></p>
+
+4. Enter a name for the token and set an expiration.
+5. Select **Create**.
+6. Copy and securely store the token.
+
+## Step 2: Store the token as a secret in Orkes Conductor
+
+After generating the API token, you must encode it with Base64 and store it securely as a [secret in Orkes Conductor](https://orkes.io/content/developer-guides/secrets-in-conductor) so it can be used for authentication without being exposed during execution.
+
+Jira uses Basic Authentication, which requires a Base64-encoded string containing your Atlassian email address and the API token.
+
+### Encode the token with Base64
+
+**To create the basic authentication string:**
+
+1. Open a Terminal.
+2. Run the following command, replacing the placeholders with your credentials:
+
+```shell
+echo -n "your-email@example.com:<your_api_token>" | base64
+```
+
+3. Copy the output, which is your Base64-encoded authentication string.
+
+### Store as a secret in Orkes Conductor
+
+**To store the basic authentication token as a secret:**
+
+1. Go to [**Definitions** > **Secret**](https://developer.orkescloud.com/secrets) from the left navigation menu on your Conductor cluster.
+2. Select **+ Add secret**.
+3. Set the **Secret name** as *atlassian-token*.
+4. Paste the Base64 encoded string as the **Secret value**.
+
+<p align="center"><img src="/content/img/saving-as-secret.png" alt="Saving Base64 encoded token as a secret in Orkes Conductor" width="100%" height="auto"></img></p>
+
+5. Select **Add** to save the secret.
+
+## Step 3: Create the ticket automation workflow
+
+Next, define a workflow in Orkes Conductor that creates a Jira ticket when triggered by a webhook. The workflow includes an [HTTP task](https://orkes.io/content/reference-docs/system-tasks/http) that sends an API request to Jira.
+
+### Create workflow
+
+**To create the ticket automation workflow:**
+
+1. Go to [**Definitions** > **Workflows**](https://developer.orkescloud.com/workflowDef) and select **+ Define workflow.**
+2. In the **Code** tab, paste the following JSON:
+
+```json
+{
+ "name": "ticket-automation-workflow",
+ "description": "Creates a Jira task for a new bug reported via webhook.",
+ "version": 1,
+ "tasks": [
+   {
+     "name": "create_jira_task",
+     "taskReferenceName": "create_jira",
+     "inputParameters": {
+       "http_request": {
+         "uri": "<YOUR-ATLASSIAN-PORTAL-URL>/rest/api/3/issue",
+         "method": "POST",
+         "headers": {
+           "Authorization": "Basic ${workflow.secrets.atlassian-token}",
+           "Content-Type": "application/json"
+         },
+         "body": {
+           "fields": {
+             "project": {
+               "key": "<YOUR-PROJECT-KEY>"
+             },
+             "summary": "${workflow.input.title}",
+             "issuetype": {
+               "name": "Task"
+             },
+             "description": {
+               "type": "doc",
+               "version": 1,
+               "content": [
+                 {
+                   "type": "paragraph",
+                   "content": [
+                     {
+                       "text": "Reported by: ${workflow.input.reported_by}\nBug ID: ${workflow.input.bug_id}",
+                       "type": "text"
+                     }
+                   ]
+                 }
+               ]
+             }
+           }
+         }
+       }
+     },
+     "type": "HTTP"
+   }
+ ],
+ "inputParameters": [
+   "bug_id",
+   "title",
+   "reported_by"
+ ],
+ "schemaVersion": 2
+}
+```
+
+3. Select **Save** > **Confirm**.
+
+### Edit workflow
+
+Next, update the placeholders in your workflow definition:
+
+- Select the HTTP task and update `<YOUR-ATLASSIAN-PORTAL-URL>` with your Jira portal URL. For example, if your Jira URL is https://your-atlassian.atlassian.net/, the endpoint URL will be https://your-atlassian.atlassian.net/rest/api/3/issue.  
+- In the JSON body, update `<YOUR-JIRA-PROJECT-KEY>` with your Jira space key. You can find your project key on the Jira project settings page.
+
+<p align="center"><img src="/content/img/project-key-from-jira.png" alt="Getting the project key from a Jira project" width="100%" height="auto"></img></p>
+
+Select **Save** to update the workflow. The Conductor UI highlights the changes in real-time, making it easier to review and understand the edits before saving the workflow.
+
+<p align="center"><img src="/content/img/conductor-ui-showing-workflow-changes.png" alt="Orkes Conductor UI displaying the workflow changes made" width="100%" height="auto"></img></p>
+
+## Step 4: Create a webhook in Orkes Conductor
+
+In this example, we use a *Custom* webhook to simulate input from an internal system. However, you can create a webhook based on your requirements using [any supported platforms](https://orkes.io/content/developer-guides/webhook-integration#step-2-create-a-webhook-in-orkes-conductor) or a Custom webhook for integration with other systems.
+
+Create a webhook that triggers the workflow you defined. Configure it to use the *bug_id* input variable as the idempotency key to prevent duplicate executions for the same event.
+
+**To create a webhook:**
+
+1. Go to [**Definitions** > **Webhook**](https://developer.orkescloud.com/configure-webhooks) from the left navigation menu on your Conductor cluster.
+2. Select **+ New webhook**.
+3. Configure the following parameters:
+
+<p align="center"><img src="/content/img/webhook-for-ticket-automation-flow.png" alt="Webhook in Orkes Conductor triggering a workflow on receiving an event" width="80%" height="auto"></img></p>
+
+    - In **Webhook name**, enter a webhook name such as *CreateJiraTickets*.
+    - Select **Source platform** as **Custom**.
+    - Set a request **Header** for the webhook.
+    - Enable **Start workflow when webhook event comes**.
+    - In the **Workflow name**, select *ticket-automation-workflow*.
+    - In the **Idempotency key**, enter `${workflow.input.bug_id}`.
+    - Set the **Idempotency strategy** as **Return Existing**.
+
+4. Select **Save**.
+
+After saving, Conductor generates an unverified webhook URL. 
+
+[URL verification](https://orkes.io/content/developer-guides/webhook-integration#step-3-create-a-webhook-in-the-source-platform-and-verify-the-conductor-webhook-url) depends on the type of webhook. For Custom webhooks, Conductor uses header-based verification. This means incoming requests must include headers that match the exact names and values specified during configuration. If the request doesn’t match all required headers, it will be ignored. The URL is marked as verified when the first valid request with matching headers is received.
+
+By using `${workflow.input.bug_id}` as the idempotency key, Conductor will prevent duplicate workflow executions for the same bug report, even if the webhook is triggered multiple times.
+
+## Step 5: Test the workflow using cURL
+
+Simulate a sample input using a cURL command. You can adapt this to accept inputs from various internal sources, such as email systems, monitoring tools, or internal bots.
+
+**To send a cURL request:**
+
+1. Open Terminal.
+2. Run the following command, replacing the placeholders with your actual values:
+
+```shell
+curl -X POST "<YOUR-CONDUCTOR-WEBHOOK-URL>" \
+  -H "Content-Type: application/json" \
+  -H "<YOUR-HEADER-NAME>: <YOUR-HEADER-VALUE>" \
+  -d '{
+    "bug_id": "BUG-2045",
+    "title": "Java SDK workflow execution bug",
+    "reported_by": "Internal Bot"
+  }'
+```
+
+This verifies the Webhook URL in Conductor and triggers the *ticket-automation-workflow*. 
+
+<p align="center"><img src="/content/img/webhook-event-received.png" alt="Webhook event received in Orkes Conductor" width="100%" height="auto"></img></p>
+
+To confirm the workflow execution, navigate to **Executions** > **Workflow** in Orkes Conductor and verify the execution.
+
+<p align="center"><img src="/content/img/workflow-triggered-idempotency.png" alt="Workflow triggered from a webhook event" width="100%" height="auto"></img></p>
+
+In your Jira project, confirm that the ticket has been created. Then, open the ticket to verify that the description has been passed through the webhook correctly.
+
+<p align="center"><img src="/content/img/jira-ticket.png" alt="Ticket created in Jira" width="100%" height="auto"></img></p>
+
+### Test the idempotency behavior
+
+Consider a scenario where the same bug report is submitted multiple times due to a system glitch or network retry. If not handled properly, this could lead to hundreds or thousands of duplicate tickets in large systems.
+
+**To simulate this behavior:**
+
+1. Re-run the same cURL request using the same *bug_id* value as before.
+
+```shell
+curl -X POST "<YOUR-CONDUCTOR-WEBHOOK-URL>" \
+  -H "Content-Type: application/json" \
+  -H "<YOUR-HEADER-NAME>: <YOUR-HEADER-VALUE>" \
+  -d '{
+    "bug_id": "BUG-2045",
+    "title": "Java SDK workflow execution bug",
+    "reported_by": "Internal Bot"
+  }'
+```
+
+2. Check the webhook activity in Conductor. A new event is received, but no new workflow is triggered. You can verify this by comparing timestamps.
+
+<p align="center"><img src="/content/img/idempotent-behavior.png" alt="Idempotent behavior showing no workflow triggered for the same idempotency key event" width="100%" height="auto"></img></p>
+
+This confirms that Orkes Conductor correctly recognized the event as a duplicate. Since the webhook was configured with *bug_id* as the idempotency key and the strategy set to **Return Existing**, it avoids initiating a new workflow and instead references the original execution.
+
+If you send a request with a different *bug_id*, Conductor treats it as a new event:
+
+```shell
+curl -X POST "<YOUR-CONDUCTOR-WEBHOOK-URL>" \
+  -H "Content-Type: application/json" \
+  -H "<YOUR-HEADER-NAME>: <YOUR-HEADER-VALUE>" \
+  -d '{
+    "bug_id": "BUG-3045",
+    "title": "Task execution bug",
+    "reported_by": "Internal Bot"
+  }'
+```
+
+This triggers a new webhook event, starts a new workflow instance, and creates a new Jira ticket.
+
+<p align="center"><img src="/content/img/new-ticket-creation-workflow.png" alt="New ticket creation flow for another idempotency key" width="100%" height="auto"></img></p>
+
+This approach keeps your system clean, reliable, and free from duplicate ticket noise, even under high-load or retry-heavy conditions.
+
+## Troubleshooting
+
+Here are a few common issues you might encounter while setting up the Jira ticket automation workflow and how to resolve them:
+
+| Issue | Possible causes and fixes | 
+| ----- | ------------------------- |
+| Webhook doesn’t trigger the workflow | <ul><li>The webhook URL is incorrect or malformed.</li><li>The webhook is not configured to **Start workflow when webhook event comes**.</li><li>Required headers are missing or do not match the expected configuration.</li><li>The workflow name in the webhook settings does not match the actual workflow definition.</li></ul> | 
+| Jira ticket isn’t created | <ul><li>Make sure your Jira portal and project key are correctly set in the workflow definition. </li><li>Verify that the secret *atlassian-token* contains a valid Base64-encoded token. </li><li>Confirm that your user has the permission to create tickets.</li></ul> | 
+| Authentication fails with Jira API | <ul><li>Verify the format of the Base64-encoded authentication string `email:api_token`.</li><li>Regenerate your API token from Atlassian if it has expired. </li><li>Make sure the workflow uses the correct secret name (*atlassian-token*).</li><li>Double-check that the email address used in the Base64 string matches the account tied to the API token.</li></ul> | 
+| Workflow execution fails | <ul><li>Review the workflow execution logs in **Executions** > **Workflow**.</li><li>Make sure the webhook payload includes all required input parameters: *bug_id*, *title*, and *reported_by*.</li></ul> |

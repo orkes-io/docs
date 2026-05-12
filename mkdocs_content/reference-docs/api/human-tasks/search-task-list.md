@@ -1,0 +1,354 @@
+---
+title: "Search Human Tasks"
+description: "Use the Orkes Conductor human tasks API to search Human Tasks. Includes endpoint details, authentication, parameters, request bodies, response behavior, and."
+---
+
+# Search Human Tasks
+
+**Endpoint:** `POST /api/human/tasks/search`
+
+Retrieves a list of Human tasks based on the provided search criteria.
+
+The invoking user should be one of the following:
+
+- Cluster admin
+- Task owner of the Human task
+- Task assignee
+
+!!! tip
+    You can construct your search query in the Conductor UI (**Executions** > **Human Tasks**) and open the browser developer console’s network tab to get the same search request as an API payload.
+
+## **Request body**
+
+Format the request as an object containing the following search parameters.
+
+| Parameter               | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      | Type             | Required/ Optional                  |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------- | ----------------------------------- |
+| searchType              | The type of search. Supported values: <ul><li>`ADMIN`: Shows all Human task executions only if the user is a cluster admin.</li> <li>`INBOX`: Shows all Human task executions assigned to the requesting user.</li></ul>                                                                                                                                                                                                                                                                       | string           | Required.                           |
+| start                    | The start of the search results list, which is used for pagination.                                                                                                                                                                                                                                                                                                                                                                                                                              | integer          | Required.                           |
+| size                   | The number of search results that should be returned from the specified start.                                                                                                                                                                                                                                                                                                                                                                                                                   | integer          | Required.                           |
+| assignees               | The assignee details.                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | array of objects | Optional.                           |
+| assignees. **user**     | The user or group ID for the assignee. The value depends on the user type. <ul><li>**External User**: Enter the user's email that is managed and verified in an external system.</li> <li>**External Group**: Enter the name of the group that is managed and verified in an external system.</li> <li>**Conductor User**: Enter the user’s Conductor email.</li> <li>**Conductor Group**: Enter the [Conductor group](/content/access-control-and-security/users-and-groups#groups) name.</li></ul>Supports partial search using the `*` wildcard. For example, `john*` returns all users whose IDs start with “john”, and `*doe*` returns all users whose IDs contain “doe”. | string           | Required if searching by assignees. |
+| assignees. **userType** | The type of user or group that will be assigned to the task. Supported values: <ul><li>**External User**: The assignee is a user residing outside the Conductor cluster in an external system.</li> <li>**External Group**: The assignee is a group residing outside the Conductor cluster in an external system.</li> <li>**Conductor User**: The assignee is a user in the Conductor cluster.</li> <li>**Conductor Group**: The assignee is a group in the Conductor cluster.</li></ul>            | array of objects | Required if searching by assignees. |
+| claimants               | The claimant details.                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | array of objects | Optional.                           |
+| claimants. **user**     | The user or group ID for the claimant. The value depends on the user type.<ul><li>**External User**: Enter the user's email that is managed and verified in an external system.</li> <li>**External Group**: Enter the name of the group that is managed and verified in an external system.</li> <li>**Conductor User**: Enter the user’s Conductor email.</li> <li>**Conductor Group**: Enter the [Conductor group](/content/access-control-and-security/users-and-groups#groups) name.</li></ul>Supports partial search using the `*` wildcard. For example, `john*` returns all users whose IDs start with “john”, and `*doe*` returns all users whose IDs contain “doe”.  | string           | Required if searching by claimants. |
+| claimants. **userType** | The type of user or group that will be assigned to the task. Supported values: <ul><li>**External User**: The assignee is a user residing outside the Conductor cluster in an external system.</li> <li>**External Group**: The assignee is a group residing outside the Conductor cluster in an external system.</li> <li>**Conductor User**: The assignee is a user in the Conductor cluster.</li> <li>**Conductor Group**: The assignee is a group in the Conductor cluster.</li></ul>            | string           | Required if searching by claimants. |
+| definitionNames         | The task definition name for the Human task.                                                                                                                                                                                                                                                                                                                                                                                                                                                     | array of strings | Optional.                           |
+| displayNames            | The task display name specified in the workflow definition.                                                                                                                                                                                                                                                                                                                                                                                                                                      | array of strings | Optional.                           |
+| taskRefNames            | The task reference name for the Human task.                                                                                                                                                                                                                                                                                                                                                                                                                                                      | array of strings | Optional.                           |
+| fullTextQuery           | All full-text indexed data associated with the Human task (task input, name, and so on). Only AND and OR operations are supported.<br/><br/> Supports partial search using the `*` wildcard. For example, entering `expense*` returns all tasks where the indexed fields begin with “expense”.                                                                                                                                                                                                                                                                                         | string           | Optional.                           |
+| states                  | The Human task status. Supported values: <ul><li>PENDING</li> <li>ASSIGNED</li> <li>IN_PROGRESS</li> <li>COMPLETED</li> <li>TIMED_OUT</li> <li>DELETED</li></ul>                                                                                                                                                                                                                                                                                                                                 | array of strings | Optional.                           |
+| taskInputQuery          | The query expression for the input data to the Human task, in the format `FIELD = VALUE` or `FIELD IN (value1, value2)`. Only AND and OR operations are supported. <br/><br/> Wildcard (`*`) can be used for partial matches, for example, FIELD = s*me.                                                                                                                                                                                                                                                    | string           | Optional.                           |
+| taskOutputQuery         | The query expression for the output data from the Human task, in the format `FIELD = VALUE` or `FIELD IN (value1, value2)`. Only AND and OR operations are supported. <br/><br/> Wildcard (`*`) can be used for partial values e.g. FIELD = s*me .                                                                                                                                                                                                                                                 | string           | Optional.                           |
+| updateStartTime         | The start range for the Human task’s last updated time.                                                                                                                                                                                                                                                                                                                                                                                                                                             | integer          | Optional.                           |
+| updateEndTime           | The end range for the Human task’s last updated time.                                                                                                                                                                                                                                                                                                                                                                                                                                          | integer          | Optional.                           |
+| workflowIds             | The workflow (execution) ID associated with the Human task.                                                                                                                                                                                                                                                                                                                                                                                                                                      | array of strings | Optional.                           |
+| workflowNames           | The workflow name associated to the Human task.                                                                                                                                                                                                                                                                                                                                                                                                                                                  | array of strings | Optional.                           |
+
+## Response
+
+Returns the Human task object.
+
+## Examples
+
+<details>
+<summary>Search for completed Human tasks for `Approval` task - `ADMIN`</summary>
+
+**Request**
+
+```shell
+curl -X 'POST' \
+  'https://<YOUR-SERVER-URL>/api/human/tasks/search' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{"size":15,"states":["COMPLETED"],"taskOutputQuery":"","taskInputQuery":"","fullTextQuery":"","definitionNames":[],"taskRefNames":[],"displayNames":["Approval"],"claimants":[],"assignees":[],"workflowIds":[],"start":0, "searchType":"INBOX"}'
+```
+
+**Response**
+
+Returns a paginated list of completed Human tasks with display name "Approval" including task details, assignee information, and input/output data.
+
+```json
+{
+  "totalHits": 2,
+  "results": [
+    {
+      "createdBy": "jane.doe@acme.com",
+      "updatedBy": "jane.doe@acme.com",
+      "taskId": "426f92f5-f43f-11ef-ac96-fafd3ea2ae3c",
+      "state": "COMPLETED",
+      "displayName": "Approval",
+      "definitionName": "human",
+      "workflowId": "426e3364-f43f-11ef-ac96-fafd3ea2ae3c",
+      "workflowName": "NewWorkflow_1oztf",
+      "taskRefName": "human_ref",
+      "assignee": {
+        "userType": "CONDUCTOR_USER",
+        "user": "jane.doe@acme.com"
+      },
+      "claimant": {
+        "userType": "CONDUCTOR_USER",
+        "user": "jane.doe@acme.com"
+      },
+      "input": {
+        "_createdBy": "jane.doe@acme.com",
+        "__humanTaskDefinition": {
+          "assignments": [
+            {
+              "assignee": {
+                "user": "jane.doe@acme.com",
+                "userType": "CONDUCTOR_USER"
+              },
+              "slaMinutes": 1
+            }
+          ],
+          "displayName": "Approval",
+          "userFormTemplate": {
+            "name": "Approval",
+            "version": 1
+          },
+          "assignmentCompletionStrategy": "LEAVE_OPEN"
+        },
+        "__humanTaskProcessContext": {
+          "state": "COMPLETED",
+          "lastUpdated": 1740573815398,
+          "assigneeIndex": 0,
+          "humanTaskActionLogs": [
+            {
+              "id": "671ec598-374a-4a8c-a836-32340aa1aee1",
+              "state": "ASSIGNED",
+              "action": "ASSIGNMENT",
+              "actedBy": "system",
+              "assignee": {
+                "user": "jane.doe@acme.com",
+                "userType": "CONDUCTOR_USER"
+              },
+              "stateStart": 1740573800674
+            },
+            {
+              "id": "8ca3db99-c043-4c9b-9d1f-661cc10d4966",
+              "state": "IN_PROGRESS",
+              "action": "CLAIM",
+              "actedBy": "CONDUCTOR_USER:jane.doe@acme.com",
+              "assignee": {
+                "user": "jane.doe@acme.com",
+                "userType": "CONDUCTOR_USER"
+              },
+              "claimant": {
+                "user": "jane.doe@acme.com",
+                "userType": "CONDUCTOR_USER"
+              },
+              "stateStart": 1740573809445
+            }
+          ],
+          "humanTaskTriggerLog": [],
+          "assignmentsCompleted": false,
+          "skippedAssigneeIndexes": []
+        }
+      },
+      "output": {
+        "amount": "10000000",
+        "approve": " no"
+      },
+      "createdOn": 1740573800655,
+      "updatedOn": 1740573815398
+    },
+        {
+      "createdBy": "john.doe@acme.com",
+      "updatedBy": "john.doe@acme.com",
+      "taskId": "5e8384df-f43b-11ef-be98-6a3c60865306",
+      "state": "COMPLETED",
+      "displayName": "Approval",
+      "definitionName": "human",
+      "workflowId": "5e82c18e-f43b-11ef-be98-6a3c60865306",
+      "workflowName": "NewWorkflow_1oztf",
+      "taskRefName": "human_ref",
+      "claimant": {
+        "userType": "CONDUCTOR_USER",
+        "user": "john.doe@acme.com"
+      },
+      "input": {
+        "_createdBy": "john.doe@acme.com",
+        "__humanTaskDefinition": {
+          "assignments": [],
+          "displayName": "Approval",
+          "userFormTemplate": {
+            "name": "Approval",
+            "version": 1
+          },
+          "assignmentCompletionStrategy": "LEAVE_OPEN"
+        },
+        "__humanTaskProcessContext": {
+          "state": "COMPLETED",
+          "lastUpdated": 1740572149226,
+          "humanTaskActionLogs": [
+            {
+              "id": "21b4ee0d-b95a-4d66-991f-7f75caaf2548",
+              "state": "ASSIGNED",
+              "action": "ASSIGNMENTS_COMPLETED",
+              "actedBy": "system",
+              "stateStart": 1740572129830
+            },
+            {
+              "id": "5e75cb52-fe72-4276-9c6d-e98eb0e8e47e",
+              "state": "IN_PROGRESS",
+              "action": "CLAIM",
+              "actedBy": "CONDUCTOR_USER:john.doe@acme.com",
+              "claimant": {
+                "user": "john.doe@acme.com",
+                "userType": "CONDUCTOR_USER"
+              },
+              "stateStart": 1740572141218
+            }
+          ],
+          "humanTaskTriggerLog": [],
+          "assignmentsCompleted": true,
+          "skippedAssigneeIndexes": []
+        }
+      },
+      "output": {
+        "amount": "5000",
+        "approve": "yes"
+      },
+      "createdOn": 1740572129774,
+      "updatedOn": 1740572149226
+    }
+  ],
+  "hits": 2,
+  "start": 0,
+  "pageSizeLimit": 15
+}
+```
+
+</details>
+
+<details>
+<summary>Search for completed Human tasks for `test` task - `INBOX`</summary>
+
+**Request**
+
+```shell
+curl -X 'POST' \
+  'https://<YOUR-SERVER-URL>/api/human/tasks/search' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d {"size":15,"states":["ASSIGNED","IN_PROGRESS"],"displayNames":["test"],"searchType":"INBOX","start":0,"searchType":"INBOX"}'
+```
+
+**Response**
+
+Returns tasks assigned to the requesting user with display name "test" in `ASSIGNED` or `IN_PROGRESS` state.
+
+```json
+{
+  "totalHits": 1,
+  "results": [
+    {
+      "createdBy": "john.doe@acme.com",
+      "updatedBy": "john.doe@acme.com",
+      "taskId": "fe425973-b0ac-11f0-9abc-4655aa16f981",
+      "state": "ASSIGNED",
+      "displayName": "test",
+      "definitionName": "human",
+      "workflowId": "fe1c33d2-b0ac-11f0-9abc-4655aa16f981",
+      "workflowName": "NewWorkflow_e9ig9",
+      "taskRefName": "human_ref",
+      "assignee": {
+        "userType": "CONDUCTOR_USER",
+        "user": "john.doe@acme.com"
+      },
+      "input": {
+        "approve": "",
+        "comments": "",
+        "paperUrl": "",
+        "_createdBy": "john.doe@acme.com",
+        "__humanTaskDefinition": {
+          "autoClaim": false,
+          "assignments": [
+            {
+              "assignee": {
+                "user": "john.doe@acme.com",
+                "userType": "CONDUCTOR_USER"
+              }
+            }
+          ],
+          "displayName": "test",
+          "userFormTemplate": {
+            "name": "Approval",
+            "version": 1
+          },
+          "assignmentCompletionStrategy": "LEAVE_OPEN"
+        },
+        "__humanTaskProcessContext": {
+          "state": "ASSIGNED",
+          "lastUpdated": 1761291767132,
+          "assigneeIndex": 0,
+          "humanTaskActionLogs": [
+            {
+              "id": "f3a9a1d7-9de2-45e4-9734-bb3b0df35503",
+              "state": "ASSIGNED",
+              "action": "ASSIGNMENT",
+              "actedBy": "system",
+              "assignee": {
+                "user": "john.doe@acme.com",
+                "userType": "CONDUCTOR_USER"
+              },
+              "stateStart": 1761291750276
+            },
+            {
+              "id": "1b47b5a3-30f2-498a-b302-fc5d174e8673",
+              "state": "IN_PROGRESS",
+              "action": "CLAIM",
+              "actedBy": "CONDUCTOR_USER:john.doe@acme.com",
+              "assignee": {
+                "user": "john.doe@acme.com",
+                "userType": "CONDUCTOR_USER"
+              },
+              "claimant": {
+                "user": "john.doe@acme.com",
+                "userType": "CONDUCTOR_USER"
+              },
+              "stateStart": 1761291760816
+            },
+            {
+              "id": "70af9a0f-7c7e-4df9-888d-ef188e962e88",
+              "state": "PENDING",
+              "action": "RELEASE",
+              "actedBy": "john.doe@acme.com",
+              "assignee": {
+                "user": "john.doe@acme.com",
+                "userType": "CONDUCTOR_USER"
+              },
+              "stateStart": 1761291767107
+            },
+            {
+              "id": "48e4fa54-8fda-4b7b-8250-ca4731468d04",
+              "state": "ASSIGNED",
+              "action": "ASSIGNMENT",
+              "actedBy": "system",
+              "assignee": {
+                "user": "john.doe@acme.com",
+                "userType": "CONDUCTOR_USER"
+              },
+              "stateStart": 1761291767132
+            }
+          ],
+          "humanTaskTriggerLog": [],
+          "assignmentsCompleted": false,
+          "skippedAssigneeIndexes": []
+        }
+      },
+      "output": {},
+      "createdOn": 1761291749512,
+      "updatedOn": 1761291767132
+    }
+  ],
+  "hits": 1,
+  "start": 0,
+  "pageSizeLimit": 15
+}
+```
+
+</details>

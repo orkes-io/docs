@@ -1,0 +1,102 @@
+---
+title: "Get User Form by Task ID"
+description: "Use the Orkes Conductor human tasks API to get User Form by Task ID. Includes endpoint details, authentication, parameters, request bodies, response behavior."
+---
+
+# Get User Form by Task ID
+
+**Endpoint:** `GET /api/human/template/{humanTaskId}`
+
+Retrieves the user form associated with a Human task using its task execution ID.
+
+## Path parameters
+
+| Parameter | Description                                         | Type   | Required/ Optional |
+| --------- | --------------------------------------------------- | ------ | ------------------ |
+| humanTaskId    | The task ID of the Human task execution. | string | Required.          |
+
+## Response
+
+Returns the user form for the Human task. Returns 400 if an invalid task is provided.
+
+## Examples
+
+<details>
+<summary>Get a user form using a Human task ID</summary>
+
+**Request**
+
+```shell
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/human/template/71d22e49-027b-11f1-913a-226156badb04' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+Returns the user form associated with the specified Human task.
+
+```json
+{
+  "createTime": 1740572078291,
+  "updateTime": 1768558337481,
+  "createdBy": "USER:john.doe@acme.com",
+  "updatedBy": "USER:john.doe@acme.com",
+  "name": "Approval",
+  "version": 1,
+  "jsonSchema": {
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "properties": {
+      "paperUrl": {
+        "type": "string"
+      },
+      "approve": {
+        "type": "string",
+        "enum": [
+          "Yes",
+          " No"
+        ]
+      },
+      "comments": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "approve",
+      "comments"
+    ]
+  },
+  "templateUI": {
+    "type": "VerticalLayout",
+    "elements": [
+      {
+        "type": "VerticalLayout",
+        "elements": [
+          {
+            "type": "Control",
+            "scope": "#/properties/paperUrl",
+            "label": "Review doc",
+            "options": {
+              "readonly": true
+            }
+          }
+        ]
+      },
+      {
+        "type": "Control",
+        "scope": "#/properties/approve",
+        "label": "Approve document",
+        "options": {}
+      },
+      {
+        "type": "Control",
+        "scope": "#/properties/comments",
+        "label": "Comments"
+      }
+    ]
+  }
+}
+```
+
+</details>

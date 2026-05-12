@@ -1,0 +1,211 @@
+---
+title: "Routing Tasks"
+description: "Learn how task domains help route tasks to different worker groups so tasks from the same queue can be handled by the appropriate workers in Orkes Conductor."
+---
+
+# Routing Tasks (Task-to-domain)
+
+Task-to-domain routes worker tasks to a specific pool of workers. It lets the same task definition be executed by different worker groups based on environment, tenant, region, capability, version, or operational priority.
+
+!!! tip "5-minute path"
+    Configure workers to poll a domain, start the workflow with `taskToDomain`, and grant the worker application `Execute` permission for that task or domain.
+
+## What is task-to-domain?
+
+By default, a worker task is placed on the queue for its task type, and any authorized worker polling that task type can receive it. With task-to-domain, the task is also assigned to a domain string such as `payments-us-east`, `tenant-a`, `gpu`, or `canary`.
+
+Use task-to-domain when:
+
+- Different worker pools need different permissions or network access.
+- Some tenants or customers need isolated worker capacity.
+- You want canary workers to process selected executions.
+- A task should run in a specific region or environment.
+- You need local debugging without changing the workflow definition.
+
+This avoids creating many near-identical task definitions just to route traffic.
+
+## Routing tasks using task-to-domain
+
+Routing has two sides:
+
+1. Workers must poll a task type with a domain.
+2. The workflow start request must map task names to domains with `taskToDomain`.
+
+### Worker configuration
+
+Configure the worker to poll the domain it owns.
+
+=== "Java"
+
+    ```java
+    Map<String, String> taskToDomain = Map.of("send_email", "tenant-a");
+
+    TaskRunnerConfigurer configurer = new TaskRunnerConfigurer.Builder(taskClient, workers)
+        .withTaskToDomain(taskToDomain)
+        .withThreadCount(10)
+        .build();
+
+    configurer.init();
+    ```
+
+    You can also set the domain on an annotated worker:
+
+    ```java
+    @WorkerTask(value = "send_email", domain = "tenant-a")
+    public TaskResult sendEmail(Task task) {
+        TaskResult result = new TaskResult(task);
+        result.setStatus(TaskResult.Status.COMPLETED);
+        return result;
+    }
+    ```
+
+=== "Python"
+
+    ```python
+    from conductor.client.worker.worker import Worker
+
+    workers = [
+        Worker(
+            task_definition_name="send_email",
+            execute_function=send_email,
+            domain="tenant-a",
+            poll_interval=0.25
+        )
+    ]
+    ```
+
+=== "JavaScript / TypeScript"
+
+    ```typescript
+    const sendEmailWorker = {
+      taskDefName: "send_email",
+      domain: "tenant-a",
+      execute: async ({ inputData }) => ({
+        status: "COMPLETED",
+        outputData: { messageId: await sendEmail(inputData) },
+      }),
+    };
+
+    new TaskManager(client, [sendEmailWorker], {
+      options: { concurrency: 5, pollInterval: 100 },
+    });
+    ```
+
+
+If both the worker and the poller specify a domain, the worker-level domain takes precedence.
+
+### Workflow configuration
+
+When starting a workflow, pass `taskToDomain` to tell Conductor which domain should process each task.
+
+```json
+{
+  "name": "customer_notification",
+  "version": 1,
+  "input": {
+    "customerId": "CUST-123"
+  },
+  "taskToDomain": {
+    "send_email": "tenant-a"
+  }
+}
+```
+
+Use the `*` key to define a default domain for every task in the workflow execution, then override individual tasks as needed.
+
+```json
+{
+  "taskToDomain": {
+    "*": "standard-workers",
+    "high_risk_review": "fraud-specialists"
+  }
+}
+```
+
+### RBAC configuration
+
+Worker applications need permission to execute the routed work.
+
+Grant either:
+
+- `Execute` permission on the specific task definition, or
+- `Execute` permission on the domain when the worker should handle all tasks routed to that domain.
+
+Domain permissions are useful when a worker pool owns a whole capability or tenant and you do not want to update permissions every time a new task is added to that domain.
+
+## Fallback task-to-domain
+
+Fallback domains let Conductor try another domain if no active worker is polling the primary domain.
+
+```json
+{
+  "taskToDomain": {
+    "send_email": "tenant-a,email-shared,NO_DOMAIN"
+  }
+}
+```
+
+In this example, Conductor tries:
+
+1. `tenant-a`
+2. `email-shared`
+3. `NO_DOMAIN`
+
+Notes:
+
+- `NO_DOMAIN` routes to workers polling without a domain.
+- Put `NO_DOMAIN` last when you want a safe final fallback.
+- Domain selection is made when the task is scheduled. A worker appearing later in a higher-priority domain does not move an already scheduled task.
+- Worker activity is based on recent polling. The active-worker threshold is configured server-side.
+
+## Example
+
+The following start request routes `charge_card` to a dedicated payments worker pool and leaves the other tasks on the default worker pool.
+
+```json
+{
+  "name": "checkout",
+  "version": 1,
+  "input": {
+    "orderId": "ORD-1001",
+    "amount": 59.99
+  },
+  "taskToDomain": {
+    "*": "default-workers",
+    "charge_card": "payments-prod"
+  }
+}
+```
+
+The workflow definition does not need to change:
+
+```json
+{
+  "name": "checkout",
+  "version": 1,
+  "schemaVersion": 2,
+  "tasks": [
+    {
+      "name": "reserve_inventory",
+      "taskReferenceName": "reserve_inventory",
+      "type": "SIMPLE"
+    },
+    {
+      "name": "charge_card",
+      "taskReferenceName": "charge_card",
+      "type": "SIMPLE",
+      "inputParameters": {
+        "orderId": "${workflow.input.orderId}",
+        "amount": "${workflow.input.amount}"
+      }
+    },
+    {
+      "name": "send_receipt",
+      "taskReferenceName": "send_receipt",
+      "type": "SIMPLE"
+    }
+  ]
+}
+```
+
+This keeps routing as an execution-time concern. The same workflow can run in different regions, tenants, or worker pools without duplicating workflow definitions.

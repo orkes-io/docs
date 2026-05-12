@@ -1,0 +1,77 @@
+---
+title: "Get Document"
+description: "Learn how the Get Document task retrieves stored documents for further AI processing or analysis in Orkes Conductor."
+---
+
+# Get Document
+
+The Get Document task is used to retrieve the content of a specified document for further data processing using AI tasks. It supports a wide range of media types and allows integration with various file formats to facilitate comprehensive data handling and processing.
+
+The Get Document task fetches a document from a specified URL based on the provided media type. It supports different formats, ensuring the retrieval of various types of documents. The task initiates a GET request to the URL and retrieves the document in the specified format, which is then available for subsequent AI-driven tasks or data processing.
+
+## Task parameters 
+
+Configure these parameters for the Get Document task.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- |
+| inputParameters.**url** | The URL of the file to be retrieved. | Required. |
+| inputParameters.**mediaType** | The media type of the file to be retrieved. Supported media types:<ul> <li>application/pdf</li> <li>text/html</li> <li>text/plain</li> <li>application/json</li> </ul> | Optional. |
+
+The following are generic configuration parameters that can be applied to the task and are not specific to the Get Document task.
+
+<details>
+<summary>Caching parameters</summary>
+
+You can cache the task outputs using the following parameters. Refer to [Caching Task Outputs](/content/faqs/task-cache-output) for a full guide.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| cacheConfig.**ttlInSecond** | The time to live in seconds, which is the duration for the output to be cached. | Required if using *cacheConfig*. |
+| cacheConfig.**key** | The cache key is a unique identifier for the cached output and must be constructed exclusively from the task’s input parameters.<br/>It can be a string concatenation that contains the task’s input keys, such as `${uri}-${method}` or `re_${uri}_${method}`. | Required if using *cacheConfig*. |
+
+</details>
+
+## Task configuration
+
+This is the task configuration for a Get Document task.
+
+```json
+{
+  "name": "get_document_task",
+  "taskReferenceName": "get_document_task_ref",
+  "inputParameters": {
+    "url": "${workflow.input.url}",
+    "mediaType": "application/pdf"
+  },
+  "type": "GET_DOCUMENT"
+}
+```
+
+## Task output
+
+The Get Document task will return the following parameters.
+
+| Parameter | Description | 
+| --------- | ----------- |
+| result | Extracted text from the document. The value is a string and can include newline escape characters (\n). | 
+
+## Adding a Get Document task in UI
+
+**To add a Get Document task:**
+
+1. In your workflow, select the (**+**) icon and add an **Get Document** task.
+2. Enter the document **URL** and choose the media type from the available options.
+
+<center><p><img src="/content/img/llm-get-document-ui-method.png" alt="Get Document Task - UI" width="80%" height="auto"/></p></center>
+
+## Examples
+
+Here are some examples for using the Get Document task.
+
+<details>
+<summary>Using a Get Document task in a workflow</summary>
+
+See an example of [building a document classification workflow using the Get Document task](https://orkes.io/content/templates/document-classifier).
+
+</details>

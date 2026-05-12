@@ -1,0 +1,340 @@
+---
+title: "Create/Update Groups"
+description: "Use the Orkes Conductor groups API to create/Update Groups. Includes endpoint details, authentication, parameters, request bodies, response behavior, and."
+---
+
+# Create/Update Groups
+
+## Quick reference
+
+Use this groups endpoint to create/Update Groups. It is intended for automation scripts, CI/CD jobs, backend services, and internal tools that need to manage Orkes Conductor programmatically.
+
+- **Method and path**: `PUT` `/api/groups/{id}`
+- **Authentication**: Requires Orkes Conductor API credentials with permission for the target resource.
+- **Inputs**: Use the path parameters, query parameters, and request body fields documented below.
+- **Output**: Returns the Conductor API response for the requested operation. Check the response examples and status codes before wiring the endpoint into production automation.
+- **Operational note**: Treat API calls as part of your deployment or runtime control plane. Log request IDs, handle 4xx/5xx responses, and avoid embedding secrets in workflow definitions or source code.
+
+
+**Endpoint**: `PUT /api/groups/{id}`
+
+Creates or updates a [group](/content/category/access-control-and-security#groups) in your Conductor cluster. The invoking user must be an **Admin** to the Conductor cluster.
+
+## Path parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| id | The name of the group.  | string | Required. |
+
+## Request body
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| description | A description of the group. | string | Required. | 
+| roles | The role to assign for the group. Supported values:<ul><li>`ADMIN`: Superuser. Full access to the system and resources. Can manage users and groups.</li><li>`USER`: Regular user group with permissions to create workflow definitions, task definitions, applications, integrations, secrets, and user forms. Has full API Gateway access, including view and management permissions. Can search workflows.</li><li>`METADATA_MANAGER`: Can manage all workflow and task definitions in the cluster, including performing any action regardless of workflow or task ownership. Can view and manage API Gateway configurations. Can create integrations and secrets.</li><li>`WORKFLOW_MANAGER`: Can view, execute, and manage all workflow executions in the system, including start, pause, resume, rerun, retry, restart, terminate, and delete actions. Has execute and read access to workflow and task definitions.</li><li>`USER_READ_ONLY`: Can view applications, metadata, workflows, API gateway, and search workflows.</li></ul> | array | Required. | 
+| defaultAccess | Defines the default permissions automatically granted to the group when a group member creates a workflow definition, task definition, or workflow schedule.<br/>Supported keys:<ul><li>`WORKFLOW_DEF`</li><li>`TASK_DEF`</li><li>`WORKFLOW_SCHEDULE`</li></ul>Supported values:<ul><li>`CREATE`</li><li>`READ`</li><li>`EXECUTE`</li><li>`UPDATE`</li><li>`DELETE`</li></ul> | object | Optional. |
+
+## Response
+
+Returns the created or updated group object with its ID, description, and roles. Returns 403 if a non-admin invokes the API.
+
+## Examples
+
+<details>
+<summary>Create a new group</summary>
+
+**Request**
+
+```shell
+curl -X 'PUT' \
+  'https://<YOUR-SERVER-URL>/api/groups/TechWriters' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "description": "A dedicated group for testing",
+  "roles": [
+    "ADMIN"
+  ]
+}'
+```
+
+**Response**
+
+```json
+{
+  "id": "TechWriters",
+  "description": "A dedicated group for testing",
+  "roles": [
+    {
+      "name": "ADMIN",
+      "permissions": [
+        {
+          "name": "AUTHORIZATION_MANAGEMENT"
+        },
+        {
+          "name": "WORKFLOW_SEARCH"
+        },
+        {
+          "name": "PUBLISHER_MANAGEMENT"
+        },
+        {
+          "name": "API_GATEWAY_VIEW"
+        },
+        {
+          "name": "API_GATEWAY_MANAGEMENT"
+        },
+        {
+          "name": "WORKFLOW_MANAGEMENT"
+        },
+        {
+          "name": "PROMPT_MANAGEMENT"
+        },
+        {
+          "name": "EVENT_HANDLER_MANAGEMENT"
+        },
+        {
+          "name": "USER_MANAGEMENT"
+        },
+        {
+          "name": "PERMISSION_MANAGEMENT"
+        },
+        {
+          "name": "METADATA_VIEW"
+        },
+        {
+          "name": "ADMIN_MANAGEMENT"
+        },
+        {
+          "name": "METADATA_MANAGEMENT"
+        },
+        {
+          "name": "APPLICATION_MANAGEMENT"
+        },
+        {
+          "name": "BULK_MANAGEMENT"
+        },
+        {
+          "name": "SCHEDULE_MANAGEMENT"
+        }
+      ]
+    }
+  ],
+  "defaultAccess": {},
+  "contactInformation": {}
+}
+```
+
+</details>
+
+<details>
+<summary>Update an existing group</summary>
+
+**Request**
+
+```shell
+curl -X 'PUT' \
+  'https://<YOUR-SERVER-URL>/api/groups/TechWriters' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "description": "A dedicated group for testing for tech writers",
+  "roles": [
+    "METADATA_MANAGER"
+  ]
+}'
+```
+
+**Response**
+
+```json
+{
+  "id": "TechWriters",
+  "description": "A dedicated group for testing for tech writers",
+  "roles": [
+    {
+      "name": "METADATA_MANAGER",
+      "permissions": [
+        {
+          "name": "API_GATEWAY_VIEW"
+        },
+        {
+          "name": "API_GATEWAY_MANAGEMENT"
+        },
+        {
+          "name": "CREATE_INTEGRATION"
+        },
+        {
+          "name": "CREATE_SECRET"
+        },
+        {
+          "name": "METADATA_VIEW"
+        },
+        {
+          "name": "METADATA_MANAGEMENT"
+        }
+      ]
+    }
+  ],
+  "defaultAccess": {},
+  "contactInformation": {}
+}
+```
+
+</details>
+
+<details>
+<summary>Create a group with `defaultAccess`</summary>
+
+In this example, you will:
+1. Create a group with `defaultAccess` configured for `WORKFLOW_DEF`.
+2. Verify that `defaultAccess` is configured correctly on the group.
+3. Add a member to the group.
+4. Have the member create a workflow definition.
+5. Verify that the group is automatically granted the configured permissions on the workflow definition.
+
+**Step 1: Create the group**
+
+Create a group with `USER` role and `defaultAccess` configured for `WORKFLOW_DEF`.
+
+**Request**
+
+```shell
+curl -X 'PUT' \
+  'https://<YOUR-SERVER-URL>/api/groups/TechWriters' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "description": "A dedicated group for tech writers",
+  "roles": [
+    "USER"
+  ],
+  "defaultAccess": {
+    "WORKFLOW_DEF": ["READ", "EXECUTE"]
+  }
+}
+'
+```
+
+**Step 2: Verify the defaultAccess configuration**
+
+To confirm that `defaultAccess` is configured correctly, call `GET /api/groups/TechWriters`.
+
+**Request**
+
+```shell
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/groups/TechWriters' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+{
+  "id": "TechWriters",
+  "description": "A dedicated group for tech writers",
+  "roles": [
+    {
+      "name": "USER",
+      "permissions": [
+        {
+          "name": "CREATE_SECRET"
+        },
+        {
+          "name": "API_GATEWAY_VIEW"
+        },
+        {
+          "name": "CREATE_USER_FORM_TEMPLATE"
+        },
+        {
+          "name": "CREATE_WORKFLOW_DEF"
+        },
+        {
+          "name": "CREATE_TASK_DEF"
+        },
+        {
+          "name": "WORKFLOW_SEARCH"
+        },
+        {
+          "name": "CREATE_INTEGRATION"
+        },
+        {
+          "name": "CREATE_APPLICATION"
+        },
+        {
+          "name": "API_GATEWAY_MANAGEMENT"
+        }
+      ]
+    }
+  ],
+  "defaultAccess": {
+    "WORKFLOW_DEF": [
+      "EXECUTE",
+      "READ"
+    ]
+  },
+  "contactInformation": {}
+}
+```
+
+The `defaultAccess` field confirms that when a group member creates a workflow definition, the group is automatically granted `READ` and `EXECUTE` permissions on that resource.
+
+**Step 3: Add a member to the group**
+
+Add a user to `TechWriters`. 
+
+**Request**
+
+```shell
+curl -X 'POST' \
+  'https://<YOUR-SERVER-URL>/api/groups/TechWriters/users/john.doe%40acme.com' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>' \
+  -d ''
+```
+
+**Step 4: Member creates a workflow definition**
+
+Let the group member create a workflow definition using their own credentials. Let the name of the workflow be `Test Workflow`.
+
+**Step 5: Verify the group permissions**
+
+Confirm that the group was automatically granted the configured permissions on the workflow definition created in Step 4. 
+
+**Request**
+
+```shell
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL/api/groups/TechWriters/permissions' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+{
+  "grantedAccess": [
+    {
+      "target": {
+        "type": "WORKFLOW_DEF",
+        "id": "Test Workflow"
+      },
+      "access": [
+        "EXECUTE",
+        "READ"
+      ]
+    }
+  ]
+}
+```
+
+This confirms that the group was automatically granted `READ` and `EXECUTE` access on `Test Workflow` when the group member created it.
+
+Therefore, any workflow definitions created by any member of the `TechWriters` will automatically have `READ` and `EXECUTE` access granted to the group.
+
+</details>

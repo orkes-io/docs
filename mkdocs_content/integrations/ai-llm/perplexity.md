@@ -1,0 +1,100 @@
+---
+title: "Perplexity Integration with Orkes Conductor"
+description: "Learn how to integrate Perplexity so workflows can use Perplexity AI models through Conductor AI tasks."
+---
+
+# Perplexity Integration with Orkes Conductor
+
+To use system AI tasks in Orkes Conductor, you must integrate your Conductor cluster with the necessary AI/LLM providers. This guide explains how to integrate Perplexity with Orkes Conductor. Here’s an overview:
+
+1. Get the required credentials from Perplexity.
+2. Configure a new Perplexity integration in Orkes Conductor.
+3. Add models to the integration.
+4. Set access limits to the AI model to govern which applications or groups can use it.
+
+## Step 1: Get the Perplexity credentials
+
+To integrate Perplexity with Orkes Conductor, retrieve the API key from the Perplexity console.
+
+!!! info "Prerequisites"
+    - A [Perplexity account](https://www.perplexity.ai/). 
+    - Admin permissions for billing and API key management. If you’re joining an existing team, you’ll need an invitation from an Admin.
+    - An [API Group](https://docs.perplexity.ai/getting-started/api-groups#what-is-an-api-group%3F) set up with billing details.
+
+**To get the API key:**
+
+1. Sign in to the [Perplexity console](https://www.perplexity.ai/).
+2. Select your user account icon in the bottom-left corner of the console, and select **All settings**.
+3. Go to **[API](https://www.perplexity.ai/account/api)** > **API Keys**, select **+ Create key**.
+
+<p align="center"><img src="/content/img/perplexity-api-key.png" alt="API key generation Perplexity console" width="100%" height="auto"></img></p>
+
+4. Copy and store the generated key securely, as it is shown only once.
+
+## Step 2: Add an integration for Perplexity
+
+After obtaining the credentials, add a Perplexity integration to your Conductor cluster.
+
+**To create a Perplexity integration:**
+
+1. Go to **Integrations** > **Connections and Resources** from the left navigation menu on your Conductor cluster.
+2. Select **+ New integration**.
+3. In the **AI/LLM** section, choose **Perplexity**.
+4. Select **+ Add** and enter the following parameters:
+
+| Parameters | Description |
+| ---------- | ----------- |
+| Integration name | A name for the integration. |
+| API Key | The API key copied previously from the Perplexity console.
+| Description | A description of the integration. | 
+
+<p align="center"><img src="/content/img/perplexity-integration-with-orkes-conductor.png" alt="Perplexity Integration with Orkes Conductor" width="70%" height="auto"></img></p>
+
+5. (Optional) Toggle the **Active** button off if you don’t want to activate the integration instantly.
+6. Select **Save**.
+
+## Step 3: Add Perplexity models
+
+Once you’ve integrated Perplexity, the next step is to configure specific models. Perplexity has different models, each designed for various use cases. Choose the model that best fits your use case.
+
+**To add a model to the Perplexity integration:**
+
+1. Go to the **Integrations** and select the **+** button next to the integration created.
+
+<p align="center"><img src="/content/img/adding-perplexity-integration-models.png" alt="Create new model for Perplexity Integration" width="100%" height="auto"></img></p>
+
+2. Select **+ New model**.
+3. Enter the **Model name**. The name must exactly match the Perplexity model name. For a complete list, see the [Perplexity documentation](https://docs.perplexity.ai/getting-started/models).
+4. Provide a **Description**. 
+
+<p align="center"><img src="/content/img/perplexity-model.png" alt="Creating new model for Perplexity Integration" width="70%" height="auto"></img></p>
+
+5. (Optional) Toggle the **Active** button off if you don’t want to activate the model instantly.
+6. Select **Save**.
+
+This saves the model for future use in AI tasks within Orkes Conductor.
+
+## Step 4: Set access limits to integration
+
+Once the integration is configured, set access controls to manage which [applications](https://orkes.io/content/access-control-and-security/applications) or [groups](https://orkes.io/content/access-control-and-security/users-and-groups#groups) can use the models.
+
+**To provide access to an application or group:**
+
+1. Go to **Access Control** > **Applications** or **Groups** from the left navigation menu on your Conductor cluster.
+2. Create a new group/application or select an existing one.
+3. In the **Permissions** section, select **+ Add Permission**.
+4. In the **Integration** tab, select the required AI models and toggle the necessary permissions.
+5. Select **Add Permissions**. 
+
+<p align="center"><img src="/content/img/perplexity-rbac.png" alt="Add Permissions for Perplexity Integration" width="70%" height="auto"></img></p>
+
+The group or application can now access the AI model according to the configured permissions.
+
+With the integration in place, you can now create workflows using [AI/LLM tasks](https://orkes.io/content/category/reference-docs/ai-tasks).
+
+## More resources
+
+- [Using AI Models or LLMs](https://orkes.io/content/developer-guides/using-llms-in-your-orkes-conductor-workflows)
+- [Using Vector Databases](https://orkes.io/content/developer-guides/using-vector-databases-in-your-orkes-conductor-workflows)
+- [Using AI Prompts](https://orkes.io/content/developer-guides/creating-and-managing-gen-ai-prompt-templates)
+- [AI Orchestration Tutorials](https://orkes.io/content/tutorials/ai)

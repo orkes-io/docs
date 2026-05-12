@@ -1,0 +1,16 @@
+repo: https://github.com/conductor-oss/conductor.git
+ref: 4e77a872d199d08fd6c793199ddd890d4e905e2f
+cache_dir: .cache/conductor-oss
+paths:
+  - docs/quickstart/index.md
+  - docs/devguide/concepts
+  - docs/architecture/durable-execution.md
+  - docs/architecture/json-native.md
+  - docs/devguide/architecture/tasklifecycle.md
+  - docs/devguide/ai
+  - docs/devguide/cookbook/ai-llm.md
+  - docs/documentation/api
+  - docs/documentation/clientsdks
+  - docs/documentation/configuration/eventhandlers.md
+  - docs/documentation/configuration/taskdef.md
+  - docs/documentation/configuration/workflowdef

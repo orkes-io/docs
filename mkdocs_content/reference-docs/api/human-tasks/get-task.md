@@ -1,0 +1,304 @@
+---
+title: "Get Human Task"
+description: "Use the Orkes Conductor human tasks API to get Human Task. Includes endpoint details, authentication, parameters, request bodies, response behavior, and."
+---
+
+# Get Human Task
+
+**Endpoint:** `GET /api/human/tasks/{taskId}`
+
+Retrieves a Human task’s details using the task ID.
+
+The invoking user should be one of the following:
+
+- Cluster admin
+- Task owner of the Human task
+- Task assignee
+- Task claimant
+- User with READ or UPDATE permission for the Human task definition
+
+## Path parameters
+
+| Parameter | Description                                         | Type   | Required/ Optional |
+| --------- | --------------------------------------------------- | ------ | ------------------ |
+| taskId    | The task ID of the Human task execution. | string | Required.          |
+
+## Query parameters
+
+| Parameter    | Description                                                                        | Type    | Required/ Optional |
+| ------------ | ---------------------------------------------------------------------------------- | ------- | ------------------ |
+| withTemplate | Whether to include the task’s user form details in the response. Default is `false`. | boolean | Optional.          |
+
+## Response
+
+Returns the Human task object, including the task state, assignee, input and output data, and user-form metadata (if requested).
+
+When the query parameter `withTemplate` is set to `true`, the response includes the `fullTemplate` field, which contains the complete user form schema and layout definition. This field is omitted when `withTemplate` is set to `false`.
+
+Returns 404 if an invalid task execution ID is provided.
+
+## Examples
+
+<details>
+<summary>Get a Human task with its user form details</summary>
+
+**Request**
+
+```shell
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/human/tasks/fd7s46d9ace7-6c82-11f0-a7fc-a652d19b1278?withTemplate=true \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+Here, the response contains a `fullTemplate` field. This field includes the complete user form schema and layout definition.
+
+```json
+{
+  "createdBy": "john.doe@acme.com",
+  "updatedBy": "john.doe@acme.com",
+  "taskId": "fd7s46d9ace7-6c82-11f0-a7fc-a652d19b1278",
+  "state": "ASSIGNED",
+  "displayName": "Reviewer 1",
+  "definitionName": "reviewer_1",
+  "workflowId": "fd7s46d89b76-6c82-11f0-a7fc-a652d19b1278",
+  "workflowName": "document_approval",
+  "taskRefName": "reviewer_1",
+  "assignee": {
+    "userType": "CONDUCTOR_USER",
+    "user": "john.doe@acme.com"
+  },
+  "humanTaskDef": {
+    "assignments": [
+      {
+        "slaMinutes": 1440,
+        "assignee": {
+          "userType": "CONDUCTOR_USER",
+          "user": "john.doe@acme.com"
+        }
+      }
+    ],
+    "userFormTemplate": {
+      "name": "Approval",
+      "version": 1
+    },
+    "taskTriggers": [],
+    "assignmentCompletionStrategy": "LEAVE_OPEN",
+    "displayName": "Reviewer 1",
+    "fullTemplate": {
+      "createTime": 1752650223294,
+      "updateTime": 1752650223294,
+      "createdBy": "USER:john.doe@acme.com",
+      "updatedBy": "USER:john.doe@acme.com",
+      "name": "Approval",
+      "version": 1,
+      "jsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema",
+        "properties": {
+          "paperUrl": {
+            "type": "string"
+          },
+          "comments": {
+            "type": "string"
+          },
+          "approve": {
+            "type": "string",
+            "enum": [
+              "Yes",
+              " No"
+            ]
+          }
+        },
+        "required": [
+          "approve",
+          "comments"
+        ]
+      },
+      "templateUI": {
+        "type": "VerticalLayout",
+        "elements": [
+          {
+            "type": "VerticalLayout",
+            "elements": [
+              {
+                "type": "Control",
+                "scope": "#/properties/paperUrl",
+                "label": "Review doc",
+                "options": {
+                  "readonly": true
+                }
+              }
+            ]
+          },
+          {
+            "type": "Control",
+            "scope": "#/properties/approve",
+            "label": "Approve document",
+            "options": {}
+          },
+          {
+            "type": "Control",
+            "scope": "#/properties/comments",
+            "label": "Comments"
+          }
+        ]
+      }
+    }
+  },
+  "input": {
+    "approve": "",
+    "comments": "",
+    "paperUrl": "https://orkes.io/content/developer-guides/convert-bpmn-to-workflows",
+    "_createdBy": "john.doe@acme.com",
+    "__humanTaskDefinition": {
+      "assignments": [
+        {
+          "assignee": {
+            "user": "john.doe@acme.com",
+            "userType": "CONDUCTOR_USER"
+          },
+          "slaMinutes": 1440
+        }
+      ],
+      "displayName": "Reviewer 1",
+      "taskTriggers": [],
+      "userFormTemplate": {
+        "name": "Approval",
+        "version": 1
+      },
+      "assignmentCompletionStrategy": "LEAVE_OPEN"
+    },
+    "__humanTaskProcessContext": {
+      "state": "ASSIGNED",
+      "lastUpdated": 1753796723884,
+      "assigneeIndex": 0,
+      "humanTaskActionLogs": [
+        {
+          "id": "e2d1dcdf-b5d0-4d9d-9726-818513c933c6",
+          "state": "ASSIGNED",
+          "action": "ASSIGNMENT",
+          "actedBy": "system",
+          "assignee": {
+            "user": "john.doe@acme.com",
+            "userType": "CONDUCTOR_USER"
+          },
+          "stateStart": 1753796723884
+        }
+      ],
+      "humanTaskTriggerLog": [],
+      "assignmentsCompleted": false,
+      "skippedAssigneeIndexes": []
+    }
+  },
+  "output": {},
+  "createdOn": 1753796723873,
+  "updatedOn": 1753796723884
+}
+```
+
+</details>
+
+<details>
+<summary>Get a Human task without its user form details</summary>
+
+**Request**
+
+```shell
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/human/tasks/fd7s46d9ace7-6c82-11f0-a7fc-a652d19b1278?withTemplate=false \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+Here, the response does not include the `fullTemplate` field because `withTemplate` is set to `false`. Only the form metadata, such as name and version, is returned.
+
+
+```json
+{
+  "createdBy": "john.doe@acme.com",
+  "updatedBy": "john.doe@acme.com",
+  "taskId": "fd7s46d9ace7-6c82-11f0-a7fc-a652d19b1278",
+  "state": "ASSIGNED",
+  "displayName": "Reviewer 1",
+  "definitionName": "reviewer_1",
+  "workflowId": "fd7s46d89b76-6c82-11f0-a7fc-a652d19b1278",
+  "workflowName": "document_approval",
+  "taskRefName": "reviewer_1",
+  "assignee": {
+    "userType": "CONDUCTOR_USER",
+    "user": "john.doe@acme.com"
+  },
+  "humanTaskDef": {
+    "assignments": [
+      {
+        "slaMinutes": 1440,
+        "assignee": {
+          "userType": "CONDUCTOR_USER",
+          "user": "john.doe@acme.com"
+        }
+      }
+    ],
+    "userFormTemplate": {
+      "name": "Approval",
+      "version": 1
+    },
+    "taskTriggers": [],
+    "assignmentCompletionStrategy": "LEAVE_OPEN",
+    "displayName": "Reviewer 1"
+  },
+  "input": {
+    "approve": "",
+    "comments": "",
+    "paperUrl": "https://orkes.io/content/developer-guides/convert-bpmn-to-workflows",
+    "_createdBy": "john.doe@acme.com",
+    "__humanTaskDefinition": {
+      "assignments": [
+        {
+          "assignee": {
+            "user": "john.doe@acme.com",
+            "userType": "CONDUCTOR_USER"
+          },
+          "slaMinutes": 1440
+        }
+      ],
+      "displayName": "Reviewer 1",
+      "taskTriggers": [],
+      "userFormTemplate": {
+        "name": "Approval",
+        "version": 1
+      },
+      "assignmentCompletionStrategy": "LEAVE_OPEN"
+    },
+    "__humanTaskProcessContext": {
+      "state": "ASSIGNED",
+      "lastUpdated": 1753796723884,
+      "assigneeIndex": 0,
+      "humanTaskActionLogs": [
+        {
+          "id": "e2d1dcdf-b5d0-4d9d-9726-818513c933c6",
+          "state": "ASSIGNED",
+          "action": "ASSIGNMENT",
+          "actedBy": "system",
+          "assignee": {
+            "user": "john.doe@acme.com",
+            "userType": "CONDUCTOR_USER"
+          },
+          "stateStart": 1753796723884
+        }
+      ],
+      "humanTaskTriggerLog": [],
+      "assignmentsCompleted": false,
+      "skippedAssigneeIndexes": []
+    }
+  },
+  "output": {},
+  "createdOn": 1753796723873,
+  "updatedOn": 1753796723884
+}
+```
+
+</details>

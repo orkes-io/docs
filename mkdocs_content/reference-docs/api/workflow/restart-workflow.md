@@ -1,0 +1,68 @@
+---
+title: "Restart Workflow"
+description: "Use the Orkes Conductor workflows API to restart Workflow. Includes endpoint details, authentication, parameters, request bodies, response behavior, and."
+---
+
+# Restart Workflow
+
+**Endpoint:** `POST /api/workflow/{workflowId}/restart`
+
+Restarts a terminal workflow execution from the beginning using the same input and workflow definition. You can optionally restart it using the latest workflow definition. This method has no effect on ongoing workflows.
+
+## Path parameters
+
+| Parameter  | Description                                       | Type   | Required/ Optional |
+| ---------- | ------------------------------------------------- | ------ | ------------------ |
+| workflowId | The execution ID of the workflow to restart. | string | Required.          |
+
+## Query parameters
+
+| Parameter            | Description                                                                                                      | Type    | Required/ Optional |
+| -------------------- | ---------------------------------------------------------------------------------------------------------------- | ------- | ------------------ |
+| useLatestDefinitions | If set to `true`, the restarted workflow will use the latest definition from the metadata store. Default is `false`. | boolean | Optional.          |
+
+## Response
+
+Returns 204, indicating that the workflow execution has been restarted successfully.
+
+Returns 400 if an invalid workflow execution ID is provided.
+
+## Examples
+
+<details>
+<summary>Restart workflow execution without using the latest definition</summary>
+
+**Request**
+
+```shell
+curl -X 'POST' \
+  'https://<YOUR-SERVER-URL>/api/workflow/bf6ac066-d493-11ef-87b1-b2b27c52ebde/restart' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -d ''
+```
+
+**Response**
+
+Returns 204, indicating that the workflow execution has been restarted successfully.
+
+</details>
+
+<details>
+<summary>Restart workflow execution using the latest definition</summary>
+
+**Request**
+
+```shell
+curl -X 'POST' \
+  'https://<YOUR-SERVER-URL>/api/workflow/bf6ac066-d493-11ef-87b1-b2b27c52ebde/restart?useLatestDefinitions=true' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -d ''
+```
+
+**Response**
+
+Returns 204, indicating that the workflow execution has been restarted successfully with the latest version.
+
+</details>

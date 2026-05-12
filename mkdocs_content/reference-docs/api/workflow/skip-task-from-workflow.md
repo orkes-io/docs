@@ -1,0 +1,111 @@
+---
+title: "Skip Task in Workflow Execution"
+description: "Use the Orkes Conductor workflows API to skip Task in Workflow Execution. Includes endpoint details, authentication, parameters, request bodies, response."
+---
+
+# Skip Task in Workflow Execution
+
+**Endpoint:** `PUT /api/workflow/{workflowId}/skiptask/{taskReferenceName}`
+
+Skips a pending task in an ongoing workflow using the task reference name. The skipped task’s inputs and outputs can be updated using the query parameters.
+
+## Path parameters
+
+| Parameter         | Description                                                                    | Type   | Required/ Optional |
+| ----------------- | ------------------------------------------------------------------------------ | ------ | ------------------ |
+| workflowId        | The execution ID of the running workflow that contains the task to skip.       | string | Required.          |
+| taskReferenceName | The reference name of the task to be skipped.                                  | string | Required.          |
+
+## Query parameters
+
+| Parameter  | Description                                     | Type   | Required/ Optional |
+| ---------- | ----------------------------------------------- | ------ | ------------------ |
+| taskInput  | The skipped task’s inputs.                      | object | Optional.          |
+| taskOutput | The skipped task’s outputs.                     | object | Optional.          |
+
+**Example**
+
+```json
+{
+  "taskInput": {
+    "someInput": "Some task input"
+  },
+  "taskOutput": {
+    "someOutput": "Some task output"
+  }
+}
+```
+
+## Response
+
+- Returns 200, indicating that the task has been skipped successfully.
+- Returns 500 if the task has already been processed.
+- Returns 400 if an invalid workflow execution ID is provided.
+
+## Examples
+
+<details>
+<summary>Skip a task</summary>
+
+**Request**
+
+```shell
+curl -X 'PUT' \
+  'https://<YOUR-SERVER-URL>/api/workflow/9002f320-0663-11f1-9b1b-c6f35360b671/skiptask/simple_ref' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{}'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the task has been skipped successfully.
+
+</details>
+
+<details>
+<summary>Skip a task with updated task inputs and outputs</summary>
+
+**Request**
+
+```bash
+curl -X 'PUT' \
+  'https://<YOUR-SERVER-URL>/api/workflow/fd7s06a839e9-71d6-11f0-af9d-8e9bff353733/skiptask/simple_ref' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "taskInput": {
+    "input": "Task is skipped"
+  },
+  "taskOutput": {
+    "output": "Skipped task from execution via API"
+  }
+}'
+```
+**Response**
+
+Returns 200 OK, indicating that the task has been skipped successfully. You can verify the update by reviewing the task’s input and output in the workflow execution details.
+
+<p align="center">
+  <img
+    src="/content/img/updated-task-input-for-a-skipped-task.png"
+    alt="Screenshot of Conductor UI showing updated task input for a skipped task."
+    width="90%"
+    height="auto"
+    style="padding-bottom: 40px; padding-top: 40px;"
+  />
+</p>
+
+<p align="center">
+  <img
+    src="/content/img/updated-task-output-for-a-skipped-task.png"
+    alt="Screenshot of Conductor UI showing updated task output for a skipped task."
+    width="90%"
+    height="auto"
+    style="padding-bottom: 40px; padding-top: 40px;"
+  />
+</p>
+
+</details>

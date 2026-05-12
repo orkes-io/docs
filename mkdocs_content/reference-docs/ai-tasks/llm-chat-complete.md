@@ -1,0 +1,306 @@
+---
+title: "LLM Chat Complete"
+description: "Learn how the LLM Chat Complete task generates conversational responses using chat-based LLM models in Orkes Conductor."
+---
+
+# LLM Chat Complete
+
+The LLM Chat Complete task is used to complete a chat query based on additional instructions. It can be used to govern the model's behavior to minimize deviation from the intended objective.
+
+The LLM Chat Complete task processes a chat query by taking the user's input and generating a response based on the supplied instructions and parameters. This helps the model to stay focused on the objective and provides control over the model's output behavior.
+
+!!! info "Prerequisites"
+    
+    - [Integrate the required AI model](/content/category/integrations/ai-llm) with Orkes Conductor.
+    - (Optional)[Create the required AI prompt](/content/developer-guides/creating-and-managing-gen-ai-prompt-templates) for the task.
+
+## Task parameters 
+
+Configure these parameters for the LLM Chat Complete task.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- |
+| inputParameters. **llmProvider** | The integration name of the LLM provider integrated with your Conductor cluster.<br/><br/>**Note:** If you haven’t configured your AI/LLM provider on your Orkes Conductor cluster, go to the **Integrations** tab and [configure your required provider](/content/category/integrations/ai-llm). | Required. |
+| inputParameters. **model** | The available language models within the selected LLM provider. <br/><br/>For example, If your LLM provider is Azure Open AI and you’ve configured text-davinci-003 as the language model, you can select it here. | Required. |
+| inputParameters. **instructions** | The ground rules or instructions for the chat so the model responds to only specific queries and will not deviate from the objective. Select the instructions saved as an AI prompt in Orkes Conductor and add it here.  <br/><br/>**Note**: If you haven’t created an AI prompt for your language model, refer to the documentation on [creating AI Prompts in Orkes Conductor](/content/developer-guides/creating-and-managing-gen-ai-prompt-templates). | Optional. |
+| inputParameters. **promptVariables** | For prompts that involve variables, provide the input to these variables within this field. It can be string, number, boolean, null, object/array. | Optional. |
+| inputParameters. **messages** | An array of chat messages representing the conversation history passed to the model. Each entry consists of a `role` and a `message`.  | Optional. |
+| inputParameters. **messages.role**| The required role for the chat completion. Supported options include *user*, *assistant*, *human* or *system*.<ul><li>`user`: The person asking questions or providing input.</li><li>`human`: The person asking questions or providing input.</li><li>`assistant`: The model's prior responses.</li><li>`system`: Top-level instructions that govern the model's overall behavior for the conversation (not a model response).</li></ul> | Optional. |
+| inputParameters. **messages.message** | The input message for the corresponding role. It can also be [passed as a dynamic input](/content/developer-guides/passing-inputs-to-task-in-conductor). | Optional. |
+| inputParameters. **temperature** | A parameter to control the randomness of the model’s output. Higher temperatures, such as 1.0, make the output more random and creative. A lower value makes the output more deterministic and focused.<br/><br/>**Tip:** If you're using a text blurb as input and want to categorize it based on its content type, opt for a lower temperature setting. Conversely, if you're providing text inputs and intend to generate content like emails or blogs, it's advisable to use a higher temperature setting. | Optional. |
+| inputParameters. **stopWords** | A list of strings that signal the model to stop generating output. When the model produces any string in this list, generation halts immediately at that point. For example, providing `["END", "\n"]` stops generation when the model outputs `END` or a newline. Accepts string and object/array. | Optional. |
+| inputParameters. **topP** | Another parameter to control the randomness of the model’s output. This parameter defines a probability threshold and then chooses tokens whose cumulative probability exceeds this threshold.<br/><br/>**Example**: Imagine you want to complete the sentence: “She walked into the room and saw a __.” The top few words the LLM model would consider based on the highest probabilities would be:<ul><li>Cat - 35%</li><li>Dog - 25%</li><li>Book - 15%</li><li>Chair - 10%</li></ul>If you set the top-p parameter to 0.70, the LLM model will consider tokens until their cumulative probability reaches or exceeds 70%. Here's how it works:<ol><li>Add "Cat" (35%) to the cumulative probability.</li><li>Add "Dog" (25%) to the cumulative probability, totaling 60%.</li><li>Add "Book" (15%) to the cumulative probability, now at 75%.</li></ol>At this point, the cumulative probability is 75%, exceeding the set top-p value of 70%. Therefore, the LLM will randomly select one of the tokens from the list of "Cat," "Dog," and "Book" to complete the sentence because these tokens collectively account for approximately 75% of the likelihood. | Optional. |
+| inputParameters. **maxTokens** | The maximum number of tokens to be generated by the LLM and returned as part of the result. A token is approximately four characters. | Optional. |
+| inputParameters. **jsonOutput** | Determines whether the LLM’s response is to be parsed as JSON. When set to ‘true’, the model’s response will be processed as structured JSON data. | Optional. | 
+
+### Using JSON output mode
+
+When `jsonOutput` is set to `true`, Conductor parses the model's response as JSON and makes the fields directly accessible downstream.
+
+Ensure your prompt explicitly instructs the model to respond only with valid JSON in the expected structure. For providers like OpenAI, the word "json" must appear somewhere in the messages, check your provider's documentation for specific requirements.
+
+If the model returns malformed JSON, the task fails. The task output contains the parse error message and the raw unparsed response for debugging.
+
+Parsed fields are accessible downstream as `${taskReferenceName.output.result.<fieldName>}`.
+
+The following are generic configuration parameters that can be applied to the task and are not specific to the LLM Chat Complete task.
+
+<details>
+<summary>Caching parameters</summary>
+
+You can cache the task outputs using the following parameters. Refer to [Caching Task Outputs](/content/faqs/task-cache-output) for a full guide.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| cacheConfig.**ttlInSecond** | The time to live in seconds, which is the duration for the output to be cached. | Required if using *cacheConfig*. |
+| cacheConfig.**key** | The cache key is a unique identifier for the cached output and must be constructed exclusively from the task’s input parameters.<br/>It can be a string concatenation that contains the task’s input keys, such as `${uri}-${method}` or `re_${uri}_${method}`. | Required if using *cacheConfig*. |
+
+</details>
+
+<details>
+<summary>Other generic parameters</summary>
+
+Here are other parameters for configuring the task behavior.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| optional | Whether the task is optional. <br/><br/>If set to`true`, any task failure is ignored, and the workflow continues with the task status updated to `COMPLETED_WITH_ERRORS`. However, the task must reach a terminal state. If the task remains incomplete, the workflow waits until it reaches a terminal state before proceeding. | Optional. | 
+
+</details>
+
+## Task configuration
+
+This is the task configuration for an LLM Chat Complete task.
+
+```json
+{
+       "name": "llm_chat_complete",
+  	"taskReferenceName": "llm_chat_complete_ref",
+     "inputParameters": {
+       "llmProvider": "openAI",
+       "model": "chatgpt-4o-latest",
+       "instructions": "<AI-PROMPT>", 
+       "messages": [
+         {
+           "role": "user",
+           "message": "${workflow.input.someParameter}"
+         }
+       ],
+       "temperature": 0.2,
+       "topP": 0.9,
+       "jsonOutput": false,
+       "promptVariables": {
+         "prDescription": "${workflow.input.someParameter}"
+       }
+     },
+     "type": "LLM_CHAT_COMPLETE"
+}
+```
+
+## Task output
+
+The LLM Chat Complete task will return the following parameters.
+
+| Parameter | Description | 
+| --------- | ----------- | 
+| result | The completed chat by the LLM. | 
+| finishReason | Indicates why the text generation stopped. Common values include STOP when the model completes naturally. | 
+| tokenUsed | Total number of tokens consumed for the request, including both prompt and completion tokens. | 
+| promptTokens | Number of tokens used to process the prompt. | 
+| completionTokens | Number of tokens generated by the model in the output text returned by the task. | 
+
+## Adding an LLM Chat Complete task in UI
+
+**To add an LLM Chat Complete task:**
+
+1. In your workflow, select the (**+**) icon and add an **LLM Chat Complete** task.
+2. In **Provider and Model**, select the **LLM provider**, and **Model**.
+3. In **Prompt and Variables**, select the **Prompt Name**.
+4. (Optional) Select **+Add variable** to provide the variable path if your prompt template includes variables.
+5. (Optional) In **Structured Message**, select **+Add message** and choose the appropriate role and messages to complete the chat query.
+6. (Optional) In **Fine Tuning**, set the parameters **Temperature**, **TopP**, **Token Limit**, **Stop words**, and **Stop word type**.
+7. (Optional) In **Output Format**, toggle on **Enable JSON Output** to format the LLM’s response as a structured JSON.
+
+<center><p><img src="/content/img/llm-chat-complete-ui-method.png" alt="LLM Chat Complete Task - UI" width="80%" height="auto"/></p></center>
+
+## Examples
+
+Here are some examples for using the LLM Chat Complete task.
+
+<details>
+<summary>Using an LLM Chat Complete task in a workflow</summary>
+
+See an example of [building a pull request summary workflow](http://orkes.io/content/tutorials/pull-request-summary-workflow).
+
+</details>
+
+<details>
+<summary>Building a multi-turn conversation</summary>
+
+This example demonstrates how to pass conversation history to the model using `system`, `user`, and `assistant` roles. The caller is responsible for managing and passing the history across invocations.
+
+**To create a workflow:**
+
+1. Go to **Definitions** > **Workflow** from the left navigation menu on your Conductor cluster.
+2. Select **+ Define workflow**.
+3. In the **Code** tab, paste the following workflow definition:
+
+```json
+{
+  "name": "Multi_Turn_Chat_Workflow",
+  "description": "Demonstrates multi-turn conversation using LLM Chat Complete.",
+  "version": 1,
+  "schemaVersion": 2,
+  "inputParameters": [
+    "firstUserMessage",
+    "previousAssistantReply",
+    "followUpQuestion"
+  ],
+  "tasks": [
+    {
+      "name": "llm_chat_complete",
+      "taskReferenceName": "multi_turn_ref",
+      "inputParameters": {
+        "llmProvider": "<YOUR-LLM-PROVIDER>",
+        "model": "<YOUR-LLM-MODEL>",
+        "messages": [
+          {
+            "role": "system",
+            "message": "You are a helpful support agent. Answer only questions related to billing."
+          },
+          {
+            "role": "user",
+            "message": "${workflow.input.firstUserMessage}"
+          },
+          {
+            "role": "assistant",
+            "message": "${workflow.input.previousAssistantReply}"
+          },
+          {
+            "role": "user",
+            "message": "${workflow.input.followUpQuestion}"
+          }
+        ],
+        "temperature": 0.3
+      },
+      "type": "LLM_CHAT_COMPLETE"
+    }
+  ],
+  "outputParameters": {
+    "reply": "${multi_turn_ref.output.result}"
+  }
+}
+```
+
+4. Update the LLM Chat Complete task with your actual provider and model values.
+5. Select **Save** > **Confirm**.
+
+**To run the workflow:**
+
+1. Go to the **Run** tab and enter the following input:
+
+```json
+{
+  "firstUserMessage": "My invoice number is INV-1042. What is my balance?",
+  "previousAssistantReply": "Your current balance for invoice INV-1042 is $250.",
+  "followUpQuestion": "Can I get a discount on that?"
+}
+```
+
+2. Select **Execute**.
+
+Once completed, verify the workflow output — the model's reply should reflect awareness of the prior exchange, referencing the invoice and balance without them being re-stated in the follow-up question.
+
+<center><p><img src="/content/img/multi-turn-chat-output.png" alt="LLM Chat Complete Task output" width="100%" height="auto"/></p></center>
+
+</details>
+
+<details>
+<summary>Extracting structured data with JSON output</summary>
+
+This example builds a workflow that takes a product review as input and analyzes its sentiment using an LLM Chat Complete task with `jsonOutput: true`.
+
+**To create the AI prompt:**
+
+1. Go to **Definitions** > **AI Prompts** and select** + Add AI prompt**.
+2. In **Prompt Name**, enter **extract-sentiment-prompt**.
+3. In **Model(s)**, select your LLM provider and model.
+4. Enter a **Description** for the prompt.
+5. In **Prompt Template**, enter:
+
+```json
+Analyze the sentiment of the given text and respond only with a valid JSON object in this exact format, no markdown, no code blocks:
+{"sentiment": "<positive|negative|neutral>", "confidence": <float between 0 and 1>}
+```
+
+6. Select **Save** > **Confirm Save**.
+
+**To create a workflow:**
+
+1. Go to **Definitions** > **Workflow** from the left navigation menu on your Conductor cluster.
+2. Select **+ Define workflow**.
+3. In the **Code** tab, paste the following workflow definition:
+
+```json
+{
+  "name": "Sentiment_Analysis_Workflow",
+  "description": "Analyzes sentiment of a product review using JSON output mode.",
+  "version": 1,
+  "schemaVersion": 2,
+  "inputParameters": ["reviewText"],
+  "tasks": [
+    {
+      "name": "llm_chat_complete",
+      "taskReferenceName": "sentiment_task_ref",
+      "inputParameters": {
+        "llmProvider": "<YOUR-LLM-PROVIDER>",
+        "model": "<YOUR-LLM-MODEL>",
+        "instructions": "extract-sentiment-prompt",
+        "messages": [
+          {
+            "role": "user",
+            "message": "Analyze the sentiment of the following text and respond in JSON format: ${workflow.input.reviewText}"
+          }
+        ],
+        "temperature": 0.1,
+        "jsonOutput": true
+      },
+      "type": "LLM_CHAT_COMPLETE"
+    },
+    {
+      "name": "set_variable",
+      "taskReferenceName": "store_sentiment_ref",
+      "inputParameters": {
+        "sentiment": "${sentiment_task_ref.output.result.sentiment}",
+        "confidence": "${sentiment_task_ref.output.result.confidence}"
+      },
+      "type": "SET_VARIABLE"
+    }
+  ],
+  "outputParameters": {
+    "sentiment": "${workflow.variables.sentiment}",
+    "confidence": "${workflow.variables.confidence}"
+  }
+}
+```
+
+4. Update the LLM Chat Complete task with your actual provider and model values.
+5. Select **Save** > **Confirm**.
+
+**To run the workflow:**
+
+1. Go to the **Run** tab and enter the following input:
+
+```json
+{
+  "reviewText": "I absolutely love this product, it exceeded all my expectations!"
+}
+```
+
+2. Select **Execute**.
+
+Once completed, verify the workflow output — `sentiment` should resolve to `positive` and `confidence` to a float between 0 and 1.
+
+<center><p><img src="/content/img/llm-chat-output.png" alt="LLM Chat Complete Task output" width="100%" height="auto"/></p></center>
+
+</details>

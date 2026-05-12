@@ -1,0 +1,75 @@
+---
+title: "Signal Running Task Asynchronously"
+description: "Use the Orkes Conductor tasks API to signal Running Task Asynchronously. Includes endpoint details, authentication, parameters, request bodies, response."
+---
+
+# Signal Running Task Asynchronously
+
+## Quick reference
+
+Use this tasks endpoint to signal Running Task Asynchronously. It is intended for automation scripts, CI/CD jobs, backend services, and internal tools that need to manage Orkes Conductor programmatically.
+
+- **Method and path**: `POST` `/api/tasks/{workflowId}/{status}/signal`
+- **Authentication**: Requires Orkes Conductor API credentials with permission for the target resource.
+- **Inputs**: Use the path parameters, query parameters, and request body fields documented below.
+- **Output**: Returns the Conductor API response for the requested operation. Check the response examples and status codes before wiring the endpoint into production automation.
+- **Operational note**: Treat API calls as part of your deployment or runtime control plane. Log request IDs, handle 4xx/5xx responses, and avoid embedding secrets in workflow definitions or source code.
+
+
+!!! info "Available since"
+    v5.1.0 and later
+
+**Endpoint**: `POST /api/tasks/{workflowId}/{status}/signal`
+
+Updates the task status and output of a running [Wait](/content/reference-docs/operators/wait) or [Yield](/content/reference-docs/operators/yield) asynchronously. This operation signals a running task and does not wait for the workflow to proceed or return a response. It immediately acknowledges the signal, making it well-suited for high-throughput systems and fire-and-forget scenarios.
+
+## Path parameters
+
+| Parameter | Description                                 | Type   | Required/ Optional |
+| --------- | ------------------------------------------- | ------ | ------------------ |
+| workflowId | The execution ID of the workflow containing the Yield task. | string | Required. | 
+| status | The status to which the task is to be updated. Supported values:<ul><li>**IN_PROGRESS**</li><li>**FAILED**</li><li>**FAILED_WITH_TERMINAL_ERROR**</li><li>**COMPLETED**</li></ul> | string | Required. | 
+
+## Request body
+
+Format the request to include any additional parameters, such as task output data. This data is merged with the existing task output.
+
+**Example**
+
+```json
+{
+    "message": "Data processing completed successfully",
+    "recordCount": 1540,
+    "status": "SUCCESS"
+  }
+```
+
+## Response
+
+Returns 200 OK, indicating that the task has been signaled successfully. The response only acknowledges the signal and does not reflect task or workflow progression.
+
+Returns 400 if an invalid task execution ID is provided.
+
+## Examples
+
+<details>
+<summary>Signal a running task asynchronously</summary>
+
+**Request**
+
+```json
+curl -X 'POST' \
+  'https://<YOUR-SERVER-URL>/api/tasks/ddbccfbf-0589-11f1-913a-226156badb04/COMPLETED/signal' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "message": "Data processing completed successfully"
+}'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the task has been signaled successfully.
+
+</details>

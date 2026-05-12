@@ -1,0 +1,409 @@
+---
+title: "Get Workflows by Correlation ID"
+description: "Use the Orkes Conductor workflows API to get Workflows by Correlation ID. Includes endpoint details, authentication, parameters, request bodies, response."
+---
+
+# Get Workflows by Correlation ID
+
+**Endpoint:** `POST /api/workflow/{name}/correlated`
+
+Gets a list of execution details for a specific workflow definition based on a list of correlation IDs. By default, only running executions are returned.
+
+## Path parameters
+
+| Parameter | Description                             | Type   | Required/ Optional |
+| --------- | --------------------------------------- | ------ | ------------------ |
+| name      | The name of the workflow to fetch. | string | Required.          |
+
+## Query parameters
+
+| Parameter     | Description                                                                                      | Type    | Required/ Optional |
+| ------------- | ------------------------------------------------------------------------------------------------ | ------- | ------------------ |
+| includeClosed | If set to `true`, the response will also include workflows in a terminal state. Default is `false`.           | boolean | Optional.          |
+| includeTasks  | If set to `true`, all task execution details will be fetched in a `tasks` array. Default is `false`. | boolean | Optional.          |
+
+## Request body
+
+Format the request as an array of correlation IDs. For example, `["1", "2", "3"]`.
+
+## Response
+
+Returns a map where each key is a correlation ID and its corresponding value is a list of workflow executions for the indicated workflow.
+
+## Examples
+
+<details>
+<summary>Get only running workflows based on correlation IDs</summary>
+
+**Request**
+
+```shell
+curl -X 'POST' \
+'https://<YOUR-SERVER-URL>/api/workflow/DemoWorkflow/correlated?includeClosed=false&includeTasks=false' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '[
+  "1","2"
+]'
+```
+
+**Response**
+
+The response includes only currently running workflow executions for each correlation ID because the `includeClosed` parameter is set to false.
+
+```json
+{
+  "1": [
+    {
+      "ownerApp": "",
+      "createTime": 1770636479617,
+      "updateTime": 1770636479767,
+      "createdBy": "john.doe@acme.com",
+      "updatedBy": "john.doe@acme.com",
+      "status": "RUNNING",
+      "endTime": 0,
+      "workflowId": "6371c352-05aa-11f1-913a-226156badb04",
+      "tasks": [],
+      "input": {},
+      "output": {},
+      "correlationId": "1",
+      "taskToDomain": {},
+      "failedReferenceTaskNames": [],
+      "workflowDefinition": {
+        "createTime": 1770620896994,
+        "updateTime": 1770622092083,
+        "name": "DemoWorkflow",
+        "description": "DemoWorkflow",
+        "version": 1,
+        "tasks": [
+          {
+            "name": "http",
+            "taskReferenceName": "http_ref",
+            "inputParameters": {
+              "uri": "https://orkes-api-tester.orkesconductor.com/api",
+              "method": "GET",
+              "accept": "application/json",
+              "contentType": "application/json",
+              "encode": true,
+              "asyncComplete": true
+            },
+            "type": "HTTP",
+            "decisionCases": {},
+            "defaultCase": [],
+            "forkTasks": [],
+            "startDelay": 0,
+            "joinOn": [],
+            "optional": false,
+            "defaultExclusiveJoinTask": [],
+            "asyncComplete": true,
+            "loopOver": [],
+            "onStateChange": {},
+            "permissive": false
+          }
+        ],
+        "inputParameters": [],
+        "outputParameters": {},
+        "failureWorkflow": "",
+        "schemaVersion": 2,
+        "restartable": true,
+        "workflowStatusListenerEnabled": false,
+        "ownerEmail": "john.doe@acme.com",
+        "timeoutPolicy": "ALERT_ONLY",
+        "timeoutSeconds": 0,
+        "variables": {},
+        "inputTemplate": {},
+        "enforceSchema": true,
+        "metadata": {},
+        "maskedFields": []
+      },
+      "priority": 0,
+      "variables": {},
+      "lastRetriedTime": 0,
+      "failedTaskNames": [],
+      "history": [],
+      "rateLimited": false,
+      "startTime": 1770636479617,
+      "workflowName": "DemoWorkflow",
+      "workflowVersion": 1
+    }
+  ],
+  "2": [
+    {
+      "ownerApp": "",
+      "createTime": 1770636507254,
+      "updateTime": 1770636507360,
+      "createdBy": "john.doe@acme.com",
+      "updatedBy": "john.doe@acme.com",
+      "status": "RUNNING",
+      "endTime": 0,
+      "workflowId": "73ead685-05aa-11f1-8b8d-6219b54da7fe",
+      "tasks": [],
+      "input": {},
+      "output": {},
+      "correlationId": "2",
+      "taskToDomain": {},
+      "failedReferenceTaskNames": [],
+      "workflowDefinition": {
+        "createTime": 1770620896994,
+        "updateTime": 1770622092083,
+        "name": "DemoWorkflow",
+        "description": "DemoWorkflow",
+        "version": 1,
+        "tasks": [
+          {
+            "name": "http",
+            "taskReferenceName": "http_ref",
+            "inputParameters": {
+              "uri": "https://orkes-api-tester.orkesconductor.com/api",
+              "method": "GET",
+              "accept": "application/json",
+              "contentType": "application/json",
+              "encode": true,
+              "asyncComplete": true
+            },
+            "type": "HTTP",
+            "decisionCases": {},
+            "defaultCase": [],
+            "forkTasks": [],
+            "startDelay": 0,
+            "joinOn": [],
+            "optional": false,
+            "defaultExclusiveJoinTask": [],
+            "asyncComplete": true,
+            "loopOver": [],
+            "onStateChange": {},
+            "permissive": false
+          }
+        ],
+        "inputParameters": [],
+        "outputParameters": {},
+        "failureWorkflow": "",
+        "schemaVersion": 2,
+        "restartable": true,
+        "workflowStatusListenerEnabled": false,
+        "ownerEmail": "john.doe@acme.com",
+        "timeoutPolicy": "ALERT_ONLY",
+        "timeoutSeconds": 0,
+        "variables": {},
+        "inputTemplate": {},
+        "enforceSchema": true,
+        "metadata": {},
+        "maskedFields": []
+      },
+      "priority": 0,
+      "variables": {},
+      "lastRetriedTime": 0,
+      "failedTaskNames": [],
+      "history": [],
+      "rateLimited": false,
+      "startTime": 1770636507254,
+      "workflowName": "DemoWorkflow",
+      "workflowVersion": 1
+    }
+  ]
+}
+```
+
+</details>
+
+<details>
+<summary>Get running and completed workflow executions based on correlation IDs</summary>
+
+**Request**
+
+```shell
+curl -X 'POST' \
+'https://<YOUR-SERVER-URL>/api/workflow/DemoWorkflow/correlated?includeClosed=true&includeTasks=false' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '[
+  "1"
+]'
+```
+
+**Response**
+
+The response includes both running and completed workflow executions for each correlation ID because the `includeClosed` parameter is set to true.
+
+```json
+{
+  "1": [
+    {
+      "ownerApp": "",
+      "createTime": 1770636479617,
+      "updateTime": 1770636479767,
+      "createdBy": "john.doe@acme.com",
+      "updatedBy": "john.doe@acme.com",
+      "status": "RUNNING",
+      "endTime": 0,
+      "workflowId": "6371c352-05aa-11f1-913a-226156badb04",
+      "tasks": [],
+      "input": {},
+      "output": {},
+      "correlationId": "1",
+      "taskToDomain": {},
+      "failedReferenceTaskNames": [],
+      "workflowDefinition": {
+        "createTime": 1770620896994,
+        "updateTime": 1770622092083,
+        "name": "DemoWorkflow",
+        "description": "DemoWorkflow",
+        "version": 1,
+        "tasks": [
+          {
+            "name": "http",
+            "taskReferenceName": "http_ref",
+            "inputParameters": {
+              "uri": "https://orkes-api-tester.orkesconductor.com/api",
+              "method": "GET",
+              "accept": "application/json",
+              "contentType": "application/json",
+              "encode": true,
+              "asyncComplete": true
+            },
+            "type": "HTTP",
+            "decisionCases": {},
+            "defaultCase": [],
+            "forkTasks": [],
+            "startDelay": 0,
+            "joinOn": [],
+            "optional": false,
+            "defaultExclusiveJoinTask": [],
+            "asyncComplete": true,
+            "loopOver": [],
+            "onStateChange": {},
+            "permissive": false
+          }
+        ],
+        "inputParameters": [],
+        "outputParameters": {},
+        "failureWorkflow": "",
+        "schemaVersion": 2,
+        "restartable": true,
+        "workflowStatusListenerEnabled": false,
+        "ownerEmail": "john.doe@acme.com",
+        "timeoutPolicy": "ALERT_ONLY",
+        "timeoutSeconds": 0,
+        "variables": {},
+        "inputTemplate": {},
+        "enforceSchema": true,
+        "metadata": {},
+        "maskedFields": []
+      },
+      "priority": 0,
+      "variables": {},
+      "lastRetriedTime": 0,
+      "failedTaskNames": [],
+      "history": [],
+      "rateLimited": false,
+      "startTime": 1770636479617,
+      "workflowName": "DemoWorkflow",
+      "workflowVersion": 1
+    },
+    {
+      "ownerApp": "",
+      "createTime": 1770636412350,
+      "updateTime": 1770636423600,
+      "createdBy": "john.doe@acme.com",
+      "updatedBy": "john.doe@acme.com",
+      "status": "COMPLETED",
+      "endTime": 1770636423597,
+      "workflowId": "3b59a275-05aa-11f1-8b8d-6219b54da7fe",
+      "tasks": [],
+      "input": {},
+      "output": {
+        "response": {
+          "headers": {
+            "content-length": [
+              "182"
+            ],
+            "content-type": [
+              "application/json"
+            ],
+            "date": [
+              "Mon, 09 Feb 2026 11:26:52 GMT"
+            ],
+            "strict-transport-security": [
+              "max-age=15724800; includeSubDomains"
+            ]
+          },
+          "reasonPhrase": "",
+          "body": {
+            "randomString": "pybbkritovfwilicpubt",
+            "randomInt": 7375,
+            "hostName": "orkes-api-sampler-67dfc8cf58-nv6hz",
+            "apiRandomDelay": "0 ms",
+            "sleepFor": "0 ms",
+            "statusCode": "200",
+            "queryParams": {}
+          },
+          "statusCode": 200
+        }
+      },
+      "correlationId": "1",
+      "taskToDomain": {},
+      "failedReferenceTaskNames": [],
+      "workflowDefinition": {
+        "createTime": 1770620896994,
+        "updateTime": 1770622092083,
+        "name": "DemoWorkflow",
+        "description": "DemoWorkflow",
+        "version": 1,
+        "tasks": [
+          {
+            "name": "http",
+            "taskReferenceName": "http_ref",
+            "inputParameters": {
+              "uri": "https://orkes-api-tester.orkesconductor.com/api",
+              "method": "GET",
+              "accept": "application/json",
+              "contentType": "application/json",
+              "encode": true,
+              "asyncComplete": true
+            },
+            "type": "HTTP",
+            "decisionCases": {},
+            "defaultCase": [],
+            "forkTasks": [],
+            "startDelay": 0,
+            "joinOn": [],
+            "optional": false,
+            "defaultExclusiveJoinTask": [],
+            "asyncComplete": true,
+            "loopOver": [],
+            "onStateChange": {},
+            "permissive": false
+          }
+        ],
+        "inputParameters": [],
+        "outputParameters": {},
+        "failureWorkflow": "",
+        "schemaVersion": 2,
+        "restartable": true,
+        "workflowStatusListenerEnabled": false,
+        "ownerEmail": "john.doe@acme.com",
+        "timeoutPolicy": "ALERT_ONLY",
+        "timeoutSeconds": 0,
+        "variables": {},
+        "inputTemplate": {},
+        "enforceSchema": true,
+        "metadata": {},
+        "maskedFields": []
+      },
+      "priority": 0,
+      "variables": {},
+      "lastRetriedTime": 0,
+      "failedTaskNames": [],
+      "history": [],
+      "rateLimited": false,
+      "startTime": 1770636412350,
+      "workflowName": "DemoWorkflow",
+      "workflowVersion": 1
+    }
+  ]
+}
+```
+
+</details>

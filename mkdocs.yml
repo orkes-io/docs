@@ -1,0 +1,524 @@
+site_name: Orkes Conductor Documentation
+site_description: Orkes Conductor is the managed enterprise platform for durable execution, agentic workflows, visual debugging, access control, and internet-scale orchestration.
+site_url: https://orkes.io/content/
+repo_url: https://github.com/conductor-oss/conductor
+edit_uri: ''
+strict: false
+use_directory_urls: false
+docs_dir: mkdocs_content
+site_dir: build
+
+nav:
+  - Quickstart:
+    - Run Your First Workflow: quickstarts.md
+    - Concepts: quickstarts/concepts.md
+    - Architecture: conductor-architecture.md
+    - Durable Execution: quickstarts/durable-execution.md
+    - JSON + Code Native: quickstarts/json-code-native.md
+    - Workflows: quickstarts/workflows.md
+    - Tasks: quickstarts/tasks.md
+    - Task Lifecycle: quickstarts/task-lifecycle.md
+    - Workers: quickstarts/workers.md
+  - Guides:
+    - Build with AI Agents: developer-guides/conductor-skills.md
+    - Why Conductor: ai-orchestration/why-conductor.md
+    - Workflows:
+      - Workflows: developer-guides/workflows.md
+      - Write Workflows Using Code: developer-guides/write-workflows-using-code.md
+      - Import BPMN Files as Workflows: developer-guides/convert-bpmn-to-workflows.md
+      - Versioning Workflows: developer-guides/versioning-workflows.md
+      - Executing Workflows: developer-guides/running-workflows.md
+      - Scheduling Workflows: developer-guides/scheduling-workflows.md
+      - Sending Signals to Workflows: developer-guides/sending-signals-to-workflows.md
+      - Change Data Capture: developer-guides/enabling-cdc-on-conductor-workflows.md
+      - Idempotency: idempotency.md
+      - Search / Query Executions: developer-guides/debugging-workflows.md
+      - Unit and Regression Tests: developer-guides/unit-and-regression-tests.md
+      - Metrics and Observability: developer-guides/metrics-and-observability.md
+      - CI/CD Best Practices: developer-guides/integration-with-cicd.md
+      - Using Secrets: developer-guides/secrets-in-conductor.md
+      - Using Environment Variables: developer-guides/using-environment-variables.md
+      - Handling Failures: error-handling.md
+    - Tasks:
+      - Tasks: developer-guides/tasks.md
+      - Parameter Mapping: developer-guides/passing-inputs-to-task-in-conductor.md
+      - Caching Task Outputs: faqs/task-cache-output.md
+      - Rate Limits: rate-limits.md
+      - Writing Workers for Conductor Workflows: developer-guides/using-workers.md
+      - Guide to Scaling Workers: developer-guides/scaling-workers.md
+      - Routing Tasks: developer-guides/task-to-domain.md
+    - "API Gateway & Service Orchestration":
+      - "API Gateway & Service Orchestration": developer-guides/mcp-api-gateway.md
+      - API Gateway: developer-guides/api-gateway.md
+      - MCP Gateway: developer-guides/mcp-gateway.md
+      - Remote Services: remote-services.md
+  - Eventing:
+    - "Event-Driven Orchestration":
+      - "Event-Driven Orchestration": category/event-driven-orchestration.md
+      - Receive Events:
+        - Receive Events: category/event-driven-orchestration/receive-events.md
+        - Webhooks: developer-guides/webhook-integration.md
+        - Wait for Webhook Task: reference-docs/system-tasks/wait-for-webhook.md
+        - Event Handlers: developer-guides/event-handler.md
+        - Event Handler Reference: reference-docs/event-handlers.md
+      - Publish Events:
+        - Publish Events: category/event-driven-orchestration/publish-events.md
+        - Event Task: reference-docs/system-tasks/event.md
+        - Kafka Publish Task: reference-docs/system-tasks/kafka-publish.md
+        - Event Publishing Recipes: eventing.md
+      - Message Broker Integrations:
+        - Message Broker Integrations: category/integrations/message-broker.md
+        - Apache Kafka: integrations/message-broker/apache-kafka.md
+        - Confluent Kafka: integrations/message-broker/confluent-kafka.md
+        - Amazon MSK: integrations/message-broker/amazon-msk.md
+        - AMQP / RabbitMQ: integrations/message-broker/amqp.md
+        - NATS Messaging: integrations/message-broker/nats-messaging.md
+        - AWS SQS: integrations/message-broker/aws-sqs.md
+        - Azure Service Bus: integrations/message-broker/azure-service-bus.md
+        - GCP Pub/Sub: integrations/message-broker/gcp-pub-sub.md
+        - IBM MQ: integrations/message-broker/ibm-mq.md
+      - Webhook Examples:
+        - Webhook Examples: category/event-driven-orchestration/webhook-examples.md
+        - Custom Webhook with cURL: _routes/templates/examples/custom-conductor-webhook-using-curl.md
+        - Incoming Webhook with Postman: _routes/templates/examples/incoming-webhook-using-postman.md
+        - Webhook Idempotency Keys: tutorials/using-idempotency-keys-in-webhook-triggered-workflows.md
+        - GitHub Webhook: tutorials/github-webhook.md
+        - Stripe Webhook: tutorials/stripe-webhook.md
+        - SendGrid Webhook: tutorials/using-sendgrid-webhooks.md
+        - Microsoft Teams Webhook: tutorials/microsoft-teams-webhook.md
+        - Slack Webhook: _routes/templates/daily-scrum-automation-using-standup-bot.md
+      - API Reference:
+        - Eventing API Reference: category/event-driven-orchestration/api-reference.md
+        - Event Handlers API: reference-docs/api/event-handlers.md
+        - Webhook API:
+          - Webhook API: reference-docs/api/webhooks.md
+          - Create Webhook: reference-docs/api/webhooks/create-webhook.md
+          - Update Webhook: reference-docs/api/webhooks/update-webhook.md
+          - Get Webhook by ID: reference-docs/api/webhooks/get-webhook.md
+          - Delete Webhook: reference-docs/api/webhooks/delete-webhook.md
+          - Get All Webhooks: reference-docs/api/webhooks/get-all-webhooks.md
+          - Add Tags to Webhook: reference-docs/api/webhooks/add-tags-to-webhook.md
+          - Get Tags from Webhook: reference-docs/api/webhooks/get-tags-from-webhook.md
+  - Cookbook:
+    - Cookbook: category/tutorials.md
+    - Microservice orchestration: general-templates.md
+    - Dynamic parallelism: cookbook/dynamic-parallelism.md
+    - Wait and timer patterns: cookbook/wait-and-timers.md
+    - Human in the loop: developer-guides/orchestrating-human-tasks.md
+    - Task timeouts and retries: cookbook/task-timeouts-and-retries.md
+    - Scheduled workflows: cookbook/workflow-scheduling.md
+    - Dynamic workflows as code: cookbook/dynamic-workflows.md
+    - Gateway tutorials:
+      - Gateway Tutorials: tutorials/mcp.md
+      - Build a Feedback API: tutorials/expose-feedback-workflow-as-api.md
+      - Build an MCP Ticket Service: tutorials/expose-ticket-service-using-mcp-gateway.md
+  - AI Cookbook:
+    - AI Orchestration:
+      - AI Orchestration: ai-orchestration.md
+      - Build Your First AI Agent: ai-orchestration/first-ai-agent.md
+      - "AI & LLM Recipes": ai-orchestration/ai-llm-recipes.md
+      - LLM Orchestration: ai-orchestration/llm-orchestration.md
+      - MCP Integration: ai-orchestration/mcp-integration.md
+      - Production Agent Architecture: ai-orchestration/production-agent-architecture.md
+      - Failure Semantics: ai-orchestration/failure-semantics.md
+      - Durable Agents: ai-orchestration/durable-agents.md
+      - "Human-in-the-Loop": ai-orchestration/human-in-the-loop.md
+      - Dynamic Workflows: ai-orchestration/dynamic-workflows.md
+      - Token Efficiency: ai-orchestration/token-efficiency.md
+    - AI Tutorials:
+      - AI Tutorials: tutorials/ai.md
+      - "AI-Powered Translator": developer-guides/quickstart-ai-orchestration.md
+      - Agentic Interview App: tutorials/agentic-interview-app.md
+      - Document Classification: _routes/templates/document-classifier.md
+      - Question Answering Workflow: tutorials/question-answering-with-embeddings.md
+      - Document Retrieval Workflow: tutorials/document-retrieval-workflow.md
+      - Pull Request Summary Workflow: tutorials/pull-request-summary-workflow.md
+      - Text Indexing and Search Workflow: tutorials/text-indexing-search-workflow.md
+  - SDKs:
+    - SDKs: category/sdks.md
+    - Python: sdks/python.md
+    - Java: sdks/java.md
+    - JavaScript: sdks/javascript.md
+    - "C#": sdks/csharp.md
+    - Go: sdks/golang.md
+    - Ruby: sdks/ruby.md
+    - Rust: sdks/rust.md
+  - Reference:
+    - Task Reference:
+      - Task Reference: category/reference-docs.md
+      - Worker Task: reference-docs/worker-task.md
+      - Workflow Definition: reference-docs/workflow-definition.md
+      - Task Definition: reference-docs/task-definition.md
+      - Operators:
+        - Operators: category/reference-docs/operators.md
+        - Switch: reference-docs/operators/switch.md
+        - Do While: reference-docs/operators/do-while.md
+        - Wait Task: reference-docs/operators/wait.md
+        - Dynamic: reference-docs/operators/dynamic.md
+        - Set Variable: reference-docs/operators/set-variable.md
+        - Sub Workflow: reference-docs/operators/sub-workflow.md
+        - Terminate Workflow Operator: reference-docs/operators/terminate-workflow.md
+        - Terminate: reference-docs/operators/terminate.md
+        - Fork: reference-docs/operators/fork-join.md
+        - Dynamic Fork: reference-docs/operators/dynamic-fork.md
+        - Join: reference-docs/operators/join.md
+        - Start Workflow: reference-docs/operators/start-workflow.md
+        - Human Operator: reference-docs/operators/human.md
+        - Get Workflow: reference-docs/operators/get-workflow.md
+        - Yield: reference-docs/operators/yield.md
+      - System Tasks:
+        - System Tasks: category/reference-docs/system-tasks.md
+        - HTTP Task: reference-docs/system-tasks/http.md
+        - HTTP Poll: reference-docs/system-tasks/http-poll.md
+        - Inline Task: reference-docs/system-tasks/inline.md
+        - JSON JQ Transform Task: reference-docs/system-tasks/jq-transform.md
+        - No Op Task: reference-docs/system-tasks/noop.md
+        - Business Rule: reference-docs/system-tasks/business-rule.md
+        - SendGrid: reference-docs/system-tasks/sendgrid.md
+        - JDBC Task: reference-docs/system-tasks/jdbc.md
+        - Update Secret: reference-docs/system-tasks/update-secret.md
+        - Get Signed JWT: reference-docs/system-tasks/get-signed-jwt.md
+        - Update Task: reference-docs/system-tasks/update-task.md
+        - gRPC: reference-docs/system-tasks/grpc.md
+        - Alerting Tasks:
+          - Alerting Tasks: category/reference-docs/alerting-tasks.md
+          - Opsgenie: reference-docs/system-tasks/opsgenie.md
+          - Query Processor: reference-docs/system-tasks/query-processor.md
+        - AI Tasks:
+          - AI Tasks: category/reference-docs/ai-tasks.md
+          - LLM Text Complete: reference-docs/ai-tasks/llm-text-complete.md
+          - LLM Generate Embeddings: reference-docs/ai-tasks/llm-generate-embeddings.md
+          - LLM Store Embeddings: reference-docs/ai-tasks/llm-store-embeddings.md
+          - LLM Get Embeddings: reference-docs/ai-tasks/llm-get-embeddings.md
+          - LLM Index Document: reference-docs/ai-tasks/llm-index-document.md
+          - Get Document: reference-docs/ai-tasks/llm-get-document.md
+          - LLM Index Text: reference-docs/ai-tasks/llm-index-text.md
+          - LLM Search Index: reference-docs/ai-tasks/llm-search-index.md
+          - LLM Chat Complete: reference-docs/ai-tasks/llm-chat-complete.md
+          - Chunk Text: reference-docs/ai-tasks/chunk-text.md
+          - List Files: reference-docs/ai-tasks/list-files.md
+          - Parse Document: reference-docs/ai-tasks/parse-document.md
+    - API Reference:
+      - API Reference: category/ref-docs/api.md
+      - Authentication: sdks/authentication.md
+      - Bulk: reference-docs/api/bulk.md
+      - Files: reference-docs/api/files.md
+      - Task Domains: reference-docs/api/task-domains.md
+      - Metadata:
+        - Metadata: reference-docs/api/metadata.md
+        - Create Task Definition: reference-docs/api/metadata/creating-task-definitions.md
+        - Update Task Definition: reference-docs/api/metadata/update-task-definitions.md
+        - Delete Task Definition: reference-docs/api/metadata/delete-task-definition.md
+        - Get All Task Definitions: reference-docs/api/metadata/get-all-task-definitions.md
+        - Get Task Definition: reference-docs/api/metadata/get-task-definition.md
+        - Create Workflow Definition: reference-docs/api/metadata/creating-workflow-definition.md
+        - Update Workflow Definition: reference-docs/api/metadata/update-workflow-definitions.md
+        - Import BPMN to Workflows: reference-docs/api/metadata/import-bpmn.md
+        - Delete Workflow Definition: reference-docs/api/metadata/delete-workflow-definition.md
+        - Get All Workflow Definitions: reference-docs/api/metadata/get-all-workflow-definitions.md
+        - Get Workflow Definition: reference-docs/api/metadata/get-workflow-definition.md
+      - Tasks:
+        - Tasks: reference-docs/api/task.md
+        - Get Poll Data for All Tasks: reference-docs/api/task/task-queue/get-poll-data-for-all-task.md
+        - Log Task Execution: reference-docs/api/task/add-task-log.md
+        - Get Task by ID: reference-docs/api/task/get-task.md
+        - Get Task Queue Size for All Tasks: reference-docs/api/task/task-queue/get-task-queue-size-for-all-tasks.md
+        - Get Task Queue Size for a Task Type: reference-docs/api/task/task-queue/get-task-queue-size-for-individual-tasks.md
+        - Update Task Status in Workflow: reference-docs/api/task/update-task-status-in-workflow.md
+        - Signal Running Task Asynchronously: reference-docs/api/task/signal-running-task-asynchronously.md
+        - Signal Running Task Synchronously: reference-docs/api/task/signal-running-task-synchronously.md
+        - Task Queues: reference-docs/api/task/task-queue.md
+      - Workflows:
+        - Workflows: reference-docs/api/workflow.md
+        - Execute Workflow Asynchronously: reference-docs/api/workflow/start-workflow-execution.md
+        - Execute Workflow Synchronously: reference-docs/api/workflow/synchronous-workflow-execution.md
+        - Get Workflow by ID: reference-docs/api/workflow/get-workflow-by-id.md
+        - Get Workflows by Correlation ID: reference-docs/api/workflow/get-workflows-by-correlation-id.md
+        - Update Variable: reference-docs/api/workflow/update-variable.md
+        - Upgrade Workflow: reference-docs/api/workflow/upgrade-workflow.md
+        - Skip Task in Workflow Execution: reference-docs/api/workflow/skip-task-from-workflow.md
+        - Pause Workflow: reference-docs/api/workflow/pause-worflow.md
+        - Resume Workflow: reference-docs/api/workflow/resume-workflow.md
+        - Terminate Workflow API: reference-docs/api/workflow/terminate-workflow.md
+        - Rerun Workflow: reference-docs/api/workflow/rerun-workflow.md
+        - Restart Workflow: reference-docs/api/workflow/restart-workflow.md
+        - Retry Failed Workflow: reference-docs/api/workflow/retry-failed-workflow.md
+        - Delete Workflow Execution: reference-docs/api/workflow/delete-workflow.md
+        - Search Workflow Executions: reference-docs/api/workflow/search-workflow-executions.md
+        - Test Workflow: reference-docs/api/workflow/test-workflow.md
+        - Test Workflow Synchronously: reference-docs/api/workflow/test-workflow-synchronously.md
+      - Users:
+        - Users: reference-docs/api/users.md
+        - Create/Update User: reference-docs/api/users/create-user.md
+        - Delete User: reference-docs/api/users/delete-user.md
+        - Get All Users: reference-docs/api/users/get-all-users.md
+        - Get User by ID: reference-docs/api/users/get-user-by-id.md
+        - Get User Permission over Resources: reference-docs/api/users/get-user-permissions.md
+        - Check User Permission over Resources: reference-docs/api/users/check-user-permissions.md
+      - Groups:
+        - Groups: reference-docs/api/groups.md
+        - Create/Update Groups: reference-docs/api/groups/create-group.md
+        - Add Users to Group in Bulk: reference-docs/api/groups/add-users-to-group-bulk.md
+        - Add Single User to Group: reference-docs/api/groups/add-user-to-group.md
+        - Remove Users from Group in Bulk: reference-docs/api/groups/remove-users-from-group-bulk.md
+        - Remove Single User from Group: reference-docs/api/groups/remove-users-from-group.md
+        - Get Group Permission over Resources: reference-docs/api/groups/get-group-permissions.md
+        - Delete Group: reference-docs/api/groups/delete-group.md
+        - Get All Groups: reference-docs/api/groups/get-all-groups.md
+        - Get All Users in Group: reference-docs/api/groups/get-all-users-in-group.md
+        - Get Group by ID: reference-docs/api/groups/get-group.md
+      - Applications:
+        - Applications: reference-docs/api/applications.md
+        - Create Application: reference-docs/api/applications/create-application.md
+        - Assign Role to Application: reference-docs/api/applications/assign-role-to-application.md
+        - Create an Access Key for Application: reference-docs/api/applications/create-application-access-key.md
+        - Update Application: reference-docs/api/applications/update-application.md
+        - Toggle Access Key Status: reference-docs/api/applications/toggle-access-key-status.md
+        - Delete Access Key: reference-docs/api/applications/delete-access-key.md
+        - Remove Role from Application: reference-docs/api/applications/remove-application-role.md
+        - Delete Application: reference-docs/api/applications/delete-application.md
+        - Get All Applications: reference-docs/api/applications/get-all-applications.md
+        - Get Application Access Keys: reference-docs/api/applications/get-application-access-keys.md
+        - Get Application by ID: reference-docs/api/applications/get-application-by-id.md
+        - Get Application ID using Access Key: reference-docs/api/applications/get-application-id-using-access-key.md
+        - Add Tag to Application: reference-docs/api/applications/add-tag-to-application.md
+        - Get Tags from Application: reference-docs/api/applications/get-application-tags.md
+        - Delete Tag from Application: reference-docs/api/applications/delete-tag-application.md
+      - Tags:
+        - Tags: reference-docs/api/tags.md
+        - List All Tags: reference-docs/api/tags/list-all-tags.md
+        - List Tags Grouped by Resource Type: reference-docs/api/tags/get-all-tags-grouped.md
+        - Add Tags to a Task Definition: reference-docs/api/tags/add-tags-to-a-task-definition.md
+        - Replace Tags in a Task Definition: reference-docs/api/tags/replace-tags-in-a-task-definition.md
+        - Get Tags from a Task Definition: reference-docs/api/tags/get-tags-from-task-definition.md
+        - Delete Tag from Task Definition: reference-docs/api/tags/delete-tag-from-task-definition.md
+        - Add Tag to a Workflow Definition: reference-docs/api/tags/add-tag-to-a-workflow-definition.md
+        - Replace Tags in a Workflow Definition: reference-docs/api/tags/replace-tags-in-a-workflow-definition.md
+        - Get Tags from a Workflow Definition: reference-docs/api/tags/get-tags-from-workflow-definition.md
+        - Delete Tag from Workflow Definition: reference-docs/api/tags/delete-tag-from-workflow-definition.md
+        - Get Resources by Tag: reference-docs/api/tags/get-resources-by-tag.md
+      - Secrets:
+        - Secrets: reference-docs/api/secrets.md
+        - Create/Update Secret: reference-docs/api/secrets/create-secret.md
+        - Delete Secret: reference-docs/api/secrets/delete-secret.md
+        - Get Secret Value by Key: reference-docs/api/secrets/get-secret-value.md
+        - Check if Secret Exists: reference-docs/api/secrets/check-secret-exists.md
+        - List All Secrets: reference-docs/api/secrets/list-all-secrets.md
+        - List Accessible Secrets: reference-docs/api/secrets/list-accessible-secrets.md
+        - List Secrets with Tags: reference-docs/api/secrets/list-secrets-with-tags.md
+        - Add Tags to Secret: reference-docs/api/secrets/add-tags-to-secret.md
+        - Get Tags from Secret: reference-docs/api/secrets/get-tags-from-secret.md
+        - Delete Tags from Secret: reference-docs/api/secrets/delete-tags-from-secret.md
+      - Schema:
+        - Input/Output Schema Validation: reference-docs/api/schema.md
+        - Create Schema: reference-docs/api/schema/create-schema.md
+        - Get All Schemas: reference-docs/api/schema/get-all-schemas.md
+        - Get Schema by Name: reference-docs/api/schema/get-schema-by-name.md
+        - Get Schema by Name and Version: reference-docs/api/schema/get-schema-by-name-and-version.md
+        - Delete Schema: reference-docs/api/schema/delete-schema.md
+        - Delete Schema Version: reference-docs/api/schema/delete-schema-version.md
+      - Environment Variables:
+        - Environment Variables: reference-docs/api/environment-variables.md
+        - Create/Update Environment Variable: reference-docs/api/environment-variables/create-environment-variable.md
+        - Get Environment Value by Key: reference-docs/api/environment-variables/get-environment-value-by-key.md
+        - Get All Environment Variables: reference-docs/api/environment-variables/get-all-environment-variables.md
+        - Delete Environment Variable: reference-docs/api/environment-variables/delete-environment-variable.md
+        - Add Tags to an Environment Variable: reference-docs/api/environment-variables/add-tags-to-environment-variable.md
+        - Get Tags from an Environment Variable: reference-docs/api/environment-variables/get-tags-from-environment-variable.md
+        - Delete Tags from an Environment Variable: reference-docs/api/environment-variables/delete-tags-from-environment-variable.md
+      - Schedule:
+        - Schedule: reference-docs/api/schedule.md
+        - Create Schedule: reference-docs/api/schedule/create-schedule.md
+        - Get Schedule: reference-docs/api/schedule/get-schedule.md
+        - Pause Schedule: reference-docs/api/schedule/pause-schedule.md
+        - Resume Schedule: reference-docs/api/schedule/resume-schedule.md
+        - Pause Schedules in Bulk: reference-docs/api/schedule/bulk-pause-schedule.md
+        - Resume Schedules in Bulk: reference-docs/api/schedule/bulk-resume-schedule.md
+        - Delete Schedule: reference-docs/api/schedule/delete-schedule.md
+        - Add Tags to a Schedule: reference-docs/api/schedule/add-tags-to-schedule.md
+        - Delete Tags from a Schedule: reference-docs/api/schedule/delete-tags-from-schedule.md
+        - Get Tags from a Schedule: reference-docs/api/schedule/get-tags-from-schedule.md
+        - Get Schedules by Tag: reference-docs/api/schedule/get-schedules-using-tags.md
+        - Search Schedule Definitions with Pagination: reference-docs/api/schedule/search-schedule-definitions.md
+        - Search Schedule Executions: reference-docs/api/schedule/search-schedule-executions.md
+        - Get All Schedules: reference-docs/api/schedule/get-all-schedules.md
+        - Get Next Few Schedules: reference-docs/api/schedule/get-next-few-schedules.md
+      - Human Task:
+        - Human Task: reference-docs/api/human-tasks.md
+        - Get Human Task: reference-docs/api/human-tasks/get-task.md
+        - Get Conductor Task by Human Task ID: reference-docs/api/human-tasks/get-conductor-task-by-human-task-id.md
+        - Claim Task (Conductor User): reference-docs/api/human-tasks/claim-task-conductor-user.md
+        - Claim Task (External/All Users): reference-docs/api/human-tasks/claim-task-external-user.md
+        - Reassign Human Task: reference-docs/api/human-tasks/reassign-human-task.md
+        - Release Human Task: reference-docs/api/human-tasks/release-human-task.md
+        - Skip Human Task: reference-docs/api/human-tasks/skip-human-task.md
+        - Update Human Task by Task ID: reference-docs/api/human-tasks/update-human-task.md
+        - Update Human Task by Workflow ID and Task Reference: reference-docs/api/human-tasks/update-human-task-by-workflow-and-task-ref.md
+        - Delete Human Task: reference-docs/api/human-tasks/delete-task.md
+        - Get Available Human Tasks Display Names: reference-docs/api/human-tasks/get-available-human-tasks-display-names.md
+        - Search Human Tasks: reference-docs/api/human-tasks/search-task-list.md
+        - Create User Form: reference-docs/api/human-tasks/save-task-ui-template.md
+        - Create User Forms in Bulk: reference-docs/api/human-tasks/create-user-forms-bulk.md
+        - Get All User Forms: reference-docs/api/human-tasks/list-task-ui-templates.md
+        - Get User Form by Task ID: reference-docs/api/human-tasks/get-task-ui-template.md
+        - Get User Form by Name and Version: reference-docs/api/human-tasks/get-user-form-by-name-version.md
+        - Add Tags to User Form: reference-docs/api/human-tasks/add-tags-to-user-form.md
+        - Get Tags from a User Form: reference-docs/api/human-tasks/get-tags-from-user-form.md
+        - Delete Tags from User Form: reference-docs/api/human-tasks/delete-tags-from-user-form.md
+        - Delete User Form: reference-docs/api/human-tasks/delete-task-ui-template.md
+        - Delete User Form Version: reference-docs/api/human-tasks/delete-user-form-version.md
+      - Remote Services:
+        - Remote Services: reference-docs/api/remote-services.md
+        - Create Service: reference-docs/api/remote-services/create-service.md
+        - Get Service: reference-docs/api/remote-services/get-service.md
+        - Delete Service: reference-docs/api/remote-services/delete-service.md
+        - Get All Services: reference-docs/api/remote-services/get-all-services.md
+        - Discover and Register Service Endpoints: reference-docs/api/remote-services/discover-service-endpoints.md
+        - Add Method to Service: reference-docs/api/remote-services/add-method-to-service.md
+        - Remove Method from Service: reference-docs/api/remote-services/remove-method-from-service.md
+        - Get Circuit Breaker Status: reference-docs/api/remote-services/get-circuit-breaker-status.md
+        - Open Circuit Breaker: reference-docs/api/remote-services/open-circuit-breaker.md
+        - Close Circuit Breaker: reference-docs/api/remote-services/close-circuit-breaker.md
+        - Upload Proto File to gRPC Service: reference-docs/api/remote-services/upload-proto-file.md
+        - Get Proto File from gRPC Service: reference-docs/api/remote-services/get-proto-file.md
+        - Delete Proto File from gRPC Service: reference-docs/api/remote-services/delete-proto-file.md
+        - Get All Proto Files from gRPC Service: reference-docs/api/remote-services/get-all-proto-files.md
+      - Integrations:
+        - Integrations: reference-docs/api/integrations.md
+        - Create or Update Integration Provider: reference-docs/api/integrations/create-integration-provider.md
+        - Get Integration Provider: reference-docs/api/integrations/get-integration-provider.md
+        - Delete Integration Provider: reference-docs/api/integrations/delete-integration-provider.md
+        - Add Tags to Integration Provider: reference-docs/api/integrations/add-tags-to-integration-provider.md
+        - Get Tags from Integration Provider: reference-docs/api/integrations/get-tags-from-integration-provider.md
+        - Delete Tags from Integration Provider: reference-docs/api/integrations/delete-tags-from-integration-provider.md
+        - Create or Update Integration Resource: reference-docs/api/integrations/create-integration-resource.md
+        - Get Integration Resource: reference-docs/api/integrations/get-integration-resource.md
+        - Delete Integration Resource: reference-docs/api/integrations/delete-integration-resource.md
+        - Add Tags to Integration Resource: reference-docs/api/integrations/add-tags-to-integration-resource.md
+        - Get Tags from Integration Resource: reference-docs/api/integrations/get-tags-from-integration-resource.md
+        - Delete Tags from Integration Resource: reference-docs/api/integrations/delete-tags-from-integration-resource.md
+        - Associate Prompt with Integration Model: reference-docs/api/integrations/associate-prompt-with-integration-model.md
+        - List Integration Model Prompts: reference-docs/api/integrations/list-integration-model-prompts.md
+        - Save All Integrations: reference-docs/api/integrations/save-all-integrations.md
+        - Get All Integrations: reference-docs/api/integrations/get-all-integrations.md
+        - Get All Integration Providers: reference-docs/api/integrations/get-all-integration-providers.md
+        - Get Integration List: reference-docs/api/integrations/get-integration-list.md
+    - FAQs:
+      - FAQs: category/faqs.md
+      - General FAQs: faqs/general-faqs.md
+    - Glossary: glossary.md
+    - Integrations:
+      - Integrations:
+        - Integrations: category/integrations.md
+        - AI / LLM:
+          - AI / LLM Integrations: category/integrations/ai-llm.md
+          - Ollama: integrations/ai-llm/ollama.md
+          - Azure Open AI: integrations/ai-llm/azure-open-ai.md
+          - Open AI: integrations/ai-llm/open-ai.md
+          - Perplexity: integrations/ai-llm/perplexity.md
+          - Grok: integrations/ai-llm/grok.md
+          - Cohere: integrations/ai-llm/cohere.md
+          - Mistral: integrations/ai-llm/mistral.md
+          - Anthropic Claude: integrations/ai-llm/anthropic-claude.md
+          - Google Vertex AI: integrations/ai-llm/vertex-ai.md
+          - Google Gemini AI: integrations/ai-llm/google-gemini-ai.md
+          - Hugging Face: integrations/ai-llm/hugging-face.md
+          - AWS Bedrock Anthropic: integrations/ai-llm/aws-bedrock-anthropic.md
+          - AWS Bedrock Cohere: integrations/ai-llm/aws-bedrock-cohere.md
+          - AWS Bedrock Titan: integrations/ai-llm/aws-bedrock-titan.md
+        - Vector Databases:
+          - Vector Databases Integrations: category/integrations/vector-databases.md
+          - Pinecone: integrations/vector-databases/pinecone.md
+          - Weaviate: integrations/vector-databases/weaviate.md
+          - Postgres Vector Database: integrations/vector-databases/postgres-vector-database.md
+          - Mongo Vector Database: integrations/vector-databases/mongo-vector-database.md
+        - Cloud Providers:
+          - Cloud Providers: category/integrations/cloud-provider.md
+          - AWS: integrations/cloud-provider/aws.md
+          - GCP: integrations/cloud-provider/gcp.md
+        - RDBMS:
+          - RDBMS Integrations: category/integrations/rdbms.md
+          - Relational Database: integrations/rdbms/relational-database.md
+        - Email/Git:
+          - Email/Git: category/integrations/email.md
+          - SendGrid Email: integrations/email/sendgrid.md
+          - Git Repository: integrations/git-repository.md
+  - RBAC:
+    - Role Based Access Control: category/access-control-and-security.md
+    - Managing Users and Groups: access-control-and-security/users-and-groups.md
+    - "Application-Level Access": access-control-and-security/applications.md
+    - "Tag-Based Access": access-control-and-security/tags.md
+  - Blog: https://orkes.io/blog/
+
+not_in_nav: |
+  search.md
+  integrations/ai-llm/aws-bedrock-llama2.md
+
+theme:
+  name: material
+  logo: img/branding/orkes-logo-purple-4x.png
+  favicon: img/branding/orkes-favicon-purple.png
+  custom_dir: mkdocs_overrides
+  palette:
+    - scheme: default
+      primary: custom
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: custom
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  font: false
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.indexes
+    - navigation.footer
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.highlight
+    - search.suggest
+    - content.code.copy
+    - content.code.annotate
+    - content.tabs.link
+    - toc.follow
+
+extra:
+  generator: false
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/conductor-oss/conductor
+    - icon: fontawesome/brands/slack
+      link: https://join.slack.com/t/orkes-conductor/shared_invite/zt-3dpcskdyd-W895bJDm8psAV7viYG3jFA
+    - icon: fontawesome/brands/youtube
+      link: https://www.youtube.com/@orkesio
+
+extra_css:
+  - css/custom.css
+
+plugins:
+  - search
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - meta
+  - tables
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.details
+
+copyright: Orkes, Inc.

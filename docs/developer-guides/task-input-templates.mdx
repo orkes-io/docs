@@ -3,58 +3,91 @@ slug: "/developer-guides/task-input-templates"
 description: "Learn how to define task input templates in task definitions and use them as default inputs when configuring tasks in workflows."
 ---
 
-# Using Task Input Templates​
+# Using Task Input Templates
 
-Task input templates are default parameters included in a task definition that are applied to all instances of the task. When you use the task in a workflow, the system automatically populates the task configuration with the template values. You can override these values in the workflow using task input parameters.
+Task input templates define default input parameters on a task definition. Every workflow task that uses that task definition receives those defaults unless the workflow task configuration overrides them.
 
-## Configuring task input template
+:::tip 5-minute path
+Put shared defaults in `inputTemplate`, keep workflow-specific values in the workflow task `inputParameters`, and only template values that should apply across every use of that task type.
+:::
 
-Task input templates are part of a task definition, and you can create them when you define the task.
+## When to use task input templates
 
-**To create a task definition:**
+Use templates for defaults shared by many workflows:
 
-1. Go to **Definitions > Task** from the left menu on your Conductor cluster.
-2. Select an existing task definition or create a new task using **+ Define task**.
-3. Configure the required [task parameters](/content/reference-docs/api/metadata/creating-task-definitions#request-body).
-4. In **Task input template**, select **+ Add parameter**. 
-5. Enter the template parameters as key-value pairs. Supports string, number, boolean, null, and object/array.
-6. Select **Save** > **Confirm Save**.
+- Static service paths
+- Default headers
+- Common retry metadata passed to workers
+- Provider or integration names
+- Feature flags used by the worker
+- Default task payload shape
 
-<p align="center"><img src="/content/img/task-input-template-in-task-definition.png" alt="Task input template in task definition" width="100%"
-                       height="auto"/></p>
+Do not use templates for per-workflow data, secrets, customer-specific values, or values that should be obvious in the workflow definition.
+
+## Configure a task input template
+
+Add `inputTemplate` to the task definition:
 
 ```json
-// Example of a task input template in a task definition JSON
- "inputTemplate": {
-   "someKey": "someValue"
- }
+{
+  "name": "send_notification",
+  "description": "Send a notification message",
+  "ownerEmail": "platform@example.com",
+  "retryCount": 3,
+  "timeoutSeconds": 300,
+  "responseTimeoutSeconds": 60,
+  "inputTemplate": {
+    "channel": "email",
+    "priority": "normal",
+    "headers": {
+      "source": "conductor"
+    }
+  }
+}
 ```
 
-## Adding task input templates in workflow definitions
+The template supports strings, numbers, booleans, nulls, arrays, and objects.
 
-**To include a task input template in a workflow:**
+## Override template values in a workflow
 
-1. Go to **Definitions** > **Workflow** from the left menu on your Conductor cluster.
-2. Select an existing workflow definition or create a new one using **+ Define workflow**.
-3. Configure the required [workflow parameters](https://orkes.io/content/reference-docs/api/metadata/creating-workflow-definition#input-payload).
-4. In your workflow, select the (+) icon and add a task that uses the definition you created earlier, such as a [Worker task](https://orkes.io/content/reference-docs/worker-task). There are two ways to add this task.
-    - Select the (+) icon and search for your task using its task name (created previously) and add it.
-    - Add a **Worker** task and search for your task name (created previously) in the **Task Definition** field. This will add your task definition to the workflow.
+Workflow task input overrides template values with the same key:
 
-When a task definition is added to the workflow, the parameters supplied via the task input template are automatically included.
+```json
+{
+  "name": "send_notification",
+  "taskReferenceName": "send_notification_ref",
+  "type": "SIMPLE",
+  "inputParameters": {
+    "recipient": "${workflow.input.email}",
+    "message": "${workflow.input.message}",
+    "priority": "high"
+  }
+}
+```
 
-<p align="center"><img src="/content/img/workflow-definition-with-task-input-template.png" alt="Workflow definition with task input template supplied already" width="90%"
-                       height="auto"/></p>
+In this example, `channel` and `headers` come from the task definition template. `priority` is overridden by the workflow task configuration.
 
-If you provide the same value as an input parameter to the task, the template values get overridden by the task input parameter. 
+## Runtime behavior
 
-For example, a parameter `someKey` with the value `someValue` has been supplied through a task input template. If the same `someKey` is defined as an input parameter to the task, those values override the values from the template.
+Task input templates are stored on the task definition, not inside each workflow definition. During execution, Conductor applies the template and then applies the workflow task input parameters.
 
-<p align="center"><img src="/content/img/overriding-values.png" alt="Overriding task input template parameters from Workflow definition" width="90%"
-                       height="auto"/></p>
+The effective task input is:
 
-Use the **Override All** button to replace the task input parameters with the template's parameters.
+```json
+{
+  "channel": "email",
+  "priority": "high",
+  "headers": {
+    "source": "conductor"
+  },
+  "recipient": "customer@example.com",
+  "message": "Your order has shipped"
+}
+```
 
-:::note
-Task input templates are only part of the task definition and will not appear in the workflow definition JSON. However, the values are passed into the workflow during execution. 
-:::
+## Production notes
+
+- Keep templates small and stable. Large templates make workflow behavior harder to inspect.
+- Avoid putting secrets in templates. Use [secrets](/content/developer-guides/secrets-in-conductor).
+- Document any required override keys in the task definition description.
+- Remember that changing a task definition template can affect every workflow using that task definition.

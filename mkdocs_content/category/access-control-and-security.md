@@ -1,0 +1,99 @@
+---
+title: "Role Based Access Control"
+description: "Configure role based access control in Orkes Conductor for users, groups, applications, roles, permissions, and tag-based access."
+---
+
+# Role Based Access Control
+
+Orkes Conductor provides role-based access control (RBAC) for individual users and applications that interact with Conductor servers via APIs or SDKs. RBAC ensures fine-grained access to the following metadata resources:
+
+- Workflows
+- Tasks
+- Secrets
+- Environment variables
+- Tags
+- Integrations
+- Prompts
+- User forms
+- Event handlers
+- Schedules
+- Webhooks
+- Domains
+
+To get started with RBAC, familiarize yourself with the concepts of users, groups, applications, tags, roles, and permissions.
+
+## Users
+
+A user represents a human user who interacts with Conductor. Users are authenticated using SSO providers or email and password. Each user has one or more roles assigned to them.
+
+## Groups
+
+A group is a set of users. Groups are a way to share permissions among multiple users quickly.
+
+Each Conductor group can be associated with one or more roles. Groups can also be assigned granular permissions that grant access to specific Conductor resources beyond role-based access. When a user is added to a group, the user automatically inherits the group's roles and permissions. Likewise, when a user is removed from a group, the roles and permissions are automatically removed from the user.
+
+## Applications
+
+An application represents a non-human identity, such as a script, service, task worker, client, or CI/CD pipeline, that interacts with a Conductor server via APIs or SDKs. In Orkes Conductor, applications serve as service accounts, which are commonly used on other platforms. 
+
+You can assign each application a set of roles and granular permissions, providing access to specific Conductor resources. Each application can also have one or more access key/secret pairs, which can be used to authenticate with the Conductor SDK or API.
+
+## Tags
+
+A tag is a key-value pair that can be added to any metadata resource, such as a workflow, task, schedule, secret, and so on.
+
+Tags allow you to grant access to multiple resources at once when used in permission assignments. When you grant tag permissions to a group or application, it provides access to all resources that contain that tag.
+
+## Roles
+
+A role in Conductor represents a set of broad-level, default permissions to resources. Roles can be assigned to a user, group, or application.
+
+If multiple roles are granted, they will have all granted role-level permissions. For example, a group with both User and Workflow Manager roles can not only create their own workflows, but also read all workflows in the cluster.
+
+
+=== "User/Group Roles"
+
+    | Role             | Description                                                                                                                                                           |
+    | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+    | Admin            | Superuser. Full access to the system and resources. Can manage users and groups.                                                                                      |
+    | User             | Regular user with permissions to create workflow definitions, task definitions, applications, integrations, secrets, and user forms. Has full API Gateway access, including view and management permissions. Can search workflows.                                                                                                            |
+    | Metadata Manager | Can manage all workflow and task definitions in the cluster, including performing any action regardless of workflow or task ownership. Can view and manage API Gateway configurations. Can create integrations and secrets.                                                                                                            |
+    | Workflow Manager | Can view, execute, and manage all workflow executions in the system, including start, pause, resume, rerun, retry, restart, terminate, and delete actions. Has execute and read access to workflow and task definitions.                                                                                                                  |
+    | Read Only User   | Can view applications, metadata, workflows, API gateway, and search workflows. |
+
+=== "Application Roles"
+
+    | Role                | Description                                                                                                                                                                                                                         |
+    | ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+    | Worker              | Can poll and execute tasks for which it has *Execute* permissions for. <br/> <br/> Should be granted to a task worker application that is responsible for polling and executing a task.                                                    |
+    | Metadata API        | Can create and view workflow definitions, task definitions, and user forms. <br/> <br/> Should be granted to an application that is responsible for retrieving and managing workflow and task definitions, such as for testing or CI/CD integration purposes. |
+    | Application API     | Can create and view applications. <br/> <br/> Should be granted to an application that is responsible for managing other applications in the cluster.                                                                             |
+    | Unrestricted Worker | Worker role with full access to poll and execute any task in the cluster. <br/> <br/> This role can only be granted by an Admin.                                                                                                    |
+    | Metadata Manager    | Can manage all workflow and task definitions in the cluster, including performing any action regardless of workflow or task ownership. Can view and manage API Gateway configurations. Can create integrations and secrets. <br/> <br/> This role can only be granted by an Admin.                                                                         |
+    | Workflow Manager    | Can view, execute, and manage all workflow executions in the system, including start, pause, resume, rerun, retry, restart, terminate, and delete actions. Has execute and read access to workflow and task definitions. <br/> <br/> This role can only be granted by an Admin.                                                                                           |
+    | Application Manager | Can create, update, and delete any application in the cluster. Can also view and manage API Gateway configurations. <br/> <br/> This role can only be granted by an Admin.                                                                                                               |
+    | Admin               | Full control over that particular application, including creating, viewing, modifying, deleting, and executing it. <br/> <br/> This role can only be granted by an Admin.                                                                                                   |
+
+
+## Permissions
+
+Besides the role-based permissions, you can add granular permissions to **groups** or **applications**. These permissions grant access to specific resources:
+
+- Workflows
+- Tasks
+- Secrets
+- Environment variables
+- Tags
+- Domains
+- Integrations
+- Prompts
+
+Unlike other permission targets, **tags** and **domains** provide bulk access to multiple resources. Tags can be used to grant resources across almost every resource type. When you grant access for a tag “x”, all resources with the tag “x” will be made available to the group or application.
+
+A domain is used to grant access to all tasks under a particular domain. This is useful for mass-granting a worker application to execute all tasks under a specific domain, rather than having to add individual tasks and specify their domain. Refer to [Routing Tasks](/content/developer-guides/task-to-domain) to learn more about domain mappings.
+
+### Permission stacking
+
+These granular permissions provide additional access on top of the user’s or application’s role-based permissions. For example, even though default users can only access their own resources, they can also access other resources shared at the group level.
+
+## Guides for access control

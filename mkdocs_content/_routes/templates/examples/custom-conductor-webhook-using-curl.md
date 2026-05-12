@@ -1,0 +1,185 @@
+---
+title: "Incoming Custom Conductor Webhook using cURL"
+description: "Learn how to build a workflow that receives webhook requests using cURL in Orkes Conductor."
+---
+
+# Incoming Custom Conductor Webhook using cURL
+
+This tutorial explains how to receive incoming webhook requests in Orkes Conductor using a custom webhook and a cURL request. When an external system sends an HTTP request, Conductor captures the payload and resumes a waiting workflow execution.
+
+While many systems provide built-in webhook integrations, using a custom webhook allows you to trigger workflows from any source that can make an HTTP request. This approach is useful for lightweight integrations and other internal tools.
+
+## The webhook workflow
+
+Here’s an overview of what you will build:
+
+1. Create a Conductor workflow with a Wait for Webhook task.
+2. Set up a custom webhook in Conductor to receive events.
+3. Run the workflow.
+4. Send a cURL request to trigger the webhook.
+5. Verify incoming webhook requests.
+
+To follow along, ensure you have access to the free [Orkes Developer Edition](https://developer.orkescloud.com/).
+
+## Step 1: Create a workflow in Conductor
+
+Orkes Conductor lets you define workflows as JSON, through [SDKs](https://orkes.io/content/category/sdks), [APIs](https://orkes.io/content/category/ref-docs/api), or the [UI](http://orkes.io/content/developer-guides/build-workflows-using-ui). In this tutorial, we will create the workflow using Conductor UI.
+
+The workflow contains a single [Wait for Webhook task](https://orkes.io/content/reference-docs/system-tasks/wait-for-webhook). The task pauses the workflow execution until Conductor receives a matching webhook request.
+
+**To create a workflow:**
+
+1. Go to [**Definitions** > **Workflows**](https://developer.orkescloud.com/workflowDef) from the left menu on your Conductor cluster.
+2. Select **+ Define workflow**.
+3. In the **Code** tab, paste the following code:
+
+```json
+{
+ "name": "sample-webhook-demo-using-curl",
+ "description": "Sample workflow for demonstration",
+ "version": 1,
+ "tasks": [
+   {
+     "name": "webhook_task",
+     "taskReferenceName": "webhook_task_ref",
+     "inputParameters": {
+       "matches": {
+         "$['event']['type']": "${workflow.input.type}"
+       }
+     },
+     "type": "WAIT_FOR_WEBHOOK"
+   }
+ ],
+ "inputParameters": [
+   "type"
+ ],
+ "schemaVersion": 2
+}
+```
+
+4. Select **Save** > **Confirm**.
+
+Your workflow will look like this:
+
+<p align="center"><img src="/content/img/sample-webhook-demo-using-curl.png" alt="Workflow that includes webhook task" width="40%" height="auto" /></p>
+
+### Using the Wait for Webhook task
+
+The Wait for Webhook task uses input matches to determine which incoming requests should complete the task.
+
+In this workflow, the input matches for the Wait for Webhook task are defined as:
+
+```json
+"matches": {
+  "$['event']['type']": "${workflow.input.type}"
+}
+```
+
+Therefore, the workflow expects the webhook payload to follow this structure:
+
+```json
+{
+  "event": {
+    "type": "someValue"
+  }
+}
+```
+
+This ensures the workflow only resumes when the webhook payload contains an `event.type` value that matches the workflow input.
+
+## Step 2: Create a webhook in Conductor
+
+Next, create a custom webhook that listens for incoming events from cURL.
+
+**To create a webhook:**
+
+1. Go to [**Definitions** > **Webhook**](https://developer.orkescloud.com/configure-webhooks) from the left menu on your Conductor cluster.
+2. Select **+ New webhook**.
+3. In the **Code** tab, paste the following code:
+
+```json
+{
+ "verifier": "HEADER_BASED",
+ "headers": {
+   "someKey": "someValue"
+ },
+ "name": "SampleWebhookforcURL",
+ "receiverWorkflowNamesToVersions": {
+   "sample-webhook-demo-using-curl": 1
+ },
+ "sourcePlatform": "Custom"
+}
+```
+
+4. Select **Save**.
+
+<p align="center"><img src="/content/img/sample-webhook-using-curl.png" alt="Webhook created in Conductor" width="100%" height="auto" /></p>
+
+An unverified webhook URL is generated. It remains unverified until a request with the expected headers is received.
+
+## Step 3: Run workflow
+
+Before triggering the webhook, run the workflow with an input value that matches the expected value of the webhook event.
+
+Since the Wait for Webhook task uses the following input matches:
+
+```json
+"matches": {
+     "$['event'][‘type’]": "${workflow.input.type}"
+}
+```
+Run the workflow to pass `type` as the workflow input. 
+
+**To run the workflow:**
+
+1. Go to the **Run** tab.
+2. Enter the following **Input Params**:
+
+```json
+{
+"type":"type-1"
+}
+```
+
+3. Select **Execute**.
+
+<p align="center"><img src="/content/img/running-workflow-curl.png" alt="Running the workflow" width="100%" height="auto" /></p>
+
+The workflow is now running and waiting for a webhook event that contains an input payload with `“type”: "type-1"`.
+
+## Step 4: Send a request using cURL
+
+Now that the workflow is waiting for input, you can send a matching request using cURL.
+
+You ran the workflow using the input:
+```json
+{
+"type":"type-1"
+}
+```
+
+Therefore, send a cURL request to match this: 
+
+```shell
+curl -H "Content-Type:application/json" -H "Accept:application/json" \
+     -H 'someKey: someValue'    \
+     -X POST '<WEBHOOK-URL-IN-CONDUCTOR>' \
+     -d '{"event": {"type" : "type-1"}}'
+```
+
+!!! note "Notes"
+    - Replace `<WEBHOOK-URL-IN-CONDUCTOR>` with the webhook URL generated by Conductor.
+    - The request must include the expected header (`someKey: someValue`).
+    - The value for `type` in the request payload must match the input provided when running the workflow (`type-1` in this example).
+
+## Step 5: Verify incoming webhook requests
+
+Once the request is received, the webhook is automatically verified, and the payload is received in Conductor.
+
+<p align="center"><img src="/content/img/verified-webhook-curl.png" alt="Verified Webhook" width="100%" height="auto" /></p>
+
+Select the workflow ID from the **Webhook execution history** to view the execution. You can verify that the webhook task is completed.
+
+<p align="center"><img src="/content/img/completed-webhook-curl.png" alt="Completed Workflow" width="100%" height="auto" /></p>
+
+You’ve successfully created and triggered a custom webhook in Orkes Conductor using cURL. This setup enables you to build powerful, event-driven workflows that respond to real-time data from external systems.

@@ -1,0 +1,66 @@
+---
+title: "Get Task Queue Size for a Task Type"
+description: "Use the Orkes Conductor tasks API to get Task Queue Size for a Task Type. Includes endpoint details, authentication, parameters, request bodies, response."
+---
+
+# Get Task Queue Size for a Task Type
+
+**Endpoint:** `GET /api/tasks/queue/sizes`
+
+Gets the task queue size for a specified task type. The queue size represents the number of tasks of the given type waiting to be processed.
+
+## Query parameters
+
+| Parameter | Description                                                                                                                                                                                                 | Type   | Required/ Optional |
+| --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ | ------------------ |
+| taskType  | The type of the task to be queried. For predefined tasks, this indicates the task type, such as _HTTP_. For user-defined tasks, it corresponds to the task definition name, such as _python_worker_. | string | Required.          |
+
+## Response
+
+Returns a JSON object containing the task type as the key and its queue size as the value.
+
+## Examples
+
+<details>
+<summary>Get task queue for HTTP tasks</summary>
+
+**Request**
+
+```bash
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/tasks/queue/sizes?taskType=HTTP' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+{
+  "HTTP": 3
+}
+```
+
+</details>
+
+<details>
+<summary>Get task queue for a custom Worker task</summary>
+
+**Request**
+
+```bash
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/tasks/queue/sizes?taskType=simple-java-worker' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+{
+  "simple-java-worker": 1
+}
+```
+
+</details>

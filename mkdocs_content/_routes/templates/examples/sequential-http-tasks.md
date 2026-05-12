@@ -1,0 +1,100 @@
+---
+title: "Build a Sequential HTTP Workflow with Orkes Conductor"
+description: "Learn how to build a sequential HTTP workflow by chaining multiple HTTP system tasks in Orkes Conductor."
+---
+
+# Build a Sequential HTTP Workflow with Orkes Conductor
+
+In this tutorial, you’ll build a sequential HTTP workflow in Orkes Conductor. You’ll learn how to chain multiple HTTP system tasks so that [the output from one task becomes the input to the next](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor). 
+
+This pattern is useful for real-world scenarios where tasks must run in a specific order and depend on internal/external APIs.
+
+## The sequential HTTP workflow
+
+In this tutorial, you’ll build a workflow that runs two [HTTP tasks](/content/reference-docs/system-tasks/http) in order. The first task fetches location details based on an IP address, and the second uses that information to retrieve weather data.
+
+Here’s what the workflow looks like:
+
+<p align="center"><img src="/content/img/sequential-http-workflow.png" alt="Sequential HTTP Workflow in Orkes Conductor" width="50%" height="auto"></img></p>
+
+Follow along using the free [Developer Edition](https://developer.orkescloud.com/). If you don’t have an account yet, sign up to get started.
+
+!!! info "Note"
+    This tutorial uses free third-party APIs for demonstration purposes only. These APIs have rate limits and usage restrictions, and may experience downtime. Do not use them in production workflows.
+
+## Step 1: Create a workflow in Orkes Conductor
+
+Orkes Conductor lets you define workflows as JSON, through [SDKs](https://orkes.io/content/category/sdks), [APIs](https://orkes.io/content/category/ref-docs/api), or the [UI](http://orkes.io/content/developer-guides/build-workflows-using-ui). Use the provided JSON below to create the workflow using the Conductor UI.
+
+**To create a workflow using Conductor UI:**
+
+1. Go to [**Definitions** > **Workflow**](https://developer.orkescloud.com/workflowDef) from the left navigation menu on your Conductor cluster.
+2. Select **+ Define workflow.**
+3. In the **Code** tab, paste the following code:
+
+```JSON
+{
+ "name": "SequentialHTTPWorkflow",
+ "description": "Sequential HTTP workflow using IP geolocation and no-auth weather API.",
+ "version": 1,
+ "tasks": [
+   {
+     "name": "get_IP",
+     "taskReferenceName": "get_IP_ref",
+     "inputParameters": {
+       "http_request": {
+         "uri": "http://ip-api.com/json/${workflow.input.ipaddress}?fields=status,message,country,countryCode,region,regionName,city,zip,lat,lon,timezone,offset,isp,org,as,query",
+         "method": "GET"
+       }
+     },
+     "type": "HTTP"
+   },
+   {
+     "name": "get_weather",
+     "taskReferenceName": "get_weather_ref",
+     "inputParameters": {
+       "http_request": {
+         "uri": "https://wttr.in/${get_IP_ref.output.response.body.lat},${get_IP_ref.output.response.body.lon}?format=j1",
+         "method": "GET"
+       }
+     },
+     "type": "HTTP"
+   }
+ ],
+ "inputParameters": [
+   "ipaddress"
+ ],
+ "outputParameters": {
+   "weather": "${get_weather_ref.output.response.body.current_condition[0].weatherDesc[0].value}",
+   "temperature_C": "${get_weather_ref.output.response.body.current_condition[0].temp_C}"
+ },
+ "schemaVersion": 2
+}
+```
+
+4. Select **Save** > **Confirm**.
+
+## Step 2: Execute workflow 
+
+**To test the workflow:**
+1. From your workflow definition, go to the **Run** tab.
+2. Set the input parameter. For example:
+
+```json
+{
+ "ipaddress": "8.8.8.8"
+}
+```
+
+!!! tip "Try it with your own IP address"
+    Want to personalize your test run? Replace with your own public IP address. You can find it at https://whatismyipaddress.com. The workflow will return your actual ZIP code and local weather.
+
+<p align="center"><img src="/content/img/execute-sequential-http-workflow.png" alt="Configuring input parameters for executing the workflow" width="100%" height="auto"></img></p>
+
+3. Select **Execute**.
+
+This initiates the workflow and takes you to the workflow execution page.
+
+Once the workflow is completed, check the **Workflow Input/Output** tab to see the result, which includes the weather condition and temperature for the given IP address.
+
+<p align="center"><img src="/content/img/sequential-http-workflow-output.png" alt="Workflow output returning the ZIP code, weather, and temperature for the given IP address" width="100%" height="auto"></img></p>

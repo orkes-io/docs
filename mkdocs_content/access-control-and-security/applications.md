@@ -1,0 +1,86 @@
+---
+title: "Managing Applications"
+description: "Learn how applications provide secure authentication for services and clients connecting to your Conductor cluster."
+---
+
+# Managing Applications
+
+Applications are non-human identities for programs that call Orkes Conductor: workers, services, CI/CD jobs, scripts, gateway services, and test harnesses. Each application can have access keys and resource permissions, so production automation does not depend on human user credentials.
+
+!!! tip "5-minute path"
+    Create one application per runtime responsibility, grant only the required roles and resource permissions, generate an access key, store the secret securely, and rotate keys on a schedule.
+
+Each application can have one or more key/secret pairs for SDK and API authentication. See [Authentication and Access Keys](/content/sdks/authentication) for client setup.
+
+## Applications as service accounts
+
+Use applications the same way you would use service accounts in other systems. Separate them by responsibility:
+
+| Application | Recommended access |
+| ----------- | ------------------ |
+| Worker service | `Worker` role and `Execute` permission on the task definitions or domains it polls. |
+| Workflow client | `Execute` permission on workflows it starts and any tasks required by that workflow. |
+| CI/CD publisher | `Metadata API` role plus read/update permissions on workflow and task definitions it deploys. |
+| API Gateway service account | Execute permission on workflows exposed through gateway routes. |
+| MCP Gateway service account | Execute permission on workflows exposed as MCP tools. |
+
+Avoid sharing one broad application across workers, clients, and deployment jobs. Separate applications make incident response, key rotation, permission reviews, and audit trails much cleaner.
+
+## Application roles
+
+Application roles grant capability beyond ordinary resource permissions. Choose the smallest role set that fits the runtime.
+
+| Role | Use when |
+| ---- | -------- |
+| Worker | The application polls and completes worker tasks. It still needs `Execute` permission on the task or domain. |
+| Metadata API | The application creates, reads, or updates workflow definitions, task definitions, or user forms. |
+| Application API | The application manages other applications. Use only for automation that explicitly owns application provisioning. |
+| Unrestricted Worker | The worker must poll any task in the cluster. Reserve for trusted platform workers. |
+| Metadata Manager | The application manages metadata across the cluster. |
+| Workflow Manager | The application manages workflow executions across the cluster. |
+| Application Manager | The application creates, updates, or deletes applications across the cluster. |
+| Admin | Full control. Use only for tightly governed automation. |
+
+Resource permissions still matter. For example, a worker application normally needs both the `Worker` role and `Execute` permission on the task definition or domain it polls.
+
+## Configuring applications
+
+Configure an application with roles, keys, and resource permissions.
+
+1. Create an application in **Access Control** > **Applications**.
+2. Enable the minimum application roles needed by the runtime.
+3. Create an access key and store the secret in your secret manager. The secret is shown only once.
+4. Grant permissions to workflows, tasks, domains, secrets, environment variables, tags, integrations, prompts, or gateway resources as required.
+5. Configure the SDK or API client with the server URL, key ID, and key secret.
+
+Permission levels are:
+
+| Permission | Allows |
+| ---------- | ------ |
+| Read | View the resource. |
+| Update | Modify the resource. Metadata resources also require the `Metadata API` role. |
+| Execute | Start workflows, poll/complete tasks, or invoke executable resources. Worker applications also require the `Worker` role for task polling. |
+| Delete | Delete the resource. Metadata resources also require the `Metadata API` role. |
+
+!!! tip
+    For broad team or environment access, grant permissions to [tags](/content/access-control-and-security/tags) rather than repeating the same permissions on many resources.
+
+## Editing applications
+
+Edit an application when its runtime responsibility changes. Review the roles, resource permissions, active keys, and key age together. Remove stale keys instead of leaving them attached to inactive services.
+
+## Deleting applications
+
+Delete an application only after confirming no workers, clients, gateway routes, schedules, or CI/CD jobs still use its keys. Deleting the application invalidates its access keys.
+
+## Example application setup
+
+Consider two programs and one worker:
+
+| Runtime | Responsibility | Access |
+| ------- | -------------- | ------ |
+| `worker-x` | Polls and completes `Task X`. | `Worker` role and `Execute` on `Task X`. |
+| `program-1` | Starts `Workflow 1`. | `Execute` on `Workflow 1` and any required task permissions. |
+| `program-2` | Starts `Workflow 2`. | `Execute` on `Workflow 2` and any required task permissions. |
+
+This is better than one shared application with access to both workflows and the worker task. The worker does not need permission to start workflows, and the workflow clients do not need permission to poll task queues.

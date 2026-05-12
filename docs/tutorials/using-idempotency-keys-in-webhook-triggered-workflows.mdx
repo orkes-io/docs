@@ -178,7 +178,7 @@ Select **Save** to update the workflow. The Conductor UI highlights the changes 
 
 ## Step 4: Create a webhook in Orkes Conductor
 
-In this example, we use a *Custom* webhook to simulate input from an internal system. However, you can create a webhook based on your requirements using [any supported platforms](https://orkes.io/content/developer-guides/webhook-integration#step-2-create-a-webhook) or a Custom webhook for integration with other systems.
+In this example, we use a *Custom* webhook to simulate input from an internal system. However, you can create a webhook based on your requirements using [any supported platforms](https://orkes.io/content/developer-guides/webhook-integration#step-2-create-a-webhook-in-orkes-conductor) or a Custom webhook for integration with other systems.
 
 Create a webhook that triggers the workflow you defined. Configure it to use the *bug_id* input variable as the idempotency key to prevent duplicate executions for the same event.
 
@@ -202,7 +202,7 @@ Create a webhook that triggers the workflow you defined. Configure it to use the
 
 After saving, Conductor generates an unverified webhook URL. 
 
-[URL verification](https://orkes.io/content/developer-guides/webhook-integration#step-3-verify-the-webhook-url) depends on the type of webhook. For Custom webhooks, Conductor uses header-based verification. This means incoming requests must include headers that match the exact names and values specified during configuration. If the request doesn’t match all required headers, it will be ignored. The URL is marked as verified when the first valid request with matching headers is received.
+[URL verification](https://orkes.io/content/developer-guides/webhook-integration#step-3-create-a-webhook-in-the-source-platform-and-verify-the-conductor-webhook-url) depends on the type of webhook. For Custom webhooks, Conductor uses header-based verification. This means incoming requests must include headers that match the exact names and values specified during configuration. If the request doesn’t match all required headers, it will be ignored. The URL is marked as verified when the first valid request with matching headers is received.
 
 By using `${workflow.input.bug_id}` as the idempotency key, Conductor will prevent duplicate workflow executions for the same bug report, even if the webhook is triggered multiple times.
 

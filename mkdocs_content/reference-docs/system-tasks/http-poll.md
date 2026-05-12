@@ -1,0 +1,191 @@
+---
+title: "HTTP Poll"
+description: "Learn how the HTTP Poll task repeatedly calls an HTTP endpoint until a specified condition is met in Orkes Conductor."
+---
+
+# HTTP Poll
+
+The HTTP Poll task is used to invoke HTTP endpoints until a specified condition is met.
+
+An HTTP Poll task sends HTTP requests to a specified endpoint at regular intervals and continues until a given termination condition is met. This is useful when you need to check the status or output of an HTTP service repeatedly.
+
+## Task parameters
+
+Configure these parameters for the HTTP Poll task.
+
+| Parameter                                | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      | Required/ Optional                |
+| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------- |
+| inputParameters.http_request. **uri**                  | The URI for the service. It can be a partial value when using `vipAddress` or it can be the server address.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      | Required.                         |
+| inputParameters.http_request. **method**               | The HTTP method. Supported methods:<ul><li>GET</li><li>HEAD</li><li>POST</li><li>PUT</li><li>PATCH</li><li>DELETE</li><li>OPTIONS</li><li>TRACE</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | Required.                         |
+| inputParameters.http_request. **accept**               | The accept header required by the server. The default value is `application/json`. Supported types: <ul><li>application/java-archive</li><li>application/EDI-X12</li><li>application/EDIFACT</li><li>application/javascript</li><li>application/octet-stream</li><li>application/ogg</li><li>application/pdf</li><li>application/xhtml+xml</li><li>application/x-shockwave-flash</li><li>application/json</li><li>application/ld+json</li><li>application/xml</li><li>application/zip</li><li>application/x-www-form-urlencoded</li><li>audio/mpeg</li><li>audio/x-ms-wma</li><li>audio/vnd.rn-realaudio</li><li>audio/x-wav</li><li>image/gif</li><li>image/jpeg</li><li>image/png</li><li>image/tiff</li><li>image/vnd.microsoft.icon</li><li>image/x-icon</li><li>image/vnd.djvu</li><li>image/svg+xml</li></ul>Any other headers can be [passed as a dynamic variable](/content/developer-guides/passing-inputs-to-task-in-conductor). | Optional.                         |
+| inputParameters.http_request. **contentType**          | The content type for the server. The default value is `application/json`. Supported types: <ul><li>application/java-archive</li><li>application/EDI-X12</li><li>application/EDIFACT</li><li>application/javascript</li><li>application/octet-stream</li><li>application/ogg</li><li>application/pdf</li><li>application/xhtml+xml</li><li>application/x-shockwave-flash</li><li>application/json</li><li>application/ld+json</li><li>application/xml</li><li>application/zip</li><li>application/x-www-form-urlencoded</li><li>audio/mpeg</li><li>audio/x-ms-wma</li><li>audio/vnd.rn-realaudio</li><li>audio/x-wav</li><li>image/gif</li><li>image/jpeg</li><li>image/png</li><li>image/tiff</li><li>image/vnd.microsoft.icon</li><li>image/x-icon</li><li>image/vnd.djvu</li><li>image/svg+xml</li></ul>It can be [passed as a dynamic variable](/content/developer-guides/passing-inputs-to-task-in-conductor).                       | Optional.                         |
+| inputParameters.http_request. **terminationCondition** | The condition to be evaluated after every HTTP invocation. If the condition is evaluated as `true`, the task is marked as completed. If the condition evaluates to `false`, Conductor schedules the next poll according to the configurations (`pollingInterval` and `pollingStrategy`).<br/><br/>When writing the termination condition, it can be [passed as a dynamic variable](/content/developer-guides/passing-inputs-to-task-in-conductor). To use the current HTTP poll as input to the condition, prefix it with a `$`. For example, `$.output.status`. Similarly, refer to previous tasks' output using `$.task_ref_name.output`.<br/><br/>**Example Termination Condition**-`(function(){ return $.output.response.body.randomInt > 10;})();`                                                                                                                                                                          | Required.                         |
+| inputParameters.http_request. **pollingInterval**      | The duration in seconds between each HTTP invocation. The default value is 60. The minimum value must be 60 for pollInterval.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | Required.                         |
+| inputParameters.http_request. **pollingStrategy**      | The polling strategy. Supported values:<ul><li>`FIXED`—The duration between each HTTP invocation remains constant.</li><li>`LINEAR_BACKOFF`— The duration between invocations increases linearly, calculated by multiplying the poll count with the pollingInterval. Note that the poll count increments with each invocation.</li><li>`EXPONENTIAL_BACKOFF`—The duration between invocations increases exponentially, calculated by multiplying the poll count by 2 base exponential powers of the `pollingInterval`.</li></ul>By default, the polling strategy is set to FIXED.                                                                                                                                                                                                                                                                                                                                                            | Required.                         |
+| inputParameters.http_request. **headers**              | A map of additional HTTP headers to be sent along with the request. Supported types:<ul><li>Accept-Language</li><li>Authorization</li><li>Cache Control</li><li>Content-MD5</li><li>From</li><li>If-Match</li><li>If-Modified-Since</li><li>If-None-Match</li><li>Max-Forwards</li><li>Pragma</li><li>If-Range</li><li>If-Unmodified-Since</li><li>Proxy-Authorization</li><li>Range</li><li>Warning</li><li>x-api-key</li><li>Accept-Charset</li><li>Accept-Encoding</li><li>Accept-Control-Request-Headers</li><li>Accept-Control-Request-Method</li><li>Content-Transfer-Encoding</li><li>Expect</li><li>Transfer-Encoding</li><li>Trailer</li></ul>                                                                                                                                                                                                                                                                                          | Optional.                         |
+| inputParameters.http_request. **body**                 | The request body for POST, PUT, or PATCH methods. Can be text or parameters such as string, number, boolean, null, or object/array.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | Required for POST, PUT, or PATCH. |
+| inputParameters.http_request. **encode**               | Determines whether the URI needs encoding. When set to `true`, the Conductor will automatically encode the query parameters before sending the HTTP request. Set this to `false` if the URI is already encoded. The default value is `true`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | Optional.                         |
+| inputParameters.http_request. **acceptedStatusCodes**<br/><span class="table-note"><strong>Available since:</strong> v5.2.97 and later.</span> | List of HTTP status codes or families to treat as successful. Supports exact codes (such as "404", "302") and family wildcards ("1xx", "2xx", "3xx", "4xx", "5xx").<br/><br/>When not set, only 2xx responses are treated as successful. When explicitly set, only the listed codes are accepted, i.e.; "2xx" is not implicitly included. | Optional. | 
+
+The following are generic configuration parameters that can be applied to the task and are not specific to the HTTP Poll task.
+
+<details>
+<summary>Caching parameters</summary>
+
+You can cache the task outputs using the following parameters. Refer to [Caching Task Outputs](/content/faqs/task-cache-output) for a full guide.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| cacheConfig.**ttlInSecond** | The time to live in seconds, which is the duration for the output to be cached. | Required if using *cacheConfig*. |
+| cacheConfig.**key** | The cache key is a unique identifier for the cached output and must be constructed exclusively from the task’s input parameters.<br/>It can be a string concatenation that contains the task’s input keys, such as `${uri}-${method}` or `re_${uri}_${method}`. | Required if using *cacheConfig*. |
+
+</details>
+
+<details>
+<summary>Other generic parameters</summary>
+
+Here are other parameters for configuring the task behavior.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| optional | Whether the task is optional. <br/><br/>If set to`true`, any task failure is ignored, and the workflow continues with the task status updated to `COMPLETED_WITH_ERRORS`. However, the task must reach a terminal state. If the task remains incomplete, the workflow waits until it reaches a terminal state before proceeding. | Optional. | 
+
+</details>
+
+## Task configuration
+
+This is the task configuration for an HTTP Poll task.
+
+```json
+{
+     "name": "http_poll",
+     "taskReferenceName": "http_poll_ref",
+     "type": "HTTP_POLL",
+     "inputParameters": {
+       "http_request": {
+         "uri": "https://orkes-api-tester.orkesconductor.com/api",
+         "method": "GET",
+         "accept": "application/json",
+         "contentType": "application/json",
+         "terminationCondition": "(function(){ return $.output.response.body.randomInt > 10;})();",
+         "pollingInterval": 60,
+         "pollingStrategy": "FIXED",
+         "encode": true,
+         "headers": {
+           "header-1": "${workflow.input.header-1}"
+         }
+       }
+     }
+}
+```
+
+## Task output
+
+The HTTP Poll task will return the following parameters.
+
+| Parameter    | Description                                                                                                                   |
+| ------------ | ----------------------------------------------------------------------------------------------------------------------------- |
+| response     | A JSON object representing the response, if present.                                                                          |
+| headers      | An object containing the metadata about the response.                                                                         |
+| statusCode   | The [HTTP status code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes) indicating success or failure of the request. |
+| reasonPhrase | The reason phrase associated with the HTTP status code.                                                                       |
+| body         | The response body containing the data returned by the API.                                                                    |
+
+## Adding an HTTP Poll task in UI
+
+An HTTP Poll task can be configured manually through the UI or automatically populated using registered service definitions.
+
+
+=== "Using registered services"
+
+    !!! info "Prerequisites"
+        [Register the remote service in Orkes Conductor](https://orkes.io/content/remote-services).
+
+    **To add an HTTP task using registered services:**
+
+    1. In your workflow, select the (**+**) icon and add an **HTTP Poll** task.
+    2. Select **Populate from remote services**.
+    3. In **Service**, select the registered HTTP service.
+    4. In **Host**, select the required host for the service.
+    5. In **Service method**, select the required endpoint.
+    6. Select **Populate**.
+    7. In **Termination Condition**, set the condition to be evaluated after every API invocation.
+    8. Set the **Polling Interval** and **Polling Strategy**.
+
+    <p align="center"><img src="/content/img/adding-service-to-http-poll-task.gif" alt="Adding the registered service to an HTTP Poll task" width="100%" height="auto"></img></p>
+
+    This method automatically fills in the HTTP Poll task parameters based on the selected service. It is recommended if you have already registered your HTTP services in Orkes Conductor.
+
+    !!! info "Note"
+        When an HTTP service with circuit breaker configuration is applied in an HTTP Poll task, the circuit breaker settings are not applied.
+
+=== "Manually configuring an HTTP Poll task"
+
+    **To add an HTTP Poll task:**
+
+    1. In your workflow, select the (**+**) icon and add an **HTTP Poll** task.
+    2. Choose the HTTP method for sending requests from the **Method** drop-down.
+    3. In **URL**, add the URI to be called by the HTTP Poll task.
+    4. In **Accept**, select the accept header as required by the server.
+    5. In **Content-Type**, select the content type for the server.
+    6. In **Termination Condition**, set the condition to be evaluated after every API invocation.
+    7. Set the **Polling Interval** and **Polling Strategy**.
+    8. (Optional) In **Other-headers**, add any additional HTTP headers to be sent along with the request.
+    9. In **Body**, add the request body when using PUT, POST, or PATCH method.
+    10. (Optional) Enable or disable **Encode** to specify if the URI needs to be encoded.
+
+    <center><p><img src="/content/img/ui-guide-http-poll-task.png" alt="Adding HTTP Poll Task" width="100%" height="auto"/></p></center>
+
+
+## Examples
+
+Here are some examples for using the HTTP Poll task.
+
+<details>
+<summary>Using HTTP Poll task in a workflow</summary>
+<p>
+
+To demonstrate the HTTP Poll task, consider the following sample workflow.
+
+```json
+{
+  "name": "your_workflow_name",
+  "description": "Sample workflow to get started with HTTP POLL task.",
+  "tasks": [
+    {
+      "name": "example",
+      "taskReferenceName": "example",
+      "inputParameters": {
+        "http_request": {
+          "uri": "https://jsonplaceholder.typicode.com/posts/1",
+          "method": "GET",
+          "terminationCondition": "$.output.body.length > 10 ? true : false;",
+          "pollingInterval": "60",
+          "pollingStrategy": "FIXED"
+        }
+      },
+      "type": "HTTP_POLL"
+    }
+  ]
+}
+```
+
+In this configuration, the polling conditions are configured as follows:
+
+- **_uri_** - Specifies the endpoint to be called (https://jsonplaceholder.typicode.com/posts/1 in this example).
+- **_method_** - Defines the HTTP method used for the request (GET in this case).
+- **_terminationCondition_** - Evaluate whether the length of the response body ($.output.body.length) exceeds ten characters to determine task completion.
+- **_pollingInterval_** - Sets the interval (60 seconds) between successive API invocations.
+- **_pollingStrategy_** - Utilizes a FIXED strategy to maintain a constant interval between invocations.
+
+Conductor will execute the HTTP API call every 60 seconds until the condition (response body length > 10) evaluates to true.
+
+</p>
+</details>
+
+<details>
+<summary>Orchestrating long-running APIs</summary>
+<p>
+Explore the full tutorial on [orchestrating long-running APIs](/content/tutorials/long-running-apis).
+</p>
+</details>

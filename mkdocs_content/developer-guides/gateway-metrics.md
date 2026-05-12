@@ -1,0 +1,16 @@
+---
+title: "Monitor Gateway Metrics"
+description: "Learn how to monitor API and MCP Gateway services and routes using built-in metrics such as request count, latency, and errors in Orkes Conductor."
+---
+
+# Monitor Gateway Metrics
+
+Gateway metrics are now covered in the API Gateway guide so route design, authentication, request handling, and operational monitoring live in one place.
+
+Use [Monitor API Gateway metrics](/content/developer-guides/api-gateway#monitor-api-gateway-metrics) for request volume, success rate, latency, error rate, service-level metrics, route-level metrics, workflow debugging, alerting, and production guidance.
+
+For AI-agent tool endpoints, use [MCP Gateway](/content/developer-guides/mcp-gateway) with the same service and route monitoring model.
+
+Use gateway metrics when you need to answer operational questions about exposed workflows: which routes are getting traffic, which clients are seeing errors, whether p95 latency is drifting, and whether a route problem maps to bad input, authentication, workflow timeout, failed worker task, or a downstream dependency.
+
+The API Gateway guide now keeps those checks next to route configuration because metrics are most useful when read with the service, route, workflow version, timeout, schema, cache, and rate-limit settings that produced them.

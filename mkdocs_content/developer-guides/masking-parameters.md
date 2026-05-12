@@ -1,0 +1,217 @@
+---
+title: "Masking Parameters"
+description: "Learn how to securely pass sensitive data in Conductor by masking parameters, ensuring privacy and preventing unauthorized access to confidential data."
+---
+
+# Masking Parameters
+
+Masking prevents sensitive values from being exposed in workflow execution payloads, task inputs, task outputs, logs, and archived execution data. Use it for tokens, API keys, credentials, authorization headers, customer identifiers, or any field that should not be visible during debugging.
+
+!!! tip "5-minute path"
+    Store long-lived credentials as secrets, reference them with `${workflow.secrets.<secretName>}`, and use `_masked`, `_secrets`, or `maskedFields` for sensitive runtime values.
+
+## Masking sensitive data
+
+Conductor supports three masking mechanisms:
+
+| Mechanism | Use when |
+| --------- | -------- |
+| `_masked` | A task input contains runtime-sensitive values that should remain available for restart/archive behavior. |
+| `_secrets` | A task input contains sensitive values that should be permanently replaced with `***` during archiving. |
+| `maskedFields` | Specific workflow input or output fields should be masked by name. Available in v5.1.18+/v4.1.68+. |
+
+`_masked` example:
+
+```json
+{
+  "inputParameters": {
+    "_masked": {
+      "customerToken": "${workflow.input.customerToken}"
+    }
+  }
+}
+```
+
+`_secrets` example:
+
+```json
+{
+  "inputParameters": {
+    "_secrets": {
+      "apiKey": "${workflow.input.apiKey}"
+    }
+  }
+}
+```
+
+`maskedFields` example:
+
+```json
+{
+  "name": "payment_workflow",
+  "version": 1,
+  "schemaVersion": 2,
+  "inputParameters": ["customerId", "paymentToken"],
+  "maskedFields": ["paymentToken"],
+  "tasks": []
+}
+```
+
+In execution details, masked fields are displayed as `***`.
+
+### Passing sensitive data between tasks
+
+When one task produces sensitive output and another task needs it, place the referenced value under `_masked` or `_secrets` in the receiving task's input.
+
+```json
+{
+  "name": "charge_payment",
+  "taskReferenceName": "charge_payment",
+  "type": "HTTP",
+  "inputParameters": {
+    "_masked": {
+      "authorization": "${create_token.output.authorization}"
+    },
+    "http_request": {
+      "uri": "https://payments.example.com/charge",
+      "method": "POST",
+      "headers": {
+        "Authorization": "${charge_payment.input._masked.authorization}"
+      },
+      "body": {
+        "customerId": "${workflow.input.customerId}",
+        "amount": "${workflow.input.amount}"
+      }
+    }
+  }
+}
+```
+
+Design workers and HTTP tasks so sensitive values are not copied into ordinary output fields unless the next task explicitly needs them.
+
+### Masking secret references and secret values
+
+Secrets referenced with `${workflow.secrets.<secretName>}` are masked when resolved. Use this pattern for credentials that should be stored centrally instead of passed through workflow input.
+
+```json
+{
+  "name": "charge_payment",
+  "taskReferenceName": "charge_payment",
+  "type": "HTTP",
+  "inputParameters": {
+    "http_request": {
+      "uri": "https://payments.example.com/charge",
+      "method": "POST",
+      "headers": {
+        "Authorization": "Bearer ${workflow.secrets.payment_api_token}"
+      },
+      "body": {
+        "customerId": "${workflow.input.customerId}",
+        "amount": "${workflow.input.amount}"
+      }
+    }
+  }
+}
+```
+
+The resolved value of `payment_api_token` is shown as `***` in execution details. Secret values used inside INLINE scripts or JSON JQ TRANSFORM expressions are also masked when they are resolved.
+
+## Workflow behavior with masked parameters
+
+Masking affects restart and archive behavior:
+
+| Mechanism | Restart/archive behavior |
+| --------- | ------------------------ |
+| `_masked` | Retained during archiving, so restarts can still use the original value. |
+| `_secrets` | Permanently replaced with `***` during archiving. Restarting may fail if downstream tasks still require the original value. |
+| `maskedFields` | Permanently replaced with `***` during archiving. Restarting may fail if the field is required later. |
+
+For long-running or restartable workflows, prefer workflow secrets for durable credentials and `_masked` for runtime values that a restart may need.
+
+## Examples
+
+### Mask selected workflow inputs
+
+```json
+{
+  "name": "mask_selected_inputs",
+  "version": 1,
+  "schemaVersion": 2,
+  "inputParameters": ["customerId", "paymentToken"],
+  "maskedFields": ["paymentToken"],
+  "tasks": [
+    {
+      "name": "validate_payment",
+      "taskReferenceName": "validate_payment",
+      "type": "SIMPLE",
+      "inputParameters": {
+        "customerId": "${workflow.input.customerId}",
+        "paymentToken": "${workflow.input.paymentToken}"
+      }
+    }
+  ]
+}
+```
+
+### Pass sensitive worker output forward
+
+```json
+{
+  "name": "pass_sensitive_output",
+  "version": 1,
+  "schemaVersion": 2,
+  "tasks": [
+    {
+      "name": "create_session",
+      "taskReferenceName": "create_session",
+      "type": "SIMPLE"
+    },
+    {
+      "name": "call_private_api",
+      "taskReferenceName": "call_private_api",
+      "type": "HTTP",
+      "inputParameters": {
+        "_masked": {
+          "sessionToken": "${create_session.output.sessionToken}"
+        },
+        "http_request": {
+          "uri": "https://api.example.com/private",
+          "method": "GET",
+          "headers": {
+            "Authorization": "Bearer ${call_private_api.input._masked.sessionToken}"
+          }
+        }
+      }
+    }
+  ]
+}
+```
+
+### Use a stored secret in an HTTP task
+
+```json
+{
+  "name": "secret_backed_http_call",
+  "version": 1,
+  "schemaVersion": 2,
+  "tasks": [
+    {
+      "name": "call_billing_api",
+      "taskReferenceName": "call_billing_api",
+      "type": "HTTP",
+      "inputParameters": {
+        "http_request": {
+          "uri": "https://billing.example.com/invoices",
+          "method": "POST",
+          "headers": {
+            "Authorization": "Bearer ${workflow.secrets.billing_api_token}"
+          },
+          "body": {
+            "invoiceId": "${workflow.input.invoiceId}"
+          }
+        }
+      }
+    }
+  ]
+}
+```

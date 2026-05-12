@@ -1,0 +1,92 @@
+---
+title: "Mongo Vector Database Integration with Orkes Conductor"
+description: "Learn how to integrate MongoDB vector databases so workflows can store and retrieve embeddings for AI tasks in Orkes Conductor."
+---
+
+# Mongo Vector Database Integration with Orkes Conductor
+
+To use LLM embedding tasks in Orkes Conductor, you must integrate your Conductor cluster with the necessary vector database providers. This guide explains how to integrate Atlas Vector Search from MongoDB with Orkes Conductor. Here’s an overview:
+
+1. Get the required credentials from Atlas Vector Search.
+2. Configure a new Mongo Vector Database integration in Orkes Conductor.
+3. Add indexes to the integration.
+4. Set access limits to the vector database to govern which applications or groups can use it.
+
+## Step 1: Get the Atlas Vector Search credentials
+
+**Set up [Atlas Vector Search](https://www.mongodb.com/docs/atlas/atlas-vector-search/tutorials/vector-search-quick-start/) along with an index**, and retrieve the following credentials:
+
+- [MongoDB Atlas connection string](https://www.mongodb.com/docs/manual/reference/connection-string/#find-your-mongodb-atlas-connection-string)
+- Database name
+
+## Step 2: Add an integration for Mongo Vector Database
+
+After obtaining the credentials, add a Mongo Vector Database integration to your Conductor cluster.
+
+**To create a Mongo Vector Database integration:**
+
+1. Go to **Integrations** > **Connections and Resources** from the left navigation menu on your Conductor cluster.
+2. Select **+ New integration**.
+3. In the **Vector Databases** section, choose **Mongo Vector Database**.
+4. Select **+ Add** and enter the following parameters:
+
+| Parameters | Description |
+| ---------- | ----------- | 
+| Integration name | A name for the integration. |
+| MongoDB Atlas connection string | The MongoDB Atlas connection string, in the format: **mongodb+srv://username:password@cluster0.mongodb.net/** | 
+| Database name | The database name to store and query vector data. | 
+| Embedding dimensions | The number of dimensions in the embeddings. The embedding dimensions often depend on the AI model used to generate the embeddings.<br/><br/>Common default values are: OpenAI `text-embedding-3-small`: 1536, `text-embedding-3-large`: 3072, and Cohere `embed-english-v3.0`: 1024. |
+| Distance metric | The distance metric, which is a metric to measure the similarity or distance between vectors. Supported values:<ul><li>Cosine Similarity</li><li>Euclidean Distance</li><li>Dot Product</li></ul> |
+| Number of nearest neighbours | The number of nearest neighbors to be used during the search. | 
+| Description | A description of the integration. |
+
+<p align="center"><img src="/content/img/create-new-mongo-integration.png" alt="Mongo Vector Database Integration with Orkes Conductor" width="60%" height="auto"></img></p>
+
+5. (Optional) Toggle the **Active** button off if you don’t want to activate the integration instantly.
+6. Select **Save**.
+
+## Step 3: Add Mongo Vector Database indexes
+
+Once you’ve integrated the Mongo Vector Database, the next step is to configure specific indexes.
+
+**To add an index to the integration:**
+
+1. Go to **Integrations** and select the **+** button next to the integration created.
+
+<p align="center"><img src="/content/img/create-new-mongo-integration-index.png" alt="Create Indexes for MongoDB Integration" width="100%" height="auto"></img></p>
+
+2. Select **+ New Index**.
+3. Enter the **Index name** and a **Description**. The index must already exist in the connected MongoDB Atlas database.
+
+<p align="center"><img src="/content/img/create-new-mongo-integration-index-model.png" alt="Create Indexes for MongoDB Integration Model" width="60%" height="auto"></img></p>
+
+4. (Optional) Toggle the **Active** button off if you don’t want to activate the index instantly.
+5. Select **Save**.
+
+This saves the index for future use in AI tasks within Orkes Conductor.
+
+## Step 4: Set access limits to integration
+
+Once the integration is configured, set access controls to manage which [applications](https://orkes.io/content/access-control-and-security/applications) or [groups](https://orkes.io/content/access-control-and-security/users-and-groups#groups) can use the databases.
+
+**To provide access to an application or group:**
+
+1. Go to **Access Control** > **Applications** or **Groups** from the left navigation menu on your Conductor cluster.
+2. Create a new group/application or select an existing one.
+3. In the **Permissions** section, select **+ Add Permission**.
+4. In the **Integration** tab, select the required vector database providers and toggle the necessary permissions.
+5. Select **Add Permissions**. 
+
+<p align="center"><img src="/content/img/add-integration-permission-for-mongo-db.png" alt="Add Permissions for Mongo Vector Database Integration" width="60%" height="auto"></img></p>
+
+The group or application can now access the vector database according to the configured permissions.
+With the integration in place, you can now create workflows using [AI/LLM tasks](https://orkes.io/content/category/reference-docs/ai-tasks).
+
+!!! info
+    To store data in a vector database, an embedding is to be generated by an AI model. You must also integrate an [AI model provider](https://orkes.io/content/category/integrations/ai-llm) of your choice to use this integration in workflows.
+
+## More resources
+
+- [AI Orchestration](https://orkes.io/content/ai-orchestration)
+- [Using AI Models or LLMs](https://orkes.io/content/developer-guides/using-llms-in-your-orkes-conductor-workflows)
+- [Using Vector Databases](https://orkes.io/content/developer-guides/using-vector-databases-in-your-orkes-conductor-workflows)

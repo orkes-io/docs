@@ -193,7 +193,7 @@ Now that your translation workflow is ready, you can deploy it to production. On
 1. Grant your application with access to the translation workflow resources.
 2. Retrieve the Conductor access key for the application.
 3. Generate the JWT access token to connect to the API server.
-4. Invoke the workflow using the [Start Workflow Execution API](/reference-docs/api/workflow/start-workflow-execution) or [Execute Workflow Synchronously API](/reference-docs/api/workflow/synchronous-execution).
+4. Invoke the workflow using the [Start Workflow Execution API](/reference-docs/api/workflow/start-workflow-execution) or [Execute Workflow Synchronously API](/reference-docs/api/workflow/synchronous-workflow-execution).
 
 
 ### Step 1: Grant your application with access
@@ -239,7 +239,7 @@ The JWT token will be returned in the response. Copy it to use in the next step.
 
 ### Step 4: Invoke the workflow
 
-Invoke the workflow from the terminal using either the [Start Workflow Execution API](/reference-docs/api/workflow/start-workflow-execution) or [Execute Workflow Synchronously API](/reference-docs/api/workflow/synchronous-execution). Set the JWT token in the X-Authorization header and format the translation workflow inputs in the response body.
+Invoke the workflow from the terminal using either the [Start Workflow Execution API](/reference-docs/api/workflow/start-workflow-execution) or [Execute Workflow Synchronously API](/reference-docs/api/workflow/synchronous-workflow-execution). Set the JWT token in the X-Authorization header and format the translation workflow inputs in the response body.
 
 
 <Tabs>

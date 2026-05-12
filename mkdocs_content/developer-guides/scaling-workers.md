@@ -1,0 +1,80 @@
+---
+title: "Guide to Scaling Workers"
+description: "Learn how to scale workers based on workflow throughput, queue depth, task latency, and worker capacity in Orkes Conductor."
+---
+
+# Guide to Scaling Workers
+
+Workers execute the custom code behind Worker tasks. Scale them like production services: measure queue depth, processing rate, latency, error rate, and resource saturation, then add worker capacity or tune concurrency before queues grow.
+
+Use this guide when a task is waiting in `SCHEDULED`, queue depth is rising, task latency is increasing, or a new workflow is expected to add significant load.
+
+!!! tip "5-minute path"
+    Start with one metric per task type: queue depth, completion rate, and queue wait time. If queue depth grows while worker CPU, memory, or downstream dependencies are saturated, add worker instances or reduce per-task work. If workers are idle but queue wait time is high, check polling interval, domains, permissions, and task names.
+
+## Scaling model
+
+For a rough capacity estimate:
+
+```text
+required_worker_slots = arrival_rate_per_second * p95_task_duration_seconds
+required_worker_processes = ceil(required_worker_slots / concurrent_tasks_per_process)
+```
+
+Example: if a task receives 20 requests per second and p95 task duration is 2 seconds, it needs about 40 concurrent worker slots. If each worker process safely runs 5 tasks concurrently, start with 8 worker processes and adjust from observed metrics.
+
+Increase capacity in this order:
+
+1. Add worker processes or pods for the task type.
+2. Tune SDK worker concurrency or thread count.
+3. Reduce task execution time or move expensive work to specialized workers.
+4. Split traffic with [task domains](/content/developer-guides/task-to-domain) when teams, regions, or tenants need isolation.
+5. Add rate limits when downstream systems need protection.
+
+## Metrics to watch
+
+Conductor publishes metrics that let you monitor worker health. Each metric includes `taskType`, which lets you monitor and alert on a specific task definition.
+
+### Pending requests
+
+Queue depth shows how many tasks are waiting for workers.
+
+```promql
+max(task_queue_depth{taskType="<task_definition_name>"})
+```
+
+Use this metric to detect insufficient worker capacity. A non-zero queue is normal for long-running tasks, but a queue that grows over time usually means workers cannot keep up.
+
+### Tasks completed per second
+
+Completion rate shows worker throughput.
+
+```promql
+rate(task_completed_seconds_count{taskType="<task_definition_name>"}[$__rate_interval])
+```
+
+Use this metric to verify whether new worker instances increase throughput. If throughput does not improve after scaling workers, check downstream service limits, task failures, rate limits, and worker resource saturation.
+
+### Queue wait time
+
+Queue wait time shows how long tasks wait before a worker picks them up.
+
+```promql
+max(task_queue_wait_seconds{quantile="<quantile>",taskType="<task_definition_name>"})
+```
+
+If wait time is high, check:
+
+- Worker process count and whether each worker is busy.
+- SDK polling interval and concurrency settings.
+- Application permissions for the task.
+- Task domain configuration.
+- Whether the workflow task name exactly matches the worker task definition name.
+
+## Production notes
+
+- Keep workers idempotent. Conductor can redeliver tasks after worker crashes, timeouts, or network failures.
+- Configure `responseTimeoutSeconds`, `timeoutSeconds`, and `pollTimeoutSeconds` so stalled tasks are rescheduled instead of waiting indefinitely.
+- Use task domains to isolate tenants, regions, or priority workloads without creating duplicate workflow definitions.
+- Autoscale on queue depth and queue wait time, not CPU alone. A worker can be idle if it is polling the wrong task type or domain.
+- Protect downstream systems with rate limits and concurrency limits before increasing worker count.

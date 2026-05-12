@@ -1,0 +1,108 @@
+---
+title: "Install and Set Up Orkes Conductor"
+description: "Learn how to install and set up Orkes Conductor for cloud or local environments to start building reliable workflow orchestration for microservices and APIs."
+---
+
+# Install and Set Up Orkes Conductor
+
+You can get started with Orkes Conductor using one of the following options, depending on your use case:
+
+- **Developer Edition**: A browser-based sandbox for quick prototyping and testing.
+- **Orkes Cloud**: A fully managed, enterprise-grade Conductor deployment.
+- **Local setup with Docker**: Run Orkes Conductor locally using Docker for development and testing.
+
+## Developer Edition
+
+For quick testing and experimentation, use the [Developer Edition](https://developer.orkescloud.com/). This free, browser-based sandbox lets you start building and running workflows instantly, with no installation required.
+
+## Orkes Cloud
+
+Orkes Cloud is the fully managed, enterprise version of Orkes Conductor. It provides dedicated Conductor instances and can be deployed in one of the following ways:
+
+- **Orkes-hosted**, where Orkes manages the infrastructure.
+- **Customer-hosted**, where Orkes Cloud runs within your cloud environment, such as AWS, Azure, or GCP.
+
+Orkes Cloud includes enterprise capabilities such as security, scalability, observability, and operational management. For details, see https://orkes.io/cloud. 
+
+## Local setup with Docker
+
+For enterprise customers to conduct local development and testing, Orkes provides Docker containers via the [orkesio organization on DockerHub](https://hub.docker.com/orgs/orkesio/repositories). These images allow you to run Orkes Conductor locally using Docker and **require an Orkes Cloud subscription**.
+
+!!! note
+    The `orkes-conductor-standalone` container is ideal for local development and testing. It includes the full Orkes stack, with a persistent store, server, and system workers. To download it, you'll need an authorization token from the Orkes team.
+
+**To set up Conductor clusters locally:**
+
+=== "macOS, Linux"
+
+    !!! info "Prerequisites"
+        * Docker must be installed.
+        * [Orkes Cloud](https://cloud.orkes.io/) subscription.
+        * Authorization token from Orkes team (Contact your Orkes representative).
+
+    **To download and run the container:**
+    1. Log in to DockerHub using your Orkes access credentials. When prompted for a password, use the access token provided by Orkes.
+    2. Download and run the latest container build​​:
+
+    ```bash
+    export orkes_access_key=<ACCESS_KEY_PROVIDED_BY_ORKES>
+    echo $orkes_access_key | docker login --username orkesdocker --password-stdin
+
+    # Create volumes for persistent stores
+    docker volume create postgres
+    docker volume create redis
+
+    # Download and start the container
+    docker run -i -p 8080:8080 -p 3000:5000 --mount source=redis,target=/redis \
+    --mount source=postgres,target=/pgdata orkesio/orkes-conductor-standalone:latest
+    ```
+    The UI can be accessed at [http://localhost:3000](http://localhost:3000) and API docs at [http://localhost:8080/swagger-ui/](http://localhost:8080/swagger-ui/). 
+
+=== "Windows"
+
+    !!! info "Prerequisites"
+        * Docker must be installed.
+        * [Orkes Cloud](https://cloud.orkes.io/) subscription.
+        * Authorization token from Orkes team (Contact your Orkes representative).
+
+    **Step 1: Install Windows Subsystem for Linux (WSL) on Windows**
+
+    The Windows devices must have Windows Subsystem for Linux (WSL) installed.
+
+    **To install WSL:**
+    1. Open PowerShell or Windows Command Prompt in administrator mode by right-clicking and selecting **Run as administrator**.
+    2. Enter the following command and restart your computer once completed:
+    ```bash
+    wsl --install
+    ```
+    If you encounter issues, refer to Microsoft's [WSL installation guide](https://learn.microsoft.com/en-us/windows/wsl/install).
+
+    **Step 2: Install Docker Desktop for Windows**
+
+    Orkes containers are distributed as Docker containers and require a Docker runtime with WSL support. 
+
+    **To install Docker Desktop for Windows:**
+    1. Follow the [instructions on Docker](https://docs.docker.com/desktop/install/windows-install/) to download and install Docker Desktop. Make sure to download the correct binary for your CPU type.
+    2. When prompted, select WSL.
+    3. Restart your computer.
+
+    Ensure that the Docker is running automatically after the restart. If not, search for *Docker* in your *Applications* and start it.
+
+    **Step 3: Download and run container**
+    1. Open PowerShell in administrator mode by right-clicking and selecting **Run as administrator**.
+    2. Run the following PowerShell commands individually, or save the commands into a script file (e.g., orkes-enterprise.ps1) and run the script.
+    ```bash
+    # Set the Orkes access key
+    $env:orkes_access_key = "<ACCESS KEY PROVIDED BY ORKES>"
+
+    # Log in to Docker
+    $env:orkes_access_key | docker login --username orkesdocker --password-stdin
+
+    # Create volumes for persistent stores
+    docker volume create postgres
+    docker volume create redis
+
+    # Download and start the container
+    docker run -i -p 8080:8080 -p 3000:5000 --mount source=redis,target=/redis --mount source=postgres,target=/pgdata orkesio/orkes-conductor-standalone:latest
+    ```
+    Once the container starts, the Orkes Conductor welcome screen appears on the terminal. The UI can be accessed at [http://localhost:3000](http://localhost:3000) and API docs at [http://localhost:8080/swagger-ui/](http://localhost:8080/swagger-ui/).

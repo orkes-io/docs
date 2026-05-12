@@ -50,7 +50,7 @@ const config = {
       tagName: "link",
       attributes: {
         rel: "preload",
-        href: "https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700;800&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=IBM+Plex+Mono:wght@400;500;600&display=swap",
         as: "style",
         onload: "this.onload=null;this.rel='stylesheet'",
       },
@@ -58,7 +58,7 @@ const config = {
     {
       tagName: "noscript",
       attributes: {},
-      innerHTML: '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700;800&display=swap">',
+      innerHTML: '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">',
     },
   ],
   plugins: [
@@ -119,10 +119,13 @@ const config = {
       ],
       colorMode: {
         defaultMode: "light",
+        respectPrefersColorScheme: true,
+        disableSwitch: false,
       },
       docs: {
         sidebar: {
-          autoCollapseCategories: false,
+          autoCollapseCategories: true,
+          hideable: false,
         },
       },
       zoom: {
@@ -136,196 +139,113 @@ const config = {
         },
       },
       navbar: {
+        title: "Orkes Conductor",
         logo: {
           alt: "Orkes Conductor",
           src: "img/branding/orkes-logo-purple-4x.png",
           srcDark: "img/branding/orkes-logo-purple-inverted-4x.png",
-          href: "https://orkes.io",
+          href: "/",
         },
         items: [
           {
-            to: "/content/",
+            type: "docSidebar",
+            sidebarId: "quickstartSidebar",
             position: "left",
-            label: "Home",
-            exact: true,
+            label: "Quickstart",
           },
           {
-            to: "/content/quickstarts",
+            type: "docSidebar",
+            sidebarId: "guidesSidebar",
             position: "left",
-            label: "Quickstarts",
+            label: "Guides",
           },
           {
-            to: "/content/category/sdks",
+            type: "docSidebar",
+            sidebarId: "cookbookSidebar",
+            position: "left",
+            label: "Cookbook",
+          },
+          {
+            type: "docSidebar",
+            sidebarId: "aiSidebar",
+            position: "left",
+            label: "AI Cookbook",
+          },
+          {
+            type: "docSidebar",
+            sidebarId: "sdksSidebar",
             position: "left",
             label: "SDKs",
           },
           {
-            to: "/content/ai-orchestration",
+            type: "docSidebar",
+            sidebarId: "referenceSidebar",
             position: "left",
-            label: "AI Orchestration",
-          },
-          {
-            to: "/content/category/reference-docs",
-            position: "left",
-            label: "Task Catalog",
-          },
-          {
-            to: "/content/category/ref-docs/api",
-            position: "left",
-            label: "API Reference",
-          },
-          {
-            href: "https://www.orkes.io/changelog",
-            label: "Changelog",
-            position: "right",
+            label: "Reference",
           },
           {
             type: "search",
             position: "right",
           },
+          {
+            href: "https://github.com/conductor-oss/conductor",
+            position: "right",
+            className: "navbar-icon navbar-icon--github",
+            "aria-label": "GitHub",
+          },
+          {
+            href: "https://join.slack.com/t/orkes-conductor/shared_invite/zt-3dpcskdyd-W895bJDm8psAV7viYG3jFA",
+            position: "right",
+            className: "navbar-icon navbar-icon--slack",
+            "aria-label": "Slack",
+          },
+          {
+            href: "https://www.youtube.com/@orkesio",
+            position: "right",
+            className: "navbar-icon navbar-icon--youtube",
+            "aria-label": "YouTube",
+          },
         ],
       },
       footer: {
-        style: "dark",
-        logo: {
-          alt: "Orkes Logo",
-          src: "img/branding/orkes-logo-purple-inverted-2x.png",
-          href: "https://orkes.io",
-          width: 160,
-          height: 51,
-        },
+        style: "light",
         links: [
           {
-            title: "Company",
+            title: "Community",
             items: [
               {
-                label: "Platform",
-                href: "https://www.orkes.io/platform",
+                label: "GitHub",
+                href: "https://github.com/conductor-oss/conductor",
               },
               {
-                label: "Careers",
-                href: "https://www.orkes.io/careers",
+                label: "Slack",
+                href: "https://join.slack.com/t/orkes-conductor/shared_invite/zt-3dpcskdyd-W895bJDm8psAV7viYG3jFA",
               },
               {
-                label: "Partners",
-                href: "https://orkesio.partnerportal.io/sign-in",
-              },
-              {
-                label: "About Us",
-                href: "https://www.orkes.io/about-us",
-              },
-              {
-                label: "Legal Hub",
-                href: "https://orkes.io/legal",
-              },
-              {
-                label: "Security",
-                href: "https://orkes.io/security",
-              },
-            ],
-          },
-          {
-            title: "Product",
-            items: [
-              {
-                label: "Cloud",
-                href: "https://cloud.orkes.io/",
-              },
-              {
-                label: "Platform",
-                href: "https://orkes.io/platform",
-              },
-              {
-                label: "Support",
-                href: "https://orkeshelp.zendesk.com/auth/v2/login/",
-              },
-            ],
-          },
-          {
-            title: "Resources",
-            items: [
-              {
-                label: "Blogs",
-                href: "https://www.orkes.io/blog/",
-              },
-              {
-                label: "Academy",
-                href: "https://orkes.io/academy/",
-              },
-              {
-                label: "Changelog",
-                href: "https://www.orkes.io/changelog",
-              },
-              {
-                label: "Video Guides",
+                label: "YouTube",
                 href: "https://www.youtube.com/@orkesio",
               },
-              {
-                label: "Events",
-                href: "https://www.orkes.io/events/",
-              },
-              {
-                label: "Case Studies",
-                href: "https://www.orkes.io/customers",
-              },
             ],
           },
           {
-            title: "Use Cases",
+            title: "Project",
             items: [
               {
-                label: "Microservices Workflow Orchestration",
-                href: "https://www.orkes.io/use-cases/microservices-orchestration",
+                label: "Contributing guide",
+                href: "https://github.com/conductor-oss/conductor/blob/main/CONTRIBUTING.md",
               },
               {
-                label: "Realtime API Orchestration",
-                href: "https://www.orkes.io/use-cases/api-orchestration",
-              },
-              {
-                label: "Event Driven Architecture",
-                href: "https://www.orkes.io/use-cases/event-driven-architecture",
-              },
-              {
-                label: "Agentic Workflows",
-                href: "https://www.orkes.io/use-cases/agentic-workflows",
-              },
-              {
-                label: "Human Workflow Orchestration",
-                href: "https://www.orkes.io/use-cases/human-workflow-orchestration",
-              },
-              {
-                label: "Process Orchestration",
-                href: "https://www.orkes.io/use-cases/process-orchestration",
-              },
-            ],
-          },
-          {
-            title: "Compare",
-            items: [
-              {
-                label: "Orkes vs Camunda",
-                href: "https://www.orkes.io/compare/orkes-conductor-vs-camunda-bpmn",
-              },
-              {
-                label: "Orkes vs BPMN",
-                href: "https://www.orkes.io/bpmn-switch",
-              },
-              {
-                label: "Orkes vs LangChain",
-                href: "https://www.orkes.io/compare/orkes-conductor-vs-langchain",
-              },
-              {
-                label: "Orkes vs Temporal",
-                href: "https://www.orkes.io/compare/orkes-conductor-vs-temporal",
+                label: "Orkes",
+                href: "https://orkes.io",
               },
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} Orkes Inc`,
+        copyright: "Conductor authors",
       },
       prism: {
         theme: prismThemes.github,
-        darkTheme: prismThemes.github,
+        darkTheme: prismThemes.vsDark,
         additionalLanguages: [
           "java",
           "json",

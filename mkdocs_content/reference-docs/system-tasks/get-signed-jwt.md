@@ -1,0 +1,119 @@
+---
+title: "Get Signed JWT"
+description: "Learn how the Get Signed JWT task generates a signed JSON Web Token (JWT) in Orkes Conductor."
+---
+
+# Get Signed JWT
+
+The Get Signed JWT task is used to sign a JSON Web Token (JWT).
+
+The task uses the RS256 algorithm to sign the JWT. The signed token includes the specified authorization scopes and an expiration time based on the configured TTL (time-to-live).
+
+## Task parameters
+
+Configure these parameters for the Get Signed JWT task.
+
+| Parameter                         | Description                                                                                                                          | Required/ Optional |
+| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ | ------------------ |
+| inputParameters. **subject**      | The subject of the JWT, typically representing the entity (e.g., user or service) for which the token is issued.                     | Required.          |
+| inputParameters **issuer**        | The entity issuing the JWT, identifying who created and signed the token.                                                            | Required.          |
+| inputParameters. **privateKey**   | The private key used to sign the JWT. This key must be in PKCS#8 format.                                                         | Required.          |
+| inputParameters. **privateKeyId** | The identifier of the private key used to sign the JWT.                                                                             | Required.          |
+| inputParameters. **audience**     | The intended recipient of the JWT.                                                                                                | Required.          |
+| inputParameters. **ttlInSeconds** | The time-to-live (TTL) or expiration time of the JWT, specified in seconds.                                                          | Required.          |
+| inputParameters. **scopes**       | The scopes associated with the JWT, defining the access permissions granted by the token. It can be a string or an array of strings. | Required.          |
+| inputParameters. **algorithm**    | The signing algorithm to use for the JWT. Currently set to RS256, which refers to the RSA signature with the SHA-256 hash algorithm. | Required.          |
+
+The following are generic configuration parameters that can be applied to the task and are not specific to the Get Signed JWT task.
+
+<details>
+<summary>Caching parameters</summary>
+
+You can cache the task outputs using the following parameters. Refer to [Caching Task Outputs](/content/faqs/task-cache-output) for a full guide.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| cacheConfig.**ttlInSecond** | The time to live in seconds, which is the duration for the output to be cached. | Required if using *cacheConfig*. |
+| cacheConfig.**key** | The cache key is a unique identifier for the cached output and must be constructed exclusively from the task’s input parameters.<br/>It can be a string concatenation that contains the task’s input keys, such as `${uri}-${method}` or `re_${uri}_${method}`. | Required if using *cacheConfig*. |
+
+</details>
+
+<details>
+<summary>Other generic parameters</summary>
+
+Here are other parameters for configuring the task behavior.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| optional | Whether the task is optional. <br/><br/>If set to`true`, any task failure is ignored, and the workflow continues with the task status updated to `COMPLETED_WITH_ERRORS`. However, the task must reach a terminal state. If the task remains incomplete, the workflow waits until it reaches a terminal state before proceeding. | Optional. | 
+
+</details>
+
+## Task configuration
+
+This is the task configuration for a Get Signed JWT task.
+
+```json
+{
+     "name": "get_signed_jwt",
+     "taskReferenceName": "get_signed_jwt_ref",
+     "inputParameters": {
+       "subject": "${workflow.input.subject}",
+       "issuer": "${workflow.input.issuer}",
+       "privateKey": "${workflow.secrets.jwt-privatekey}",
+       "privateKeyId": "key-123",
+       "audience": "${workflow.input.audience}",
+       "ttlInSecond": 3600,
+       "scopes": "${workflow.input.scope}",
+       "algorithm": "RS256"
+     },
+     "type": "GET_SIGNED_JWT"
+}
+```
+
+## Task output
+
+The Get Signed JWT task returns the signed JWT in the `_secrets` variable. The signed JWT will be masked (`***`). 
+
+## Adding a Get Signed JWT task in UI
+
+**To add a Get Signed JWT task:**
+
+1. In your workflow, select the (**+**) icon and add a **Get Signed JWT** task.
+2. Enter the **Subject** and **Issuer** of the JWT.
+3. Provide the **PrivateKey** and **PrivateKeyId** used for signing JWT.
+4. Set the **Audience**, **TTL (in seconds)**, **Scopes**, and **Algorithm** as required.
+
+<center><p><img src="/content/img/get-signed-jwt-ui.png" alt="Adding Get Signed JWT task" width="80%" height="auto"/></p></center>
+
+## Examples
+
+Here are some examples for using the Get Signed JWT task.
+
+<details>
+<summary>Authorization</summary>
+
+In this example, the Get Signed JWT is used for server-to-server interaction between Conductor and Google. The signed JWT can be subsequently used to request an access token for calling the Google API.
+
+```json
+{
+  "name": "get_signed_jwt_token",
+  "taskReferenceName": "get_signed_jwt_token_ref",
+  "inputParameters": {
+    "privateKey": "${workflow.secrets.gcp_private_key}",
+    "privateKeyId": "${workflow.secrets.gcp_private_key_id}",
+    "audience": "https://oauth2.googleapis.com/token",
+    "ttlInSecond": 3600,
+    "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/documents",
+      "https://www.googleapis.com/auth/drive"
+    ],
+    "subject": "service-account-name@project-id.iam.gserviceaccount.com",
+    "issuer": "service-account-name@project-id.iam.gserviceaccount.com"
+  },
+  "type": "GET_SIGNED_JWT"
+}
+```
+
+</details>

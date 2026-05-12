@@ -1,0 +1,113 @@
+---
+title: "LLM Search Index"
+description: "Learn how the LLM Search Index task queries a vector database to find documents relevant to a given query in Orkes Conductor."
+---
+
+# LLM Search Index
+
+The LLM Search Index task is used to search a vector database or repository of vector embeddings of already processed and indexed documents to get the closest match. This task is typically used in scenarios where you need to retrieve the data stored in a database using a natural language query.
+
+The LLM Search Index task takes a query, which can be a question, statement, or request made in natural language. This query is processed to generate a vector representation, which is then used to search the vector database. The task returns a list of documents with vectors similar to the query vector, providing the closest matches based on the degree of similarity.
+
+!!! info "Prerequisites"
+    
+    - [Integrate the required AI model](/content/category/integrations/ai-llm) with Orkes Conductor.
+    - [Integrate the required vector database](/content/category/integrations/vector-databases) with Orkes Conductor.
+
+
+## Task parameters 
+
+Configure these parameters for the LLM Search Index task.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- |
+| inputParameters.**vectorDB** | The vector database to retrieve the data.<br/><br/>**Note**: If you haven’t configured the vector database on your Orkes Conductor cluster, navigate to the **Integrations** tab and [configure your required provider](/content/category/integrations/vector-databases). | Required. | 
+| inputParameters.**index** | The index in your vector database to search for relevant embeddings.<br/><br/>The terminology of the index field varies depending on the integration:<ul><li>For Weaviate, the index field indicates the collection name.</li><li>For other integrations, it denotes the index name.</li></ul> | Required. |
+| inputParameters.**namespace** | Namespaces are separate isolated environments within the database to manage and organize vector data effectively. Enter the namespace the task will utilize. <br/><br/>The usage and terminology of the namespace field vary depending on the integration:<ul><li>For Pinecone, the namespace field is applicable.</li><li>For Weaviate, the namespace field is not applicable.</li><li>For MongoDB, the namespace field is referred to as “Collection” in MongoDB.</li><li>For Postgres, the namespace field is referred to as “Table” in Postgres.</li></ul> | Required. | 
+| inputParameters.**embeddingModelProvider** | The LLM provider for the embeddings.<br/><br/>**Note**: If you haven’t configured your AI/LLM provider on your Orkes Conductor cluster, navigate to the **Integrations** tab and [configure your required provider](/content/category/integrations/ai-llm). | Required. |
+| inputParameters.**embeddingModel** | The embedding model provided by the selected LLM provider. | Required. |
+| inputParameters.**query** | The search query. A query typically refers to a question, statement, or request made in natural language that is used to search, retrieve, or manipulate data stored in a database. | Required. |
+| inputParameters.**maxResults** | The maximum number of results to return. Provide a non-zero integer between 1 and 10000. | Required. |
+| inputParameters.**dimensions** | The size of the vector, which is the number of elements in the vector. | Optional. | 
+
+The following are generic configuration parameters that can be applied to the task and are not specific to the LLM Search Index task.
+
+<details>
+<summary>Caching parameters</summary>
+
+You can cache the task outputs using the following parameters. Refer to [Caching Task Outputs](/content/faqs/task-cache-output) for a full guide.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| cacheConfig.**ttlInSecond** | The time to live in seconds, which is the duration for the output to be cached. | Required if using *cacheConfig*. |
+| cacheConfig.**key** | The cache key is a unique identifier for the cached output and must be constructed exclusively from the task’s input parameters.<br/>It can be a string concatenation that contains the task’s input keys, such as `${uri}-${method}` or `re_${uri}_${method}`. | Required if using *cacheConfig*. |
+
+</details>
+
+<details>
+<summary>Other generic parameters</summary>
+
+Here are other parameters for configuring the task behavior.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| optional | Whether the task is optional. <br/><br/>If set to`true`, any task failure is ignored, and the workflow continues with the task status updated to `COMPLETED_WITH_ERRORS`. However, the task must reach a terminal state. If the task remains incomplete, the workflow waits until it reaches a terminal state before proceeding. | Optional. | 
+
+</details>
+
+## Task configuration
+
+This is the task configuration for an LLM Search Index task.
+
+```json
+{
+     "name": "llm_search_index",
+     "taskReferenceName": "llm_search_index_ref",
+     "inputParameters": {
+       "vectorDB": "Pinecone",
+       "index": "doc",
+       "namespace": "docs",
+       "embeddingModelProvider": "openAI",
+       "embeddingModel": "text-embedding-3-large",
+       "query": "${workflow.input.query}",
+       "maxResults": 10,
+       "dimensions": 3024
+     },
+     "type": "LLM_SEARCH_INDEX"
+}
+```
+
+## Task output
+
+The LLM Search Index task will return the following parameters.
+
+| Parameter | Description |
+| --------- | ----------- | 
+| result | A JSON array containing the results of the query. | 
+| score | Represents a value quantifying the degree of likeness between a specific item and a query vector, facilitating ranking and ordering of results. Higher scores denote stronger relevance to the query vector. |
+| metadata | An object containing additional metadata related to the retrieved document. |
+| docId | The unique identifier of the queried document. |
+| parentDocId | An identifier that denotes a parent document in hierarchical or relational data structures. | 
+| text | The actual content retrieved. |
+
+## Adding an LLM Search Index task in UI
+
+**To add an LLM Search Index task:**
+
+1. In your workflow, select the (**+**) icon and add an **LLM Search Index** task.
+2. In **Vector Database Configuration**, select the **Vector database**, **Index**, and **Namespace** to retrieve the embeddings.
+3. In **Embedding Model**, select the **Embedding model provider**, and **Embedding model** to generate the embeddings.
+4. In **Search Parameter**, enter the **Query**, **Max Results**, and **Dimensions**.
+
+<center><p><img src="/content/img/llm-search-index-ui-method.png" alt="LLM Search Index Task - UI" width="80%" height="auto"/></p></center>
+
+## Examples
+
+Here are some examples for using the LLM Search Index task.
+
+<details>
+<summary>Using an LLM Search Index task in a workflow</summary>
+
+See an example of [building a document retrieval workflow using Orkes Conductor](http://orkes.io/content/tutorials/document-retrieval-workflow).
+
+</details>

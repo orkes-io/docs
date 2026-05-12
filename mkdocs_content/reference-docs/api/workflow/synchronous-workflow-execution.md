@@ -1,0 +1,275 @@
+---
+title: "Execute Workflow Synchronously"
+description: "Use the Orkes Conductor workflows API to execute Workflow Synchronously. Includes endpoint details, authentication, parameters, request bodies, response."
+---
+
+# Execute Workflow Synchronously
+
+## Quick reference
+
+Use this workflows endpoint to execute Workflow Synchronously. It is intended for automation scripts, CI/CD jobs, backend services, and internal tools that need to manage Orkes Conductor programmatically.
+
+- **Method and path**: `POST` `/api/workflow/execute/{name}/{version}`
+- **Authentication**: Requires Orkes Conductor API credentials with permission for the target resource.
+- **Inputs**: Use the path parameters, query parameters, and request body fields documented below.
+- **Output**: Returns the Conductor API response for the requested operation. Check the response examples and status codes before wiring the endpoint into production automation.
+- **Operational note**: Treat API calls as part of your deployment or runtime control plane. Log request IDs, handle 4xx/5xx responses, and avoid embedding secrets in workflow definitions or source code.
+
+
+**Endpoint**: `POST /api/workflow/execute/{name}/{version}`
+
+Starts a workflow execution synchronously. Set *consistency* to *SYNCHRONOUS* to execute the workflow directly from memory without persisting the request.
+
+If the workflow includes a [Yield task](https://orkes.io/content/reference-docs/operators/yield), the endpoint returns the response based on the `returnStrategy` parameter. 
+
+## Path parameters
+
+| Parameter | Description                             | Type   | Required/ Optional |
+| --------- | --------------------------------------- | ------ | ------------------ |
+| name      | The name of the workflow to execute. | string | Required.          |
+| version | The workflow version. If unspecified, the latest version will be used. | integer | Required. | 
+
+## Query parameters
+
+| Parameter | Description                                                            | Type    | Required/ Optional |
+| --------- | ---------------------------------------------------------------------- | ------- | ------------------ |
+| requestId | A user-generated request ID, which can be used to track the API request. | string | Optional.<br/>**Note**: For the Conductor version below v5.0.1, this field is Required. | 
+| waitUntilTaskRef | The reference name of the task to wait for before returning a response. If the workflow is incomplete, the response will return 206. | string | Optional. | 
+| waitForSeconds | The duration in seconds to wait before returning a response. Default is 10. | integer | Optional. | 
+| consistency | Specifies how the request persists and is replicated.  Supported values: <ul><li>**SYNCHRONOUS**: Executes the workflow directly from memory without persisting the request. The workflow is evaluated with minimal state synchronization during execution. This mode provides the lowest latency but is non-durable.</li><li>**DURABLE**: The request is stored in persistence before the workflow execution. Workflow state is synchronized during execution.</li><li>**REGION_DURABLE**: The request is replicated across regions before the workflow execution. This method provides the highest level of durability and fault tolerance but may introduce additional latency.</li></ul> Default is DURABLE.<br/><span class="table-note"><strong>Available since:</strong> v5.0.1 and later</span>| string | Optional. |
+| returnStrategy | If the workflow includes a [Yield task](https://orkes.io/content/reference-docs/operators/yield), this parameter defines the strategy for when the API returns a response. Supported values: <ul><li>**TARGET_WORKFLOW**: Returns the state of the originally triggered workflow.</li><li>**BLOCKING_WORKFLOW**: Returns the state of the workflow that is currently blocking the execution, which may be a sub-workflow.</li><li>**BLOCKING_TASK**: Returns the execution status of the task that is currently blocking workflow execution.</li><li>**BLOCKING_TASK_INPUT**: Returns the input of the task that is currently blocking workflow execution. Useful for introspecting runtime behavior or debugging.</li></ul> Default is TARGET_WORKFLOW.<br/><span class="table-note"><strong>Available since:</strong> v5.0.1 and later</span> | string | Optional. | 
+
+## Request body
+
+Contains the workflow inputs. Format the request body as an object containing key-value pairs.
+
+**Example**
+
+```json
+{
+  "someKey": “someValue”,
+  "anotherKey": {}
+}
+```
+
+## Response
+
+By default, the API returns the workflow's current state along with its data, including:
+
+- Workflow execution status
+- Input and output data
+- Task execution details
+- Workflow metadata
+
+For workflows with Yield tasks, the response format is determined by the `returnStrategy` parameter.
+
+Returns 404 if an invalid workflow name is provided.
+
+## Examples
+
+<details>
+<summary>Execute a workflow synchronously</summary>
+
+**Request**
+
+```bash
+curl -X 'POST' \
+  'https://<YOUR-SERVER-URL>/api/workflow/execute/someWorkflow/1?waitForSeconds=10&consistency=SYNCHRONOUS' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "someKey": "someValue"
+}'
+```
+
+**Response**
+
+Returns the workflow’s current state along with its data.
+
+```json
+{
+  "responseType": "TARGET_WORKFLOW",
+  "targetWorkflowId": "fd7sd1da1255-729e-11f0-af9d-8e9bff353733",
+  "targetWorkflowStatus": "COMPLETED",
+  "workflowId": "fd7sd1da1255-729e-11f0-af9d-8e9bff353733",
+  "input": {},
+  "output": {
+    "response": {
+      "headers": {
+        "content-length": [
+          "182"
+        ],
+        "content-type": [
+          "application/json"
+        ],
+        "date": [
+          "Wed, 06 Aug 2025 08:24:49 GMT"
+        ],
+        "strict-transport-security": [
+          "max-age=15724800; includeSubDomains"
+        ]
+      },
+      "reasonPhrase": "",
+      "body": {
+        "randomString": "cwrsgqarvvoxqmyyqzse",
+        "randomInt": 1776,
+        "hostName": "orkes-api-sampler-67dfc8cf58-nfx4d",
+        "apiRandomDelay": "0 ms",
+        "sleepFor": "0 ms",
+        "statusCode": "200",
+        "queryParams": {}
+      },
+      "statusCode": 200
+    }
+  },
+  "priority": 0,
+  "variables": {},
+  "tasks": [
+    {
+      "taskType": "HTTP",
+      "status": "COMPLETED",
+      "inputData": {
+        "encode": true,
+        "method": "GET",
+        "asyncComplete": false,
+        "_createdBy": "john.doe@acme.com",
+        "uri": "https://orkes-api-tester.orkesconductor.com/api",
+        "contentType": "application/json",
+        "accept": "application/json"
+      },
+      "referenceTaskName": "http_ref",
+      "retryCount": 0,
+      "seq": 1,
+      "pollCount": 0,
+      "taskDefName": "http",
+      "scheduledTime": 1754468689963,
+      "startTime": 1754468689963,
+      "endTime": 1754468689969,
+      "updateTime": 1754468689969,
+      "startDelayInSeconds": 0,
+      "retried": false,
+      "executed": true,
+      "callbackFromWorker": true,
+      "responseTimeoutSeconds": 0,
+      "workflowInstanceId": "fd7sd1da1255-729e-11f0-af9d-8e9bff353733",
+      "workflowType": "someWorkflow",
+      "taskId": "fd7sd1da6076-729e-11f0-af9d-8e9bff353733",
+      "callbackAfterSeconds": 0,
+      "workerId": "orkes-conductor-deployment-84d9984cb8-r7rrd",
+      "outputData": {
+        "response": {
+          "headers": {
+            "content-length": [
+              "182"
+            ],
+            "content-type": [
+              "application/json"
+            ],
+            "date": [
+              "Wed, 06 Aug 2025 08:24:49 GMT"
+            ],
+            "strict-transport-security": [
+              "max-age=15724800; includeSubDomains"
+            ]
+          },
+          "reasonPhrase": "",
+          "body": {
+            "randomString": "cwrsgqarvvoxqmyyqzse",
+            "randomInt": 1776,
+            "hostName": "orkes-api-sampler-67dfc8cf58-nfx4d",
+            "apiRandomDelay": "0 ms",
+            "sleepFor": "0 ms",
+            "statusCode": "200",
+            "queryParams": {}
+          },
+          "statusCode": 200
+        }
+      },
+      "workflowTask": {
+        "name": "http",
+        "taskReferenceName": "http_ref",
+        "inputParameters": {
+          "uri": "https://orkes-api-tester.orkesconductor.com/api",
+          "method": "GET",
+          "accept": "application/json",
+          "contentType": "application/json",
+          "encode": true,
+          "asyncComplete": false
+        },
+        "type": "HTTP",
+        "decisionCases": {},
+        "defaultCase": [],
+        "forkTasks": [],
+        "startDelay": 0,
+        "joinOn": [],
+        "optional": false,
+        "defaultExclusiveJoinTask": [],
+        "asyncComplete": false,
+        "loopOver": [],
+        "onStateChange": {},
+        "permissive": false
+      },
+      "rateLimitPerFrequency": 0,
+      "rateLimitFrequencyInSeconds": 0,
+      "workflowPriority": 0,
+      "iteration": 0,
+      "subworkflowChanged": false,
+      "firstStartTime": 0,
+      "queueWaitTime": 0,
+      "loopOverTask": false,
+      "taskDefinition": null
+    }
+  ],
+  "createdBy": "john.doe@acme.com",
+  "createTime": 1754468689961,
+  "status": "COMPLETED",
+  "updateTime": 1754468689971
+}
+```
+</details>
+
+<details>
+<summary>Execute a workflow (which contains a Yield task) synchronously</summary>
+
+**Request**
+
+```bash
+curl -X 'POST' \
+  'https://<YOUR-SERVER-URL>/api/workflow/execute/YieldWorkflow/1?waitForSeconds=10&consistency=SYNCHRONOUS&returnStrategy=BLOCKING_TASK' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "someKey": "someValue"
+}'
+```
+
+**Response**
+
+Here, the response is determined by `returnStrategy=BLOCKING_TASK`, which returns the execution status of the task currently blocking workflow execution.
+
+```json
+{
+  "responseType": "BLOCKING_TASK",
+  "targetWorkflowId": "fd7s7da03c14-729f-11f0-af9d-8e9bff353733",
+  "targetWorkflowStatus": "RUNNING",
+  "workflowId": "fd7s7da03c14-729f-11f0-af9d-8e9bff353733",
+  "input": {
+    "_createdBy": "john.doe@acme.com"
+  },
+  "output": {},
+  "taskType": "YIELD",
+  "taskId": "fd7s7da08a35-729f-11f0-af9d-8e9bff353733",
+  "referenceTaskName": "yield_ref",
+  "retryCount": 0,
+  "taskDefName": "yield",
+  "workflowType": "YieldWorkflow",
+  "priority": 0,
+  "createTime": 0,
+  "updateTime": 0,
+  "status": "IN_PROGRESS"
+}
+```
+
+</details>

@@ -1,0 +1,92 @@
+---
+title: "Update Human Task by Task ID"
+description: "Use the Orkes Conductor human tasks API to update Human Task by Task ID. Includes endpoint details, authentication, parameters, request bodies, response."
+---
+
+# Update Human Task by Task ID
+
+**Endpoint:** `POST /api/human/tasks/{taskId}/update`
+
+Updates a Human task's output data with form field inputs using the task execution ID. You can optionally mark the task as complete.
+
+The invoking user should be one of the following:
+
+- Cluster admin
+- Task owner of the Human task
+- Task claimant
+
+## Path parameters
+
+| Parameter | Description                                                       | Type   | Required/ Optional |
+| --------- | ----------------------------------------------------------------- | ------ | ------------------ |
+| taskId    | The task ID of the Human task execution to be updated. | string | Required.          |
+
+## Query parameters
+
+| Parameter | Description                                                                                               | Type    | Required/ Optional |
+| --------- | --------------------------------------------------------------------------------------------------------- | ------- | ------------------ |
+| complete  | Whether to mark the task as complete or not. Set to `false` to keep the task in progress. Default is `false`. | boolean | Optional.          |
+
+## Request body
+
+Format the request as an object containing the form field inputs. The request body must match the form fields defined in the Human task, or it will fail validation.
+
+**Example**
+
+```json
+{
+  "formFieldName": "yourInputHere"
+}
+```
+
+## Response
+
+Returns 200 OK, indicating that the Human task has been updated or completed successfully. Returns 400 if an invalid task execution ID is provided, or if the task has reached a terminal state. 
+
+## Examples
+
+<details>
+<summary>Update a Human task’s output</summary>
+
+**Request**
+
+```shell
+curl -X 'POST' \
+  'https://<YOUR-PORTAL>/api/human/tasks/2bbca27b-0267-11f1-913a-226156badb04/update?complete=false' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "approve": "Yes",
+"comments": "LGTM"
+}
+```
+
+**Response**
+
+Returns 200 OK, indicating that the Human task’s output has been updated successfully.
+
+</details>
+
+<details>
+<summary>Update a Human task's output and complete the task</summary>
+
+**Request**
+
+```shell
+curl -X 'POST' \
+  'https://<YOUR-SERVER-URL>/api/human/tasks/2bbca27b-0267-11f1-913a-226156badb04/update?complete=true' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "approve": "Yes",
+"comments": "LGTM"
+}'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the Human task’s output has been updated, and the task has been completed successfully.
+
+</details>

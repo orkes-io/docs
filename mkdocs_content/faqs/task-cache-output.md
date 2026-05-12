@@ -1,0 +1,108 @@
+---
+title: "Caching Task Outputs"
+description: "Learn how task output caching stores task results based on input parameters so workflows can reuse previous results instead of re-executing the task in Orkes."
+---
+
+# Caching Task Outputs
+
+Task output caching lets Conductor reuse a previous successful task result when the same task runs again with the same cache key. Use it for deterministic, read-heavy work where repeated calls are expensive or slow.
+
+!!! tip "5-minute path"
+    Add `cacheConfig.key` and `cacheConfig.ttlInSecond` to the task configuration. Build the key only from task input values that determine the output.
+
+## When to use caching
+
+Good fits:
+
+- Read-only HTTP calls
+- Document fetches
+- Embedding lookups
+- Database reads
+- Expensive deterministic transforms
+- Provider calls where repeated identical requests should reuse the same result
+
+Avoid caching:
+
+- Non-deterministic outputs
+- Mutating operations
+- User-specific data without a user-specific cache key
+- Sensitive values that should not be reused across contexts
+- Calls where freshness matters more than cost
+
+## Configuration
+
+Add `cacheConfig` to the task configuration:
+
+```json
+{
+  "name": "get_document",
+  "taskReferenceName": "get_document_ref",
+  "type": "GET_DOCUMENT",
+  "inputParameters": {
+    "url": "${workflow.input.url}",
+    "mediaType": "application/pdf"
+  },
+  "cacheConfig": {
+    "key": "${url}-${mediaType}",
+    "ttlInSecond": 60
+  }
+}
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| `cacheConfig.key` | Unique cache key built from task input values. |
+| `cacheConfig.ttlInSecond` | How long the cached output remains valid. |
+
+Before scheduling the task, Conductor checks for cached output with the same task definition name and cache key. If a match exists, Conductor completes the task with cached output. If no match exists, the task runs normally and its successful output is cached for the configured TTL.
+
+## Cache key design
+
+The cache key must include every input value that can affect the output.
+
+Good:
+
+```json
+"key": "${url}-${mediaType}-${workflow.input.tenantId}"
+```
+
+Risky:
+
+```json
+"key": "${url}"
+```
+
+The risky key ignores media type and tenant. It can return the wrong cached result if those values differ between executions.
+
+## Using workflow input in a cache key
+
+Workflow input must be passed into the task input first:
+
+```json
+{
+  "name": "get_document",
+  "taskReferenceName": "get_document_ref",
+  "type": "GET_DOCUMENT",
+  "inputParameters": {
+    "url": "${workflow.input.url}",
+    "mediaType": "application/pdf",
+    "userId": "${workflow.input.userId}"
+  },
+  "cacheConfig": {
+    "key": "${url}-${mediaType}-${userId}",
+    "ttlInSecond": 300
+  }
+}
+```
+
+## Supported tasks
+
+Caching is supported for selected worker, system, and AI task types, including Worker, HTTP, HTTP Poll, Business Rule, SendGrid, JDBC, gRPC, Opsgenie, Yield, and several LLM/document tasks. Check the task reference page for the task you are configuring before relying on caching in production.
+
+## Production notes
+
+- Keep TTL short until you know the data freshness requirements.
+- Include tenant, user, region, language, model, and version fields when they affect output.
+- Do not cache mutating requests.
+- Monitor cache hit rate and stale-data incidents.
+- Treat cache key changes as behavior changes and test them with representative input.

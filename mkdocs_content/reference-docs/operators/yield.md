@@ -1,0 +1,158 @@
+---
+title: "Yield"
+description: "Learn how the Yield task temporarily pauses workflow execution and returns control to the caller in Orkes Conductor."
+---
+
+# Yield
+
+The Yield task temporarily yields control of the workflow by pausing execution until it is explicitly resumed using [synchronous](/content/reference-docs/api/task/signal-running-task-synchronously) or [asynchronous](/content/reference-docs/api/task/signal-running-task-asynchronously) signal endpoints, typically in response to external conditions or events.
+
+When a workflow runs in synchronous consistency mode, and execution reaches a Yield task, Conductor immediately returns a response based on the `returnStrategy` in the [Execute Workflow Synchronously](/content/reference-docs/api/workflow/synchronous-workflow-execution#query-parameters) endpoint.
+
+!!! info "Note"
+    To achieve similar immediate-return behavior on a [Wait task](/content/reference-docs/operators/wait) with a duration, set `yield: true` in the Wait task's `inputParameters`. Unlike the Yield task, the Wait task continues running in the background for the specified duration. 
+
+## Task parameters
+
+Configure these parameters for the Yield task.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| inputParameters | The input parameters for the Yield task, which can be fixed or [passed as a dynamic variable](/content/developer-guides/passing-inputs-to-task-in-conductor). | Required. | 
+
+The following are generic configuration parameters that can be applied to the task and are not specific to the Yield task.
+
+<details>
+<summary>Caching parameters</summary>
+
+You can cache the task outputs using the following parameters. Refer to [Caching Task Outputs](/content/faqs/task-cache-output) for a full guide.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| cacheConfig.**ttlInSecond** | The time to live in seconds, which is the duration for the output to be cached. | Required if using *cacheConfig*. |
+| cacheConfig.**key** | The cache key is a unique identifier for the cached output and must be constructed exclusively from the task’s input parameters.<br/>It can be a string concatenation that contains the task’s input keys, such as `${uri}-${method}` or `re_${uri}_${method}`. | Required if using *cacheConfig*. |
+
+</details>
+
+<details>
+<summary>Schema parameters</summary>
+
+You can enforce input/output validation for the task using the following parameters. Refer to [Schema Validation](/content/developer-guides/schema-validation) for a full guide.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| taskDefinition.**enforceSchema** | Whether to enforce schema validation for task inputs/outputs. Set to *true* to enable validation. | Optional. | 
+| taskDefinition.**inputSchema** | The name and type of the input schema to be associated with the task. | Required if *enforceSchema* is set to true. | 
+| taskDefinition.**outputSchema** | The name and type of the output schema to be associated with the task. | Required if *enforceSchema* is set to true.
+
+</details>
+
+<details>
+<summary>Other generic parameters</summary>
+
+Here are other parameters for configuring the task behavior.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| optional | Whether the task is optional. <br/><br/>If set to`true`, any task failure is ignored, and the workflow continues with the task status updated to `COMPLETED_WITH_ERRORS`. However, the task must reach a terminal state. If the task remains incomplete, the workflow waits until it reaches a terminal state before proceeding. | Optional. | 
+
+</details>
+
+## Task configuration
+
+This is the task configuration for a Yield task.
+
+```json
+   {
+     "name": "yield",
+     "taskReferenceName": "yield_ref",
+     "type": "YIELD",
+     "inputParameters": {
+       "key": "value"
+     }
+   }
+```
+
+## Task output
+
+The task returns the output passed through the [synchronous](/content/reference-docs/api/task/signal-running-task-synchronously) or [asynchronous](/content/reference-docs/api/task/signal-running-task-asynchronously) signal endpoints. This output can include updated values provided by an external system, allowing workflows to continue with new data injected mid-execution. For example:
+
+```json
+{
+ "taskOutput": "Output passed through the API"
+}
+```
+
+## Adding a Yield task in UI
+
+**To add a Yield task:**
+
+1. In your workflow, select the **(+)** icon and add a **Yield** task.
+2. Configure the **Input parameters**. 
+
+<p><img src="/content/img/yield-task-ui.png" alt="Adding yield task" /></p>
+
+## Examples
+
+Here are some examples for using the Yield task.
+
+<details>
+<summary>Using the Yield task in a workflow</summary>
+<p>
+
+The following example workflow demonstrates how the Yield task pauses execution until it is signaled.
+
+```json
+{
+ "name": "http_yield_signal_test",
+ "description": "http_yield_signal_test",
+ "version": 1,
+ "tasks": [
+   {
+     "name": "http",
+     "taskReferenceName": "http_ref",
+     "inputParameters": {
+       "uri": "https://orkes-api-tester.orkesconductor.com/api",
+       "method": "GET",
+       "accept": "application/json",
+       "contentType": "application/json",
+       "encode": true
+     },
+     "type": "HTTP"
+   },
+   {
+     "name": "yield",
+     "taskReferenceName": "simple_ref_1",
+     "inputParameters": {},
+     "type": "YIELD"
+   }
+ ],
+ "schemaVersion": 2
+}
+```
+
+In this example:
+
+- The workflow begins by executing an HTTP task.
+- After the HTTP task is completed, it proceeds to the Yield task.
+- The workflow is now paused, and the Yield task waits to be signaled.
+
+Let’s signal this task asynchronously using the endpoint [`POST /api/tasks/{workflowId}/{status}/signal`](/content/reference-docs/api/task/signal-running-task-asynchronously). An example API request:
+
+```shell
+curl -X 'POST' \
+  'https://developer.orkescloud.com/api/tasks/fd7s37423ca7-5002-11f0-9613-0e9a9f41f671/COMPLETED/signal' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "taskOutPut": "Output passed using the API"
+}'
+```
+
+After calling this endpoint, return to the workflow execution to verify that the Yield task has been successfully signaled, with the output set through the API.
+
+<p><img src="/content/img/yield-example-workflow-execution.png" alt="Sample execution with Yield task completed" /></p>
+
+</p>
+</details>

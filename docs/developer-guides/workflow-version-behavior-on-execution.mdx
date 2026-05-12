@@ -3,66 +3,50 @@ slug: "/developer-guides/workflow-version-behavior-on-execution"
 description: "Learn how workflow versions affect running and new workflow executions and how version changes behave at runtime."
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
 # Workflow Versioning and Upgrades at Runtime
 
-Learn how workflow versioning works during runtime and how to upgrade a currently running workflow.
+This page is kept at its original URL for compatibility. For the current consolidated guide, see [Versioning Workflows](/content/developer-guides/versioning-workflows).
+
+:::tip 5-minute path
+Running executions use the definition snapshot captured at start time. New executions use the requested version, or the latest version when no version is specified.
+:::
 
 ## General runtime behavior
 
-Each workflow execution runs based on the snapshot of the workflow definition and version at the start of the execution. To get a better understanding, take a look at the following illustration:
+Every workflow execution runs against a snapshot of its workflow definition. Updating the definition does not change executions that are already running.
 
-<p align="center"><img src="/content/img/dev-guides/Workflow-versioning-at-runtime-V2.jpg" alt="General Behavior of Workflow Version" width="100%"
-                       height="auto"/></p>
+Example:
 
-In the illustration above, the workflow with version V1 is executed at timestamp T1 and thus uses the workflow definition at that time.
+1. Version 1 starts at `T1`.
+2. Version 1 is edited at `T2`.
+3. The execution from `T1` continues with the `T1` snapshot.
+4. New executions that request version 1 use the updated version 1 definition.
+5. If version 2 is created, executions with no explicit version use version 2.
 
-When the workflow definition is updated but with the same version V1, all previously running executions will continue based on the definition at timestamp T1. Meanwhile, any newly-triggered executions with version V1 will run based on the definition at timestamp T3.
-
-When a new workflow version V2 is added at T2, all new executions from that point will also execute based on the latest version V2, unless V1 is explicitly specified.
+This snapshot behavior makes long-running workflows safer because an in-flight execution is not silently reshaped by a metadata change.
 
 ### Behavior during restarts
 
-By default, all workflow restarts, retries, and task reruns will also be executed based on the snapshot of the workflow definition and version at the start of the *first* execution attempt. 
+Restart, retry, and task rerun normally use the definition snapshot from the original execution. That keeps recovery behavior consistent with the execution that failed.
 
-<p align="center"><img src="/content/img/dev-guides/Restarting-workflows-at-runtime-v2.jpg" alt="Behavior of Workflow Version during restarts." width="100%"
-                       height="auto"/></p>
+Restart with latest definitions only when you intentionally want the recovered execution to use a newer workflow definition.
 
-In the illustration above, if a V1 execution is restarted after a new version V2 has been created, the restarted execution will still be based on the definition at T1. This is true even if the V1 execution is restarted after the V1 definition itself has been updated.
+Use:
 
-There is also an option to restart execution using the latest definitions rather than those at the initial execution time. In this case, the V1 execution will restart using the definition at T2 instead. 
-
-Learn more about [workflow restarts and retries](https://orkes.io/content/developer-guides/debugging-workflows#recovering-from-failures).
+- **Retry** for transient task failures.
+- **Restart** when the same input should replay from the beginning.
+- **Rerun** when input, correlation ID, task-to-domain mapping, or a specific task should change.
+- **Restart with latest definitions** only after confirming the newer definition is compatible with the old execution input.
 
 ## Upgrading running workflows
 
-Since all workflow executions are based on the snapshot of their definition at the start of the execution, any changes to the definition will not impact currently running executions. If necessary, running workflows can be upgraded to the latest definitions using Conductor UI or API.
+Changing a workflow definition does not automatically upgrade running executions. To move running work to a new definition, choose one of these approaches:
 
-**To upgrade a running workflow:**
+| Approach | Use when |
+| -------- | -------- |
+| Let current executions finish | The safest default for long-running production workflows. |
+| Terminate and restart with latest definitions | The old execution can be safely replayed with the same input. |
+| Rerun with adjusted input | The recovery needs corrected input or routing. |
+| Upgrade through API | You have a controlled migration path for running executions. |
 
-
-<Tabs groupId="method">
-<TabItem value="ui" label="Using Conductor UI">
-
-To run the latest version in UI, terminate the currently running execution and restart it with the latest definition.
-
-1. Go to **Executions** > **Workflow** in the left navigation menu and select the workflow to upgrade.
-2. In the top right, select **Actions** > **Terminate**.
-    <p align="center"><img src="/content/img/step-1-terminate-workflow.png" alt="Step 2 - Terminate the running workflow" width="100%"
-                       height="auto"/></p>
-3. Once terminated, select **Actions** > **Restart with latest definitions**.
-    <p align="center"><img src="/content/img/step-2-restart-with-latest-definitions.png" alt="Step 3 - Restart with Latest Definitions" width="100%"
-                       height="auto"/></p>
-
-For consistency with your business flow, you can use the [Skip Task API](https://orkes.io/content/reference-docs/api/workflow/skip-task-from-workflow) to skip the tasks that were previously completed.
-
-</TabItem>
-
-<TabItem value="api" label="Using API">
-
-Use the [Upgrade Workflow API](https://orkes.io/content/reference-docs/api/workflow/upgrade-workflow) to upgrade a running workflow to another version.
-
-</TabItem>
-</Tabs>
+For consistency, use the [Skip Task API](/content/reference-docs/api/workflow/skip-task-from-workflow) only when previously completed work should not run again and the workflow remains logically valid.

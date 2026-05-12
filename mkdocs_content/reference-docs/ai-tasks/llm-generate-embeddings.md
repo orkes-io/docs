@@ -1,0 +1,97 @@
+---
+title: "LLM Generate Embeddings"
+description: "Learn how the LLM Generate Embeddings task creates vector embeddings from text or data using an AI model in Orkes Conductor."
+---
+
+# LLM Generate Embeddings
+
+The LLM Generate Embeddings task is used to convert input text into a sequence of vectors, also known as embeddings. These embeddings are processed versions of the input text and can be stored in a vector database for later retrieval. This task utilizes a [previously integrated language model (LLM)](/content/category/integrations/ai-llm) to generate the embeddings.
+
+The LLM Generate Embeddings task takes the input text and processes it through the selected language model (LLM) to produce embeddings. The task evaluates the specified parameters, such as the LLM provider and model, and generates a corresponding sequence of vectors for the provided text. The output is a JSON array containing these vectors, which can be used in subsequent tasks or stored for future use.
+
+!!! info "Prerequisites"
+    
+    - [Integrate the required AI model](/content/category/integrations/ai-llm) with Orkes Conductor.
+
+## Task parameters 
+
+Configure these parameters for the LLM Generate Embeddings task.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- |
+| inputParameters.**llmProvider** | The integration name of the LLM provider integrated with your Conductor cluster.<br/><br/>**Note**: If you haven’t configured your AI/LLM provider on your Orkes Conductor cluster, go to the **Integrations** tab and [configure your required provider](/content/category/integrations/ai-llm).| Required. | 
+| inputParameters.**model** | The available language models within the selected LLM provider. <br/><br/>For example, If your LLM provider is Azure Open AI and you’ve configured text-davinci-003 as the language model, you can select it here. | Required. | 
+| inputParameters.**text** | The text to be converted and stored as a vector. It can also be [passed as variables](/content/developer-guides/passing-inputs-to-task-in-conductor). | Required. | 
+| inputParameters.**dimensions** | The number of dimensions in the generated embedding vector. Must match the dimensions supported by the chosen model and your vector database index configuration. For example, for OpenAI `text-embedding-3-large`, the supported values are 256, 1024, or 3072. | Optional. | 
+
+The following are generic configuration parameters that can be applied to the task and are not specific to the LLM Generate Embeddings task.
+
+<details>
+<summary>Caching parameters</summary>
+
+You can cache the task outputs using the following parameters. Refer to [Caching Task Outputs](/content/faqs/task-cache-output) for a full guide.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| cacheConfig.**ttlInSecond** | The time to live in seconds, which is the duration for the output to be cached. | Required if using *cacheConfig*. |
+| cacheConfig.**key** | The cache key is a unique identifier for the cached output and must be constructed exclusively from the task’s input parameters.<br/>It can be a string concatenation that contains the task’s input keys, such as `${uri}-${method}` or `re_${uri}_${method}`. | Required if using *cacheConfig*. |
+
+</details>
+
+<details>
+<summary>Other generic parameters</summary>
+
+Here are other parameters for configuring the task behavior.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| optional | Whether the task is optional. <br/><br/>If set to`true`, any task failure is ignored, and the workflow continues with the task status updated to `COMPLETED_WITH_ERRORS`. However, the task must reach a terminal state. If the task remains incomplete, the workflow waits until it reaches a terminal state before proceeding. | Optional. | 
+
+</details>
+
+## Task configuration
+
+This is the task configuration for an LLM Generate Embeddings task.
+
+```json
+{
+  "name": "llm_generate_embeddings",
+  "taskReferenceName": "llm_generate_embeddings_ref",
+  "inputParameters": {
+    "llmProvider": "openAI",
+    "model": "text-embedding-3-large",
+    "text": "${workflow.input.text}",
+    "dimensions": 3072
+  },
+  "type": "LLM_GENERATE_EMBEDDINGS"
+}
+```
+
+## Task output
+
+The LLM Generate Embeddings task will return the following parameters.
+
+| Parameter | Description |
+| --------- | ----------- | 
+| result | A JSON array containing the vectors of the indexed data. | 
+
+## Adding an LLM Generate Embeddings task in UI
+
+**To add an LLM Generate Embeddings task:**
+
+1. In your workflow, select the (**+**) icon and add an **LLM Generate Embeddings** task.
+2. In **Provider and Model**, select the **LLM provider**, and **Model**.
+3. In **Embedding Configuration**, enter the **Text**, and **Dimensions**.
+
+<center><p><img src="/content/img/llm-generate-embeddings-ui-method.png" alt="LLM Generate Embeddings Task" width="100%" height="auto"/></p></center>
+
+## Examples
+
+Here are some examples for using the LLM Generate Embeddings task.
+
+<details>
+<summary>Using an LLM Generate Embeddings task in a workflow</summary>
+
+See an example of [building a question answering workflow using stored embeddings](http://orkes.io/content/tutorials/question-answering-with-embeddings).
+
+</details>

@@ -1,0 +1,136 @@
+---
+title: "Authentication and Access Keys"
+description: "Learn how to authenticate SDK and API access using applications, access keys, and JWT tokens for programmatic access to Conductor."
+---
+
+# Authentication and Access Keys
+
+When you're ready to integrate Conductor into your application, you'll need to authenticate your programmatic access to the Conductor SDKs and APIs. Every connection to Orkes Conductor requires an authorization header with a valid JSON Web Token (JWT).
+
+You create JWTs using access keys, which are tied to applications in your Conductor cluster. This application-based approach lets you use separate access keys for each project, each with its own set of permissions.
+
+Conductor SDKs handle authentication automatically by reading credentials from environment variables. For direct API access, you'll retrieve a JWT token by calling the authentication endpoint with your application access key.
+
+!!! note
+    Authentication does not grant full access to all the resources in your Conductor cluster. Since programmatic access to resources is also application-based, ensure that your application is configured with the appropriate roles and permissions before you start using the SDK or API. Learn more about application permissions in [Access Control and Security](/content/category/access-control-and-security).
+
+## Understanding Applications and Access Keys
+
+In Orkes Conductor, an application represents a service or project that needs programmatic access to Conductor. Each application can have its own access keys, allowing you to:
+
+- Isolate credentials between different services or environments
+- Grant different permissions to different applications
+- Revoke access to specific applications without affecting others
+
+An **access key** consists of:
+
+- **Key ID**: A unique identifier for the access key
+- **Key Secret**: A confidential credential used to generate JWT tokens (shown only once)
+- **Server URL**: The endpoint for your Conductor cluster
+
+## Retrieving access keys​​
+
+Access keys are required to create a valid JWT. Before retrieving your access key, you must first create an application in Orkes Conductor.
+
+**To create an application:**
+
+1. Go to **Access Control** > **Applications** from the left menu on your Conductor cluster.
+2. Select **+ Create application**.
+3. Enter the application name.
+4. Select **Save**.
+
+The application has been created. You can proceed to retrieve an access key. Learn more about applications in [Managing Applications](/content/access-control-and-security/applications).
+
+Once you've created an application, you can generate access keys to authenticate your API calls and SDK connections.
+
+**To retrieve the access key:**
+
+1. Go to **Access Control** > **Applications** from the left menu on your Conductor cluster.
+2. Select the application name or the **Edit** icon located next to the application name.
+3. In the **Access Keys** section, select **+ Create access key** to generate a unique Key Id, Key Secret, and Server URL. 
+
+The Key Secret is shown only once, so make sure to copy and store it securely.
+
+Once the access key has been created, you can perform the following actions on the key:
+
+- **Copy**: Copy the key ID.
+- **Pause**: Temporarily restrict access to the application.
+- **Delete**: Permanently delete the key.
+
+## API authentication
+
+For direct API access (without using an SDK), you need to manually retrieve a JWT token and include it in your API requests.
+
+### Step 1: Request a JWT Token
+
+Call the `/api/token` endpoint with your Key ID and Key Secret to retrieve a JWT token:
+
+**Example - Request**
+
+```shell
+curl -X 'POST' \
+  'https://<YOUR-SERVER-URL>/api/token' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "keyId": "<YOUR-KEY-ID>",
+    "keySecret": "<YOUR-KEY-SECRET>"
+  }'
+```
+
+**Example - Response**
+
+```shell
+{
+  "token": "<YOUR-JWT-TOKEN>"
+}
+```
+
+### Step 2: Use the Token in API Calls
+
+Include the JWT token in the `X-Authorization` header for all API requests:
+
+**Example**
+
+```shell
+// API call to a workflow called super_weather
+
+curl -X 'POST' \
+  'https://<YOUR-SERVER-URL>/api/workflow/super_weather' \
+  -H 'Content-Type: application/json; charset=utf-8' \
+  -H 'X-Authorization: <YOUR-JWT-TOKEN>' \
+  -d '{
+    "zip": "90210"
+  }'
+```
+
+## SDK authentication
+
+The Conductor SDK handles authentication automatically by reading your access key credentials from environment variables. Set the application key and secret in your project’s environment variables.
+
+**Example**
+
+```
+export CONDUCTOR_AUTH_KEY=your_key
+export CONDUCTOR_AUTH_SECRET=your_key_secret
+```
+
+## Quick access for prototyping​​
+
+For quick testing on Orkes Conductor without creating an application, you can obtain a user-based JWT token. This token remains valid for your current session and has the same access as your user account.
+
+!!! warning
+    This token should never be used in a production setting.
+
+**To retrieve the user-based JWT token:**
+
+In the bottom left corner of the Conductor UI, select **Copy Token**.
+
+<p align="center">
+  <img
+    src="/content/img/authentication-copying-token.png"
+    alt="Copying user-based token in Orkes Conductor"
+    width="80%"
+    height="auto"
+  ></img>
+</p>

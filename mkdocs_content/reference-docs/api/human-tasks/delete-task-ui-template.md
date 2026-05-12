@@ -1,0 +1,43 @@
+---
+title: "Delete User Form"
+description: "Use the Orkes Conductor human tasks API to delete User Form. Includes endpoint details, authentication, parameters, request bodies, response behavior, and."
+---
+
+# Delete User Form
+
+**Endpoint:** `DELETE /api/human/template/{name}`
+
+Deletes a user form using its name from the Conductor server.
+
+!!! warning
+    After deletion, all Human tasks that make use of the deleted user form will fail to render.
+
+## Path parameters
+
+| Parameter | Description                              | Type   | Required/ Optional |
+| --------- | ---------------------------------------- | ------ | ------------------ |
+| name      | The name of the user form to be deleted. | string | Required.          |
+
+## Response
+
+Returns 200 OK, indicating that the user form has been deleted successfully. Returns 500 if a user form does not exist.
+
+## Examples
+
+<details>
+<summary>Delete a user form</summary>
+
+**Request**
+
+```shell
+curl -X 'DELETE' \
+  'https://<YOUR-SERVER-URL>/api/human/template/ExpenseApproval' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the user form has been deleted successfully.
+
+</details>

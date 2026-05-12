@@ -1,0 +1,102 @@
+---
+title: "Worker Task"
+description: "Learn how Worker tasks allow external workers to poll task queues and execute custom business logic in Orkes Conductor."
+---
+
+# Worker Task
+
+A Worker task (Simple task) is used to run custom logic implemented in any language. The custom logic can be deployed anywhere, and the Worker task requires an external worker for polling. A worker is a service you run that polls Conductor for Worker tasks, executes them, and returns the results.
+
+!!! info "Prerequisites"
+    Before adding a Worker task to a workflow, you should complete the following:
+    
+    - Create and run a worker that polls Conductor and executes the Worker task. 
+    - Create the task definition in Conductor (UI or API) so the workflow can reference it by name. The Worker task name in your workflow must match the Task Definition name you created in Conductor.
+    
+    For a full guide on how to use workers, refer to [Writing Workers](/content/developer-guides/using-workers).
+
+## Task parameters
+
+To configure a Worker task, set `inputParameters` to the inputs your worker expects. The inputs can be [passed as a dynamic variable](/content/developer-guides/passing-inputs-to-task-in-conductor).
+
+The following are generic configuration parameters that can be applied to the task and are not specific to the Worker task. 
+
+<details>
+<summary>Caching parameters</summary>
+
+You can cache the task outputs using the following parameters. Refer to [Caching Task Outputs](/content/faqs/task-cache-output) for a full guide.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| cacheConfig.**ttlInSecond** | The time to live in seconds, which is the duration for the output to be cached. | Required if using *cacheConfig*. |
+| cacheConfig.**key** | The cache key is a unique identifier for the cached output and must be constructed exclusively from the task’s input parameters.<br/>It can be a string concatenation that contains the task’s input keys, such as `${uri}-${method}` or `re_${uri}_${method}`. | Required if using *cacheConfig*. |
+
+</details>
+
+<details>
+<summary>Schema parameters</summary>
+
+You can enforce input/output validation for the task using the following parameters. Refer to [Schema Validation](/content/developer-guides/schema-validation) for a full guide.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| taskDefinition.**enforceSchema** | Whether to enforce schema validation for task inputs/outputs. Set to *true* to enable validation. | Optional. | 
+| taskDefinition.**inputSchema** | The name and type of the input schema to be associated with the task. | Required if *enforceSchema* is set to true. | 
+| taskDefinition.**outputSchema** | The name and type of the output schema to be associated with the task. | Required if *enforceSchema* is set to true.
+
+</details>
+
+<details>
+<summary>Other generic parameters</summary> 
+
+Here are other parameters for configuring the task behavior.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| optional | Whether the task is optional. <br/><br/>If set to`true`, any task failure is ignored, and the workflow continues with the task status updated to `COMPLETED_WITH_ERRORS`. However, the task must reach a terminal state. If the task remains incomplete, the workflow waits until it reaches a terminal state before proceeding. | Optional. | 
+
+</details>
+
+## Task configuration
+
+This is the task configuration for a Worker task.
+
+```json
+{
+  "name": "sayHello",
+  "taskReferenceName": "sayHello_ref",
+  "type": "SIMPLE",
+  "inputParameters": {
+    "firstName": "${workflow.input.firstName}",
+    "lastName": "${workflow.input.lastName}"
+  }
+}
+```
+
+## Task output
+
+The Worker task will return the output defined in your worker code.
+
+## Adding a Worker task in UI
+
+**To add a Worker task:**
+
+1. In your workflow, select the **(+)** icon to add a new task. You can add a Worker task in either of these ways:
+   - Search for your task by its name, then select to add it to the workflow.
+   - Add a **Worker Task** and enter the task name in **Task Definition**.
+2. Configure the task, such as its inputs, caching, schema validation, and optionality.
+
+<center><p><img src="/content/img/worker-task-ui-guide.png" alt="Adding a Worker task" width="1024" height="auto"/></p></center>
+
+Sample worker code snippets are available in the Conductor UI for reference.
+
+<center><p><img src="/content/img/sample-worker-code-in-ui.png" alt="Sample workers available in Conductor UI" width="1024" height="auto"/></p></center>
+
+## Examples
+
+<details>
+<summary>Using a Worker task</summary>
+
+See an [example of how to add and run a Worker task](/content/quickstarts/write-workers) in our Quickstart guide.
+
+</details>

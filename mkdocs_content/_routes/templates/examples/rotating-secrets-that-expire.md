@@ -1,0 +1,104 @@
+---
+title: "Build a Secret Rotation Workflow with Orkes Conductor"
+description: "Learn how to build a workflow that automatically rotates secrets used in your applications in Orkes Conductor."
+---
+
+# Build a Secret Rotation Workflow with Orkes Conductor
+
+This tutorial demonstrates how to build a workflow that automatically refreshes an expiring access token and updates a stored secret in Orkes Conductor. This approach is useful when your workflows call external APIs that require short-lived tokens. We utilize an HTTP task to fetch a new token and an Update Secret task to store it securely.
+
+In this tutorial, you will:
+
+- Retrieve a new token from an external API using an [HTTP task](https://orkes.io/content/reference-docs/system-tasks/http).
+- Securely update the stored secret using the [Update Secret task](https://orkes.io/content/reference-docs/system-tasks/update-secret).
+- [Schedule the workflow](https://orkes.io/content/developer-guides/scheduling-workflows) to run periodically so that tokens refresh automatically.
+
+## The secret rotation workflow
+
+This workflow automates the rotation of an access token by periodically retrieving a new token from an external API and updating a stored secret in Orkes Conductor.
+
+1. **appKeyId**: A long-lived application key used to request a new access token. This secret is not rotated.
+2. **appKeySecret**: A long-lived application secret used to authenticate the token request. This secret is not rotated.
+3. **my_secret_holding_a_token**: The secret that is updated on each workflow run with the newly issued access token. 
+
+## Step 1: Configure secrets in Orkes Conductor
+
+**[To create a secret:](https://orkes.io/content/developer-guides/secrets-in-conductor)**
+
+1. Go to **Definitions** > **Secrets** from the left navigation menu on your Conductor cluster.
+2. Select **+ Add secret**.
+3. In the **Secret name**, enter **_appKeyId_**, and in the **Secret value**, enter the actual ID.
+4. Select **Add**.
+
+Repeat the process to create two more secrets, **appKeySecret** and **my_secret_holding_a_token**.
+
+## Step 2: Create a workflow in Orkes Conductor
+
+Create the workflow that retrieves a new token and updates the stored secret.
+
+**To create a workflow:**
+
+1. Go to **Definitions** > **Workflow** from the left navigation menu on your Conductor cluster.
+2. Select **+ Define workflow**.
+3. In the **Code** tab, paste the following code:
+
+```json
+{
+ "name": "update_rotate_secrets_tracker_app",
+ "description": "Workflow to retrieve and update secrets",
+ "version": 1,
+ "tasks": [
+   {
+     "name": "retrieve_token",
+     "taskReferenceName": "retrieve_token",
+     "inputParameters": {
+         "uri": "<YOUR_TOKEN_API_ENDPOINT>",
+         "method": "POST",
+         "accept": "application/json",
+         "contentType": "application/json",
+         "body": {
+           "keyId": "${workflow.secrets.appKeyId}",
+           "keySecret": "${workflow.secrets.appKeySecret}"
+       },
+       "outputFilter": {
+         "_secrets": {
+           "token": "$${retrieve_token.output.response.body.token}"
+         }
+       }
+     },
+     "type": "HTTP"
+   },
+   {
+     "name": "update_secret_task",
+     "taskReferenceName": "update_secret_task_ref",
+     "inputParameters": {
+       "_secrets": {
+         "secretKey": "my_secret_holding_a_token",
+         "secretValue": "${retrieve_token.output._secrets.token}"
+       }
+     },
+     "type": "UPDATE_SECRET"
+   }
+ ],
+ "schemaVersion": 2
+}
+```
+
+4. Select **Save** > **Confirm**.
+
+!!! note
+    Replace `<YOUR_TOKEN_API_ENDPOINT>` with your actual API endpoint that issues an access token. If the endpoint is private or not publicly accessible, ensure that your Conductor cluster can reach it through the correct integration or proxy. 
+
+This workflow retrieves a new token from your API and automatically updates the stored secret. The **HTTP** task calls your token endpoint using credentials stored as secrets. The response is filtered with `outputFilters` to extract only the token value, which is then masked under `_secrets` to keep it hidden in logs. 
+
+The **Update Secret** task uses this masked value to update the secret with the refreshed token securely. 
+
+## Step 3: Create a schedule in Orkes Conductor
+
+Configure a [schedule](https://orkes.io/content/developer-guides/scheduling-workflows) to run the workflow at regular intervals, ensuring that tokens are automatically renewed before expiration.
+
+You have successfully built a workflow that automates secret rotation in Orkes Conductor.
+
+By combining the **HTTP** and **Update Secret** tasks, your workflow can refresh access tokens and securely update stored secrets without manual intervention.
+
+You can further extend this workflow by adding notification or monitoring steps to track token refresh status or errors.

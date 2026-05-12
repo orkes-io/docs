@@ -1,0 +1,102 @@
+---
+title: "LLM Get Embeddings"
+description: "Learn how the LLM Get Embeddings task retrieves stored embeddings from a vector database in Orkes Conductor."
+---
+
+# LLM Get Embeddings
+
+The LLM Get Embeddings task retrieves numerical vector representations of words, phrases, sentences, or documents that have been previously generated or learned by the model. Unlike the [LLM Generate Embeddings](/content/reference-docs/ai-tasks/llm-generate-embeddings) task, which creates vector representations from input data, this task focuses on efficiently accessing pre-existing embeddings. This is useful for utilizing embeddings that have already been computed and stored without regenerating them.
+
+The LLM Get Embeddings task accesses pre-computed embeddings stored in a vector database. It retrieves vectors based on specified parameters, such as vector database, namespace, index, and embedding source. This task enables efficient querying of stored embeddings to fetch relevant data quickly.
+
+!!! info "Prerequisites"
+    
+    - [Integrate the required vector database](/content/category/integrations/vector-databases) with Orkes Conductor.
+
+## Task parameters 
+
+Configure these parameters for the LLM Get Embeddings task.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- |
+| inputParameters.**vectorDB** | The vector database from which data is to be retrieved.<br/><br/>**Note**: If you haven’t configured the vector database on your Orkes Conductor cluster, navigate to the **Integrations** tab and [configure your required provider](/content/category/integrations/vector-databases).  | Required. |
+| inputParameters.**namespace** | Namespaces are separate isolated environments within the database to manage and organize vector data effectively. Enter the namespace the task will utilize. <br/><br/>The usage and terminology of the namespace field vary depending on the integration:<ul><li>For Pinecone, the namespace field is applicable.</li><li>For Weaviate, the namespace field is not applicable.</li><li>For MongoDB, the namespace field is referred to as “Collection” in MongoDB.</li><li>For Postgres, the namespace field is referred to as “Table” in Postgres.</li></ul> | Required. |
+| inputParameters.**index** | The index in your vector database where the indexed text or data was stored.<br/><br/>The terminology of the index field varies depending on the integration:<ul><li>For Weaviate, the index field indicates the collection name.</li><li>For other integrations, it denotes the index name.</li></ul> | Required. |
+| inputParameters.**embeddings** | The embeddings from which the stored data will be retrieved. This should be from the same embedding model used to create the embeddings stored in the specified index. | Required. |
+
+The following are generic configuration parameters that can be applied to the task and are not specific to the LLM Get Embeddings task.
+
+<details>
+<summary>Caching parameters</summary>
+
+You can cache the task outputs using the following parameters. Refer to [Caching Task Outputs](/content/faqs/task-cache-output) for a full guide.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| cacheConfig.**ttlInSecond** | The time to live in seconds, which is the duration for the output to be cached. | Required if using *cacheConfig*. |
+| cacheConfig.**key** | The cache key is a unique identifier for the cached output and must be constructed exclusively from the task’s input parameters.<br/>It can be a string concatenation that contains the task’s input keys, such as `${uri}-${method}` or `re_${uri}_${method}`. | Required if using *cacheConfig*. |
+
+</details>
+
+<details>
+<summary>Other generic parameters</summary>
+
+Here are other parameters for configuring the task behavior.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| optional | Whether the task is optional. <br/><br/>If set to`true`, any task failure is ignored, and the workflow continues with the task status updated to `COMPLETED_WITH_ERRORS`. However, the task must reach a terminal state. If the task remains incomplete, the workflow waits until it reaches a terminal state before proceeding. | Optional. | 
+
+</details>
+
+## Task configuration
+
+This is the task configuration for an LLM Get Embeddings task.
+
+```json
+{
+     "name": "llm_get_embeddings_task",
+     "taskReferenceName": "llm_get_embeddings_task_ref",
+     "inputParameters": {
+       "vectorDB": "Pinecone",
+       "index": "doc-1536",
+       "namespace": "rag_demo",
+       "embeddings": "${generate_doc_embedding_ref.output.result}"
+     },
+     "type": "LLM_GET_EMBEDDINGS"
+}
+```
+
+## Task output
+
+The LLM Get Embeddings task will return the following parameters.
+
+| Parameter | Description | 
+| --------- | ----------- | 
+| result | A JSON array containing the results of the query. |
+| score | Represents a value quantifying the degree of likeness between a specific item and a query vector, facilitating ranking and ordering of results. Higher scores denote stronger relevance to the query vector. |
+| metadata | An object containing additional metadata related to the retrieved document. |
+| docId | The unique identifier of the queried document. |
+| parentDocId | An identifier that denotes a parent document in hierarchical or relational data structures. | 
+| text | The actual content retrieved. | 
+
+## Adding an LLM Get Embeddings task in UI
+
+**To add an LLM Get Embeddings task:**
+
+1. In your workflow, select the (**+**) icon and add an **LLM Get Embeddings** task.
+2. In **Vector Database Configuration**, select the **Vector database**, **Index**, and **Namespace** to retrieve the embeddings.
+3. Select the **Embeddings** from which the stored data is to be retrieved.
+
+<center><p><img src="/content/img/llm-get-embeddings-ui-method.png" alt="LLM Get Embeddings Task - UI" width="80%" height="auto"/></p></center>
+
+## Examples
+
+Here are some examples for using the LLM Get Embeddings task.
+
+<details>
+<summary>Using an LLM Get Embeddings task in a workflow</summary>
+
+See an example of [building a question answering workflow using stored embeddings](http://orkes.io/content/tutorials/question-answering-with-embeddings).
+
+</details>

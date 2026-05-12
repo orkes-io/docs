@@ -1,0 +1,51 @@
+---
+title: "Workflow Versioning and Upgrades at Runtime"
+description: "Learn how workflow versions affect running and new workflow executions and how version changes behave at runtime in Orkes Conductor."
+---
+
+# Workflow Versioning and Upgrades at Runtime
+
+This page is kept at its original URL for compatibility. For the current consolidated guide, see [Versioning Workflows](/content/developer-guides/versioning-workflows).
+
+!!! tip "5-minute path"
+    Running executions use the definition snapshot captured at start time. New executions use the requested version, or the latest version when no version is specified.
+
+## General runtime behavior
+
+Every workflow execution runs against a snapshot of its workflow definition. Updating the definition does not change executions that are already running.
+
+Example:
+
+1. Version 1 starts at `T1`.
+2. Version 1 is edited at `T2`.
+3. The execution from `T1` continues with the `T1` snapshot.
+4. New executions that request version 1 use the updated version 1 definition.
+5. If version 2 is created, executions with no explicit version use version 2.
+
+This snapshot behavior makes long-running workflows safer because an in-flight execution is not silently reshaped by a metadata change.
+
+### Behavior during restarts
+
+Restart, retry, and task rerun normally use the definition snapshot from the original execution. That keeps recovery behavior consistent with the execution that failed.
+
+Restart with latest definitions only when you intentionally want the recovered execution to use a newer workflow definition.
+
+Use:
+
+- **Retry** for transient task failures.
+- **Restart** when the same input should replay from the beginning.
+- **Rerun** when input, correlation ID, task-to-domain mapping, or a specific task should change.
+- **Restart with latest definitions** only after confirming the newer definition is compatible with the old execution input.
+
+## Upgrading running workflows
+
+Changing a workflow definition does not automatically upgrade running executions. To move running work to a new definition, choose one of these approaches:
+
+| Approach | Use when |
+| -------- | -------- |
+| Let current executions finish | The safest default for long-running production workflows. |
+| Terminate and restart with latest definitions | The old execution can be safely replayed with the same input. |
+| Rerun with adjusted input | The recovery needs corrected input or routing. |
+| Upgrade through API | You have a controlled migration path for running executions. |
+
+For consistency, use the [Skip Task API](/content/reference-docs/api/workflow/skip-task-from-workflow) only when previously completed work should not run again and the workflow remains logically valid.

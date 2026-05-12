@@ -1,0 +1,314 @@
+---
+title: "Get Workflow by ID"
+description: "Use the Orkes Conductor workflows API to get Workflow by ID. Includes endpoint details, authentication, parameters, request bodies, response behavior, and."
+---
+
+# Get Workflow by ID
+
+**Endpoint:** `GET /api/workflow/{workflowId}`
+
+Gets a workflow’s execution details using its workflow execution ID.
+
+## Path parameters
+
+| Parameter  | Description                                                       | Type   | Required/ Optional |
+| ---------- | ----------------------------------------------------------------- | ------ | ------------------ |
+| workflowId | The execution ID of the workflow to fetch.                        | string | Required.          |
+
+## Query parameters
+
+| Parameter    | Description                                                                                                                             | Type    | Required/ Optional |
+| ------------ | --------------------------------------------------------------------------------------------------------------------------------------- | ------- | ------------------ |
+| includeTasks | If set to `true`, all task execution details will be fetched in a `tasks` array. Default is `true`.                                        | boolean | Optional.          |
+| summarize    | **Note:** This parameter is deprecated. There is no effect when configured. <br/><br/> Whether the workflow details will be summarized. | boolean | Optional.          |
+
+## Response
+
+Returns a JSON object containing the workflow's execution details, including workflow status, inputs, outputs, task execution information (if `includeTasks=true`), and the workflow definition.
+
+Returns 400 if an invalid task execution ID is provided.
+
+## Examples
+
+<details>
+<summary>Get workflow with task execution details</summary>
+
+**Request**
+
+```shell
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/workflow/3791f604-6d4c-11f0-880f-0246e7260963?includeTasks=true' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+The task execution details are returned in the `tasks` array:
+
+```json
+{
+  "ownerApp": "",
+  "createTime": 1753883456574,
+  "updateTime": 1753883458402,
+  "createdBy": "john.doe@acme.com",
+  "updatedBy": "john.doe@acme.com",
+  "status": "COMPLETED",
+  "endTime": 1753883458400,
+  "workflowId": "3791f604-6d4c-11f0-880f-0246e7260963",
+  "tasks": [
+    {
+      "taskType": "LLM_TEXT_COMPLETE",
+      "status": "COMPLETED",
+      "inputData": {
+        "promptVariables": {
+          "language": "",
+          "text": ""
+        },
+        "promptName": "translate",
+        "llmProvider": "openAI",
+        "temperature": 0,
+        "model": "chatgpt-4o-latest",
+        "_createdBy": "john.doe@acme.com",
+        "prompt": "Translate the following text into .\n\n<text>\n \n</text>\n\nMake sure the translated output sounds native. Reply only with the translation and nothing else."
+      },
+      "referenceTaskName": "llm_text_complete_task_ref",
+      "retryCount": 0,
+      "seq": 1,
+      "pollCount": 1,
+      "taskDefName": "LLM_TEXT_COMPLETE",
+      "scheduledTime": 1753883456582,
+      "startTime": 1753883456663,
+      "endTime": 1753883458388,
+      "updateTime": 1753883456663,
+      "startDelayInSeconds": 0,
+      "retried": false,
+      "executed": true,
+      "callbackFromWorker": true,
+      "responseTimeoutSeconds": 3600,
+      "workflowInstanceId": "3791f604-6d4c-11f0-880f-0246e7260963",
+      "workflowType": "translation",
+      "taskId": "37932e85-6d4c-11f0-880f-0246e7260963",
+      "callbackAfterSeconds": 0,
+      "workerId": "orkes-workers-deployment-7686d95698-l9rwl",
+      "outputData": {
+        "result": "It seems the text to be translated is missing. Please provide the text you'd like me to translate.",
+        "finishReason": "stop",
+        "tokenUsed": 57
+      },
+      "workflowTask": {
+        "name": "llm_text_complete_task",
+        "taskReferenceName": "llm_text_complete_task_ref",
+        "inputParameters": {
+          "llmProvider": "openAI",
+          "model": "chatgpt-4o-latest",
+          "promptName": "translate",
+          "promptVariables": {
+            "language": "",
+            "text": ""
+          },
+          "temperature": 0
+        },
+        "type": "LLM_TEXT_COMPLETE",
+        "decisionCases": {},
+        "defaultCase": [],
+        "forkTasks": [],
+        "startDelay": 0,
+        "joinOn": [],
+        "optional": false,
+        "defaultExclusiveJoinTask": [],
+        "asyncComplete": false,
+        "loopOver": [],
+        "onStateChange": {},
+        "permissive": false
+      },
+      "rateLimitPerFrequency": 0,
+      "rateLimitFrequencyInSeconds": 1,
+      "workflowPriority": 0,
+      "iteration": 0,
+      "subworkflowChanged": false,
+      "firstStartTime": 0,
+      "queueWaitTime": 81,
+      "loopOverTask": false,
+      "taskDefinition": null
+    }
+  ],
+  "input": {
+    "input": "What is your name?",
+    "language": "Arabic"
+  },
+  "output": {
+    "result": "It seems the text to be translated is missing. Please provide the text you'd like me to translate.",
+    "finishReason": "stop",
+    "tokenUsed": 57
+  },
+  "taskToDomain": {},
+  "failedReferenceTaskNames": [],
+  "workflowDefinition": {
+    "createTime": 1751876511418,
+    "updateTime": 1753883441350,
+    "name": "translation",
+    "description": "translation",
+    "version": 1,
+    "tasks": [
+      {
+        "name": "llm_text_complete_task",
+        "taskReferenceName": "llm_text_complete_task_ref",
+        "inputParameters": {
+          "llmProvider": "openAI",
+          "model": "chatgpt-4o-latest",
+          "promptName": "translate",
+          "promptVariables": {
+            "language": "",
+            "text": ""
+          },
+          "temperature": 0
+        },
+        "type": "LLM_TEXT_COMPLETE",
+        "decisionCases": {},
+        "defaultCase": [],
+        "forkTasks": [],
+        "startDelay": 0,
+        "joinOn": [],
+        "optional": false,
+        "defaultExclusiveJoinTask": [],
+        "asyncComplete": false,
+        "loopOver": [],
+        "onStateChange": {},
+        "permissive": false
+      }
+    ],
+    "inputParameters": [
+      "input",
+      "language"
+    ],
+    "outputParameters": {},
+    "failureWorkflow": "",
+    "schemaVersion": 2,
+    "restartable": true,
+    "workflowStatusListenerEnabled": false,
+    "ownerEmail": "john.doe@acme.com",
+    "timeoutPolicy": "ALERT_ONLY",
+    "timeoutSeconds": 0,
+    "variables": {},
+    "inputTemplate": {},
+    "enforceSchema": true,
+    "metadata": {}
+  },
+  "priority": 0,
+  "variables": {},
+  "lastRetriedTime": 0,
+  "failedTaskNames": [],
+  "history": [],
+  "rateLimited": false,
+  "startTime": 1753883456574,
+  "workflowName": "translation",
+  "workflowVersion": 1
+}
+
+```
+
+</details>
+
+<details>
+<summary>Get workflow without task execution details</summary>
+
+**Request**
+
+```shell
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/workflow/3791f604-6d4c-11f0-880f-0246e7260963?includeTasks=false \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+The tasks array is empty because `includeTasks` is set to false:
+
+```json
+{
+  "ownerApp": "",
+  "createTime": 1753883456574,
+  "updateTime": 1753883458402,
+  "createdBy": "john.doe@acme.com",
+  "updatedBy": "john.doe@acme.com",
+  "status": "COMPLETED",
+  "endTime": 1753883458400,
+  "workflowId": "3791f604-6d4c-11f0-880f-0246e7260963",
+  "tasks": [],
+  "input": {
+    "input": "What is your name?",
+    "language": "Arabic"
+  },
+  "output": {
+    "result": "It seems the text to be translated is missing. Please provide the text you'd like me to translate.",
+    "finishReason": "stop",
+    "tokenUsed": 57
+  },
+  "taskToDomain": {},
+  "failedReferenceTaskNames": [],
+  "workflowDefinition": {
+    "createTime": 1751876511418,
+    "updateTime": 1753883441350,
+    "name": "translation",
+    "description": "translation",
+    "version": 1,
+    "tasks": [
+      {
+        "name": "llm_text_complete_task",
+        "taskReferenceName": "llm_text_complete_task_ref",
+        "inputParameters": {
+          "llmProvider": "openAI",
+          "model": "chatgpt-4o-latest",
+          "promptName": "translate",
+          "promptVariables": {
+            "language": "",
+            "text": ""
+          },
+          "temperature": 0
+        },
+        "type": "LLM_TEXT_COMPLETE",
+        "decisionCases": {},
+        "defaultCase": [],
+        "forkTasks": [],
+        "startDelay": 0,
+        "joinOn": [],
+        "optional": false,
+        "defaultExclusiveJoinTask": [],
+        "asyncComplete": false,
+        "loopOver": [],
+        "onStateChange": {},
+        "permissive": false
+      }
+    ],
+    "inputParameters": [
+      "input",
+      "language"
+    ],
+    "outputParameters": {},
+    "failureWorkflow": "",
+    "schemaVersion": 2,
+    "restartable": true,
+    "workflowStatusListenerEnabled": false,
+    "ownerEmail": "john.doe@acme.com",
+    "timeoutPolicy": "ALERT_ONLY",
+    "timeoutSeconds": 0,
+    "variables": {},
+    "inputTemplate": {},
+    "enforceSchema": true,
+    "metadata": {}
+  },
+  "priority": 0,
+  "variables": {},
+  "lastRetriedTime": 0,
+  "failedTaskNames": [],
+  "history": [],
+  "rateLimited": false,
+  "startTime": 1753883456574,
+  "workflowName": "translation",
+  "workflowVersion": 1
+}
+```
+
+</details>

@@ -1,0 +1,103 @@
+---
+title: "Reassign Human Task"
+description: "Use the Orkes Conductor human tasks API to reassign Human Task. Includes endpoint details, authentication, parameters, request bodies, response behavior, and."
+---
+
+# Reassign Human Task
+
+**Endpoint:** `POST /api/human/tasks/{taskId}/reassign`
+
+Reassigns an unclaimed Human task to a different assignment policy. Use this endpoint when the original assignment is no longer valid, and the task needs to be reassigned so that it can be completed.
+
+The invoking user should be one of the following:
+
+- Cluster admin
+- Task owner of the Human task
+- Task assignee
+- User with UPDATE permission for the Human task definition
+
+## Path parameters
+
+| Parameter | Description                                                          | Type   | Required/ Optional |
+| --------- | -------------------------------------------------------------------- | ------ | ------------------ |
+| taskId    | The task ID of the Human task execution to be reassigned. | string | Required.          |
+
+## Request body
+
+Format the request as an array of assignment policy objects, in descending order of assignment. Each object may contain the following parameters:
+
+| Parameter              | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      | Type    | Required/ Optional |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------- | ------------------ |
+| assignee               | The assignee details.                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | object  | Required.          |
+| assignee. **user**     | The user or group ID for the assignee. The value depends on the user type. <ul><li>**External User**: Enter the user's email that is managed and verified in an external system.</li> <li>**External Group**: Enter the name of the group that is managed and verified in an external system.</li> <li>**Conductor User**: Enter the user’s Conductor email.</li> <li>**Conductor Group**: Enter the [Conductor group](/content/access-control-and-security/users-and-groups#groups) name.</li></ul> | string  | Required.          |
+| assignee. **userType** | The type of user or group that will be assigned to the task. Supported values: <ul><li>**External User**: The assignee is a user residing outside the Conductor cluster in an external system.</li> <li>**External Group**: The assignee is a group residing outside the Conductor cluster in an external system.</li> <li>**Conductor User**: The assignee is a user in the Conductor cluster.</li> <li>**Conductor Group**: The assignee is a group in the Conductor cluster.</li></ul>            | string  | Required.          |
+| slaMinutes             | The duration in minutes for which the Human task will be assigned, starting from when the task first began. Use 0 minutes for a non-expiring duration.                                                                                                                                                                                                                                                                                                                                           | integer | Required.          |
+
+## Response
+
+Returns 200 OK, indicating that the Human task has been reassigned successfully. Returns 400  if an invalid task execution ID is provided.
+
+## Examples
+
+<details>
+<summary>Reassign to a single user</summary>
+
+**Request**
+
+```shell
+curl -X 'POST' \
+  'https://<YOUR-SERVER-URL>/api/human/tasks/89b4fee2-025e-11f1-913a-226156badb04/reassign' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '[
+  {
+    "assignee": {
+      "user": "jane.doe@acme.com",
+      "userType": "CONDUCTOR_USER"
+    },
+    "slaMinutes": 0
+  }
+]'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the Human task has been reassigned successfully.
+
+</details>
+
+<details>
+<summary>Reassign with multiple assignment tiers</summary>
+
+**Request**
+
+```shell
+curl -X 'POST' \
+  'https://<YOUR-SERVER-URL>/api/human/tasks/ffe6e2a3-025e-11f1-913a-226156badb04/reassign' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '[
+  {
+    "assignee": {
+      "user": "jane.doe@acme.com",
+      "userType": "CONDUCTOR_USER"
+    },
+    "slaMinutes": 20
+  },
+  {
+    "assignee": {
+      "user": "john.doe@acme.com",
+      "userType": "CONDUCTOR_USER"
+    },
+    "slaMinutes": 0
+  }
+]'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the Human task has been reassigned successfully.
+
+</details>

@@ -1,0 +1,132 @@
+---
+title: "Using Webhooks"
+description: "Learn how to use webhooks to receive events from external systems and trigger workflows or resume workflows waiting for webhook events in Orkes Conductor."
+---
+
+# Using Webhooks
+
+Webhooks let external systems send HTTP events to Orkes Conductor. A webhook can start a workflow, resume a workflow waiting on a webhook event, or do both.
+
+!!! tip "5-minute path"
+    Decide whether the event starts a workflow or resumes one. Configure verification, map the payload to workflow input, use an idempotency key for redelivered events, then test with a real delivery from the source platform.
+
+Supported source platforms include GitHub, Microsoft Teams, SendGrid, Slack, Stripe, and Custom.
+
+## Before you begin
+
+Choose the execution pattern before creating the webhook:
+
+| Goal | Configure |
+| ---- | --------- |
+| Start a workflow for each incoming event | `workflowsToStart` with workflow name, version, and optional idempotency key. |
+| Resume a workflow that is already waiting | A [Wait for Webhook](/content/reference-docs/system-tasks/wait-for-webhook) task and `receiverWorkflowNamesToVersions`. |
+| Do both | Configure both start and receive behavior. |
+
+Production webhooks should use verification, idempotency, and input validation.
+
+## Step 1: (Optional) Create a workflow with Wait for Webhook task
+
+Use this pattern when a workflow starts before the external callback arrives.
+
+```json
+{
+  "name": "wait_for_payment_event",
+  "taskReferenceName": "wait_for_payment_event_ref",
+  "type": "WAIT_FOR_WEBHOOK",
+  "inputParameters": {
+    "matches": {
+      "paymentId": "${workflow.input.paymentId}"
+    }
+  }
+}
+```
+
+Run the workflow before the webhook event arrives. The workflow pauses until a matching webhook event completes the wait task.
+
+## Step 2: Create a webhook in Orkes Conductor
+
+A webhook definition connects a source platform to one or more workflow actions.
+
+```json
+{
+  "name": "payment-events",
+  "receiverWorkflowNamesToVersions": {
+    "wait_for_payment": 1
+  },
+  "workflowsToStart": {
+    "process_payment_event": 1
+  },
+  "sourcePlatform": "Custom",
+  "verifier": "HEADER_BASED",
+  "headers": {
+    "X-Webhook-Source": "payments"
+  },
+  "secretValue": "***"
+}
+```
+
+| Field | Purpose |
+| ----- | ------- |
+| `name` | Stable webhook name. |
+| `receiverWorkflowNamesToVersions` | Workflows whose Wait for Webhook tasks can receive this event. |
+| `workflowsToStart` | Workflows to start when a valid event arrives. |
+| `sourcePlatform` | Source system, such as GitHub, Slack, Stripe, SendGrid, Microsoft Teams, or Custom. |
+| `verifier` | Verification method. |
+| `headers` or `secretValue` | Verification material, depending on source platform. |
+
+If the webhook starts workflows, configure an idempotency key derived from the event payload whenever the source can retry deliveries.
+
+## Step 3: Create a webhook in the source platform and verify the Conductor webhook URL
+
+After saving the webhook, Conductor generates a URL. Configure that URL in the source platform and complete verification.
+
+### Verification methods
+
+| Method | Use when | How it verifies |
+| ------ | -------- | --------------- |
+| Header-based verification | Custom systems | Incoming request must include exact configured header keys and values. |
+| Challenge-based verification | Platforms such as Slack | Source sends a challenge request and Conductor responds. |
+| Signature-based verification | GitHub, Stripe, SendGrid, Microsoft Teams | Source signs the payload and Conductor verifies it using the configured secret or key. |
+
+### Header-based verification
+
+Use for internal or custom systems. Send a request with the required headers:
+
+```shell
+curl -sS -X POST "$WEBHOOK_URL" \
+  -H "X-Webhook-Source: payments" \
+  -H "Content-Type: application/json" \
+  -d '{"paymentId":"pay_123","status":"authorized"}'
+```
+
+### Challenge-based verification
+
+Use when the platform performs URL validation automatically. Configure the Conductor URL in the platform and let the challenge request complete before sending production events.
+
+### Signature-based verification
+
+Use for platforms that sign requests:
+
+- GitHub: `X-Hub-Signature-256`
+- Stripe: `Stripe-Signature`
+- SendGrid: signed event webhook headers
+- Microsoft Teams: HMAC signature header
+
+Store signing material in Conductor and in the source platform. Do not put webhook secrets in workflow input.
+
+## Step 4: Verify that Conductor received webhook events
+
+Verify at two levels:
+
+1. Webhook delivery: the webhook URL is verified and event history shows accepted requests.
+2. Workflow behavior: the expected workflow execution started or the expected waiting task completed.
+
+For started workflows, search by workflow name, correlation ID, or idempotency key. For waiting workflows, inspect the Wait for Webhook task output and downstream task input.
+
+## Production notes
+
+- Use idempotency keys for GitHub, Stripe, SendGrid, queues, and any source that retries events.
+- Validate payload shape before running business logic.
+- Keep verification secrets in [secrets](/content/developer-guides/secrets-in-conductor).
+- Avoid synchronous assumptions. Webhook delivery should return quickly while Conductor handles durable execution.
+- Monitor failures with [Search / Query Executions](/content/developer-guides/debugging-workflows) and [Gateway/Webhook metrics](/content/developer-guides/metrics-and-observability).

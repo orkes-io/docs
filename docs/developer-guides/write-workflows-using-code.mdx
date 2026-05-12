@@ -9,7 +9,18 @@ import Install from '@site/src/components/install.mdx';
 
 # Write Workflows Using Code
 
-You can write workflows in code to create dynamic workflows that can't be predefined. Support for defining workflows in code is part of all the supported SDKs.
+You can define Conductor workflows in code when the workflow definition should be generated, versioned, tested, or registered from the same codebase as the application that owns it. The workflow still runs on Conductor's durable execution engine, while custom business logic runs in worker code written in your preferred language.
+
+Use workflow-as-code when you need:
+
+- Dynamic workflow definitions assembled from application configuration or templates.
+- Code review, tests, and CI/CD around workflow definitions before registration.
+- A typed way to compose branches, loops, worker tasks, and system tasks.
+- Clear separation between orchestration logic and task implementation.
+
+:::tip 5-minute path
+Define the workflow in your SDK, register it with Conductor, start an execution, then implement any custom task as a [worker](/developer-guides/using-workers). Workflow code describes the graph; worker code performs the business logic.
+:::
 
 ## Create workflows in code
 
@@ -178,7 +189,7 @@ const getUserDetailsTask = simpleTask(GET_USER_INFO, GET_USER_INFO, {
     userId: "${workflow.input.userId}",
   });
   const emailOrSmsTask = switchTask("emailorsms", "${workflow.input.notificationPref}", {
-    emai: [
+    email: [
       simpleTask(SEND_EMAIL, SEND_EMAIL, {
         email: "${get_user_info.output.email}",
       }),

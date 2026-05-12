@@ -1,0 +1,1378 @@
+---
+title: "Test Workflow"
+description: "Use the Orkes Conductor workflows API to test Workflow. Includes endpoint details, authentication, parameters, request bodies, response behavior, and examples."
+---
+
+# Test Workflow
+
+**Endpoint:** `POST /api/workflow/test`
+
+Tests a workflow execution using mock data. This endpoint can be used for unit tests.
+
+When testing workflows, [Worker tasks](/content/reference-docs/worker-task) (type `SIMPLE`), [Sub Workflow tasks](/content/reference-docs/operators/sub-workflow), and [HTTP tasks](/content/reference-docs/system-tasks/http) can be mocked. All other system tasks and operators cannot be mocked and will be executed against the server. Refer to [Unit and Regression Tests](/content/developer-guides/unit-and-regression-tests) for a guide on how to conduct unit tests.
+
+!!! info
+    HTTP task mocking requires the feature to be enabled on your Conductor server. 
+
+## Request body
+
+Format the request as an object containing the following parameters.
+
+| Parameter | Description | Type | Required/ Optional |
+| ----- | ----- | ----- | ----- |
+| name | The name of the workflow to be tested. | string | Required. |
+| version | The version of the workflow to be tested. If unspecified, the latest version will be used. | integer | Optional. |
+| input | The workflow inputs for the test request. | object | Required if there are workflow inputs specified. |
+| workflowDef | The workflow definition JSON of the workflow to be tested. | object | Required if you don’t want to use the JSON from the Conductor server. |
+| taskRefToMockOutput |  The mock output and status for the task, keyed by task reference name. Each key maps to an ordered list of mock entries consumed in FIFO order, useful when a task executes more than once. If a running task has no mock entry, the simulation stops and returns the workflow in `RUNNING` state. See [Configuring mock entries](#configuring-mock-entries) below. | object | Optional. | 
+| maxLoops | Maximum number of simulation loop iterations before short-circuiting and returning the workflow in its current state. Defaults to 1000. | integer | Optional. | 
+| mockTtlSeconds | The time-to-live in seconds for mock data stored. Mock entries are automatically removed after this period, even if the workflow does not complete cleanly. Default is 300. | integer | Optional. | 
+| subWorkflowTestRequest | The sub-workflow test request for mocking outputs in the sub-workflow's Worker tasks. The sub-workflow must either be registered on the Conductor server or have its definition embedded inline via `workflowDefinition` in `subWorkflowParam` of the SUB_WORKFLOW task. If neither is provided, the test will fail with "No such workflow defined." See [example](#examples). | object | Required if there are sub-workflows containing Worker tasks. |
+| correlationId | A unique identifier used to correlate the current workflow execution with other executions of the same workflow. | string | Optional. |
+| idempotencyKey | A unique, user-generated key to prevent duplicate workflow executions. Idempotency data is retained for the life of the workflow execution. | string | Optional. |
+| idempotencyStrategy | The idempotency strategy for handling duplicate requests. Supported values:<ul><li>`RETURN_EXISTING`: Return the `workflowId` of the workflow instance with the same idempotency key.</li><li>`FAIL`: Start a new workflow instance only if there are no workflow executions with the same idempotency key.</li><li>`FAIL_ON_RUNNING`: Start a new workflow instance only if there are no RUNNING or PAUSED workflows with the same idempotency key. Completed workflows can run again.</li></ul> | string | Required if `idempotencyKey` is used. |
+| taskToDomain | A mapping of task reference names to domain-specific values to [route the task to defined workers](/content/developer-guides/task-to-domain). | object | Optional. |
+
+### Configuring mock entries
+
+Each entry in `taskRefToMockOutput` is a list of mock objects with the following fields:
+
+| Field | Description | Type | Required/ Optional |
+| ----- | ----- | ----- | ----- |
+| status | The mocked task status. Defaults to `COMPLETED`. Supported values: `COMPLETED`, `FAILED`, `FAILED_WITH_TERMINAL_ERROR`. |  string | Optional. | 
+| output | The mocked output data for the task. Must be provided as an object — use `{}` for empty output. Omitting this field will cause an error. | object | Required. |
+| executionTime | Simulated task execution duration in milliseconds. Used to backdate the task's `startTime`, enabling timeout condition testing. Defaults to `0`. | integer | Optional. | 
+| queueWaitTime | Simulated queue wait time in milliseconds. Combined with `executionTime` to backdate the task's `scheduledTime`. Defaults to `0`. | integer | Optional. | 
+
+**Example**
+
+```json
+"taskRefToMockOutput": {
+  "myTask_ref": [
+    {
+      "status": "COMPLETED",
+      "output": {
+        "greet": "Hello, user."
+      }
+    }
+  ]
+}
+```
+
+**subWorkflowTestRequest example**
+
+```json
+"subWorkflowTestRequest": {
+  "subworkflow_ref": {
+    "name": "mySubWorkflow",
+    "taskRefToMockOutput": {
+      "workerInSubWorkflow_ref": [
+        {
+          "status": "COMPLETED",
+          "output": {
+            "result": "done"
+          }
+        }
+      ]
+    }
+  }
+}
+```
+
+For deeply nested sub-workflows, include another `subWorkflowTestRequest` inside the nested request object.
+
+## Response
+
+Returns the execution JSON of the tested workflow.
+
+## Examples
+
+<details>
+<summary>Test workflow using remote workflow definition</summary>
+
+**Request**
+
+``` shell
+curl -X 'POST' \
+  'https://<YOUR-SERVER-URL>/api/workflow/test' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "name":"http",
+"version":1
+}'
+```
+
+**Response**  
+
+The workflow execution details are returned, showing the test execution of the `http` workflow using the workflow definition already stored in the Conductor server.
+
+``` json
+{
+  "ownerApp": "",
+  "createTime": 1770709155763,
+  "updateTime": 1770709155814,
+  "createdBy": "john.doe@acme.com",
+  "updatedBy": "john.doe@acme.com",
+  "status": "COMPLETED",
+  "endTime": 1770709155804,
+  "workflowId": "99cda0e3-0653-11f1-9b1b-c6f35360b671",
+  "tasks": [
+    {
+      "taskType": "HTTP",
+      "status": "COMPLETED",
+      "inputData": {
+        "encode": true,
+        "method": "GET",
+        "asyncComplete": false,
+        "_createdBy": "john.doe@acme.com",
+        "uri": "https://orkes-api-tester.orkesconductor.com/api",
+        "contentType": "application/json",
+        "accept": "application/json"
+      },
+      "referenceTaskName": "http_ref",
+      "retryCount": 0,
+      "seq": 1,
+      "pollCount": 0,
+      "taskDefName": "http",
+      "scheduledTime": 1770709155775,
+      "startTime": 1770709155775,
+      "endTime": 1770709155797,
+      "updateTime": 1770709155802,
+      "startDelayInSeconds": 0,
+      "retried": false,
+      "executed": true,
+      "callbackFromWorker": true,
+      "responseTimeoutSeconds": 0,
+      "workflowInstanceId": "99cda0e3-0653-11f1-9b1b-c6f35360b671",
+      "workflowType": "http",
+      "taskId": "99ceb25c-0653-11f1-9b1b-c6f35360b671",
+      "callbackAfterSeconds": 0,
+      "workerId": "orkes-conductor-deployment-584f9458c9-c2ttq",
+      "outputData": {
+        "response": {
+          "headers": {
+            "content-length": [
+              "182"
+            ],
+            "content-type": [
+              "application/json"
+            ],
+            "date": [
+              "Tue, 10 Feb 2026 07:39:15 GMT"
+            ],
+            "strict-transport-security": [
+              "max-age=15724800; includeSubDomains"
+            ]
+          },
+          "reasonPhrase": "",
+          "body": {
+            "randomString": "hjacazkrqrwqrukjjemd",
+            "randomInt": 4075,
+            "hostName": "orkes-api-sampler-67dfc8cf58-4lt28",
+            "apiRandomDelay": "0 ms",
+            "sleepFor": "0 ms",
+            "statusCode": "200",
+            "queryParams": {}
+          },
+          "statusCode": 200
+        }
+      },
+      "workflowTask": {
+        "name": "http",
+        "taskReferenceName": "http_ref",
+        "inputParameters": {
+          "uri": "https://orkes-api-tester.orkesconductor.com/api",
+          "method": "GET",
+          "accept": "application/json",
+          "contentType": "application/json",
+          "encode": true,
+          "asyncComplete": false
+        },
+        "type": "HTTP",
+        "decisionCases": {},
+        "defaultCase": [],
+        "forkTasks": [],
+        "startDelay": 0,
+        "joinOn": [],
+        "optional": false,
+        "defaultExclusiveJoinTask": [],
+        "asyncComplete": false,
+        "loopOver": [],
+        "onStateChange": {},
+        "permissive": false
+      },
+      "rateLimitPerFrequency": 0,
+      "rateLimitFrequencyInSeconds": 0,
+      "workflowPriority": 0,
+      "iteration": 0,
+      "subworkflowChanged": false,
+      "firstStartTime": 0,
+      "loopOverTask": false,
+      "taskDefinition": null,
+      "queueWaitTime": 0
+    }
+  ],
+  "input": {},
+  "output": {
+    "response": {
+      "headers": {
+        "content-length": [
+          "182"
+        ],
+        "content-type": [
+          "application/json"
+        ],
+        "date": [
+          "Tue, 10 Feb 2026 07:39:15 GMT"
+        ],
+        "strict-transport-security": [
+          "max-age=15724800; includeSubDomains"
+        ]
+      },
+      "reasonPhrase": "",
+      "body": {
+        "randomString": "hjacazkrqrwqrukjjemd",
+        "randomInt": 4075,
+        "hostName": "orkes-api-sampler-67dfc8cf58-4lt28",
+        "apiRandomDelay": "0 ms",
+        "sleepFor": "0 ms",
+        "statusCode": "200",
+        "queryParams": {}
+      },
+      "statusCode": 200
+    }
+  },
+  "taskToDomain": {
+    "*": "5b88f704-f090-47cc-9854-b8841ae4780f"
+  },
+  "failedReferenceTaskNames": [],
+  "workflowDefinition": {
+    "createTime": 1770651831951,
+    "updateTime": 1770707162316,
+    "name": "http",
+    "description": "http",
+    "version": 1,
+    "tasks": [
+      {
+        "name": "http",
+        "taskReferenceName": "http_ref",
+        "inputParameters": {
+          "uri": "https://orkes-api-tester.orkesconductor.com/api",
+          "method": "GET",
+          "accept": "application/json",
+          "contentType": "application/json",
+          "encode": true,
+          "asyncComplete": false
+        },
+        "type": "HTTP",
+        "decisionCases": {},
+        "defaultCase": [],
+        "forkTasks": [],
+        "startDelay": 0,
+        "joinOn": [],
+        "optional": false,
+        "defaultExclusiveJoinTask": [],
+        "asyncComplete": false,
+        "loopOver": [],
+        "onStateChange": {},
+        "permissive": false
+      }
+    ],
+    "inputParameters": [],
+    "outputParameters": {},
+    "failureWorkflow": "",
+    "schemaVersion": 2,
+    "restartable": true,
+    "workflowStatusListenerEnabled": false,
+    "ownerEmail": "john.doe@acme.com",
+    "timeoutPolicy": "ALERT_ONLY",
+    "timeoutSeconds": 0,
+    "variables": {},
+    "inputTemplate": {},
+    "enforceSchema": true,
+    "metadata": {},
+    "maskedFields": []
+  },
+  "priority": 0,
+  "variables": {},
+  "lastRetriedTime": 0,
+  "failedTaskNames": [],
+  "history": [],
+  "rateLimited": false,
+  "startTime": 1770709155763,
+  "workflowName": "http",
+  "workflowVersion": 1
+}
+```
+
+</details>
+
+<details>
+<summary>Test workflow using local workflow definition</summary>
+
+**Request**
+
+``` shell
+curl -X 'POST' \
+  'https://<YOUR-SERVER-URL>/api/workflow/test' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+"name":"myFirstWorkflow",
+  "workflowDef": {
+   "name": "myFirstWorkflow",
+   "tasks": [
+     {
+       "name": "get-user_ref",
+       "taskReferenceName": "get-user_ref",
+       "inputParameters": {
+         "http_request": {
+           "uri": "https://randomuser.me/api/",
+           "method": "GET"
+         }
+       },
+       "type": "HTTP"
+     }
+   ],
+   "inputParameters": [],
+   "outputParameters": {},
+   "failureWorkflow": "",
+   "schemaVersion": 2,
+   "timeoutPolicy": "ALERT_ONLY",
+   "timeoutSeconds": 60,
+   "enforceSchema": false,
+   "metadata": {}
+  }
+}'
+```
+
+**Response**  
+
+The workflow execution details are returned, showing the test execution using the local workflow definition provided in the request body.
+
+``` json
+{
+  "ownerApp": "",
+  "createTime": 1770714098807,
+  "updateTime": 1770714098807,
+  "createdBy": "john.doe@acme.com",
+  "status": "RUNNING",
+  "endTime": 0,
+  "workflowId": "1c164561-065f-11f1-9c6e-ba084417949a",
+  "tasks": [
+    {
+      "taskType": "HTTP",
+      "status": "SCHEDULED",
+      "inputData": {
+        "asyncComplete": false,
+        "http_request": {
+          "method": "GET",
+          "uri": "https://randomuser.me/api/"
+        },
+        "_createdBy": "john.doe@acme.com"
+      },
+      "referenceTaskName": "get-user_ref",
+      "retryCount": 0,
+      "seq": 1,
+      "pollCount": 0,
+      "taskDefName": "get-user_ref",
+      "scheduledTime": 1770714098817,
+      "startTime": 0,
+      "endTime": 0,
+      "updateTime": 1770714098817,
+      "startDelayInSeconds": 0,
+      "retried": false,
+      "executed": false,
+      "callbackFromWorker": true,
+      "responseTimeoutSeconds": 0,
+      "workflowInstanceId": "1c164561-065f-11f1-9c6e-ba084417949a",
+      "workflowType": "myFirstWorkflow",
+      "taskId": "1c17cc0a-065f-11f1-9c6e-ba084417949a",
+      "callbackAfterSeconds": 0,
+      "outputData": {},
+      "workflowTask": {
+        "name": "get-user_ref",
+        "taskReferenceName": "get-user_ref",
+        "inputParameters": {
+          "http_request": {
+            "uri": "https://randomuser.me/api/",
+            "method": "GET"
+          },
+          "asyncComplete": false
+        },
+        "type": "HTTP",
+        "decisionCases": {},
+        "defaultCase": [],
+        "forkTasks": [],
+        "startDelay": 0,
+        "joinOn": [],
+        "optional": false,
+        "defaultExclusiveJoinTask": [],
+        "asyncComplete": false,
+        "loopOver": [],
+        "onStateChange": {},
+        "permissive": false
+      },
+      "rateLimitPerFrequency": 0,
+      "rateLimitFrequencyInSeconds": 0,
+      "workflowPriority": 0,
+      "iteration": 0,
+      "subworkflowChanged": false,
+      "firstStartTime": 0,
+      "loopOverTask": false,
+      "taskDefinition": null,
+      "queueWaitTime": 0
+    }
+  ],
+  "input": {},
+  "output": {},
+  "taskToDomain": {
+    "*": "d12d9688-2241-4746-8354-3e3420ad1035"
+  },
+  "failedReferenceTaskNames": [],
+  "workflowDefinition": {
+    "createTime": 0,
+    "updateTime": 0,
+    "name": "myFirstWorkflow",
+    "version": 1,
+    "tasks": [
+      {
+        "name": "get-user_ref",
+        "taskReferenceName": "get-user_ref",
+        "inputParameters": {
+          "http_request": {
+            "uri": "https://randomuser.me/api/",
+            "method": "GET"
+          },
+          "asyncComplete": false
+        },
+        "type": "HTTP",
+        "decisionCases": {},
+        "defaultCase": [],
+        "forkTasks": [],
+        "startDelay": 0,
+        "joinOn": [],
+        "optional": false,
+        "defaultExclusiveJoinTask": [],
+        "asyncComplete": false,
+        "loopOver": [],
+        "onStateChange": {},
+        "permissive": false
+      }
+    ],
+    "inputParameters": [],
+    "outputParameters": {},
+    "failureWorkflow": "",
+    "schemaVersion": 2,
+    "restartable": true,
+    "workflowStatusListenerEnabled": false,
+    "timeoutPolicy": "ALERT_ONLY",
+    "timeoutSeconds": 60,
+    "variables": {},
+    "inputTemplate": {},
+    "enforceSchema": false,
+    "metadata": {},
+    "maskedFields": []
+  },
+  "priority": 0,
+  "variables": {},
+  "lastRetriedTime": 0,
+  "failedTaskNames": [],
+  "history": [],
+  "rateLimited": false,
+  "startTime": 1770714098807,
+  "workflowName": "myFirstWorkflow",
+  "workflowVersion": 1
+}
+```
+</details>
+
+<details>
+<summary>Test workflow with mock Worker tasks</summary>
+
+**Request**
+
+```bash
+curl -X 'POST' \
+  'https://<YOUR-SERVER-URL>/api/workflow/test' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "name":"myFirstWorkflow",
+  "workflowDef": {
+   "name": "myFirstWorkflow",
+   "tasks": [
+     {
+       "name": "get-user_ref",
+       "taskReferenceName": "get-user_ref",
+       "inputParameters": {
+         "http_request": {
+           "uri": "https://randomuser.me/api/",
+           "method": "GET"
+         }
+       },
+       "type": "HTTP"
+     },
+    {
+      "name": "myTask",
+      "taskReferenceName": "myTask_ref",
+      "inputParameters": {
+        "name": "${get-user_ref.output.response.body.results[0].name.first}"
+      },
+      "type": "SIMPLE"
+    }
+   ],
+   "inputParameters": [],
+   "outputParameters": {},
+   "failureWorkflow": "",
+   "schemaVersion": 2,
+   "timeoutPolicy": "ALERT_ONLY",
+   "timeoutSeconds": 60,
+   "enforceSchema": false,
+   "metadata": {}
+  },
+  "taskRefToMockOutput": {
+    "myTask_ref": [
+      {
+        "status":"COMPLETED",
+        "output": {
+          "greet": "Hello, user."
+        }
+      }
+    ]
+  }
+}
+'
+```
+
+**Response**
+
+The workflow execution details are returned with the Worker task (`myTask_ref`) showing the mocked output instead of executing the actual worker.
+
+```json
+{
+  "ownerApp": "",
+  "createTime": 1770709472215,
+  "updateTime": 1770709472298,
+  "createdBy": "john.doe@acme.com",
+  "updatedBy": "john.doe@acme.com",
+  "status": "COMPLETED",
+  "endTime": 1770709472296,
+  "workflowId": "566c403f-0654-11f1-9b1b-c6f35360b671",
+  "tasks": [
+    {
+      "taskType": "HTTP",
+      "status": "COMPLETED",
+      "inputData": {
+        "asyncComplete": false,
+        "http_request": {
+          "method": "GET",
+          "uri": "https://randomuser.me/api/"
+        },
+        "_createdBy": "john.doe@acme.com"
+      },
+      "referenceTaskName": "get-user_ref",
+      "retryCount": 0,
+      "seq": 1,
+      "pollCount": 0,
+      "taskDefName": "get-user_ref",
+      "scheduledTime": 1770709472239,
+      "startTime": 1770709472239,
+      "endTime": 1770709472260,
+      "updateTime": 1770709472272,
+      "startDelayInSeconds": 0,
+      "retried": false,
+      "executed": true,
+      "callbackFromWorker": true,
+      "responseTimeoutSeconds": 0,
+      "workflowInstanceId": "566c403f-0654-11f1-9b1b-c6f35360b671",
+      "workflowType": "myFirstWorkflow",
+      "taskId": "566dedf8-0654-11f1-9b1b-c6f35360b671",
+      "callbackAfterSeconds": 0,
+      "workerId": "orkes-conductor-deployment-584f9458c9-c2ttq",
+      "outputData": {
+        "response": {
+          "headers": {
+            "alt-svc": [
+              "h3=\":443\"; ma=86400"
+            ],
+            "cf-cache-status": [
+              "DYNAMIC"
+            ],
+            "cf-ray": [
+              "9cb9fb5988ce64aa-IAD"
+            ],
+            "content-type": [
+              "application/json"
+            ],
+            "date": [
+              "Tue, 10 Feb 2026 07:44:32 GMT"
+            ],
+            "nel": [
+              "{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}"
+            ],
+            "report-to": [
+              "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=PaWZxyT4tdHG8P904rkHOK6srGgtcJGmRjB7LOoCgJEld4SBbrL5%2FcNwC9JsnjvboDLBQxqk5GQpZkC9T2cRTmlTPMkFVYwUtSbBRu8%3D\"}]}"
+            ],
+            "server": [
+              "cloudflare"
+            ]
+          },
+          "reasonPhrase": "",
+          "body": {
+            "results": [],
+            "info": {
+              "seed": "d3adb33f",
+              "results": 1,
+              "page": 1,
+              "version": "1.4"
+            }
+          },
+          "statusCode": 200
+        }
+      },
+      "workflowTask": {
+        "name": "get-user_ref",
+        "taskReferenceName": "get-user_ref",
+        "inputParameters": {
+          "http_request": {
+            "uri": "https://randomuser.me/api/",
+            "method": "GET"
+          },
+          "asyncComplete": false
+        },
+        "type": "HTTP",
+        "decisionCases": {},
+        "defaultCase": [],
+        "forkTasks": [],
+        "startDelay": 0,
+        "joinOn": [],
+        "optional": false,
+        "defaultExclusiveJoinTask": [],
+        "asyncComplete": false,
+        "loopOver": [],
+        "onStateChange": {},
+        "permissive": false
+      },
+      "rateLimitPerFrequency": 0,
+      "rateLimitFrequencyInSeconds": 0,
+      "workflowPriority": 0,
+      "iteration": 0,
+      "subworkflowChanged": false,
+      "firstStartTime": 0,
+      "loopOverTask": false,
+      "taskDefinition": null,
+      "queueWaitTime": 0
+    },
+    {
+      "taskType": "myTask",
+      "status": "COMPLETED",
+      "inputData": {
+        "name": null,
+        "_createdBy": "john.doe@acme.com"
+      },
+      "referenceTaskName": "myTask_ref",
+      "retryCount": 0,
+      "seq": 2,
+      "pollCount": 0,
+      "taskDefName": "myTask",
+      "scheduledTime": 1770709472265,
+      "startTime": 0,
+      "endTime": 1770709472285,
+      "updateTime": 1770709472294,
+      "startDelayInSeconds": 0,
+      "retried": false,
+      "executed": true,
+      "callbackFromWorker": true,
+      "responseTimeoutSeconds": 3600,
+      "workflowInstanceId": "566c403f-0654-11f1-9b1b-c6f35360b671",
+      "workflowType": "myFirstWorkflow",
+      "taskId": "5673ba65-0654-11f1-9b1b-c6f35360b671",
+      "callbackAfterSeconds": 0,
+      "outputData": {
+        "greet": "Hello, user."
+      },
+      "workflowTask": {
+        "name": "myTask",
+        "taskReferenceName": "myTask_ref",
+        "inputParameters": {
+          "name": "${get-user_ref.output.response.body.results[0].name.first}"
+        },
+        "type": "SIMPLE",
+        "decisionCases": {},
+        "defaultCase": [],
+        "forkTasks": [],
+        "startDelay": 0,
+        "joinOn": [],
+        "optional": false,
+        "taskDefinition": {
+          "createTime": 0,
+          "updateTime": 0,
+          "name": "myTask",
+          "retryCount": 3,
+          "timeoutSeconds": 0,
+          "inputKeys": [],
+          "outputKeys": [],
+          "timeoutPolicy": "TIME_OUT_WF",
+          "retryLogic": "FIXED",
+          "retryDelaySeconds": 60,
+          "responseTimeoutSeconds": 3600,
+          "inputTemplate": {},
+          "rateLimitPerFrequency": 0,
+          "rateLimitFrequencyInSeconds": 1,
+          "backoffScaleFactor": 1,
+          "totalTimeoutSeconds": 0,
+          "enforceSchema": false
+        },
+        "defaultExclusiveJoinTask": [],
+        "asyncComplete": false,
+        "loopOver": [],
+        "onStateChange": {},
+        "permissive": false
+      },
+      "domain": "9b030f7c-3424-4463-a17a-2d710019a1ec",
+      "rateLimitPerFrequency": 0,
+      "rateLimitFrequencyInSeconds": 1,
+      "workflowPriority": 0,
+      "iteration": 0,
+      "subworkflowChanged": false,
+      "firstStartTime": 0,
+      "loopOverTask": false,
+      "taskDefinition": {
+        "createTime": 0,
+        "updateTime": 0,
+        "name": "myTask",
+        "retryCount": 3,
+        "timeoutSeconds": 0,
+        "inputKeys": [],
+        "outputKeys": [],
+        "timeoutPolicy": "TIME_OUT_WF",
+        "retryLogic": "FIXED",
+        "retryDelaySeconds": 60,
+        "responseTimeoutSeconds": 3600,
+        "inputTemplate": {},
+        "rateLimitPerFrequency": 0,
+        "rateLimitFrequencyInSeconds": 1,
+        "backoffScaleFactor": 1,
+        "totalTimeoutSeconds": 0,
+        "enforceSchema": false
+      },
+      "queueWaitTime": 0
+    }
+  ],
+  "input": {},
+  "output": {
+    "greet": "Hello, user."
+  },
+  "taskToDomain": {
+    "*": "9b030f7c-3424-4463-a17a-2d710019a1ec"
+  },
+  "failedReferenceTaskNames": [],
+  "workflowDefinition": {
+    "createTime": 0,
+    "updateTime": 0,
+    "name": "myFirstWorkflow",
+    "version": 1,
+    "tasks": [
+      {
+        "name": "get-user_ref",
+        "taskReferenceName": "get-user_ref",
+        "inputParameters": {
+          "http_request": {
+            "uri": "https://randomuser.me/api/",
+            "method": "GET"
+          },
+          "asyncComplete": false
+        },
+        "type": "HTTP",
+        "decisionCases": {},
+        "defaultCase": [],
+        "forkTasks": [],
+        "startDelay": 0,
+        "joinOn": [],
+        "optional": false,
+        "defaultExclusiveJoinTask": [],
+        "asyncComplete": false,
+        "loopOver": [],
+        "onStateChange": {},
+        "permissive": false
+      },
+      {
+        "name": "myTask",
+        "taskReferenceName": "myTask_ref",
+        "inputParameters": {
+          "name": "${get-user_ref.output.response.body.results[0].name.first}"
+        },
+        "type": "SIMPLE",
+        "decisionCases": {},
+        "defaultCase": [],
+        "forkTasks": [],
+        "startDelay": 0,
+        "joinOn": [],
+        "optional": false,
+        "taskDefinition": {
+          "createTime": 0,
+          "updateTime": 0,
+          "name": "myTask",
+          "retryCount": 3,
+          "timeoutSeconds": 0,
+          "inputKeys": [],
+          "outputKeys": [],
+          "timeoutPolicy": "TIME_OUT_WF",
+          "retryLogic": "FIXED",
+          "retryDelaySeconds": 60,
+          "responseTimeoutSeconds": 3600,
+          "inputTemplate": {},
+          "rateLimitPerFrequency": 0,
+          "rateLimitFrequencyInSeconds": 1,
+          "backoffScaleFactor": 1,
+          "totalTimeoutSeconds": 0,
+          "enforceSchema": false
+        },
+        "defaultExclusiveJoinTask": [],
+        "asyncComplete": false,
+        "loopOver": [],
+        "onStateChange": {},
+        "permissive": false
+      }
+    ],
+    "inputParameters": [],
+    "outputParameters": {},
+    "failureWorkflow": "",
+    "schemaVersion": 2,
+    "restartable": true,
+    "workflowStatusListenerEnabled": false,
+    "timeoutPolicy": "ALERT_ONLY",
+    "timeoutSeconds": 60,
+    "variables": {},
+    "inputTemplate": {},
+    "enforceSchema": false,
+    "metadata": {},
+    "maskedFields": []
+  },
+  "priority": 0,
+  "variables": {},
+  "lastRetriedTime": 0,
+  "failedTaskNames": [],
+  "history": [],
+  "rateLimited": false,
+  "startTime": 1770709472215,
+  "workflowName": "myFirstWorkflow",
+  "workflowVersion": 1
+}
+```
+
+</details>
+
+<details>
+<summary>Test workflow with mock Sub Workflow tasks</summary>
+
+**Request**
+
+```bash
+curl -X 'POST' \
+  'https://<YOUR-SERVER-URL>/api/workflow/test' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>' \
+  -d '{
+  "name": "mock",
+  "version": 1,
+  "workflowDef": {
+    "name": "mock",
+    "version": 1,
+    "tasks": [
+      {
+        "name": "subworkflow",
+        "taskReferenceName": "subworkflow",
+        "type": "SUB_WORKFLOW",
+        "subWorkflowParam": { "name": "payment-workflow", "version": 1 },
+        "inputParameters": {}
+      }
+    ],
+    "schemaVersion": 2,
+    "timeoutPolicy": "ALERT_ONLY",
+    "timeoutSeconds": 0
+  },
+  "taskRefToMockOutput": {
+    "subworkflow": [
+      { "status": "COMPLETED", "output": { "message": "hello mocked sub-workflow!" } }
+    ]
+  }
+}'
+```
+
+**Response**
+
+The workflow execution details are returned with the Sub Workflow task (`subworkflow`) showing the mocked output.
+
+```json
+{
+  "ownerApp": "",
+  "createTime": 1775049120719,
+  "updateTime": 1775049120769,
+  "createdBy": "john.doe@acme.com",
+  "updatedBy": "john.doe@acme.com",
+  "status": "COMPLETED",
+  "endTime": 1775049120766,
+  "workflowId": "5e7f85fc-2dcc-11f1-8ec0-e2e7759c6eba",
+  "tasks": [
+    {
+      "taskType": "SUB_WORKFLOW",
+      "status": "COMPLETED",
+      "inputData": {
+        "subWorkflowDefinition": null,
+        "workflowInput": {},
+        "subWorkflowTaskToDomain": null,
+        "subWorkflowName": "payment-workflow",
+        "subWorkflowPriority": null,
+        "_createdBy": "john.doe@acme.com",
+        "subWorkflowVersion": 1
+      },
+      "referenceTaskName": "subworkflow",
+      "retryCount": 0,
+      "seq": 1,
+      "pollCount": 0,
+      "taskDefName": "subworkflow",
+      "scheduledTime": 1775049120759,
+      "startTime": 1775049120759,
+      "endTime": 1775049120759,
+      "updateTime": 1775049120764,
+      "startDelayInSeconds": 0,
+      "retried": false,
+      "executed": true,
+      "callbackFromWorker": true,
+      "responseTimeoutSeconds": 0,
+      "workflowInstanceId": "5e7f85fc-2dcc-11f1-8ec0-e2e7759c6eba",
+      "workflowType": "mock",
+      "taskId": "5e848f0d-2dcc-11f1-8ec0-e2e7759c6eba",
+      "callbackAfterSeconds": 0,
+      "outputData": {
+        "message": "hello mocked sub-workflow!"
+      },
+      "workflowTask": {
+        "name": "subworkflow",
+        "taskReferenceName": "subworkflow",
+        "inputParameters": {},
+        "type": "SUB_WORKFLOW",
+        "decisionCases": {},
+        "defaultCase": [],
+        "forkTasks": [],
+        "startDelay": 0,
+        "subWorkflowParam": {
+          "name": "payment-workflow",
+          "version": 1
+        },
+        "joinOn": [],
+        "optional": false,
+        "defaultExclusiveJoinTask": [],
+        "asyncComplete": false,
+        "loopOver": [],
+        "onStateChange": {},
+        "permissive": false
+      },
+      "rateLimitPerFrequency": 0,
+      "rateLimitFrequencyInSeconds": 0,
+      "workflowPriority": 0,
+      "iteration": 0,
+      "subworkflowChanged": false,
+      "firstStartTime": 0,
+      "loopOverTask": false,
+      "taskDefinition": null,
+      "queueWaitTime": 0
+    }
+  ],
+  "input": {},
+  "output": {
+    "message": "hello mocked sub-workflow!"
+  },
+  "taskToDomain": {
+    "*": "8d112198-243e-4713-9693-707fc4ceabf0"
+  },
+  "failedReferenceTaskNames": [],
+  "workflowDefinition": {
+    "createTime": 0,
+    "updateTime": 0,
+    "name": "mock",
+    "version": 1,
+    "tasks": [
+      {
+        "name": "subworkflow",
+        "taskReferenceName": "subworkflow",
+        "inputParameters": {},
+        "type": "SUB_WORKFLOW",
+        "decisionCases": {},
+        "defaultCase": [],
+        "forkTasks": [],
+        "startDelay": 0,
+        "subWorkflowParam": {
+          "name": "payment-workflow",
+          "version": 1
+        },
+        "joinOn": [],
+        "optional": false,
+        "defaultExclusiveJoinTask": [],
+        "asyncComplete": false,
+        "loopOver": [],
+        "onStateChange": {},
+        "permissive": false
+      }
+    ],
+    "inputParameters": [],
+    "outputParameters": {},
+    "schemaVersion": 2,
+    "restartable": true,
+    "workflowStatusListenerEnabled": false,
+    "timeoutPolicy": "ALERT_ONLY",
+    "timeoutSeconds": 0,
+    "variables": {},
+    "inputTemplate": {},
+    "enforceSchema": true,
+    "metadata": {},
+    "maskedFields": []
+  },
+  "priority": 0,
+  "variables": {},
+  "lastRetriedTime": 0,
+  "failedTaskNames": [],
+  "history": [],
+  "rateLimited": false,
+  "startTime": 1775049120719,
+  "workflowName": "mock",
+  "workflowVersion": 1
+}
+```
+
+</details>
+
+<details>
+<summary>Test workflow with mock Worker tasks in a Sub Workflow</summary>
+
+**Request**
+
+```bash
+curl -X 'POST' \
+  'https://<YOUR-SERVER-URL>/api/workflow/test' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "name": "subWorkflowWorkerMockTest",
+  "workflowDef": {
+    "name": "subWorkflowWorkerMockTest",
+    "tasks": [
+      {
+        "name": "subworkflow",
+        "taskReferenceName": "subworkflow_ref",
+        "type": "SUB_WORKFLOW",
+        "subWorkflowParam": {
+          "name": "mySubWorkflow",
+          "version": 1,
+          "workflowDefinition": {
+            "name": "mySubWorkflow",
+            "version": 1,
+            "tasks": [
+              {
+                "name": "workerInSubWorkflow",
+                "taskReferenceName": "workerInSubWorkflow_ref",
+                "inputParameters": {},
+                "type": "SIMPLE"
+              }
+            ],
+            "inputParameters": [],
+            "outputParameters": {},
+            "schemaVersion": 2,
+            "timeoutPolicy": "ALERT_ONLY",
+            "timeoutSeconds": 0,
+            "enforceSchema": false
+          }
+        },
+        "inputParameters": {}
+      }
+    ],
+    "inputParameters": [],
+    "outputParameters": {},
+    "schemaVersion": 2,
+    "timeoutPolicy": "ALERT_ONLY",
+    "timeoutSeconds": 0,
+    "enforceSchema": false
+  },
+  "subWorkflowTestRequest": {
+    "subworkflow_ref": {
+      "name": "mySubWorkflow",
+      "taskRefToMockOutput": {
+        "workerInSubWorkflow_ref": [
+          {
+            "status": "COMPLETED",
+            "output": {
+              "result": "done"
+            }
+          }
+        ]
+      }
+    }
+  }
+}'
+```
+
+**Response**
+
+The workflow execution details are returned with the Worker task (`workerInSubWorkflow_ref`) inside the sub-workflow showing the mocked output.
+
+```json
+{
+  "ownerApp": "",
+  "createTime": 1775055148738,
+  "updateTime": 1775055148850,
+  "createdBy": "john.doe@acme.com",
+  "updatedBy": "john.doe@acme.com",
+  "status": "COMPLETED",
+  "endTime": 1775055148849,
+  "workflowId": "677a3a33-2dda-11f1-bf9f-cea03a00d806",
+  "tasks": [
+    {
+      "taskType": "SUB_WORKFLOW",
+      "status": "COMPLETED",
+      "inputData": {
+        "_systemMetadata": {
+          "dynamic": true
+        },
+        "subWorkflowDefinition": {
+          "createTime": 0,
+          "updateTime": 0,
+          "name": "mySubWorkflow",
+          "version": 1,
+          "tasks": [
+            {
+              "name": "workerInSubWorkflow",
+              "taskReferenceName": "workerInSubWorkflow_ref",
+              "inputParameters": {},
+              "type": "SIMPLE",
+              "decisionCases": {},
+              "defaultCase": [],
+              "forkTasks": [],
+              "startDelay": 0,
+              "joinOn": [],
+              "optional": false,
+              "defaultExclusiveJoinTask": [],
+              "asyncComplete": false,
+              "loopOver": [],
+              "onStateChange": {},
+              "permissive": false
+            }
+          ],
+          "inputParameters": [],
+          "outputParameters": {},
+          "schemaVersion": 2,
+          "restartable": true,
+          "workflowStatusListenerEnabled": false,
+          "timeoutPolicy": "ALERT_ONLY",
+          "timeoutSeconds": 0,
+          "variables": {},
+          "inputTemplate": {},
+          "enforceSchema": false,
+          "metadata": {},
+          "maskedFields": []
+        },
+        "workflowInput": {},
+        "subWorkflowTaskToDomain": null,
+        "subWorkflowName": "mySubWorkflow",
+        "subWorkflowPriority": null,
+        "_createdBy": "john.doe@acme.com",
+        "subWorkflowVersion": null
+      },
+      "referenceTaskName": "subworkflow_ref",
+      "retryCount": 0,
+      "seq": 1,
+      "pollCount": 0,
+      "taskDefName": "subworkflow",
+      "scheduledTime": 1775055148755,
+      "startTime": 1775055148755,
+      "endTime": 1775055148834,
+      "updateTime": 1775055148845,
+      "startDelayInSeconds": 0,
+      "retried": false,
+      "executed": true,
+      "callbackFromWorker": true,
+      "responseTimeoutSeconds": 0,
+      "workflowInstanceId": "677a3a33-2dda-11f1-bf9f-cea03a00d806",
+      "workflowType": "subWorkflowWorkerMockTest",
+      "taskId": "677b99c4-2dda-11f1-bf9f-cea03a00d806",
+      "callbackAfterSeconds": 0,
+      "outputData": {
+        "subWorkflowId": "677cf955-2dda-11f1-bf9f-cea03a00d806",
+        "result": "done"
+      },
+      "workflowTask": {
+        "name": "subworkflow",
+        "taskReferenceName": "subworkflow_ref",
+        "inputParameters": {},
+        "type": "SUB_WORKFLOW",
+        "decisionCases": {},
+        "defaultCase": [],
+        "forkTasks": [],
+        "startDelay": 0,
+        "subWorkflowParam": {
+          "name": "mySubWorkflow",
+          "version": 1,
+          "workflowDefinition": {
+            "createTime": 0,
+            "updateTime": 0,
+            "name": "mySubWorkflow",
+            "version": 1,
+            "tasks": [
+              {
+                "name": "workerInSubWorkflow",
+                "taskReferenceName": "workerInSubWorkflow_ref",
+                "inputParameters": {},
+                "type": "SIMPLE",
+                "decisionCases": {},
+                "defaultCase": [],
+                "forkTasks": [],
+                "startDelay": 0,
+                "joinOn": [],
+                "optional": false,
+                "defaultExclusiveJoinTask": [],
+                "asyncComplete": false,
+                "loopOver": [],
+                "onStateChange": {},
+                "permissive": false
+              }
+            ],
+            "inputParameters": [],
+            "outputParameters": {},
+            "schemaVersion": 2,
+            "restartable": true,
+            "workflowStatusListenerEnabled": false,
+            "timeoutPolicy": "ALERT_ONLY",
+            "timeoutSeconds": 0,
+            "variables": {},
+            "inputTemplate": {},
+            "enforceSchema": false,
+            "metadata": {},
+            "maskedFields": []
+          }
+        },
+        "joinOn": [],
+        "optional": false,
+        "defaultExclusiveJoinTask": [],
+        "asyncComplete": false,
+        "loopOver": [],
+        "onStateChange": {},
+        "permissive": false
+      },
+      "rateLimitPerFrequency": 0,
+      "rateLimitFrequencyInSeconds": 0,
+      "workflowPriority": 0,
+      "iteration": 0,
+      "subWorkflowId": "677cf955-2dda-11f1-bf9f-cea03a00d806",
+      "subworkflowChanged": false,
+      "firstStartTime": 0,
+      "queueWaitTime": 0,
+      "taskDefinition": null,
+      "loopOverTask": false
+    }
+  ],
+  "input": {},
+  "output": {
+    "subWorkflowId": "677cf955-2dda-11f1-bf9f-cea03a00d806",
+    "result": "done"
+  },
+  "taskToDomain": {
+    "*": "bfc488c7-3a7a-4eb9-abbf-a5134a39f7a1"
+  },
+  "failedReferenceTaskNames": [],
+  "workflowDefinition": {
+    "createTime": 0,
+    "updateTime": 0,
+    "name": "subWorkflowWorkerMockTest",
+    "version": 1,
+    "tasks": [
+      {
+        "name": "subworkflow",
+        "taskReferenceName": "subworkflow_ref",
+        "inputParameters": {},
+        "type": "SUB_WORKFLOW",
+        "decisionCases": {},
+        "defaultCase": [],
+        "forkTasks": [],
+        "startDelay": 0,
+        "subWorkflowParam": {
+          "name": "mySubWorkflow",
+          "version": 1,
+          "workflowDefinition": {
+            "createTime": 0,
+            "updateTime": 0,
+            "name": "mySubWorkflow",
+            "version": 1,
+            "tasks": [
+              {
+                "name": "workerInSubWorkflow",
+                "taskReferenceName": "workerInSubWorkflow_ref",
+                "inputParameters": {},
+                "type": "SIMPLE",
+                "decisionCases": {},
+                "defaultCase": [],
+                "forkTasks": [],
+                "startDelay": 0,
+                "joinOn": [],
+                "optional": false,
+                "defaultExclusiveJoinTask": [],
+                "asyncComplete": false,
+                "loopOver": [],
+                "onStateChange": {},
+                "permissive": false
+              }
+            ],
+            "inputParameters": [],
+            "outputParameters": {},
+            "schemaVersion": 2,
+            "restartable": true,
+            "workflowStatusListenerEnabled": false,
+            "timeoutPolicy": "ALERT_ONLY",
+            "timeoutSeconds": 0,
+            "variables": {},
+            "inputTemplate": {},
+            "enforceSchema": false,
+            "metadata": {},
+            "maskedFields": []
+          }
+        },
+        "joinOn": [],
+        "optional": false,
+        "defaultExclusiveJoinTask": [],
+        "asyncComplete": false,
+        "loopOver": [],
+        "onStateChange": {},
+        "permissive": false
+      }
+    ],
+    "inputParameters": [],
+    "outputParameters": {},
+    "schemaVersion": 2,
+    "restartable": true,
+    "workflowStatusListenerEnabled": false,
+    "timeoutPolicy": "ALERT_ONLY",
+    "timeoutSeconds": 0,
+    "variables": {},
+    "inputTemplate": {},
+    "enforceSchema": false,
+    "metadata": {},
+    "maskedFields": []
+  },
+  "priority": 0,
+  "variables": {},
+  "lastRetriedTime": 0,
+  "failedTaskNames": [],
+  "history": [],
+  "rateLimited": false,
+  "startTime": 1775055148738,
+  "workflowName": "subWorkflowWorkerMockTest",
+  "workflowVersion": 1
+}
+```
+
+</details>

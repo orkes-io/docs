@@ -1,0 +1,140 @@
+---
+title: "Using Secrets"
+description: "Learn how to store and reference sensitive values using secrets so credentials and tokens can be used securely in workflows in Orkes Conductor."
+---
+
+# Using Secrets
+
+Use secrets for credentials, API keys, tokens, passwords, private keys, and any value that should not appear in workflow definitions, execution input, task output, logs, or screenshots. A workflow references a secret by name; Conductor resolves the value at runtime for authorized users and masks it in execution data.
+
+!!! tip "5-minute path"
+    Create a secret with a stable key name, reference it as `${workflow.secrets.secret_name}`, grant the workflow or application permission to read it, and rotate the value without changing the workflow definition.
+
+## Configuring secrets
+
+Secrets can be created through the UI or API. For automation and environment promotion, prefer the API so secret setup can be handled by deployment tooling.
+
+Create or update a secret:
+
+```shell
+curl -sS -X PUT "$CONDUCTOR_SERVER_URL/secrets/payment_api_token" \
+  -H "X-Authorization: $CONDUCTOR_AUTH_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '"secret-value"'
+```
+
+List secret names:
+
+```shell
+curl -sS -X POST "$CONDUCTOR_SERVER_URL/secrets" \
+  -H "X-Authorization: $CONDUCTOR_AUTH_TOKEN"
+```
+
+Related APIs:
+
+- [Create or update secret](/content/reference-docs/api/secrets/create-secret)
+- [List all secrets](/content/reference-docs/api/secrets/list-all-secrets)
+- [Check secret exists](/content/reference-docs/api/secrets/check-secret-exists)
+- [Delete secret](/content/reference-docs/api/secrets/delete-secret)
+
+## Using secrets in workflow
+
+Reference a secret with:
+
+```text
+${workflow.secrets.secret_name}
+```
+
+Example HTTP task:
+
+```json
+{
+  "name": "call_payment_api",
+  "taskReferenceName": "call_payment_api_ref",
+  "type": "HTTP",
+  "inputParameters": {
+    "http_request": {
+      "uri": "https://payments.example.com/charges",
+      "method": "POST",
+      "headers": {
+        "Authorization": "Bearer ${workflow.secrets.payment_api_token}",
+        "Content-Type": "application/json"
+      },
+      "body": {
+        "orderId": "${workflow.input.orderId}",
+        "amount": "${workflow.input.amount}"
+      }
+    }
+  }
+}
+```
+
+When the workflow runs, Conductor resolves `${workflow.secrets.payment_api_token}` only if the caller has permission to access that secret. The resolved value is masked in workflow and task execution data.
+
+## Updating secrets
+
+Updating a secret does not require changing or redeploying workflow definitions. Keep the secret key stable and rotate the value behind it.
+
+Use the same `PUT` API to update an existing secret:
+
+```shell
+curl -sS -X PUT "$CONDUCTOR_SERVER_URL/secrets/payment_api_token" \
+  -H "X-Authorization: $CONDUCTOR_AUTH_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '"rotated-secret-value"'
+```
+
+For rotation workflows, use the [Update Secret task](/content/reference-docs/system-tasks/update-secret). This is useful when a workflow obtains a short-lived token and must replace the stored value for later executions.
+
+```json
+{
+  "name": "update_secret",
+  "taskReferenceName": "update_secret_ref",
+  "type": "UPDATE_SECRET",
+  "inputParameters": {
+    "_secrets": {
+      "secretKey": "payment_api_token",
+      "secretValue": "${refresh_token.output.access_token}"
+    }
+  }
+}
+```
+
+## Examples
+
+### Environment-specific credentials
+
+Use the same workflow definition across environments and change only the secret values:
+
+| Environment | Secret key | Example reference |
+| ----------- | ---------- | ----------------- |
+| Development | `payment_api_token` | `${workflow.secrets.payment_api_token}` |
+| Staging | `payment_api_token` | `${workflow.secrets.payment_api_token}` |
+| Production | `payment_api_token` | `${workflow.secrets.payment_api_token}` |
+
+The workflow remains portable. The cluster controls which value is returned.
+
+### Passing sensitive task output
+
+If a task produces a sensitive value that must be passed to another task, place it under `_secrets` or `_masked` so execution data does not expose it. See [Masking Parameters](/content/developer-guides/masking-parameters) for details.
+
+## Use cases
+
+Use secrets for:
+
+- API tokens and OAuth access tokens
+- Database passwords
+- Private keys and signing keys
+- Webhook signing secrets
+- LLM provider keys
+- Integration credentials used by HTTP, gRPC, event, and custom worker tasks
+
+Use [environment variables](/content/developer-guides/using-environment-variables) instead for non-sensitive configuration such as base URLs, feature flags, region names, and numeric thresholds.
+
+## Production notes
+
+- Do not put secret values in workflow input, task output, task logs, or inline expressions.
+- Use stable secret names and rotate values behind those names.
+- Grant read and update permissions narrowly through [Role Based Access Control](/content/category/access-control-and-security).
+- Keep secret creation and rotation in deployment automation where possible.
+- Test secret access with the same application identity that starts the workflow.

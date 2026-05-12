@@ -1,0 +1,222 @@
+---
+title: "Get All Task Definitions"
+description: "Use the Orkes Conductor metadata API to get All Task Definitions. Includes endpoint details, authentication, parameters, request bodies, response behavior, and."
+---
+
+# Get All Task Definitions
+
+**Endpoint:** `GET /api/metadata/taskdefs`
+
+Gets all the task definitions in the cluster.
+
+## Query parameters
+
+| Parameter | Description                                                                                                                 | Type    | Required/ Optional |
+| --------- | --------------------------------------------------------------------------------------------------------------------------- | ------- | ------------------ |
+| access    | The access level being requested. Supported values: _READ_, _CREATE_, _UPDATE_, _EXECUTE_, and _DELETE_. Default is _READ_. | string  | Optional.          |
+| metadata  | Whether metadata (such as tags) should be included in the response. Default is _false_.                                     | boolean | Optional.          |
+| tagKey    | Option to filter based on the tag key associated with the task definitions.                                                 | string  | Optional.          |
+| tagValue  | Option to filter based on the tag value associated with the task definitions.                                               | string  | Optional.          |
+
+## Response
+
+Returns an array containing all the task definitions in the cluster, optionally including metadata such as tags based on the query parameters.
+
+## Examples
+
+<details>
+<summary>Get all task definitions with a specific tag</summary>
+
+**Request**
+
+```bash
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/metadata/taskdefs?access=READ&metadata=false&tagKey=team&tagValue=engineering' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+Returns all task definitions with tag `team:engineering`.
+
+```json
+[
+  {
+    "ownerApp": "string",
+    "createTime": 0,
+    "updateTime": 1735634595302,
+    "createdBy": "string",
+    "updatedBy": "john.doe@acme.com",
+    "name": "string",
+    "description": "string",
+    "retryCount": 0,
+    "timeoutSeconds": 0,
+    "inputKeys": ["string"],
+    "outputKeys": ["string"],
+    "timeoutPolicy": "RETRY",
+    "retryLogic": "FIXED",
+    "retryDelaySeconds": 0,
+    "responseTimeoutSeconds": 1,
+    "concurrentExecLimit": 0,
+    "inputTemplate": {
+      "additionalProp1": {},
+      "additionalProp2": {},
+      "additionalProp3": {}
+    },
+    "rateLimitPerFrequency": 0,
+    "rateLimitFrequencyInSeconds": 0,
+    "isolationGroupId": "string",
+    "executionNameSpace": "string",
+    "ownerEmail": "john.doe@acme.com",
+    "pollTimeoutSeconds": 0,
+    "backoffScaleFactor": 1,
+    "totalTimeoutSeconds": 0,
+    "inputSchema": {
+      "ownerApp": "string",
+      "createTime": 0,
+      "updateTime": 0,
+      "createdBy": "string",
+      "updatedBy": "string",
+      "name": "string-11",
+      "version": 0,
+      "type": "JSON",
+      "data": {
+        "additionalProp1": {},
+        "additionalProp2": {},
+        "additionalProp3": {}
+      },
+      "externalRef": "string"
+    },
+    "outputSchema": {
+      "ownerApp": "string",
+      "createTime": 0,
+      "updateTime": 0,
+      "createdBy": "string",
+      "updatedBy": "string",
+      "name": "string",
+      "version": 0,
+      "type": "JSON",
+      "data": {
+        "additionalProp1": {},
+        "additionalProp2": {},
+        "additionalProp3": {}
+      },
+      "externalRef": "string"
+    },
+    "enforceSchema": true,
+    "overwriteTags": true,
+    "tags": [
+      {
+        "key": "team",
+        "value": "engineering"
+      }
+    ]
+  }
+]
+```
+
+</details>
+
+<details>
+<summary>Get all task definitions with metadata set to `true`</summary>
+
+**Request**
+
+```json
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/metadata/taskdefs?access=EXECUTE&metadata=true' \
+  -H 'accept: */*' \
+  -H '
+X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+Returns an array containing all the task definitions in the cluster, including their tags metadata. For example:
+
+```json
+//truncated response
+{
+    "createTime": 1746599870085,
+    "updateTime": 1746599870085,
+    "createdBy": "john.doe@acme.com",
+    "updatedBy": "john.doe@acme.com",
+    "name": "hello_task",
+    "description": "",
+    "retryCount": 3,
+    "timeoutSeconds": 3600,
+    "inputKeys": [],
+    "outputKeys": [],
+    "timeoutPolicy": "TIME_OUT_WF",
+    "retryLogic": "FIXED",
+    "retryDelaySeconds": 60,
+    "responseTimeoutSeconds": 600,
+    "concurrentExecLimit": 0,
+    "inputTemplate": {},
+    "rateLimitPerFrequency": 0,
+    "rateLimitFrequencyInSeconds": 1,
+    "ownerEmail": "john.doe@acme.com",
+    "pollTimeoutSeconds": 3600,
+    "backoffScaleFactor": 1,
+    "totalTimeoutSeconds": 0,
+    "enforceSchema": false,
+    "overwriteTags": true,
+    "tags": [
+      {
+        "key": "tag",
+        "value": "new"
+      }
+    ]
+  }
+```
+
+</details>
+
+<details>
+<summary>Get all task definitions with metadata set to `false`</summary>
+
+**Request**
+
+```json
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/metadata/taskdefs?access=EXECUTE&metadata=false' \
+  -H 'accept: */*' \
+  -H '
+X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+Returns an array containing all the task definitions in the cluster without any tag metadata. For example: 
+
+```json
+//truncated response
+{
+    "createTime": 1746599870085,
+    "updateTime": 1746599870085,
+    "createdBy": "john.doe@acme.com",
+    "updatedBy": "john.doe@acme.com",
+    "name": "hello_task",
+    "description": "",
+    "retryCount": 3,
+    "timeoutSeconds": 3600,
+    "inputKeys": [],
+    "outputKeys": [],
+    "timeoutPolicy": "TIME_OUT_WF",
+    "retryLogic": "FIXED",
+    "retryDelaySeconds": 60,
+    "responseTimeoutSeconds": 600,
+    "concurrentExecLimit": 0,
+    "inputTemplate": {},
+    "rateLimitPerFrequency": 0,
+    "rateLimitFrequencyInSeconds": 1,
+    "ownerEmail": "john.doe@acme.com",
+    "pollTimeoutSeconds": 3600,
+    "backoffScaleFactor": 1,
+    "totalTimeoutSeconds": 0,
+    "enforceSchema": false
+  }
+```
+
+</details>

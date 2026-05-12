@@ -1,0 +1,152 @@
+---
+title: "MCP Gateway: Expose Workflows as MCP Tools"
+description: "Learn how to expose workflows as MCP tools so AI agents can trigger workflow actions through the MCP Gateway in Orkes Conductor."
+---
+
+# MCP Gateway: Expose Workflows as MCP Tools
+
+MCP Gateway exposes Conductor workflows as Model Context Protocol tools. Each tool maps to a workflow that can run governed business actions, coordinate systems, call workers, wait for durable work, use human approval, and return structured output to an agent.
+
+Use MCP Gateway when agents should invoke controlled workflows instead of raw internal APIs. Every tool call becomes a workflow execution, so teams can inspect inputs, outputs, retries, failures, approvals, and downstream service calls.
+
+!!! tip "5-minute path"
+    Create the workflow that implements the tool, create an application with `Execute` permission, configure authentication, define an MCP-enabled service, add a route with a clear tool description, test it, then connect the MCP endpoint to your agent runtime.
+
+## Step 1: Create workflows that define tool behavior
+
+Design each workflow as a tool-safe business action.
+
+Good MCP-backed workflows:
+
+- Have a narrow, well-described purpose.
+- Validate input with schemas.
+- Return small, structured output.
+- Apply access control through the gateway application.
+- Use human approval or policy checks before sensitive side effects.
+- Keep audit history through workflow executions.
+
+Avoid exposing low-level internal operations directly to agents when a workflow can enforce policy, validation, retries, and observability around the action.
+
+## Step 2: Create an application in Orkes Conductor
+
+Create an [application](/content/access-control-and-security/applications) for the MCP Gateway service account. Grant it only the permissions required to execute workflows exposed as tools.
+
+Minimum production setup:
+
+- `Execute` permission on each workflow exposed as an MCP tool.
+- Task/domain permissions required by those workflows.
+- No broad application roles unless this service explicitly needs them.
+
+## Step 3: Configure authentication settings
+
+Authentication settings control how agent runtimes connect to the MCP service.
+
+| Setting | Purpose |
+| ------- | ------- |
+| ID | Stable identifier for the auth configuration. |
+| Authentication Type | `API Key` for protected tools or `No Authentication` only for intentionally public tools. |
+| API Key | Key used by the MCP client when API key auth is enabled. |
+| Application | Conductor application used to execute the mapped workflows. |
+
+Use separate auth configurations for different agent runtimes when they need different permissions, environments, or rotation schedules.
+
+## Step 4: Define an MCP service
+
+An MCP service groups tool routes under shared base path, authentication, CORS, and enablement settings.
+
+| Field | Purpose |
+| ----- | ------- |
+| Service ID | Stable lowercase identifier used in endpoint URLs. |
+| Display Name | Human-readable service name. |
+| Service Enabled | Enables or disables the service. |
+| MCP Enabled | Must be enabled for tools to be exposed over MCP. |
+| Base Path | Base path for the service. |
+| Auth Config | Authentication setting used by clients. |
+| CORS | Allowed origins, methods, and headers. |
+| Description | Operational description of the service. |
+
+Create separate services when tool ownership, permissions, environment, or agent audience differs.
+
+## Step 5: Define and test a route
+
+Each route becomes an MCP tool. Tool descriptions matter because model clients use them to decide when and how to call the tool.
+
+| Field | Purpose |
+| ----- | ------- |
+| HTTP Method | Method used by the underlying route. |
+| Path | Route path. Use `{name}` for path parameters. |
+| Description | Model-facing tool description. Include purpose, inputs, output, and safety constraints. |
+| Workflow Name | Workflow executed by the tool. |
+| Version | Workflow version. Pin for stable tool behavior. |
+| Wait Until Tasks | Optional task reference whose output should be returned early. |
+| Timeout | Maximum response wait time. |
+| Input Schema | Tool input contract. Strongly recommended. |
+| Output Schema | Tool output contract. Strongly recommended. |
+| Query Parameters | Optional route parameters. |
+| Cache / Rate Limit | Optional controls for idempotent or high-volume tools. |
+
+Example tool description:
+
+```text
+Create a support ticket for a customer issue. Use this tool when the user asks to file, escalate, or track a support request. Required inputs: customerId, summary, severity. Returns ticketId, status, and workflowId. Do not use for billing disputes.
+```
+
+Pre-request scripts can normalize MCP input into workflow input:
+
+```javascript
+(function () {
+  return {
+    customerId: $.customerId,
+    summary: $.summary,
+    severity: $.severity || "normal"
+  };
+})();
+```
+
+### Test a route
+
+Test the route as both an HTTP endpoint and an MCP tool.
+
+#### Run a test request
+
+Submit representative input, including invalid or missing fields, to confirm schema validation and error behavior.
+
+#### Verify workflow execution
+
+Open the workflow execution and verify the tool input, workflow version, task outcomes, and returned output. This is the operational advantage of using Conductor as the tool runtime: tool calls are not opaque.
+
+#### View endpoint details
+
+Use the route details to copy the generated cURL command and inspect the service metadata before connecting external clients.
+
+## Step 6: Connect the service with AI agents as an MCP tool
+
+Copy the MCP tool remote endpoint from the service configuration and register it with your agent runtime.
+
+Production checklist:
+
+- Use API key auth or your gateway-level identity controls.
+- Prefer schema-backed inputs and outputs.
+- Keep tool output compact and deterministic.
+- Add human approval for sensitive or irreversible actions.
+- Monitor executions and route metrics after rollout.
+
+### Verify using Orkes MCP Workbench
+
+Use Orkes MCP Workbench or another MCP client to connect to the endpoint, list tools, inspect tool schemas, and call each tool with representative payloads.
+
+For each test call, verify:
+
+- The tool appears with a clear name and description.
+- Required inputs are enforced.
+- The workflow starts with the expected input.
+- The tool response matches the output schema.
+- Failures return actionable messages without exposing secrets.
+
+## Examples
+
+See the [ticket service MCP Gateway tutorial](/content/tutorials/expose-ticket-service-using-mcp-gateway).
+
+## Next steps
+
+Use [API Gateway metrics](/content/developer-guides/api-gateway#monitor-api-gateway-metrics) to monitor service and route performance.

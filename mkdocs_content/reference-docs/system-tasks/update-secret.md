@@ -1,0 +1,117 @@
+---
+title: "Update Secret"
+description: "Learn how the Update Secret task updates the value of an existing secret in Orkes Conductor."
+---
+
+# Update Secret
+
+The Update Secret task is used to update the value of any [secret already stored in Conductor](https://orkes.io/content/developer-guides/secrets-in-conductor), provided the user has permission to modify it.
+
+The task requires a `secretKey` and a `secretValue`. If the user does not have update permission for the specified `secretKey`, the workflow fails with a 403 error. If the secret does not already exist, the task creates it.
+
+## Task parameters
+
+Configure these parameters for the Update Secret task.
+
+| Parameter                                 | Description                                                                                                                                                | Required/ Optional |
+| ----------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
+| inputparameters.**\_secrets**             | A nested object within `inputParameters` containing the `secretKey` and `secretValue` fields.                                                              | Required.          |
+| inputparameters.**\_secrets.secretKey**   | The name of the secret key to be updated. It can be [passed as a dynamic variable](/content/developer-guides/passing-inputs-to-task-in-conductor). | Required.          |
+| inputparameters.**\_secrets.secretValue** | The new value for the secret key. It can be [passed as a dynamic variable](/content/developer-guides/passing-inputs-to-task-in-conductor).         | Required.          |
+
+The following are generic configuration parameters that can be applied to the task and are not specific to the Update Secret task.
+
+<details>
+<summary>Other generic parameters</summary>
+
+Here are other parameters for configuring the task behavior.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| optional | Whether the task is optional. <br/><br/>If set to`true`, any task failure is ignored, and the workflow continues with the task status updated to `COMPLETED_WITH_ERRORS`. However, the task must reach a terminal state. If the task remains incomplete, the workflow waits until it reaches a terminal state before proceeding. | Optional. | 
+
+</details>
+
+## Task configuration
+
+This is the task configuration for an Update Secret task.
+
+```json
+{
+     "name": "update_secret",
+     "taskReferenceName": "update_secret_ref",
+     "inputParameters": {
+       "_secrets": {
+         "secretKey": "my_token",
+         "secretValue": "input secret value here"
+       }
+     },
+     "type": "UPDATE_SECRET"
+}
+```
+
+## Task output
+
+This task will not return any output parameters. During execution, the secret is replaced with whatever value is passed. If the secret does not exist, it will be created with the provided secret value. 
+
+## Adding an Update Secret task in UI
+
+**To add an Update Secret task:**
+
+1. In your workflow, select the (**+**) icon and add a **Update Secret** task.
+2. In **Secret key**, enter the secret name to be updated.
+3. In **Secret value**, enter the new value for the secret.
+
+<center><p><img src="/content/img/update-secret-ui-guide.png" alt="Adding Update Secret task" width="90%" height="auto"/></p></center>
+
+## Examples
+
+Here are some examples for using the Update Secret task.
+
+<details>
+<summary>Using Update Secret task in a workflow</summary>
+<p>
+
+To demonstrate the Update Secret task, consider the following [secret](https://orkes.io/content/developer-guides/secrets-in-conductor) already saved in Conductor.
+
+<center><p><img src="/content/img/saved-secret.png" alt="Saved secret in Orkes Conductor" width="80%" height="auto"/></p></center>
+
+The following workflow updates the value of the **my_token** secret to **abcd**.
+
+**To create a workflow:**
+
+1. Go to **Definitions** > **Workflow**, from the left navigation menu on your Conductor cluster.
+2. Select **+ Define workflow**.
+3. In the **Code** tab, paste the following workflow definition:
+
+```json
+{
+ "name": "UpdateSecretDemo",
+ "description": "Sample workflow",
+ "version": 1,
+ "tasks": [
+   {
+     "name": "update_secret_task",
+     "taskReferenceName": "update_secret_task_ref",
+     "inputParameters": {
+       "_secrets": {
+         "secretKey": "my_token",
+         "secretValue": "abcd"
+       }
+     },
+     "type": "UPDATE_SECRET"
+   }
+ ],
+ "schemaVersion": 2
+}
+```
+
+4. Save the workflow.
+5. Select **Execute** to run the workflow.
+
+Once the execution is successful, navigate to the **Definitions > Secrets**, search for the secret name, and select the eye icon to verify the updated secret value.
+
+<center><p><img src="/content/img/updated-secret.png" alt="Updated secret in Orkes Conductor using update secret task" width="80%" height="auto"/></p></center>
+
+</p>
+</details>

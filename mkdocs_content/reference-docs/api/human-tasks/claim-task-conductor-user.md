@@ -1,0 +1,662 @@
+---
+title: "Claim Task (Conductor User)"
+description: "Use the Orkes Conductor human tasks API to claim Task (Conductor User). Includes endpoint details, authentication, parameters, request bodies, response."
+---
+
+# Claim Task (Conductor User)
+
+**Endpoint:** `POST /api/human/tasks/{taskId}/claim`
+
+Claims an unclaimed Human task by an authenticated Conductor user. The task is claimed by the Conductor user who makes the request.
+
+The invoking user should be one of the following:
+
+- Cluster admin
+- Task owner of the Human task
+- CONDUCTOR_USER or CONDUCTOR_GROUP task assignee
+- User with UPDATE permission for the Human task definition
+
+If the Human task is not assigned to any user or group, any authorized Conductor user can claim it. If the task is already assigned to a user or group, Conductor users can claim it by overriding the assignment. Claimed tasks cannot be claimed again unless they are released.
+
+## Path parameters
+
+| Parameter | Description                                                       | Type   | Required/ Optional |
+| --------- | ----------------------------------------------------------------- | ------ | ------------------ |
+| taskId    | The task ID of the Human task execution to be claimed. | string | Required.          |
+
+## Query parameters
+
+| Parameter          | Description                                                                        | Type    | Required/ Optional |
+| ------------------ | ---------------------------------------------------------------------------------- | ------- | ------------------ |
+| overrideAssignment | Whether to override the existing assignment. Default is `false`.                     | boolean | Optional.          |
+| withTemplate       | Whether to include the task’s user form details in the response. Default is `false`. | boolean | Optional.          |
+
+## Response
+
+Returns the Human task object, which includes details such as the task state, assignee, input and output data, and user form metadata (if requested).
+
+When the query parameter `withTemplate` is set to `true`, the response includes the `fullTemplate` field, which contains the complete user form schema and layout definition. This field is omitted when `withTemplate` is set to `false`.
+
+Returns 400  if an invalid task execution ID is provided or if the Human task is already claimed and is in the IN_PROGRESS state.
+
+## Examples
+
+<details>
+<summary>Claim a Human task by a Conductor user</summary>
+
+**Request**
+
+```shell
+curl -X 'POST' \
+  'https://<YOUR-SERVER-URL>/api/human/tasks/9dbdd974-01c2-11f1-913a-226156badb04/claim?overrideAssignment=false&withTemplate=false' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>' \
+  -d ''
+```
+
+**Response**
+
+Returns the claimed task with state changed to `IN_PROGRESS` and the claimant information populated.
+
+```json
+{
+  "createdBy": "john.doe@acme.com",
+  "updatedBy": "john.doe@acme.com",
+  "taskId": "9dbdd974-01c2-11f1-913a-226156badb04",
+  "state": "IN_PROGRESS",
+  "displayName": "LoanApproval",
+  "definitionName": "human",
+  "workflowId": "99e1cce7-01c2-11f1-8b8d-6219b54da7fe",
+  "workflowName": "LoanApprovalWorkflow",
+  "taskRefName": "human_ref",
+  "assignee": {
+    "userType": "CONDUCTOR_USER",
+    "user": "john.doe@acme.com"
+  },
+  "claimant": {
+    "userType": "CONDUCTOR_USER",
+    "user": "john.doe@acme.com"
+  },
+  "humanTaskDef": {
+    "assignments": [
+      {
+        "slaMinutes": 0,
+        "assignee": {
+          "userType": "CONDUCTOR_USER",
+          "user": "john.doe@acme.com"
+        }
+      }
+    ],
+    "userFormTemplate": {
+      "name": "LoanApproval",
+      "version": 1
+    },
+    "assignmentCompletionStrategy": "LEAVE_OPEN",
+    "displayName": "LoanApproval"
+  },
+  "input": {
+    "approve": "",
+    "comments": "",
+    "paperUrl": "documents.pdf",
+    "_createdBy": "john.doe@acme.com",
+    "loan_amount": 80000,
+    "monthly_debt": 1100,
+    "annual_income": 75000,
+    "payment_history": "bank-statement.pdf",
+    "employment_status": "employment-doc.pdf",
+    "__humanTaskDefinition": {
+      "assignments": [
+        {
+          "assignee": {
+            "user": "john.doe@acme.com",
+            "userType": "CONDUCTOR_USER"
+          },
+          "slaMinutes": 0
+        }
+      ],
+      "displayName": "LoanApproval",
+      "userFormTemplate": {
+        "name": "LoanApproval",
+        "version": 1
+      },
+      "assignmentCompletionStrategy": "LEAVE_OPEN"
+    },
+    "__humanTaskProcessContext": {
+      "state": "IN_PROGRESS",
+      "lastUpdated": 1770208068131,
+      "humanTaskTriggerLog": [],
+      "humanTaskActionLogs": [
+        {
+          "id": "f0c5664b-eec0-4964-b75d-43871a706fb4",
+          "state": "ASSIGNED",
+          "stateStart": 1770207080754,
+          "assignee": {
+            "userType": "CONDUCTOR_USER",
+            "user": "john.doe@acme.com"
+          },
+          "action": "ASSIGNMENT",
+          "actedBy": "system"
+        },
+        {
+          "id": "9a89f619-aca4-42ac-a4fd-4cada06c1aa3",
+          "state": "IN_PROGRESS",
+          "stateStart": 1770208068131,
+          "assignee": {
+            "userType": "CONDUCTOR_USER",
+            "user": "john.doe@acme.com"
+          },
+          "claimant": {
+            "userType": "CONDUCTOR_USER",
+            "user": "john.doe@acme.com"
+          },
+          "action": "CLAIM",
+          "actedBy": "CONDUCTOR_USER:john.doe@acme.com"
+        }
+      ],
+      "assigneeIndex": 0,
+      "skippedAssigneeIndexes": [],
+      "assignmentsCompleted": false
+    }
+  },
+  "output": {},
+  "createdOn": 1770207080694,
+  "updatedOn": 1770207080754
+}
+```
+
+</details>
+
+<details>
+<summary>Claim a Human task by overriding the existing assignment</summary>
+
+**Request**
+
+```shell
+curl -X 'POST' \
+  'https://<YOUR-SERVER-URL>/api/human/tasks/8af5f139-01c5-11f1-913a-226156badb04/claim?overrideAssignment=true&withTemplate=false' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>' \
+  -d ''
+```
+
+**Response**
+
+Returns the claimed task where john.doe@acme.com has overridden the original assignment to jane.doe@acme.com.
+
+```json
+{
+  "createdBy": "john.doe@acme.com",
+  "updatedBy": "john.doe@acme.com",
+  "taskId": "8af5f139-01c5-11f1-913a-226156badb04",
+  "state": "IN_PROGRESS",
+  "displayName": "LoanApproval",
+  "definitionName": "human",
+  "workflowId": "89ef4639-01c5-11f1-8b8d-6219b54da7fe",
+  "workflowName": "LoanApprovalWorkflow",
+  "taskRefName": "human_ref",
+  "assignee": {
+    "userType": "CONDUCTOR_USER",
+    "user": "john.doe@acme.com"
+  },
+  "claimant": {
+    "userType": "CONDUCTOR_USER",
+    "user": "john.doe@acme.com"
+  },
+  "humanTaskDef": {
+    "assignments": [
+      {
+        "slaMinutes": 0,
+        "assignee": {
+          "userType": "CONDUCTOR_USER",
+          "user": "jane.doe@acme.com"
+        }
+      }
+    ],
+    "userFormTemplate": {
+      "name": "LoanApproval",
+      "version": 1
+    },
+    "assignmentCompletionStrategy": "LEAVE_OPEN",
+    "displayName": "LoanApproval"
+  },
+  "input": {
+    "approve": "",
+    "comments": "",
+    "paperUrl": "documents.pdf",
+    "_createdBy": "john.doe@acme.com",
+    "loan_amount": 80000,
+    "monthly_debt": 1100,
+    "annual_income": 75000,
+    "payment_history": "bank-statement.pdf",
+    "employment_status": "employment-doc.pdf",
+    "__humanTaskDefinition": {
+      "assignments": [
+        {
+          "assignee": {
+            "user": "jane.doe@acme.com",
+            "userType": "CONDUCTOR_USER"
+          },
+          "slaMinutes": 0
+        }
+      ],
+      "displayName": "LoanApproval",
+      "userFormTemplate": {
+        "name": "LoanApproval",
+        "version": 1
+      },
+      "assignmentCompletionStrategy": "LEAVE_OPEN"
+    },
+    "__humanTaskProcessContext": {
+      "state": "IN_PROGRESS",
+      "lastUpdated": 1770208347574,
+      "humanTaskTriggerLog": [],
+      "humanTaskActionLogs": [
+        {
+          "id": "f2064995-364f-4583-982c-bd4a1ad69537",
+          "state": "ASSIGNED",
+          "stateStart": 1770208337720,
+          "assignee": {
+            "userType": "CONDUCTOR_USER",
+            "user": "jane.doe@acme.com"
+          },
+          "action": "ASSIGNMENT",
+          "actedBy": "system"
+        },
+        {
+          "id": "4c452194-fc76-410f-832e-360fb74628c5",
+          "state": "IN_PROGRESS",
+          "stateStart": 1770208347574,
+          "assignee": {
+            "userType": "CONDUCTOR_USER",
+            "user": "john.doe@acme.com"
+          },
+          "claimant": {
+            "userType": "CONDUCTOR_USER",
+            "user": "john.doe@acme.com"
+          },
+          "action": "CLAIM",
+          "actedBy": "CONDUCTOR_USER:john.doe@acme.com"
+        }
+      ],
+      "assigneeIndex": 0,
+      "skippedAssigneeIndexes": [],
+      "assignmentsCompleted": false
+    }
+  },
+  "output": {},
+  "createdOn": 1770208337675,
+  "updatedOn": 1770208337720
+}
+```
+
+</details>
+
+<details>
+<summary>Claim a Human task without returning the user form details</summary>
+
+**Request**
+
+```shell
+curl -X 'POST' \
+  'https://<YOUR-SERVER-URL>/api/human/tasks/8af5f139-01c5-11f1-913a-226156badb04/claim?overrideAssignment=false&withTemplate=false' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>' \
+  -d ''
+```
+
+**Response**
+
+Returns the claimed task without the `fullTemplate` field since `withTemplate` is set to `false`.
+
+```json
+{
+  "createdBy": "john.doe@acme.com",
+  "updatedBy": "john.doe@acme.com",
+  "taskId": "30cc83bd-01c6-11f1-913a-226156badb04",
+  "state": "IN_PROGRESS",
+  "displayName": "LoanApproval",
+  "definitionName": "human",
+  "workflowId": "30259537-01c6-11f1-913a-226156badb04",
+  "workflowName": "LoanApprovalWorkflow",
+  "taskRefName": "human_ref",
+  "assignee": {
+    "userType": "CONDUCTOR_USER",
+    "user": "john.doe@acme.com"
+  },
+  "claimant": {
+    "userType": "CONDUCTOR_USER",
+    "user": "john.doe@acme.com"
+  },
+  "humanTaskDef": {
+    "assignments": [
+      {
+        "slaMinutes": 0,
+        "assignee": {
+          "userType": "CONDUCTOR_USER",
+          "user": "john.doe@acme.com"
+        }
+      }
+    ],
+    "userFormTemplate": {
+      "name": "LoanApproval",
+      "version": 1
+    },
+    "assignmentCompletionStrategy": "LEAVE_OPEN",
+    "displayName": "LoanApproval"
+  },
+  "input": {
+    "approve": "",
+    "comments": "",
+    "paperUrl": "documents.pdf",
+    "_createdBy": "john.doe@acme.com",
+    "loan_amount": 80000,
+    "monthly_debt": 1100,
+    "annual_income": 75000,
+    "payment_history": "bank-statement.pdf",
+    "employment_status": "employment-doc.pdf",
+    "__humanTaskDefinition": {
+      "assignments": [
+        {
+          "assignee": {
+            "user": "john.doe@acme.com",
+            "userType": "CONDUCTOR_USER"
+          },
+          "slaMinutes": 0
+        }
+      ],
+      "displayName": "LoanApproval",
+      "userFormTemplate": {
+        "name": "LoanApproval",
+        "version": 1
+      },
+      "assignmentCompletionStrategy": "LEAVE_OPEN"
+    },
+    "__humanTaskProcessContext": {
+      "state": "IN_PROGRESS",
+      "lastUpdated": 1770208630227,
+      "humanTaskTriggerLog": [],
+      "humanTaskActionLogs": [
+        {
+          "id": "592ac3b6-288f-41b8-a6b0-dd9dc2469581",
+          "state": "ASSIGNED",
+          "stateStart": 1770208615927,
+          "assignee": {
+            "userType": "CONDUCTOR_USER",
+            "user": "john.doe@acme.com"
+          },
+          "action": "ASSIGNMENT",
+          "actedBy": "system"
+        },
+        {
+          "id": "3a1068de-5dd7-47e0-9c9f-3a8bd3936e18",
+          "state": "IN_PROGRESS",
+          "stateStart": 1770208630227,
+          "assignee": {
+            "userType": "CONDUCTOR_USER",
+            "user": "john.doe@acme.com"
+          },
+          "claimant": {
+            "userType": "CONDUCTOR_USER",
+            "user": "john.doe@acme.com"
+          },
+          "action": "CLAIM",
+          "actedBy": "CONDUCTOR_USER:john.doe@acme.com"
+        }
+      ],
+      "assigneeIndex": 0,
+      "skippedAssigneeIndexes": [],
+      "assignmentsCompleted": false
+    }
+  },
+  "output": {},
+  "createdOn": 1770208615905,
+  "updatedOn": 1770208615927
+}
+```
+
+</details>
+
+<details>
+<summary>Claim a Human task and return the user form details</summary>
+
+**Request**
+
+```shell
+curl -X 'POST' \
+  'https://<YOUR-SERVER-URL>/api/human/tasks/59ce2c3c-01c6-11f1-8b8d-6219b54da7fe/claim?overrideAssignment=false&withTemplate=true' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>' \
+  -d ''
+```
+
+**Response**
+
+Returns the claimed task, including the complete user form schema and layout definition in the `fullTemplate` field.
+
+```json
+{
+  "createdBy": "john.doe@acme.com",
+  "updatedBy": "john.doe@acme.com",
+  "taskId": "59ce2c3c-01c6-11f1-8b8d-6219b54da7fe",
+  "state": "IN_PROGRESS",
+  "displayName": "LoanApproval",
+  "definitionName": "human",
+  "workflowId": "30259537-01c6-11f1-913a-226156badb04",
+  "workflowName": "LoanApprovalWorkflow",
+  "taskRefName": "human_ref",
+  "assignee": {
+    "userType": "CONDUCTOR_USER",
+    "user": "john.doe@acme.com"
+  },
+  "claimant": {
+    "userType": "CONDUCTOR_USER",
+    "user": "john.doe@acme.com"
+  },
+  "humanTaskDef": {
+    "assignments": [
+      {
+        "slaMinutes": 0,
+        "assignee": {
+          "userType": "CONDUCTOR_USER",
+          "user": "john.doe@acme.com"
+        }
+      }
+    ],
+    "userFormTemplate": {
+      "name": "LoanApproval",
+      "version": 1
+    },
+    "assignmentCompletionStrategy": "LEAVE_OPEN",
+    "displayName": "LoanApproval",
+    "fullTemplate": {
+      "createTime": 1755513469904,
+      "updateTime": 1768559637142,
+      "createdBy": "USER:john.doe@acme.com",
+      "updatedBy": "USER:john.doe@acme.com",
+      "name": "LoanApproval",
+      "version": 1,
+      "jsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema",
+        "properties": {
+          "paperUrl": {
+            "type": "string"
+          },
+          "comments": {
+            "type": "string"
+          },
+          "approve": {
+            "type": "string",
+            "enum": [
+              "Yes",
+              "No"
+            ]
+          },
+          "monthly_debt": {
+            "type": "number"
+          },
+          "loan_amount": {
+            "type": "number"
+          },
+          "employment_status": {
+            "type": "string"
+          },
+          "annual_income": {
+            "type": "number"
+          },
+          "payment_history": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "approve",
+          "comments"
+        ]
+      },
+      "templateUI": {
+        "type": "VerticalLayout",
+        "elements": [
+          {
+            "type": "Group",
+            "label": "Loan Application Details",
+            "elements": [
+              {
+                "type": "Control",
+                "scope": "#/properties/loan_amount",
+                "label": "Loan Amount",
+                "options": {
+                  "readonly": true
+                }
+              },
+              {
+                "type": "Control",
+                "scope": "#/properties/annual_income",
+                "label": "Annual Income",
+                "options": {
+                  "readonly": true
+                }
+              },
+              {
+                "type": "Control",
+                "scope": "#/properties/monthly_debt",
+                "label": "Monthly Debt",
+                "options": {
+                  "readonly": true
+                }
+              },
+              {
+                "type": "Control",
+                "scope": "#/properties/employment_status",
+                "label": "Employment Status",
+                "options": {
+                  "readonly": true
+                }
+              },
+              {
+                "type": "Control",
+                "scope": "#/properties/payment_history",
+                "label": "Payment History",
+                "options": {
+                  "readonly": true
+                }
+              },
+              {
+                "type": "Control",
+                "scope": "#/properties/paperUrl",
+                "label": "Supporting Documents",
+                "options": {
+                  "readonly": true
+                }
+              }
+            ]
+          },
+          {
+            "type": "Group",
+            "label": "Reviewer Decision",
+            "elements": [
+              {
+                "type": "Control",
+                "scope": "#/properties/approve",
+                "label": "Approve Loan?"
+              },
+              {
+                "type": "Control",
+                "scope": "#/properties/comments",
+                "label": "Reviewer Comments"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "input": {
+    "approve": "",
+    "comments": "",
+    "paperUrl": "documents.pdf",
+    "_createdBy": "john.doe@acme.com",
+    "loan_amount": 80000,
+    "monthly_debt": 1100,
+    "annual_income": 75000,
+    "payment_history": "bank-statement.pdf",
+    "employment_status": "employment-doc.pdf",
+    "__humanTaskDefinition": {
+      "assignments": [
+        {
+          "assignee": {
+            "user": "john.doe@acme.com",
+            "userType": "CONDUCTOR_USER"
+          },
+          "slaMinutes": 0
+        }
+      ],
+      "displayName": "LoanApproval",
+      "userFormTemplate": {
+        "name": "LoanApproval",
+        "version": 1
+      },
+      "assignmentCompletionStrategy": "LEAVE_OPEN"
+    },
+    "__humanTaskProcessContext": {
+      "state": "IN_PROGRESS",
+      "lastUpdated": 1770208694681,
+      "humanTaskTriggerLog": [],
+      "humanTaskActionLogs": [
+        {
+          "id": "559721fe-cd40-42a9-8cde-71b11c49bb9b",
+          "state": "ASSIGNED",
+          "stateStart": 1770208684779,
+          "assignee": {
+            "userType": "CONDUCTOR_USER",
+            "user": "john.doe@acme.com"
+          },
+          "action": "ASSIGNMENT",
+          "actedBy": "system"
+        },
+        {
+          "id": "826daa03-7449-4d98-a0ad-d0ac46ddaf75",
+          "state": "IN_PROGRESS",
+          "stateStart": 1770208694681,
+          "assignee": {
+            "userType": "CONDUCTOR_USER",
+            "user": "john.doe@acme.com"
+          },
+          "claimant": {
+            "userType": "CONDUCTOR_USER",
+            "user": "john.doe@acme.com"
+          },
+          "action": "CLAIM",
+          "actedBy": "CONDUCTOR_USER:john.doe@acme.com"
+        }
+      ],
+      "assigneeIndex": 0,
+      "skippedAssigneeIndexes": [],
+      "assignmentsCompleted": false
+    }
+  },
+  "output": {},
+  "createdOn": 1770208684703,
+  "updatedOn": 1770208684779
+}
+```
+
+</details>

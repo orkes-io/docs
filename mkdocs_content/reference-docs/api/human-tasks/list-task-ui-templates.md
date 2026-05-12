@@ -1,0 +1,394 @@
+---
+title: "Get All User Forms"
+description: "Use the Orkes Conductor human tasks API to get All User Forms. Includes endpoint details, authentication, parameters, request bodies, response behavior, and."
+---
+
+# Get All User Forms
+
+**Endpoint:** `GET /api/human/template`
+
+Lists all user form details stored in the Conductor server, or gets a particular user form’s details by name and version.
+
+## Query parameters
+
+Add the following query parameters only if a particular user form is to be retrieved.
+
+| Parameter | Description                                   | Type    | Required/ Optional |
+| --------- | --------------------------------------------- | ------- | ------------------ |
+| name      | The user form name to be retrieved.           | string  | Optional.          |
+| version   | The version of the user form to be retrieved. If not specified, all the versions will be retrieved. | integer | Optional.          |
+
+## Response
+
+Returns an array of user form details. Returns 404 if an invalid user form name is provided.
+
+## Examples
+
+<details>
+<summary>Get all user forms</summary>
+
+**Request**
+
+```shell
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/human/template' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+Returns an array of all user forms with their complete schema and configuration.
+
+```json
+[
+  {
+    "createTime": 1721621243092,
+    "updateTime": 1723805020725,
+    "createdBy": "USER:user@example.com",
+    "updatedBy": "USER:user@example.com",
+    "name": "ExpenseApproval",
+    "version": 1,
+    "jsonSchema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "expenseName": {
+          "type": "string"
+        },
+        "expenseAmt": {
+          "type": "number"
+        },
+        "approve": {
+          "type": "boolean"
+        },
+        "approveReason": {
+          "type": "string"
+        }
+      },
+      "required": ["expenseName", "expenseAmt", "approve"]
+    },
+    "templateUI": {
+      "type": "VerticalLayout",
+      "elements": [
+        {
+          "type": "Control",
+          "scope": "#/properties/expenseName",
+          "label": "Expense",
+          "options": {
+            "readonly": true
+          }
+        },
+        {
+          "type": "Control",
+          "scope": "#/properties/expenseAmt",
+          "label": "Amount",
+          "options": {
+            "readonly": true
+          }
+        },
+        {
+          "type": "Control",
+          "scope": "#/properties/approve",
+          "label": "Approved?",
+          "options": {}
+        },
+        {
+          "type": "Control",
+          "scope": "#/properties/approveReason",
+          "label": "Comments"
+        }
+      ]
+    }
+  },
+  {
+    "createTime": 1736938788768,
+    "updateTime": 1736938788768,
+    "createdBy": "USER:user@example.com",
+    "updatedBy": "USER:user@example.com",
+    "name": "someForm",
+    "version": 2,
+    "jsonSchema": {
+      "$schema": "http://json-schema.org/draft-07/schema",
+      "properties": {
+        "vegetable": {
+          "type": "string",
+          "enum": ["potatoes", "carrots", "celery", "apple", "banana"]
+        }
+      }
+    },
+    "templateUI": {
+      "type": "VerticalLayout",
+      "elements": [
+        {
+          "type": "Control",
+          "scope": "#/properties/vegetable",
+          "label": "Pick a vegetable or fruit",
+          "options": {}
+        }
+      ]
+    }
+  },
+  {
+    "createTime": 1736938081924,
+    "updateTime": 1736940939545,
+    "createdBy": "USER:user@example.com",
+    "updatedBy": "USER:user@example.com",
+    "name": "someForm",
+    "version": 1,
+    "jsonSchema": {
+      "$schema": "http://json-schema.org/draft-07/schema",
+      "properties": {
+        "vegetable": {
+          "type": "string",
+          "enum": ["potatoes", "carrots"]
+        }
+      }
+    },
+    "templateUI": {
+      "type": "VerticalLayout",
+      "elements": [
+        {
+          "type": "Control",
+          "scope": "#/properties/vegetable",
+          "label": "Pick one",
+          "options": {}
+        }
+      ]
+    }
+  }
+]
+```
+
+</details>
+
+<details>
+<summary>Get all versions of a user form</summary>
+
+**Request**
+
+```shell
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/human/template?name=Approval' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+Returns an array of all versions of the user form "Approval".
+
+```json
+[
+  {
+    "createTime": 1770288366174,
+    "updateTime": 1770288366174,
+    "createdBy": "USER:john.doe@acme.com",
+    "updatedBy": "USER:john.doe@acme.com",
+    "name": "Approval",
+    "version": 2,
+    "jsonSchema": {
+      "$schema": "http://json-schema.org/draft-07/schema",
+      "properties": {
+        "paperUrl": {
+          "type": "string"
+        },
+        "approve": {
+          "type": "string",
+          "enum": [
+            "Yes",
+            " No"
+          ]
+        },
+        "comments": {
+          "type": "string"
+        },
+        "improvementNotes": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "approve",
+        "comments"
+      ]
+    },
+    "templateUI": {
+      "type": "VerticalLayout",
+      "elements": [
+        {
+          "type": "VerticalLayout",
+          "elements": [
+            {
+              "type": "Control",
+              "scope": "#/properties/paperUrl",
+              "label": "Review doc",
+              "options": {
+                "readonly": true
+              }
+            }
+          ]
+        },
+        {
+          "type": "Control",
+          "scope": "#/properties/approve",
+          "label": "Approve document",
+          "options": {}
+        },
+        {
+          "type": "Control",
+          "scope": "#/properties/comments",
+          "label": "Comments"
+        },
+        {
+          "type": "Control",
+          "scope": "#/properties/improvementNotes",
+          "label": "Improvement Feedback"
+        }
+      ]
+    }
+  },
+  {
+    "createTime": 1740572078291,
+    "updateTime": 1768558337481,
+    "createdBy": "USER:john.doe@acme.com",
+    "updatedBy": "USER:john.doe@acme.com",
+    "name": "Approval",
+    "version": 1,
+    "jsonSchema": {
+      "$schema": "http://json-schema.org/draft-07/schema",
+      "properties": {
+        "paperUrl": {
+          "type": "string"
+        },
+        "approve": {
+          "type": "string",
+          "enum": [
+            "Yes",
+            " No"
+          ]
+        },
+        "comments": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "approve",
+        "comments"
+      ]
+    },
+    "templateUI": {
+      "type": "VerticalLayout",
+      "elements": [
+        {
+          "type": "VerticalLayout",
+          "elements": [
+            {
+              "type": "Control",
+              "scope": "#/properties/paperUrl",
+              "label": "Review doc",
+              "options": {
+                "readonly": true
+              }
+            }
+          ]
+        },
+        {
+          "type": "Control",
+          "scope": "#/properties/approve",
+          "label": "Approve document",
+          "options": {}
+        },
+        {
+          "type": "Control",
+          "scope": "#/properties/comments",
+          "label": "Comments"
+        }
+      ]
+    }
+  }
+]
+```
+
+</details>
+
+<details>
+<summary>Get a specific version of a user form</summary>
+
+**Request**
+
+```shell
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/human/template?name=Approval&version=1' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+Returns version 1 of the user form "Approval".
+
+```json
+[
+  {
+    "createTime": 1740572078291,
+    "updateTime": 1768558337481,
+    "createdBy": "USER:john.doe@acme.com",
+    "updatedBy": "USER:john.doe@acme.com",
+    "name": "Approval",
+    "version": 1,
+    "jsonSchema": {
+      "$schema": "http://json-schema.org/draft-07/schema",
+      "properties": {
+        "paperUrl": {
+          "type": "string"
+        },
+        "approve": {
+          "type": "string",
+          "enum": [
+            "Yes",
+            " No"
+          ]
+        },
+        "comments": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "approve",
+        "comments"
+      ]
+    },
+    "templateUI": {
+      "type": "VerticalLayout",
+      "elements": [
+        {
+          "type": "VerticalLayout",
+          "elements": [
+            {
+              "type": "Control",
+              "scope": "#/properties/paperUrl",
+              "label": "Review doc",
+              "options": {
+                "readonly": true
+              }
+            }
+          ]
+        },
+        {
+          "type": "Control",
+          "scope": "#/properties/approve",
+          "label": "Approve document",
+          "options": {}
+        },
+        {
+          "type": "Control",
+          "scope": "#/properties/comments",
+          "label": "Comments"
+        }
+      ]
+    }
+  }
+]
+```
+
+</details>

@@ -1,0 +1,115 @@
+---
+title: "Azure OpenAI Integration with Orkes Conductor"
+description: "Learn how to integrate Azure OpenAI so workflows can use GPT models through Conductor AI tasks."
+---
+
+# Azure OpenAI Integration with Orkes Conductor
+
+To use system AI tasks in Orkes Conductor, you must integrate your Conductor cluster with the necessary AI/LLM providers. This guide explains how to integrate Azure OpenAI with Orkes Conductor. Here’s an overview:
+
+1. Get the required credentials from Azure OpenAI.
+2. Deploy models in the Azure portal.
+3. Configure a new Azure OpenAI integration in Orkes Conductor.
+4. Add models to the integration.
+5. Set access limits to the AI model to govern which applications or groups can use it.
+
+!!! info "Prerequisites"
+    Ensure Azure OpenAI access is enabled for your Azure subscription before proceeding.
+
+## Step 1: Get the Azure OpenAI credentials
+
+To integrate Azure OpenAI with Orkes Conductor, retrieve the API key and endpoint from the Azure portal.
+
+**To get the API key and endpoint:**
+
+1. Sign in to the [Azure portal](https://portal.azure.com/).
+2. In **Azure services**, select **Azure OpenAI**.
+3. Create a new resource or open an existing one.
+4. Go to **Resource Management** > **Keys and Endpoint** in the left navigation menu.
+
+<p align="center"><img src="/content/img/get-azure-open-ai-api-key.png" alt="Get Azure OpenAI API Key" width="100%" height="auto"></img></p>
+
+5. Copy *KEY 1* or *KEY 2* as the API key.
+6. Copy the endpoint. 
+
+## Step 2: Deploy models in the Azure portal
+
+Before using a model in Orkes Conductor, you must deploy it in your Azure portal.
+
+[Azure OpenAI has different models](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models), each designed for specific use cases. Choose the model that best fits your use case. 
+
+**To deploy a model:**
+
+1. Follow the Azure OpenAI documentation to [deploy the desired model in the Azure portal](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/create-resource?pivots=web-portal#deploy-a-model). 
+2. When deploying a model, you are required to assign a **deployment name**. This name serves as a unique identifier for the deployed model and is required when referencing the model in Orkes Conductor integration.
+
+Ensure the deployment is successful.
+
+## Step 3: Add an integration for Azure OpenAI
+
+After obtaining the credentials, add an Azure OpenAI integration to your Conductor cluster.
+
+**To create an Azure OpenAI integration:**
+
+1. Go to **Integrations** > **Connections and Resources** from the left navigation menu on your Conductor cluster.
+2. Select **+ New integration**.
+3. In the **AI/LLM** section, choose **Azure + OpenAI**.
+4. Select **+ Add** and enter the following parameters:
+
+| Parameters | Description |
+| ---------- | ----------- |
+| Integration name | A name for the integration. |
+| API Key | The API key copied previously from the Azure portal. |
+| Endpoint | The endpoint copied previously from the Azure portal. | 
+| Description | A description of the integration. | 
+
+<p align="center"><img src="/content/img/create-new-azure-open-ai-integration.png" alt="Azure OpenAI Integration with Orkes Conductor" width="60%" height="auto"></img></p>
+
+5. (Optional) Toggle the **Active** button off if you don’t want to activate the integration instantly.
+6. Select **Save**.
+
+## Step 4: Add Azure OpenAI models
+
+Once you’ve integrated Azure OpenAI, the next step is to add specific models.
+
+**To add a model to the Azure OpenAI integration:**
+
+1. Go to **Integrations** and select the **+** button next to the integration created.
+
+<p align="center"><img src="/content/img/create-new-azure-open-ai-integration-model-from-integrations-page.png" alt="Create Azure Open AI Integration Model from Listed Integrations" width="100%" height="auto"></img></p>
+
+2. Select **+ New model**.
+3. Enter the **Model name**, which is the **deployment name** used in the Azure portal. For example, if you deployed *gpt-35-turbo* with the deployment name *mySummarizerModel*, enter *mySummarizerModel* here, not the base model name like *gpt-35-turbo*.
+
+<p align="center"><img src="/content/img/create-new-azure-open-ai-integration-model.png" alt="Create Azure Open AI Integration Model" width="60%" height="auto"></img></p>
+
+4. Provide a **Description**.
+5. (Optional) Toggle the **Active** button off if you don’t want to activate the model instantly.
+6. Select **Save**.
+
+This saves the model for future use in AI tasks within Orkes Conductor.
+
+## Step 5: Set access limits to integration
+
+Once the integration is configured, set access controls to manage which [applications](https://orkes.io/content/access-control-and-security/applications) or [groups](https://orkes.io/content/access-control-and-security/users-and-groups#groups) can use the models.
+
+**To provide access to an application or group:**
+
+1. Go to **Access Control** > **Applications** or **Groups** from the left navigation menu on your Conductor cluster.
+2. Create a new group/application or select an existing one.
+3. In the **Permissions** section, select **+ Add Permission**.
+4. In the **Integration** tab, select the required AI models and toggle the necessary permissions.
+5. Select **Add Permissions**. 
+
+<p align="center"><img src="/content/img/add-integration-permission.png" alt="Add Permissions for Integrations" width="70%" height="auto"></img></p>
+
+The group or application can now access the AI model according to the configured permissions.
+
+With the integration in place, you can now create workflows using [AI/LLM tasks](https://orkes.io/content/category/reference-docs/ai-tasks).
+
+## More resources
+
+- [Using AI Models or LLMs](https://orkes.io/content/developer-guides/using-llms-in-your-orkes-conductor-workflows)
+- [Using Vector Databases](https://orkes.io/content/developer-guides/using-vector-databases-in-your-orkes-conductor-workflows)
+- [Using AI Prompts](https://orkes.io/content/developer-guides/creating-and-managing-gen-ai-prompt-templates)
+- [AI Orchestration Tutorials](https://orkes.io/content/tutorials/ai)

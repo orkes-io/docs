@@ -34,7 +34,7 @@ Each task will be in a scheduled, ongoing, or terminal status.
 | SCHEDULED | The task has been scheduled to be picked up by a worker. |
 | IN_PROGRESS | The task is being executed by a worker. | 
 | SKIPPED | The task is skipped without executing, and the workflow continues to the subsequent tasks. <br/><br/> Occurs if the [Skip Task API](/reference-docs/api/workflow/skip-task-from-workflow) is used in a currently running workflow. |
-| TIMED_OUT | The task times out without being completed. <br/><br/> Occurs if the task has been configured with the following timeout parameters in its task definition: <ul><li>timeOutPolicy.</li><li>timeOutSeconds</li><li>pollTimeoutSeconds</li><li>responseTimeoutSeconds</li></ul> |
+| TIMED_OUT | The task times out without being completed. <br/><br/> Occurs if the task has been configured with the following timeout parameters in its task definition: <ul><li>timeoutPolicy.</li><li>timeoutSeconds</li><li>pollTimeoutSeconds</li><li>responseTimeoutSeconds</li></ul> |
 | CANCELED | The scheduled task has been canceled without being completed because the workflow has been terminated. |
 | FAILED | The task failed to complete due to an error, and the workflow can be [retried from the failed task](debugging-workflows#recovering-from-failures). |
 | FAILED_WITH_TERMINAL_ERROR | The task failed to complete due to an error and cannot be retried. |

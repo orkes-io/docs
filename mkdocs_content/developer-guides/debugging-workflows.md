@@ -1,0 +1,217 @@
+---
+title: "Search / Query Executions"
+description: "Learn how to search and query workflow executions, inspect task state, and recover failed or blocked workflow runs in Orkes Conductor."
+---
+
+# Search / Query Executions
+
+Search and query workflow executions when you need to find a run by workflow name, workflow ID, status, correlation ID, idempotency key, time window, or payload value. Once you find the execution, the same record gives you workflow status, task status, inputs, outputs, retry counts, timestamps, and `reasonForIncompletion`.
+
+The UI is useful for visual inspection, but the same execution data is available through APIs and can be used from scripts, CI checks, runbooks, and incident tooling.
+
+!!! tip "5-minute path"
+    Find the execution, open or fetch the full execution JSON, identify the first failed or blocked task, compare resolved task input with task output, then retry, restart, rerun, signal, or terminate based on the failure mode.
+
+## What to collect first
+
+| Need | Field or endpoint | Why it matters |
+| ---- | ----------------- | -------------- |
+| Execution state | `status`, `reasonForIncompletion` | Shows whether the workflow is still running, failed, timed out, paused, or terminated. |
+| Failed or blocked task | `tasks[]` | Most workflow failures are caused by one task, one missing worker, one timeout, or one unresolved wait. |
+| Inputs and outputs | `input`, `output`, `tasks[].inputData`, `tasks[].outputData` | Shows what data actually reached the task after expression resolution. |
+| Retry behavior | `tasks[].retryCount`, `tasks[].callbackAfterSeconds` | Shows whether retries are working or a task is being rescheduled repeatedly. |
+| Worker identity | `tasks[].workerId`, task logs, application logs | Tells you which worker handled the task, so you can correlate with service logs. |
+| Version | `workflowVersion` | Confirms which definition version produced the execution. |
+
+## Searching workflow executions
+
+Use search when you know part of the workflow name, a status, a correlation ID, an idempotency key, a time window, or a value in the execution payload.
+
+Common search filters:
+
+- Workflow name
+- Workflow ID
+- Correlation ID
+- Idempotency key
+- Status
+- Execution start time range
+- Free text across workflow input, output, variables, task output, correlation ID, and reason for incompletion
+
+### Partial search
+
+Use `*` for prefix-style matches in workflow name or free text search. For example, `payment*` returns executions whose workflow name or indexed payload fields start with `payment`.
+
+### SQL search
+
+SQL-format search supports simple field filters:
+
+```sql
+workflowType = payment_flow AND status IN (FAILED, TIMED_OUT)
+```
+
+Supported syntax:
+
+- `FIELD = VALUE`
+- `FIELD IN (value1, value2)`
+- `AND`
+
+Common fields:
+
+- `workflowId`
+- `correlationId`
+- `workflowType`
+- `status`
+- `startTime`
+- `modifiedTime`
+
+Example queries:
+
+```sql
+workflowType = payment_flow
+status IN (PAUSED, RUNNING)
+startTime > 1726655978410
+workflowType = payment_flow AND status = FAILED
+workflowId IN (3434546, 45365767, 20984885) AND workflowType = payment_flow
+```
+
+### API search
+
+Use the [Search Workflow Executions API](/content/reference-docs/api/workflow/search-workflow-executions) when debugging from scripts or runbooks.
+
+```shell
+curl -sS -G "$CONDUCTOR_SERVER_URL/workflow/search" \
+  -H "X-Authorization: $CONDUCTOR_AUTH_TOKEN" \
+  --data-urlencode 'query=status=FAILED AND workflowType=payment_flow' \
+  --data-urlencode 'size=20' \
+  --data-urlencode 'sort=startTime:DESC'
+```
+
+For a known execution ID, fetch the full execution with tasks:
+
+```shell
+curl -sS "$CONDUCTOR_SERVER_URL/workflow/$WORKFLOW_ID?includeTasks=true" \
+  -H "X-Authorization: $CONDUCTOR_AUTH_TOKEN"
+```
+
+## Inspecting a workflow execution
+
+Inspect the workflow-level fields first:
+
+- `workflowId`: Stable ID for the execution.
+- `workflowName` and `workflowVersion`: The definition that ran.
+- `status`: Current execution state.
+- `reasonForIncompletion`: Failure or timeout reason, when present.
+- `input` and `output`: External contract for the workflow.
+- `variables`: Runtime variables created by Set Variable tasks.
+- `tasks`: Ordered task execution history.
+
+Then inspect the task list in execution order. Look for the first task with `FAILED`, `TIMED_OUT`, `FAILED_WITH_TERMINAL_ERROR`, or a long-running `IN_PROGRESS` state. Later tasks may be symptoms of the first bad task.
+
+## Inspecting a task execution
+
+For a failed or blocked task, review these fields:
+
+| Field | What to check |
+| ----- | ------------- |
+| `taskType` and `taskDefName` | Confirms the task queue or system task type. |
+| `taskReferenceName` | Confirms downstream expressions point to the correct task. |
+| `status` | Shows whether the task failed, timed out, completed, or is waiting. |
+| `inputData` | Shows resolved input values after `${...}` expressions were evaluated. |
+| `outputData` | Shows what the task returned before the next task consumed it. |
+| `reasonForIncompletion` | Worker exception, timeout, validation failure, or terminal error reason. |
+| `retryCount` | Shows how many times this task has already been retried. |
+| `workerId` | Identifies the worker process that picked up the task. |
+
+If you have the task ID directly:
+
+```shell
+curl -sS "$CONDUCTOR_SERVER_URL/tasks/$TASK_ID" \
+  -H "X-Authorization: $CONDUCTOR_AUTH_TOKEN"
+```
+
+## Recovering from failures
+
+Choose the recovery action based on whether the workflow definition, input data, or external dependency has changed.
+
+| Action | Use when |
+| ------ | -------- |
+| Retry from failed task | The definition and input are correct, and the dependency or worker issue has been fixed. |
+| Restart with current definition | You want to run from the beginning using the same definition version that started the execution. |
+| Restart with latest definition | A workflow definition fix has been deployed and the execution should use the newest version. |
+| Rerun workflow | You need a new execution with corrected input, correlation ID, idempotency key, or task-to-domain mapping. |
+| Signal task | A WAIT, HUMAN, or async task is blocked and should be completed or failed externally. |
+| Terminate | The execution should stop and should not be retried. |
+
+Retry a failed workflow:
+
+```shell
+curl -sS -X POST "$CONDUCTOR_SERVER_URL/workflow/$WORKFLOW_ID/retry" \
+  -H "X-Authorization: $CONDUCTOR_AUTH_TOKEN"
+```
+
+Signal a waiting task:
+
+```shell
+curl -sS -X POST "$CONDUCTOR_SERVER_URL/tasks/$WORKFLOW_ID/COMPLETED/signal/sync" \
+  -H "X-Authorization: $CONDUCTOR_AUTH_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"approved": true, "approvedBy": "ops@example.com"}'
+```
+
+## Common failure patterns
+
+### Task stuck in SCHEDULED state
+
+`SCHEDULED` means the task is waiting to be picked up. Check in this order:
+
+1. The workflow task `name` exactly matches the task type your worker polls.
+2. At least one worker is running and polling that task type.
+3. The worker has permission to poll and update that task.
+4. Task-to-domain routing matches the worker domain, if domains are used.
+5. The task definition exists and has sensible `pollTimeoutSeconds`.
+6. Queue depth is not growing faster than workers can drain it.
+
+### Task keeps failing
+
+Repeated `FAILED` or `TIMED_OUT` tasks usually mean the worker is deterministically failing on the same input, the external dependency is unavailable, or the task timeout is shorter than real processing time.
+
+Check:
+
+- `reasonForIncompletion`
+- Worker logs for the `workerId`
+- Resolved `inputData`
+- External service response codes
+- Retry and timeout settings in the task definition
+
+Use `FAILED_WITH_TERMINAL_ERROR` from workers for failures that should not be retried, such as invalid customer input.
+
+### Workflow hangs
+
+A workflow that remains `RUNNING` with no task progress is usually waiting on one of these:
+
+- A WAIT task that needs a signal
+- A HUMAN task waiting for assignment or completion
+- An async task with `asyncComplete: true`
+- A worker task that is stuck `IN_PROGRESS`
+- An event that was never delivered
+
+For long-running workflows, this can be normal. For request/response flows, prefer explicit workflow and task timeouts.
+
+### Workflow timed out
+
+`TIMED_OUT` means the workflow or task exceeded configured timeout settings. Review:
+
+- Workflow `timeoutSeconds` and `timeoutPolicy`
+- Task `timeoutSeconds`, `responseTimeoutSeconds`, `pollTimeoutSeconds`, and `timeoutPolicy`
+- Whether workers send heartbeats or `IN_PROGRESS` updates for long-running work
+- Whether retry delays and backoff make the total execution exceed the workflow SLA
+
+See [Handling Failures](/content/error-handling) for retry, timeout, and compensation configuration.
+
+## Production notes
+
+- Log workflow IDs in every application request that starts a workflow.
+- Use correlation IDs for business entities such as order ID, customer ID, ticket ID, or payment ID.
+- Make workers idempotent because Conductor uses at-least-once delivery.
+- Keep sensitive values in [secrets](/content/developer-guides/secrets-in-conductor), not workflow input.
+- Add [metrics and alerts](/content/developer-guides/metrics-and-observability) for failed workflows, timed-out tasks, queue depth, and worker poll rates.

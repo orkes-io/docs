@@ -1,0 +1,129 @@
+---
+title: "List Integration Model Prompts"
+description: "Use the Orkes Conductor integrations API to list Integration Model Prompts. Includes endpoint details, authentication, parameters, request bodies, response."
+---
+
+# List Integration Model Prompts
+
+## Quick reference
+
+Use this integrations endpoint to list Integration Model Prompts. It is intended for automation scripts, CI/CD jobs, backend services, and internal tools that need to manage Orkes Conductor programmatically.
+
+- **Method and path**: `GET` `/api/integrations/provider/{integration_provider}/integration/{integration_name}/prompt`
+- **Authentication**: Requires Orkes Conductor API credentials with permission for the target resource.
+- **Inputs**: Use the path parameters, query parameters, and request body fields documented below.
+- **Output**: Returns the Conductor API response for the requested operation. Check the response examples and status codes before wiring the endpoint into production automation.
+- **Operational note**: Treat API calls as part of your deployment or runtime control plane. Log request IDs, handle 4xx/5xx responses, and avoid embedding secrets in workflow definitions or source code.
+
+
+**Endpoint**: `GET /api/integrations/provider/{integration_provider}/integration/{integration_name}/prompt`
+
+Retrieves all prompts associated with a specific model under an integration provider.
+
+## Path parameters
+
+| Parameter | Description                                      | Type   | Required/ Optional |
+| --------- | ------------------------------------------------ | ------ | ------------------ |
+| integration_provider | The name of the integration provider in Conductor from which the prompt is to be retrieved.  | string | Required. | 
+| integration_name | The name of the model.| string | Required. | 
+
+## Response
+
+| Status | Description                                      | 
+| --------- | ------------------------------------------------ | 
+| 200 OK | Returns an array of prompt objects. | 
+| 403 Forbidden | Indicates that the authenticated user does not have READ or UPDATE access on the prompt. | 
+| 404 Not Found | The integration provider, integration, or prompt does not exist. | 
+
+## Examples
+
+<details>
+<summary>Get prompts associated with an integration provider </summary>
+
+**Request**
+
+```shell
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/integrations/provider/openAI/integration/gpt-4o/prompt' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+[
+  {
+    "createTime": 1766476941820,
+    "updateTime": 1774266945682,
+    "createdBy": "john.doe@acme.com",
+    "updatedBy": "john.doe@acme.com",
+    "name": "Document-Retrieval",
+    "template": "You are an assistant that answers questions using only the provided context.\nIf the context does not contain the answer, say that the information is not available.\nKeep your responses short and clear.\n\nQuestion:\n${question}\n\nContext:\n${retrievedContext}",
+    "description": "Generates an answer to a user question using only the context retrieved from the vector database.\n",
+    "variables": [
+      "retrievedContext",
+      "question"
+    ],
+    "integrations": [
+      "openAI:gpt-4o",
+      "openAI:chatgpt-4o-latest"
+    ],
+    "version": 1
+  },
+  {
+    "createTime": 1769502880756,
+    "updateTime": 1769502880756,
+    "createdBy": "john.doe@acme.com",
+    "updatedBy": "john.doe@acme.com",
+    "name": "population-prompt",
+    "template": "What is the current population of `${country}`? What was the population in `${year}`?",
+    "description": "Population prompt",
+    "variables": [
+      "country",
+      "year"
+    ],
+    "integrations": [
+      "openAI:gpt-4o",
+      "openAI:chatgpt-4o-latest"
+    ],
+    "version": 1
+  },
+  {
+    "createTime": 1740554651215,
+    "updateTime": 1768294578179,
+    "createdBy": "john.doe@acme.com",
+    "updatedBy": "john.doe@acme.com",
+    "name": "translate",
+    "template": "Translate the following text into ${language}.\n\n<text>\n${text} \n</text>\n\nReply only with the translation and nothing else.",
+    "description": "Translate text from any source language to any target language.",
+    "variables": [
+      "language",
+      "text"
+    ],
+    "integrations": [
+      "openAI:gpt-4o",
+      "openAI:chatgpt-4o-latest"
+    ],
+    "version": 1
+  },
+  {
+    "createTime": 1738303350247,
+    "updateTime": 1768378780327,
+    "createdBy": "john.doe@acme.com",
+    "updatedBy": "john.doe@acme.com",
+    "name": "doc_classifier_prompt",
+    "template": "We have a document that was scanned using OCR. The content is ${text}. You need to classify the document based on the provided OCR content. The document could be one of these: W2, Drivers License, Pay stub, Employment Verification Letter, or Mortgage Application. Suppose the provided content does not match with any of those documents. In that case, you must reply NO_MATCH, and in the following line, you must give a human-understandable message about the result and why that determination was made in under three sentences. If the provided content matches, return the values found, including the document type. If the social security number is part of the values, obfuscate the first five digits.",
+    "description": "The AI prompt to classify documents.",
+    "variables": [
+      "text"
+    ],
+    "integrations": [
+      "openAI:gpt-4o"
+    ],
+    "version": 1
+  }
+]
+```
+
+</details>

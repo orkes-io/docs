@@ -1,0 +1,289 @@
+---
+title: "Signal Running Task Synchronously"
+description: "Use the Orkes Conductor tasks API to signal Running Task Synchronously. Includes endpoint details, authentication, parameters, request bodies, response."
+---
+
+# Signal Running Task Synchronously
+
+## Quick reference
+
+Use this tasks endpoint to signal Running Task Synchronously. It is intended for automation scripts, CI/CD jobs, backend services, and internal tools that need to manage Orkes Conductor programmatically.
+
+- **Method and path**: `POST` `/api/tasks/{workflowId}/{status}/signal/sync`
+- **Authentication**: Requires Orkes Conductor API credentials with permission for the target resource.
+- **Inputs**: Use the path parameters, query parameters, and request body fields documented below.
+- **Output**: Returns the Conductor API response for the requested operation. Check the response examples and status codes before wiring the endpoint into production automation.
+- **Operational note**: Treat API calls as part of your deployment or runtime control plane. Log request IDs, handle 4xx/5xx responses, and avoid embedding secrets in workflow definitions or source code.
+
+
+!!! info "Available since"
+    v5.1.0 and later
+
+**Endpoint**: `POST /api/tasks/{workflowId}/{status}/signal/sync`
+
+Signals a running [Wait](/content/reference-docs/operators/wait) or [Yield](/content/reference-docs/operators/yield) task in the specified workflow synchronously with a new status and output, and returns the updated workflow state, based on the `returnStrategy`. This API is useful for tightly coordinated task control or integrating external events into an ongoing workflow. 
+
+## Path parameters
+
+| Parameter | Description                                 | Type   | Required/ Optional |
+| --------- | ------------------------------------------- | ------ | ------------------ |
+| workflowId | The execution ID of the workflow containing the Yield task. | string | Required. | 
+| status | The status to which the task is to be updated. Supported values:<ul><li>**IN_PROGRESS**</li><li>**FAILED**</li><li>**FAILED_WITH_TERMINAL_ERROR**</li><li>**COMPLETED**</li></ul> | string | Required. | 
+
+## Query parameters
+
+| Parameter | Description                                 | Type   | Required/ Optional |
+| --------- | ------------------------------------------- | ------ | ------------------ |
+| returnStrategy | The strategy that determines what response the API returns. Supported values:<ul><li>**TARGET_WORKFLOW**: Returns the full execution state of the originally triggered workflow. Use this when monitoring the overall workflow status or managing orchestration at the top level.</li><li>**BLOCKING_WORKFLOW**: Returns the state of the workflow that is currently blocking the original workflow execution. This may be a sub workflow. Use when signaling Yield tasks in nested workflows.</li><li>**BLOCKING_TASK**: Returns the execution status of the task that is currently blocking workflow execution. Best for real-time status checks.</li><li>**BLOCKING_TASK_INPUT**: Returns the input payload of the task that is currently blocking workflow execution. Ideal for debugging or runtime inspection.</li></ul> The default is TARGET_WORKFLOW. | string | Optional. |
+| timeoutMillis | The timeout in milliseconds after which the task times out. Default is 5000. | integer | Optional. | 
+
+## Request body
+
+Format the request to include any additional parameters, such as task output.
+
+**Example**
+
+```json
+{
+  "additionalProp1": {},
+  "additionalProp2": {},
+  "additionalProp3": {}
+}
+```
+
+## Response
+
+Returns 200 OK, indicating that the task status was successfully updated and the signal was processed. The response payload structure depends on the `returnStrategy` specified:
+
+- `TARGET_WORKFLOW`: Full execution state of the originally triggered workflow
+- `BLOCKING_WORKFLOW`: State of the workflow currently blocking execution (may be a sub workflow)
+- `BLOCKING_TASK`: Execution status of the task currently blocking workflow execution
+- `BLOCKING_TASK_INPUT`: Input payload of the task currently blocking workflow execution
+
+
+## Examples
+
+<details>
+<summary>Signal a running task synchronously with TARGET_WORKFLOW as return strategy</summary>
+
+**Request**
+
+```shell
+curl -X 'POST' \
+  'https://<YOUR-SERVER-URL>/api/tasks/ea866cbb-29ab-11f0-8259-1a170f75b9fc/FAILED_WITH_TERMINAL_ERROR/signal/sync?returnStrategy=TARGET_WORKFLOW' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>' \
+  -d '{
+  "additionalProp1": {}
+}'
+```
+
+**Response**
+
+Returns a 200 OK response indicating that the task status was updated successfully and the signal was processed. The response includes the current state of the workflow, as specified by the `returnStrategy`.
+
+```json
+//truncated response
+{
+  "responseType": "TARGET_WORKFLOW",
+  "targetWorkflowId": "fd7s71db5e9c-4a9e-11f0-8f25-26000e13d725",
+  "targetWorkflowStatus": "RUNNING",
+  "workflowId": "fd7s71db5e9c-4a9e-11f0-8f25-26000e13d725",
+  "tasks": [
+    {
+      "taskType": "YIELD",
+      "status": "COMPLETED",
+      "inputData": {
+        "_createdBy": "john.doe@acme.com"
+      },
+      "referenceTaskName": "yield_ref",
+      "retryCount": 0,
+      "seq": 1,
+      "pollCount": 0,
+      "taskDefName": "yield",
+      "scheduledTime": 1750070520205,
+      "startTime": 0,
+      "endTime": 1750070632655,
+      "updateTime": 1750070632656,
+      "startDelayInSeconds": 0,
+      "retried": false,
+      "executed": true,
+      "callbackFromWorker": true,
+      "responseTimeoutSeconds": 0,
+      "workflowInstanceId": "fd7s71db5e9c-4a9e-11f0-8f25-26000e13d725",
+      "workflowType": "sample-yield-task",
+      "taskId": "fd7s88646e5a-4a9e-11f0-a337-9e736287a215",
+      "callbackAfterSeconds": 0,
+      "workerId": "10.0.8.137",
+      "outputData": {
+        "additionalProp1": {}
+      },
+```
+</details>
+
+<details>
+<summary>Signal a running task synchronously with BLOCKING_WORKFLOW as return strategy</summary>
+
+**Request**
+
+```shell
+curl -X 'POST' \
+  'https://<YOUR-SERVER-URL>/api/tasks/fd7s71db5e9c-4a9e-11f0-8f25-26000e13d725/COMPLETED/signal/sync?returnStrategy=BLOCKING_WORKFLOW' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "additionalProp1": {}
+}'
+```
+
+**Response**
+
+Returns a 200 OK response indicating that the task status was updated successfully and the signal was processed.  The response includes the current state of the blocking workflow, which is a sub workflow.
+
+```json
+// truncated response
+{
+  "responseType": "BLOCKING_WORKFLOW",
+  "targetWorkflowId": "fd7s71db5e9c-4a9e-11f0-8f25-26000e13d725",
+  "targetWorkflowStatus": "RUNNING",
+  "workflowId": "fd7s71db5e9c-4a9e-11f0-8f25-26000e13d725",
+  "input": {},
+  "output": {},
+  "priority": 0,
+  "variables": {},
+  "tasks": [
+    {
+      "taskType": "YIELD",
+      "status": "COMPLETED",
+      "inputData": {
+        "_createdBy": "john.doe@acme.com"
+      },
+.
+.
+.
+    {
+      "taskType": "SUB_WORKFLOW",
+      "status": "IN_PROGRESS",
+      "inputData": {
+        "subWorkflowDefinition": null,
+        "workflowInput": {},
+        "subWorkflowTaskToDomain": null,
+        "subWorkflowName": "demo-feb",
+        "subWorkflowPriority": null,
+        "_createdBy": "john.doe@acme.com",
+        "subWorkflowVersion": 1
+      },
+      "referenceTaskName": "sub_workflow_ref",
+  "createTime": 1750070482397,
+  "status": "RUNNING",
+  "updateTime": 1750070926333
+}
+```
+</details>
+
+<details>
+<summary>Signal a running task synchronously with BLOCKING_TASK as return strategy</summary>
+
+**Request**
+
+```shell
+curl -X 'POST' \
+  'https:<YOUR-SERVER-URL>/api/tasks/fd7s71db5e9c-4a9e-11f0-8f25-26000e13d725/COMPLETED/signal/sync?returnStrategy=BLOCKING_TASK' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "additionalProp1": {}
+}'
+```
+
+**Response**
+
+Returns a 200 OK response indicating that the task status was updated successfully and the signal was processed. The response includes the execution state of the task that is currently blocking progress.
+
+```json
+// truncated response
+{
+  "responseType": "BLOCKING_TASK",
+  "targetWorkflowId": "fd7s71db5e9c-4a9e-11f0-8f25-26000e13d725",
+  "targetWorkflowStatus": "RUNNING",
+  "workflowId": "fd7s71db5e9c-4a9e-11f0-8f25-26000e13d725",
+  "input": {
+    "subWorkflowDefinition": null,
+    "workflowInput": {},
+    "subWorkflowTaskToDomain": null,
+    "subWorkflowName": "demo-feb",
+    "subWorkflowPriority": null,
+    "_createdBy": "john.doe@acme.com",
+    "subWorkflowVersion": 1
+  },
+  "output": {
+    "subWorkflowId": "fd7sea8f8c0f-4a9f-11f0-a337-9e736287a215"
+  },
+  "taskType": "SUB_WORKFLOW",
+  "taskId": "fd7sea8e538e-4a9f-11f0-a337-9e736287a215",
+  "referenceTaskName": "sub_workflow_ref",
+  "retryCount": 0,
+  "taskDefName": "sub_workflow",
+  "workflowType": "sample-yield-task",
+  "priority": 0,
+  "createTime": 1750071114395,
+  "updateTime": 1750071114408,
+  "status": "IN_PROGRESS"
+}
+```
+</details>
+
+<details>
+<summary>Signal a running task synchronously with BLOCKING_TASK_INPUT as return strategy</summary>
+
+**Request**
+
+```shell
+curl -X 'POST' \
+  'https://<YOUR-SERVER-URL>/api/tasks/fd7s71db5e9c-4a9e-11f0-8f25-26000e13d725/COMPLETED/signal/sync?returnStrategy=BLOCKING_TASK_INPUT' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "additionalProp1": {}
+}'
+```
+
+**Response**
+
+Returns a 200 OK response indicating that the task status was updated successfully and the signal was processed. The response includes the input payload of the task that is currently blocking workflow progress.
+
+```json
+//truncated response
+{
+  "responseType": "BLOCKING_TASK_INPUT",
+  "targetWorkflowId": "fd7s71db5e9c-4a9e-11f0-8f25-26000e13d725",
+  "targetWorkflowStatus": "RUNNING",
+  "workflowId": "fd7s71db5e9c-4a9e-11f0-8f25-26000e13d725",
+  "input": {
+    "subWorkflowDefinition": null,
+    "workflowInput": {},
+    "subWorkflowTaskToDomain": null,
+    "subWorkflowName": "demo-feb",
+    "subWorkflowPriority": null,
+    "_createdBy": "john.doe@acme.com",
+    "subWorkflowVersion": 1
+  },
+  "output": {
+    "subWorkflowId": "fd7s86925c46-4aa0-11f0-a337-9e736287a215"
+  },
+  "taskType": "SUB_WORKFLOW",
+  "taskId": "fd7s869123c5-4aa0-11f0-a337-9e736287a215",
+  "referenceTaskName": "sub_workflow_ref",
+  "retryCount": 0,
+  "taskDefName": "sub_workflow",
+  "workflowType": "sample-yield-task",
+  "priority": 0,
+  "createTime": 1750071376139,
+  "updateTime": 1750071376151,
+  "status": "IN_PROGRESS"
+}
+```
+</details>

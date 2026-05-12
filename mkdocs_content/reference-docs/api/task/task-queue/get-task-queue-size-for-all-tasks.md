@@ -1,0 +1,86 @@
+---
+title: "Get Task Queue Size for All Tasks"
+description: "Use the Orkes Conductor tasks API to get Task Queue Size for All Tasks. Includes endpoint details, authentication, parameters, request bodies, response."
+---
+
+# Get Task Queue Size for All Tasks
+
+**Endpoint:** `GET /api/tasks/queue/all`
+
+Retrieves the task queue size for all tasks in the cluster. It only returns the size of the task queues without any associated poll data.
+
+## Response
+
+Returns a map where each key is a task type or task queue name, and each value is the number of tasks currently in that queue.
+
+**Example:**
+
+```json
+{
+  "BUSINESS_RULE": 4,
+  "EVENT": 3,
+  "FORK": 0,
+  "GET_DOCUMENT": 1,
+  "GET_SIGNED_JWT": 0
+}
+```
+
+## Examples
+
+<details>
+<summary>Get task queue size for all tasks</summary>
+
+**Request**
+
+```bash
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/tasks/queue/all' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+{
+  "AWS_LAMBDA": 0,
+  "BUSINESS_RULE": 0,
+  "EVENT": 0,
+  "FORK": 0,
+  "GET_DOCUMENT": 0,
+  "GET_SIGNED_JWT": 0,
+  "HTTP": 3,
+  "HTTP_POLL": 0,
+  "INLINE": 0,
+  "JDBC": 0,
+  "JOIN": 0,
+  "LLM_CHAT_COMPLETE": 0,
+  "LLM_GENERATE_EMBEDDINGS": 0,
+  "LLM_GET_EMBEDDINGS": 0,
+  "LLM_INDEX_DOCUMENT": 0,
+  "LLM_INDEX_TEXT": 0,
+  "LLM_SEARCH_INDEX": 0,
+  "LLM_STORE_EMBEDDINGS": 0,
+  "LLM_TEXT_COMPLETE": 0,
+  "OPS_GENIE": 0,
+  "QUERY_PROCESSOR": 0,
+  "SPLIT_DOCUMENT": 0,
+  "TERMINATE": 0,
+  "WAIT": 0,
+  "WAIT_FOR_WEBHOOK": 0,
+  "_batch_upload_queue0": 22,
+  "_batch_upload_queue1": 1,
+  "_batch_upload_queue2": 3,
+  "_batch_upload_queue3": 0,
+  "_batch_upload_queue4": 0,
+  "_deciderQueue": 3,
+  "_index_queue": 0,
+  "_webhook_queue": 0,
+  "fakeResults": 0,
+  "sitemap_urls": 0,
+  "test-input_template": 0,
+  "test-java-sdk": 0
+}
+```
+
+</details>

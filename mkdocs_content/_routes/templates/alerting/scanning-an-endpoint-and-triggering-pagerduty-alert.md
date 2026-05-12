@@ -1,0 +1,242 @@
+---
+title: "Build an Alerting Workflow with PagerDuty and Orkes Conductor"
+description: "Learn how to build a workflow that monitors an endpoint and sends alerts to PagerDuty when failures occur in Orkes Conductor."
+---
+
+# Build an Alerting Workflow with PagerDuty and Orkes Conductor
+
+In this tutorial, you’ll build an alerting workflow using Orkes Conductor and PagerDuty. The workflow periodically checks for failed workflows and sends alerts to on-call engineers when failures are detected.
+
+This pattern mirrors real-world operational monitoring, where automated polling detects issues and immediately notifies the team responsible for resolution.
+
+## The alerting workflow
+
+In this tutorial, you’ll build an alerting system with Conductor workflows and PagerDuty, where:
+
+- A **[Query Processor](https://orkes.io/content/reference-docs/system-tasks/query-processor)** task checks for failed workflows within a defined time window.
+- A **[Switch](https://orkes.io/content/reference-docs/operators/switch)** task that evaluates the number of failed workflows and determines whether to trigger a PagerDuty alert.
+  - If failures exist, the workflow triggers a PagerDuty alert.
+  - If no failures are found, the workflow completes silently.
+
+Here’s how the workflow looks like:
+
+<p align="center"><img src="/content/img/alerting-workflow.png" alt="Alerting workflow in Orkes Conductor" width="60%" height="auto"></img></p>
+
+Follow along using the free [Orkes Developer Edition](https://developer.orkescloud.com/). If you don’t have an account yet, sign up to get started.
+
+## Step 1: Create workflows in Orkes Conductor
+
+Orkes Conductor lets you define workflows as JSON, through [SDKs](https://orkes.io/content/category/sdks), [APIs](https://orkes.io/content/category/ref-docs/api), or the [UI](http://orkes.io/content/developer-guides/build-workflows-using-ui). 
+
+In this tutorial, you will create two workflows:
+1. **seed_failure**: A workflow that intentionally fails on each run, used to simulate a failure event.
+2. **alert_workflow**: A workflow that monitors the first one for failures and triggers a PagerDuty alert.
+
+**To create a workflow using Conductor UI:**
+
+1. Go to [**Definitions** > **Workflow**](https://developer.orkescloud.com/workflowDef) from the left navigation menu on your Conductor cluster.
+2. Select **+ Define workflow**.
+3. In the **Code** tab, paste the following code:
+
+```json
+{
+ "name": "seed_failure",
+ "description": "Intentionally fails for alert testing",
+ "version": 1,
+ "tasks": [
+   {
+     "name": "force_error",
+     "taskReferenceName": "force_error",
+     "inputParameters": {
+       "evaluatorType": "graaljs",
+       "expression": "(function(){ throw new Error('Intentional failure for alert test'); })();"
+     },
+     "type": "INLINE"
+   }
+ ],
+ "schemaVersion": 2
+}
+```
+
+4. Select **Save** > **Confirm**.
+
+Next, repeat the steps and create the alerting workflow using the following code:
+
+```json
+{
+ "name": "alert_workflow",
+ "description": "Track workflow failures and trigger a PagerDuty alert.",
+ "version": 1,
+ "tasks": [
+   {
+     "name": "query_failures",
+     "taskReferenceName": "query_failures",
+     "inputParameters": {
+       "queryType": "CONDUCTOR_API",
+       "workflowNames": [
+         "seed_failure"
+       ],
+       "statuses": [
+         "FAILED"
+       ],
+       "startTimeFrom": "${workflow.input.nowMinusStartMinutes}",
+       "startTimeTo": "${workflow.input.nowMinusEndMinutes}",
+       "endTimeFrom": 0,
+       "endTimeTo": 0,
+       "freeText": ""
+     },
+     "type": "QUERY_PROCESSOR"
+   },
+   {
+     "name": "has_failure_workflows",
+     "taskReferenceName": "has_failure_workflows",
+     "inputParameters": {
+       "resultCount": "${query_failures.output.result.count}"
+     },
+     "type": "SWITCH",
+     "decisionCases": {
+       "true": [
+         {
+           "name": "trigger_pagerduty",
+           "taskReferenceName": "trigger_pagerduty",
+           "inputParameters": {
+             "uri": "<PAGERDUTY-URL>",
+             "method": "POST",
+             "contentType": "application/json",
+             "body": {
+               "routing_key": "${workflow.secrets.orkes_pagerduty_integration_key}",
+               "event_action": "trigger",
+               "dedup_key": "failures:${query_failures.input.workflowNames[0]}:${workflow.input.nowMinusStartMinutes}m",
+               "payload": {
+                 "summary": "Workflow failures detected in Orkes Conductor",
+                 "severity": "critical",
+                 "source": "orkes-conductor",
+                 "component": "workflow-monitor",
+                 "group": "conductor",
+                 "class": "workflow_failure",
+                 "custom_details": {
+                   "failedWorkflows": "${query_failures.output.result.count}",
+                   "viewInConductor": "${query_failures.output.listUrl}",
+                   "timeWindow": "now-${workflow.input.nowMinusStartMinutes}m → now-${workflow.input.nowMinusEndMinutes}m",
+                   "executionId": "${workflow.workflowId}"
+                 }
+               }
+             }
+           },
+           "type": "HTTP"
+         }
+       ]
+     },
+     "defaultCase": [
+       {
+         "name": "no_alert",
+         "taskReferenceName": "no_alert",
+         "inputParameters": {
+           "evaluatorType": "graaljs",
+           "expression": "(function(){ return { message: 'No failures found in the selected window' }; })();"
+         },
+         "type": "INLINE"
+       }
+     ],
+     "evaluatorType": "graaljs",
+     "expression": "(function () { const count = Number($.resultCount || 0); return count > 0 ? \"true\" : \"false\"; })();"
+   }
+ ],
+ "inputParameters": [
+   "nowMinusStartMinutes",
+   "nowMinusEndMinutes"
+ ],
+ "schemaVersion": 2
+}
+```
+
+The workflows are ready. The next step is to create a PagerDuty integration to receive the alerts.
+
+## Step 2: Configure PagerDuty integration
+
+**To create an integration in PagerDuty:**
+
+1. Log in to your [PagerDuty](https://www.pagerduty.com/) account.
+2. Select **Service**  > **Service Directory** from the top navigation menu.
+3. Select **+ New Service**.
+4. Enter a **Name** and [create a new service](https://support.pagerduty.com/main/docs/services-and-integrations#create-a-service).
+5. When prompted for an integration, select **Events API V2**.
+6. Select **Create Service**.
+7. Copy the **Integration Key** and the **Integration URL** and store them securely.
+
+<p align="center"><img src="/content/img/pagerduty-integration.png" alt="Configuring integration in PagerDuty" width="100%" height="auto"></img></p>
+
+Now let’s save the integration key as a secret in Orkes Conductor, so it can be passed into the workflow without exposing the actual value.
+
+## Step 3: Store PagerDuty key as a secret in Orkes Conductor
+
+**To create a secret:**
+
+1. Go to [**Definitions** > **Secrets**](https://developer.orkescloud.com/secrets) from the left navigation menu on your Conductor cluster.
+2. Select **+ Add secret**.
+3. Enter the following:
+  - **Secret name**: Enter *orkes_pagerduty_integration_key*.
+  - **Secret value**: Enter the integration key copied previously.
+
+<p align="center"><img src="/content/img/storing-pagerduty-key-as-secret.png" alt="Storing PagerDuty key as secret in Conductor" width="100%" height="auto"></img></p>
+
+4. Select **Add**.
+
+The secret is referenced in the workflow as `${workflow.secrets.orkes_pagerduty_integration_key}`.
+
+<p align="center"><img src="/content/img/secret-used-in-workflow.png" alt="Secret used in workflow" width="100%" height="auto"></img></p>
+
+## Step 4: Modify workflow 
+
+Next, modify the workflow to suit your requirements.
+
+Open the alert_workflow definition. In the *trigger_pagerduty* task, replace the `<PAGERDUTY-URL>` placeholder with the **Integration URL** you copied from PagerDuty.
+
+<p align="center"><img src="/content/img/modifying-pagerduty-workflow.png" alt="Modifying PagerDuty workflow" width="100%" height="auto"></img></p>
+
+Save the workflow.
+
+## Step 5: Execute workflow 
+
+We will run the workflow that checks for the failed status of the `seed_failure` workflow.
+
+**To test the workflow:**
+
+1. From your workflow definition, go to the **Run** tab.
+2. Set the input parameter. For example, let’s fetch the failure workflow in the last 60 minutes:
+
+```json
+{
+ "nowMinusStartMinutes": "60",
+ "nowMinusEndMinutes": "0"
+}
+```
+
+3. Select **Execute**.
+
+Since the workflow has no failures, it will complete without triggering an alert.
+
+<p align="center"><img src="/content/img/pagerduty-workflow-no-alert-triggered.png" alt="No alert triggered" width="70%" height="auto"></img></p>
+
+To simulate a failure, let’s run the `seed_failure` workflow to trigger failures. 
+
+<p align="center"><img src="/content/img/executing-seed-failure-workflow.png" alt="Running a failure workflow to be monitored" width="90%" height="auto"></img></p>
+
+Re-run the alert_workflow. This time, the workflow detects the failed run and triggers a PagerDuty alert.
+
+<p align="center"><img src="/content/img/pagerduty-workflow-alerts-triggered.png" alt="Alerts triggered" width="90%" height="auto"></img></p>
+
+Open PagerDuty and go to **Incidents** to view the alert received.
+
+<p align="center"><img src="/content/img/alert-receieved-in-pagerduty.png" alt="Alerts received in PagerDuty" width="100%" height="auto"></img></p>
+
+## Workflow modifications
+
+This alerting workflow can be extended by:
+
+- Adding an HTTP request to fetch failures from other endpoints.
+- Adding multiple alerting channels, such as Slack or email.
+- Monitoring various workflows in the same query.
+- Adding retry or escalation logic for failed alerts.
+- Preventing duplicate alerts within a specific timeframe.
+- Generate periodic reports of workflow failures.

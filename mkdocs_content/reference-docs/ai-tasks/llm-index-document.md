@@ -1,0 +1,108 @@
+---
+title: "LLM Index Document"
+description: "Learn how the LLM Index Document task indexes documents into a vector database for semantic search and retrieval in Orkes Conductor."
+---
+
+# LLM Index Document
+
+The LLM Index Document task is used to index a document into a vector database for efficient search, retrieval, and processing at a later stage.
+
+The task utilizes a large language model (LLM) to generate embeddings of the indexed document text, which are then stored in a vector database for later retrieval.
+
+!!! info "Prerequisites"
+    
+    - [Integrate the required AI model](/content/category/integrations/ai-llm) with Orkes Conductor.
+    - [Integrate the required vector database](/content/category/integrations/vector-databases) with Orkes Conductor.
+
+## Task parameters 
+
+Configure these parameters for the LLM Index Document task.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- |
+| inputParameters.**vectorDB** | The vector database to store the data.<br/><br/>**Note**: If you haven’t configured the vector database on your Orkes Conductor cluster, navigate to the **Integrations** tab and [configure your required provider](/content/category/integrations/vector-databases). | Required. | 
+| inputParameters.**index** | The index in your vector database where the text or data will be stored.<br/><br/>The terminology of the index field varies depending on the integration:<ul><li>For Weaviate, the index field indicates the collection name.</li><li>For other integrations, it denotes the index name.</li></ul> | Required. |
+| inputParameters.**namespace** | Namespaces are separate isolated environments within the database to manage and organize vector data effectively. Enter the namespace the task will utilize. <br/><br/>The usage and terminology of the namespace field vary depending on the integration:<ul><li>For Pinecone, the namespace field is applicable.</li><li>For Weaviate, the namespace field is not applicable.</li><li>For MongoDB, the namespace field is referred to as “Collection” in MongoDB.</li><li>For Postgres, the namespace field is referred to as “Table” in Postgres.</li></ul> | Required. | 
+| inputParameters.**embeddingModelProvider** | The LLM provider for generating the embeddings.<br/><br/>**Note**: If you haven’t configured your AI/LLM provider on your Orkes Conductor cluster, navigate to the **Integrations** tab and [configure your required provider](/content/category/integrations/ai-llm).  | Required. |
+| inputParameters.**embeddingModel** | The embedding model provided by the selected LLM provider to generate the embeddings. | Required. |
+| inputParameters.**dimensions** | The size of the vector, which is the number of elements in the vector. | Optional. | 
+| inputParameters.**url** | The URL of the file to be indexed. | Required. |
+| inputParameters.**mediaType** | The media type of the file to be indexed. Supported media types: <ul> <li>application/pdf</li> <li>text/html</li> <li>text/plain</li> <li>application/json</li> </ul> | Optional. | 
+| inputParameters.**chunkSize** | The length of each input text segment when divided for processing by the LLM. For example, if the document contains 2,000 words and the chunk size is set to 500, the document is divided into four chunks for processing. | Optional. | 
+| inputParameters.**chunkOverlap** | The overlap between adjacent chunks. For example, if the chunk overlap is specified as 100, then the first 100 words of each chunk would overlap with the last 100 words of the previous chunk. | Optional. | 
+
+The following are generic configuration parameters that can be applied to the task and are not specific to the LLM Index Document task.
+
+<details>
+<summary>Caching parameters</summary>
+
+You can cache the task outputs using the following parameters. Refer to [Caching Task Outputs](/content/faqs/task-cache-output) for a full guide.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| cacheConfig.**ttlInSecond** | The time to live in seconds, which is the duration for the output to be cached. | Required if using *cacheConfig*. |
+| cacheConfig.**key** | The cache key is a unique identifier for the cached output and must be constructed exclusively from the task’s input parameters.<br/>It can be a string concatenation that contains the task’s input keys, such as `${uri}-${method}` or `re_${uri}_${method}`. | Required if using *cacheConfig*. |
+
+</details>
+
+<details>
+<summary>Other generic parameters</summary>
+
+Here are other parameters for configuring the task behavior.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| optional | Whether the task is optional. <br/><br/>If set to`true`, any task failure is ignored, and the workflow continues with the task status updated to `COMPLETED_WITH_ERRORS`. However, the task must reach a terminal state. If the task remains incomplete, the workflow waits until it reaches a terminal state before proceeding. | Optional. | 
+
+</details>
+
+## Task configuration
+
+This is the task configuration for an LLM Index Document task.
+
+```json
+{
+     "name": "llm_index_document",
+     "taskReferenceName": "llm_index_document_ref",
+     "inputParameters": {
+       "chunkSize": 200,
+       "vectorDB": "Pinecone",
+       "index": "${workflow.input.indexName}",
+       "namespace": "docs",
+       "embeddingModelProvider": "openAI",
+       "embeddingModel": "text-embedding-3-large",
+       "dimensions": 3024,
+       "url": "https://orkes.io/content/remote-services",
+       "mediaType": "text/html",
+       "chunkOverlap": 50
+     },
+     "type": "LLM_INDEX_DOCUMENT"
+}
+```
+
+## Task output
+
+There is no output. The LLM Index Document task will store the indexed data in the specified vector database.
+
+## Adding an LLM Index Document task in UI
+
+**To add an LLM Index Document task:**
+
+1. In your workflow, select the (**+**) icon and add an **LLM Index Document** task.
+2. In **Vector Database Configuration**, select the **Vector database**, **Index**, and **Namespace** to store the indexed document.
+3. In **Embedding Model**, select the **Embedding model provider**, **Embedding model**, and **Dimensions** to generate the embeddings.
+4. Enter the **URL** of the document to be indexed and select the **Media type**.
+5. Enter the **Chunk Size** and **Chunk Overlap**.
+
+<center><p><img src="/content/img/llm-index-document-ui-method.png" alt="LLM Index Document Task - UI" width="80%" height="auto"/></p></center>
+
+## Examples
+
+Here are some examples for using the LLM Index Document task.
+
+<details>
+<summary>Using an LLM Index Document task in a workflow</summary>
+
+See an example of [building a document retrieval workflow using Orkes Conductor](http://orkes.io/content/tutorials/document-retrieval-workflow).
+
+</details>

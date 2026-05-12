@@ -1,0 +1,197 @@
+---
+title: "Create User Form"
+description: "Use the Orkes Conductor human tasks API to create User Form. Includes endpoint details, authentication, parameters, request bodies, response behavior, and."
+---
+
+# Create User Form 
+
+**Endpoint:** `POST /api/human/template`
+
+Creates a user form in the Conductor server. You can also update existing forms as new versions by setting `newVersion=true`.
+
+## Query parameters
+
+| Parameter  | Description                                                                                                                                                                                                  | Type   | Required/ Optional |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------ | ------------------ |
+| newVersion | Whether to save the user form as a new version. Default is `false`.<br/><br/>If the version number is specified in the request body, it will take precedence even if `newVersion` is set to `false`. | string | Required.          |
+
+## Request body
+
+Format the request as an object containing the user form JSON schema.
+
+| Parameter | Description                                                          | Type   | Required/ Optional |
+| --------- | -------------------------------------------------------------------- | ------ | ------------------ |
+| name | The name of the user form template. | string | Required. | 
+| jsonSchema | The JSON schema defining the form's data structure and validation rules. | object | Required. | 
+| templateUI | The UI configuration that defines how the form should be rendered. [Supported form layout and components](/content/developer-guides/orchestrating-human-tasks#step-1-create-a-user-form-schema). | object | Required. | 
+| createdBy | The user who created the form. | string | Optional. | 
+| updatedBy | The user who last updated the form. | string | Optional. | 
+| version | The version number to assign. If specified, it takes precedence over the `newVersion` query parameter. | integer | Optional. | 
+
+## Response
+
+Returns the created or updated user form with its assigned version number and timestamps.
+
+## Examples
+
+<details>
+<summary>Create a user form</summary>
+
+**Request**
+
+```shell
+curl -X 'POST' \
+  'https://<YOUR-SERVER-URL>/api/human/template?newVersion=false' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "createdBy": "USER:john.doe@acme.com",
+"updatedBy": "USER:john.doe@acme.com",
+  "name": "someForm",
+  "jsonSchema": {
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "properties": {
+      "vegetable": {
+        "type": "string",
+        "enum": [
+          "potatoes",
+          "carrots",
+          "celery"
+        ]
+      }
+    }
+  },
+  "templateUI": {
+    "type": "VerticalLayout",
+    "elements": [
+      {
+        "type": "Control",
+        "scope": "#/properties/vegetable",
+        "label": "Pick one",
+        "options": {}
+      }
+    ]
+  }
+}'
+```
+
+**Response**
+
+```json
+{
+  "createTime": 1770293776993,
+  "updateTime": 1770293776993,
+  "createdBy": "USER:john.doe@acme.com",
+  "updatedBy": "USER:john.doe@acme.com",
+  "name": "someForm",
+  "version": 1,
+  "jsonSchema": {
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "properties": {
+      "vegetable": {
+        "type": "string",
+        "enum": [
+          "potatoes",
+          "carrots",
+          "celery"
+        ]
+      }
+    }
+  },
+  "templateUI": {
+    "type": "VerticalLayout",
+    "elements": [
+      {
+        "type": "Control",
+        "scope": "#/properties/vegetable",
+        "label": "Pick one",
+        "options": {}
+      }
+    ]
+  }
+}
+```
+
+</details>
+
+<details>
+<summary>Save a user form as a new version</summary>
+
+**Request**
+
+```shell
+curl -X 'POST' \
+  'https://<YOUR-SERVER-URL>/api/human/template?newVersion=true' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "createdBy": "USER:john.doe@acme.com",
+"updatedBy": "USER:john.doe@acme.com",
+  "name": "someForm",
+  "jsonSchema": {
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "properties": {
+      "vegetable": {
+        "type": "string",
+        "enum": [
+          "potatoes",
+          "carrots",
+          "celery"
+        ]
+      }
+    }
+  },
+  "templateUI": {
+    "type": "VerticalLayout",
+    "elements": [
+      {
+        "type": "Control",
+        "scope": "#/properties/vegetable",
+        "label": "Pick any one",
+        "options": {}
+      }
+    ]
+  }
+}'
+```
+
+**Response**
+
+```json
+{
+  "createTime": 1770294080864,
+  "updateTime": 1770294080864,
+  "createdBy": "USER:john.doe@acme.com",
+  "updatedBy": "USER:john.doe@acme.com",
+  "name": "someForm",
+  "version": 2,
+  "jsonSchema": {
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "properties": {
+      "vegetable": {
+        "type": "string",
+        "enum": [
+          "potatoes",
+          "carrots",
+          "celery"
+        ]
+      }
+    }
+  },
+  "templateUI": {
+    "type": "VerticalLayout",
+    "elements": [
+      {
+        "type": "Control",
+        "scope": "#/properties/vegetable",
+        "label": "Pick any one",
+        "options": {}
+      }
+    ]
+  }
+}
+```
+
+</details>

@@ -1,0 +1,366 @@
+---
+title: "Wait For Webhook"
+description: "Learn how the Wait for Webhook task pauses workflow execution until a webhook event is received in Orkes Conductor."
+---
+
+# Wait For Webhook
+
+A webhook is an HTTP-based callback function that facilitates communication between the Conductor and other third-party systems. It can be used to receive data from other applications to the Conductor. Conductor supports webhook integration with the following platforms:
+
+- GitHub
+- Microsoft Teams
+- SendGrid
+- Slack
+- Stripe
+
+Additionally, the Custom option can be used to integrate other systems.
+
+For a full guide on how to use webhook tasks, refer to [Webhook Integrations](/content/developer-guides/webhook-integration).
+
+## Task parameters
+
+Configure these parameters for the Wait for Webhook task.
+
+| Parameter                   | Description                                                                                                                                                                                                                                                                                            | Required/ Optional |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------ |
+| inputParameters.**matches** | The conditions that incoming event payloads must meet to trigger the webhook. Can be string, number, boolean, null, or object/array.<br/><br/><span class="table-note"><strong>Note:</strong> When you update the matches, a default caching period of 60 seconds is applied, causing the updates to take effect with a delay of up to 60 seconds.</span> | Required.          |
+
+### Writing input matches​
+
+In the example below, the input matches for a Wait for Webhook task are defined as follows:
+
+```json
+"matches":
+{
+   "$['event']['type']": "message"
+}
+```
+
+This configuration requires the incoming event payload to have a JSON path `event.type`, and it must be a `message`.
+
+To satisfy this condition, the webhook request body sent to Conductor must include:
+
+```json
+"inputParameters": {
+  "event": {
+    "type": "message"
+  }
+}
+```
+
+You can define multiple match conditions within the `matches` object. All conditions are evaluated using the logical AND operator.
+
+```json
+   "matches" : {
+       "$['event']['type']": "message",
+       "$['event']['text']": "hello"
+   }
+```
+
+For example, the configuration above will match the webhook event payload where `event.type` is `message` AND `event.text` is `hello`.
+
+To satisfy this condition, the webhook request body sent to Conductor must include:
+
+```json
+"inputParameters": {
+    "event": {
+        "type": "message",
+        "text": "hello"
+    }
+}
+```
+
+!!! info
+    You can use any webhook testing tool (for example, [Webhook.site](https://webhook.site/)) to temporarily capture and view the incoming payload. Use the captured JSON paths to configure `inputMatches`. Most providers document their webhook payloads, but a capture tool can help you validate the payload.
+
+The following are generic configuration parameters that can be applied to the task and are not specific to the Wait for Webhook task.
+
+<details>
+<summary>Other generic parameters</summary>
+
+Here are other parameters for configuring the task behavior.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| optional | Whether the task is optional. <br/><br/>If set to`true`, any task failure is ignored, and the workflow continues with the task status updated to `COMPLETED_WITH_ERRORS`. However, the task must reach a terminal state. If the task remains incomplete, the workflow waits until it reaches a terminal state before proceeding. | Optional. | 
+
+</details>
+
+## Task configuration
+
+This is the task configuration for a Wait for Webhook task.
+
+```json
+{
+  "name": "webhook",
+  "taskReferenceName": "webhook_ref",
+  "inputParameters": {
+    "matches": {
+      "$['event']['type']": "message",
+      "$['event']['text']": "Hello"
+    }
+  },
+  "type": "WAIT_FOR_WEBHOOK"
+}
+```
+
+## Task output
+
+The Wait for Webhook task returns the incoming webhook event payload as its output. The exact fields depend on the payload sent by the webhook source.
+
+For example, if the incoming webhook payload is:
+
+```json
+{
+  "data": {
+    "recipientId": "2",
+    "message": "Hello"
+  },
+  "event": {
+    "type": "message"
+  }
+}
+```
+
+The task output will be:
+
+```json
+{
+  "data": {
+    "recipientId": "2",
+    "message": "Hello"
+  },
+  "event": {
+    "type": "message"
+  }
+}
+```
+
+To reference these fields in downstream tasks, use the task reference name with standard dot-notation:
+
+```json
+{
+  "recipientId": "${webhook_ref.output.data.recipientId}",
+  "messageType": "${webhook_ref.output.event.type}"
+}
+```
+
+Replace `webhook_ref` with your task's reference name and adjust the field path to match your payload structure.
+
+## Adding a Wait for Webhook task in UI
+
+**To add a Wait for Webhook task:**
+
+1. In your workflow, select the (**+**) icon and add a **Wait for Webhook** task.
+2. Add the **Input matches**.
+
+<center><p><img src="/content/img/webhook-ui-guide.png " alt="Webhook UI" width="100%" height="auto"/></p></center>
+
+## Examples
+
+Here are some examples for using the Wait for Webhook task.
+
+<details>
+<summary>Incoming webhook using cURL</summary>
+<p>
+
+See an example of [passing an incoming request to Webhook using cURL commands](/content/templates/examples/custom-conductor-webhook-using-curl).
+
+</p>
+</details>
+
+<details>
+<summary>Incoming webhook using Postman</summary>
+<p>
+
+See an example of [passing an incoming request to Webhook using Postman](/content/templates/examples/incoming-webhook-using-postman).
+
+</p>
+</details>
+
+<details>
+<summary>Sample Workflow for Slack webhook - Creating standup bot</summary>
+<p>
+
+See an example of [creating a standup bot using Slack Webhook](/content/templates/daily-scrum-automation-using-standup-bot).
+
+</p>
+</details>
+
+<details>
+<summary>Sample workflow for Slack webhook - Automating Slack greetings</summary>
+<p>
+
+See an example of [automating Slack Greetings using Slack Webhook](https://orkes.io/blog/automating-slack-greetings-to-community-with-orkes-conductor/).
+
+</p>
+</details>
+
+<details>
+<summary>Sample workflow for SendGrid webhook</summary>
+<p>
+
+See an example of [using SendGrid Event Webhooks in Orkes Conductor](https://orkes.io/content/tutorials/using-sendgrid-webhooks).
+
+</p>
+</details>
+
+<details>
+<summary>Sample workflow for GitHub webhook</summary>
+<p>
+
+See an example of [building a GitHub pull request reviewer assignment workflow using Orkes Conductor](http://orkes.io/content/tutorials/github-webhook).
+
+</p>
+</details>
+
+<details>
+<summary>Sample workflow for Stripe webhook</summary>
+<p>
+
+See an example of [building a Stripe payment confirmation workflow in Orkes Conductor](http://orkes.io/content/tutorials/stripe-webhook).
+
+</p>
+</details>
+
+<details>
+<summary>Sample workflow for Microsoft Teams webhook</summary>
+<p>
+
+See an example of [building a Microsoft Teams webhook processing workflow in Orkes Conductor](http://orkes.io/content/tutorials/microsoft-teams-webhook).
+
+</p>
+</details>
+
+<details>
+<summary>Using dynamic idempotency keys in webhook-triggered workflows</summary>
+<p>
+
+See an example of [using dynamic idempotency keys in webhook-triggered workflows](/content/tutorials/using-idempotency-keys-in-webhook-triggered-workflows).
+
+</p>
+</details>
+
+<details>
+<summary>Single webhook triggering multiple workflows</summary>
+<p>
+
+Multiple workflows can wait for and respond to the same webhook event. This example demonstrates how two workflows, each containing a Wait for Webhook task, are triggered by a single webhook event.
+
+The following workflows include a Wait for Webhook task configured with the same matches:
+
+**Workflow 1**
+```json
+{
+ "name": "Workflow1",
+ "description": "Sample workflow",
+ "version": 1,
+ "tasks": [
+   {
+     "name": "webhook",
+     "taskReferenceName": "webhook_ref",
+     "inputParameters": {
+       "matches": {
+         "$['data']['recipientId']": "${workflow.input.recipientId}"
+       }
+     },
+     "type": "WAIT_FOR_WEBHOOK"
+   }
+ ],
+ "inputParameters": [
+   "recipientId"
+ ],
+ "schemaVersion": 2,
+ "ownerEmail": "john.doe@acme.com"
+}
+```
+
+**Workflow 2**
+
+```json
+{
+ "name": "Workflow2",
+ "description": "Sample workflow",
+ "version": 1,
+ "tasks": [
+   {
+     "name": "http",
+     "taskReferenceName": "http_ref",
+     "inputParameters": {
+       "uri": "https://orkes-api-tester.orkesconductor.com/api",
+       "method": "GET",
+       "accept": "application/json",
+       "contentType": "application/json",
+       "encode": true
+     },
+     "type": "HTTP"
+   },
+   {
+     "name": "webhook",
+     "taskReferenceName": "webhook_ref",
+     "inputParameters": {
+       "matches": {
+         "$['data']['recipientId']": "${workflow.input.recipientId}"
+       }
+     },
+     "type": "WAIT_FOR_WEBHOOK"
+   }
+ ],
+ "inputParameters": [
+   "recipientId"
+ ],
+ "schemaVersion": 2,
+ "ownerEmail": "john.doe@acme.com"
+}
+```
+
+Run the workflows with the same input values.
+
+<center><p><img src="/content/img/running-webhook-based-workflows-with-same-input.png" alt="Running different webhook based workflows with same matches" width="100%" height="auto"/></p></center>
+
+The workflows are now in a running state, waiting for the webhook event.
+
+<center><p><img src="/content/img/webhook-based-workflows-in-running-state.png" alt="Workflows in running state awaiting Webhook events" width="80%" height="auto"/></p></center>
+
+Next, create a custom webhook in Conductor to receive events, ensuring that both workflows are included and the headers are set.
+
+<center><p><img src="/content/img/conductor-webhook.png" alt="Webhook configurations in Conductor" width="100%" height="auto"/></p></center>
+
+Next, send a Postman request using the same input payload defined in the Wait for Webhook tasks.
+
+The matches in the Wait for Webhook tasks are defined as:
+
+```json
+     "inputParameters": {
+       "matches": {
+         "$['data']['recipientId']": "${workflow.input.recipientId}"
+       }
+     },
+```
+
+Both workflows are triggered with the following input:
+
+```json
+{
+ "recipientId": "2"
+}
+```
+
+To ensure the request is matched, send the Postman request with a payload that aligns with these matches.
+
+<center><p><img src="/content/img/postman-request.png" alt="Sending Postman request" width="100%" height="auto"/></p></center>
+
+Ensure the request includes the same headers as set in the Conductor webhook.
+
+<center><p><img src="/content/img/headers-matches.png" alt="Configuring matching headers in Postman" width="100%" height="auto"/></p></center>
+
+Once the webhook receives the event, both workflows are triggered.
+
+<center><p><img src="/content/img/workflows-triggered.png" alt="Workflows triggered" width="100%" height="auto"/></p></center>
+
+Click on the workflow (execution) IDs to confirm that the Wait for Webhook tasks have been completed.
+
+<center><p><img src="/content/img/workflows-completed.png" alt="Workflows completed" width="80%" height="auto"/></p></center>
+
+</p>
+</details>

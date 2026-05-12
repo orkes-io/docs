@@ -1,0 +1,324 @@
+---
+title: "Business Rule"
+description: "Learn how the Business Rule task evaluates business rules defined in spreadsheet-based decision tables in Orkes Conductor."
+---
+
+# Business Rule
+
+The Business Rule task allows the evaluation of business rules defined in spreadsheet files. Supported formats include CSV, XLS, and XLSX. If a rule file lacks these extensions, it can also be processed if the `Content-Type` indicates a supported format.
+
+The Business Rule task evaluates business rules using a specified rule file. The file can be stored locally on the web, AWS S3, Azure Blob, or elsewhere. The task supports various execution strategies, including cache timeout, as well as input and output columns. The rules can be configured to apply multiple logical operations, such as comparison, string, list, and date operations.
+
+## Task parameters
+
+Configure these parameters for the Business Rule task.
+
+| Parameter                              | Description                                                                                                                                                                                                                                                                                                                                                                                                                              | Required/ Optional |
+| -------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
+| inputParameter.**ruleFileLocation**  | URL of the spreadsheet to be evaluated, in CSV, XLS, or XLSX format. The file can be stored on the web, AWS S3, Azure Blob, etc.<br/><br/>**Note:** A spreadsheet without an explicitly-defined .csv, .xls, or .xlsx extension can also be processed as long as its `Content-Type` indicates a supported format, such as a Google spreadsheet published to the web.                                                                       | Required.          |
+| inputParameter.**executionStrategy** | Strategy for rule execution. Supported types:<ul><li>**FIRE_FIRST**—Uses the first rule that matches to generate the output.</li><li>**FIRE_ALL**—Uses all matching rules to generate the output, with subsequent rules overwriting previous values.</li></ul>**Note:** When you update the rule for any files, there will be a default caching period of 60 mins, causing the updated rules to reflect with a delay of up to 60 mins. Override this delay by configuring `cacheTimeoutMinutes` parameter. | Required.          |
+| inputParameter.**cacheTimeoutMinutes** <span class="table-note"><strong>Available since:</strong> v5.2.1 and later, v4.1.69 and later</span> | The cache timeout, in minutes, which is the duration for which rule files are cached. If not configured, the task uses the default timeout of 60 minutes. <br/><br/>**Note**: When multiple tasks access the same rule file, the timeout is determined by the first task that loads the file. Subsequent tasks use the same cached file until it expires. [See an example of cacheTimeoutMinutes in use](/content/reference-docs/system-tasks/business-rule#examples). | Optional. | 
+| inputParameter.**inputColumns**      | The inputs to the rule file, which can be fixed or [passed as a dynamic variable](/content/developer-guides/passing-inputs-to-task-in-conductor). Supports string, number, boolean, null, and object/array.                                                                                                                                                                                                                       | Required.          |
+| inputParameter.**outputColumns**     | List of columns that will be present in the task output, which can be fixed or [passed as a dynamic variable](/content/developer-guides/passing-inputs-to-task-in-conductor).                                                                                                                                                                                                                                                                                                                                                                                 | Required.          |
+
+### Execution strategy
+
+To understand the **executionStrategy** parameter, consider the following spreadsheet example:
+
+| Name  | Price |
+| ----- | ----- |
+| Phone | 10$   |
+| Phone | 11$   |
+
+If the input name is "Phone":
+
+- With `FIRE_FIRST`, the output price will be $10.
+- With `FIRE_ALL`, the output price will be $11, as the second rule overwrites the first.
+
+The following are generic configuration parameters that can be applied to the task and are not specific to the Business Rule task.
+
+<details>
+<summary>Caching parameters</summary>
+
+You can cache the task outputs using the following parameters. Refer to [Caching Task Outputs](/content/faqs/task-cache-output) for a full guide.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| cacheConfig.**ttlInSecond** | The time to live in seconds, which is the duration for the output to be cached. | Required if using *cacheConfig*. |
+| cacheConfig.**key** | The cache key is a unique identifier for the cached output and must be constructed exclusively from the task’s input parameters.<br/>It can be a string concatenation that contains the task’s input keys, such as `${uri}-${method}` or `re_${uri}_${method}`. | Required if using *cacheConfig*. |
+</details>
+
+<details>
+<summary>Other generic parameters</summary>
+
+Here are other parameters for configuring the task behavior.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| optional | Whether the task is optional. <br/><br/>If set to`true`, any task failure is ignored, and the workflow continues with the task status updated to `COMPLETED_WITH_ERRORS`. However, the task must reach a terminal state. If the task remains incomplete, the workflow waits until it reaches a terminal state before proceeding. | Optional. | 
+
+</details>
+
+### Supported operators​
+
+The Business Rule task supports the following operators:
+
+| Operator type | Operator/Syntax | Description | Example | 
+| ------------- | --------------- | ----------- | ------- |
+| Comparison | `<=`, `>=`, `=`, `<`, `>` | Performs numerical comparison between values. | `price >= 100` | 
+| String | `=` | Exact string match comparison. | `name = John` | 
+| String | `!=` | String inequality comparison. | `name != John` | 
+| String | `startsWith` <br/><br/>**Available since**<ul><li>v5.2.3 and later</li><li>v4.1.72 and later</li></ul> | Checks if a string begins with a specified substring | `productName startsWith "iPhone"` matches "iPhone 14", "iPhone 14 Pro", etc. | 
+| String | `endsWith` <br/><br/>**Available since**<ul><li>v5.2.3 and later</li><li>v4.1.72 and later</li></ul> | Checks if a string ends with a specified substring. | `fileName endsWith ".pdf"` matches "document.pdf", "report.pdf", etc. | 
+| String | `contains` <br/><br/>**Available since**<ul><li>v5.2.3 and later</li><li>v4.1.72 and later</li></ul> | Checks if a string contains a specified substring anywhere in it. | `description contains "premium"` matches "premium quality", "our premium product", etc. | 
+| String | `matches` <br/><br/>**Available since**<ul><li>v5.2.3 and later</li><li>v4.1.72 and later</li></ul> | Performs pattern matching using a regular expression. | `email matches "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"` validates an email address format. | 
+| String | `length` <br/><br/>**Available since**<ul><li>v5.2.3 and later</li><li>v4.1.72 and later</li></ul> |  Compares the length of a string with a numerical value. | `password length >= 8` ensures a password has at least eight characters. | 
+| List | `inList` | Checks if a value is in a specified list. | `productName inList({"phone","laptop"})` will match if productName is a phone or laptop. | 
+| List | `!=inList` | Checks if a value is not in a specified list. | `productName !=inList({"phone","laptop"})` | 
+| Others | `createList` | Generates a list with the specified elements. | `createList({"A","B","C"})` will generate a list `{"A", "B", "C"}` in output. | 
+
+
+## Task configuration
+
+This is the task configuration for a Business Rule task.
+
+```json
+{
+     "name": "business_rule",
+     "taskReferenceName": "business_rule_ref",
+     "inputParameters": {
+       "ruleFileLocation": "https://business-rules.s3.amazonaws.com/rules.xlsx",
+       "executionStrategy": "FIRE_FIRST",
+       "cacheTimeoutMinutes": "30",
+       "inputColumns": {
+         "InputVariable1": "${workflow.input.InputVariable1}",
+         "InputVariable2": "${workflow.input.InputVariable2}"
+       },
+       "outputColumns": [
+         "OutputVariable1"
+       ]
+     },
+     "type": "BUSINESS_RULE"
+}
+```
+
+## Task output
+
+The Business rule task will return the following parameters.
+
+| Parameter | Description                                                                                                                                                                        |
+| --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| result    | Contains the evaluated parameters based on the matching rule. The specific parameters inside the `result` object depend on the output columns specified in the task configuration. |
+
+## Adding a Business Rule task in UI
+
+**To add a Business Rule task:**
+
+1. In your workflow, select the (**+**) icon and add a **Business Rule** task.
+2. Enter the URL of the file in **Rule file location**.
+3. Select the **Execution strategy** for evaluating the file.
+
+- `FIRE_FIRST`—Uses the first rule that matches to generate the output.
+- `FIRE_ALL`—Uses all matching rules to generate the output, with subsequent rules overwriting previous values.
+
+4. Enter the **Refresh Interval (Minutes)**.
+5. Configure the **Input columns** and **Output columns**.
+
+<center>
+  <p>
+    <img
+      src="/content/img/ui-guide-business-rule-task.png"
+      alt="Adding Business Rule"
+      width="80%"
+      height="auto"
+    />
+  </p>
+</center>
+
+## Examples
+
+Here are some examples for using the Business Rule task.
+
+<details>
+<summary>Using Business Rule task in a workflow</summary>
+
+To illustrate the use of the Business Rule task in a workflow, consider the following rule file:
+
+```
+
+productType |   productCategory |   purchaseDate            |   itemCount   |   price   |   Discount    |   ShippingCharges
+electronics |       cellphone   |   <=2022-04-22            |       8       |   != 100  |       11%     |       5$
+electronics |       cellphone   |   <=2022-04-22            |       8       |   < 100   |       13%     |       15$
+electronics |      laptop       |   > 2022-mar-12           |       >10     |   <10.2   |       5%      |       4$
+beauty      |      powder       |   = 2022-01-01            |       >15     |   >=10.3  |       15%     |       2$
+food        |      pizza        |   < 2022-03-22 12:20:22   |       25      |   >300    |       7%      |       10$
+
+```
+
+Save the rule file as an Excel file with the name **Product.xlsx** and upload it to a publicly accessible location. Note the file URL.
+
+Next, let’s create the workflow definition.
+
+**To create a workflow:**
+
+1. Go to **Definitions** > **Workflow**, from the left navigation menu on your Conductor cluster.
+2. Select **+ Define workflow**.
+3. In the **Code** tab, paste the following workflow definition:
+
+```json
+{
+ "name": "BusinessRuleDemo",
+ "description": "Sample workflow demonstrating business rule task",
+ "version": 1,
+ "tasks": [
+   {
+     "name": "rule",
+     "taskReferenceName": "rule",
+     "inputParameters": {
+       "ruleFileLocation": "https://example-bucket.s3.amazonaws.com/Product.xlsx",
+       "executionStrategy": "FIRE_FIRST",
+       "inputColumns": {
+         "productType": "${workflow.input.productType}",
+         "productCategory": "${workflow.input.productCategory}",
+         "price": "${workflow.input.price}",
+         "itemCount": "${workflow.input.itemCount}",
+         "itemCode": "${workflow.input.itemCode}"
+       },
+       "outputColumns": [
+         "Discount",
+         "ShippingCharges"
+       ]
+     },
+     "type": "BUSINESS_RULE"
+   }
+ ],
+ "schemaVersion": 2
+}
+```
+
+4. Select **Save** > **Confirm**.
+
+Ensure to update the `ruleFileLocation` to your location where the Excel file is stored.
+
+Let’s test the different cases by running the workflow with varying input parameters.
+
+**To run the workflow for any case:**
+1. Go to the **Run** tab, and enter the **Input params** for the case you want to test.
+2. Select **Execute**.
+
+**Case 1**
+
+If the workflow is triggered using the following input with `FIRE_FIRST` as the execution strategy:
+
+```json
+{
+  "productType": "electronics",
+  "productCategory": "cellphone",
+  "price": "5",
+  "itemCount": "8",
+  "purchaseDate": "2022-04-22"
+}
+```
+
+To find the matching rule,
+
+**Explanation:**
+
+- **productType**: Matches "electronics", which corresponds to rules defined for electronics in the rule file (rows 1, 2, and 3).
+- **productCategory**: Matches "cellphone", narrowing down the applicable rules to those for electronics and cellphone (eliminating row 3).
+- **purchaseDate**: Matches "`<=2022-04-22`" (April 22, 2022 is on or before April 22, 2022), applying to rules (matching rows 1 and 2).
+- **itemCount**: Matches "8", which applies to rules requiring an itemCount of 8 (matching rows 1 and 2).
+- **price**: Matches "!= 100" (5 is not equal to 100), specifically matching rules where the price is not equal to 100. Also matches “`<100`” where 5 is less than 100 (matching rows 1 and 2).
+
+With the `FIRE_FIRST` execution strategy, the first rule that matches the input will be evaluated. Therefore, even though both the first and second rules match, the first rule is chosen for execution.
+
+Consequently, the output generated is:
+
+```json
+{
+  "Discount": "11%",
+  "ShippingCharges": "5$"
+}
+```
+
+**Case 2**
+
+When using `FIRE_ALL` as the execution strategy, with the same input as **_Case 1_**:
+
+```json
+{
+  "productType": "electronics",
+  "productCategory": "cellphone",
+  "price": "5",
+  "itemCount": "8",
+  "purchaseDate": "2022-04-22"
+}
+```
+
+Here, since the input is the same as Case 1, we can narrow down the evaluation to row 1 and 2.
+
+With the `FIRE_ALL` execution strategy, all rules that match the input will be evaluated. In this case, both the first and second rows match the input criteria. However, according to the `FIRE_ALL` strategy, subsequent rules can overwrite the output values of previous rules if they also match the input.
+
+Therefore, even though both the first and second rules match, the second rule is chosen for execution.
+
+Consequently, the output generated is:
+
+```json
+{
+  "Discount": "13%",
+  "ShippingCharges": "5$"
+}
+```
+
+**Case 3**
+
+For a different case, if the workflow is triggered using the following input with `FIRE_FIRST` as the execution strategy:
+
+```json
+{
+  "productType": "electronics",
+  "productCategory": "laptop",
+  "price": "10.0",
+  "itemCount": "12",
+  "purchaseDate": "2022-04-22"
+}
+```
+
+To find the matching rule,
+
+**Explanation:**
+
+- **productType**: Matches "electronics", which corresponds to rules defined for electronics in the rule file (rows 1, 2, and 3).
+- **productCategory**: Matches "laptop", narrowing down the applicable rules to those for electronics and laptops (eliminating rows outside this category).
+- **purchaseDate**: Matches "> 2022-mar-12" (The input purchase date April 22, 2022 is after March 12, 2022), applying to rules where the purchase date is after March 12, 2022.
+- **price**: Matches "`<10.2`" (10.0 is less than 10.2).
+- **itemCount**: Matches ">10" (12 is greater than 10).
+
+Based on these conditions, the input meets the criteria defined by the third rule in the rule file (row 3). Therefore, the output generated is:
+
+```json
+{
+  "Discount": "5%",
+  "ShippingCharges": "4$"
+}
+```
+
+</details>
+
+<details>
+<summary>Using `cacheTimeoutMinutes`</summary>
+
+To illustrate the use of the `cacheTimeoutMinutes` parameter, consider a rule file that is used by multiple Business Rule tasks.
+
+In this example, the Business Rule tasks A, B, C, and D use the same rule file `fileA`.
+
+When multiple Business Rule tasks use the same rule file, the cache timeout is determined by the first task that loads the file. All other tasks share that cached version until it expires, regardless of their own `cacheTimeoutMinutes` value.
+
+For example:
+- At 10:00 AM, task A runs with `cacheTimeoutMinutes` set to 10. It downloads `fileA` and caches it for 10 minutes, until 10:10 AM.
+- At 10:05 AM, task B runs with `cacheTimeoutMinutes` set to 60. It uses the cached `fileA`.
+- At 10:08 AM, task C runs with `cacheTimeoutMinutes` set to 5 . It also uses the cached `fileA`.
+- At 10:10 AM, the initial cache expires.
+- At 10:15 AM, task D runs with `cacheTimeoutMinutes` set to 30. Because the previous cache has expired, it downloads `fileA` again and caches it for 30 minutes. Any task using this file within the next 30 minutes will use the cached version.
+
+</details>
