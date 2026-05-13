@@ -3,11 +3,25 @@ const path = require("path");
 
 const ROOT = path.resolve(__dirname, "..");
 const BUILD_DIR = path.join(ROOT, "build");
-const BASE_PATH = "/content";
-const SITE_URL = "https://orkes.io/content/";
+const LEGACY_BASE_PATH = "/content";
+const LEGACY_SITE_URLS = ["https://orkes.io/content/", "http://orkes.io/content/"];
+const BASE_PATH = normalizeBaseUrl(process.env.DOCS_BASE_URL || "/content");
+const SITE_URL = normalizeSiteUrl(process.env.DOCS_SITE_URL || "https://orkes.io/content/");
 
 const errors = [];
 const warnings = [];
+
+function normalizeBaseUrl(value) {
+  const clean = String(value || "").trim().replace(/\/+$/, "");
+  if (!clean || clean === "/") return "";
+  return clean.startsWith("/") ? clean : `/${clean}`;
+}
+
+function normalizeSiteUrl(value) {
+  const clean = String(value || "").trim();
+  if (!clean) return "https://orkes.io/content/";
+  return clean.endsWith("/") ? clean : `${clean}/`;
+}
 
 function posixPath(filePath) {
   return filePath.split(path.sep).join("/");
@@ -61,6 +75,23 @@ function isAssetPath(value) {
   return /\.(css|js|json|png|jpg|jpeg|gif|svg|webp|ico|txt|xml|map|woff2?|ttf|eot|pdf|zip)([#?].*)?$/i.test(
     value,
   );
+}
+
+function startsWithBasePath(value, basePath) {
+  if (!basePath) return value.startsWith("/");
+  return value === basePath || value === `${basePath}/` || value.startsWith(`${basePath}/`);
+}
+
+function isInternalHrefString(href) {
+  return startsWithBasePath(href, BASE_PATH) || href.startsWith(SITE_URL) || legacySiteUrlSuffix(href) !== null;
+}
+
+function legacySiteUrlSuffix(href) {
+  for (const legacySiteUrl of LEGACY_SITE_URLS) {
+    if (href.startsWith(legacySiteUrl)) return href.slice(legacySiteUrl.length);
+    if (href === legacySiteUrl.slice(0, -1)) return "";
+  }
+  return null;
 }
 
 function htmlPathForRoute(route) {
@@ -135,6 +166,11 @@ function parseInternalHref(href, currentRoute) {
   if (/^(mailto:|tel:|javascript:|data:|#)/i.test(href) || href.startsWith("//")) {
     return null;
   }
+  const legacySuffix = legacySiteUrlSuffix(href);
+  if (legacySuffix !== null) {
+    const [targetPath, hash = ""] = legacySuffix.split("#");
+    return { route: targetPath.replace(/\/$/, ""), hash };
+  }
   if (/^https?:\/\//i.test(href)) {
     if (!href.startsWith(SITE_URL)) return null;
     const suffix = href.slice(SITE_URL.length);
@@ -143,6 +179,11 @@ function parseInternalHref(href, currentRoute) {
   }
   if (href.startsWith(BASE_PATH)) {
     const suffix = href.slice(BASE_PATH.length).replace(/^\//, "");
+    const [targetPath, hash = ""] = suffix.split("#");
+    return { route: targetPath.replace(/\/$/, ""), hash };
+  }
+  if (BASE_PATH !== LEGACY_BASE_PATH && startsWithBasePath(href, LEGACY_BASE_PATH)) {
+    const suffix = href.slice(LEGACY_BASE_PATH.length).replace(/^\//, "");
     const [targetPath, hash = ""] = suffix.split("#");
     return { route: targetPath.replace(/\/$/, ""), hash };
   }
@@ -224,10 +265,10 @@ function auditLinks(route, html) {
       continue;
     }
     if (isAssetPath(href)) continue;
-    if (href.includes(".html") && href.includes(BASE_PATH)) {
+    if (href.includes(".html") && isInternalHrefString(href)) {
       errors.push(`${route || "/"}: internal link includes .html: ${href}`);
     }
-    if (href.includes("/_routes/") || href.includes(`${BASE_PATH}/_routes`)) {
+    if (isInternalHrefString(href) && (href.includes("/_routes/") || href.includes(`${BASE_PATH}/_routes`))) {
       errors.push(`${route || "/"}: internal link exposes _routes: ${href}`);
     }
 
@@ -285,10 +326,10 @@ function auditGeneratedFiles() {
   const robotsPath = path.join(BUILD_DIR, "robots.txt");
   if (fs.existsSync(robotsPath)) {
     const robots = fs.readFileSync(robotsPath, "utf8");
-    if (!robots.includes("Sitemap: https://orkes.io/content/sitemap.xml")) {
+    if (!robots.includes(`Sitemap: ${SITE_URL}sitemap.xml`)) {
       errors.push("robots.txt missing content sitemap");
     }
-    if (!robots.includes("LLMs: https://orkes.io/content/llms.txt")) {
+    if (!robots.includes(`LLMs: ${SITE_URL}llms.txt`)) {
       errors.push("robots.txt missing llms.txt discovery hint");
     }
   }

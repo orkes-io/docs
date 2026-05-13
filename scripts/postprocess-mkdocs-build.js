@@ -4,8 +4,31 @@ const zlib = require("zlib");
 
 const ROOT = path.resolve(__dirname, "..");
 const BUILD_DIR = path.join(ROOT, "build");
-const BASE_URL = "/content";
-const SITE_URL = "https://orkes.io/content/";
+const LEGACY_BASE_URL = "/content";
+const LEGACY_SITE_URLS = ["https://orkes.io/content/", "http://orkes.io/content/"];
+const BASE_URL = normalizeBaseUrl(process.env.DOCS_BASE_URL || "/content");
+const SITE_URL = normalizeSiteUrl(process.env.DOCS_SITE_URL || "https://orkes.io/content/");
+
+function normalizeBaseUrl(value) {
+  const clean = String(value || "").trim().replace(/\/+$/, "");
+  if (!clean || clean === "/") return "";
+  return clean.startsWith("/") ? clean : `/${clean}`;
+}
+
+function normalizeSiteUrl(value) {
+  const clean = String(value || "").trim();
+  if (!clean) return "https://orkes.io/content/";
+  return clean.endsWith("/") ? clean : `${clean}/`;
+}
+
+function rewriteLegacySiteUrl(value) {
+  for (const legacySiteUrl of LEGACY_SITE_URLS) {
+    if (legacySiteUrl === SITE_URL) continue;
+    if (value.startsWith(legacySiteUrl)) return `${SITE_URL}${value.slice(legacySiteUrl.length)}`;
+    if (value === legacySiteUrl.slice(0, -1)) return SITE_URL;
+  }
+  return null;
+}
 
 function posixPath(filePath) {
   return filePath.split(path.sep).join("/");
@@ -52,6 +75,8 @@ function isAssetHref(href) {
 
 function toCanonicalPath(href, currentRoute) {
   if (!href) return href;
+  const legacySiteUrl = rewriteLegacySiteUrl(href);
+  if (legacySiteUrl) return legacySiteUrl;
   if (/^(https?:|mailto:|tel:|javascript:|data:)/.test(href)) {
     if (!href.startsWith(SITE_URL)) return href;
     const pathPart = href.slice(SITE_URL.length);
@@ -66,6 +91,14 @@ function toCanonicalPath(href, currentRoute) {
 
   if (pathPart.startsWith(`${BASE_URL}/`) || pathPart === `${BASE_URL}` || pathPart === `${BASE_URL}/`) {
     const route = stripHtmlFromRoute(pathPart.slice(BASE_URL.length).replace(/^\//, ""));
+    return route ? `${BASE_URL}/${route}${suffix}` : `${BASE_URL}/${suffix}`;
+  }
+
+  if (
+    BASE_URL !== LEGACY_BASE_URL &&
+    (pathPart.startsWith(`${LEGACY_BASE_URL}/`) || pathPart === LEGACY_BASE_URL || pathPart === `${LEGACY_BASE_URL}/`)
+  ) {
+    const route = stripHtmlFromRoute(pathPart.slice(LEGACY_BASE_URL.length).replace(/^\//, ""));
     return route ? `${BASE_URL}/${route}${suffix}` : `${BASE_URL}/${suffix}`;
   }
 

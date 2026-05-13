@@ -97,6 +97,6 @@ Here are some examples for using the LLM Get Embeddings task.
 <details>
 <summary>Using an LLM Get Embeddings task in a workflow</summary>
 
-See an example of [building a question answering workflow using stored embeddings](http://orkes.io/content/tutorials/question-answering-with-embeddings).
+See an example of [building a question answering workflow using stored embeddings](https://orkes.io/content/tutorials/question-answering-with-embeddings).
 
 </details>

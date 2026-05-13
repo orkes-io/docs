@@ -209,7 +209,7 @@ See an example of [using SendGrid Event Webhooks in Orkes Conductor](https://ork
 <summary>Sample workflow for GitHub webhook</summary>
 <p>
 
-See an example of [building a GitHub pull request reviewer assignment workflow using Orkes Conductor](http://orkes.io/content/tutorials/github-webhook).
+See an example of [building a GitHub pull request reviewer assignment workflow using Orkes Conductor](https://orkes.io/content/tutorials/github-webhook).
 
 </p>
 </details>
@@ -218,7 +218,7 @@ See an example of [building a GitHub pull request reviewer assignment workflow u
 <summary>Sample workflow for Stripe webhook</summary>
 <p>
 
-See an example of [building a Stripe payment confirmation workflow in Orkes Conductor](http://orkes.io/content/tutorials/stripe-webhook).
+See an example of [building a Stripe payment confirmation workflow in Orkes Conductor](https://orkes.io/content/tutorials/stripe-webhook).
 
 </p>
 </details>
@@ -227,7 +227,7 @@ See an example of [building a Stripe payment confirmation workflow in Orkes Cond
 <summary>Sample workflow for Microsoft Teams webhook</summary>
 <p>
 
-See an example of [building a Microsoft Teams webhook processing workflow in Orkes Conductor](http://orkes.io/content/tutorials/microsoft-teams-webhook).
+See an example of [building a Microsoft Teams webhook processing workflow in Orkes Conductor](https://orkes.io/content/tutorials/microsoft-teams-webhook).
 
 </p>
 </details>

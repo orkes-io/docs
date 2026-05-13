@@ -26,7 +26,7 @@ Follow along using the free [Orkes Developer Edition](https://developer.orkesclo
 
 ## Step 1: Create workflows in Orkes Conductor
 
-Orkes Conductor lets you define workflows as JSON, through [SDKs](https://orkes.io/content/category/sdks), [APIs](https://orkes.io/content/category/ref-docs/api), or the [UI](http://orkes.io/content/developer-guides/build-workflows-using-ui). 
+Orkes Conductor lets you define workflows as JSON, through [SDKs](https://orkes.io/content/category/sdks), [APIs](https://orkes.io/content/category/ref-docs/api), or the [UI](https://orkes.io/content/developer-guides/build-workflows-using-ui).
 
 In this tutorial, you will create two workflows:
 1. **seed_failure**: A workflow that intentionally fails on each run, used to simulate a failure event.
@@ -186,7 +186,7 @@ The secret is referenced in the workflow as `${workflow.secrets.orkes_pagerduty_
 
 <p align="center"><img src="/content/img/secret-used-in-workflow.png" alt="Secret used in workflow" width="100%" height="auto"></img></p>
 
-## Step 4: Modify workflow 
+## Step 4: Modify workflow
 
 Next, modify the workflow to suit your requirements.
 
@@ -196,7 +196,7 @@ Open the alert_workflow definition. In the *trigger_pagerduty* task, replace the
 
 Save the workflow.
 
-## Step 5: Execute workflow 
+## Step 5: Execute workflow
 
 We will run the workflow that checks for the failed status of the `seed_failure` workflow.
 
@@ -218,7 +218,7 @@ Since the workflow has no failures, it will complete without triggering an alert
 
 <p align="center"><img src="/content/img/pagerduty-workflow-no-alert-triggered.png" alt="No alert triggered" width="70%" height="auto"></img></p>
 
-To simulate a failure, let’s run the `seed_failure` workflow to trigger failures. 
+To simulate a failure, let’s run the `seed_failure` workflow to trigger failures.
 
 <p align="center"><img src="/content/img/executing-seed-failure-workflow.png" alt="Running a failure workflow to be monitored" width="90%" height="auto"></img></p>
 

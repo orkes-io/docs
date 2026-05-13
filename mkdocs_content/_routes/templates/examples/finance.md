@@ -62,7 +62,7 @@ In this tutorial, we’ll use SendGrid to send emails. To do that, you must set 
 
 ## Step 3: Create a user form in Orkes Conductor
 
-The workflow uses a Human task in Orkes Conductor to route the loan request for manual approval. Reviewers can complete approvals either through the Conductor UI or an external interface, such as an internal website or loan approval portal. 
+The workflow uses a Human task in Orkes Conductor to route the loan request for manual approval. Reviewers can complete approvals either through the Conductor UI or an external interface, such as an internal website or loan approval portal.
 
 In this tutorial, you’ll use the Conductor UI to complete approvals. For this, a user form is to be created in Conductor.
 
@@ -233,7 +233,7 @@ Update the **Model(s)** drop-down with the OpenAI integration created in [Step 1
 
 ## Step 5: Create a workflow in Orkes Conductor
 
-Orkes Conductor lets you define workflows as JSON, through [SDKs](https://orkes.io/content/category/sdks), [APIs](https://orkes.io/content/category/ref-docs/api), or the [UI](http://orkes.io/content/developer-guides/build-workflows-using-ui). 
+Orkes Conductor lets you define workflows as JSON, through [SDKs](https://orkes.io/content/category/sdks), [APIs](https://orkes.io/content/category/ref-docs/api), or the [UI](https://orkes.io/content/developer-guides/build-workflows-using-ui).
 
 **To create a workflow using Conductor UI:**
 1. Go to [**Definitions** > **Workflow**](https://developer.orkescloud.com/workflowDef) from the left navigation menu on your Conductor cluster.
@@ -426,7 +426,7 @@ Next, replace all placeholder values with your actual reviewer information and i
 8. Update the *sendgrid_1* and *sendgrid_2* tasks with the same email and integration values.
 9. Select **Save** > **Confirm**.
 
-## Step 6: Execute workflow 
+## Step 6: Execute workflow
 
 **To test the workflow:**
 1. From your workflow definition, go to the **Run** tab.
@@ -501,5 +501,5 @@ This loan approval workflow can be extended by:
 - Adding additional validation rules or fraud detection checks. For example, include checks for monthly debt ratios or employment status to improve accuracy.
 - Adjusting the loan amount threshold for manual review.
 - Adjusting the review SLA (currently set to 96 hours) to meet your specific timing requirements. You can also configure fallback actions if the reviewer does not act in time, such as sending an escalation email.
-- Integrating other AI or ML models for risk assessment. 
+- Integrating other AI or ML models for risk assessment.
 - Customizing email templates for different decision outcomes.

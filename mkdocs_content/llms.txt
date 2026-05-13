@@ -21552,7 +21552,7 @@ Here are some examples for using the LLM Chat Complete task.
 Using an LLM Chat Complete task in a workflow
 
 
-See an example of [building a pull request summary workflow](http://orkes.io/content/tutorials/pull-request-summary-workflow).
+See an example of [building a pull request summary workflow](https://orkes.io/content/tutorials/pull-request-summary-workflow).
 
 
 Building a multi-turn conversation
@@ -21826,7 +21826,7 @@ Here are some examples for using the LLM Generate Embeddings task.
 Using an LLM Generate Embeddings task in a workflow
 
 
-See an example of [building a question answering workflow using stored embeddings](http://orkes.io/content/tutorials/question-answering-with-embeddings).
+See an example of [building a question answering workflow using stored embeddings](https://orkes.io/content/tutorials/question-answering-with-embeddings).
 
 ---
 URL: https://orkes.io/content/reference-docs/ai-tasks/llm-get-document
@@ -22028,7 +22028,7 @@ Here are some examples for using the LLM Get Embeddings task.
 Using an LLM Get Embeddings task in a workflow
 
 
-See an example of [building a question answering workflow using stored embeddings](http://orkes.io/content/tutorials/question-answering-with-embeddings).
+See an example of [building a question answering workflow using stored embeddings](https://orkes.io/content/tutorials/question-answering-with-embeddings).
 
 ---
 URL: https://orkes.io/content/reference-docs/ai-tasks/llm-index-document
@@ -22158,7 +22158,7 @@ Here are some examples for using the LLM Index Document task.
 Using an LLM Index Document task in a workflow
 
 
-See an example of [building a document retrieval workflow using Orkes Conductor](http://orkes.io/content/tutorials/document-retrieval-workflow).
+See an example of [building a document retrieval workflow using Orkes Conductor](https://orkes.io/content/tutorials/document-retrieval-workflow).
 
 ---
 URL: https://orkes.io/content/reference-docs/ai-tasks/llm-index-text
@@ -22281,7 +22281,7 @@ Here are some examples for using the LLM Index Text task.
 Using an LLM Index Text task in a workflow
 
 
-See an example of [building a text indexing and search workflow](http://orkes.io/content/tutorials/text-indexing-search-workflow).
+See an example of [building a text indexing and search workflow](https://orkes.io/content/tutorials/text-indexing-search-workflow).
 
 ---
 URL: https://orkes.io/content/reference-docs/ai-tasks/llm-search-index
@@ -22412,7 +22412,7 @@ Here are some examples for using the LLM Search Index task.
 Using an LLM Search Index task in a workflow
 
 
-See an example of [building a document retrieval workflow using Orkes Conductor](http://orkes.io/content/tutorials/document-retrieval-workflow).
+See an example of [building a document retrieval workflow using Orkes Conductor](https://orkes.io/content/tutorials/document-retrieval-workflow).
 
 ---
 URL: https://orkes.io/content/reference-docs/ai-tasks/llm-store-embeddings
@@ -22538,7 +22538,7 @@ Here are some examples for using the LLM Store Embeddings task.
 Using an LLM Store Embeddings task in a workflow
 
 
-See an example of [building a question answering workflow using stored embeddings](http://orkes.io/content/tutorials/question-answering-with-embeddings).
+See an example of [building a question answering workflow using stored embeddings](https://orkes.io/content/tutorials/question-answering-with-embeddings).
 
 ---
 URL: https://orkes.io/content/reference-docs/ai-tasks/llm-text-complete
@@ -56243,19 +56243,19 @@ See an example of [using SendGrid Event Webhooks in Orkes Conductor](https://ork
 Sample workflow for GitHub webhook
 
 
-See an example of [building a GitHub pull request reviewer assignment workflow using Orkes Conductor](http://orkes.io/content/tutorials/github-webhook).
+See an example of [building a GitHub pull request reviewer assignment workflow using Orkes Conductor](https://orkes.io/content/tutorials/github-webhook).
 
 
 Sample workflow for Stripe webhook
 
 
-See an example of [building a Stripe payment confirmation workflow in Orkes Conductor](http://orkes.io/content/tutorials/stripe-webhook).
+See an example of [building a Stripe payment confirmation workflow in Orkes Conductor](https://orkes.io/content/tutorials/stripe-webhook).
 
 
 Sample workflow for Microsoft Teams webhook
 
 
-See an example of [building a Microsoft Teams webhook processing workflow in Orkes Conductor](http://orkes.io/content/tutorials/microsoft-teams-webhook).
+See an example of [building a Microsoft Teams webhook processing workflow in Orkes Conductor](https://orkes.io/content/tutorials/microsoft-teams-webhook).
 
 
 Using dynamic idempotency keys in webhook-triggered workflows
@@ -60394,7 +60394,7 @@ Follow along using the free [Orkes Developer Edition](https://developer.orkesclo
 
 ## Step 1: Create workflows in Orkes Conductor
 
-Orkes Conductor lets you define workflows as JSON, through [SDKs](https://orkes.io/content/category/sdks), [APIs](https://orkes.io/content/category/ref-docs/api), or the [UI](http://orkes.io/content/developer-guides/build-workflows-using-ui). 
+Orkes Conductor lets you define workflows as JSON, through [SDKs](https://orkes.io/content/category/sdks), [APIs](https://orkes.io/content/category/ref-docs/api), or the [UI](https://orkes.io/content/developer-guides/build-workflows-using-ui).
 
 In this tutorial, you will create two workflows:
 1. **seed_failure**: A workflow that intentionally fails on each run, used to simulate a failure event.
@@ -60557,7 +60557,7 @@ The secret is referenced in the workflow as `${workflow.secrets.orkes_pagerduty_
 Image: Secret used in workflow
 
 
-## Step 4: Modify workflow 
+## Step 4: Modify workflow
 
 Next, modify the workflow to suit your requirements.
 
@@ -60568,7 +60568,7 @@ Image: Modifying PagerDuty workflow
 
 Save the workflow.
 
-## Step 5: Execute workflow 
+## Step 5: Execute workflow
 
 We will run the workflow that checks for the failed status of the `seed_failure` workflow.
 
@@ -60591,7 +60591,7 @@ Since the workflow has no failures, it will complete without triggering an alert
 Image: No alert triggered
 
 
-To simulate a failure, let’s run the `seed_failure` workflow to trigger failures. 
+To simulate a failure, let’s run the `seed_failure` workflow to trigger failures.
 
 Image: Running a failure workflow to be monitored
 
@@ -61494,7 +61494,7 @@ Follow along using the free [Developer Edition](https://developer.orkescloud.com
 
 ## Step 1: Create a workflow in Orkes Conductor
 
-Orkes Conductor lets you define workflows as JSON, through [SDKs](https://orkes.io/content/category/sdks), [APIs](https://orkes.io/content/category/ref-docs/api), or the [UI](http://orkes.io/content/developer-guides/build-workflows-using-ui). Use the provided JSON below to create the workflow quickly using the Conductor UI.
+Orkes Conductor lets you define workflows as JSON, through [SDKs](https://orkes.io/content/category/sdks), [APIs](https://orkes.io/content/category/ref-docs/api), or the [UI](https://orkes.io/content/developer-guides/build-workflows-using-ui). Use the provided JSON below to create the workflow quickly using the Conductor UI.
 
 **To create a workflow using Conductor UI:**
 
@@ -61586,7 +61586,7 @@ To follow along, ensure you have access to the free [Orkes Developer Edition](ht
 
 ## Step 1: Create a workflow in Conductor
 
-Orkes Conductor lets you define workflows as JSON, through [SDKs](https://orkes.io/content/category/sdks), [APIs](https://orkes.io/content/category/ref-docs/api), or the [UI](http://orkes.io/content/developer-guides/build-workflows-using-ui). In this tutorial, we will create the workflow using Conductor UI.
+Orkes Conductor lets you define workflows as JSON, through [SDKs](https://orkes.io/content/category/sdks), [APIs](https://orkes.io/content/category/ref-docs/api), or the [UI](https://orkes.io/content/developer-guides/build-workflows-using-ui). In this tutorial, we will create the workflow using Conductor UI.
 
 The workflow contains a single [Wait for Webhook task](https://orkes.io/content/reference-docs/system-tasks/wait-for-webhook). The task pauses the workflow execution until Conductor receives a matching webhook request.
 
@@ -61800,7 +61800,7 @@ In this tutorial, we’ll use SendGrid to send emails. To do that, you must set 
 
 ## Step 2: Create a user form in Orkes Conductor
 
-The workflow uses a Human task in Orkes Conductor to route documents for manual approval. Reviewers can complete approvals either through the Conductor UI or an external interface, such as an internal website or document approval portal. 
+The workflow uses a Human task in Orkes Conductor to route documents for manual approval. Reviewers can complete approvals either through the Conductor UI or an external interface, such as an internal website or document approval portal.
 
 In this tutorial, you’ll use the Conductor UI to complete approvals. For this, a user form is to be created in Conductor.
 
@@ -61876,7 +61876,7 @@ Image: Doc approval user form in Orkes Conductor
 
 ## Step 3: Create a workflow in Orkes Conductor
 
-Orkes Conductor lets you define workflows as JSON, through [SDKs](https://orkes.io/content/category/sdks), [APIs](https://orkes.io/content/category/ref-docs/api), or the [UI](http://orkes.io/content/developer-guides/build-workflows-using-ui). 
+Orkes Conductor lets you define workflows as JSON, through [SDKs](https://orkes.io/content/category/sdks), [APIs](https://orkes.io/content/category/ref-docs/api), or the [UI](https://orkes.io/content/developer-guides/build-workflows-using-ui).
 
 **To create a workflow using Conductor UI:**
 1. Go to [**Definitions** > **Workflow**](https://developer.orkescloud.com/workflowDef) from the left navigation menu on your Conductor cluster.
@@ -62060,7 +62060,7 @@ Image: Updating SendGrid task with email and integration details
 8. Update the *sendgrid_1* and *send_approval_email* tasks with the same email and integration values.
 9. Select **Save** > **Confirm**.
 
-## Step 4: Execute workflow 
+## Step 4: Execute workflow
 
 **To test the workflow:**
 1. From your workflow definition, go to the **Run** tab.
@@ -62214,7 +62214,7 @@ In this tutorial, we’ll use SendGrid to send emails. To do that, you must set 
 
 ## Step 3: Create a user form in Orkes Conductor
 
-The workflow uses a Human task in Orkes Conductor to route the loan request for manual approval. Reviewers can complete approvals either through the Conductor UI or an external interface, such as an internal website or loan approval portal. 
+The workflow uses a Human task in Orkes Conductor to route the loan request for manual approval. Reviewers can complete approvals either through the Conductor UI or an external interface, such as an internal website or loan approval portal.
 
 In this tutorial, you’ll use the Conductor UI to complete approvals. For this, a user form is to be created in Conductor.
 
@@ -62387,7 +62387,7 @@ Image: Updating ai prompt with the integrated model
 
 ## Step 5: Create a workflow in Orkes Conductor
 
-Orkes Conductor lets you define workflows as JSON, through [SDKs](https://orkes.io/content/category/sdks), [APIs](https://orkes.io/content/category/ref-docs/api), or the [UI](http://orkes.io/content/developer-guides/build-workflows-using-ui). 
+Orkes Conductor lets you define workflows as JSON, through [SDKs](https://orkes.io/content/category/sdks), [APIs](https://orkes.io/content/category/ref-docs/api), or the [UI](https://orkes.io/content/developer-guides/build-workflows-using-ui).
 
 **To create a workflow using Conductor UI:**
 1. Go to [**Definitions** > **Workflow**](https://developer.orkescloud.com/workflowDef) from the left navigation menu on your Conductor cluster.
@@ -62574,7 +62574,7 @@ Image: Updating SendGrid task with email and integration details
 8. Update the *sendgrid_1* and *sendgrid_2* tasks with the same email and integration values.
 9. Select **Save** > **Confirm**.
 
-## Step 6: Execute workflow 
+## Step 6: Execute workflow
 
 **To test the workflow:**
 1. From your workflow definition, go to the **Run** tab.
@@ -62656,7 +62656,7 @@ This loan approval workflow can be extended by:
 - Adding additional validation rules or fraud detection checks. For example, include checks for monthly debt ratios or employment status to improve accuracy.
 - Adjusting the loan amount threshold for manual review.
 - Adjusting the review SLA (currently set to 96 hours) to meet your specific timing requirements. You can also configure fallback actions if the reviewer does not act in time, such as sending an escalation email.
-- Integrating other AI or ML models for risk assessment. 
+- Integrating other AI or ML models for risk assessment.
 - Customizing email templates for different decision outcomes.
 
 ---
@@ -63190,7 +63190,7 @@ Image: Updating ai prompt with the integrated model
 
 ## Step 5: Create a workflow in Orkes Conductor
 
-Orkes Conductor lets you define workflows as JSON, through [SDKs](https://orkes.io/content/category/sdks), [APIs](https://orkes.io/content/category/ref-docs/api), or the [UI](http://orkes.io/content/developer-guides/build-workflows-using-ui). 
+Orkes Conductor lets you define workflows as JSON, through [SDKs](https://orkes.io/content/category/sdks), [APIs](https://orkes.io/content/category/ref-docs/api), or the [UI](https://orkes.io/content/developer-guides/build-workflows-using-ui).
 
 **To create a workflow using Conductor UI:**
 1. Go to [**Definitions** > **Workflow**](https://developer.orkescloud.com/workflowDef) from the left navigation menu on your Conductor cluster.
@@ -63456,7 +63456,7 @@ Image: Updating SendGrid task with email and integration details
 7. Update the *notify_sendgrid* task with the same email and integration values.
 8. Select **Save** > **Confirm**.
 
-## Step 6: Execute workflow 
+## Step 6: Execute workflow
 
 **To test the workflow:**
 1. From your workflow definition, go to the **Run** tab.
@@ -63573,7 +63573,7 @@ To follow along, ensure you have access to the free [Orkes Developer Edition](ht
 
 ## Step 1: Create a workflow in Conductor
 
-Orkes Conductor lets you define workflows as JSON, through [SDKs](https://orkes.io/content/category/sdks), [APIs](https://orkes.io/content/category/ref-docs/api), or the [UI](http://orkes.io/content/developer-guides/build-workflows-using-ui). In this tutorial, we will create the workflow using Conductor UI.
+Orkes Conductor lets you define workflows as JSON, through [SDKs](https://orkes.io/content/category/sdks), [APIs](https://orkes.io/content/category/ref-docs/api), or the [UI](https://orkes.io/content/developer-guides/build-workflows-using-ui). In this tutorial, we will create the workflow using Conductor UI.
 
 The workflow contains a single [Wait for Webhook task](https://orkes.io/content/reference-docs/system-tasks/wait-for-webhook). The task pauses execution until a matching webhook request is received.
 
@@ -63996,7 +63996,7 @@ Follow along using the free [Developer Edition](https://developer.orkescloud.com
 
 ## Step 1: Create a workflow in Orkes Conductor
 
-Orkes Conductor lets you define workflows as JSON, through [SDKs](https://orkes.io/content/category/sdks), [APIs](https://orkes.io/content/category/ref-docs/api), or the [UI](http://orkes.io/content/developer-guides/build-workflows-using-ui). Use the provided JSON below to create the workflow using the Conductor UI.
+Orkes Conductor lets you define workflows as JSON, through [SDKs](https://orkes.io/content/category/sdks), [APIs](https://orkes.io/content/category/ref-docs/api), or the [UI](https://orkes.io/content/developer-guides/build-workflows-using-ui). Use the provided JSON below to create the workflow using the Conductor UI.
 
 **To create a workflow using Conductor UI:**
 
@@ -65596,7 +65596,7 @@ Follow the tutorial using the free [Orkes Developer Edition](https://developer.o
 
 ## Step 1: Create a PR reviewer assignment workflow 
 
-Orkes Conductor lets you define workflows as JSON, through [SDKs](https://orkes.io/content/category/sdks), [APIs](https://orkes.io/content/category/ref-docs/api), or the [UI](http://orkes.io/content/developer-guides/build-workflows-using-ui).
+Orkes Conductor lets you define workflows as JSON, through [SDKs](https://orkes.io/content/category/sdks), [APIs](https://orkes.io/content/category/ref-docs/api), or the [UI](https://orkes.io/content/developer-guides/build-workflows-using-ui).
 
 In this tutorial, we will create the workflow using Conductor UI.
 
@@ -66177,7 +66177,7 @@ Follow the tutorial using the free [Orkes Developer Edition](https://developer.o
 
 ## Step 1: Create the webhook processing workflow
 
-Orkes Conductor lets you define workflows as JSON, through [SDKs](https://orkes.io/content/category/sdks), [APIs](https://orkes.io/content/category/ref-docs/api), or the [UI](http://orkes.io/content/developer-guides/build-workflows-using-ui).
+Orkes Conductor lets you define workflows as JSON, through [SDKs](https://orkes.io/content/category/sdks), [APIs](https://orkes.io/content/category/ref-docs/api), or the [UI](https://orkes.io/content/developer-guides/build-workflows-using-ui).
 
 In this tutorial, we will create the workflow using Conductor UI.
 
@@ -66940,7 +66940,7 @@ Follow the tutorial using the free [Orkes Developer Edition](https://developer.o
 
 ## Step 1: Create payment confirmation workflow
 
-Orkes Conductor lets you define workflows as JSON, through [SDKs](https://orkes.io/content/category/sdks), [APIs](https://orkes.io/content/category/ref-docs/api), or the [UI](http://orkes.io/content/developer-guides/build-workflows-using-ui).
+Orkes Conductor lets you define workflows as JSON, through [SDKs](https://orkes.io/content/category/sdks), [APIs](https://orkes.io/content/category/ref-docs/api), or the [UI](https://orkes.io/content/developer-guides/build-workflows-using-ui).
 
 In this tutorial, we will create the workflow using Conductor UI.
 

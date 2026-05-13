@@ -103,6 +103,6 @@ Here are some examples for using the LLM Index Document task.
 <details>
 <summary>Using an LLM Index Document task in a workflow</summary>
 
-See an example of [building a document retrieval workflow using Orkes Conductor](http://orkes.io/content/tutorials/document-retrieval-workflow).
+See an example of [building a document retrieval workflow using Orkes Conductor](https://orkes.io/content/tutorials/document-retrieval-workflow).
 
 </details>

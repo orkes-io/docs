@@ -100,6 +100,6 @@ Here are some examples for using the LLM Index Text task.
 <details>
 <summary>Using an LLM Index Text task in a workflow</summary>
 
-See an example of [building a text indexing and search workflow](http://orkes.io/content/tutorials/text-indexing-search-workflow).
+See an example of [building a text indexing and search workflow](https://orkes.io/content/tutorials/text-indexing-search-workflow).
 
 </details>

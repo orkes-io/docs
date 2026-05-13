@@ -25,7 +25,7 @@ Follow along using the free [Developer Edition](https://developer.orkescloud.com
 
 ## Step 1: Create a workflow in Orkes Conductor
 
-Orkes Conductor lets you define workflows as JSON, through [SDKs](https://orkes.io/content/category/sdks), [APIs](https://orkes.io/content/category/ref-docs/api), or the [UI](http://orkes.io/content/developer-guides/build-workflows-using-ui). Use the provided JSON below to create the workflow quickly using the Conductor UI.
+Orkes Conductor lets you define workflows as JSON, through [SDKs](https://orkes.io/content/category/sdks), [APIs](https://orkes.io/content/category/ref-docs/api), or the [UI](https://orkes.io/content/developer-guides/build-workflows-using-ui). Use the provided JSON below to create the workflow quickly using the Conductor UI.
 
 **To create a workflow using Conductor UI:**
 

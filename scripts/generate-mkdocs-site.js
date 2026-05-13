@@ -10,8 +10,10 @@ const DEFAULT_LOCAL_OSS_DOCS = "/Users/viren/workspace/github/conductoross/condu
 const SHARED_DOCS_CACHE = path.join(ROOT, ".cache", "conductor-oss", "docs");
 const OSS_DOCS = resolveOssDocsDir();
 const SHARED_DOCS_MAP = loadSharedDocsMap();
-const BASE_URL = "/content";
-const SITE_URL = "https://orkes.io/content/";
+const LEGACY_BASE_URL = "/content";
+const LEGACY_SITE_URLS = ["https://orkes.io/content/", "http://orkes.io/content/"];
+const BASE_URL = normalizeBaseUrl(process.env.DOCS_BASE_URL || "/content");
+const SITE_URL = normalizeSiteUrl(process.env.DOCS_SITE_URL || "https://orkes.io/content/");
 const SITE_DESCRIPTION =
   "Orkes Conductor is the managed enterprise platform for durable execution, agentic workflows, visual debugging, access control, and internet-scale orchestration.";
 const DEVELOPER_EDITION_URL =
@@ -24,6 +26,27 @@ const ORKES_COLOR_REPLACEMENTS = [
   [/#fb923c/gi, "#835edd"],
   [/rgba\(249,\s*115,\s*22,\s*([0-9.]+)\)/gi, "rgba(108, 55, 189, $1)"],
 ];
+
+function normalizeBaseUrl(value) {
+  const clean = String(value || "").trim().replace(/\/+$/, "");
+  if (!clean || clean === "/") return "";
+  return clean.startsWith("/") ? clean : `/${clean}`;
+}
+
+function normalizeSiteUrl(value) {
+  const clean = String(value || "").trim();
+  if (!clean) return "https://orkes.io/content/";
+  return clean.endsWith("/") ? clean : `${clean}/`;
+}
+
+function rewriteLegacySiteUrl(value) {
+  for (const legacySiteUrl of LEGACY_SITE_URLS) {
+    if (legacySiteUrl === SITE_URL) continue;
+    if (value.startsWith(legacySiteUrl)) return `${SITE_URL}${value.slice(legacySiteUrl.length)}`;
+    if (value === legacySiteUrl.slice(0, -1)) return SITE_URL;
+  }
+  return null;
+}
 
 const ROUTE_METADATA_OVERRIDES = {
   "category/tutorials": {
@@ -616,6 +639,8 @@ function routeFromSidebarHref(href) {
   if (!clean || /^[a-z][a-z0-9+.-]*:/i.test(clean)) return null;
   if (clean.startsWith(`${BASE_URL}/`)) clean = clean.slice(BASE_URL.length + 1);
   else if (clean === BASE_URL) clean = "";
+  else if (clean.startsWith(`${LEGACY_BASE_URL}/`)) clean = clean.slice(LEGACY_BASE_URL.length + 1);
+  else if (clean === LEGACY_BASE_URL) clean = "";
   else clean = clean.replace(/^\//, "");
   clean = clean
     .replace(/\.html$/, "")
@@ -699,11 +724,19 @@ function sourceTargetUrl(sourceKey, query, hash) {
 
 function transformUrl(rawUrl, sourceRel) {
   if (!rawUrl) return rawUrl;
+  const legacySiteUrl = rewriteLegacySiteUrl(rawUrl);
+  if (legacySiteUrl) return legacySiteUrl;
   if (/^(https?:|mailto:|tel:|javascript:|data:)/.test(rawUrl)) return rawUrl;
   if (rawUrl.startsWith("#")) return rawUrl;
   if (rawUrl.startsWith("//")) return rawUrl;
-  if (rawUrl.startsWith(`${BASE_URL}/`) || rawUrl === `${BASE_URL}/`) {
+  if (rawUrl.startsWith(`${BASE_URL}/`) || rawUrl === BASE_URL || rawUrl === `${BASE_URL}/`) {
     return rawUrl;
+  }
+  if (
+    BASE_URL !== LEGACY_BASE_URL &&
+    (rawUrl.startsWith(`${LEGACY_BASE_URL}/`) || rawUrl === LEGACY_BASE_URL || rawUrl === `${LEGACY_BASE_URL}/`)
+  ) {
+    return `${BASE_URL}${rawUrl.slice(LEGACY_BASE_URL.length)}`;
   }
 
   let url = rawUrl;
@@ -1999,7 +2032,7 @@ function writeMkdocsConfig(nav) {
   const navLines = yamlNav(nav, 2).join("\n");
 const mkdocs = `site_name: Orkes Conductor Documentation
 site_description: ${SITE_DESCRIPTION}
-site_url: https://orkes.io/content/
+site_url: ${SITE_URL}
 repo_url: https://github.com/conductor-oss/conductor
 edit_uri: ''
 strict: false
@@ -2648,7 +2681,7 @@ a.repo-link:hover {
   writeOverrides();
   write(
     path.join(OUT_DIR, "robots.txt"),
-    "User-agent: *\nAllow: /\n\nSitemap: https://orkes.io/content/sitemap.xml\nLLMs: https://orkes.io/content/llms.txt\n",
+    `User-agent: *\nAllow: /\n\nSitemap: ${SITE_URL}sitemap.xml\nLLMs: ${SITE_URL}llms.txt\n`,
   );
 }
 
@@ -2690,7 +2723,7 @@ function writeLlmsTxt() {
     "",
     "This file is a machine-readable version of the public Orkes Conductor documentation for AI systems, developer tools, and search systems.",
     "",
-    "Source documentation: https://orkes.io/content/",
+    `Source documentation: ${SITE_URL}`,
     "Product: Orkes Conductor",
     "Positioning: Managed enterprise platform and agentic workflow engine for durable execution, visual debugging, access control, polyglot workers, and internet-scale orchestration.",
     "",
@@ -2730,7 +2763,7 @@ function writeLlmsTxt() {
     lines.push(`---`);
     lines.push(`URL: ${url}`);
     lines.push(`Title: ${title}`);
-    lines.push(`Route: /content/${route}`);
+    lines.push(`Route: ${routeToUrl(route)}`);
     lines.push(`---`);
     lines.push("");
     lines.push(content);
