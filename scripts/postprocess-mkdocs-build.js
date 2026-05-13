@@ -122,7 +122,7 @@ function rewriteHtml(file) {
   fs.writeFileSync(file, html);
 }
 
-function duplicateExtensionlessHtml(file) {
+function copyRouteAliasHtml(file) {
   const rel = posixPath(path.relative(BUILD_DIR, file));
   if (rel === "index.html" || rel === "404.html") return;
   const publicRel = stripHtmlFromRoute(rel);
@@ -131,10 +131,6 @@ function duplicateExtensionlessHtml(file) {
     fs.mkdirSync(path.dirname(htmlTarget), { recursive: true });
     fs.copyFileSync(file, htmlTarget);
   }
-  const target = path.join(BUILD_DIR, publicRel);
-  if (fs.existsSync(target) && fs.statSync(target).isDirectory()) return;
-  fs.mkdirSync(path.dirname(target), { recursive: true });
-  fs.copyFileSync(rel.startsWith("_routes/") ? htmlTarget : file, target);
 }
 
 function rewriteSearchIndex(file) {
@@ -166,7 +162,7 @@ function rewriteSitemap(file) {
 function main() {
   const htmlFiles = listFiles(BUILD_DIR, (file) => file.endsWith(".html"));
   for (const file of htmlFiles) rewriteHtml(file);
-  for (const file of htmlFiles) duplicateExtensionlessHtml(file);
+  for (const file of htmlFiles) copyRouteAliasHtml(file);
   fs.rmSync(path.join(BUILD_DIR, "_routes"), { recursive: true, force: true });
   rewriteSearchIndex(path.join(BUILD_DIR, "search", "search_index.json"));
   rewriteSitemap(path.join(BUILD_DIR, "sitemap.xml"));

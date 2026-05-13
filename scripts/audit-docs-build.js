@@ -343,6 +343,18 @@ function auditGeneratedFiles() {
   }
 }
 
+function auditMimeSafeHtmlFiles() {
+  const files = listFiles(BUILD_DIR);
+  for (const file of files) {
+    if (path.extname(file)) continue;
+    const rel = posixPath(path.relative(BUILD_DIR, file));
+    const head = fs.readFileSync(file, "utf8").slice(0, 256).toLowerCase();
+    if (head.includes("<!doctype html") || head.includes("<html")) {
+      errors.push(`${rel}: extensionless HTML file may be served as application/octet-stream by GitHub Pages`);
+    }
+  }
+}
+
 function main() {
   if (!fs.existsSync(BUILD_DIR)) {
     console.error("Build directory does not exist. Run npm run build first.");
@@ -363,6 +375,7 @@ function main() {
   }
 
   auditGeneratedFiles();
+  auditMimeSafeHtmlFiles();
 
   if (warnings.length) {
     console.warn(`Docs audit warnings (${warnings.length}):`);
