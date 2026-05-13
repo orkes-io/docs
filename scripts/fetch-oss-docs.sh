@@ -26,13 +26,16 @@ fi
 git -C "${CACHE_DIR}" fetch --depth 1 origin "${REF}"
 git -C "${CACHE_DIR}" checkout --detach "${REF}"
 
-mapfile -t PATHS < <(awk '/^paths:/ { in_paths=1; next } in_paths && /^  - / { sub(/^  - /, ""); print } in_paths && /^[^ ]/ { in_paths=0 }' "${LOCK_FILE}")
+PATHS=()
+while IFS= read -r path; do
+  PATHS+=("${path}")
+done < <(awk '/^paths:/ { in_paths=1; next } in_paths && /^  - / { sub(/^  - /, ""); print } in_paths && /^[^ ]/ { in_paths=0 }' "${LOCK_FILE}")
 
 if [[ "${#PATHS[@]}" -eq 0 ]]; then
   echo "shared-docs.lock.yml has no sparse paths" >&2
   exit 1
 fi
 
-git -C "${CACHE_DIR}" sparse-checkout set "${PATHS[@]}"
+git -C "${CACHE_DIR}" sparse-checkout set --no-cone "${PATHS[@]}"
 
 echo "Fetched shared OSS docs at ${REF}"
