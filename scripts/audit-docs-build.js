@@ -67,6 +67,13 @@ function routeForHtml(file) {
   return rel.replace(/\.html$/, "").replace(/\/index$/, "");
 }
 
+function isTrailingSlashAlias(file) {
+  const rel = posixPath(path.relative(BUILD_DIR, file));
+  if (!rel.endsWith("/index.html")) return false;
+  const route = rel.slice(0, -"/index.html".length);
+  return fs.existsSync(path.join(BUILD_DIR, `${route}.html`));
+}
+
 function routeUrl(route) {
   return route ? `${SITE_URL}${route}` : SITE_URL;
 }
@@ -443,13 +450,25 @@ function auditMimeSafeHtmlFiles() {
   }
 }
 
+function auditTrailingSlashAliases(htmlFiles) {
+  for (const file of htmlFiles) {
+    const rel = posixPath(path.relative(BUILD_DIR, file));
+    if (rel === "index.html" || rel === "404.html" || rel.endsWith("/index.html")) continue;
+    const route = rel.replace(/\.html$/, "").replace(/\/index$/, "");
+    const alias = path.join(BUILD_DIR, route, "index.html");
+    if (!fs.existsSync(alias)) {
+      errors.push(`${route}: missing trailing-slash alias index.html`);
+    }
+  }
+}
+
 function main() {
   if (!fs.existsSync(BUILD_DIR)) {
     console.error("Build directory does not exist. Run npm run build first.");
     process.exit(1);
   }
 
-  const htmlFiles = listFiles(BUILD_DIR, (file) => file.endsWith(".html"));
+  const htmlFiles = listFiles(BUILD_DIR, (file) => file.endsWith(".html")).filter((file) => !isTrailingSlashAlias(file));
   const seenTitles = new Map();
   const seenDescriptions = new Map();
 
@@ -464,6 +483,7 @@ function main() {
 
   auditGeneratedFiles();
   auditMimeSafeHtmlFiles();
+  auditTrailingSlashAliases(htmlFiles);
 
   if (warnings.length) {
     console.warn(`Docs audit warnings (${warnings.length}):`);

@@ -133,6 +133,32 @@ function copyRouteAliasHtml(file) {
   }
 }
 
+function createTrailingSlashAliases() {
+  let count = 0;
+  const htmlFiles = listFiles(BUILD_DIR, (file) => file.endsWith(".html"));
+  for (const file of htmlFiles) {
+    const rel = posixPath(path.relative(BUILD_DIR, file));
+    if (rel === "index.html" || rel === "404.html" || rel.endsWith("/index.html")) continue;
+
+    const route = stripHtmlFromRoute(rel);
+    if (!route) continue;
+
+    const aliasDir = path.join(BUILD_DIR, route);
+    const aliasFile = path.join(aliasDir, "index.html");
+    if (fs.existsSync(aliasDir) && !fs.statSync(aliasDir).isDirectory()) {
+      console.warn(`Skipping trailing-slash alias for ${rel}: ${posixPath(path.relative(BUILD_DIR, aliasDir))} is a file.`);
+      continue;
+    }
+
+    fs.mkdirSync(aliasDir, { recursive: true });
+    const source = fs.readFileSync(file);
+    if (fs.existsSync(aliasFile) && fs.readFileSync(aliasFile).equals(source)) continue;
+    fs.writeFileSync(aliasFile, source);
+    count += 1;
+  }
+  return count;
+}
+
 function rewriteSearchIndex(file) {
   if (!fs.existsSync(file)) return;
   let json = fs.readFileSync(file, "utf8");
@@ -164,9 +190,10 @@ function main() {
   for (const file of htmlFiles) rewriteHtml(file);
   for (const file of htmlFiles) copyRouteAliasHtml(file);
   fs.rmSync(path.join(BUILD_DIR, "_routes"), { recursive: true, force: true });
+  const aliasCount = createTrailingSlashAliases();
   rewriteSearchIndex(path.join(BUILD_DIR, "search", "search_index.json"));
   rewriteSitemap(path.join(BUILD_DIR, "sitemap.xml"));
-  console.log(`Postprocessed ${htmlFiles.length} MkDocs HTML files.`);
+  console.log(`Postprocessed ${htmlFiles.length} MkDocs HTML files. Added ${aliasCount} trailing-slash aliases.`);
 }
 
 main();
