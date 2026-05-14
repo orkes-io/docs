@@ -1,6 +1,9 @@
 ---
 title: "Build your first AI agent"
 description: "Build your first AI agent with Conductor in 5 minutes. Step-by-step tutorial: discover MCP tools, call an LLM, execute tools, add human approval, and make it."
+canonical_route: "ai-orchestration/first-ai-agent"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, AI orchestration, LLM orchestration, MCP gateway, agent workflows"
 ---
 
 # Build your first AI agent

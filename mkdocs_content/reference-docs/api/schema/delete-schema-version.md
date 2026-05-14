@@ -1,6 +1,9 @@
 ---
 title: "Delete Schema Version"
 description: "Use the Orkes Conductor schemas API to delete Schema Version. Includes endpoint details, authentication, parameters, request bodies, response behavior, and."
+canonical_route: "reference-docs/api/schema/delete-schema-version"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration"
 ---
 
 # Delete Schema Version

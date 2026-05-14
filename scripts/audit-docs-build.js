@@ -304,16 +304,102 @@ function auditImages(route, html) {
   }
 }
 
+function topLevelJsonLdNodes(parsed) {
+  if (Array.isArray(parsed)) return parsed.filter((node) => node && typeof node === "object");
+  if (!parsed || typeof parsed !== "object") return [];
+  if (Array.isArray(parsed["@graph"])) {
+    return parsed["@graph"].filter((node) => node && typeof node === "object");
+  }
+  return [parsed];
+}
+
+function jsonLdTypes(node) {
+  const type = node && node["@type"];
+  if (Array.isArray(type)) return type;
+  return type ? [type] : [];
+}
+
+function hasJsonLdType(node, type) {
+  return jsonLdTypes(node).includes(type);
+}
+
+function missingJsonLdFields(node, fields) {
+  return fields.filter((field) => {
+    const value = node[field];
+    if (Array.isArray(value)) return value.length === 0;
+    if (value && typeof value === "object") return Object.keys(value).length === 0;
+    return value === undefined || value === null || String(value).trim() === "";
+  });
+}
+
+function shouldHaveSoftwareSourceCodeSchema(route) {
+  return (
+    route.startsWith("sdks/") ||
+    route.startsWith("developer-guides/write-workflows") ||
+    route.startsWith("developer-guides/using-workers") ||
+    route.startsWith("developer-guides/scaling-workers") ||
+    route === "developer-guides/tasks" ||
+    route.startsWith("quickstarts/")
+  );
+}
+
 function auditJsonLd(route, html) {
   const scripts = [...html.matchAll(/<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)];
+  const nodes = [];
   for (const script of scripts) {
     const json = script[1].trim();
     if (!json) continue;
     try {
-      JSON.parse(json);
+      nodes.push(...topLevelJsonLdNodes(JSON.parse(json)));
     } catch (error) {
       errors.push(`${route || "/"}: invalid JSON-LD: ${error.message}`);
     }
+  }
+
+  if (route === "404") return;
+  if (!nodes.length) {
+    errors.push(`${route || "/"}: missing JSON-LD`);
+    return;
+  }
+
+  const faqNodes = nodes.filter((node) => hasJsonLdType(node, "FAQPage"));
+  const canHaveFaqSchema = route === "" || route.startsWith("faqs/") || route === "category/faqs";
+  if (!canHaveFaqSchema && faqNodes.length) {
+    errors.push(`${route || "/"}: FAQPage JSON-LD should only appear on visible FAQ pages or sections`);
+  }
+
+  if (route === "") return;
+
+  const techArticle = nodes.find((node) => hasJsonLdType(node, "TechArticle"));
+  if (!techArticle) {
+    errors.push(`${route}: missing TechArticle JSON-LD`);
+    return;
+  }
+
+  const expectedArticleId = `${routeUrl(route)}#techarticle`;
+  if (techArticle["@id"] !== expectedArticleId) {
+    errors.push(`${route}: TechArticle @id should be ${expectedArticleId}`);
+  }
+
+  const missing = missingJsonLdFields(techArticle, [
+    "@id",
+    "headline",
+    "description",
+    "url",
+    "mainEntityOfPage",
+    "isPartOf",
+    "about",
+    "keywords",
+    "dateModified",
+    "publisher",
+    "author",
+  ]);
+  if (missing.length) {
+    errors.push(`${route}: TechArticle JSON-LD missing ${missing.join(", ")}`);
+  }
+
+  if (shouldHaveSoftwareSourceCodeSchema(route) && !nodes.some((node) => hasJsonLdType(node, "SoftwareSourceCode"))) {
+    errors.push(`${route}: missing SoftwareSourceCode JSON-LD for SDK/code-heavy page`);
   }
 }
 

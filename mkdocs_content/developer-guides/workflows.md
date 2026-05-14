@@ -1,6 +1,9 @@
 ---
 title: "Workflows"
 description: "Design Orkes Conductor workflows: choose a build path, connect tasks, version safely, and add production controls without memorizing every JSON field."
+canonical_route: "developer-guides/workflows"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
 ---
 
 # Workflows

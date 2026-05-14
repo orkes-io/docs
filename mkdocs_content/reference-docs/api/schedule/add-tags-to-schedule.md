@@ -1,6 +1,9 @@
 ---
 title: "Add Tags to a Schedule"
 description: "Use the Orkes Conductor schedules API to add Tags to a Schedule. Includes endpoint details, authentication, parameters, request bodies, response behavior, and."
+canonical_route: "reference-docs/api/schedule/add-tags-to-schedule"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration"
 ---
 
 # Add Tags to a Schedule

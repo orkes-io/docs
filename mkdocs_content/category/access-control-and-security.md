@@ -1,6 +1,9 @@
 ---
 title: "Role Based Access Control"
 description: "Configure role based access control in Orkes Conductor for users, groups, applications, roles, permissions, and tag-based access."
+canonical_route: "category/access-control-and-security"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, role based access control, workflow security, access control"
 ---
 
 # Role Based Access Control

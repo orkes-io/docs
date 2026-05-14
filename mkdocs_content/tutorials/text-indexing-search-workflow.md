@@ -1,6 +1,9 @@
 ---
 title: "Build a Text Indexing and Search Workflow"
 description: "Learn how to build workflows that index text into a vector database and search it to generate answers from indexed content in Orkes Conductor."
+canonical_route: "tutorials/text-indexing-search-workflow"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow cookbook, workflow recipes, Conductor examples"
 ---
 
 # Build a Text Indexing and Search Workflow

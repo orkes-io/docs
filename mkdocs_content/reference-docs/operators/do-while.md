@@ -1,6 +1,9 @@
 ---
 title: "Do While"
 description: "Do-While Task — loop over tasks in a Conductor workflow until a condition is met, with configurable iteration limits."
+canonical_route: "reference-docs/operators/do-while"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
 ---
 
 # Do While

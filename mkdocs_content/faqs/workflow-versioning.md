@@ -1,6 +1,9 @@
 ---
 title: "Managing Workflow Versions"
 description: "Learn how workflow versioning allows you to safely update workflows and manage multiple workflow versions in production in Orkes Conductor."
+canonical_route: "faqs/workflow-versioning"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
 ---
 
 # Managing Workflow Versions

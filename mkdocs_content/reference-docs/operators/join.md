@@ -1,6 +1,9 @@
 ---
 title: "Join"
 description: "Join Task — synchronize parallel branches in a Conductor workflow, waiting for all forked tasks to complete."
+canonical_route: "reference-docs/operators/join"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
 ---
 
 # Join

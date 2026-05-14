@@ -1,6 +1,9 @@
 ---
 title: "NATS Messaging Integration with Orkes Conductor"
 description: "Learn how to integrate NATS so workflows can publish and receive events through NATS messaging systems in Orkes Conductor."
+canonical_route: "integrations/message-broker/nats-messaging"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
 ---
 
 # NATS Messaging Integration with Orkes Conductor

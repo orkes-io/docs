@@ -1,6 +1,9 @@
 ---
 title: "Enabling CDC (Change Data Capture)"
 description: "Learn how to enable Change Data Capture (CDC) to stream workflow state changes to external message brokers in Orkes Conductor."
+canonical_route: "developer-guides/enabling-cdc-on-conductor-workflows"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
 ---
 
 # Enabling CDC (Change Data Capture)

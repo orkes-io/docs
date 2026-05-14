@@ -1,6 +1,9 @@
 ---
 title: "Update Task"
 description: "Learn how the Update Task task updates the status of another task in a running workflow in Orkes Conductor."
+canonical_route: "reference-docs/system-tasks/update-task"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow tasks, workflow workers, task queues"
 ---
 
 # Update Task

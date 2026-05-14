@@ -1,6 +1,9 @@
 ---
 title: "AWS Bedrock Cohere Integration with Orkes Conductor"
 description: "Learn how to integrate AWS Bedrock Cohere so workflows can use Cohere models through Conductor AI tasks."
+canonical_route: "integrations/ai-llm/aws-bedrock-cohere"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, AI orchestration, LLM orchestration, MCP gateway, agent workflows"
 ---
 
 # AWS Bedrock Cohere Integration with Orkes Conductor

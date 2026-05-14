@@ -1,6 +1,9 @@
 ---
 title: "Parameter Mapping"
 description: "Learn how to map parameters in Orkes Conductor using dynamic expressions, task input templates, masking, and schema validation."
+canonical_route: "developer-guides/passing-inputs-to-task-in-conductor"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow tasks, workflow workers, task queues"
 ---
 
 # Parameter Mapping

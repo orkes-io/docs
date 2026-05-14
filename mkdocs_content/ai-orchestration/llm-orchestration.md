@@ -1,6 +1,9 @@
 ---
 title: "LLM orchestration"
 description: "Native LLM orchestration with Conductor — supported LLM providers, vector database integration for RAG pipelines, and multimodal content generation tasks."
+canonical_route: "ai-orchestration/llm-orchestration"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, AI orchestration, LLM orchestration, MCP gateway, agent workflows"
 ---
 
 # LLM orchestration

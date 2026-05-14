@@ -1,6 +1,9 @@
 ---
 title: "AWS SQS Integration with Orkes Conductor"
 description: "Learn how to integrate AWS SQS so workflows can send and receive messages through SQS queues in Orkes Conductor."
+canonical_route: "integrations/message-broker/aws-sqs"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
 ---
 
 # AWS SQS Integration with Orkes Conductor

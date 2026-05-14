@@ -1,6 +1,9 @@
 ---
 title: "Cohere Integration with Orkes Conductor"
 description: "Learn how to integrate Cohere so workflows can use Cohere models through Conductor AI tasks."
+canonical_route: "integrations/ai-llm/cohere"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, AI orchestration, LLM orchestration, MCP gateway, agent workflows"
 ---
 
 # Cohere Integration with Orkes Conductor

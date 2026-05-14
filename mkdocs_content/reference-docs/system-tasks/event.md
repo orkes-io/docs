@@ -1,6 +1,9 @@
 ---
 title: "Event Task"
 description: "Event Task — publish events to message brokers (Kafka, SQS, NATS) from Conductor workflows for event-driven orchestration."
+canonical_route: "reference-docs/system-tasks/event"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, event-driven orchestration, webhooks, Kafka orchestration, RabbitMQ orchestration, workflow tasks, workflow workers, task queues"
 ---
 
 # Event Task

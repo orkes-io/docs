@@ -1,6 +1,9 @@
 ---
 title: "Event Handlers"
 description: "Event Handlers — configure Conductor to produce and consume events from Kafka, SQS, and other message systems."
+canonical_route: "reference-docs/event-handlers"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, event-driven orchestration, webhooks, Kafka orchestration, RabbitMQ orchestration"
 ---
 
 # Event Handlers

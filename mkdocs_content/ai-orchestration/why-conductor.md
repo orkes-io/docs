@@ -1,6 +1,9 @@
 ---
 title: "Why Conductor for agents"
 description: "Why Conductor for AI agents — native LLM tasks, MCP tool calling, deterministic JSON definitions, durable human-in-the-loop, and dynamic runtime execution."
+canonical_route: "ai-orchestration/why-conductor"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, AI orchestration, LLM orchestration, MCP gateway, agent workflows"
 ---
 
 # Why Conductor for agents

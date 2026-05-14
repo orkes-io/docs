@@ -1,6 +1,9 @@
 ---
 title: "Git Repository Integration with Orkes Conductor"
 description: "Learn how to integrate Git repositories such as GitHub, GitLab, or Bitbucket so workflows can securely access files using API tokens in Orkes Conductor."
+canonical_route: "integrations/git-repository"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
 ---
 
 # Git Repository Integration with Orkes Conductor

@@ -1,6 +1,9 @@
 ---
 title: "Mistral Integration with Orkes Conductor"
 description: "Learn how to integrate Mistral so workflows can use Mistral models through Conductor AI tasks."
+canonical_route: "integrations/ai-llm/mistral"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, AI orchestration, LLM orchestration, MCP gateway, agent workflows"
 ---
 
 # Mistral Integration with Orkes Conductor

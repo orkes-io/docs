@@ -1,6 +1,9 @@
 ---
 title: "AI Cookbook"
 description: "AI agent orchestration and LLM orchestration with Conductor — LLM tasks with function calling, tool use via MCP, human-in-the-loop approval, dynamic workflows."
+canonical_route: "ai-orchestration"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, AI orchestration, LLM orchestration, MCP gateway, agent workflows, workflow cookbook, workflow recipes, Conductor examples"
 ---
 
 # AI Cookbook

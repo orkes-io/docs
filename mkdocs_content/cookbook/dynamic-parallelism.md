@@ -1,6 +1,9 @@
 ---
 title: "Dynamic Parallelism"
 description: "Cookbook recipes for dynamic fork patterns, runtime fan-out, same-task parallelism, and parallel sub-workflows in Orkes Conductor."
+canonical_route: "cookbook/dynamic-parallelism"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow cookbook, workflow recipes, Conductor examples"
 ---
 
 # Dynamic parallelism

@@ -1,6 +1,9 @@
 ---
 title: "API Reference"
 description: "Conductor REST API reference — complete endpoint documentation for workflow orchestration including metadata, execution management, task polling, bulk."
+canonical_route: "category/ref-docs/api"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration"
 ---
 
 # API Reference

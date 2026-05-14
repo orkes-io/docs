@@ -1,6 +1,9 @@
 ---
 title: "GCP Pub Sub Integration with Orkes Conductor"
 description: "Learn how to integrate Google Cloud Pub/Sub so workflows can publish and receive events through Pub/Sub topics in Orkes Conductor."
+canonical_route: "integrations/message-broker/gcp-pub-sub"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
 ---
 
 # GCP Pub Sub Integration with Orkes Conductor

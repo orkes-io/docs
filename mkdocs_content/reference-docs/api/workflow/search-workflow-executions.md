@@ -1,6 +1,9 @@
 ---
 title: "Search Workflow Executions"
 description: "Use the Orkes Conductor workflows API to search Workflow Executions. Includes endpoint details, authentication, parameters, request bodies, response behavior."
+canonical_route: "reference-docs/api/workflow/search-workflow-executions"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration"
 ---
 
 # Search Workflow Executions

@@ -1,6 +1,9 @@
 ---
 title: "Query Processor"
 description: "Learn how the Query Processor task runs queries against systems such as Conductor APIs and Prometheus metrics to evaluate conditions for workflow alerts."
+canonical_route: "reference-docs/system-tasks/query-processor"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow tasks, workflow workers, task queues"
 ---
 
 # Query Processor

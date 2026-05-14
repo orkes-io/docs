@@ -1,6 +1,9 @@
 ---
 title: "Build a Microsoft Teams Webhook Processing Workflow"
 description: "Learn how to receive Microsoft Teams webhook messages and trigger workflows to generate structured tickets in Orkes Conductor."
+canonical_route: "tutorials/microsoft-teams-webhook"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow cookbook, workflow recipes, Conductor examples, event-driven orchestration, webhooks, Kafka orchestration, RabbitMQ orchestration"
 ---
 
 # Build a Microsoft Teams Webhook Processing Workflow

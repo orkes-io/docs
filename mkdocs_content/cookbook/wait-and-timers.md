@@ -1,6 +1,9 @@
 ---
 title: "Wait and Timer Patterns"
 description: "Cookbook recipes for fixed delays, scheduled waits, external signals, and human approval pauses in Orkes Conductor workflows."
+canonical_route: "cookbook/wait-and-timers"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, AI orchestration, LLM orchestration, MCP gateway, agent workflows, workflow cookbook, workflow recipes, Conductor examples"
 ---
 
 # Wait and timer patterns

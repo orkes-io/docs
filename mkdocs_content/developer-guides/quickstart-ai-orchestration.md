@@ -1,6 +1,9 @@
 ---
 title: "Build an AI-Powered Translator with Orkes Conductor"
 description: "Learn how to build an AI-powered translation workflow using AI model integrations, prompt templates, and workflow orchestration in Orkes Conductor."
+canonical_route: "developer-guides/quickstart-ai-orchestration"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, AI orchestration, LLM orchestration, MCP gateway, agent workflows"
 ---
 
 # Build an AI-Powered Translator with Orkes Conductor

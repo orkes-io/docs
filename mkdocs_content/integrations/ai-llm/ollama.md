@@ -1,6 +1,9 @@
 ---
 title: "Ollama Integration with Orkes Conductor"
 description: "Learn how to integrate Ollama so workflows can use locally hosted AI models through Conductor AI tasks."
+canonical_route: "integrations/ai-llm/ollama"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, AI orchestration, LLM orchestration, MCP gateway, agent workflows"
 ---
 
 # Ollama Integration with Orkes Conductor

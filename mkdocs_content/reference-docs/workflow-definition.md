@@ -1,6 +1,9 @@
 ---
 title: "Workflow Definition"
 description: "Complete reference for Conductor workflow definitions — properties, task configurations, input expressions, failure workflows, and timeout policies."
+canonical_route: "reference-docs/workflow-definition"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
 ---
 
 # Workflow Definition

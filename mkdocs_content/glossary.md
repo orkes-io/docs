@@ -1,6 +1,9 @@
 ---
 title: "Orkes Conductor Glossary"
 description: "Explore definitions of key terms and concepts used in Conductor and workflow orchestration."
+canonical_route: "glossary"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
 ---
 
 # Orkes Conductor Glossary

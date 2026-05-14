@@ -1,6 +1,9 @@
 ---
 title: "Event Publishing Recipes"
 description: "Examples for publishing events to Kafka, NATS, RabbitMQ, SQS, and other event sinks from Orkes Conductor workflows."
+canonical_route: "eventing"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, event-driven orchestration, webhooks, Kafka orchestration, RabbitMQ orchestration"
 ---
 
 # Event-driven recipes

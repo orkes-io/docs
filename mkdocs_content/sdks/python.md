@@ -1,6 +1,9 @@
 ---
 title: "Python SDK"
 description: "Build Conductor workers in Python with decorator-based task definitions, async support, and workflow management."
+canonical_route: "sdks/python"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, Conductor SDKs, workflow workers, Python SDK, Java SDK, Go SDK, TypeScript SDK"
 ---
 
 # Python SDK

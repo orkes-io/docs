@@ -1,6 +1,9 @@
 ---
 title: "Wait Task"
 description: "Configure Wait tasks in Conductor to pause workflow execution for a set duration or until a specific timestamp. Supports durable code execution patterns."
+canonical_route: "reference-docs/operators/wait"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, AI orchestration, LLM orchestration, MCP gateway, agent workflows, workflow tasks, workflow workers, task queues"
 ---
 
 # Wait Task

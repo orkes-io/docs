@@ -1,6 +1,9 @@
 ---
 title: "Add Tags to User Form"
 description: "Use the Orkes Conductor human tasks API to add Tags to User Form. Includes endpoint details, authentication, parameters, request bodies, response behavior, and."
+canonical_route: "reference-docs/api/human-tasks/add-tags-to-user-form"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration, workflow tasks, workflow workers, task queues"
 ---
 
 # Add Tags to User Form

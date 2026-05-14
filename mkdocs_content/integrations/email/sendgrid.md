@@ -1,6 +1,9 @@
 ---
 title: "SendGrid Email Integration with Orkes Conductor"
 description: "Learn how to configure SendGrid integration so workflows can send email notifications using SendGrid in Orkes Conductor."
+canonical_route: "integrations/email/sendgrid"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, AI orchestration, LLM orchestration, MCP gateway, agent workflows"
 ---
 
 # SendGrid Email Integration with Orkes Conductor

@@ -1,6 +1,9 @@
 ---
 title: "LLM Index Text"
 description: "Learn how the LLM Index Text task indexes text content into a vector database for semantic search in Orkes Conductor."
+canonical_route: "reference-docs/ai-tasks/llm-index-text"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, AI orchestration, LLM orchestration, MCP gateway, agent workflows, workflow tasks, workflow workers, task queues"
 ---
 
 # LLM Index Text

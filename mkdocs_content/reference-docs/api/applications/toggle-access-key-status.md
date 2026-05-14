@@ -1,6 +1,9 @@
 ---
 title: "Toggle Access Key Status"
 description: "Use the Orkes Conductor applications API to toggle Access Key Status. Includes endpoint details, authentication, parameters, request bodies, response behavior."
+canonical_route: "reference-docs/api/applications/toggle-access-key-status"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration, role based access control, workflow security, access control"
 ---
 
 # Toggle Access Key Status

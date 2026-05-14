@@ -1,6 +1,9 @@
 ---
 title: "Routing Tasks"
 description: "Learn how task domains help route tasks to different worker groups so tasks from the same queue can be handled by the appropriate workers in Orkes Conductor."
+canonical_route: "developer-guides/task-to-domain"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, AI orchestration, LLM orchestration, MCP gateway, agent workflows, workflow tasks, workflow workers, task queues"
 ---
 
 # Routing Tasks (Task-to-domain)

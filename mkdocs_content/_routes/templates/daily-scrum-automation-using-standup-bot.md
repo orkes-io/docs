@@ -1,6 +1,9 @@
 ---
 title: "Build a Standup Bot using Slack Webhooks in Orkes Conductor"
 description: "Learn how to automate daily stand-up updates using webhook events and workflow automation in Orkes Conductor."
+canonical_route: "templates/daily-scrum-automation-using-standup-bot"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, AI orchestration, LLM orchestration, MCP gateway, agent workflows, workflow cookbook, workflow recipes, Conductor examples, event-driven orchestration, webhooks, Kafka orchestration, RabbitMQ orchestration"
 ---
 
 # Build a Standup Bot using Slack Webhooks in Orkes Conductor

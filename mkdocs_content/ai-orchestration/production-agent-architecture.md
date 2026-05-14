@@ -1,6 +1,9 @@
 ---
 title: "Production agent architecture"
 description: "The canonical reference architecture for building production AI agents on Conductor — end-to-end pattern with planner, tool selection, execution, retry."
+canonical_route: "ai-orchestration/production-agent-architecture"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, AI orchestration, LLM orchestration, MCP gateway, agent workflows"
 ---
 
 # Production agent architecture

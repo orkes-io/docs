@@ -1,6 +1,9 @@
 ---
 title: "Monitor HTTP Endpoints"
 description: "Learn how to use an endpoint monitoring workflow that checks an HTTP endpoint and sends an email alert when the endpoint fails or returns a non-200 status code."
+canonical_route: "templates/availability-monitoring-for-http-endpoints"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, AI orchestration, LLM orchestration, MCP gateway, agent workflows, workflow cookbook, workflow recipes, Conductor examples"
 ---
 
 # Monitor HTTP Endpoints

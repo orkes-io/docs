@@ -16,6 +16,7 @@ const BASE_URL = normalizeBaseUrl(process.env.DOCS_BASE_URL || "/content");
 const SITE_URL = normalizeSiteUrl(process.env.DOCS_SITE_URL || "https://orkes.io/content/");
 const SITE_DESCRIPTION =
   "Orkes Conductor is the managed enterprise platform for durable execution, agentic workflows, visual debugging, access control, and internet-scale orchestration.";
+const DOCS_LAST_MODIFIED = process.env.DOCS_LAST_MODIFIED || "2026-05-14";
 const DEVELOPER_EDITION_URL =
   "https://developer.orkescloud.com/?ga_id=GA1.1.114307086.1749276711&amp;utm_source=google&amp;utm_medium=organic&amp;_gl=1*mi3s3s*_gcl_au*MTU0NDU1MTQuMTc3ODM5MTkyMw..";
 
@@ -568,6 +569,44 @@ function pageDescriptionForRoute(route, fallbackDescription, title) {
   return contextual;
 }
 
+function keywordsForRoute(route, title) {
+  const haystack = `${route} ${title}`.toLowerCase();
+  const keywords = [
+    "Orkes Conductor",
+    "Conductor",
+    "durable execution",
+    "workflow orchestration",
+    "agentic workflows",
+    "AI agents",
+    "microservice orchestration",
+    "internet-scale orchestration",
+  ];
+
+  if (haystack.includes("sdk") || haystack.includes("client")) {
+    keywords.push("Conductor SDKs", "workflow workers", "Python SDK", "Java SDK", "Go SDK", "TypeScript SDK");
+  }
+  if (haystack.includes("ai") || haystack.includes("agent") || haystack.includes("llm") || haystack.includes("mcp")) {
+    keywords.push("AI orchestration", "LLM orchestration", "MCP gateway", "agent workflows");
+  }
+  if (haystack.includes("tutorial") || haystack.includes("cookbook") || haystack.includes("template")) {
+    keywords.push("workflow cookbook", "workflow recipes", "Conductor examples");
+  }
+  if (haystack.includes("api") || haystack.includes("gateway") || haystack.includes("service orchestration")) {
+    keywords.push("API orchestration", "API gateway", "service orchestration");
+  }
+  if (haystack.includes("event") || haystack.includes("webhook") || haystack.includes("kafka") || haystack.includes("rabbitmq")) {
+    keywords.push("event-driven orchestration", "webhooks", "Kafka orchestration", "RabbitMQ orchestration");
+  }
+  if (haystack.includes("rbac") || haystack.includes("access") || haystack.includes("security") || haystack.includes("secret")) {
+    keywords.push("role based access control", "workflow security", "access control");
+  }
+  if (haystack.includes("worker") || haystack.includes("task")) {
+    keywords.push("workflow tasks", "workflow workers", "task queues");
+  }
+
+  return [...new Set(keywords)].join(", ");
+}
+
 function buildFrontMatter(frontMatter, route, title) {
   const lines = [];
   const baseTitle = frontMatter.title || frontMatter.sidebar_label || title;
@@ -586,6 +625,11 @@ function buildFrontMatter(frontMatter, route, title) {
   if (description) {
     lines.push(`description: ${yamlString(description)}`);
   }
+  if (route !== "") {
+    lines.push(`canonical_route: ${yamlString(route)}`);
+  }
+  lines.push(`updated: ${yamlString(DOCS_LAST_MODIFIED)}`);
+  lines.push(`keywords: ${yamlString(keywordsForRoute(route, cleanTitle))}`);
 
   if (!lines.length) return "";
   return `---\n${lines.join("\n")}\n---\n\n`;
@@ -2191,7 +2235,15 @@ function writeOverrides() {
   {% else %}
     {% set page_path = "" %}
   {% endif %}
-  {% set page_url = config.site_url ~ page_path %}`,
+  {% if page and page.meta and page.meta.canonical_route %}
+    {% set page_path = page.meta.canonical_route %}
+  {% endif %}
+  {% set page_url = config.site_url ~ page_path %}
+  {% set page_schema_id = page_url ~ "#webpage" %}
+  {% set article_schema_id = page_url ~ "#techarticle" %}
+  {% set source_code_schema_id = page_url ~ "#sourcecode" %}
+  {% set page_keywords = page.meta.keywords if page and page.meta and page.meta.keywords else "Orkes Conductor, durable execution, workflow orchestration, agentic workflows, AI agents" %}
+  {% set page_updated = page.meta.updated if page and page.meta and page.meta.updated else "${DOCS_LAST_MODIFIED}" %}`,
   );
   main = main.replace(
     /  <!-- SEO -->\n  <meta name="description" content="{{ page_desc }}" \/>\n  <link rel="canonical" href="{{ page_url }}" \/>/,
@@ -2216,18 +2268,33 @@ function writeOverrides() {
         "@id": "https://orkes.io/#organization",
         "name": "Orkes",
         "url": "https://orkes.io",
-        "logo": "{{ config.site_url }}img/branding/orkes-logo-purple-4x.png"
+        "logo": "{{ config.site_url }}img/branding/orkes-logo-purple-4x.png",
+        "sameAs": [
+          "https://github.com/orkes-io"
+        ]
       },
       {
         "@type": "WebSite",
         "@id": "{{ config.site_url }}#website",
         "name": "Orkes Conductor Documentation",
         "url": "{{ config.site_url }}",
-        "publisher": { "@id": "https://orkes.io/#organization" }
+        "publisher": { "@id": "https://orkes.io/#organization" },
+        "inLanguage": "en"
+      },
+      {
+        "@type": "WebPage",
+        "@id": "{{ page_schema_id }}",
+        "url": "{{ page_url }}",
+        "name": "{{ page_title }}",
+        "description": "{{ page_desc }}",
+        "isPartOf": { "@id": "{{ config.site_url }}#website" },
+        "about": { "@id": "https://orkes.io/#orkes-conductor" },
+        "dateModified": "{{ page_updated }}",
+        "inLanguage": "en"
       },
       {
         "@type": "SoftwareApplication",
-        "@id": "{{ config.site_url }}#orkes-conductor",
+        "@id": "https://orkes.io/#orkes-conductor",
         "name": "Orkes Conductor",
         "alternateName": ["Conductor", "Conductor OSS", "Netflix Conductor"],
         "applicationCategory": "DeveloperApplication",
@@ -2267,21 +2334,59 @@ function writeOverrides() {
   {
     "@context": "https://schema.org",
     "@type": "TechArticle",
+    "@id": "{{ article_schema_id }}",
     "headline": "{{ resolved_title }}",
     "description": "{{ page_desc }}",
     "url": "{{ page_url }}",
-    "mainEntityOfPage": "{{ page_url }}",
+    "mainEntityOfPage": { "@id": "{{ page_schema_id }}" },
+    "isPartOf": { "@id": "{{ config.site_url }}#website" },
+    "about": [
+      { "@id": "https://orkes.io/#orkes-conductor" },
+      { "@type": "Thing", "name": "durable execution" },
+      { "@type": "Thing", "name": "workflow orchestration" },
+      { "@type": "Thing", "name": "agentic workflows" }
+    ],
+    "keywords": "{{ page_keywords }}",
+    "datePublished": "{{ page_updated }}",
+    "dateModified": "{{ page_updated }}",
+    "inLanguage": "en",
     "publisher": { "@id": "https://orkes.io/#organization" },
     "author": { "@id": "https://orkes.io/#organization" }
   }
   </script>
   {% endif %}
 
-  <!-- Structured Data: FAQPage (homepage only) -->`,
+  <!-- Structured Data: SoftwareSourceCode (SDK and code examples) -->
+  {% if page and page.url and page.url != '404.html' and (
+    page_path.startswith("sdks/")
+    or page_path.startswith("developer-guides/write-workflows")
+    or page_path.startswith("developer-guides/using-workers")
+    or page_path.startswith("developer-guides/scaling-workers")
+    or page_path == "developer-guides/tasks"
+    or page_path.startswith("quickstarts/")
+  ) %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareSourceCode",
+    "@id": "{{ source_code_schema_id }}",
+    "name": "{{ resolved_title }} code examples",
+    "description": "Code examples for building Orkes Conductor workflows, workers, and integrations.",
+    "url": "{{ page_url }}",
+    "isPartOf": { "@id": "{{ article_schema_id }}" },
+    "targetProduct": { "@id": "https://orkes.io/#orkes-conductor" },
+    "programmingLanguage": ["Python", "Java", "Go", "C#", "Ruby", "Rust", "TypeScript", "JavaScript"],
+    "runtimePlatform": "Orkes Conductor",
+    "publisher": { "@id": "https://orkes.io/#organization" }
+  }
+  </script>
+  {% endif %}
+
+  <!-- Structured Data: FAQPage (visible FAQ section only) -->`,
   );
   main = main.replace(
-    /<!-- Structured Data: FAQPage \(homepage only\) -->[\s\S]*?<\/script>/,
-    `<!-- Structured Data: FAQPage (homepage only) -->
+    /<!-- Structured Data: FAQPage \((?:homepage only|visible FAQ section only)\) -->[\s\S]*?<\/script>/,
+    `<!-- Structured Data: FAQPage (visible FAQ section only) -->
   {% if page and page.url == 'index.html' %}
   <script type="application/ld+json">
   {

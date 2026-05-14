@@ -1,6 +1,9 @@
 ---
 title: "Create Application"
 description: "Use the Orkes Conductor applications API to create Application. Includes endpoint details, authentication, parameters, request bodies, response behavior, and."
+canonical_route: "reference-docs/api/applications/create-application"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration"
 ---
 
 # Create Application

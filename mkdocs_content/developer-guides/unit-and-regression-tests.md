@@ -1,6 +1,9 @@
 ---
 title: "Unit and Regression Tests"
 description: "Learn how to write unit and regression tests to validate workflow logic, task inputs and outputs, and expected workflow execution paths in Orkes Conductor."
+canonical_route: "developer-guides/unit-and-regression-tests"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
 ---
 
 # Unit and Regression Tests

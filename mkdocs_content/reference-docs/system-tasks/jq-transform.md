@@ -1,6 +1,9 @@
 ---
 title: "JSON JQ Transform Task"
 description: "JSON JQ Transform Task — transform and filter JSON data inside Conductor workflows using JQ expressions."
+canonical_route: "reference-docs/system-tasks/jq-transform"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow tasks, workflow workers, task queues"
 ---
 
 # JSON JQ Transform Task

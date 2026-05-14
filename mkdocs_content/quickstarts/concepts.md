@@ -1,6 +1,9 @@
 ---
 title: "Basic Concepts"
 description: "Core concepts of Conductor — an open source workflow orchestration engine for distributed workflows, microservice orchestration, AI agent orchestration, and."
+canonical_route: "quickstarts/concepts"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
 ---
 
 # Basic Concepts

@@ -1,6 +1,9 @@
 ---
 title: "Get All Groups"
 description: "Use the Orkes Conductor groups API to get All Groups. Includes endpoint details, authentication, parameters, request bodies, response behavior, and examples."
+canonical_route: "reference-docs/api/groups/get-all-groups"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration"
 ---
 
 # Get All Groups

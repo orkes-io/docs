@@ -1,6 +1,9 @@
 ---
 title: "Create User Forms in Bulk"
 description: "Use the Orkes Conductor human tasks API to create User Forms in Bulk. Includes endpoint details, authentication, parameters, request bodies, response behavior."
+canonical_route: "reference-docs/api/human-tasks/create-user-forms-bulk"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration, workflow tasks, workflow workers, task queues"
 ---
 
 # Create User Forms in Bulk

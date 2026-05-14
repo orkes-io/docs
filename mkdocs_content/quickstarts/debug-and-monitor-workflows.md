@@ -1,6 +1,9 @@
 ---
 title: "Quickstart 3: Monitor and Debug Workflows"
 description: "Learn how to debug and monitor workflow executions in Orkes Conductor by inspecting tasks, inputs, outputs, and execution timelines in the Conductor UI."
+canonical_route: "quickstarts/debug-and-monitor-workflows"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
 ---
 
 # Quickstart 3: Monitor and Debug Workflows

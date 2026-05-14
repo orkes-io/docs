@@ -1,6 +1,9 @@
 ---
 title: "Kafka Publish Task"
 description: "Kafka Publish Task — send messages to Kafka topics from Conductor workflows with configurable serialization."
+canonical_route: "reference-docs/system-tasks/kafka-publish"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, event-driven orchestration, webhooks, Kafka orchestration, RabbitMQ orchestration, workflow tasks, workflow workers, task queues"
 ---
 
 # Kafka Publish Task

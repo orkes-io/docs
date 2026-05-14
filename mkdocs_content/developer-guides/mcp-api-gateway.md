@@ -1,6 +1,9 @@
 ---
 title: "API and MCP Gateway"
 description: "Learn how to expose workflows as APIs and MCP tools using the Gateway so external applications and AI agents can invoke workflow logic in Orkes Conductor."
+canonical_route: "developer-guides/mcp-api-gateway"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, AI orchestration, LLM orchestration, MCP gateway, agent workflows, API orchestration, API gateway, service orchestration"
 ---
 
 # API and MCP Gateway

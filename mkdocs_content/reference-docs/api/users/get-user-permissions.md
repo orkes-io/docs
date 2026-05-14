@@ -1,6 +1,9 @@
 ---
 title: "Get User Permission over Resources"
 description: "Use the Orkes Conductor users API to get User Permission over Resources. Includes endpoint details, authentication, parameters, request bodies, response."
+canonical_route: "reference-docs/api/users/get-user-permissions"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration"
 ---
 
 # Get User Permission over Resources

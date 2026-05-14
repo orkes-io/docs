@@ -1,6 +1,9 @@
 ---
 title: "Get Available Human Tasks Display Names"
 description: "Use the Orkes Conductor human tasks API to get Available Human Tasks Display Names. Includes endpoint details, authentication, parameters, request bodies."
+canonical_route: "reference-docs/api/human-tasks/get-available-human-tasks-display-names"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, AI orchestration, LLM orchestration, MCP gateway, agent workflows, API orchestration, API gateway, service orchestration, workflow tasks, workflow workers, task queues"
 ---
 
 # Get Available Human Tasks Display Names

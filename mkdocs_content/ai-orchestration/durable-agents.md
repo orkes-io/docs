@@ -1,6 +1,9 @@
 ---
 title: "Durable agents"
 description: "What makes a durable AI agent — persisted state, crash recovery, and why JSON workflow definitions are AI-native for agent orchestration in Orkes Conductor."
+canonical_route: "ai-orchestration/durable-agents"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, AI orchestration, LLM orchestration, MCP gateway, agent workflows"
 ---
 
 # Durable agents

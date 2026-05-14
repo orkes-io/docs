@@ -1,6 +1,9 @@
 ---
 title: "Handling Failures"
 description: "Learn how to configure retries, timeouts, and failure workflows to handle task and workflow failures and maintain reliable workflow execution in Orkes Conductor."
+canonical_route: "error-handling"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, AI orchestration, LLM orchestration, MCP gateway, agent workflows"
 ---
 
 # Handling Failures

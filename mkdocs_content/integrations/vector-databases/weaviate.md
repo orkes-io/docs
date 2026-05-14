@@ -1,6 +1,9 @@
 ---
 title: "Weaviate Integration with Orkes Conductor"
 description: "Learn how to integrate Weaviate so workflows can store and retrieve embeddings for AI tasks in Orkes Conductor."
+canonical_route: "integrations/vector-databases/weaviate"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
 ---
 
 # Weaviate Integration with Orkes Conductor

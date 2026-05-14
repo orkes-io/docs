@@ -1,6 +1,9 @@
 ---
 title: "Install and Set Up Orkes Conductor"
 description: "Learn how to install and set up Orkes Conductor for cloud or local environments to start building reliable workflow orchestration for microservices and APIs."
+canonical_route: "get-orkes-conductor"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
 ---
 
 # Install and Set Up Orkes Conductor

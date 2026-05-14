@@ -1,6 +1,9 @@
 ---
 title: "Human Operator"
 description: "Configure Human tasks in Conductor to pause workflows for manual approval or external signals. Supports human-in-the-loop and agentic workflow patterns."
+canonical_route: "reference-docs/operators/human"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
 ---
 
 # Human Task

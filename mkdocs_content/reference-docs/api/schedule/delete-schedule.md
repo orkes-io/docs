@@ -1,6 +1,9 @@
 ---
 title: "Delete Schedule"
 description: "Use the Orkes Conductor schedules API to delete Schedule. Includes endpoint details, authentication, parameters, request bodies, response behavior, and."
+canonical_route: "reference-docs/api/schedule/delete-schedule"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration"
 ---
 
 # Delete Schedule

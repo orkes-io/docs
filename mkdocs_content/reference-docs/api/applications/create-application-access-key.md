@@ -1,6 +1,9 @@
 ---
 title: "Create an Access Key for Application"
 description: "Use the Orkes Conductor applications API to create an Access Key for Application. Includes endpoint details, authentication, parameters, request bodies."
+canonical_route: "reference-docs/api/applications/create-application-access-key"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration, role based access control, workflow security, access control"
 ---
 
 # Create an Access Key for Application

@@ -1,6 +1,9 @@
 ---
 title: "Get All Schemas"
 description: "Use the Orkes Conductor schemas API to get All Schemas. Includes endpoint details, authentication, parameters, request bodies, response behavior, and examples."
+canonical_route: "reference-docs/api/schema/get-all-schemas"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration"
 ---
 
 # Get All Schemas

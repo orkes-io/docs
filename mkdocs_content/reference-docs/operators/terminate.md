@@ -1,6 +1,9 @@
 ---
 title: "Terminate"
 description: "Terminate Task — end a Conductor workflow execution with a specified status and output from any point in the flow."
+canonical_route: "reference-docs/operators/terminate"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
 ---
 
 # Terminate

@@ -1,6 +1,9 @@
 ---
 title: "Task Lifecycle"
 description: "Understand the task lifecycle in Conductor — state transitions, retries, timeouts, and failure handling for durable workflow execution."
+canonical_route: "quickstarts/task-lifecycle"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow tasks, workflow workers, task queues"
 ---
 
 # Task Lifecycle

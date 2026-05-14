@@ -1,6 +1,9 @@
 ---
 title: "Incoming Custom Conductor Webhook using cURL"
 description: "Learn how to build a workflow that receives webhook requests using cURL in Orkes Conductor."
+canonical_route: "templates/examples/custom-conductor-webhook-using-curl"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow cookbook, workflow recipes, Conductor examples, event-driven orchestration, webhooks, Kafka orchestration, RabbitMQ orchestration"
 ---
 
 # Incoming Custom Conductor Webhook using cURL

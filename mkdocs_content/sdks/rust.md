@@ -1,6 +1,9 @@
 ---
 title: "Rust SDK"
 description: "Build Conductor workers in Rust with type-safe task definitions and async workflow management."
+canonical_route: "sdks/rust"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, Conductor SDKs, workflow workers, Python SDK, Java SDK, Go SDK, TypeScript SDK"
 ---
 
 # Rust SDK

@@ -1,6 +1,9 @@
 ---
 title: "Task Queues"
 description: "Use the Orkes Conductor tasks API to task Queues. Includes endpoint details, authentication, parameters, request bodies, response behavior, and examples."
+canonical_route: "reference-docs/api/task/task-queue"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration, workflow tasks, workflow workers, task queues"
 ---
 
 # Task Queues

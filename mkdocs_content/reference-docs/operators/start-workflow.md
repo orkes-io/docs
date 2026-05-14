@@ -1,6 +1,9 @@
 ---
 title: "Start Workflow"
 description: "Start Workflow Task — asynchronously launch a new Conductor workflow execution from within a running workflow."
+canonical_route: "reference-docs/operators/start-workflow"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
 ---
 
 # Start Workflow

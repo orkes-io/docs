@@ -1,6 +1,9 @@
 ---
 title: "Conductor Architecture and Worker Polling"
 description: "Learn the architecture of Orkes Conductor, including the state machine evaluator, task queues, workers, data stores, and APIs used to orchestrate distributed."
+canonical_route: "conductor-architecture"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow tasks, workflow workers, task queues"
 ---
 
 # Conductor Architecture and Worker Polling

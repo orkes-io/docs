@@ -1,6 +1,9 @@
 ---
 title: "Remove Single User from Group"
 description: "Use the Orkes Conductor groups API to remove Single User from Group. Includes endpoint details, authentication, parameters, request bodies, response behavior."
+canonical_route: "reference-docs/api/groups/remove-users-from-group"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration"
 ---
 
 # Remove Single User from Group

@@ -1,6 +1,9 @@
 ---
 title: "gRPC"
 description: "Learn how the gRPC task invokes remote gRPC service endpoints from workflows in Orkes Conductor."
+canonical_route: "reference-docs/system-tasks/grpc"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow tasks, workflow workers, task queues"
 ---
 
 # gRPC

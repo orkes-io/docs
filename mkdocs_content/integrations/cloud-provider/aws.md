@@ -1,6 +1,9 @@
 ---
 title: "AWS Integration with Orkes Conductor"
 description: "Learn how to configure AWS integration so workflows can securely access private S3 buckets using storage-related tasks in Orkes Conductor."
+canonical_route: "integrations/cloud-provider/aws"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
 ---
 
 # AWS Integration with Orkes Conductor

@@ -1,6 +1,9 @@
 ---
 title: "Task Concepts"
 description: "Learn about tasks in Conductor — the reusable building blocks of workflows, including system tasks, worker tasks, operators, LLM tasks with 14+ AI providers."
+canonical_route: "quickstarts/tasks"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow tasks, workflow workers, task queues"
 ---
 
 # Tasks

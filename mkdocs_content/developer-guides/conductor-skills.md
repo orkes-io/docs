@@ -1,6 +1,9 @@
 ---
 title: "Build with AI Agents"
 description: "Use Conductor Skills to teach AI coding agents to create, run, monitor, debug, and manage Orkes Conductor workflows and workers."
+canonical_route: "developer-guides/conductor-skills"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, AI orchestration, LLM orchestration, MCP gateway, agent workflows"
 ---
 
 # Build with AI Agents

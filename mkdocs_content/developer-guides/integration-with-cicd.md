@@ -1,6 +1,9 @@
 ---
 title: "CI/CD Best Practices"
 description: "Learn best practices for integrating workflows into CI/CD pipelines, including testing workflow definitions and deploying updates through automated pipelines."
+canonical_route: "developer-guides/integration-with-cicd"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
 ---
 
 # CI/CD Best Practices

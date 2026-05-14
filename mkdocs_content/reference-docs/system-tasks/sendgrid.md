@@ -1,6 +1,9 @@
 ---
 title: "SendGrid"
 description: "Learn how the SendGrid task sends emails through the SendGrid email service in Orkes Conductor."
+canonical_route: "reference-docs/system-tasks/sendgrid"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow tasks, workflow workers, task queues"
 ---
 
 # SendGrid

@@ -1,6 +1,9 @@
 ---
 title: "Get User by ID"
 description: "Use the Orkes Conductor users API to get User by ID. Includes endpoint details, authentication, parameters, request bodies, response behavior, and examples."
+canonical_route: "reference-docs/api/users/get-user-by-id"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration"
 ---
 
 # Get User by ID

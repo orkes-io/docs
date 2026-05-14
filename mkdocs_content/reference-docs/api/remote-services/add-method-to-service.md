@@ -1,6 +1,9 @@
 ---
 title: "Add Method to Service"
 description: "Use the Orkes Conductor remote services API to add Method to Service. Includes endpoint details, authentication, parameters, request bodies, response behavior."
+canonical_route: "reference-docs/api/remote-services/add-method-to-service"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration"
 ---
 
 # Add Method to Service

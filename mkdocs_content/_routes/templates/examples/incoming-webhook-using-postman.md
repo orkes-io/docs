@@ -1,6 +1,9 @@
 ---
 title: "Incoming Custom Webhook using Postman"
 description: "Learn how to build a workflow that receives webhook requests sent from Postman in Orkes Conductor."
+canonical_route: "templates/examples/incoming-webhook-using-postman"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow cookbook, workflow recipes, Conductor examples, event-driven orchestration, webhooks, Kafka orchestration, RabbitMQ orchestration"
 ---
 
 # Incoming Custom Webhook using Postman

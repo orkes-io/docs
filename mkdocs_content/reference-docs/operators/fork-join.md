@@ -1,6 +1,9 @@
 ---
 title: "Fork"
 description: "Configure Fork (FORK_JOIN) tasks in Conductor to run task sequences in parallel. Learn parameters, JSON configuration, and Join task pairing."
+canonical_route: "reference-docs/operators/fork-join"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
 ---
 
 # Fork

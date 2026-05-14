@@ -1,6 +1,9 @@
 ---
 title: "Get Signed JWT"
 description: "Learn how the Get Signed JWT task generates a signed JSON Web Token (JWT) in Orkes Conductor."
+canonical_route: "reference-docs/system-tasks/get-signed-jwt"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow tasks, workflow workers, task queues"
 ---
 
 # Get Signed JWT

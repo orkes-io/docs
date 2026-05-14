@@ -1,6 +1,9 @@
 ---
 title: "Build a Document Approval Workflow with Orkes Conductor"
 description: "Learn how to build a document approval workflow that routes documents for review and approval in Orkes Conductor."
+canonical_route: "templates/examples/document-approvals"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow cookbook, workflow recipes, Conductor examples"
 ---
 
 # Build a Document Approval Workflow with Orkes Conductor

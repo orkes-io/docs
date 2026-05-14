@@ -1,6 +1,9 @@
 ---
 title: "Running Workflows in UI"
 description: "Learn how to run workflows from the Conductor UI by selecting a workflow version, providing input parameters, and viewing execution details."
+canonical_route: "how-to-videos/run-workflow"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
 ---
 
 # Running Workflows in UI

@@ -1,6 +1,9 @@
 ---
 title: "Human-in-the-loop"
 description: "Human-in-the-loop patterns for AI agents — pre-execution approval, conditional post-execution review, LLM-as-judge automated review, and durable human."
+canonical_route: "ai-orchestration/human-in-the-loop"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, AI orchestration, LLM orchestration, MCP gateway, agent workflows"
 ---
 
 # Human-in-the-loop

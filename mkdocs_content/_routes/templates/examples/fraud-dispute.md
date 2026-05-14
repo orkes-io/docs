@@ -1,6 +1,9 @@
 ---
 title: "Build a Fraud Dispute Resolution Workflow with Orkes Conductor"
 description: "Learn how to build a workflow that manages fraud dispute cases and routes them through review and resolution steps in Orkes Conductor."
+canonical_route: "templates/examples/fraud-dispute"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow cookbook, workflow recipes, Conductor examples"
 ---
 
 # Build a Fraud Dispute Resolution Workflow with Orkes Conductor

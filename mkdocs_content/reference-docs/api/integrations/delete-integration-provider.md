@@ -1,6 +1,9 @@
 ---
 title: "Delete Integration Provider"
 description: "Use the Orkes Conductor integrations API to delete Integration Provider. Includes endpoint details, authentication, parameters, request bodies, response."
+canonical_route: "reference-docs/api/integrations/delete-integration-provider"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration"
 ---
 
 # Delete Integration Provider

@@ -57,7 +57,15 @@
   {% else %}
     {% set page_path = "" %}
   {% endif %}
+  {% if page and page.meta and page.meta.canonical_route %}
+    {% set page_path = page.meta.canonical_route %}
+  {% endif %}
   {% set page_url = config.site_url ~ page_path %}
+  {% set page_schema_id = page_url ~ "#webpage" %}
+  {% set article_schema_id = page_url ~ "#techarticle" %}
+  {% set source_code_schema_id = page_url ~ "#sourcecode" %}
+  {% set page_keywords = page.meta.keywords if page and page.meta and page.meta.keywords else "Orkes Conductor, durable execution, workflow orchestration, agentic workflows, AI agents" %}
+  {% set page_updated = page.meta.updated if page and page.meta and page.meta.updated else "2026-05-14" %}
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
@@ -86,18 +94,33 @@
         "@id": "https://orkes.io/#organization",
         "name": "Orkes",
         "url": "https://orkes.io",
-        "logo": "{{ config.site_url }}img/branding/orkes-logo-purple-4x.png"
+        "logo": "{{ config.site_url }}img/branding/orkes-logo-purple-4x.png",
+        "sameAs": [
+          "https://github.com/orkes-io"
+        ]
       },
       {
         "@type": "WebSite",
         "@id": "{{ config.site_url }}#website",
         "name": "Orkes Conductor Documentation",
         "url": "{{ config.site_url }}",
-        "publisher": { "@id": "https://orkes.io/#organization" }
+        "publisher": { "@id": "https://orkes.io/#organization" },
+        "inLanguage": "en"
+      },
+      {
+        "@type": "WebPage",
+        "@id": "{{ page_schema_id }}",
+        "url": "{{ page_url }}",
+        "name": "{{ page_title }}",
+        "description": "{{ page_desc }}",
+        "isPartOf": { "@id": "{{ config.site_url }}#website" },
+        "about": { "@id": "https://orkes.io/#orkes-conductor" },
+        "dateModified": "{{ page_updated }}",
+        "inLanguage": "en"
       },
       {
         "@type": "SoftwareApplication",
-        "@id": "{{ config.site_url }}#orkes-conductor",
+        "@id": "https://orkes.io/#orkes-conductor",
         "name": "Orkes Conductor",
         "alternateName": ["Conductor", "Conductor OSS", "Netflix Conductor"],
         "applicationCategory": "DeveloperApplication",
@@ -154,17 +177,55 @@
   {
     "@context": "https://schema.org",
     "@type": "TechArticle",
+    "@id": "{{ article_schema_id }}",
     "headline": "{{ resolved_title }}",
     "description": "{{ page_desc }}",
     "url": "{{ page_url }}",
-    "mainEntityOfPage": "{{ page_url }}",
+    "mainEntityOfPage": { "@id": "{{ page_schema_id }}" },
+    "isPartOf": { "@id": "{{ config.site_url }}#website" },
+    "about": [
+      { "@id": "https://orkes.io/#orkes-conductor" },
+      { "@type": "Thing", "name": "durable execution" },
+      { "@type": "Thing", "name": "workflow orchestration" },
+      { "@type": "Thing", "name": "agentic workflows" }
+    ],
+    "keywords": "{{ page_keywords }}",
+    "datePublished": "{{ page_updated }}",
+    "dateModified": "{{ page_updated }}",
+    "inLanguage": "en",
     "publisher": { "@id": "https://orkes.io/#organization" },
     "author": { "@id": "https://orkes.io/#organization" }
   }
   </script>
   {% endif %}
 
-  <!-- Structured Data: FAQPage (homepage only) -->
+  <!-- Structured Data: SoftwareSourceCode (SDK and code examples) -->
+  {% if page and page.url and page.url != '404.html' and (
+    page_path.startswith("sdks/")
+    or page_path.startswith("developer-guides/write-workflows")
+    or page_path.startswith("developer-guides/using-workers")
+    or page_path.startswith("developer-guides/scaling-workers")
+    or page_path == "developer-guides/tasks"
+    or page_path.startswith("quickstarts/")
+  ) %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareSourceCode",
+    "@id": "{{ source_code_schema_id }}",
+    "name": "{{ resolved_title }} code examples",
+    "description": "Code examples for building Orkes Conductor workflows, workers, and integrations.",
+    "url": "{{ page_url }}",
+    "isPartOf": { "@id": "{{ article_schema_id }}" },
+    "targetProduct": { "@id": "https://orkes.io/#orkes-conductor" },
+    "programmingLanguage": ["Python", "Java", "Go", "C#", "Ruby", "Rust", "TypeScript", "JavaScript"],
+    "runtimePlatform": "Orkes Conductor",
+    "publisher": { "@id": "https://orkes.io/#organization" }
+  }
+  </script>
+  {% endif %}
+
+  <!-- Structured Data: FAQPage (visible FAQ section only) -->
   {% if page and page.url == 'index.html' %}
   <script type="application/ld+json">
   {

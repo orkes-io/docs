@@ -1,6 +1,9 @@
 ---
 title: "LLM Get Embeddings"
 description: "Learn how the LLM Get Embeddings task retrieves stored embeddings from a vector database in Orkes Conductor."
+canonical_route: "reference-docs/ai-tasks/llm-get-embeddings"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, AI orchestration, LLM orchestration, MCP gateway, agent workflows, workflow tasks, workflow workers, task queues"
 ---
 
 # LLM Get Embeddings

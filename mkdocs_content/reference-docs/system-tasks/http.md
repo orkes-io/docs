@@ -1,6 +1,9 @@
 ---
 title: "HTTP Task"
 description: "Configure HTTP tasks in Conductor to call remote APIs and services. Supports GET, POST, PUT, DELETE methods with headers, body, and timeout options."
+canonical_route: "reference-docs/system-tasks/http"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow tasks, workflow workers, task queues"
 ---
 
 # HTTP Task

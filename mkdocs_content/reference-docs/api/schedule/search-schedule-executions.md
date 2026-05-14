@@ -1,6 +1,9 @@
 ---
 title: "Search Schedule Executions"
 description: "Use the Orkes Conductor schedules API to search Schedule Executions. Includes endpoint details, authentication, parameters, request bodies, response behavior."
+canonical_route: "reference-docs/api/schedule/search-schedule-executions"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration"
 ---
 
 # Search Schedule Executions

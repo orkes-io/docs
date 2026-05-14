@@ -1,6 +1,9 @@
 ---
 title: "Token efficiency with durable execution"
 description: "Token efficiency with durable execution in Orkes Conductor: How durable execution saves LLM tokens and reduces AI costs — crash recovery without re-execution."
+canonical_route: "ai-orchestration/token-efficiency"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, AI orchestration, LLM orchestration, MCP gateway, agent workflows"
 ---
 
 # Token efficiency with durable execution

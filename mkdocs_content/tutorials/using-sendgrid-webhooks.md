@@ -1,6 +1,9 @@
 ---
 title: "Using SendGrid Event Webhooks in Orkes Conductor"
 description: "Learn how to configure SendGrid event webhooks, capture incoming events, and process them through workflows in Orkes Conductor."
+canonical_route: "tutorials/using-sendgrid-webhooks"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow cookbook, workflow recipes, Conductor examples, event-driven orchestration, webhooks, Kafka orchestration, RabbitMQ orchestration"
 ---
 
 # Using SendGrid Event Webhooks in Orkes Conductor

@@ -1,6 +1,9 @@
 ---
 title: "Rate Limits"
 description: "Learn how to configure rate limits for workflows and tasks to control execution throughput and prevent overloading downstream services in Orkes Conductor."
+canonical_route: "rate-limits"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
 ---
 
 # Rate Limits

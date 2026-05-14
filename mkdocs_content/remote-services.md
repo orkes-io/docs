@@ -1,6 +1,9 @@
 ---
 title: "Remote Services Guide"
 description: "Learn how to register and manage HTTP and gRPC service endpoints so they can be reused across workflows in Orkes Conductor."
+canonical_route: "remote-services"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
 ---
 
 # Remote Services

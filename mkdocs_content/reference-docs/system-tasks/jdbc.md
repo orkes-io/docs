@@ -1,6 +1,9 @@
 ---
 title: "JDBC Task"
 description: "Configure JDBC tasks in Conductor to execute SQL queries and updates against relational databases. Supports SELECT, UPDATE, and parameterized queries with."
+canonical_route: "reference-docs/system-tasks/jdbc"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow tasks, workflow workers, task queues"
 ---
 
 # JDBC Task

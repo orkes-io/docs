@@ -1,6 +1,9 @@
 ---
 title: "Using Vector Databases"
 description: "Learn how to integrate vector databases and use them with AI tasks to store and retrieve embeddings in workflows in Orkes Conductor."
+canonical_route: "developer-guides/using-vector-databases-in-your-orkes-conductor-workflows"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
 ---
 
 # Using Vector Databases

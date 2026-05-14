@@ -1,6 +1,9 @@
 ---
 title: "MCP integration"
 description: "MCP (Model Context Protocol) integration with Conductor — connect AI agents to external tools, discover tools at runtime, execute with durable retry, and."
+canonical_route: "ai-orchestration/mcp-integration"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, AI orchestration, LLM orchestration, MCP gateway, agent workflows"
 ---
 
 # MCP integration

@@ -1,6 +1,9 @@
 ---
 title: "LLM Text Complete"
 description: "Learn how the LLM Text Complete task generates text responses based on prompts and model parameters in Orkes Conductor."
+canonical_route: "reference-docs/ai-tasks/llm-text-complete"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, AI orchestration, LLM orchestration, MCP gateway, agent workflows, workflow tasks, workflow workers, task queues"
 ---
 
 # LLM Text Complete

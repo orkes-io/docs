@@ -1,6 +1,9 @@
 ---
 title: "No Op Task"
 description: "No-Op Task — a pass-through task in Conductor workflows useful for routing, placeholder steps, and workflow testing."
+canonical_route: "reference-docs/system-tasks/noop"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow tasks, workflow workers, task queues"
 ---
 
 # No Op Task

@@ -1,6 +1,9 @@
 ---
 title: "Metrics and Observability"
 description: "Learn how to use metrics dashboards and observability tools to monitor workflow executions and analyze workflow performance in Orkes Conductor."
+canonical_route: "developer-guides/metrics-and-observability"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
 ---
 
 # Metrics and Observability

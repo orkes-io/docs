@@ -1,6 +1,9 @@
 ---
 title: "GCP Integration with Orkes Conductor"
 description: "Learn how to configure Google Cloud integration so workflows can securely access private Cloud Storage buckets using storage-related tasks in Orkes Conductor."
+canonical_route: "integrations/cloud-provider/gcp"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
 ---
 
 # GCP Integration with Orkes Conductor

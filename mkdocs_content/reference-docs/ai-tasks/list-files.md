@@ -1,6 +1,9 @@
 ---
 title: "List Files"
 description: "Learn how the List Files task retrieves file listings from cloud storage, Git repositories, or websites for downstream processing in Orkes Conductor."
+canonical_route: "reference-docs/ai-tasks/list-files"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, AI orchestration, LLM orchestration, MCP gateway, agent workflows, workflow tasks, workflow workers, task queues"
 ---
 
 # List Files

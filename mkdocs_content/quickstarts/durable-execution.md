@@ -1,6 +1,9 @@
 ---
 title: "Durable Execution Semantics"
 description: "How Conductor guarantees durable code execution for distributed workflows — what persists at every step, at-least-once task delivery, saga pattern."
+canonical_route: "quickstarts/durable-execution"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
 ---
 
 # Durable Execution Semantics

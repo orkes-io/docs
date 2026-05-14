@@ -1,6 +1,9 @@
 ---
 title: "Build a Feedback API Using Orkes Conductor API Gateway"
 description: "Learn how to expose a feedback workflow as a public API using the Conductor API Gateway with schema validation and authentication."
+canonical_route: "tutorials/expose-feedback-workflow-as-api"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow cookbook, workflow recipes, Conductor examples, API orchestration, API gateway, service orchestration"
 ---
 
 # Build a Feedback API Using Orkes Conductor API Gateway

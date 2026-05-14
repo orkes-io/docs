@@ -1,6 +1,9 @@
 ---
 title: "Sub Workflow"
 description: "Use Sub Workflow tasks in Conductor to nest and reuse workflows. Enables modular workflow design with synchronous execution and parent references."
+canonical_route: "reference-docs/operators/sub-workflow"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
 ---
 
 # Sub Workflow

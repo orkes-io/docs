@@ -1,6 +1,9 @@
 ---
 title: "Build a Document Classification Workflow with Orkes Conductor"
 description: "Learn how to build a document classification workflow that processes PDFs and uses AI tasks to classify documents into predefined categories in Orkes Conductor."
+canonical_route: "templates/document-classifier"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow cookbook, workflow recipes, Conductor examples"
 ---
 
 # Build a Document Classification Workflow with Orkes Conductor

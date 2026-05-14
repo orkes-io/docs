@@ -1,6 +1,9 @@
 ---
 title: "SDKs"
 description: "Conductor SDKs for Java, Python, Go, JavaScript, C#, Ruby, and Rust — build workflow as code and task workers in any language with type-safe APIs, automatic."
+canonical_route: "category/sdks"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, Conductor SDKs, workflow workers, Python SDK, Java SDK, Go SDK, TypeScript SDK"
 ---
 
 # SDKs

@@ -1,6 +1,9 @@
 ---
 title: "Quickstart 1: Write a Worker"
 description: "Learn how to write custom workers in Orkes Conductor to execute workflow tasks and implement business logic in distributed workflow orchestration systems."
+canonical_route: "quickstarts/write-workers"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow tasks, workflow workers, task queues"
 ---
 
 # Quickstart 1: Write a Worker

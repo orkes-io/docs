@@ -1,6 +1,9 @@
 ---
 title: "Import BPMN Files as Workflows"
 description: "Learn how to convert BPMN files into Orkes Conductor workflows. Upload .bpmn or XML files and migrate your existing process definitions with no code required."
+canonical_route: "developer-guides/convert-bpmn-to-workflows"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
 ---
 
 # Import BPMN Files as Workflows

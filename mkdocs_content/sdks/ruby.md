@@ -1,6 +1,9 @@
 ---
 title: "Ruby SDK"
 description: "Build Conductor workers in Ruby with idiomatic task definitions and workflow management."
+canonical_route: "sdks/ruby"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, Conductor SDKs, workflow workers, Python SDK, Java SDK, Go SDK, TypeScript SDK"
 ---
 
 # Ruby SDK

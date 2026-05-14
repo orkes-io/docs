@@ -1,6 +1,9 @@
 ---
 title: "Task Timeouts and Retries"
 description: "Cookbook recipes for response timeouts, total timeouts, retry policies, exponential backoff, and lease extension in Orkes Conductor."
+canonical_route: "cookbook/task-timeouts-and-retries"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow cookbook, workflow recipes, Conductor examples, workflow tasks, workflow workers, task queues"
 ---
 
 # Task timeouts and retries

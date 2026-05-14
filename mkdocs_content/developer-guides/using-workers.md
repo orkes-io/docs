@@ -1,6 +1,9 @@
 ---
 title: "Writing Workers for Conductor Workflows"
 description: "Learn how to create and run workers that poll for tasks and execute custom business logic in workflows in Orkes Conductor."
+canonical_route: "developer-guides/using-workers"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow tasks, workflow workers, task queues"
 ---
 
 # Writing Workers for Conductor Workflows

@@ -1,6 +1,9 @@
 ---
 title: "Running a Worker Until a Condition is met"
 description: "Learn how to build and run a custom polling worker to repeatedly check a condition until it becomes true in Orkes Conductor."
+canonical_route: "templates/examples/keep-worker-running-until-condition-true"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow cookbook, workflow recipes, Conductor examples, workflow tasks, workflow workers, task queues"
 ---
 
 # Running a Worker Until a Condition is met

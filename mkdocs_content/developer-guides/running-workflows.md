@@ -1,6 +1,9 @@
 ---
 title: "Executing Workflows"
 description: "Execute Orkes Conductor workflows by starting asynchronously, executing synchronously, scheduling runs, or triggering workflows from events and gateways."
+canonical_route: "developer-guides/running-workflows"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
 ---
 
 # Executing Workflows

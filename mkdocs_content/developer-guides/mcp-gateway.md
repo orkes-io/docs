@@ -1,6 +1,9 @@
 ---
 title: "MCP Gateway: Expose Workflows as MCP Tools"
 description: "Learn how to expose workflows as MCP tools so AI agents can trigger workflow actions through the MCP Gateway in Orkes Conductor."
+canonical_route: "developer-guides/mcp-gateway"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, AI orchestration, LLM orchestration, MCP gateway, agent workflows, API orchestration, API gateway, service orchestration"
 ---
 
 # MCP Gateway: Expose Workflows as MCP Tools

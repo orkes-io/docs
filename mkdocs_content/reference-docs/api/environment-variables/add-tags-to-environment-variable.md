@@ -1,6 +1,9 @@
 ---
 title: "Add Tags to an Environment Variable"
 description: "Use the Orkes Conductor environment variables API to add Tags to an Environment Variable. Includes endpoint details, authentication, parameters, request."
+canonical_route: "reference-docs/api/environment-variables/add-tags-to-environment-variable"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration"
 ---
 
 # Add Tags to an Environment Variable

@@ -1,6 +1,9 @@
 ---
 title: "Switch"
 description: "Switch Task — conditional branching in Conductor workflows based on task output or workflow input values."
+canonical_route: "reference-docs/operators/switch"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
 ---
 
 # Switch

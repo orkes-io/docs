@@ -1,6 +1,9 @@
 ---
 title: "Get Workflow"
 description: "Learn how the Get Workflow task retrieves details of a workflow execution using its workflow ID in Orkes Conductor."
+canonical_route: "reference-docs/operators/get-workflow"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
 ---
 
 # Get Workflow 

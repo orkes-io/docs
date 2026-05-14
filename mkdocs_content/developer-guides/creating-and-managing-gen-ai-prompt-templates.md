@@ -1,6 +1,9 @@
 ---
 title: "Using AI Prompts"
 description: "Learn how to create and manage prompt templates with variables and reuse them in AI tasks across workflows in Orkes Conductor."
+canonical_route: "developer-guides/creating-and-managing-gen-ai-prompt-templates"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, AI orchestration, LLM orchestration, MCP gateway, agent workflows, workflow cookbook, workflow recipes, Conductor examples"
 ---
 
 # Using AI Prompts

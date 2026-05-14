@@ -1,6 +1,9 @@
 ---
 title: "Using Secrets"
 description: "Learn how to store and reference sensitive values using secrets so credentials and tokens can be used securely in workflows in Orkes Conductor."
+canonical_route: "developer-guides/secrets-in-conductor"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, role based access control, workflow security, access control"
 ---
 
 # Using Secrets

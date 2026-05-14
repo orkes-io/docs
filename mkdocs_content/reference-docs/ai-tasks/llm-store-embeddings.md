@@ -1,6 +1,9 @@
 ---
 title: "LLM Store Embeddings"
 description: "Learn how the LLM Store Embeddings task stores generated embeddings in a vector database for later retrieval in Orkes Conductor."
+canonical_route: "reference-docs/ai-tasks/llm-store-embeddings"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, AI orchestration, LLM orchestration, MCP gateway, agent workflows, workflow tasks, workflow workers, task queues"
 ---
 
 # LLM Store Embeddings

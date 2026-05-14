@@ -1,6 +1,9 @@
 ---
 title: "Using Webhooks"
 description: "Learn how to use webhooks to receive events from external systems and trigger workflows or resume workflows waiting for webhook events in Orkes Conductor."
+canonical_route: "developer-guides/webhook-integration"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, event-driven orchestration, webhooks, Kafka orchestration, RabbitMQ orchestration"
 ---
 
 # Using Webhooks

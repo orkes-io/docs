@@ -1,6 +1,9 @@
 ---
 title: "Perplexity Integration with Orkes Conductor"
 description: "Learn how to integrate Perplexity so workflows can use Perplexity AI models through Conductor AI tasks."
+canonical_route: "integrations/ai-llm/perplexity"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, AI orchestration, LLM orchestration, MCP gateway, agent workflows"
 ---
 
 # Perplexity Integration with Orkes Conductor

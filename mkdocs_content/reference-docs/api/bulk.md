@@ -1,6 +1,9 @@
 ---
 title: "Bulk Operations API"
 description: "Use the Orkes Conductor Conductor API to bulk Operations API. Includes endpoint details, authentication, parameters, request bodies, response behavior, and."
+canonical_route: "reference-docs/api/bulk"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration"
 ---
 
 # Bulk Operations API

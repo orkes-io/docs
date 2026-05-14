@@ -1,6 +1,9 @@
 ---
 title: "Build a Stripe Payment Confirmation Workflow"
 description: "Learn how to build a payment confirmation workflow that processes Stripe webhook events and sends acknowledgment emails in Orkes Conductor."
+canonical_route: "tutorials/stripe-webhook"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow cookbook, workflow recipes, Conductor examples, event-driven orchestration, webhooks, Kafka orchestration, RabbitMQ orchestration"
 ---
 
 # Build a Stripe Payment Confirmation Workflow
