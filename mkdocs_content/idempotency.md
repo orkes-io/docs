@@ -95,6 +95,30 @@ Example:
 
 Use the source system's event ID when available. If the source does not provide a stable event ID, derive a key from immutable business fields such as order ID plus event type.
 
+## Idempotency for agent tool calls
+
+AI agents often call tools that create external side effects: send an email, create a support ticket, update a CRM record, trigger a deployment, or charge a payment provider. These calls must be idempotent because task delivery is at least once and an in-flight tool call can be retried after a timeout, worker restart, or network partition.
+
+Use a stable key that identifies the business operation, not the retry attempt:
+
+| Tool action | Recommended key |
+| ----------- | --------------- |
+| Create a ticket | `ticket:${customerId}:${requestId}` |
+| Send a notification | `notification:${recipient}:${template}:${eventId}` |
+| Run an external operation | `operation:${workflowId}:${taskReferenceName}:${businessKey}` |
+| Update a customer record | `customer-update:${customerId}:${changeRequestId}` |
+| Charge or refund payment | Provider payment intent, refund ID, or authorization ID |
+
+Good sources for agent tool idempotency include:
+
+- Source event ID or webhook delivery ID.
+- Business key such as order ID, case ID, customer ID, or payment intent ID.
+- Conductor workflow ID plus a tool-specific operation name.
+- Task reference name when the tool can only run once per workflow execution.
+- External operation ID returned by the first successful call and stored in task output.
+
+Avoid using the task attempt ID alone for irreversible side effects. A retry creates a new attempt, so the external system may see a different key and repeat the side effect. Prefer a business key that stays the same across retries.
+
 ## Searching executions by idempotency key
 
 Search by idempotency key when debugging duplicate requests. Store the key in the caller logs as well as in Conductor so support teams can trace the logical request across systems.

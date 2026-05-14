@@ -10,6 +10,18 @@ keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration
 
 Conductor is a durable execution engine for distributed workflows and durable agents. Every workflow execution is persisted at every step, survives infrastructure failures, and guarantees at-least-once task delivery. This durable execution model means your workflows and agents never lose progress. This page defines exactly what that means.
 
+## Durability proof scenarios
+
+Use these scenarios to verify that Conductor is providing durable execution, not just task sequencing.
+
+| Scenario | Test | Expected result |
+| -------- | ---- | --------------- |
+| Process kill after LLM plan | Kill the worker or server after an LLM task completes. | The completed LLM output is reused after restart. |
+| Tool timeout and retry | Delay a tool beyond `responseTimeoutSeconds`. | Only the tool task retries; prior tasks are preserved. |
+| Human wait across deploy | Leave a `HUMAN` task open, deploy, then approve. | The workflow resumes with the approval payload. |
+| Worker restart | Stop a worker after polling and before completion. | The task is redelivered after timeout. |
+| Duplicate side effect prevention | Retry a side-effecting step with the same business idempotency key. | The external system deduplicates or the failure workflow compensates. |
+
 ## What persists
 
 When a workflow executes, Conductor persists:

@@ -1,5 +1,5 @@
 site_name: Orkes Conductor Documentation
-site_description: Orkes Conductor is the managed enterprise platform for durable execution, agentic workflows, visual debugging, access control, and internet-scale orchestration.
+site_description: Orkes Conductor is the managed enterprise platform for Conductor OSS, a durable workflow engine for production AI agents and distributed systems.
 site_url: https://orkes.io/content/
 repo_url: https://github.com/conductor-oss/conductor
 edit_uri: ''

@@ -9,8 +9,8 @@ description: "Orkes Conductor documentation for building durable workflows, API 
 
 <div class="hero">
   <h1 class="hero-title">Build unbreakable workflows<br/><span class="hero-highlight">and AI agents.</span></h1>
-  <p class="hero-subtitle">Orkes Conductor is the managed enterprise version of Conductor OSS, with durable execution, visual debugging, access control, and internet-scale orchestration.</p>
-  <p class="hero-differentiators">No SDK restrictions. No non-determinism bugs. No cloud lock-in.</p>
+  <p class="hero-subtitle">Orkes Conductor is the managed enterprise platform for Conductor OSS, a durable workflow engine for production AI agents and distributed systems.</p>
+  <p class="hero-differentiators">Keep your frameworks and services. Add durable execution, human waits, retries, replay, and governance.</p>
   <div class="hero-actions">
     <a href="https://developer.orkescloud.com/?ga_id=GA1.1.114307086.1749276711&amp;utm_source=google&amp;utm_medium=organic&amp;_gl=1*mi3s3s*_gcl_au*MTU0NDU1MTQuMTc3ODM5MTkyMw.." class="btn-primary">Start for free<span class="btn-arrow">&rarr;</span></a>
     <a href="/content/quickstarts" class="btn-ghost">Read the quickstarts</a>
@@ -63,7 +63,7 @@ description: "Orkes Conductor documentation for building durable workflows, API 
     <div class="feature-card">
       <div class="feature-tag">AI</div>
       <h3>AI agent orchestration</h3>
-      <p>Orchestrate AI agents with native LLM providers, tool calling, human approval, structured output, and vector database support.</p>
+      <p>Run production agents as durable workflows. Keep agent frameworks for reasoning and use Conductor for state, tool execution, approvals, retries, and auditability.</p>
       <a href="/content/ai-orchestration" class="feature-link">AI Cookbook &rarr;</a>
     </div>
     <div class="feature-card">
@@ -140,7 +140,15 @@ description: "Orkes Conductor documentation for building durable workflows, API 
     </details>
     <details class="faq-item">
       <summary>Can Orkes Conductor orchestrate AI agents and LLMs?</summary>
-      <p>Yes. Orkes Conductor supports native AI tasks, LLM providers, vector databases, and human-in-the-loop workflows.</p>
+      <p>Yes. Orkes Conductor supports native AI tasks, LLM providers, vector databases, MCP tools, and human-in-the-loop workflows. It is the durable execution runtime under production agents.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Is Conductor still maintained?</summary>
+      <p>Yes. Conductor OSS continues as an actively maintained open-source project under the Conductor OSS community, with Orkes contributing maintenance, engineering, documentation, and enterprise support.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Is Conductor an AI framework?</summary>
+      <p>No. Use agent frameworks for reasoning, prompts, and model-specific loops; use Conductor for durable execution, persisted state, retries, waits, human approval, auditability, and governance.</p>
     </details>
     <details class="faq-item">
       <summary>Can I replay or retry workflows?</summary>

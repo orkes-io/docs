@@ -30,6 +30,10 @@ An agentic workflow is flexible and can be used for many scenarios:
 * Implement an AI agent as a workflow for improved governance  
 * Orchestrate multi-agent collaboration
 
+## AgentSpan
+
+AgentSpan, when used with Conductor, should be described as a Conductor project for running supported agent frameworks as durable Conductor workflows. It is not the same as Conductor Skills: AgentSpan is runtime integration, while Conductor Skills help coding agents create, run, and operate Conductor workflows.
+
 ## Application
 
 (In the context of Conductor) An access layer for external systems to interact with a Conductor server via APIs or SDKs. It is similar to a service account, in which permissions govern a system’s access to Conductor resources.
@@ -69,6 +73,14 @@ A label used in Orkes Conductor to route task executions to a specific worker po
 
 A type of graph where its vertices are connected in one direction and without any repeating cycles. All [Conductor workflows are directed acyclic graphs](/content/faqs/directed-acyclic-graph) (DAGs), providing a clear map of the workflow and its progress through different states.
 
+## Durable Agent
+
+A production AI agent whose execution state is persisted at each step. In Conductor, a durable agent can survive worker restarts, server restarts, model provider failures, long waits, human approvals, and retries without restarting from the beginning or repeating completed side effects.
+
+## Durable Execution
+
+An execution model where workflow state, task state, inputs, outputs, retries, waits, and version snapshots are persisted so a process can resume from the last known state after failures. Durable execution is the core runtime guarantee behind Conductor workflows and production AI agents.
+
 ## Environment Variables
 
 In Orkes Conductor, an [environment variable](/content/developer-guides/using-environment-variables) is a configuration value stored at the cluster level and made available to workflows at runtime. Environment variables are commonly used to externalize configuration, such as service endpoints or default settings, without hardcoding values in workflow definitions.
@@ -87,11 +99,19 @@ A module that listens for specific events in an event-driven system. This can be
 
 Gateway enables exposing any Conductor workflow as APIs or MCP tools.  Workflows can be exposed as HTTP APIs via the [API Gateway](/content/developer-guides/api-gateway) or as MCP tools via the [MCP Gateway](/content/developer-guides/mcp-gateway) for AI agent integration.
 
+## MCP Gateway
+
+The Orkes Gateway capability that exposes Conductor workflows as Model Context Protocol tools. MCP Gateway lets AI agents call governed workflows instead of raw internal APIs, with schema validation, access control, retries, human approval, execution history, and auditability handled by Conductor.
+
 ## Idempotency
 
 A property where an operation executed multiple times will not affect the result beyond the initial execution. Idempotency prevents any unwanted side effects or duplicate results. For example, if the same event message is sent multiple times, subsequent messages will not trigger the service again.
 
 In Conductor, workflows can be made idempotent to prevent duplicate workflow executions. Upon duplicate requests, the Conductor server can return the initial workflow execution ID or fail the request.
+
+## Idempotency Key
+
+A stable value that identifies one logical business operation across retries or duplicate deliveries. For agent tool calls, good idempotency keys often use source event IDs, workflow IDs, task reference names, business IDs, or external operation IDs so retries do not repeat side effects.
 
 ## JSON Web Token (JWT)
 
@@ -164,6 +184,10 @@ A [task](/content/developer-guides/tasks) is a unit in a Conductor workflow that
 ## Task Configuration
 
 A workflow-specific configuration, specifying the task type, reference name, input parameters, and other details about the task to be executed. The [task configuration](/content/developer-guides/tasks#task-configuration) is part of the workflow definition and it is an ordered array that describes the order and control flow of tasks, the data flow between tasks, and task behaviour like optionality, caching, and schema enforcement.
+
+## Compensation Workflow
+
+A workflow that runs when another workflow fails and needs to undo, mitigate, or record partial work. Compensation workflows are commonly used to release inventory, void payments, close duplicate tickets, revoke external operations, notify operators, or mark an agent action as failed for audit.
 
 ## Task Definition
 

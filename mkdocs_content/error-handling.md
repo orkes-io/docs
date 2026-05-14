@@ -30,6 +30,16 @@ Common idempotency patterns:
 - Return `FAILED_WITH_TERMINAL_ERROR` for invalid input that should not be retried.
 - Use [idempotency keys](/content/idempotency) when starting workflows from APIs, queues, or webhooks that can redeliver.
 
+For AI agents and MCP tools, treat every real-world action as a side effect. A retry can otherwise send the same email twice, create duplicate tickets, post duplicate Slack messages, repeat a payment call, rerun a deployment, or call an external tool after the original request eventually succeeds.
+
+Use these safeguards for side-effecting agent steps:
+
+- Pass a stable idempotency key to every external tool that supports one.
+- Store the external operation ID in task output so compensation workflows can find it.
+- Put irreversible actions behind a `HUMAN` task or policy check when risk is high.
+- Use `failureWorkflow` to undo or mitigate partial work, such as closing a duplicate ticket, voiding a payment authorization, or notifying an operator.
+- Prefer `FAILED_WITH_TERMINAL_ERROR` when the agent produced invalid or unsafe input that should not be retried automatically.
+
 ## Task retries
 
 Task retries are configured on the task definition. They apply to worker tasks and supported system tasks that use the task definition.
@@ -156,6 +166,8 @@ Use a failure workflow for:
 - Refunding or voiding a payment authorization
 - Notifying operators or customers
 - Creating an incident or ticket
+- Cleaning up side effects created by agent tool calls
+- Marking an AI-assisted action as failed for audit and review
 - Recording audit data
 - Marking a business entity as failed
 

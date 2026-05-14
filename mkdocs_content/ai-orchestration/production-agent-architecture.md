@@ -10,6 +10,12 @@ keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration
 
 This is the reference architecture for a durable AI agent on Conductor. Not a toy. Not a feature list. This is the exact pattern for an agent that plans, acts, waits, recovers, and runs in production.
 
+## Agents are distributed systems
+
+A production agent coordinates models, tools, workers, queues, humans, timers, webhooks, and external callbacks. The agent framework can own reasoning and planning; Conductor owns durable execution, persisted state, task routing, retries, waits, replay, and audit history.
+
+Use this architecture when the agent takes actions that matter: creating records, updating systems, calling internal services, waiting for approval, or coordinating multiple tools over minutes, hours, or days.
+
 
 ## Architecture diagram
 

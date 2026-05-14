@@ -10,6 +10,28 @@ keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration
 
 This page defines exactly what happens when things go wrong in an agent workflow. Not "Conductor is durable" — but the precise behavior under every failure scenario an agent can encounter.
 
+## Failure-injection checklist
+
+| Scenario | How to test | Expected durable behavior |
+| -------- | ----------- | ------------------------- |
+| Crash after LLM plan | Stop the worker or server after the plan task completes. | Completed prompt, response, and token data remain persisted; execution resumes after restart. |
+| Tool timeout | Configure a short `responseTimeoutSeconds` and delay the tool response. | Only the timed-out tool task retries; upstream LLM calls are not repeated. |
+| Human approval wait | Leave a `HUMAN` task open across a deploy or restart. | The workflow remains paused and resumes when signaled. |
+| Worker deploy | Stop an in-flight worker and start a new version. | The task is requeued after timeout and picked up by a new worker. |
+| Duplicate side effect risk | Retry a side-effecting tool call with the same business key. | The external system deduplicates or the compensation workflow mitigates the duplicate. |
+
+## What to measure
+
+| Metric | Why it matters |
+| ------ | -------------- |
+| Completion rate | Shows whether agents finish business work instead of only starting it. |
+| Recovery time | Measures how quickly workflows resume after crashes, deploys, and dependency failures. |
+| Duplicate tool calls | Validates idempotency and side-effect control. |
+| State consistency | Confirms that completed LLM/tool outputs are reused instead of recomputed. |
+| Manual operator steps | Shows how much recovery work humans still perform. |
+| p95 runtime overhead | Quantifies orchestration overhead against reliability gains. |
+| Cost and token usage | Shows avoided re-execution for expensive LLM calls. |
+
 
 ## LLM task failure
 

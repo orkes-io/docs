@@ -10,6 +10,12 @@ keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration
 
 Conductor is not an AI framework. It is a durable execution engine that provides AI agent orchestration and LLM orchestration by solving the hard infrastructure problems that AI agents create: long-running processes, unreliable external calls, function calling and tool use, human-in-the-loop approval, structured output, and the need to survive failures across any of these steps. Conductor makes every agent a durable agent — one that survives crashes, retries, and infrastructure failures without losing progress.
 
+## Where Conductor fits
+
+Use your agent framework for reasoning, prompts, graph composition, and model-specific loops. Use Conductor for execution: persisted state, task queues, retries, timeouts, durable human waits, replay, governance, and audit history.
+
+Conductor is the durable runtime under production agents and distributed workflows. It is not a replacement for every agent framework, and it should not be positioned as one. Keep the framework where it helps the model reason; add Conductor where the work must finish reliably.
+
 
 ## The problem agents create
 
@@ -67,7 +73,7 @@ Your agent code starts a workflow. Conductor schedules each step as a task, pers
 
 ## What you'd have to build without Conductor
 
-If you run agents on a framework like LangChain, CrewAI, or LangGraph without a durable execution backend, you are responsible for:
+If you run agents only inside an in-process or non-durable runtime, you are responsible for:
 
 - **State persistence** &mdash; Checkpointing agent progress so crashes don't restart from zero.
 - **Retry logic** &mdash; Retrying failed LLM and tool calls with backoff, deduplication, and timeout handling.

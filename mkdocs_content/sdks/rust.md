@@ -434,7 +434,7 @@ Yes. Conductor OSS is the continuation of the original [Netflix Conductor](https
 
 **Is this project actively maintained?**
 
-Yes. [Orkes](https://orkes.io) is the primary maintainer and offers an enterprise SaaS platform for Conductor across all major cloud providers.
+Yes. Conductor OSS continues as an actively maintained open-source project under the Conductor OSS community, with Orkes contributing maintenance, engineering, documentation, and enterprise support. The original Netflix project history is part of Conductor's origin story; the current project continues under the Conductor OSS organization.
 
 **Can Conductor scale to handle my workload?**
 

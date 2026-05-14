@@ -100,9 +100,9 @@ Conductor persists LLM task outputs the same way it persists any task output:
 This is the same persistence model that applies to every task in Conductor — the [durable execution semantics](/content/quickstarts/durable-execution) guarantee that completed work is never lost.
 
 
-## Comparison: durable vs non-durable frameworks
+## Comparison: durable vs in-process runtimes
 
-| | Non-durable (LangChain, CrewAI, custom) | Durable (Conductor) |
+| | In-process or non-durable runtime | Durable (Conductor) |
 |---|---|---|
 | **Crash at step N of M** | Restart from step 1. All N tokens re-consumed. | Resume from step N. Zero tokens wasted. |
 | **Retry after tool failure** | Re-run entire chain including LLM calls. | Retry only the failed task. LLM outputs preserved. |
@@ -110,7 +110,7 @@ This is the same persistence model that applies to every task in Conductor — t
 | **Debugging** | Re-run the agent to reproduce. More tokens. | Inspect persisted outputs. Rerun from any task. |
 | **Deploy/scale** | In-flight work may be lost. | Workflows survive scaling events. |
 
-The bottom line: **durable execution is a cost optimization**, not just a reliability feature. Every crash, retry, pause, or debugging session that would re-execute LLM calls in a non-durable framework is free in Conductor — because the work was already persisted.
+The bottom line: **durable execution is a cost optimization**, not just a reliability feature. Every crash, retry, pause, or debugging session that would re-execute LLM calls in an in-process runtime is free in Conductor — because the work was already persisted.
 
 
 ## Next steps

@@ -10,6 +10,12 @@ keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration
 
 Build Conductor workers and define workflow as code in your language of choice. Every SDK provides task polling, workflow management, and full API coverage for this open source workflow orchestration engine — so you can focus on your business logic while Conductor handles retries, state, and orchestration.
 
+## Maintenance and compatibility
+
+Conductor SDKs are open source under the Conductor OSS organization. Conductor OSS continues as an actively maintained open-source project, with Orkes contributing maintenance, engineering, documentation, and enterprise support.
+
+Use Orkes Conductor credentials when connecting these SDKs to Orkes clusters. Use local or OSS server configuration when connecting to Conductor OSS.
+
 <div class="sdk-grid">
 <a href="/content/sdks/java" class="sdk-card"><div class="sdk-icon sdk-java" aria-hidden="true"></div><div class="sdk-info"><h3>Java</h3><p>Spring Boot integration, annotation-based workers, thread management, and testing framework.</p></div><span class="sdk-arrow">→</span></a>
 <a href="/content/sdks/python" class="sdk-card"><div class="sdk-icon sdk-python" aria-hidden="true"></div><div class="sdk-info"><h3>Python</h3><p>Decorator-based task definitions, async support, and workflow management.</p></div><span class="sdk-arrow">→</span></a>

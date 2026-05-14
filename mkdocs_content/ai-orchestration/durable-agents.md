@@ -10,6 +10,18 @@ keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration
 
 An agent that runs in a single process is fragile. A crashed pod replays every LLM call from the beginning — burning tokens and money. A human approval that took three days is lost because a deploy bounced the server. A multi-hour research pipeline fails at step 47 and starts over from step 1.
 
+## Framework plus durable runtime
+
+A durable agent is not a different reasoning framework. Keep an agent framework, custom planner, or model-specific loop where it helps with reasoning. Use Conductor for the execution path that must survive failures: state, queues, retries, waits, human approval, compensation, replay, and audit history.
+
+This is the practical production boundary: the framework decides what should happen next; Conductor makes sure the selected work is executed, recovered, and observable.
+
+| Scenario | Durable runtime behavior |
+| -------- | ------------------------ |
+| Agent process dies after planning | Completed planning output is persisted; execution resumes from the next task. |
+| Human approval spans days | The workflow remains paused without holding a process or thread. |
+| Tool side effect is retried | Idempotency keys and compensation workflows prevent or mitigate duplicate work. |
+
 Conductor eliminates all of this. Every step of a durable agent workflow is persisted to storage as it completes. If the process dies, the agent resumes from the last completed step — not from the beginning.
 
 
@@ -71,7 +83,7 @@ This is not error handling you bolt on later. It is built into the execution mod
 - **Timeout policies** that fail or alert when an LLM call or tool takes too long.
 - **`TERMINATE` task** to end execution early with a specific status and output when the agent detects an unrecoverable condition.
 
-Most AI frameworks have no concept of compensation. If your LangChain agent sends an email in step 3 and crashes in step 5, the email is already sent and there is no built-in mechanism to undo it. Conductor's failure workflows solve this.
+Many in-process agent runtimes do not provide compensation as a first-class execution primitive. If an agent sends an email in step 3 and crashes in step 5, the email is already sent and the runtime still needs a way to undo, mitigate, or record the partial result. Conductor's failure workflows solve this.
 
 
 ## Multi-agent composition

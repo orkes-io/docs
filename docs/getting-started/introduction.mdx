@@ -22,6 +22,13 @@ At the core of Conductor are workflows: modular blueprints that define how tasks
 
 You define workflows declaratively, regardless of the languages or environments your components run in. Conductor manages the complexity of execution, scaling, and error handling.
 
+## Product relationship
+
+- **Conductor OSS** is the open-source durable workflow engine for distributed applications, microservices, event-driven systems, and production AI agents.
+- **Orkes Conductor** is the managed, enterprise-ready version of Conductor OSS. It adds hosted operations, visual debugging, role based access control, secrets, schedules, webhooks, observability, integrations, and support.
+- **Agent frameworks** can still own reasoning, prompts, and model-specific loops. Conductor provides the durable execution runtime under those systems when work must survive crashes, retries, long waits, human approvals, and side effects.
+- **AgentSpan**, when used with Conductor, should be described as a Conductor project for running supported agent frameworks as durable Conductor workflows. It is separate from Conductor Skills, which help coding agents author and operate Conductor workflows.
+
 ## Key features
 
 - **Scalability**: Run workflows of any size, from lightweight automation to mission-critical enterprise systems, without compromising performance or reliability.

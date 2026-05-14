@@ -13,6 +13,10 @@ workflows as code or as JSON, write workers in any language, and let Conductor h
 retries, timeouts, and flow control. Every step is durably recorded, so processes survive crashes,
 restarts, and network partitions without losing progress.
 
+## How to think about Conductor
+
+Conductor is a durable workflow engine for distributed applications and production AI agents. It is not limited to JSON-only or simple flows: workflow definitions describe orchestration, while workers and system tasks run real business logic in Python, Java, Go, .NET/C#, Ruby, Rust, TypeScript, or any service that can poll an API.
+
 Workflow definitions are JSON-native — you can version them in source control, diff changes across
 releases, generate them programmatically, or let LLMs create and modify them at runtime. Workers
 are polyglot: official SDKs exist for Java, Python, Go, JavaScript, C#, Clojure, Ruby, and Rust,
@@ -23,7 +27,7 @@ and sub-workflow orchestration without writing custom code. AI capabilities exte
 library with native support for 14+ LLM providers, MCP tool calling, function calling, vector databases, and content
 generation — enabling AI agent orchestration and LLM orchestration alongside traditional microservice orchestration and workflow automation.
 
-## What can Conductor do?
+## What Conductor is best at
 
 <div class="wcc-widget" role="tablist">
   <div class="wcc-left">

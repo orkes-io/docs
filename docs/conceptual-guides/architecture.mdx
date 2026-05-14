@@ -27,6 +27,21 @@ In Conductor, workflows are executed on a worker-task queue architecture, where 
 
 Integrations with tools such as Prometheus, Grafana, and Datadog enable you to collect and monitor system performance data easily.
 
+## Agents are distributed systems
+
+Production AI agents are not just prompt loops. They coordinate model calls, tools, APIs, workers, queues, human decisions, webhooks, and external callbacks. Treat the agent framework as the reasoning layer and Conductor as the execution layer that makes that reasoning durable.
+
+Conductor provides the runtime primitives production agents need:
+
+- **Persisted state** for plans, prompts, tool inputs, tool outputs, retries, approvals, and final results.
+- **Task queues** so model calls, MCP tools, HTTP calls, and custom workers can scale independently.
+- **Timeouts and retries** so stalled model calls or tools are recovered without restarting the whole agent.
+- **Human and wait states** that survive deploys, restarts, and multi-day pauses.
+- **Replay and recovery** through retry, rerun, restart, and workflow version snapshots.
+- **Audit history** for every tool call, side effect, human approval, and failure.
+
+This is why Conductor is a durable workflow engine for both distributed applications and production AI agents.
+
 ## Worker implementation
 
 System task workers are managed by Conductor. On the other hand, external workers can be implemented in any language and can run on any environment, including bare metal, containers, or VMs, or serverless functions. Conductor offers [SDKs](https://orkes.io/content/category/sdks) with features such as polling threads, metrics, and server communication to simplify worker creation. 

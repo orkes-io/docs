@@ -9,6 +9,20 @@ MCP Gateway exposes Conductor workflows as Model Context Protocol tools. Each to
 
 Use MCP Gateway when agents should invoke controlled workflows instead of raw internal APIs. Every tool call becomes a workflow execution, so teams can inspect inputs, outputs, retries, failures, approvals, and downstream service calls.
 
+## Why put workflows behind MCP tools?
+
+MCP tools often become the path from an AI agent to internal systems. Exposing raw APIs makes the agent responsible for policy, validation, retries, permissions, and audit history. MCP Gateway moves that responsibility into a governed workflow.
+
+Use this pattern when a tool can create or change business state: create a ticket, update an account, approve a refund, provision infrastructure, send a notification, query regulated data, or call a downstream service with side effects. The agent still sees a normal MCP tool, but Conductor owns the durable execution path behind it.
+
+MCP Gateway gives production teams:
+
+- A schema-backed input and output contract for every tool.
+- Workflow-level retries, timeouts, compensation, and human approval.
+- Access control through a Conductor application instead of broad internal API credentials.
+- Execution history for each tool call, including inputs, outputs, failures, and approvals.
+- A stable tool surface even when the downstream service graph changes.
+
 :::tip 5-minute path
 Create the workflow that implements the tool, create an application with `Execute` permission, configure authentication, define an MCP-enabled service, add a route with a clear tool description, test it, then connect the MCP endpoint to your agent runtime.
 :::

@@ -8,12 +8,12 @@ keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration
 
 # Why Conductor for agents
 
-Conductor is the original durable workflow orchestration engine — born at Netflix to run microservices at internet scale, now powering AI agents with the same battle-tested execution model. Other engines give you generic primitives and say "build your agent infrastructure yourself." Conductor gives you the agent infrastructure. Here's what that looks like in practice.
+Conductor is a durable workflow engine for production AI agents and distributed systems. Keep your agent framework for reasoning, planning, and model-specific logic; use Conductor when execution must survive process crashes, tool timeouts, human waits, duplicate callbacks, worker deploys, and partial side effects. Here's what that looks like in practice.
 
 
 ## Call an LLM — zero boilerplate
 
-Other engines treat LLM calls as generic function calls. You build the abstraction: prompt construction, provider switching, response parsing, token tracking, retry logic. On Conductor, an LLM call is a system task:
+In many in-process agent runtimes, LLM calls are ordinary function calls. Teams still need to handle prompt construction, provider switching, response parsing, token tracking, and retry policy. In Conductor, an LLM call can be a system task:
 
 ```json
 {
@@ -34,7 +34,7 @@ Other engines treat LLM calls as generic function calls. You build the abstracti
 
 That's it. No SDK wrapper, no worker code, no retry logic. Conductor executes it, persists the prompt, response, token usage, model, and latency. Switch providers by changing `llmProvider` — from `anthropic` to `openai` to `bedrock` — with zero code changes. 14+ providers supported natively.
 
-On other engines, this same task requires:
+Without a durable orchestration layer, this same task usually requires:
 
 - A worker/activity function that constructs the HTTP request
 - Provider-specific SDK initialization and auth
@@ -70,9 +70,9 @@ MCP (Model Context Protocol) is the open standard for agent tool use. On Conduct
 ]
 ```
 
-The agent discovers tools at runtime, the LLM picks the right one, and Conductor executes it with automatic retry, timeout, and full audit trail. Connect to any MCP server — GitHub, Slack, databases, custom APIs — with no wrapper code.
+The agent discovers tools at runtime, the LLM picks the right one, and Conductor executes it with automatic retry, timeout, and full audit trail. Connect to MCP-compatible servers such as GitHub, Slack, databases, and custom APIs with a standard tool interface.
 
-On other engines, you write a "Durable MCP" wrapper: a custom activity/worker that connects to the MCP server, marshals requests, handles errors, and logs results. For every MCP server. For every tool type.
+Without a durable orchestration layer, teams often write a wrapper that connects to the MCP server, marshals requests, handles errors, and logs results for each tool surface.
 
 
 ## Human-in-the-loop — one line, durable forever
@@ -92,7 +92,7 @@ An agent needs human approval before a risky action. On Conductor:
 
 The workflow pauses. The pause survives server restarts, deploys, infrastructure changes — indefinitely. When someone approves via the API or UI, the workflow resumes with the approval payload. No polling, no timer hacks, no external state.
 
-On other engines, you implement `wait_condition()` with signal handlers, write the signal routing code, and build the approval UI integration yourself. The pause mechanism is in your workflow code, not in the platform.
+Without a platform-level wait state, teams usually implement signal routing, approval storage, and UI integration themselves. The pause mechanism lives in application code instead of the execution runtime.
 
 
 ## Agent loops — checkpointed per iteration
@@ -138,12 +138,12 @@ An autonomous agent loops: plan, act, observe, repeat. On Conductor, each iterat
 
 If the agent crashes at iteration 18 of 20, it resumes from iteration 18. Not from scratch. The 17 completed LLM calls and tool executions are already persisted — zero tokens wasted, zero duplicate side effects. The loop condition enforces an iteration cap so the agent can't run forever.
 
-On other engines, you build the loop in your workflow code. If the process crashes, you either restart from the beginning (burning all tokens again) or build your own checkpointing mechanism.
+In an in-process loop, a crash can force a restart from the beginning or require a custom checkpointing mechanism.
 
 
 ## Dynamic workflows — LLMs generate execution plans
 
-This is the capability no other engine can match. An LLM generates a complete workflow definition as JSON, and Conductor executes it immediately:
+This is where Conductor's JSON-native runtime is especially useful. An LLM generates a complete workflow definition as JSON, and Conductor executes it immediately:
 
 ```json
 {
@@ -160,9 +160,9 @@ This is the capability no other engine can match. An LLM generates a complete wo
 
 The LLM's output is a Conductor workflow definition. No code generation. No compilation. No deployment pipeline. The generated workflow runs with the same durable execution guarantees as any hand-written workflow — persistence, retries, observability, replay.
 
-Combined with `DYNAMIC` tasks (resolve which task to run at runtime) and `DYNAMIC_FORK` (create N parallel branches at runtime), Conductor is more dynamic than code-based engines. Not despite using JSON — because of it. Data is easier to generate, transform, and compose than code.
+Combined with `DYNAMIC` tasks (resolve which task to run at runtime) and `DYNAMIC_FORK` (create N parallel branches at runtime), Conductor is more dynamic than code-only orchestration patterns. Not despite using JSON — because of it. Data is easier to generate, transform, and compose than code.
 
-On code-based engines, dynamic workflows require generating source code, compiling it, deploying it, and then executing it. That friction fundamentally limits how dynamically an AI system can operate.
+In code-only orchestration, dynamic workflows often require generating source code, compiling it, deploying it, and then executing it. That friction limits how dynamically an AI system can operate.
 
 
 ## RAG pipelines — native vector database support
@@ -198,7 +198,7 @@ Retrieval-augmented generation as two system tasks, no external framework:
 ]
 ```
 
-Pinecone, pgvector, and MongoDB Atlas are supported natively. No LangChain, no custom retrieval workers, no framework dependencies.
+Pinecone, pgvector, and MongoDB Atlas are supported natively. Use this when you want retrieval inside the workflow instead of pushing orchestration into a separate RAG framework.
 
 
 ## Multi-agent delegation — sub-workflows with lifecycle
@@ -244,7 +244,7 @@ Running executions continue with their original definition. New executions pick 
 This is not a minor convenience. For AI agents that run for hours or days — iterating through plan/act/observe loops, waiting for human approvals, pausing for external events — the ability to evolve the workflow definition without version branching is the difference between a maintainable system and a fragile one.
 
 
-## Guaranteed execution — failure is not a choice
+## Durable execution — failures are explicit
 
 Conductor was built as a state machine engine at Netflix to orchestrate microservices at internet scale. The execution model is designed around one principle: **every task will be executed to completion, or every failure will be explicitly handled.** There is no silent failure mode.
 
@@ -299,7 +299,7 @@ Every `LLM_CHAT_COMPLETE` task automatically records:
 
 Every `CALL_MCP_TOOL` task records the method, arguments, response, and timing. Every `HUMAN` task records who approved, when, and with what payload. All of this is queryable via API and visible in the UI.
 
-On other engines, you build this logging yourself. Every team does it differently, with different coverage and different gaps.
+Without platform-level execution history, teams usually build this logging themselves, with uneven coverage and gaps.
 
 
 ## The agent use case matrix

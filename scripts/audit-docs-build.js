@@ -424,7 +424,9 @@ function auditGeneratedFiles() {
   if (fs.existsSync(llmsPath)) {
     const llms = fs.readFileSync(llmsPath, "utf8");
     if (!llms.includes("Product: Orkes Conductor")) errors.push("llms.txt missing product identity");
-    if (!llms.includes("agentic workflow engine")) errors.push("llms.txt missing agentic workflow positioning");
+    if (!llms.includes("durable workflow engine for production AI agents")) {
+      errors.push("llms.txt missing durable workflow positioning");
+    }
     if (!llms.includes("## Documentation Index")) errors.push("llms.txt missing documentation index");
   }
 }

@@ -15,7 +15,7 @@ const LEGACY_SITE_URLS = ["https://orkes.io/content/", "http://orkes.io/content/
 const BASE_URL = normalizeBaseUrl(process.env.DOCS_BASE_URL || "/content");
 const SITE_URL = normalizeSiteUrl(process.env.DOCS_SITE_URL || "https://orkes.io/content/");
 const SITE_DESCRIPTION =
-  "Orkes Conductor is the managed enterprise platform for durable execution, agentic workflows, visual debugging, access control, and internet-scale orchestration.";
+  "Orkes Conductor is the managed enterprise platform for Conductor OSS, a durable workflow engine for production AI agents and distributed systems.";
 const DOCS_LAST_MODIFIED = process.env.DOCS_LAST_MODIFIED || "2026-05-14";
 const DEVELOPER_EDITION_URL =
   "https://developer.orkescloud.com/?ga_id=GA1.1.114307086.1749276711&amp;utm_source=google&amp;utm_medium=organic&amp;_gl=1*mi3s3s*_gcl_au*MTU0NDU1MTQuMTc3ODM5MTkyMw..";
@@ -1207,6 +1207,7 @@ function convertFaqPage(contents) {
   }
 
   const order = [
+    ["Project, maintenance, and product relationship", "projectFaqs"],
     ["Setup, environments, and compliance", "setupFaqs"],
     ["Authentication and access control", "authFaqs"],
     ["Workflow basics and building blocks", "workflowFaqs"],
@@ -1289,6 +1290,284 @@ function enhanceApiReferencePage(body, route, title, description) {
   ].join("\n");
 
   return body.replace(/^(# .+\n)/, `$1\n${quickReference}\n`);
+}
+
+function insertAfterIntro(body, addition) {
+  const cleanAddition = addition.trim();
+  if (!cleanAddition) return body;
+  const firstLine = cleanAddition.split(/\r?\n/)[0];
+  if (body.includes(firstLine)) return body;
+  const match = body.match(/^(# .+\n\n[\s\S]*?\n\n)/);
+  if (!match) return `${cleanAddition}\n\n${body}`;
+  return body.replace(match[0], `${match[0]}${cleanAddition}\n\n`);
+}
+
+function insertBeforeHeading(body, heading, addition) {
+  const cleanAddition = addition.trim();
+  if (!cleanAddition) return body;
+  const firstLine = cleanAddition.split(/\r?\n/)[0];
+  if (body.includes(firstLine)) return body;
+  const marker = `\n## ${heading}`;
+  const idx = body.indexOf(marker);
+  if (idx === -1) return `${body.trim()}\n\n${cleanAddition}\n`;
+  return `${body.slice(0, idx).trimEnd()}\n\n${cleanAddition}\n${body.slice(idx)}`;
+}
+
+function appendBeforeNextSteps(body, addition) {
+  return insertBeforeHeading(body, "Next steps", addition);
+}
+
+function enhancePositioningPage(body, route) {
+  let output = body;
+
+  if (route === "ai-orchestration") {
+    output = insertAfterIntro(
+      output,
+      [
+        "## Where Conductor fits",
+        "",
+        "Use your agent framework for reasoning, prompts, graph composition, and model-specific loops. Use Conductor for execution: persisted state, task queues, retries, timeouts, durable human waits, replay, governance, and audit history.",
+        "",
+        "Conductor is the durable runtime under production agents and distributed workflows. It is not a replacement for every agent framework, and it should not be positioned as one. Keep the framework where it helps the model reason; add Conductor where the work must finish reliably.",
+      ].join("\n"),
+    );
+    output = output.replace(
+      "If you run agents on a framework like LangChain, CrewAI, or LangGraph without a durable execution backend, you are responsible for:",
+      "If you run agents only inside an in-process or non-durable runtime, you are responsible for:",
+    );
+  }
+
+  if (route === "ai-orchestration/why-conductor") {
+    output = output.replace(
+      /Conductor is the original durable workflow orchestration engine[\s\S]*?Here's what that looks like in practice\./,
+      "Conductor is a durable workflow engine for production AI agents and distributed systems. Keep your agent framework for reasoning, planning, and model-specific logic; use Conductor when execution must survive process crashes, tool timeouts, human waits, duplicate callbacks, worker deploys, and partial side effects. Here's what that looks like in practice.",
+    );
+    output = output.replace(
+      "Other engines treat LLM calls as generic function calls. You build the abstraction: prompt construction, provider switching, response parsing, token tracking, retry logic. On Conductor, an LLM call is a system task:",
+      "In many in-process agent runtimes, LLM calls are ordinary function calls. Teams still need to handle prompt construction, provider switching, response parsing, token tracking, and retry policy. In Conductor, an LLM call can be a system task:",
+    );
+    output = output.replace("On other engines, this same task requires:", "Without a durable orchestration layer, this same task usually requires:");
+    output = output.replace(
+      "The agent discovers tools at runtime, the LLM picks the right one, and Conductor executes it with automatic retry, timeout, and full audit trail. Connect to any MCP server — GitHub, Slack, databases, custom APIs — with no wrapper code.",
+      "The agent discovers tools at runtime, the LLM picks the right one, and Conductor executes it with automatic retry, timeout, and full audit trail. Connect to MCP-compatible servers such as GitHub, Slack, databases, and custom APIs with a standard tool interface.",
+    );
+    output = output.replace(
+      'On other engines, you write a "Durable MCP" wrapper: a custom activity/worker that connects to the MCP server, marshals requests, handles errors, and logs results. For every MCP server. For every tool type.',
+      "Without a durable orchestration layer, teams often write a wrapper that connects to the MCP server, marshals requests, handles errors, and logs results for each tool surface.",
+    );
+    output = output.replace(
+      "On other engines, you implement `wait_condition()` with signal handlers, write the signal routing code, and build the approval UI integration yourself. The pause mechanism is in your workflow code, not in the platform.",
+      "Without a platform-level wait state, teams usually implement signal routing, approval storage, and UI integration themselves. The pause mechanism lives in application code instead of the execution runtime.",
+    );
+    output = output.replace(
+      "On other engines, you build the loop in your workflow code. If the process crashes, you either restart from the beginning (burning all tokens again) or build your own checkpointing mechanism.",
+      "In an in-process loop, a crash can force a restart from the beginning or require a custom checkpointing mechanism.",
+    );
+    output = output.replace("This is the capability no other engine can match.", "This is where Conductor's JSON-native runtime is especially useful.");
+    output = output.replace("more dynamic than code-based engines", "more dynamic than code-only orchestration patterns");
+    output = output.replace(
+      "On code-based engines, dynamic workflows require generating source code, compiling it, deploying it, and then executing it. That friction fundamentally limits how dynamically an AI system can operate.",
+      "In code-only orchestration, dynamic workflows often require generating source code, compiling it, deploying it, and then executing it. That friction limits how dynamically an AI system can operate.",
+    );
+    output = output.replace(
+      "Pinecone, pgvector, and MongoDB Atlas are supported natively. No LangChain, no custom retrieval workers, no framework dependencies.",
+      "Pinecone, pgvector, and MongoDB Atlas are supported natively. Use this when you want retrieval inside the workflow instead of pushing orchestration into a separate RAG framework.",
+    );
+    output = output.replace(
+      "## Guaranteed execution — failure is not a choice",
+      "## Durable execution — failures are explicit",
+    );
+    output = output.replace(
+      "On other engines, you build this logging yourself. Every team does it differently, with different coverage and different gaps.",
+      "Without platform-level execution history, teams usually build this logging themselves, with uneven coverage and gaps.",
+    );
+  }
+
+  if (route === "ai-orchestration/durable-agents") {
+    output = insertAfterIntro(
+      output,
+      [
+        "## Framework plus durable runtime",
+        "",
+        "A durable agent is not a different reasoning framework. Keep an agent framework, custom planner, or model-specific loop where it helps with reasoning. Use Conductor for the execution path that must survive failures: state, queues, retries, waits, human approval, compensation, replay, and audit history.",
+        "",
+        "This is the practical production boundary: the framework decides what should happen next; Conductor makes sure the selected work is executed, recovered, and observable.",
+        "",
+        "| Scenario | Durable runtime behavior |",
+        "| -------- | ------------------------ |",
+        "| Agent process dies after planning | Completed planning output is persisted; execution resumes from the next task. |",
+        "| Human approval spans days | The workflow remains paused without holding a process or thread. |",
+        "| Tool side effect is retried | Idempotency keys and compensation workflows prevent or mitigate duplicate work. |",
+      ].join("\n"),
+    );
+    output = output.replace(
+      "Most AI frameworks have no concept of compensation. If your LangChain agent sends an email in step 3 and crashes in step 5, the email is already sent and there is no built-in mechanism to undo it. Conductor's failure workflows solve this.",
+      "Many in-process agent runtimes do not provide compensation as a first-class execution primitive. If an agent sends an email in step 3 and crashes in step 5, the email is already sent and the runtime still needs a way to undo, mitigate, or record the partial result. Conductor's failure workflows solve this.",
+    );
+  }
+
+  if (route === "ai-orchestration/production-agent-architecture") {
+    output = insertAfterIntro(
+      output,
+      [
+        "## Agents are distributed systems",
+        "",
+        "A production agent coordinates models, tools, workers, queues, humans, timers, webhooks, and external callbacks. The agent framework can own reasoning and planning; Conductor owns durable execution, persisted state, task routing, retries, waits, replay, and audit history.",
+        "",
+        "Use this architecture when the agent takes actions that matter: creating records, updating systems, calling internal services, waiting for approval, or coordinating multiple tools over minutes, hours, or days.",
+      ].join("\n"),
+    );
+  }
+
+  if (route === "ai-orchestration/failure-semantics") {
+    output = insertAfterIntro(
+      output,
+      [
+        "## Failure-injection checklist",
+        "",
+        "| Scenario | How to test | Expected durable behavior |",
+        "| -------- | ----------- | ------------------------- |",
+        "| Crash after LLM plan | Stop the worker or server after the plan task completes. | Completed prompt, response, and token data remain persisted; execution resumes after restart. |",
+        "| Tool timeout | Configure a short `responseTimeoutSeconds` and delay the tool response. | Only the timed-out tool task retries; upstream LLM calls are not repeated. |",
+        "| Human approval wait | Leave a `HUMAN` task open across a deploy or restart. | The workflow remains paused and resumes when signaled. |",
+        "| Worker deploy | Stop an in-flight worker and start a new version. | The task is requeued after timeout and picked up by a new worker. |",
+        "| Duplicate side effect risk | Retry a side-effecting tool call with the same business key. | The external system deduplicates or the compensation workflow mitigates the duplicate. |",
+        "",
+        "## What to measure",
+        "",
+        "| Metric | Why it matters |",
+        "| ------ | -------------- |",
+        "| Completion rate | Shows whether agents finish business work instead of only starting it. |",
+        "| Recovery time | Measures how quickly workflows resume after crashes, deploys, and dependency failures. |",
+        "| Duplicate tool calls | Validates idempotency and side-effect control. |",
+        "| State consistency | Confirms that completed LLM/tool outputs are reused instead of recomputed. |",
+        "| Manual operator steps | Shows how much recovery work humans still perform. |",
+        "| p95 runtime overhead | Quantifies orchestration overhead against reliability gains. |",
+        "| Cost and token usage | Shows avoided re-execution for expensive LLM calls. |",
+      ].join("\n"),
+    );
+  }
+
+  if (route === "ai-orchestration/first-ai-agent") {
+    output = insertBeforeHeading(
+      output,
+      "Step 5: Add human approval",
+      [
+        "## Prove durability",
+        "",
+        "After the first successful run, prove that the agent is durable instead of just runnable.",
+        "",
+        "1. Start the agent asynchronously so you can inspect the execution while it runs.",
+        "2. Stop a worker, restart the Conductor server, or interrupt the MCP service after one task completes.",
+        "3. Start the worker or service again.",
+        "4. Open the workflow execution and confirm completed tasks were not repeated and the workflow resumed from the last incomplete step.",
+        "",
+        "Expected result: completed LLM calls keep their prompts, responses, token usage, and timing. Only the interrupted task is retried.",
+      ].join("\n"),
+    );
+    output = output.replace(/any MCP server/g, "any MCP-compatible server");
+  }
+
+  if (route === "ai-orchestration/mcp-integration") {
+    output = insertAfterIntro(
+      output,
+      [
+        "## Where MCP fits with Conductor",
+        "",
+        "Conductor does not replace your agent runtime. It makes tool calls durable and auditable. Use MCP for the standard tool interface; use Conductor for retries, timeouts, state, human approval, compensation, permissions, and execution history behind the tool call.",
+        "",
+        "For production tools, prefer exposing governed workflows through MCP Gateway instead of giving agents raw access to internal APIs.",
+      ].join("\n"),
+    );
+    output = output.replace(/any MCP server/g, "any MCP-compatible server");
+  }
+
+  if (route === "ai-orchestration/token-efficiency") {
+    output = output.replace("## Comparison: durable vs non-durable frameworks", "## Comparison: durable vs in-process runtimes");
+    output = output.replace("| | Non-durable (LangChain, CrewAI, custom) | Durable (Conductor) |", "| | In-process or non-durable runtime | Durable (Conductor) |");
+    output = output.replace(
+      "Every crash, retry, pause, or debugging session that would re-execute LLM calls in a non-durable framework is free in Conductor",
+      "Every crash, retry, pause, or debugging session that would re-execute LLM calls in an in-process runtime is free in Conductor",
+    );
+  }
+
+  if (route === "quickstarts/durable-execution") {
+    output = insertBeforeHeading(
+      output,
+      "What persists",
+      [
+        "## Durability proof scenarios",
+        "",
+        "Use these scenarios to verify that Conductor is providing durable execution, not just task sequencing.",
+        "",
+        "| Scenario | Test | Expected result |",
+        "| -------- | ---- | --------------- |",
+        "| Process kill after LLM plan | Kill the worker or server after an LLM task completes. | The completed LLM output is reused after restart. |",
+        "| Tool timeout and retry | Delay a tool beyond `responseTimeoutSeconds`. | Only the tool task retries; prior tasks are preserved. |",
+        "| Human wait across deploy | Leave a `HUMAN` task open, deploy, then approve. | The workflow resumes with the approval payload. |",
+        "| Worker restart | Stop a worker after polling and before completion. | The task is redelivered after timeout. |",
+        "| Duplicate side effect prevention | Retry a side-effecting step with the same business idempotency key. | The external system deduplicates or the failure workflow compensates. |",
+      ].join("\n"),
+    );
+  }
+
+  if (route === "quickstarts/concepts") {
+    output = output.replace("## What can Conductor do?", "## What Conductor is best at");
+    output = insertAfterIntro(
+      output,
+      [
+        "## How to think about Conductor",
+        "",
+        "Conductor is a durable workflow engine for distributed applications and production AI agents. It is not limited to JSON-only or simple flows: workflow definitions describe orchestration, while workers and system tasks run real business logic in Python, Java, Go, .NET/C#, Ruby, Rust, TypeScript, or any service that can poll an API.",
+      ].join("\n"),
+    );
+  }
+
+  if (route === "developer-guides/conductor-skills") {
+    output = appendBeforeNextSteps(
+      output,
+      [
+        "## Conductor Skills and AgentSpan",
+        "",
+        "Conductor Skills help AI coding agents create, run, monitor, debug, and manage Conductor workflows and workers. They are authoring and operations instructions for coding agents.",
+        "",
+        "AgentSpan, when used with Conductor, should be positioned separately: a Conductor project for running supported agent frameworks as durable Conductor workflows. Do not describe Conductor Skills as the agent runtime, and do not describe AgentSpan as replacing every agent framework.",
+      ].join("\n"),
+    );
+  }
+
+  if (route === "category/sdks" || route.startsWith("sdks/")) {
+    if (route === "category/sdks") {
+      output = insertAfterIntro(
+        output,
+        [
+          "## Maintenance and compatibility",
+          "",
+          "Conductor SDKs are open source under the Conductor OSS organization. Conductor OSS continues as an actively maintained open-source project, with Orkes contributing maintenance, engineering, documentation, and enterprise support.",
+          "",
+          "Use Orkes Conductor credentials when connecting these SDKs to Orkes clusters. Use local or OSS server configuration when connecting to Conductor OSS.",
+        ].join("\n"),
+      );
+    } else if (route !== "sdks/authentication" && !output.includes("Is this project actively maintained?")) {
+      output = insertAfterIntro(
+        output,
+        [
+          '!!! note "Maintenance"',
+          "    This SDK is part of the Conductor OSS ecosystem. Conductor OSS remains actively maintained under the Conductor OSS community, with Orkes contributing maintenance, engineering, documentation, and enterprise support.",
+        ].join("\n"),
+      );
+    }
+    output = output.replace(
+      /Yes\. \[Orkes\]\(https:\/\/orkes\.io\) is the primary maintainer and offers an enterprise SaaS platform for Conductor across all major cloud providers\./g,
+      "Yes. Conductor OSS continues as an actively maintained open-source project under the Conductor OSS community, with Orkes contributing maintenance, engineering, documentation, and enterprise support. The original Netflix project history is part of Conductor's origin story; the current project continues under the Conductor OSS organization.",
+    );
+    output = output.replace(
+      /Yes\. This client works with Conductor OSS and Orkes Conductor\. Conductor originated at Netflix and was later contributed to the open-source foundation\./g,
+      "Yes. This client works with Conductor OSS and Orkes Conductor. Conductor originated at Netflix and continues under the Conductor OSS community, with Orkes as a major contributor and enterprise maintainer.",
+    );
+  }
+
+  return output;
 }
 
 function demoteExtraH1(body) {
@@ -1376,7 +1655,10 @@ function convertEntry(entry) {
   const pageTitle = pageTitleForRoute(route, title);
   const pageDescription = pageDescriptionForRoute(route, frontMatter.description, pageTitle);
   const sourceBody = entry.shared ? transformSharedBody(body, entry) : body;
-  const cleaned = enhanceApiReferencePage(cleanMdx(sourceBody, sourceRel), route, pageTitle, pageDescription);
+  const cleaned = enhancePositioningPage(
+    enhanceApiReferencePage(cleanMdx(sourceBody, sourceRel), route, pageTitle, pageDescription),
+    route,
+  );
   return `${buildFrontMatter(frontMatter, route, pageTitle)}${cleaned}`;
 }
 
@@ -1392,8 +1674,8 @@ description: "Orkes Conductor documentation for building durable workflows, API 
 
 <div class="hero">
   <h1 class="hero-title">Build unbreakable workflows<br/><span class="hero-highlight">and AI agents.</span></h1>
-  <p class="hero-subtitle">Orkes Conductor is the managed enterprise version of Conductor OSS, with durable execution, visual debugging, access control, and internet-scale orchestration.</p>
-  <p class="hero-differentiators">No SDK restrictions. No non-determinism bugs. No cloud lock-in.</p>
+  <p class="hero-subtitle">Orkes Conductor is the managed enterprise platform for Conductor OSS, a durable workflow engine for production AI agents and distributed systems.</p>
+  <p class="hero-differentiators">Keep your frameworks and services. Add durable execution, human waits, retries, replay, and governance.</p>
   <div class="hero-actions">
     <a href="${DEVELOPER_EDITION_URL}" class="btn-primary">Start for free<span class="btn-arrow">&rarr;</span></a>
     <a href="${BASE_URL}/quickstarts" class="btn-ghost">Read the quickstarts</a>
@@ -1446,7 +1728,7 @@ description: "Orkes Conductor documentation for building durable workflows, API 
     <div class="feature-card">
       <div class="feature-tag">AI</div>
       <h3>AI agent orchestration</h3>
-      <p>Orchestrate AI agents with native LLM providers, tool calling, human approval, structured output, and vector database support.</p>
+      <p>Run production agents as durable workflows. Keep agent frameworks for reasoning and use Conductor for state, tool execution, approvals, retries, and auditability.</p>
       <a href="${BASE_URL}/ai-orchestration" class="feature-link">AI Cookbook &rarr;</a>
     </div>
     <div class="feature-card">
@@ -1523,7 +1805,15 @@ description: "Orkes Conductor documentation for building durable workflows, API 
     </details>
     <details class="faq-item">
       <summary>Can Orkes Conductor orchestrate AI agents and LLMs?</summary>
-      <p>Yes. Orkes Conductor supports native AI tasks, LLM providers, vector databases, and human-in-the-loop workflows.</p>
+      <p>Yes. Orkes Conductor supports native AI tasks, LLM providers, vector databases, MCP tools, and human-in-the-loop workflows. It is the durable execution runtime under production agents.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Is Conductor still maintained?</summary>
+      <p>Yes. Conductor OSS continues as an actively maintained open-source project under the Conductor OSS community, with Orkes contributing maintenance, engineering, documentation, and enterprise support.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Is Conductor an AI framework?</summary>
+      <p>No. Use agent frameworks for reasoning, prompts, and model-specific loops; use Conductor for durable execution, persisted state, retries, waits, human approval, auditability, and governance.</p>
     </details>
     <details class="faq-item">
       <summary>Can I replay or retry workflows?</summary>
@@ -2811,6 +3101,7 @@ function cleanMarkdownForLlms(contents) {
     .replace(/&gt;/g, ">")
     .replace(/&quot;/g, '"')
     .replace(/&#39;/g, "'")
+    .replace(/[ \t]+$/gm, "")
     .replace(/\n{4,}/g, "\n\n\n")
     .trim();
 }
@@ -2830,11 +3121,15 @@ function writeLlmsTxt() {
     "",
     `Source documentation: ${SITE_URL}`,
     "Product: Orkes Conductor",
-    "Positioning: Managed enterprise platform and agentic workflow engine for durable execution, visual debugging, access control, polyglot workers, and internet-scale orchestration.",
+    "Positioning: Managed enterprise platform for Conductor OSS, a durable workflow engine for production AI agents and distributed systems.",
     "",
     "## What is Orkes Conductor?",
     "",
     "Orkes Conductor is the managed enterprise version of Conductor OSS. It orchestrates production workflows, distributed applications, microservices, APIs, human approvals, and AI agents with durable execution and operational visibility.",
+    "",
+    "Conductor OSS is the actively maintained open-source durable workflow engine under the Conductor OSS community. Orkes contributes maintenance, engineering, documentation, and enterprise support; the original Netflix project history is part of the origin story, not the current maintenance model.",
+    "",
+    "Conductor is not a replacement for agent frameworks. Use frameworks for reasoning, prompts, graph composition, and model-specific loops; use Conductor for durable execution, persisted state, task queues, retries, timeouts, long waits, human approval, replay, governance, and audit history.",
     "",
     "Use Orkes Conductor when work must survive crashes, retries, timeouts, long waits, external callbacks, human approvals, model calls, and worker failures. Define orchestration in Conductor and keep business logic in workers written in Python, Java, Go, .NET/C#, Ruby, Rust, TypeScript, or any service that can poll an API.",
     "",

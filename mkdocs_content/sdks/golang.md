@@ -11,6 +11,9 @@ keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration
 !!! info "Source"
     GitHub: [conductor-oss/go-sdk](https://github.com/conductor-oss/go-sdk) | Report issues and contribute on GitHub.
 
+!!! note "Maintenance"
+    This SDK is part of the Conductor OSS ecosystem. Conductor OSS remains actively maintained under the Conductor OSS community, with Orkes contributing maintenance, engineering, documentation, and enterprise support.
+
 ## Installation
 
 1. Initialize your module. e.g.:

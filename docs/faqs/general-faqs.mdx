@@ -5,6 +5,29 @@ description: "Explore answers to commonly asked questions about using Conductor 
 
 import FAQStructuredData from '../../src/theme/FAQStructuredData';
 
+export const projectFaqs = [
+  {
+    question: 'Is Conductor still maintained?',
+    answer:
+      'Yes. Conductor OSS continues as an actively maintained open-source project under the Conductor OSS community, with Orkes contributing maintenance, engineering, documentation, and enterprise support. The original Netflix project history is part of Conductor’s origin story; the current project continues under the Conductor OSS organization.',
+  },
+  {
+    question: 'Is this the same project that started at Netflix?',
+    answer:
+      'Yes. Conductor originated at Netflix and is now maintained under the Conductor OSS community. Orkes Conductor builds on that engine and adds managed enterprise capabilities for teams running Conductor in production.',
+  },
+  {
+    question: 'What is the difference between Conductor OSS and Orkes Conductor?',
+    answer:
+      'Conductor OSS is the open-source durable workflow engine. Orkes Conductor is the managed, enterprise-ready version of Conductor with hosted operations, role based access control, secrets, schedules, webhooks, observability, visual debugging, integrations, and support.',
+  },
+  {
+    question: 'Is Conductor an AI framework?',
+    answer:
+      'No. Conductor is a durable workflow engine for production AI agents and distributed systems. Use agent frameworks for reasoning, prompts, and model-specific loops; use Conductor for durable execution, persisted state, retries, timeouts, long waits, human approval, auditability, and governance.',
+  },
+]
+
 export const setupFaqs = [
   {
     question: 'What setup options are available for Orkes Conductor?',
@@ -208,6 +231,9 @@ export const workflowExecFaqs =
 ]
 
 # General FAQs
+
+## Project, maintenance, and product relationship
+<FAQStructuredData faqs={projectFaqs} />
 
 ## Setup, environments, and compliance
 <FAQStructuredData faqs={setupFaqs} />

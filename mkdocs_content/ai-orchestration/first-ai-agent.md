@@ -18,7 +18,7 @@ keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration
 
 ## Step 1: Start an MCP server
 
-Your agent needs tools to call. MCP (Model Context Protocol) is the open standard for connecting AI agents to tools. Start a test MCP server — or use any MCP server you already have running.
+Your agent needs tools to call. MCP (Model Context Protocol) is the open standard for connecting AI agents to tools. Start a test MCP server — or use any MCP-compatible server you already have running.
 
 ```bash
 pip install mcp-testkit
@@ -157,6 +157,16 @@ Open [http://localhost:8080](http://localhost:8080) to see the execution. Click 
 !!! success "What just happened"
     Your agent discovered tools from an MCP server, asked an LLM to pick the right one, executed it, and summarized the result. Every step was persisted — if the server had crashed at any point, execution would have resumed from the last completed task. No tokens wasted, no progress lost.
 
+## Prove durability
+
+After the first successful run, prove that the agent is durable instead of just runnable.
+
+1. Start the agent asynchronously so you can inspect the execution while it runs.
+2. Stop a worker, restart the Conductor server, or interrupt the MCP service after one task completes.
+3. Start the worker or service again.
+4. Open the workflow execution and confirm completed tasks were not repeated and the workflow resumed from the last incomplete step.
+
+Expected result: completed LLM calls keep their prompts, responses, token usage, and timing. Only the interrupted task is retried.
 
 ## Step 5: Add human approval
 
@@ -278,7 +288,7 @@ Each iteration of the loop is a durable checkpoint. If the agent crashes at iter
 
 In 5 minutes, you built an AI agent that:
 
-- **Discovers tools** from any MCP server at runtime
+- **Discovers tools** from any MCP-compatible server at runtime
 - **Plans actions** using an LLM
 - **Executes tools** with full retry and error handling
 - **Supports human approval** as a durable pause
@@ -291,7 +301,7 @@ All of this with zero custom code. The entire agent is a JSON workflow definitio
 
 ## Next steps
 
-- **[MCP Integration](/content/ai-orchestration/mcp-integration)** — Connect to any MCP server, expose workflows as MCP tools.
+- **[MCP Integration](/content/ai-orchestration/mcp-integration)** — Connect to any MCP-compatible server, expose workflows as MCP tools.
 - **[Human-in-the-Loop](/content/ai-orchestration/human-in-the-loop)** — Advanced approval patterns: conditional review, LLM-as-judge.
 - **[Dynamic Workflows](/content/ai-orchestration/dynamic-workflows)** — Agents that generate their own execution plans as JSON.
 - **[Token Efficiency](/content/ai-orchestration/token-efficiency)** — How durable execution saves tokens and reduces LLM costs.

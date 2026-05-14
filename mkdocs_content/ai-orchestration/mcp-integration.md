@@ -10,6 +10,12 @@ keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration
 
 MCP (Model Context Protocol) is the open standard for connecting AI agents to tools and data sources. Conductor provides native MCP integration — discover tools, call them with full durability, and expose your own workflows as MCP tools.
 
+## Where MCP fits with Conductor
+
+Conductor does not replace your agent runtime. It makes tool calls durable and auditable. Use MCP for the standard tool interface; use Conductor for retries, timeouts, state, human approval, compensation, permissions, and execution history behind the tool call.
+
+For production tools, prefer exposing governed workflows through MCP Gateway instead of giving agents raw access to internal APIs.
+
 
 ## What is MCP
 
@@ -71,7 +77,7 @@ Calls a specific tool on an MCP server with the given arguments.
 
 ## Connecting to MCP servers
 
-Conductor connects to any MCP server via HTTP. Pass the server URL as a workflow input or hardcode it in the task definition.
+Conductor connects to any MCP-compatible server via HTTP. Pass the server URL as a workflow input or hardcode it in the task definition.
 
 ```json
 {

@@ -8,6 +8,36 @@ keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration
 
 # General FAQs
 
+## Project, maintenance, and product relationship
+
+<details class="faq-item">
+<summary>Is Conductor still maintained?</summary>
+
+Yes. Conductor OSS continues as an actively maintained open-source project under the Conductor OSS community, with Orkes contributing maintenance, engineering, documentation, and enterprise support. The original Netflix project history is part of Conductor’s origin story; the current project continues under the Conductor OSS organization.
+
+</details>
+
+<details class="faq-item">
+<summary>Is this the same project that started at Netflix?</summary>
+
+Yes. Conductor originated at Netflix and is now maintained under the Conductor OSS community. Orkes Conductor builds on that engine and adds managed enterprise capabilities for teams running Conductor in production.
+
+</details>
+
+<details class="faq-item">
+<summary>What is the difference between Conductor OSS and Orkes Conductor?</summary>
+
+Conductor OSS is the open-source durable workflow engine. Orkes Conductor is the managed, enterprise-ready version of Conductor with hosted operations, role based access control, secrets, schedules, webhooks, observability, visual debugging, integrations, and support.
+
+</details>
+
+<details class="faq-item">
+<summary>Is Conductor an AI framework?</summary>
+
+No. Conductor is a durable workflow engine for production AI agents and distributed systems. Use agent frameworks for reasoning, prompts, and model-specific loops; use Conductor for durable execution, persisted state, retries, timeouts, long waits, human approval, auditability, and governance.
+
+</details>
+
 ## Setup, environments, and compliance
 
 <details class="faq-item">
