@@ -1,0 +1,462 @@
+---
+slug: "/integrations/google-drive-operations"
+description: "Look up the input and output parameters for each operation available in the Google Drive integration with Orkes Conductor."
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Google Drive Operations Reference
+
+Orkes Conductor integrates with Google Drive to let you interact with your files, folders, and shared drives directly from workflows. Once you configure the Google Drive integration, you can use the following operations to upload, download, create, move, search, share, and delete content in Google Drive, without leaving your workflow.
+
+This page covers the parameters and expected output for each operation available in the [Google Drive integration](/content/integrations/google-drive).
+
+## Share File
+
+Share a file with a user. Use this when you need to grant access to Drive files.
+
+<Tabs>
+<TabItem value="input" label="Input Parameters">
+
+| Parameter | Description | Type | Required/Optional |
+| --------- | ----------- | ---- | ----------------- |
+| Email Address | The email address of the user to share the file with. | string | Required. | 
+| Role | The access role. Supported values:<ul><li>`reader`</li><li>`commenter`</li><li>`writer`</li></ul> | string | Optional. | 
+| Email Message | A message to include in the notification email. | string | Optional. | 
+| Send Notification Email | Whether to send a notification email to the user. | boolean | Optional. | 
+| File ID | The ID of the file to share.<br/> To get the file ID, open the file in Google Drive. The ID is the string of characters at the end of the URL: `https://docs.google.com/document/d/<YOUR-DOC-ID>`. | string | Required. |
+
+</TabItem>
+<TabItem value="output" label="Output Parameters">
+
+| Parameter | Description | 
+| --------- | ----------- |
+| fileId | The ID of the shared file. | 
+| permissionId | The unique ID of the permission granted. | 
+| role | The access role granted to the user. | 
+| emailAddress | The email address of the user the file was shared with. | 
+
+</TabItem>
+</Tabs>
+
+## Move File
+
+Move a file to another folder. Use this when you need to reorganize Drive contents.
+
+<Tabs>
+<TabItem value="input" label="Input Parameters">
+
+| Parameter | Description | Type | Required/Optional |
+| --------- | ----------- | ---- | ----------------- |
+| Destination Folder ID | The folder ID of the destination folder to which the file is to be moved. If left empty/blank, it falls back to the default folder provided in the integration.<br/>To get the folder ID, open the folder in Google Drive. The ID is the string of characters at the end of the URL: `https://drive.google.com/drive/u/0/folders/<FOLDER-ID>`. | string | Optional. |
+| File ID | The ID of the file to move.<br/>To get the file ID, open the file in Google Drive. The ID is the string of characters at the end of the URL: `https://docs.google.com/document/d/<YOUR-DOC-ID>`. | string | Required. |
+
+</TabItem>
+<TabItem value="output" label="Output Parameters">
+
+| Parameter | Description | 
+| --------- | ----------- |
+| id | The unique ID of the moved file.| 
+| name | The name of the moved file. | 
+| mimeType | The MIME type of the moved file. | 
+| parents | The IDs of the parent folders. | 
+
+</TabItem>
+</Tabs>
+
+## Upload File from Base64 
+
+Upload a file from base64-encoded content into Drive. Use this to persist generated PDFs, text reports, or other artifacts to a folder.
+
+<Tabs>
+<TabItem value="input" label="Input Parameters">
+
+| Parameter | Description | Type | Required/Optional |
+| --------- | ----------- | ---- | ----------------- |
+| Base64 Content | The base64-encoded content of the file to upload.<br/>To encode a file to base64, you can use tools such as a command-line utility (`base64` on macOS/Linux, `certutil` on Windows), an online encoder, or a programming language of your choice (for example, Python's `base64` module or JavaScript's `btoa()` function). | string | Required. |
+| Parent Folder Id | The ID of the folder to upload the file into. If left empty/blank, it falls back to the default folder provided in the integration.<br/>To get the folder ID, open the folder in Google Drive. The ID is the string of characters at the end of the URL: `https://drive.google.com/drive/u/0/folders/<FOLDER-ID>?ths=true`. | string | Optional. |
+| Name | The name of the file to be created. | string | Required. |
+| Mime Type | The MIME type of the file. For example, `application/pdf`.<br/>For a full list, refer to the [Google Drive MIME types documentation](https://developers.google.com/drive/api/guides/mime-types). | string | Optional. |
+
+</TabItem>
+<TabItem value="output" label="Output Parameters">
+
+Returns a full Google Drive `File` object. For the complete schema, refer to the [Google Drive Files API documentation](https://developers.google.com/drive/api/reference/rest/v3/files).
+
+</TabItem>
+</Tabs>
+
+## Download File Base64
+
+Download file content as base64 by file ID. Use this to feed file contents into LLM tools or other binary-capable systems.
+
+<Tabs>
+<TabItem value="input" label="Input Parameters">
+
+| Parameter | Description | Type | Required/Optional |
+| --------- | ----------- | ---- | ----------------- |
+| File Id | The ID of the file to download.<br/> To get the file ID, open the file in Google Drive. The ID is the string of characters at the end of the URL: `https://drive.google.com/file/d/<FILE-ID>/view`. | string | Required. |
+
+</TabItem>
+<TabItem value="output" label="Output Parameters">
+
+Returns the full Google Drive `File` object and the `base64Content` (base64-encoded content of the file).
+
+</TabItem>
+</Tabs>
+
+## Create Folder
+
+Create a folder in Drive, optionally under a parent folder. Use this to organize artifacts or create per-run directories.
+
+<Tabs>
+<TabItem value="input" label="Input Parameters">
+
+| Parameter | Description | Type | Required/Optional |
+| --------- | ----------- | ---- | ----------------- |
+| Parent Folder Id | The ID of the parent folder under which the new folder will be created. If left empty/blank, it falls back to the default folder provided in the integration.<br/>To get the folder ID, open the folder in Google Drive. The ID is the string of characters at the end of the URL: `https://drive.google.com/drive/u/0/folders/<FOLDER-ID>?ths=true`. | string | Optional. |
+| Name | The name of the folder to be created. | string | Required. |
+
+</TabItem>
+<TabItem value="output" label="Output Parameters">
+
+Returns the full Google Drive `File`object containing all file fields. For the complete schema, refer to the [Google Drive Files API documentation](https://developers.google.com/drive/api/reference/rest/v3/files).
+
+</TabItem>
+</Tabs>
+
+## Create Google Doc
+
+Create a Google Doc with a title and plain text content. Use this to quickly spin up a doc from text generated by an LLM or workflow.
+
+<Tabs>
+<TabItem value="input" label="Input Parameters">
+
+| Parameter | Description | Type | Required/Optional |
+| --------- | ----------- | ---- | ----------------- |
+| Parent Folder Id | The ID of the folder where the Google Doc will be created. If left empty/blank, it falls back to the default folder provided in the integration.<br/>To get the folder ID, open the folder in Google Drive. The ID is the string of characters at the end of the URL: `https://drive.google.com/drive/u/0/folders/<FOLDER-ID>?ths=true`. | string | Optional. |
+| Text | The plain text content to place in the Google Doc. | string | Optional. | 
+| Title | The title of the Google Doc. | string | Required. |
+
+</TabItem>
+<TabItem value="output" label="Output Parameters">
+
+Returns the full Google Drive `File` object containing all file fields. For the complete schema, refer to the [Google Drive Files API documentation](https://developers.google.com/drive/api/reference/rest/v3/files).
+
+</TabItem>
+</Tabs>
+
+## Create File From Text 
+
+Create a new file in Drive from plain text content. Use this when you want to store generated text as a file.
+
+<Tabs>
+<TabItem value="input" label="Input Parameters">
+
+| Parameter | Description | Type | Required/Optional |
+| --------- | ----------- | ---- | ----------------- |
+| Parent Folder ID | The ID of the folder where the file will be created. If left empty/blank, it falls back to the default folder provided in the integration.<br/>To get the folder ID, open the folder in Google Drive. The ID is the string of characters at the end of the URL: `https://drive.google.com/drive/u/0/folders/<FOLDER-ID>?ths=true`. | string | Optional. |
+| Name | The name of the file to be created. | string | Required. |
+| Text | The plain text content to place in the file. | string | Optional. |
+| Mime Type | The MIME type of the file. Default is `text/plain`. | string | Optional. |
+
+</TabItem>
+<TabItem value="output" label="Output Parameters">
+
+| Parameter | Description | 
+| --------- | ----------- |
+| id | The unique ID of the created file.| 
+| name | The name of the created file. | 
+| mimeType | The MIME type of the created file. | 
+| parents | The IDs of the parent folders. | 
+
+</TabItem>
+</Tabs>
+
+## Search Files and Folders
+
+Search files and folders in Google Drive. Use this when you need a quick filtered list.
+
+<Tabs>
+<TabItem value="input" label="Input Parameters">
+
+| Parameter | Description | Type | Required/Optional |
+| --------- | ----------- | ---- | ----------------- |
+| Parent Folder ID | The ID of the folder to search in. If left empty/blank, it falls back to the default folder provided in the integration.<br/>To get the folder ID, open the folder in Google Drive. The ID is the string of characters at the end of the URL: `https://drive.google.com/drive/u/0/folders/<FOLDER-ID>?ths=true`. | string | Optional. |
+| Query | The Drive query string to filter files and folders. For example, `mimeType='application/pdf'` or `name='report.pdf'`. Leave empty to return all files.<br/>For supported query fields and operators, refer to the [Google Drive query string documentation](https://developers.google.com/workspace/drive/api/guides/search-files#examples). | string | Optional. |
+| Page Size | The number of results to return per page. | integer | Optional. | 
+
+</TabItem>
+<TabItem value="output" label="Output Parameters">
+
+| Parameter | Description | 
+| --------- | ----------- |
+| files | An array of file and folder objects matching the query. | 
+| files.**id** | The unique ID of the file or folder. | 
+| files.**name** | The name of the file or folder. | 
+| files.**mimeType** | The MIME type of the file or folder. | 
+| files.**parents** | The IDs of the parent folders. | 
+| nextPageToken | The token to retrieve the next page of results. Returns `null` if there are no more results. | 
+
+</TabItem>
+</Tabs>
+
+## Delete Folder
+
+Delete a folder in Drive. Use this when cleaning up obsolete directories. This is a permanent delete; the folder is removed directly from Google Drive without being moved to the trash.
+
+<Tabs>
+<TabItem value="input" label="Input Parameters">
+
+| Parameter | Description | Type | Required/Optional |
+| --------- | ----------- | ---- | ----------------- |
+| Folder ID | The ID of the folder to be deleted.<br/>To get the folder ID, open the folder in Google Drive. The ID is the string of characters at the end of the URL: `https://drive.google.com/drive/u/0/folders/<FOLDER-ID>?ths=true`. | string | Required. |
+
+</TabItem>
+<TabItem value="output" label="Output Parameters">
+
+| Parameter | Description | 
+| --------- | ----------- |
+| folderId | The ID of the deleted folder. |
+| deleted | Indicates whether the folder was successfully deleted. | 
+
+</TabItem>
+</Tabs>
+
+## Share Folder
+
+Share a folder with a user. Use this when you need to grant access to folder contents.
+
+<Tabs>
+<TabItem value="input" label="Input Parameters">
+
+| Parameter | Description | Type | Required/Optional |
+| --------- | ----------- | ---- | ----------------- |
+| Email Address | The email address of the user to share the folder with. | string | Required. | 
+| Role | The access role. Supported values:<ul><li>`reader`</li><li>`commenter`</li><li>`writer`</li></ul> | string | Optional. |
+| Email Message | A message to include in the notification email. | string | Optional. |
+| Send Notification Email | Whether to send a notification email to the user. | boolean | Optional. |
+| Folder ID | The ID of the folder to share.<br/>To get the folder ID, open the folder in Google Drive. The ID is the string of characters at the end of the URL: `https://drive.google.com/drive/u/0/folders/<FOLDER-ID>?ths=true`. | string | Required. |
+
+</TabItem>
+<TabItem value="output" label="Output Parameters">
+
+| Parameter | Description | 
+| --------- | ----------- |
+| fileId | The ID of the shared folder. | 
+| permissionId | The unique ID of the permission granted. | 
+| role | The access role granted to the user. | 
+| emailAddress | The email address of the user the folder was shared with. | 
+
+</TabItem>
+</Tabs>
+
+## Create Shared Drive
+
+Create a shared drive. Use this when you need a shared workspace for a team.
+
+<Tabs>
+<TabItem value="input" label="Input Parameters">
+
+| Parameter | Description | Type | Required/Optional |
+| --------- | ----------- | ---- | ----------------- |
+| Request ID | A unique request ID for idempotency. Auto-generated if left empty. | string | Optional. |
+| Name | The name of the shared drive. | string | Required. |
+
+</TabItem>
+<TabItem value="output" label="Output Parameters">
+
+| Parameter | Description | 
+| --------- | ----------- |
+| id | The unique ID of the created shared drive. | 
+| name | The name of the created shared drive. | 
+
+</TabItem>
+</Tabs>
+
+## Delete Shared Drive
+
+Delete a shared drive. Use this when decommissioning a team workspace.
+
+<Tabs>
+<TabItem value="input" label="Input Parameters">
+
+| Parameter | Description | Type | Required/Optional |
+| --------- | ----------- | ---- | ----------------- |
+| Drive ID | The ID of the shared drive to delete.<br/>To get the drive ID, open the shared Google Drive. The ID is the string of characters at the end of the URL: `https://drive.google.com/drive/u/0/folders/<YOUR-DRIVE-ID>?ths=true`. | string | Required. | 
+
+</TabItem>
+<TabItem value="output" label="Output Parameters">
+
+| Parameter | Description | 
+| --------- | ----------- |
+| id | The unique ID of the deleted shared drive. | 
+| name | The name of the deleted shared drive. | 
+| deleted | Indicates whether the shared drive was successfully deleted. | 
+
+</TabItem>
+</Tabs>
+
+## Get Shared Drive
+
+Retrieve a shared drive by ID. Use this when you need shared drive metadata.
+
+<Tabs>
+<TabItem value="input" label="Input Parameters">
+
+| Parameter | Description | Type | Required/Optional |
+| --------- | ----------- | ---- | ----------------- |
+| Drive ID | The ID of the shared drive to retrieve.<br/>To get the drive ID, open the shared Google Drive. The ID is the string of characters at the end of the URL: `https://drive.google.com/drive/u/0/folders/<YOUR-DRIVE-ID>?ths=true`. | string | Required. | 
+
+</TabItem>
+<TabItem value="output" label="Output Parameters">
+
+| Parameter | Description | 
+| --------- | ----------- |
+| id | The unique ID of the shared drive. | 
+| name | The name of the shared drive. | 
+
+</TabItem>
+</Tabs>
+
+## Get Many Shared Drives
+
+List shared drives available to the user. Use this when you need to enumerate team drives.
+
+<Tabs>
+<TabItem value="input" label="Input Parameters">
+
+| Parameter | Description | Type | Required/Optional |
+| --------- | ----------- | ---- | ----------------- |
+| Page Size | The maximum number of shared drives to return. | integer | Optional. | 
+| Page Token | The page token for pagination. To paginate through results, pass the `nextPageToken` value from a previous response into this field. | string | Optional. | 
+
+</TabItem>
+<TabItem value="output" label="Output Parameters">
+
+| Parameter | Description | 
+| --------- | ----------- |
+| sharedDrives | An array of shared drive objects available to the user. | 
+| sharedDrives.**id** | The unique ID of the shared drive. | 
+| sharedDrives.**name** | The name of the shared drive. | 
+| nextPageToken | The token to retrieve the next page of results. Returns `null` if there are no more results. | 
+
+</TabItem>
+</Tabs>
+
+## Update Shared Drive
+
+Update shared drive metadata. Use this when you need to rename a shared drive.
+
+<Tabs>
+<TabItem value="input" label="Input Parameters">
+
+| Parameter | Description | Type | Required/Optional |
+| --------- | ----------- | ---- | ----------------- |
+| Drive ID | The ID of the shared drive to update.<br/>To get the drive ID, open the shared Google Drive. The ID is the string of characters at the end of the URL: `https://drive.google.com/drive/u/0/folders/<YOUR-DRIVE-ID>?ths=true`. | string | Required. | 
+| Name | The updated name of the drive. | string | Required. | 
+
+</TabItem>
+<TabItem value="output" label="Output Parameters">
+
+| Parameter | Description | 
+| --------- | ----------- |
+| id | The unique ID of the updated shared drive. | 
+| name | Updated name of the shared drive. | 
+
+</TabItem>
+</Tabs>
+
+## Update File
+
+Update a file's metadata or content. Use this when you need to rename or overwrite a file.
+
+<Tabs>
+<TabItem value="input" label="Input Parameters">
+
+| Parameter | Description | Type | Required/Optional |
+| --------- | ----------- | ---- | ----------------- |
+| Base 64 Content | The base64-encoded content to be updated.<br/>To encode a file to base64, you can use tools such as a command-line utility (`base64` on macOS/Linux, `certutil` on Windows), an online encoder, or a programming language of your choice (for example, Python's `base64` module or JavaScript's `btoa()` function). | string | Optional. | 
+| Name | Updated name of the file. | string | Optional. | 
+| Mime Type | The mime type of the updated file. | string | Optional. |  
+| File ID | The ID of the file to be updated.<br/>To get the file ID, open the file in Google Drive. The ID is the string of characters at the end of the URL: `https://drive.google.com/file/d/<FILE-ID>/view`. | string | Required. | 
+
+</TabItem>
+<TabItem value="output" label="Output Parameters">
+
+| Parameter | Description | 
+| --------- | ----------- |
+| id | The unique ID of the updated file. | 
+| name | The name of the updated file. | 
+| mimeType | The mime type of the updated file. | 
+| parents | The IDs of the parent folders. | 
+
+</TabItem>
+</Tabs>
+
+## Delete File 
+
+Delete a file by file ID. Use this when cleaning up temporary content or obsolete artifacts. This is a permanent delete; the file is removed directly from Google Drive without being moved to the trash.
+
+<Tabs>
+<TabItem value="input" label="Input Parameters">
+
+| Parameter | Description | Type | Required/Optional |
+| --------- | ----------- | ---- | ----------------- |
+| File Id | The ID of the file to delete.<br/>To get the file ID, open the file in Google Drive. The ID is the string of characters at the end of the URL: `https://drive.google.com/file/d/<FILE-ID>/view`. | string | Required. |
+
+</TabItem>
+<TabItem value="output" label="Output Parameters">
+
+Returns a full Google Drive `File` object containing all file fields. For the complete schema, refer to the [Google Drive Files API documentation](https://developers.google.com/workspace/drive/api/reference/rest/v3/files#resource).
+
+</TabItem>
+</Tabs>
+
+## List Files
+
+List files matching an optional Drive query and/or restricted to a parent folder. Use this to locate documents for downstream tools.
+
+<Tabs>
+<TabItem value="input" label="Input Parameters">
+
+| Parameter | Description | Type | Required/Optional |
+| --------- | ----------- | ---- | ----------------- |
+| Parent Folder Id | The ID of the folder to list files from. If left empty/blank, it falls back to the default folder provided in the integration.<br/>To get the folder ID, open the folder in Google Drive. The ID is the string of characters at the end of the URL: `https://drive.google.com/drive/u/0/folders/<FOLDER-ID>?ths=true`.  | string | Optional. | 
+| Query | The Drive query to filter files. For example, `mimeType='application/pdf'`.<br/>Leave empty to list all the files. | string | Optional. | 
+| Page Size | The number of files to return per page. | integer | Required. | 
+
+</TabItem>
+<TabItem value="output" label="Output Parameters">
+
+Returns a `FileList` object containing a `files` array of full Google Drive `File` objects, a `nextPageToken` for pagination, and an `incompleteSearch` flag. For the complete schema, refer to the [Google Drive Files API documentation](https://developers.google.com/workspace/drive/api/reference/rest/v3/files/list).
+
+</TabItem>
+</Tabs>
+
+## Copy File
+
+Copy a file in Google Drive. Use this when you need a duplicate for templating or safe edits.
+
+<Tabs>
+<TabItem value="input" label="Input Parameters">
+
+| Parameter | Description | Type | Required/Optional |
+| --------- | ----------- | ---- | ----------------- |
+| New Name | A new name for the copied file. | string | Optional. | 
+| Parent Folder ID | The ID of the folder to copy files into. If left empty/blank, it falls back to the default folder provided in the integration.<br/>To get the folder ID, open the folder in Google Drive. The ID is the string of characters at the end of the URL: `https://drive.google.com/drive/u/0/folders/<FOLDER-ID>?ths=true`. | string | Optional. | 
+| File ID | The ID of the file to copy.<br/>To get the file ID, open the file in Google Drive. The ID is the string of characters at the end of the URL: `https://docs.google.com/document/d/<YOUR-DOC-ID>`. | string | Required. | 
+
+</TabItem>
+<TabItem value="output" label="Output Parameters">
+
+| Parameter | Description | 
+| --------- | ----------- |
+| id | The unique ID of the copied file. | 
+| name | The name of the copied file. | 
+| mimeType | The mime type of the copied file. | 
+| parents | The IDs of the parent folders. | 
+
+</TabItem>
+</Tabs>
