@@ -112,19 +112,21 @@ nav:
       - Gateway Tutorials: tutorials/mcp.md
       - Build a Feedback API: tutorials/expose-feedback-workflow-as-api.md
       - Build an MCP Ticket Service: tutorials/expose-ticket-service-using-mcp-gateway.md
-  - AI Cookbook:
-    - AI Orchestration:
-      - AI Orchestration: ai-orchestration.md
+  - Agentic Workflow Engine:
+    - Agentic Workflow Engine: agentic-workflow-engine.md
+    - Production Agents:
+      - Production Agents: ai-orchestration/production-agent-architecture.md
       - Build Your First AI Agent: ai-orchestration/first-ai-agent.md
-      - "AI & LLM Recipes": ai-orchestration/ai-llm-recipes.md
-      - LLM Orchestration: ai-orchestration/llm-orchestration.md
-      - MCP Integration: ai-orchestration/mcp-integration.md
-      - Production Agent Architecture: ai-orchestration/production-agent-architecture.md
       - Failure Semantics: ai-orchestration/failure-semantics.md
       - Durable Agents: ai-orchestration/durable-agents.md
       - "Human-in-the-Loop": ai-orchestration/human-in-the-loop.md
       - Dynamic Workflows: ai-orchestration/dynamic-workflows.md
       - Token Efficiency: ai-orchestration/token-efficiency.md
+    - AI Cookbook:
+      - AI Cookbook: ai-orchestration.md
+      - "AI & LLM Recipes": ai-orchestration/ai-llm-recipes.md
+      - LLM Orchestration: ai-orchestration/llm-orchestration.md
+      - MCP Integration: ai-orchestration/mcp-integration.md
     - AI Tutorials:
       - AI Tutorials: tutorials/ai.md
       - "AI-Powered Translator": developer-guides/quickstart-ai-orchestration.md

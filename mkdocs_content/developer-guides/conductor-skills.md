@@ -286,11 +286,13 @@ graph LR
 curl -sSL https://conductor-oss.github.io/conductor-skills/install.sh | bash -s -- --all --upgrade
 ```
 
-## Conductor Skills and AgentSpan
+## Conductor Skills and Agentspan
 
 Conductor Skills help AI coding agents create, run, monitor, debug, and manage Conductor workflows and workers. They are authoring and operations instructions for coding agents.
 
-AgentSpan, when used with Conductor, should be positioned separately: a Conductor project for running supported agent frameworks as durable Conductor workflows. Do not describe Conductor Skills as the agent runtime, and do not describe AgentSpan as replacing every agent framework.
+Agentspan is the developer-facing agent runtime. Conductor OSS is the durable workflow engine underneath. Orkes Conductor is the managed enterprise platform for operating Conductor-based systems at scale.
+
+Do not describe Conductor Skills as the agent runtime. Conductor Skills are instructions for AI coding agents. Agentspan is runtime integration for agent applications that need durable execution through Conductor.
 
 ## Next steps
 

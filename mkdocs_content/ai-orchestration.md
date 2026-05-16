@@ -8,11 +8,13 @@ keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration
 
 # AI Cookbook
 
-Conductor is not an AI framework. It is a durable execution engine that provides AI agent orchestration and LLM orchestration by solving the hard infrastructure problems that AI agents create: long-running processes, unreliable external calls, function calling and tool use, human-in-the-loop approval, structured output, and the need to survive failures across any of these steps. Conductor makes every agent a durable agent — one that survives crashes, retries, and infrastructure failures without losing progress.
+Conductor is not an AI framework. It is a durable execution engine that provides AI agent orchestration and LLM orchestration by solving the hard infrastructure problems that AI agents create: long-running processes, unreliable external calls, function calling and tool use, human-in-the-loop approval, structured output, and the need to survive failures across any of these steps. Conductor lets you run agents as durable workflows that can survive crashes, retries, and infrastructure failures without losing completed progress.
 
 ## Where Conductor fits
 
 Use your agent framework for reasoning, prompts, graph composition, and model-specific loops. Use Conductor for execution: persisted state, task queues, retries, timeouts, durable human waits, replay, governance, and audit history.
+
+Agentspan is the developer-facing agent runtime. Conductor OSS is the durable workflow engine underneath. Orkes Conductor is the managed enterprise platform for operating Conductor-based systems at scale.
 
 Conductor is the durable runtime under production agents and distributed workflows. It is not a replacement for every agent framework, and it should not be positioned as one. Keep the framework where it helps the model reason; add Conductor where the work must finish reliably.
 
@@ -54,9 +56,9 @@ Your agent code starts a workflow. Conductor schedules each step as a task, pers
 
 | Agent pattern | Conductor primitive | What happens mechanically |
 |---|---|---|
-| **LLM call** | `LLM_CHAT_COMPLETE` / `LLM_TEXT_COMPLETE` system task | Native LLM task. Configure provider and model as parameters. Retried on failure. Prompt, response, and token usage persisted. Supports built-in tools: web search, code execution, file search, extended thinking. |
+| **LLM call** | `LLM_CHAT_COMPLETE` / `LLM_TEXT_COMPLETE` system task | Native LLM task. Configure provider and model as parameters. Retried on failure. Prompt, response, and token usage persisted. Provider and model specific tool features such as web search, code execution, file search, or extended thinking can be passed through when the configured provider supports them. |
 | **Embeddings** | `LLM_GENERATE_EMBEDDINGS` system task | Generate vector embeddings using any configured provider. Output stored and passed to downstream tasks. |
-| **Tool call / function calling** | `CALL_MCP_TOOL` system task, or `SIMPLE` / `HTTP` task | Call tools on any MCP server, or implement custom tool workers. Each call is tracked, retried on failure, and fully auditable. |
+| **Tool call / function calling** | `CALL_MCP_TOOL` system task, or `SIMPLE` / `HTTP` task | Call tools on any MCP-compatible server, or implement custom tool workers. Each call is tracked, retried on failure, and fully auditable. |
 | **Tool discovery** | `LIST_MCP_TOOLS` system task | Discover available tools from an MCP server at runtime. Feed the tool list to an LLM for dynamic tool selection. |
 | **RAG / semantic search** | `LLM_INDEX_TEXT` + `LLM_SEARCH_INDEX` system tasks | Index documents and run semantic search against Pinecone, pgvector, or MongoDB Atlas. No external RAG framework needed. |
 | **Wait for human approval** | `HUMAN` task | Workflow pauses. Remains `IN_PROGRESS` in persistent storage. Resumes when the Task Update API is called with approval/rejection. Survives deploys. |
@@ -91,7 +93,7 @@ Conductor provides all of this as infrastructure. Your agent code focuses on the
 - **[Build Your First AI Agent](/content/ai-orchestration/first-ai-agent)** &mdash; Step-by-step: discover MCP tools, call an LLM, execute, add human approval, make it autonomous. 5 minutes.
 - **[AI & LLM Recipes](/content/ai-orchestration/ai-llm-recipes)** &mdash; Ready-to-use recipes: chat completion, RAG, MCP agents, web search, code execution, coding agents, extended thinking, and more.
 - **[LLM Orchestration](/content/ai-orchestration/llm-orchestration)** &mdash; Native LLM providers, built-in tools, vector databases, and content generation.
-- **[MCP Integration](/content/ai-orchestration/mcp-integration)** &mdash; Connect to any MCP server, expose workflows as MCP tools, multi-server agents.
+- **[MCP Integration](/content/ai-orchestration/mcp-integration)** &mdash; Connect to any MCP-compatible server, expose workflows as MCP tools, multi-server agents.
 - **[Production Agent Architecture](/content/ai-orchestration/production-agent-architecture)** &mdash; The canonical reference architecture for a durable production agent. End-to-end pattern with every primitive mapped.
 - **[Failure Semantics for AI Agents](/content/ai-orchestration/failure-semantics)** &mdash; The exact failure contract: what happens under crashes, retries, duplicates, long waits, and partial side effects.
 - **[Why Conductor for Agents](/content/ai-orchestration/why-conductor)** &mdash; What Conductor gives you out of the box for agentic workflows.

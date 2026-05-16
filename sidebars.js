@@ -311,25 +311,37 @@ const sidebars = {
     ],
 
     // ==========================================================================
-    // AI COOKBOOK — AI Orchestration developer guides + AI tutorials
+    // AGENTIC WORKFLOW ENGINE — production agent architecture + AI recipes
     // ==========================================================================
     aiSidebar: [
         {
+            type: 'doc',
+            id: 'agentic-workflow-engine',
+            label: 'Agentic Workflow Engine',
+            className: 'leftMenuHeader',
+        },
+        {
             type: 'category',
-            label: 'AI Orchestration',
-            link: { type: 'doc', id: 'developer-guides/ai-orchestration' },
+            label: 'Production Agents',
+            link: { type: 'doc', id: 'ai-cookbook/production-agent-architecture' },
             className: 'leftMenuHeader',
             items: [
                 { type: 'doc', id: 'ai-cookbook/first-ai-agent', label: 'Build Your First AI Agent' },
-                { type: 'doc', id: 'ai-cookbook/ai-llm-recipes', label: 'AI & LLM Recipes' },
-                { type: 'doc', id: 'ai-cookbook/llm-orchestration', label: 'LLM Orchestration' },
-                { type: 'doc', id: 'ai-cookbook/mcp-integration', label: 'MCP Integration' },
-                { type: 'doc', id: 'ai-cookbook/production-agent-architecture', label: 'Production Agent Architecture' },
                 { type: 'doc', id: 'ai-cookbook/failure-semantics', label: 'Failure Semantics' },
                 { type: 'doc', id: 'ai-cookbook/durable-agents', label: 'Durable Agents' },
                 { type: 'doc', id: 'ai-cookbook/human-in-the-loop', label: 'Human-in-the-Loop' },
                 { type: 'doc', id: 'ai-cookbook/dynamic-workflows', label: 'Dynamic Workflows' },
                 { type: 'doc', id: 'ai-cookbook/token-efficiency', label: 'Token Efficiency' },
+            ],
+        },
+        {
+            type: 'category',
+            label: 'AI Cookbook',
+            link: { type: 'doc', id: 'developer-guides/ai-orchestration' },
+            items: [
+                { type: 'doc', id: 'ai-cookbook/ai-llm-recipes', label: 'AI & LLM Recipes' },
+                { type: 'doc', id: 'ai-cookbook/llm-orchestration', label: 'LLM Orchestration' },
+                { type: 'doc', id: 'ai-cookbook/mcp-integration', label: 'MCP Integration' },
             ],
         },
         {

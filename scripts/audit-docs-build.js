@@ -411,7 +411,7 @@ function auditJsonLd(route, html) {
 }
 
 function auditGeneratedFiles() {
-  const required = ["robots.txt", "sitemap.xml", "llms.txt"];
+  const required = ["robots.txt", "sitemap.xml", "llms.txt", "llms-full.txt"];
   for (const file of required) {
     if (!fs.existsSync(path.join(BUILD_DIR, file))) errors.push(`missing ${file}`);
   }
@@ -425,6 +425,9 @@ function auditGeneratedFiles() {
     if (!robots.includes(`LLMs: ${SITE_URL}llms.txt`)) {
       errors.push("robots.txt missing llms.txt discovery hint");
     }
+    if (!robots.includes(`LLMs-Full: ${SITE_URL}llms-full.txt`)) {
+      errors.push("robots.txt missing llms-full.txt discovery hint");
+    }
   }
 
   const llmsPath = path.join(BUILD_DIR, "llms.txt");
@@ -435,6 +438,76 @@ function auditGeneratedFiles() {
       errors.push("llms.txt missing durable workflow positioning");
     }
     if (!llms.includes("## Documentation Index")) errors.push("llms.txt missing documentation index");
+    if (!llms.includes("Full documentation dump:")) errors.push("llms.txt missing llms-full.txt pointer");
+    if (!llms.includes("Agentic Workflow Engine")) errors.push("llms.txt missing agentic workflow engine route");
+    if (!llms.includes("Agentspan is the developer-facing agent runtime")) {
+      errors.push("llms.txt missing Agentspan relationship copy");
+    }
+    if (llms.includes("## Full Documentation")) {
+      errors.push("llms.txt should stay concise; full page dump belongs in llms-full.txt");
+    }
+    if (llms.length > 60000) {
+      errors.push(`llms.txt is too large for a concise canonical map (${llms.length} chars)`);
+    }
+  }
+
+  const llmsFullPath = path.join(BUILD_DIR, "llms-full.txt");
+  if (fs.existsSync(llmsFullPath)) {
+    const llmsFull = fs.readFileSync(llmsFullPath, "utf8");
+    if (!llmsFull.includes("## Full Documentation")) errors.push("llms-full.txt missing full documentation section");
+  }
+}
+
+function auditMessagingGuardrails(htmlFiles) {
+  const requiredRoutes = [
+    "agentic-workflow-engine",
+    "ai-orchestration",
+    "developer-guides/conductor-skills",
+    "glossary",
+  ];
+  for (const route of requiredRoutes) {
+    if (!pageExists(route)) errors.push(`${route}: missing required messaging page`);
+  }
+
+  const relationshipCopy =
+    "Agentspan is the developer-facing agent runtime. Conductor OSS is the durable workflow engine underneath. Orkes Conductor is the managed enterprise platform for operating Conductor-based systems at scale.";
+  const relationshipRoutes = ["agentic-workflow-engine", "ai-orchestration", "developer-guides/conductor-skills", "glossary"];
+  for (const route of relationshipRoutes) {
+    const text = stripTags(readRoute(route));
+    if (!text.includes(relationshipCopy)) {
+      errors.push(`${route}: missing canonical Agentspan relationship copy`);
+    }
+  }
+
+  const home = readRoute("");
+  if (!home.includes(`${BASE_PATH}/agentic-workflow-engine`)) {
+    errors.push("/: homepage does not link to the agentic workflow engine page");
+  }
+  const homeText = stripTags(home);
+  if (!homeText.includes("Persisted state") || !homeText.includes("Execution history")) {
+    errors.push("/: homepage missing durable execution proof points");
+  }
+
+  const forbiddenPhrases = [
+    "Internet Scale Execution",
+    "Conductor eliminates all of this",
+    "Conductor makes every agent a durable agent",
+    "most dynamic workflow engine available",
+    "Every run is deterministic",
+    "Code-based workflow engines require generated code",
+    "Write task workers in any language.",
+    "Implementation logic (calling APIs, transforming data, running ML models) lives in workers written in any language.",
+    "The opposite is true. Code-based definitions are static at deploy time",
+    "any MCP server",
+    "Supports built-in tools: web search, code execution, file search, extended thinking.",
+    "\"type\": \"FORK\"",
+  ];
+  for (const file of htmlFiles) {
+    const rel = posixPath(path.relative(BUILD_DIR, file));
+    const html = fs.readFileSync(file, "utf8");
+    for (const phrase of forbiddenPhrases) {
+      if (html.includes(phrase)) errors.push(`${rel}: contains forbidden messaging phrase: ${phrase}`);
+    }
   }
 }
 
@@ -482,6 +555,7 @@ function main() {
   }
 
   auditGeneratedFiles();
+  auditMessagingGuardrails(htmlFiles);
   auditMimeSafeHtmlFiles();
   auditTrailingSlashAliases(htmlFiles);
 

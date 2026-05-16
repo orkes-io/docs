@@ -22,7 +22,7 @@ This is the practical production boundary: the framework decides what should hap
 | Human approval spans days | The workflow remains paused without holding a process or thread. |
 | Tool side effect is retried | Idempotency keys and compensation workflows prevent or mitigate duplicate work. |
 
-Conductor eliminates all of this. Every step of a durable agent workflow is persisted to storage as it completes. If the process dies, the agent resumes from the last completed step — not from the beginning.
+Conductor moves these recovery concerns into the workflow runtime. Every completed step of a durable agent workflow is persisted to storage. If the process dies, the agent can resume from the last completed step instead of restarting from the beginning.
 
 
 ## What gets persisted

@@ -150,13 +150,13 @@ JSON workflow definitions are pure orchestration — they describe *what* runs a
 
 **No side effects in the workflow definition.** A JSON definition cannot open a database connection, write to a file, or call an API outside of a declared task. Every side effect lives in a worker or system task — isolated, testable, and independently deployable. The workflow definition itself is inert data.
 
-**Every run is deterministic.** Given the same inputs, a Conductor workflow will schedule the same tasks in the same order, every time. There is no ambient state, no thread-local context, no hidden mutation. This is why [replay](/content/quickstarts/durable-execution#replay-and-recovery) works unconditionally — restart a workflow from three months ago and it re-executes the same graph. Code-based workflow engines that embed orchestration logic alongside business logic cannot make this guarantee without imposing significant constraints on what your code is allowed to do (no random numbers, no system clocks, no uncontrolled I/O).
+**Workflow scheduling is explicit.** Given the same workflow definition and inputs, Conductor schedules the same declared tasks in the same order. Side effects live in workers and system tasks, not in hidden process state. This is why [replay](/content/quickstarts/durable-execution#replay-and-recovery) can restart a workflow from a known definition and execution history. Code-first orchestration can make similar guarantees only when workflow code follows strict determinism rules around clocks, randomness, I/O, and external state.
 
-**Clean separation of concerns.** Orchestration logic (sequencing, branching, retries, timeouts) is defined declaratively in JSON. Implementation logic (calling APIs, transforming data, running ML models) lives in workers written in any language. Each can be tested, deployed, and versioned independently. Change a worker without touching the workflow. Change the workflow without redeploying workers.
+**Clean separation of concerns.** Orchestration logic (sequencing, branching, retries, timeouts) is defined declaratively in JSON. Implementation logic (calling APIs, transforming data, running ML models) lives in workers written with SDKs in Python, Java, Go, .NET/C#, Ruby, Rust, and TypeScript, or in any service that can poll the task API. Each can be tested, deployed, and versioned independently. Change a worker without touching the workflow. Change the workflow without redeploying workers.
 
 ### JSON is more dynamic than code
 
-The common assumption is that code-based workflows are more flexible. The opposite is true. Code-based definitions are static at deploy time — to change the workflow, you redeploy.
+The common assumption is that code-first workflows are always more flexible. Conductor takes a different approach: flexibility comes from treating the orchestration graph as data. Code-first definitions are often static at deploy time, so changing workflow topology usually means redeploying.
 
 Conductor's JSON definitions can be:
 
@@ -164,13 +164,13 @@ Conductor's JSON definitions can be:
 - **Modified per-execution** — pass a complete `workflowDef` in the start request to customize any execution on the fly.
 - **Dynamically branched** — [DYNAMIC tasks](/content/reference-docs/operators/dynamic) resolve which task to execute based on runtime output. [DYNAMIC_FORK](/content/reference-docs/operators/dynamic-fork) creates an arbitrary number of parallel branches determined by a previous task's output. [Sub-workflows](/content/reference-docs/operators/sub-workflow) can be selected and parameterized dynamically.
 
-Combined, these primitives make Conductor the most dynamic workflow engine available — not despite using JSON, but because of it. A JSON definition is data, and data is easy to generate, transform, and compose programmatically. Code is not.
+Together, these primitives let Conductor support highly dynamic workflows without turning generated source code into the deployment unit. JSON definitions are data, and data is easy to generate, transform, and compose programmatically.
 
 ### AI-native by design
 
 LLMs produce structured output. JSON *is* structured output. There is no impedance mismatch — an agent can generate a Conductor workflow definition directly, and Conductor executes it with full durability, observability, and replayability. No code generation, no compilation, no deployment pipeline. The workflow evolves as fast as the agent can think.
 
-Code-based workflow engines require generated code to be compiled, tested, and deployed before it runs — a friction that fundamentally limits how dynamically an AI system can operate.
+Code-first workflow approaches often require generated workflow code to be compiled, tested, and deployed before it runs, which adds friction when an AI system needs to create or change orchestration at runtime.
 
 
 ## Exposing workflows as APIs and MCP tools

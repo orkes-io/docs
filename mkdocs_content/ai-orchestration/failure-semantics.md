@@ -158,7 +158,7 @@ This times out after 24 hours and fails the workflow. Alternatively, use `timeou
 
 ```json
 {
-  "type": "FORK",
+  "type": "FORK_JOIN",
   "forkTasks": [
     [{"type": "HUMAN", "taskReferenceName": "approval"}],
     [{"type": "WAIT", "inputParameters": {"duration": "4 hours"}},

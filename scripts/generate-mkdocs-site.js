@@ -19,6 +19,8 @@ const SITE_DESCRIPTION =
 const DOCS_LAST_MODIFIED = process.env.DOCS_LAST_MODIFIED || "2026-05-14";
 const DEVELOPER_EDITION_URL =
   "https://developer.orkescloud.com/?ga_id=GA1.1.114307086.1749276711&amp;utm_source=google&amp;utm_medium=organic&amp;_gl=1*mi3s3s*_gcl_au*MTU0NDU1MTQuMTc3ODM5MTkyMw..";
+const AGENTSPAN_RELATIONSHIP_COPY =
+  "Agentspan is the developer-facing agent runtime. Conductor OSS is the durable workflow engine underneath. Orkes Conductor is the managed enterprise platform for operating Conductor-based systems at scale.";
 
 const ORKES_COLOR_REPLACEMENTS = [
   [/Zinc \+ Orange Theme/g, "Zinc + Orkes Purple Theme"],
@@ -50,6 +52,11 @@ function rewriteLegacySiteUrl(value) {
 }
 
 const ROUTE_METADATA_OVERRIDES = {
+  "agentic-workflow-engine": {
+    title: "Agentic Workflow Engine",
+    description:
+      "Use Orkes Conductor as an agentic workflow engine for durable AI agents, reliable tool execution, human approvals, retries, and audit history.",
+  },
   "category/tutorials": {
     title: "Cookbook",
     description:
@@ -347,7 +354,7 @@ const topSections = [
   ["Guides", "guidesSidebar"],
   ["Eventing", "eventingSidebar"],
   ["Cookbook", "cookbookSidebar"],
-  ["AI Cookbook", "aiSidebar"],
+  ["Agentic Workflow Engine", "aiSidebar"],
   ["SDKs", "sdksSidebar"],
   ["Reference", "referenceSidebar"],
   ["RBAC", "rbacSidebar"],
@@ -1328,12 +1335,23 @@ function enhancePositioningPage(body, route) {
         "",
         "Use your agent framework for reasoning, prompts, graph composition, and model-specific loops. Use Conductor for execution: persisted state, task queues, retries, timeouts, durable human waits, replay, governance, and audit history.",
         "",
+        AGENTSPAN_RELATIONSHIP_COPY,
+        "",
         "Conductor is the durable runtime under production agents and distributed workflows. It is not a replacement for every agent framework, and it should not be positioned as one. Keep the framework where it helps the model reason; add Conductor where the work must finish reliably.",
       ].join("\n"),
     );
     output = output.replace(
       "If you run agents on a framework like LangChain, CrewAI, or LangGraph without a durable execution backend, you are responsible for:",
       "If you run agents only inside an in-process or non-durable runtime, you are responsible for:",
+    );
+    output = output.replace(
+      "Conductor makes every agent a durable agent — one that survives crashes, retries, and infrastructure failures without losing progress.",
+      "Conductor lets you run agents as durable workflows that can survive crashes, retries, and infrastructure failures without losing completed progress.",
+    );
+    output = output.replace(/any MCP server/g, "any MCP-compatible server");
+    output = output.replace(
+      "Supports built-in tools: web search, code execution, file search, extended thinking.",
+      "Provider and model specific tool features such as web search, code execution, file search, or extended thinking can be passed through when the configured provider supports them.",
     );
   }
 
@@ -1401,6 +1419,10 @@ function enhancePositioningPage(body, route) {
       ].join("\n"),
     );
     output = output.replace(
+      "Conductor eliminates all of this. Every step of a durable agent workflow is persisted to storage as it completes. If the process dies, the agent resumes from the last completed step — not from the beginning.",
+      "Conductor moves these recovery concerns into the workflow runtime. Every completed step of a durable agent workflow is persisted to storage. If the process dies, the agent can resume from the last completed step instead of restarting from the beginning.",
+    );
+    output = output.replace(
       "Most AI frameworks have no concept of compensation. If your LangChain agent sends an email in step 3 and crashes in step 5, the email is already sent and there is no built-in mechanism to undo it. Conductor's failure workflows solve this.",
       "Many in-process agent runtimes do not provide compensation as a first-class execution primitive. If an agent sends an email in step 3 and crashes in step 5, the email is already sent and the runtime still needs a way to undo, mitigate, or record the partial result. Conductor's failure workflows solve this.",
     );
@@ -1417,6 +1439,7 @@ function enhancePositioningPage(body, route) {
         "Use this architecture when the agent takes actions that matter: creating records, updating systems, calling internal services, waiting for approval, or coordinating multiple tools over minutes, hours, or days.",
       ].join("\n"),
     );
+    output = output.replace(/any MCP server/g, "any MCP-compatible server");
   }
 
   if (route === "ai-orchestration/failure-semantics") {
@@ -1446,6 +1469,7 @@ function enhancePositioningPage(body, route) {
         "| Cost and token usage | Shows avoided re-execution for expensive LLM calls. |",
       ].join("\n"),
     );
+    output = output.replace('"type": "FORK"', '"type": "FORK_JOIN"');
   }
 
   if (route === "ai-orchestration/first-ai-agent") {
@@ -1523,15 +1547,44 @@ function enhancePositioningPage(body, route) {
     );
   }
 
+  if (route === "quickstarts/json-code-native") {
+    output = output.replace(
+      "**Every run is deterministic.** Given the same inputs, a Conductor workflow will schedule the same tasks in the same order, every time. There is no ambient state, no thread-local context, no hidden mutation. This is why [replay](/content/quickstarts/durable-execution#replay-and-recovery) works unconditionally — restart a workflow from three months ago and it re-executes the same graph. Code-based workflow engines that embed orchestration logic alongside business logic cannot make this guarantee without imposing significant constraints on what your code is allowed to do (no random numbers, no system clocks, no uncontrolled I/O).",
+      "**Workflow scheduling is explicit.** Given the same workflow definition and inputs, Conductor schedules the same declared tasks in the same order. Side effects live in workers and system tasks, not in hidden process state. This is why [replay](/content/quickstarts/durable-execution#replay-and-recovery) can restart a workflow from a known definition and execution history. Code-first orchestration can make similar guarantees only when workflow code follows strict determinism rules around clocks, randomness, I/O, and external state.",
+    );
+    output = output.replace(
+      "Implementation logic (calling APIs, transforming data, running ML models) lives in workers written in any language.",
+      "Implementation logic (calling APIs, transforming data, running ML models) lives in workers written with SDKs in Python, Java, Go, .NET/C#, Ruby, Rust, and TypeScript, or in any service that can poll the task API.",
+    );
+    output = output.replace(
+      "The common assumption is that code-based workflows are more flexible. The opposite is true. Code-based definitions are static at deploy time — to change the workflow, you redeploy.",
+      "The common assumption is that code-first workflows are always more flexible. Conductor takes a different approach: flexibility comes from treating the orchestration graph as data. Code-first definitions are often static at deploy time, so changing workflow topology usually means redeploying.",
+    );
+    output = output.replace(
+      "Combined, these primitives make Conductor the most dynamic workflow engine available — not despite using JSON, but because of it. A JSON definition is data, and data is easy to generate, transform, and compose programmatically. Code is not.",
+      "Together, these primitives let Conductor support highly dynamic workflows without turning generated source code into the deployment unit. JSON definitions are data, and data is easy to generate, transform, and compose programmatically.",
+    );
+    output = output.replace(
+      "Code-based workflow engines require the workflow topology to be known at compile time.",
+      "Code-first workflow engines often require more of the workflow topology to be known before deployment.",
+    );
+    output = output.replace(
+      "Code-based workflow engines require generated code to be compiled, tested, and deployed before it runs — a friction that fundamentally limits how dynamically an AI system can operate.",
+      "Code-first workflow approaches often require generated workflow code to be compiled, tested, and deployed before it runs, which adds friction when an AI system needs to create or change orchestration at runtime.",
+    );
+  }
+
   if (route === "developer-guides/conductor-skills") {
     output = appendBeforeNextSteps(
       output,
       [
-        "## Conductor Skills and AgentSpan",
+        "## Conductor Skills and Agentspan",
         "",
         "Conductor Skills help AI coding agents create, run, monitor, debug, and manage Conductor workflows and workers. They are authoring and operations instructions for coding agents.",
         "",
-        "AgentSpan, when used with Conductor, should be positioned separately: a Conductor project for running supported agent frameworks as durable Conductor workflows. Do not describe Conductor Skills as the agent runtime, and do not describe AgentSpan as replacing every agent framework.",
+        AGENTSPAN_RELATIONSHIP_COPY,
+        "",
+        "Do not describe Conductor Skills as the agent runtime. Conductor Skills are instructions for AI coding agents. Agentspan is runtime integration for agent applications that need durable execution through Conductor.",
       ].join("\n"),
     );
   }
@@ -1687,25 +1740,25 @@ description: "Orkes Conductor documentation for building durable workflows, API 
     </div>
     <div class="hero-ai-body">
       <div class="hero-ai-item">
-        <a href="${BASE_URL}/developer-guides/creating-and-managing-gen-ai-prompt-templates" class="hero-ai-link">AI Prompts &rarr;</a>
-        <span class="hero-ai-sub">Create reusable prompts for AI tasks.</span>
+        <a href="${BASE_URL}/agentic-workflow-engine" class="hero-ai-link">Agentic Workflow Engine &rarr;</a>
+        <span class="hero-ai-sub">Persist state, retries, waits, tool calls, and audit history for production agents.</span>
       </div>
       <div class="hero-ai-item">
-        <a href="${BASE_URL}/ai-orchestration" class="hero-ai-link">AI Cookbook &rarr;</a>
-        <span class="hero-ai-sub">LLM providers, vector databases, MCP, and human-in-the-loop workflows.</span>
+        <a href="${BASE_URL}/ai-orchestration/production-agent-architecture" class="hero-ai-link">Production Agent Architecture &rarr;</a>
+        <span class="hero-ai-sub">Keep reasoning in the agent framework and move execution into Conductor.</span>
       </div>
     </div>
   </div>
 </div>
 
 <div class="value-strip">
-  <div class="value-item"><div class="value-metric">Guaranteed at-least-once</div><div class="value-label">Task Delivery</div></div>
+  <div class="value-item"><div class="value-metric">Persisted state</div><div class="value-label">Resume After Failure</div></div>
   <div class="value-divider"></div>
-  <div class="value-item"><div class="value-metric">Any language</div><div class="value-label">Worker Support</div></div>
+  <div class="value-item"><div class="value-metric">Isolated retries</div><div class="value-label">Only Failed Steps Retry</div></div>
   <div class="value-divider"></div>
-  <div class="value-item"><div class="value-metric">Millions</div><div class="value-label">Concurrent Workflows</div></div>
+  <div class="value-item"><div class="value-metric">Durable waits</div><div class="value-label">Humans, Timers, Callbacks</div></div>
   <div class="value-divider"></div>
-  <div class="value-item"><div class="value-metric">Billions of workflows</div><div class="value-label">Internet Scale Execution</div></div>
+  <div class="value-item"><div class="value-metric">Execution history</div><div class="value-label">Inputs, Outputs, Audit</div></div>
 </div>
 
 <div class="features-section" id="built-for-production">
@@ -1729,12 +1782,12 @@ description: "Orkes Conductor documentation for building durable workflows, API 
       <div class="feature-tag">AI</div>
       <h3>AI agent orchestration</h3>
       <p>Run production agents as durable workflows. Keep agent frameworks for reasoning and use Conductor for state, tool execution, approvals, retries, and auditability.</p>
-      <a href="${BASE_URL}/ai-orchestration" class="feature-link">AI Cookbook &rarr;</a>
+      <a href="${BASE_URL}/agentic-workflow-engine" class="feature-link">Agentic workflow engine &rarr;</a>
     </div>
     <div class="feature-card">
       <div class="feature-tag">Workers</div>
       <h3>Polyglot workers</h3>
-      <p>Write task workers in any language. Workers poll for tasks, execute your logic, and report results from wherever they run.</p>
+      <p>Write task workers with SDKs in Python, Java, Go, .NET/C#, Ruby, Rust, and TypeScript, or from any service that can poll the task API.</p>
       <a href="${BASE_URL}/developer-guides/using-workers" class="feature-link">Worker guide &rarr;</a>
     </div>
   </div>
@@ -3076,7 +3129,7 @@ a.repo-link:hover {
   writeOverrides();
   write(
     path.join(OUT_DIR, "robots.txt"),
-    `User-agent: *\nAllow: /\n\nSitemap: ${SITE_URL}sitemap.xml\nLLMs: ${SITE_URL}llms.txt\n`,
+    `User-agent: *\nAllow: /\n\nSitemap: ${SITE_URL}sitemap.xml\nLLMs: ${SITE_URL}llms.txt\nLLMs-Full: ${SITE_URL}llms-full.txt\n`,
   );
 }
 
@@ -3114,12 +3167,26 @@ function writeLlmsTxt() {
   const routes = [...titleByRoute.keys()]
     .filter((route) => route !== "search")
     .sort();
-  const lines = [
+  const canonicalRoutes = [
+    "agentic-workflow-engine",
+    "ai-orchestration/production-agent-architecture",
+    "ai-orchestration/failure-semantics",
+    "ai-orchestration/durable-agents",
+    "ai-orchestration/mcp-integration",
+    "developer-guides/conductor-skills",
+    "developer-guides/write-workflows-using-code",
+    "developer-guides/using-workers",
+    "quickstarts/durable-execution",
+    "quickstarts/json-code-native",
+  ].filter((route) => titleByRoute.has(route));
+  const canonicalLines = canonicalRoutes.map((route) => `- ${titleByRoute.get(route)}: ${SITE_URL}${route}`);
+  const introLines = [
     "# Orkes Conductor Documentation",
     "",
     "This file is a machine-readable version of the public Orkes Conductor documentation for AI systems, developer tools, and search systems.",
     "",
     `Source documentation: ${SITE_URL}`,
+    `Full documentation dump: ${SITE_URL}llms-full.txt`,
     "Product: Orkes Conductor",
     "Positioning: Managed enterprise platform for Conductor OSS, a durable workflow engine for production AI agents and distributed systems.",
     "",
@@ -3128,6 +3195,10 @@ function writeLlmsTxt() {
     "Orkes Conductor is the managed enterprise version of Conductor OSS. It orchestrates production workflows, distributed applications, microservices, APIs, human approvals, and AI agents with durable execution and operational visibility.",
     "",
     "Conductor OSS is the actively maintained open-source durable workflow engine under the Conductor OSS community. Orkes contributes maintenance, engineering, documentation, and enterprise support; the original Netflix project history is part of the origin story, not the current maintenance model.",
+    "",
+    AGENTSPAN_RELATIONSHIP_COPY,
+    "",
+    "Conductor Skills are authoring and operations instructions for AI coding agents. They are not the runtime. Agentspan is runtime integration for agent applications that need durable execution through Conductor.",
     "",
     "Conductor is not a replacement for agent frameworks. Use frameworks for reasoning, prompts, graph composition, and model-specific loops; use Conductor for durable execution, persisted state, task queues, retries, timeouts, long waits, human approval, replay, governance, and audit history.",
     "",
@@ -3141,17 +3212,23 @@ function writeLlmsTxt() {
     "- Visual workflow graph, execution debugging, task inputs and outputs, logs, metrics, and observability.",
     "- Enterprise access control, tags, applications, secrets, schedules, webhooks, integrations, and API gateway/MCP gateway.",
     "",
+    "## Canonical Agentic Workflow Pages",
+    "",
+    ...canonicalLines,
+    "",
     "## Documentation Index",
     "",
   ];
 
+  const conciseLines = [...introLines];
   for (const route of routes) {
-    lines.push(`- ${titleByRoute.get(route)}: ${SITE_URL}${route}`);
+    conciseLines.push(`- ${titleByRoute.get(route)}: ${SITE_URL}${route}`);
   }
 
-  lines.push("");
-  lines.push("## Full Documentation");
-  lines.push("");
+  conciseLines.push("");
+  conciseLines.push("For full page text, use llms-full.txt. This file is intentionally concise so agents can discover canonical docs without ingesting the entire site.");
+
+  const fullLines = [...introLines, "", "## Full Documentation", ""];
 
   for (const route of routes) {
     const file = routeMarkdownPath(route);
@@ -3160,17 +3237,18 @@ function writeLlmsTxt() {
     const url = `${SITE_URL}${route}`;
     const content = cleanMarkdownForLlms(read(file));
     if (!content) continue;
-    lines.push(`---`);
-    lines.push(`URL: ${url}`);
-    lines.push(`Title: ${title}`);
-    lines.push(`Route: ${routeToUrl(route)}`);
-    lines.push(`---`);
-    lines.push("");
-    lines.push(content);
-    lines.push("");
+    fullLines.push(`---`);
+    fullLines.push(`URL: ${url}`);
+    fullLines.push(`Title: ${title}`);
+    fullLines.push(`Route: ${routeToUrl(route)}`);
+    fullLines.push(`---`);
+    fullLines.push("");
+    fullLines.push(content);
+    fullLines.push("");
   }
 
-  write(path.join(OUT_DIR, "llms.txt"), `${lines.join("\n")}\n`);
+  write(path.join(OUT_DIR, "llms.txt"), `${conciseLines.join("\n")}\n`);
+  write(path.join(OUT_DIR, "llms-full.txt"), `${fullLines.join("\n")}\n`);
 }
 
 function main() {

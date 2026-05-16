@@ -22,25 +22,25 @@ description: "Orkes Conductor documentation for building durable workflows, API 
     </div>
     <div class="hero-ai-body">
       <div class="hero-ai-item">
-        <a href="/content/developer-guides/creating-and-managing-gen-ai-prompt-templates" class="hero-ai-link">AI Prompts &rarr;</a>
-        <span class="hero-ai-sub">Create reusable prompts for AI tasks.</span>
+        <a href="/content/agentic-workflow-engine" class="hero-ai-link">Agentic Workflow Engine &rarr;</a>
+        <span class="hero-ai-sub">Persist state, retries, waits, tool calls, and audit history for production agents.</span>
       </div>
       <div class="hero-ai-item">
-        <a href="/content/ai-orchestration" class="hero-ai-link">AI Cookbook &rarr;</a>
-        <span class="hero-ai-sub">LLM providers, vector databases, MCP, and human-in-the-loop workflows.</span>
+        <a href="/content/ai-orchestration/production-agent-architecture" class="hero-ai-link">Production Agent Architecture &rarr;</a>
+        <span class="hero-ai-sub">Keep reasoning in the agent framework and move execution into Conductor.</span>
       </div>
     </div>
   </div>
 </div>
 
 <div class="value-strip">
-  <div class="value-item"><div class="value-metric">Guaranteed at-least-once</div><div class="value-label">Task Delivery</div></div>
+  <div class="value-item"><div class="value-metric">Persisted state</div><div class="value-label">Resume After Failure</div></div>
   <div class="value-divider"></div>
-  <div class="value-item"><div class="value-metric">Any language</div><div class="value-label">Worker Support</div></div>
+  <div class="value-item"><div class="value-metric">Isolated retries</div><div class="value-label">Only Failed Steps Retry</div></div>
   <div class="value-divider"></div>
-  <div class="value-item"><div class="value-metric">Millions</div><div class="value-label">Concurrent Workflows</div></div>
+  <div class="value-item"><div class="value-metric">Durable waits</div><div class="value-label">Humans, Timers, Callbacks</div></div>
   <div class="value-divider"></div>
-  <div class="value-item"><div class="value-metric">Billions of workflows</div><div class="value-label">Internet Scale Execution</div></div>
+  <div class="value-item"><div class="value-metric">Execution history</div><div class="value-label">Inputs, Outputs, Audit</div></div>
 </div>
 
 <div class="features-section" id="built-for-production">
@@ -64,12 +64,12 @@ description: "Orkes Conductor documentation for building durable workflows, API 
       <div class="feature-tag">AI</div>
       <h3>AI agent orchestration</h3>
       <p>Run production agents as durable workflows. Keep agent frameworks for reasoning and use Conductor for state, tool execution, approvals, retries, and auditability.</p>
-      <a href="/content/ai-orchestration" class="feature-link">AI Cookbook &rarr;</a>
+      <a href="/content/agentic-workflow-engine" class="feature-link">Agentic workflow engine &rarr;</a>
     </div>
     <div class="feature-card">
       <div class="feature-tag">Workers</div>
       <h3>Polyglot workers</h3>
-      <p>Write task workers in any language. Workers poll for tasks, execute your logic, and report results from wherever they run.</p>
+      <p>Write task workers with SDKs in Python, Java, Go, .NET/C#, Ruby, Rust, and TypeScript, or from any service that can poll the task API.</p>
       <a href="/content/developer-guides/using-workers" class="feature-link">Worker guide &rarr;</a>
     </div>
   </div>

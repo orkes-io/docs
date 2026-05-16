@@ -457,5 +457,5 @@ The parent agent waits for the child to complete. If the child fails, the parent
 - **[Failure Semantics for AI Agents](/content/ai-orchestration/failure-semantics)** — The exact failure contract: what happens under crashes, retries, duplicates, and long waits.
 - **[Why Conductor for Agents](/content/ai-orchestration/why-conductor)** — What Conductor gives you out of the box for agentic workflows.
 - **[Build Your First AI Agent](/content/ai-orchestration/first-ai-agent)** — Start simple and build up to this architecture in 5 minutes.
-- **[MCP Integration](/content/ai-orchestration/mcp-integration)** — Connect to any MCP server, expose workflows as MCP tools.
+- **[MCP Integration](/content/ai-orchestration/mcp-integration)** — Connect to any MCP-compatible server, expose workflows as MCP tools.
 - **[Token Efficiency](/content/ai-orchestration/token-efficiency)** — How durable execution saves tokens and reduces LLM costs.
