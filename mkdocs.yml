@@ -1,4 +1,4 @@
-site_name: Orkes Conductor Documentation
+site_name: Agentic Workflow Engine
 site_description: Orkes Conductor is the managed enterprise platform for Conductor OSS, a durable workflow engine for production AI agents and distributed systems.
 site_url: https://orkes.io/content/
 repo_url: https://github.com/conductor-oss/conductor
@@ -76,7 +76,7 @@ nav:
       - Document Retrieval Workflow: tutorials/document-retrieval-workflow.md
       - Pull Request Summary Workflow: tutorials/pull-request-summary-workflow.md
       - Text Indexing and Search Workflow: tutorials/text-indexing-search-workflow.md
-  - Events:
+  - Event Orchestration:
     - "Event-Driven Orchestration":
       - "Event-Driven Orchestration": category/event-driven-orchestration.md
       - Receive Events:

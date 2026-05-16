@@ -353,7 +353,7 @@ const topSections = [
   ["Quickstart", "quickstartSidebar"],
   ["Guides", "guidesSidebar"],
   ["AI Agents", "aiSidebar"],
-  ["Events", "eventingSidebar"],
+  ["Event Orchestration", "eventingSidebar"],
   ["Cookbook", "cookbookSidebar"],
   ["SDKs", "sdksSidebar"],
   ["Reference", "referenceSidebar"],
@@ -2417,7 +2417,7 @@ function buildNav() {
 
 function writeMkdocsConfig(nav) {
   const navLines = yamlNav(nav, 2).join("\n");
-const mkdocs = `site_name: Orkes Conductor Documentation
+const mkdocs = `site_name: Agentic Workflow Engine
 site_description: ${SITE_DESCRIPTION}
 site_url: ${SITE_URL}
 repo_url: https://github.com/conductor-oss/conductor
@@ -2619,7 +2619,7 @@ function writeOverrides() {
       {
         "@type": "WebSite",
         "@id": "{{ config.site_url }}#website",
-        "name": "Orkes Conductor Documentation",
+        "name": "Agentic Workflow Engine",
         "url": "{{ config.site_url }}",
         "publisher": { "@id": "https://orkes.io/#organization" },
         "inLanguage": "en"
@@ -3181,7 +3181,7 @@ function writeLlmsTxt() {
   ].filter((route) => titleByRoute.has(route));
   const canonicalLines = canonicalRoutes.map((route) => `- ${titleByRoute.get(route)}: ${SITE_URL}${route}`);
   const introLines = [
-    "# Orkes Conductor Documentation",
+    "# Agentic Workflow Engine",
     "",
     "This file is a machine-readable version of the public Orkes Conductor documentation for AI systems, developer tools, and search systems.",
     "",
