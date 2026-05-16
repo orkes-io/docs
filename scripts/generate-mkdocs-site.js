@@ -352,12 +352,12 @@ const sidebars = require(path.join(ROOT, "sidebars.js"));
 const topSections = [
   ["Quickstart", "quickstartSidebar"],
   ["Guides", "guidesSidebar"],
-  ["Eventing", "eventingSidebar"],
+  ["AI Agents", "aiSidebar"],
+  ["Events", "eventingSidebar"],
   ["Cookbook", "cookbookSidebar"],
-  ["Agentic Workflow Engine", "aiSidebar"],
   ["SDKs", "sdksSidebar"],
   ["Reference", "referenceSidebar"],
-  ["RBAC", "rbacSidebar"],
+  ["Security", "rbacSidebar"],
 ];
 
 const routeBySource = new Map();

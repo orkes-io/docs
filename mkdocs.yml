@@ -52,7 +52,31 @@ nav:
       - API Gateway: developer-guides/api-gateway.md
       - MCP Gateway: developer-guides/mcp-gateway.md
       - Remote Services: remote-services.md
-  - Eventing:
+  - AI Agents:
+    - Agentic Workflow Engine: agentic-workflow-engine.md
+    - Production Agents:
+      - Production Agents: ai-orchestration/production-agent-architecture.md
+      - Build Your First AI Agent: ai-orchestration/first-ai-agent.md
+      - Failure Semantics: ai-orchestration/failure-semantics.md
+      - Durable Agents: ai-orchestration/durable-agents.md
+      - "Human-in-the-Loop": ai-orchestration/human-in-the-loop.md
+      - Dynamic Workflows: ai-orchestration/dynamic-workflows.md
+      - Token Efficiency: ai-orchestration/token-efficiency.md
+    - AI Cookbook:
+      - AI Cookbook: ai-orchestration.md
+      - "AI & LLM Recipes": ai-orchestration/ai-llm-recipes.md
+      - LLM Orchestration: ai-orchestration/llm-orchestration.md
+      - MCP Integration: ai-orchestration/mcp-integration.md
+    - AI Tutorials:
+      - AI Tutorials: tutorials/ai.md
+      - "AI-Powered Translator": developer-guides/quickstart-ai-orchestration.md
+      - Agentic Interview App: tutorials/agentic-interview-app.md
+      - Document Classification: _routes/templates/document-classifier.md
+      - Question Answering Workflow: tutorials/question-answering-with-embeddings.md
+      - Document Retrieval Workflow: tutorials/document-retrieval-workflow.md
+      - Pull Request Summary Workflow: tutorials/pull-request-summary-workflow.md
+      - Text Indexing and Search Workflow: tutorials/text-indexing-search-workflow.md
+  - Events:
     - "Event-Driven Orchestration":
       - "Event-Driven Orchestration": category/event-driven-orchestration.md
       - Receive Events:
@@ -112,30 +136,6 @@ nav:
       - Gateway Tutorials: tutorials/mcp.md
       - Build a Feedback API: tutorials/expose-feedback-workflow-as-api.md
       - Build an MCP Ticket Service: tutorials/expose-ticket-service-using-mcp-gateway.md
-  - Agentic Workflow Engine:
-    - Agentic Workflow Engine: agentic-workflow-engine.md
-    - Production Agents:
-      - Production Agents: ai-orchestration/production-agent-architecture.md
-      - Build Your First AI Agent: ai-orchestration/first-ai-agent.md
-      - Failure Semantics: ai-orchestration/failure-semantics.md
-      - Durable Agents: ai-orchestration/durable-agents.md
-      - "Human-in-the-Loop": ai-orchestration/human-in-the-loop.md
-      - Dynamic Workflows: ai-orchestration/dynamic-workflows.md
-      - Token Efficiency: ai-orchestration/token-efficiency.md
-    - AI Cookbook:
-      - AI Cookbook: ai-orchestration.md
-      - "AI & LLM Recipes": ai-orchestration/ai-llm-recipes.md
-      - LLM Orchestration: ai-orchestration/llm-orchestration.md
-      - MCP Integration: ai-orchestration/mcp-integration.md
-    - AI Tutorials:
-      - AI Tutorials: tutorials/ai.md
-      - "AI-Powered Translator": developer-guides/quickstart-ai-orchestration.md
-      - Agentic Interview App: tutorials/agentic-interview-app.md
-      - Document Classification: _routes/templates/document-classifier.md
-      - Question Answering Workflow: tutorials/question-answering-with-embeddings.md
-      - Document Retrieval Workflow: tutorials/document-retrieval-workflow.md
-      - Pull Request Summary Workflow: tutorials/pull-request-summary-workflow.md
-      - Text Indexing and Search Workflow: tutorials/text-indexing-search-workflow.md
   - SDKs:
     - SDKs: category/sdks.md
     - Python: sdks/python.md
@@ -445,7 +445,7 @@ nav:
           - Email/Git: category/integrations/email.md
           - SendGrid Email: integrations/email/sendgrid.md
           - Git Repository: integrations/git-repository.md
-  - RBAC:
+  - Security:
     - Role Based Access Control: category/access-control-and-security.md
     - Managing Users and Groups: access-control-and-security/users-and-groups.md
     - "Application-Level Access": access-control-and-security/applications.md
