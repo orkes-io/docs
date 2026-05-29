@@ -58,8 +58,8 @@ This guide explains how to set up and use the integration. Here’s an overview:
 To integrate Slack with Orkes Conductor, you need a bot token and, depending on the operations you want to use, a user token or an incoming webhook URL.
 
 - The bot token is required for most operations. 
-- The user token is required for **Search Messages**, and **Update User Profile**.
-- The webhook URL is only required for the **Send Message** operation.
+- The user token is required for **[Search Messages](/content/integrations/slack-operations#search-messages)**, and **[Update User Profile](/content/integrations/slack-operations#update-user-profile)**.
+- The webhook URL is only required for the **[Send Message](/content/integrations/slack-operations#send-message)** operation.
 
 ### Create a Slack app
 
@@ -70,7 +70,7 @@ To integrate Slack with Orkes Conductor, you need a bot token and, depending on 
 3. Choose **From scratch**, enter a name for your app, and select the workspace where you want to use it.
 4. Select **Create App**.
 
-### Get the bot token
+### Get the user and bot tokens
 
 **To retrieve the bot token:**
 
@@ -112,7 +112,7 @@ To integrate Slack with Orkes Conductor, you need a bot token and, depending on 
 
 ### Get the webhook URL
 
-Webhook URL is only needed for the operation [Send Message] where you need to send messages to a configured channel via Slack webhook.
+Webhook URL is only needed for the operation [Send Message](/content/integrations/slack-operations#send-message) where you need to send messages to a configured channel via Slack webhook.
 
 **To retrieve the webhook URL:**
 
@@ -135,9 +135,9 @@ After obtaining the credentials, add a Slack integration to your Conductor clust
 | Parameter | Description | Required/Optional |
 | --------- | ----------- | ----------------- |
 | Integration name | A name for the integration. | Required. | 
-| Endpoint | The incoming webhook URL generated in [Step 1]. Required only for the **Send Message** operation. | Optional. | 
-| Bot Token | The bot user OAuth token generated in [Step 1]. Required for majority of operations. | Optional. | 
-| User Token | The user OAuth token generated in [Step 1]. Required for **Search Messages**, and **Update User Profile**. | Optional. | 
+| Endpoint | The incoming webhook URL generated in [Step 1](/content/integrations/slack#get-the-webhook-url). Required only for the **[Send Message](/content/integrations/slack-operations#send-message)** operation. | Optional. | 
+| Bot Token | The bot user OAuth token generated in [Step 1](/content/integrations/slack#get-the-user-and-bot-tokens). Required for majority of operations. | Optional. | 
+| User Token | The user OAuth token generated in [Step 1](/content/integrations/slack#get-the-user-and-bot-tokens). Required for **[Search Messages](/content/integrations/slack-operations#search-messages)**, and **[Update User Profile](/content/integrations/slack-operations#update-user-profile)**. | Optional. | 
 | Description | A description of the integration. | Required. | 
 
 <p align="center"><img src="/content/img/slack-integration.png" alt="Slack Integration with Orkes Conductor" width="60%" height="auto"></img></p>
@@ -196,7 +196,7 @@ The following operations are available for use with this integration.
 | [List Users](/content/integrations/slack-operations#list-users) | Retrieves the list of users in the workspace. |
 | [Get User Profile](/content/integrations/slack-operations#get-user-profile) | Retrieves the profile of a specific user, including custom fields. |
 | [Get User Status](/content/integrations/slack-operations#get-user-status) | Retrieves the presence status of a user. | 
-| [Update User Profile](/content/integrations/slack-operations#update-user-profile) | Updates a user's profile fields such as status text and emoji. Requires a user token with users.profile:write scope. | 
+| [Update User Profile](/content/integrations/slack-operations#update-user-profile) | Updates a user's profile fields such as status text and emoji. | 
 | [Create User Group](/content/integrations/slack-operations#create-user-group) | Creates a new user group that can be mentioned with a handle. |
 | [Update User Group](/content/integrations/slack-operations#update-user-group) | Updates the name, handle, description, or associated channels of a user group. |
 | [Disable User Group](/content/integrations/slack-operations#disable-user-group) | Disables a user group so it can no longer be mentioned. |
