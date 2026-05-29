@@ -623,6 +623,18 @@ const sidebars = {
                                 },
                                 {
                                     type: 'category',
+                                    label: 'Slack',
+                                    link: { type: 'doc', id: 'integrations/connected-apps/productivity/slack' },
+                                    items: [
+                                        {
+                                            type: 'doc',
+                                            id: 'integrations/connected-apps/productivity/slack-operations',
+                                            label: 'Slack Operations Reference',
+                                        },
+                                    ],
+                                },
+                                {
+                                    type: 'category',
                                     label: 'Google Calendar',
                                     link: { type: 'doc', id: 'integrations/connected-apps/productivity/google-calendar' },
                                     items: [
