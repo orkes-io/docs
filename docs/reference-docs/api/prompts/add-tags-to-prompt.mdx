@@ -1,0 +1,57 @@
+---
+sidebar_position: 9
+slug: "/reference-docs/api/prompts/add-tags-to-prompt"
+description: "Learn how to add a tag to a prompt."
+---
+
+# Add Tags to Prompt
+
+**Endpoint**: `PUT /api/prompts/{name}/tags`
+
+Adds tags to a prompt. 
+
+## Path parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| name | The name of the prompt to add tags to. | string | Required. | 
+
+## Request Body
+
+The request body should be an array of tag objects.
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| key | The tag key. | string | Required. | 
+| value | The tag value. | string | Required. | 
+
+## Response
+
+Returns 200 OK, indicating that tags have been added to the prompt.
+
+## Examples
+
+<details>
+<summary>Add a tag to a prompt</summary>
+
+**Request**
+
+```bash
+curl -X 'PUT' \
+  'https://<YOUR-SERVER-URL>/api/prompts/population-prompt/tags' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '[
+  {
+    "key": "team",
+    "value": "engineering"
+  }
+]'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the tag has been added to the prompt.
+
+</details>
