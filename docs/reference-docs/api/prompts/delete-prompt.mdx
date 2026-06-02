@@ -1,0 +1,45 @@
+---
+sidebar_position: 4
+slug: "/reference-docs/api/prompts/delete-prompt"
+description: "Learn how to delete a prompt."
+---
+
+# Delete Prompt
+
+**Endpoint**: `DELETE /api/prompts/{name}`
+
+Deletes a prompt and all its versions, including all associated tags and access control entries.
+
+To delete a single version rather than the entire prompt, use `DELETE /api/prompts/{name}/versions/{version}`.
+
+## Path parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| name | The name of the prompt to delete. | string | Required. | 
+
+## Response
+
+- Returns 200 OK with no response body on success.
+- Returns 401 if authentication is required.
+- Returns 403 if the caller does not have DELETE permission on the prompt.
+
+## Examples
+
+<details>
+<summary>Delete prompt</summary>
+
+**Request**
+
+```bash
+curl -X 'DELETE' \
+  'https://<YOUR-SERVER-URL>/api/prompts/population-prompt' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the prompt was deleted successfully.
+
+</details>
