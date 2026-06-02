@@ -8,7 +8,7 @@ description: "Learn how to create or update a prompt."
 
 **Endpoint**: `PUT /api/prompts/{name}`
 
-Creates a new prompt or updates the latest version of an existing one. If the prompt does not yet exist, it is created and the caller is granted full access. If it already exists, the caller must have `UPDATE` permission.
+Creates a new prompt or updates the latest version of an existing one. If the prompt does not exist yet, it is created and the caller is granted full access. If it already exists, the caller must have `UPDATE` permission.
 
 ## Path parameters
 
@@ -43,7 +43,7 @@ The prompt text is to be supplied as a raw string. Enclosing quotation marks are
 - **Model association**: Each value in `models` must reference an existing integration in the format `integrationName:modelName`. The caller must have access to each integration.
 
 :::tip 
-This is the recommended endpoint for day-to-day prompt management. Use [ `POST /api/prompts/{name}`] when you need explicit control over version numbering or auto-incrementing.
+This is the recommended endpoint for day-to-day prompt management. Use [`POST /api/prompts/{name}`](/content/reference-docs/api/prompts/create-prompt-version) when you need explicit control over version numbering or auto-incrementing.
 ::::
 
 ## Examples
