@@ -1,0 +1,52 @@
+---
+sidebar_position: 10
+slug: "/reference-docs/api/prompts/get-tags-from-prompt"
+description: "Learn how to retrieve a tag from a prompt."
+---
+
+# Get Tags from Prompt
+
+**Endpoint**: `GET /api/prompts/{name}/tags`
+
+Retrieves tags from a prompt. 
+
+## Path parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| name | The name of the prompt to retrieve tags from. | string | Required. | 
+
+## Response
+
+Returns 200 OK with an array of tag objects, each containing a key-value pair.
+
+## Examples
+
+<details>
+<summary>Get tags from a prompt</summary>
+
+**Request**
+
+```bash
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/prompts/population-prompt/tags' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+[
+  {
+    "key": "team",
+    "value": "docs"
+  },
+  {
+    "key": "team",
+    "value": "engineering"
+  }
+]
+```
+
+</details>
