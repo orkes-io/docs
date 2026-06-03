@@ -773,478 +773,560 @@ Returns `totalCount`, `incompleteResults`, and `items` (list of pull requests, e
 </TabItem>
 </Tabs>
 
-## A
+## List Pull Request Files
 
-a
-
-<Tabs>
-<TabItem value="input" label="Input Parameters">
-
-| Parameter | Description | Type | Required/Optional |
-| --------- | ----------- | ---- | ----------------- |
-
-
-</TabItem>
-<TabItem value="output" label="Output Parameters">
-
-A
-
-</TabItem>
-</Tabs>
-
-## A
-
-a
+Lists the files changed in a pull request.
 
 <Tabs>
 <TabItem value="input" label="Input Parameters">
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-
+| Owner | The repository owner's username or organization name.For example, to retrieve https://github.com/conductor-oss/conductor, enter owner as **conductor-oss**. | string | Required. |
+| Repo | The repository name. | string | Required. | 
+| Pull Number | The pull request number. For example, in https://github.com/acme/docs/pull/1000, the pull request number is 1000. You can also retrieve it from the `number` field returned by the [List Pull Requests](#list-pull-requests) operation. | integer | Required. | 
+| Per Page | Maximum number of results per page. | integer | Optional. |
+| Page | Page number. | integer | Optional. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-A
+Returns a list of files, where each entry includes `filename`, `status`, `additions`, `deletions`, `changes`, `blobUrl`, `rawUrl`, and `patch`.
 
 </TabItem>
 </Tabs>
 
-## A
+## List Pull Request Reviews
 
-a
+Retrieves the reviews for a pull request.
 
 <Tabs>
 <TabItem value="input" label="Input Parameters">
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-
+| Owner | The repository owner's username or organization name.For example, to retrieve https://github.com/conductor-oss/conductor, enter owner as **conductor-oss**. | string | Required. |
+| Repo | The repository name. | string | Required. | 
+| Pull Number | The pull request number. For example, in https://github.com/acme/docs/pull/1000, the pull request number is 1000. You can also retrieve it from the `number` field returned by the [List Pull Requests](#list-pull-requests) operation. | integer | Required. | 
+| Per Page | Maximum number of results per page. | integer | Optional. |
+| Page | Page number. | integer | Optional. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-A
+Returns a list of reviews, where each entry includes `id`, `body`, `state`, `htmlUrl`, `user` (with `id`, `login`, `type`, and `htmlUrl`), and `submittedAt`.
 
 </TabItem>
 </Tabs>
 
-## A
+## List Pull Request Review Comments
 
-a
+Retrieves the review comments for a pull request.
 
 <Tabs>
 <TabItem value="input" label="Input Parameters">
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-
+| Owner | The repository owner's username or organization name.For example, to retrieve https://github.com/conductor-oss/conductor, enter owner as **conductor-oss**. | string | Required. |
+| Repo | The repository name. | string | Required. | 
+| Pull Number | The pull request number. For example, in https://github.com/acme/docs/pull/1000, the pull request number is 1000. You can also retrieve it from the `number` field returned by the [List Pull Requests](#list-pull-requests) operation. | integer | Required. | 
+| Per Page | Maximum number of results per page. | integer | Optional. |
+| Page | Page number. | integer | Optional. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-A
+Returns a list of review comments, where each entry includes `id`, `body`, `path`, `line`, `htmlUrl`, `user` (with `id`, `login`, `type`, and `htmlUrl`), `createdAt`, and `updatedAt`.
 
 </TabItem>
 </Tabs>
 
-## A
+## Create Pending Review
 
-a
+Creates a pending review for a pull request. The review is not submitted until the Submit Pending Review operation is called.
 
 <Tabs>
 <TabItem value="input" label="Input Parameters">
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-
+| Owner | The repository owner's username or organization name.For example, to retrieve https://github.com/conductor-oss/conductor, enter owner as **conductor-oss**. | string | Required. |
+| Repo | The repository name. | string | Required. | 
+| Pull Number | The pull request number. For example, in https://github.com/acme/docs/pull/1000, the pull request number is 1000. You can also retrieve it from the `number` field returned by the [List Pull Requests](#list-pull-requests) operation. | integer | Required. | 
+| Body | The review body text. | string | Optional. |
+| Commit Id | The commit SHA to associate the review with. Must be a valid 40-character commit SHA from the pull request. You can retrieve it from the `head.sha` field returned by the [Get Pull Request] operation. If not provided, defaults to the latest commit on the PR. | string | Optional. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-A
+Returns `id`, `body`, `state`, `htmlUrl`, `user` (with `id`, `login`, `type`, and `htmlUrl`), and `submittedAt` (null until the review is submitted).
 
 </TabItem>
 </Tabs>
 
-## A
+## Add Pending Review Comment
 
-a
+Adds a review comment to a pull request. Replaces any existing pending review.
 
 <Tabs>
 <TabItem value="input" label="Input Parameters">
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-
+| Owner | The repository owner's username or organization name.For example, to retrieve https://github.com/conductor-oss/conductor, enter owner as **conductor-oss**. | string | Required. |
+| Repo | The repository name. | string | Required. | 
+| Pull Number | The pull request number. For example, in https://github.com/acme/docs/pull/1000, the pull request number is 1000. You can also retrieve it from the `number` field returned by the [List Pull Requests](#list-pull-requests) operation. | integer | Required. | 
+| Review Id | The ID of an existing pending review to replace. You can retrieve it from the `id` field returned by the [Create Pending Review](#create-pending-review) operation. | integer | Optional. | 
+| Body | The comment text. | string | Required. |
+| Path | The file path to comment on. Must be a file present in the pull request diff. If not specified, defaults to the first changed file. | string | Optional. |
+| Line | The line number in the file to comment on. | integer | Required. | 
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-A
+Returns `id`, `body`, `state`, `htmlUrl`, `user` (with `id`, `login`, `type`, and `htmlUrl`), and `submittedAt` (null until the review is submitted).
 
 </TabItem>
 </Tabs>
 
-## A
+## Submit Pending Review
 
-a
+Submits a pending pull request review.
 
 <Tabs>
 <TabItem value="input" label="Input Parameters">
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-
+| Owner | The repository owner's username or organization name.For example, to retrieve https://github.com/conductor-oss/conductor, enter owner as **conductor-oss**. | string | Required. |
+| Repo | The repository name. | string | Required. | 
+| Pull Number | The pull request number. For example, in https://github.com/acme/docs/pull/1000, the pull request number is 1000. You can also retrieve it from the `number` field returned by the [List Pull Requests](#list-pull-requests) operation. | integer | Required. | 
+| Review Id | The ID of the pending review to submit. You can retrieve it from the `id` field returned by the [Create Pending Review](#create-pending-review) operation. | integer | Required. | 
+| Event | The review action. Supported values:<ul><li>APPROVE</li><li>REQUEST_CHANGES</li><li>COMMENT</li></ul> | string | Required. |
+| Body | The review summary text. | string | Optional. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-A
+Returns `id`, `body`, `state`, `htmlUrl`, `user` (with `id`, `login`, `type`, and `htmlUrl`), and `submittedAt`.
 
 </TabItem>
 </Tabs>
 
-## A
+## List Releases
 
-a
+Lists the releases in a repository.
 
 <Tabs>
 <TabItem value="input" label="Input Parameters">
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-
+| Owner | The repository owner's username or organization name.For example, to retrieve https://github.com/conductor-oss/conductor, enter owner as **conductor-oss**. | string | Required. |
+| Repo | The repository name. | string | Required. | 
+| Per Page | Maximum number of results per page. | integer | Optional. |
+| Page | The page number. | integer | Optional. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-A
+Returns a list of releases, where each entry includes `id`, `tagName`, `name`, `body`, `draft`, `prerelease`, `createdAt`, `publishedAt`, `author`, `htmlUrl`, and `assets`.
 
 </TabItem>
 </Tabs>
 
-## A
+## Get Latest Release
 
-a
+Retrieves the latest published release in a repository.
 
 <Tabs>
 <TabItem value="input" label="Input Parameters">
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-
+| Owner | The repository owner's username or organization name.For example, to retrieve https://github.com/conductor-oss/conductor, enter owner as **conductor-oss**. | string | Required. |
+| Repo | The repository name. | string | Required. | 
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-A
+Returns the latest release details, including `id`, `tagName`, `name`, `body`, `draft`, `prerelease`, `createdAt`, `publishedAt`, `author`, `htmlUrl`, and `assets`.
 
 </TabItem>
 </Tabs>
 
-## A
+## Get Release by Tag
 
-a
+Retrieves a release by its tag name.
 
 <Tabs>
 <TabItem value="input" label="Input Parameters">
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-
+| Owner | The repository owner's username or organization name.For example, to retrieve https://github.com/conductor-oss/conductor, enter owner as **conductor-oss**. | string | Required. |
+| Repo | The repository name. | string | Required. | 
+| Tag Name | The tag name to retrieve the release from. | string | Required. | 
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-A
+Returns the release details, including `id`, `tagName`, `name`, `body`, `draft`, `prerelease`, `createdAt`, `publishedAt`, `author`, `htmlUrl`, and `assets`.
 
 </TabItem>
 </Tabs>
 
-## A
+## Create Release
 
-a
+Creates a new release in a repository.
 
 <Tabs>
 <TabItem value="input" label="Input Parameters">
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-
+| Owner | The repository owner's username or organization name.For example, to retrieve https://github.com/conductor-oss/conductor, enter owner as **conductor-oss**. | string | Required. |
+| Repo | The repository name. | string | Required. | 
+| Tag Name | The name of the tag for the release. | string | Required. | 
+| Target Commitish | The branch or commit SHA the release is based on. Defaults to the repository's default branch if not specified. | string | Optional. | 
+| Name | The name of the release. | string | Optional. | 
+| Body | The description of the release. | string | Optional. | 
+| Draft | Whether to create the release as a draft. | boolean | Optional. | 
+| Prerelease | Whether to identify the release as a prerelease. | boolean | Optional. | 
+| Discussion Category Name | The discussion category to create and link to the release. | string | Optional. | 
+| Generate Release Notes | Whether to automatically generate the release name and body. | boolean | Optional. | 
+| Make Latest | Whether to set this release as the latest. Supported values:<ul><li>true</li><li>false</li><li>legacy</li></ul> | string | Optional. | 
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-A
+Returns the created release details, including `id`, `tagName`, `name`, `body`, `draft`, `prerelease`, `createdAt`, `publishedAt`, `author`, `htmlUrl`, and `assets`.
 
 </TabItem>
 </Tabs>
 
-## A
+## Update Release
 
-a
+Updates an existing release in a repository.
 
 <Tabs>
 <TabItem value="input" label="Input Parameters">
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-
+| Owner | The repository owner's username or organization name.For example, to retrieve https://github.com/conductor-oss/conductor, enter owner as **conductor-oss**. | string | Required. |
+| Repo | The repository name. | string | Required. | 
+| Release Id | The unique ID of the release. You can retrieve it from the `id` field returned by the [List Releases](#list-releases) or [Create Release](#create-release) operation. | integer | Required. | 
+| Tag Name | The updated tag name for the release. | string | Optional. | 
+| Target Commitish | The updated branch or commit SHA the release is based on. | string | Optional. | 
+| Name | The updated name of the release. | string | Optional. | 
+| Body | The updated description of the release. | string | Optional. | 
+| Draft | Whether to create the release as a draft. | boolean | Optional. | 
+| Prerelease | Whether to identify the release as a prerelease. | boolean | Optional. | 
+| Discussion Category Name | The discussion category to create and link to the release. | string | Optional. | 
+| Make Latest | Whether to set this release as the latest. Supported values:<ul><li>true</li><li>false</li><li>legacy</li></ul> | string | Optional. | 
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-A
+Returns the updated release details, including `id`, `tagName`, `name`, `body`, `draft`, `prerelease`, `createdAt`, `publishedAt`, `author`, `htmlUrl`, and `assets`.
 
 </TabItem>
 </Tabs>
 
-## A
+## Delete Release
 
-a
+Deletes a release from a repository.
 
 <Tabs>
 <TabItem value="input" label="Input Parameters">
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-
+| Owner | The repository owner's username or organization name.For example, to retrieve https://github.com/conductor-oss/conductor, enter owner as **conductor-oss**. | string | Required. |
+| Repo | The repository name. | string | Required. | 
+| Release Id | The unique ID of the release. You can retrieve it from the `id` field returned by the [List Releases](#list-releases) or [Create Release](#create-release) operation. | integer | Required. | 
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-A
+Returns `status: success` upon successfully deleting the release.
 
 </TabItem>
 </Tabs>
 
-## A
+## List Tags
 
-a
+Lists the tags in a repository.
 
 <Tabs>
 <TabItem value="input" label="Input Parameters">
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-
+| Owner | The repository owner's username or organization name.For example, to retrieve https://github.com/conductor-oss/conductor, enter owner as **conductor-oss**. | string | Required. |
+| Repo | The repository name. | string | Required. | 
+| Per Page | Maximum number of results per page. | integer | Optional. |
+| Page | The page number. | integer | Optional. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-A
+Returns a list of tags, where each entry includes `name`, `commit` (with `sha` and `url`), `zipballUrl`, and `tarballUrl`.
 
 </TabItem>
 </Tabs>
 
-## A
+## Get Tag
 
-a
+Retrieves a specific tag by name.
 
 <Tabs>
 <TabItem value="input" label="Input Parameters">
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-
+| Owner | The repository owner's username or organization name.For example, to retrieve https://github.com/conductor-oss/conductor, enter owner as **conductor-oss**. | string | Required. |
+| Repo | The repository name. | string | Required. | 
+| Tag Name | The tag name to retrieve. For example, **v1.0.0**. | string | Required. | 
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-A
+Returns the tag details, including `ref`, `node_id`, `url`, and `object` (with `sha`, `type`, and `url`).
 
 </TabItem>
 </Tabs>
 
-## A
+## List Workflows
 
-a
+Lists the GitHub Actions workflows in a repository.
 
 <Tabs>
 <TabItem value="input" label="Input Parameters">
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-
+| Owner | The repository owner's username or organization name.For example, to retrieve https://github.com/conductor-oss/conductor, enter owner as **conductor-oss**. | string | Required. |
+| Repo | The repository name. | string | Required. | 
+| Per Page | Maximum number of results per page. | integer | Optional. |
+| Page | The page number. | integer | Optional. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-A
+Returns `totalCount` and `workflows`, where each entry includes `id`, `name`, `path`, and `state`.
 
 </TabItem>
 </Tabs>
 
-## A
+## List Workflow Runs
 
-a
+Lists the workflow runs for a repository or a specific workflow.
 
 <Tabs>
 <TabItem value="input" label="Input Parameters">
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-
+| Owner | The repository owner's username or organization name.For example, to retrieve https://github.com/conductor-oss/conductor, enter owner as **conductor-oss**. | string | Required. |
+| Repo | The repository name. | string | Required. | 
+| Workflow Id | The workflow ID to filter runs by. You can retrieve it from the `id` field returned by the [List Workflows](#list-workflows) operation. | integer | Optional.|
+| Per Page | Maximum number of results per page. | integer | Optional. |
+| Page | The page number. | integer | Optional. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-A
+Returns `totalCount` and `workflowRuns`, where each entry includes `id`, `name`, `status`, `conclusion`, `runNumber`, `headSha`, and `htmlUrl`.
 
 </TabItem>
 </Tabs>
 
-## A
+## Get Workflow Run
 
-a
+Retrieves the details of a specific workflow run.
 
 <Tabs>
 <TabItem value="input" label="Input Parameters">
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-
+| Owner | The repository owner's username or organization name.For example, to retrieve https://github.com/conductor-oss/conductor, enter owner as **conductor-oss**. | string | Required. |
+| Repo | The repository name. | string | Required. | 
+| Run Id | The workflow run ID. For example, in `https://github.com/acme/docs/actions/runs/12345678901`, the run ID is `12345678901`. You can also retrieve it from the `id` field returned by the [List Workflow Runs](#list-workflow-runs) operation. | integer | Required. | 
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-A
+Returns the workflow run details, including `id`, `name`, `status`, `conclusion`, `runNumber`, `event`, `headSha`, `htmlUrl`, `createdAt`, `updatedAt`, `actor`, `headCommit`, and `repository`.
 
 </TabItem>
 </Tabs>
 
-## A
+## Run Workflow
 
-a
+Triggers a workflow dispatch event to run a GitHub Actions workflow.
 
 <Tabs>
 <TabItem value="input" label="Input Parameters">
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-
+| Owner | The repository owner's username or organization name.For example, to retrieve https://github.com/conductor-oss/conductor, enter owner as **conductor-oss**. | string | Required. |
+| Repo | The repository name. | string | Required. | 
+| Workflow Id | The workflow ID or filename. For example, the filename is `test.yml`.<br/>For workflow ID, You can retrieve it from the `id` field returned by the [List Workflows](#list-workflows) operation. | string | Required. | 
+| Ref | The branch or tag name to run the workflow on. | string | Required. |
+| Inputs | The workflow input parameters as a JSON object. | string | Optional. | 
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-A
+Returns `status: success` upon successfully triggering the workflow run.
 
 </TabItem>
 </Tabs>
 
-## A
+## Disable Workflow
 
-a
+Disables a GitHub Actions workflow.
 
 <Tabs>
 <TabItem value="input" label="Input Parameters">
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-
+| Owner | The repository owner's username or organization name.For example, to retrieve https://github.com/conductor-oss/conductor, enter owner as **conductor-oss**. | string | Required. |
+| Repo | The repository name. | string | Required. | 
+| Workflow Id | The workflow ID or filename. For example, the filename is `test.yml`.<br/>For workflow ID, You can retrieve it from the `id` field returned by the [List Workflows](#list-workflows) operation. | string | Required. | 
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-A
+Returns `status: success` upon successfully disabling the workflow.
 
 </TabItem>
 </Tabs>
 
-## A
+## Enable Workflow
 
-a
+Enables a disabled GitHub Actions workflow.
 
 <Tabs>
 <TabItem value="input" label="Input Parameters">
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-
+| Owner | The repository owner's username or organization name.For example, to retrieve https://github.com/conductor-oss/conductor, enter owner as **conductor-oss**. | string | Required. |
+| Repo | The repository name. | string | Required. | 
+| Workflow Id | The workflow ID or filename. For example, the filename is `test.yml`.<br/>For workflow ID, You can retrieve it from the `id` field returned by the [List Workflows](#list-workflows) operation. | string | Required. | 
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-A
+Returns `status: success` upon successfully enabling the workflow.
 
 </TabItem>
 </Tabs>
 
-## A
+## Get Workflow Usage
 
-a
+Retrieves the usage statistics and billing information for a GitHub Actions workflow.
 
 <Tabs>
 <TabItem value="input" label="Input Parameters">
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-
+| Owner | The repository owner's username or organization name.For example, to retrieve https://github.com/conductor-oss/conductor, enter owner as **conductor-oss**. | string | Required. |
+| Repo | The repository name. | string | Required. | 
+| Workflow Id | The workflow ID or filename. For example, the filename is `test.yml`.<br/>For workflow ID, You can retrieve it from the `id` field returned by the [List Workflows](#list-workflows) operation. | string | Required. | 
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-A
+Returns `billable`, which contains usage data broken down by operating system (for example, `UBUNTU`, `MACOS`, `WINDOWS`), each with `totalMs` (total billable milliseconds).
 
 </TabItem>
 </Tabs>
 
-## A
+## List Teams
 
-a
+Lists the teams for the authenticated user across all organizations
 
 <Tabs>
 <TabItem value="input" label="Input Parameters">
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-
+| Per Page | Maximum number of results per page. | integer | Optional. |
+| Page | The page number. | integer | Optional. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-A
+Returns a list of teams, where each entry includes `name`, `id`, `slug`, `description`, `privacy`, `url`, `htmlUrl`, `membersCount`, `reposCount`, and `organization` (with `login`, `id`, `email`, `createdAt`, and `updatedAt`).
 
 </TabItem>
 </Tabs>
 
-## A
+## List Team Members
 
-a
+Retrieves the members of a team in an organization.
 
 <Tabs>
 <TabItem value="input" label="Input Parameters">
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-
+| Org | The organization name. | string | Required. |
+| Team Slug | The team slug. You can retrieve it from the `slug` field returned by the [List Teams] operation. | string | Required. |
+| Per Page | Maximum number of results per page. | integer | Optional. |
+| Page | The page number. | integer | Optional. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-A
+Returns a list of team members, where each entry includes `id`, `login`, `type`, and `htmlUrl`.
 
 </TabItem>
 </Tabs>
 
-## A
+## List Notifications
 
-a
+Lists the notifications for the authenticated user.
 
 <Tabs>
 <TabItem value="input" label="Input Parameters">
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-
+| All | Whether to show all notifications, including read ones. Defaults to showing only unread notifications. | boolean | Optional. | 
+| Per Page | Maximum number of results per page. | integer | Optional. |
+| Page | The page number. | integer | Optional. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-A
+Returns a list of notifications, where each entry includes details such as the notification ID, subject, repository, reason, and read status.
 
 </TabItem>
 </Tabs>
 
+## Mark Notifications Read
+
+Marks all notifications as read for the authenticated user.
+
+<Tabs>
+<TabItem value="input" label="Input Parameters">
+
+This operation has no input parameters.
+
+</TabItem>
+<TabItem value="output" label="Output Parameters">
+
+Returns `status: success` upon successfully marking all notifications as read.
+
+</TabItem>
+</Tabs>
