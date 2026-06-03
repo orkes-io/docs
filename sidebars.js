@@ -791,6 +791,30 @@ const sidebars = {
                                 },
                             ],
                         },
+                        {
+                            type: 'category',
+                            label: 'Source Control',
+                            link: {
+                                type: 'generated-index',
+                                title: 'Source Control',
+                                slug: '/category/integrations/source-control',
+                                description: 'Learn how to connect source control platforms to Conductor workflows.',
+                            },
+                            items: [
+                                {
+                                    type: 'category',
+                                    label: 'GitHub',
+                                    link: { type: 'doc', id: 'integrations/connected-apps/source-control/github' },
+                                    items: [
+                                        {
+                                            type: 'doc',
+                                            id: 'integrations/connected-apps/source-control/github-operations',
+                                            label: 'GitHub Operations Reference',
+                                        },
+                                    ],
+                                },
+                            ],
+                        },
                     ],
                 },
             ],
