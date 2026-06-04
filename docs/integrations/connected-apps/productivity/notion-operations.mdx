@@ -61,9 +61,9 @@ Update the properties or archive status of an existing page.
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Archived | Whether to archive the page. Set to `true` to archive the page, or `false` to restore it. | boolean | Optional. |
 | Page Id | The ID of the page to update. The page ID can be provided with or without dashes.<br/>To get the page ID, open the page shared with your integration in Notion. The page ID is the string of characters at the end of the URL: <ul><li>`https://www.notion.so/<page-title>-<page-id>`</li><li>or (newer Notion URLs): `https://app.notion.com/p/<page-id>`</li></ul> | string | Required. |
-| Properties | The page properties to update as a JSON string. Property names must match the exact names defined in your database. For example, `{"Task name":{"title":[{"text":{"content":"Updated Title"}}]}}`. | string (JSON) | Required. |
+| Properties | The page properties to update as a JSON string. Property names must match the exact names defined in your database. For example, `{"title":[{"text":{"content":"Updated Title"}}]}`. | string (JSON) | Required. |
+| Archived | Whether to archive the page. Set to `true` to archive the page, or `false` to restore it. | boolean | Optional. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -82,10 +82,10 @@ Retrieve the value of a specific property from a page.
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Page Size | The maximum number of property item objects to return. Maximum value is 100. | integer | Optional. |
 | Page Id | The ID of the page to retrieve the properties from. The page ID can be provided with or without dashes.<br/>To get the page ID, open the page shared with your integration in Notion. The page ID is the string of characters at the end of the URL: <ul><li>`https://www.notion.so/<page-title>-<page-id>`</li><li>or (newer Notion URLs): `https://app.notion.com/p/<page-id>`</li></ul> | string | Required. |
 | Property Id | The ID of the property to retrieve. To get the property ID, use the [Retrieve Page operation](/content/integrations/notion-operations#retrieve-page) and copy the required `id` value from the property in the response. | string | Required. |
 | Start Cursor | The start cursor for pagination. To paginate through results, pass the `nextCursor` value from the previous response into this field. | string | Optional. |
+| Page Size | The maximum number of property item objects to return. Maximum value is 100. | integer | Optional. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -144,10 +144,10 @@ Update the title, properties schema, or archive status of an existing database.
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Archived | Whether to archive the database. Set to `true` to archive, or `false` to restore it. | boolean | Optional. |
 | Database Id | The ID of the database to update. The database ID can be provided with or without dashes.<br/>To get the database ID, open the database in Notion. The database ID is the string of characters at the end of the URL: <ul><li>`https://www.notion.so/<database-id>?v=<view-id>`</li><li>or (newer Notion URLs): `https://app.notion.com/p/<database-id>`</li></ul> | string | Required. |
 | Title | The updated database title as a JSON array string. For example, `[{"type":"text","text":{"content":"My Database"}}]`. | string (JSON array) | Optional. |
 | Properties | The updated database properties schema as a JSON string. For example, `{"Name":{"title":{}},"Status":{"select":{}}}`. | string (JSON) | Optional. |
+| Archived | Whether to archive the database. Set to `true` to archive, or `false` to restore it. | boolean | Optional. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -166,8 +166,8 @@ List databases accessible to the integration.
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Page Size | The maximum number of entries to return. Maximum value is 100. | integer | Optional. |
 | Start Cursor | The start cursor for pagination. To paginate through results, pass the `nextCursor` value from the previous response into this field. | string | Optional. |
+| Page Size | The maximum number of entries to return. Maximum value is 100. | integer | Optional. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -186,11 +186,11 @@ Query a database to retrieve entries based on filter and sort criteria.
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Filter | The filter conditions as a JSON string. Leave empty to return all entries. | string (JSON) | Optional. |
-| Page Size | The maximum number of entries to return. Maximum value is 100. | integer | Optional. | 
 | Database Id | The ID of the database to query. The database ID can be provided with or without dashes.<br/>To get the database ID, open the database in Notion. The database ID is the string of characters at the end of the URL: <ul><li>`https://www.notion.so/<database-id>?v=<view-id>`</li><li>or (newer Notion URLs): `https://app.notion.com/p/<database-id>`</li></ul> | string | Required. |
+| Filter | The filter conditions as a JSON string. Leave empty to return all entries. | string (JSON) | Optional. |
 | Sorts | The sort conditions as a JSON array string. For example, `[{"property":"Name","direction":"ascending"}]`. | string (JSON array) | Optional. |
 | Start Cursor | The start cursor for pagination. To paginate through results, pass the `nextCursor` value from the previous response into this field. | string | Optional. |
+| Page Size | The maximum number of entries to return. Maximum value is 100. | integer | Optional. | 
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -229,8 +229,8 @@ Update the content or archive status of an existing block.
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
 | Block Id | The ID of the block to update. The block ID can be provided with or without dashes. <br/>To get the block ID, hover over the block in Notion, select the `⋮⋮` icon on the left, and select Copy link to block. The block ID is the string after `#` in the copied URL: `https://www.notion.so/<page-title>-<page-id>?source=copy_link#<block-id>`. | string | Required. |
-| Archived | Whether to archive the block. Set to `true` to archive, or `false` to restore it. | boolean | Optional. |
 | Block Content | The block content as a JSON string. The structure depends on the block type. For example, for a paragraph: `{"paragraph":{"rich_text":[{"text":{"content":"Updated text"}}]}}`. | string (JSON) | Optional. |
+| Archived | Whether to archive the block. Set to `true` to archive, or `false` to restore it. | boolean | Optional. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -259,7 +259,7 @@ Returns the Notion block object with `archived` and `inTrash` set to `true`, con
 </TabItem>
 </Tabs>
 
-## Retrieve Block Children
+## List Block Children
 
 Get child blocks of a page or block (with pagination)
 
@@ -269,8 +269,8 @@ Get child blocks of a page or block (with pagination)
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
 | Block Id | The ID of the page or block whose children you want to retrieve. The ID can be provided with or without dashes.<br/><ul><li>To get a page ID, open the page in Notion. The page ID is the string of characters at the end of the URL: `https://www.notion.so/<page-title>-<page-id>` or (newer Notion URLs): `https://app.notion.com/p/<page-id>`.</li><li>To get a block ID, hover over the block, select the `⋮⋮` icon on the left, and select Copy link to block. The block ID is the string after `# ` in the copied URL: `https://www.notion.so/<page-title>-<page-id>?source=copy_link#<block-id>`.</li></ul> | string | Required. |
-| Page Size | The maximum number of blocks to return. Maximum value is 100. | integer | Optional. |
 | Start Cursor | The start cursor for pagination. To paginate through results, pass the `nextCursor` value from the previous response into this field. | string | Optional. |
+| Page Size | The maximum number of blocks to return. Maximum value is 100. | integer | Optional. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -310,8 +310,8 @@ Add a comment to a page or a discussion thread.
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
 | Parent | The parent page for the comment, provided as a JSON string. For example, `{"type":"page_id","page_id":"<page-id>"}`.<br/>To get the page ID, open the page in Notion. The page ID is the string of characters at the end of the URL: <ul><li>`https://www.notion.so/<page-title>-<page-id>`</li><li>or (newer Notion URLs): `https://app.notion.com/p/<page-id>`</li></ul> | string (JSON) | Required. |
-| Discussion Id | The ID of an existing discussion thread to add the comment to. If provided, the comment is added as a reply to that thread.<br/>To get the discussion ID, copy the link to the comment in Notion. The discussion ID is the value of the `d=` parameter in the URL: `https://www.notion.so/<page-title>-<page-id>?d=<discussion-id>&source=copy_link`. | string | Optional. |
 | Rich Text | The comment as a JSON array string. For example, `[{"text":{"content":"This is a comment"}}]`. | string (JSON array) | Required. |
+| Discussion Id | The ID of an existing discussion thread to add the comment to. If provided, the comment is added as a reply to that thread.<br/>To get the discussion ID, copy the link to the comment in Notion. The discussion ID is the value of the `d=` parameter in the URL: `https://www.notion.so/<page-title>-<page-id>?d=<discussion-id>&source=copy_link`. | string | Optional. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -331,8 +331,8 @@ Retrieve comments for a page or block.
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
 | Block Id | The ID of the page or block to list comments from. The ID can be provided with or without dashes.<br/><ul><li>To get a page ID, open the page in Notion. The page ID is the string of characters at the end of the URL: `https://www.notion.so/<page-title>-<page-id>` or (newer Notion URLs): `https://app.notion.com/p/<page-id>`.</li><li>To get a block ID, hover over the block, select the `⋮⋮` icon on the left, and select Copy link to block. The block ID is the string after `# ` in the copied URL: `https://www.notion.so/<page-title>-<page-id>?source=copy_link#<block-id>`.</li></ul> | string | Required. |
-| Page Size | The maximum number of comments to return. Maximum value is 100. | integer | Optional. |
 | Start Cursor | The start cursor for pagination. To paginate through results, pass the `nextCursor` value from the previous response into this field. | string | Optional. |
+| Page Size | The maximum number of comments to return. Maximum value is 100. | integer | Optional. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -351,8 +351,8 @@ Retrieve all users in the Notion workspace.
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Page Size | The maximum number of users to return. Maximum value is 100. | integer | Optional. |
 | Start Cursor | The start cursor for pagination. To paginate through results, pass the `nextCursor` value from the previous response into this field. | string | Optional. |
+| Page Size | The maximum number of users to return. Maximum value is 100. | integer | Optional. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -407,11 +407,11 @@ Search for pages and databases in the Notion workspace by title.
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Filter | Filter results by object type. Use `page` or `database`, or provide a full JSON string. For example, `{"property":"object","value":"page"}`. | string | Optional. |
 | Query | The search query string to match against page and database titles. | string | Required. | 
-| Page Size | The maximum number of results to return. Maximum value is 100. | integer | Optional. | 
+| Filter | Filter results by object type. Use `page` or `database`, or provide a full JSON string. For example, `{"property":"object","value":"page"}`. | string | Optional. |
 | Sort | The sort direction for results. Use `ascending` or `descending`, or provide a full JSON string. For example, `{"direction":"ascending","timestamp":"last_edited_time"}`. | string | Optional. | 
 | Start Cursor | The start cursor for pagination. To paginate through results, pass the `nextCursor` value from the previous response into this field. | string | Optional. | 
+| Page Size | The maximum number of results to return. Maximum value is 100. | integer | Optional. | 
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
