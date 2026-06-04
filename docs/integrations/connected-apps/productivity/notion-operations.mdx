@@ -21,9 +21,9 @@ Create a new page in Notion under a specified parent page or database.
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Parent | The parent object for the new page, provided as a JSON string. Use `page_id` when the parent is a page, and `database_id` when the parent is a database.<br/>For example:<ul><li>`{"type":"page_id","page_id":"<page-id>"}`</li><li>`{"type":"database_id","database_id":"<database-id>"}`</li></ul>To get the ID, open the page or database shared with your integration in Notion. The ID is the string of characters at the end of the URL: `https://www.notion.so/<parent-page-or-database-id>`. | string (JSON) | Required. |
-| Children | The page content as a JSON array of Notion block objects. Each block must follow the Notion block structure. For example, to add a paragraph: `[{"object":"block","type":"paragraph","paragraph":{"rich_text":[{"type":"text","text":{"content":"Hello world"}}]}}]`. | string (JSON array) | Optional. |
+| Parent | The parent object for the new page, provided as a JSON string. Use `page_id` when the parent is a page, and `database_id` when the parent is a database.<br/>For example:<ul><li>`{"type":"page_id","page_id":"<page-id>"}`</li><li>`{"type":"database_id","database_id":"<database-id>"}`</li></ul>To get the ID, open the page or database shared with your integration in Notion. The ID is the string of characters at the end of the URL: <ul><li>`https://www.notion.so/<parent-page-or-database-id>`</li><li>or (newer Notion URLs): `https://app.notion.com/p/<page-or-database-id>`</li></ul> | string (JSON) | Required. |
 | Properties | The page properties as a JSON string. For example, `{"title":[{"text":{"content":"My Page"}}]}`. | string (JSON) | Required. |
+| Children | The page content as a JSON array of Notion block objects. Each block must follow the Notion block structure. For example, to add a paragraph: `[{"object":"block","type":"paragraph","paragraph":{"rich_text":[{"type":"text","text":{"content":"Hello world"}}]}}]`. | string (JSON array) | Optional. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
