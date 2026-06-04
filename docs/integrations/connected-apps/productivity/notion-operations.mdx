@@ -42,7 +42,7 @@ Retrieve the details and properties of a page by its ID.
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Page Id | The ID of the page to retrieve. The page ID can be provided with or without dashes.<br/>To get the page ID, open the page shared with your integration in Notion and copy the ID from the end of the URL: `https://www.notion.so/<page-title>-<page-id>`. | string | Required. |
+| Page Id | The ID of the page to retrieve. The page ID can be provided with or without dashes.<br/>To get the page ID, open the page shared with your integration in Notion. The page ID is the string of characters at the end of the URL: <ul><li>`https://www.notion.so/<page-title>-<page-id>`</li><li>or (newer Notion URLs): `https://app.notion.com/p/<page-id>`</li></ul> | string | Required. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -62,7 +62,7 @@ Update the properties or archive status of an existing page.
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
 | Archived | Whether to archive the page. Set to `true` to archive the page, or `false` to restore it. | boolean | Optional. |
-| Page Id | The ID of the page to update. The page ID can be provided with or without dashes.<br/>To get the page ID, open the page shared with your integration in Notion and copy the ID from the end of the URL: `https://www.notion.so/<page-title>-<page-id>`. | string | Required. |
+| Page Id | The ID of the page to update. The page ID can be provided with or without dashes.<br/>To get the page ID, open the page shared with your integration in Notion. The page ID is the string of characters at the end of the URL: <ul><li>`https://www.notion.so/<page-title>-<page-id>`</li><li>or (newer Notion URLs): `https://app.notion.com/p/<page-id>`</li></ul> | string | Required. |
 | Properties | The page properties to update as a JSON string. Property names must match the exact names defined in your database. For example, `{"Task name":{"title":[{"text":{"content":"Updated Title"}}]}}`. | string (JSON) | Required. |
 
 </TabItem>
@@ -83,7 +83,7 @@ Retrieve the value of a specific property from a page.
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
 | Page Size | The maximum number of property item objects to return. Maximum value is 100. | integer | Optional. |
-| Page Id | The ID of the page to retrieve the properties from. The page ID can be provided with or without dashes.<br/>To get the page ID, open the page shared with your integration in Notion and copy the ID from the end of the URL: `https://www.notion.so/<page-title>-<page-id>`. | string | Required. |
+| Page Id | The ID of the page to retrieve the properties from. The page ID can be provided with or without dashes.<br/>To get the page ID, open the page shared with your integration in Notion. The page ID is the string of characters at the end of the URL: <ul><li>`https://www.notion.so/<page-title>-<page-id>`</li><li>or (newer Notion URLs): `https://app.notion.com/p/<page-id>`</li></ul> | string | Required. |
 | Property Id | The ID of the property to retrieve. To get the property ID, use the [Retrieve Page operation](/content/integrations/notion-operations#retrieve-page) and copy the required `id` value from the property in the response. | string | Required. |
 | Start Cursor | The start cursor for pagination. To paginate through results, pass the `nextCursor` value from the previous response into this field. | string | Optional. |
 
@@ -104,7 +104,7 @@ Create a new database as a subpage under a specified parent page.
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Parent | The parent page under which the new database will be created, provided as a JSON string. For example, `{"type":"page_id","page_id":"<page-id>"`}.<br/>To get the page ID, open the page shared with your integration in Notion and copy the ID from the end of the URL: `https://www.notion.so/<page-title>-<page-id>`.<br/>**Note**: The parent must be a Notion page. A database cannot be created directly inside another database. | string (JSON) | Required. |
+| Parent | The parent page under which the new database will be created, provided as a JSON string. For example, `{"type":"page_id","page_id":"<page-id>"`}.<br/>To get the page ID, open the page shared with your integration in Notion. The page ID is the string of characters at the end of the URL: <ul><li>`https://www.notion.so/<page-title>-<page-id>`</li><li>or (newer Notion URLs): `https://app.notion.com/p/<page-id>`</li></ul>**Note**: The parent must be a Notion page. A database cannot be created directly inside another database. | string (JSON) | Required. |
 | Title | The database title as a JSON array string. For example, `[{"type":"text","text":{"content":"My Database"}}]`. | string (JSON array) | Required. |
 |Properties | The database properties schema as a JSON string. For example, `{"Name":{"title":{}},"Status":{"select":{}}}`. | string (JSON) | Required. |
 
@@ -125,7 +125,7 @@ Retrieve the details and schema of a database by its ID.
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Database Id | The ID of the database to retrieve. The database ID can be provided with or without dashes.<br/>To get the database ID, open the database in Notion and copy the ID from the URL: `https://www.notion.so/<database-id>?v=<view-id>`. | string | Required. |
+| Database Id | The ID of the database to retrieve. The database ID can be provided with or without dashes.<br/>To get the database ID, open the database in Notion. The database ID is the string of characters at the end of the URL: <ul><li>`https://www.notion.so/<database-id>?v=<view-id>`</li><li>or (newer Notion URLs): `https://app.notion.com/p/<database-id>`</li></ul> | string | Required. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -145,7 +145,7 @@ Update the title, properties schema, or archive status of an existing database.
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
 | Archived | Whether to archive the database. Set to `true` to archive, or `false` to restore it. | boolean | Optional. |
-| Database Id | The ID of the database to update. The database ID can be provided with or without dashes.<br/>To get the database ID, open the database in Notion and copy the ID from the URL: `https://www.notion.so/<database-id>?v=<view-id>`. | string | Required. |
+| Database Id | The ID of the database to update. The database ID can be provided with or without dashes.<br/>To get the database ID, open the database in Notion. The database ID is the string of characters at the end of the URL: <ul><li>`https://www.notion.so/<database-id>?v=<view-id>`</li><li>or (newer Notion URLs): `https://app.notion.com/p/<database-id>`</li></ul> | string | Required. |
 | Title | The updated database title as a JSON array string. For example, `[{"type":"text","text":{"content":"My Database"}}]`. | string (JSON array) | Optional. |
 | Properties | The updated database properties schema as a JSON string. For example, `{"Name":{"title":{}},"Status":{"select":{}}}`. | string (JSON) | Optional. |
 
@@ -188,7 +188,7 @@ Query a database to retrieve entries based on filter and sort criteria.
 | --------- | ----------- | ---- | ----------------- |
 | Filter | The filter conditions as a JSON string. Leave empty to return all entries. | string (JSON) | Optional. |
 | Page Size | The maximum number of entries to return. Maximum value is 100. | integer | Optional. | 
-| Database Id | The ID of the database to query. The database ID can be provided with or without dashes.<br/>To get the database ID, open the database in Notion and copy the ID from the URL: `https://www.notion.so/<database-id>?v=<view-id>`. | string | Required. |
+| Database Id | The ID of the database to query. The database ID can be provided with or without dashes.<br/>To get the database ID, open the database in Notion. The database ID is the string of characters at the end of the URL: <ul><li>`https://www.notion.so/<database-id>?v=<view-id>`</li><li>or (newer Notion URLs): `https://app.notion.com/p/<database-id>`</li></ul> | string | Required. |
 | Sorts | The sort conditions as a JSON array string. For example, `[{"property":"Name","direction":"ascending"}]`. | string (JSON array) | Optional. |
 | Start Cursor | The start cursor for pagination. To paginate through results, pass the `nextCursor` value from the previous response into this field. | string | Optional. |
 
@@ -268,7 +268,7 @@ Get child blocks of a page or block (with pagination)
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Block Id | The ID of the page or block whose children you want to retrieve. The ID can be provided with or without dashes.<br/><ul><li>To get a page ID, open the page in Notion and copy the ID from the end of the URL: `https://www.notion.so/<page-title>-<page-id>`.</li><li>To get a block ID, hover over the block, select the `⋮⋮` icon on the left, and select Copy link to block. The block ID is the string after `# ` in the copied URL: `https://www.notion.so/<page-title>-<page-id>?source=copy_link#<block-id>`.</li></ul> | string | Required. |
+| Block Id | The ID of the page or block whose children you want to retrieve. The ID can be provided with or without dashes.<br/><ul><li>To get a page ID, open the page in Notion. The page ID is the string of characters at the end of the URL: `https://www.notion.so/<page-title>-<page-id>` or (newer Notion URLs): `https://app.notion.com/p/<page-id>`.</li><li>To get a block ID, hover over the block, select the `⋮⋮` icon on the left, and select Copy link to block. The block ID is the string after `# ` in the copied URL: `https://www.notion.so/<page-title>-<page-id>?source=copy_link#<block-id>`.</li></ul> | string | Required. |
 | Page Size | The maximum number of blocks to return. Maximum value is 100. | integer | Optional. |
 | Start Cursor | The start cursor for pagination. To paginate through results, pass the `nextCursor` value from the previous response into this field. | string | Optional. |
 
@@ -289,7 +289,7 @@ Append new blocks to an existing page or block.
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Block Id | The ID of the page or block to append children to. The ID can be provided with or without dashes.<br/><ul><li>To get a page ID, open the page in Notion and copy the ID from the end of the URL: `https://www.notion.so/<page-title>-<page-id>`.</li><li>To get a block ID, hover over the block, select the `⋮⋮` icon on the left, and select Copy link to block. The block ID is the string after `# ` in the copied URL: `https://www.notion.so/<page-title>-<page-id>?source=copy_link#<block-id>`.</li></ul> | string | Required. |
+| Block Id | The ID of the page or block to append children to. The ID can be provided with or without dashes.<br/><ul><li>To get a page ID, open the page in Notion. The page ID is the string of characters at the end of the URL: `https://www.notion.so/<page-title>-<page-id>` or (newer Notion URLs): `https://app.notion.com/p/<page-id>`.</li><li>To get a block ID, hover over the block, select the `⋮⋮` icon on the left, and select Copy link to block. The block ID is the string after `# ` in the copied URL: `https://www.notion.so/<page-title>-<page-id>?source=copy_link#<block-id>`.</li></ul> | string | Required. |
 | Children | The blocks to append as a JSON array string. For example, `[{"object":"block","type":"paragraph","paragraph":{"rich_text":[{"text":{"content":"Hello"}}]}}]`. | string (JSON array) | Required. |
 
 </TabItem>
@@ -309,7 +309,7 @@ Add a comment to a page or a discussion thread.
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Parent | The parent page for the comment, provided as a JSON string. For example, `{"type":"page_id","page_id":"<page-id>"}`.<br/>To get the page ID, open the page in Notion and copy the ID from the end of the URL: `https://www.notion.so/<page-title>-<page-id>`. | string (JSON) | Required. |
+| Parent | The parent page for the comment, provided as a JSON string. For example, `{"type":"page_id","page_id":"<page-id>"}`.<br/>To get the page ID, open the page in Notion. The page ID is the string of characters at the end of the URL: <ul><li>`https://www.notion.so/<page-title>-<page-id>`</li><li>or (newer Notion URLs): `https://app.notion.com/p/<page-id>`</li></ul> | string (JSON) | Required. |
 | Discussion Id | The ID of an existing discussion thread to add the comment to. If provided, the comment is added as a reply to that thread.<br/>To get the discussion ID, copy the link to the comment in Notion. The discussion ID is the value of the `d=` parameter in the URL: `https://www.notion.so/<page-title>-<page-id>?d=<discussion-id>&source=copy_link`. | string | Optional. |
 | Rich Text | The comment as a JSON array string. For example, `[{"text":{"content":"This is a comment"}}]`. | string (JSON array) | Required. |
 
@@ -330,7 +330,7 @@ Retrieve comments for a page or block.
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Block Id | The ID of the page or block to list comments from. The ID can be provided with or without dashes.<br/><ul><li>To get a page ID, open the page in Notion and copy the ID from the end of the URL: `https://www.notion.so/<page-title>-<page-id>`.</li><li>To get a block ID, hover over the block, select the `⋮⋮` icon on the left, and select Copy link to block. The block ID is the string after `# ` in the copied URL: `https://www.notion.so/<page-title>-<page-id>?source=copy_link#<block-id>`.</li></ul> | string | Required. |
+| Block Id | The ID of the page or block to list comments from. The ID can be provided with or without dashes.<br/><ul><li>To get a page ID, open the page in Notion. The page ID is the string of characters at the end of the URL: `https://www.notion.so/<page-title>-<page-id>` or (newer Notion URLs): `https://app.notion.com/p/<page-id>`.</li><li>To get a block ID, hover over the block, select the `⋮⋮` icon on the left, and select Copy link to block. The block ID is the string after `# ` in the copied URL: `https://www.notion.so/<page-title>-<page-id>?source=copy_link#<block-id>`.</li></ul> | string | Required. |
 | Page Size | The maximum number of comments to return. Maximum value is 100. | integer | Optional. |
 | Start Cursor | The start cursor for pagination. To paginate through results, pass the `nextCursor` value from the previous response into this field. | string | Optional. |
 
