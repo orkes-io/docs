@@ -295,6 +295,40 @@ Returns the deletion status.
 </TabItem>
 </Tabs>
 
+## Get Deal Pipelines
+
+Retrieves all deal pipelines and their stages from HubSpot.
+
+<Tabs>
+<TabItem value="input" label="Input Parameters">
+
+This operation has no input parameters.
+
+</TabItem>
+<TabItem value="output" label="Output Parameters">
+
+Returns a list of deal pipelines, each containing the pipeline ID, label, display order, and stages. Each stage includes the stage ID, label, display order, and metadata such as whether the stage is closed and its probability.
+
+</TabItem>
+</Tabs>
+
+## Get Ticket Pipelines
+
+Retrieves all ticket pipelines and their stages from HubSpot.
+
+<Tabs>
+<TabItem value="input" label="Input Parameters">
+
+This operation has no input parameters.
+
+</TabItem>
+<TabItem value="output" label="Output Parameters">
+
+Returns a list of ticket pipelines, each containing the pipeline ID, label, display order, and stages. Each stage includes the stage ID, label, display order, and metadata such as the ticket state and whether the stage is closed.
+
+</TabItem>
+</Tabs>
+
 ## Create Deal
 
 Create a new deal in HubSpot.
@@ -306,8 +340,8 @@ Create a new deal in HubSpot.
 | --------- | ----------- | ---- | ----------------- |
 | Deal Name | The name of the deal. | string | Required. |
 | Amount | The monetary value of the deal. | string | Optional. | 
-| Deal Stage | The stage of the deal in the pipeline. Use [Get Deal Pipelines] to retrieve the valid stage IDs for your account. If not set, the deal will not appear in the pipeline board view in HubSpot. | string | Optional. | 
-| Pipeline | The pipeline the deal belongs to. Use [Get Deal Pipelines] to retrieve the available pipeline IDs for your account. If not set, the deal will not appear in the pipeline board view in HubSpot. | string | Optional. | 
+| Deal Stage | The stage of the deal in the pipeline. Use [Get Deal Pipelines](/content/integrations/hubspot-operations#get-deal-pipelines) to retrieve the valid stage IDs for your account. If not set, the deal will not appear in the pipeline board view in HubSpot. | string | Optional. | 
+| Pipeline | The pipeline the deal belongs to. Use [Get Deal Pipelines](/content/integrations/hubspot-operations#get-deal-pipelines) to retrieve the available pipeline IDs for your account. If not set, the deal will not appear in the pipeline board view in HubSpot. | string | Optional. | 
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -639,40 +673,6 @@ Returns a list of associated object IDs and their association types.
 </TabItem>
 </Tabs>
 
-## Get Deal Pipelines
-
-Retrieves all deal pipelines and their stages from HubSpot.
-
-<Tabs>
-<TabItem value="input" label="Input Parameters">
-
-This operation has no input parameters.
-
-</TabItem>
-<TabItem value="output" label="Output Parameters">
-
-Returns a list of deal pipelines, each containing the pipeline ID, label, display order, and stages. Each stage includes the stage ID, label, display order, and metadata such as whether the stage is closed and its probability.
-
-</TabItem>
-</Tabs>
-
-## Get Ticket Pipelines
-
-Retrieves all ticket pipelines and their stages from HubSpot.
-
-<Tabs>
-<TabItem value="input" label="Input Parameters">
-
-This operation has no input parameters.
-
-</TabItem>
-<TabItem value="output" label="Output Parameters">
-
-Returns a list of ticket pipelines, each containing the pipeline ID, label, display order, and stages. Each stage includes the stage ID, label, display order, and metadata such as the ticket state and whether the stage is closed.
-
-</TabItem>
-</Tabs>
-
 ## Get Owners
 
 List all owners in HubSpot.
@@ -718,7 +718,7 @@ Submits data to a HubSpot form using the public submission endpoint.
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Portal Id | The numeric HubSpot portal ID. To find this, go to **Settings** > **Account Defaults** in HubSpot, or copy the number from your HubSpot URL. For example, in `app.hubspot.com/contacts/123456789`, the portal ID is 123456789. | string | Required. |
+| Portal Id | The numeric HubSpot portal ID. To find this, select your account name in the top-right corner of HubSpot, and the ID is displayed in the dropdown, or copy the number from your any HubSpot URL. For example, in `app.hubspot.com/contacts/123456789`, the portal ID is 123456789. | string | Required. |
 | Form ID | The unique ID of the form. To find this, go to **Marketing** > **Forms** in HubSpot, open a form, and copy the UUID after `/form/` in the URL. For example, in `app.hubspot.com/submissions/123456789/form/4cf6934c-e42e-4585-a944-d709e2e685fd`, the form ID is `4cf6934c-e42e-4585-a944-d709e2e685fd`. | string | Required. | 
 | Fields | The form field values to submit, provided as a JSON object. For example, `{"email": "test@example.com", "firstname": "Jane"}`. | JSON map | Required. | 
 
