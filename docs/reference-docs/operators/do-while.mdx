@@ -6,6 +6,7 @@ description: "Learn how the Do While task repeatedly executes a sequence of task
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import TableNote from '@site/src/components/TableNote';
 
 # Do While
 
@@ -22,6 +23,7 @@ Configure these parameters for the Do While task.
 | loopOver                       | The list of tasks to be executed as long as the condition is true.    | Required.          |
 | inputParameters. **items** | An array of items, which will be iterated over in the loop. The number of iterations is equal to the list size. You can use this to iterate without a condition. <br/><br/> Refer to [Examples](#examples) for more information on how to use the `items` parameter.            | Optional.          |
 | inputParameters. **keepLastN** | The number of iterations of execution data to retain. The minimum value is 2.<br/><br/> Use `keepLastN` if the number of iterations is expected to be large and not all execution data needs to be retained. Refer to the [Execution data](#execution-data) for more information.         | Optional.        |
+| inputParameters. **captureOutput** <br/><br/><TableNote title="Available since:">v5.3.0 and later</TableNote> | Whether to capture and store per-iteration task outputs in the Do While task's output. Defaults to `true`.<br/><br/>When set to `true`, the output of each iteration's tasks is aggregated and stored in the Do While task's output, keyed by iteration number ("1", "2", "3", and so on).<br/><br/>When set to `false`, iteration outputs are not aggregated, keeping the task output minimal. Useful for large loops where storing every iteration's output would cause memory or performance issues. | Optional. | 
 
 The following are generic configuration parameters that can be applied to the task and are not specific to the Do While task. 
 
@@ -73,13 +75,15 @@ This is the task configuration for a Do While task.
 {
   "name": "do_while",
   "taskReferenceName": "do_while_ref",
-  "inputParameters": {},
+"inputParameters": {
+  "captureOutput": true  // optional, defaults to true. Set to false to skip per-iteration output aggregation.
+},
   "type": "DO_WHILE",
   "loopCondition": "", // Condition
   "evaluatorType": "value-param",
   "loopOver": [ // List of tasks to be executed in the loop
-    {// task configuration},
-    {// task configuration}
+    {//taskDefinition}, 
+    {//taskDefinition}
   ]
 }
 ```
@@ -93,9 +97,9 @@ The Do While task will return the following parameters.
 | iteration | The number of iterations. <br/><br/> If the Do While task is in progress, `iteration` will show the current iteration number. When completed, `iteration` will show the final number of iterations. |
 | item      | (If `items` is used as an input parameter) Contains the value of the last item specified in the `items` array. |
 
-Additionally, an object will be created for each iteration, keyed by its iteration number (e.g., 1, 2, 3), and will contain the task outputs for all `loopOver` tasks. If keepLastN is specified, only outputs for the last n iterations will be stored.
+By default, an object is created for each iteration, keyed by its iteration number ("1", "2", "3", and so on), containing the output of all `loopOver` tasks for that iteration.
 
-**Example output**
+**Example output (default)**
 
 ```json
 {
@@ -124,6 +128,18 @@ Additionally, an object will be created for each iteration, keyed by its iterati
     }
   },
   "iteration": 2
+}
+```
+
+If `keepLastN` is configured, only the last n iterations are retained. References to earlier iterations return `null`.
+
+If `captureOutput` is set to `false`, per-iteration objects are not created. Only `iteration` (and `item`, if applicable) are returned. This is useful for large loops where accumulating iteration outputs would cause memory or performance issues.
+
+**Example output with `captureOutput: false`:**
+
+```json
+{
+  "iteration": 3
 }
 ```
 

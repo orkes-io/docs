@@ -85,8 +85,8 @@ Add a new activity or update an existing activity in Common Room to track commun
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Activity | An object containing the activity details. It can include the following parameters:<table><thead><tr><th>Parameter</th><th>Description</th></tr></thead><tbody><tr><td>activity.<strong>id</strong></td><td>The unique identifier of the activity in the source system.</td></tr><tr><td>activity.<strong>activityType</strong></td><td>The type of activity. Must be a valid activity type ID returned by the [Get Activity Types](/content/integrations/common-room-operations#get-activity-types) operation.</td></tr><tr><td>activity.<strong>user</strong></td><td>An object representing the user associated with the activity. Must contain an <code>id</code> field.</td></tr><tr><td>activity.<strong>timestamp</strong></td><td>The date and time the activity occurred, in ISO 8601 format.</td></tr><tr><td>activity.<strong>activityTitle</strong></td><td>An object representing the title of the activity.</td></tr><tr><td>activity.<strong>content</strong></td><td>An object representing the content of the activity.</td></tr><tr><td>activity.<strong>url</strong></td><td>The URL associated with the activity, such as a link to the post or contribution.</td></tr><tr><td>activity.<strong>tags</strong></td><td>A list of tags to associate with the activity.</td></tr><tr><td>activity.<strong>parentActivity</strong></td><td>An object representing the parent activity, if this activity is a reply or sub-activity.</td></tr><tr><td>activity.<strong>subSource</strong></td><td>An object representing the sub-source of the activity within the integration source.</td></tr></tbody></table> | object | Required. | 
 | Destination Source Id | The Destination Source ID retrieved from [Common Room](/content/integrations/common-room#get-the-destination-source-id). | string |. Required. | 
+| Activity | An object containing the activity details. It can include the following parameters:<table><thead><tr><th>Parameter</th><th>Description</th></tr></thead><tbody><tr><td>activity.<strong>id</strong></td><td>The unique identifier of the activity in the source system.</td></tr><tr><td>activity.<strong>activityType</strong></td><td>The type of activity. Must be a valid activity type ID returned by the [Get Activity Types](/content/integrations/common-room-operations#get-activity-types) operation.</td></tr><tr><td>activity.<strong>user</strong></td><td>An object representing the user associated with the activity. Must contain an <code>id</code> field.</td></tr><tr><td>activity.<strong>timestamp</strong></td><td>The date and time the activity occurred, in ISO 8601 format.</td></tr><tr><td>activity.<strong>activityTitle</strong></td><td>An object representing the title of the activity.</td></tr><tr><td>activity.<strong>content</strong></td><td>An object representing the content of the activity.</td></tr><tr><td>activity.<strong>url</strong></td><td>The URL associated with the activity, such as a link to the post or contribution.</td></tr><tr><td>activity.<strong>tags</strong></td><td>A list of tags to associate with the activity.</td></tr><tr><td>activity.<strong>parentActivity</strong></td><td>An object representing the parent activity, if this activity is a reply or sub-activity.</td></tr><tr><td>activity.<strong>subSource</strong></td><td>An object representing the sub-source of the activity within the integration source.</td></tr></tbody></table> | object | Required. | 
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -103,7 +103,9 @@ Retrieve the list of custom fields defined in your Common Room community.
 <Tabs>
 <TabItem value="input" label="Input Parameters">
 
-This operation has no input parameters.
+| Parameter | Description | Type | Required/Optional |
+| --------- | ----------- | ---- | ----------------- |
+| Destination Source Id | The Destination Source ID retrieved from [Common Room](/content/integrations/common-room#get-the-destination-source-id). | string | Optional. | 
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -203,8 +205,8 @@ Create a new tag in your Common Room community.
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
 | Name | The name of the tag. | string | Required. | 
-| Description | The description of the tag. | string | Optional. | 
 | Entity Types | The entity types the tag applies to. Supported values:<ul><li>`member`</li><li>`activity`</li><li>`company`</li></ul> | array | Required. | 
+| Description | The description of the tag. | string | Optional. | 
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
