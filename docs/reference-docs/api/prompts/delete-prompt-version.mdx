@@ -1,0 +1,46 @@
+---
+sidebar_position: 5
+slug: "/reference-docs/api/prompts/delete-prompt-version"
+description: "Learn how to delete a specific version of a prompt."
+---
+
+# Delete Prompt Version
+
+**Endpoint**: `DELETE /api/prompts/{name}/versions/{version}`
+
+Deletes a specific version of a prompt. If it is the last remaining version, all associated tags and access control entries are also removed.
+
+To delete all versions, use [`DELETE /api/prompts/{name}`](/content/reference-docs/api/prompts/delete-prompt).
+
+## Path parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| name | The name of the prompt to delete. | string | Required. | 
+| version | The version of the prompt to delete. | integer | Required. | 
+
+## Response
+
+- Returns 200 OK with no response body on success.
+- Returns 401 if authentication is required.
+- Returns 403 if the caller does not have DELETE permission on the prompt.
+
+## Examples
+
+<details>
+<summary>Delete a specific prompt version</summary>
+
+**Request**
+
+```bash
+curl -X 'DELETE' \
+  'https://<YOUR-SERVER-URL>/api/prompts/population-prompt/versions/2' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the specific prompt version was deleted successfully.
+
+</details>

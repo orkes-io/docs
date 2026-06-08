@@ -43,16 +43,16 @@ Create a new post or page in WordPress.
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Parent | The ID of the parent page. Used to nest the new page under an existing page, supporting multi-level hierarchies. Applicable to pages only. | integer | Optional. | 
-| Menu Order | The menu order of the page. Applicable to pages only. | integer | Optional. | 
-| Categories | The category names or IDs, entered as comma-separated values. Applicable to posts only. | string | Optional. | 
-| Featured Media | The media ID of the featured image.<br/>To get the media ID, open the media item in the WordPress admin panel. The ID is the value of the `item` parameter in the URL: `https://<YOUR-SITE>/wp-admin/upload.php?item=<MEDIA-ID>`. | integer | Optional. | 
 | Type | The content type. Supported values:<ul><li>`post` (default)</li><li>`page`</li></ul> | string | Optional. | 
 | Title | The title of the post or page. | string | Required. | 
-| Excerpt | The post excerpt. | string | Optional. | 
 | Content | The content of the post or page. HTML is supported. | string | Required. | 
 | Status | The post status. Supported values: <ul><li>`draft` (default)</li><li>`publish`</li><li>`pending`</li><li>`private`</li></ul> | string | Optional. | 
+| Excerpt | The post excerpt. | string | Optional. | 
+| Categories | The category names or IDs, entered as comma-separated values. Applicable to posts only. | string | Optional. | 
 | Tags | The tag names or IDs, entered as comma-separated values. Applicable to posts only. | string | Optional. | 
+| Featured Media | The media ID of the featured image.<br/>To get the media ID, open the media item in the WordPress admin panel. The ID is the value of the `item` parameter in the URL: `https://<YOUR-SITE>/wp-admin/upload.php?item=<MEDIA-ID>`. | integer | Optional. | 
+| Parent | The ID of the parent page. Used to nest the new page under an existing page, supporting multi-level hierarchies. Applicable to pages only. | integer | Optional. | 
+| Menu Order | The menu order of the page. Applicable to pages only. | integer | Optional. | 
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -71,16 +71,16 @@ Update an existing post or page in WordPress. It cannot update the type, which m
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Parent | The ID of an existing published page to set as the parent. When updated, the page is moved under the specified parent in the hierarchy. Applicable to pages only. | integer | Optional. | 
-| Menu Order | The updated menu order of the page. Applicable to pages only. | integer | Optional. | 
 | Post Id | The ID of the post or page to update.<br/>To get the post ID, open the post or page in the WordPress admin panel. The ID is the value of the `post` parameter in the URL: `https://<YOUR-SITE>/wp-admin/post.php?post=<POST-ID>&action=edit`. | integer | Required. | 
-| Categories | The updated category names or IDs, entered as comma-separated values. Applicable to posts only. | string | Optional. | 
-| Featured Media | The updated media ID of the featured image.<br/>To get the media ID, open the media item in the WordPress admin panel. The ID is the value of the `item` parameter in the URL: `https://<YOUR-SITE>/wp-admin/upload.php?item=<MEDIA-ID>`. | integer | Optional. | 
 | Title | The updated title of the post or page. | string | Optional. | 
-| Excerpt | The updated post excerpt. | string | Optional. | 
 | Content | The updated content of the post or page. HTML is supported. | string | Required. | 
 | Status | The updated post status. Supported values:<ul><li>`draft`</li><li>`publish`</li><li>`pending`</li><li>`private`</li></ul> | string | Optional. | 
+| Excerpt | The updated post excerpt. | string | Optional. | 
+| Categories | The updated category names or IDs, entered as comma-separated values. Applicable to posts only. | string | Optional. | 
 | Tags | The updated tag names or IDs, entered as comma-separated values. Applicable to posts only. | string | Optional. | 
+| Featured Media | The updated media ID of the featured image.<br/>To get the media ID, open the media item in the WordPress admin panel. The ID is the value of the `item` parameter in the URL: `https://<YOUR-SITE>/wp-admin/upload.php?item=<MEDIA-ID>`. | integer | Optional. | 
+| Parent | The ID of an existing published page to set as the parent. When updated, the page is moved under the specified parent in the hierarchy. Applicable to pages only. | integer | Optional. | 
+| Menu Order | The updated menu order of the page. Applicable to pages only. | integer | Optional. | 
 
 :::info Note
 In addition to the mandatory field **Post ID**, at least one other field must also be provided for the operation to work.
@@ -142,12 +142,12 @@ List posts or pages with optional filters.
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Search | The search term. | string | Optional. | 
-| Per Page | The number of items to return per page. Maximum value is 100. Default is 20. | integer | Optional. | 
-| Order By | Sort field. Supported values:<ul><li>`date`</li><li>`modified` (default)</li><li>`title`</li></ul> | string | Optional. | 
-| Page | The page number for pagination. Default is 1. | integer | Optional. | 
 | Type | The type to filter. Supported values:<ul><li>`page`</li><li>`post`</li></ul> | string | Optional. | 
+| Per Page | The number of items to return per page. Maximum value is 100. Default is 20. | integer | Optional. | 
+| Page | The page number for pagination. Default is 1. | integer | Optional. | 
 | Status | The status to filter. Supported values:<ul><li>`publish`</li><li>`draft`</li><li>`pending`</li><li>`private`</li><li>`any` (default)</li></ul> | string | Optional. | 
+| Search | The search term. | string | Optional. | 
+| Order By | Sort field. Supported values:<ul><li>`date`</li><li>`modified` (default)</li><li>`title`</li></ul> | string | Optional. | 
 | Order | The sorting order. Supported values:<ul><li>`ASC`</li><li>`DESC` (default)</li></ul> | string | Optional. | 
 
 </TabItem>

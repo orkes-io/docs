@@ -5,6 +5,10 @@ description: "Learn how to integrate Notion with Orkes Conductor to automate you
 
 # Notion Integration with Orkes Conductor
 
+:::info Available since
+- v5.3.0 and later
+:::
+
 Integrating Notion with Orkes Conductor lets you build workflows that interact with your Notion using the following operations:
 
 - Create Page
@@ -42,10 +46,11 @@ To integrate Notion with Orkes Conductor, create a Notion integration and retrie
 
 **To create the integration:**
 
-1. Go to **Build** > **[Internal integrations](https://www.notion.so/profile/integrations/internal)** from the left navigation menu on your Conductor cluster.
-2. Select **+ Create a new integration**.
+1. Go to **Developers** > [**Connections**](https://app.notion.com/developers/connections).
+2. Select **+ New connection**.
 3. Enter a name for your integration.
-4. Select the workspace where you want to use the integration, and select **Create**.
+4. Select **Authentication method **as **Access token**.
+5. Select the workspace where you want to use the integration, and select **Create connection**.
 
 Next, edit the integration to add capabilities.
 
@@ -54,7 +59,7 @@ Next, edit the integration to add capabilities.
     - **Comment capabilities**: **Read comments** and **Insert comments**.
     - **User capabilities**: **Read user information including email addresses**.
 6. Save the integration.
-7. Copy and store the **Internal integration secret**.
+7. Copy and store the **Access token**.
 
 ### Share pages or databases with your integration
 
@@ -119,7 +124,7 @@ The following operations are available for use with this integration.
 | [Retrieve Block](/content/integrations/notion-operations#retrieve-block) | Get block details by ID. | 
 | [Update Block](/content/integrations/notion-operations#update-block) | Update block content and properties. | 
 | [Delete Block](/content/integrations/notion-operations#delete-block) | Archive a block. | 
-| [Retrieve Block Children](/content/integrations/notion-operations#retrieve-block-children) | Get child blocks of a page or block (with pagination). | 
+| [List Block Children](/content/integrations/notion-operations#list-block-children) | Get child blocks of a page or block (with pagination). | 
 | [Append Block Children](/content/integrations/notion-operations#append-block-children) | Add new blocks to a parent block or page. | 
 | [Create Comment](/content/integrations/notion-operations#create-comment) | Add a comment to a page or discussion thread. | 
 | [List Comments](/content/integrations/notion-operations#list-comments) | Get comments for a specific block or page. | 

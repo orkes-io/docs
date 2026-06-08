@@ -63,10 +63,10 @@ Append one or more rows to a specified range in a sheet. Accepts a 2D array, let
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Value Input Option | Determines how the input values are interpreted. Supported values:<ul><li>`USER_ENTERED`; Mimics a user typing into the cell, parsing numbers, dates, booleans, and formulas.</li><li>`RAW`: Stores values exactly as-is without any parsing.</li></ul>Defaults to `USER_ENTERED`. | string | Optional. | 
-| Values | A 2D array of rows and values to append to the sheet. Each row is a numbered block, and each value within a row corresponds to a cell in that row.<br/>**To configure in the UI:**<ol><li>Select **+** at the top of the **Values** field to add a row.<p align="center"><img src="/content/img/values-in-google-sheet1.png" alt="UI Configuration steps" width="100%" height="auto"></img></p></li><li>Within the row, select **+** to add a cell value. Repeat to add more values to the same row.<p align="center"><img src="/content/img/values-in-google-sheet2.png" alt="UI Configuration steps" width="100%" height="auto"></img></p></li><li>Select **+** at the top again to add another row. Repeat as needed.</li></ol>**Example**: To append two rows where each row has a Name and Age, configure row 1 with **Name** and **Age**,<p align="center"><img src="/content/img/values-in-google-sheet3.png" alt="UI Configuration steps" width="100%" height="auto"></img></p>and row 2 with **Alice** and **30**.<p align="center"><img src="/content/img/values-in-google-sheet4.png" alt="UI Configuration steps" width="100%" height="auto"></img></p> | array of arrays | Required. | 
-| Range | The range to append values to, in A1 notation. For example: `Sheet1!A1`. | string | Required. | 
 | Spreadsheet Id | The spreadsheet ID to append. If left empty/blank, it falls back to the default spreadsheet provided in the integration.<br/>To get the spreadsheet ID, open the spreadsheet in Google Sheets. The ID is the string of characters at the end of the URL: `https://docs.google.com/spreadsheets/d/<YOUR-SPREADSHEET-ID>/`. | string | Optional. | 
+| Range | The range to append values to, in A1 notation. For example: `Sheet1!A1`. | string | Required. | 
+| Values | A 2D array of rows and values to append to the sheet. Each row is a numbered block, and each value within a row corresponds to a cell in that row.<br/>**To configure in the UI:**<ol><li>Select **+** at the top of the **Values** field to add a row.<p align="center"><img src="/content/img/values-in-google-sheet1.png" alt="UI Configuration steps" width="100%" height="auto"></img></p></li><li>Within the row, select **+** to add a cell value. Repeat to add more values to the same row.<p align="center"><img src="/content/img/values-in-google-sheet2.png" alt="UI Configuration steps" width="100%" height="auto"></img></p></li><li>Select **+** at the top again to add another row. Repeat as needed.</li></ol>**Example**: To append two rows where each row has a Name and Age, configure row 1 with **Name** and **Age**,<p align="center"><img src="/content/img/values-in-google-sheet3.png" alt="UI Configuration steps" width="100%" height="auto"></img></p>and row 2 with **Alice** and **30**.<p align="center"><img src="/content/img/values-in-google-sheet4.png" alt="UI Configuration steps" width="100%" height="auto"></img></p> | array of arrays | Required. | 
+| Value Input Option | Determines how the input values are interpreted. Supported values:<ul><li>`USER_ENTERED`; Mimics a user typing into the cell, parsing numbers, dates, booleans, and formulas.</li><li>`RAW`: Stores values exactly as-is without any parsing.</li></ul>Defaults to `USER_ENTERED`. | string | Optional. | 
 | Include Values in Response | Set to `true` to include the appended data in the response. | boolean | Optional. | 
 
 </TabItem>
@@ -90,10 +90,10 @@ Append a single row to a sheet using a flat array, without requiring a range. Us
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Sheet Name | The name of the sheet tab where the row will be appended. This is the tab label visible at the bottom of the spreadsheet (for example, **Sheet1**), not the spreadsheet title shown at the top of the page. | string | Required. |
-| Value Input Option | Determines how the input values are interpreted. Supported values:<ul><li>`USER_ENTERED`; Mimics a user typing into the cell, parsing numbers, dates, booleans, and formulas.</li><li>`RAW`: Stores values exactly as-is without any parsing.</li></ul>Defaults to `USER_ENTERED`. | string | Optional. | 
-| Values | An array of values to append as a single row. Each value corresponds to a cell in the row, in column order.<br/>**To configure in the UI:**<ol><li>Select **+** next to Values to add a cell value.</li><li>Repeat to add more values in the same row.</li></ol>**Example**: To append a row with a name and age, add **John** as the first value and **25** as the second.<p align="center"><img src="/content/img/appending.png" alt="Appending a Google Sheet using Conductor" width="100%" height="auto"></img></p> | array of strings | Required. | 
 | Spreadsheet Id | The spreadsheet ID to append the row to. If left empty/blank, it falls back to the default spreadsheet provided in the integration.<br/>To get the spreadsheet ID, open the spreadsheet in Google Sheets. The ID is the string of characters at the end of the URL: `https://docs.google.com/spreadsheets/d/<YOUR-SPREADSHEET-ID>/`. | string | Optional. | 
+| Sheet Name | The name of the sheet tab where the row will be appended. This is the tab label visible at the bottom of the spreadsheet (for example, **Sheet1**), not the spreadsheet title shown at the top of the page. | string | Required. |
+| Values | An array of values to append as a single row. Each value corresponds to a cell in the row, in column order.<br/>**To configure in the UI:**<ol><li>Select **+** next to Values to add a cell value.</li><li>Repeat to add more values in the same row.</li></ol>**Example**: To append a row with a name and age, add **John** as the first value and **25** as the second.<p align="center"><img src="/content/img/appending.png" alt="Appending a Google Sheet using Conductor" width="100%" height="auto"></img></p> | array of strings | Required. | 
+| Value Input Option | Determines how the input values are interpreted. Supported values:<ul><li>`USER_ENTERED`; Mimics a user typing into the cell, parsing numbers, dates, booleans, and formulas.</li><li>`RAW`: Stores values exactly as-is without any parsing.</li></ul>Defaults to `USER_ENTERED`. | string | Optional. | 
 | Include Values in Response | Set to `true` to include the appended data in the response. | boolean | Optional. | 
 
 </TabItem>
@@ -122,11 +122,11 @@ Append a row when it does not exist, or update it if it already exists. Checks a
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Sheet Name | The name of the sheet where the row will be appended or updated. This is the tab label visible at the bottom of the spreadsheet (for example, **Sheet1**), not the spreadsheet title shown at the top of the page. | string | Required. | 
-| Value Input Option | Determines how the input values are interpreted. Supported values:<ul><li>`USER_ENTERED`; Mimics a user typing into the cell, parsing numbers, dates, booleans, and formulas.</li><li>`RAW`: Stores values exactly as-is without any parsing.</li></ul>Defaults to `USER_ENTERED`. | string | Optional. | 
-| Values | An array of values to append or update as a single row, in order. Each value corresponds to a cell in the row, in column order.<br/>**To configure in the UI:**<ul><li>Select **+** next to **Values** to add a cell value.</li><li>Repeat to add more values in the same row.</li></ul>**Example**: To append a row with a name and age, add **Rebecca** as the first value and **41** as the second.<p align="center"><img src="/content/img/updating-sheets.png" alt="Updating a Google Sheet using Conducto" width="100%" height="auto"></img></p> | array of strings | Required. | 
-| Row Index | The 1-based index of the row to update. For example, 1 refers to the first row. If the row does not exist, a new row is appended. | integer | Required. | 
 | Spreadsheet Id | The spreadsheet ID to append or update the row in. If left empty/blank, it falls back to the default spreadsheet provided in the integration.<br/>To get the spreadsheet ID, open the spreadsheet in Google Sheets. The ID is the string of characters at the end of the URL: `https://docs.google.com/spreadsheets/d/<YOUR-SPREADSHEET-ID>/`. | string | Optional. | 
+| Sheet Name | The name of the sheet where the row will be appended or updated. This is the tab label visible at the bottom of the spreadsheet (for example, **Sheet1**), not the spreadsheet title shown at the top of the page. | string | Required. | 
+| Row Index | The 1-based index of the row to update. For example, 1 refers to the first row. If the row does not exist, a new row is appended. | integer | Required. | 
+| Values | An array of values to append or update as a single row, in order. Each value corresponds to a cell in the row, in column order.<br/>**To configure in the UI:**<ul><li>Select **+** next to **Values** to add a cell value.</li><li>Repeat to add more values in the same row.</li></ul>**Example**: To append a row with a name and age, add **Rebecca** as the first value and **41** as the second.<p align="center"><img src="/content/img/updating-sheets.png" alt="Updating a Google Sheet using Conducto" width="100%" height="auto"></img></p> | array of strings | Required. | 
+| Value Input Option | Determines how the input values are interpreted. Supported values:<ul><li>`USER_ENTERED`; Mimics a user typing into the cell, parsing numbers, dates, booleans, and formulas.</li><li>`RAW`: Stores values exactly as-is without any parsing.</li></ul>Defaults to `USER_ENTERED`. | string | Optional. | 
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -154,8 +154,8 @@ Read values from a specified range in a sheet. Use this when spreadsheet data is
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Range | The range to read values from, in A1 notation. For example: `Sheet1!A1:C10`. | string | Required. | 
 | Spreadsheet Id | The spreadsheet ID to read values from. If left empty/blank, it falls back to the default spreadsheet provided in the integration.<br/>To get the spreadsheet ID, open the spreadsheet in Google Sheets. The ID is the string of characters at the end of the URL: `https://docs.google.com/spreadsheets/d/<YOUR-SPREADSHEET-ID>/`. | string | Optional. | 
+| Range | The range to read values from, in A1 notation. For example: `Sheet1!A1:C10`. | string | Required. | 
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -178,9 +178,9 @@ Read all rows from a sheet. Use this when you need the full table contents.
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Range Override | Limits the rows retrieved to a specific range in A1 notation. For example: `Sheet1!A1:C10`. If not provided, all rows in the sheet are returned. | string | Optional. | 
-| Sheet Name | The name of the sheet to retrieve rows from. This is the tab label visible at the bottom of the spreadsheet (for example, **Sheet1**), not the spreadsheet title shown at the top of the page. | string | Required. | 
 | Spreadsheet Id | The spreadsheet ID to get rows from. If left empty/blank, it falls back to the default spreadsheet provided in the integration.<br/>To get the spreadsheet ID, open the spreadsheet in Google Sheets. The ID is the string of characters at the end of the URL: `https://docs.google.com/spreadsheets/d/<YOUR-SPREADSHEET-ID>/`. | string | Optional. | 
+| Sheet Name | The name of the sheet to retrieve rows from. This is the tab label visible at the bottom of the spreadsheet (for example, **Sheet1**), not the spreadsheet title shown at the top of the page. | string | Required. | 
+| Range Override | Limits the rows retrieved to a specific range in A1 notation. For example: `Sheet1!A1:C10`. If not provided, all rows in the sheet are returned. | string | Optional. | 
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -203,11 +203,11 @@ Update a specific row by index. Use this when you need to overwrite a row's cont
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Sheet Name | The name of the sheet where the row will be updated. This is the tab label visible at the bottom of the spreadsheet (for example, **Sheet1**), not the spreadsheet title shown at the top of the page. | string | Required. | 
-| Value Input Option | Determines how the input values are interpreted. Supported values:<ul><li>`USER_ENTERED`; Mimics a user typing into the cell, parsing numbers, dates, booleans, and formulas.</li><li>`RAW`: Stores values exactly as-is without any parsing.</li></ul>Defaults to `USER_ENTERED`. | string | Optional. | 
-| Values | An array of values to update in a single row. Each value corresponds to a cell in the row, in column order.**To configure in the UI**:<ol><li>Select **+** next to Values to add a cell value.</li><li>Repeat to add more values in the same row.</li></ol>**Example**: To append a row with a name and age, add **John** as the first value and **25** as the second. | array of strings | Required. | 
-| Row Index | The 1-based index of the row to update. For example, 1 refers to the first row. | integer | Required. | 
 | Spreadsheet Id | The spreadsheet ID to update the row in. If left empty/blank, it falls back to the default spreadsheet provided in the integration.<br/>To get the spreadsheet ID, open the spreadsheet in Google Sheets. The ID is the string of characters at the end of the URL: `https://docs.google.com/spreadsheets/d/<YOUR-SPREADSHEET-ID>/`. | string | Optional. | 
+| Sheet Name | The name of the sheet where the row will be updated. This is the tab label visible at the bottom of the spreadsheet (for example, **Sheet1**), not the spreadsheet title shown at the top of the page. | string | Required. | 
+| Row Index | The 1-based index of the row to update. For example, 1 refers to the first row. | integer | Required. | 
+| Values | An array of values to update in a single row. Each value corresponds to a cell in the row, in column order.**To configure in the UI**:<ol><li>Select **+** next to Values to add a cell value.</li><li>Repeat to add more values in the same row.</li></ol>**Example**: To append a row with a name and age, add **John** as the first value and **25** as the second. | array of strings | Required. | 
+| Value Input Option | Determines how the input values are interpreted. Supported values:<ul><li>`USER_ENTERED`; Mimics a user typing into the cell, parsing numbers, dates, booleans, and formulas.</li><li>`RAW`: Stores values exactly as-is without any parsing.</li></ul>Defaults to `USER_ENTERED`. | string | Optional. | 
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -235,8 +235,8 @@ Clear values from a specified range in a sheet. Use this when you want to reset 
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Range | The range to clear, in A1 notation. For example: `Sheet1!A1:C10`. | string | Required. | 
 | Spreadsheet Id | The spreadsheet ID to clear the range in. If left empty/blank, it falls back to the default spreadsheet provided in the integration.<br/>To get the spreadsheet ID, open the spreadsheet in Google Sheets. The ID is the string of characters at the end of the URL: `https://docs.google.com/spreadsheets/d/<YOUR-SPREADSHEET-ID>/`. | string | Optional. | 
+| Range | The range to clear, in A1 notation. For example: `Sheet1!A1:C10`. | string | Required. | 
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -258,8 +258,8 @@ Clear all values from a sheet while keeping the sheet structure. Use this when y
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Sheet Name | The name of the sheet to clear all values from. This is the tab label visible at the bottom of the spreadsheet (for example, **Sheet1**), not the spreadsheet title shown at the top of the page. | string | Required. | 
 | Spreadsheet Id | The spreadsheet ID containing the sheet to clear. If left empty/blank, it falls back to the default spreadsheet provided in the integration.<br/>To get the spreadsheet ID, open the spreadsheet in Google Sheets. The ID is the string of characters at the end of the URL: `https://docs.google.com/spreadsheets/d/<YOUR-SPREADSHEET-ID>/`. | string | Optional. | 
+| Sheet Name | The name of the sheet to clear all values from. This is the tab label visible at the bottom of the spreadsheet (for example, **Sheet1**), not the spreadsheet title shown at the top of the page. | string | Required. | 
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -281,8 +281,8 @@ Create a new sheet (tab) within a spreadsheet. Use this when you need a fresh ta
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Sheet Name | The name of the sheet to create. | string | Required. | 
 | Spreadsheet Id | The spreadsheet ID to create the sheet in. If left empty/blank, it falls back to the default spreadsheet provided in the integration.<br/>To get the spreadsheet ID, open the spreadsheet in Google Sheets. The ID is the string of characters at the end of the URL: `https://docs.google.com/spreadsheets/d/<YOUR-SPREADSHEET-ID>/`. | string | Optional. |
+| Sheet Name | The name of the sheet to create. | string | Required. | 
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -305,9 +305,9 @@ Delete a sheet (tab) from a spreadsheet. Use this when a tab is no longer needed
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
+| Spreadsheet Id | The spreadsheet ID containing the sheet to delete. If left empty/blank, it falls back to the default spreadsheet provided in the integration.<br/>To get the spreadsheet ID, open the spreadsheet in Google Sheets. The ID is the string of characters at the end of the URL: `https://docs.google.com/spreadsheets/d/<YOUR-SPREADSHEET-ID>/`. | string | Optional. | 
 | Sheet Name | The sheet name to delete. | string | Optional. | 
 | Sheet Id | The unique ID of the sheet to delete.<br/>The unique ID of the sheet to delete. To get the sheet ID, open the spreadsheet and select the sheet. The ID is the string after `?gid=` in the URL: `https://docs.google.com/spreadsheets/d/<YOUR-SPREADSHEET-ID>/edit?gid=<YOUR-SHEET-ID>`. | integer | Optional. | 
-| Spreadsheet Id | The spreadsheet ID containing the sheet to delete. If left empty/blank, it falls back to the default spreadsheet provided in the integration.<br/>To get the spreadsheet ID, open the spreadsheet in Google Sheets. The ID is the string of characters at the end of the URL: `https://docs.google.com/spreadsheets/d/<YOUR-SPREADSHEET-ID>/`. | string | Optional. | 
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">

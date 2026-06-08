@@ -587,18 +587,6 @@ const sidebars = {
                             items: [
                                 {
                                     type: 'category',
-                                    label: 'Google Drive',
-                                    link: { type: 'doc', id: 'integrations/connected-apps/productivity/google-drive' },
-                                    items: [
-                                        {
-                                            type: 'doc',
-                                            id: 'integrations/connected-apps/productivity/google-drive-operations',
-                                            label: 'Google Drive Operations Reference',
-                                        },
-                                    ],
-                                },
-                                {
-                                    type: 'category',
                                     label: 'Google Slides',
                                     link: { type: 'doc', id: 'integrations/connected-apps/productivity/google-slides' },
                                     items: [
@@ -606,6 +594,18 @@ const sidebars = {
                                             type: 'doc',
                                             id: 'integrations/connected-apps/productivity/google-slides-operations',
                                             label: 'Google Slides Operations Reference',
+                                        },
+                                    ],
+                                },
+                                {
+                                    type: 'category',
+                                    label: 'Google Sheets',
+                                    link: { type: 'doc', id: 'integrations/connected-apps/productivity/google-sheets' },
+                                    items: [
+                                        {
+                                            type: 'doc',
+                                            id: 'integrations/connected-apps/productivity/google-sheets-operations',
+                                            label: 'Google Sheets Operations Reference',
                                         },
                                     ],
                                 },
@@ -647,6 +647,18 @@ const sidebars = {
                                 },
                                 {
                                     type: 'category',
+                                    label: 'Google Drive',
+                                    link: { type: 'doc', id: 'integrations/connected-apps/productivity/google-drive' },
+                                    items: [
+                                        {
+                                            type: 'doc',
+                                            id: 'integrations/connected-apps/productivity/google-drive-operations',
+                                            label: 'Google Drive Operations Reference',
+                                        },
+                                    ],
+                                },
+                                {
+                                    type: 'category',
                                     label: 'Google Docs',
                                     link: { type: 'doc', id: 'integrations/connected-apps/productivity/google-docs' },
                                     items: [
@@ -654,18 +666,6 @@ const sidebars = {
                                             type: 'doc',
                                             id: 'integrations/connected-apps/productivity/google-docs-operations',
                                             label: 'Google Docs Operations Reference',
-                                        },
-                                    ],
-                                },
-                                {
-                                    type: 'category',
-                                    label: 'Google Sheets',
-                                    link: { type: 'doc', id: 'integrations/connected-apps/productivity/google-sheets' },
-                                    items: [
-                                        {
-                                            type: 'doc',
-                                            id: 'integrations/connected-apps/productivity/google-sheets-operations',
-                                            label: 'Google Sheets Operations Reference',
                                         },
                                     ],
                                 },
@@ -690,54 +690,6 @@ const sidebars = {
                                             type: 'doc',
                                             id: 'integrations/connected-apps/project-management/discourse-operations',
                                             label: 'Discourse Operations Reference',
-                                        },
-                                    ],
-                                },
-                            ],
-                        },
-                        {
-                            type: 'category',
-                            label: 'Community',
-                            link: {
-                                type: 'generated-index',
-                                title: 'Community',
-                                slug: '/category/integrations/community',
-                                description: 'Learn how to connect community platforms to automate engagement and outreach workflows.',
-                            },
-                            items: [
-                                {
-                                    type: 'category',
-                                    label: 'Common Room',
-                                    link: { type: 'doc', id: 'integrations/connected-apps/community/common-room' },
-                                    items: [
-                                        {
-                                            type: 'doc',
-                                            id: 'integrations/connected-apps/community/common-room-operations',
-                                            label: 'Common Room Operations Reference',
-                                        },
-                                    ],
-                                },
-                            ],
-                        },
-                        {
-                            type: 'category',
-                            label: 'CRM',
-                            link: {
-                                type: 'generated-index',
-                                title: 'CRM',
-                                slug: '/category/integrations/crm',
-                                description: 'Learn how to connect CRM platforms to manage and automate customer relationships through workflows.',
-                            },
-                            items: [
-                                {
-                                    type: 'category',
-                                    label: 'HubSpot',
-                                    link: { type: 'doc', id: 'integrations/connected-apps/crm/hubspot' },
-                                    items: [
-                                        {
-                                            type: 'doc',
-                                            id: 'integrations/connected-apps/crm/hubspot-operations',
-                                            label: 'HubSpot Operations Reference',
                                         },
                                     ],
                                 },
@@ -810,6 +762,54 @@ const sidebars = {
                                             type: 'doc',
                                             id: 'integrations/connected-apps/source-control/github-operations',
                                             label: 'GitHub Operations Reference',
+                                        },
+                                    ],
+                                },
+                            ],
+                        },
+                        {
+                            type: 'category',
+                            label: 'Community',
+                            link: {
+                                type: 'generated-index',
+                                title: 'Community',
+                                slug: '/category/integrations/community',
+                                description: 'Learn how to connect community platforms to automate engagement and outreach workflows.',
+                            },
+                            items: [
+                                {
+                                    type: 'category',
+                                    label: 'Common Room',
+                                    link: { type: 'doc', id: 'integrations/connected-apps/community/common-room' },
+                                    items: [
+                                        {
+                                            type: 'doc',
+                                            id: 'integrations/connected-apps/community/common-room-operations',
+                                            label: 'Common Room Operations Reference',
+                                        },
+                                    ],
+                                },
+                            ],
+                        },
+                        {
+                            type: 'category',
+                            label: 'CRM',
+                            link: {
+                                type: 'generated-index',
+                                title: 'CRM',
+                                slug: '/category/integrations/crm',
+                                description: 'Learn how to connect CRM platforms to manage and automate customer relationships through workflows.',
+                            },
+                            items: [
+                                {
+                                    type: 'category',
+                                    label: 'HubSpot',
+                                    link: { type: 'doc', id: 'integrations/connected-apps/crm/hubspot' },
+                                    items: [
+                                        {
+                                            type: 'doc',
+                                            id: 'integrations/connected-apps/crm/hubspot-operations',
+                                            label: 'HubSpot Operations Reference',
                                         },
                                     ],
                                 },
@@ -1157,12 +1157,28 @@ const sidebars = {
                         type: 'generated-index',
                         title: 'Integrations',
                         slug: '/reference-docs/api/integrations',
-                        description: 'Learn how to create or update an integration provider.'
+                        description: 'Learn how to add integrations in Orkes Conductor..'
                     },
                     items: [
                         {
                             type: 'autogenerated',
                             dirName: 'reference-docs/api/integrations'
+                        }
+                    ]
+                },
+                {
+                    type: 'category',
+                    label: 'Prompts',
+                    link: {
+                        type: 'generated-index',
+                        title: 'Prompts',
+                        slug: '/reference-docs/api/prompts',
+                        description: 'Learn how to add prompts in Orkes Conductor.'
+                    },
+                    items: [
+                        {
+                            type: 'autogenerated',
+                            dirName: 'reference-docs/api/prompts'
                         }
                     ]
                 },

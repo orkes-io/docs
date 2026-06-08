@@ -842,11 +842,11 @@ Learn the essential concepts for building with Conductor.
 
 # Conductor Architecture and Worker Polling
 
-To learn how to scale and integrate with Conductor, it is important to understand its system architecture and worker polling mechanism.
+To learn how to scale and integrate with Orkes Conductor, it is important to understand its system architecture and worker polling mechanism.
 
 Before you read this article, you should understand:
 - [What Orkes Conductor is](/content/category/getting-started)
-- [Core concepts](/content/core-concepts)
+- [Core concepts of Conductor](/content/core-concepts)
 
 ## System architecture
 
@@ -856,27 +856,27 @@ In Conductor, workflows are executed on a worker-task queue architecture, where 
 
 * **State machine evaluator**: Orchestrates workflows by scheduling tasks to their relevant queues and assigning them to active workers when polled. Monitors each task's state and ensures it is completed, retried, or failed as required.
 * **Task queues**: Distributed queues for each task type, where tasks are completed on a first-in-first-out basis.
-* **Task workers**: Poll the Conductor server via HTTP or gRPC for tasks, execute tasks, and update the server on the task status. Each worker is responsible for carrying out a specific task type.
+* **Task workers**: Poll the Conductor server via HTTP for tasks, execute tasks, and update the server on the task status. Each worker is responsible for carrying out a specific task type.
 * **Data stores** (Postgres or Redis): High-availability persistence stores that maintain workflow and task metadata, task queues, and execution history
 * **APIs**: REST APIs for programmatic access to the Conductor server. 
 
-Integrations with tools such as Prometheus, Grafana, and Datadog enable you to collect and monitor system performance data easily.
+Integrations with tools such as Prometheus and Datadog enable you to collect and monitor system performance data easily. Prometheus metrics can be visualized using Grafana.
 
 ## Worker implementation
 
-System task workers are managed by Conductor. On the other hand, external workers can be implemented in any language and can run on any environment, including bare metal, containers, or VMs, or serverless functions. Conductor offers [SDKs](https://orkes.io/content/category/sdks) with features such as polling threads, metrics, and server communication to simplify worker creation. 
+System task workers are managed by Conductor. On the other hand, external workers can be implemented in any language and can run on any environment, including bare metal, containers, VMs, or serverless functions. Conductor offers [SDKs](https://orkes.io/content/category/sdks) with features such as polling threads, metrics, and server communication to simplify worker creation. 
 
 ## Worker-server polling mechanism
 
 Each worker declares beforehand which tasks it can execute, and the Conductor server assigns tasks to workers accordingly. At runtime, task workers poll the Conductor server to receive and execute scheduled work. Conductor passes task inputs to the worker for execution and collects the outputs, continuing the process according to the workflow definition. 
 
-By default, workers infinitely poll Conductor every 100ms. The polling interval value for each type of worker can be adjusted accordingly based on factors like workload. Here is the polling mechanism in detail:
+By default, workers infinitely poll Conductor every 100ms. This interval is configured in the worker's SDK and can be adjusted based on workload. Here is the polling mechanism in detail:
 
 The following sequence describes how workers poll Conductor and execute workflow tasks:
 
 1. The application starts a workflow execution by interacting with Orkes Conductor, which returns a workflow (execution) ID. It can be used to track the workflow's progress and manage its execution.
 2. Conductor schedules the first task in the workflow to its task queue.
-3. The workers responsible for executing the first task within the workflow are polling Orkes Conductor for tasks to execute via HTTP or gRPC. When a task is scheduled, Conductor sends it to the next available worker, which then performs the required work.
+3. The workers responsible for executing the first task within the workflow are polling Orkes Conductor for tasks to execute via HTTP.  When a task is scheduled, Conductor sends it to the next available worker, which then performs the required work.
 4. Periodically, the worker returns the task status to the Conductor (e.g., IN PROGRESS, FAILED, COMPLETED, etc.).
 5. Once the first task in the workflow execution is completed, the worker returns the task output to the server, and Conductor schedules the next set of tasks to be performed.
 
@@ -908,45 +908,43 @@ During a workflow execution, each task will go through the state transitions.
 ### Task status
 Each task will be in a scheduled, ongoing, or terminal status.
 
-| Status | Description |
-| --------------------------------- | --------------------------------- |
-| SCHEDULED | The task has been scheduled to be picked up by a worker. |
-| IN_PROGRESS | The task is being executed by a worker. | 
-| SKIPPED | The task is skipped without executing, and the workflow continues to the subsequent tasks. <br/><br/> Occurs if the [Skip Task API](/reference-docs/api/workflow/skip-task-from-workflow) is used in a currently running workflow. |
-| TIMED_OUT | The task times out without being completed. <br/><br/> Occurs if the task has been configured with the following timeout parameters in its task definition: <ul><li>timeOutPolicy.</li><li>timeOutSeconds</li><li>pollTimeoutSeconds</li><li>responseTimeoutSeconds</li></ul> |
-| CANCELED | The scheduled task has been canceled without being completed because the workflow has been terminated. |
-| FAILED | The task failed to complete due to an error, and the workflow can be [retried from the failed task](debugging-workflows#recovering-from-failures). |
-| FAILED_WITH_TERMINAL_ERROR | The task failed to complete due to an error and cannot be retried. |
-| COMPLETED_WITH_ERRORS | The task has encountered errors but is still completed. <br/><br/> Occurs only when a task is set as optional in the workflow definition and fails during execution. The workflow will continue even when there are errors.  |
-| COMPLETED | The task has been successfully completed without any errors. | 
+| Status | Description | Retriable | Terminal | 
+| ------ | ----------- | --------- | -------- |
+| SCHEDULED | The task has been scheduled to be picked up by a worker. | Yes | No | 
+| IN_PROGRESS | The task is being executed by a worker. | Yes | No | 
+| SKIPPED | The task is skipped without executing, and the workflow continues to the subsequent tasks. <br/><br/> Occurs if the [Skip Task API](/reference-docs/api/workflow/skip-task-from-workflow) is used in a currently running workflow. | No | Yes | 
+| TIMED_OUT | The task timed out without being completed. <br/><br/> Occurs if the task has been configured with the following timeout parameters in its task definition: <ul><li>timeoutPolicy.</li><li>timeoutSeconds</li><li>pollTimeoutSeconds</li><li>responseTimeoutSeconds</li></ul> | Yes | Yes | 
+| CANCELED | A SCHEDULED or IN_PROGRESS task has been canceled without being completed because the workflow has been terminated. | No | Yes | 
+| FAILED | The task failed to complete due to an error, and the workflow can be [retried from the failed task](debugging-workflows#recovering-from-failures). | Yes | Yes | 
+| FAILED_WITH_TERMINAL_ERROR | The task failed to complete due to an error and cannot be retried. | No | Yes | 
+| COMPLETED_WITH_ERRORS | The task has encountered errors but is still completed. <br/><br/> Occurs only when a task is set as optional in the workflow definition and fails during execution. The workflow will continue even when there are errors.  | Yes | Yes | 
+| COMPLETED | The task has been successfully completed without any errors. | Yes | Yes |
 
 # Directed Acyclic Graph (DAG)
 
-All Conductor workflows are directed acyclic graphs (DAGs). A directed acyclic graph (DAG) is a set of vertices where the connections are unidirectional without any repetition. DAG workflows can move only in one direction and cannot redo a step (or series of steps).
+All Conductor workflows are directed acyclic graphs (DAGs). A DAG is a set of vertices connected by unidirectional edges, with no cycles or repeated paths. Workflows modeled as DAGs can only move forward and cannot revisit a step or series of steps.
 
 Here is a breakdown of what DAG means:
 
 * **Graph**
 
-For DAGs, a graph refers to "a collection of vertices (or points) and edges (or lines) that indicate connections between the vertices."
+A graph is a collection of vertices (points) and edges (lines) representing connections between them.
 
-Imagine each vertex in the above graph as a microservice. The lines represent a dependency relation between each microservice. However, this graph is not a directed graph, as there is no direction given to each dependency.
+Each vertex can represent a microservice, and each edge represents a dependency between microservices. The graph above is not yet directed because its edges have no direction.
 
 * **Directed**
 
-In a directed graph, each connection (edge) has a direction. For example, this graph is directed:
+In a directed graph, each connection (edge) has a direction.
 
-Each line has a direction. In the example above, Point N can proceed directly to B, but B cannot proceed directly to N.
+In the example above, point N can proceed to B, but B cannot proceed directly back to N.
 
 * **Acyclic**
 
-Acyclic means without circular or cyclic paths. The example shown above contains directed cyclic graphs, such as A -> B -> D -> A. In contrast, a directed acyclic graph can only begin at one point and end at a different point (A -> B -> D).
+Acyclic means without circular paths. A cyclic directed graph contains paths that loop back to an earlier point, such as A → B → D → A. A directed acyclic graph can only move from a start point to an end point, such as A → B → D.
 
 ## Workflows as DAGs
 
-A Conductor workflow is a series of tasks that can connect in only a specific direction and cannot circle back, it is a directed acyclic graph.
-
-The order and structure of tasks are defined in the tasks array in the workflow definition JSON (or generated by an SDK). 
+A Conductor workflow is a DAG: tasks connect in a specific direction and cannot circle back. The order and structure of tasks are defined in the tasks array in the workflow definition JSON, or generated by an SDK.
 
 ### Can a workflow contain loops and still be a DAG?
 
@@ -18242,10 +18240,10 @@ The Business Rule task supports the following operators:
 | Comparison | `<=`, `>=`, `=`, `<`, `>` | Performs numerical comparison between values. | `price >= 100` | 
 | String | `=` | Exact string match comparison. | `name = John` | 
 | String | `!=` | String inequality comparison. | `name != John` | 
-| String | `startsWith` <br/><br/>**Available since**<ul><li>v5.2.3 and later</li><li>v4.1.72 and later</li></ul> | Checks if a string begins with a specified substring | `productName startsWith "iPhone"` matches "iPhone 14", "iPhone 14 Pro", etc. | 
-| String | `endsWith` <br/><br/>**Available since**<ul><li>v5.2.3 and later</li><li>v4.1.72 and later</li></ul> | Checks if a string ends with a specified substring. | `fileName endsWith ".pdf"` matches "document.pdf", "report.pdf", etc. | 
-| String | `contains` <br/><br/>**Available since**<ul><li>v5.2.3 and later</li><li>v4.1.72 and later</li></ul> | Checks if a string contains a specified substring anywhere in it. | `description contains "premium"` matches "premium quality", "our premium product", etc. | 
-| String | `matches` <br/><br/>**Available since**<ul><li>v5.2.3 and later</li><li>v4.1.72 and later</li></ul> | Performs pattern matching using a regular expression. | `email matches "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"` validates an email address format. | 
+| String | `startsWith` <br/><br/>**Available since**<ul><li>v5.2.3 and later</li><li>v4.1.72 and later</li></ul> | Checks if a string begins with a specified substring | `productName startsWith("iPhone")` matches "iPhone 14", "iPhone 14 Pro", etc. |
+| String | `endsWith` <br/><br/>**Available since**<ul><li>v5.2.3 and later</li><li>v4.1.72 and later</li></ul> | Checks if a string ends with a specified substring. | `fileName endsWith(".pdf")` matches "document.pdf", "report.pdf", etc. |
+| String | `contains` <br/><br/>**Available since**<ul><li>v5.2.3 and later</li><li>v4.1.72 and later</li></ul> | Checks if a string contains a specified substring anywhere in it. | `description contains("premium")` matches "premium quality", "our premium product", etc. |
+| String | `matches` <br/><br/>**Available since**<ul><li>v5.2.3 and later</li><li>v4.1.72 and later</li></ul> | Performs pattern matching using a regular expression. | `email matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")` validates an email address format. | 
 | String | `length` <br/><br/>**Available since**<ul><li>v5.2.3 and later</li><li>v4.1.72 and later</li></ul> |  Compares the length of a string with a numerical value. | `password length >= 8` ensures a password has at least eight characters. | 
 | List | `inList` | Checks if a value is in a specified list. | `productName inList({"phone","laptop"})` will match if productName is a phone or laptop. | 
 | List | `!=inList` | Checks if a value is not in a specified list. | `productName !=inList({"phone","laptop"})` | 
@@ -32692,6 +32690,725 @@ curl -X 'GET' \
     "value": "tag"
   }
 ]
+```
+
+</details>
+
+# Create or Update Prompt
+
+**Endpoint**: `PUT /api/prompts/{name}`
+
+Creates a new prompt or updates the latest version of an existing one. If the prompt does not exist yet, it is created and the caller is granted full access. If it already exists, the caller must have `UPDATE` permission.
+
+## Path parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| name | The name of the prompt to create or update. | string | Required. |
+
+## Query parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| version | Version number to create or update. If omitted, it defaults to 1 for new prompts or the latest version for existing ones. | integer | Optional. |
+| description | A description for the prompt. | string | Required. |
+| models | The AI model to associate with this prompt, in the format `integrationName:modelName`. Repeat this parameter to associate multiple models. The specified integration must exist and the caller must have access to it. | string | Optional. |
+
+## Request body
+
+The prompt text is to be supplied as a raw string. Enclosing quotation marks are stripped automatically.
+
+## Response
+
+- Returns 200 OK with no response body on success.
+- Returns 401 if authentication is required.
+- Returns 403 if the caller does not have UPDATE permission on the existing prompt.
+- Returns 404 if a specified integration does not exist.
+
+## Behavior
+
+- **Create**: If no prompt with the given `name` exists, a new one is created and full access is granted to the calling user.
+- **Update**: If the prompt exists, the template text and description are updated while preserving the original `createdBy` and `createTime` metadata.
+- **Version targeting**: If `version` is supplied, that specific version is targeted. Otherwise the latest version is used.
+- **Model association**: Each value in `models` must reference an existing integration in the format `integrationName:modelName`. The caller must have access to each integration.
+
+## Examples
+
+<details>
+<summary>Create a prompt</summary>
+
+**Request**
+
+```bash
+curl -X 'PUT' \
+  'https://<YOUR-SERVER-URL>/api/prompts/population-prompt?description=A%20population%20prompt' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d 'What is the population of China in 1994?'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the prompt has been created successfully.
+
+</details>
+
+# Create or Update Prompt Version
+
+**Endpoint**: `POST /api/prompts/{name}`
+
+Creates a new prompt template or saves to a specific version of an existing one. Supports explicit version targeting or automatic version incrementing.
+
+If neither `version` nor `autoIncrement=true` is specified, this endpoint always targets version 1, overwriting it. For general-purpose prompt creation and updates, use `PUT /api/prompts/{name}` instead.
+
+## Path parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| name | The name of the prompt to create or update. | string | Required. |
+
+## Query parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| description | A description for the prompt. | string | Required. |
+| models | The AI model to associate with this prompt, in the format `integrationName:modelName`. The specified integration must exist and the caller must have access to it. | string | Optional. |
+| version | Explicit version number to save. Ignored if `autoIncrement=true`. | integer | Optional. |
+| autoIncrement | When `true`, automatically sets the version to the current latest version + 1. If no versions exist yet, defaults to version 1. | boolean | Optional. |
+
+## Request body
+
+The prompt text is to be supplied as a raw string. Enclosing quotation marks are stripped automatically.
+
+## Response
+
+- Returns 200 OK with no response body on success.
+- Returns 401 if authentication is required.
+- Returns 403 if the caller does not have UPDATE permission on the existing prompt.
+- Returns 404 if a specified integration does not exist.
+
+## Behavior
+
+- **Version resolution follows this priority order:**
+    - If `autoIncrement=true`, it uses `latestVersion + 1` (or 1 if no versions exist yet).
+    - If `version` is provided, it uses that explicit version number.
+    - Otherwise, it defaults to version 1 (overwrites existing version 1 without preserving metadata).
+- **Create vs. Update**: If no version of the prompt exists under `name`, a new prompt is created and the caller is granted full access. If any version already exists, the caller must have `UPDATE` permission.
+- **Model association**: Each value in `models` must reference an existing integration in the format `integrationName:modelName`. The caller must have access to each integration.
+
+## Examples
+
+<details>
+<summary>Update a prompt</summary>
+
+**Request**
+
+```bash
+curl -X 'POST' \
+  'https://<YOUR-SERVER-URL>/api/prompts/population-prompt?description=Updated%20description&autoIncrement=true' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d 'What is the population of Russia in 1994?'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the prompt has been updated successfully.
+
+</details>
+
+# Create Prompts in Bulk
+
+**Endpoint**: `POST /api/prompts/`
+
+Creates or updates prompts in bulk. New prompts are created with full access granted to the caller. Existing ones are updated if the caller has **UPDATE** permission.
+
+This endpoint processes prompts sequentially. A validation failure on one prompt (e.g. a missing integration) throws immediately and halts processing of remaining prompts in the list. If the caller lacks **UPDATE** permission on an existing prompt, that prompt is silently skipped.
+
+## Request body
+
+Format the request body as a JSON array of objects. Each object supports the following fields:
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| name | The name of the prompt. | string | Required. |
+| template | The prompt text body. Can contain `${variable}` placeholders. | string | Required. |
+| version | The version of the prompt. | integer | Optional. |
+| description | A description of the prompt. | string | Optional. |
+| integrations | The LLM integrations to associate with this prompt, in the format `integrationName:modelName`. The integration must already exist in your Conductor cluster. | Array of strings | Optional. |
+| temperature | The temperature for the prompt. | integer | Optional. |
+| topP | Top-p nucleus sampling parameter. | integer | Optional. |
+| responseFormat | The output format of the prompt. | string | Optional. |
+| stopWords | The stop sequences for generation. | Array of strings | Optional. |
+
+## Response
+
+- Returns 200 OK with no response body on success.
+- Returns 401 if authentication is required.
+- Returns 403 if the caller does not have READ access to a referenced integration.
+- Returns 404 if a referenced integration does not exist.
+
+## Examples
+
+<details>
+<summary>Create prompts in bulk</summary>
+
+**Request**
+
+```bash
+curl -X 'POST' \
+  'https://<YOUR-SERVER-URL>/api/prompts/' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '[
+  {
+    "name": "email-summary",
+    "template": "Summarize this email in ${language}: ${email_body}",
+    "description": "Summarizes an email",
+    "integrations": ["openAI:gpt-4o"],
+    "version": 1,
+    "temperature": 0.1,
+    "topP": 1.0,
+    "responseFormat": "text",
+    "stopWords": []
+  },
+  {
+    "name": "meeting-notes",
+    "template": "Summarize the following meeting transcript: ${transcript}",
+    "description": "Summarizes a meeting transcript",
+    "integrations": ["openAI:gpt-4o"],
+    "version": 1,
+    "temperature": 0.1,
+    "topP": 1.0,
+    "responseFormat": "text",
+    "stopWords": []
+  }
+]'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the prompts have been created successfully.
+
+</details>
+
+# Delete Prompt
+
+**Endpoint**: `DELETE /api/prompts/{name}`
+
+Deletes a prompt and all its versions, including all associated tags and access control entries.
+
+To delete a single version rather than the entire prompt, use `DELETE /api/prompts/{name}/versions/{version}`.
+
+## Path parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| name | The name of the prompt to delete. | string | Required. |
+
+## Response
+
+- Returns 200 OK with no response body on success.
+- Returns 401 if authentication is required.
+- Returns 403 if the caller does not have DELETE permission on the prompt.
+
+## Examples
+
+<details>
+<summary>Delete prompt</summary>
+
+**Request**
+
+```bash
+curl -X 'DELETE' \
+  'https://<YOUR-SERVER-URL>/api/prompts/population-prompt' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the prompt was deleted successfully.
+
+</details>
+
+# Delete Prompt Version
+
+**Endpoint**: `DELETE /api/prompts/{name}/versions/{version}`
+
+Deletes a specific version of a prompt. If it is the last remaining version, all associated tags and access control entries are also removed.
+
+To delete all versions, use `DELETE /api/prompts/{name}`.
+
+## Path parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| name | The name of the prompt to delete. | string | Required. |
+| version | The version of the prompt to delete. | integer | Required. |
+
+## Response
+
+- Returns 200 OK with no response body on success.
+- Returns 401 if authentication is required.
+- Returns 403 if the caller does not have DELETE permission on the prompt.
+
+## Examples
+
+<details>
+<summary>Delete a specific prompt version</summary>
+
+**Request**
+
+```bash
+curl -X 'DELETE' \
+  'https://<YOUR-SERVER-URL>/api/prompts/population-prompt/versions/2' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the specific prompt version was deleted successfully.
+
+</details>
+
+# Get Prompt
+
+**Endpoint**: `GET /api/prompts/{name}`
+
+Retrieves a single prompt by name, optionally at a specific version.
+
+## Path parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| name | The name of the prompt to retrieve. | string | Required. |
+
+## Query parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| version | The version of the prompt to retrieve. | integer | Optional. |
+
+## Response
+
+- Returns 200 OK with the prompt object on success.
+- Returns 401 if authentication is required.
+- Returns 403 if the caller does not have READ permission on the prompt.
+- Returns 404 if no prompt exists with the given name or version.
+
+## Examples
+
+<details>
+<summary>Get prompt</summary>
+
+**Request**
+
+```bash
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/prompts/population-prompt' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+{
+  "createTime": 1780303601036,
+  "updateTime": 1780303601036,
+  "createdBy": "john.doe@acme.com",
+  "updatedBy": "john.doe@acme.com",
+  "name": "population-prompt",
+  "template": "What is the population of Russia in 1994?",
+  "description": "Updated description",
+  "variables": [],
+  "integrations": [
+    "openAI:gpt-4o"
+  ],
+  "tags": [],
+  "version": 3,
+  "temperature": 0.1,
+  "topP": 1,
+  "responseFormat": "text",
+  "stopWords": []
+}
+```
+
+</details>
+
+# Get All Versions of Prompts
+
+**Endpoint**: `GET /api/prompts/{name/versions}`
+
+Retrieves all versions of a prompt.
+
+## Path parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| name | The name of the prompt to retrieve. | string | Required. |
+
+## Response
+
+- Returns 200 OK with the prompt version objects on success.
+- Returns 401 if authentication is required.
+- Returns 403 if the caller does not have READ permission on the prompt.
+- Returns 404 if no versions are found for the given prompt name.
+
+## Examples
+
+<details>
+<summary>Get all versions of prompt</summary>
+
+**Request**
+
+```bash
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/prompts/population-prompt/versions' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+[
+  {
+    "createTime": 1780313786302,
+    "updateTime": 1780313786302,
+    "createdBy": "john.doe@acme.com",
+    "updatedBy": "john.doe@acme.com",
+    "name": "population-prompt",
+    "template": "What is the current population of `${country}`? What was the population in `${year}`?",
+    "description": "Population prompt",
+    "variables": [
+      "country",
+      "year"
+    ],
+    "integrations": [
+      "openAI:gpt-4o",
+      "openAI:chatgpt-4o-latest"
+    ],
+    "tags": [
+      {
+        "key": "team",
+        "value": "docs"
+      }
+    ],
+    "version": 2
+  },
+  {
+    "createTime": 1769502880756,
+    "updateTime": 1780313747596,
+    "createdBy": "john.doe@acme.com",
+    "updatedBy": "john.doe@acme.com",
+    "name": "population-prompt",
+    "template": "What is the current population of `${country}`? What was the population in `${year}`?",
+    "description": "Population prompt",
+    "variables": [
+      "country",
+      "year"
+    ],
+    "integrations": [
+      "openAI:gpt-4o",
+      "openAI:chatgpt-4o-latest"
+    ],
+    "tags": [
+      {
+        "key": "team",
+        "value": "docs"
+      }
+    ],
+    "version": 1
+  }
+]
+```
+
+</details>
+
+# Get All Prompts
+
+**Endpoint**: `GET /api/prompts`
+
+Retrieves all prompts from the cluster.
+
+## Response
+
+- Returns 200 OK with the prompt objects on success.
+- Returns 401 if authentication is required.
+
+## Examples
+
+<details>
+<summary>Get all prompts</summary>
+
+**Request**
+
+```bash
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/prompts' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+[
+  {
+    "createTime": 1780310666892,
+    "updateTime": 1780310666892,
+    "createdBy": "john.doe@acme.com",
+    "updatedBy": "john.doe@acme.com",
+    "name": "email-summary",
+    "template": "Summarize this email in ${language}: ${email_body}",
+    "description": "Summarizes an email",
+    "variables": ["email_body", "language"],
+    "integrations": ["openAI:gpt-4o"],
+    "tags": [],
+    "version": 1,
+    "temperature": 0.1,
+    "topP": 1,
+    "responseFormat": "text",
+    "stopWords": []
+  },
+  {
+    "createTime": 1780310666903,
+    "updateTime": 1780310666903,
+    "createdBy": "john.doe@acme.com",
+    "updatedBy": "john.doe@acme.com",
+    "name": "meeting-notes",
+    "template": "Summarize the following meeting transcript: ${transcript}",
+    "description": "Summarizes a meeting transcript",
+    "variables": ["transcript"],
+    "integrations": ["openAI:gpt-4o"],
+    "tags": [],
+    "version": 1,
+    "temperature": 0.1,
+    "topP": 1,
+    "responseFormat": "text",
+    "stopWords": []
+  }
+]
+```
+
+</details>
+
+# Add Tags to Prompt
+
+**Endpoint**: `PUT /api/prompts/{name}/tags`
+
+Adds tags to a prompt.
+
+## Path parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| name | The name of the prompt to add tags to. | string | Required. |
+
+## Request Body
+
+The request body should be an array of tag objects.
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| key | The tag key. | string | Required. |
+| value | The tag value. | string | Required. |
+
+## Response
+
+Returns 200 OK, indicating that tags have been added to the prompt.
+
+## Examples
+
+<details>
+<summary>Add a tag to a prompt</summary>
+
+**Request**
+
+```bash
+curl -X 'PUT' \
+  'https://<YOUR-SERVER-URL>/api/prompts/population-prompt/tags' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '[
+  {
+    "key": "team",
+    "value": "engineering"
+  }
+]'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the tag has been added to the prompt.
+
+</details>
+
+# Get Tags from Prompt
+
+**Endpoint**: `GET /api/prompts/{name}/tags`
+
+Retrieves tags from a prompt.
+
+## Path parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| name | The name of the prompt to retrieve tags from. | string | Required. |
+
+## Response
+
+Returns 200 OK with an array of tag objects, each containing a key-value pair.
+
+## Examples
+
+<details>
+<summary>Get tags from a prompt</summary>
+
+**Request**
+
+```bash
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/prompts/population-prompt/tags' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+[
+  {
+    "key": "team",
+    "value": "docs"
+  },
+  {
+    "key": "team",
+    "value": "engineering"
+  }
+]
+```
+
+</details>
+
+# Delete Tags from Prompt
+
+**Endpoint**: `DELETE /api/prompts/{name}/tags`
+
+Deletes tags from a prompt.
+
+## Path parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| name | The name of the prompt to remove tags from. | string | Required. |
+
+## Request Body
+
+The request body should be an array of tag objects.
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| key | The tag key to be removed. | string | Required. |
+| value | The tag value to be removed. | string | Required. |
+
+## Response
+
+Returns 200 OK, indicating that tags have been deleted from the prompt.
+
+## Examples
+
+<details>
+<summary>Delete a tag from a prompt</summary>
+
+**Request**
+
+```bash
+curl -X 'DELETE' \
+  'https://<YOUR-SERVER-URL>/api/prompts/population-prompt/tags' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '[
+  {
+    "key": "team",
+    "value": "engineering"
+  }
+]'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the tag has been deleted from the prompt.
+
+</details>
+
+# Test Prompts
+
+**Endpoint**: `POST /api/prompts/test`
+
+Tests a raw prompt string against a specified LLM integration and returns the model response. The prompt does not need to be saved in Conductor. This endpoint can be used to test ad-hoc prompt text before creating or updating a prompt.
+
+## Request Body
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| llmProvider | The name of the LLM provider integration in Conductor to test the prompt with. | string | Required |
+| model | The model name within the LLM provider to test the prompt with. | string | Required. |
+| prompt | The prompt text to test. | string | Required. |
+| promptVariables | Key-value pairs to substitute into the prompt template. | Array of strings | Optional. |
+| temperature | The temperature for the prompt. | integer | Optional. |
+| topP | Top-p nucleus sampling parameter. | integer | Optional. |
+| maxTokens | Maximum tokens to generate. 0 means, it  uses the provider default. | integer | Optional. |
+| stopWords | The stop sequences for generation. | Array of strings | Optional. |
+| response_format | The output format of the prompt. Whether `text` or `json`. | string | Optional. |
+
+## Response
+
+- Returns 200 OK with the raw model output as a plain-text string on success.
+- Returns 401 if authentication is required.
+- Returns 403 if the caller does not have READ access to the specified `llmProvider:model`.
+
+## Examples
+
+<details>
+<summary>Test a prompt</summary>
+
+**Request**
+
+```bash
+curl -X 'POST' \
+  'https://<YOUR-SERVER-URL>/api/prompts/test' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>' \
+  -d '{
+  "llmProvider": "openAI",
+  "model": "gpt-4o",
+  "prompt": "What is the current population of `${country}`? What was the population in `${year}`?",
+  "promptVariables": {
+    "country": "Japan",
+    "year": "1994"
+  },
+  "temperature": 0.1,
+  "topP": 0.9,
+  "stopWords": [],
+  "response_format": "text"
+}'
+```
+
+**Response**
+
+Returns 200 OK with the raw model output as a plain-text string on success.
+
+```json
+As of the latest data available up to October 2023, Japan's population is estimated to be around 124 million people. In 1994, the population of Japan was approximately 125 million. Please note that these figures are estimates and can vary based on the source and the methodology used for population counting.
 ```
 
 </details>
