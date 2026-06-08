@@ -95,7 +95,7 @@ For example, if you are adding an Anthropic Claude integration, the configuratio
 
 | Status | Description | 
 | ------ | ----------- | 
-| 200 OK | Indicates that the integration is created/updated successfully. | 
+| 200 OK | Returns the created or updated integration provider object, including fields such as `name`, `type`, `category`, `description`, `enabled`, `configuration`, `tags`, `modelsCount`, `createTime`, `updateTime`, `createdBy`, and `updatedBy`. | 
 | 400 Bad Request | Returns for an invalid input. For example, attempting to change the `type` of an existing integration. | 
 | 403 Forbidden | Indicates that the authenticated user does not have permission to update one or more integrations. | 
 | 404 | The `type` is not a recognized integration on this server. | 
@@ -128,7 +128,25 @@ curl -X 'POST' \
 
 **Response**
 
-Returns 200 OK, indicating that the integration is created successfully.
+Returns 200 OK with the created integration provider object.
+
+```json
+{
+  "createTime": 1780923107007,
+  "updateTime": 1780923120214,
+  "createdBy": "john.doe@acme.com",
+  "updatedBy": "john.doe@acme.com",
+  "name": "openAI-eng",
+  "type": "openai",
+  "description": "OpenAI account for the marketing team",
+  "category": "AI_MODEL",
+  "configuration": {
+    "api_key": "xxxxxxxxxx"
+  },
+  "enabled": true,
+  "modelsCount": 0
+}
+```
 
 </details>
 
@@ -158,6 +176,24 @@ curl -X 'POST' \
 
 **Response**
 
-Returns 200 OK, indicating that the integration is updated successfully.
+Returns 200 OK with the updated integration provider object.
+
+```json
+{
+  "createTime": 1780923107007,
+  "updateTime": 1780923201927,
+  "createdBy": "john.doe@acme.com",
+  "updatedBy": "john.doe@acme.com",
+  "name": "openAI-eng",
+  "type": "openai",
+  "description": "Updated description",
+  "category": "AI_MODEL",
+  "configuration": {
+    "api_key": "xxxxxxxxx"
+  },
+  "enabled": false,
+  "modelsCount": 0
+}
+```
 
 </details>
