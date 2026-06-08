@@ -1,0 +1,354 @@
+---
+slug: "/integrations/google-sheets-operations"
+description: "Look up the input and output parameters for each operation available in the Google Sheets integration with Orkes Conductor."
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Google Sheets Operations Reference
+
+Orkes Conductor integrates with Google Sheets to let you create and manage spreadsheets directly from your workflows. You can use the following operations to create, read, update, and modify content in Google Sheets, without leaving your workflow.
+
+This page covers the parameters and expected output for each operation available in the [Google Sheets integration](/content/integrations/google-sheets).
+
+## Create Spreadsheet
+
+Create a new Google Sheets spreadsheet with the provided title. Use this when a workflow needs a fresh spreadsheet to hold tabular data produced by the integration or AI.
+
+<Tabs>
+<TabItem value="input" label="Input Parameters">
+
+| Parameter | Description | Type | Required/Optional |
+| --------- | ----------- | ---- | ----------------- |
+| Title | The title of the spreadsheet. | string | Required. | 
+
+</TabItem>
+<TabItem value="output" label="Output Parameters">
+
+Returns a full `Spreadsheet` object containing `spreadsheetId`, `spreadsheetUrl`, `properties`, and `sheets`. For the complete schema, refer to the [Google Sheets API documentation](https://developers.google.com/workspace/sheets/api/reference/rest/v4/spreadsheets#Spreadsheet).
+
+</TabItem>
+</Tabs>
+
+## Delete Spreadsheet
+
+Delete an entire spreadsheet by ID. Use this when a workflow needs to remove a spreadsheet after exporting or archiving its data.
+
+<Tabs>
+<TabItem value="input" label="Input Parameters">
+
+| Parameter | Description | Type | Required/Optional |
+| --------- | ----------- | ---- | ----------------- |
+| Spreadsheet Id | The spreadsheet ID to delete. If left empty/blank, it falls back to the default spreadsheet provided in the integration.<br/>To get the spreadsheet ID, open the spreadsheet in Google Sheets. The ID is the string of characters at the end of the URL: `https://docs.google.com/spreadsheets/d/<YOUR-SPREADSHEET-ID>/`. | string | Optional. | 
+
+</TabItem>
+<TabItem value="output" label="Output Parameters">
+
+| Parameter | Description | 
+| --------- | ----------- |
+| spreadsheetId | The ID of the deleted spreadsheet. | 
+| name | The title of the deleted spreadsheet. | 
+| deleted | Confirms whether the spreadsheet was successfully deleted. | 
+
+</TabItem>
+</Tabs>
+
+## Append Values
+
+Append one or more rows to a specified range in a sheet. Accepts a 2D array, letting you write multiple rows in a single operation. Use this when you want to log events, metrics, or AI-generated outputs by adding new rows at the bottom of a table.
+
+<Tabs>
+<TabItem value="input" label="Input Parameters">
+
+| Parameter | Description | Type | Required/Optional |
+| --------- | ----------- | ---- | ----------------- |
+| Spreadsheet Id | The spreadsheet ID to append. If left empty/blank, it falls back to the default spreadsheet provided in the integration.<br/>To get the spreadsheet ID, open the spreadsheet in Google Sheets. The ID is the string of characters at the end of the URL: `https://docs.google.com/spreadsheets/d/<YOUR-SPREADSHEET-ID>/`. | string | Optional. | 
+| Range | The range to append values to, in A1 notation. For example: `Sheet1!A1`. | string | Required. | 
+| Values | A 2D array of rows and values to append to the sheet. Each row is a numbered block, and each value within a row corresponds to a cell in that row.<br/>**To configure in the UI:**<ol><li>Select **+** at the top of the **Values** field to add a row.<p align="center"><img src="/content/img/values-in-google-sheet1.png" alt="UI Configuration steps" width="100%" height="auto"></img></p></li><li>Within the row, select **+** to add a cell value. Repeat to add more values to the same row.<p align="center"><img src="/content/img/values-in-google-sheet2.png" alt="UI Configuration steps" width="100%" height="auto"></img></p></li><li>Select **+** at the top again to add another row. Repeat as needed.</li></ol>**Example**: To append two rows where each row has a Name and Age, configure row 1 with **Name** and **Age**,<p align="center"><img src="/content/img/values-in-google-sheet3.png" alt="UI Configuration steps" width="100%" height="auto"></img></p>and row 2 with **Alice** and **30**.<p align="center"><img src="/content/img/values-in-google-sheet4.png" alt="UI Configuration steps" width="100%" height="auto"></img></p> | array of arrays | Required. | 
+| Value Input Option | Determines how the input values are interpreted. Supported values:<ul><li>`USER_ENTERED`; Mimics a user typing into the cell, parsing numbers, dates, booleans, and formulas.</li><li>`RAW`: Stores values exactly as-is without any parsing.</li></ul>Defaults to `USER_ENTERED`. | string | Optional. | 
+| Include Values in Response | Set to `true` to include the appended data in the response. | boolean | Optional. | 
+
+</TabItem>
+<TabItem value="output" label="Output Parameters">
+
+| Parameter | Description | 
+| --------- | ----------- |
+| spreadsheetId | The ID of the spreadsheet the values were appended to. | 
+| tableRange | The range of the existing table in the sheet. | 
+| updates | Contains the details of the update, including `updatedRange`, `updatedRows`, `updatedColumns`, `updatedCells`, and optionally `updatedData` when **Include Values in Response** is set to `true`. | 
+
+</TabItem>
+</Tabs>
+
+## Append Row
+
+Append a single row to a sheet using a flat array, without requiring a range. Use this when you are adding one record at a time.
+
+<Tabs>
+<TabItem value="input" label="Input Parameters">
+
+| Parameter | Description | Type | Required/Optional |
+| --------- | ----------- | ---- | ----------------- |
+| Spreadsheet Id | The spreadsheet ID to append the row to. If left empty/blank, it falls back to the default spreadsheet provided in the integration.<br/>To get the spreadsheet ID, open the spreadsheet in Google Sheets. The ID is the string of characters at the end of the URL: `https://docs.google.com/spreadsheets/d/<YOUR-SPREADSHEET-ID>/`. | string | Optional. | 
+| Sheet Name | The name of the sheet tab where the row will be appended. This is the tab label visible at the bottom of the spreadsheet (for example, **Sheet1**), not the spreadsheet title shown at the top of the page. | string | Required. |
+| Values | An array of values to append as a single row. Each value corresponds to a cell in the row, in column order.<br/>**To configure in the UI:**<ol><li>Select **+** next to Values to add a cell value.</li><li>Repeat to add more values in the same row.</li></ol>**Example**: To append a row with a name and age, add **John** as the first value and **25** as the second.<p align="center"><img src="/content/img/appending.png" alt="Appending a Google Sheet using Conductor" width="100%" height="auto"></img></p> | array of strings | Required. | 
+| Value Input Option | Determines how the input values are interpreted. Supported values:<ul><li>`USER_ENTERED`; Mimics a user typing into the cell, parsing numbers, dates, booleans, and formulas.</li><li>`RAW`: Stores values exactly as-is without any parsing.</li></ul>Defaults to `USER_ENTERED`. | string | Optional. | 
+| Include Values in Response | Set to `true` to include the appended data in the response. | boolean | Optional. | 
+
+</TabItem>
+<TabItem value="output" label="Output Parameters">
+
+| Parameter | Description | 
+| --------- | ----------- |
+| spreadsheetId | The ID of the spreadsheet the row was appended to. | 
+| tableRange | The range of the existing table in the sheet. | 
+| updatedRange | The range where the row was appended. | 
+| updatedRows | The number of rows appended. | 
+| updatedColumns | The number of columns updated. | 
+| updatedCells | The total number of cells updated. | 
+| action | The action performed. Returns "appended". | 
+| updatedValues | The appended row data. Returned only when **Include Values in Response** is set to `true`. | 
+
+</TabItem>
+</Tabs>
+
+## Append or Update Row
+
+Append a row when it does not exist, or update it if it already exists. Checks a specific row index before writing, preventing duplicates. Use this when you want to ensure a specific row index is populated.
+
+<Tabs>
+<TabItem value="input" label="Input Parameters">
+
+| Parameter | Description | Type | Required/Optional |
+| --------- | ----------- | ---- | ----------------- |
+| Spreadsheet Id | The spreadsheet ID to append or update the row in. If left empty/blank, it falls back to the default spreadsheet provided in the integration.<br/>To get the spreadsheet ID, open the spreadsheet in Google Sheets. The ID is the string of characters at the end of the URL: `https://docs.google.com/spreadsheets/d/<YOUR-SPREADSHEET-ID>/`. | string | Optional. | 
+| Sheet Name | The name of the sheet where the row will be appended or updated. This is the tab label visible at the bottom of the spreadsheet (for example, **Sheet1**), not the spreadsheet title shown at the top of the page. | string | Required. | 
+| Row Index | The 1-based index of the row to update. For example, 1 refers to the first row. If the row does not exist, a new row is appended. | integer | Required. | 
+| Values | An array of values to append or update as a single row, in order. Each value corresponds to a cell in the row, in column order.<br/>**To configure in the UI:**<ul><li>Select **+** next to **Values** to add a cell value.</li><li>Repeat to add more values in the same row.</li></ul>**Example**: To append a row with a name and age, add **Rebecca** as the first value and **41** as the second.<p align="center"><img src="/content/img/updating-sheets.png" alt="Updating a Google Sheet using Conducto" width="100%" height="auto"></img></p> | array of strings | Required. | 
+| Value Input Option | Determines how the input values are interpreted. Supported values:<ul><li>`USER_ENTERED`; Mimics a user typing into the cell, parsing numbers, dates, booleans, and formulas.</li><li>`RAW`: Stores values exactly as-is without any parsing.</li></ul>Defaults to `USER_ENTERED`. | string | Optional. | 
+
+</TabItem>
+<TabItem value="output" label="Output Parameters">
+
+| Parameter | Description | 
+| --------- | ----------- |
+| spreadsheetId | The ID of the spreadsheet the row was appended or updated in. | 
+| tableRange | The range of the existing table in the sheet. Returns `null` when a row is updated. | 
+| updatedRange | The range of the row that was appended or updated. | 
+| updatedRows | The number of rows appended or updated. | 
+| updatedColumns | The number of columns updated. | 
+| updatedCells | The total number of cells updated. | 
+| action | Indicates whether the row was appended or updated. Returns `updated` if the row existed, or `appended` if a new row was added. | 
+| updatedValues | The appended or updated row data. | 
+
+</TabItem>
+</Tabs>
+
+## Read Values
+
+Read values from a specified range in a sheet. Use this when spreadsheet data is needed as input or context for downstream workflow steps.
+
+<Tabs>
+<TabItem value="input" label="Input Parameters">
+
+| Parameter | Description | Type | Required/Optional |
+| --------- | ----------- | ---- | ----------------- |
+| Spreadsheet Id | The spreadsheet ID to read values from. If left empty/blank, it falls back to the default spreadsheet provided in the integration.<br/>To get the spreadsheet ID, open the spreadsheet in Google Sheets. The ID is the string of characters at the end of the URL: `https://docs.google.com/spreadsheets/d/<YOUR-SPREADSHEET-ID>/`. | string | Optional. | 
+| Range | The range to read values from, in A1 notation. For example: `Sheet1!A1:C10`. | string | Required. | 
+
+</TabItem>
+<TabItem value="output" label="Output Parameters">
+
+| Parameter | Description | 
+| --------- | ----------- |
+| majorDimension | The major dimension of the returned values. Returns `ROWS` by default, where each inner array represents a row. | 
+| range | The range the values cover, in A1 notation. | 
+| values | The data read from the sheet, returned as a 2D array. Each inner array represents a row, and each item in the inner array corresponds to a cell. Empty trailing rows and columns are not included. | 
+
+</TabItem>
+</Tabs>
+
+## Get Rows
+
+Read all rows from a sheet. Use this when you need the full table contents.
+
+<Tabs>
+<TabItem value="input" label="Input Parameters">
+
+| Parameter | Description | Type | Required/Optional |
+| --------- | ----------- | ---- | ----------------- |
+| Spreadsheet Id | The spreadsheet ID to get rows from. If left empty/blank, it falls back to the default spreadsheet provided in the integration.<br/>To get the spreadsheet ID, open the spreadsheet in Google Sheets. The ID is the string of characters at the end of the URL: `https://docs.google.com/spreadsheets/d/<YOUR-SPREADSHEET-ID>/`. | string | Optional. | 
+| Sheet Name | The name of the sheet to retrieve rows from. This is the tab label visible at the bottom of the spreadsheet (for example, **Sheet1**), not the spreadsheet title shown at the top of the page. | string | Required. | 
+| Range Override | Limits the rows retrieved to a specific range in A1 notation. For example: `Sheet1!A1:C10`. If not provided, all rows in the sheet are returned. | string | Optional. | 
+
+</TabItem>
+<TabItem value="output" label="Output Parameters">
+
+| Parameter | Description | 
+| --------- | ----------- |
+| majorDimension | The major dimension of the returned values. Returns `ROWS` by default, where each inner array represents a row. | 
+| range | The range the values cover, in A1 notation. | 
+| values | The data read from the sheet, returned as a 2D array. Each inner array represents a row, and each item in the inner array corresponds to a cell. Empty trailing rows and columns are not included. | 
+
+</TabItem>
+</Tabs>
+
+## Update Row
+
+Update a specific row by index. Use this when you need to overwrite a row's contents.
+
+<Tabs>
+<TabItem value="input" label="Input Parameters">
+
+| Parameter | Description | Type | Required/Optional |
+| --------- | ----------- | ---- | ----------------- |
+| Spreadsheet Id | The spreadsheet ID to update the row in. If left empty/blank, it falls back to the default spreadsheet provided in the integration.<br/>To get the spreadsheet ID, open the spreadsheet in Google Sheets. The ID is the string of characters at the end of the URL: `https://docs.google.com/spreadsheets/d/<YOUR-SPREADSHEET-ID>/`. | string | Optional. | 
+| Sheet Name | The name of the sheet where the row will be updated. This is the tab label visible at the bottom of the spreadsheet (for example, **Sheet1**), not the spreadsheet title shown at the top of the page. | string | Required. | 
+| Row Index | The 1-based index of the row to update. For example, 1 refers to the first row. | integer | Required. | 
+| Values | An array of values to update in a single row. Each value corresponds to a cell in the row, in column order.**To configure in the UI**:<ol><li>Select **+** next to Values to add a cell value.</li><li>Repeat to add more values in the same row.</li></ol>**Example**: To append a row with a name and age, add **John** as the first value and **25** as the second. | array of strings | Required. | 
+| Value Input Option | Determines how the input values are interpreted. Supported values:<ul><li>`USER_ENTERED`; Mimics a user typing into the cell, parsing numbers, dates, booleans, and formulas.</li><li>`RAW`: Stores values exactly as-is without any parsing.</li></ul>Defaults to `USER_ENTERED`. | string | Optional. | 
+
+</TabItem>
+<TabItem value="output" label="Output Parameters">
+
+| Parameter | Description | 
+| --------- | ----------- |
+| spreadsheetId | The ID of the spreadsheet where the rows were updated. | 
+| tableRange | The range of the existing table in the sheet. Returns `null` when a row is updated. | 
+| updatedRange | The range where the row was updated. | 
+| updatedRows | The number of rows updated. | 
+| updatedColumns | The number of columns updated. | 
+| updatedCells | The total number of cells updated. | 
+| action | The action performed. Returns "updated". | 
+| updatedValues | The updated row data. | 
+
+</TabItem>
+</Tabs>
+
+## Clear Range
+
+Clear values from a specified range in a sheet. Use this when you want to reset or overwrite a region before writing fresh data.
+
+<Tabs>
+<TabItem value="input" label="Input Parameters">
+
+| Parameter | Description | Type | Required/Optional |
+| --------- | ----------- | ---- | ----------------- |
+| Spreadsheet Id | The spreadsheet ID to clear the range in. If left empty/blank, it falls back to the default spreadsheet provided in the integration.<br/>To get the spreadsheet ID, open the spreadsheet in Google Sheets. The ID is the string of characters at the end of the URL: `https://docs.google.com/spreadsheets/d/<YOUR-SPREADSHEET-ID>/`. | string | Optional. | 
+| Range | The range to clear, in A1 notation. For example: `Sheet1!A1:C10`. | string | Required. | 
+
+</TabItem>
+<TabItem value="output" label="Output Parameters">
+
+| Parameter | Description | 
+| --------- | ----------- |
+| spreadsheetId | The ID of the spreadsheet the range was cleared in. | 
+| clearedRange | The range that was cleared, in A1 notation. If the requested range exceeded the sheet's bounds, this reflects the actual range that was cleared. | 
+
+</TabItem>
+</Tabs>
+
+## Clear Sheet
+
+Clear all values from a sheet while keeping the sheet structure. Use this when you want to reset the entire tab.
+
+<Tabs>
+<TabItem value="input" label="Input Parameters">
+
+| Parameter | Description | Type | Required/Optional |
+| --------- | ----------- | ---- | ----------------- |
+| Spreadsheet Id | The spreadsheet ID containing the sheet to clear. If left empty/blank, it falls back to the default spreadsheet provided in the integration.<br/>To get the spreadsheet ID, open the spreadsheet in Google Sheets. The ID is the string of characters at the end of the URL: `https://docs.google.com/spreadsheets/d/<YOUR-SPREADSHEET-ID>/`. | string | Optional. | 
+| Sheet Name | The name of the sheet to clear all values from. This is the tab label visible at the bottom of the spreadsheet (for example, **Sheet1**), not the spreadsheet title shown at the top of the page. | string | Required. | 
+
+</TabItem>
+<TabItem value="output" label="Output Parameters">
+
+| Parameter | Description | 
+| --------- | ----------- |
+| spreadsheetId | The ID of the spreadsheet the sheet was cleared in. | 
+| clearedRange | The range that was cleared, in A1 notation. | 
+
+</TabItem>
+</Tabs>
+
+## Create Sheet
+
+Create a new sheet (tab) within a spreadsheet. Use this when you need a fresh tab for new data.
+
+<Tabs>
+<TabItem value="input" label="Input Parameters">
+
+| Parameter | Description | Type | Required/Optional |
+| --------- | ----------- | ---- | ----------------- |
+| Spreadsheet Id | The spreadsheet ID to create the sheet in. If left empty/blank, it falls back to the default spreadsheet provided in the integration.<br/>To get the spreadsheet ID, open the spreadsheet in Google Sheets. The ID is the string of characters at the end of the URL: `https://docs.google.com/spreadsheets/d/<YOUR-SPREADSHEET-ID>/`. | string | Optional. |
+| Sheet Name | The name of the sheet to create. | string | Required. | 
+
+</TabItem>
+<TabItem value="output" label="Output Parameters">
+
+| Parameter | Description | 
+| --------- | ----------- |
+| spreadsheetId | The ID of the spreadsheet the sheet was created in. | 
+| sheetId | The unique ID of the newly created sheet. | 
+| sheetName | The name of the newly created sheet. | 
+
+</TabItem>
+</Tabs>
+
+## Delete Sheet
+
+Delete a sheet (tab) from a spreadsheet. Use this when a tab is no longer needed.
+
+<Tabs>
+<TabItem value="input" label="Input Parameters">
+
+| Parameter | Description | Type | Required/Optional |
+| --------- | ----------- | ---- | ----------------- |
+| Spreadsheet Id | The spreadsheet ID containing the sheet to delete. If left empty/blank, it falls back to the default spreadsheet provided in the integration.<br/>To get the spreadsheet ID, open the spreadsheet in Google Sheets. The ID is the string of characters at the end of the URL: `https://docs.google.com/spreadsheets/d/<YOUR-SPREADSHEET-ID>/`. | string | Optional. | 
+| Sheet Name | The sheet name to delete. | string | Optional. | 
+| Sheet Id | The unique ID of the sheet to delete.<br/>The unique ID of the sheet to delete. To get the sheet ID, open the spreadsheet and select the sheet. The ID is the string after `?gid=` in the URL: `https://docs.google.com/spreadsheets/d/<YOUR-SPREADSHEET-ID>/edit?gid=<YOUR-SHEET-ID>`. | integer | Optional. | 
+
+</TabItem>
+<TabItem value="output" label="Output Parameters">
+
+| Parameter | Description | 
+| --------- | ----------- |
+| spreadsheetId | The ID of the spreadsheet the sheet was deleted from. | 
+| sheetId | The unique ID of the deleted sheet. | 
+| sheetName | The name of the deleted sheet. | 
+| deleted | Confirms whether the sheet was successfully deleted. | 
+
+</TabItem>
+</Tabs>
+
+## Delete Rows or Columns
+
+Delete a range of rows or columns from a sheet. Use this when you need to remove blocks of data.
+
+<Tabs>
+<TabItem value="input" label="Input Parameters">
+
+| Parameter | Description | Type | Required/Optional |
+| --------- | ----------- | ---- | ----------------- |
+| Start Index | The 0-based, inclusive index of the first row or column to delete. For example, to delete the first row, set Start Index to `0`. | integer | Required. | 
+| Sheet Name | The name of the sheet to delete the rows or columns from. This is the tab label visible at the bottom of the spreadsheet (for example, **Sheet1**), not the spreadsheet title shown at the top of the page. | string | Optional.| 
+| End Index | The 0-based, exclusive index of the last row or column to delete. For example, to delete rows 1 and 2, set Start Index to `0` and End Index to `2`. | integer | Required. | 
+| Sheet Id | The unique ID of the sheet to delete rows or columns from.<br/>The unique ID of the sheet to delete. To get the sheet ID, open the spreadsheet and select the sheet. The ID is the string after `?gid=` in the URL: `https://docs.google.com/spreadsheets/d/<YOUR-SPREADSHEET-ID>/edit?gid=<YOUR-SHEET-ID>`. | integer | Optional. | 
+| Spreadsheet Id | The spreadsheet ID containing the sheet. If left empty/blank, it falls back to the default spreadsheet provided in the integration.<br/>To get the spreadsheet ID, open the spreadsheet in Google Sheets. The ID is the string of characters at the end of the URL: `https://docs.google.com/spreadsheets/d/<YOUR-SPREADSHEET-ID>/`.  | string | Optional. | 
+| Dimension | Specifies whether to delete rows or columns. Supported values:<ul><li>`ROWS`: Deletes the specified rows.</li><li>`COLUMNS`: Deletes the specified columns.</li></ul> | string | Required. | 
+
+</TabItem>
+<TabItem value="output" label="Output Parameters">
+
+| Parameter | Description | 
+| --------- | ----------- |
+| spreadsheetId | The ID of the spreadsheet the rows or columns were deleted from. | 
+| sheetId | The unique ID of the sheet the rows or columns were deleted from. | 
+| dimension | Indicates whether rows or columns were deleted. | 
+| startIndex | The start index of the deleted range. | 
+| endIndex | The end index of the deleted range. | 
+| deleted | Confirms whether the rows or columns were successfully deleted. | 
+
+</TabItem>
+</Tabs>
