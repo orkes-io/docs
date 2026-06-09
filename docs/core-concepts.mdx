@@ -5,7 +5,7 @@ description: "Understand what workflow orchestration means and how it works. Lea
 
 # Core Concepts
 
-Orkes Conductor orchestrates the execution flow of distributed application components, including APIs, events, functions, AI models, databases, and other systems. Here are the core concepts you need to know to understand Conductor:
+Orkes Conductor is the orchestration layer that coordinates AI agents, microservices, APIs, events, and human interactions into reliable, production-ready workflows. Here are the core concepts you need to know to understand Conductor:
 
 * Workflows  
 * Tasks   
@@ -15,11 +15,13 @@ Orkes Conductor orchestrates the execution flow of distributed application compo
 
 A workflow is a sequence of tasks with a defined order and execution. Each workflow encapsulates a specific process, such as:
 
-* Classifying documents
-* Ordering from a self-checkout service
-* Upgrading cloud infrastructure
-* Transcoding videos
-* Approving expenses
+- Processing a loan application
+- Orchestrating an AI research pipeline
+- Transcoding and distributing media files
+- Approving and fulfilling purchase orders
+- Detecting fraud in financial transactions
+- Provisioning cloud infrastructure
+- Routing customer support tickets to human agents
 
 In Conductor, workflows can refer to the workflow definition or execution.
 
@@ -33,7 +35,7 @@ The workflow definition describes the flow of the application. Think of it as a 
 
 ### Workflow Execution
 
-A workflow execution is the execution instance of a workflow definition. Whenever a workflow definition is invoked with a given input, a new workflow execution with a unique ID is created. The workflow is governed by a [defined state](/content/developer-guides/task-and-workflow-status-in-conductor) (e.g., RUNNING or COMPLETED), making it intuitive to track.
+A workflow execution is the execution instance of a workflow definition. Whenever a workflow definition is invoked with a given input, a new workflow execution with a unique ID is created. The workflow is governed by a [defined state](/content/developer-guides/task-and-workflow-status-in-conductor) (e.g., RUNNING or COMPLETED), making it easier to track.
 
 ## Tasks
 

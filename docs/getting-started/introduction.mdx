@@ -8,28 +8,31 @@ import DocCardList from '@theme/DocCardList';
 
 # Get Started with Orkes Conductor
 
-Orkes Conductor is an enterprise platform for orchestrating distributed applications and building AI agents with enterprise-grade reliability, scalability, and observability.
+Orkes Conductor is a battle-tested workflow orchestration platform rooted in open-source, built to help you develop AI agents and workflows that scale with confidence.
 
-In today's complex architectures, microservices, APIs, and AI components must work together seamlessly. An orchestration layer is essential for coordinating these distributed systems, managing their interactions, and ensuring reliable execution across your entire application stack.
+Building production-ready AI systems is harder than building a proof of concept. Agents need to reason, adapt, and act reliably across complex, distributed environments, coordinating microservices, APIs, human approvals, and AI components without failing under load. Orchestration is the missing layer that moves agents from demos to production.
 
-Conductor acts as this orchestration layer, unifying your services, APIs, and intelligent agents. Whether you're coordinating backend microservices, executing long-running workflows, or building agentic AI systems, Conductor provides the operational backbone to ensure reliability, transactional integrity, and fault tolerance throughout your application's lifecycle.
+Orkes Conductor provides that orchestration layer. It unifies AI agents, services, APIs, and humans into deterministic, auditable workflows with built-in reliability, observability, and control. Whether you're orchestrating microservices, building agentic AI pipelines, or running long-running business processes, Conductor gives you the operational backbone to do it at scale; executing over 1 billion workflows daily with up to 99.99% availability.
 
-At the core of Conductor are workflows: modular blueprints that define how tasks are executed across your system. These workflows manage state, handle retries, and provide centralized control over distributed processes. This makes Conductor ideal not only for microservices and event-driven data pipelines but also for agentic AI systems, such as:
+At the core of Conductor are workflows: modular blueprints that define how tasks are executed across your system. Workflows manage state, handle retries, and provide centralized control over distributed processes. This makes Conductor suited for a wide range of use cases:
 
-- **Retrieval-Augmented Generation (RAG)**: Coordinate multiple AI services (retrieval engines, LLMs, and post-processing steps) into reliable, observable pipelines.
-- **Agentic Workflows**: Empower AI agents to take actions, call APIs, and perform multi-step reasoning by integrating them into deterministic, auditable workflows.
+- **Agentic Workflows**: Blend structured process stages with LLM-driven decisions to handle real-world complexity, with full traceability and control.
+- **Retrieval-Augmented Generation (RAG)**: Coordinate retrieval engines, LLMs, and post-processing steps into reliable, observable pipelines.
 - **Human-in-the-Loop Interactions**: Seamlessly integrate human approvals or feedback into automated processes for hybrid decision-making.
+- **Microservices and Event-Driven Systems**: Orchestrate APIs, microservices, and message queues in a single platform supporting both durable asynchronous and low-latency synchronous execution.
 
 You define workflows declaratively, regardless of the languages or environments your components run in. Conductor manages the complexity of execution, scaling, and error handling.
 
 ## Key features
 
+- **Agentic orchestration**: Seamlessly manage agentic AI patterns, Retrieval-Augmented Generation (RAG), multi-step tool use, and human-in-the-loop processes with deterministic, traceable workflows.
 - **Scalability**: Run workflows of any size, from lightweight automation to mission-critical enterprise systems, without compromising performance or reliability.
 - **Workflow as code**: Write workflows in your preferred language, including Python, Java, JavaScript, C#, and Go.
 - **Task workers**: Build task workers as microservices, serverless functions, or containerized services. Deploy them anywhere, using any tech stack or runtime.
-- **Agentic orchestration**: Seamlessly manage agentic AI patterns such as Retrieval-Augmented Generation (RAG), multi-step tool use, and human-in-the-loop processes with deterministic, traceable workflows.
 - **Fault tolerance**: Automatically recover from failures using built-in retries and compensation mechanisms to ensure high availability and uninterrupted operations.
+- **Gateway**: Expose workflows as APIs or MCP tools so that applications and AI agents can invoke workflow logic directly.
 - **Durable execution**: Create long-running workflows without worrying about system failures, dependencies, or scaling issues.
+- **Event-driven triggers**: Start or signal workflows in response to external events via built-in event handlers, message queues, and webhooks.
 - **Reusable components**: Package and reuse common functions to minimize duplication across workflows.
 - **Access controls**: Maintain control and visibility with built-in access management features.
 - **Troubleshooting**: Built-in metrics and logs help identify and resolve issues across distributed executions.
@@ -44,7 +47,7 @@ With Orkes’ suite of SDKs, APIs, and Conductor UI, you can mix and match our p
 
 * **Conductor SDKs**: Manage, test, and deploy workflows; write workers;  or integrate Conductor into your applications. Available in Python, Java, JavaScript, C#, and Go.
 * **Conductor APIs**: Manage resources (workflows, tasks, applications, users, and so on) programmatically.
-* **Conductor UI**: Manage resources from a user interface, which includes a visual workflow builder.
+* **Conductor UI**: Manage resources from a user interface, which includes a visual workflow editor.
 
 Continue to [Core Concepts](/content/core-concepts) to understand workflows, tasks, and workers, or jump to [Setting Up Orkes Conductor](/content/get-orkes-conductor) to get started immediately.
 
