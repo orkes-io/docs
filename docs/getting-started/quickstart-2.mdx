@@ -412,7 +412,7 @@ func main() {
 
 ### Step 2: Get access credentials for your workflow client
 
-To connect your workflow-as-code project, create an application in Conductor with the Metadata API role.
+To connect your workflow-as-code project, create an application in Conductor with the **Metadata API** role.
 
 **To create an application for your workflow client:**
 1. In the left navigation menu, go to **Access Control** > **Applications**.
@@ -420,16 +420,16 @@ To connect your workflow-as-code project, create an application in Conductor wit
 3. Enable the **Metadata API** application role, which allows the application to create and manage workflows and tasks.
 4. Select **+ Create access key** and store the generated credentials securely.
 5. Set the credentials in the workflow client file for your language:
-    * **Python** — `conductor-apps/python/quickstarts/create-your-first-workflow/workflow_as_code.py`  Note that `base_url` should not include `/api`.
-    * **Java** — `conductor-apps/java/quickstarts/create-your-first-workflow/src/main/java/io/orkes/conductor/examples/WorkflowAsCode.java`  Note that `basePath` should include `/api`.
+    * **Python** — Update the credentials in`conductor-apps/python/quickstarts/create-your-first-workflow/workflow_as_code.py`. Note that `base_url` should not include `/api`.
+    * **Java** — Update the credentials in `conductor-apps/java/quickstarts/create-your-first-workflow/src/main/java/io/orkes/conductor/examples/WorkflowAsCode.java`. Note that `basePath` should include `/api`.
     * **JavaScript** — Set as environment variables before running:
       ```shell
       export CONDUCTOR_SERVER_URL=https://your-cluster-url/api
       export CONDUCTOR_AUTH_KEY=<YOUR-KEY-ID>
       export CONDUCTOR_AUTH_SECRET=<YOUR-KEY-SECRET>
       ```
-    * **C#** — `conductor-apps/csharp/quickstarts/create-your-first-workflow/workflow_as_code.cs`  Note that `BasePath` should include `/api`.
-    * **Go** — `conductor-apps/go/quickstarts/create-your-first-workflow/workflow_as_code.go`  Note that `SERVER_URL` should include `/api`.
+    * **C#** — Update the credentials in `conductor-apps/csharp/quickstarts/create-your-first-workflow/workflow_as_code.cs`. Note that `BasePath` should include `/api`.
+    * **Go** — Update the credentials in `conductor-apps/go/quickstarts/create-your-first-workflow/workflow_as_code.go`. Note that `SERVER_URL` should include `/api`.
 6. Grant the application permission to the `helloWorld` workflow definition:
     1. Under **Permissions**, select **Add permission**.
     2. Select the **Workflow** tab and choose `helloWorld`.
@@ -466,37 +466,48 @@ Inside the workflow visual builder, go to the **Run** tab and select **Execute**
 
 Navigate to the project directory and run:
 
-**Python**
+<Tabs>
+<TabItem value="python" label="Python">
+
 ```shell
 cd conductor-apps/python/quickstarts/create-your-first-workflow
 pip3 install -r requirements.txt
 python3 workflow_as_code.py
 ```
 
-**Java**
+</TabItem>
+<TabItem value="java" label="Java">
+
 ```shell
 cd conductor-apps/java/quickstarts/create-your-first-workflow
 ./gradlew build && ./gradlew run
 ```
+</TabItem>
+<TabItem value="javascript" label="JavaScript">
 
-**JavaScript**
 ```shell
 cd conductor-apps/javascript/quickstarts/create-your-first-workflow
 npm install
 node workflow_as_code.js
 ```
 
-**C#**
+</TabItem>
+<TabItem value="csharp" label="C#">
+
 ```shell
 cd conductor-apps/csharp/quickstarts/create-your-first-workflow
 dotnet run
 ```
+</TabItem>
+<TabItem value="go" label="Go">
 
 **Go**
 ```shell
 cd conductor-apps/go/quickstarts/create-your-first-workflow
 go run workflow_as_code.go
 ```
+</TabItem>
+</Tabs>
 
 </TabItem>
 </Tabs>

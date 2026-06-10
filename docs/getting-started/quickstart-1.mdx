@@ -69,8 +69,12 @@ If you are using [Developer Edition](https://developer.orkescloud.com/?utm_campa
 4. Select **+ Create access key** and store the generated credentials securely.
 5. Set the credentials in the worker project file for your language:
 
-    **Python** — `conductor-apps/python/developer-guides/using-workers/main.py`  Note that `base_url` should not include `/api`.
-    ```python
+<Tabs>
+<TabItem value="python" label="Python">
+
+Update the following in `conductor-apps/python/developer-guides/using-workers/main.py`. Note that `base_url` should not include `/api`.
+ 
+```python
     configuration = Configuration(
         base_url='https://your-cluster-url',
         authentication_settings=AuthenticationSettings(
@@ -78,24 +82,37 @@ If you are using [Developer Edition](https://developer.orkescloud.com/?utm_campa
             key_secret='<YOUR-KEY-SECRET>'
         )
     )
-    ```
+```
+</TabItem>
 
-    **Java** — `conductor-apps/java/developer-guides/using-workers/src/main/java/io/orkes/conductor/examples/Main.java`  Note that `basePath` should include `/api`.
-    ```java
+<TabItem value="Java" label="Java">
+
+Update the following in `conductor-apps/java/developer-guides/using-workers/src/main/java/io/orkes/conductor/examples/Main.java`. Note that `basePath` should include `/api`.
+
+```java
     ApiClient client = ApiClient.builder()
         .basePath("https://your-cluster-url/api")
         .credentials("<YOUR-KEY-ID>", "<YOUR-KEY-SECRET>")
         .build();
-    ```
+```
 
-    **JavaScript** — Set as environment variables before running.
+</TabItem>
+
+<TabItem value="JavaScript" label="JavaScript">
+
+Set as environment variables before running.
+
     ```shell
     export CONDUCTOR_SERVER_URL=https://your-cluster-url/api
     export CONDUCTOR_AUTH_KEY=<YOUR-KEY-ID>
     export CONDUCTOR_AUTH_SECRET=<YOUR-KEY-SECRET>
     ```
+</TabItem>
 
-    **C#** — `conductor-apps/csharp/developer-guides/using-workers/Worker.cs`  Note that `BasePath` should include `/api`.
+<TabItem value="C#" label="C#">
+
+Update the following in `conductor-apps/csharp/developer-guides/using-workers/Worker.cs`. Note that `BasePath` should include `/api`.
+   
     ```csharp
     var conf = new Configuration
     {
@@ -103,13 +120,19 @@ If you are using [Developer Edition](https://developer.orkescloud.com/?utm_campa
         AuthenticationSettings = new OrkesAuthenticationSettings("<YOUR-KEY-ID>", "<YOUR-KEY-SECRET>")
     };
     ```
+</TabItem>
 
-    **Go** — `conductor-apps/go/developer-guides/using-workers/worker.go`  Note that `API_URL` should include `/api`.
+<TabItem value="Go" label="Go">
+
+Update the following in `conductor-apps/go/developer-guides/using-workers/worker.go`. Note that `API_URL` should include `/api`.
+   
     ```go
     const API_URL = "https://your-cluster-url/api"
     const KEY_ID = "<YOUR-KEY-ID>"
     const SECRET = "<YOUR-KEY-SECRET>"
     ```
+</TabItem>
+</Tabs>
 
 6. (Skip this step if you are using [Developer Edition](https://developer.orkescloud.com/?utm_campaign=quickstarts&utm_source=orkes-doc&utm_medium=web)) Grant Execute permission to the application:
     1. Under **Permissions**, select **Add permission**.
@@ -123,7 +146,9 @@ The application account can now execute the worker task.
 
 Using the command line, navigate to the downloaded project directory and launch the worker.
 
-**Python**
+<Tabs>
+<TabItem value="python" label="Python">
+
 ```shell
 cd conductor-apps/python/developer-guides/using-workers
 python3 -m venv venv
@@ -131,30 +156,37 @@ source venv/bin/activate
 pip3 install -r requirements.txt
 python3 main.py
 ```
+</TabItem>
+<TabItem value="Java" label="Java">
 
-**Java**
 ```shell
 cd conductor-apps/java/developer-guides/using-workers
 ./gradlew build && ./gradlew run
 ```
+</TabItem>
+<TabItem value="JavaScript" label="JavaScript">
 
-**JavaScript**
 ```shell
 cd conductor-apps/javascript/developer-guides/using-workers
 npm install
 node worker.js
 ```
 
-**C#**
+</TabItem>
+<TabItem value="C#" label="C#">
+
 ```shell
 cd conductor-apps/csharp/developer-guides/using-workers
 dotnet run
 ```
+</TabItem>
+<TabItem value="Go" label="Go">
 
-**Go**
 ```shell
 cd conductor-apps/go/developer-guides/using-workers
 go run worker.go
 ```
+</TabItem>
+</Tabs>
 
 When the worker starts successfully, you should see polling logs in the terminal. Later, when you run a workflow containing this worker, the task should run to completion. But first, let’s build a workflow using this task in Quickstart 2.
