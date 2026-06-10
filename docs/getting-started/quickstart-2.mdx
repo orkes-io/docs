@@ -114,7 +114,6 @@ git clone https://github.com/conductor-oss/conductor-apps.git
 * [JavaScript](https://github.com/conductor-oss/conductor-apps/tree/main/javascript/quickstarts/create-your-first-workflow) 
 * [C#](https://github.com/conductor-oss/conductor-apps/tree/main/csharp/quickstarts/create-your-first-workflow) 
 * [Go](https://github.com/conductor-oss/conductor-apps/tree/main/go/quickstarts/create-your-first-workflow) 
-* [Clojure](https://github.com/conductor-oss/conductor-apps/tree/main/clojure/quickstarts/create-your-first-workflow)
 
 <Tabs groupId="language">
 <TabItem value="python" label="Python">
@@ -413,51 +412,6 @@ func main() {
 
 </TabItem>
 
-<TabItem value="clojure" label="Clojure">
-
-This sample Clojure code demonstrates how to create, register, and execute a workflow in Conductor.
-
-``` clojure
-(ns wac.core
-  (:require [io.orkes.workflow-resource :as wr]
-            [io.orkes.sdk :as sdk]
-            [io.orkes.metadata :as metadata])
-  (:gen-class))
-
-; Set up an application in your Orkes Conductor cluster. Sign up for a Developer Edition account at https://developer.orkescloud.com.
-; - Set your cluster's API URL as url (e.g., "https://developer.orkescloud.com/api/" for Developer Edition).
-; - Use the application's Key ID and Secret here.
-(def options
-  {:url "_CHANGE_ME_"
-   :app-key "_CHANGE_ME_"
-   :app-secret "_CHANGE_ME_"}) 
-
-; Function that creates the tasks.
-(defn create-tasks
-  []
-  (vector (sdk/http-task "get-user_ref" {:uri "https://randomuser.me/api/"})
-          (sdk/switch-task "user-criteria_ref" "${get-user_ref.output.response.body.results[0].location.country}"
-                           {"United States" [(sdk/simple-task "simple_ref"
-                                                              "helloWorld"
-                                                              {"user"
-                                                               "${get-user_ref.output.response.body.results[0].name.first}"})]}
-                           [])))
-
-; Function that creates the workflow definition.
-(defn create-workflow
-  [tasks]
-  (merge (sdk/workflow "myFirstWorkflow" tasks)))
-
-(defn -main
-  []
-  ; Register the workflow with overwrite = true
-  (metadata/register-workflow-def options (-> (create-tasks) (create-workflow)) true)
-  ; Start the workflow
-  (let [workflow-id (wr/start-workflow options {:name "myFirstWorkflow" :version 1})]
-    (println "Started workflow:" workflow-id)))
-```
-
-</TabItem>
 </Tabs>
 
 ### Step 2: Get access credentials for your workflow client
