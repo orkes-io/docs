@@ -105,8 +105,8 @@ Code your Hello World workflow using Conductor SDKs.
 
 Create a project for your workflow client where you can define, register, and execute workflows programmatically. To get started quickly, download one of our sample workflow as code projects in your preferred language:
 
-``` shell
-gh repo clone conductor-oss/conductor-apps
+```
+git clone https://github.com/conductor-oss/conductor-apps.git
 ```
 
 * [Python](https://github.com/conductor-oss/conductor-apps/tree/main/python/quickstarts/create-your-first-workflow)
@@ -114,6 +114,7 @@ gh repo clone conductor-oss/conductor-apps
 * [JavaScript](https://github.com/conductor-oss/conductor-apps/tree/main/javascript/quickstarts/create-your-first-workflow) 
 * [C#](https://github.com/conductor-oss/conductor-apps/tree/main/csharp/quickstarts/create-your-first-workflow) 
 * [Go](https://github.com/conductor-oss/conductor-apps/tree/main/go/quickstarts/create-your-first-workflow) 
+* [Clojure](https://github.com/conductor-oss/conductor-apps/tree/main/clojure/quickstarts/create-your-first-workflow)
 
 <Tabs groupId="language">
 <TabItem value="python" label="Python">
@@ -145,7 +146,7 @@ def main():
     # Create the workflow definition.
     workflow = ConductorWorkflow(
         executor=executor,
-        name='helloWorld',
+        name='myFirstWorkflow',
         description='Workflow that greets a user. Uses a Switch task, HTTP task, and Simple task.',
         version=1
     )
@@ -153,7 +154,7 @@ def main():
     # Create the tasks.
     httpTask = HttpTask('get-user_ref', {'uri': 'https://randomuser.me/api/'})
     switchTask = SwitchTask('user-criteria_ref', '${get-user_ref.output.response.body.results[0].location.country}').switch_case(
-        'United States', SimpleTask('myTask', 'simple_ref').input(
+        'United States', SimpleTask('helloWorld', 'simple_ref').input(
             key='user', value='${get-user_ref.output.response.body.results[0].name.first}'))
 
     # Add the tasks to the workflow using `add` method or the `>>` operator.
@@ -166,7 +167,7 @@ def main():
 
     # Start the workflow.
     request = StartWorkflowRequest()
-    request.name = 'helloWorld'
+    request.name = 'myFirstWorkflow'
     request.version = 1
     id = executor.start_workflow(request)
     print(f"Started workflow {id}")
@@ -209,13 +210,13 @@ public class WorkflowAsCode {
 
         // Create the workflow definition.
         ConductorWorkflow<Object> workflow = new WorkflowBuilder<>(executor)
-                .name("helloWorld")
+                .name("myFirstWorkflow")
                 .version(1)
                 .description("Workflow that greets a user. Uses a Switch task, HTTP task, and Simple task.")
                 .add(new Http("get-user_ref").url("https://randomuser.me/api/"))
                 // This switch task will execute the "helloWorld" task if the user's country is "United States"
                 .add(new Switch("user-criteria_ref", "${get-user_ref.output.response.body.results[0].location.country}")
-                        .switchCase("United States", new SimpleTask("myTask", "simple_ref")
+                        .switchCase("United States", new SimpleTask("helloWorld", "simple_ref")
                                 .input("user", "${get-user_ref.output.response.body.results[0].name.first}")))
                 .build();
 
@@ -262,7 +263,7 @@ const executor = new WorkflowExecutor(client);
 
 // Create the workflow definition.
 const wf = {
-  name: "helloWorld",
+  name: "myFirstWorkflow",
   version: 1,
   description:
     "Workflow that greets a user. Uses a Switch task, HTTP task, and Simple task.",
@@ -273,7 +274,7 @@ const wf = {
       "${get-user_ref.output.response.body.results[0].location.country}",
       {
         "United States": [
-          simpleTask("simple_ref", "myTask", {
+          simpleTask("simple_ref", "helloWorld", {
             user: "${get-user_ref.output.response.body.results[0].name.first}",
           }),
         ],
@@ -320,13 +321,13 @@ var executor = new WorkflowExecutor(conf);
 
 // Create the workflow definition.
 var workflow = new ConductorWorkflow()
-        .WithName("helloWorld")
+        .WithName("myFirstWorkflow")
         .WithDescription("Workflow that greets a user. Uses a Switch task, HTTP task, and Simple task.")
         .WithVersion(1)
         .WithTask(new HttpTask("get-user_ref", new HttpTaskSettings { uri = "https://randomuser.me/api/" }))
         .WithTask(new SwitchTask("user-criteria_ref", "${get-user_ref.output.response.body.results[0].location.country}")
             .WithDecisionCase("United States",
-                [new SimpleTask("myTask", "simple_ref").WithInput("user", "${get-user_ref.output.response.body.results[0].name.first}")]));
+                [new SimpleTask("helloWorld", "simple_ref").WithInput("user", "${get-user_ref.output.response.body.results[0].name.first}")]));
 
 // Register the workflow with overwrite = true.
 executor.RegisterWorkflow(
@@ -411,6 +412,52 @@ func main() {
 ```
 
 </TabItem>
+
+<TabItem value="clojure" label="Clojure">
+
+This sample Clojure code demonstrates how to create, register, and execute a workflow in Conductor.
+
+``` clojure
+(ns wac.core
+  (:require [io.orkes.workflow-resource :as wr]
+            [io.orkes.sdk :as sdk]
+            [io.orkes.metadata :as metadata])
+  (:gen-class))
+
+; Set up an application in your Orkes Conductor cluster. Sign up for a Developer Edition account at https://developer.orkescloud.com.
+; - Set your cluster's API URL as url (e.g., "https://developer.orkescloud.com/api/" for Developer Edition).
+; - Use the application's Key ID and Secret here.
+(def options
+  {:url "_CHANGE_ME_"
+   :app-key "_CHANGE_ME_"
+   :app-secret "_CHANGE_ME_"}) 
+
+; Function that creates the tasks.
+(defn create-tasks
+  []
+  (vector (sdk/http-task "get-user_ref" {:uri "https://randomuser.me/api/"})
+          (sdk/switch-task "user-criteria_ref" "${get-user_ref.output.response.body.results[0].location.country}"
+                           {"United States" [(sdk/simple-task "simple_ref"
+                                                              "helloWorld"
+                                                              {"user"
+                                                               "${get-user_ref.output.response.body.results[0].name.first}"})]}
+                           [])))
+
+; Function that creates the workflow definition.
+(defn create-workflow
+  [tasks]
+  (merge (sdk/workflow "myFirstWorkflow" tasks)))
+
+(defn -main
+  []
+  ; Register the workflow with overwrite = true
+  (metadata/register-workflow-def options (-> (create-tasks) (create-workflow)) true)
+  ; Start the workflow
+  (let [workflow-id (wr/start-workflow options {:name "myFirstWorkflow" :version 1})]
+    (println "Started workflow:" workflow-id)))
+```
+
+</TabItem>
 </Tabs>
 
 ### Step 2: Get access credentials for your workflow client
@@ -422,16 +469,12 @@ To connect your workflow-as-code project, you must again use an application in C
 2. Select **+ Create application** and enter a **Name** for it. For example, *myWorkflowClient* or *myApp*.
 3. Enable the **Metadata API** application role, which allows the application to create and manage workflows and tasks.
 4. Select **+ Create access key** and store the generated credentials securely.
-5. Set the Server URL, Key ID, and Key Secret in your project.
-
-**Example** (Java)
-
-``` java
-ApiClient client = ApiClient.builder()
-        .basePath(“https://SERVER_URL/api”) // e.g., https://developer.orkescloud.com/api for Developer Edition
-        .credentials("_CHANGE_ME_", "_CHANGE_ME_")
-        .build();
-```
+5. Set the `base_url`, Key ID, and Key Secret in `workflow_as_code.py`, located at `conductor-apps/python/quickstarts/create-your-first-workflow/workflow_as_code.py`.
+6. Grant the application permission to the `helloWorld` workflow definition:
+    1. Under **Permissions**, select **Add permission**.
+    2. Select the **Workflow** tab and choose `helloWorld`.
+    3. Enable the **Read**, **Execute**, and **Update** toggles.
+    4. Select **Add Permissions**.
 
 The application account can now create, manage, and execute the workflow. 
 
@@ -463,11 +506,14 @@ Inside the workflow visual builder, go to the **Run** tab and select **Execute**
 
 Using the command line, launch the workflow client. The commands depend on your language and project configuration. You can follow the README instructions in the sample workflow-as-code project to register and run the workflow.
 
-**Example (Java)**
+**Example (Python)**
+
+Navigate to the project directory and run:
 
 ``` shell
-./gradlew build
-./gradlew run
+cd conductor-apps/python/quickstarts/create-your-first-workflow
+pip3 install -r requirements.txt
+python3 workflow_as_code.py
 ```
 
 </TabItem>
