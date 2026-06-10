@@ -13,7 +13,7 @@ import TabItem from '@theme/TabItem';
 In Conductor, workflow definitions are stored as JSON. These workflows can be created using a code-based approach or a UI-based approach:
 
 * **Workflow as code**: Using the Conductor SDKs, define and execute your workflow in your preferred language.
-* **Visual workflow editor**: Using the Conductor UI, define and execute your workflow visually.
+* **Visual workflow builder**: Using the Conductor UI, define and execute your workflow visually.
 
 In this quickstart, you will use your preferred option to:
 
@@ -87,13 +87,9 @@ Use the visual workflow builder in Conductor UI to create your *helloWorld* work
     }
     ```
 
-5. To register the workflow, select **Save** > **Confirm**.
+5. Select **Save** > **Confirm**.
 
-Your first workflow has been created!
-
-Note how the code above references _myTask_ - this tells the workflow to push tasks on a queue with that name.
-Your local worker is then constantly polling for work on that queue (pointed to via the worker's _taskDefName_ field).
-To learn more about how tasks are routed, see [Routing Tasks](https://orkes.io/content/developer-guides/task-to-domain).
+Your first workflow has been created! Note how the code above references `myTask` — this tells the workflow to push tasks onto a queue with that name. Your local worker is then constantly polling for work on that queue. To learn more about how tasks are routed, see [Routing Tasks](https://orkes.io/content/developer-guides/task-to-domain).
 
 </TabItem>
 
@@ -109,11 +105,11 @@ Create a project for your workflow client where you can define, register, and ex
 git clone https://github.com/conductor-oss/conductor-apps.git
 ```
 
-* [Python](https://github.com/conductor-oss/conductor-apps/tree/main/python/quickstarts/create-your-first-workflow)
-* [Java](https://github.com/conductor-oss/conductor-apps/tree/main/java/quickstarts/create-your-first-workflow) 
-* [JavaScript](https://github.com/conductor-oss/conductor-apps/tree/main/javascript/quickstarts/create-your-first-workflow) 
-* [C#](https://github.com/conductor-oss/conductor-apps/tree/main/csharp/quickstarts/create-your-first-workflow) 
-* [Go](https://github.com/conductor-oss/conductor-apps/tree/main/go/quickstarts/create-your-first-workflow) 
+* [Python](https://github.com/conductor-oss/awesome-conductor-apps/tree/main/python/quickstarts/create-your-first-workflow)
+* [Java](https://github.com/conductor-oss/awesome-conductor-apps/tree/main/java/quickstarts/create-your-first-workflow)
+* [JavaScript](https://github.com/conductor-oss/awesome-conductor-apps/tree/main/javascript/quickstarts/create-your-first-workflow)
+* [C#](https://github.com/conductor-oss/awesome-conductor-apps/tree/main/csharp/quickstarts/create-your-first-workflow)
+* [Go](https://github.com/conductor-oss/awesome-conductor-apps/tree/main/go/quickstarts/create-your-first-workflow)
 
 <Tabs groupId="language">
 <TabItem value="python" label="Python">
@@ -416,14 +412,24 @@ func main() {
 
 ### Step 2: Get access credentials for your workflow client
 
-To connect your workflow-as-code project, you must again use an application in Conductor, which is an access layer with its own permissions and access tokens. This time, the application should have the Metadata API role.
+To connect your workflow-as-code project, create an application in Conductor with the Metadata API role.
 
 **To create an application for your workflow client:**
-1. In the left navigation menu of the Conductor UI, go to **Access Control** > **Applications**.
+1. In the left navigation menu, go to **Access Control** > **Applications**.
 2. Select **+ Create application** and enter a **Name** for it. For example, *myWorkflowClient* or *myApp*.
 3. Enable the **Metadata API** application role, which allows the application to create and manage workflows and tasks.
 4. Select **+ Create access key** and store the generated credentials securely.
-5. Set the `base_url`, Key ID, and Key Secret in `workflow_as_code.py`, located at `conductor-apps/python/quickstarts/create-your-first-workflow/workflow_as_code.py`.
+5. Set the credentials in the workflow client file for your language:
+    * **Python** — `conductor-apps/python/quickstarts/create-your-first-workflow/workflow_as_code.py`  Note that `base_url` should not include `/api`.
+    * **Java** — `conductor-apps/java/quickstarts/create-your-first-workflow/src/main/java/io/orkes/conductor/examples/WorkflowAsCode.java`  Note that `basePath` should include `/api`.
+    * **JavaScript** — Set as environment variables before running:
+      ```shell
+      export CONDUCTOR_SERVER_URL=https://your-cluster-url/api
+      export CONDUCTOR_AUTH_KEY=<YOUR-KEY-ID>
+      export CONDUCTOR_AUTH_SECRET=<YOUR-KEY-SECRET>
+      ```
+    * **C#** — `conductor-apps/csharp/quickstarts/create-your-first-workflow/workflow_as_code.cs`  Note that `BasePath` should include `/api`.
+    * **Go** — `conductor-apps/go/quickstarts/create-your-first-workflow/workflow_as_code.go`  Note that `SERVER_URL` should include `/api`.
 6. Grant the application permission to the `helloWorld` workflow definition:
     1. Under **Permissions**, select **Add permission**.
     2. Select the **Workflow** tab and choose `helloWorld`.
@@ -458,16 +464,38 @@ Inside the workflow visual builder, go to the **Run** tab and select **Execute**
 
 <TabItem value="code" label="Workflow as code">
 
-Using the command line, launch the workflow client. The commands depend on your language and project configuration. You can follow the README instructions in the sample workflow-as-code project to register and run the workflow.
-
-**Example (Python)**
-
 Navigate to the project directory and run:
 
-``` shell
+**Python**
+```shell
 cd conductor-apps/python/quickstarts/create-your-first-workflow
 pip3 install -r requirements.txt
 python3 workflow_as_code.py
+```
+
+**Java**
+```shell
+cd conductor-apps/java/quickstarts/create-your-first-workflow
+./gradlew build && ./gradlew run
+```
+
+**JavaScript**
+```shell
+cd conductor-apps/javascript/quickstarts/create-your-first-workflow
+npm install
+node workflow_as_code.js
+```
+
+**C#**
+```shell
+cd conductor-apps/csharp/quickstarts/create-your-first-workflow
+dotnet run
+```
+
+**Go**
+```shell
+cd conductor-apps/go/quickstarts/create-your-first-workflow
+go run workflow_as_code.go
 ```
 
 </TabItem>

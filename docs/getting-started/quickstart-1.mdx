@@ -10,7 +10,7 @@ import TabItem from '@theme/TabItem';
 
 *Estimated time: 5min*
 
-As you will have learned in [Core Concepts](/core-concepts), the core units of every Conductor workflow are tasks and operators. All code is executed by workers - system tasks are serviced by internal Conductor workers (a.k.a. system tasks/workers), and any custom tasks must be serviced by workers of your own hosting.
+As you will have learned in [Core Concepts](/core-concepts), the core units of every Conductor workflow are tasks and operators. All code is executed by workers—system tasks are serviced by internal Conductor workers, and any custom tasks must be serviced by workers of your own hosting.
 <p align="center"><img src="/content/img/getting-started/getting_started-worker-diagram.jpg" alt="Diagram of system workers (i.e. inline tasks, http tasks) and customer workers." width="100%" height="auto"></img></p>
 
 Custom workers can be deployed anywhere: container, VM, or bare metal.
@@ -28,11 +28,11 @@ Begin by creating a task worker that polls the Conductor server for scheduled ta
 git clone https://github.com/conductor-oss/conductor-apps.git
 ```
 
-* [Python](https://github.com/conductor-oss/conductor-apps/tree/main/python/developer-guides/using-workers)
-* [Java](https://github.com/conductor-oss/conductor-apps/tree/main/java/developer-guides/using-workers) 
-* [JavaScript](https://github.com/conductor-oss/conductor-apps/tree/main/javascript/developer-guides/using-workers) 
-* [C#](https://github.com/conductor-oss/conductor-apps/tree/main/csharp/developer-guides/using-workers) 
-* [Go](https://github.com/conductor-oss/conductor-apps/tree/main/go/developer-guides/using-workers) 
+* [Python](https://github.com/conductor-oss/awesome-conductor-apps/tree/main/python/developer-guides/using-workers)
+* [Java](https://github.com/conductor-oss/awesome-conductor-apps/tree/main/java/developer-guides/using-workers)
+* [JavaScript](https://github.com/conductor-oss/awesome-conductor-apps/tree/main/javascript/developer-guides/using-workers)
+* [C#](https://github.com/conductor-oss/awesome-conductor-apps/tree/main/csharp/developer-guides/using-workers)
+* [Go](https://github.com/conductor-oss/awesome-conductor-apps/tree/main/go/developer-guides/using-workers)
 
 ## Integrate the worker with Conductor
 
@@ -46,7 +46,7 @@ To connect your task worker with the Conductor server, you must:
 **To register your worker:**
 
 1. Log in to your Conductor cluster or [Developer Edition](https://developer.orkescloud.com/?utm_campaign=quickstarts&utm_source=orkes-doc&utm_medium=web).
-1. In the left navigation menu of the Conductor UI, go to **Definitions** > **Task**.
+1. In the left navigation menu, go to **Definitions** > **Task**.
 2. Select **+ Define task**.
 3. Enter the **Name** for the task, which must match the task definition name in your worker code. This must be `myTask` if you are using the sample worker project downloaded in the previous step.
 4. Select **Save** > **Confirm Save**.
@@ -63,25 +63,57 @@ If you are using [Developer Edition](https://developer.orkescloud.com/?utm_campa
 
 **To create an application for your worker:**
 
-1. In the left navigation menu of the Conductor UI, go to **Access Control** > **Applications**.
+1. In the left navigation menu, go to **Access Control** > **Applications**.
 2. Select **+ Create application** and enter a **Name** for it. For example, *myApp *or* myWorkerApp*.
 3. Enable the **Worker** application role, which allows the application to poll and update tasks.
 4. Select **+ Create access key** and store the generated credentials securely.
-5. Set the `base_url`, Key ID, and Key Secret in `main.py`, located at `conductor-apps/python/developer-guides/using-workers/main.py`. Note that `base_url` should not include `/api`.
+5. Set the credentials in the worker project file for your language:
 
-    **Example** (Python)
+    **Python** — `conductor-apps/python/developer-guides/using-workers/main.py`  Note that `base_url` should not include `/api`.
     ```python
     configuration = Configuration(
-           base_url='https://your-cluster-url',
-           authentication_settings=AuthenticationSettings(
-               key_id='<YOUR-KEY-ID>',
-               key_secret='<YOUR-KEY-SECRET>'
-           )
-       )
+        base_url='https://your-cluster-url',
+        authentication_settings=AuthenticationSettings(
+            key_id='<YOUR-KEY-ID>',
+            key_secret='<YOUR-KEY-SECRET>'
+        )
+    )
     ```
-6. (Skip this step if you are using [Developer Edition](https://developer.orkescloud.com/?utm_campaign=quickstarts&utm_source=orkes-doc&utm_medium=web)) Grant Execute permission to the application.
+
+    **Java** — `conductor-apps/java/developer-guides/using-workers/src/main/java/io/orkes/conductor/examples/Main.java`  Note that `basePath` should include `/api`.
+    ```java
+    ApiClient client = ApiClient.builder()
+        .basePath("https://your-cluster-url/api")
+        .credentials("<YOUR-KEY-ID>", "<YOUR-KEY-SECRET>")
+        .build();
+    ```
+
+    **JavaScript** — Set as environment variables before running.
+    ```shell
+    export CONDUCTOR_SERVER_URL=https://your-cluster-url/api
+    export CONDUCTOR_AUTH_KEY=<YOUR-KEY-ID>
+    export CONDUCTOR_AUTH_SECRET=<YOUR-KEY-SECRET>
+    ```
+
+    **C#** — `conductor-apps/csharp/developer-guides/using-workers/Worker.cs`  Note that `BasePath` should include `/api`.
+    ```csharp
+    var conf = new Configuration
+    {
+        BasePath = "https://your-cluster-url/api",
+        AuthenticationSettings = new OrkesAuthenticationSettings("<YOUR-KEY-ID>", "<YOUR-KEY-SECRET>")
+    };
+    ```
+
+    **Go** — `conductor-apps/go/developer-guides/using-workers/worker.go`  Note that `API_URL` should include `/api`.
+    ```go
+    const API_URL = "https://your-cluster-url/api"
+    const KEY_ID = "<YOUR-KEY-ID>"
+    const SECRET = "<YOUR-KEY-SECRET>"
+    ```
+
+6. (Skip this step if you are using [Developer Edition](https://developer.orkescloud.com/?utm_campaign=quickstarts&utm_source=orkes-doc&utm_medium=web)) Grant Execute permission to the application:
     1. Under **Permissions**, select **Add permission**.
-    2. Select the **Task** tab and then your worker task `myTask`.
+    2. Select the **Task** tab and choose `myTask`.
     3. Enable the **Execute** toggle.
     4. Select **Add Permissions**.
 
@@ -89,16 +121,40 @@ The application account can now execute the worker task.
 
 ## Start the worker
 
-Using the command line, navigate to the downloaded project directory and launch the worker. You can follow the README in the sample project for language-specific instructions.
+Using the command line, navigate to the downloaded project directory and launch the worker.
 
-**Example** (Python)
-
-``` python
+**Python**
+```shell
 cd conductor-apps/python/developer-guides/using-workers
 python3 -m venv venv
 source venv/bin/activate
 pip3 install -r requirements.txt
 python3 main.py
+```
+
+**Java**
+```shell
+cd conductor-apps/java/developer-guides/using-workers
+./gradlew build && ./gradlew run
+```
+
+**JavaScript**
+```shell
+cd conductor-apps/javascript/developer-guides/using-workers
+npm install
+node worker.js
+```
+
+**C#**
+```shell
+cd conductor-apps/csharp/developer-guides/using-workers
+dotnet run
+```
+
+**Go**
+```shell
+cd conductor-apps/go/developer-guides/using-workers
+go run worker.go
 ```
 
 When the worker starts successfully, you should see polling logs in the terminal. Later, when you run a workflow containing this worker, the task should run to completion. But first, let’s build a workflow using this task in Quickstart 2.
