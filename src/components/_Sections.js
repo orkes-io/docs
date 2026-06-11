@@ -495,7 +495,7 @@ const conceptsData = [
   {
     title: "Error handling",
     description: "Configure retries, timeouts, and failure workflows to keep executions resilient.",
-    url: "/developer-guides/error-handling",
+    url: "/content/error-handling",
   },
 ];
 
