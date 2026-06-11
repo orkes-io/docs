@@ -102,7 +102,7 @@ Code your Hello World workflow using Conductor SDKs.
 Create a project for your workflow client where you can define, register, and execute workflows programmatically. To get started quickly, download one of our sample workflow as code projects in your preferred language:
 
 ```
-git clone https://github.com/conductor-oss/conductor-apps.git
+git clone https://github.com/conductor-oss/awesome-conductor-apps.git
 ```
 
 * [Python](https://github.com/conductor-oss/awesome-conductor-apps/tree/main/python/quickstarts/create-your-first-workflow)
@@ -236,32 +236,21 @@ This sample JavaScript code demonstrates how to create, register, and execute a 
 
 ``` javascript
 import {
-  orkesConductorClient,
+  OrkesClients,
   WorkflowExecutor,
   httpTask,
   simpleTask,
   switchTask,
 } from "@io-orkes/conductor-javascript";
 
-// Set up an application in your Orkes Conductor cluster. Sign up for a Developer Edition account at https://developer.orkescloud.com. 
-// - Set your cluster's API URL as the serverUrl (e.g., "https://developer.orkescloud.com/api" for Developer Edition).
-// - Use the application's Key ID and Secret here.
-const config = {
-  serverUrl: "_CHANGE_ME_",
-  keyId: "_CHANGE_ME_",
-  keySecret: "_CHANGE_ME_",
-};
+const clients = await OrkesClients.from();
+const executor = new WorkflowExecutor(clients.getClient());
 
-const client = await orkesConductorClient(config);
-// A WorkflowExecutor instance is used to register and execute workflows.
-const executor = new WorkflowExecutor(client);
-
-// Create the workflow definition.
 const wf = {
-  name: "myFirstWorkflow",
+  name: "helloWorld",
   version: 1,
   description:
-    "Workflow that greets a user. Uses a Switch task, HTTP task, and Simple task.",
+    "Hello World workflow that greets a user. Uses a Switch task, HTTP task, and Simple task.",
   tasks: [
     httpTask("get-user_ref", { uri: "https://randomuser.me/api/" }),
     switchTask(
@@ -269,8 +258,8 @@ const wf = {
       "${get-user_ref.output.response.body.results[0].location.country}",
       {
         "United States": [
-          simpleTask("simple_ref", "helloWorld", {
-            user: "${get-user_ref.output.response.body.results[0].name.first}",
+          simpleTask("myTask_ref", "myTask", {
+            name: "${get-user_ref.output.response.body.results[0].name.first}",
           }),
         ],
       }
@@ -278,14 +267,10 @@ const wf = {
   ],
 };
 
-// Register the workflow with overwrite = true.
 await executor.registerWorkflow(true, wf);
 
-// Start the workflow.
-const id = await executor.startWorkflow({name: wf.name, version: wf.version});
+const id = await executor.startWorkflow({ name: wf.name, version: wf.version });
 console.log(`Started workflow: ${id}`);
-client.stop()
-
 ```
 
 </TabItem>
@@ -420,17 +405,17 @@ To connect your workflow-as-code project, create an application in Conductor wit
 3. Enable the **Metadata API** application role, which allows the application to create and manage workflows and tasks.
 4. Select **+ Create access key** and store the generated credentials securely.
 5. Set the credentials in the workflow client file for your language:
-    * **Python** — Update the credentials in`conductor-apps/python/quickstarts/create-your-first-workflow/workflow_as_code.py`. Note that `base_url` should not include `/api`.
-    * **Java** — Update the credentials in `conductor-apps/java/quickstarts/create-your-first-workflow/src/main/java/io/orkes/conductor/examples/WorkflowAsCode.java`. Note that `basePath` should include `/api`.
+    * **Python** — Update the credentials in`awesome-conductor-apps/python/quickstarts/create-your-first-workflow/workflow_as_code.py`. Note that `base_url` should not include `/api`.
+    * **Java** — Update the credentials in `awesome-conductor-apps/java/quickstarts/create-your-first-workflow/src/main/java/io/orkes/conductor/examples/WorkflowAsCode.java`. Note that `basePath` should include `/api`.
     * **JavaScript** — Set as environment variables before running:
       ```shell
       export CONDUCTOR_SERVER_URL=https://your-cluster-url/api
       export CONDUCTOR_AUTH_KEY=<YOUR-KEY-ID>
       export CONDUCTOR_AUTH_SECRET=<YOUR-KEY-SECRET>
       ```
-    * **C#** — Update the credentials in `conductor-apps/csharp/quickstarts/create-your-first-workflow/workflow_as_code.cs`. Note that `BasePath` should include `/api`.
-    * **Go** — Update the credentials in `conductor-apps/go/quickstarts/create-your-first-workflow/workflow_as_code.go`. Note that `SERVER_URL` should include `/api`.
-6. Grant the application permission to the `helloWorld` workflow definition:
+    * **C#** — Update the credentials in `awesome-conductor-apps/csharp/quickstarts/create-your-first-workflow/workflow_as_code.cs`. Note that `BasePath` should include `/api`.
+    * **Go** — Update the credentials in `awesome-conductor-apps/go/quickstarts/create-your-first-workflow/workflow_as_code.go`. Note that `SERVER_URL` should include `/api`.
+6. (Skip this step if you are using [Developer Edition](https://developer.orkescloud.com/)) Grant the application permission to the `helloWorld` workflow definition:
     1. Under **Permissions**, select **Add permission**.
     2. Select the **Workflow** tab and choose `helloWorld`.
     3. Enable the **Read**, **Execute**, and **Update** toggles.
@@ -464,13 +449,13 @@ Inside the workflow visual builder, go to the **Run** tab and select **Execute**
 
 <TabItem value="code" label="Workflow as code">
 
-Navigate to the project directory and run:
+In a new terminal, navigate to the project directory and run:
 
 <Tabs>
 <TabItem value="python" label="Python">
 
 ```shell
-cd conductor-apps/python/quickstarts/create-your-first-workflow
+cd awesome-conductor-apps/python/quickstarts/create-your-first-workflow
 pip3 install -r requirements.txt
 python3 workflow_as_code.py
 ```
@@ -479,14 +464,19 @@ python3 workflow_as_code.py
 <TabItem value="java" label="Java">
 
 ```shell
-cd conductor-apps/java/quickstarts/create-your-first-workflow
+cd awesome-conductor-apps/java/quickstarts/create-your-first-workflow
 ./gradlew build && ./gradlew run
 ```
+
+:::info Note 
+If .`/gradlew` fails with a `GradleWrapperMain` error, use `gradle build && gradle run` instead.
+:::
+
 </TabItem>
 <TabItem value="javascript" label="JavaScript">
 
 ```shell
-cd conductor-apps/javascript/quickstarts/create-your-first-workflow
+cd awesome-conductor-apps/javascript/quickstarts/create-your-first-workflow
 npm install
 node workflow_as_code.js
 ```
@@ -495,15 +485,20 @@ node workflow_as_code.js
 <TabItem value="csharp" label="C#">
 
 ```shell
-cd conductor-apps/csharp/quickstarts/create-your-first-workflow
+cd awesome-conductor-apps/csharp/quickstarts/create-your-first-workflow
 dotnet run
 ```
+
+:::info note
+C# sample requires .NET 8.0 or above.
+:::
+
 </TabItem>
 <TabItem value="go" label="Go">
 
 **Go**
 ```shell
-cd conductor-apps/go/quickstarts/create-your-first-workflow
+cd awesome-conductor-apps/go/quickstarts/create-your-first-workflow
 go run workflow_as_code.go
 ```
 </TabItem>

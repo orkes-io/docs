@@ -25,7 +25,7 @@ In this quickstart, you will:
 Begin by creating a task worker that polls the Conductor server for scheduled tasks at regular intervals. To get started quickly,  download one of our sample `myTask` worker projects in your preferred language:
 
 ```
-git clone https://github.com/conductor-oss/conductor-apps.git
+git clone https://github.com/conductor-oss/awesome-conductor-apps.git
 ```
 
 * [Python](https://github.com/conductor-oss/awesome-conductor-apps/tree/main/python/quickstarts)
@@ -57,10 +57,6 @@ The task is now saved to the Conductor server, which facilitates the routing of 
 
 Your worker requires programmatic access to the Conductor server. This is done by creating an application in Conductor; an access layer with its own permissions and access tokens.
 
-:::note
-If you are using [Developer Edition](https://developer.orkescloud.com/?utm_campaign=quickstarts&utm_source=orkes-doc&utm_medium=web), you can only create one application with the Admin role enabled.
-:::
-
 **To create an application for your worker:**
 
 1. In the left navigation menu, go to **Access Control** > **Applications**.
@@ -72,7 +68,7 @@ If you are using [Developer Edition](https://developer.orkescloud.com/?utm_campa
 <Tabs>
 <TabItem value="python" label="Python">
 
-Update the following in `conductor-apps/python/developer-guides/using-workers/main.py`. Note that `base_url` should not include `/api`.
+Update the following in `awesome-conductor-apps/python/developer-guides/using-workers/main.py`. Note that `base_url` should not include `/api`.
  
 ```python
     configuration = Configuration(
@@ -87,7 +83,7 @@ Update the following in `conductor-apps/python/developer-guides/using-workers/ma
 
 <TabItem value="Java" label="Java">
 
-Update the following in `conductor-apps/java/developer-guides/using-workers/src/main/java/io/orkes/conductor/examples/Main.java`. Note that `basePath` should include `/api`.
+Update the following in `awesome-conductor-apps/java/developer-guides/using-workers/src/main/java/io/orkes/conductor/examples/Main.java`. Note that `basePath` should include `/api`.
 
 ```java
     ApiClient client = ApiClient.builder()
@@ -111,7 +107,7 @@ Set as environment variables before running.
 
 <TabItem value="C#" label="C#">
 
-Update the following in `conductor-apps/csharp/developer-guides/using-workers/Worker.cs`. Note that `BasePath` should include `/api`.
+Update the following in `awesome-conductor-apps/csharp/developer-guides/using-workers/Worker.cs`. Note that `BasePath` should include `/api`.
    
     ```csharp
     var conf = new Configuration
@@ -124,7 +120,7 @@ Update the following in `conductor-apps/csharp/developer-guides/using-workers/Wo
 
 <TabItem value="Go" label="Go">
 
-Update the following in `conductor-apps/go/developer-guides/using-workers/worker.go`. Note that `API_URL` should include `/api`.
+Update the following in `awesome-conductor-apps/go/developer-guides/using-workers/worker.go`. Note that `API_URL` should include `/api`.
    
     ```go
     const API_URL = "https://your-cluster-url/api"
@@ -150,7 +146,7 @@ Using the command line, navigate to the downloaded project directory and launch 
 <TabItem value="python" label="Python">
 
 ```shell
-cd conductor-apps/python/developer-guides/using-workers
+cd awesome-conductor-apps/python/developer-guides/using-workers
 python3 -m venv venv
 source venv/bin/activate
 pip3 install -r requirements.txt
@@ -160,14 +156,19 @@ python3 main.py
 <TabItem value="Java" label="Java">
 
 ```shell
-cd conductor-apps/java/developer-guides/using-workers
+cd awesome-conductor-apps/java/developer-guides/using-workers
 ./gradlew build && ./gradlew run
 ```
+
+:::info Note 
+If .`/gradlew` fails with a `GradleWrapperMain` error, use `gradle build && gradle run` instead.
+:::
+
 </TabItem>
 <TabItem value="JavaScript" label="JavaScript">
 
 ```shell
-cd conductor-apps/javascript/developer-guides/using-workers
+cd awesome-conductor-apps/javascript/developer-guides/using-workers
 npm install
 node worker.js
 ```
@@ -176,14 +177,19 @@ node worker.js
 <TabItem value="C#" label="C#">
 
 ```shell
-cd conductor-apps/csharp/developer-guides/using-workers
+cd awesome-conductor-apps/csharp/developer-guides/using-workers
 dotnet run
 ```
+
+:::info note
+C# sample requires .NET 8.0 or above.
+:::
+
 </TabItem>
 <TabItem value="Go" label="Go">
 
 ```shell
-cd conductor-apps/go/developer-guides/using-workers
+cd awesome-conductor-apps/go/developer-guides/using-workers
 go run worker.go
 ```
 </TabItem>
