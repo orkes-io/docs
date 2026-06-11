@@ -1,0 +1,50 @@
+---
+slug: "/developer-guides/agentspan"
+title: "Agentspan"
+description: "Agentspan documentation for building production AI agents."
+---
+
+# Agentspan
+**Agentspan is a durable runtime for AI agents. Your code runs in your process. Execution state lives on the server.**
+
+Agentspan is a durable runtime for AI agents. Execution state lives server-side, so crashes, restarts, and deployments do not lose work. Write agents natively or wrap an existing LangGraph, OpenAI Agents SDK, or Google ADK agent in one line.
+
+## Getting Started
+
+- [Why Agentspan](/developer-guides/agentspan/why-agentspan) - Why agents fail in production, and how Agentspan solves it.
+- [Quickstart](/developer-guides/agentspan/quickstart) - Build your first agent in 5 minutes.
+
+## Concepts
+
+- [Agents](/developer-guides/agentspan/concepts/agents) - The `Agent` class, parameters, results, and handles.
+- [Tools](/developer-guides/agentspan/concepts/tools) - `@tool`, `http_tool()`, `api_tool()`, `mcp_tool()`, credentials, and approval-required tools.
+- [Skills](/developer-guides/agentspan/concepts/skills) - Load, register, run, and test agentskills.io skill folders.
+- [Multi-Agent Strategies](/developer-guides/agentspan/concepts/multi-agent) - Sequential, parallel, handoff, router, and nested agent coordination.
+- [Guardrails](/developer-guides/agentspan/concepts/guardrails) - Input and output safety, retry, block, and fix behavior.
+- [Memory](/developer-guides/agentspan/concepts/memory) - Conversation history and semantic search across sessions.
+- [Streaming](/developer-guides/agentspan/concepts/streaming) - Runtime events, async execution, and HITL with streams.
+- [Testing](/developer-guides/agentspan/concepts/testing) - `mock_run`, `expect`, record/replay, pytest, and evaluation helpers.
+
+## Deployment
+
+- [Deployment overview](/developer-guides/agentspan/reference/deployment) - Local development, Docker, Helm, and Orkes Cloud.
+- [Self-hosting](/developer-guides/agentspan/reference/self-hosting) - Run Agentspan in your own environment.
+
+## Examples
+
+- [Support Ticket Triage](/developer-guides/agentspan/examples/support-triage) - Classify, route, and resolve support tickets.
+- [Research Pipeline](/developer-guides/agentspan/examples/research-pipeline) - Run sequential research, writing, and editing agents.
+- [Batch Document Processor](/developer-guides/agentspan/examples/document-processor) - Process multiple documents in parallel.
+- [Crash and Resume](/developer-guides/agentspan/examples/crash-resume) - Resume durable executions after worker failure.
+- [Human in the Loop](/developer-guides/agentspan/examples/human-in-the-loop) - Pause execution for human approval.
+- [LangGraph Code Review Bot](/developer-guides/agentspan/examples/langgraph) - Wrap an existing LangGraph app.
+- [OpenAI Agents SDK Customer Support](/developer-guides/agentspan/examples/openai-agents-sdk) - Run an OpenAI Agents SDK app through Agentspan.
+- [Google ADK Research Assistant](/developer-guides/agentspan/examples/google-adk) - Run a Google ADK agent through Agentspan.
+
+## Reference
+
+- [CLI Reference](/developer-guides/agentspan/reference/cli) - Commands with exact syntax.
+- [LLM Providers](/developer-guides/agentspan/reference/providers) - Providers, model strings, and API keys.
+- [AI Models](/developer-guides/agentspan/reference/ai-models) - Model configuration and supported provider formats.
+- [Integrations](/developer-guides/agentspan/reference/integrations) - Framework integrations and compatibility notes.
+- [Worker Types](/developer-guides/agentspan/reference/worker-types) - Python and TypeScript worker models.
