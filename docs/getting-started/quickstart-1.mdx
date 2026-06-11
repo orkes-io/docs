@@ -28,17 +28,17 @@ Begin by creating a task worker that polls the Conductor server for scheduled ta
 git clone https://github.com/conductor-oss/awesome-conductor-apps.git
 ```
 
-* [Python](https://github.com/conductor-oss/awesome-conductor-apps/tree/main/python/quickstarts)
-* [Java](https://github.com/conductor-oss/awesome-conductor-apps/tree/main/java/quickstarts)
-* [JavaScript](https://github.com/conductor-oss/awesome-conductor-apps/tree/main/javascript/quickstarts)
-* [C#](https://github.com/conductor-oss/awesome-conductor-apps/tree/main/csharp/quickstarts)
-* [Go](https://github.com/conductor-oss/awesome-conductor-apps/tree/main/go/quickstarts)
+* [Python](https://github.com/conductor-oss/awesome-conductor-apps/blob/main/python/developer-guides/using-workers)
+* [Java](https://github.com/conductor-oss/awesome-conductor-apps/tree/main/java/developer-guides/using-workers)
+* [JavaScript](https://github.com/conductor-oss/awesome-conductor-apps/tree/main/javascript/developer-guides/using-workers)
+* [C#](https://github.com/conductor-oss/awesome-conductor-apps/tree/main/csharp/developer-guides/using-workers)
+* [Go](https://github.com/conductor-oss/awesome-conductor-apps/tree/main/go/developer-guides/using-workers)
 
 ## Integrate the worker with Conductor
 
 To connect your task worker with the Conductor server, you must:
 
-1. Register your worker by creating a task definition
+1. Register your worker by creating a task definition in Conductor
 2. Create a worker application and grant it Execute permission
 
 ### Register worker
@@ -63,7 +63,12 @@ Your worker requires programmatic access to the Conductor server. This is done b
 2. Select **+ Create application** and enter a **Name** for it. For example, *myApp *or* myWorkerApp*.
 3. Enable the **Worker** application role, which allows the application to poll and update tasks.
 4. Select **+ Create access key** and store the generated credentials securely.
-5. Set the credentials in the worker project file for your language:
+5. (Skip this step if you are using [Developer Edition](https://developer.orkescloud.com/?utm_campaign=quickstarts&utm_source=orkes-doc&utm_medium=web)) Grant Execute permission to the application:
+    1. Under **Permissions**, select **Add permission**.
+    2. Select the **Task** tab and choose `myTask`.
+    3. Enable the **Execute** toggle.
+    4. Select **Add Permissions**.
+6. Now, go back to your worker project and set the credentials in the worker project file for your language:
 
 <Tabs>
 <TabItem value="python" label="Python">
@@ -129,12 +134,6 @@ Update the following in `awesome-conductor-apps/go/developer-guides/using-worker
     ```
 </TabItem>
 </Tabs>
-
-6. (Skip this step if you are using [Developer Edition](https://developer.orkescloud.com/?utm_campaign=quickstarts&utm_source=orkes-doc&utm_medium=web)) Grant Execute permission to the application:
-    1. Under **Permissions**, select **Add permission**.
-    2. Select the **Task** tab and choose `myTask`.
-    3. Enable the **Execute** toggle.
-    4. Select **Add Permissions**.
 
 The application account can now execute the worker task. 
 

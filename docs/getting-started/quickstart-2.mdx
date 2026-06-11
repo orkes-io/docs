@@ -99,7 +99,7 @@ Code your Hello World workflow using Conductor SDKs.
 
 ### Step 1: Create your workflow in code
 
-Create a project for your workflow client where you can define, register, and execute workflows programmatically. To get started quickly, download one of our sample workflow as code projects in your preferred language:
+Create a project for your workflow client where you can define, register, and execute workflows programmatically. To get started quickly, download one of our sample workflow as code projects in your preferred language. If you already cloned the repository in Quickstart 1, skip this step.
 
 ```
 git clone https://github.com/conductor-oss/awesome-conductor-apps.git
@@ -404,7 +404,12 @@ To connect your workflow-as-code project, create an application in Conductor wit
 2. Select **+ Create application** and enter a **Name** for it. For example, *myWorkflowClient* or *myApp*.
 3. Enable the **Metadata API** application role, which allows the application to create and manage workflows and tasks.
 4. Select **+ Create access key** and store the generated credentials securely.
-5. Set the credentials in the workflow client file for your language:
+5. (Skip this step if you are using [Developer Edition](https://developer.orkescloud.com/)) Grant the application permission to the `helloWorld` workflow definition:
+    1. Under **Permissions**, select **Add permission**.
+    2. Select the **Workflow** tab and choose `helloWorld`.
+    3. Enable the **Read**, **Execute**, and **Update** toggles.
+    4. Select **Add Permissions**.
+6. Now go back to your project, and set the credentials in the workflow client file for your language:
     * **Python** — Update the credentials in`awesome-conductor-apps/python/quickstarts/create-your-first-workflow/workflow_as_code.py`. Note that `base_url` should not include `/api`.
     * **Java** — Update the credentials in `awesome-conductor-apps/java/quickstarts/create-your-first-workflow/src/main/java/io/orkes/conductor/examples/WorkflowAsCode.java`. Note that `basePath` should include `/api`.
     * **JavaScript** — Set as environment variables before running:
@@ -415,11 +420,6 @@ To connect your workflow-as-code project, create an application in Conductor wit
       ```
     * **C#** — Update the credentials in `awesome-conductor-apps/csharp/quickstarts/create-your-first-workflow/workflow_as_code.cs`. Note that `BasePath` should include `/api`.
     * **Go** — Update the credentials in `awesome-conductor-apps/go/quickstarts/create-your-first-workflow/workflow_as_code.go`. Note that `SERVER_URL` should include `/api`.
-6. (Skip this step if you are using [Developer Edition](https://developer.orkescloud.com/)) Grant the application permission to the `helloWorld` workflow definition:
-    1. Under **Permissions**, select **Add permission**.
-    2. Select the **Workflow** tab and choose `helloWorld`.
-    3. Enable the **Read**, **Execute**, and **Update** toggles.
-    4. Select **Add Permissions**.
 
 The application account can now create, manage, and execute the workflow. 
 
@@ -432,10 +432,6 @@ Let’s give your first workflow a test run.
 
 :::tip
 Before running the workflow, make sure that your *myTask* worker is actively polling the Conductor server. Otherwise, go back and [start your worker](write-workers#start-the-worker) again.
-:::
-
-:::caution Third-party API dependency
-This workflow fetches data from `randomuser.me`, a public API that can occasionally return empty results. If the Switch task receives an empty response, `switchCaseValue` resolves to undefined and the workflow always routes to `defaultCase`—meaning `myTask` never executes. If your workflow completes without running `myTask`, retry the execution and check the HTTP task's output in the execution details to confirm the API returned a valid result.
 :::
 
 <Tabs groupId="workflow-method">
