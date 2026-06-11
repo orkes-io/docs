@@ -490,7 +490,7 @@ const conceptsData = [
   {
     title: "Access control",
     description: "Control who can view, execute, or modify workflows and tasks using role-based permissions.",
-    url: "/access-control-and-security",
+    url: "/content/category/access-control-and-security",
   },
   {
     title: "Error handling",
