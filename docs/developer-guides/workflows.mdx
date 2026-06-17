@@ -13,7 +13,7 @@ A workflow defines how tasks run, in what order, and under which conditions. Con
 
 In Conductor, all workflows are stored and executed as JSON workflow definitions. You can create a workflow using any of the following methods:
 
-1. **Code**: Using Conductor SDKs, define the workflow in any programming language (Python, Java, JavaScript, C#, Go) and register it with the Conductor server. Once registered, Conductor generates and saves the JSON workflow definition. Learn more in [Write Workflows as Code](/content/developer-guides/write-workflows-using-code).
+1. **Code**: Using Conductor SDKs, define the workflow in your preferred programming language (Python, Java, JavaScript, C#, Go) and register it with the Conductor server. Once registered, Conductor generates and saves the JSON workflow definition. Learn more in [Write Workflows as Code](/content/developer-guides/write-workflows-using-code).
 2. **API**: Write the workflow in JSON and register it to the Conductor server using the [`/api/metadata/workflow`](/reference-docs/api/metadata/creating-workflow-definition) endpoint.
 3. **Conductor UI**: Using the Conductor UI, you can design workflows in two ways:
     - [**Visual workflow builder**](/content/developer-guides/build-workflows-using-ui#create-workflows-using-visual-workflow-builder): Define your workflow visually, which is formatted as JSON under the hood.
@@ -22,15 +22,15 @@ In Conductor, all workflows are stored and executed as JSON workflow definitions
 
 ### Static vs dynamic workflows
 
-You can create workflows statically (ahead of time) or dynamically (at runtime). Dynamic workflows are created using the workflow-as-code approach, allowing you to write your workflow and task workers in your preferred language and execute them immediately. This is useful when you can't define workflows ahead of time because the number of tasks and flow control depend on real-time factors. Learn more in [Write Workflows as Code](write-workflows-using-code).
+You can create workflows statically (ahead of time) or dynamically (at runtime). Dynamic workflows are created using the workflow-as-code approach, allowing you to write your workflow and task workers in your preferred language and execute them immediately. This is useful when you can't define workflows ahead of time because the number of tasks and execution flow depend on real-time factors. Learn more in [Write Workflows as Code](write-workflows-using-code).
 
 ### AI-powered and agentic workflows
 
-Agentic workflows use AI-driven decision-making to determine which tasks to execute and when. Task execution can adapt dynamically with minimal human intervention while still allowing oversight when required.
+Agentic workflows use AI-driven decision-making to determine which tasks to execute and when. Workflows adapt dynamically with minimal human intervention, while still supporting human oversight when needed.
 
 Conductor’s AI orchestration capabilities let you build agentic workflows that are auditable, scalable, and safe to operate in production environments. Learn more in [AI Orchestration and Agentic Workflows](/content/ai-orchestration). 
 
-### Human in the loop
+### Human-in-the-loop
 
 Human-in-the-loop workflows include tasks that require manual input, review, or approval. These workflows combine automated steps with human decision points, making them suitable for approval flows, exception handling, and review-based processes. Learn more in [Human Task Orchestration](/content/developer-guides/orchestrating-human-tasks).
 
@@ -64,14 +64,14 @@ Here are the workflow configuration parameters:
 | enforceSchema                 | Whether to enforce input schema validation. Set to `true` to enable validation. <br/><br/> Learn more about using schemas in [Schema Validation](schema-validation).                                | Optional.                       |
 | inputSchema                   | Name and type of the input schema to be associated with the workflow.                                  | Required if `enforceSchema` is set to true.          |
 | outputSchema                  | Name and type of the output schema to be associated with the workflow.                                 | Required if `enforceSchema` is set to true.          |
-| restartable                   | Whether the workflow can be restarted after completion. The default value is true. <br/><br/> Set to false if restarting a completed workflow causes side effects.                            | Optional.                       |
+| restartable                   | Whether the workflow can be restarted after completion. The default value is true. <br/><br/> Set to false if restarting a completed workflow could cause side effects.                            | Optional.                       |
 | workflowStatusListenerEnabled | Whether to enable status callback for workflow state changes. The default value is false. <br/><br/> Learn more in [Enabling CDC](enabling-cdc-on-conductor-workflows).                            | Optional.                       |
 | workflowStatusListenerSink    | The message broker sink where workflow state changes are sent.                                 | Required if `workflowStatusListenerEnabled` is set to true. |
 | ownerEmail                    | The email address of the workflow creator.                                          | Required.                       |
 | timeoutPolicy                 | The workflow timeout policy. <br/><br/> Learn more about workflow timeouts in [Handling Failures](/content/error-handling#workflow-timeouts).                                                                             | Required.                       |
 | timeoutSeconds                | The timeout duration in seconds.<br/><br/>Learn more about workflow timeouts in [Handling Failures](/content/error-handling#workflow-timeouts).                                                | Required.                       |
 | failureWorkflow               | The compensation workflow to trigger upon failure of the current workflow execution. Useful for cleanup, notifications, or post actions. <br/><br/> Learn more about compensation workflows in [Handling Failures](/content/error-handling#workflow-compensation-flows).                                                                          | Optional.                       |
-| rateLimitConfig               | A map of the workflow rate limit configuration. <br/><br/> Learn more about workflow rate limits in [Workflow rate limits](/content/rate-limits#workflow-rate-limits).                                         | Optional.                       |
+| rateLimitConfig               | A map of the workflow rate limit configuration, that limits the number of workflow executions at any given time. <br/><br/> Learn more about workflow rate limits in [Workflow rate limits](/content/rate-limits#workflow-rate-limits).                                         | Optional.                       |
 | rateLimitConfig. **rateLimitKey**             | A unique identifier to group workflow executions for rate limiting.                                                                                                         | Optional.                       |
 | rateLimitConfig. **concurrentExecLimit**      | The number of workflow executions that can run concurrently for a given key.                                                                           | Optional.                       |
 | maskedFields                  | An array of fields to be masked in the workflow execution.<br/>Learn more about masking fields in [Masking Parameters](/content/developer-guides/masking-parameters).| Optional. | 
@@ -106,7 +106,7 @@ Here is an example workflow definition JSON:
 }
 ```
 
-Get started by choosing how you want to build workflows, using code, API,  the Conductor UI, or by converting existing BPMN definitions.
+Get started by choosing how you want to build workflows–using code, API, the Conductor UI, or by converting existing BPMN definitions.
 
 ```mdx-code-block
 import DocCardList from '@theme/DocCardList';
