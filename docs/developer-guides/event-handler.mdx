@@ -16,7 +16,7 @@ Event handlers in Orkes Conductor listen for messages from message brokers and t
 - Fail a task
 - Start a new workflow
 
-## Configuring event handlers
+## Creating an event handler
 
 :::info Prerequisites
 Before configuring an event handler, ensure the following:
@@ -62,7 +62,7 @@ Before configuring an event handler, ensure the following:
 }
 ```
 
-### Configuring conditions to filter events
+### Filter events with conditions
 
 Use ECMAScript expressions to filter events based on their payload. Use `${$}` to reference the entire payload.
 
@@ -89,7 +89,7 @@ The following expressions can be used in **condition** with the indicated result
 | $.version > 10 | false | 
 | $.metadata.length == 300 | true | 
 
-### Referencing payload fields
+### Reference payload fields
 
 The variable substitution syntax `${fieldName}` lets you pass values from the incoming message payload into your action parameters. Fields are referenced by their key name; nested fields use dot notation.
 
@@ -121,7 +121,7 @@ The same fields are accessible in the `condition` expression using `$.fieldName`
 
 Actions are executed only after the `condition` evaluates to `true`. Multiple actions can be triggered based on the events received. Below are the actions and their configuration details. 
 
-### Complete Task​
+### Complete Task
 
 Mark a task as complete using one of the following methods:
 
@@ -192,7 +192,7 @@ Mark a task as complete using one of the following methods:
 | actions. complete_task. **taskId** | The task execution ID of the task to be marked as completed. | Required if using `taskId`method. |
 | actions. complete_task. **output** | The output data to be sent along with the completion. Can be string, number, boolean, null, or object/array. | Optional. | 
 
-### Terminate Workflow​
+### Terminate Workflow
 
 Terminates a running workflow.
 
@@ -226,7 +226,7 @@ Terminates a running workflow.
 | actions. terminate_workflow. **workflowId** | The execution ID of the workflow to be terminated. | Required. | 
 | actions. terminate_workflow. **terminationReason** |The reason for termination. | Required. | 
 
-### Update Variables​
+### Update Variables
 
 Updates variables in a running workflow. Useful for controlling inputs in a long-running workflow.
 
@@ -263,7 +263,7 @@ Updates variables in a running workflow. Useful for controlling inputs in a long
 | actions. update_workflow_variables. **appendArray** | If set to `true`, all list (array) variables in the workflow are appended with new values instead of being replaced. This can be used to collect data from a series of events into a single workflow. | Optional. | 
 | actions. update_workflow_variables. **variables** | The variables to be updated in the workflow. Can be string, number, boolean, null, or object/array. | Required.| 
 
-### Fail Task​
+### Fail Task
 
 Marks a task as failed using one of the following methods:
 
