@@ -57,6 +57,21 @@ Or
 
 The function should return a boolean value. To dynamically reference other input parameters in the script, it is recommended to use bracket notation (for example, `$.do_while_ref['iteration']`).
 
+### Console logging
+
+You can use `console.log`, `console.info`, and `console.error` inside the `loopCondition` script for debugging. The console bridge accepts a single string argument; use string concatenation to include variable values. 
+
+**For example:**
+
+```java
+(function () {
+  console.log('Iteration: ' + $.iteration + ', limit: ' + $.number);
+  return $.iteration < $.number;
+})();
+```
+
+The output appears in the task's execution logs. [See example](#examples).
+
 ### Referencing task outputs in a Do While task
 
 A Do While task uses two distinct syntaxes depending on context. `inputParameters` values use standard Conductor notation (`${...}`), while `loopCondition` expressions use JavaScript variable binding (`$.`).
@@ -568,5 +583,70 @@ In each iteration, the HTTP task receives a different value for `someInput` (a, 
   "iteration": 3
 }
 ```
+
+</details>
+
+<details>
+<summary>Using console logging in a Do While loop condition</summary>
+
+This example builds a workflow that runs an HTTP task a fixed number of times and logs the iteration count and limit at each step.
+
+**To create a workflow:**
+
+1. Go to **Definitions** > **Workflow**, from the left navigation menu on your Conductor cluster.
+2. Select **+ Define workflow**.
+3. In the **Code** tab, paste the following workflow definition:
+
+```json
+{
+  "name": "Do_While_Console_Log_Demo",
+  "description": "Demonstrates console logging in a Do While loop condition",
+  "version": 1,
+  "tasks": [
+    {
+      "name": "do_while",
+      "taskReferenceName": "do_while_ref",
+      "inputParameters": {
+        "number": "${workflow.input.qty}",
+        "iteration": "${do_while_ref.output.iteration}"
+      },
+      "type": "DO_WHILE",
+      "loopCondition": "(function () { console.log('Iteration: ' + $.iteration + ', limit: ' + $.number); return $.iteration < $.number; })();",
+      "loopOver": [
+        {
+          "name": "http",
+          "taskReferenceName": "http_ref",
+          "inputParameters": {
+            "uri": "https://orkes-api-tester.orkesconductor.com/api",
+            "method": "GET",
+            "accept": "application/json",
+            "contentType": "application/json",
+            "encode": true
+          },
+          "type": "HTTP"
+        }
+      ],
+      "evaluatorType": "graaljs"
+    }
+  ],
+  "inputParameters": ["qty"],
+  "schemaVersion": 2
+}
+```
+
+4. Select **Save** > **Confirm**.
+5. Go to the **Run** tab and enter the input:
+
+```json
+{
+  "qty": 3
+}
+```
+
+6. Select **Execute**.
+
+Once completed, open the Do While task and check the **Logs** tab to see the `console.log` output for each iteration.
+
+<p><img src="/content/img/do-while-console-log-example.png" alt="Workflow output"/></p>
 
 </details>
