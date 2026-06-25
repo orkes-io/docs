@@ -37,7 +37,10 @@ To integrate Azure Storage with Orkes Conductor, you need the Azure Storage conn
 2. From the left navigation pane, select **Storage accounts**.
 3. Select a storage account or create a new one.
 4. Open your storage account and navigate to **Security + networking** > **Access keys** from the left navigation menu.
-5. Select **Show**, then copy the **Connection string** for key1 or key2.
+5. Select **Show**, then copy the **Connection string** for *key1* or *key2*.
+
+<p align="center"><img src="/content/img/connection-string-azure-portal.png" alt="Retrieving connection string from Azure portal." width="100%" height="auto"></img></p>
+
 6. Store the connection string securely.
 
 ## Step 2: Add an integration for Azure Storage
@@ -54,7 +57,7 @@ After obtaining the credentials, add an Azure Storage integration to your Conduc
 | Parameter | Description | Required/Optional |
 | --------- | ----------- | ----------------- |
 | Integration name | A name for the integration. | Required. |
-| Connection String | The connection string copied from the Azure portal in [Step 1]. | Required. |
+| Connection String | The connection string copied from the Azure portal in [Step 1](/content/integrations/azure-storage#step-1-get-the-azure-portal-credentials). | Required. |
 | Description | A description of the integration. | Required. |
 
 <p align="center"><img src="/content/img/azure-storage-integration.png" alt="Azure Storage Integration with Orkes Conductor" width="60%" height="auto"></img></p>
