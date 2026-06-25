@@ -42,9 +42,9 @@ Creates a new Lambda function from a base64-encoded ZIP package.
 | --------- | ----------- | ---- | ----------------- |
 | Function Name | Name of the Lambda function to create. | string | Required. |
 | Runtime | Runtime environment. For example, `python3.12`, `nodejs20.x`, `java21`. | string | Required. |
-| Role | ARN of the IAM role that Lambda assumes during execution.<br/>To create one: Go to **IAM** > **Roles** > **Create role**. Select **AWS service**, choose **Lambda**, and click **Next**. Search for and attach **AWSLambdaBasicExecutionRole**, then click **Next**. Enter a role name, for example `lambda-execution-role`, and click **Create role**. Open the created role and copy the ARN. For example: `arn:aws:iam::1234567890:role/lambda-execution-role`. | string | Required. |
-| Handler | Function entry point.<br/>For example, `index.lambda_handler` for Python, `index.handler` for Node.js, or `com.example.Handler::handleRequest` for Java. | string | Required. |
-| Zip File Base 64 | Function code as a base64-encoded ZIP file.<br/>Create a ZIP of your code, then run `base64 -i function.zip | tr -d '\n'` (Mac/Linux) or `[Convert]::ToBase64String([IO.File]::ReadAllBytes("function.zip"))` (Windows PowerShell) to get the encoded string. | string | Required. |
+| Role | ARN of the IAM role that Lambda assumes during execution.<br/><br/>**To create one**:<ol><li>Go to **IAM** > **Roles** > **Create role**.</li><li>Select **AWS service**, choose **Lambda**, and click **Next**.</li><li>Search for and attach **AWSLambdaBasicExecutionRole**, then click **Next**.</li><li>Enter a role name, for example `lambda-execution-role`, and click **Create role**.</li><li>Open the created role and copy the ARN. For example: `arn:aws:iam::1234567890:role/lambda-execution-role`.</li></ol> | string | Required. |
+| Handler | Function entry point.<br/><br/>For example, `index.lambda_handler` for Python, `index.handler` for Node.js, or `com.example.Handler::handleRequest` for Java. | string | Required. |
+| Zip File Base 64 | Function code as a base64-encoded ZIP file.<br/><br/> Create a ZIP of your code, then run `base64 -i function.zip \| tr -d '\n'` (Mac/Linux) or `[Convert]::ToBase64String([IO.File]::ReadAllBytes("function.zip"))` (Windows PowerShell) to get the encoded string.| string | Required. |
 | Description | A description of the function's purpose. | string | Optional. |
 | Memory Size | Memory allocated in MB (128–10240). Defaults to 128. | integer | Optional. |
 | Timeout | Maximum execution time in seconds (1–900). Defaults to 3. | integer | Optional. |
@@ -111,7 +111,7 @@ Invokes a Lambda function synchronously or asynchronously with a JSON payload.
 | --------- | ----------- | ---- | ----------------- |
 | Function Name | Name of the Lambda function to invoke. | string | Required. |
 | Payload | Input payload as a JSON string. For example, `{"message": "Hello from Lambda!"}`. | string | Required. |
-| Invocation Type | The invocation type for the request. Supported values: `RequestResponse` for synchronous (waits for response), `Event` for asynchronous (returns immediately). Defaults to `RequestResponse`. | string | Optional. |
+| Invocation Type | The invocation type for the request. Supported values:<ul><li>`RequestResponse` for synchronous (waits for response)</li><li>`Event` for asynchronous (returns immediately)</li></ul> Defaults to `RequestResponse`. | string | Optional. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
