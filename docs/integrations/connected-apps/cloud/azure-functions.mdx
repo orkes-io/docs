@@ -35,10 +35,10 @@ To integrate Azure Functions with Orkes Conductor, you need a Subscription ID, T
 1. Log in to the [Azure portal](https://portal.azure.com) and navigate to **Microsoft Entra ID**.
 2. Go to **Manage** > **App registrations** > **+ New registration**.
 3. Give your application a name and select **Register**.
-4. Copy the **Application (client) ID**, which is your Client ID.
-5. Copy the **Directory (tenant) ID**, which is your Tenant ID.
+4. Copy the **_Application (client) ID_**, which is your **Client ID**.
+5. Copy the **_Directory (tenant) ID_**, which is your **Tenant ID**.
 6. Within the application, go to **Certificates & secrets** > **+ New client secret**.
-7. Add a description, set an expiration, select **Add**, and copy the secret value immediately, as it won't be shown again. This is your Client Secret.
+7. Add a description, set an expiration, select **Add**, and copy the secret value immediately, as it won't be shown again. This is your **Client Secret**.
 8. Go to your **Subscription** > select your subscription > **Access control (IAM)** > **+ Add** > **Add role assignment**.
 9. Assign the **Reader** role (minimum) or **Contributor** role (recommended) to the application you just registered. This grants the application, referred to as a Service Principal in Azure, permission to access your Azure resources.
 10. Go to **Subscriptions** and copy your **Subscription ID**.
@@ -57,10 +57,10 @@ After obtaining the credentials, add an Azure Functions integration to your Cond
 | Parameter | Description | Required/Optional |
 | --------- | ----------- | ----------------- |
 | Integration name | A name for the integration. | Required. |
-| Subscription ID | The subscription ID retrieved from the Azure portal in [Step 1]. | Required. |
-| Tenant ID | The tenant ID retrieved from the Azure portal in [Step 1]. | Required. |
-| Client ID | The client ID retrieved from the Azure portal in [Step 1]. | Required. |
-| Client Secret | The client secret retrieved from the Azure portal in [Step 1]. | Required. |
+| Subscription ID | The subscription ID retrieved from the Azure portal in [Step 1](/content/integrations/azure-functions#step-1-get-the-azure-portal-credentials). | Required. |
+| Tenant ID | The tenant ID retrieved from the Azure portal in [Step 1](/content/integrations/azure-functions#step-1-get-the-azure-portal-credentials). | Required. |
+| Client ID | The client ID retrieved from the Azure portal in [Step 1](/content/integrations/azure-functions#step-1-get-the-azure-portal-credentials). | Required. |
+| Client Secret | The client secret retrieved from the Azure portal in [Step 1](/content/integrations/azure-functions#step-1-get-the-azure-portal-credentials). | Required. |
 | Default Resource Group | The default resource group to use. | Optional. |
 | Description | A description of the integration. | Required. |
 
