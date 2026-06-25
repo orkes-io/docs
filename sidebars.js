@@ -887,6 +887,54 @@ const sidebars = {
                                 },
                             ],
                         },
+                        {
+                            type: 'category',
+                            label: 'Database',
+                            link: {
+                                type: 'generated-index',
+                                title: 'Database',
+                                slug: '/category/integrations/database',
+                                description: 'Learn how to connect Database platforms to manage and automate databases through workflows.',
+                            },
+                            items: [
+                                {
+                                    type: 'category',
+                                    label: 'MySQL',
+                                    link: { type: 'doc', id: 'integrations/connected-apps/database/mysql' },
+                                    items: [
+                                        {
+                                            type: 'doc',
+                                            id: 'integrations/connected-apps/database/mysql-operations',
+                                            label: 'MySQL Operations Reference',
+                                        },
+                                    ],
+                                },
+                                {
+                                    type: 'category',
+                                    label: 'PostgreSQL',
+                                    link: { type: 'doc', id: 'integrations/connected-apps/database/postgresql' },
+                                    items: [
+                                        {
+                                            type: 'doc',
+                                            id: 'integrations/connected-apps/database/postgresql-operations',
+                                            label: 'PostgreSQL Operations Reference',
+                                        },
+                                    ],
+                                },
+                                {
+                                    type: 'category',
+                                    label: 'Redis',
+                                    link: { type: 'doc', id: 'integrations/connected-apps/database/redis' },
+                                    items: [
+                                        {
+                                            type: 'doc',
+                                            id: 'integrations/connected-apps/database/redis-operations',
+                                            label: 'Redis Operations Reference',
+                                        },
+                                    ],
+                                },
+                            ],
+                        },
                     ],
                 },
             ],
