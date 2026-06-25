@@ -21,11 +21,12 @@ Creates a new issue in a Jira project.
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Project Key | The project key of the Jira project where the issue will be created.<br/>To find the project key, go to your project, select ··· near the project name > **Space settings**. The key is listed under **Space key**.<br/>Alternatively, retrieve it from the URL. For example,  in `https://your-domain.atlassian.net/jira/software/projects/MT/boards/1`, the project key is **MT**. | string | Required. | 
+| Project Key | The project key of the Jira project where the issue will be created.<br/><br/>To find the project key, go to your project, select ··· near the project name > **Space settings**. The key is listed under **Space key**.<br/><br/>Alternatively, retrieve it from the URL. For example,  in `https://your-domain.atlassian.net/jira/software/projects/MT/boards/1`, the project key is **MT**. | string | Required. | 
 | Issue Type | The type of issue to create (e.g., `Task`, `Bug`, `Story`). | string | Required. | 
 | Summary | The title of the issue. | string | Required. | 
 | Description | The description of the issue. | string | Required. | 
 | Priority | The priority of the issue (e.g., `High`, `Medium`,` Low`). | string | Optional. | 
+| Assignee Id | The account ID of the user to assign the issue to.<br/><br/>To find the account ID, go to [Atlassian People](https://home.atlassian.com), search for the user, and copy the ID from the URL (e.g., `63610d2bfe5ff375235b6ef4` in `https://home.atlassian.com/o/{orgId}/people/63610d2bfe5ff375235b6ef4`). | string | Optional. | 
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -44,7 +45,7 @@ Retrieves the details of a specific Jira issue by its ID or key.
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Issue ID or Key | The issue key or ID of the issue to retrieve. The issue key is visible on the Jira board and in the URL. For example, in `https://your-domain.atlassian.net/browse/MT-4`, the issue ID is MT-4. | string | Required. |
+| Issue ID or Key | The issue key or ID of the issue to retrieve. The issue key is visible on the Jira board and in the URL. For example, in `https://your-domain.atlassian.net/browse/MT-4`, the issue ID is **MT-4**. | string | Required. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -63,11 +64,11 @@ Updates an existing Jira issue.
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Issue ID or Key | The issue key or ID of the issue to update. The issue key is visible on the Jira board and in the URL. For example, in `https://your-domain.atlassian.net/browse/MT-4`, the issue ID is MT-4. | string | Required. |
+| Issue ID or Key | The issue key or ID of the issue to update. The issue key is visible on the Jira board and in the URL. For example, in `https://your-domain.atlassian.net/browse/MT-4`, the issue ID is **MT-4**. | string | Required. |
 | Summary | The updated title of the issue. | string | Optional. |
 | Description | The updated description of the issue. | string | Optional. |
 | Priority | The updated priority of the issue (e.g., `High`, `Medium`, `Low`). | string | Optional. |
-| Assignee Id | The updated account ID of the user to assign the issue to.<br/>To find the account ID, go to Atlassian People, search for the user, and copy the ID from the URL (e.g., `63610d2bfe5ff375235b6ef4` in `https://home.atlassian.com/o/{orgId}/people/63610d2bfe5ff375235b6ef4`). | string | Optional. |
+| Assignee Id | The updated account ID of the user to assign the issue to.<br/><br/>To find the account ID, go to [Atlassian People](https://home.atlassian.com), search for the user, and copy the ID from the URL (e.g., `63610d2bfe5ff375235b6ef4` in `https://home.atlassian.com/o/{orgId}/people/63610d2bfe5ff375235b6ef4`). | string | Optional. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -86,7 +87,7 @@ Deletes an issue from Jira.
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Issue ID or Key | The issue key or ID of the issue to delete. The issue key is visible on the Jira board and in the URL. For example, in `https://your-domain.atlassian.net/browse/MT-4`, the issue ID is MT-4. | string | Required. |
+| Issue ID or Key | The issue key or ID of the issue to delete. The issue key is visible on the Jira board and in the URL. For example, in `https://your-domain.atlassian.net/browse/MT-4`, the issue ID is **MT-4**. | string | Required. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -127,7 +128,7 @@ Retrieves the available transitions for a Jira issue.
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Issue ID or Key | The issue key or ID of the issue to retrieve transitions for. The issue key is visible on the Jira board and in the URL. For example, in `https://your-domain.atlassian.net/browse/MT-4`, the issue ID is MT-4. | string | Required. |
+| Issue ID or Key | The issue key or ID of the issue to retrieve transitions for. The issue key is visible on the Jira board and in the URL. For example, in `https://your-domain.atlassian.net/browse/MT-4`, the issue ID is **MT-4**. | string | Required. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -146,8 +147,8 @@ Transitions a Jira issue to a different status.
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Issue ID or Key | The issue key or ID of the issue to transition. The issue key is visible on the Jira board and in the URL. For example, in `https://your-domain.atlassian.net/browse/MT-4`, the issue ID is MT-4. | string | Required. |
-| Transition ID | The ID of the transition to apply. Use the [Get Transitions] operation to retrieve available transition IDs for the issue. | string | Required. |
+| Issue ID or Key | The issue key or ID of the issue to transition. The issue key is visible on the Jira board and in the URL. For example, in `https://your-domain.atlassian.net/browse/MT-4`, the issue ID is **MT-4**. | string | Required. |
+| Transition ID | The ID of the transition to apply. Use the [Get Transitions](/content/integrations/jira-operations#get-transitions) operation to retrieve available transition IDs for the issue. | string | Required. |
 | Comment | A comment to add along with the transition. | string | Optional. |
 
 </TabItem>
@@ -167,7 +168,7 @@ Retrieves the change history of a Jira issue.
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Issue ID or Key | The issue key or ID of the issue to retrieve the changelog for. The issue key is visible on the Jira board and in the URL. For example, in `https://your-domain.atlassian.net/browse/MT-4`, the issue ID is MT-4. | string | Required. |
+| Issue ID or Key | The issue key or ID of the issue to retrieve the changelog for. The issue key is visible on the Jira board and in the URL. For example, in `https://your-domain.atlassian.net/browse/MT-4`, the issue ID is **MT-4**. | string | Required. |
 | Max Results | The maximum number of changelog entries to return. Defaults to 100. | integer | Optional. |
 | Start At | The index of the first result to return for pagination. Defaults to 0. | integer | Optional. |
 
@@ -188,11 +189,11 @@ Sends an email notification for a Jira issue and adds it to the mail queue.
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Issue ID or Key | The issue key or ID of the issue to send a notification for. The issue key is visible on the Jira board and in the URL. For example, in `https://your-domain.atlassian.net/browse/MT-4`, the issue ID is MT-4. | string | Required. |
+| Issue ID or Key | The issue key or ID of the issue to send a notification for. The issue key is visible on the Jira board and in the URL. For example, in `https://your-domain.atlassian.net/browse/MT-4`, the issue ID is **MT-4**. | string | Required. |
 | Subject | The subject line of the notification email. | string | Required. |
 | HTML Body | The HTML body of the notification email. | string | Optional. |
-| To User IDs | A comma-separated list of account IDs of users to notify.<br/>To find the user ID, go to Atlassian People, search for the user, and copy the ID from the URL (e.g., `63610d2bfe5ff375235b6ef4` in `https://home.atlassian.com/o/{orgId}/people/63610d2bfe5ff375235b6ef4`). | string | Optional. |
-| To Group Names | A comma-separated list of Jira group names to notify.<br/>Group names can be found at admin.atlassian.com → Directory → Groups. | string | Optional. |
+| To User IDs | A comma-separated list of account IDs of users to notify.<br/><br/>To find the user ID, go to [Atlassian People](https://home.atlassian.com), search for the user, and copy the ID from the URL (e.g., `63610d2bfe5ff375235b6ef4` in `https://home.atlassian.com/o/{orgId}/people/63610d2bfe5ff375235b6ef4`). | string | Optional. |
+| To Group Names | A comma-separated list of Jira group names to notify.<br/><br/>Group names can be found at **admin.atlassian.com** → **Directory** → **Groups**. | string | Optional. |
 | To Reporter | Whether to include the issue reporter in the notification. | boolean | Optional. |
 | To Assignees | Whether to include the issue assignee in the notification. | boolean | Optional. |
 | To Watchers | Whether to include issue watchers in the notification. | boolean | Optional. |
@@ -214,7 +215,7 @@ Adds a comment to a Jira issue.
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Issue ID or Key | The issue key or ID of the issue to add a comment to. The issue key is visible on the Jira board and in the URL. For example, in `https://your-domain.atlassian.net/browse/MT-4`, the issue ID is MT-4. | string | Required. |
+| Issue ID or Key | The issue key or ID of the issue to add a comment to. The issue key is visible on the Jira board and in the URL. For example, in `https://your-domain.atlassian.net/browse/MT-4`, the issue ID is **MT-4**. | string | Required. |
 | Body | The text of the comment. | string | Required. |
 
 </TabItem>
@@ -234,8 +235,8 @@ Retrieves a specific comment from a Jira issue.
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Issue ID or Key | The issue key or ID of the issue to retrieve the comment from. The issue key is visible on the Jira board and in the URL. For example, in `https://your-domain.atlassian.net/browse/MT-4`, the issue ID is MT-4. | string | Required. |
-| Comment Id | The ID of the comment to retrieve.<br/>To find the comment ID, open the issue in Jira, right-click the comment link, and copy the `focusedCommentId` value from the URL (e.g., `10033` in `https://your-domain.atlassian.net/browse/MT-4?focusedCommentId=10033`). | string | Required. |
+| Issue ID or Key | The issue key or ID of the issue to retrieve the comment from. The issue key is visible on the Jira board and in the URL. For example, in `https://your-domain.atlassian.net/browse/MT-4`, the issue ID is **MT-4**. | string | Required. |
+| Comment Id | The ID of the comment to retrieve.<br/><br/>To find the comment ID, open the issue in Jira, right-click the comment link, and copy the `focusedCommentId` value from the URL (e.g., `10033` in `https://your-domain.atlassian.net/browse/MT-4?focusedCommentId=10033`). | string | Required. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -254,7 +255,7 @@ Retrieves all comments for a Jira issue.
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Issue ID or Key | The issue key or ID of the issue to retrieve comments for. The issue key is visible on the Jira board and in the URL. For example, in `https://your-domain.atlassian.net/browse/MT-4`, the issue ID is MT-4. | string | Required. |
+| Issue ID or Key | The issue key or ID of the issue to retrieve comments for. The issue key is visible on the Jira board and in the URL. For example, in `https://your-domain.atlassian.net/browse/MT-4`, the issue ID is **MT-4**. | string | Required. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -273,8 +274,8 @@ Updates an existing comment on a Jira issue. Can update only their own comments.
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Issue ID or Key | The issue key or ID of the issue containing the comment. The issue key is visible on the Jira board and in the URL. For example, in `https://your-domain.atlassian.net/browse/MT-4`, the issue ID is MT-4. | string | Required. |
-| Comment Id | The ID of the comment to update.<br/>To find the comment ID, open the issue in Jira, right-click the comment permalink, and copy the `focusedCommentId` value from the URL (e.g., `10033` in `https://your-domain.atlassian.net/browse/MT-4?focusedCommentId=10033`). | string | Required. |
+| Issue ID or Key | The issue key or ID of the issue containing the comment. The issue key is visible on the Jira board and in the URL. For example, in `https://your-domain.atlassian.net/browse/MT-4`, the issue ID is **MT-4**. | string | Required. |
+| Comment Id | The ID of the comment to update.<br/><br/>To find the comment ID, open the issue in Jira, right-click the comment permalink, and copy the `focusedCommentId` value from the URL (e.g., `10033` in `https://your-domain.atlassian.net/browse/MT-4?focusedCommentId=10033`). | string | Required. |
 | Body | The updated text of the comment. | string | Required. |
 
 </TabItem>
@@ -294,8 +295,8 @@ Deletes a comment from a Jira issue. Can delete only their own comments.
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Issue ID or Key | The issue key or ID of the issue containing the comment. The issue key is visible on the Jira board and in the URL. For example, in `https://your-domain.atlassian.net/browse/MT-4`, the issue ID is MT-4. | string | Required. |
-| Comment Id | The ID of the comment to delete.<br/>To find the comment ID, open the issue in Jira, right-click the comment permalink, and copy the `focusedCommentId` value from the URL (e.g., `10033` in `https://your-domain.atlassian.net/browse/MT-4?focusedCommentId=10033`). | string | Required. |
+| Issue ID or Key | The issue key or ID of the issue containing the comment. The issue key is visible on the Jira board and in the URL. For example, in `https://your-domain.atlassian.net/browse/MT-4`, the issue ID is **MT-4**. | string | Required. |
+| Comment Id | The ID of the comment to delete.<br/><br/>To find the comment ID, open the issue in Jira, right-click the comment permalink, and copy the `focusedCommentId` value from the URL (e.g., `10033` in `https://your-domain.atlassian.net/browse/MT-4?focusedCommentId=10033`). | string | Required. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -314,7 +315,7 @@ Adds an attachment to a Jira issue.
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Issue ID or Key | The issue key or ID of the issue to add an attachment to. The issue key is visible on the Jira board and in the URL. For example, in `https://your-domain.atlassian.net/browse/MT-4`, the issue ID is MT-4. | string | Required. |
+| Issue ID or Key | The issue key or ID of the issue to add an attachment to. The issue key is visible on the Jira board and in the URL. For example, in `https://your-domain.atlassian.net/browse/MT-4`, the issue ID is **MT-4**. | string | Required. |
 | File Content Base 64 | The file content encoded as a Base64 string. | string | Required. |
 | Filename | The filename for the attachment. | string | Required. |
 
@@ -335,7 +336,7 @@ Retrieves all attachments for a Jira issue.
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Issue ID or Key | The issue key or ID of the issue to retrieve attachments for. The issue key is visible on the Jira board and in the URL. For example, in `https://your-domain.atlassian.net/browse/MT-4`, the issue ID is MT-4. | string | Required. |
+| Issue ID or Key | The issue key or ID of the issue to retrieve attachments for. The issue key is visible on the Jira board and in the URL. For example, in `https://your-domain.atlassian.net/browse/MT-4`, the issue ID is **MT-4**. | string | Required. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -354,7 +355,7 @@ Retrieves metadata for a Jira attachment by its ID.
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Attachment ID | The ID of the attachment.<br/>To get it, use the [Get Issue Attachments] operation; the response includes an `id` field for each attachment. | string | Required. |
+| Attachment ID | The ID of the attachment.<br/><br/>To get it, use the [Get Issue Attachments](/content/integrations/jira-operations#get-issue-attachments) operation; the response includes an `id` field for each attachment. | string | Required. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -373,7 +374,7 @@ Removes an attachment from Jira by its ID.
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Attachment ID | The ID of the attachment.<br/>To get it, use the [Get Issue Attachments] operation; the response includes an `id` field for each attachment. | string | Required. |
+| Attachment ID | The ID of the attachment.<br/><br/>To get it, use the [Get Issue Attachments](/content/integrations/jira-operations#get-issue-attachments) operation; the response includes an `id` field for each attachment. | string | Required. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -409,7 +410,7 @@ Retrieves the details of a specific Jira project.
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Project ID or Key | The project key or ID of the project to retrieve.<br/>To find the project key, go to your project, select ··· > **Space settings**. The key is listed under **Space key**.<br/>Alternatively, retrieve it from the URL. For example, in `https://your-domain.atlassian.net/jira/software/projects/MT/boards/1`, the project key is **MT**. | string | Required. |
+| Project ID or Key | The project key or ID of the project to retrieve.<br/><br/>To find the project key, go to your project, select ··· > **Space settings**. The key is listed under **Space key**.<br/><br/>Alternatively, retrieve it from the URL. For example, in `https://your-domain.atlassian.net/jira/software/projects/MT/boards/1`, the project key is **MT**. | string | Required. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -441,14 +442,14 @@ Returns a list of users, each containing the account ID, account type, display n
 
 ## Get Sprint
 
-Retrieves the details of a Jira sprint by its ID, including its name, state, dates, and goal. Sprints are only available in Scrum (company-managed) projects with the Sprints feature enabled under Space Settings > Features.
+Retrieves the details of a Jira sprint by its ID, including its name, state, dates, and goal. Sprints are only available in Scrum (company-managed) projects with the Sprints feature enabled under **Space Settings** > **Features**.
 
 <Tabs>
 <TabItem value="input" label="Input Parameters">
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Sprint ID | The ID of the sprint to retrieve.<br/>To find the sprint ID, open an issue in the sprint and copy the ID from the URL (e.g., `1` in `https://your-domain.atlassian.net/browse/MS-1`). | integer | Required. |
+| Sprint ID | The ID of the sprint to retrieve.<br/><br/>To find the sprint ID, open an issue in the sprint and copy the ID from the URL (e.g., `1` in `https://your-domain.atlassian.net/browse/MS-1`). | integer | Required. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -460,14 +461,14 @@ Returns the sprint ID, URL, name, state, start date, end date, completion date, 
 
 ## Get Sprint Issues
 
-Retrieves all issues in a Jira sprint. Sprints are only available in Scrum (company-managed) projects with the Sprints feature enabled under Space Settings > Features.
+Retrieves all issues in a Jira sprint. Sprints are only available in Scrum (company-managed) projects with the Sprints feature enabled under **Space Settings** > **Features**.
 
 <Tabs>
 <TabItem value="input" label="Input Parameters">
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Sprint ID | The ID of the sprint to retrieve the issues for.<br/>To find the sprint ID, open an issue in the sprint and copy the ID from the URL (e.g., `1` in `https://your-domain.atlassian.net/browse/MS-1`). | integer | Required. |
+| Sprint ID | The ID of the sprint to retrieve the issues for.<br/><br/>To find the sprint ID, open an issue in the sprint and copy the ID from the URL (e.g., `1` in `https://your-domain.atlassian.net/browse/MS-1`). | integer | Required. |
 | Max Results | The maximum number of results to return. Defaults to 50. | integer | Optional. |
 | Start At | The index of the first result to return for pagination. Defaults to 0. | integer | Optional. |
 
@@ -488,7 +489,7 @@ Retrieves the details of a Jira user by their account ID.
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Account ID | The account ID of the user to retrieve.<br/>To find the account ID, go to Atlassian People, search for the user, and copy the ID from the URL (e.g., `63610d2bfe5ff375235b6ef4` in `https://home.atlassian.com/o/{orgId}/people/63610d2bfe5ff375235b6ef4`). | string | Required. |
+| Account ID | The account ID of the user to retrieve.<br/><br/>To find the account ID, go to [Atlassian People](https://home.atlassian.com), search for the user, and copy the ID from the URL (e.g., `63610d2bfe5ff375235b6ef4` in `https://home.atlassian.com/o/{orgId}/people/63610d2bfe5ff375235b6ef4`). | string | Required. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
