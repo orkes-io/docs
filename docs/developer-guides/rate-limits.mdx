@@ -20,9 +20,9 @@ When the number of tasks scheduled within a given period exceeds the defined rat
 
 You can configure rate limit behavior for tasks in its **task definition**. The parameters for defining a task’s rate limit behavior are:
 
-- Rate limit
-- Rate limit frequency
-- Concurrent executions
+- Rate limit per frequency
+- Frequency seconds
+- Concurrent execution limit
 
 | Parameter                   | Description                                                                                          | Required/ Optional |
 | --------------------------- | ---------------------------------------------------------------------------------------------------- | ------------------ |
@@ -64,7 +64,7 @@ You can configure the limit on concurrent workflow executions in its **workflow 
 | Parameter                                | Description                                                                                                                                                                                                                                                                                        | Required/ Optional |
 | ---------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
 | rateLimitConfig                          | A map of the workflow rate limit configuration.                                                                                                                                                                                                                                                    | Optional.          |
-| rateLimitConfig. **rateLimitKey**        | A unique identifier to group workflow executions for rate limits. <br/><br/> Can be a fixed value (for example, “max”) or a [dynamic variable](/developer-guides/passing-inputs-to-task-in-conductor#sample-expressions) passed only from the workflow input (for example, `${workflow.input.correlationId}`). | Optional.          |
+| rateLimitConfig. **rateLimitKey**        | A unique identifier to group workflow executions for rate limits. <br/><br/> Can be a fixed value (for example, “max”) or a [dynamic variable](/developer-guides/passing-inputs-to-task-in-conductor#sample-expressions) from the workflow (for example, `${workflow.input.someKey}`, `${workflow.correlationId}`, `${workflow.workflowType}`, or `${workflow.version}`). | Optional.          |
 | rateLimitConfig. **concurrentExecLimit** | The number of workflow executions that can run concurrently for each rate limit key. Cannot be passed as a dynamic variable.                                                                                                                                                                       | Optional.          |
 
 ### Routing rate limits with dynamic key

@@ -140,8 +140,8 @@ const sidebars = {
                             id: 'developer-guides/idempotency',
                             label: "Idempotency"
                         },
-                        'developer-guides/rate-limits',
                         'developer-guides/error-handling',
+                        'developer-guides/rate-limits',
                     ]
                 },
                 {
