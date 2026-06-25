@@ -36,7 +36,8 @@ To integrate Google Cloud Functions with Orkes Conductor, you need a Google Clou
 5. Select **Continue**, then **Done**.
 6. Select the newly created service account, go to the **Keys** tab, and select **Add Key** > **Create new key**.
 7. Choose **JSON** as the key type and select **Create**. The key file downloads automatically.
-8. Keep the downloaded JSON file ready; you'll need its full contents in the next step.
+
+Keep the downloaded JSON file ready; you'll need its full contents in the next step.
 
 Next, enable the following APIs for the project.
 
@@ -61,10 +62,10 @@ After obtaining the credentials, add a Google Cloud Functions integration to you
 | Parameter | Description | Required/Optional |
 | --------- | ----------- | ----------------- |
 | Integration name | A name for the integration. | Required. |
-| Scope | The OAuth2 scope for Cloud Functions / Cloud Platform API access. Supported values: **Cloud Functions (read-only)** (grants read-only access to cloud functions) or **Cloud Functions (full control)** (grants full access to cloud functions). | Required. |
-| Service Account JSON | Paste the full contents of the Google Cloud service account key JSON file downloaded in [Step 1]. | Required. |
+| Scope | The OAuth2 scope for Cloud Functions / Cloud Platform API access. Supported values:<ul><li>**Cloud Functions (read-only)**: Grants read-only access to cloud functions.</li><li>**Cloud Functions (full control)**: Grants full access to cloud functions.</li></ul> | Required. |
+| Service Account JSON | Paste the full contents of the Google Cloud service account key JSON file downloaded in [Step 1](/content/integrations/google-cloud-functions#step-1-get-the-google-cloud-credentials). | Required. |
 | Default Project ID | The default Google Cloud Project ID to use when a project ID is not explicitly provided in a workflow task. | Optional. |
-| Default Location | The default region for the cloud function. For example: us-central1. | Optional. |
+| Default Location | The default region for the cloud function. For example: **us-central1**. | Optional. |
 | Default Function URL | The default HTTP trigger URL to use when the function URL is not explicitly provided in a workflow task. | Optional. |
 | Description | A description of the integration. | Required. |
 
