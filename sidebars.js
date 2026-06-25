@@ -779,6 +779,18 @@ const sidebars = {
                                 },
                                 {
                                     type: 'category',
+                                    label: 'Google Cloud Functions',
+                                    link: { type: 'doc', id: 'integrations/connected-apps/cloud/google-cloud-functions' },
+                                    items: [
+                                        {
+                                            type: 'doc',
+                                            id: 'integrations/connected-apps/cloud/google-cloud-functions-operations',
+                                            label: 'Google Cloud Functions Operations Reference',
+                                        },
+                                    ],
+                                },
+                                {
+                                    type: 'category',
                                     label: 'AWS S3',
                                     link: { type: 'doc', id: 'integrations/connected-apps/cloud/aws-s3' },
                                     items: [
