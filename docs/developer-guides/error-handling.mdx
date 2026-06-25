@@ -21,7 +21,7 @@ For workflows, you can configure the following resilience parameters in its work
 - Compensation flows (known as failure workflow in Conductor)
 
 :::note
-To deal with workflow failures post-execution, refer to [Debugging Workflows](/developer-guides/debugging-workflows).
+To deal with workflow failures post-execution, refer to [Debugging Workflow Executions](/developer-guides/debugging-workflows).
 :::
 
 ## Message delivery guarantees
@@ -41,15 +41,15 @@ You can configure retry behavior for tasks in its **task definition**. The param
 
 - Retry count
 - Retry delay seconds
-- Backoff scale factor
 - Retry logic
+- Backoff scale factor
 
 | Parameter          | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | Required/ Optional |
 | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
 | retryCount         | The number of retry attempts if the task fails. Default value is 3.                                                                                                                                                                                                                                                                                                                                                                                                                                     | Optional.          |
 | retryDelaySeconds  | The time (in seconds) to wait before each retry attempt. This provides time for the task service to recover from any transient failure before it is retried. Default value is 60. <br/><br/>                                                                                                                                                                                                                              | Optional.          |
+| retryLogic         | The policy that determines the retry mechanism for the tasks. Supported values: <ul><li>**`FIXED`**: Retries after a fixed interval defined by `retryDelaySeconds`.</li> <li>**`LINEAR_BACKOFF`**: Retries occur with a delay that increases linearly based on `retryDelaySeconds` x `backoffScaleFactor` x `attemptNumber`.</li><li>**`EXPONENTIAL_BACKOFF`**: Retries occur with a delay that increases exponentially based on `retryDelaySeconds` x (`2` ^ `attemptNumber`).</li></ul> Default is FIXED. | Optional.          |
 | backoffScaleFactor | The value multiplied with `retryDelaySeconds`to determine the interval for retry. Default value is 1.                                                                                                                                                                                                                                                                                                                                                                                                   | Optional.          |
-| retryLogic         | The policy that determines the retry mechanism for the tasks. Supported values: <ul><li>**`FIXED`**: Retries after a fixed interval defined by `retryDelaySeconds`.</li> <li>**`LINEAR_BACKOFF`**: Retries occur with a delay that increases linearly based on `retryDelaySeconds` x `backoffScaleFactor` x `attemptNumber`.</li><li>**`EXPONENTIAL_BACKOFF`**: Retries occur with a delay that increases exponentially based on `retryDelaySeconds` x (`backoffScaleFactor` ^ `attemptNumber`).</li></ul> Default is FIXED. | Optional.          |
 
 **Example**
 
@@ -103,12 +103,12 @@ You can configure timeout behavior for tasks in its **task definition** to handl
 | Parameter              | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | Required/ Optional |
 | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------ |
 | responseTimeoutSeconds | The maximum duration in seconds that a worker has to respond to the server with a status update before it gets marked as `TIMED_OUT`. When configured with a value > 0, Conductor will wait for the worker to return a status update, starting from when the task was picked up. <br/><br/> If a task requires more time to complete, the worker can respond with the `IN_PROGRESS` status. <br/> <br/> Default value is 600.                                                                          | Optional.          |
-| timeoutSeconds         | The maximum duration in seconds for the task to reach a terminal state before it gets marked as `TIMED_OUT`. When configured with a value > 0, Conductor will wait for the task to complete, starting from when the task was picked up. <br/><br/> Useful for governing the overall SLA for completion. <br/><br/> Default value is 3600.                                                                                                                                                              | Required.          |
+| timeoutSeconds         | The maximum duration in seconds for the task to reach a terminal state before it gets marked as `TIMED_OUT`. When configured with a value > 0, Conductor will wait for the task to complete, starting from when the task was picked up. <br/><br/> Useful for governing the overall SLA for completion. <br/><br/> Default value is 3600.                                                                                                                                                              | Optional.          |
 | pollTimeoutSeconds     | The maximum duration in seconds that a worker has to poll a task before it gets marked as `TIMED_OUT`. When configured with a value > 0, Conductor will wait for the task to be picked up by a worker. <br/> <br/> Useful for detecting a backlogged task queue with insufficient workers. <br/> <br/> Default value is 3600.                                                                                                                                                                          | Optional.          |
 | timeoutPolicy          | The policy for handling timeout. Supported values: <ul><li><strong>RETRY</strong>: Retries the task based on the retry configuration.</li> <li><strong>TIME_OUT_WF</strong>: The task is marked as TIMED_OUT and is terminated, which also sets the workflow status as TIMED_OUT.</li> <li><strong>ALERT_ONLY</strong>: An alert message is logged when the timeout occurs.</li></ul>**Note:** The ALERT_ONLY option should be used only when you have your own metrics monitoring system to send alerts. | Optional.          |
 
 :::note
-To configure tasks that never timeout, set `timeOutSeconds` and `pollTimeoutSeconds` to 0.
+To configure tasks that never timeout, set `timeoutSeconds` and `pollTimeoutSeconds` to 0.
 :::
 
 **Example**
@@ -180,7 +180,7 @@ Based on the timeout configuration in the above figure, the following sequence o
 Based on the timeout configuration in the above figure, the following sequence of events will occur when a task cannot be completed within the given duration:
 
 1. At 0 seconds, a worker polls the Conductor server for task T1 and receives the task. T1 is marked as IN_PROGRESS by the server.
-2. The worker starts processing the task, but is unable to complete it within the response timeout. The worker updates the server with T1 set to an IN_PROGRESS status and a callback of 9 seconds.
+2. The worker starts processing the task, but is unable to complete it within the response timeout. The worker updates the server with T1 set to an IN_PROGRESS status and a callback of 9 seconds (part of worker configuration).
 3. The server puts T1 back in the queue but makes it invisible and the worker continues to poll for the task but does not receive T1 for 9 seconds.
 4. After 9 seconds, the worker receives T1 from the server but is still unable to finish processing the task. As such, the worker updates the server again with a callback of 9 seconds.
 5. The same cycle repeats for the next few seconds.
@@ -223,13 +223,21 @@ You can configure the timeout behavior for the workflow using its **workflow def
 
 ## Workflow compensation flows
 
-A compensation flow can be configured to take place when a workflow execution fails (FAILED status). Known as a **failure workflow** in Conductor, this failure workflow must be created in Conductor and added to the main workflow definition.
+A compensation flow can be configured to take place when a workflow reaches a non-successful terminal state such as FAILED, TIMED_OUT, or TERMINATED. Known as a **failure workflow** in Conductor, this failure workflow must be created in Conductor and added to the main workflow definition. 
 
-When triggered, the failure workflow receives the failed workflow details, such as its workflow ID and tasks, as input. This enables you to implement compensating logic to handle the failure.
+When triggered, the failure workflow receives the following details as input:
+
+- `workflowId`: The ID of the failed workflow.
+- `reason`: The reason for failure.
+- `failureStatus`: The terminal status of the failed workflow (FAILED, TIMED_OUT, or TERMINATED).
+- `failureTaskId`: The ID of the task that caused the failure, if applicable.
+- `failedWorkflow`: The complete workflow object, including all task details.
+
+This enables you to implement compensating logic to handle the failure.
 
 ### Setting a failure workflow
 
-You can set a failure workflow for a workflow in its **workflow definition**. Before setting the failure workflow, ensure it has been created.
+You can set a failure workflow for a workflow in its **workflow definition**. Before setting the failure workflow, ensure it has been created in Conductor.
 
 **To set a failure workflow:**
 

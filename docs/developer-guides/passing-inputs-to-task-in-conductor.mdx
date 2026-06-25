@@ -9,7 +9,7 @@ import Install from "@site/src/components/install.mdx";
 
 # Wiring Parameters
 
-In Conductor, various workflow and task parameters can be hard-coded or dynamically referenced from elsewhere (including its workflow parameters, prior task parameters, workflow variables, environment variables, and secrets). As long as it can be passed as a string, any workflow or task parameter can make use of a dynamic reference instead of a hard-coded value.
+In Conductor, various workflow and task parameters can be hard-coded or dynamically referenced from elsewhere (including its workflow parameters, prior task parameters, workflow variables, environment variables, secrets, and more). As long as it can be passed as a string, any workflow or task parameter can make use of a dynamic reference instead of a hard-coded value.
 
 These dynamic references are formatted as dot-notation expressions, taking after [JSONPath syntax](https://goessner.net/articles/JsonPath/).
 
@@ -25,7 +25,7 @@ export const text = `"key" : "\${type.jsonpath}"`;
 | -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | key                  | A string representing the parameter name for a workflow or task parameter.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 | `${...}`             | The root notation indicating that the variable will be dynamically replaced at runtime.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-| type                 | The type of reference. Supported values:<ul><li>**workflow**: Refers to the current workflow instance.</li> <li>**workflow.input**: Refers to the workflow’s input parameters.</li> <li>**workflow.output**: Refers to the workflow’s output parameters.</li> <li>**workflow.secrets**: Refers to the secrets available in your Conductor cluster.</li> <li>**workflow.variables**: Refers to the workflow variables set in the workflow using the [Set Variable](/reference-docs/operators/set-variable) task.</li> <li>**workflow.env**: Refers to the environment variables available in your Conductor cluster.</li> <li>**_taskReferenceName_**: Refers to a task in the current workflow instance by its reference name. (For example, “http_ref”).</li> <li>**taskReferenceName.input**: Refers to the task’s input parameters.</li> <li>**taskReferenceName.output**: Refers to the task’s output parameters.</li></ul> |
+| type                 | The type of reference. Supported values:<ul><li>**workflow**: Refers to the current workflow instance.</li> <li>**workflow.input**: Refers to the workflow’s input parameters.</li> <li>**workflow.output**: Refers to the workflow’s output parameters.</li> <li>**workflow.secrets**: Refers to the [secrets](/content/developer-guides/secrets-in-conductor) available in your Conductor cluster.</li> <li>**workflow.variables**: Refers to the workflow variables set in the workflow using the [Set Variable](/reference-docs/operators/set-variable) task.</li> <li>**workflow.env**: Refers to the environment variables available in your Conductor cluster.</li> <li>**_taskReferenceName_**: Refers to a task in the current workflow instance by its reference name. (For example, “http_ref”).</li> <li>**taskReferenceName.input**: Refers to the task’s input parameters.</li> <li>**taskReferenceName.output**: Refers to the task’s output parameters.</li></ul> |
 | jsonpath             | [JSONPath](https://goessner.net/articles/JsonPath/) expression in dot-notation. The path is based on the reference type’s JSON object.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 
 ## Sample expressions
@@ -43,17 +43,18 @@ Depending on where the data is being referenced from, here is a non-exhaustive l
 | `${workflow.input._someKey_}`             | References the current workflow’s input parameter `someKey`.                                                                                                                                                                                                                                                                                                                                      |
 | `${workflow.output._someKey_}`            | References the current workflow’s output parameter `someKey`.                                                                                                                                                                                                                                                                                                                                     |
 | `${workflow.status}`                      | References the current [workflow’s status](/developer-guides/task-and-workflow-status-in-conductor). Possible values: RUNNING, PAUSED, TIMED_OUT, TERMINATED, FAILED, or COMPLETED.                                                                                                                                                                                                               |
-| `${workflow.workflowId}`                  | References the current workflow (execution) ID.                                                                                                                                                                                                                                                                                                                                                               |
-| `${workflow.parentWorkflowId}`            | (Used in sub-workflows) References the parent workflow (execution) ID.                                                                                                                                                                                                                                                                                                                                        |
-| `${workflow.parentWorkflowTaskId}`        | (Used in sub-workflows) References the task execution ID for the [Sub Workflow](/reference-docs/operators/sub-workflow) task in the parent workflow.                                                                                                                                                                                                                                                  |
+| `${workflow.workflowId}`                  | References the current workflow (execution) ID.                                                                                                                                                                                                                                                                                                                                                   |
+| `${workflow.parentWorkflowId}`            | (Used in sub-workflows) References the parent workflow (execution) ID.                                                                                                                                                                                                                                                                                                                            |
+| `${workflow.parentWorkflowTaskId}`        | (Used in sub-workflows) References the task execution ID for the [Sub Workflow](/reference-docs/operators/sub-workflow) task in the parent workflow.                                                                                                                                                                                                                                              |
 | `${workflow.workflowType}`                | References the current workflow name.                                                                                                                                                                                                                                                                                                                                                             |
 | `${workflow.version}`                     | References the current workflow version.                                                                                                                                                                                                                                                                                                                                                          |
-| `${workflow.createTime}`                  | References the start time of the workflow execution.                                                                                                                                                                                                                                                                                                                                                           |
+| `${workflow.createTime}`                  | References the start time of the workflow execution.                                                                                                                                                                                                                                                                                                                                              |
 | `${workflow.correlationId}`               | References the current workflow’s correlation ID.                                                                                                                                                                                                                                                                                                                                                 |
-| `${workflow.taskToDomain._domainName_}`   | References the workflow’s domain name that was invoked during its execution.                                                                                                                                                                                                                                                                                                                      |
+| `${workflow.idempotencyKey}`              | References the idempotency key used when starting the workflow.                                                                                                                                                                                                                                                                                                                                   | 
+| `${workflow.taskToDomain.taskReferenceName}`| References the domain mapped to a specific task in this workflow execution. Replace `taskReferenceName` with the actual task reference name.                                                                                                                                                                                                                                                    |
 | `${workflow.variables._someKey_}`         | References the workflow variable `someKey`, which has been set earlier in a [Set Variable](/reference-docs/operators/set-variable) task.                                                                                                                                                                                                                                                          |
 | `${workflow.env._someKey_}`               | References the [environment variable](/developer-guides/using-environment-variables) `someKey`, which has been defined previously in the Conductor cluster.                                                                                                                                                                                                                                       |
-| `${workflow.secrets._someKey_}`           | References the [secret](/developer-guides/secrets-in-conductor) `someKey`, which has been defined previously in the Conductor cluster. <br/><br/> When inspected, the secret value will not be exposed and instead retain its reference value `${workflow.secrets.someKey}`. <br/><br/> During execution, if the workflow doesn't have permission to read the secret, it will fail with an error saying so. |
+| `${workflow.secrets._someKey_}`           | References the [secret](/developer-guides/secrets-in-conductor) `someKey`, which has been defined previously in the Conductor cluster. <br/><br/>When inspected, the secret value will not be exposed and will be masked (***) in the workflow execution.<br/><br/> During execution, if the workflow doesn't have permission to read the secret, it will fail with an error saying so. |
 
 ## Examples
 
@@ -141,11 +142,11 @@ If a secret named `api_key` with the value `Xxhhjiu0nbfdinvdHyj` is stored in yo
 }
 ```
 
-At runtime, the dynamic parameter `auth` resolves to the value of the secret `api_key`. This value will not be exposed in the workflow execution JSON, and users will only see the reference expression while inspecting the JSON object:
+At runtime, the dynamic parameter `auth` resolves to the value of the secret `api_key`. When inspected, the secret value will not be exposed and will be masked (***) in the workflow execution.
 
 ```json
 {
-  "auth": "${workflow.secrets.api_key}"
+  "auth": "***"
 }
 ```
 
@@ -226,6 +227,180 @@ At runtime, the parameters will be:
   "place": "US"
 }
 ```
+
+</details>
+
+<details>
+<summary>Referencing the workflow ID</summary>
+
+To reference the current workflow's execution ID, use the following expression:
+
+```json
+{
+  "currentWorkflow": "${workflow.workflowId}"
+}
+```
+
+At runtime, it will be replaced with the workflow’s execution ID:
+
+```json
+{
+  "currentWorkflow": "9a679cb1-6bea-11f1-a803-9e478e6b7089"
+}
+```
+
+</details>
+
+<details>
+<summary>Referencing the workflow status</summary>
+
+To reference the current workflow's status, use the following expression:
+
+```json
+{
+  "currentStatus": "${workflow.status}"
+}
+```
+
+At runtime, it will be replaced with the workflow’s current status:
+
+```json
+{
+  "currentStatus": "RUNNING"
+}
+```
+
+</details>
+
+<details>
+<summary>Referencing the workflow name and version</summary>
+
+To reference the current workflow's name and version, use the following expressions:
+
+```json
+{
+  "workflowName": "${workflow.workflowType}",
+  "workflowVersion": "${workflow.version}"
+}
+```
+
+At runtime, it will be replaced with the workflow’s name and version:
+
+```json
+{
+  "workflowName": "order-processing-workflow",
+  "workflowVersion": 1
+}
+```
+
+</details>
+
+<details>
+<summary>Referencing the correlation ID</summary>
+
+To reference the current workflow's correlation ID, use the following expression:
+
+```json
+{
+  "correlationId": "${workflow.correlationId}"
+}
+```
+
+At runtime, it will be replaced with the workflow’s correlation ID:
+
+```json
+{
+  "correlationId": "order-123"
+}
+```
+
+</details>
+
+<details>
+<summary>Referencing the idempotency key</summary>
+
+To reference the idempotency key used when starting the workflow, use the following expression:
+
+```json
+{
+  "idempotencyKey": "${workflow.idempotencyKey}"
+}
+```
+
+At runtime, it will be replaced with the the idempotency key used when starting the workflow:
+
+```json
+{
+  "idempotencyKey": "test-key-456"
+}
+```
+
+</details>
+
+<details>
+<summary>Referencing the task domain</summary>
+
+To reference the domain mapped to a specific task in the workflow execution, use the following expression. This is useful when you need to pass the task's routing domain as an input to a downstream task.
+
+```json
+{
+  "domain": "${workflow.taskToDomain.http_ref}"
+}
+```
+
+At runtime, it will be replaced with the domain name that ran the task execution:
+
+```json
+{
+  "domain": "my-domain"
+}
+```
+
+</details>
+
+<details>
+<summary>Referencing the workflow start time</summary>
+
+To reference the start time of the workflow execution, use the following expression. The value is a Unix timestamp in milliseconds.
+
+```json
+{
+  "startedAt": "${workflow.createTime}"
+}
+```
+
+At runtime, it will be replaced with the workflow execution start time:
+
+```json
+{
+  "startedAt": 1781879078219
+}
+```
+
+</details>
+
+<details>
+<summary>Referencing the parent workflow (in sub-workflows)</summary>
+
+To reference the parent workflow and its task execution ID from within a sub-workflow, use the following expressions:
+
+```json
+{
+  "parentId": "${workflow.parentWorkflowId}",
+  "parentTaskId": "${workflow.parentWorkflowTaskId}"
+}
+```
+
+At runtime, these will be replaced with the actual IDs:
+
+```json
+{
+  "parentId": "d7061d93-6bea-11f1-b106-2a7869257662",
+  "parentTaskId": "d70903cf-6bea-11f1-b106-2a7869257662"
+}
+```
+
+These return null if the workflow is not running as a sub-workflow.
 
 </details>
 
