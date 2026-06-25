@@ -32,17 +32,17 @@ This guide explains how to set up and use the integration. Here's an overview:
 
 :::note
 You can use this integration in either of the following scenarios:
-- Conductor is running locally, and Redis server is running locally.
+- [Conductor is running locally](https://orkes.io/content/get-orkes-conductor#local-setup-with-docker), and Redis server is running locally.
 - Conductor is running in the cloud, and the Redis server is exposed via a secure tunnel or hosted on a cloud database service.
 :::
 
 To integrate Redis with Orkes Conductor, get the following credentials from your Redis server:
 
-Required:
+**Required:**
 - Host
 - Port
 
-Optional:
+**Optional:**
 - Database index
 - Username (if using Redis ACL)
 - Password (if authentication is enabled)
@@ -65,7 +65,7 @@ After obtaining the credentials, add a Redis integration to your Conductor clust
 | Port | The Redis server port. Default is 6379. | Required. |
 | User | The Redis ACL username. Omit for the default user. | Optional. |
 | Password | The Redis password or ACL secret. | Optional. |
-| Database | The Redis database index (0–15). Default is 0.<br/>Note: Many Redis cluster deployments only support DB 0. | Optional. |
+| Database | The Redis database index (0–15). Default is 0.<br/><br/>**Note**: Many Redis cluster deployments only support DB 0. | Optional. |
 | TLS | Whether to enable TLS/SSL when connecting to Redis. Default is No. | Required. |
 | Description | A description of the integration. | Required. |
 

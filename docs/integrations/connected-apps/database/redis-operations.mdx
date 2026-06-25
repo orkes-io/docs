@@ -69,7 +69,7 @@ Upserts a single field in a hash key.
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-Returns the key, field, and value that were set, and a flag indicating whether the field was newly created (1) or updated (0).
+Returns the key, field, and value that were set, and a flag indicating whether the field was newly created (**1**) or updated (**0**).
 
 </TabItem>
 </Tabs>
@@ -102,7 +102,7 @@ Lists keys matching a specified pattern using SCAN.
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Pattern | The glob-style pattern to match keys against. Defaults to * (all keys). | string | Optional. |
+| Pattern | The glob-style pattern to match keys against. Defaults to __*__ (all keys). | string | Optional. |
 | Limit | The maximum number of keys to return. | integer | Optional. |
 
 </TabItem>
@@ -146,7 +146,7 @@ Retrieves the remaining time to live for a key in seconds.
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-Returns the key and its remaining TTL in seconds. Returns -1 if the key exists but has no expiry, and -2 if the key does not exist.
+Returns the key and its remaining TTL in seconds. Returns **-1** if the key exists but has no expiry, and **-2** if the key does not exist.
 
 </TabItem>
 </Tabs>

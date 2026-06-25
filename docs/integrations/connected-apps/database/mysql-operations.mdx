@@ -22,7 +22,7 @@ Creates a new table in the database.
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
 | Table Name | The name of the table to create. | string | Required. |
-| Column Definitions | The column definitions for the table. Supported formats: JSON array (e.g., `[{"name":"id","type":"INT PRIMARY KEY AUTO_INCREMENT"}]`) or comma-separated string (e.g., `id:INT PRIMARY KEY AUTO_INCREMENT`). | string | Required. |
+| Column Definitions | The column definitions for the table. Supported formats:<ul><li>JSON array (e.g., `[{"name":"id","type":"INT PRIMARY KEY AUTO_INCREMENT"}]`)</li><li>comma-separated string (e.g., `id:INT PRIMARY KEY AUTO_INCREMENT`)</li></ul> | string | Required. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -61,8 +61,8 @@ Inserts one or more rows into a table.
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
 | Table Name | The name of the table to insert rows into. | string | Required. |
-| Columns | The column names to insert data into. Supported formats: JSON array (e.g., `["id","name"]`) or comma-separated string (e.g., `id,name`). | string | Required. |
-| Values | The row values to insert. Supported formats: JSON array of arrays for multiple rows (e.g., `[[1,"John"],[2,"Jane"]]`) or a single JSON array for one row (e.g., `[1,"John"]`). | string | Required. |
+| Columns | The column names to insert data into. Supported formats:<ul><li>JSON array (e.g., `["id","name"]`)</li><li>comma-separated string (e.g., `id,name`)</li></ul> | string | Required. |
+| Values | The row values to insert. Supported formats:<ul><li>JSON array of arrays for multiple rows (e.g., `[[1,"John"],[2,"Jane"]]`)</li><li>a single JSON array for one row (e.g., `[1,"John"]`)</li></ul> | string | Required. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -103,10 +103,10 @@ Inserts rows or updates them if they already exist. Unlike Update Rows, Upsert R
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
 | Table Name | The name of the table to upsert rows into. | string | Required. |
-| Columns | The column names to insert data into. Supported formats: JSON array (e.g., `["id","name"]`) or comma-separated string (e.g., `id,name`). | string | Required. |
-| Values | The row values to insert. Supported formats: JSON array of arrays for multiple rows (e.g., `[[1,"John"],[2,"Jane"]]`) or a single JSON array for one row (e.g., `[1,"John"]`). | string | Required. |
+| Columns | The column names to insert data into. Supported formats:<ul><li>JSON array (e.g., `["id","name"]`)</li><li>comma-separated string (e.g., `id,name`)</li></ul> | string | Required. |
+| Values | The row values to insert. Supported formats:<ul><li>JSON array of arrays for multiple rows (e.g., `[[1,"John"],[2,"Jane"]]`)</li><li>a single JSON array for one row (e.g., `[1,"John"]`)</li></ul> | string | Required. |
 | Conflict Target | The column name(s) with a unique constraint used to detect duplicate rows. If a row with the same value already exists, it is updated instead of inserted (e.g., `id` or `email`). | string | Required. |
-| Update Columns | The columns to update on conflict. Supported formats: JSON array or comma-separated string. Defaults to all columns except the conflict target. | string | Optional. |
+| Update Columns | The columns to update on conflict. Supported formats:<ul><li>JSON array</li><li>comma-separated string</li></ul> Defaults to all columns except the conflict target. | string | Optional. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
