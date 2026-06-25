@@ -767,6 +767,18 @@ const sidebars = {
                                 },
                                 {
                                     type: 'category',
+                                    label: 'Google Cloud Storage',
+                                    link: { type: 'doc', id: 'integrations/connected-apps/cloud/google-cloud-storage' },
+                                    items: [
+                                        {
+                                            type: 'doc',
+                                            id: 'integrations/connected-apps/cloud/google-cloud-storage-operations',
+                                            label: 'Google Cloud Storage Operations Reference',
+                                        },
+                                    ],
+                                },
+                                {
+                                    type: 'category',
                                     label: 'AWS S3',
                                     link: { type: 'doc', id: 'integrations/connected-apps/cloud/aws-s3' },
                                     items: [
