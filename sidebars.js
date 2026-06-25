@@ -791,6 +791,18 @@ const sidebars = {
                                 },
                                 {
                                     type: 'category',
+                                    label: 'AWS Lambda',
+                                    link: { type: 'doc', id: 'integrations/connected-apps/cloud/aws-lambda' },
+                                    items: [
+                                        {
+                                            type: 'doc',
+                                            id: 'integrations/connected-apps/cloud/aws-lambda-operations',
+                                            label: 'AWS Lambda Operations Reference',
+                                        },
+                                    ],
+                                },
+                                {
+                                    type: 'category',
                                     label: 'AWS S3',
                                     link: { type: 'doc', id: 'integrations/connected-apps/cloud/aws-s3' },
                                     items: [
