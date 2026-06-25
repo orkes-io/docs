@@ -64,7 +64,8 @@ To integrate Google Cloud Storage with Orkes Conductor, you need a Google Cloud 
 5. Select **Continue**, then **Done**.
 6. Click on the newly created service account, go to the **Keys** tab, and select **Add Key** > **Create new key**.
 7. Choose **JSON** as the key type and select **Create**. The key file downloads automatically.
-8. Keep the downloaded JSON file ready; you'll need its full contents in the next step.
+
+Keep the downloaded JSON file ready; you'll need its full contents in the next step.
 
 ## Step 2: Add an integration for Google Cloud Storage
 
@@ -80,8 +81,8 @@ After obtaining the credentials, add a Google Cloud Storage integration to your 
 | Parameter | Description | Required/Optional |
 | --------- | ----------- | ----------------- |
 | Integration name | A name for the integration. | Required. |
-| Scope | The OAuth2 scope for Cloud Storage API access. Supported values: **Read Only** (read-only access to buckets and objects), **Read & Write** (read and write access to buckets and objects), or **Full Control** (full control over buckets and objects, including updating and deleting). | Required. |
-| Service Account JSON | Paste the full contents of the Google Cloud service account key JSON file downloaded in [Step 1]. | Required. |
+| Scope | The OAuth2 scope for Cloud Storage API access. Supported values:<ul><li>**Read Only**:Grants read-only access to buckets and objects.</li><li>**Read & Write**: Grants read and write access to buckets and objects.</li><li>**Full Control**: Grants full control over buckets and objects, including updating and deleting.</li></ul> | Required. |
+| Service Account JSON | Paste the full contents of the Google Cloud service account key JSON file downloaded in [Step 1](/content/integrations/google-cloud-storage#step-1-get-the-google-cloud-console-credentials). | Required. |
 | Default Bucket Name | The default Google Cloud Storage bucket to use when a bucket is not explicitly provided in a workflow task. | Optional. |
 | Description | A description of the integration. | Required. |
 

@@ -147,7 +147,7 @@ Provision a new Google Cloud Storage bucket.
 | --------- | ----------- | ---- | ----------------- |
 | Bucket Name | A globally unique name for the new bucket. | string | Required. |
 | Location | The geographic location for the bucket (e.g., `US`, `EU`, `ASIA`). | string | Optional. |
-| Storage Class | The storage class for the bucket. Supported values: `STANDARD`, `NEARLINE`, `COLDLINE`, `ARCHIVE`. | string | Optional. |
+| Storage Class | The storage class for the bucket. Supported values:<ul><li>`STANDARD`</li><li>`NEARLINE`</li><li>`COLDLINE`</li><li>`ARCHIVE`</li></ul>. | string | Optional. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -187,7 +187,7 @@ Modify a Google Cloud Storage bucket's settings, such as versioning or storage c
 | --------- | ----------- | ---- | ----------------- |
 | Bucket Name | The name of the bucket to update. | string | Required. |
 | Versioning Enabled | Set to `true` to enable object versioning or `false` to disable it. | boolean | Optional. |
-| Storage Class | The new storage class for the bucket. Supported values: `STANDARD`, `NEARLINE`, `COLDLINE`, `ARCHIVE`. | string | Optional. |
+| Storage Class | The new storage class for the bucket. Supported values:<ul><li>`STANDARD`</li><li>`NEARLINE`</li><li>`COLDLINE`</li><li>`ARCHIVE`</li></ul> | string | Optional. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
