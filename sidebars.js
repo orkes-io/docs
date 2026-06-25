@@ -693,6 +693,18 @@ const sidebars = {
                                         },
                                     ],
                                 },
+                                {
+                                    type: 'category',
+                                    label: 'Jira',
+                                    link: { type: 'doc', id: 'integrations/connected-apps/project-management/jira' },
+                                    items: [
+                                        {
+                                            type: 'doc',
+                                            id: 'integrations/connected-apps/project-management/jira-operations',
+                                            label: 'Jira Operations Reference',
+                                        },
+                                    ],
+                                },
                             ],
                         },
                         {
