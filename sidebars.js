@@ -743,6 +743,18 @@ const sidebars = {
                             items: [
                                 {
                                     type: 'category',
+                                    label: 'Azure Storage',
+                                    link: { type: 'doc', id: 'integrations/connected-apps/cloud/azure-storage' },
+                                    items: [
+                                        {
+                                            type: 'doc',
+                                            id: 'integrations/connected-apps/cloud/azure-storage-operations',
+                                            label: 'Azure Storage Operations Reference',
+                                        },
+                                    ],
+                                },
+                                {
+                                    type: 'category',
                                     label: 'AWS S3',
                                     link: { type: 'doc', id: 'integrations/connected-apps/cloud/aws-s3' },
                                     items: [
