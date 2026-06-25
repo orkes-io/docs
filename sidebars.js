@@ -935,6 +935,30 @@ const sidebars = {
                                 },
                             ],
                         },
+                        {
+                            type: 'category',
+                            label: 'Payment',
+                            link: {
+                                type: 'generated-index',
+                                title: 'Payment',
+                                slug: '/category/integrations/payment',
+                                description: 'Learn how to connect payment platforms to automate payment related workflows.',
+                            },
+                            items: [
+                                {
+                                    type: 'category',
+                                    label: 'Stripe',
+                                    link: { type: 'doc', id: 'integrations/connected-apps/payment/stripe' },
+                                    items: [
+                                        {
+                                            type: 'doc',
+                                            id: 'integrations/connected-apps/payment/stripe-operations',
+                                            label: 'Stripe Operations Reference',
+                                        },
+                                    ],
+                                },
+                            ],
+                        },
                     ],
                 },
             ],
