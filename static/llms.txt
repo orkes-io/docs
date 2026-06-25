@@ -1595,16 +1595,16 @@ With the imported workflow definitions in place, you can:
 
 # Tasks in Workflows
 
-Tasks are the fundamental building blocks of Conductor workflows. Each task represents a discrete unit of work that can be executed within a larger business process. Understanding how tasks work is essential to building effective workflows in Conductor.
+Tasks are the fundamental building blocks of Conductor workflows. Each task represents a discrete unit of work that can be executed within a larger business process. Understanding how tasks work is essential for building effective workflows in Conductor.
 
-When building workflows, you can use the built-in system tasks and operators provided by Conductor and additionally [write your own custom worker tasks](using-workers) to implement custom logic.
+When building workflows, you can use the built-in system tasks and operators provided by Conductor, leverage connected apps to interact with third-party services, and additionally [write your own custom worker tasks](using-workers) to implement custom logic.
 
 ## Built-in tasks
 
 Conductor provides built-in system tasks and operators that let you build workflows without writing custom workers. These are managed by Conductor and run within its JVM (Java Virtual Machine), allowing you to get started quickly.
 
-* [System tasks](/content/category/reference-docs/system-tasks) perform units of work, such as calling APIs, transforming data, or interacting with external services. System tasks include [AI tasks](/category/reference-docs/ai-tasks) that can be used to build AI-powered and agentic applications.
 * [Operators](/content/category/reference-docs/operators) control workflow execution, such as branching, looping, and parallel execution.
+* [System tasks](/content/category/reference-docs/system-tasks) perform units of work, such as calling APIs, transforming data, or interacting with external services. System tasks include [AI tasks](/category/reference-docs/ai-tasks) that can be used to build AI-powered and agentic applications.
 
 ### Operators
 
@@ -1614,10 +1614,10 @@ Use these operators as control structures for managing the execution flow in you
 | -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
 | Conditional flow | <ul><li>[Switch](../reference-docs/operators/switch): Execute tasks conditionally, like an _if…else…_ statement.</li></ul> | 
 | Looping flow | <ul><li>[Do While](../reference-docs/operators/do-while): Execute tasks repeatedly, like a _do…while…_ statement.</li></ul> |
-| Parallel flows | <ul><li>[Fork](../reference-docs/operators/fork-join): Execute a static number of tasks in parallel.</li><li>[Dynamic Fork](../reference-docs/operators/dynamic-fork): Execute a dynamic number of tasks in parallel.</li><li>[Join](../reference-docs/operators/join): Join the forks after a Fork or Dynamic Fork before proceeding to the next task.</li><li>[Start Workflow](../reference-docs/operators/start-workflow): Asynchronously start another workflow.</li></ul> | 
-| Jumps or state changes in flow | <ul><li>[Terminate](../reference-docs/operators/terminate): Terminate the current workflow, like a _return_ statement.</li><li>[Sub Workflow](../reference-docs/operators/sub-workflow): Synchronously start another workflow, like a subroutine.</li><li>[Terminate Workflow](../reference-docs/operators/terminate-workflow.mdx): Terminate another ongoing workflow.</li></ul> | 
+| Parallel flows | <ul><li>[Fork](../reference-docs/operators/fork-join): Execute a static number of tasks in parallel.</li><li>[Dynamic Fork](../reference-docs/operators/dynamic-fork): Execute a dynamic number of tasks in parallel.</li><li>[Join](../reference-docs/operators/join): Join the forks after a Fork or Dynamic Fork before proceeding to the next task.</li></ul> | 
+| Jumps or state changes in flow | <ul><li>[Terminate](../reference-docs/operators/terminate): Terminate the current workflow, like a _return_ statement.</li><li>[Terminate Workflow](../reference-docs/operators/terminate-workflow.mdx): Terminate another ongoing workflow.</li><li>[Sub Workflow](../reference-docs/operators/sub-workflow): Synchronously start another workflow, like a subroutine.</li><li>[Start Workflow](../reference-docs/operators/start-workflow): Asynchronously start another workflow.</li></ul> | 
 | State querying | <ul><li>[Get Workflow](../reference-docs/operators/get-workflow): Get the execution details of another ongoing workflow.</li></ul> | 
-| Waits in flow | <ul><li>[Wait](../reference-docs/operators/wait): Pause the current workflow until a set time, duration, or signal is received.</li><li>[Human](/content/reference-docs/operators/human): Pause the current workflow for human input before proceeding to the next task.</li><li>[Yield](../reference-docs/operators/yield): Temporarily yields control over the workflow by pausing the execution until it is explicitly resumed using specific endpoints.</li></ul> | 
+| Waits in flow | <ul><li>[Wait](../reference-docs/operators/wait): Pause the current workflow until a set time, duration, or signal is received.</li><li>[Human](/content/reference-docs/operators/human): Pause the current workflow for human input before proceeding to the next task.</li><li>[Yield](../reference-docs/operators/yield): Temporarily yields control over the workflow by pausing the execution until it is explicitly resumed via signal endpoints.</li></ul> | 
 | Dynamic tasks in flow | <ul><li>[Dynamic](../reference-docs/operators/dynamic): Execute a task dynamically, like a function pointer.</li></ul> 
 | For assigning variables | <ul><li>[Set Variable](../reference-docs/operators/set-variable): Define shared variables at the workflow level that can be accessed or overwritten by subsequent tasks in the workflow.</li></ul> | 
 
@@ -1642,6 +1642,11 @@ In most common cases, you can make use of existing Conductor tasks instead of cr
 | Invoke remote endpoints in gRPC services                                                     | [gRPC](../reference-docs/system-tasks/grpc)                               |
 | Query data from Conductor Search API or Metrics                                              | [Query Processor](../reference-docs/system-tasks/query-processor)         |
 | Send alerts to Opsgenie                                                                      | [Opsgenie](../reference-docs/system-tasks/opsgenie)                       |
+
+**AI tasks**
+
+| Use Case                                                                                     | Task to Use                                                               |
+| -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
 | Generate text from an LLM based on a defined prompt                                          | [Text Complete](../reference-docs/ai-tasks/llm-text-complete)             |
 | Generate text from an LLM based on a user query and additional system/assistant instructions | [Chat Complete](../reference-docs/ai-tasks/llm-chat-complete)             |
 | Generate text embeddings                                                                     | [Generate Embeddings](../reference-docs/ai-tasks/llm-generate-embeddings) |
@@ -1655,6 +1660,16 @@ In most common cases, you can make use of existing Conductor tasks instead of cr
 | Retrieve files from a specific location                                                      | [List Files](../reference-docs/ai-tasks/list-files)                             |
 | Parse and chunk documents from various storage locations                                     | [Parse Document](../reference-docs/ai-tasks/parse-document)                             |
 
+## Connected apps operations
+
+The connected apps in Orkes Conductor expose their operations directly as workflow tasks, allowing you to interact with third-party services without writing custom workers. Once a connected app integration is configured in your Conductor cluster, its operations become available as tasks you can drop into any workflow.
+
+For example, the Google Slides integration exposes operations like Create Presentation, Add Slide, Replace Text, and Get Thumbnail as individual tasks. Each operation maps to a discrete step in your workflow, making it easy to build document automation pipelines entirely within Conductor.
+
+These tasks work like system tasks without requiring any external worker setup. The available operations depend on which integrations are configured in your cluster.
+
+To see all available connected apps and their operations, refer [Connected Apps](/content/category/integrations/connected-apps).
+
 ## Custom worker tasks
 
 A [Worker task](../reference-docs/worker-task) can be used to implement custom logic beyond Conductor's built-in tasks. Use custom worker tasks when you need to:
@@ -1664,7 +1679,7 @@ A [Worker task](../reference-docs/worker-task) can be used to implement custom l
 - Execute operations that require access to resources outside Conductor's environment
 - Perform computationally intensive processing that benefits from dedicated workers
 
-These tasks can be written in any programming language of your choice (Python, Java, JavaScript, C#, Go, and Clojure). Unlike a built-in task, a Worker task requires setting up a worker outside the Conductor environment that polls for and executes the task. Your worker application will continuously poll Conductor for tasks to execute, process them, and report results back.
+These tasks can be written in any programming language of your choice (Python, Java, JavaScript, C#, and Go). In workflow JSON, worker tasks use `"type": "SIMPLE"`.  Unlike a built-in task, a Worker task requires setting up a worker outside the Conductor environment that polls for and executes the task. Your worker application will continuously poll Conductor for tasks to execute, process them, and report results back.
 
 Before adding a Worker task in a workflow, it must be registered as a task definition in Conductor. This allows Conductor to apply retries, timeouts, rate limits, and RBAC controls.
 
@@ -1676,7 +1691,7 @@ When working with tasks in Conductor, it's important to understand the distincti
 
 ### Task definition
 
-A task definition specifies a task’s general implementation details, such as expected input and output keys, and failure-handling configurations, including rate limits, retries, and timeouts. This definition applies to all instances of the task across workflows.
+A task definition specifies a task’s general implementation details, such as expected input and output keys, and failure-handling configurations, including [retry logic](/content/error-handling#retry-configuration), [timeouts](/content/error-handling#task-timeouts), and [rate limits](/content/rate-limits#task-rate-limits). This definition applies to all instances of the task across workflows.
 
 All task definitions are stored as JSON. These parameters can be updated in real time without needing to redeploy your application. 
 
@@ -1687,7 +1702,6 @@ Task definitions can be registered via the Conductor UI or through SDK/[API](/co
 **Example**
 
 Here is an example task definition JSON:
-
 
 ``` json
 {
@@ -1728,7 +1742,6 @@ Although each task type has its unique configuration, all tasks share several pa
 
 Refer to the [Task Reference](/category/reference-docs) to learn more about the task configuration for each task type.
 
-
 ### Common configuration parameters
 
 The task configurations appear in the *tasks* array of the workflow definition JSON. For example:
@@ -1754,7 +1767,7 @@ Each task configuration JSON object may contain the following parameters:
 
 | Parameter         | Description                                                                                 | Required/ Optional  |
 | ----------------- | ------------------------------------------------------------------------------------------- | ------------------- |
-| name              | Name of the task. The default value is the same as the task type. <br/><br/>The name can be changed to something descriptive, like “getUsers”. To use a given task definition, the task name here must match the task definition name (case-sensitive).<br/><br/>**Note**: It is recommended to use alphanumeric characters for task names. While special characters are allowed for backward compatibility, they are not fully supported and may cause unexpected behavior. | Required.             |
+| name              | Name of the task. The default value is the same as the task type. <br/><br/>The name can be changed to something descriptive, like “getUsers”. For worker tasks, the name must match the registered task definition name exactly (case-sensitive).<br/><br/>**Note**: It is recommended to use alphanumeric characters for task names. While special characters are allowed for backward compatibility, they are not fully supported and may cause unexpected behavior. | Required.             |
 | taskReferenceName | Reference name for the task. <br/><br/> Must be a unique value in a given workflow.                                                                                                    | Required.           |
 | type              | The task type. For example, HTTP, SIMPLE.                                              | Required.           |
 | inputParameters   | Map of the task’s input parameters.                                                    | Depends on the task type. |
@@ -1806,11 +1819,13 @@ Understanding the lifecycle of a task helps you debug and monitor your workflows
 - Remember that task definitions are shared across workflows, changing retry logic affects all workflows using that task.
 - Consider the impact on shared task queues when deploying high-volume workflows.
 
-Learn how to configure input/output parameters to be used in tasks.
+```mdx-code-block
+
+```
 
 # Wiring Parameters
 
-In Conductor, various workflow and task parameters can be hard-coded or dynamically referenced from elsewhere (including its workflow parameters, prior task parameters, workflow variables, environment variables, and secrets). As long as it can be passed as a string, any workflow or task parameter can make use of a dynamic reference instead of a hard-coded value.
+In Conductor, various workflow and task parameters can be hard-coded or dynamically referenced from elsewhere (including its workflow parameters, prior task parameters, workflow variables, environment variables, secrets, and more). As long as it can be passed as a string, any workflow or task parameter can make use of a dynamic reference instead of a hard-coded value.
 
 These dynamic references are formatted as dot-notation expressions, taking after [JSONPath syntax](https://goessner.net/articles/JsonPath/).
 
@@ -1818,15 +1833,11 @@ These dynamic references are formatted as dot-notation expressions, taking after
 
 All dynamic references are formatted as the following expression:
 
-export const text = `"key" : "\${type.jsonpath}"`;
-
-<div className="passingDataReference">{text}</div>
-
 | Expression Component | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 | -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | key                  | A string representing the parameter name for a workflow or task parameter.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 | `${...}`             | The root notation indicating that the variable will be dynamically replaced at runtime.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-| type                 | The type of reference. Supported values:<ul><li>**workflow**: Refers to the current workflow instance.</li> <li>**workflow.input**: Refers to the workflow’s input parameters.</li> <li>**workflow.output**: Refers to the workflow’s output parameters.</li> <li>**workflow.secrets**: Refers to the secrets available in your Conductor cluster.</li> <li>**workflow.variables**: Refers to the workflow variables set in the workflow using the [Set Variable](/reference-docs/operators/set-variable) task.</li> <li>**workflow.env**: Refers to the environment variables available in your Conductor cluster.</li> <li>**_taskReferenceName_**: Refers to a task in the current workflow instance by its reference name. (For example, “http_ref”).</li> <li>**taskReferenceName.input**: Refers to the task’s input parameters.</li> <li>**taskReferenceName.output**: Refers to the task’s output parameters.</li></ul> |
+| type                 | The type of reference. Supported values:<ul><li>**workflow**: Refers to the current workflow instance.</li> <li>**workflow.input**: Refers to the workflow’s input parameters.</li> <li>**workflow.output**: Refers to the workflow’s output parameters.</li> <li>**workflow.secrets**: Refers to the [secrets](/content/developer-guides/secrets-in-conductor) available in your Conductor cluster.</li> <li>**workflow.variables**: Refers to the workflow variables set in the workflow using the [Set Variable](/reference-docs/operators/set-variable) task.</li> <li>**workflow.env**: Refers to the environment variables available in your Conductor cluster.</li> <li>**_taskReferenceName_**: Refers to a task in the current workflow instance by its reference name. (For example, “http_ref”).</li> <li>**taskReferenceName.input**: Refers to the task’s input parameters.</li> <li>**taskReferenceName.output**: Refers to the task’s output parameters.</li></ul> |
 | jsonpath             | [JSONPath](https://goessner.net/articles/JsonPath/) expression in dot-notation. The path is based on the reference type’s JSON object.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 
 ## Sample expressions
@@ -1844,23 +1855,23 @@ Depending on where the data is being referenced from, here is a non-exhaustive l
 | `${workflow.input._someKey_}`             | References the current workflow’s input parameter `someKey`.                                                                                                                                                                                                                                                                                                                                      |
 | `${workflow.output._someKey_}`            | References the current workflow’s output parameter `someKey`.                                                                                                                                                                                                                                                                                                                                     |
 | `${workflow.status}`                      | References the current [workflow’s status](/developer-guides/task-and-workflow-status-in-conductor). Possible values: RUNNING, PAUSED, TIMED_OUT, TERMINATED, FAILED, or COMPLETED.                                                                                                                                                                                                               |
-| `${workflow.workflowId}`                  | References the current workflow (execution) ID.                                                                                                                                                                                                                                                                                                                                                               |
-| `${workflow.parentWorkflowId}`            | (Used in sub-workflows) References the parent workflow (execution) ID.                                                                                                                                                                                                                                                                                                                                        |
-| `${workflow.parentWorkflowTaskId}`        | (Used in sub-workflows) References the task execution ID for the [Sub Workflow](/reference-docs/operators/sub-workflow) task in the parent workflow.                                                                                                                                                                                                                                                  |
+| `${workflow.workflowId}`                  | References the current workflow (execution) ID.                                                                                                                                                                                                                                                                                                                                                   |
+| `${workflow.parentWorkflowId}`            | (Used in sub-workflows) References the parent workflow (execution) ID.                                                                                                                                                                                                                                                                                                                            |
+| `${workflow.parentWorkflowTaskId}`        | (Used in sub-workflows) References the task execution ID for the [Sub Workflow](/reference-docs/operators/sub-workflow) task in the parent workflow.                                                                                                                                                                                                                                              |
 | `${workflow.workflowType}`                | References the current workflow name.                                                                                                                                                                                                                                                                                                                                                             |
 | `${workflow.version}`                     | References the current workflow version.                                                                                                                                                                                                                                                                                                                                                          |
-| `${workflow.createTime}`                  | References the start time of the workflow execution.                                                                                                                                                                                                                                                                                                                                                           |
+| `${workflow.createTime}`                  | References the start time of the workflow execution.                                                                                                                                                                                                                                                                                                                                              |
 | `${workflow.correlationId}`               | References the current workflow’s correlation ID.                                                                                                                                                                                                                                                                                                                                                 |
-| `${workflow.taskToDomain._domainName_}`   | References the workflow’s domain name that was invoked during its execution.                                                                                                                                                                                                                                                                                                                      |
+| `${workflow.idempotencyKey}`              | References the idempotency key used when starting the workflow.                                                                                                                                                                                                                                                                                                                                   | 
+| `${workflow.taskToDomain.taskReferenceName}`| References the domain mapped to a specific task in this workflow execution. Replace `taskReferenceName` with the actual task reference name.                                                                                                                                                                                                                                                    |
 | `${workflow.variables._someKey_}`         | References the workflow variable `someKey`, which has been set earlier in a [Set Variable](/reference-docs/operators/set-variable) task.                                                                                                                                                                                                                                                          |
 | `${workflow.env._someKey_}`               | References the [environment variable](/developer-guides/using-environment-variables) `someKey`, which has been defined previously in the Conductor cluster.                                                                                                                                                                                                                                       |
-| `${workflow.secrets._someKey_}`           | References the [secret](/developer-guides/secrets-in-conductor) `someKey`, which has been defined previously in the Conductor cluster. <br/><br/> When inspected, the secret value will not be exposed and instead retain its reference value `${workflow.secrets.someKey}`. <br/><br/> During execution, if the workflow doesn't have permission to read the secret, it will fail with an error saying so. |
+| `${workflow.secrets._someKey_}`           | References the [secret](/developer-guides/secrets-in-conductor) `someKey`, which has been defined previously in the Conductor cluster. <br/><br/>When inspected, the secret value will not be exposed and will be masked (***) in the workflow execution.<br/><br/> During execution, if the workflow doesn't have permission to read the secret, it will fail with an error saying so. |
 
 ## Examples
 
 Here are some examples for using dynamic references in workflows.
 
-<details>
 <summary>Referencing workflow inputs​​</summary>
 
 For the given workflow input:
@@ -1894,9 +1905,6 @@ At runtime, the parameters will be:
 }
 ```
 
-</details>
-
-<details>
 <summary>Referencing other task outputs​​</summary>
 
 If a task `previousTaskReference` produced the following output:
@@ -1929,9 +1937,6 @@ At runtime, the parameters will be:
 }
 ```
 
-</details>
-
-<details>
 <summary>Referencing secrets​​</summary>
 
 If a secret named `api_key` with the value `Xxhhjiu0nbfdinvdHyj` is stored in your Conductor cluster, you can reference it in a workflow using the following expression:
@@ -1942,17 +1947,14 @@ If a secret named `api_key` with the value `Xxhhjiu0nbfdinvdHyj` is stored in yo
 }
 ```
 
-At runtime, the parameter `auth` will take on the value `USXxhhjiu0nbfdinvdHyj`. This value will not be exposed in the workflow execution JSON, and users will only see the reference expression while inspecting the JSON object:
+At runtime, the dynamic parameter `auth` resolves to the value of the secret `api_key`. When inspected, the secret value will not be exposed and will be masked (***) in the workflow execution.
 
 ```json
 {
-  "auth": "${workflow.secrets.api_key}"
+  "auth": "***"
 }
 ```
 
-</details>
-
-<details>
 <summary>Referencing workflow variables</summary>
 
 If a workflow variable is set using the [Set Variable](/reference-docs/operators/set-variable) task:
@@ -1971,13 +1973,40 @@ The variable can be referenced in the same workflow using the following expressi
 }
 ```
 
-:::note
+For example, the following workflow sets a variable in the first task and reads it in the second task.
+
+```json
+{
+  "name": "set_and_read_variable_example",
+  "version": 1,
+  "schemaVersion": 2,
+  "tasks": [
+    {
+      "name": "set_user",
+      "taskReferenceName": "set_user_ref",
+      "type": "SET_VARIABLE",
+      "inputParameters": {
+        "name": "Orkes"
+      }
+    },
+    {
+      "name": "read_user",
+      "taskReferenceName": "read_user_ref",
+      "type": "INLINE",
+      "inputParameters": {
+        "evaluatorType": "graaljs",
+        "expression": "(function(){ return { greeting: 'Hello, ' + $.name }; })()",
+        "name": "${workflow.variables.name}"
+      }
+    }
+  ]
+}
+```
+
+At runtime, `${workflow.variables.name}` in `read_user_ref` resolves to "Orkes", and the task outputs `{ "greeting": "Hello, Orkes" }`.
+
 Workflow variables cannot be re-referenced across workflows, even between a parent workflow and a sub-workflow.
-:::
 
-</details>
-
-<details>
 <summary>Referencing environment variables​</summary>
 
 If an environment variable named `location` with the value `US` is stored in your Conductor cluster, you can reference it in a workflow using the following expression:
@@ -1996,13 +2025,157 @@ At runtime, the parameters will be:
 }
 ```
 
-</details>
+<summary>Referencing the workflow ID</summary>
 
-<details>
+To reference the current workflow's execution ID, use the following expression:
+
+```json
+{
+  "currentWorkflow": "${workflow.workflowId}"
+}
+```
+
+At runtime, it will be replaced with the workflow’s execution ID:
+
+```json
+{
+  "currentWorkflow": "9a679cb1-6bea-11f1-a803-9e478e6b7089"
+}
+```
+
+<summary>Referencing the workflow status</summary>
+
+To reference the current workflow's status, use the following expression:
+
+```json
+{
+  "currentStatus": "${workflow.status}"
+}
+```
+
+At runtime, it will be replaced with the workflow’s current status:
+
+```json
+{
+  "currentStatus": "RUNNING"
+}
+```
+
+<summary>Referencing the workflow name and version</summary>
+
+To reference the current workflow's name and version, use the following expressions:
+
+```json
+{
+  "workflowName": "${workflow.workflowType}",
+  "workflowVersion": "${workflow.version}"
+}
+```
+
+At runtime, it will be replaced with the workflow’s name and version:
+
+```json
+{
+  "workflowName": "order-processing-workflow",
+  "workflowVersion": 1
+}
+```
+
+<summary>Referencing the correlation ID</summary>
+
+To reference the current workflow's correlation ID, use the following expression:
+
+```json
+{
+  "correlationId": "${workflow.correlationId}"
+}
+```
+
+At runtime, it will be replaced with the workflow’s correlation ID:
+
+```json
+{
+  "correlationId": "order-123"
+}
+```
+
+<summary>Referencing the idempotency key</summary>
+
+To reference the idempotency key used when starting the workflow, use the following expression:
+
+```json
+{
+  "idempotencyKey": "${workflow.idempotencyKey}"
+}
+```
+
+At runtime, it will be replaced with the the idempotency key used when starting the workflow:
+
+```json
+{
+  "idempotencyKey": "test-key-456"
+}
+```
+
+<summary>Referencing the task domain</summary>
+
+To reference the domain mapped to a specific task in the workflow execution, use the following expression. This is useful when you need to pass the task's routing domain as an input to a downstream task.
+
+```json
+{
+  "domain": "${workflow.taskToDomain.http_ref}"
+}
+```
+
+At runtime, it will be replaced with the domain name that ran the task execution:
+
+```json
+{
+  "domain": "my-domain"
+}
+```
+
+<summary>Referencing the workflow start time</summary>
+
+To reference the start time of the workflow execution, use the following expression. The value is a Unix timestamp in milliseconds.
+
+```json
+{
+  "startedAt": "${workflow.createTime}"
+}
+```
+
+At runtime, it will be replaced with the workflow execution start time:
+
+```json
+{
+  "startedAt": 1781879078219
+}
+```
+
+<summary>Referencing the parent workflow (in sub-workflows)</summary>
+
+To reference the parent workflow and its task execution ID from within a sub-workflow, use the following expressions:
+
+```json
+{
+  "parentId": "${workflow.parentWorkflowId}",
+  "parentTaskId": "${workflow.parentWorkflowTaskId}"
+}
+```
+
+At runtime, these will be replaced with the actual IDs:
+
+```json
+{
+  "parentId": "d7061d93-6bea-11f1-b106-2a7869257662",
+  "parentTaskId": "d70903cf-6bea-11f1-b106-2a7869257662"
+}
+```
+
+These return null if the workflow is not running as a sub-workflow.
+
 <summary>Referencing data between parent workflow and sub-workflow​</summary>
-
-<Tabs>
-<TabItem value="From parent workflow" label="From parent workflow">
 
 To pass parameters from a parent workflow into its sub-workflow, you must declare them as input parameters for the Sub Workflow task.
 
@@ -2051,9 +2224,6 @@ To pass parameters from a parent workflow into its sub-workflow, you must declar
 
 If needed, these inputs can then be set as workflow variables within the sub-workflow definition itself using a Set Variable task.
 
-</TabItem>
-<TabItem value="From sub-workflow" label="From sub-workflow">
-
 To pass parameters from a sub-workflow back to its parent workflow, you must pass them as the sub-workflow’s output parameters in the sub-workflow definition.
 
 ```
@@ -2100,17 +2270,12 @@ To pass parameters from a sub-workflow back to its parent workflow, you must pas
 
 In the parent workflow, these sub-workflow outputs can be referenced using the expression format `${*sub_workflow_ref*.output.*someKey*}`.
 
-</TabItem>
-</Tabs>
-</details>
-
 ## Troubleshooting
 
 You can verify if the data was passed correctly by checking the input/output values of the task execution in **Executions** > **Workflow**. Common errors:
 
 - If the reference expression is incorrectly formatted, the referencing parameter value may end up with the wrong data or a null value.
 - If the reference parameter (such as a task output) has not been resolved at the point when it is referenced, the dynamic parameter will be null.
-
 
 # Masking Parameters
 
@@ -2124,10 +2289,7 @@ You can mask data in a workflow definition using the following parameters:
 
 ## Masking sensitive data
 
-When a value is masked, it is replaced with `***`, ensuring that confidential information is hidden in workflow executions. 
-
-<Tabs>
-<TabItem value="Using _secrets parameter" label="Using _secrets parameter">
+When a value is masked, it is replaced with `***`, hiding confidential information in workflow executions.
 
 For example:
 
@@ -2147,9 +2309,6 @@ This is displayed in the workflow execution as:
 }
 ```
 
-</TabItem>
-<TabItem value="Using _masked parameter" label="Using _masked parameter">
-
 For example:
 
 ```json
@@ -2166,14 +2325,8 @@ This is displayed in the workflow execution as:
 }
 ```
 
-</TabItem>
-
-<TabItem value="Using maskedFields parameter" label="Using maskedFields parameter">
-
-:::info Available since
 - v5.1.18 and later
 - v4.1.68 and later
-:::
 
 Use the *maskedFields* parameter to specify which fields to mask during execution. Include the name of each field you want to mask as an element in the array.
 
@@ -2196,15 +2349,9 @@ In the workflow execution, the fields are displayed as:
 }
 ```
 
-</TabItem>
-</Tabs>
-
 ### Passing sensitive data between tasks
 
 To pass sensitive data from one task's output to a subsequent task, nest the sensitive fields inside either the *_secrets* or *_masked* object in the receiving task’s  input parameters as follows:
-
-<Tabs>
-<TabItem value="Using _secrets parameter" label="Using _secrets parameter">
 
 ```json
 {
@@ -2214,9 +2361,6 @@ To pass sensitive data from one task's output to a subsequent task, nest the sen
 }
 ```
 
-</TabItem>
-<TabItem value="Using _masked parameter" label="Using _masked parameter">
-
 ```json
 {
   "_masked": {
@@ -2224,9 +2368,6 @@ To pass sensitive data from one task's output to a subsequent task, nest the sen
   }
 }
 ```
-
-</TabItem>
-</Tabs>
 
 See the complete example in [Passing sensitive data between tasks](/content/developer-guides/masking-parameters#examples).
 
@@ -2254,21 +2395,18 @@ is displayed during execution as
 
 Resolved secret values are always masked, regardless of the context. This ensures that the underlying secret value is never exposed at any point in the workflow execution.
 
-:::info Note
-Secrets used within task expressions, such as in [INLINE scripts](https://orkes.io/content/reference-docs/system-tasks/inline) or [JSON JQ TRANSFORM expressions](https://orkes.io/content/reference-docs/system-tasks/jq-transform), are also masked during execution. When a secret is referenced or resolved inside an expression, its value is replaced with *** in task inputs, task outputs, and the execution details.
-:::
+Secrets used within task expressions, such as in [Inline scripts](https://orkes.io/content/reference-docs/system-tasks/inline) or [JSON JQ Transform expressions](https://orkes.io/content/reference-docs/system-tasks/jq-transform), are also masked during execution. When a secret is referenced or resolved inside an expression, its value is replaced with *** in task inputs, task outputs, and the execution details.
 
 ## Workflow behavior with masked parameters
 
 **Behavior on restarting workflows with masked values**: When a workflow with masked values reaches a terminal state and is removed from the primary execution:
 
-- Values with the _\_masked_ parameter are retained during archiving. If the workflow is restarted, the original data will remain accessible.
-- Values with the _\_secrets_ parameter are permanently replaced with \*\*\* during archiving. As a result, restarting the workflow might cause failures if any tasks rely on the masked data.
-- Values within the _maskedFields_ parameter are permanently replaced with *** during archiving. As a result, restarting the workflow might cause failures if any tasks rely on the masked data.
+- Values masked with `_masked` are retained during archiving. Restarting the workflow preserves the original data.
+- Values masked with `_secrets` are permanently replaced with `***` during archiving. Restarting the workflow may cause failures if tasks depend on the masked data.
+- Values masked with `maskedFields` are permanently replaced with `***` during archiving. Restarting the workflow may cause failures if tasks depend on the masked data.
 
 ## Examples
 
-<details>
 <summary>Using _secrets parameter </summary>
 
 Consider a workflow with a task having an input masked using *_secrets*:
@@ -2303,11 +2441,8 @@ Here’s the complete workflow definition:
 }
 ```
 
-When you run this workflow, the system masks the parameters in the execution results within the task input and the workflow input.
+When you run the workflow, the system masks the parameters in the execution results within the task input and the workflow input.
 
-</details>
-
-<details>
 <summary>Using _masked parameter </summary>
 
 Consider a workflow with a task having an input parameter masked using *_masked*:
@@ -2342,11 +2477,8 @@ Here’s the complete workflow definition:
 }
 ```
 
-When you run this workflow, the system masks the parameters in the execution results within the task input and the workflow input.
+When you run the workflow, the system masks the parameters in the execution results within the task input and the workflow input.
 
-</details>
-
-<details>
 <summary>Using maskedFields parameter</summary>
 
 Consider a workflow definition with input parameters `input1` and `input2`, and output parameter `output1`.
@@ -2408,9 +2540,6 @@ Next, update the workflow definition to mask the `input1` and `output1` paramete
 
 When you run the execution, `input1` and `output1` are masked.
 
-</details>
-
-<details>
 <summary>Passing sensitive data between tasks</summary>
 
 Consider a workflow where a sensitive value from one task’s output needs to be passed to another task. To ensure the data remains masked, nest the parameter under *_secrets* in the receiving task’s input parameters. 
@@ -2441,15 +2570,10 @@ Consider a workflow where a sensitive value from one task’s output needs to be
 }
 ```
 
-:::note
 You can also use the *_masked* parameter to mask the data in this scenario.
-:::
 
-When you run this workflow, the system masks the sensitive data from `simple_demo_ref.output.result` in the execution results because you nested it under `_secrets` as the input parameter to the second task.
+When you run this workflow, the system masks the sensitive data from `simple_demo_ref.output.result` in the execution results because it is nested under `_secrets` as the input parameter to the second task.
 
-</details>
-
-<details>
 <summary>Masking secret references in workflow definitions</summary>
 
 The following workflow calls an external payments API. The HTTP task sends an Authorization header that uses a secret stored as `payment_api_token` in the workflow secrets.
@@ -2551,6 +2675,31 @@ Task input templates are only part of the task definition and will not appear in
 
 You can cache task outputs to reuse them in subsequent workflow executions. When you enable caching, the system stores the task output for a specified duration and reuses it when the same task runs again with matching input parameters. This feature can be configured in the **task configuration**.
 
+## Supported tasks
+
+Caching is available for the following task types:
+
+- [Worker (Simple)](../reference-docs/worker-task)
+- [HTTP](../reference-docs/system-tasks/http)
+- [HTTP Poll](../reference-docs/system-tasks/http-poll)
+- [Business Rule](../reference-docs/system-tasks/business-rule)
+- [SendGrid](/content/reference-docs/system-tasks/sendgrid)
+- [JDBC](../reference-docs/system-tasks/jdbc)
+- [Get Signed JWT](../reference-docs/system-tasks/get-signed-jwt)
+- [gRPC](../reference-docs/system-tasks/grpc)
+- [Opsgenie](../reference-docs/system-tasks/opsgenie)
+- [Yield](/content/reference-docs/operators/yield)
+- [LLM Text Complete](../reference-docs/ai-tasks/llm-text-complete)
+- [LLM Generate Embeddings](../reference-docs/ai-tasks/llm-generate-embeddings)
+- [LLM Store Embeddings](../reference-docs/ai-tasks/llm-store-embeddings.mdx)
+- [LLM Get Embeddings](../reference-docs/ai-tasks/llm-get-embeddings)
+- [LLM Index Document](../reference-docs/ai-tasks/llm-index-document)
+- [Get Document](../reference-docs/ai-tasks/llm-get-document)
+- [LLM Index Text](../reference-docs/ai-tasks/llm-index-text)
+- [LLM Search Index](../reference-docs/ai-tasks/llm-search-index)
+- [LLM Chat Complete](../reference-docs/ai-tasks/llm-chat-complete.mdx)
+- [Chunk Text](../reference-docs/ai-tasks/chunk-text)
+
 ## Parameters
 
 Configure the following parameters to enable task caching in your task configuration.
@@ -2568,7 +2717,7 @@ To configure caching, add the `cacheConfig` object to your task configuration:
 // task configuration    
 "cacheConfig": {
        "key": "someKey",
-       "ttlInSecond": "2500"
+       "ttlInSecond": 2500
      }
 ```
 
@@ -2588,79 +2737,242 @@ If no cached output is found, the task is scheduled as usual. When the task comp
 4. Turn on the **Cache output** toggle.
 5. Enter the **Cache key** and  **TTL (in seconds).** 
 
+  <img
+    src="/content/img/dev-guides/caching_task_outputs-UI_screen.png"
+    alt="Configuring cache output in UI."
+    width="100%"
+    height="auto"
+  ></img>
 ## Example
 
-### Cache output using task input parameters
+<summary>Cache hit</summary>
 
-The following example shows how to cache task output using the task's input parameters `url` and `mediaType`.
+Run the following workflow twice with the same input. The second run returns the cached result.
+
+**To create and run workflow from Conductor UI:**
+
+1. Go to **Definitions** > **Workflow** from the left navigation menu on your Conductor UI.
+2. Select **+ Define workflow** and paste the following code in the **Code** tab:
 
 ```json
-// workflow definition
 {
-  ...
+  "name": "cache_basic_example",
+  "description": "Basic task output caching example",
+  "version": 1,
   "tasks": [
     {
-      "name": "get_document",
-      "taskReferenceName": "get_document_ref",
+      "name": "http_poll",
+      "taskReferenceName": "http_poll_ref",
+      "type": "HTTP_POLL",
       "inputParameters": {
-        "url": "${workflow.input.url}",
-        "mediaType": "application/pdf"
+        "uri": "https://orkes-api-tester.orkesconductor.com/api",
+        "method": "GET",
+        "accept": "application/json",
+        "contentType": "application/json",
+        "terminationCondition": "true",
+        "env": "${workflow.input.env}"
       },
-      "type": "GET_DOCUMENT",
       "cacheConfig": {
-        "key": "${url}-${mediaType}",
-        "ttlInSecond": 60
+        "key": "${env}",
+        "ttlInSecond": 120
       }
     }
   ],
-  "inputParameters": [
-    "url"
-  ],
+  "inputParameters": ["env"],
   "outputParameters": {},
   "schemaVersion": 2
 }
 ```
 
-### Cache output using workflow inputs
-
-To include workflow inputs in the cache key, first pass them to the task's `inputParameters`. The following example passes `userId` from the workflow input to the task:
+3. Go to the **Run** tab and run the workflow using the following input:
 
 ```json
 {
-  ...
+  "env": "prod"
+}
+```
+
+- **For the first execution (cache miss)**: The task executes the API call, and the `pollCount` is 1. The result is stored in cache under key `prod` for 120 seconds.
+- **For the second execution with the same input (cache hit)**: The cached result is returned immediately without executing the task. The task output includes `_cachedResponse: true` and `pollCount` is 0.
+
+<summary>Cache miss</summary>
+
+Run the workflow with a different input. A different cache key is computed, so no cached result is found and the task executes fresh.
+
+Use the same workflow definition as **Cache hit example**. First run with input as `“env”:”prod”` and then run using a different input:
+
+```json
+{
+  "env": "staging"
+}
+```
+
+The cache key now resolves to `staging`, which has no cached entry. The task executes the API call. `pollCount` is 1 and there is no `_cachedResponse` in the output.
+
+Each unique cache key has its own independent cache entry. Running with `env: "prod"` and `env: "staging"` are treated as separate executions.
+
+<summary>Cache expiry (TTL)</summary>
+
+When the TTL expires, the cached result is discarded and the next run executes the task fresh.
+
+**To create and run workflow from Conductor UI:**
+
+1. Go to **Definitions** > **Workflow** from the left navigation menu on your Conductor UI.
+2. Select **+ Define workflow** and paste the following code in the **Code** tab:
+
+```json
+{
+  "name": "cache_ttl_example",
+  "description": "Demonstrates cache expiry using a short TTL",
+  "version": 1,
   "tasks": [
     {
-      "name": "get_document",
-      "taskReferenceName": "get_document_ref",
+      "name": "http_poll",
+      "taskReferenceName": "http_poll_ref",
+      "type": "HTTP_POLL",
       "inputParameters": {
-        "url": "${workflow.input.url}",
-        "mediaType": "application/pdf",
-        "id": "${workflow.input.userId}"
+        "uri": "https://orkes-api-tester.orkesconductor.com/api",
+        "method": "GET",
+        "accept": "application/json",
+        "contentType": "application/json",
+        "terminationCondition": "true"
       },
-      "type": "GET_DOCUMENT",
       "cacheConfig": {
-        "key": "${url}-${id}",
-        "ttlInSecond": 60
+        "key": "ttl_test_key",
+        "ttlInSecond": 30
       }
     }
   ],
-  "inputParameters": [
-    "url",
-    "userId"
-  ],
+  "inputParameters": [],
   "outputParameters": {},
   "schemaVersion": 2
 }
 ```
 
-### Cache output using variables from previous tasks
+3. Run the workflow once and then a second time immediately.
+4. Wait for 30 seconds and run for a third time.
 
-The following example shows how to use a variable from a [Set Variable](/content/reference-docs/operators/set-variable) task in the cache key:
+**For the first execution**: Task executes the API call. The result is cached for 30 seconds, and the `pollCount` is 1.
+
+**For the second execution within 30 seconds (cache hit)**: Cached result is returned. `_cachedResponse: true` and the `pollCount` is 0.
+
+**For the third execution after 30 seconds (cache miss)**: The cache entry has expired. The task executes the API call again. `pollCount` is 1 and there is no `_cachedResponse`.
+
+<summary>Cache output using task input parameters</summary>
+
+Cache the task output based on a value passed directly in the task's `inputParameters`. Here, the `method` field is used as part of the cache key, so GET and POST requests are cached separately.
+
+**To create and run workflow from Conductor UI:**
+
+1. Go to **Definitions** > **Workflow** from the left navigation menu on your Conductor UI.
+2. Select **+ Define workflow** and paste the following code in the **Code** tab:
 
 ```json
-// workflow definition
 {
-  ...
+  "name": "cache_task_input_example",
+  "description": "Demonstrates caching task output using task input parameters",
+  "version": 1,
+  "tasks": [
+    {
+      "name": "http_poll",
+      "taskReferenceName": "http_poll_ref",
+      "type": "HTTP_POLL",
+      "inputParameters": {
+        "uri": "https://orkes-api-tester.orkesconductor.com/api",
+        "method": "${workflow.input.method}",
+        "accept": "application/json",
+        "contentType": "application/json",
+        "terminationCondition": "true"
+      },
+      "cacheConfig": {
+        "key": "api_${method}",
+        "ttlInSecond": 120
+      }
+    }
+  ],
+  "inputParameters": ["method"],
+  "outputParameters": {},
+  "schemaVersion": 2
+}
+```
+
+3. Go to the **Run** tab and run the workflow once and then a second time immediately using the following input:
+
+```json
+{
+  "method": "GET"
+}
+```
+
+**For the first execution (cache miss)**: The cache key resolves to `api_GET`. No cached entry exists. The task executes the API call. `pollCount` is 1.
+
+**For the second execution with the same input (cache hit)**: The cache key resolves to `api_GET` again. The cached result is returned immediately.
+
+Running with `"method": "POST"` computes the key `api_POST` — a cache miss. GET and POST results are cached independently.
+
+<summary>Cache output using workflow inputs</summary>
+
+Cache the task output based on a workflow-level input. Each unique input value gets its own cache entry.
+
+1. Go to **Definitions** > **Workflow** from the left navigation menu on your Conductor UI.
+2. Select **+ Define workflow** and paste the following code in the **Code** tab:
+
+```json
+{
+  "name": "cache_workflow_input_example",
+  "description": "Demonstrates caching task output using workflow input parameters",
+  "version": 1,
+  "tasks": [
+    {
+      "name": "http_poll",
+      "taskReferenceName": "http_poll_ref",
+      "type": "HTTP_POLL",
+      "inputParameters": {
+        "uri": "https://orkes-api-tester.orkesconductor.com/api",
+        "method": "GET",
+        "accept": "application/json",
+        "contentType": "application/json",
+        "terminationCondition": "true",
+        "userId": "${workflow.input.userId}"
+      },
+      "cacheConfig": {
+        "key": "user_${userId}",
+        "ttlInSecond": 120
+      }
+    }
+  ],
+  "inputParameters": ["userId"],
+  "outputParameters": {},
+  "schemaVersion": 2
+}
+```
+
+3. Go to the **Run** tab and run the workflow once and then a second time immediately using the following input:
+
+```json
+{
+  "userId": "user-123"
+}
+```
+
+**For the first execution (cache miss)**: The cache key resolves to `user_user-123`. No cached entry exists. The task executes the API call, and the `pollCount` is 1.
+
+**For the second execution with the same userId (cache hit)**: The cache key resolves to `user_user-123` again. The cached result is returned immediately.
+
+Running with another workflow input is a cache miss. Each user ID has its own independent cache entry.
+
+<summary>Cache output using variables from previous tasks</summary>
+
+Cache the task output based on a value set by an earlier task in the workflow. The [Set Variable](/content/reference-docs/operators/set-variable) task captures the input and stores it as a workflow variable, which is then referenced in the cache key.
+
+1. Go to **Definitions** > **Workflow** from the left navigation menu on your Conductor UI.
+2. Select **+ Define workflow** and paste the following code in the **Code** tab:
+
+```json
+{
+  "name": "cache_variable_example",
+  "description": "Demonstrates caching task output using variables from a previous task",
+  "version": 1,
   "tasks": [
     {
       "name": "set_variable",
@@ -2671,71 +2983,52 @@ The following example shows how to use a variable from a [Set Variable](/content
       }
     },
     {
-      "name": "http",
-      "taskReferenceName": "http_ref",
+      "name": "http_poll",
+      "taskReferenceName": "http_poll_ref",
+      "type": "HTTP_POLL",
       "inputParameters": {
         "uri": "https://orkes-api-tester.orkesconductor.com/api",
         "method": "GET",
         "accept": "application/json",
         "contentType": "application/json",
-        "encode": true,
-        "body": {
-          "cacheKey": "${workflow.variables.region}",
-          "someUnrelated": "Some-val-qvw4g"
-        }
+        "terminationCondition": "true",
+        "cacheKey": "${workflow.variables.region}"
       },
-      "type": "HTTP",
       "cacheConfig": {
-        "key": "re_${body.cacheKey}",
-        "ttlInSecond": 60
+        "key": "re_${cacheKey}",
+        "ttlInSecond": 120
       }
     }
   ],
-  "inputParameters": [
-    "location"
-  ],
+  "inputParameters": ["location"],
   "outputParameters": {},
   "schemaVersion": 2
 }
 ```
 
-## Supported tasks
+3. Go to the **Run** tab and run the workflow once and then a second time immediately using the following input:
 
-Caching is available for the following task types:
+```json
+{
+  "location": "us-east-1"
+}
+```
 
-- [Worker (Simple)](../reference-docs/worker-task)
-- [HTTP](../reference-docs/system-tasks/http)
-- [HTTP Poll](../reference-docs/system-tasks/http-poll)
-- [Business Rule](../reference-docs/system-tasks/business-rule)
-- [SendGrid](/content/reference-docs/system-tasks/sendgrid)
-- [JDBC](../reference-docs/system-tasks/jdbc)
-- [Get Signed JWT](../reference-docs/system-tasks/get-signed-jwt)
-- [gRPC](../reference-docs/system-tasks/grpc)
-- [Opsgenie](../reference-docs/system-tasks/opsgenie)
-- [Yield](/content/reference-docs/operators/yield)
-- [LLM Text Complete](../reference-docs/ai-tasks/llm-text-complete)
-- [LLM Generate Embeddings](../reference-docs/ai-tasks/llm-generate-embeddings)
-- [LLM Store Embeddings](../reference-docs/ai-tasks/llm-store-embeddings.mdx)
-- [LLM Get Embeddings](../reference-docs/ai-tasks/llm-get-embeddings)
-- [LLLM Index Document](../reference-docs/ai-tasks/llm-index-document)
-- [Get Document](../reference-docs/ai-tasks/llm-get-document)
-- [LLM Index Text](../reference-docs/ai-tasks/llm-index-text)
-- [LLM Search Index](../reference-docs/ai-tasks/llm-search-index)
-- [LLM Chat Complete](../reference-docs/ai-tasks/llm-chat-complete.mdx)
-- [Chunk Text](../reference-docs/ai-tasks/chunk-text)
+**For the first execution (cache miss)**: The Set Variable task runs first and stores `us-east-1` as the workflow variable `region`. The HTTP Poll task resolves `${workflow.variables.region}` to `us-east-1` and computes the cache key `re_us-east-1`. No cached entry exists. The task executes the API call. `pollCount` is 1.
+
+**For the second execution with the same location (cache hit)**: The cache key resolves to `re_us-east-1` again. The cached result is returned immediately.
+
+Running with another workflow input is a cache miss. Each region has its own independent cache entry.
 
 # Input/Output Schema Validation
 
-:::info Available since
 - v4.0.11 and later
-:::
 
 In Orkes Conductor, you can create schemas to define and enforce the payload structure of workflow or task inputs/outputs. Once created, schemas can be added to workflow or task definitions:
 * A **workflow-level schema** specifies what workflow inputs/outputs must be supplied.
 * A **task-level schema** specifies the inputs/outputs that must be wired to/from the task. The task-level schema can be general across workflows (specified in the *task definition*) or unique to a specific workflow (specified in the *task configuration*).
 
 The schema is enforced at runtime. The workflow or task will fail if the inputs/outputs do not pass the validation. This behavior is the primary distinction between a task-level schema and non-validated elements, such as *input keys*, *output keys*, and [*input templates*](/content/developer-guides/task-input-templates) defined within a task.
-
 
 ## Schema formats
 
@@ -2783,7 +3076,6 @@ Here is an overview of using schemas in Conductor workflows:
 1. Define a schema for a task’s or workflow’s inputs/outputs.
 2. Add the schema in a workflow definition, task definition, or task configuration.
 
-
 ### Step 1: Define a schema
 
 **To define a schema:**
@@ -2794,15 +3086,11 @@ Here is an overview of using schemas in Conductor workflows:
 
 Learn more about [creating a JSON Schema](https://json-schema.org/learn/getting-started-step-by-step).
 
-
 ### Step 2: Add schema to workflow or task
 
 If the version is unspecified, the latest schema version will be used.
 
 **To add a schema:**
-
-<Tabs>
-<TabItem value="Task-definition" label="Task definition">
 
 1. Go to **Definitions** > **Task**.
 2. Select a task definition that you want to add a schema to.
@@ -2815,7 +3103,6 @@ If the version is unspecified, the latest schema version will be used.
 // task definition
 
 {
-...
   "inputSchema": {
     "name": "mySchema",
     "version": 1,
@@ -2829,10 +3116,6 @@ If the version is unspecified, the latest schema version will be used.
 }
 ```
 
-</TabItem>
-
-<TabItem value="Task-configuration" label="Task configuration">
-
 1. Go to **Definitions** > **Workflow**.
 2. Select a workflow.
 3. In the visual workflow builder, select a task that you want to add a task-level schema to.
@@ -2845,7 +3128,6 @@ If the version is unspecified, the latest schema version will be used.
 // workflow definition
 
 {
-...
      {
      "name": "poll-until-condition-matches-full-worker",
      "taskReferenceName": "poll-until-condition-matches-full-worker",
@@ -2869,35 +3151,32 @@ If the version is unspecified, the latest schema version will be used.
 }
 ```
 
-</TabItem>
+Schema validation at the task-configuration level  is currently supported for the following task types:
 
-<TabItem value="Workflow-definition" label="Workflow definition">
+* [Worker (Simple)](/reference-docs/worker-task)
+* [Yield](/content/reference-docs/operators/yield#task-configuration)
 
 1. Go to **Definitions** > **Workflow**.
 2. Select a workflow that you want to add a workflow-level schema to.
-3. Go to **Schema and Parameters** >  **Workflow Schema** section of the **Workflow** tab.
+3. In the **Workflow** tab, go to **Schema and Parameters** >  **Workflow Schema**.
 4. Select a schema to use as an **Input Schema** or **Output Schema**.
 5. Select a **Version** for the schema.
 6. Select **Save** > **Confirm** in the top right.
 
 ``` json
 // workflow definition
-
 {
-...
-"inputSchema": {
-   "name": "mySchema",
-   "type": "JSON"
- },
- "outputSchema": {
-   "name": "mySchema",
-   "type": "JSON"
- }
+  "inputSchema": {
+    "name": "mySchema",
+    "type": "JSON"
+  },
+  "outputSchema": {
+    "name": "mySchema",
+    "type": "JSON"
+  },
+  "enforceSchema": true
 }
 ```
-
-</TabItem>
-</Tabs>
 
 Once the schema is added, modify your workflow or task inputs/outputs to match the schema.
 
@@ -2907,25 +3186,16 @@ Schemas can be edited in the **Definitions** > **Schema** tab or directly from w
 
 Since schemas can be reused for multiple workflows or tasks, you are encouraged to save changes to an existing schema as a new version or as a new schema entirely.
 
-
 ## Workflow behavior with schemas
 
 If a workflow does not pass its schema validation, it will not be allowed to execute.
 
 If a task does not pass its schema validation, it will fail with a terminal error.
 
-## Supported tasks
-
-Schema validation at the task-configuration level  is currently supported for the following task types:
-
-* [Worker (Simple)](/reference-docs/worker-task)
-* [Yield](/content/reference-docs/operators/yield#task-configuration)
-
 ## Examples
 
 Here are some examples for using the Schema definition in workflows.
 
-<details>
 <summary>Applying a schema in a task definition</summary>
 
 The following example demonstrates how to define a schema, apply it directly to a task definition, and use it in a workflow.
@@ -2967,6 +3237,7 @@ Next, attach the schema to a task definition.
 1. Go to **Definitions** > **Task** from the left navigation menu on your Conductor cluster.
 2. Select an existing task, or create a new one.
 3. In the **Schema** section, select the created schema (`productSchema`) to use as the **Input Schema**.
+
 4. Select a **Version** for the schema.
 5. Switch on the **Enforce schema** toggle.
 6. Select **Save** in the top right.
@@ -3006,6 +3277,7 @@ Next, create a workflow definition to use this task definition.
 
 3. Select **Save** > **Confirm**.
 4. Select the task and update its **Task Definition** to the one created in Step 2. This step ensures that the schema is actually applied.
+
 5. Save the workflow.
 
 Next, run the workflow.
@@ -3024,9 +3296,7 @@ Next, run the workflow.
 
 The workflow begins execution. Since the task is a SIMPLE worker task and no worker is registered for this example, the task remains **SCHEDULED**. For demonstration purposes, manually mark the task as completed from the Conductor UI.
 
-:::tip 
 See the documentation on [using Workers for more details on running Worker tasks](https://orkes.io/content/developer-guides/using-workers).
-:::
 
 The workflow completes successfully. This indicates that the input matched the schema and validation passed.
 
@@ -3042,9 +3312,6 @@ Rerun the same workflow with an invalid `productId`, for example:
 
 The workflow execution now fails. Because the input does not match the schema (expected integer), the task fails schema validation. 
 
-</details>
-
-<details>
 <summary>Applying a schema in a task configuration</summary>
 
 The following example demonstrates how to define a schema and apply it at the task configuration level within a workflow.
@@ -3113,8 +3380,9 @@ Next, attach the schema to a task inside a workflow.
 3. Select **Save** > **Confirm**.
 4. Open the workflow in the visual editor and select the Worker task.
 5. Select the created schema (`productSchema`) to use as the **Input Schema**.
+
 6. Select a **Version** for the schema.
-7. Ensure to update the Input parameter to `${workflow.input.productId}`.
+7. Ensure to update the **Input parameter** to `${workflow.input.productId}`.
 8. Select **Save** > **Confirm** in the top right.
 
 Next, run the workflow.
@@ -3133,9 +3401,7 @@ Next, run the workflow.
 
 The workflow begins execution. Since the task is a SIMPLE worker task and no worker is registered for this example, the task remains **SCHEDULED**. For demonstration purposes, manually mark the task as completed from the Conductor UI.
 
-:::tip 
 See the documentation on [using Workers for more details on running Worker tasks](https://orkes.io/content/developer-guides/using-workers).
-:::
 
 The workflow completes successfully. This indicates that the input matched the schema and validation passed.
 
@@ -3153,11 +3419,8 @@ The workflow execution now fails. Because the input does not match the schema (e
 
 Because `productId` is defined in the schema as an integer, providing a string value causes the input to violate the schema. During execution, Conductor validates the task inputs against the schema attached to the task configuration. When the validator checks `$.productId`, it detects that a string was provided where an integer is required.
 
-As a result, schema validation fails before the task can run. Conductor immediately marks the task with the status **Failed_with_terminal_error**, which indicates that the task cannot proceed or be retried automatically. Since this task is part of a workflow and its failure is terminal, the workflow also transitions to the **Failed** state.
+As a result, schema validation fails before the task can run. Conductor immediately marks the task with the status **FAILED_WITH_TERMINAL_ERROR**, which indicates that the task cannot proceed or be retried automatically. Since this task is part of a workflow and its failure is terminal, the workflow also transitions to the **Failed** state.
 
-</details>
-
-<details>
 <summary>Applying a schema in a workflow definition</summary>
 
 The following example demonstrates how to define a schema and apply it at the workflow definition level.
@@ -3226,7 +3489,8 @@ This schema enforces that all workflow runs must provide a `customerId` of type 
 ```
 
 3. Select **Save** > **Confirm**.
-4. Go to **Schema and Parameters** > **Workflow Schema** section of the **Workflow** tab.
+4. In the **Workflow** tab, go to **Schema and Parameters** > **Workflow Schema**.
+
 5. In **Input Schema**, select the schema (`customerSchema`) created in the previous step.
 6. Select a **Version** for the schema.
 7. Select **Save** > **Confirm** in the top right.
@@ -3235,7 +3499,7 @@ Next, run the workflow.
 
 **Step 3: Run the workflow**
 
-1. Go to the **Run** tab, and enter a valid integer `customerId` as the **Input params**. For example:
+1. Go to the **Run** tab, and enter a valid `customerId` as the **Input params**. For example:
 
 ```json
 {
@@ -3263,7 +3527,9 @@ Execution does not begin because workflow-level validation runs first. When Cond
 
 # Using Secrets
 
-Secrets in Conductor allows you to store and use sensitive data, such as usernames, passwords, API keys, and authorization tokens, without exposing it directly in workflow definitions. After storing them as secrets in Conductor, you can reference them by their secret names in the workflows.
+Secrets in Conductor allow you to store and use sensitive data, such as API keys, passwords, authorization tokens, and environment-specific variables, without exposing it directly in workflow definitions. After storing them as secrets in Conductor, you can reference them by their secret names in the workflows. 
+
+If a user does not have access to a referenced secret, the workflow will fail.
 
 ## Configuring secrets
 
@@ -3275,8 +3541,8 @@ Secrets in Conductor allows you to store and use sensitive data, such as usernam
 
 | Parameter    | Description                                                                                         | Required/ Optional |
 | ------------ | --------------------------------------------------------------------------------------------------- | ------------------ |
-| Secret name  | A unique name for the secret. This will be used to refer to the secret in the workflow definitions. | Required.          |
-| Secret value | The value to be stored as secret.                                                                   | Required.          |
+| Secret name  | A unique name for the secret. Used to reference the secret in workflow definitions.                 | Required.          |
+| Secret value | The value to be stored as secret. Can be a plain string or a JSON object.                           | Required.          |
 
 4. Select **Add** to save the secret.
 
@@ -3290,76 +3556,99 @@ ${workflow.secrets.secret_name}
 
 Here, _secret_name_ is the name of the secret saved in Conductor. This expression dynamically retrieves the secret value during workflow execution, ensuring it is not exposed directly in the workflow definition.
 
+If the secret value is a JSON object, you can access individual fields using dot notation:
+
+```json
+${workflow.secrets.secret_name.field_name}
+```
+
+For example, if a secret named `db-credentials` has the value `{"username": "admin", "password": "secret123"}`, you can reference the username as `${workflow.secrets.db-credentials.username}`.
+
 ## Updating secrets​
 
 Secrets can be updated directly from the Conductor UI or using the [Update Secret task](/content/reference-docs/system-tasks/update-secret) in a workflow.
-
-<Tabs>
-<TabItem label="Using Conductor UI" value="Using Conductor UI">
 
 **To update the secret:**
 
 1. Go to **Definitions** > **Secrets**, and select the secret to update.
 2. In **Secret value**, enter the updated value, then select **Edit** to confirm.
 
-</TabItem>
-<TabItem label="Using Update Secret task" value="Using Update Secret task">
+Use the [Update Secret](/content/reference-docs/system-tasks/update-secret) task when secrets need to be replaced programmatically within a workflow; for example, when an access token expires and must be rotated automatically.
 
-Updating secrets can be challenging when tokens expire and require periodic updates. Use the [Update Secret](https://orkes.io/content/reference-docs/system-tasks/update-secret) task in Conductor to replace such secrets within a workflow.
-
-</TabItem>
-</Tabs>
-
-## Examples
-
-<details>
-<summary>Using secrets in a workflow</summary>
-
-Suppose you have a secret named *sampletask-api-token*. Here is an example of how to use this secret in a workflow definition:
+The task requires the following input structure:
 
 ```json
-// workflow definition
 {
-  "name": "sample_task_http",
-  "taskReferenceName": "sample_task_http",
-  "inputParameters": {
-    "http_request": {
-      "uri": "https://orkes-api-tester.orkesconductor.com/api",
-      "method": "GET",
-      "connectionTimeOut": 3000,
-      "readTimeOut": 3000,
-      "accept": "application/json",
-      "contentType": "application/json",
-      "headers": {
-        "Authorization": "Bearer: ${workflow.secrets.sampletask-api-token}"
-      }
-    }
-  },
-  "type": "HTTP"
+  "_secrets": {
+    "secretKey": "my-secret-name",
+    "secretValue": "${workflow.secrets.new-token-secret}"
+  }
 }
 ```
 
-When this workflow runs, the expression `${workflow.secrets.sampletask-api-token}` will be dynamically replaced with the secret value, provided the user running the workflow has [permission](/content/category/access-control-and-security) to access it.
+If `_secrets`, `secretKey`, or `secretValue` are missing or empty, the task terminates the workflow immediately.
+
+## Examples
+
+<summary>Using a secret in an HTTP task</summary>
+
+Suppose you have a secret named `sampletask-api-token`. Here is an example of how to use this secret in a workflow definition:
+
+```json
+// workflow definition
+   {
+     "name": "sample_task_http",
+     "taskReferenceName": "sample_task_http",
+     "inputParameters": {
+       "http_request": {
+         "uri": "https://orkes-api-tester.orkesconductor.com/api",
+         "method": "GET",
+         "connectionTimeOut": 3000,
+         "readTimeOut": 3000,
+         "accept": "application/json",
+         "contentType": "application/json",
+         "headers": {
+           "Authorization": "Bearer: ${workflow.secrets.sampletask-api-token}"
+         }
+       }
+     },
+     "type": "HTTP"
+   }
+```
+
+When this workflow runs, the expression `${workflow.secrets.sampletask-api-token}` will be dynamically replaced with the secret value, provided the user running the workflow has READ [permission](/content/category/access-control-and-security)  over the secret.
+
+<summary>Using a JSON secret with dot notation</summary>
+
+Suppose you have a secret named `db-credentials` with the following JSON value:
+
+```json
+{
+  "username": "admin",
+  "password": "secret123"
+}
+```
+
+Reference individual fields in a task input using dot notation:
+
+```json
+{
+  "name": "db_query_task",
+  "taskReferenceName": "db_query_task",
+  "inputParameters": {
+    "username": "${workflow.secrets.db-credentials.username}",
+    "password": "${workflow.secrets.db-credentials.password}",
+    "query": "SELECT * FROM orders WHERE status = 'pending'"
+  },
+  "type": "SIMPLE"
+}
+```
+
+<summary>Token rotation</summary>
+
+Regular rotation is essential for time-sensitive secrets, such as access tokens. Implementing effective token rotation strategies ensures that tokens remain valid and secure. For an end-to-end implementation including scheduling, see [Build a Secret Rotation Workflow](/content/templates/examples/rotating-secrets-that-expire).
 
 </details>
-
-## Use cases
-
-### Storing environment-specific variables as secrets
-
-Secrets in Conductor can store values that vary across different environments, such as development, testing, and production. This allows workflows to seamlessly adapt to the environment in which they are executed without requiring hardcoded changes.
-For example, you might have different API keys or database connection strings for testing and production environments. Instead of manually updating the workflow for each environment, you can store these values as secrets and reference them dynamically.
-
-**Example:**
-
-- For a testing environment, you can store a secret with the name _testing-api-key_, and reference it in the workflow as `${workflow.secrets.testing-api-key}`.
-- For a production environment, store a secret named _production-api-key_, and reference it as `${workflow.secrets.production-api-key}`.
-
-This approach ensures workflows can automatically adapt to the appropriate configuration based on the environment.
-
-### Token rotation
-
-Regular rotation is essential for time-sensitive secrets, such as access tokens. Implementing effective token rotation strategies ensures that tokens remain valid and secure. For more detailed instructions, refer to the guide on [rotating secrets](https://orkes.io/content/templates/examples/rotating-secrets-that-expire).
 
 # Using Environment Variables
 
@@ -3384,72 +3673,102 @@ To use an environment variable in a workflow, use the following expression:
 ```
 ${workflow.env.variable-name}
 ```
-Replace *variable-name* with the actual environment variable name. This expression dynamically retrieves the variable during workflow execution.
+Replace *variable-name* with the actual environment variable name. This expression dynamically retrieves the variable during workflow execution. Ensure that the referenced environment variable exists on the cluster before using it in a workflow.
 
-If the environment variable is a JSON value and you want to use it as an object, append `.$` to explicitly parse it as JSON:
+If the environment variable is a JSON value, use dot notation to access its fields:
+
+```
+${workflow.env.variable-name.fieldName}
+```
+
+You can also use standard JsonPath notation:
+
+```
+${workflow.env.variable-name.$.fieldName}
+```
+
+Both forms are equivalent. To retrieve the entire JSON object, use:
 
 ```
 ${workflow.env.variable-name.$}
 ```
+
+The expression is validated when saving the workflow definition. An invalid field path will result in a validation error and the workflow cannot be saved.
 
 ## Updating environment variables
 
 **To update an environment variable:**
 
 1. Go to **Definitions** > **Environment Variables**, and select the variable to update.
-2. In **Value**, enter the updated variable.
+2. In **Value**, enter the updated value.
 3. Select **Edit** to confirm.
 
+  <img
+    src="/content/img/editing-environment-variable.png"
+    alt="Editing an environment variable in Orkes Conductor"
+    width="60%"
+    height="auto"
+  ></img>
 ## Example
 
-<details>
 <summary>Using environment variables in a workflow</summary>
-<p>
-
 To illustrate the use of environment variables in a workflow, consider the following variable stored in Orkes Conductor.
 
+  <img
+    src="/content/img/sample-environment-variable.png"
+    alt="Sample environment variable"
+    width="50%"
+    height="auto"
+  ></img>
 The following example defines a workflow that references the stored environment variable:
 
 ```json
 {
-  "name": "sample-workflow",
-  "description": "Workflow to demonstrate passing variables through environment variables",
-  "version": 1,
-  "tasks": [
-    {
-      "name": "http",
-      "taskReferenceName": "http_ref",
-      "inputParameters": {
-        "uri": "${workflow.env.sample-url}",
-        "method": "GET",
-        "connectionTimeOut": 3000,
-        "readTimeOut": "3000",
-        "accept": "application/json",
-        "contentType": "application/json",
-        "encode": true
-      },
-      "type": "HTTP"
-    }
-  ],
-  "schemaVersion": 2,
-  "ownerEmail": "name@example.com"
+ "name": "sample-workflow",
+ "description": "Workflow to demonstrate passing variables through environment variables",
+ "version": 1,
+ "tasks": [
+   {
+     "name": "http",
+     "taskReferenceName": "http_ref",
+     "inputParameters": {
+       "http_request": {
+         "uri": "${workflow.env.sample-url}",
+         "method": "GET",
+         "connectionTimeOut": 3000,
+         "readTimeOut": "3000",
+         "accept": "application/json",
+         "contentType": "application/json",
+         "encode": true
+       }
+     },
+     "type": "HTTP"
+   }
+ ],
+ "schemaVersion": 2
 }
 ```
 
-When this workflow runs, the expression `${workflow.env.sample-url}` is dynamically replaced with the actual variable value, provided that the user running the workflow has permission to access the variable.
+When this workflow runs, the expression `${workflow.env.sample-url}` is dynamically replaced with the actual variable value.
 
 To verify that the stored variable is passed correctly, go to the workflow execution page, select the HTTP task, and check the **Input**.
 
-</p>
-</details>
-
-<details>
+  <img
+    src="/content/img/sample-environment-variable-used.png"
+    alt="Verifying sample environment variable used in workflow definition"
+    width="100%"
+    height="auto"
+  ></img>
 <summary>Using JSON environment variables in a workflow</summary>
-<p>
-
 This example shows how to use a JSON environment variable in a workflow. Assume the following environment variable is stored in Orkes Conductor:
 
-The following workflow references the stored JSON environment variable and explicitly parses it.
+  <img
+    src="/content/img/env-variable-stored-as-json.png"
+    alt="Environment variable stored as JSON"
+    width="50%"
+    height="auto"
+  ></img>
+The following workflow references the stored JSON environment variable.
 
 ```json
 {
@@ -3478,14 +3797,19 @@ The following workflow references the stored JSON environment variable and expli
 
 In this example:
 
-- `${workflow.env.api-config.$}` parses the environment variable as a JSON object.
-- Individual fields are accessed using standard JSON path notation.
+- `${workflow.env.api-config.$.baseUrl}` accesses the `baseUrl` field of the JSON environment variable using dot notation.
+- `${workflow.env.api-config.$.timeout}` accesses the timeout field.
 
 Run the workflow.
 
 To verify that the stored variable is passed correctly, open the workflow execution, select the HTTP task, and confirm that the resolved values appear in the **Input** tab.
 
-</p>
+  <img
+    src="/content/img/env-variable-parsed-as-json-in-workflow.png"
+    alt="Environment variable parsed as JSON in workflow"
+    width="100%"
+    height="auto"
+  ></img>
 </details>
 
 # Rate Limits
@@ -3502,9 +3826,9 @@ When the number of tasks scheduled within a given period exceeds the defined rat
 
 You can configure rate limit behavior for tasks in its **task definition**. The parameters for defining a task’s rate limit behavior are:
 
-- Rate limit
-- Rate limit frequency
-- Concurrent executions
+- Rate limit per frequency
+- Frequency seconds
+- Concurrent execution limit
 
 | Parameter                   | Description                                                                                          | Required/ Optional |
 | --------------------------- | ---------------------------------------------------------------------------------------------------- | ------------------ |
@@ -3512,9 +3836,7 @@ You can configure rate limit behavior for tasks in its **task definition**. The 
 | rateLimitFrequencyInSeconds | The frequency window (in seconds) for the rate limit.                                                | Optional.          |
 | concurrentExecLimit         | The number of task executions that can be executed concurrently. Default value is 0. <br/><br/>For example, if you have 1000 task executions waiting in the queue and 1000 workers polling it for tasks, but you set `concurrentExecLimit` to 10, only 10 tasks would be given to workers (which would lead to starvation). If any of the workers finish execution, a new task will be removed from the queue while still keeping the current execution count to 10.    | Optional.          |
 
-:::note
 To configure tasks with no rate limits, set `rateLimitPerFrequency` and `concurrentExecLimit` to 0.
-:::
 
 **Example**
 
@@ -3538,7 +3860,6 @@ A workflow’s rate limit controls the number of concurrent executions that can 
 
 When the number of scheduled workflows exceeds the defined rate limit, the Conductor server will place these workflows in a RUNNING state with the first task set to a PENDING status. Once a workflow completes, the rate limit is freed up and the server will schedule the next PENDING task for polling.
 
-
 ### Rate limit configuration
 
 You can configure the limit on concurrent workflow executions in its **workflow definition**.
@@ -3546,7 +3867,7 @@ You can configure the limit on concurrent workflow executions in its **workflow 
 | Parameter                                | Description                                                                                                                                                                                                                                                                                        | Required/ Optional |
 | ---------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
 | rateLimitConfig                          | A map of the workflow rate limit configuration.                                                                                                                                                                                                                                                    | Optional.          |
-| rateLimitConfig. **rateLimitKey**        | A unique identifier to group workflow executions for rate limits. <br/><br/> Can be a fixed value (for example, “max”) or a [dynamic variable](/developer-guides/passing-inputs-to-task-in-conductor#sample-expressions) passed only from the workflow input (for example, `${workflow.input.correlationId}`). | Optional.          |
+| rateLimitConfig. **rateLimitKey**        | A unique identifier to group workflow executions for rate limits. <br/><br/> Can be a fixed value (for example, “max”) or a [dynamic variable](/developer-guides/passing-inputs-to-task-in-conductor#sample-expressions) from the workflow (for example, `${workflow.input.someKey}`, `${workflow.correlationId}`, `${workflow.workflowType}`, or `${workflow.version}`). | Optional.          |
 | rateLimitConfig. **concurrentExecLimit** | The number of workflow executions that can run concurrently for each rate limit key. Cannot be passed as a dynamic variable.                                                                                                                                                                       | Optional.          |
 
 ### Routing rate limits with dynamic key
@@ -3570,9 +3891,6 @@ For example, if workflow executions are grouped by their correlation ID and `con
 
 ### Client SDK methods
 
-<Tabs groupId="language">
-<TabItem value="Java" label="Java">
-
 **Using a fixed `rateLimitKey`**
 
 ```java
@@ -3593,9 +3911,6 @@ In this case, a separate rate limit is applied for each correlation ID.
         workflowDef.setRateLimitConfig(rateLimitConfig);
 ```
 
-</TabItem>
-</Tabs>
-
 # Handling Failures
 
 Orkes Conductor automatically handles transient workflow and task failures without the need to write custom code. Various failure-handling configurations can be set ahead of time, which will take effect during execution.
@@ -3610,9 +3925,7 @@ For workflows, you can configure the following resilience parameters in its work
 - Timeouts
 - Compensation flows (known as failure workflow in Conductor)
 
-:::note
-To deal with workflow failures post-execution, refer to [Debugging Workflows](/developer-guides/debugging-workflows).
-:::
+To deal with workflow failures post-execution, refer to [Debugging Workflow Executions](/developer-guides/debugging-workflows).
 
 ## Message delivery guarantees
 
@@ -3631,15 +3944,15 @@ You can configure retry behavior for tasks in its **task definition**. The param
 
 - Retry count
 - Retry delay seconds
-- Backoff scale factor
 - Retry logic
+- Backoff scale factor
 
 | Parameter          | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | Required/ Optional |
 | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
 | retryCount         | The number of retry attempts if the task fails. Default value is 3.                                                                                                                                                                                                                                                                                                                                                                                                                                     | Optional.          |
 | retryDelaySeconds  | The time (in seconds) to wait before each retry attempt. This provides time for the task service to recover from any transient failure before it is retried. Default value is 60. <br/><br/>                                                                                                                                                                                                                              | Optional.          |
+| retryLogic         | The policy that determines the retry mechanism for the tasks. Supported values: <ul><li>**`FIXED`**: Retries after a fixed interval defined by `retryDelaySeconds`.</li> <li>**`LINEAR_BACKOFF`**: Retries occur with a delay that increases linearly based on `retryDelaySeconds` x `backoffScaleFactor` x `attemptNumber`.</li><li>**`EXPONENTIAL_BACKOFF`**: Retries occur with a delay that increases exponentially based on `retryDelaySeconds` x (`2` ^ `attemptNumber`).</li></ul> Default is FIXED. | Optional.          |
 | backoffScaleFactor | The value multiplied with `retryDelaySeconds`to determine the interval for retry. Default value is 1.                                                                                                                                                                                                                                                                                                                                                                                                   | Optional.          |
-| retryLogic         | The policy that determines the retry mechanism for the tasks. Supported values: <ul><li>**`FIXED`**: Retries after a fixed interval defined by `retryDelaySeconds`.</li> <li>**`LINEAR_BACKOFF`**: Retries occur with a delay that increases linearly based on `retryDelaySeconds` x `backoffScaleFactor` x `attemptNumber`.</li><li>**`EXPONENTIAL_BACKOFF`**: Retries occur with a delay that increases exponentially based on `retryDelaySeconds` x (`backoffScaleFactor` ^ `attemptNumber`).</li></ul> Default is FIXED. | Optional.          |
 
 **Example**
 
@@ -3657,6 +3970,12 @@ You can configure retry behavior for tasks in its **task definition**. The param
 
 ### Example retry behavior
 
+  <img
+    src="/content/img/dev-guides/handling_failures-retry_example.jpg"
+    alt="Diagram showing how the Conductor server and worker interact in the event of a retry."
+    width="100%"
+    height="auto"
+  ></img>
 Based on the retry configuration in the above figure, the following sequence of events will occur in the event of a retry:
 
 1. Worker (W1) polls the Conductor server for task T1 and receives the task.
@@ -3684,13 +4003,11 @@ You can configure timeout behavior for tasks in its **task definition** to handl
 | Parameter              | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | Required/ Optional |
 | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------ |
 | responseTimeoutSeconds | The maximum duration in seconds that a worker has to respond to the server with a status update before it gets marked as `TIMED_OUT`. When configured with a value > 0, Conductor will wait for the worker to return a status update, starting from when the task was picked up. <br/><br/> If a task requires more time to complete, the worker can respond with the `IN_PROGRESS` status. <br/> <br/> Default value is 600.                                                                          | Optional.          |
-| timeoutSeconds         | The maximum duration in seconds for the task to reach a terminal state before it gets marked as `TIMED_OUT`. When configured with a value > 0, Conductor will wait for the task to complete, starting from when the task was picked up. <br/><br/> Useful for governing the overall SLA for completion. <br/><br/> Default value is 3600.                                                                                                                                                              | Required.          |
+| timeoutSeconds         | The maximum duration in seconds for the task to reach a terminal state before it gets marked as `TIMED_OUT`. When configured with a value > 0, Conductor will wait for the task to complete, starting from when the task was picked up. <br/><br/> Useful for governing the overall SLA for completion. <br/><br/> Default value is 3600.                                                                                                                                                              | Optional.          |
 | pollTimeoutSeconds     | The maximum duration in seconds that a worker has to poll a task before it gets marked as `TIMED_OUT`. When configured with a value > 0, Conductor will wait for the task to be picked up by a worker. <br/> <br/> Useful for detecting a backlogged task queue with insufficient workers. <br/> <br/> Default value is 3600.                                                                                                                                                                          | Optional.          |
 | timeoutPolicy          | The policy for handling timeout. Supported values: <ul><li><strong>RETRY</strong>: Retries the task based on the retry configuration.</li> <li><strong>TIME_OUT_WF</strong>: The task is marked as TIMED_OUT and is terminated, which also sets the workflow status as TIMED_OUT.</li> <li><strong>ALERT_ONLY</strong>: An alert message is logged when the timeout occurs.</li></ul>**Note:** The ALERT_ONLY option should be used only when you have your own metrics monitoring system to send alerts. | Optional.          |
 
-:::note
-To configure tasks that never timeout, set `timeOutSeconds` and `pollTimeoutSeconds` to 0.
-:::
+To configure tasks that never timeout, set `timeoutSeconds` and `pollTimeoutSeconds` to 0.
 
 **Example**
 
@@ -3708,9 +4025,24 @@ To configure tasks that never timeout, set `timeOutSeconds` and `pollTimeoutSeco
 
 ### Example timeout behavior
 
-<details>
+<summary>Poll timeout</summary>
+
+In the figure below, task T1 isn’t polled by the worker within 60 seconds, so Conductor marks it as `TIMED_OUT`.
+
+  <img
+    src="/content/img/dev-guides/handling_failures-poll_timeout_example.jpg"
+    alt="Diagram showing how the Conductor server and worker interact in the event of a poll timeout."
+    width="100%"
+    height="auto"
+  ></img>
 <summary>Response timeout</summary>
 
+  <img
+    src="/content/img/dev-guides/handling_failures-response_timeout_example.jpg"
+    alt="Diagram showing how the Conductor server and worker interact in the event of a response timeout."
+    width="100%"
+    height="auto"
+  ></img>
 Based on the timeout configuration in the above figure, the following sequence of events will occur in the event of a delayed worker response:
 
 1. At 0 seconds, the worker polls the Conductor server for task T1 and receives it. T1 is marked as IN_PROGRESS by the server.
@@ -3719,23 +4051,23 @@ Based on the timeout configuration in the above figure, the following sequence o
 4. A new instance of task T1 is scheduled based on the retry configuration.
 5. At 25 seconds, the retried instance of T1 is available for polling after the `retryDelaySeconds` set to 5 has elapsed.
 
-</details>
-
-<details>
 <summary>Timeout</summary>
 
+  <img
+    src="/content/img/dev-guides/handling_failures-timeout_example.jpg"
+    alt="Diagram showing how the Conductor server and worker interact in the event of a timeout."
+    width="100%"
+    height="auto"
+  ></img>
 Based on the timeout configuration in the above figure, the following sequence of events will occur when a task cannot be completed within the given duration:
 
 1. At 0 seconds, a worker polls the Conductor server for task T1 and receives the task. T1 is marked as IN_PROGRESS by the server.
-2. The worker starts processing the task, but is unable to complete it within the response timeout. The worker updates the server with T1 set to an IN_PROGRESS status and a callback of 9 seconds.
+2. The worker starts processing the task, but is unable to complete it within the response timeout. The worker updates the server with T1 set to an IN_PROGRESS status and a callback of 9 seconds (part of worker configuration).
 3. The server puts T1 back in the queue but makes it invisible and the worker continues to poll for the task but does not receive T1 for 9 seconds.
 4. After 9 seconds, the worker receives T1 from the server but is still unable to finish processing the task. As such, the worker updates the server again with a callback of 9 seconds.
 5. The same cycle repeats for the next few seconds.
 6. At 30 seconds (T1 timeout), the server marks T1 as TIMED_OUT because it is not in a terminal state after first being moved to IN_PROGRESS status. The server schedules a new task based on the retry count.
 7. At 32 seconds, the worker finishes processing T1 and updates the server with a COMPLETED status. The server ignores this update since T1 has already been moved to a terminal status (TIMED_OUT).
-
-</details>
-
 
 ## Workflow timeouts
 
@@ -3770,13 +4102,21 @@ You can configure the timeout behavior for the workflow using its **workflow def
 
 ## Workflow compensation flows
 
-A compensation flow can be configured to take place when a workflow execution fails (FAILED status). Known as a **failure workflow** in Conductor, this failure workflow must be created in Conductor and added to the main workflow definition.
+A compensation flow can be configured to take place when a workflow reaches a non-successful terminal state such as FAILED, TIMED_OUT, or TERMINATED. Known as a **failure workflow** in Conductor, this failure workflow must be created in Conductor and added to the main workflow definition. 
 
-When triggered, the failure workflow receives the failed workflow details, such as its workflow ID and tasks, as input. This enables you to implement compensating logic to handle the failure.
+When triggered, the failure workflow receives the following details as input:
+
+- `workflowId`: The ID of the failed workflow.
+- `reason`: The reason for failure.
+- `failureStatus`: The terminal status of the failed workflow (FAILED, TIMED_OUT, or TERMINATED).
+- `failureTaskId`: The ID of the task that caused the failure, if applicable.
+- `failedWorkflow`: The complete workflow object, including all task details.
+
+This enables you to implement compensating logic to handle the failure.
 
 ### Setting a failure workflow
 
-You can set a failure workflow for a workflow in its **workflow definition**. Before setting the failure workflow, ensure it has been created.
+You can set a failure workflow for a workflow in its **workflow definition**. Before setting the failure workflow, ensure it has been created in Conductor.
 
 **To set a failure workflow:**
 
@@ -3785,6 +4125,12 @@ You can set a failure workflow for a workflow in its **workflow definition**. Be
 3. In the **Workflow** tab on the right, scroll down to **Execution Parameters** > **Failure/Compensation** > **Failure/Compensation workflow name**, and select the failure workflow from the dropdown box.
 4. Select **Save** > **Confirm save**.
 
+  <img
+    src="/content/img/failure-workflow.png"
+    alt="Configuring failure workflow in UI."
+    width="100%"
+    height="auto"
+  ></img>
 **Example**
 
 ```json
@@ -4341,8 +4687,20 @@ Task-to-domain mapping allows you to route task executions to a specific pool of
 
 To better understand the concept of routing tasks, consider an example task, `send_email`. By default, the task queue distributes this task to all available workers, as shown:
 
+  <img
+    src="/content/img/task-routing.png"
+    alt="Task distribution by default"
+    width="90%"
+    height="auto"
+  />
 To route this task to a specific group of workers, you can assign it a domain when triggering the workflow. The task is then routed only to workers configured for that domain.
 
+  <img
+    src="/content/img/task-routing-domains.png"
+    alt="Task distribution via dedicated domains"
+    width="90%"
+    height="auto"
+  />
 Here, the `send_email` task has two additional sets of worker instances that listen to specific domain-based tasks. For example, all the tasks triggered with the domain `dedicated_for_app_x` are sent to the workers configured with the domain `dedicated_for_app_x`.
 
 The task-to-domain feature is useful in the following scenarios:
@@ -4364,9 +4722,6 @@ To successfully route a task by domain:
 ### Worker configuration
 
 Workers must be configured to listen for tasks mapped with a specific domain. Below are examples demonstrating how to set up workers to poll for tasks in the `test` domain across various programming languages:
-
-<Tabs>
-<TabItem value="Java" label="Java">
 
 The following table shows the order of precedence when initializing the task domain for a worker. Suppose a system property is set according to the table below. In that case, it takes priority over initializing the taskToDomain map or passing the domain as an argument when using annotations. If `${TASK_NAME}` is replaced by `all` in the system property name, then all workers will pick up that task domain.
 
@@ -4405,10 +4760,692 @@ public TaskResult sendAnnotatedTaskDomain(Task task) {
 
 In the example above, we map the task `taskName` to the domain `test`. Only workers configured to poll for the `test` domain will execute the task when the workflow is triggered. [See the complete code here](https://github.com/orkes-io/orkes-conductor-client/blob/main/examples/java/io/orkes/conductor/sdk/examples/TaskDomainWorker.java).
 
-</TabItem>
-<TabItem value="Python" label="Python">
-
 ```python
+# Function Worker
+def execute(task: Task) -> TaskResult:
+    task_result = TaskResult(
+        task_id=task.task_id,
+        workflow_instance_id=task.workflow_instance_id,
+        worker_id='your_custom_id'
+    )
+    task_result.add_output_data('worker_style', 'function')
+    task_result.status = TaskResultStatus.COMPLETED
+    return task_result
+
+# Class Worker
+class SimpleWorker(WorkerInterface):
+    def execute(self, task: Task) -> TaskResult:
+        task_result = self.get_task_result_from_task(task)
+        task_result.add_output_data('worker_style', 'class')
+        task_result.status = TaskResultStatus.COMPLETED
+        return task_result
+
+    def get_polling_interval_in_seconds(self) -> float:
+        return 0.4
+
+    # Overriding it for specifying the DOMAIN of class workers
+    def get_domain(self) -> str:
+        return "test"
+
+def startTaskRunnerWorkers():
+    configuration = Configuration(
+        authentication_settings=AuthenticationSettings(
+            key_id='key',
+            key_secret='secret'
+        ),
+        server_api_url='https://developer.orkescloud.com/api',
+        debug=True
+    )
+
+    workers = [
+        Worker(
+            task_definition_name='task_1',
+            execute_function=execute,
+            poll_interval=0.25,
+            domain="test" # specifying DOMAIN for function workers
+        ),
+        SimpleWorker(task_definition_name="task_2")
+    ]
+```
+
+In this example, we configure the `SimpleWorker` to listen for tasks with the `test` domain by implementing the `get_domain()` method. [See additional examples](https://github.com/conductor-oss/python-sdk/blob/main/docs/WORKER.md).
+
+```javascript
+// You can specify on the worker
+  return {
+    domain: "myDomain",
+    taskDefName: GET_USER_INFO,
+    execute: async ({ inputData }) => {
+      const userId = inputData?.userId;
+      return {
+        outputData: {
+          email: `${userId}@email.com`,
+          phoneNumber: "555-555-5555",
+        },
+        status: "COMPLETED",
+      };
+    },
+  };
+};
+// or on the Poller Option
+new TaskManager(client, workers, {
+  logger: console,
+  options: { concurrency: 5, pollInterval: 100, domain: "domain" },
+});
+// *Note* worker domain has precedence over the domain passed in the poller
+```
+
+```typescript
+// You can specify on the worker
+  return {
+    domain: "myDomain",
+    taskDefName: GET_USER_INFO,
+    execute: async ({ inputData }) => {
+      const userId = inputData?.userId;
+      return {
+        outputData: {
+          email: `${userId}@email.com`,
+          phoneNumber: "555-555-5555",
+        },
+        status: "COMPLETED",
+      };
+    },
+  };
+};
+
+// or on the Poller Option
+new TaskManager(client, workers, {
+  logger: console,
+  options: { concurrency: 5, pollInterval: 100, domain: "domain" },
+});
+// *Note* worker domain has precedence over the domain passed in the poller
+```
+
+### Workflow configuration
+
+When you start a workflow, you can specify which tasks must run on which domains.
+
+For running a workflow from the Conductor UI, define the following task-to-domain mapping:
+
+```json
+{
+  "task_x": "test"
+}
+```
+
+  <img
+    src="/content/img/task-to-domain.png"
+    alt="Task To Domain mapping while invoking workflows"
+    width="100%"
+    height="auto"
+  ></img>
+Use the [Start Workflow Execution API](https://orkes.io/content/reference-docs/api/workflow/start-workflow-execution) to trigger the workflow by providing the `taskToDomain` as the input payload.
+
+```
+POST /api/workflow/{name}
+```
+
+### RBAC configuration
+
+While configuring groups or applications in Conductor, you can add granular permissions to access specific resources. This includes granting permission to specific domains and allowing applications or groups to execute all tasks under that domain by eliminating the need to configure access for individual tasks.
+
+**To enable domain permissions:**
+
+1. Go to **Access Control** > **Applications/Groups** from the left menu on your Conductor cluster.
+2. Select your application or group.
+3. Scroll down to **Permissions**, and select **+ Add permission**.
+4. In the **Domain** tab, select **+ Add**, and enter the domain name.
+5. Enable the **Execute** toggle.
+6. Select **Add Permissions**.
+
+  <img
+    src="/content/img/domain-permission.png"
+    alt="RBAC to Domain"
+    width="50%"
+    height="auto"
+  ></img>
+The application/group can now execute all tasks under the specified domain.
+
+## Fallback task-to-domain​
+
+A fallback domain is a secondary or backup domain that the system will use if the primary domain fails or is unreachable. These domains can only be specified when triggering a workflow, as clients polling for tasks can use only one domain at a time.
+
+Conductor tracks the last polling time for each worker. When assigning tasks, it first checks if any active workers are available for the primary domain. If no active workers are found, the Conductor tries the next domain in the fallback sequence.
+
+- A worker is considered active if the polled time is within the active threshold, which defaults to 10 seconds.
+- Workers do not poll when they are busy doing work and resume polling after completing their tasks.
+- The active threshold can be adjusted using the configuration field `conductor.app.activeWorkerLastPollTimeout`. This applies to all worker tasks, so extending the duration slows down the fallback response behavior across all tasks.
+- The domain of a task is determined at the time when the task is scheduled. Therefore, a domain worker becoming available after a task is scheduled will not change the domain of the already scheduled task.
+  
+A fallback mapping for `task_x` is as follows:
+
+```json
+{
+  "task_x": "test,fallback,NO_DOMAIN"
+}
+```
+
+In this configuration,
+
+- Conductor first assigns the task to workers in the `test` domain if available.
+- If no workers are active in the `test` domain, it tries the `fallback` domain.
+- If neither `test` nor  `fallback` has active workers, the task is assigned to `NO_DOMAIN`.
+
+- `NO_DOMAIN` is a generic keyword for workers with no domain.
+- Always use `NO_DOMAIN` as the final fallback option.
+- If `NO_DOMAIN` is not included, the task falls back to subsequent domains. If it reaches an inactive domain, it remains there indefinitely until workers for that domain become active.
+- Use the `*` token to apply domains for all tasks. This can be overridden by providing task-specific mappings along with `*`.
+  
+## Example
+
+<summary>Task-to-domain implementation using Java Spring Boot</summary>
+
+Let’s create a simple workflow that includes a worker task ([SIMPLE](https://orkes.io/content/reference-docs/worker-task)) and configure it to poll only from a specific domain.
+
+**Step 1: Create a task definition**
+
+**To create a task definition:**
+
+1. Go to **Definitions** > **Task** from the left menu on your Conductor cluster.
+2. Select **+ Define task**.
+3. In **Code** tab, paste the following JSON:
+
+```json
+{
+ "name": "hello_task",
+ "description": "Sample",
+ "retryCount": 3,
+ "timeoutSeconds": 3600,
+ "inputKeys": [],
+ "outputKeys": [],
+ "timeoutPolicy": "TIME_OUT_WF",
+ "retryLogic": "FIXED",
+ "retryDelaySeconds": 60,
+ "responseTimeoutSeconds": 600,
+ "concurrentExecLimit": 0,
+ "inputTemplate": {},
+ "rateLimitPerFrequency": 0,
+ "rateLimitFrequencyInSeconds": 1,
+ "ownerEmail": "john.doe@acme.com",
+ "pollTimeoutSeconds": 3600,
+ "backoffScaleFactor": 1,
+ "totalTimeoutSeconds": 0,
+ "enforceSchema": false
+}
+```
+
+4. Select **Save** > **Confirm Save**.
+
+**Step 2: Create a workflow definition**
+
+**To create a workflow definition:**
+
+1. Go to **Definitions** > **Workflow** from the left menu on your Conductor cluster.
+2. Select **+ Define workflow**.
+3. In **Code** tab, paste the following JSON:
+
+```json
+{
+ "name": "hello_world_workflow",
+ "description": "A simple workflow that runs the hello_task in test_domain",
+ "version": 1,
+ "tasks": [
+   {
+     "name": "hello_task",
+     "taskReferenceName": "hello_ref",
+     "type": "SIMPLE"
+   }
+ ],
+ "schemaVersion": 2
+}
+```
+
+4. Select **Save** > **Confirm Save**.
+
+**Step 3: Configure task-to-domain routing in Spring Boot**
+
+This Spring Boot worker configuration connects to your Orkes Conductor cluster and sets up domain-based task polling. This configuration:
+
+- Loads a task-to-domain mapping
+- Registers the worker
+- Routes `hello_task` to `test_domain`
+
+```java
+package com.example.demo.condutor;
+
+@Configuration
+public class ConductorConfig {
+
+   private static final String CONDUCTOR_SERVER = "http://<YOUR-SERVER-URL>/api";
+   private static final String KEY = "<YOUR-ACCESS-KEY>";
+   private static final String SECRET = "<YOUR-ACCESS-SECRET>";
+
+   // Environment properties simulation
+   private static final Map<String, String> environment = new ConcurrentHashMap<>();
+
+   static {
+       // Initialize environment properties
+       environment.put("conductor.server.url", CONDUCTOR_SERVER);
+       environment.put("conductor.security.client.key-id", KEY);
+       environment.put("conductor.security.client.secret", SECRET);
+       environment.put("verifySsl", "N");
+       environment.put("isTaskToDomainEnabled", "Y");
+
+       // Sample task to domain mapping
+       environment.put("taskToDomain",
+               "{\"task_example\": \"test_domain\", \"hello_task\": \"test_domain\", \"*\": \"default_domain\"}");
+   }
+
+   @Bean
+   public TaskClient taskClient(ApiClient apiClient) {
+       return new TaskClient(apiClient);
+   }
+
+   @Bean
+   @Primary
+   public TaskRunnerConfigurer domainAwareTaskRunnerConfigurer(TaskClient taskClient) {
+       List<Worker> workers = List.of(new HelloWorldWorker());
+       // Create taskToDomain map from properties
+       Map<String, String> taskToDomain = loadTaskToDomainMap();
+
+       // Log what we're doing (for debugging)
+       System.out.println("Creating domain-aware TaskRunnerConfigurer with domains: " + taskToDomain);
+
+       // Create the TaskRunnerConfigurer with domain settings
+       TaskRunnerConfigurer configurer = new TaskRunnerConfigurer.Builder(taskClient, workers)
+               .withThreadCount(5)  // Use your desired thread count
+               .withTaskToDomain(taskToDomain)
+               .build();
+
+       configurer.init();
+       return configurer;
+   }
+
+   private Map<String, String> loadTaskToDomainMap() {
+       Map<String, String> taskToDomain = new HashMap<>();
+       String isTaskToDomainEnabled = "Y";
+
+       if ("Y".equals(isTaskToDomainEnabled)) {
+           String taskToDomainJsonStr = environment.get("taskToDomain");
+           if (taskToDomainJsonStr != null && !taskToDomainJsonStr.isEmpty()) {
+               try {
+                   JSONParser parser = new JSONParser();
+                   JSONObject taskToDomainJson = (JSONObject) parser.parse(taskToDomainJsonStr);
+
+                   // Convert JSON object to Map<String, String>
+                   for (Object key : taskToDomainJson.keySet()) {
+                       String taskName = (String) key;
+                       String domainValue = (String) taskToDomainJson.get(key);
+                       taskToDomain.put(taskName, domainValue);
+                   }
+
+               } catch (Exception e) {
+                   System.err.println("Error parsing taskToDomain JSON: " + e.getMessage());
+               }
+           }
+       }
+
+       return taskToDomain;
+   }
+
+   @Bean
+   public static ApiClient getApiClientForOrkes() throws Exception {
+       // Initialize the API client first
+        String envKey = (String) env.getProperty("conductor.security.client.key-id");
+        String envSecret = (String) env.getProperty("conductor.security.client.secret");
+        String rootUrl = (String) env.getProperty("conductor.server.url");
+       boolean verifySsl = env.getProperty("verifySsl", "N").equals("Y");
+
+       ApiClient apiClient = ApiClient.builder()
+               .basePath(CONDUCTOR_SERVER)
+                .credentials(envKey, envSecret)
+               .verifyingSsl(verifySsl)
+               .readTimeout(50000)
+               .build();
+
+       // Initialize TaskClient with the API client
+       TaskClient taskClient = new TaskClient(apiClient);
+
+       // Set up taskToDomain mapping
+       Map<String, String> taskToDomain = new HashMap<>();
+       String isTaskToDomainEnabled = "Y";
+
+       if ("Y".equals(isTaskToDomainEnabled)) {
+           String taskToDomainJsonStr = environment.get("taskToDomain");
+           if (taskToDomainJsonStr != null && !taskToDomainJsonStr.isEmpty()) {
+               try {
+                   JSONParser parser = new JSONParser();
+                   JSONObject taskToDomainJson = (JSONObject) parser.parse(taskToDomainJsonStr);
+
+                   // Convert JSON object to Map<String, String>
+                   for (Object key : taskToDomainJson.keySet()) {
+                       String taskName = (String) key;
+                       String domainValue = (String) taskToDomainJson.get(key);
+                       taskToDomain.put(taskName, domainValue);
+                   }
+
+                   // Log the taskToDomain map to verify it's populated
+                   System.out.println("Task to Domain mapping: " + taskToDomain);
+
+               } catch (org.json.simple.parser.ParseException e) {
+                   System.err.println("Error parsing taskToDomain JSON: " + e.getMessage());
+                   // Don't throw runtime exception - continue with empty map instead
+               }
+           }
+       }
+
+       return apiClient;
+   }
+}
+```
+
+**Step 4: Generate access keys**
+
+To connect your Java Spring Boot worker to a Conductor cluster, you must generate application credentials with the required permissions:
+
+**To generate the access keys:**
+
+1. Go to **Access Control** > **Applications** from the left navigation menu on your Conductor cluster.
+2. Select **+ Create application**.
+3. Name your application and enable **Application roles** > **Worker**.
+4. Select **+ Create access key**.
+5. Store the key ID and key secret, as the secret would be shown only once.
+6. In **Permissions** section, select **+ Add permission**.
+  - In the **Workflow** tab, search for `hello_world_workflow` and enable **EXECUTE** permission.
+  - In the **Task** tab, search for `hello_task` and enable **EXECUTE** permission.
+
+Then update the following lines in your worker code with your credentials:
+
+```json
+   private static final String CONDUCTOR_SERVER = "http://<YOUR-SERVER-URL>/api";
+   private static final String KEY = "<YOUR-ACCESS-KEY>";
+   private static final String SECRET = "<YOUR-ACCESS-SECRET>";
+```
+
+**Step 5: Run your Spring Boot application**
+
+Once configured, start your Java application. Your worker will register and start polling tasks.
+
+**Step 6: Run the workflow**
+
+**To run the workflow:**
+
+1. From your workflow definition, go to the **Run** tab.
+2. In **Tasks to domain** mapping, enter the following mapping:
+
+```json
+{
+   "hello_task": "test_domain"
+}
+```
+
+3. Select **Run workflow**.
+
+The `hello_task` will be picked up only by the worker polling `test_domain`. You can verify this in the Conductor UI under **Executions** > **Workflows**, where the task’s domain will be shown as `test_domain`.
+
+  <img
+    src="/content/img/task-to-domain-example-workflow.png"
+    alt="Task to domain workflow example"
+    width="90%"
+    height="auto"
+  />
+<summary>Task-to-domain implementation using a Java client</summary>
+
+This example shows how to configure domain-based task routing in a Java application.
+
+**What this setup does:**
+
+- Connects to your Orkes Conductor cluster using access credentials
+- Maps `hello_task` to the `test_domain` using a task-to-domain map
+- Defines a `HelloWorldWorker` to process the task
+- Registers a sample workflow (`hello_world_workflow`)
+- Starts the workflow and verifies that the task runs in the right domain
+- Prints workflow status and task output
+
+**How to run this example:**
+
+To connect your Java worker to a Conductor cluster, you must generate access keys.
+
+**To generate the access keys:**
+
+1. Go to **Access Control** > **Applications** from the left navigation menu on your Conductor cluster.
+2. Select **+ Create application**.
+3. Name your application and enable **Application roles** > **Worker**.
+4. Select **+ Create access key**.
+5. Store the key ID and key secret, as the secret would be shown only once.
+6. Replace the credentials and cluster URL in the code below:
+
+```java
+
+public class ConductorClientTest {
+
+    private static final String CONDUCTOR_SERVER = "http://<YOUR-SERVER-URL>/api";
+    private static final String KEY = "<YOUR-ACCESS-KEY>";
+    private static final String SECRET = "<YOUR-ACCESS-SECRET>";
+
+    private static final Map<String, String> environment = new ConcurrentHashMap<>();
+
+    static {
+        environment.put("conductor.server.url", CONDUCTOR_SERVER);
+        environment.put("conductor.security.client.key-id", KEY);
+        environment.put("conductor.security.client.secret", SECRET);
+        environment.put("verifySsl", "N");
+        environment.put("isTaskToDomainEnabled", "Y");
+        environment.put("taskToDomain",
+                "{\"task_example\": \"test_domain\", \"hello_task\": \"test_domain\", \"*\": \"default_domain\"}");
+    }
+
+    public static class HelloWorldWorker implements Worker {
+        @Override
+        public String getTaskDefName() {
+            return "hello_task";
+        }
+
+        @Override
+        public TaskResult execute(Task task) {
+            System.out.println("===> Worker started executing task: " + task.getTaskDefName());
+            TaskResult result = new TaskResult(task);
+            result.setStatus(TaskResult.Status.COMPLETED);
+            result.addOutputData("greeting", "Hello " + task.getInputData().getOrDefault("name", "World"));
+            System.out.println("===> Task completed with output: " + result.getOutputData());
+            return result;
+        }
+    }
+
+    public static class Environment {
+        public Object getProperty(String key) {
+            return environment.get(key);
+        }
+
+        public Object getProperty(String key, String defaultValue) {
+            return environment.getOrDefault(key, defaultValue);
+        }
+    }
+
+    public static ApiClient getApiClientForOrkes(Environment env) throws Exception {
+        String envKey = (String) env.getProperty("conductor.security.client.key-id");
+        String envSecret = (String) env.getProperty("conductor.security.client.secret");
+        String rootUrl = (String) env.getProperty("conductor.server.url");
+        boolean verifySsl = env.getProperty("verifySsl", "N").equals("Y");
+
+        ApiClient apiClient = ApiClient.builder()
+                .basePath(rootUrl)
+                .credentials(envKey, envSecret)
+                .verifyingSsl(verifySsl)
+                .readTimeout(50000)
+                .build();
+
+        TaskClient taskClient = new TaskClient(apiClient);
+
+        Map<String, String> taskToDomain = new HashMap<>();
+        String taskToDomainJsonStr = (String) env.getProperty("taskToDomain");
+        if (taskToDomainJsonStr != null && !taskToDomainJsonStr.isEmpty()) {
+            JSONParser parser = new JSONParser();
+            JSONObject taskToDomainJson = (JSONObject) parser.parse(taskToDomainJsonStr);
+            for (Object key : taskToDomainJson.keySet()) {
+                taskToDomain.put((String) key, (String) taskToDomainJson.get(key));
+            }
+            System.out.println("Task to Domain mapping: " + taskToDomain);
+        }
+
+        List<Worker> workers = List.of(new HelloWorldWorker());
+
+        TaskRunnerConfigurer configurer = new TaskRunnerConfigurer.Builder(taskClient, workers)
+                .withTaskToDomain(taskToDomain)
+                .withThreadCount(5)
+                .build();
+        configurer.init();
+
+        return apiClient;
+    }
+
+    public static void registerWorkflow(ApiClient apiClient, String workflowJson) throws Exception {
+        MetadataClient metadataClient = new MetadataClient(apiClient);
+        JSONParser parser = new JSONParser();
+        JSONObject workflowObj = (JSONObject) parser.parse(workflowJson);
+
+        WorkflowDef workflowDef = new WorkflowDef();
+        workflowDef.setName((String) workflowObj.get("name"));
+        workflowDef.setDescription((String) workflowObj.get("description"));
+        workflowDef.setVersion(((Long) workflowObj.getOrDefault("version", 1L)).intValue());
+        workflowDef.setSchemaVersion(((Long) workflowObj.getOrDefault("schemaVersion", 2L)).intValue());
+
+        List<com.netflix.conductor.common.metadata.workflow.WorkflowTask> workflowTasks = new ArrayList<>();
+        org.json.simple.JSONArray tasksArray = (org.json.simple.JSONArray) workflowObj.get("tasks");
+
+        for (Object taskObj : tasksArray) {
+            JSONObject task = (JSONObject) taskObj;
+            com.netflix.conductor.common.metadata.workflow.WorkflowTask workflowTask =
+                    new com.netflix.conductor.common.metadata.workflow.WorkflowTask();
+            workflowTask.setName((String) task.get("name"));
+            workflowTask.setTaskReferenceName((String) task.get("taskReferenceName"));
+            workflowTask.setType((String) task.get("type"));
+
+            if (task.containsKey("inputParameters")) {
+                JSONObject inputParams = (JSONObject) task.get("inputParameters");
+                Map<String, Object> inputMap = new HashMap<>();
+                for (Object key : inputParams.keySet()) {
+                    inputMap.put((String) key, inputParams.get(key));
+                }
+                workflowTask.setInputParameters(inputMap);
+            }
+            workflowTasks.add(workflowTask);
+        }
+
+        workflowDef.setTasks(workflowTasks);
+
+        if (workflowObj.containsKey("outputParameters")) {
+            JSONObject outputParams = (JSONObject) workflowObj.get("outputParameters");
+            Map<String, Object> outputMap = new HashMap<>();
+            for (Object key : outputParams.keySet()) {
+                outputMap.put((String) key, outputParams.get(key));
+            }
+            workflowDef.setOutputParameters(outputMap);
+        }
+
+        metadataClient.registerWorkflowDef(workflowDef);
+        System.out.println("Workflow registered successfully: " + workflowDef.getName());
+    }
+
+    public static void startWorkflow(ApiClient apiClient, String workflowName) throws Exception {
+        OrkesWorkflowClient workflowClient = new OrkesWorkflowClient(apiClient);
+        StartWorkflowRequest request = new StartWorkflowRequest();
+        request.setName(workflowName);
+        request.setVersion(1);
+
+        Map<String, Object> input = new HashMap<>();
+        input.put("name", "Orkes User");
+        request.setInput(input);
+
+        Map<String, String> taskToDomainForWorkflow = new HashMap<>();
+        taskToDomainForWorkflow.put("hello_task", "test_domain");
+        request.setTaskToDomain(taskToDomainForWorkflow);
+
+        String workflowId = workflowClient.startWorkflow(request);
+        System.out.println("Workflow started with ID: " + workflowId);
+
+        Workflow workflow = workflowClient.getWorkflow(workflowId, true);
+        System.out.println("Workflow status: " + workflow.getStatus());
+        if (!workflow.getTasks().isEmpty()) {
+            System.out.println("First task status: " + workflow.getTasks().get(0).getStatus());
+            System.out.println("First task domain: " + workflow.getTasks().get(0).getDomain());
+        }
+    }
+
+    public static void main(String[] args) {
+        try {
+            Environment env = new Environment();
+            ApiClient apiClient = getApiClientForOrkes(env);
+
+            String sampleWorkflowJson = getSampleWorkflowJson();
+            registerWorkflow(apiClient, sampleWorkflowJson);
+            startWorkflow(apiClient, "hello_world_workflow");
+
+            System.out.println("Worker is polling. Press Ctrl+C to exit.");
+            Thread.sleep(Long.MAX_VALUE);
+
+        } catch (Exception e) {
+            System.err.println("Error running client: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    private static String getSampleWorkflowJson() {
+        return "{\n" +
+                "  \"name\": \"hello_world_workflow\",\n" +
+                "  \"description\": \"A simple Hello World workflow\",\n" +
+                "  \"version\": 1,\n" +
+                "  \"tasks\": [\n" +
+                "    {\n" +
+                "      \"name\": \"hello_task\",\n" +
+                "      \"taskReferenceName\": \"hello_ref\",\n" +
+                "      \"inputParameters\": {\n" +
+                "        \"name\": \"${workflow.input.name}\"\n" +
+                "      },\n" +
+                "      \"type\": \"SIMPLE\"\n" +
+                "    }\n" +
+                "  ],\n" +
+                "  \"outputParameters\": {\n" +
+                "    \"greeting\": \"${hello_ref.output.greeting}\"\n" +
+                "  },\n" +
+                "  \"schemaVersion\": 2\n" +
+                "}";
+    }
+}
+```
+
+Compile and run the Java worker. This registers and starts the workflow.
+
+The `hello_task` will be picked up only by the worker polling `test_domain`. You can verify this in the Conductor UI under **Executions** > **Workflows**, where the task’s domain will be shown as `test_domain`.
+
+  <img
+    src="/content/img/task-to-domain-example-workflow.png"
+    alt="Task to domain workflow example"
+    width="90%"
+    height="auto"
+  />
+<summary>Using fallback domain</summary>
+
+In this example, we’ll assume the `taskToDomain` mapping is as follows:
+
+```json
+"taskToDomain": {
+  "*": "mydomain",
+  "task-a": "NO_DOMAIN",
+  "task-b": "abc, NO_DOMAIN",
+  "task-c": "someInactiveDomain1, someInactiveDomain2"
+}
+```
+
+Here,
+
+- The `task-a` is routed to the `NO_DOMAIN` queue, meaning it doesn't have an assigned domain.
+- The `task-b` is routed first to the `abc` domain if available, or otherwise to the default domain (`NO_DOMAIN`).
+- The `task-c` is routed to the `someInactiveDomain1` and then to the `someInactiveDomain2`, but these are inactive, so they may not be processed in these domains.
+- All other tasks in this workflow are routed to `mydomain`.
+
+</details>
+
 # Function Worker
 def execute(task: Task) -> TaskResult:
     task_result = TaskResult(
@@ -5668,7 +6705,7 @@ You can manage and automate workflows in Orkes Conductor by sending signals to p
 
 - **Using Conductor UI**: Perform actions such as pause, resume, restart, rerun, retry, or terminate directly from the workflow execution page.
 - **Using APIs**: Send REST API requests to control workflows programmatically.
-- **Using SDKs**: Integrate workflow control into your applications using SDKs in Java, Go, Python, C#, JavaScript/TypeScript, or Clojure.
+- **Using SDKs**: Integrate workflow control into your applications using SDKs in Java, Go, Python, C#, or JavaScript/TypeScript.
 
 ## Run workflow
 
@@ -5676,143 +6713,69 @@ You can run workflows programmatically using one of the following endpoints:
 * [Start Workflow Execution (Async)](/reference-docs/api/workflow/start-workflow-execution): Start a workflow without waiting for it to be completed.
 * [Execute Workflow Synchronously](/reference-docs/api/synchronous-workflow-execution): Start a workflow and wait for an output from the workflow.
 
-
 ## Pause workflow
 
 You can pause a workflow to wait for external signals.
 
-<Tabs groupId="method">
-
-<TabItem value="ui" label="Using Conductor UI">
-
 In the workflow execution page (**Executions** > **Workflow** > *someWorkflow*), select **Actions** > **Pause**.
 
-</TabItem>
-
-<TabItem value="api" label="Using API">
-
-Use the [Pause Workflow](/reference-docs/api/workflow/pause-worflow) API on a running workflow.
+Use the [Pause Workflow](/reference-docs/api/workflow/pause-workflow) API on a running workflow.
 
 **Endpoint:** `PUT /api/workflow/{workflowId}/pause`
-
-</TabItem>
-
-<TabItem value="sdk" label="Using SDK">
-
-<Tabs>
-<TabItem value="Java" label="Java">
 
 ```java
 BulkResponse pauseWorkflow(List<String> workflowIds) throws ApiException
 ```
 
-</TabItem>
-<TabItem value="Go" label="Go">
-
 ```go
 func (e *WorkflowExecutor) Pause(workflowId string) error
 ```
 
-</TabItem>
-<TabItem value="Python" label="Python">
-
 ```python
-WorkflowResourceApi.pause_workflow1(self, workflow_id, **kwargs)
+WorkflowResourceApi.pause_workflow(self, workflow_id, **kwargs)
 ```
-
-</TabItem>
-<TabItem value="CSharp" label="C#">
 
 ```csharp
 void WorkflowResourceApi.PauseWorkflow(string workflowId)
 ```
 
-</TabItem>
-<TabItem value="JavaScript" label="JavaScript">
-
 ```javascript
 WorkflowExecutor.pauseWorkflow(
     workflowId: string,
 ): CancelablePromise<any>
 ```
 
-</TabItem>
-<TabItem value="Typescript" label="Typescript">
-
 ```typescript
 WorkflowExecutor.pauseWorkflow(
     workflowId: string,
 ): CancelablePromise<any>
 ```
-
-</TabItem>
-<TabItem value="Clojure" label="Clojure">
-
-```clojure
-(workflow-resource/pause-workflow [options workflow-id])
-```
-
-</TabItem>
-</Tabs>
-
-</TabItem>
-
-</Tabs>
-
 
 ## Resume workflow
 
 Once an external signal is received, you can resume the paused workflow.
 
-<Tabs groupId="method">
-
-<TabItem value="ui" label="Using Conductor UI">
-
 In the workflow execution page (**Executions** > **Workflow** > *someWorkflow*), select **Actions** > **Resume**.
-
-</TabItem>
-
-<TabItem value="api" label="Using API">
 
 Use the [Resume Workflow](/reference-docs/api/workflow/resume-workflow) API on a paused workflow.
 
 **Endpoint:** `PUT /api/workflow/{workflowId}/resume`
 
-</TabItem>
-
-<TabItem value="sdk" label="Using SDK">
-
-<Tabs>
-<TabItem value="Java" label="Java">
-
 ```java
 BulkResponse resumeWorkflow(List<String> workflowIds) throws ApiException
 ```
-
-</TabItem>
-<TabItem value="Go" label="Go">
 
 ```go
 func (e *WorkflowExecutor) Resume(workflowId string) error
 ```
 
-</TabItem>
-<TabItem value="Python" label="Python">
-
 ```python
-WorkflowResourceApi.resume_workflow1(self, workflow_id, **kwargs)
+WorkflowResourceApi.resume_workflow(self, workflow_id, **kwargs)
 ```
-
-</TabItem>
-<TabItem value="CSharp" label="C#">
 
 ```csharp
 void WorkflowResourceApi.ResumeWorkflow(string workflowId)
 ```
-
-</TabItem>
-
-<TabItem value="JavaScript" label="JavaScript">
 
 ```javascript
 WorkflowExecutor.resume(
@@ -5820,29 +6783,11 @@ WorkflowExecutor.resume(
 ): CancelablePromise<any>
 ```
 
-</TabItem>
-<TabItem value="Typescript" label="Typescript">
-
 ```typescript
 WorkflowExecutor.resume(
     workflowId: string,
 ): CancelablePromise<any>
 ```
-
-</TabItem>
-<TabItem value="Clojure" label="Clojure">
-
-```clojure
-(workflow-resource/resume-workflow [options workflow-id])
-```
-
-</TabItem>
-</Tabs>
-
-</TabItem>
-
-</Tabs>
-
 
 ## Restart workflow
 
@@ -5851,61 +6796,30 @@ If a workflow execution fails for any reason and enters a terminal state, you ca
 * **Restart with Current Definitions**: Restart using the same workflow definition that was referenced in the initial execution. This is useful if the workflow definition has changed and the original definition needs to be retained.
 * **Restart with Latest Definitions**: Restart using the latest workflow definition and version. If you’ve changed the definition, you can use this option to rerun the execution with the latest version.
 
-:::note
 When restarting workflows, the same inputs will be used. To use different workflow inputs, rerun the workflow instead.
-:::
-
-
-<Tabs groupId="method">
-
-<TabItem value="ui" label="Using Conductor UI">
 
 In the workflow execution page (**Executions** > **Workflow** > *someTerminalWorkflow*), select **Actions** > **Restart with current definitions** or **Restart with latest definitions**.
-
-</TabItem>
-
-<TabItem value="api" label="Using API">
 
 Use the [Restart Workflow](/reference-docs/api/workflow/restart-workflow) API on a terminal workflow to restart the workflow from the beginning with the same input.
 
 **Endpoint:** `POST /api/workflow/{workflowId}/restart`
 
-</TabItem>
-
-<TabItem value="sdk" label="Using SDK">
-
-
-<Tabs>
-<TabItem value="Java" label="Java">
-
 ```java
 BulkResponse restartWorkflow(List<String> workflowIds, Boolean useLatestDefinitions) throws ApiException
 ```
-
-</TabItem>
-<TabItem value="Go" label="Go">
 
 ```go
 func (e *WorkflowExecutor) Restart(workflowId string, useLatestDefinition bool) error
 ```
 
-</TabItem>
-<TabItem value="Python" label="Python">
-
 ```python
-WorkflowResourceApi.restart1(self, workflow_id, **kwargs)
+WorkflowResourceApi.restart(self, workflow_id, **kwargs)
 ```
-
-</TabItem>
-<TabItem value="CSharp" label="C#">
 
 ```csharp
 void WorkflowResourceApi.Restart(string workflowId, bool? useLatestDefinitions = null)
 ```
 
-</TabItem>
-<TabItem value="JavaScript" label="JavaScript">
-
 ```javascript
 WorkflowExecutor.restart(
     workflowId: string,
@@ -5913,86 +6827,40 @@ WorkflowExecutor.restart(
 ): CancelablePromise<void>
 ```
 
-</TabItem>
-<TabItem value="Typescript" label="Typescript">
-
 ```typescript
 WorkflowExecutor.restart(
     workflowId: string,
     useLatestDefinitions: boolean,
 ): CancelablePromise<void>
 ```
-
-</TabItem>
-<TabItem value="Clojure" label="Clojure">
-
-```clojure
-(workflow-resource/restart-workflow [options workflow-id])
-```
-
-</TabItem>
-</Tabs>
-
-</TabItem>
-
-</Tabs>
 
 ## Rerun workflow
 
 You can rerun a terminal workflow from the start if you need to change the workflow inputs, correlation ID, or task-to-domain mapping. The workflow (execution) ID from the original run will be retained.
 
-<Tabs groupId="method">
-
-<TabItem value="ui" label="Using Conductor UI">
-
-:::note
 In the UI, there is no option to rerun the workflow using the same workflow (execution) ID. However, you can rerun it by creating a new execution instance.
-:::
 
 In the workflow execution page (**Executions** > **Workflow** > *someTerminalWorkflow*), select **Actions** >  **Re-run Workflow**. You will be redirected to the Run Workflow page, where you can update the workflow inputs, correlation ID, and task-to-domain mapping to run a new workflow instance.
-
-</TabItem>
-
-<TabItem value="api" label="Using API">
 
 Use the [Rerun Workflow](/reference-docs/api/workflow/rerun-workflow) API to rerun the workflow from the beginning with updated inputs.
 
 **Endpoint:** `POST /api/workflow/{workflowId}/rerun`
 
-</TabItem>
-
-<TabItem value="sdk" label="Using SDK">
-
-<Tabs>
-<TabItem value="Java" label="Java">
-
 ```java
 String rerunWorkflow(String workflowId, RerunWorkflowRequest rerunWorkflowRequest)
 ```
-
-</TabItem>
-<TabItem value="Go" label="Go">
 
 ```go
 func (e *WorkflowExecutor) ReRun(workflowId string, reRunRequest model.RerunWorkflowRequest) (id string, error error)
 ```
 
-</TabItem>
-<TabItem value="Python" label="Python">
-
 ```python
 WorkflowResourceApi.rerun(self, body, workflow_id, **kwargs)
 ```
 
-</TabItem>
-<TabItem value="CSharp" label="C#">
-
 ```csharp
 string WorkflowResourceApi.Rerun(RerunWorkflowRequest body, string workflowId)
 ```
-
-</TabItem>
-<TabItem value="JavaScript" label="JavaScript">
 
 ```javascript
 WorkflowExecutor.rerun(
@@ -6001,87 +6869,40 @@ WorkflowExecutor.rerun(
 ): CancelablePromise<string>
 ```
 
-</TabItem>
-<TabItem value="Typescript" label="Typescript">
-
 ```typescript
 WorkflowResourceService.rerun(
     workflowId: string,
     requestBody: RerunWorkflowRequest,
 ): CancelablePromise<string>
 ```
-
-</TabItem>
-<TabItem value="Clojure" label="Clojure">
-
-```clojure
-(workflow-resource/rerun-workflow [options workflow-id rerun-wf-request])
-```
-
-</TabItem>
-</Tabs>
-
-</TabItem>
-
-</Tabs>
 
 ### Rerun workflow from task
 
 In certain cases, you may wish to rerun an ongoing or terminal workflow from a specific task instead.
 
-<Tabs groupId="method">
-
-<TabItem value="ui" label="Using Conductor UI">
-
 In the workflow execution page (**Executions** > **Workflow** > *someWorkflow*), select a task in the visual diagram, then select **Re-Run from Task**. The task will be rerun, and the previous attempt(s) will be marked as CANCELED.
 
-:::note
 If you need to provide updated task inputs, use the API instead.
-:::
-
-</TabItem>
-
-<TabItem value="api" label="Using API">
 
 Use the [Rerun Workflow](/reference-docs/api/workflow/rerun-workflow) API to rerun the workflow from a specific task, with the option to provide updated task inputs.
 
 **Endpoint:** `POST /api/workflow/{workflowId}/rerun`
 
-</TabItem>
-
-<TabItem value="sdk" label="Using SDK">
-
-
-<Tabs>
-<TabItem value="Java" label="Java">
-
 ```java
 String rerunWorkflow(String workflowId, RerunWorkflowRequest rerunWorkflowRequest)
 ```
-
-</TabItem>
-<TabItem value="Go" label="Go">
 
 ```go
 func (e *WorkflowExecutor) ReRun(workflowId string, reRunRequest model.RerunWorkflowRequest) (id string, error error)
 ```
 
-</TabItem>
-<TabItem value="Python" label="Python">
-
 ```python
 WorkflowResourceApi.rerun(self, body, workflow_id, **kwargs)
 ```
 
-</TabItem>
-<TabItem value="CSharp" label="C#">
-
 ```csharp
 string WorkflowResourceApi.Rerun(RerunWorkflowRequest body, string workflowId)
 ```
-
-</TabItem>
-<TabItem value="JavaScript" label="JavaScript">
 
 ```javascript
 WorkflowExecutor.rerun(
@@ -6090,9 +6911,6 @@ WorkflowExecutor.rerun(
 ): CancelablePromise<string>
 ```
 
-</TabItem>
-<TabItem value="Typescript" label="Typescript">
-
 ```typescript
 WorkflowResourceService.rerun(
     workflowId: string,
@@ -6100,72 +6918,31 @@ WorkflowResourceService.rerun(
 ): CancelablePromise<string>
 ```
 
-</TabItem>
-<TabItem value="Clojure" label="Clojure">
-
-```clojure
-(workflow-resource/rerun-workflow [options workflow-id rerun-wf-request])
-```
-
-</TabItem>
-</Tabs>
-
-</TabItem>
-
-</Tabs>
-
 ## Retry from failed task
 
 If the workflow fails, you can retry it from its last failed task.
 
-<Tabs groupId="method">
-
-<TabItem value="ui" label="Using Conductor UI">
-
 In the workflow execution page (**Executions** > **Workflow** > *someWorkflow*), select **Actions** > **Retry - from failed task**. 
-
-</TabItem>
-
-<TabItem value="api" label="Using API">
 
 Use the [Retry Failed Workflow](/reference-docs/api/workflow/retry-failed-workflow) API to retry the workflow from its last failed task.
 
 **Endpoint:** `POST /api/workflow/{workflowId}/retry`
 
-</TabItem>
-
-<TabItem value="sdk" label="Using SDK">
-
-<Tabs>
-<TabItem value="Java" label="Java">
-
 ```java
 BulkResponse retryWorkflow(List<String> workflowIds) throws ApiException
 ```
-
-</TabItem>
-<TabItem value="Go" label="Go">
 
 ```go
 func (e *WorkflowExecutor) Retry(workflowId string, resumeSubworkflowTasks bool) error
 ```
 
-</TabItem>
-<TabItem value="Python" label="Python">
-
 ```python
-WorkflowResourceApi.retry1(self, workflow_id, **kwargs)
+WorkflowResourceApi.retry(self, workflow_id, **kwargs)
 ```
-
-</TabItem>
-<TabItem value="CSharp" label="C#">
 
 ```csharp
 void WorkflowResourceApi.Retry(string workflowId, bool? resumeSubworkflowTasks = null)
 ```
-
-</TabItem>
-<TabItem value="JavaScript" label="JavaScript">
 
 ```javascript
 WorkflowExecutor.retry(
@@ -6174,9 +6951,6 @@ WorkflowExecutor.retry(
 ): CancelablePromise<void>
 ```
 
-</TabItem>
-<TabItem value="Typescript" label="Typescript">
-
 ```typescript
 WorkflowExecutor.retry(
     workflowId: string,
@@ -6184,27 +6958,9 @@ WorkflowExecutor.retry(
 ): CancelablePromise<void>
 ```
 
-</TabItem>
-<TabItem value="Clojure" label="Clojure">
-
-```clojure
-(workflow-resource/retry-last-failed-task [options workflow-id resume-subworkflow-tasks])
-```
-
-</TabItem>
-</Tabs>
-
-</TabItem>
-
-</Tabs>
-
 ## Update task status
 
 In some cases, you may need to update the task status in an ongoing workflow with a signal, such as updating the status of a signal-type [Wait](/reference-docs/operators/wait) task.
-
-<Tabs groupId="method">
-
-<TabItem value="ui" label="Using Conductor UI">
 
 1. In the workflow execution page (**Executions** > **Workflow** > *someWorkflow*), select a task in the visual diagram.
 2. In the **Summary** tab, select a status in the **Update task** field.
@@ -6212,10 +6968,6 @@ In some cases, you may need to update the task status in an ongoing workflow wit
 4. Select **Update**.
 
 Once the task is updated via UI,the *worker* is automatically set to *conductor-ui*, providing better traceability for manual overrides.
-
-</TabItem>
-
-<TabItem value="api" label="Using API">
 
 Use the [Update Task Status in Workflow](/reference-docs/api/task/update-task-status-in-workflow) API to update the task status to one of the following options:
 * IN_PROGRESS
@@ -6227,41 +6979,22 @@ You can also provide the task output in the request body.
 
 **Endpoint:** `POST /api/tasks/{workflowId}/{taskRefName}/{status}`
 
-</TabItem>
-
-<TabItem value="sdk" label="Using SDK">
-
-<Tabs>
-<TabItem value="Java" label="Java">
-
 ```java
 String OrkesTaskClient.updateTaskByRefName(Map<String, Object> output, String workflowId, String taskRefName, String status) throws ApiException
 ```
-
-</TabItem>
-<TabItem value="Go" label="Go">
 
 ```go
 func (*WorkflowExecutor) UpdateTaskByRefName(taskRefName string, workflowInstanceId string, status model.TaskResultStatus, output interface{}) error
 ```
 
-</TabItem>
-<TabItem value="Python" label="Python">
-
 ```python
 TaskResourceApi.update_task1(taskOutput, workflow_id, task_ref_name, status, **kwargs)
 ```
-
-</TabItem>
-<TabItem value="CSharp" label="C#">
 
 ```csharp
 string TaskResourceApi.UpdateTask(Dictionary<string, Object> taskOutput, string workflowId, string taskRefName, string status, string workerid = null)
 ```
 
-</TabItem>
-<TabItem value="JavaScript" label="JavaScript">
-
 ```javascript
 TaskResourceService.updateTask(
     workflowId: string,
@@ -6271,9 +7004,6 @@ TaskResourceService.updateTask(
 ): CancelablePromise<string>
 ```
 
-</TabItem>
-<TabItem value="Typescript" label="Typescript">
-
 ```typescript
 TaskResourceService.updateTask(
     workflowId: string,
@@ -6282,74 +7012,32 @@ TaskResourceService.updateTask(
     taskOutput: Record<string, any>,
 ): CancelablePromise<string>
 ```
-
-</TabItem>
-<TabItem value="Clojure" label="Clojure">
-
-```clojure
-(task-resource/update-task-by-reference-name options workflow-id task-reference-name status update-req)
-```
-
-</TabItem>
-</Tabs>
-
-</TabItem>
-
-</Tabs>
 
 ## Terminate workflow
 
 In some cases, you may need to terminate the workflow with a signal. For example, if a user terminates an ongoing indexing process.
 
-<Tabs groupId="method">
-
-<TabItem value="ui" label="Using Conductor UI">
-
 In the workflow execution page (**Executions** > **Workflow** > *someWorkflow*), select **Actions** > **Terminate**.
-
-</TabItem>
-
-<TabItem value="api" label="Using API">
 
 Use the [Terminate Workflow](/reference-docs/api/workflow/terminate-workflow) API to terminate an ongoing workflow.
 
 **Endpoint:** `DELETE /api/workflow/{workflowId}`
 
-</TabItem>
-
-<TabItem value="sdk" label="Using SDK">
-
-
-<Tabs>
-<TabItem value="Java" label="Java">
-
 ```java
 void terminateWorkflow(String workflowId, String reason)
 ```
-
-</TabItem>
-<TabItem value="Go" label="Go">
 
 ```go
 func (e *WorkflowExecutor) Terminate(workflowId string, reason string) error
 ```
 
-</TabItem>
-<TabItem value="Python" label="Python">
-
 ```python
-WorkflowResourceApi.terminate1(self, workflow_id, **kwargs)
+WorkflowResourceApi.terminate(self, workflow_id, **kwargs)
 ```
-
-</TabItem>
-<TabItem value="CSharp" label="C#">
 
 ```csharp
 void WorkflowResourceApi.Terminate(string workflowId, string reason = null, bool? triggerFailureWorkflow = null)
 ```
-
-</TabItem>
-<TabItem value="JavaScript" label="JavaScript">
 
 ```javascript
 WorkflowExecutor.terminate(
@@ -6358,27 +7046,12 @@ WorkflowExecutor.terminate(
 ): CancelablePromise<any>
 ```
 
-</TabItem>
-<TabItem value="Typescript" label="Typescript">
-
 ```typescript
 WorkflowExecutor.terminate(
     workflowId: string,
     reason: string,
 ): CancelablePromise<any>
 ```
-
-</TabItem>
-<TabItem value="Clojure" label="Clojure">
-
-```clojure
-(workflow-resource/terminate-workflow [options workflow-id & args])
-```
-
-</TabItem>
-</Tabs>
-
-</TabItem>
 
 </Tabs>
 
@@ -7661,13 +8334,13 @@ Conductor supports three idempotency strategies:
 | ---------|------------------------------------|----------------------------------------|
 | `FAIL` | Starts a new workflow instance only if there are no workflow executions with the same idempotency key, whether running or completed. | You need strict once-only semantics and want any duplicate requests treated as errors (for example, in payment processing, where a charge must occur exactly once). |
 | `RETURN_EXISTING` | Returns the `workflowId` of the existing workflow instance with the same idempotency key. No new execution is started. | The caller only needs the workflow ID and can safely reuse an in-progress or already-completed execution. Ideal for idempotent APIs where clients may retry on timeout, or for event-driven triggers with at-least-once delivery. |
-| `FAIL_ON_RUNNING` | Starts a new workflow instance only if there are no RUNNING or PAUSED workflows with the same idempotency key. Completed workflows with the same key can run again. | You want to prevent concurrent duplicate executions while allowing re-triggering once the original run has finished (for example, a scheduled job that should not run concurrently but can be re-run after completion). | 
+| `FAIL_ON_RUNNING` | Starts a new workflow instance only if there are no RUNNING or PAUSED workflows with the same idempotency key. Terminal workflows (COMPLETED, FAILED, TIMED_OUT, or TERMINATED) with the same key can run again. | You want to prevent concurrent duplicate executions while allowing re-triggering once the original run has finished (for example, a scheduled job that should not run concurrently but can be re-run after it finishes, regardless of whether it completed or failed). | 
 
 ## Configuring idempotency
 
 ### Via the Start Workflow API
 
-Use the Start Workflow API and pass the `idempotencyKey` and `idempotencyStrategy` as header parameters: 
+Use the [Start Workflow API](/content/reference-docs/api/workflow/start-workflow-execution) and pass the `idempotencyKey` and `idempotencyStrategy` as header parameters: 
 
 ```bash
 curl -X 'POST' \
@@ -7684,7 +8357,9 @@ curl -X 'POST' \
 }'
 ```
 
-### Via the [Java SDK](https://github.com/conductor-oss/java-sdk)
+### Via the SDK
+
+[Java SDK](https://github.com/conductor-oss/java-sdk)
 
 ```java
 var request = new StartWorkflowRequest();
@@ -7695,10 +8370,58 @@ request.setIdempotencyStrategy(IdempotencyStrategy.RETURN_EXISTING);
 
 String workflowId = workflowClient.startWorkflow(request);
 ```
+[Python SDK](https://github.com/conductor-oss/python-sdk)
 
+```python
+from conductor.client.http.models import StartWorkflowRequest, IdempotencyStrategy
+
+request = StartWorkflowRequest(
+    name="order-processing-workflow",
+    version=1,
+    idempotency_key="order-42-attempt-1",
+    idempotency_strategy=IdempotencyStrategy.RETURN_EXISTING
+)
+
+workflow_id = workflow_client.start_workflow(request)
+```
+[JavaScript SDK](https://github.com/conductor-oss/javascript-sdk)
+
+```javascript
+const workflowId = await workflow.startWorkflow(
+  input,
+  correlationId,
+  priority,
+  "order-42-attempt-1",   // idempotencyKey
+  "RETURN_EXISTING"       // idempotencyStrategy
+);
+```
+[C# SDK](https://github.com/conductor-oss/csharp-sdk)
+
+```cshatp
+var request = new StartWorkflowRequest(
+    name: "order-processing-workflow",
+    version: 1,
+    idempotencyKey: "order-42-attempt-1",
+    idempotencyStrategy: IdempotencyStrategy.RETURN_EXISTING
+);
+
+string workflowId = workflowExecutor.StartWorkflow(request);
+```
+[Go SDK](https://github.com/conductor-oss/go-sdk)
+
+```go
+request := &model.StartWorkflowRequest{
+    Name:                "order-processing-workflow",
+    Version:             1,
+    IdempotencyKey:      "order-42-attempt-1",
+    IdempotencyStrategy: model.ReturnExisting,
+}
+
+workflowId, err := executor.StartWorkflow(request)
+```
 ### Via the Conductor UI
 
-When running a workflow from the UI:
+[When running a workflow from the UI](/content/how-to-videos/run-workflow):
 
 1. Go to **Executions** > **Workflow** or **Definitions** > **Workflow**.
 2. Select **Run Workflow**.
@@ -7709,7 +8432,7 @@ When running a workflow from the UI:
 
 ### Via the Start Workflow task
 
-Use the Start Workflow task inside a workflow to trigger a child workflow with idempotency controls:
+Use the [Start Workflow task](/content/reference-docs/operators/start-workflow) inside a workflow to trigger a child workflow with idempotency controls:
 
 ```json
 {
@@ -7732,7 +8455,7 @@ Use the Start Workflow task inside a workflow to trigger a child workflow with i
 
 ### Via the Sub Workflow task
 
-The Sub Workflow task also supports idempotency configuration. If an idempotency strategy is set but no key is provided, the sub-workflow automatically inherits the idempotency key from its parent workflow.
+The [Sub Workflow task](/content/reference-docs/operators/sub-workflow) also supports idempotency configuration. If an idempotency strategy is set but no key is provided, the sub-workflow automatically inherits the idempotency key from its parent workflow.
 
 ```json
 {
@@ -7757,7 +8480,7 @@ The Sub Workflow task also supports idempotency configuration. If an idempotency
 
 ### Via the Scheduler
 
-When defining a workflow schedule, set the `idempotencyKey` and `idempotencyStrategy` in the schedule definition:
+When defining a [workflow schedule](/content/developer-guides/scheduling-workflows), set the `idempotencyKey` and `idempotencyStrategy` in the schedule definition:
 
 ```json
 {
@@ -7780,7 +8503,7 @@ When defining a workflow schedule, set the `idempotencyKey` and `idempotencyStra
 
 ### Via Webhooks
 
-Configure a webhook to use a workflow input variable as the idempotency key:
+Configure a webhook to [use a workflow input variable as the idempotency key](/content/developer-guides/webhook-integration#step-2-create-a-webhook-in-orkes-conductor):
 
 1. Go to **Definitions** > **Webhook** and select **+ New webhook**.
 2. Configure the source platform and headers.
@@ -7791,7 +8514,6 @@ Configure a webhook to use a workflow input variable as the idempotency key:
 
 With this configuration, if the same event is delivered multiple times (for example, due to webhook retries), Conductor will not start duplicate workflow executions.
 
-Note
 The idempotency key can be variable here, but it can be passed only from workflow inputs.
 
 ## Worker idempotency
@@ -7804,7 +8526,7 @@ A worker is idempotent when executing the same task multiple times produces no a
 - A worker that sends a notification should track sent state to avoid re-sending.
 - A worker that charges a payment should use an external idempotency key with the payment provider.
 
-Workers in Conductor should follow these design principles:
+[Workers in Conductor](/content/developer-guides/using-workers) should follow these design principles:
 
 - **Defined I/O**: Each worker executes a specific task with well-defined inputs and outputs.
 - **Statelessness**: Workers do not maintain workflow-specific state between executions.
@@ -7828,7 +8550,7 @@ This is useful for verifying whether a duplicate request was correctly deduplica
 | Payment processing: Charge exactly once | FAIL |
 | REST client retries on timeout: Return same result | RETURN_EXISTING | 
 | Event-driven trigger with at-least-once delivery | RETURN_EXISTING or FAIL_ON_RUNNING | 
-| Scheduled job, no concurrency, but re-run after completion is OK | FAIL_ON_RUNNING | 
+| Scheduled job, no concurrency, but re-run after it finishes is OK | FAIL_ON_RUNNING | 
 
 ## Best practices
 
@@ -9060,7 +9782,7 @@ This auto-populates the gRPC task parameters in the workflow.
 </TabItem>
 </Tabs>
 
-# Gateway
+# Gateway: Expose Workflows as APIs and MCP Tools
 
 Orkes Conductor’s Gateway lets you expose any workflow as APIs or MCP tools.
 
@@ -26337,10 +27059,15 @@ Orkes Conductor supports the following SDKs to build workflows & workers in Cond
 
 - [Python](https://github.com/conductor-sdk/conductor-python)
 - [Java](https://github.com/conductor-oss/java-sdk)
-- [Javascript](https://github.com/conductor-sdk/conductor-javascript)
+- [JavaScript](https://github.com/conductor-sdk/conductor-javascript)
 - [C#](https://github.com/conductor-sdk/conductor-csharp)
 - [Go](https://github.com/conductor-sdk/conductor-go)
-- [Clojure](https://github.com/conductor-sdk/conductor-clojure)
+
+## SDK guides
+
+```mdx-code-block
+
+```
 
 # Python SDK
 
@@ -30239,7 +30966,7 @@ Once the workflow is completed, check the **Workflow Input/Output** tab to view 
 
 This tutorial demonstrates how to create a **custom polling worker** that runs continuously until a specific condition is met.
 
-You’ll implement this pattern using the Orkes Conductor SDK and learn how to keep a worker active by setting `callbackAfterSeconds`, allowing Conductor to requeue it automatically until your logic determines that completion has been reached.
+You’ll implement this pattern using the Orkes Conductor SDK and learn how to keep a worker active by setting `callbackAfterSeconds`, allowing Conductor to requeue it automatically until your logic determines that completion has been reached. This tutorial uses the Java SDK, though the pattern is supported in all Orkes Conductor SDKs.
 
 This approach is useful when:
 
@@ -30247,11 +30974,9 @@ This approach is useful when:
 - You need to monitor progress without repeatedly invoking APIs.
 - You want the workers themselves to decide when a task is complete.
 
-:::info Prerequisites:
 - Access to free [Orkes Developer Edition](https://developer.orkescloud.com/).
 - Familiarity with Java and [Conductor’s worker SDK](https://orkes.io/content/developer-guides/using-workers).
 - Basic understanding of [task lifecycle statuses](https://orkes.io/content/developer-guides/task-and-workflow-status-in-conductor#task-status).
-:::
 
 ## The polling workflow
 
@@ -30307,7 +31032,7 @@ Once done, [authenticate the SDK project](https://orkes.io/content/sdks/authenti
 
 Use the Java SDK to create a worker that keeps running until a condition is met. Create a file named `PollUntilConditionMeetsWorker.java` and add the following code:
 
-<CodeBlock language="java" title={ <div ><i>Complete source file on Github:</i> <a href="https://github.com/conductor-sdk/orkes-java-springboot2-example/blob/main/src/main/java/io/orkes/example/banking/workers/PollUntilConditionMeetsWorker.java">.../workers/PollUntilConditionMeetsWorker.java</a></div>}>
+<CodeBlock language="java" title={ }>
 {`  @Override
     public TaskResult execute(Task task) {
         TaskResult taskResult = new TaskResult(task);
@@ -30342,8 +31067,6 @@ Use the Java SDK to create a worker that keeps running until a condition is met.
         return taskResult;
     }`}
 
-</CodeBlock>
-
 This worker uses the `callbackAfterSeconds` attribute to control re-execution.
 
 Here’s how it works:
@@ -30356,9 +31079,10 @@ Here’s how it works:
 
 This approach maintains the worker’s state across polls without requiring an external data store. 
 
-:::info Note
 Workers can be implemented in any language supported by Orkes Conductor SDKs.
-:::
+
+  
+</center>
 
 # Build a Secret Rotation Workflow with Orkes Conductor
 
@@ -44164,10 +44888,8 @@ Reference documentation for system alerting tasks in Orkes Conductor. These syst
 
 # Opsgenie
 
-:::info Retired since
 - v4.1.67 and later
 - v5.1.10 and later
-:::
 
 The Opsgenie task is used to send alerts to the alerting system Opsgenie.
 
@@ -44193,7 +44915,6 @@ Configure these parameters for the Opsgenie task.
 
 The following are generic configuration parameters that can be applied to the task and are not specific to the Opsgenie task.
 
-<details>
 <summary>Caching parameters</summary>
 
 You can cache the task outputs using the following parameters. Refer to [Caching Task Outputs](/faqs/task-cache-output) for a full guide.
@@ -44202,8 +44923,6 @@ You can cache the task outputs using the following parameters. Refer to [Caching
 | --------- | ----------- | ----------------- | 
 | cacheConfig.**ttlInSecond** | The time to live in seconds, which is the duration for the output to be cached. | Required if using *cacheConfig*. |
 | cacheConfig.**key** | The cache key is a unique identifier for the cached output and must be constructed exclusively from the task’s input parameters.<br/>It can be a string concatenation that contains the task’s input keys, such as `${uri}-${method}` or `re_${uri}_${method}`. | Required if using *cacheConfig*. |
-
-</details>
 
 ## Task configuration
 
@@ -50137,7 +50856,6 @@ Returns 400 if an invalid workflow execution ID is provided.
 
 ## Examples
 
-<details>
 <summary>Pause a workflow execution</summary>
 
 **Request**
@@ -50152,8 +50870,6 @@ curl -X 'PUT' \
 **Response**
 
 Returns 200 OK, indicating that the workflow execution has paused successfully.
-
-</details>
 
 # Resume Workflow
 
