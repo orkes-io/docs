@@ -468,7 +468,7 @@ Lists the commits in a repository.
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-Returns a list of commits, where each entry includes `sha`, `commit` (with `author`, `committer`, `message`, `tree`, `url`, `comment_count, and `verification`), `url`, `html_url`, `comments_url`, `author`, `committer`, and `parents`.
+Returns a list of commits, where each entry includes `sha`, `commit` (with `author`, `committer`, `message`, `tree`, `url`, `comment_count`, and `verification`), `url`, `html_url`, `comments_url`, `author`, `committer`, and `parents`.
 
 </TabItem>
 </Tabs>
@@ -623,7 +623,7 @@ Deletes a file from a repository.
 | Repo | The repository name. | string | Required. | 
 | Path | The file path relative to the repository root. | string | Required. |
 | Message | The commit message. | string | Required. |
-| Sha | The file's blob SHA. This is the SHA of the specific file content, not the branch name. To get the file SHA, use the [Get File Contents] operation first and retrieve the `sha` field from the output. | string | Required. |
+| Sha | The file's blob SHA. This is the SHA of the specific file content, not the branch name. To get the file SHA, use the [Get File Contents](/content/integrations/github-operations#get-file-contents) operation first and retrieve the `sha` field from the output. | string | Required. |
 | Branch | The branch to delete the file from. Defaults to the repository's default branch if not specified. | string | Optional. | 
 
 </TabItem>
@@ -855,7 +855,7 @@ Creates a pending review for a pull request. The review is not submitted until t
 | Repo | The repository name. | string | Required. | 
 | Pull Number | The pull request number. For example, in https://github.com/acme/docs/pull/1000, the pull request number is 1000. You can also retrieve it from the `number` field returned by the [List Pull Requests](#list-pull-requests) operation. | integer | Required. | 
 | Body | The review body text. | string | Optional. |
-| Commit Id | The commit SHA to associate the review with. Must be a valid 40-character commit SHA from the pull request. You can retrieve it from the `head.sha` field returned by the [Get Pull Request] operation. If not provided, defaults to the latest commit on the PR. | string | Optional. |
+| Commit Id | The commit SHA to associate the review with. Must be a valid 40-character commit SHA from the pull request. You can retrieve it from the `head.sha` field returned by the [Get Pull Request](/content/integrations/github-operations#get-pull-request) operation. If not provided, defaults to the latest commit on the PR. | string | Optional. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -1176,7 +1176,7 @@ Triggers a workflow dispatch event to run a GitHub Actions workflow.
 | --------- | ----------- | ---- | ----------------- |
 | Owner | The repository owner's username or organization name.For example, to retrieve https://github.com/conductor-oss/conductor, enter owner as **conductor-oss**. | string | Required. |
 | Repo | The repository name. | string | Required. | 
-| Workflow Id | The workflow ID or filename. For example, the filename is `test.yml`.<br/>For workflow ID, You can retrieve it from the `id` field returned by the [List Workflows](#list-workflows) operation. | string | Required. | 
+| Workflow Id | The workflow ID or filename. Example for  filename is `test.yml`.<br/>For workflow ID, You can retrieve it from the `id` field returned by the [List Workflows](#list-workflows) operation. | string | Required. | 
 | Ref | The branch or tag name to run the workflow on. | string | Required. |
 | Inputs | The workflow input parameters as a JSON object. | string | Optional. | 
 
@@ -1199,7 +1199,7 @@ Disables a GitHub Actions workflow.
 | --------- | ----------- | ---- | ----------------- |
 | Owner | The repository owner's username or organization name.For example, to retrieve https://github.com/conductor-oss/conductor, enter owner as **conductor-oss**. | string | Required. |
 | Repo | The repository name. | string | Required. | 
-| Workflow Id | The workflow ID or filename. For example, the filename is `test.yml`.<br/>For workflow ID, You can retrieve it from the `id` field returned by the [List Workflows](#list-workflows) operation. | string | Required. | 
+| Workflow Id | The workflow ID or filename. Example for  filename is `test.yml`.<br/>For workflow ID, You can retrieve it from the `id` field returned by the [List Workflows](#list-workflows) operation. | string | Required. | 
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -1220,7 +1220,7 @@ Enables a disabled GitHub Actions workflow.
 | --------- | ----------- | ---- | ----------------- |
 | Owner | The repository owner's username or organization name.For example, to retrieve https://github.com/conductor-oss/conductor, enter owner as **conductor-oss**. | string | Required. |
 | Repo | The repository name. | string | Required. | 
-| Workflow Id | The workflow ID or filename. For example, the filename is `test.yml`.<br/>For workflow ID, You can retrieve it from the `id` field returned by the [List Workflows](#list-workflows) operation. | string | Required. | 
+| Workflow Id | The workflow ID or filename. Example for  filename is `test.yml`.<br/>For workflow ID, You can retrieve it from the `id` field returned by the [List Workflows](#list-workflows) operation. | string | Required. | 
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -1241,7 +1241,7 @@ Retrieves the usage statistics and billing information for a GitHub Actions work
 | --------- | ----------- | ---- | ----------------- |
 | Owner | The repository owner's username or organization name.For example, to retrieve https://github.com/conductor-oss/conductor, enter owner as **conductor-oss**. | string | Required. |
 | Repo | The repository name. | string | Required. | 
-| Workflow Id | The workflow ID or filename. For example, the filename is `test.yml`.<br/>For workflow ID, You can retrieve it from the `id` field returned by the [List Workflows](#list-workflows) operation. | string | Required. | 
+| Workflow Id | The workflow ID or filename. Example for  filename is `test.yml`.<br/>For workflow ID, You can retrieve it from the `id` field returned by the [List Workflows](#list-workflows) operation. | string | Required. | 
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -1281,7 +1281,7 @@ Retrieves the members of a team in an organization.
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
 | Org | The organization name. | string | Required. |
-| Team Slug | The team slug. You can retrieve it from the `slug` field returned by the [List Teams] operation. | string | Required. |
+| Team Slug | The team slug. You can retrieve it from the `slug` field returned by the [List Teams](/content/integrations/github-operations#list-teams) operation. | string | Required. |
 | Per Page | Maximum number of results per page. | integer | Optional. |
 | Page | The page number. | integer | Optional. |
 
