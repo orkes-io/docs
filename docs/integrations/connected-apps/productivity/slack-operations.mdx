@@ -263,7 +263,7 @@ Send a message to an already configured channel via a Slack incoming webhook. Us
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Text | The message text to send. The message is delivered to the channel configured in the webhook URL set up in [Step 1](/content/integrations/slack#get-the-webhook-url). | string | Required. | 
+| Text | The message text to send. The message is delivered to the channel configured in the webhook URL set up in [Slack Integration](/content/integrations/slack#get-the-webhook-url). | string | Required. | 
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -498,7 +498,7 @@ Retrieves all reactions on a specific message.
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
 | Channel Id | The ID of the channel containing the message. To get the channel ID, use the [List Channels](/content/integrations/slack-operations#list-channels) operation or open the channel in Slack, click the channel name at the top, and scroll to the bottom to find the channel ID. | string | Required. | 
-| Message Ts | The timestamp of the message to retrieve reactions from. To get the message timestamp, use the [Get Channel History] operation and copy the `ts` value from the response. | string | Required. | 
+| Message Ts | The timestamp of the message to retrieve reactions from. To get the message timestamp, use the [Get Channel History](/content/integrations/slack-operations#get-channel-history) operation and copy the `ts` value from the response. | string | Required. | 
 | Full | Whether to return the full reaction details, including the list of users who reacted. | boolean | Optional. | 
 
 </TabItem>
@@ -676,7 +676,7 @@ Returns the user's `profile` object, including `display_name`, `real_name`, `tit
 
 ## Get User Status
 
-Retrieves the presence status of a user.
+Retrieves the present status of a user.
 
 <Tabs>
 <TabItem value="input" label="Input Parameters">
@@ -805,8 +805,8 @@ Retrieves the list of user groups in the workspace.
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Include Disabled | Whether to include disabled user groups in the results. | boolean | Optional. | 
 | Include Users | Whether to include the list of user IDs in each group. | boolean | Optional. | 
+| Include Disabled | Whether to include disabled user groups in the results. | boolean | Optional. | 
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">

@@ -85,9 +85,9 @@ To integrate Slack with Orkes Conductor, you need a bot token and, depending on 
 | channels:join | Join Channel |
 | channels:write.invites | Invite To Channel |
 | channels:write.topic | Set Channel Topic, Set Channel Purpose |
-| groups:read | Same as channels:read but for private channels |
-| groups:history | Same as channels:history but for private channels |
-| groups:write | Same as channels:manage but for private channels |
+| groups:read | Same as `channels:read` but for private channels |
+| groups:history | Same as `channels:history` but for private channels |
+| groups:write | Same as `channels:manage` but for private channels |
 | im:write | Open Conversation, Close Conversation (DMs) |
 | mpim:write | Open/Close multi-person DMs |
 | chat:write | Send Slack API Message, Send Message And Wait For Response, Update Message, Delete Message | 
@@ -183,7 +183,7 @@ The following operations are available for use with this integration.
 | [Get Channel History](/content/integrations/slack-operations#get-channel-history) | Retrieves messages and events from a channel's history, with optional time range filtering. |
 | [Get Thread Replies](/content/integrations/slack-operations#get-thread-replies) | Retrieves all replies in a message thread. |
 | [Get Message Permalink](/content/integrations/slack-operations#get-message-permalink) | Retrieves a permanent link to a specific message. | 
-| [Search Messages](/content/integrations/slack-operations#search-messages) | Searches for messages across the workspace matching a query. Requires a user token with search:read scope. | 
+| [Search Messages](/content/integrations/slack-operations#search-messages) | Searches for messages across the workspace matching a query. Requires a user token with `search:read` scope. | 
 | [Add Reaction](/content/integrations/slack-operations#add-reaction) | Adds an emoji reaction to a message. | 
 | [Remove Reaction](/content/integrations/slack-operations#remove-reaction) | Removes an emoji reaction from a message. |
 | [Get Reactions](/content/integrations/slack-operations#get-reactions) | Retrieves all reactions on a specific message. |
@@ -195,7 +195,7 @@ The following operations are available for use with this integration.
 | [Get User Info](/content/integrations/slack-operations#get-user-info) | Retrieves details about a specific user. |
 | [List Users](/content/integrations/slack-operations#list-users) | Retrieves the list of users in the workspace. |
 | [Get User Profile](/content/integrations/slack-operations#get-user-profile) | Retrieves the profile of a specific user, including custom fields. |
-| [Get User Status](/content/integrations/slack-operations#get-user-status) | Retrieves the presence status of a user. | 
+| [Get User Status](/content/integrations/slack-operations#get-user-status) | Retrieves the present status of a user. | 
 | [Update User Profile](/content/integrations/slack-operations#update-user-profile) | Updates a user's profile fields such as status text and emoji. | 
 | [Create User Group](/content/integrations/slack-operations#create-user-group) | Creates a new user group that can be mentioned with a handle. |
 | [Update User Group](/content/integrations/slack-operations#update-user-group) | Updates the name, handle, description, or associated channels of a user group. |
