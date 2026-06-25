@@ -5,16 +5,16 @@ description: "Understand tasks in Orkes Conductor workflows, including system ta
 
 # Tasks in Workflows
 
-Tasks are the fundamental building blocks of Conductor workflows. Each task represents a discrete unit of work that can be executed within a larger business process. Understanding how tasks work is essential to building effective workflows in Conductor.
+Tasks are the fundamental building blocks of Conductor workflows. Each task represents a discrete unit of work that can be executed within a larger business process. Understanding how tasks work is essential for building effective workflows in Conductor.
 
-When building workflows, you can use the built-in system tasks and operators provided by Conductor and additionally [write your own custom worker tasks](using-workers) to implement custom logic.
+When building workflows, you can use the built-in system tasks and operators provided by Conductor, leverage connected apps to interact with third-party services, and additionally [write your own custom worker tasks](using-workers) to implement custom logic.
 
 ## Built-in tasks
 
 Conductor provides built-in system tasks and operators that let you build workflows without writing custom workers. These are managed by Conductor and run within its JVM (Java Virtual Machine), allowing you to get started quickly.
 
-* [System tasks](/content/category/reference-docs/system-tasks) perform units of work, such as calling APIs, transforming data, or interacting with external services. System tasks include [AI tasks](/category/reference-docs/ai-tasks) that can be used to build AI-powered and agentic applications.
 * [Operators](/content/category/reference-docs/operators) control workflow execution, such as branching, looping, and parallel execution.
+* [System tasks](/content/category/reference-docs/system-tasks) perform units of work, such as calling APIs, transforming data, or interacting with external services. System tasks include [AI tasks](/category/reference-docs/ai-tasks) that can be used to build AI-powered and agentic applications.
 
 ### Operators
 
@@ -24,10 +24,10 @@ Use these operators as control structures for managing the execution flow in you
 | -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
 | Conditional flow | <ul><li>[Switch](../reference-docs/operators/switch): Execute tasks conditionally, like an _if…else…_ statement.</li></ul> | 
 | Looping flow | <ul><li>[Do While](../reference-docs/operators/do-while): Execute tasks repeatedly, like a _do…while…_ statement.</li></ul> |
-| Parallel flows | <ul><li>[Fork](../reference-docs/operators/fork-join): Execute a static number of tasks in parallel.</li><li>[Dynamic Fork](../reference-docs/operators/dynamic-fork): Execute a dynamic number of tasks in parallel.</li><li>[Join](../reference-docs/operators/join): Join the forks after a Fork or Dynamic Fork before proceeding to the next task.</li><li>[Start Workflow](../reference-docs/operators/start-workflow): Asynchronously start another workflow.</li></ul> | 
-| Jumps or state changes in flow | <ul><li>[Terminate](../reference-docs/operators/terminate): Terminate the current workflow, like a _return_ statement.</li><li>[Sub Workflow](../reference-docs/operators/sub-workflow): Synchronously start another workflow, like a subroutine.</li><li>[Terminate Workflow](../reference-docs/operators/terminate-workflow.mdx): Terminate another ongoing workflow.</li></ul> | 
+| Parallel flows | <ul><li>[Fork](../reference-docs/operators/fork-join): Execute a static number of tasks in parallel.</li><li>[Dynamic Fork](../reference-docs/operators/dynamic-fork): Execute a dynamic number of tasks in parallel.</li><li>[Join](../reference-docs/operators/join): Join the forks after a Fork or Dynamic Fork before proceeding to the next task.</li></ul> | 
+| Jumps or state changes in flow | <ul><li>[Terminate](../reference-docs/operators/terminate): Terminate the current workflow, like a _return_ statement.</li><li>[Terminate Workflow](../reference-docs/operators/terminate-workflow.mdx): Terminate another ongoing workflow.</li><li>[Sub Workflow](../reference-docs/operators/sub-workflow): Synchronously start another workflow, like a subroutine.</li><li>[Start Workflow](../reference-docs/operators/start-workflow): Asynchronously start another workflow.</li></ul> | 
 | State querying | <ul><li>[Get Workflow](../reference-docs/operators/get-workflow): Get the execution details of another ongoing workflow.</li></ul> | 
-| Waits in flow | <ul><li>[Wait](../reference-docs/operators/wait): Pause the current workflow until a set time, duration, or signal is received.</li><li>[Human](/content/reference-docs/operators/human): Pause the current workflow for human input before proceeding to the next task.</li><li>[Yield](../reference-docs/operators/yield): Temporarily yields control over the workflow by pausing the execution until it is explicitly resumed using specific endpoints.</li></ul> | 
+| Waits in flow | <ul><li>[Wait](../reference-docs/operators/wait): Pause the current workflow until a set time, duration, or signal is received.</li><li>[Human](/content/reference-docs/operators/human): Pause the current workflow for human input before proceeding to the next task.</li><li>[Yield](../reference-docs/operators/yield): Temporarily yields control over the workflow by pausing the execution until it is explicitly resumed via signal endpoints.</li></ul> | 
 | Dynamic tasks in flow | <ul><li>[Dynamic](../reference-docs/operators/dynamic): Execute a task dynamically, like a function pointer.</li></ul> 
 | For assigning variables | <ul><li>[Set Variable](../reference-docs/operators/set-variable): Define shared variables at the workflow level that can be accessed or overwritten by subsequent tasks in the workflow.</li></ul> | 
 
@@ -52,6 +52,11 @@ In most common cases, you can make use of existing Conductor tasks instead of cr
 | Invoke remote endpoints in gRPC services                                                     | [gRPC](../reference-docs/system-tasks/grpc)                               |
 | Query data from Conductor Search API or Metrics                                              | [Query Processor](../reference-docs/system-tasks/query-processor)         |
 | Send alerts to Opsgenie                                                                      | [Opsgenie](../reference-docs/system-tasks/opsgenie)                       |
+
+**AI tasks**
+
+| Use Case                                                                                     | Task to Use                                                               |
+| -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
 | Generate text from an LLM based on a defined prompt                                          | [Text Complete](../reference-docs/ai-tasks/llm-text-complete)             |
 | Generate text from an LLM based on a user query and additional system/assistant instructions | [Chat Complete](../reference-docs/ai-tasks/llm-chat-complete)             |
 | Generate text embeddings                                                                     | [Generate Embeddings](../reference-docs/ai-tasks/llm-generate-embeddings) |
@@ -65,6 +70,16 @@ In most common cases, you can make use of existing Conductor tasks instead of cr
 | Retrieve files from a specific location                                                      | [List Files](../reference-docs/ai-tasks/list-files)                             |
 | Parse and chunk documents from various storage locations                                     | [Parse Document](../reference-docs/ai-tasks/parse-document)                             |
 
+## Connected apps operations
+
+The connected apps in Orkes Conductor expose their operations directly as workflow tasks, allowing you to interact with third-party services without writing custom workers. Once a connected app integration is configured in your Conductor cluster, its operations become available as tasks you can drop into any workflow.
+
+For example, the Google Slides integration exposes operations like Create Presentation, Add Slide, Replace Text, and Get Thumbnail as individual tasks. Each operation maps to a discrete step in your workflow, making it easy to build document automation pipelines entirely within Conductor.
+
+These tasks work like system tasks without requiring any external worker setup. The available operations depend on which integrations are configured in your cluster.
+
+To see all available connected apps and their operations, refer [Connected Apps](/content/category/integrations/connected-apps).
+
 ## Custom worker tasks
 
 A [Worker task](../reference-docs/worker-task) can be used to implement custom logic beyond Conductor's built-in tasks. Use custom worker tasks when you need to:
@@ -74,7 +89,7 @@ A [Worker task](../reference-docs/worker-task) can be used to implement custom l
 - Execute operations that require access to resources outside Conductor's environment
 - Perform computationally intensive processing that benefits from dedicated workers
 
-These tasks can be written in any programming language of your choice (Python, Java, JavaScript, C#, and Go). Unlike a built-in task, a Worker task requires setting up a worker outside the Conductor environment that polls for and executes the task. Your worker application will continuously poll Conductor for tasks to execute, process them, and report results back.
+These tasks can be written in any programming language of your choice (Python, Java, JavaScript, C#, and Go). In workflow JSON, worker tasks use `"type": "SIMPLE"`.  Unlike a built-in task, a Worker task requires setting up a worker outside the Conductor environment that polls for and executes the task. Your worker application will continuously poll Conductor for tasks to execute, process them, and report results back.
 
 Before adding a Worker task in a workflow, it must be registered as a task definition in Conductor. This allows Conductor to apply retries, timeouts, rate limits, and RBAC controls.
 
@@ -86,7 +101,7 @@ When working with tasks in Conductor, it's important to understand the distincti
 
 ### Task definition
 
-A task definition specifies a task’s general implementation details, such as expected input and output keys, and failure-handling configurations, including rate limits, retries, and timeouts. This definition applies to all instances of the task across workflows.
+A task definition specifies a task’s general implementation details, such as expected input and output keys, and failure-handling configurations, including [retry logic](/content/error-handling#retry-configuration), [timeouts](/content/error-handling#task-timeouts), and [rate limits](/content/rate-limits#task-rate-limits). This definition applies to all instances of the task across workflows.
 
 All task definitions are stored as JSON. These parameters can be updated in real time without needing to redeploy your application. 
 
@@ -164,7 +179,7 @@ Each task configuration JSON object may contain the following parameters:
 
 | Parameter         | Description                                                                                 | Required/ Optional  |
 | ----------------- | ------------------------------------------------------------------------------------------- | ------------------- |
-| name              | Name of the task. The default value is the same as the task type. <br/><br/>The name can be changed to something descriptive, like “getUsers”. To use a given task definition, the task name here must match the task definition name (case-sensitive).<br/><br/>**Note**: It is recommended to use alphanumeric characters for task names. While special characters are allowed for backward compatibility, they are not fully supported and may cause unexpected behavior. | Required.             |
+| name              | Name of the task. The default value is the same as the task type. <br/><br/>The name can be changed to something descriptive, like “getUsers”. For worker tasks, the name must match the registered task definition name exactly (case-sensitive).<br/><br/>**Note**: It is recommended to use alphanumeric characters for task names. While special characters are allowed for backward compatibility, they are not fully supported and may cause unexpected behavior. | Required.             |
 | taskReferenceName | Reference name for the task. <br/><br/> Must be a unique value in a given workflow.                                                                                                    | Required.           |
 | type              | The task type. For example, HTTP, SIMPLE.                                              | Required.           |
 | inputParameters   | Map of the task’s input parameters.                                                    | Depends on the task type. |
@@ -215,8 +230,6 @@ Understanding the lifecycle of a task helps you debug and monitor your workflows
 - Always configure appropriate timeouts and retries in task definitions to prevent workflows from hanging indefinitely.
 - Remember that task definitions are shared across workflows, changing retry logic affects all workflows using that task.
 - Consider the impact on shared task queues when deploying high-volume workflows.
-
-Learn how to configure input/output parameters to be used in tasks.
 
 ```mdx-code-block
 import DocCardList from '@theme/DocCardList';

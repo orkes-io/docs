@@ -26,20 +26,34 @@ To use an environment variable in a workflow, use the following expression:
 ```
 ${workflow.env.variable-name}
 ```
-Replace *variable-name* with the actual environment variable name. This expression dynamically retrieves the variable during workflow execution.
+Replace *variable-name* with the actual environment variable name. This expression dynamically retrieves the variable during workflow execution. Ensure that the referenced environment variable exists on the cluster before using it in a workflow.
 
-If the environment variable is a JSON value and you want to use it as an object, append `.$` to explicitly parse it as JSON:
+If the environment variable is a JSON value, use dot notation to access its fields:
+
+```
+${workflow.env.variable-name.fieldName}
+```
+
+You can also use standard JsonPath notation:
+
+```
+${workflow.env.variable-name.$.fieldName}
+```
+
+Both forms are equivalent. To retrieve the entire JSON object, use:
 
 ```
 ${workflow.env.variable-name.$}
 ```
+
+The expression is validated when saving the workflow definition. An invalid field path will result in a validation error and the workflow cannot be saved.
 
 ## Updating environment variables
 
 **To update an environment variable:**
 
 1. Go to **Definitions** > **Environment Variables**, and select the variable to update.
-2. In **Value**, enter the updated variable.
+2. In **Value**, enter the updated value.
 3. Select **Edit** to confirm.
 
 <p align="center">
@@ -72,31 +86,32 @@ The following example defines a workflow that references the stored environment 
 
 ```json
 {
-  "name": "sample-workflow",
-  "description": "Workflow to demonstrate passing variables through environment variables",
-  "version": 1,
-  "tasks": [
-    {
-      "name": "http",
-      "taskReferenceName": "http_ref",
-      "inputParameters": {
-        "uri": "${workflow.env.sample-url}",
-        "method": "GET",
-        "connectionTimeOut": 3000,
-        "readTimeOut": "3000",
-        "accept": "application/json",
-        "contentType": "application/json",
-        "encode": true
-      },
-      "type": "HTTP"
-    }
-  ],
-  "schemaVersion": 2,
-  "ownerEmail": "name@example.com"
+ "name": "sample-workflow",
+ "description": "Workflow to demonstrate passing variables through environment variables",
+ "version": 1,
+ "tasks": [
+   {
+     "name": "http",
+     "taskReferenceName": "http_ref",
+     "inputParameters": {
+       "http_request": {
+         "uri": "${workflow.env.sample-url}",
+         "method": "GET",
+         "connectionTimeOut": 3000,
+         "readTimeOut": "3000",
+         "accept": "application/json",
+         "contentType": "application/json",
+         "encode": true
+       }
+     },
+     "type": "HTTP"
+   }
+ ],
+ "schemaVersion": 2
 }
 ```
 
-When this workflow runs, the expression `${workflow.env.sample-url}` is dynamically replaced with the actual variable value, provided that the user running the workflow has permission to access the variable.
+When this workflow runs, the expression `${workflow.env.sample-url}` is dynamically replaced with the actual variable value.
 
 To verify that the stored variable is passed correctly, go to the workflow execution page, select the HTTP task, and check the **Input**.
 
@@ -127,7 +142,7 @@ This example shows how to use a JSON environment variable in a workflow. Assume 
   ></img>
 </p>
 
-The following workflow references the stored JSON environment variable and explicitly parses it.
+The following workflow references the stored JSON environment variable.
 
 ```json
 {
@@ -156,8 +171,8 @@ The following workflow references the stored JSON environment variable and expli
 
 In this example:
 
-- `${workflow.env.api-config.$}` parses the environment variable as a JSON object.
-- Individual fields are accessed using standard JSON path notation.
+- `${workflow.env.api-config.$.baseUrl}` accesses the `baseUrl` field of the JSON environment variable using dot notation.
+- `${workflow.env.api-config.$.timeout}` accesses the timeout field.
 
 Run the workflow.
 
@@ -167,7 +182,7 @@ To verify that the stored variable is passed correctly, open the workflow execut
   <img
     src="/content/img/env-variable-parsed-as-json-in-workflow.png"
     alt="Environment variable parsed as JSON in workflow"
-    width="50%"
+    width="100%"
     height="auto"
   ></img>
 </p>

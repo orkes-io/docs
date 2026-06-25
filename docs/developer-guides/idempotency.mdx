@@ -3,6 +3,9 @@ slug: "/idempotency"
 description: "Learn how idempotency keys ensure a workflow runs only once by returning the same execution for duplicate requests caused by retries or repeated triggers."
 ---
 
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
 # Idempotency in Conductor Workflows
 
 Idempotency is the property of an operation where executing it multiple times produces the same result as executing it once. In distributed systems, network failures, retries, and duplicate events are inevitable. Without idempotency controls, these conditions can cause workflows to run multiple times for the same logical event, leading to duplicate side effects such as double-charging a customer, creating redundant records, or triggering conflicting downstream processes.
@@ -37,7 +40,7 @@ Conductor supports three idempotency strategies:
 | ---------|------------------------------------|----------------------------------------|
 | `FAIL` | Starts a new workflow instance only if there are no workflow executions with the same idempotency key, whether running or completed. | You need strict once-only semantics and want any duplicate requests treated as errors (for example, in payment processing, where a charge must occur exactly once). |
 | `RETURN_EXISTING` | Returns the `workflowId` of the existing workflow instance with the same idempotency key. No new execution is started. | The caller only needs the workflow ID and can safely reuse an in-progress or already-completed execution. Ideal for idempotent APIs where clients may retry on timeout, or for event-driven triggers with at-least-once delivery. |
-| `FAIL_ON_RUNNING` | Starts a new workflow instance only if there are no RUNNING or PAUSED workflows with the same idempotency key. Completed workflows with the same key can run again. | You want to prevent concurrent duplicate executions while allowing re-triggering once the original run has finished (for example, a scheduled job that should not run concurrently but can be re-run after completion). | 
+| `FAIL_ON_RUNNING` | Starts a new workflow instance only if there are no RUNNING or PAUSED workflows with the same idempotency key. Terminal workflows (COMPLETED, FAILED, TIMED_OUT, or TERMINATED) with the same key can run again. | You want to prevent concurrent duplicate executions while allowing re-triggering once the original run has finished (for example, a scheduled job that should not run concurrently but can be re-run after it finishes, regardless of whether it completed or failed). | 
 
 ## Configuring idempotency
 
@@ -60,7 +63,12 @@ curl -X 'POST' \
 }'
 ```
 
-### Via the [Java SDK](https://github.com/conductor-oss/java-sdk)
+### Via the SDK
+
+<Tabs>
+<TabItem value="Java" label="Java">
+
+[Java SDK](https://github.com/conductor-oss/java-sdk)
 
 ```java
 var request = new StartWorkflowRequest();
@@ -71,6 +79,73 @@ request.setIdempotencyStrategy(IdempotencyStrategy.RETURN_EXISTING);
 
 String workflowId = workflowClient.startWorkflow(request);
 ```
+</TabItem>
+
+<TabItem value="Python" label="Python">
+
+[Python SDK](https://github.com/conductor-oss/python-sdk)
+
+```python
+from conductor.client.http.models import StartWorkflowRequest, IdempotencyStrategy
+
+request = StartWorkflowRequest(
+    name="order-processing-workflow",
+    version=1,
+    idempotency_key="order-42-attempt-1",
+    idempotency_strategy=IdempotencyStrategy.RETURN_EXISTING
+)
+
+workflow_id = workflow_client.start_workflow(request)
+```
+</TabItem>
+
+<TabItem value="JavaScript" label="JavaScript">
+
+[JavaScript SDK](https://github.com/conductor-oss/javascript-sdk)
+
+```javascript
+const workflowId = await workflow.startWorkflow(
+  input,
+  correlationId,
+  priority,
+  "order-42-attempt-1",   // idempotencyKey
+  "RETURN_EXISTING"       // idempotencyStrategy
+);
+```
+</TabItem>
+
+<TabItem value="C#" label="C#">
+
+[C# SDK](https://github.com/conductor-oss/csharp-sdk)
+
+```cshatp
+var request = new StartWorkflowRequest(
+    name: "order-processing-workflow",
+    version: 1,
+    idempotencyKey: "order-42-attempt-1",
+    idempotencyStrategy: IdempotencyStrategy.RETURN_EXISTING
+);
+
+string workflowId = workflowExecutor.StartWorkflow(request);
+```
+</TabItem>
+
+<TabItem value="Go" label="Go">
+
+[Go SDK](https://github.com/conductor-oss/go-sdk)
+
+```go
+request := &model.StartWorkflowRequest{
+    Name:                "order-processing-workflow",
+    Version:             1,
+    IdempotencyKey:      "order-42-attempt-1",
+    IdempotencyStrategy: model.ReturnExisting,
+}
+
+workflowId, err := executor.StartWorkflow(request)
+```
+</TabItem>
+</Tabs>
 
 ### Via the Conductor UI
 
@@ -205,7 +280,7 @@ This is useful for verifying whether a duplicate request was correctly deduplica
 | Payment processing: Charge exactly once | FAIL |
 | REST client retries on timeout: Return same result | RETURN_EXISTING | 
 | Event-driven trigger with at-least-once delivery | RETURN_EXISTING or FAIL_ON_RUNNING | 
-| Scheduled job, no concurrency, but re-run after completion is OK | FAIL_ON_RUNNING | 
+| Scheduled job, no concurrency, but re-run after it finishes is OK | FAIL_ON_RUNNING | 
 
 ## Best practices
 

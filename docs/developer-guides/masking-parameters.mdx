@@ -18,7 +18,7 @@ You can mask data in a workflow definition using the following parameters:
 
 ## Masking sensitive data
 
-When a value is masked, it is replaced with `***`, ensuring that confidential information is hidden in workflow executions. 
+When a value is masked, it is replaced with `***`, hiding confidential information in workflow executions.
 
 <Tabs>
 <TabItem value="Using _secrets parameter" label="Using _secrets parameter">
@@ -149,16 +149,16 @@ is displayed during execution as
 Resolved secret values are always masked, regardless of the context. This ensures that the underlying secret value is never exposed at any point in the workflow execution.
 
 :::info Note
-Secrets used within task expressions, such as in [INLINE scripts](https://orkes.io/content/reference-docs/system-tasks/inline) or [JSON JQ TRANSFORM expressions](https://orkes.io/content/reference-docs/system-tasks/jq-transform), are also masked during execution. When a secret is referenced or resolved inside an expression, its value is replaced with *** in task inputs, task outputs, and the execution details.
+Secrets used within task expressions, such as in [Inline scripts](https://orkes.io/content/reference-docs/system-tasks/inline) or [JSON JQ Transform expressions](https://orkes.io/content/reference-docs/system-tasks/jq-transform), are also masked during execution. When a secret is referenced or resolved inside an expression, its value is replaced with *** in task inputs, task outputs, and the execution details.
 :::
 
 ## Workflow behavior with masked parameters
 
 **Behavior on restarting workflows with masked values**: When a workflow with masked values reaches a terminal state and is removed from the primary execution:
 
-- Values with the _\_masked_ parameter are retained during archiving. If the workflow is restarted, the original data will remain accessible.
-- Values with the _\_secrets_ parameter are permanently replaced with \*\*\* during archiving. As a result, restarting the workflow might cause failures if any tasks rely on the masked data.
-- Values within the _maskedFields_ parameter are permanently replaced with *** during archiving. As a result, restarting the workflow might cause failures if any tasks rely on the masked data.
+- Values masked with `_masked` are retained during archiving. Restarting the workflow preserves the original data.
+- Values masked with `_secrets` are permanently replaced with `***` during archiving. Restarting the workflow may cause failures if tasks depend on the masked data.
+- Values masked with `maskedFields` are permanently replaced with `***` during archiving. Restarting the workflow may cause failures if tasks depend on the masked data.
 
 ## Examples
 
@@ -197,7 +197,7 @@ Here’s the complete workflow definition:
 }
 ```
 
-When you run this workflow, the system masks the parameters in the execution results within the task input and the workflow input.
+When you run the workflow, the system masks the parameters in the execution results within the task input and the workflow input.
 
 <p align="center"><img src="/content/img/masked-inputs-using-secrets-parameter.png" alt="Masked inputs using the _secrets parameter" width="100%" height="auto"></img></p>
 
@@ -238,7 +238,7 @@ Here’s the complete workflow definition:
 }
 ```
 
-When you run this workflow, the system masks the parameters in the execution results within the task input and the workflow input.
+When you run the workflow, the system masks the parameters in the execution results within the task input and the workflow input.
 
 <p align="center"><img src="/content/img/masked-inputs-using-masked-parameter.png" alt="Masked inputs using the masked parameter" width="100%" height="auto"></img></p>
 
@@ -347,7 +347,7 @@ Consider a workflow where a sensitive value from one task’s output needs to be
 You can also use the *_masked* parameter to mask the data in this scenario.
 :::
 
-When you run this workflow, the system masks the sensitive data from `simple_demo_ref.output.result` in the execution results because you nested it under `_secrets` as the input parameter to the second task.
+When you run this workflow, the system masks the sensitive data from `simple_demo_ref.output.result` in the execution results because it is nested under `_secrets` as the input parameter to the second task.
 
 <p align="center"><img src="/content/img/passing-data-between-tasks-output.png" alt="Passing data between tasks" width="100%" height="auto"></img></p>
 

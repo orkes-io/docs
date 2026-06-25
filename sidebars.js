@@ -140,8 +140,8 @@ const sidebars = {
                             id: 'developer-guides/idempotency',
                             label: "Idempotency"
                         },
-                        'developer-guides/rate-limits',
                         'developer-guides/error-handling',
+                        'developer-guides/rate-limits',
                     ]
                 },
                 {
@@ -1323,7 +1323,7 @@ const sidebars = {
                     label: 'Gateway',
                     link: {
                         type: 'generated-index',
-                        title: 'Gateway',
+                        title: 'Gateway: API and MCP Tutorials',
                         description: 'Explore tutorials for exposing workflows as APIs and MCP tools using the Conductor Gateway.',
                         slug: '/tutorials/mcp'
                     },

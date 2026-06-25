@@ -154,13 +154,18 @@ If the version is unspecified, the latest schema version will be used.
 }
 ```
 
+Schema validation at the task-configuration level  is currently supported for the following task types:
+
+* [Worker (Simple)](/reference-docs/worker-task)
+* [Yield](/content/reference-docs/operators/yield#task-configuration)
+
 </TabItem>
 
 <TabItem value="Workflow-definition" label="Workflow definition">
 
 1. Go to **Definitions** > **Workflow**.
 2. Select a workflow that you want to add a workflow-level schema to.
-3. Go to **Schema and Parameters** >  **Workflow Schema** section of the **Workflow** tab.
+3. In the **Workflow** tab, go to **Schema and Parameters** >  **Workflow Schema**.
 4. Select a schema to use as an **Input Schema** or **Output Schema**.
 5. Select a **Version** for the schema.
 6. Select **Save** > **Confirm** in the top right.
@@ -169,16 +174,16 @@ If the version is unspecified, the latest schema version will be used.
 
 ``` json
 // workflow definition
-
 {
-"inputSchema": {
-   "name": "mySchema",
-   "type": "JSON"
- },
- "outputSchema": {
-   "name": "mySchema",
-   "type": "JSON"
- }
+  "inputSchema": {
+    "name": "mySchema",
+    "type": "JSON"
+  },
+  "outputSchema": {
+    "name": "mySchema",
+    "type": "JSON"
+  },
+  "enforceSchema": true
 }
 ```
 
@@ -203,13 +208,6 @@ If a workflow does not pass its schema validation, it will not be allowed to exe
 If a task does not pass its schema validation, it will fail with a terminal error.
 
 <p align="center"><img src="/content/img/dev-guides/input_output_validation-task_failure.png" alt="Screenshot of task failure due to invalid inputs or outputs." width="100%" height="auto"></img></p>
-
-## Supported tasks
-
-Schema validation at the task-configuration level  is currently supported for the following task types:
-
-* [Worker (Simple)](/reference-docs/worker-task)
-* [Yield](/content/reference-docs/operators/yield#task-configuration)
 
 ## Examples
 
@@ -417,7 +415,7 @@ Next, attach the schema to a task inside a workflow.
 <p align="center"><img src="/content/img/enforcing-schema-in-task-configuration.png" alt="Enforcing schema validation to a task configuration" width="100%" height="auto"></img></p>
 
 6. Select a **Version** for the schema.
-7. Ensure to update the Input parameter to `${workflow.input.productId}`.
+7. Ensure to update the **Input parameter** to `${workflow.input.productId}`.
 8. Select **Save** > **Confirm** in the top right.
 
 Next, run the workflow.
@@ -460,7 +458,7 @@ The workflow execution now fails. Because the input does not match the schema (e
 
 Because `productId` is defined in the schema as an integer, providing a string value causes the input to violate the schema. During execution, Conductor validates the task inputs against the schema attached to the task configuration. When the validator checks `$.productId`, it detects that a string was provided where an integer is required.
 
-As a result, schema validation fails before the task can run. Conductor immediately marks the task with the status **Failed_with_terminal_error**, which indicates that the task cannot proceed or be retried automatically. Since this task is part of a workflow and its failure is terminal, the workflow also transitions to the **Failed** state.
+As a result, schema validation fails before the task can run. Conductor immediately marks the task with the status **FAILED_WITH_TERMINAL_ERROR**, which indicates that the task cannot proceed or be retried automatically. Since this task is part of a workflow and its failure is terminal, the workflow also transitions to the **Failed** state.
 
 </details>
 
@@ -533,7 +531,7 @@ This schema enforces that all workflow runs must provide a `customerId` of type 
 ```
 
 3. Select **Save** > **Confirm**.
-4. Go to **Schema and Parameters** > **Workflow Schema** section of the **Workflow** tab.
+4. In the **Workflow** tab, go to **Schema and Parameters** > **Workflow Schema**.
 
 <p align="center"><img src="/content/img/enforcing-input-schema-for-a-workflow-definition.png" alt="Enforcing schema validation to a workflow definition" width="100%" height="auto"></img></p>
 
@@ -545,7 +543,7 @@ Next, run the workflow.
 
 **Step 3: Run the workflow**
 
-1. Go to the **Run** tab, and enter a valid integer `customerId` as the **Input params**. For example:
+1. Go to the **Run** tab, and enter a valid `customerId` as the **Input params**. For example:
 
 ```json
 {
