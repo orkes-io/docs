@@ -623,6 +623,18 @@ const sidebars = {
                                 },
                                 {
                                     type: 'category',
+                                    label: 'Slack',
+                                    link: { type: 'doc', id: 'integrations/connected-apps/productivity/slack' },
+                                    items: [
+                                        {
+                                            type: 'doc',
+                                            id: 'integrations/connected-apps/productivity/slack-operations',
+                                            label: 'Slack Operations Reference',
+                                        },
+                                    ],
+                                },
+                                {
+                                    type: 'category',
                                     label: 'Google Calendar',
                                     link: { type: 'doc', id: 'integrations/connected-apps/productivity/google-calendar' },
                                     items: [
@@ -681,6 +693,18 @@ const sidebars = {
                                         },
                                     ],
                                 },
+                                {
+                                    type: 'category',
+                                    label: 'Jira',
+                                    link: { type: 'doc', id: 'integrations/connected-apps/project-management/jira' },
+                                    items: [
+                                        {
+                                            type: 'doc',
+                                            id: 'integrations/connected-apps/project-management/jira-operations',
+                                            label: 'Jira Operations Reference',
+                                        },
+                                    ],
+                                },
                             ],
                         },
                         {
@@ -719,6 +743,66 @@ const sidebars = {
                             items: [
                                 {
                                     type: 'category',
+                                    label: 'Azure Storage',
+                                    link: { type: 'doc', id: 'integrations/connected-apps/cloud/azure-storage' },
+                                    items: [
+                                        {
+                                            type: 'doc',
+                                            id: 'integrations/connected-apps/cloud/azure-storage-operations',
+                                            label: 'Azure Storage Operations Reference',
+                                        },
+                                    ],
+                                },
+                                {
+                                    type: 'category',
+                                    label: 'Azure Functions',
+                                    link: { type: 'doc', id: 'integrations/connected-apps/cloud/azure-functions' },
+                                    items: [
+                                        {
+                                            type: 'doc',
+                                            id: 'integrations/connected-apps/cloud/azure-functions-operations',
+                                            label: 'Azure Functions Operations Reference',
+                                        },
+                                    ],
+                                },
+                                {
+                                    type: 'category',
+                                    label: 'Google Cloud Storage',
+                                    link: { type: 'doc', id: 'integrations/connected-apps/cloud/google-cloud-storage' },
+                                    items: [
+                                        {
+                                            type: 'doc',
+                                            id: 'integrations/connected-apps/cloud/google-cloud-storage-operations',
+                                            label: 'Google Cloud Storage Operations Reference',
+                                        },
+                                    ],
+                                },
+                                {
+                                    type: 'category',
+                                    label: 'Google Cloud Functions',
+                                    link: { type: 'doc', id: 'integrations/connected-apps/cloud/google-cloud-functions' },
+                                    items: [
+                                        {
+                                            type: 'doc',
+                                            id: 'integrations/connected-apps/cloud/google-cloud-functions-operations',
+                                            label: 'Google Cloud Functions Operations Reference',
+                                        },
+                                    ],
+                                },
+                                {
+                                    type: 'category',
+                                    label: 'AWS Lambda',
+                                    link: { type: 'doc', id: 'integrations/connected-apps/cloud/aws-lambda' },
+                                    items: [
+                                        {
+                                            type: 'doc',
+                                            id: 'integrations/connected-apps/cloud/aws-lambda-operations',
+                                            label: 'AWS Lambda Operations Reference',
+                                        },
+                                    ],
+                                },
+                                {
+                                    type: 'category',
                                     label: 'AWS S3',
                                     link: { type: 'doc', id: 'integrations/connected-apps/cloud/aws-s3' },
                                     items: [
@@ -726,6 +810,30 @@ const sidebars = {
                                             type: 'doc',
                                             id: 'integrations/connected-apps/cloud/aws-s3-operations',
                                             label: 'AWS S3 Operations Reference',
+                                        },
+                                    ],
+                                },
+                            ],
+                        },
+                        {
+                            type: 'category',
+                            label: 'Source Control',
+                            link: {
+                                type: 'generated-index',
+                                title: 'Source Control',
+                                slug: '/category/integrations/source-control',
+                                description: 'Learn how to connect source control platforms to Conductor workflows.',
+                            },
+                            items: [
+                                {
+                                    type: 'category',
+                                    label: 'GitHub',
+                                    link: { type: 'doc', id: 'integrations/connected-apps/source-control/github' },
+                                    items: [
+                                        {
+                                            type: 'doc',
+                                            id: 'integrations/connected-apps/source-control/github-operations',
+                                            label: 'GitHub Operations Reference',
                                         },
                                     ],
                                 },
@@ -774,6 +882,78 @@ const sidebars = {
                                             type: 'doc',
                                             id: 'integrations/connected-apps/crm/hubspot-operations',
                                             label: 'HubSpot Operations Reference',
+                                        },
+                                    ],
+                                },
+                            ],
+                        },
+                        {
+                            type: 'category',
+                            label: 'Database',
+                            link: {
+                                type: 'generated-index',
+                                title: 'Database',
+                                slug: '/category/integrations/database',
+                                description: 'Learn how to connect Database platforms to manage and automate databases through workflows.',
+                            },
+                            items: [
+                                {
+                                    type: 'category',
+                                    label: 'MySQL',
+                                    link: { type: 'doc', id: 'integrations/connected-apps/database/mysql' },
+                                    items: [
+                                        {
+                                            type: 'doc',
+                                            id: 'integrations/connected-apps/database/mysql-operations',
+                                            label: 'MySQL Operations Reference',
+                                        },
+                                    ],
+                                },
+                                {
+                                    type: 'category',
+                                    label: 'PostgreSQL',
+                                    link: { type: 'doc', id: 'integrations/connected-apps/database/postgresql' },
+                                    items: [
+                                        {
+                                            type: 'doc',
+                                            id: 'integrations/connected-apps/database/postgresql-operations',
+                                            label: 'PostgreSQL Operations Reference',
+                                        },
+                                    ],
+                                },
+                                {
+                                    type: 'category',
+                                    label: 'Redis',
+                                    link: { type: 'doc', id: 'integrations/connected-apps/database/redis' },
+                                    items: [
+                                        {
+                                            type: 'doc',
+                                            id: 'integrations/connected-apps/database/redis-operations',
+                                            label: 'Redis Operations Reference',
+                                        },
+                                    ],
+                                },
+                            ],
+                        },
+                        {
+                            type: 'category',
+                            label: 'Payment',
+                            link: {
+                                type: 'generated-index',
+                                title: 'Payment',
+                                slug: '/category/integrations/payment',
+                                description: 'Learn how to connect payment platforms to automate payment related workflows.',
+                            },
+                            items: [
+                                {
+                                    type: 'category',
+                                    label: 'Stripe',
+                                    link: { type: 'doc', id: 'integrations/connected-apps/payment/stripe' },
+                                    items: [
+                                        {
+                                            type: 'doc',
+                                            id: 'integrations/connected-apps/payment/stripe-operations',
+                                            label: 'Stripe Operations Reference',
                                         },
                                     ],
                                 },
