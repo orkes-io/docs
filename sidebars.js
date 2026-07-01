@@ -252,6 +252,7 @@ const sidebars = {
                                         'developer-guides/agentspan/concepts/skills',
                                         'developer-guides/agentspan/concepts/multi-agent',
                                         'developer-guides/agentspan/concepts/plan-execute',
+                                        'developer-guides/agentspan/concepts/adaptive-loops',
                                         'developer-guides/agentspan/concepts/guardrails',
                                         'developer-guides/agentspan/concepts/memory',
                                         'developer-guides/agentspan/concepts/streaming',
@@ -289,6 +290,7 @@ const sidebars = {
                                         description: 'Reference pages for Agentspan providers, model configuration, CLI commands, deployment, self-hosting, integrations, and worker types.',
                                     },
                                     items: [
+                                        'developer-guides/agentspan/reference/sdk',
                                         'developer-guides/agentspan/reference/providers',
                                         'developer-guides/agentspan/reference/ai-models',
                                         'developer-guides/agentspan/reference/cli',
