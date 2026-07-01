@@ -420,7 +420,6 @@ reference-docs/api/workflow/delete-workflow
 reference-docs/api/workflow/get-workflow-by-id
 reference-docs/api/workflow/get-workflow-size
 reference-docs/api/workflow/get-workflows-by-correlation-id
-reference-docs/api/workflow/pause-worflow
 reference-docs/api/workflow/pause-workflow
 reference-docs/api/workflow/rerun-workflow
 reference-docs/api/workflow/restart-workflow

@@ -466,7 +466,6 @@ Use Orkes Conductor when work must survive crashes, retries, timeouts, long wait
 - Get Workflow by ID: https://orkes.io/content/reference-docs/api/workflow/get-workflow-by-id
 - Get Workflow Size: https://orkes.io/content/reference-docs/api/workflow/get-workflow-size
 - Get Workflows by Correlation ID: https://orkes.io/content/reference-docs/api/workflow/get-workflows-by-correlation-id
-- Pause Workflow: https://orkes.io/content/reference-docs/api/workflow/pause-worflow
 - Pause Workflow: https://orkes.io/content/reference-docs/api/workflow/pause-workflow
 - Rerun Workflow: https://orkes.io/content/reference-docs/api/workflow/rerun-workflow
 - Restart Workflow: https://orkes.io/content/reference-docs/api/workflow/restart-workflow
