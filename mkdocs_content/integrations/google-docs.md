@@ -1,0 +1,110 @@
+---
+title: "Google Docs Integration with Orkes Conductor"
+description: "Learn how to integrate Google Docs with Orkes Conductor to automate workflows that interact with your Google Docs"
+canonical_route: "integrations/google-docs"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+---
+
+# Google Docs Integration with Orkes Conductor
+
+!!! info "Available since"
+    - v5.3.0 and later
+
+Integrating Google Docs with Orkes Conductor lets you build workflows that interact with your Google Docs using the following operations:
+
+- Create Document
+- Update Document
+- Get Document
+- Replace Text
+- Append Text
+
+This guide explains how to set up and use the integration. Here’s an overview:
+
+1. Get the required credentials from Google Console.
+2. Configure a new Google Docs integration in Orkes Conductor.
+3. Use Google Docs integration in workflows.
+
+## Step 1: Get the Google Console credentials
+
+To integrate Google Docs with Orkes Conductor, retrieve the OAuth client ID and secret from the Google console, and enable the Google Docs API.
+
+### Get OAuth Client credentials
+
+**To get the credentials:**
+
+1. Go to the [Google Cloud Console](https://console.cloud.google.com).
+2. Select your project or create a new one.
+3. In the left navigation menu, go to **APIs & Services** > **Credentials**
+4. Select **+ Create credentials** > **OAuth client ID**.
+
+<p align="center"><img src="/content/img/oauth-client-id.png" alt="Getting OAuth Client credentials from Google Cloud Console." width="100%" height="auto"></img></p>
+
+5. Choose your application type as **Web application**, and enter a **Name**.
+6. In **Authorized redirect URIs**, select **+Add URI** and enter your redirect URI in the format `https://<YOUR-CONDUCTOR-CLUSTER-NAME>/integrations/oauth/callback`.
+7. Select **+ Create**.
+8. Note the generated OAuth Client ID and secret, or download and save the JSON.
+
+### Enable Google Docs API
+
+**To enable Google Docs API access:**
+
+1. Go to **APIs & Services** > **Enabled APIs & services**.
+2. Select **+ Enable APIs and services**.
+3. Search for **Google Docs API** and enable it.
+
+## Step 2: Add an integration for Google Docs
+
+After obtaining the credentials, add a Google Docs integration to your Conductor cluster.
+
+**To create an integration:**
+
+1. Go to **Integrations** > **Connected Apps** from the left navigation menu on your Conductor cluster.
+2. Select **+ New integration**.
+3. In the **Productivity** section, choose **Google Docs**.
+4. Select **+ Add** and enter the following parameters:
+
+| Parameter | Description | Required/Optional |
+| --------- | ----------- | ----------------- |
+| Integration name | A name for the integration. | Required. | 
+| Scope | The OAuth2 scope for Google Docs API access. The scope you select determines the level of access Google grants to the integration. Supported values:<ul><li>**Read Only**: Grants read-only access to documents.</li><li>**Read & Write**: Grants full read and write access to documents.</li></ul> | Required. |
+| OAuth Client ID | The OAuth client ID generated from [Step 1](/content/integrations/google-docs#step-1-get-the-google-console-credentials). | Required. |
+| OAuth Client Secret | The OAuth client secret generated from [Step 1](/content/integrations/google-docs#step-1-get-the-google-console-credentials). | Required.
+| Default Document Id | The default document ID to use. To get the document ID, open the document. The ID is the string of characters at the end of the URL: `https://docs.google.com/document/d/<YOUR-DOC-ID>/edit?tab=t.0`. | Optional. | 
+| Description | A description of the integration. | Required. | 
+
+<p align="center"><img src="/content/img/google-docs-integration.png" alt="Google Docs Integration with Orkes Conductor" width="60%" height="auto"></img></p>
+
+5. (Optional) Toggle the **Active** button off if you don’t want to activate the integration instantly.
+6. Select **Authorize**.
+
+This takes you to the Google sign-in page, where you can authorize the connection with your Google account. Once authorized, the integration is created successfully.
+
+## Step 3: Use Google Docs integration in workflows
+
+Once the integration is ready, this can be used directly within the workflows. 
+
+**To use Google Docs integration in a workflow:**
+
+1. Go to **Definitions** > **Workflow** from the left navigation menu on your Conductor cluster.
+2. Select **+ Define workflow**.
+3. In your workflow, select the (**+**) icon and select **Connected Apps**.
+
+<p align="center"><img src="/content/img/connected-apps.png" alt="Adding Google Docs Integration in Conductor workflow" width="100%" height="auto"></img></p>
+
+4. In **Add Task** panel on the right, search for **Google Docs**, and select the integration created in [Step 2](/content/integrations/google-docs#step-2-add-an-integration-for-google-docs).
+
+The following operations are available for use with this integration.
+
+| Operation | Description | Supported Integration Scopes |
+| --------- | ----------- | ---------------------------- |
+| [Create Document](/content/integrations/google-docs-operations#create-document) | Create a new Google Doc with a title and content. | <ul><li>Read & Write</li></ul> | 
+| [Update Document](/content/integrations/google-docs-operations#update-document) | Replace all document content with new text. | <ul><li>Read & Write</li></ul> | 
+| [Get Document](/content/integrations/google-docs-operations#get-document) | Fetch a Google Doc by ID, including structure and content metadata. | <ul><li>Read & Write</li><li>Read Only</li></ul> | 
+| [Replace Text](/content/integrations/google-docs-operations#replace-text) | Find and replace all occurrences of target text in a Google Doc. | <ul><li>Read & Write</li></ul> | 
+| [Append Text](/content/integrations/google-docs-operations#append-text) | Append text to the end of an existing Google Doc. | <ul><li>Read & Write</li></ul> | 
+
+5. Select the required operation, configure the parameters, and select **Save** > **Confirm**.
+6. Select **Execute** to run the workflow.
+
+For the complete operations parameters and output reference, see [Google Docs Operations Reference](/content/integrations/google-docs-operations).

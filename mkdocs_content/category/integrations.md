@@ -24,3 +24,4 @@ Use these pages to answer implementation questions, compare available primitives
 - [Cloud Providers](/content/category/integrations/cloud-provider)
 - [RDBMS](/content/category/integrations/rdbms)
 - [Email/Git](/content/category/integrations/email)
+- [Connected Apps](/content/category/integrations/connected-apps)

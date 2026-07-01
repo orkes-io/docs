@@ -1,0 +1,168 @@
+---
+title: "Google Slides Operations Reference"
+description: "Look up the input and output parameters for each operation available in the Google Slides integration with Orkes Conductor."
+canonical_route: "integrations/google-slides-operations"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+---
+
+# Google Slides Operations Reference
+
+Orkes Conductor integrates with Google Slides to let you create and manage presentations directly from your workflows. You can use the following operations to create, read, update, and modify content in Google Slides, without leaving your workflow.
+
+This page covers the parameters and expected output for each operation available in the [Google Slides integration](/content/integrations/google-slides).\
+
+## Create Presentation
+
+Create a new Google Slides presentation with the provided title. Use this when a workflow needs a fresh deck to populate with generated content.
+
+=== "Input Parameters"
+
+    | Parameter | Description | Type | Required/Optional |
+    | --------- | ----------- | ---- | ----------------- |
+    | Title | The title of the Google Slide. | string | Required. | 
+
+=== "Output Parameters"
+
+    Returns a full `Presentation` object containing `presentationId`, `title`, `slides`, `pageSize`, and `locale`. For the complete schema, refer to the [Google Slides API documentation](https://developers.google.com/slides/api/reference/rest/v1/presentations#Presentation).
+
+
+## Add Slide
+
+Add a new slide with a predefined layout to a presentation. Use this when you want to grow an existing deck dynamically from a workflow.
+
+=== "Input Parameters"
+
+    | Parameter | Description | Type | Required/Optional |
+    | --------- | ----------- | ---- | ----------------- |
+    | Layout | The predefined layout for the slide. Supported values:<ul><li>`BLANK`</li><li>`CAPTION_ONLY`</li><li>`TITLE`</li><li>`TITLE_AND_BODY`</li><li>`TITLE_AND_TWO_COLUMNS`</li><li>`TITLE_ONLY`</li><li>`SECTION_HEADER`</li><li>`SECTION_TITLE_AND_DESCRIPTION`</li><li>`ONE_COLUMN_TEXT`</li><li>`MAIN_POINT`</li><li>`BIG_NUMBER`</li></ul> Defaults to `BLANK` if empty. | string | Optional. | 
+    | Presentation ID | The ID of the presentation to add the slide to. If left empty/blank, it falls back to the default presentation provided in the integration.<br/>To get the presentation ID, open the presentation in Google Slides. The ID is the string of characters at the end of the URL: `https://docs.google.com/presentation/d/<YOUR-PRESENTATION-ID>`. | string | Optional. |
+
+=== "Output Parameters"
+
+    | Parameter | Description | 
+    | --------- | ----------- |
+    | presentationId | The ID of the presentation the slide was added to. | 
+    | replies.createSlide.**objectId** | The unique object ID of the newly created slide. | 
+    | writeControl.**requiredRevisionId** | The revision ID confirming the write operation. | 
+
+
+## Add Text Box
+
+Add a text box with content to a slide. Use this when you want to position AI-generated text at specific coordinates on a slide.
+
+=== "Input Parameters"
+
+    | Parameter | Description | Type | Required/Optional |
+    | --------- | ----------- | ---- | ----------------- |
+    | Presentation ID | The ID of the presentation. If left empty/blank, it falls back to the default presentation provided in the integration.<br/> To get the presentation ID, open the presentation in Google Slides. The ID is the string of characters at the end of the URL: `https://docs.google.com/presentation/d/<YOUR-PRESENTATION-ID>`. | string | Optional. | 
+    | Page Object ID | The slide page object ID where the text box will be placed.<br/>To get the page object ID, open the presentation in Google Slides and select the slide. The ID is the string after `?slide=id`. in the URL: `https://docs.google.com/presentation/d/<YOUR-PRESENTATION-ID>/edit?slide=id.<PAGE-OBJECT-ID>`.<br/>For example, if the URL contains `?slide=id.slide_abc123`, enter `slide_abc123`. | string | Required. | 
+    | Translate Y | The Y offset of the text box in points. Defaults to 50. | number (double) | Optional. | 
+    | Translate X | The X offset of the text box in points. Defaults to 50. | number (double) | Optional. | 
+    | Width | The width of the text box in points. Defaults to 400. | number (double) | Optional. | 
+    | Text | The text content to insert in the text box. Defaults to an empty string if null. | string | Optional. | 
+    | Height | The height of the text box in points. Defaults to 100. | number (double) | Optional. | 
+
+=== "Output Parameters"
+
+    | Parameter | Description | 
+    | --------- | ----------- |
+    | presentationId | The ID of the presentation the text box was added to. | 
+    | replies.createShape.**objectId** | The unique object ID of the created text box. | 
+    | writeControl.**requiredRevisionId** | The revision ID confirming the write operation. | 
+
+
+## Get Presentation Slides
+
+List slide page IDs and types in a presentation. Use this when you need a concise slide inventory.
+
+=== "Input Parameters"
+
+    | Parameter | Description | Type | Required/Optional |
+    | --------- | ----------- | ---- | ----------------- |
+    | Presentation Id | The ID of the presentation to retrieve. If left empty/blank, it falls back to the default presentation provided in the integration.<br/>To get the presentation ID, open the presentation in Google Slides. The ID is the string of characters at the end of the URL: `https://docs.google.com/presentation/d/<YOUR-PRESENTATION-ID>`. | string | Optional. | 
+
+=== "Output Parameters"
+
+    | Parameter | Description | 
+    | --------- | ----------- |
+    | presentationId | The ID of the presentation. | 
+    | slides | An array of slide objects in the presentation. | 
+    | slides.**objectId** | The unique object ID of the slide. | 
+    | slides.**pageType** | The type of the slide page. | 
+
+
+## Get Presentation 
+
+Retrieve a presentation's full metadata, including slide structure and page identifiers. Use this when you need slide or page object IDs before adding or modifying content.
+
+=== "Input Parameters"
+
+    | Parameter | Description | Type | Required/Optional |
+    | --------- | ----------- | ---- | ----------------- |
+    | Presentation Id | The ID of the presentation to retrieve. If left empty/blank, it falls back to the default presentation provided in the integration.<br/>To get the presentation ID, open the presentation in Google Slides. The ID is the string of characters at the end of the URL: `https://docs.google.com/presentation/d/<YOUR-PRESENTATION-ID>`. | string | Optional. | 
+
+=== "Output Parameters"
+
+    Returns a full `Presentation` object. For the complete schema, refer to the [Google Slides API documentation](https://developers.google.com/workspace/slides/api/reference/rest/v1/presentations#Presentation).
+
+
+## Get Page 
+
+Fetch a single slide by its page object ID. Use this when you need details about a specific slide before modifying it.
+
+=== "Input Parameters"
+
+    | Parameter | Description | Type | Required/Optional |
+    | --------- | ----------- | ---- | ----------------- |
+    | Presentation Id | The ID of the presentation. If left empty/blank, it falls back to the default presentation provided in the integration.<br/>To get the presentation ID, open the presentation in Google Slides. The ID is the string of characters at the end of the URL: `https://docs.google.com/presentation/d/<YOUR-PRESENTATION-ID>`. | string | Optional. | 
+    | Page Object Id | The object ID of the slide to retrieve.<br/>To get the page object ID, open the presentation in Google Slides and select the slide. The ID is the string after `?slide=id`. in the URL: `https://docs.google.com/presentation/d/<YOUR-PRESENTATION-ID>/edit?slide=id.<PAGE-OBJECT-ID>`. | string | Required. | 
+
+=== "Output Parameters"
+
+    Returns a `Page` object containing `presentationId`, `pageObjectId`, `pageType`, and `pageElements`. For the complete schema, refer to the [Google Slides API documentation](https://developers.google.com/workspace/slides/api/reference/rest/v1/presentations#Presentation).
+
+
+## Replace Text in Presentation
+
+Replace all occurrences of a text string across a presentation. Use this when you need to update placeholders across slides.
+
+=== "Input Parameters"
+
+    | Parameter | Description | Type | Required/Optional |
+    | --------- | ----------- | ---- | ----------------- |
+    | Presentation Id | The ID of the presentation. If left empty/blank, it falls back to the default presentation provided in the integration.<br/>To get the presentation ID, open the presentation in Google Slides. The ID is the string of characters at the end of the URL: `https://docs.google.com/presentation/d/<YOUR-PRESENTATION-ID>`. | string | Optional. | 
+    | Search Text | The target text to search for in the Google Slide. | string | Required. | 
+    | Replacement Text | The text to replace in the Google Slide. Defaults to empty if not provided. | string | Optional. | 
+    | Match Case | Set to `true` for case-sensitive matching, or `false` to ignore case. | boolean | Optional. | 
+
+=== "Output Parameters"
+
+    | Parameter | Description | 
+    | --------- | ----------- |
+    | presentationId | The ID of the presentation where the replacement was applied. | 
+    | replaceCount | The number of replacements made. | 
+
+
+## Get Thumbnail
+
+Fetch a thumbnail image URL for a slide. Use this when you need a preview image of a slide.
+
+=== "Input Parameters"
+
+    | Parameter | Description | Type | Required/Optional |
+    | --------- | ----------- | ---- | ----------------- |
+    | Presentation Id | The ID of the presentation. If left empty/blank, it falls back to the default presentation provided in the integration.<br/>To get the presentation ID, open the presentation in Google Slides. The ID is the string of characters at the end of the URL: `https://docs.google.com/presentation/d/<YOUR-PRESENTATION-ID>`. | string | Optional. | 
+    | Page Object Id | The object ID of the slide to retrieve the thumbnail for.<br/>To get the page object ID, open the presentation in Google Slides and select the slide. The ID is the string after `?slide=id`. in the URL: `https://docs.google.com/presentation/d/<YOUR-PRESENTATION-ID>/edit?slide=id.<PAGE-OBJECT-ID>`. | string | Required. | 
+    | Thumbnail Size | The size of the thumbnail image. Supported values:<ul><li>LARGE</li><li>MEDIUM</li><li>SMALL</li></ul> | string | Optional. | 
+    | Mime Type | The file format for the thumbnail image. Supported values:<ul><li>PNG</li><li>JPEG</li></ul> | string | Optional. | 
+
+=== "Output Parameters"
+
+    | Parameter | Description | 
+    | --------- | ----------- |
+    | presentationId | The ID of the presentation. | 
+    | pageObjectId | The object ID of the slide the thumbnail was generated for. | 
+    | contentUrl | The URL of the generated thumbnail image. | 
+    | width | The width of the thumbnail in pixels. | 
+    | height | The height of the thumbnail in pixels. |

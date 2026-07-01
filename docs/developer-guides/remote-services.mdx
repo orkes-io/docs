@@ -30,6 +30,10 @@ Generate a gRPC descriptor file with:
 protoc --proto_path=. --descriptor_set_out=compiled.bin *.proto
 ```
 
+To clone an existing service definition, select the clone icon next to the service in the Remote Services list. Enter a new name for the cloned service and select Clone. The new service is created with all the configuration and methods copied from the original.
+
+<p align="center"><img src="/content/img/clone-service.png" alt="Cloning services" width="100%" height="auto"></img></p>
+
 ## Discover or add endpoints
 
 After the service exists, add methods in one of two ways.
@@ -60,6 +64,7 @@ HTTP endpoint fields:
 | Content-Type | Request content type. |
 | Input Schema | Optional schema for the request payload. |
 | Output Schema | Optional schema for the response payload. |
+| Request Parameters | Additional request parameters (available since v5.4.0). |
 | Deprecated | Marks the endpoint as deprecated for workflow authors. |
 
 gRPC endpoint fields:

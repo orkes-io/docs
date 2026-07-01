@@ -84,6 +84,20 @@ histogram_quantile(
 )
 ```
 
+### Payload size metrics (v5.4.0 and later)
+
+| Metrics | Description | Tags |
+| ------- | ----------- | ---- |
+| task_size_bytes | Distribution summary of the serialized task payload size in bytes. | taskType, orgId |
+| task_size_ratio | Ratio of the task payload size to the configured limit (e.g., 0.7 = 70% of limit). | taskType, orgId |
+| workflow_size_bytes | Distribution summary of the serialized workflow payload size in bytes, including all tasks. | workflowName, orgId |
+| workflow_size_ratio | Ratio of the workflow payload size to the configured limit. | workflowName, orgId |
+| limit_breach | Counter incremented when a payload size exceeds the configured limit. | workflowName, taskType, orgId |
+
+**Recommended alert**: Set an alert on `*_size_ratio_max > 0.7` to get early warning before a hard size breach causes workflow truncation.
+
+## Configuring alerts via Grafana
+
 Metric bucket names can vary by metrics backend and exporter configuration. If your backend exposes summary quantiles instead of histogram buckets, use the available `quantile` label instead of `histogram_quantile`.
 
 ## Alerting starting points

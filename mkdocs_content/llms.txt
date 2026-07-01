@@ -73,10 +73,20 @@ Use Orkes Conductor when work must survive crashes, retries, timeouts, long wait
 - Get Started with Orkes Conductor: https://orkes.io/content/category/getting-started
 - Integration Catalog: https://orkes.io/content/category/integrations
 - AI / LLM Integrations: https://orkes.io/content/category/integrations/ai-llm
+- Cloud: https://orkes.io/content/category/integrations/cloud
 - Cloud Providers: https://orkes.io/content/category/integrations/cloud-provider
+- CMS: https://orkes.io/content/category/integrations/cms
+- Community: https://orkes.io/content/category/integrations/community
+- Connected Apps: https://orkes.io/content/category/integrations/connected-apps
+- CRM: https://orkes.io/content/category/integrations/crm
+- Database: https://orkes.io/content/category/integrations/database
 - Email/Git: https://orkes.io/content/category/integrations/email
 - Message Broker Integrations: https://orkes.io/content/category/integrations/message-broker
+- Payment: https://orkes.io/content/category/integrations/payment
+- Productivity: https://orkes.io/content/category/integrations/productivity
+- Project Management: https://orkes.io/content/category/integrations/project-management
 - RDBMS Integrations: https://orkes.io/content/category/integrations/rdbms
+- Source Control: https://orkes.io/content/category/integrations/source-control
 - Vector Databases Integrations: https://orkes.io/content/category/integrations/vector-databases
 - API Reference: https://orkes.io/content/category/ref-docs/api
 - Task Reference: https://orkes.io/content/category/reference-docs
@@ -161,10 +171,42 @@ Use Orkes Conductor when work must survive crashes, retries, timeouts, long wait
 - OpenAI Integration with Orkes Conductor: https://orkes.io/content/integrations/ai-llm/open-ai
 - Perplexity Integration with Orkes Conductor: https://orkes.io/content/integrations/ai-llm/perplexity
 - Google Vertex AI Integration with Orkes Conductor: https://orkes.io/content/integrations/ai-llm/vertex-ai
+- AWS Lambda Integration with Orkes Conductor: https://orkes.io/content/integrations/aws-lambda
+- AWS Lambda Operations Reference: https://orkes.io/content/integrations/aws-lambda-operations
+- AWS S3 Integration with Orkes Conductor: https://orkes.io/content/integrations/aws-s3
+- AWS S3 Operations Reference: https://orkes.io/content/integrations/aws-s3-operations
+- Azure Functions Integration with Orkes Conductor: https://orkes.io/content/integrations/azure-functions
+- Azure Functions Operations Reference: https://orkes.io/content/integrations/azure-functions-operations
+- Azure Storage Integration with Orkes Conductor: https://orkes.io/content/integrations/azure-storage
+- Azure Storage Operations Reference: https://orkes.io/content/integrations/azure-storage-operations
 - AWS Integration with Orkes Conductor: https://orkes.io/content/integrations/cloud-provider/aws
 - GCP Integration with Orkes Conductor: https://orkes.io/content/integrations/cloud-provider/gcp
+- Common Room Integration with Orkes Conductor: https://orkes.io/content/integrations/common-room
+- Common Room Operations Reference: https://orkes.io/content/integrations/common-room-operations
+- Discourse Integration with Orkes Conductor: https://orkes.io/content/integrations/discourse
+- Discourse Operations Reference: https://orkes.io/content/integrations/discourse-operations
 - SendGrid Email Integration with Orkes Conductor: https://orkes.io/content/integrations/email/sendgrid
 - Git Repository Integration with Orkes Conductor: https://orkes.io/content/integrations/git-repository
+- GitHub Integration with Orkes Conductor: https://orkes.io/content/integrations/github
+- GitHub Operations Reference: https://orkes.io/content/integrations/github-operations
+- Google Calendar Integration with Orkes Conductor: https://orkes.io/content/integrations/google-calendar
+- Google Calendar Operations Reference: https://orkes.io/content/integrations/google-calendar-operations
+- Google Cloud Functions Integration with Orkes Conductor: https://orkes.io/content/integrations/google-cloud-functions
+- Google Cloud Functions Operations Reference: https://orkes.io/content/integrations/google-cloud-functions-operations
+- Google Cloud Storage Integration with Orkes Conductor: https://orkes.io/content/integrations/google-cloud-storage
+- Google Cloud Storage Operations Reference: https://orkes.io/content/integrations/google-cloud-storage-operations
+- Google Docs Integration with Orkes Conductor: https://orkes.io/content/integrations/google-docs
+- Google Docs Operations Reference: https://orkes.io/content/integrations/google-docs-operations
+- Google Drive Integration with Orkes Conductor: https://orkes.io/content/integrations/google-drive
+- Google Drive Operations Reference: https://orkes.io/content/integrations/google-drive-operations
+- Google Sheets Integration with Orkes Conductor: https://orkes.io/content/integrations/google-sheets
+- Google Sheets Operations Reference: https://orkes.io/content/integrations/google-sheets-operations
+- Google Slides Integration with Orkes Conductor: https://orkes.io/content/integrations/google-slides
+- Google Slides Operations Reference: https://orkes.io/content/integrations/google-slides-operations
+- HubSpot Integration with Orkes Conductor: https://orkes.io/content/integrations/hubspot
+- HubSpot Operations Reference: https://orkes.io/content/integrations/hubspot-operations
+- Jira Integration with Orkes Conductor: https://orkes.io/content/integrations/jira
+- Jira Operations Reference: https://orkes.io/content/integrations/jira-operations
 - Amazon MSK Integration with Orkes Conductor: https://orkes.io/content/integrations/message-broker/amazon-msk
 - AMQP Integration with Orkes Conductor: https://orkes.io/content/integrations/message-broker/amqp
 - Apache Kafka Integration with Orkes Conductor: https://orkes.io/content/integrations/message-broker/apache-kafka
@@ -174,11 +216,25 @@ Use Orkes Conductor when work must survive crashes, retries, timeouts, long wait
 - GCP Pub Sub Integration with Orkes Conductor: https://orkes.io/content/integrations/message-broker/gcp-pub-sub
 - IBM MQ Integration with Orkes Conductor: https://orkes.io/content/integrations/message-broker/ibm-mq
 - NATS Messaging Integration with Orkes Conductor: https://orkes.io/content/integrations/message-broker/nats-messaging
+- MySQL Integration with Orkes Conductor: https://orkes.io/content/integrations/mysql
+- MySQL Operations Reference: https://orkes.io/content/integrations/mysql-operations
+- Notion Integration with Orkes Conductor: https://orkes.io/content/integrations/notion
+- Notion Operations Reference: https://orkes.io/content/integrations/notion-operations
+- PostgreSQL Integration with Orkes Conductor: https://orkes.io/content/integrations/postgresql
+- PostgreSQL Operations Reference: https://orkes.io/content/integrations/postgresql-operations
 - Relational Database Integration with Orkes Conductor: https://orkes.io/content/integrations/rdbms/relational-database
+- Redis Integration with Orkes Conductor: https://orkes.io/content/integrations/redis
+- Redis Operations Reference: https://orkes.io/content/integrations/redis-operations
+- Slack Integration with Orkes Conductor: https://orkes.io/content/integrations/slack
+- Slack Operations Reference: https://orkes.io/content/integrations/slack-operations
+- Stripe Integration with Orkes Conductor: https://orkes.io/content/integrations/stripe
+- Stripe Operations Reference: https://orkes.io/content/integrations/stripe-operations
 - Mongo Vector Database Integration with Orkes Conductor: https://orkes.io/content/integrations/vector-databases/mongo-vector-database
 - Pinecone Integration with Orkes Conductor: https://orkes.io/content/integrations/vector-databases/pinecone
 - Postgres Vector Database Integration with Orkes Conductor: https://orkes.io/content/integrations/vector-databases/postgres-vector-database
 - Weaviate Integration with Orkes Conductor: https://orkes.io/content/integrations/vector-databases/weaviate
+- WordPress Integration with Orkes Conductor: https://orkes.io/content/integrations/wordpress
+- WordPress Operations Reference: https://orkes.io/content/integrations/wordpress-operations
 - Run Your First Workflow: https://orkes.io/content/quickstarts
 - Basic Concepts: https://orkes.io/content/quickstarts/concepts
 - Quickstart 2: Create Your First Workflow: https://orkes.io/content/quickstarts/create-first-workflow
@@ -219,6 +275,12 @@ Use Orkes Conductor when work must survive crashes, retries, timeouts, long wait
 - Remove Role from Application: https://orkes.io/content/reference-docs/api/applications/remove-application-role
 - Toggle Access Key Status: https://orkes.io/content/reference-docs/api/applications/toggle-access-key-status
 - Update Application: https://orkes.io/content/reference-docs/api/applications/update-application
+- Authorization: https://orkes.io/content/reference-docs/api/authorization
+- Get Access Grants for a Resource: https://orkes.io/content/reference-docs/api/authorization/get-access-grants-for-resource
+- Grant Access: https://orkes.io/content/reference-docs/api/authorization/grant-access
+- List Grants for a Subject: https://orkes.io/content/reference-docs/api/authorization/list-grants-for-subject
+- Revoke Access: https://orkes.io/content/reference-docs/api/authorization/revoke-access
+- Revoke Grants for a Subject: https://orkes.io/content/reference-docs/api/authorization/revoke-grants-for-subject
 - Bulk Operations API: https://orkes.io/content/reference-docs/api/bulk
 - Environment Variables: https://orkes.io/content/reference-docs/api/environment-variables
 - Add Tags to an Environment Variable: https://orkes.io/content/reference-docs/api/environment-variables/add-tags-to-environment-variable
@@ -295,8 +357,22 @@ Use Orkes Conductor when work must survive crashes, retries, timeouts, long wait
 - Import BPMN to Workflows: https://orkes.io/content/reference-docs/api/metadata/import-bpmn
 - Update Task Definition: https://orkes.io/content/reference-docs/api/metadata/update-task-definitions
 - Update Workflow Definition: https://orkes.io/content/reference-docs/api/metadata/update-workflow-definitions
+- Prompts: https://orkes.io/content/reference-docs/api/prompts
+- Add Tags to Prompt: https://orkes.io/content/reference-docs/api/prompts/add-tags-to-prompt
+- Create or Update Prompt: https://orkes.io/content/reference-docs/api/prompts/create-prompt
+- Create or Update Prompt Version: https://orkes.io/content/reference-docs/api/prompts/create-prompt-version
+- Create Prompts in Bulk: https://orkes.io/content/reference-docs/api/prompts/create-prompts-bulk
+- Delete Prompt: https://orkes.io/content/reference-docs/api/prompts/delete-prompt
+- Delete Prompt Version: https://orkes.io/content/reference-docs/api/prompts/delete-prompt-version
+- Delete Tags from Prompt: https://orkes.io/content/reference-docs/api/prompts/delete-tags-from-prompt
+- Get All Versions of Prompts: https://orkes.io/content/reference-docs/api/prompts/get-all-prompt-versions
+- Get All Prompts: https://orkes.io/content/reference-docs/api/prompts/get-all-prompts
+- Get Prompt: https://orkes.io/content/reference-docs/api/prompts/get-prompt
+- Get Tags from Prompt: https://orkes.io/content/reference-docs/api/prompts/get-tags-from-prompt
+- Test Prompts: https://orkes.io/content/reference-docs/api/prompts/test-prompts
 - Remote Services API Reference: https://orkes.io/content/reference-docs/api/remote-services
 - Add Method to Service: https://orkes.io/content/reference-docs/api/remote-services/add-method-to-service
+- Clone Service: https://orkes.io/content/reference-docs/api/remote-services/clone-service
 - Close Circuit Breaker: https://orkes.io/content/reference-docs/api/remote-services/close-circuit-breaker
 - Create Service: https://orkes.io/content/reference-docs/api/remote-services/create-service
 - Delete Proto File from gRPC Service: https://orkes.io/content/reference-docs/api/remote-services/delete-proto-file
@@ -367,6 +443,9 @@ Use Orkes Conductor when work must survive crashes, retries, timeouts, long wait
 - Get Task Queue Size for All Tasks: https://orkes.io/content/reference-docs/api/task/task-queue/get-task-queue-size-for-all-tasks
 - Get Task Queue Size for a Task Type: https://orkes.io/content/reference-docs/api/task/task-queue/get-task-queue-size-for-individual-tasks
 - Update Task Status in Workflow: https://orkes.io/content/reference-docs/api/task/update-task-status-in-workflow
+- Tokens: https://orkes.io/content/reference-docs/api/tokens
+- Generate JWT Token: https://orkes.io/content/reference-docs/api/tokens/generate-token
+- Get User Info: https://orkes.io/content/reference-docs/api/tokens/get-user-info
 - Users: https://orkes.io/content/reference-docs/api/users
 - Check User Permission over Resources: https://orkes.io/content/reference-docs/api/users/check-user-permissions
 - Create/Update User: https://orkes.io/content/reference-docs/api/users/create-user
@@ -385,8 +464,10 @@ Use Orkes Conductor when work must survive crashes, retries, timeouts, long wait
 - Workflows API Reference: https://orkes.io/content/reference-docs/api/workflow
 - Delete Workflow Execution: https://orkes.io/content/reference-docs/api/workflow/delete-workflow
 - Get Workflow by ID: https://orkes.io/content/reference-docs/api/workflow/get-workflow-by-id
+- Get Workflow Size: https://orkes.io/content/reference-docs/api/workflow/get-workflow-size
 - Get Workflows by Correlation ID: https://orkes.io/content/reference-docs/api/workflow/get-workflows-by-correlation-id
 - Pause Workflow: https://orkes.io/content/reference-docs/api/workflow/pause-worflow
+- Pause Workflow: https://orkes.io/content/reference-docs/api/workflow/pause-workflow
 - Rerun Workflow: https://orkes.io/content/reference-docs/api/workflow/rerun-workflow
 - Restart Workflow: https://orkes.io/content/reference-docs/api/workflow/restart-workflow
 - Resume Workflow: https://orkes.io/content/reference-docs/api/workflow/resume-workflow

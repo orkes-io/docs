@@ -1,0 +1,123 @@
+---
+title: "Stripe Integration with Orkes Conductor"
+description: "Learn how to integrate Stripe with Orkes Conductor to automate your workflows and manage your Stripe directly from Conductor."
+canonical_route: "integrations/stripe"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+---
+
+# Stripe Integration with Orkes Conductor
+
+!!! info "Available since"
+    - v5.3.0 and later
+
+Integrating Stripe with Orkes Conductor lets you build workflows that interact with your Stripe using the following operations:
+
+- Get Balance
+- List Customers
+- Create Customer
+- Get Customer
+- Update Customer
+- Delete Customer
+- Create Coupon
+- List Coupons
+- Create Payment Intent
+- Get Payment Intent
+- Cancel Payment Intent
+- List Charges
+- Create Charge
+- Update Charge
+- Get Charge
+- Create Refund
+- Get Refund
+- Attach Payment Method
+- Get Payment Method
+- Detach Payment Method
+- Create Meter Event
+
+This guide explains how to set up and use the integration. Here's an overview:
+
+1. Get the required credentials from Stripe.
+2. Configure a new Stripe integration in Orkes Conductor.
+3. Use Stripe integration in workflows.
+
+## Step 1: Get the Stripe credentials
+
+To integrate Stripe with Orkes Conductor, get the API key from Stripe.
+
+**To get the API key:**
+
+1. Log in to [Stripe](https://stripe.com).
+2. Select the settings icon on the top-right.
+3. Go to **Developers** > **API keys**.
+4. Copy the **Secret key** (starts with `sk_test_` for test mode or `sk_live_` for live mode).
+
+For testing, use the test mode API keys and for production use the live mode keys.
+
+## Step 2: Add an integration for Stripe
+
+After obtaining the credentials, add a Stripe integration to your Conductor cluster.
+
+**To create an integration:**
+
+1. Go to **Integrations** > **Connected Apps** from the left navigation menu on your Conductor cluster.
+2. Select **+ New integration**.
+3. In the **Payment** section, choose **Stripe**.
+4. Select **+ Add** and enter the following parameters:
+
+| Parameter | Description | Required/Optional |
+| --------- | ----------- | ----------------- |
+| Integration name | A name for the integration. | Required. |
+| API Key | The API key retrieved from Stripe in [Step 1](/content/integrations/stripe#step-1-get-the-stripe-credentials). | Required. |
+| API Endpoint | The stripe API endpoint. Defaults to https://api.stripe.com. | Required. |
+| Description | A description of the integration. | Required. |
+
+<p align="center"><img src="/content/img/stripe-integration.png" alt="Stripe Integration with Orkes Conductor" width="60%" height="auto"></img></p>
+
+5. (Optional) Toggle the **Active** button off if you don't want to activate the integration instantly.
+6. Select **Save**.
+
+## Step 3: Use Stripe integration in workflows
+
+Once the integration is ready, this can be used directly within the workflows.
+
+**To use Stripe integration in a workflow:**
+
+1. Go to **Definitions** > **Workflow** from the left navigation menu on your Conductor cluster.
+2. Select **+ Define workflow**.
+3. In your workflow, select the (**+**) icon and select **Connected Apps**.
+
+<p align="center"><img src="/content/img/connected-apps.png" alt="Adding Stripe Integration in Conductor workflow" width="100%" height="auto"></img></p>
+
+4. In **Add Task** panel on the right, search for **Stripe**, and select the integration created in [Step 2](/content/integrations/stripe#step-2-add-an-integration-for-stripe).
+
+The following operations are available for use with this integration.
+
+| Operation | Description |
+| --------- | ----------- |
+| [Get Balance](/content/integrations/stripe-operations#get-balance) | Retrieves the current balance for your Stripe account, including available and pending amounts across all currencies. |
+| [List Customers](/content/integrations/stripe-operations#list-customers) | Retrieves a list of customers from your Stripe account. |
+| [Create Customer](/content/integrations/stripe-operations#create-customer) | Creates a new customer record in Stripe. |
+| [Get Customer](/content/integrations/stripe-operations#get-customer) | Retrieves the details of an existing Stripe customer. |
+| [Update Customer](/content/integrations/stripe-operations#update-customer) | Updates an existing customer record in Stripe. |
+| [Delete Customer](/content/integrations/stripe-operations#delete-customer) | Deletes an existing customer record from Stripe. |
+| [Create Coupon](/content/integrations/stripe-operations#create-coupon) | Creates a new coupon in Stripe. |
+| [List Coupons](/content/integrations/stripe-operations#list-coupons) | Retrieves a list of coupons from your Stripe account. |
+| [Create Payment Intent](/content/integrations/stripe-operations#create-payment-intent) | Creates a new payment intent in Stripe. |
+| [Get Payment Intent](/content/integrations/stripe-operations#get-payment-intent) | Retrieves the details of an existing Stripe payment intent. |
+| [Cancel Payment Intent](/content/integrations/stripe-operations#cancel-payment-intent) | Cancels an existing Stripe payment intent. |
+| [List Charges](/content/integrations/stripe-operations#list-charges) | Retrieves a list of charges from your Stripe account. |
+| [Create Charge](/content/integrations/stripe-operations#create-charge) | Creates a new charge in Stripe. |
+| [Update Charge](/content/integrations/stripe-operations#update-charge) | Updates an existing charge in Stripe. |
+| [Get Charge](/content/integrations/stripe-operations#get-charge) | Retrieves the details of an existing Stripe charge. |
+| [Create Refund](/content/integrations/stripe-operations#create-refund) | Creates a refund for an existing Stripe charge. |
+| [Get Refund](/content/integrations/stripe-operations#get-refund) | Retrieves the details of an existing Stripe refund. |
+| [Attach Payment Method](/content/integrations/stripe-operations#attach-payment-method) | Attaches a payment method to an existing Stripe customer. |
+| [Get Payment Method](/content/integrations/stripe-operations#get-payment-method) | Retrieves the details of an existing Stripe payment method. |
+| [Detach Payment Method](/content/integrations/stripe-operations#detach-payment-method) | Detaches a payment method from a Stripe customer. |
+| [Create Meter Event](/content/integrations/stripe-operations#create-meter-event) | Creates a meter event to record usage in Stripe. |
+
+5. Select the required operation, configure the parameters, and select **Save** > **Confirm**.
+6. Select **Execute** to run the workflow.
+
+For the complete operations parameters and output reference, see [Stripe Operations Reference](/content/integrations/stripe-operations).

@@ -1,0 +1,131 @@
+---
+title: "Jira Integration with Orkes Conductor"
+description: "Learn how to integrate Jira with Orkes Conductor to automate your workflows and manage your Jira directly from Conductor."
+canonical_route: "integrations/jira"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+---
+
+# Jira Integration with Orkes Conductor
+
+!!! info "Available since"
+    - v5.3.0 and later
+
+Integrating Jira with Orkes Conductor lets you build workflows that interact with your Jira using the following operations:
+
+- Create Issue
+- Get Issue
+- Update Issue
+- Delete Issue
+- Search Issues
+- Get Transitions
+- Transition Issue
+- Get Issue Changelog
+- Notify Issue
+- Add Comment
+- Get Comment
+- Get Comments
+- Update Comment
+- Delete Comment
+- Add Attachment
+- Get Attachment
+- Get Issue Attachments
+- Remove Attachment
+- List Projects
+- Get Project
+- Search Users
+- Get Sprint
+- Get Sprint Issues
+- Get User
+
+This guide explains how to set up and use the integration. Here’s an overview:
+
+1. Get the required credentials from Jira.
+2. Configure a new Jira integration in Orkes Conductor.
+3. Use Jira integration in workflows.
+
+## Step 1: Get the Jira credentials
+
+To integrate Jira with Orkes Conductor, create an API token from your Atlassian account. If your Atlassian account uses a password or third-party login, you may receive a one-time verification code to your email before you can create or manage API tokens.
+
+**To get the API token:**
+
+1. Sign in with your [Atlassian account](https://id.atlassian.com/manage-profile/security/api-tokens).
+2. Select **Create API token**.
+3. Enter a label for the token.
+4. Set an expiration date (1–365 days; default is 1 year).
+5. Select **Create**.
+6. Select **Copy to clipboard** and save the token, as it will not be shown again.
+
+
+## Step 2: Add an integration for Jira
+
+After obtaining the credentials, add a Jira integration to your Conductor cluster.
+
+**To create an integration:**
+
+1. Go to **Integrations** > **Connected Apps** from the left navigation menu on your Conductor cluster.
+2. Select **+ New integration**.
+3. In the **Project Management** section, choose **Jira**.
+4. Select **+ Add** and enter the following parameters:
+
+| Parameter | Description | Required/Optional |
+| --------- | ----------- | ----------------- |
+| Integration name | A name for the integration. | Required. | 
+| Base URL | The base URL of your Jira account. For example: https://your-domain.atlassian.net. | Required. | 
+| Email | The email of your Atlassian account using which the API token is generated. | Required. | 
+| API Key | The Atlassian API token generated in [Step 1](/content/integrations/jira#step-1-get-the-jira-credentials). | Required. | 
+| Description | A description of the integration. | Required. | 
+
+<p align="center"><img src="/content/img/jira-integration.png" alt="Jira Integration with Orkes Conductor" width="60%" height="auto"></img></p>
+
+5. (Optional) Toggle the **Active** button off if you don’t want to activate the integration instantly.
+6. Select **Save**.
+
+## Step 3: Use Jira integration in workflows
+
+Once the integration is ready, this can be used directly within the workflows. 
+
+**To use Jira integration in a workflow:**
+
+1. Go to **Definitions** > **Workflow** from the left navigation menu on your Conductor cluster.
+2. Select **+ Define workflow**.
+3. In your workflow, select the (**+**) icon and select **Connected Apps**.
+
+<p align="center"><img src="/content/img/connected-apps.png" alt="Adding Jira Integration in Conductor workflow" width="100%" height="auto"></img></p>
+
+4. In **Add Task** panel on the right, search for **Jira**, and select the integration created in [Step 2](/content/integrations/jira#step-2-add-an-integration-for-jira).
+
+The following operations are available for use with this integration.
+
+| Operation | Description | 
+| --------- | ----------- | 
+| [Create Issue](/content/integrations/jira-operations#create-issue) | Creates a new issue in a Jira project. | 
+| [Get Issue](/content/integrations/jira-operations#get-issue) | Retrieves the details of a specific Jira issue by its ID or key. | 
+| [Update Issue](/content/integrations/jira-operations#update-issue) | Updates an existing Jira issue. | 
+| [Delete Issue](/content/integrations/jira-operations#delete-issue) | Deletes an issue from Jira. | 
+| [Search Issues](/content/integrations/jira-operations#search-issues) | Searches for Jira issues using JQL (Jira Query Language). | 
+| [Get Transitions](/content/integrations/jira-operations#get-transitions) | Retrieves the available transitions for a Jira issue. | 
+| [Transition Issue](/content/integrations/jira-operations#transition-issue) | Transitions a Jira issue to a different status. | 
+| [Get Issue Changelog](/content/integrations/jira-operations#get-issue-changelog) | Retrieves the change history of a Jira issue. | 
+| [Notify Issue](/content/integrations/jira-operations#notify-issue) | Sends an email notification for a Jira issue and adds it to the mail queue. | 
+| [Add Comment](/content/integrations/jira-operations#add-comment) | Adds a comment to a Jira issue. | 
+| [Get Comment](/content/integrations/jira-operations#get-comment) | Retrieves a specific comment from a Jira issue. | 
+| [Get Comments](/content/integrations/jira-operations#get-comments) | Retrieves all comments for a Jira issue. | 
+| [Update Comment](/content/integrations/jira-operations#update-comment) | Updates an existing comment on a Jira issue. | 
+| [Delete Comment](/content/integrations/jira-operations#delete-comment) | Deletes a comment from a Jira issue. | 
+| [Add Attachment](/content/integrations/jira-operations#add-attachment) | Adds an attachment to a Jira issue. | 
+| [Get Issue Attachments](/content/integrations/jira-operations#get-issue-attachments) | Retrieves all attachments for a Jira issue. | 
+| [Get Attachment](/content/integrations/jira-operations#get-attachment) | Retrieves metadata for a Jira attachment by its ID. | 
+| [Remove Attachment](/content/integrations/jira-operations#remove-attachment) | Removes an attachment from Jira by its ID. | 
+| [List Projects](/content/integrations/jira-operations#list-projects) | Retrieves all Jira projects visible to the authenticated user. | 
+| [Get Project](/content/integrations/jira-operations#get-project) | Retrieves the details of a specific Jira project. | 
+| [Search Users](/content/integrations/jira-operations#search-users) | Searches for users in Jira. | 
+| [Get Sprint](/content/integrations/jira-operations#get-sprint) | Retrieves the details of a Jira sprint by its ID | 
+| [Get Sprint Issues](/content/integrations/jira-operations#get-sprint-issues) | Retrieves all issues in a Jira sprint. | 
+| [Get User](/content/integrations/jira-operations#get-user) | Retrieves the details of a Jira user by their account ID. | 
+
+5. Select the required operation, configure the parameters, and select **Save** > **Confirm**.
+6. Select **Execute** to run the workflow.
+
+For the complete operations parameters and output reference, see [Jira Operations Reference](/content/integrations/jira-operations).

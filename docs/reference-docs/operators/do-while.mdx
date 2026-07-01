@@ -6,6 +6,7 @@ description: "Learn how the Do While task repeatedly executes a sequence of task
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import TableNote from '@site/src/components/TableNote';
 
 # Do While
 
@@ -22,6 +23,7 @@ Configure these parameters for the Do While task.
 | loopOver                       | The list of tasks to be executed as long as the condition is true.    | Required.          |
 | inputParameters. **items** | An array of items, which will be iterated over in the loop. The number of iterations is equal to the list size. You can use this to iterate without a condition. <br/><br/> Refer to [Examples](#examples) for more information on how to use the `items` parameter.            | Optional.          |
 | inputParameters. **keepLastN** | The number of iterations of execution data to retain. The minimum value is 2.<br/><br/> Use `keepLastN` if the number of iterations is expected to be large and not all execution data needs to be retained. Refer to the [Execution data](#execution-data) for more information.         | Optional.        |
+| inputParameters. **captureOutput** <br/><br/><TableNote title="Available since:">v5.3.0 and later</TableNote> | Whether to capture and store per-iteration task outputs in the Do While task's output. Defaults to `true`.<br/><br/>When set to `true`, the output of each iteration's tasks is aggregated and stored in the Do While task's output, keyed by iteration number ("1", "2", "3", and so on).<br/><br/>When set to `false`, iteration outputs are not aggregated, keeping the task output minimal. Useful for large loops where storing every iteration's output would cause memory or performance issues. | Optional. | 
 
 The following are generic configuration parameters that can be applied to the task and are not specific to the Do While task. 
 
@@ -55,6 +57,25 @@ Or
 
 The function should return a boolean value. To dynamically reference other input parameters in the script, it is recommended to use bracket notation (for example, `$.do_while_ref['iteration']`).
 
+### Console logging
+
+You can use `console.log`, `console.info`, and `console.error` inside the `loopCondition` script for debugging. The console bridge accepts a single string argument; use string concatenation to include variable values. 
+
+**For example:**
+
+```java
+(function () {
+  console.log('Iteration: ' + $.iteration + ', limit: ' + $.number);
+  return $.iteration < $.number;
+})();
+```
+
+The output appears in the task's execution logs. [See example](#examples).
+
+:::info Note
+As of v5.4.0, the `console.*` log destination is configurable. By default, logs appear in the task's execution logs in the UI, but can be redirected to server logs or discarded entirely. Contact the Orkes team to change this for your cluster.
+:::
+
 ### Referencing task outputs in a Do While task
 
 A Do While task uses two distinct syntaxes depending on context. `inputParameters` values use standard Conductor notation (`${...}`), while `loopCondition` expressions use JavaScript variable binding (`$.`).
@@ -73,13 +94,15 @@ This is the task configuration for a Do While task.
 {
   "name": "do_while",
   "taskReferenceName": "do_while_ref",
-  "inputParameters": {},
+"inputParameters": {
+  "captureOutput": true  // optional, defaults to true. Set to false to skip per-iteration output aggregation.
+},
   "type": "DO_WHILE",
   "loopCondition": "", // Condition
   "evaluatorType": "value-param",
   "loopOver": [ // List of tasks to be executed in the loop
-    {// task configuration},
-    {// task configuration}
+    {//taskDefinition}, 
+    {//taskDefinition}
   ]
 }
 ```
@@ -93,9 +116,9 @@ The Do While task will return the following parameters.
 | iteration | The number of iterations. <br/><br/> If the Do While task is in progress, `iteration` will show the current iteration number. When completed, `iteration` will show the final number of iterations. |
 | item      | (If `items` is used as an input parameter) Contains the value of the last item specified in the `items` array. |
 
-Additionally, an object will be created for each iteration, keyed by its iteration number (e.g., 1, 2, 3), and will contain the task outputs for all `loopOver` tasks. If keepLastN is specified, only outputs for the last n iterations will be stored.
+By default, an object is created for each iteration, keyed by its iteration number ("1", "2", "3", and so on), containing the output of all `loopOver` tasks for that iteration.
 
-**Example output**
+**Example output (default)**
 
 ```json
 {
@@ -124,6 +147,18 @@ Additionally, an object will be created for each iteration, keyed by its iterati
     }
   },
   "iteration": 2
+}
+```
+
+If `keepLastN` is configured, only the last n iterations are retained. References to earlier iterations return `null`.
+
+If `captureOutput` is set to `false`, per-iteration objects are not created. Only `iteration` (and `item`, if applicable) are returned. This is useful for large loops where accumulating iteration outputs would cause memory or performance issues.
+
+**Example output with `captureOutput: false`:**
+
+```json
+{
+  "iteration": 3
 }
 ```
 
@@ -552,5 +587,70 @@ In each iteration, the HTTP task receives a different value for `someInput` (a, 
   "iteration": 3
 }
 ```
+
+</details>
+
+<details>
+<summary>Using console logging in a Do While loop condition</summary>
+
+This example builds a workflow that runs an HTTP task a fixed number of times and logs the iteration count and limit at each step.
+
+**To create a workflow:**
+
+1. Go to **Definitions** > **Workflow**, from the left navigation menu on your Conductor cluster.
+2. Select **+ Define workflow**.
+3. In the **Code** tab, paste the following workflow definition:
+
+```json
+{
+  "name": "Do_While_Console_Log_Demo",
+  "description": "Demonstrates console logging in a Do While loop condition",
+  "version": 1,
+  "tasks": [
+    {
+      "name": "do_while",
+      "taskReferenceName": "do_while_ref",
+      "inputParameters": {
+        "number": "${workflow.input.qty}",
+        "iteration": "${do_while_ref.output.iteration}"
+      },
+      "type": "DO_WHILE",
+      "loopCondition": "(function () { console.log('Iteration: ' + $.iteration + ', limit: ' + $.number); return $.iteration < $.number; })();",
+      "loopOver": [
+        {
+          "name": "http",
+          "taskReferenceName": "http_ref",
+          "inputParameters": {
+            "uri": "https://orkes-api-tester.orkesconductor.com/api",
+            "method": "GET",
+            "accept": "application/json",
+            "contentType": "application/json",
+            "encode": true
+          },
+          "type": "HTTP"
+        }
+      ],
+      "evaluatorType": "graaljs"
+    }
+  ],
+  "inputParameters": ["qty"],
+  "schemaVersion": 2
+}
+```
+
+4. Select **Save** > **Confirm**.
+5. Go to the **Run** tab and enter the input:
+
+```json
+{
+  "qty": 3
+}
+```
+
+6. Select **Execute**.
+
+Once completed, open the Do While task and check the **Logs** tab to see the `console.log` output for each iteration.
+
+<p><img src="/content/img/do-while-console-log-example.png" alt="Workflow output"/></p>
 
 </details>

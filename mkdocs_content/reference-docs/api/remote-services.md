@@ -11,7 +11,7 @@ Start with the overview pages, then move into the reference or tutorial that mat
 
 ## Recommended path
 
-If you are unsure where to begin, start with **Create Service**, **Get Service**, **Delete Service**, **Get All Services**, **Discover and Register Service Endpoints**. These pages cover the most common entry points for this section.
+If you are unsure where to begin, start with **Create Service**, **Clone Service**, **Get Service**, **Delete Service**, **Get All Services**. These pages cover the most common entry points for this section.
 
 ## When to use this section
 
@@ -20,6 +20,7 @@ Use these pages to answer implementation questions, compare available primitives
 ## Pages
 
 - [Create Service](/content/reference-docs/api/remote-services/create-service)
+- [Clone Service](/content/reference-docs/api/remote-services/clone-service)
 - [Get Service](/content/reference-docs/api/remote-services/get-service)
 - [Delete Service](/content/reference-docs/api/remote-services/delete-service)
 - [Get All Services](/content/reference-docs/api/remote-services/get-all-services)

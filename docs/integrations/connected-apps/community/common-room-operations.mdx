@@ -1,0 +1,297 @@
+---
+slug: "/integrations/common-room-operations"
+description: "Look up the input and output parameters for each operation available in the Common Room integration with Orkes Conductor."
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Common Room Operations Reference
+
+Orkes Conductor integrates with Common Room to let you manage users, activities, tags, segments, and custom fields directly from your workflows. Once you configure the Common Room integration, you can use the following operations to check, retrieve, create, and update data in Common Room without leaving your workflow.
+
+This page covers the parameters and expected output for each operation available in the [Common Room integration](/content/integrations/common-room).
+
+## Check API Token Status
+
+Verify that your Common Room API token is valid and retrieve basic details about the associated community.
+
+<Tabs>
+<TabItem value="input" label="Input Parameters">
+
+This operation has no input parameters.
+
+</TabItem>
+<TabItem value="output" label="Output Parameters">
+
+| Parameter | Description | 
+| --------- | ----------- |
+| jti | The unique identifier for the API token. | 
+| communityName | The name of the Common Room community associated with the API token. | 
+| communityId | The unique identifier of the Common Room community. | 
+
+</TabItem>
+</Tabs>
+
+## Add or Edit User
+
+Add a new contact or update an existing contact in the Common Room.
+
+<Tabs>
+<TabItem value="input" label="Input Parameters">
+
+| Parameter | Description | Type | Required/Optional |
+| --------- | ----------- | ---- | ----------------- |
+| Destination Source Id | The Destination Source ID retrieved from [Common Room](/content/integrations/common-room#get-the-destination-source-id). | string |. Required. | 
+| User | An object containing the contact details: `id`, `email`, `fullName`, `firstName`, `lastName`, `username`, `avatarUrl`, `bio`, `linkedin`, `github`, `twitter`, `discord`, `roleAtCompany`, `titleAtCompany`, `companyName`, `companyDomain`, `country`, `city`, `region`, `rawLocation`, `tags`, and `customFields`.<br/>The `id` field is mandatory.<ul><li>To add a new user, use any unique identifier.</li><li>To edit an existing user, use the member ID from the Common Room member profile URL: `https://app.commonroom.io/community/<COMMUNITY-ID>-<COMMUNITY-NAME>/member/<MEMBER-ID>-<member-name>`.</li></ul> | object | Required. | 
+
+</TabItem>
+<TabItem value="output" label="Output Parameters">
+
+Returns a `status` and `message` confirming whether the user information was accepted for processing.
+
+</TabItem>
+</Tabs>
+
+## Get Activity Types
+
+Retrieve the list of activity types available in your Common Room community.
+
+<Tabs>
+<TabItem value="input" label="Input Parameters">
+
+This operation has no input parameters.
+
+</TabItem>
+<TabItem value="output" label="Output Parameters">
+
+Returns an `activityTypes` array. Each item contains the following fields:
+
+| Parameter | Description | 
+| --------- | ----------- |
+| id | The unique identifier of the activity type. Use this value in the `activityType` field of the [Add or Edit Activity](/content/integrations/common-room-operations#add-or-edit-activity) operation. | 
+| name | The name of the activity type. | 
+| displayName | The human-readable label of the activity type. | 
+
+</TabItem>
+</Tabs>
+
+## Add or Edit Activity
+
+Add a new activity or update an existing activity in Common Room to track community interactions such as forum posts, GitHub contributions, and Slack messages.
+
+<Tabs>
+<TabItem value="input" label="Input Parameters">
+
+| Parameter | Description | Type | Required/Optional |
+| --------- | ----------- | ---- | ----------------- |
+| Destination Source Id | The Destination Source ID retrieved from [Common Room](/content/integrations/common-room#get-the-destination-source-id). | string |. Required. | 
+| Activity | An object containing the activity details. It can include the following parameters:<table><thead><tr><th>Parameter</th><th>Description</th></tr></thead><tbody><tr><td>activity.<strong>id</strong></td><td>The unique identifier of the activity in the source system.</td></tr><tr><td>activity.<strong>activityType</strong></td><td>The type of activity. Must be a valid activity type ID returned by the [Get Activity Types](/content/integrations/common-room-operations#get-activity-types) operation.</td></tr><tr><td>activity.<strong>user</strong></td><td>An object representing the user associated with the activity. Must contain an <code>id</code> field.</td></tr><tr><td>activity.<strong>timestamp</strong></td><td>The date and time the activity occurred, in ISO 8601 format.</td></tr><tr><td>activity.<strong>activityTitle</strong></td><td>An object representing the title of the activity.</td></tr><tr><td>activity.<strong>content</strong></td><td>An object representing the content of the activity.</td></tr><tr><td>activity.<strong>url</strong></td><td>The URL associated with the activity, such as a link to the post or contribution.</td></tr><tr><td>activity.<strong>tags</strong></td><td>A list of tags to associate with the activity.</td></tr><tr><td>activity.<strong>parentActivity</strong></td><td>An object representing the parent activity, if this activity is a reply or sub-activity.</td></tr><tr><td>activity.<strong>subSource</strong></td><td>An object representing the sub-source of the activity within the integration source.</td></tr></tbody></table> | object | Required. | 
+
+</TabItem>
+<TabItem value="output" label="Output Parameters">
+
+Returns a `status` and `message` confirming whether the activity information was accepted for processing.
+
+</TabItem>
+</Tabs>
+
+## Get Custom Fields
+
+Retrieve the list of custom fields defined in your Common Room community.
+
+<Tabs>
+<TabItem value="input" label="Input Parameters">
+
+| Parameter | Description | Type | Required/Optional |
+| --------- | ----------- | ---- | ----------------- |
+| Destination Source Id | The Destination Source ID retrieved from [Common Room](/content/integrations/common-room#get-the-destination-source-id). | string | Optional. | 
+
+</TabItem>
+<TabItem value="output" label="Output Parameters">
+
+Returns a `customFields` array. Each item contains the following fields:
+
+| Parameter | Description | 
+| --------- | ----------- |
+| id | The unique identifier of the custom field. | 
+| name | The name of the custom field. | 
+| type | The data type of the custom field, such as `date`, `string`, `int` etc. | 
+| multivalue | Indicates whether the custom field accepts multiple values. | 
+| values | The predefined values for the custom field, if applicable. | 
+
+</TabItem>
+</Tabs>
+
+## Get Segments
+
+Retrieve the list of segments defined in your Common Room community.
+
+<Tabs>
+<TabItem value="input" label="Input Parameters">
+
+This operation has no input parameters.
+
+</TabItem>
+<TabItem value="output" label="Output Parameters">
+
+Returns a `segments` array. Each item contains the following fields:
+
+| Parameter | Description | 
+| --------- | ----------- |
+| id | The unique identifier of the segment. | 
+| name | The name of the segment. | 
+
+</TabItem>
+</Tabs>
+
+## Get Segment Statuses
+
+Retrieve the list of statuses available for a specific segment in your Common Room community.
+
+<Tabs>
+<TabItem value="input" label="Input Parameters">
+
+| Parameter | Description | Type | Required/Optional |
+| --------- | ----------- | ---- | ----------------- |
+| Segment Id | The unique identifier of the segment. Use the `id` value returned by the [Get Segments](/content/integrations/common-room-operations#get-segments) operation. | integer | Required. | 
+
+</TabItem>
+<TabItem value="output" label="Output Parameters">
+
+Returns a `statuses` array. Each item contains the following fields:
+
+| Parameter | Description | 
+| --------- | ----------- |
+| id | The unique identifier of the segment. | 
+| name | The name of the status. | 
+
+</TabItem>
+</Tabs>
+
+## List Tags
+
+Retrieve the list of tags defined in your Common Room community.
+
+<Tabs>
+<TabItem value="input" label="Input Parameters">
+
+This operation has no input parameters.
+
+</TabItem>
+<TabItem value="output" label="Output Parameters">
+
+Returns a `labels` array. Each item contains the following fields:
+
+| Parameter | Description | 
+| --------- | ----------- |
+| id | The unique identifier of the tag. | 
+| name | The name of the tag. | 
+| description | The description of the tag. | 
+| entityTypes | The entity types the tag applies to. | 
+| createdAt | The date and time the tag was created, in ISO 8601 format. | 
+| deletedAt | The date and time the tag was deleted, in ISO 8601 format. Returns `null` if the tag has not been deleted. | 
+
+</TabItem>
+</Tabs>
+
+## Create Tag
+
+Create a new tag in your Common Room community.
+
+<Tabs>
+<TabItem value="input" label="Input Parameters">
+
+| Parameter | Description | Type | Required/Optional |
+| --------- | ----------- | ---- | ----------------- |
+| Name | The name of the tag. | string | Required. | 
+| Entity Types | The entity types the tag applies to. Supported values:<ul><li>`member`</li><li>`activity`</li><li>`company`</li></ul> | array | Required. | 
+| Description | The description of the tag. | string | Optional. | 
+
+</TabItem>
+<TabItem value="output" label="Output Parameters">
+
+| Parameter | Description | 
+| --------- | ----------- |
+| id | The unique identifier of the created tag. | 
+| name | The name of the tag. | 
+| description | The description of the tag. | 
+| entityTypes | The entity types the tag applies to. | 
+| createdAt | The date and time the tag was created, in ISO 8601 format. | 
+| deletedAt | The date and time the tag was deleted, in ISO 8601 format. Returns `null` if the tag has not been deleted. | 
+
+</TabItem>
+</Tabs>
+
+## Update Tag
+
+Update the name or description of an existing tag in your Common Room community.
+
+<Tabs>
+<TabItem value="input" label="Input Parameters">
+
+| Parameter | Description | Type | Required/Optional |
+| --------- | ----------- | ---- | ----------------- |
+| Tag Id | The unique identifier of the tag to update. Use the `id` value returned by the [Create Tag](/content/integrations/common-room-operations#create-tag) or [List Tags](/content/integrations/common-room-operations#list-tags) operation. | string | Required. | 
+| Name | The updated name of the tag. | string | Required. | 
+| Description | The updated description of the tag. | string | Optional. | 
+
+</TabItem>
+<TabItem value="output" label="Output Parameters">
+
+| Parameter | Description | 
+| --------- | ----------- |
+| id | The unique identifier of the tag. | 
+| name | The name of the tag. | 
+| description | The description of the tag. | 
+| entityTypes | The entity types the tag applies to. | 
+| createdAt | The date and time the tag was created, in ISO 8601 format. | 
+| deletedAt | The date and time the tag was deleted, in ISO 8601 format. Returns `null` if the tag has not been deleted. | 
+
+</TabItem>
+</Tabs>
+
+## Delete Tag
+
+Delete an existing tag from your Common Room community.
+
+<Tabs>
+<TabItem value="input" label="Input Parameters">
+
+| Parameter | Description | Type | Required/Optional |
+| --------- | ----------- | ---- | ----------------- |
+| Tag Id | The unique identifier of the tag to delete. Use the `id` value returned by the [Create Tag](/content/integrations/common-room-operations#create-tag) or [List Tags](/content/integrations/common-room-operations#list-tags) operation. | string | Required. | 
+
+</TabItem>
+<TabItem value="output" label="Output Parameters">
+
+Returns a `status` and `message` confirming whether the tag was deleted successfully.
+
+</TabItem>
+</Tabs>
+
+## Get Tag
+
+Retrieve the details of a specific tag in your Common Room community.
+
+<Tabs>
+<TabItem value="input" label="Input Parameters">
+
+| Parameter | Description | Type | Required/Optional |
+| --------- | ----------- | ---- | ----------------- |
+| Tag Id | The unique identifier of the tag to retrieve. Use the `id` value returned by the [Create Tag](/content/integrations/common-room-operations#create-tag) or [List Tags](/content/integrations/common-room-operations#list-tags) operation. | string | Required. | 
+
+</TabItem>
+<TabItem value="output" label="Output Parameters">
+
+| Parameter | Description | 
+| --------- | ----------- |
+| id | The unique identifier of the tag. | 
+| name | The name of the tag. | 
+| description | The description of the tag. | 
+| entityTypes | The entity types the tag applies to. | 
+| createdAt | The date and time the tag was created, in ISO 8601 format. | 
+| deletedAt | The date and time the tag was deleted, in ISO 8601 format. Returns `null` if the tag has not been deleted. | 
+
+</TabItem>
+</Tabs>
