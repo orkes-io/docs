@@ -239,7 +239,6 @@ nav:
         - Get Workflow Size: reference-docs/api/workflow/get-workflow-size.md
         - Update Variable: reference-docs/api/workflow/update-variable.md
         - Upgrade Workflow: reference-docs/api/workflow/upgrade-workflow.md
-        - Pause Workflow: reference-docs/api/workflow/pause-worflow.md
         - Skip Task in Workflow Execution: reference-docs/api/workflow/skip-task-from-workflow.md
         - Pause Workflow: reference-docs/api/workflow/pause-workflow.md
         - Resume Workflow: reference-docs/api/workflow/resume-workflow.md
