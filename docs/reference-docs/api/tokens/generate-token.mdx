@@ -1,0 +1,61 @@
+---
+sidebar_position: 1
+slug: "/reference-docs/api/tokens/generate-token"
+description: "Learn how to generate a token."
+---
+
+# Generate JWT Token
+
+**Endpoint**: `POST /api/token`
+
+Generates a JWT token using either an access key/secret pair or email/password credentials (when local auth mode is enabled).
+
+## Request body
+
+Format the request body as a JSON object with the following parameters:
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| keyId | The access key ID [generated from the application in Conductor](/content/access-control-and-security/applications#configuring-applications). | string | Required if authenticating using access keys. | 
+| keySecret | The access key secret [generated from the application in Conductor](/content/access-control-and-security/applications#configuring-applications). | string | Required if authenticating using access keys. |
+| email | User email address. | string | Required if authenticating using email and password. |
+| password | User password. | string | Required if authenticating using email and password. | 
+| expiration | Token expiration time in milliseconds. If not set, the default expiration applies. Pass a negative value for no expiration. | integer | Optional. | 
+
+## Response
+
+Returns a JWT token string.
+
+```json
+{
+  "token": "<JWT_TOKEN>"
+}
+```
+
+## Examples
+
+<details>
+<summary>Generate JWT token using access keys</summary>
+
+**Request**
+
+```shell
+curl -X 'POST' \
+  'https://<YOUR-SERVER-URL>/api/token' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "keyId": "<YOUR-KEY-ID>",
+    "keySecret": "<YOUR-KEY-SECRET>"
+  }'
+```
+
+**Response**
+
+```json
+{
+  "token": "<JWT_TOKEN>"
+}
+```
+
+</details>

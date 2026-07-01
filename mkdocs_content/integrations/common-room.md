@@ -1,0 +1,117 @@
+---
+title: "Common Room Integration with Orkes Conductor"
+description: "Learn how to integrate Common Room with Orkes Conductor to automate your workflows and manage your Common Room content directly from Conductor."
+canonical_route: "integrations/common-room"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+---
+
+# Common Room Integration with Orkes Conductor
+
+!!! info "Available since"
+    - v5.3.0 and later
+
+Integrating Common Room with Orkes Conductor lets you build workflows that interact with your Common Room using the following operations:
+
+- Check API Token Status
+- Add or Edit User
+- Get Activity Types
+- Add or Edit Activity
+- Get Custom Fields
+- Get Segments
+- Get Segment Statuses
+- List Tags
+- Create Tag
+- Update Tag
+- Delete Tag
+- Get Tag
+
+This guide explains how to set up and use the integration. Here’s an overview:
+
+1. Get the required credentials from the Common Room.
+2. Configure a new Common Room integration in Orkes Conductor.
+3. Use Common Room integration in workflows.
+
+## Step 1: Get the Common Room credentials
+
+To integrate Common Room with Orkes Conductor, get the API key from Common Room.
+
+### Get the API key
+
+**To get the API key:**
+
+1. Log in to the [Common Room](https://app.commonroom.io/).
+2. Go to **Settings** > **API Keys**.
+3. Select **Create New API Key**.
+4. Enter a descriptive name for your key.
+5. Copy and store the API key as it will be shown only once.
+
+### Get the Destination Source ID
+
+The Destination Source ID is required for the [Add or Edit User](/content/integrations/common-room-operations#add-or-edit-user) and [Add or Edit Activity](/content/integrations/common-room-operations#add-or-edit-activity) operations.
+
+**To get the Destination Source ID:**
+
+1. Go to **Settings** > **Signals** on your Common Room console.
+2. Select **Add Signal** > **API Signal**, or select an existing API Signal.
+3. Copy the **Destination Source ID** from the signal configuration.
+
+For more information, refer to the [Common Room API Signal Documentation](https://www.commonroom.io/docs/signals/custom-integrations/zapier-api/#create-an-api-signal).
+
+## Step 2: Add an integration for Common Room
+
+After obtaining the credentials, add a Common Room integration to your Conductor cluster.
+
+**To create an integration:**
+
+1. Go to **Integrations** > **Connected Apps** from the left navigation menu on your Conductor cluster.
+2. Select **+ New integration**.
+3. In the **Community** section, choose **Common Room**.
+4. Select **+ Add** and enter the following parameters:
+
+| Parameter | Description | Required/Optional |
+| --------- | ----------- | ----------------- |
+| Integration name | A name for the integration. | Required. | 
+| API Key | The Admin API key retrieved from Common Room in [Step 1](/content/integrations/common-room#get-the-api-key). | Required. | 
+| Description | A description of the integration. | Required. | 
+
+<p align="center"><img src="/content/img/common-room-integration.png" alt="Common Room Integration with Orkes Conductor" width="60%" height="auto"></img></p>
+
+5. (Optional) Toggle the **Active** button off if you don’t want to activate the integration instantly.
+6. Select **Save**.
+
+## Step 3: Use Common Room integration in workflows
+
+Once the integration is ready, this can be used directly within the workflows. 
+
+**To use Common Room integration in a workflow:**
+
+1. Go to **Definitions** > **Workflow** from the left navigation menu on your Conductor cluster.
+2. Select **+ Define workflow**.
+3. In your workflow, select the (**+**) icon and select **Connected Apps**.
+
+<p align="center"><img src="/content/img/connected-apps.png" alt="Adding Common Room Integration in Conductor workflow" width="100%" height="auto"></img></p>
+
+4. In **Add Task** panel on the right, search for **Common Room**, and select the integration created in [Step 2](/content/integrations/common-room#step-2-add-an-integration-for-common-room).
+
+The following operations are available for use with this integration.
+
+| Operation | Description | 
+| --------- | ----------- | 
+| [Check API Token Status](/content/integrations/common-room-operations#check-api-token-status) | Verify that the Common Room API token is valid and retrieve basic details about the associated community. | 
+| [Add or Edit User](/content/integrations/common-room-operations#add-or-edit-user) | Add a new contact or update an existing contact in the Common Room. | 
+| [Get Activity Types](/content/integrations/common-room-operations#get-activity-types) | Retrieve the list of activity types available in the Common Room community. | 
+| [Add or Edit Activity](/content/integrations/common-room-operations#add-or-edit-activity) | Add a new activity or update an existing activity in the Common Room to track community interactions. | 
+| [Get Custom Fields](/content/integrations/common-room-operations#get-custom-fields) | Retrieve the list of custom fields defined in the Common Room community. | 
+| [Get Segments](/content/integrations/common-room-operations#get-segments) | Retrieve the list of segments defined in the Common Room community. | 
+| [Get Segment Statuses](/content/integrations/common-room-operations#get-segment-statuses) | Retrieve the list of statuses available for a specific segment in the Common Room community. | 
+| [List Tags](/content/integrations/common-room-operations#list-tags) | Retrieve the list of tags defined in the Common Room community. | 
+| [Create Tag](/content/integrations/common-room-operations#create-tag) | Create a new tag in the Common Room community. | 
+| [Update Tag](/content/integrations/common-room-operations#update-tag) | Update the name or description of an existing tag in the Common Room community. | 
+| [Delete Tag](/content/integrations/common-room-operations#delete-tag) | Delete an existing tag from the Common Room community. | 
+| [Get Tag](/content/integrations/common-room-operations#get-tag) | Retrieve the details of a specific tag in the Common Room community. | 
+
+5. Select the required operation, configure the parameters, and select **Save** > **Confirm**.
+6. Select **Execute** to run the workflow.
+
+For the complete operations parameters and output reference, see [Common Room Operations Reference](/content/integrations/common-room-operations).

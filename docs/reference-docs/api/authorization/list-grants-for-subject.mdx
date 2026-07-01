@@ -1,0 +1,68 @@
+---
+sidebar_position: 4
+slug: "/reference-docs/api/authorization/list-grants-for-subject"
+description: "Learn how to list access grants for a specific subject."
+---
+
+# List Grants for a Subject
+
+:::info Available since
+- v5.4.0 and later
+:::
+
+**Endpoint**: `GET /api/auth/subjects/{subjectType}/{subjectId}/grants`
+
+Lists all per-instance resource grants for a user, group, or role. Available for admin-only, unless the caller is listing their own grants.
+
+## Path parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| subjectType | The type of subject being granted access. Supported values:<ul><li>**USER**: A user in Orkes Conductor.</li><li>**ROLE**: A system/custom role.</li><li>**GROUP**: A group in Orkes Conductor.</li></ul> | string | Required. | 
+| subjectId | The unique identifier of the subject (e.g., user email, role name, or group name). | string | Required. | 
+
+## Query parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| resourceType | The resource type for which access grants are being retrieved. Supported values:<ul><li>WORKFLOW</li><li>WORKFLOW_DEF</li><li>WORKFLOW_SCHEDULE</li><li>EVENT_HANDLER</li><li>TASK_DEF</li><li>TASK_REF_NAME</li><li>TASK_ID</li><li>APPLICATION</li><li>USER</li><li>SECRET_NAME</li><li>ENV_VARIABLE</li><li>TAG</li><li>DOMAIN</li><li>INTEGRATION_PROVIDER</li><li>INTEGRATION</li><li>PROMPT</li><li>USER_FORM_TEMPLATE</li><li>SCHEMA</li><li>CLUSTER_CONFIG</li><li>WEBHOOK</li><li>API_GATEWAY_SERVICE</li><li>API_GATEWAY_SERVICE_ROUTE</li><li>AUTH_CONFIG</li><li>GROUP</li><li>ROLE</li><li>SERVICE_REGISTRY</li></ul> | string | Optional. |
+
+## Response
+
+Returns a list of per-instance resource grants for the subject.
+
+## Examples
+
+<details>
+<summary>List grants for a subject</summary>
+
+**Request**
+
+```shell
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/auth/subjects/USER/jane.doe%40acme.com/grants?resourceType=SECRET_NAME' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+[
+  {
+    "target": {
+      "type": "SECRET_NAME",
+      "id": "API_KEY_NEURO"
+    },
+    "access": [
+      "READ",
+      "DELETE",
+      "CREATE",
+      "EXECUTE",
+      "UPDATE"
+    ]
+  }
+]
+```
+
+</details>

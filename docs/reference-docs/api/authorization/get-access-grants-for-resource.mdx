@@ -1,0 +1,121 @@
+---
+sidebar_position: 3
+slug: "/reference-docs/api/authorization/get-access-grants-for-resource"
+description: "Learn how to get access grants for a specific resource."
+---
+
+# Get Access Grants for a Resource
+
+**Endpoint**: `GET /api/auth/authorization/{type}/{id}`
+
+Returns all subjects that have been granted access to a specific resource.
+
+## Path parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| type | The resource type for which access grants are being retrieved. Supported values:<ul><li>WORKFLOW</li><li>WORKFLOW_DEF</li><li>WORKFLOW_SCHEDULE</li><li>EVENT_HANDLER</li><li>TASK_DEF</li><li>TASK_REF_NAME</li><li>TASK_ID</li><li>APPLICATION</li><li>USER</li><li>SECRET_NAME</li><li>ENV_VARIABLE</li><li>TAG</li><li>DOMAIN</li><li>INTEGRATION_PROVIDER</li><li>INTEGRATION</li><li>PROMPT</li><li>USER_FORM_TEMPLATE</li><li>SCHEMA</li><li>CLUSTER_CONFIG</li><li>WEBHOOK</li><li>API_GATEWAY_SERVICE</li><li>API_GATEWAY_SERVICE_ROUTE</li><li>AUTH_CONFIG</li><li>GROUP</li><li>ROLE</li><li>SERVICE_REGISTRY</li></ul> | string | Required. |
+| id | The unique identifier of the resource (e.g., the workflow name). | string | Required. |
+
+## Query parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| groupBy | Response grouping. Use `access` (default) to group by access type, or `subject` to group by subject. | string | Optional. |
+
+## Response
+
+Returns the access grants for the specified resource, grouped by access type or subject.
+
+## Examples
+
+<details>
+<summary>Get grants grouped by access type</summary>
+
+**Request**
+
+```shell
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/auth/authorization/WORKFLOW_DEF/rate_limit_test?groupBy=access' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+{
+  "READ": [
+    {
+      "type": "USER",
+      "id": "jane.doe@acme.com"
+    },
+    {
+      "type": "USER",
+      "id": "john.doe@acme.com"
+    }
+  ],
+  "DELETE": [
+    {
+      "type": "USER",
+      "id": "john.doe@acme.com"
+    }
+  ],
+  "CREATE": [
+    {
+      "type": "USER",
+      "id": "john.doe@acme.com"
+    }
+  ],
+  "EXECUTE": [
+    {
+      "type": "USER",
+      "id": "jane.doe@acme.com"
+    },
+    {
+      "type": "USER",
+      "id": "john.doe@acme.com"
+    }
+  ],
+  "UPDATE": [
+    {
+      "type": "USER",
+      "id": "john.doe@acme.com"
+    }
+  ]
+}
+```
+
+</details>
+
+<details>
+<summary>Get grants grouped by subject</summary>
+
+**Request**
+
+```shell
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/auth/authorization/WORKFLOW_DEF/rate_limit_test?groupBy=subject' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+{
+  "USER:john.doe@acme.com": [
+    "EXECUTE",
+    "CREATE",
+    "READ",
+    "UPDATE",
+    "DELETE"
+  ],
+  "USER:jane.doe@acme.com": [
+    "EXECUTE",
+    "READ"
+  ]
+}
+```
+
+</details>

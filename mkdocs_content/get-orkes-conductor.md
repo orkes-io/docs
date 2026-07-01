@@ -10,7 +10,7 @@ keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration
 
 You can get started with Orkes Conductor using one of the following options, depending on your use case:
 
-- **Developer Edition**: A browser-based sandbox for quick prototyping and testing.
+- **Developer Edition**: A free browser-based sandbox for quick prototyping and testing.
 - **Orkes Cloud**: A fully managed, enterprise-grade Conductor deployment.
 - **Local setup with Docker**: Run Orkes Conductor locally using Docker for development and testing.
 
@@ -61,6 +61,20 @@ For enterprise customers to conduct local development and testing, Orkes provide
     ```
     The UI can be accessed at [http://localhost:3000](http://localhost:3000) and API docs at [http://localhost:8080/swagger-ui/](http://localhost:8080/swagger-ui/). 
 
+    **Enabling authentication (optional)**
+
+    By default, the container runs without authentication. To enable local email/password authentication, add the `LOCAL_AUTH=true` environment variable to the docker run command:
+
+    ```bash
+    docker run -i -p 8080:8080 -p 3000:5000 --mount source=redis,target=/redis --mount source=postgres,target=/pgdata -e LOCAL_AUTH=true orkesio/orkes-conductor-standalone:latest
+    ```
+
+    On first boot, the admin email and password are auto-generated and printed in the container logs. Use them to log in at http://localhost:3000. To set a fixed admin password instead of an auto-generated one, pass the DEFAULT_ADMIN_PASSWORD environment variable:
+
+    ```bash
+    docker run -i -p 8080:8080 -p 3000:5000 --mount source=redis,target=/redis --mount source=postgres,target=/pgdata -e LOCAL_AUTH=true -e DEFAULT_ADMIN_PASSWORD=yourpassword orkesio/orkes-conductor-standalone:latest
+    ```
+
 === "Windows"
 
     !!! info "Prerequisites"
@@ -108,4 +122,18 @@ For enterprise customers to conduct local development and testing, Orkes provide
     # Download and start the container
     docker run -i -p 8080:8080 -p 3000:5000 --mount source=redis,target=/redis --mount source=postgres,target=/pgdata orkesio/orkes-conductor-standalone:latest
     ```
-    Once the container starts, the Orkes Conductor welcome screen appears on the terminal. The UI can be accessed at [http://localhost:3000](http://localhost:3000) and API docs at [http://localhost:8080/swagger-ui/](http://localhost:8080/swagger-ui/).
+    Once the container starts, the Orkes Conductor welcome screen appears on the terminal. The UI can be accessed at [http://localhost:3000](http://localhost:3000) and API docs at [http://localhost:8080/swagger-ui/](http://localhost:8080/swagger-ui/). 
+
+    **Enabling authentication (optional)**
+
+    By default, the container runs without authentication. To enable local email/password authentication, add the `LOCAL_AUTH=true` environment variable to the docker run command:
+
+    ```bash
+    docker run -i -p 8080:8080 -p 3000:5000 --mount source=redis,target=/redis --mount source=postgres,target=/pgdata -e LOCAL_AUTH=true orkesio/orkes-conductor-standalone:latest
+    ```
+
+    On first boot, the admin email and password are auto-generated and printed in the container logs. Use them to log in at http://localhost:3000. To set a fixed admin password instead of an auto-generated one, pass the DEFAULT_ADMIN_PASSWORD environment variable:
+
+    ```bash
+    docker run -i -p 8080:8080 -p 3000:5000 --mount source=redis,target=/redis --mount source=postgres,target=/pgdata -e LOCAL_AUTH=true -e DEFAULT_ADMIN_PASSWORD=yourpassword orkesio/orkes-conductor-standalone:latest
+    ```

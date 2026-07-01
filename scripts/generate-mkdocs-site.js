@@ -2317,8 +2317,7 @@ function buildNav() {
     nav.push({ [label]: navFromItems(sidebars[sidebarId]) });
   }
 
-  const reference = nav.find((entry) => entry.Reference).Reference;
-  reference.push({ Integrations: navFromItems(sidebars.integrationsSidebar) });
+  nav.push({ Integrations: navFromItems(sidebars.integrationsSidebar) });
   nav.push({ Blog: "https://orkes.io/blog/" });
 
   // Keep legacy indexed category URLs even when their groups are intentionally

@@ -1,0 +1,167 @@
+---
+title: "HubSpot Integration with Orkes Conductor"
+description: "Learn how to integrate HubSpot with Orkes Conductor to automate your workflows and manage your HubSpot content directly from Conductor."
+canonical_route: "integrations/hubspot"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+---
+
+# HubSpot Integration with Orkes Conductor
+
+!!! info "Available since"
+    - v5.3.0 and later
+
+Integrating HubSpot with Orkes Conductor lets you build workflows that interact with your HubSpot CRM using the following operations:
+
+- Create Contact
+- Get Contact
+- List Contacts
+- Search Contacts
+- Search Contacts by Email
+- Update Contact
+- Delete Contact
+- Create Company
+- Get Company
+- List Companies
+- Search Companies
+- Search Companies by Domain
+- Update Company
+- Delete Company
+- Get Deal Pipelines
+- Get Ticket Pipelines
+- Create Deal
+- Get Deal
+- List Deals
+- Search Deals
+- Update Deal
+- Delete Deal
+- Create Ticket
+- Get Ticket
+- List Tickets
+- Update Ticket
+- Delete Ticket
+- Create Note
+- Get Note
+- List Notes
+- Delete Note
+- Create Association
+- Get Associations
+- Get Owners
+- Get Form Fields
+- Submit Form
+
+This guide explains how to set up and use the integration. Here’s an overview:
+
+1. Get the required credentials from HubSpot.
+2. Configure a new HubSpot integration in Orkes Conductor.
+3. Use HubSpot integration in workflows.
+
+## Step 1: Get the HubSpot credentials
+
+To integrate HubSpot with Orkes Conductor, create a private (legacy) application in Hubspot and retrieve the access token.
+
+**To retrieve the access token:**
+
+1. Log in to [HubSpot](https://app.hubspot.com/).
+2. Select the settings icon (⚙) in the top navigation bar.
+3. Go to **Integrations** > **Legacy Apps**.
+4. Select **Create legacy app**.
+5. Enter a name and description for your app.
+6. Go to the **Scopes** tab and add the required scopes based on your use case.
+
+| Scope | Operations |
+| ----- | ---------- |
+| crm.objects.contacts.read | Get Contact, List Contacts, Search Contacts, Search Contacts by Email | 
+| crm.objects.contacts.write | Create Contact, Update Contact, Delete Contact | 
+| crm.objects.companies.read | Get Company, List Companies, Search Companies, Search Companies by Domain | 
+| crm.objects.companies.write | Create Company, Update Company, Delete Company | 
+| crm.objects.deals.read | Get Deal, List Deals, Search Deals, Get Deal Pipelines | 
+| crm.objects.deals.write | Create Deal, Update Deal, Delete Deal | 
+| crm.objects.owners.read | Get Owners | 
+| tickets | Create Ticket, Get Ticket, List Tickets, Update Ticket, Delete Ticket, Get Ticket Pipelines | 
+| forms | Get Form Fields, Submit Form | 
+
+7. Select **Create app**.
+8. Go to the **Auth** tab and copy the **Access Token**.
+
+## Step 2: Add an integration for HubSpot
+
+After obtaining the credentials, add a HubSpot integration to your Conductor cluster.
+
+1. Go to **Integrations** > **Connected Apps** from the left navigation menu on your Conductor cluster.
+2. Select **+ New integration**.
+3. In the **CRM** section, choose **HubSpot**.
+4. Select **+ Add** and enter the following parameters:
+
+| Parameter | Description | Required/Optional |
+| --------- | ----------- | ----------------- |
+| Integration name | A name for the integration. | Required. | 
+| API Key | The Access Token copied in [Step 1](/content/integrations/hubspot#step-1-get-the-hubspot-credentials). | Required. | 
+| Description | A description of the integration. | Required. | 
+
+<p align="center"><img src="/content/img/hubspot-integration.png" alt="HubSpot Integration with Orkes Conductor" width="60%" height="auto"></img></p>
+
+5. (Optional) Toggle the **Active** button off if you don’t want to activate the integration instantly.
+6. Select **Save**.
+
+This creates the integration successfully.
+
+## Step 3: Use HubSpot integration in workflows
+
+Once the integration is ready, this can be used directly within the workflows. 
+
+**To use HubSpot integration in a workflow:**
+
+1. Go to **Definitions** > **Workflow** from the left navigation menu on your Conductor cluster.
+2. Select **+ Define workflow**.
+3. In your workflow, select the (**+**) icon and select **Connected Apps**.
+
+<p align="center"><img src="/content/img/connected-apps.png" alt="Adding HubSpot Integration in Conductor workflow" width="100%" height="auto"></img></p>
+
+4. In **Add Task** panel on the right, search for **HubSpot**, and select the integration created in [Step 2](/content/integrations/hubspot#step-2-add-an-integration-for-hubspot).
+
+The following operations are available for use with this integration.
+
+| Operation | Description | 
+| --------- | ----------- | 
+| [Create Contact](/content/integrations/hubspot-operations#create-contact) | Creates a new contact in HubSpot. |
+| [Get Contact](/content/integrations/hubspot-operations#get-contact) | Retrieves a contact by ID from HubSpot. |
+| [List Contacts](/content/integrations/hubspot-operations#list-contacts) | Lists contacts from HubSpot with optional pagination and sorting. |
+| [Search Contacts](/content/integrations/hubspot-operations#search-contacts) | Searches contacts in HubSpot using a query string. |
+| [Search Contacts by Email](/content/integrations/hubspot-operations#search-contacts-by-email) | Searches contacts in HubSpot by exact email address. |
+| [Update Contact](/content/integrations/hubspot-operations#update-contact) | Updates an existing contact in HubSpot. |
+| [Delete Contact](/content/integrations/hubspot-operations#delete-contact) | Deletes a contact from HubSpot. |
+| [Create Company](/content/integrations/hubspot-operations#create-company) | Creates a new company in HubSpot. |
+| [Get Company](/content/integrations/hubspot-operations#get-company) | Retrieves a company by ID from HubSpot. |
+| [List Companies](/content/integrations/hubspot-operations#list-companies) | Lists companies from HubSpot with optional pagination and sorting. |
+| [Search Companies](/content/integrations/hubspot-operations#search-companies) | Searches companies in HubSpot by name. |
+| [Search Companies by Domain](/content/integrations/hubspot-operations#search-companies-by-domain) | Searches companies in HubSpot by domain name. |
+| [Update Company](/content/integrations/hubspot-operations#update-company) | Updates an existing company in HubSpot. |
+| [Delete Company](/content/integrations/hubspot-operations#delete-company) | Deletes a company from HubSpot. |
+| [Get Deal Pipelines](/content/integrations/hubspot-operations#get-deal-pipelines) | Retrieves all deal pipelines and their stages from HubSpot. |
+| [Get Ticket Pipelines](/content/integrations/hubspot-operations#get-ticket-pipelines) | Retrieves all ticket pipelines and their stages from HubSpot. |
+| [Create Deal](/content/integrations/hubspot-operations#create-deal) | Creates a new deal in HubSpot. |
+| [Get Deal](/content/integrations/hubspot-operations#get-deal) | Retrieves a deal by ID from HubSpot. |
+| [List Deals](/content/integrations/hubspot-operations#list-deals) | Lists deals from HubSpot with optional pagination and sorting. |
+| [Search Deals](/content/integrations/hubspot-operations#search-deals) | Searches deals in HubSpot by deal name. |
+| [Update Deal](/content/integrations/hubspot-operations#update-deal) | Updates an existing deal in HubSpot. |
+| [Delete Deal](/content/integrations/hubspot-operations#delete-deal) | Deletes a deal from HubSpot. |
+| [Create Ticket](/content/integrations/hubspot-operations#create-ticket) | Creates a new ticket in HubSpot. |
+| [Get Ticket](/content/integrations/hubspot-operations#get-ticket) | Retrieves a ticket by ID from HubSpot. |
+| [List Tickets](/content/integrations/hubspot-operations#list-tickets) | Lists tickets from HubSpot with optional pagination and sorting. |
+| [Update Ticket](/content/integrations/hubspot-operations#update-ticket) | Updates an existing ticket in HubSpot. |
+| [Delete Ticket](/content/integrations/hubspot-operations#delete-ticket) | Deletes a ticket from HubSpot. |
+| [Create Note](/content/integrations/hubspot-operations#create-note) | Creates a new note in HubSpot. |
+| [Get Note](/content/integrations/hubspot-operations#get-note) | Retrieves a note by ID from HubSpot. |
+| [List Notes](/content/integrations/hubspot-operations#list-notes) | Lists notes from HubSpot with optional pagination and sorting. |
+| [Delete Note](/content/integrations/hubspot-operations#delete-note) | Deletes a note from HubSpot. |
+| [Create Association](/content/integrations/hubspot-operations#create-association) | Associates two CRM objects in HubSpot. |
+| [Get Associations](/content/integrations/hubspot-operations#get-associations) | Gets associations for a CRM object in HubSpot. |
+| [Get Owners](/content/integrations/hubspot-operations#get-owners) | Lists all owners in HubSpot. |
+| [Get Form Fields](/content/integrations/hubspot-operations#get-form-fields) | Gets all fields for a HubSpot form. |
+| [Submit Form](/content/integrations/hubspot-operations#submit-form) | Submits data to a HubSpot form. |
+
+5. Select the required operation, configure the parameters, and select **Save** > **Confirm**.
+6. Select **Execute** to run the workflow.
+
+For the complete operations parameters and output reference, see [HubSpot Operation Reference](/content/integrations/hubspot-operations).

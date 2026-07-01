@@ -1,0 +1,95 @@
+---
+sidebar_position: 7
+slug: "/reference-docs/api/prompts/get-all-prompt-versions"
+description: "Learn how to retrieve all versions of a prompt."
+---
+
+# Get All Versions of Prompts
+
+**Endpoint**: `GET /api/prompts/{name/versions}`
+
+Retrieves all versions of a prompt.
+
+## Path parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| name | The name of the prompt to retrieve. | string | Required. | 
+
+## Response
+
+- Returns 200 OK with the prompt version objects on success.
+- Returns 401 if authentication is required.
+- Returns 403 if the caller does not have READ permission on the prompt.
+- Returns 404 if no versions are found for the given prompt name.
+
+## Examples
+
+<details>
+<summary>Get all versions of prompt</summary>
+
+**Request**
+
+```bash
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/prompts/population-prompt/versions' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+[
+  {
+    "createTime": 1780313786302,
+    "updateTime": 1780313786302,
+    "createdBy": "john.doe@acme.com",
+    "updatedBy": "john.doe@acme.com",
+    "name": "population-prompt",
+    "template": "What is the current population of `${country}`? What was the population in `${year}`?",
+    "description": "Population prompt",
+    "variables": [
+      "country",
+      "year"
+    ],
+    "integrations": [
+      "openAI:gpt-4o",
+      "openAI:chatgpt-4o-latest"
+    ],
+    "tags": [
+      {
+        "key": "team",
+        "value": "docs"
+      }
+    ],
+    "version": 2
+  },
+  {
+    "createTime": 1769502880756,
+    "updateTime": 1780313747596,
+    "createdBy": "john.doe@acme.com",
+    "updatedBy": "john.doe@acme.com",
+    "name": "population-prompt",
+    "template": "What is the current population of `${country}`? What was the population in `${year}`?",
+    "description": "Population prompt",
+    "variables": [
+      "country",
+      "year"
+    ],
+    "integrations": [
+      "openAI:gpt-4o",
+      "openAI:chatgpt-4o-latest"
+    ],
+    "tags": [
+      {
+        "key": "team",
+        "value": "docs"
+      }
+    ],
+    "version": 1
+  }
+]
+```
+
+</details>

@@ -40,6 +40,26 @@ You can read `$.value1` and `$.value2` inside the expression. This is why custom
 
 If your Inline expression references a workflow secret (such as `${workflow.secrets.<secret-name>}`), the resolved value is masked in the task output. For details on masking behavior, see [Masking Parameters](https://orkes.io/content/developer-guides/masking-parameters#masking-secret-references-and-secret-values).
 
+### Console logging
+
+The GraalJS evaluator does not expose a built-in console object, but Orkes Conductor provides a console bridge that makes `console.log`, `console.info`, and `console.error` available inside Inline task scripts.
+
+The console bridge accepts a single string argument. To include variable values, use string concatenation. 
+
+```java
+// Correct
+console.log('Discount value: ' + $.discount);
+
+// Incorrect - will fail
+console.log('Discount value:', $.discount);
+```
+
+The output appears in the task's execution logs. [See example](#examples).
+
+:::info Note
+As of v5.4.0, the `console.*` log destination is configurable. By default, logs appear in the task's execution logs in the UI, but can be redirected to server logs or discarded entirely. Contact the Orkes team to change this for your cluster.
+:::
+
 The following are generic configuration parameters that can be applied to the task and are not specific to the Inline task.
 
 <details>
@@ -157,6 +177,65 @@ This takes you to the workflow execution page. Once the execution is completed, 
   <p>
     <img
       src="/content/img/inline-task-example-output.png"
+      alt="Workflow output"
+      width="100%"
+      height="auto"
+    />
+  </p>
+</center>
+
+</details>
+
+<details>
+<summary>Using console logging in an Inline task</summary>
+
+This example builds a workflow that validates a discount percentage and logs the input and result for debugging.
+
+**To create a workflow:**
+
+1. Go to **Definitions** > **Workflow**, from the left navigation menu on your Conductor cluster.
+2. Select **+ Define workflow**.
+3. In the **Code** tab, paste the following workflow definition:
+
+```json
+{
+  "name": "Discount_Validator",
+  "description": "Validates a discount percentage and logs the result",
+  "version": 1,
+  "tasks": [
+    {
+      "name": "validate_discount",
+      "taskReferenceName": "validate_discount_ref",
+      "inputParameters": {
+        "expression": "(function () { console.log('Validating discount: ' + $.discount); var isValid = $.discount >= 0 && $.discount <= 100; console.log('Result: ' + isValid); return isValid; })();",
+        "evaluatorType": "graaljs",
+        "discount": "${workflow.input.discount}"
+      },
+      "type": "INLINE"
+    }
+  ],
+  "inputParameters": ["discount"],
+  "schemaVersion": 2
+}
+```
+
+4. Select **Save** > **Confirm**.
+5. Go to the **Run** tab, and enter the **Input params**. For example:
+
+```json
+{
+  "discount": 15
+}
+```
+
+6. Select **Execute**.
+
+Once completed, open the task execution and check the **Logs** tab to see the `console.log` output.
+
+<center>
+  <p>
+    <img
+      src="/content/img/inline-console-log-example.png"
       alt="Workflow output"
       width="100%"
       height="auto"

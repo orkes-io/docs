@@ -1,0 +1,137 @@
+---
+title: "Google Sheets Integration with Orkes Conductor"
+description: "Learn how to integrate Google Sheets with Orkes Conductor to automate workflows that interact with your Google Sheets"
+canonical_route: "integrations/google-sheets"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+---
+
+# Google Sheets Integration with Orkes Conductor
+
+!!! info "Available since"
+    - v5.3.0 and later
+
+Integrating Google Sheets with Orkes Conductor lets you build workflows that interact with your Google Sheets using the following operations:
+
+- Create Spreadsheet
+- Delete Spreadsheet
+- Append Values
+- Append Row
+- Append or Update Row
+- Read Values
+- Get Row
+- Update Row
+- Clear Range
+- Clear Sheet
+- Create Sheet
+- Delete Sheet
+- Delete Rows or Columns
+
+This guide explains how to set up and use the integration. Here’s an overview:
+
+1. Get the required credentials from Google Console.
+2. Configure a new Google Sheets integration in Orkes Conductor.
+3. Use Google Sheets integration in workflows.
+
+## Step 1: Get the Google Console credentials
+
+To integrate Google Sheets with Orkes Conductor, retrieve the OAuth client ID and secret from the Google console, and enable the Google Sheets API and Google Drive API.
+
+### Get OAuth Client credentials
+
+**To get the credentials:**
+
+1. Go to the [Google Cloud Console](https://console.cloud.google.com).
+2. Select your project or create a new one.
+3. In the left navigation menu, go to **APIs & Services** > **Credentials**
+4. Select **+ Create credentials** > **OAuth client ID**.
+
+<p align="center"><img src="/content/img/oauth-client-id.png" alt="Getting OAuth Client credentials from Google Cloud Console." width="100%" height="auto"></img></p>
+
+5. Choose your application type as **Web application**, and enter a **Name**.
+6. In **Authorized redirect URIs**, select **+Add URI** and enter your redirect URI in the format `https://<YOUR-CONDUCTOR-CLUSTER-NAME>/integrations/oauth/callback`.
+7. Select **+ Create**.
+8. Note the generated OAuth Client ID and secret, or download and save the JSON.
+
+### Enable Google Sheets API
+
+**To enable Google Sheets API access:**
+
+1. Go to **APIs & Services** > **Enabled APIs & services**.
+2. Select **+ Enable APIs and services**.
+3. Search for **Google Sheets API** and enable it.
+
+### Enable Google Drive API
+
+!!! info "Note"
+    This is required only if you want to use the **Read & Write + Drive** scope for spreadsheet deletion.
+
+**To enable Google Drive API access:**
+
+1. Go to **APIs & Services** > **Enabled APIs & services**.
+2. Select **+ Enable APIs and services**.
+3. Search for **Google Drive API** and enable it.
+
+## Step 2: Add an integration for Google Sheets
+
+After obtaining the credentials, add a Google Sheets integration to your Conductor cluster.
+
+**To create an integration:**
+
+1. Go to **Integrations** > **Connected Apps** from the left navigation menu on your Conductor cluster.
+2. Select **+ New integration**.
+3. In the **Productivity** section, choose **Google Sheets**.
+4. Select **+ Add** and enter the following parameters:
+
+| Parameter | Description | Required/Optional |
+| --------- | ----------- | ----------------- |
+| Integration name | A name for the integration. | Required. | 
+| Scope | The OAuth2 scope for Google Sheets API access. The scope you select determines the level of access Google grants to the integration. Supported values: <ul><li>**Read Only**: Grants read-only access to sheets.</li><li>**Read & Write**: Grants full read and write access to sheets.</li><li>**Read & Write + Drive**: Grants full read and write access to sheets and drive. This is required for spreadsheet deletion permission.</li></ul> | Required. |
+| OAuth Client ID | The OAuth client ID generated from [Step 1](/content/integrations/google-sheets#step-1-get-the-google-console-credentials). | Required. |
+| OAuth Client Secret | The OAuth client secret generated from [Step 1](/content/integrations/google-sheets#step-1-get-the-google-console-credentials). | Required.
+| Default Spreadsheet Id | The default spreadsheet ID to use. To get the spreadsheet ID, open the spreadsheet in Google Sheets. The ID is the string of characters at the end of the URL: `https://docs.google.com/spreadsheets/d/<YOUR-SPREADSHEET-ID>/`. | Optional. | 
+| Description | A description of the integration. | Required. | 
+
+<p align="center"><img src="/content/img/google-sheets-integration.png" alt="Google Sheets Integration with Orkes Conductor" width="60%" height="auto"></img></p>
+
+5. (Optional) Toggle the **Active** button off if you don’t want to activate the integration instantly.
+6. Select **Authorize**.
+
+This takes you to the Google sign-in page, where you can authorize the connection with your Google account. Once authorized, the integration is created successfully.
+
+## Step 3: Use Google Sheets integration in workflows
+
+Once the integration is ready, this can be used directly within the workflows. 
+
+**To use Google Sheets integration in a workflow:**
+
+1. Go to **Definitions** > **Workflow** from the left navigation menu on your Conductor cluster.
+2. Select **+ Define workflow**.
+3. In your workflow, select the (**+**) icon and select **Connected Apps**.
+
+<p align="center"><img src="/content/img/connected-apps.png" alt="Adding Google Sheets Integration in Conductor workflow" width="100%" height="auto"></img></p>
+
+4. In **Add Task** panel on the right, search for **Google Sheets**, and select the integration created in [Step 2](/content/integrations/google-sheets#step-2-add-an-integration-for-google-sheets).
+
+The following operations are available for use with this integration.
+
+| Operation | Description | Supported Integration Scopes |
+| --------- | ----------- | ---------------------------- |
+| [Create Spreadsheet](/content/integrations/google-sheets-operations#create-spreadsheet) | Create a new Google Sheets spreadsheet with the provided title. | <ul><li>Read & Write + Drive</li><li>Read & Write</li></ul> | 
+| [Delete Spreadsheet](/content/integrations/google-sheets-operations#delete-spreadsheet) | Delete an entire spreadsheet by ID. | <ul><li>Read & Write + Drive</li></ul> | 
+| [Append Values](/content/integrations/google-sheets-operations#append-values) | Append multiple rows to a specified range in a sheet. | <ul><li>Read & Write + Drive</li><li>Read & Write</li></ul> | 
+| [Append Row](/content/integrations/google-sheets-operations#append-row) | Append a single row to a sheet. | <ul><li>Read & Write + Drive</li><li>Read & Write</li></ul> | 
+| [Append or Update Row](/content/integrations/google-sheets-operations#append-or-update-row) | Append a row if it doesn't exist, or update it if it does. | <ul><li>Read & Write + Drive</li><li>Read & Write</li></ul> | 
+| [Read Values](/content/integrations/google-sheets-operations#read-values) | Read values from a specified range in a sheet. | <ul><li>Read & Write + Drive</li><li>Read & Write</li><li>Read Only</li></ul> | 
+| [Get Rows](/content/integrations/google-sheets-operations#get-rows) | Read all rows from a sheet. | <ul><li>Read & Write + Drive</li><li>Read & Write</li><li>Read Only</li></ul> | 
+| [Update Row](/content/integrations/google-sheets-operations#update-row) | Update a specific row by index. | <ul><li>Read & Write + Drive</li><li>Read & Write</li></ul> | 
+| [Clear Range](/content/integrations/google-sheets-operations#clear-range) | Clear values from a specified range in a sheet. | <ul><li>Read & Write + Drive</li><li>Read & Write</li></ul> | 
+| [Clear Sheet](/content/integrations/google-sheets-operations#clear-sheet) | Clear all values from a sheet while keeping the sheet structure. | <ul><li>Read & Write + Drive</li><li>Read & Write</li></ul> | 
+| [Create Sheet](/content/integrations/google-sheets-operations#create-sheet) | Create a new sheet (tab) within a spreadsheet. | <ul><li>Read & Write + Drive</li><li>Read & Write</li></ul> | 
+| [Delete Sheet](/content/integrations/google-sheets-operations#delete-sheet) | Delete a sheet (tab) from a spreadsheet. | <ul><li>Read & Write + Drive</li><li>Read & Write</li></ul> | 
+| [Delete Rows or Columns](/content/integrations/google-sheets-operations#delete-rows-or-columns) | Delete a range of rows or columns from a sheet. | <ul><li>Read & Write + Drive</li><li>Read & Write</li></ul> | 
+
+5. Select the required operation, configure the parameters, and select **Save** > **Confirm**.
+6. Select **Execute** to run the workflow.
+
+For the complete operations parameters and output reference, see [Google Sheets Operations Reference](/content/integrations/google-sheets-operations).

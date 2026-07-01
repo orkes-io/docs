@@ -1,0 +1,70 @@
+---
+sidebar_position: 6
+slug: "/reference-docs/api/prompts/get-prompt"
+description: "Learn how to retrieve a prompt."
+---
+
+# Get Prompt
+
+**Endpoint**: `GET /api/prompts/{name}`
+
+Retrieves a single prompt by name, optionally at a specific version.
+
+## Path parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| name | The name of the prompt to retrieve. | string | Required. | 
+
+## Query parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| version | The version of the prompt to retrieve. | integer | Optional. |
+
+## Response
+
+- Returns 200 OK with the prompt object on success.
+- Returns 401 if authentication is required.
+- Returns 403 if the caller does not have READ permission on the prompt.
+- Returns 404 if no prompt exists with the given name or version.
+
+## Examples
+
+<details>
+<summary>Get prompt</summary>
+
+**Request**
+
+```bash
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/prompts/population-prompt' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+{
+  "createTime": 1780303601036,
+  "updateTime": 1780303601036,
+  "createdBy": "john.doe@acme.com",
+  "updatedBy": "john.doe@acme.com",
+  "name": "population-prompt",
+  "template": "What is the population of Russia in 1994?",
+  "description": "Updated description",
+  "variables": [],
+  "integrations": [
+    "openAI:gpt-4o"
+  ],
+  "tags": [],
+  "version": 3,
+  "temperature": 0.1,
+  "topP": 1,
+  "responseFormat": "text",
+  "stopWords": []
+}
+```
+
+</details>

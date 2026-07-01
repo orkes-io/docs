@@ -236,10 +236,12 @@ nav:
         - Execute Workflow Synchronously: reference-docs/api/workflow/synchronous-workflow-execution.md
         - Get Workflow by ID: reference-docs/api/workflow/get-workflow-by-id.md
         - Get Workflows by Correlation ID: reference-docs/api/workflow/get-workflows-by-correlation-id.md
+        - Get Workflow Size: reference-docs/api/workflow/get-workflow-size.md
         - Update Variable: reference-docs/api/workflow/update-variable.md
         - Upgrade Workflow: reference-docs/api/workflow/upgrade-workflow.md
-        - Skip Task in Workflow Execution: reference-docs/api/workflow/skip-task-from-workflow.md
         - Pause Workflow: reference-docs/api/workflow/pause-worflow.md
+        - Skip Task in Workflow Execution: reference-docs/api/workflow/skip-task-from-workflow.md
+        - Pause Workflow: reference-docs/api/workflow/pause-workflow.md
         - Resume Workflow: reference-docs/api/workflow/resume-workflow.md
         - Terminate Workflow API: reference-docs/api/workflow/terminate-workflow.md
         - Rerun Workflow: reference-docs/api/workflow/rerun-workflow.md
@@ -311,6 +313,17 @@ nav:
         - Add Tags to Secret: reference-docs/api/secrets/add-tags-to-secret.md
         - Get Tags from Secret: reference-docs/api/secrets/get-tags-from-secret.md
         - Delete Tags from Secret: reference-docs/api/secrets/delete-tags-from-secret.md
+      - Tokens:
+        - Tokens: reference-docs/api/tokens.md
+        - Generate JWT Token: reference-docs/api/tokens/generate-token.md
+        - Get User Info: reference-docs/api/tokens/get-user-info.md
+      - Authorization:
+        - Authorization: reference-docs/api/authorization.md
+        - Grant Access: reference-docs/api/authorization/grant-access.md
+        - Revoke Access: reference-docs/api/authorization/revoke-access.md
+        - Get Access Grants for a Resource: reference-docs/api/authorization/get-access-grants-for-resource.md
+        - List Grants for a Subject: reference-docs/api/authorization/list-grants-for-subject.md
+        - Revoke Grants for a Subject: reference-docs/api/authorization/revoke-grants-for-subject.md
       - Schema:
         - Input/Output Schema Validation: reference-docs/api/schema.md
         - Create Schema: reference-docs/api/schema/create-schema.md
@@ -372,6 +385,7 @@ nav:
       - Remote Services:
         - Remote Services: reference-docs/api/remote-services.md
         - Create Service: reference-docs/api/remote-services/create-service.md
+        - Clone Service: reference-docs/api/remote-services/clone-service.md
         - Get Service: reference-docs/api/remote-services/get-service.md
         - Delete Service: reference-docs/api/remote-services/delete-service.md
         - Get All Services: reference-docs/api/remote-services/get-all-services.md
@@ -405,51 +419,154 @@ nav:
         - Get All Integrations: reference-docs/api/integrations/get-all-integrations.md
         - Get All Integration Providers: reference-docs/api/integrations/get-all-integration-providers.md
         - Get Integration List: reference-docs/api/integrations/get-integration-list.md
+      - Prompts:
+        - Prompts: reference-docs/api/prompts.md
+        - Create or Update Prompt: reference-docs/api/prompts/create-prompt.md
+        - Create or Update Prompt Version: reference-docs/api/prompts/create-prompt-version.md
+        - Create Prompts in Bulk: reference-docs/api/prompts/create-prompts-bulk.md
+        - Delete Prompt: reference-docs/api/prompts/delete-prompt.md
+        - Delete Prompt Version: reference-docs/api/prompts/delete-prompt-version.md
+        - Get Prompt: reference-docs/api/prompts/get-prompt.md
+        - Get All Versions of Prompts: reference-docs/api/prompts/get-all-prompt-versions.md
+        - Get All Prompts: reference-docs/api/prompts/get-all-prompts.md
+        - Add Tags to Prompt: reference-docs/api/prompts/add-tags-to-prompt.md
+        - Get Tags from Prompt: reference-docs/api/prompts/get-tags-from-prompt.md
+        - Delete Tags from Prompt: reference-docs/api/prompts/delete-tags-from-prompt.md
+        - Test Prompts: reference-docs/api/prompts/test-prompts.md
     - FAQs:
       - FAQs: category/faqs.md
       - General FAQs: faqs/general-faqs.md
     - Glossary: glossary.md
-    - Integrations:
-      - Integrations:
-        - Integrations: category/integrations.md
-        - AI / LLM:
-          - AI / LLM Integrations: category/integrations/ai-llm.md
-          - Ollama: integrations/ai-llm/ollama.md
-          - Azure Open AI: integrations/ai-llm/azure-open-ai.md
-          - Open AI: integrations/ai-llm/open-ai.md
-          - Perplexity: integrations/ai-llm/perplexity.md
-          - Grok: integrations/ai-llm/grok.md
-          - Cohere: integrations/ai-llm/cohere.md
-          - Mistral: integrations/ai-llm/mistral.md
-          - Anthropic Claude: integrations/ai-llm/anthropic-claude.md
-          - Google Vertex AI: integrations/ai-llm/vertex-ai.md
-          - Google Gemini AI: integrations/ai-llm/google-gemini-ai.md
-          - Hugging Face: integrations/ai-llm/hugging-face.md
-          - AWS Bedrock Anthropic: integrations/ai-llm/aws-bedrock-anthropic.md
-          - AWS Bedrock Cohere: integrations/ai-llm/aws-bedrock-cohere.md
-          - AWS Bedrock Titan: integrations/ai-llm/aws-bedrock-titan.md
-        - Vector Databases:
-          - Vector Databases Integrations: category/integrations/vector-databases.md
-          - Pinecone: integrations/vector-databases/pinecone.md
-          - Weaviate: integrations/vector-databases/weaviate.md
-          - Postgres Vector Database: integrations/vector-databases/postgres-vector-database.md
-          - Mongo Vector Database: integrations/vector-databases/mongo-vector-database.md
-        - Cloud Providers:
-          - Cloud Providers: category/integrations/cloud-provider.md
-          - AWS: integrations/cloud-provider/aws.md
-          - GCP: integrations/cloud-provider/gcp.md
-        - RDBMS:
-          - RDBMS Integrations: category/integrations/rdbms.md
-          - Relational Database: integrations/rdbms/relational-database.md
-        - Email/Git:
-          - Email/Git: category/integrations/email.md
-          - SendGrid Email: integrations/email/sendgrid.md
-          - Git Repository: integrations/git-repository.md
   - Security:
     - Role Based Access Control: category/access-control-and-security.md
     - Managing Users and Groups: access-control-and-security/users-and-groups.md
     - "Application-Level Access": access-control-and-security/applications.md
     - "Tag-Based Access": access-control-and-security/tags.md
+  - Integrations:
+    - Integrations:
+      - Integrations: category/integrations.md
+      - AI / LLM:
+        - AI / LLM Integrations: category/integrations/ai-llm.md
+        - Ollama: integrations/ai-llm/ollama.md
+        - Azure Open AI: integrations/ai-llm/azure-open-ai.md
+        - Open AI: integrations/ai-llm/open-ai.md
+        - Perplexity: integrations/ai-llm/perplexity.md
+        - Grok: integrations/ai-llm/grok.md
+        - Cohere: integrations/ai-llm/cohere.md
+        - Mistral: integrations/ai-llm/mistral.md
+        - Anthropic Claude: integrations/ai-llm/anthropic-claude.md
+        - Google Vertex AI: integrations/ai-llm/vertex-ai.md
+        - Google Gemini AI: integrations/ai-llm/google-gemini-ai.md
+        - Hugging Face: integrations/ai-llm/hugging-face.md
+        - AWS Bedrock Anthropic: integrations/ai-llm/aws-bedrock-anthropic.md
+        - AWS Bedrock Cohere: integrations/ai-llm/aws-bedrock-cohere.md
+        - AWS Bedrock Titan: integrations/ai-llm/aws-bedrock-titan.md
+      - Vector Databases:
+        - Vector Databases Integrations: category/integrations/vector-databases.md
+        - Pinecone: integrations/vector-databases/pinecone.md
+        - Weaviate: integrations/vector-databases/weaviate.md
+        - Postgres Vector Database: integrations/vector-databases/postgres-vector-database.md
+        - Mongo Vector Database: integrations/vector-databases/mongo-vector-database.md
+      - Cloud Providers:
+        - Cloud Providers: category/integrations/cloud-provider.md
+        - AWS: integrations/cloud-provider/aws.md
+        - GCP: integrations/cloud-provider/gcp.md
+      - RDBMS:
+        - RDBMS Integrations: category/integrations/rdbms.md
+        - Relational Database: integrations/rdbms/relational-database.md
+      - Email/Git:
+        - Email/Git: category/integrations/email.md
+        - SendGrid Email: integrations/email/sendgrid.md
+        - Git Repository: integrations/git-repository.md
+      - Connected Apps:
+        - Connected Apps: category/integrations/connected-apps.md
+        - Productivity:
+          - Productivity: category/integrations/productivity.md
+          - Google Slides:
+            - Google Slides: integrations/google-slides.md
+            - Google Slides Operations Reference: integrations/google-slides-operations.md
+          - Google Sheets:
+            - Google Sheets: integrations/google-sheets.md
+            - Google Sheets Operations Reference: integrations/google-sheets-operations.md
+          - Notion:
+            - Notion: integrations/notion.md
+            - Notion Operations Reference: integrations/notion-operations.md
+          - Slack:
+            - Slack: integrations/slack.md
+            - Slack Operations Reference: integrations/slack-operations.md
+          - Google Calendar:
+            - Google Calendar: integrations/google-calendar.md
+            - Google Calendar Operations Reference: integrations/google-calendar-operations.md
+          - Google Drive:
+            - Google Drive: integrations/google-drive.md
+            - Google Drive Operations Reference: integrations/google-drive-operations.md
+          - Google Docs:
+            - Google Docs: integrations/google-docs.md
+            - Google Docs Operations Reference: integrations/google-docs-operations.md
+        - Project Management:
+          - Project Management: category/integrations/project-management.md
+          - Discourse:
+            - Discourse: integrations/discourse.md
+            - Discourse Operations Reference: integrations/discourse-operations.md
+          - Jira:
+            - Jira: integrations/jira.md
+            - Jira Operations Reference: integrations/jira-operations.md
+        - CMS:
+          - CMS: category/integrations/cms.md
+          - WordPress:
+            - WordPress: integrations/wordpress.md
+            - WordPress Operations Reference: integrations/wordpress-operations.md
+        - Cloud:
+          - Cloud: category/integrations/cloud.md
+          - Azure Storage:
+            - Azure Storage: integrations/azure-storage.md
+            - Azure Storage Operations Reference: integrations/azure-storage-operations.md
+          - Azure Functions:
+            - Azure Functions: integrations/azure-functions.md
+            - Azure Functions Operations Reference: integrations/azure-functions-operations.md
+          - Google Cloud Storage:
+            - Google Cloud Storage: integrations/google-cloud-storage.md
+            - Google Cloud Storage Operations Reference: integrations/google-cloud-storage-operations.md
+          - Google Cloud Functions:
+            - Google Cloud Functions: integrations/google-cloud-functions.md
+            - Google Cloud Functions Operations Reference: integrations/google-cloud-functions-operations.md
+          - AWS Lambda:
+            - AWS Lambda: integrations/aws-lambda.md
+            - AWS Lambda Operations Reference: integrations/aws-lambda-operations.md
+          - AWS S3:
+            - AWS S3: integrations/aws-s3.md
+            - AWS S3 Operations Reference: integrations/aws-s3-operations.md
+        - Source Control:
+          - Source Control: category/integrations/source-control.md
+          - GitHub:
+            - GitHub: integrations/github.md
+            - GitHub Operations Reference: integrations/github-operations.md
+        - Community:
+          - Community: category/integrations/community.md
+          - Common Room:
+            - Common Room: integrations/common-room.md
+            - Common Room Operations Reference: integrations/common-room-operations.md
+        - CRM:
+          - CRM: category/integrations/crm.md
+          - HubSpot:
+            - HubSpot: integrations/hubspot.md
+            - HubSpot Operations Reference: integrations/hubspot-operations.md
+        - Database:
+          - Database: category/integrations/database.md
+          - MySQL:
+            - MySQL: integrations/mysql.md
+            - MySQL Operations Reference: integrations/mysql-operations.md
+          - PostgreSQL:
+            - PostgreSQL: integrations/postgresql.md
+            - PostgreSQL Operations Reference: integrations/postgresql-operations.md
+          - Redis:
+            - Redis: integrations/redis.md
+            - Redis Operations Reference: integrations/redis-operations.md
+        - Payment:
+          - Payment: category/integrations/payment.md
+          - Stripe:
+            - Stripe: integrations/stripe.md
+            - Stripe Operations Reference: integrations/stripe-operations.md
   - Blog: https://orkes.io/blog/
 
 not_in_nav: |

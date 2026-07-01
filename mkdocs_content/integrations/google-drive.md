@@ -1,0 +1,138 @@
+---
+title: "Google Drive Integration with Orkes Conductor"
+description: "Learn how to integrate Google Drive with Orkes Conductor to automate workflows that interact with your Google Drive files and folders."
+canonical_route: "integrations/google-drive"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+---
+
+# Google Drive Integration with Orkes Conductor
+
+!!! info "Available since"
+    - v5.3.0 and later
+
+Integrating Google Drive with Orkes Conductor lets you build workflows that interact with your Drive files and folders using the following operations:
+
+- Create Folder
+- Delete Folder
+- Share Folder
+- Upload File from Base64
+- Download File Base64
+- Create File from Text
+- Create Google Doc
+- Copy File
+- Update File
+- Move File
+- Share File
+- List Files
+- Delete File
+- Search Files and Folders
+- Create Shared Drive
+- Update Shared Drive
+- Get Shared Drive
+- Get Many Shared Drives
+- Delete Shared Drive
+
+This guide explains how to set up and use the integration. Here’s an overview:
+
+1. Get the required credentials from Google Console.
+2. Configure a new Google Drive integration in Orkes Conductor.
+3. Use Google Drive integration in workflows.
+
+## Step 1: Get the Google Console credentials
+
+To integrate Google Drive with Orkes Conductor, retrieve the OAuth client ID and secret from the Google console, and enable the Google Drive API.
+
+### Get OAuth Client credentials
+
+**To get the credentials:**
+
+1. Go to the [Google Cloud Console](https://console.cloud.google.com).
+2. Select your project or create a new one.
+3. In the left navigation menu, go to **APIs & Services** > **Credentials**
+4. Select **+ Create credentials** > **OAuth client ID**.
+
+<p align="center"><img src="/content/img/oauth-client-id.png" alt="Getting OAuth Client credentials from Google Cloud Console." width="100%" height="auto"></img></p>
+
+5. Choose your application type as **Web application**, and enter a **Name**.
+6. In **Authorized redirect URIs**, select **+Add URI** and enter your redirect URI in the format `https://<YOUR-CONDUCTOR-CLUSTER-NAME>/integrations/oauth/callback`.
+7. Select **+ Create**.
+8. Note the generated OAuth Client ID and secret, or download and save the JSON.
+
+### Enable Google Drive API
+
+**To enable Google Drive API access:**
+
+1. Go to **APIs & Services** > **Enabled APIs & services**.
+2. Select **+ Enable APIs and services**.
+3. Search for **Google Drive API** and enable it.
+
+## Step 2: Add an integration for Google Drive
+
+After obtaining the credentials, add a Google Drive integration to your Conductor cluster.
+
+**To create an integration:**
+
+1. Go to **Integrations** > **Connected Apps** from the left navigation menu on your Conductor cluster.
+2. Select **+ New integration**.
+3. In the **Productivity** section, choose **Google Drive**.
+4. Select **+ Add** and enter the following parameters:
+
+| Parameter | Description | Required/Optional |
+| --------- | ----------- | ----------------- |
+| Integration name | A name for the integration. | Required. | 
+| Scope | The OAuth2 scope for Google Drive API access. The scope you select determines the level of access Google grants to the integration. Supported values: <ul><li>**Read Only**: Grants read-only access to files and metadata in Google Drive.</li><li>**File Access**: Grants access to files created or opened by the integration.</li><li>**Full Access**: Grants full access to all files in Google Drive.</li></ul> | Required. |
+| OAuth Client ID | The OAuth client ID generated from [Step 1](/content/integrations/google-drive#step-1-get-the-google-console-credentials). | Required. |
+| OAuth Client Secret | The OAuth client secret generated from [Step 1](/content/integrations/google-drive#step-1-get-the-google-console-credentials). | Required.
+| Parent Folder Id | The default parent folder ID to use within the integration. To get the folder ID, open the folder in Google Drive. The ID is the string of characters at the end of the URL: `https://drive.google.com/drive/u/0/folders/<FOLDER-ID>?ths=true`. | Optional. |
+| Description | A description of the integration. | Required. | 
+
+<p align="center"><img src="/content/img/google-drive-integration.png" alt="Google Drive Integration with Orkes Conductor" width="60%" height="auto"></img></p>
+
+5. (Optional) Toggle the **Active** button off if you don’t want to activate the integration instantly.
+6. Select **Authorize**.
+
+This takes you to the Google sign-in page, where you can authorize the connection with your Google account. Once authorized, the integration is created successfully.
+
+## Step 3: Use Google Drive integration in workflows
+
+Once the integration is ready, this can be used directly within the workflows. 
+
+**To use Google Drive integration in a workflow:**
+
+1. Go to **Definitions** > **Workflow** from the left navigation menu on your Conductor cluster.
+2. Select **+ Define workflow**.
+3. In your workflow, select the (**+**) icon and select **Connected Apps**.
+
+<p align="center"><img src="/content/img/connected-apps.png" alt="Adding Google Drive Integration in Conductor workflow" width="100%" height="auto"></img></p>
+
+4. In **Add Task** panel on the right, search for **Google Drive**, and select the integration created in [Step 2](/content/integrations/google-calendar#step-2-add-an-integration-for-google-calendar).
+
+The following operations are available for use with this integration.
+
+| Operation | Description | Supported Integration Scopes |
+| --------- | ----------- | ---------------------------- |
+| [Create Folder](/content/integrations/google-drive-operations#create-folder) |  Create a folder in Google Drive, optionally under a parent folder. | <ul><li>Full Access</li><li>File Access</li></ul> |
+| [Delete Folder](/content/integrations/google-drive-operations#delete-folder) | Delete a folder by ID. | <ul><li>Full Access</li><li>File Access</li></ul> |
+| [Share Folder](/content/integrations/google-drive-operations#share-folder) | Share a folder with a user. | <ul><li>Full Access</li><li>File Access</li></ul> |
+| [Upload File From Base64](/content/integrations/google-drive-operations#upload-file-from-base64) | Upload a file from base64-encoded content into Google Drive. | <ul><li>Full Access</li><li>File Access</li></ul> |
+| [Download File Base64](/content/integrations/google-drive-operations#download-file-base64) | Download a file's content as base64 by file ID.  | <ul><li>Full Access</li><li>File Access</li><li>Read Only</li></ul> |
+| [Create File From Text](/content/integrations/google-drive-operations#create-file-from-text) | Create a new file in Drive from plain text content. | <ul><li>Full Access</li><li>File Access</li></ul> |
+| [Create Google Doc](/content/integrations/google-drive-operations#create-google-doc) | Create a Google Doc with a title and plain text content. | <ul><li>Full Access</li><li>File Access</li></ul> |
+| [Copy File](/content/integrations/google-drive-operations#copy-file) | Copy a file in Google Drive. | <ul><li>Full Access</li><li>File Access</li></ul> |
+| [Update File](/content/integrations/google-drive-operations#update-file) | Update a file's metadata or content. | <ul><li>Full Access</li><li>File Access</li></ul> |
+| [Move File](/content/integrations/google-drive-operations#move-file) | Move a file to another folder. | <ul><li>Full Access</li><li>File Access</li></ul> |
+| [Share File](/content/integrations/google-drive-operations#share-file) | Share a file with a user. | <ul><li>Full Access</li><li>File Access</li></ul> |
+| [List Files](/content/integrations/google-drive-operations#list-files) | Lists files from Google Drive matching the query. | <ul><li>Full Access</li><li>File Access</li><li>Read Only</li></ul> |
+| [Delete File](/content/integrations/google-drive-operations#delete-file) | Delete a file by file ID. | <ul><li>Full Access</li><li>File Access</li></ul> |
+| [Search Files and Folders](/content/integrations/google-drive-operations#search-files-and-folders) | Search files and folders in Google Drive. | <ul><li>Full Access</li><li>File Access</li><li>Read Only</li></ul> |
+| [Create Shared Drive](/content/integrations/google-drive-operations#create-shared-drive) | Create a shared drive. | <ul><li>Full Access</li></ul> |
+| [Update Shared Drive](/content/integrations/google-drive-operations#update-shared-drive) | Update shared drive metadata. | <ul><li>Full Access</li></ul> |
+| [Get Shared Drive](/content/integrations/google-drive-operations#get-shared-drive) | Retrieve a shared drive by ID. | <ul><li>Full Access</li><li>Read Only</li></ul> |
+| [Get Many Shared Drives](/content/integrations/google-drive-operations#get-many-shared-drives) | List shared drives available to the user. | <ul><li>Full Access</li><li>Read Only</li></ul> |
+| [Delete Shared Drive](/content/integrations/google-drive-operations#delete-shared-drive) | Delete a shared drive. | <ul><li>Full Access</li></ul> |
+
+5. Select the required operation, configure the parameters, and select **Save** > **Confirm**.
+6. Select **Execute** to run the workflow.
+
+For the complete operations parameters and output reference, see [Google Drive Operations Reference](/content/integrations/google-drive-operations).
