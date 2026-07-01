@@ -65,6 +65,20 @@ docker run -i -p 8080:8080 -p 3000:5000 --mount source=redis,target=/redis \
 ```
 The UI can be accessed at [http://localhost:3000](http://localhost:3000) and API docs at [http://localhost:8080/swagger-ui/](http://localhost:8080/swagger-ui/). 
 
+**Enabling authentication (optional)**
+
+By default, the container runs without authentication. To enable local email/password authentication, add the `LOCAL_AUTH=true` environment variable to the docker run command:
+
+```bash
+docker run -i -p 8080:8080 -p 3000:5000 --mount source=redis,target=/redis --mount source=postgres,target=/pgdata -e LOCAL_AUTH=true orkesio/orkes-conductor-standalone:latest
+```
+
+On first boot, the admin email and password are auto-generated and printed in the container logs. Use them to log in at http://localhost:3000. To set a fixed admin password instead of an auto-generated one, pass the DEFAULT_ADMIN_PASSWORD environment variable:
+
+```bash
+docker run -i -p 8080:8080 -p 3000:5000 --mount source=redis,target=/redis --mount source=postgres,target=/pgdata -e LOCAL_AUTH=true -e DEFAULT_ADMIN_PASSWORD=yourpassword orkesio/orkes-conductor-standalone:latest
+```
+
 </TabItem>
 <TabItem value="windows commands" label="Windows">
 
@@ -115,6 +129,21 @@ docker volume create redis
 docker run -i -p 8080:8080 -p 3000:5000 --mount source=redis,target=/redis --mount source=postgres,target=/pgdata orkesio/orkes-conductor-standalone:latest
 ```
 Once the container starts, the Orkes Conductor welcome screen appears on the terminal. The UI can be accessed at [http://localhost:3000](http://localhost:3000) and API docs at [http://localhost:8080/swagger-ui/](http://localhost:8080/swagger-ui/). 
+
+**Enabling authentication (optional)**
+
+By default, the container runs without authentication. To enable local email/password authentication, add the `LOCAL_AUTH=true` environment variable to the docker run command:
+
+```bash
+docker run -i -p 8080:8080 -p 3000:5000 --mount source=redis,target=/redis --mount source=postgres,target=/pgdata -e LOCAL_AUTH=true orkesio/orkes-conductor-standalone:latest
+```
+
+On first boot, the admin email and password are auto-generated and printed in the container logs. Use them to log in at http://localhost:3000. To set a fixed admin password instead of an auto-generated one, pass the DEFAULT_ADMIN_PASSWORD environment variable:
+
+```bash
+docker run -i -p 8080:8080 -p 3000:5000 --mount source=redis,target=/redis --mount source=postgres,target=/pgdata -e LOCAL_AUTH=true -e DEFAULT_ADMIN_PASSWORD=yourpassword orkesio/orkes-conductor-standalone:latest
+```
+
 </TabItem>
 </Tabs>
 
