@@ -1,0 +1,366 @@
+---
+sidebar_position: 2
+slug: "/reference-docs/api/remote-services/clone-service"
+description: "Learn how to clone a service definition."
+---
+
+# Clone Service
+
+:::info Available since
+- v5.4.0 and later
+:::
+
+**Endpoint**: `POST /api/registry/service/{name}/clone`
+
+Creates a copy of an existing Remote Service definition under a new name. The clone includes all methods, request parameters, configuration, circuit breaker settings, and authentication metadata from the source service.
+
+## Path parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| name | The name of the service to clone. | string | Required. | 
+
+## Query parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| newName | The name for the cloned service. | string | Required. | 
+
+## Response
+
+Returns the full service definition of the newly created clone, including all methods, configuration, circuit breaker settings, and authentication metadata.
+
+## Examples
+
+<details>
+<summary>Clone a service</summary>
+
+**Request**
+
+```bash
+curl -X 'POST' \
+  'https://<YOUR-SERVER-URL>/api/registry/service/http-services/clone?newName=http-services-2' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>' \
+  -d ''
+```
+
+**Response**
+
+```bash
+{
+  "name": "http-services-2",
+  "type": "HTTP",
+  "serviceURI": "https://petstore.swagger.io/v2/swagger.json",
+  "methods": [
+    {
+      "operationName": "pet",
+      "methodName": "/v2/pet/{petId}/uploadImage",
+      "methodType": "POST",
+      "inputType": "uploadFile",
+      "outputType": "uploadFile",
+      "requestParams": [
+        {
+          "name": "petId",
+          "type": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      ],
+      "deprecated": false
+    },
+    {
+      "operationName": "pet",
+      "methodName": "/v2/pet",
+      "methodType": "PUT",
+      "inputType": "updatePet",
+      "requestParams": [],
+      "deprecated": false
+    },
+    {
+      "operationName": "pet",
+      "methodName": "/v2/pet",
+      "methodType": "POST",
+      "inputType": "addPet",
+      "requestParams": [],
+      "deprecated": false
+    },
+    {
+      "operationName": "pet",
+      "methodName": "/v2/pet/findByStatus",
+      "methodType": "GET",
+      "outputType": "findPetsByStatus",
+      "requestParams": [
+        {
+          "name": "status",
+          "type": "query",
+          "required": true,
+          "schema": {
+            "type": "array"
+          }
+        }
+      ],
+      "deprecated": false
+    },
+    {
+      "operationName": "pet",
+      "methodName": "/v2/pet/findByTags",
+      "methodType": "GET",
+      "outputType": "findPetsByTags",
+      "requestParams": [
+        {
+          "name": "tags",
+          "type": "query",
+          "required": true,
+          "schema": {
+            "type": "array"
+          }
+        }
+      ],
+      "deprecated": false
+    },
+    {
+      "operationName": "pet",
+      "methodName": "/v2/pet/{petId}",
+      "methodType": "GET",
+      "outputType": "getPetById",
+      "requestParams": [
+        {
+          "name": "petId",
+          "type": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      ],
+      "deprecated": false
+    },
+    {
+      "operationName": "pet",
+      "methodName": "/v2/pet/{petId}",
+      "methodType": "DELETE",
+      "requestParams": [
+        {
+          "name": "api_key",
+          "type": "header",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "petId",
+          "type": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      ],
+      "deprecated": false
+    },
+    {
+      "operationName": "pet",
+      "methodName": "/v2/pet/{petId}",
+      "methodType": "POST",
+      "inputType": "updatePetWithForm",
+      "requestParams": [
+        {
+          "name": "petId",
+          "type": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      ],
+      "deprecated": false
+    },
+    {
+      "operationName": "store",
+      "methodName": "/v2/store/inventory",
+      "methodType": "GET",
+      "outputType": "getInventory",
+      "requestParams": [],
+      "deprecated": false
+    },
+    {
+      "operationName": "store",
+      "methodName": "/v2/store/order",
+      "methodType": "POST",
+      "inputType": "placeOrder",
+      "outputType": "placeOrder",
+      "requestParams": [],
+      "deprecated": false
+    },
+    {
+      "operationName": "store",
+      "methodName": "/v2/store/order/{orderId}",
+      "methodType": "GET",
+      "outputType": "getOrderById",
+      "requestParams": [
+        {
+          "name": "orderId",
+          "type": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      ],
+      "deprecated": false
+    },
+    {
+      "operationName": "store",
+      "methodName": "/v2/store/order/{orderId}",
+      "methodType": "DELETE",
+      "requestParams": [
+        {
+          "name": "orderId",
+          "type": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      ],
+      "deprecated": false
+    },
+    {
+      "operationName": "user",
+      "methodName": "/v2/user/createWithList",
+      "methodType": "POST",
+      "inputType": "createUsersWithListInput",
+      "requestParams": [],
+      "deprecated": false
+    },
+    {
+      "operationName": "user",
+      "methodName": "/v2/user/{username}",
+      "methodType": "GET",
+      "outputType": "getUserByName",
+      "requestParams": [
+        {
+          "name": "username",
+          "type": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "deprecated": false
+    },
+    {
+      "operationName": "user",
+      "methodName": "/v2/user/{username}",
+      "methodType": "DELETE",
+      "requestParams": [
+        {
+          "name": "username",
+          "type": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "deprecated": false
+    },
+    {
+      "operationName": "user",
+      "methodName": "/v2/user/{username}",
+      "methodType": "PUT",
+      "inputType": "updateUser",
+      "requestParams": [
+        {
+          "name": "username",
+          "type": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "deprecated": false
+    },
+    {
+      "operationName": "user",
+      "methodName": "/v2/user/login",
+      "methodType": "GET",
+      "outputType": "loginUser",
+      "requestParams": [
+        {
+          "name": "username",
+          "type": "query",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "password",
+          "type": "query",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "deprecated": false
+    },
+    {
+      "operationName": "user",
+      "methodName": "/v2/user/logout",
+      "methodType": "GET",
+      "requestParams": [],
+      "deprecated": false
+    },
+    {
+      "operationName": "user",
+      "methodName": "/v2/user/createWithArray",
+      "methodType": "POST",
+      "inputType": "createUsersWithArrayInput",
+      "requestParams": [],
+      "deprecated": false
+    },
+    {
+      "operationName": "user",
+      "methodName": "/v2/user",
+      "methodType": "POST",
+      "inputType": "createUser",
+      "requestParams": [],
+      "deprecated": false
+    }
+  ],
+  "requestParams": [],
+  "config": {
+    "circuitBreakerConfig": {
+      "failureRateThreshold": 50,
+      "slidingWindowSize": 100,
+      "minimumNumberOfCalls": 100,
+      "waitDurationInOpenState": 1000,
+      "permittedNumberOfCallsInHalfOpenState": 100,
+      "slowCallRateThreshold": 50,
+      "slowCallDurationThreshold": 100,
+      "automaticTransitionFromOpenToHalfOpenEnabled": true,
+      "maxWaitDurationInHalfOpenState": 1
+    }
+  },
+  "circuitBreakerEnabled": false,
+  "servers": [],
+  "useSSL": false,
+  "trustCert": false
+}
+```
+
+</details>
