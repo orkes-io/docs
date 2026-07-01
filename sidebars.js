@@ -1047,7 +1047,7 @@ const sidebars = {
                                 type: 'generated-index',
                                 title: 'Source Control',
                                 slug: '/category/integrations/source-control',
-                                description: 'Learn how to connect source control platforms to Conductor workflows.',
+                                description: 'Learn how to connect source control platforms and repositories to Conductor workflows.',
                             },
                             items: [
                                 {
