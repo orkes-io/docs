@@ -107,6 +107,11 @@ const sidebars = {
                         'developer-guides/integration-with-cicd',
                         'developer-guides/secrets-in-conductor',
                         'developer-guides/using-environment-variables',
+                        {
+                            type: 'doc',
+                            id: 'developer-guides/schema-validation',
+                            label: 'Schema Validation',
+                        },
                         'developer-guides/error-handling',
                     ],
                 },
@@ -120,12 +125,32 @@ const sidebars = {
                             id: 'developer-guides/passing-inputs-to-task-in-conductor',
                             label: 'Parameter Mapping',
                         },
+                        {
+                            type: 'doc',
+                            id: 'developer-guides/masking-parameters',
+                            label: 'Masking Parameters',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'developer-guides/task-input-templates',
+                            label: 'Task Input Templates',
+                        },
                         'developer-guides/caching-task-outputs',
                         'developer-guides/rate-limits',
                         'developer-guides/using-workers',
                         'developer-guides/scaling-workers',
                         'developer-guides/task-to-domain',
                     ],
+                },
+                {
+                    type: 'doc',
+                    id: 'developer-guides/using-ai-prompts',
+                    label: 'Creating AI Prompts',
+                },
+                {
+                    type: 'doc',
+                    id: 'developer-guides/orchestrating-human-tasks',
+                    label: 'Human Task Orchestration',
                 },
                 {
                     type: 'category',
@@ -171,7 +196,6 @@ const sidebars = {
                         { type: 'doc', id: 'developer-guides/webhook-integration', label: 'Webhooks' },
                         { type: 'doc', id: 'reference-docs/system-tasks/wait-for-webhook', label: 'Wait for Webhook Task' },
                         { type: 'doc', id: 'developer-guides/event-handler', label: 'Event Handlers' },
-                        { type: 'doc', id: 'reference-docs/event-handlers', label: 'Event Handler Reference' },
                     ],
                 },
                 {
@@ -290,7 +314,6 @@ const sidebars = {
         { type: 'doc', id: 'cookbook/microservice-orchestration', label: 'Microservice orchestration' },
         { type: 'doc', id: 'cookbook/dynamic-parallelism', label: 'Dynamic parallelism' },
         { type: 'doc', id: 'cookbook/wait-and-timers', label: 'Wait and timer patterns' },
-        { type: 'doc', id: 'developer-guides/orchestrating-human-tasks', label: 'Human in the loop' },
         { type: 'doc', id: 'cookbook/task-timeouts-and-retries', label: 'Task timeouts and retries' },
         { type: 'doc', id: 'cookbook/workflow-scheduling', label: 'Scheduled workflows' },
         { type: 'doc', id: 'cookbook/dynamic-workflows', label: 'Dynamic workflows as code' },
@@ -397,8 +420,6 @@ const sidebars = {
             className: 'leftMenuHeader',
             items: [
                 'reference-docs/worker-task',
-                { type: 'doc', id: 'reference-docs/workflow-definition', label: 'Workflow Definition' },
-                { type: 'doc', id: 'reference-docs/task-definition', label: 'Task Definition' },
                 {
                     type: 'category',
                     label: 'Operators',
@@ -480,7 +501,6 @@ const sidebars = {
                 { type: 'doc', id: 'sdks/authentication', label: 'Authentication' },
                 { type: 'doc', id: 'reference-docs/api/bulk', label: 'Bulk' },
                 { type: 'doc', id: 'reference-docs/api/files', label: 'Files' },
-                { type: 'doc', id: 'reference-docs/api/task-domains', label: 'Task Domains' },
                 {
                     type: 'category',
                     label: 'Metadata',
