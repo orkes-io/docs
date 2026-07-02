@@ -106,7 +106,6 @@
       "docId": "ai-cookbook/token-efficiency",
       "route": "ai-orchestration/token-efficiency"
     },
-
     {
       "source": "devguide/cookbook/index.md",
       "docId": "cookbook/index",
@@ -147,7 +146,6 @@
       "docId": "cookbook/dynamic-workflows",
       "route": "cookbook/dynamic-workflows"
     },
-
     {
       "source": "documentation/clientsdks/index.md",
       "docId": "sdks/sdk-index",
@@ -188,7 +186,6 @@
       "docId": "sdks/rust",
       "route": "sdks/rust"
     },
-
     {
       "source": "documentation/api/index.md",
       "docId": "reference-docs/api/index",
@@ -229,28 +226,6 @@
       "docId": "reference-docs/api/event-handlers",
       "route": "reference-docs/api/event-handlers"
     },
-    {
-      "source": "documentation/api/taskdomains.md",
-      "docId": "reference-docs/api/task-domains",
-      "route": "reference-docs/api/task-domains"
-    },
-
-    {
-      "source": "documentation/configuration/workflowdef/index.md",
-      "docId": "reference-docs/workflow-definition",
-      "route": "reference-docs/workflow-definition"
-    },
-    {
-      "source": "documentation/configuration/taskdef.md",
-      "docId": "reference-docs/task-definition",
-      "route": "reference-docs/task-definition"
-    },
-    {
-      "source": "documentation/configuration/eventhandlers.md",
-      "docId": "reference-docs/event-handlers",
-      "route": "reference-docs/event-handlers"
-    },
-
     {
       "source": "documentation/configuration/workflowdef/operators/switch-task.md",
       "docId": "reference-docs/operators/switch",
@@ -311,7 +286,6 @@
       "docId": "reference-docs/operators/wait",
       "route": "reference-docs/operators/wait"
     },
-
     {
       "source": "documentation/configuration/workflowdef/systemtasks/index.md",
       "docId": "reference-docs/system-tasks/index",
@@ -365,10 +339,11 @@
     "documentation/advanced/externalpayloadstorage.md": "https://docs.conductor-oss.org/documentation/advanced/externalpayloadstorage",
     "documentation/advanced/file-storage.md": "https://docs.conductor-oss.org/documentation/advanced/file-storage",
     "documentation/api/startworkflow.md": "reference-docs/api/workflow/start-workflow-execution",
-    "documentation/configuration/eventhandlers.md": "reference-docs/event-handlers",
-    "documentation/configuration/taskdef.md": "reference-docs/task-definition",
-    "documentation/configuration/workflowdef/index.md": "reference-docs/workflow-definition",
+    "documentation/configuration/eventhandlers.md": "developer-guides/event-handler",
+    "documentation/configuration/taskdef.md": "reference-docs/api/metadata/creating-task-definitions",
+    "documentation/configuration/workflowdef/index.md": "reference-docs/api/metadata/creating-workflow-definition",
     "documentation/configuration/workflowdef/operators/index.md": "category/reference-docs/operators",
-    "devguide/how-tos/event-bus.md": "eventing"
+    "devguide/how-tos/event-bus.md": "eventing",
+    "documentation/api/taskdomains.md": "developer-guides/task-to-domain"
   }
 }
