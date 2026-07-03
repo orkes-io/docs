@@ -102,11 +102,6 @@
       "route": "cookbook/workflow-scheduling"
     },
     {
-      "source": "devguide/cookbook/event-driven.md",
-      "docId": "cookbook/event-driven",
-      "route": "eventing"
-    },
-    {
       "source": "devguide/cookbook/dynamic-workflows.md",
       "docId": "cookbook/dynamic-workflows",
       "route": "cookbook/dynamic-workflows"
