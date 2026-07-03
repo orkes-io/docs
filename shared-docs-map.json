@@ -72,36 +72,6 @@
       "route": "ai-orchestration/token-efficiency"
     },
     {
-      "source": "devguide/cookbook/index.md",
-      "docId": "cookbook/index",
-      "route": "category/tutorials"
-    },
-    {
-      "source": "devguide/cookbook/dynamic-parallelism.md",
-      "docId": "cookbook/dynamic-parallelism",
-      "route": "cookbook/dynamic-parallelism"
-    },
-    {
-      "source": "devguide/cookbook/wait-and-timers.md",
-      "docId": "cookbook/wait-and-timers",
-      "route": "cookbook/wait-and-timers"
-    },
-    {
-      "source": "devguide/cookbook/task-timeouts-and-retries.md",
-      "docId": "cookbook/task-timeouts-and-retries",
-      "route": "cookbook/task-timeouts-and-retries"
-    },
-    {
-      "source": "devguide/cookbook/workflow-scheduling.md",
-      "docId": "cookbook/workflow-scheduling",
-      "route": "cookbook/workflow-scheduling"
-    },
-    {
-      "source": "devguide/cookbook/dynamic-workflows.md",
-      "docId": "cookbook/dynamic-workflows",
-      "route": "cookbook/dynamic-workflows"
-    },
-    {
       "source": "documentation/clientsdks/index.md",
       "docId": "sdks/sdk-index",
       "route": "category/sdks"
