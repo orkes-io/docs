@@ -1674,22 +1674,6 @@ function transformSharedBody(body, entry) {
     );
   }
 
-  if (entry && entry.route === "category/tutorials") {
-    output = output.replace(
-      /\n-   \*\*\[AI & LLM orchestration recipes\]\([^)]+\)\*\*\n\n    .+\n/g,
-      "\n",
-    );
-    output = output.replace(
-      /\n-   \*\*\[Event-driven recipes\]\([^)]+\)\*\*\n\n    .+\n/g,
-      "\n",
-    );
-    output = output.replace(
-      /\n<\/div>\s*$/m,
-      `\n-   **[Human in the loop](/content/developer-guides/orchestrating-human-tasks)**\n\n    User forms, assignments, approvals, escalations, and human review steps inside durable workflows.\n\n-   **[Gateway tutorials](/content/tutorials/mcp)**\n\n    End-to-end examples for exposing workflows as HTTP APIs and MCP tools.\n\n</div>`,
-    );
-    output = output.replace(/\n{3,}(-   \*\*\[Dynamic workflows as code\])/g, "\n\n$1");
-  }
-
   return output;
 }
 
@@ -2029,10 +2013,6 @@ function cookbookPageCopy() {
     "",
     "    Fixed delays, scheduled execution, external signals, and human-in-the-loop approvals.",
     "",
-    "-   **[Human in the loop](/content/developer-guides/orchestrating-human-tasks)**",
-    "",
-    "    User forms, assignments, approvals, escalations, and human review steps inside durable workflows.",
-    "",
     "-   **[Task timeouts and retries](/content/cookbook/task-timeouts-and-retries)**",
     "",
     "    Exponential backoff, lease extension for long-running workers, hard SLA with totalTimeoutSeconds, and concurrency limiting.",
@@ -2055,8 +2035,7 @@ function cookbookPageCopy() {
     "",
     "1. Use **Microservice orchestration** or **Gateway tutorials** when coordinating APIs, services, and externally callable workflows.",
     "2. Use **Dynamic parallelism** and **Dynamic workflows as code** when the workflow shape depends on runtime input or application logic.",
-    "3. Use **Human in the loop** for approvals, assignments, and review checkpoints.",
-    "4. Review **Task timeouts and retries** before production rollout so each workflow has explicit failure behavior.",
+    "3. Review **Task timeouts and retries** before production rollout so each workflow has explicit failure behavior.",
     "",
   ];
 }
@@ -2259,7 +2238,6 @@ function createCookbookGeneratedPages() {
     { type: "doc", id: "cookbook/microservice-orchestration", label: "Microservice orchestration" },
     { type: "doc", id: "cookbook/dynamic-parallelism", label: "Dynamic parallelism" },
     { type: "doc", id: "cookbook/wait-and-timers", label: "Wait and timer patterns" },
-    { type: "doc", id: "developer-guides/orchestrating-human-tasks", label: "Human in the loop" },
     { type: "doc", id: "cookbook/task-timeouts-and-retries", label: "Task timeouts and retries" },
     { type: "doc", id: "cookbook/workflow-scheduling", label: "Scheduled workflows" },
     { type: "link", href: "/tutorials/mcp", label: "Gateway tutorials" },
