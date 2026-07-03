@@ -22,11 +22,6 @@
       "route": "quickstarts/task-lifecycle"
     },
     {
-      "source": "devguide/how-tos/conductor-skills.md",
-      "docId": "developer-guides/conductor-skills",
-      "route": "developer-guides/conductor-skills"
-    },
-    {
       "source": "devguide/ai/first-ai-agent.md",
       "docId": "ai-cookbook/first-ai-agent",
       "route": "ai-orchestration/first-ai-agent"

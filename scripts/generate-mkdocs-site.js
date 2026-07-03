@@ -1660,17 +1660,6 @@ function transformSharedBody(body, entry) {
       "\n\n## When to use NOOP\n\nUse `NOOP` when a workflow branch needs an explicit successful step but does not need to call a worker, system task, or external service. It is useful as a default branch in a `SWITCH`, a placeholder while building workflow definitions, or a safe join point for generated workflows.\n";
   }
 
-  if (entry && entry.route === "developer-guides/conductor-skills") {
-    output = output.replace(
-      "# Build with AI agents",
-      "# Build with AI Agents",
-    );
-    output = output.replace(
-      "```bash\nexport CONDUCTOR_SERVER_URL=<YOUR-CLUSTER-URL>/api\n```",
-      "```bash\nexport CONDUCTOR_SERVER_URL=<YOUR-CLUSTER-URL>/api\nexport CONDUCTOR_AUTH_KEY=<your-key>\nexport CONDUCTOR_AUTH_SECRET=<your-secret>\n```",
-    );
-  }
-
   if (entry && entry.route === "ai-orchestration/durable-agents") {
     output = output.replace(
       "For `CALL_MCP_TOOL`, `HTTP`, and custom worker tasks:",
