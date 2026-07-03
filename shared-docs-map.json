@@ -7,26 +7,6 @@
       "route": "quickstarts"
     },
     {
-      "source": "devguide/concepts/index.md",
-      "docId": "quickstart/concepts",
-      "route": "quickstarts/concepts"
-    },
-    {
-      "source": "devguide/concepts/workflows.md",
-      "docId": "quickstart/workflows",
-      "route": "quickstarts/workflows"
-    },
-    {
-      "source": "devguide/concepts/tasks.md",
-      "docId": "quickstart/tasks",
-      "route": "quickstarts/tasks"
-    },
-    {
-      "source": "devguide/concepts/workers.md",
-      "docId": "quickstart/workers",
-      "route": "quickstarts/workers"
-    },
-    {
       "source": "architecture/durable-execution.md",
       "docId": "quickstart/durable-execution",
       "route": "quickstarts/durable-execution"
@@ -180,41 +160,6 @@
       "source": "documentation/api/index.md",
       "docId": "reference-docs/api/index",
       "route": "category/ref-docs/api"
-    },
-    {
-      "source": "documentation/api/metadata.md",
-      "docId": "reference-docs/api/metadata",
-      "route": "reference-docs/api/metadata"
-    },
-    {
-      "source": "documentation/api/task.md",
-      "docId": "reference-docs/api/task",
-      "route": "reference-docs/api/task"
-    },
-    {
-      "source": "documentation/api/workflow.md",
-      "docId": "reference-docs/api/workflow",
-      "route": "reference-docs/api/workflow"
-    },
-    {
-      "source": "documentation/api/scheduler.md",
-      "docId": "reference-docs/api/schedule",
-      "route": "reference-docs/api/schedule"
-    },
-    {
-      "source": "documentation/api/files.md",
-      "docId": "reference-docs/api/files",
-      "route": "reference-docs/api/files"
-    },
-    {
-      "source": "documentation/api/bulk.md",
-      "docId": "reference-docs/api/bulk",
-      "route": "reference-docs/api/bulk"
-    },
-    {
-      "source": "documentation/api/eventhandlers.md",
-      "docId": "reference-docs/api/event-handlers",
-      "route": "reference-docs/api/event-handlers"
     }
   ],
   "aliases": {
@@ -256,6 +201,13 @@
     "documentation/configuration/workflowdef/systemtasks/jdbc-task.md": "reference-docs/system-tasks/jdbc",
     "documentation/configuration/workflowdef/systemtasks/kafka-publish-task.md": "category/reference-docs/system-tasks",
     "documentation/configuration/workflowdef/systemtasks/noop-task.md": "category/reference-docs/system-tasks",
-    "devguide/ai/mcp-guide.md": "developer-guides/mcp-gateway"
+    "devguide/ai/mcp-guide.md": "developer-guides/mcp-gateway",
+    "documentation/api/workflow.md": "reference-docs/api/workflow",
+    "documentation/api/task.md": "reference-docs/api/task",
+    "documentation/api/metadata.md": "reference-docs/api/metadata",
+    "documentation/api/scheduler.md": "reference-docs/api/schedule",
+    "documentation/api/files.md": "category/ref-docs/api",
+    "documentation/api/bulk.md": "category/ref-docs/api",
+    "documentation/api/eventhandlers.md": "developer-guides/event-handler"
   }
 }

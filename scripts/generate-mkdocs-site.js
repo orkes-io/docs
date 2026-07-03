@@ -1653,7 +1653,10 @@ function transformSharedBody(body, entry) {
     .replace(
       /https:\/\/orkes\.io\/content\/how-to-videos\/access-key-and-secret/g,
       "/content/sdks/authentication#retrieving-access-keys",
-    );
+    )
+    .replace(/\[https?:\/\/localhost:8080\]\(https?:\/\/localhost:8080\)/g, "<YOUR-CLUSTER-URL>")
+    .replace(/https?:\/\/localhost:8080/g, "<YOUR-CLUSTER-URL>")
+    .replace(/`localhost:8080`/g, "`<YOUR-CLUSTER-URL>`");
 
   output = demoteExtraH1(output);
 
@@ -1668,8 +1671,22 @@ function transformSharedBody(body, entry) {
       "# Build with AI Agents",
     );
     output = output.replace(
-      "```bash\nexport CONDUCTOR_SERVER_URL=http://localhost:8080/api\n```",
-      "```bash\nexport CONDUCTOR_SERVER_URL=http://localhost:8080/api\n```\n\nFor Orkes Conductor, connect to your Orkes cluster API endpoint and provide API credentials:\n\n```bash\nexport CONDUCTOR_SERVER_URL=https://<your-cluster>.orkesconductor.io/api\nexport CONDUCTOR_AUTH_KEY=<your-key>\nexport CONDUCTOR_AUTH_SECRET=<your-secret>\n```",
+      "```bash\nexport CONDUCTOR_SERVER_URL=<YOUR-CLUSTER-URL>/api\n```",
+      "```bash\nexport CONDUCTOR_SERVER_URL=<YOUR-CLUSTER-URL>/api\nexport CONDUCTOR_AUTH_KEY=<your-key>\nexport CONDUCTOR_AUTH_SECRET=<your-secret>\n```",
+    );
+  }
+
+  if (entry && entry.route === "ai-orchestration/durable-agents") {
+    output = output.replace(
+      "For `CALL_MCP_TOOL`, `HTTP`, and custom worker tasks:",
+      "For `HTTP` and custom worker tasks:",
+    );
+  }
+
+  if (entry && entry.route === "ai-orchestration/failure-semantics") {
+    output = output.replace(
+      "A `CALL_MCP_TOOL` or `HTTP` task calls an external tool",
+      "An `HTTP` task calls an external tool",
     );
   }
 

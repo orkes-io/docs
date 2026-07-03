@@ -263,7 +263,6 @@ const sidebars = {
                         slug: '/category/event-driven-orchestration/api-reference',
                     },
                     items: [
-                        { type: 'doc', id: 'reference-docs/api/event-handlers', label: 'Event Handlers API' },
                         {
                             type: 'category',
                             label: 'Webhook API',
@@ -496,8 +495,6 @@ const sidebars = {
             className: 'leftMenuHeader',
             items: [
                 { type: 'doc', id: 'sdks/authentication', label: 'Authentication' },
-                { type: 'doc', id: 'reference-docs/api/bulk', label: 'Bulk' },
-                { type: 'doc', id: 'reference-docs/api/files', label: 'Files' },
                 {
                     type: 'category',
                     label: 'Metadata',
