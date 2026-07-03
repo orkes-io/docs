@@ -82,11 +82,6 @@
       "route": "category/tutorials"
     },
     {
-      "source": "devguide/cookbook/microservice-orchestration.md",
-      "docId": "cookbook/microservice-orchestration",
-      "route": "general-templates"
-    },
-    {
       "source": "devguide/cookbook/dynamic-parallelism.md",
       "docId": "cookbook/dynamic-parallelism",
       "route": "cookbook/dynamic-parallelism"
@@ -208,6 +203,7 @@
     "documentation/api/scheduler.md": "reference-docs/api/schedule",
     "documentation/api/files.md": "category/ref-docs/api",
     "documentation/api/bulk.md": "category/ref-docs/api",
-    "documentation/api/eventhandlers.md": "developer-guides/event-handler"
+    "documentation/api/eventhandlers.md": "developer-guides/event-handler",
+    "devguide/cookbook/microservice-orchestration.md": "cookbook/microservice-orchestration"
   }
 }

@@ -98,11 +98,6 @@ const ROUTE_METADATA_OVERRIDES = {
     description:
       "Orkes Conductor tutorials for exposing workflows as HTTP APIs and MCP tools backed by durable workflow execution.",
   },
-  "general-templates": {
-    title: "Microservice Orchestration",
-    description:
-      "Cookbook recipes for orchestrating microservices with HTTP service chains, conditional branching, and parallel service calls in Orkes Conductor.",
-  },
   "cookbook/dynamic-parallelism": {
     title: "Dynamic Parallelism",
     description:
