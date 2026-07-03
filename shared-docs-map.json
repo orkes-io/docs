@@ -150,11 +150,6 @@
       "source": "documentation/clientsdks/rust-sdk.md",
       "docId": "sdks/rust",
       "route": "sdks/rust"
-    },
-    {
-      "source": "documentation/api/index.md",
-      "docId": "reference-docs/api/index",
-      "route": "category/ref-docs/api"
     }
   ],
   "aliases": {
