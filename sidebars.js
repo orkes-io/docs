@@ -209,7 +209,6 @@ const sidebars = {
                     },
                     items: [
                         { type: 'doc', id: 'reference-docs/system-tasks/event', label: 'Event Task' },
-                        { type: 'doc', id: 'reference-docs/system-tasks/kafka-publish', label: 'Kafka Publish Task' },
                         { type: 'doc', id: 'cookbook/event-driven', label: 'Event Publishing Recipes' },
                     ],
                 },
@@ -364,7 +363,6 @@ const sidebars = {
             items: [
                 { type: 'doc', id: 'ai-cookbook/ai-llm-recipes', label: 'AI & LLM Recipes' },
                 { type: 'doc', id: 'ai-cookbook/llm-orchestration', label: 'LLM Orchestration' },
-                { type: 'doc', id: 'ai-cookbook/mcp-integration', label: 'MCP Integration' },
             ],
         },
         {
@@ -447,7 +445,6 @@ const sidebars = {
                         'reference-docs/system-tasks/http-poll',
                         'reference-docs/system-tasks/inline',
                         'reference-docs/system-tasks/jq-transform',
-                        'reference-docs/system-tasks/noop',
                         'reference-docs/system-tasks/business-rule',
                         'reference-docs/system-tasks/sendgrid',
                         'reference-docs/system-tasks/jdbc',
