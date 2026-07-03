@@ -329,6 +329,25 @@ const sidebars = {
                 { type: 'doc', id: 'tutorials/ticket-service-tutorial', label: 'Build an MCP Ticket Service' },
             ],
         },
+        {
+            type: 'category',
+            label: 'AI Tutorials',
+            link: {
+                type: 'generated-index',
+                title: 'AI Tutorials',
+                description: 'Explore tutorials for building AI-powered and agentic workflows with Conductor.',
+                slug: '/tutorials/ai',
+            },
+            items: [
+                { type: 'doc', id: 'tutorials/quickstart-ai-orchestration', label: 'AI-Powered Translator' },
+                { type: 'doc', id: 'tutorials/agentic-interview-app', label: 'Agentic Interview App' },
+                { type: 'doc', id: 'tutorials/document-classifier', label: 'Document Classification' },
+                { type: 'doc', id: 'tutorials/question-answering-with-embeddings', label: 'Question Answering Workflow' },
+                { type: 'doc', id: 'tutorials/document-retrieval', label: 'Document Retrieval Workflow' },
+                { type: 'doc', id: 'tutorials/pull-request-summary-workflow', label: 'Pull Request Summary Workflow' },
+                { type: 'doc', id: 'tutorials/text-indexing-workflow', label: 'Text Indexing and Search Workflow' },
+            ],
+        },
     ],
 
     // ==========================================================================
@@ -362,26 +381,6 @@ const sidebars = {
             items: [
                 { type: 'doc', id: 'ai-cookbook/ai-llm-recipes', label: 'AI & LLM Recipes' },
                 { type: 'doc', id: 'ai-cookbook/llm-orchestration', label: 'LLM Orchestration' },
-            ],
-        },
-        {
-            type: 'category',
-            label: 'AI Tutorials',
-            link: {
-                type: 'generated-index',
-                title: 'AI Tutorials',
-                description: 'Explore tutorials for building AI-powered and agentic workflows with Conductor.',
-                slug: '/tutorials/ai',
-            },
-            className: 'leftMenuHeader',
-            items: [
-                { type: 'doc', id: 'tutorials/quickstart-ai-orchestration', label: 'AI-Powered Translator' },
-                { type: 'doc', id: 'tutorials/agentic-interview-app', label: 'Agentic Interview App' },
-                { type: 'doc', id: 'tutorials/document-classifier', label: 'Document Classification' },
-                { type: 'doc', id: 'tutorials/question-answering-with-embeddings', label: 'Question Answering Workflow' },
-                { type: 'doc', id: 'tutorials/document-retrieval', label: 'Document Retrieval Workflow' },
-                { type: 'doc', id: 'tutorials/pull-request-summary-workflow', label: 'Pull Request Summary Workflow' },
-                { type: 'doc', id: 'tutorials/text-indexing-workflow', label: 'Text Indexing and Search Workflow' },
             ],
         },
     ],
