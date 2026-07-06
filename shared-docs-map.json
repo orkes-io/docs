@@ -44,7 +44,7 @@
     {
       "source": "devguide/ai/why-conductor.md",
       "docId": "ai-cookbook/why-conductor",
-      "route": "ai-orchestration/why-conductor"
+      "route": "why-conductor"
     },
     {
       "source": "devguide/ai/durable-agents.md",

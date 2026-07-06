@@ -14,11 +14,6 @@ const sidebars = {
         },
         {
             type: 'doc',
-            label: 'Install and Set Up Orkes Conductor',
-            id: 'get-orkes-conductor',
-        },
-        {
-            type: 'doc',
             label: 'Concepts',
             id: 'quickstart/concepts',
         },
@@ -57,6 +52,11 @@ const sidebars = {
             label: 'Workers',
             id: 'quickstart/workers',
         },
+        {
+            type: 'doc',
+            label: 'Install and Set Up Orkes Conductor',
+            id: 'get-orkes-conductor',
+        },
     ],
 
     // ==========================================================================
@@ -64,22 +64,44 @@ const sidebars = {
     // ==========================================================================
     guidesSidebar: [
                 {
-                    type: 'doc',
-                    id: 'developer-guides/conductor-skills',
-                    label: 'Build with AI Agents',
-                },
-                {
-                    type: 'doc',
-                    id: 'ai-cookbook/why-conductor',
-                    label: 'Why Conductor',
-                },
-                {
                     type: 'category',
                     label: 'Workflows',
                     link: { type: 'doc', id: 'developer-guides/workflows' },
                     items: [
                         'developer-guides/write-workflows-using-code',
+                        {
+                            type: 'doc',
+                            id: 'developer-guides/build-workflows-using-conductor-ui',
+                            label: 'Build Workflows Using Conductor UI',
+                        },
                         'developer-guides/convert-bpmn-to-workflows',
+                        {
+                            type: 'category',
+                            label: 'Tasks',
+                            link: { type: 'doc', id: 'developer-guides/tasks-in-workflows' },
+                            items: [
+                                {
+                                    type: 'doc',
+                                    id: 'developer-guides/passing-inputs-to-task-in-conductor',
+                                    label: 'Parameter Mapping',
+                                },
+                                {
+                                    type: 'doc',
+                                    id: 'developer-guides/masking-parameters',
+                                    label: 'Masking Parameters',
+                                },
+                                {
+                                    type: 'doc',
+                                    id: 'developer-guides/task-input-templates',
+                                    label: 'Task Input Templates',
+                                },
+                                'developer-guides/caching-task-outputs',
+                                'developer-guides/rate-limits',
+                                'developer-guides/using-workers',
+                                'developer-guides/scaling-workers',
+                                'developer-guides/task-to-domain',
+                            ],
+                        },
                         {
                             type: 'doc',
                             id: 'developer-guides/versioning-workflows',
@@ -94,14 +116,17 @@ const sidebars = {
                         'developer-guides/sending-signals-to-workflows',
                         {
                             type: 'doc',
-                            id: 'developer-guides/enabling-cdc-on-conductor-workflows',
-                            label: 'Change Data Capture',
+                            id: 'developer-guides/schema-validation',
+                            label: 'Schema Validation',
                         },
+                        'developer-guides/secrets-in-conductor',
+                        'developer-guides/using-environment-variables',
                         {
                             type: 'doc',
                             id: 'developer-guides/idempotency',
                             label: 'Idempotency',
                         },
+                        'developer-guides/error-handling',
                         {
                             type: 'doc',
                             id: 'developer-guides/debugging-workflows',
@@ -110,41 +135,6 @@ const sidebars = {
                         'developer-guides/unit-and-regression-tests',
                         'developer-guides/metrics-and-observability',
                         'developer-guides/integration-with-cicd',
-                        'developer-guides/secrets-in-conductor',
-                        'developer-guides/using-environment-variables',
-                        {
-                            type: 'doc',
-                            id: 'developer-guides/schema-validation',
-                            label: 'Schema Validation',
-                        },
-                        'developer-guides/error-handling',
-                    ],
-                },
-                {
-                    type: 'category',
-                    label: 'Tasks',
-                    link: { type: 'doc', id: 'developer-guides/tasks-in-workflows' },
-                    items: [
-                        {
-                            type: 'doc',
-                            id: 'developer-guides/passing-inputs-to-task-in-conductor',
-                            label: 'Parameter Mapping',
-                        },
-                        {
-                            type: 'doc',
-                            id: 'developer-guides/masking-parameters',
-                            label: 'Masking Parameters',
-                        },
-                        {
-                            type: 'doc',
-                            id: 'developer-guides/task-input-templates',
-                            label: 'Task Input Templates',
-                        },
-                        'developer-guides/caching-task-outputs',
-                        'developer-guides/rate-limits',
-                        'developer-guides/using-workers',
-                        'developer-guides/scaling-workers',
-                        'developer-guides/task-to-domain',
                     ],
                 },
                 {
@@ -232,6 +222,11 @@ const sidebars = {
                     items: [
                         { type: 'doc', id: 'reference-docs/system-tasks/event', label: 'Event Task' },
                         { type: 'doc', id: 'cookbook/event-driven', label: 'Event Publishing Recipes' },
+                        {
+                            type: 'doc',
+                            id: 'developer-guides/enabling-cdc-on-conductor-workflows',
+                            label: 'Change Data Capture',
+                        },
                     ],
                 },
                 {
@@ -386,6 +381,16 @@ const sidebars = {
             id: 'agentic-workflow-engine',
             label: 'Agentic Workflow Engine',
             className: 'leftMenuHeader',
+        },
+        {
+            type: 'doc',
+            id: 'developer-guides/conductor-skills',
+            label: 'Build with AI Agents',
+        },
+        {
+            type: 'doc',
+            id: 'ai-cookbook/why-conductor',
+            label: 'Why Conductor',
         },
         {
             type: 'category',

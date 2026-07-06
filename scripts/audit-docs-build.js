@@ -462,7 +462,7 @@ function auditMessagingGuardrails(htmlFiles) {
   const requiredRoutes = [
     "agentic-workflow-engine",
     "ai-orchestration",
-    "developer-guides/conductor-skills",
+    "conductor-skills",
     "glossary",
   ];
   for (const route of requiredRoutes) {
@@ -471,7 +471,7 @@ function auditMessagingGuardrails(htmlFiles) {
 
   const relationshipCopy =
     "Agentspan is the developer-facing agent runtime. Conductor OSS is the durable workflow engine underneath. Orkes Conductor is the managed enterprise platform for operating Conductor-based systems at scale.";
-  const relationshipRoutes = ["agentic-workflow-engine", "ai-orchestration", "developer-guides/conductor-skills", "glossary"];
+  const relationshipRoutes = ["agentic-workflow-engine", "ai-orchestration", "conductor-skills", "glossary"];
   for (const route of relationshipRoutes) {
     const text = stripTags(readRoute(route));
     if (!text.includes(relationshipCopy)) {

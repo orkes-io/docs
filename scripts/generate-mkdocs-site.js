@@ -77,7 +77,7 @@ const ROUTE_METADATA_OVERRIDES = {
     description:
       "Configure role based access control in Orkes Conductor for users, groups, applications, roles, permissions, and tag-based access.",
   },
-  "developer-guides/conductor-skills": {
+  "conductor-skills": {
     title: "Build with AI Agents",
     description:
       "Use Conductor Skills to teach AI coding agents to create, run, monitor, debug, and manage Orkes Conductor workflows and workers.",
@@ -1345,7 +1345,7 @@ function enhancePositioningPage(body, route) {
     );
   }
 
-  if (route === "ai-orchestration/why-conductor") {
+  if (route === "why-conductor") {
     output = output.replace(
       /Conductor is the original durable workflow orchestration engine[\s\S]*?Here's what that looks like in practice\./,
       "Conductor is a durable workflow engine for production AI agents and distributed systems. Keep your agent framework for reasoning, planning, and model-specific logic; use Conductor when execution must survive process crashes, tool timeouts, human waits, duplicate callbacks, worker deploys, and partial side effects. Here's what that looks like in practice.",
@@ -1564,7 +1564,7 @@ function enhancePositioningPage(body, route) {
     );
   }
 
-  if (route === "developer-guides/conductor-skills") {
+  if (route === "conductor-skills") {
     output = appendBeforeNextSteps(
       output,
       [
@@ -3159,7 +3159,7 @@ function writeLlmsTxt() {
     "ai-orchestration/failure-semantics",
     "ai-orchestration/durable-agents",
     "ai-orchestration/mcp-integration",
-    "developer-guides/conductor-skills",
+    "conductor-skills",
     "developer-guides/write-workflows-using-code",
     "developer-guides/using-workers",
     "quickstarts/durable-execution",
