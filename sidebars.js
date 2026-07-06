@@ -337,6 +337,9 @@ const sidebars = {
         { type: 'doc', id: 'cookbook/task-timeouts-and-retries', label: 'Task timeouts and retries' },
         { type: 'doc', id: 'cookbook/workflow-scheduling', label: 'Scheduled workflows' },
         { type: 'doc', id: 'cookbook/dynamic-workflows', label: 'Dynamic workflows as code' },
+        { type: 'doc', id: 'tutorials/document-approvals', label: 'Document Approval' },
+        { type: 'doc', id: 'tutorials/long-running-apis', label: 'Long-Running APIs' },
+        { type: 'doc', id: 'tutorials/scanning-an-endpoint-and-triggering-pagerduty-alert', label: 'PagerDuty Alert Workflow' },
         {
             type: 'category',
             label: 'Gateway tutorials',
@@ -368,6 +371,8 @@ const sidebars = {
                 { type: 'doc', id: 'tutorials/document-retrieval', label: 'Document Retrieval Workflow' },
                 { type: 'doc', id: 'tutorials/pull-request-summary-workflow', label: 'Pull Request Summary Workflow' },
                 { type: 'doc', id: 'tutorials/text-indexing-workflow', label: 'Text Indexing and Search Workflow' },
+                { type: 'doc', id: 'tutorials/finance', label: 'Loan Approval Workflow' },
+                { type: 'doc', id: 'tutorials/fraud-dispute', label: 'Handling Fraud Disputes' },
             ],
         },
     ],
