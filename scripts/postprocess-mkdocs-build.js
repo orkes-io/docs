@@ -122,6 +122,17 @@ function rewriteHtml(file) {
   fs.writeFileSync(file, html);
 }
 
+function dropOneParentDirSegment(href) {
+  return href.startsWith("../") ? href.slice(3) : href;
+}
+
+function rewriteAssetDepthForRouteAlias(html) {
+  return html.replace(/\b(href|src|content)=["']([^"']+)["']/g, (all, attr, href) => {
+    if (!isAssetHref(href) || !href.startsWith("../")) return all;
+    return `${attr}="${dropOneParentDirSegment(href)}"`;
+  });
+}
+
 function copyRouteAliasHtml(file) {
   const rel = posixPath(path.relative(BUILD_DIR, file));
   if (rel === "index.html" || rel === "404.html") return;
@@ -129,7 +140,11 @@ function copyRouteAliasHtml(file) {
   const htmlTarget = path.join(BUILD_DIR, `${publicRel}.html`);
   if (rel.startsWith("_routes/")) {
     fs.mkdirSync(path.dirname(htmlTarget), { recursive: true });
-    fs.copyFileSync(file, htmlTarget);
+    // Files under _routes/ sit one directory deeper than their public alias,
+    // so their relative asset paths (skipped by rewriteHtml's canonical-path
+    // pass) have one extra "../" that must be dropped when copying out.
+    const html = fs.readFileSync(file, "utf8");
+    fs.writeFileSync(htmlTarget, rewriteAssetDepthForRouteAlias(html));
   }
 }
 
