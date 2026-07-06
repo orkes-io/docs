@@ -69,7 +69,18 @@ function resolveFile(route) {
   return path.join(BUILD_DIR, "404.html");
 }
 
+function sendUnavailable(res) {
+  if (!res.headersSent) {
+    res.writeHead(503, { "content-type": "text/plain; charset=utf-8" });
+  }
+  res.end("Site is rebuilding — refresh in a moment.");
+}
+
 function sendFile(res, file, method) {
+  if (!fs.existsSync(file)) {
+    sendUnavailable(res);
+    return;
+  }
   const status = file.endsWith("404.html") ? 404 : 200;
   const ext = path.extname(file);
   res.writeHead(status, {
@@ -79,7 +90,9 @@ function sendFile(res, file, method) {
     res.end();
     return;
   }
-  fs.createReadStream(file).pipe(res);
+  const stream = fs.createReadStream(file);
+  stream.on("error", () => sendUnavailable(res));
+  stream.pipe(res);
 }
 
 const server = http.createServer((req, res) => {
