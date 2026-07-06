@@ -317,11 +317,6 @@ const CATEGORY_PAGE_COPY = {
     outcome:
       "Start with a monitoring or notification workflow, configure the alert provider, then adapt retry and escalation behavior for your production environment.",
   },
-  "category/faqs": {
-    audience: "Use FAQs for concise answers to common setup, workflow, worker, execution, and troubleshooting questions.",
-    outcome:
-      "Each answer points to the deeper guide or reference page when you need implementation detail.",
-  },
 };
 
 const API_RESOURCE_LABELS = {
