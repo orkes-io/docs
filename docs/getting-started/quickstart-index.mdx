@@ -1,33 +1,458 @@
 ---
-slug: "../quickstarts"
-description: "Follow Orkes Conductor quickstart tutorials to set up your environment, create workers, build workflows, and run your first workflow orchestration application."
+slug: "/quickstarts"
+description: "Build and run your first Conductor workflow in 5 minutes using the free Developer Edition. Call an API, parse the response with server-side JavaScript, and see durable execution in action — no local server needed."
 ---
 
-import { useCurrentSidebarCategory } from '@docusaurus/theme-common';
-import DocCardList from '@theme/DocCardList';
+# Run Your First Workflow
 
-# Quickstart Guide
+Build your own workflow and execute in 5 minutes.
 
-This quickstart series teaches you the basics of developing applications and systems with Conductor. By creating your first Conductor workflow, you’ll learn how orchestration lets you develop distributed systems without worrying about coordinating complexity.
-
-In this series, we will cover the following fundamentals:
-
-1. Write a custom worker
-2. Create a workflow
-3. Debug a workflow
+You need [Node.js](https://nodejs.org/) (v16+) installed and a free **Developer Edition** account. No Java, no Docker, no local server.
 
 :::tip
-Familiarize yourself with the [core concepts](/core-concepts) in Conductor before diving into our quickstarts.
+Throughout this guide, "Save `<file>`" means create a file with that name and content in your working directory — with a text editor, or `cat > <file> <<'EOF' ... EOF` in your terminal. Shell blocks are meant to be copy-pasted directly into your terminal, replacing any `<PLACEHOLDER>` values with your real ones.
 :::
 
-## Prerequisites
+## Phase 1: See it work
 
-Before you begin, check that you have access to your Orkes Conductor cluster.  Refer to [Setting Up Orkes Conductor](get-orkes-conductor) for more information.
+:::info Prerequisite
+Sign up for a free Developer Edition account at [developer.orkescloud.com](https://developer.orkescloud.com) — no credit card required.
+:::
+
+### Connect to Conductor
+
+```bash
+npm install -g @conductor-oss/conductor-cli
+```
+
+Create an application and access key so the CLI can authenticate:
+
+1. In the Developer Edition UI, go to **Access Control > Applications**.
+2. Select **+ Create application**, name it, and save.
+3. Open it, go to **Access Keys**, and select **+ Create access key**. Copy the **Key ID** and **Key Secret** now — the secret is shown only once.
+
+Configure the CLI:
+
+```bash
+conductor config save
+```
+
+You'll be walked through several prompts — type the values carefully, especially the server URL:
+
+```
+Profile name: dev
+Server URL [http://localhost:8080/api]: https://developer.orkescloud.com/api
+Server type (OSS/Enterprise) [OSS]: enterprise
+Template repo URL [https://d2ozrtblsovn5m.cloudfront.net]: ↵ (press Enter to accept default)
+Authentication method:
+  1. API Key + Secret
+  2. Auth Token
+Choose [1]: 1
+API Key []: <YOUR_KEY_ID>
+API Secret []: <YOUR_KEY_SECRET>
+✓ Configuration saved to ~/.conductor-cli/config-dev.yaml
+```
+
+Note: passing `--server`/`--auth-key`/`--auth-secret` as flags alongside `config save` does **not** pre-fill these interactive prompts — you have to retype them here regardless.
+
+Since this saves as a named profile (`dev`), point the CLI at it for the rest of this guide:
+
+```bash
+export CONDUCTOR_PROFILE=dev
+```
+
+**This must be exported again in every new terminal window you open for this guide** — it does not persist automatically across sessions unless you add it to your shell profile (`~/.zshrc`).
+
+Verify the connection:
+
+```bash
+conductor workflow list
+```
+
+:::note Troubleshooting
+- **"undefined response type"** — almost always a malformed server URL. Run `cat ~/.conductor-cli/config-dev.yaml` and confirm `server` reads exactly `https://developer.orkescloud.com/api` — a single dropped character (e.g. `.../ap` instead of `.../api`) produces this exact error with no clearer hint.
+- **Auth fields missing from the config file** — re-run `conductor config save` and enter the Key/Secret manually at the prompts (see note above).
+- **401 / Unauthorized** — regenerate the access key from **Access Control > Applications > Access Keys** (the secret can't be viewed again once dismissed).
+- **"Token cannot be null or empty" when starting a workflow** — you're in a terminal that doesn't have `CONDUCTOR_PROFILE=dev` exported. Export it, or pass `--profile dev` on the command.
+:::
+
+### Define the workflow
+
+Save `workflow.json` — a two-task workflow that calls an API and parses the response, all server-side:
+
+```json
+{
+  "name": "hello_workflow",
+  "version": 1,
+  "tasks": [
+    {
+      "name": "fetch_data",
+      "taskReferenceName": "fetch_ref",
+      "type": "HTTP",
+      "inputParameters": {
+        "http_request": {
+          "uri": "https://orkes-api-tester.orkesconductor.com/api",
+          "method": "GET"
+        }
+      }
+    },
+    {
+      "name": "parse_response",
+      "taskReferenceName": "parse_ref",
+      "type": "INLINE",
+      "inputParameters": {
+        "data": "${fetch_ref.output.response.body}",
+        "evaluatorType": "graaljs",
+        "expression": "(function() { var d = $.data; return { summary: 'Host ' + d.hostName + ' responded in ' + d.apiRandomDelay + ' with random value ' + d.randomInt, host: d.hostName, randomValue: d.randomInt }; })()"
+      }
+    }
+  ],
+  "outputParameters": {
+    "summary": "${parse_ref.output.result.summary}",
+    "apiResponse": "${fetch_ref.output.response.body}"
+  },
+  "schemaVersion": 2,
+  "ownerEmail": "dev@example.com"
+}
+```
+
+What's happening here:
+
+- `fetch_data` — an [HTTP task](/content/reference-docs/system-tasks/http) that calls an external API. No worker needed.
+- `parse_response` — an [Inline task](/content/reference-docs/system-tasks/inline) that runs JavaScript server-side to extract and summarize the API response.
+- Both are system tasks — Conductor executes them directly. No external code to deploy.
+
+### Register and run
+
+```bash
+conductor workflow create workflow.json
+```
+
+```bash
+conductor workflow start -w hello_workflow --sync
+```
+
+The `--sync` flag waits for completion and prints the full workflow execution JSON to stdout (server detection messages go to stderr).
+
+```bash
+conductor workflow start -w hello_workflow --sync 2>/dev/null | jq '.output'
+```
+
+```json
+{
+  "summary": "Host orkes-api-sampler-... responded in 0 ms with random value 1141",
+  "apiResponse": {
+    "randomString": "gbgkaofnvesptvlmocpk",
+    "randomInt": 1141,
+    "hostName": "orkes-api-sampler-...",
+    "apiRandomDelay": "0 ms",
+    "sleepFor": "0 ms",
+    "statusCode": "200",
+    "queryParams": {}
+  }
+}
+```
+
+Open [developer.orkescloud.com](https://developer.orkescloud.com) to see the execution visually — the task timeline, inputs/outputs, and status of each step.
+
+:::tip What just happened
+Conductor called an external API, passed the response to server-side JavaScript for parsing, tracked every step, and would have retried on failure — all on a hosted cluster, without writing or deploying any worker code.
+:::
+
+## Phase 2: Add a worker
+
+Now write real code that Conductor orchestrates — with automatic retries.
+
+### Update the workflow
+
+Save `workflow-v2.json` — adds a worker task that processes the parsed data:
+
+```json
+{
+  "name": "hello_workflow",
+  "version": 2,
+  "tasks": [
+    {
+      "name": "fetch_data",
+      "taskReferenceName": "fetch_ref",
+      "type": "HTTP",
+      "inputParameters": {
+        "http_request": {
+          "uri": "https://orkes-api-tester.orkesconductor.com/api",
+          "method": "GET"
+        }
+      }
+    },
+    {
+      "name": "parse_response",
+      "taskReferenceName": "parse_ref",
+      "type": "INLINE",
+      "inputParameters": {
+        "data": "${fetch_ref.output.response.body}",
+        "evaluatorType": "graaljs",
+        "expression": "(function() { var d = $.data; return { summary: 'Host ' + d.hostName + ' responded in ' + d.apiRandomDelay + ' with random value ' + d.randomInt, host: d.hostName, randomValue: d.randomInt }; })()"
+      }
+    },
+    {
+      "name": "process_result",
+      "taskReferenceName": "process_ref",
+      "type": "SIMPLE",
+      "inputParameters": {
+        "summary": "${parse_ref.output.result.summary}",
+        "randomValue": "${parse_ref.output.result.randomValue}"
+      }
+    }
+  ],
+  "outputParameters": {
+    "finalResult": "${process_ref.output}"
+  },
+  "schemaVersion": 2,
+  "ownerEmail": "dev@example.com"
+}
+```
+
+:::note Fixed from the original doc
+`outputParameters.finalResult` must reference `${process_ref.output}` (the whole task output), not `${process_ref.output.result}`. The latter only extracts the `result` string field, silently dropping `doubled` and `attempt` — confirmed by running this end-to-end.
+:::
+
+Register the updated workflow:
+
+```bash
+conductor workflow create workflow-v2.json
+```
+
+Registering a task definition directly via the API requires a bearer token — exchange your access key for one, then use it in the `X-Authorization` header:
+
+```bash
+KEY_ID=<YOUR_KEY_ID>
+KEY_SECRET=<YOUR_KEY_SECRET>
+
+TOKEN=$(curl -s -X POST https://developer.orkescloud.com/api/token -H 'Content-Type: application/json' -d "{\"keyId\": \"$KEY_ID\", \"keySecret\": \"$KEY_SECRET\"}" | jq -r '.token')
+
+echo $TOKEN
+```
+
+If `echo $TOKEN` prints a real JWT (not `null`), register the task:
+
+```bash
+curl -X POST https://developer.orkescloud.com/api/metadata/taskdefs -H "X-Authorization: $TOKEN" -H 'Content-Type: application/json' -d '[{
+    "name": "process_result",
+    "retryCount": 2,
+    "retryLogic": "FIXED",
+    "retryDelaySeconds": 1,
+    "responseTimeoutSeconds": 10,
+    "ownerEmail": "dev@example.com"
+  }]'
+```
+
+A successful response is typically empty.
+
+### Write the worker
+
+Save `worker.py`:
+
+```python
+import threading
+
+from conductor.client.automator.task_handler import TaskHandler
+from conductor.client.configuration.configuration import Configuration
+from conductor.client.worker.worker_task import worker_task
+
+
+@worker_task(task_definition_name="process_result")
+def process_result(task) -> dict:
+    summary = task.input_data.get("summary", "")
+    random_value = task.input_data.get("randomValue", 0)
+
+    # Fail on first attempt to demonstrate retries
+    if task.retry_count == 0:
+        raise Exception(f"Simulated failure processing: {summary}")
+
+    return {
+        "result": summary.upper(),
+        "doubled": random_value * 2,
+        "attempt": task.retry_count + 1,
+    }
+
+
+def main():
+    # CONDUCTOR_AUTH_KEY / CONDUCTOR_AUTH_SECRET are read from the environment
+    config = Configuration(server_api_url="https://developer.orkescloud.com/api")
+    handler = TaskHandler(configuration=config)
+    handler.start_processes()
+
+    try:
+        threading.Event().wait()  # block until KeyboardInterrupt; no busy-wait
+    except KeyboardInterrupt:
+        handler.stop_processes()
+
+
+if __name__ == "__main__":
+    main()
+```
+
+Install and run — reuse the same Key ID/Secret from Phase 1:
+
+```bash
+export CONDUCTOR_AUTH_KEY=<YOUR_KEY_ID>
+export CONDUCTOR_AUTH_SECRET=<YOUR_KEY_SECRET>
+pip install conductor-python
+python worker.py
+```
+
+### Start the workflow and watch retries
+
+In a separate terminal (remember to `export CONDUCTOR_PROFILE=dev` here too):
+
+```bash
+conductor workflow start -w hello_workflow --version 2 --sync
+```
+
+In the terminal running your worker, you'll see:
+
+```
+Simulated failure processing: Host orkes-api-sampler-... responded in 0 ms with random value 1141
+...
+# 1 second later, the retry succeeds
+```
+
+Expected output:
+
+```json
+{
+  "finalResult": {
+    "result": "HOST ORKES-API-SAMPLER-... RESPONDED IN 0 MS WITH RANDOM VALUE 1141",
+    "doubled": 2282,
+    "attempt": 2
+  }
+}
+```
+
+Open [developer.orkescloud.com](https://developer.orkescloud.com) to see the retry visually in the execution diagram.
+
+:::tip What just happened
+Your worker failed, Conductor retried it after 1 second, and the retry succeeded — while polling a hosted cluster over the network. This is durable execution — Conductor manages retries so your code doesn't have to.
+:::
+
+## Phase 3: Replay a workflow
+
+Every Conductor workflow execution is fully replayable — restart from the beginning, or retry just a failed task. This works on any workflow, at any time, even months after the original execution.
 
 :::note
-For immediate sandbox testing, you can try [Developer Edition](https://developer.orkescloud.com/?utm_campaign=quickstarts&utm_source=orkes-doc&utm_medium=web).
+The `process_result` task has `retryCount: 2`, so a transient failure like the simulated one above self-heals automatically — the workflow reaches `COMPLETED` and there's nothing left to retry (calling `/retry` on it returns `409: "There are no retryable tasks!"`). To see manual retry in action, you need a task that actually exhausts its retries and leaves the workflow `FAILED`.
 :::
 
-## Ready to start?
+**Get a token and start a fresh execution**
 
-<DocCardList items={useCurrentSidebarCategory().items} />
+```bash
+TOKEN=$(curl -s -X POST https://developer.orkescloud.com/api/token -H 'Content-Type: application/json' -d "{\"keyId\": \"$KEY_ID\", \"keySecret\": \"$KEY_SECRET\"}" | jq -r '.token')
+
+WORKFLOW_ID=$(conductor workflow start -w hello_workflow --version 2)
+echo $WORKFLOW_ID
+```
+
+**Restart from the beginning**
+
+```bash
+curl -s -X POST "https://developer.orkescloud.com/api/workflow/$WORKFLOW_ID/restart" -H "X-Authorization: $TOKEN"
+```
+
+The workflow re-executes all tasks from scratch, creating a new execution trace while preserving the original. This works regardless of whether the workflow completed, failed, or timed out.
+
+**Retry from a failed task**
+
+To see this for real, simulate a worker with a genuine bug — one that fails on every attempt, not just the first. Save `worker_broken.py`:
+
+```python
+import threading
+
+from conductor.client.automator.task_handler import TaskHandler
+from conductor.client.configuration.configuration import Configuration
+from conductor.client.worker.worker_task import worker_task
+
+
+@worker_task(task_definition_name="process_result")
+def process_result(task) -> dict:
+    summary = task.input_data.get("summary", "")
+    raise Exception(f"Simulated permanent failure processing: {summary}")
+
+
+def main():
+    config = Configuration(server_api_url="https://developer.orkescloud.com/api")
+    handler = TaskHandler(configuration=config)
+    handler.start_processes()
+
+    try:
+        threading.Event().wait()
+    except KeyboardInterrupt:
+        handler.stop_processes()
+
+
+if __name__ == "__main__":
+    main()
+```
+
+Stop your working `worker.py`, run `worker_broken.py` instead, then start a new execution:
+
+```bash
+WORKFLOW2_ID=$(conductor workflow start -w hello_workflow --version 2)
+echo $WORKFLOW2_ID
+```
+
+After a few seconds (3 failed attempts, 1 second apart), it exhausts `retryCount: 2` and fails permanently:
+
+```bash
+conductor workflow status $WORKFLOW2_ID
+# FAILED
+```
+
+Now fix the bug — stop `worker_broken.py`, start the original `worker.py` again — and retry just the failed task:
+
+```bash
+curl -s -X POST "https://developer.orkescloud.com/api/workflow/$WORKFLOW2_ID/retry" -H "X-Authorization: $TOKEN"
+```
+
+```bash
+conductor workflow status $WORKFLOW2_ID
+# COMPLETED
+```
+
+Conductor picked up exactly where it left off, reusing the outputs of every task that had already succeeded, and only re-ran the one that was broken.
+
+:::note
+Tokens expire — if a `curl` call returns 401, regenerate `$TOKEN` using the `POST /api/token` call above.
+:::
+
+:::tip What just happened
+You saw both replay strategies for real: a full restart, and a targeted retry of a task that had a genuine, persistent bug — fixed by deploying corrected code and resuming from the point of failure, without re-running anything that already succeeded.
+:::
+
+## Workers in other languages
+
+```java
+@WorkerTask("process_result")
+public Map<String, Object> processResult(Map<String, Object> input) {
+    String summary = (String) input.get("summary");
+    int randomValue = (int) input.get("randomValue");
+    return Map.of(
+        "result", summary.toUpperCase(),
+        "doubled", randomValue * 2
+    );
+}
+```
+
+Set `CONDUCTOR_SERVER_URL=https://developer.orkescloud.com/api`, `CONDUCTOR_AUTH_KEY`, and `CONDUCTOR_AUTH_SECRET` as environment variables — the SDK picks them up automatically. See the [Java SDK](https://github.com/conductor-oss/java-sdk) for full setup.
+
+## Cleanup
+
+```bash
+conductor workflow delete hello_workflow 2
+conductor task delete process_result
+```
+
+## Next steps
+
+- **[System tasks](/content/category/reference-docs/system-tasks)** — HTTP, Wait, Event tasks without workers
+- **[Operators](/content/category/reference-docs/operators)** — Fork/join, switch, loops, sub-workflows
+- **[Error handling](/content/error-handling)** — Saga pattern, compensation flows
+- **[Client SDKs](/content/category/sdks)** — Java, Python, Go, C#, JavaScript, and more

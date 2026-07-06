@@ -2,11 +2,6 @@
   "sourceRoot": "docs",
   "pages": [
     {
-      "source": "quickstart/index.md",
-      "docId": "getting-started/quickstart-index",
-      "route": "quickstarts"
-    },
-    {
       "source": "architecture/durable-execution.md",
       "docId": "quickstart/durable-execution",
       "route": "quickstarts/durable-execution"
