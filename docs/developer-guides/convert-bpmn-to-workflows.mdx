@@ -6,10 +6,10 @@ description: "Learn how to convert BPMN files into Orkes Conductor workflows. Up
 # Import BPMN Files as Workflows
 
 :::info Available since
-v5.0.1 and later
+- v5.0.1 and later
 :::
 
-Use the BPMN importer when you already have process models in BPMN or XML and want to bootstrap equivalent Conductor workflow definitions. Treat the imported workflow as a starting point: review task names, inputs, outputs, error handling, and worker boundaries before using it in production.
+In Orkes Conductor, you can quickly convert BPMN (Business Process Model and Notation) files into workflow definitions. This simplifies the migration from BPMN-based systems by supporting standard XML and BPMN formats. Whether you’re transitioning from legacy tools or starting with predefined processes, the BPMN importer enables a fast, code-free transition into the Conductor ecosystem.
 
 :::tip 5-minute path
 Import the BPMN file, inspect the generated workflow JSON, normalize task reference names, add retries and timeouts, then test the workflow with representative input.
@@ -30,9 +30,44 @@ Common post-import checks:
 
 ## Importing BPMN files
 
-Import from **Definitions > Workflows > Import BPMN** in the Conductor UI. You can upload a `.bpmn` file, drag and drop the file, or paste raw BPMN XML.
+**To import a BPMN file:**
 
-Before importing into a shared environment, decide whether the importer may overwrite an existing workflow with the same name. For production, prefer creating a new workflow name or version, then promote it deliberately.
+1. Go to **Definitions** > **Workflow** from the left navigation menu on your Conductor cluster.
+2. Select the **⏷** icon next to **+ Define workflow**.
+3. From the dropdown menu, select **Import BPMN**.
+
+<p align="center"><img src="/content/img/import-bpmn.png" alt="Importing BPMN files" width="100%" height="auto"></img></p>
+
+4. Import files using one of the following methods:
+    - **Select file**: Upload a .bpmn file from your local device.
+    - **Drag and drop**: Drop the BPMN files directly into the designated area in the UI.
+    - **Code**: Paste the raw XML content of your BPMN directly in the code tab.
+
+<p align="center"><img src="/content/img/bpmn-importer.png" alt="BPMN Importer" width="50%" height="auto"></img></p>
+
+5. The **Workflow Name** field is pre-filled with the file name by default. Edit it if you want to use a different name.
+6. Toggle **Overwrite workflow** on to replace an existing workflow definition with the same name.  Disable this option if you want to prevent overwrites.
+7. Select **Import**.
+
+The BPMN file is converted into workflow definitions in Orkes Conductor. Each process defined in the imported BPMN file is converted into an equivalent Orkes Conductor workflow definition. 
+ 
+<p align="center"><img src="/content/img/converting-bpmn-to-workflow.gif" alt="BPMN Importer" width="100%" height="auto"></img></p>
+
+After importing, the newly created workflows appear in **Definitions** > **Workflows**. 
+
+The import will fail with an error if the BPMN file:
+
+- Contains a circular reference
+- Has multiple start events
+- Is incomplete or malformed
+
+## Next steps
+
+With the imported workflow definitions in place, you can:
+
+- Review and modify the imported workflow as needed.
+- [Run the workflow](https://orkes.io/content/how-to-videos/run-workflow) or integrate it into your [existing code](https://orkes.io/content/category/sdks).
+- Apply [version control](https://orkes.io/content/developer-guides/versioning-workflows).
 
 ## Validate the generated workflow
 
