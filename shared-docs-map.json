@@ -103,7 +103,7 @@
     }
   ],
   "aliases": {
-    "why-conductor.md": "why-conductor",
+    "devguide/ai/why-conductor.md": "why-conductor",
     "quickstart/index.md": "quickstarts",
     "architecture/durable-execution.md": "conductor-architecture",
     "devguide/architecture/index.md": "conductor-architecture",
