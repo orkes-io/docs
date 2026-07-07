@@ -1,0 +1,84 @@
+name: Deploy Docs to S3 — non-prod
+
+# Builds the MkDocs site with base=/content and publishes it to an S3 bucket in
+# the marketing-non-prod account, then invalidates the /content/* path on the
+# non-prod marketing CloudFront distribution.
+#
+# This is ADDITIVE and does NOT affect production: it does not touch orkes.io,
+# the orkes-portal, or the Docusaurus build on `main`. Config lives in the
+# `marketing-non-prod` GitHub Environment (see deploy/SETUP-s3-cloudfront.md).
+
+on:
+  push:
+    branches: [docs_site_revamp]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write # OIDC → AWS
+
+concurrency:
+  group: docs-s3-nonprod
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Build (base=/content) → S3 + invalidate
+    runs-on: ubuntu-latest
+    environment: marketing-non-prod
+    env:
+      DOCS_BASE_URL: /content
+      DOCS_SITE_URL: ${{ vars.DOCS_SITE_URL }} # e.g. https://<nonprod-cf-domain>/content/
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Fetch shared OSS docs
+        run: npm run fetch:oss-docs
+
+      - name: Build site (base=/content)
+        run: npm run build
+
+      - name: Audit generated site
+        run: npm run audit:docs
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      # Hashed, content-addressed Material assets → cache 1 year, immutable.
+      - name: Sync immutable assets
+        run: |
+          aws s3 sync build/ "s3://${{ vars.DOCS_BUCKET }}/content/" \
+            --delete \
+            --cache-control "public, max-age=31536000, immutable" \
+            --exclude "*" --include "assets/*"
+
+      # Everything else (HTML, images, search index) → short cache; prune stale.
+      - name: Sync HTML + the rest
+        run: |
+          aws s3 sync build/ "s3://${{ vars.DOCS_BUCKET }}/content/" \
+            --delete \
+            --cache-control "public, max-age=300" \
+            --exclude "assets/*"
+
+      - name: Invalidate CloudFront /content/*
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id "${{ vars.MARKETING_CF_DIST_ID }}" \
+            --paths "/content/*"
