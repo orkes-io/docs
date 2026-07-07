@@ -78,25 +78,18 @@ To configure caching, add the `cacheConfig` object to your task configuration:
 
 ## Cache key design
 
-The cache key must include every input value that can affect the output.
+When designing `cacheConfig.key`, include every task input value that can affect the task's output. Omitting a relevant input value can cause the task to return an incorrect cached result when that value changes between executions.
 
-Good:
-
-```json
-"key": "${url}-${mediaType}-${workflow.input.tenantId}"
-```
-
-Risky:
-
-```json
-"key": "${url}"
-```
-
-The risky key ignores media type and tenant. It can return the wrong cached result if those values differ between executions.
+| Key design | Example | Outcome |
+| ---------- | ------- | ------- |
+| Good — includes all inputs that affect the output | `"key": "${url}-${mediaType}-${workflow.input.tenantId}"` | Distinguishes cached results correctly across `url`, `mediaType`, and `tenantId` |
+| Risky — omits inputs that affect the output | `"key": "${url}"` | Ignores `mediaType` and `tenantId`, so it can return the wrong cached result if those values differ between executions |
 
 ## Using workflow input in a cache key
 
-Workflow input must be passed into the task input first:
+To reference a workflow input in `cacheConfig.key`, first map it to a task input parameter, then reference that task input parameter in the key. The key itself can only reference the task's input parameters, not `workflow.input` directly.
+
+For example, the following task maps `workflow.input.url` and `workflow.input.userId` to task input parameters, then uses those task input parameters (`url`, `mediaType`, `userId`) to build the cache key:
 
 ```json
 {
@@ -129,7 +122,7 @@ If no cached output is found, the task is scheduled as usual. When the task comp
 2. Select a workflow.
 3. In the visual workflow editor, select the task you want to cache.
 4. Turn on the **Cache output** toggle.
-5. Enter the **Cache key** and  **TTL (in seconds).** 
+5. Enter the **Cache key** and **TTL (in seconds).**
 
 <p align="center">
   <img

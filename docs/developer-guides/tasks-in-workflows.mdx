@@ -15,6 +15,8 @@ Use an operator for control flow, a system task for platform-managed work, an AI
 
 ## Choose a task type
 
+Use this table for a quick lookup by use case. Each task type is covered in full detail, with all available tasks, in [Built-in tasks](#built-in-tasks) below.
+
 | Need | Use |
 | ---- | --- |
 | Branch, loop, wait, fork, join, terminate, or call sub-workflows | [Operators](/category/reference-docs/operators) |
@@ -25,7 +27,7 @@ Use an operator for control flow, a system task for platform-managed work, an AI
 
 ## Built-in tasks
 
-Conductor provides built-in system tasks and operators that let you build workflows without writing custom workers. These are managed by Conductor and run within its JVM (Java Virtual Machine), allowing you to get started quickly.
+Conductor provides built-in system tasks and operators that let you build workflows without writing custom workers. These are managed by Conductor and run within its JVM (Java Virtual Machine), allowing you to get started quickly. The tables below list every available operator, system task, and AI task, organized by use case.
 
 * [Operators](/content/category/reference-docs/operators) control workflow execution, such as branching, looping, and parallel execution.
 * [System tasks](/content/category/reference-docs/system-tasks) perform units of work, such as calling APIs, transforming data, or interacting with external services. System tasks include [AI tasks](/category/reference-docs/ai-tasks) that can be used to build AI-powered and agentic applications.
@@ -67,7 +69,7 @@ In most common cases, you can make use of existing Conductor tasks instead of cr
 | Query data from Conductor Search API or Metrics                                              | [Query Processor](../reference-docs/system-tasks/query-processor)         |
 | Send alerts to Opsgenie                                                                      | [Opsgenie](../reference-docs/system-tasks/opsgenie)                       |
 
-**AI tasks**
+### AI tasks
 
 | Use Case                                                                                     | Task to Use                                                               |
 | -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
@@ -128,7 +130,7 @@ Task definitions can be registered via the Conductor UI or through SDK/[API](/co
 Here is an example task definition JSON:
 
 
-``` json
+```json
 {
   "createTime": 1721901586970,
   "updateTime": 1725926875230,

@@ -25,7 +25,7 @@ Orkes Conductor provides built-in idempotency support at multiple layers:
 When a workflow execution is triggered with an idempotency key, Conductor checks whether a workflow with the same key already exists before creating a new instance. 
 
 - If no matching record exists, Conductor creates a new workflow execution.
-- If a matching record exists, Conductor applies the configured **Idempotency strategy** to determine the response.
+- If a matching record exists, Conductor applies the configured idempotency strategy to determine the response.
 
 ### Idempotency key
 
@@ -122,7 +122,7 @@ const workflowId = await workflow.startWorkflow(
 
 [C# SDK](https://github.com/conductor-oss/csharp-sdk)
 
-```cshatp
+```csharp
 var request = new StartWorkflowRequest(
     name: "order-processing-workflow",
     version: 1,
@@ -250,9 +250,9 @@ With this configuration, if the same event is delivered multiple times (for exam
 The idempotency key can be variable here, but it can be passed only from workflow inputs.
 :::
 
-#### Idempotency for webhook-triggered workflows
+#### Choosing an idempotency key for webhook payloads
 
-For webhook workflows, derive the idempotency key from the event payload:
+The `idempotencyKey` variable set in step 4 above typically resolves to a field in the incoming event payload. For example, referencing the event's own ID:
 
 ```json
 {
@@ -282,7 +282,7 @@ A worker is idempotent when executing the same task multiple times produces no a
 
 ## Idempotency for agent tool calls
 
-AI agents often call tools that create external side effects: send an email, create a support ticket, update a CRM record, trigger a deployment, or charge a payment provider. These calls must be idempotent because task delivery is at least once and an in-flight tool call can be retried after a timeout, worker restart, or network partition.
+The same design principles apply to AI agent workers, with one added wrinkle: agents often call tools that create external side effects, such as sending an email, creating a support ticket, updating a CRM record, triggering a deployment, or charging a payment provider. These calls must be idempotent because task delivery is at least once and an in-flight tool call can be retried after a timeout, worker restart, or network partition.
 
 Use a stable key that identifies the business operation, not the retry attempt:
 

@@ -18,7 +18,7 @@ For tasks, you can configure the following resilience parameters in its task def
 For workflows, you can configure the following resilience parameters in its workflow definition:
 
 - Timeouts
-- Compensation flows (known as failure workflow in Conductor)
+- Failure workflows (also known as compensation flows)
 
 :::tip 5-minute path
 Configure retries and timeouts on task definitions, configure an end-to-end timeout on workflow definitions, make workers idempotent, and use a failure workflow for cleanup, rollback, notification, or compensation.
@@ -35,9 +35,7 @@ Conductor guarantees at least once message delivery, meaning all messages are pe
 1. If a workflow has started, it will run to completion as long as all its tasks are completed.
 2. If a task worker fails due to restarts, crashes, or other issues, the message will be redelivered to another worker node that is alive and responding.
 
-This durability guarantee also means worker code must be idempotent, since a retried worker should be safe to run again with the same task input.
-
-Common idempotency patterns:
+This durability guarantee also means worker code must be idempotent, since a retried worker should be safe to run again with the same task input. Common idempotency patterns include:
 
 - Use a business key, such as `orderId` or `paymentId`, when calling external systems.
 - Make writes conditional or upsert-based.
@@ -45,14 +43,12 @@ Common idempotency patterns:
 - Return `FAILED_WITH_TERMINAL_ERROR` for invalid input that should not be retried.
 - Use idempotency keys when starting workflows from APIs, queues, or webhooks that can redeliver.
 
-For AI agents and MCP tools, treat every real-world action as a side effect. A retry can otherwise send the same email twice, create duplicate tickets, post duplicate Slack messages, repeat a payment call, rerun a deployment, or call an external tool after the original request eventually succeeds.
-
-Use these safeguards for side-effecting agent steps:
+These same idempotency principles are especially important when a worker's task involves an AI agent or MCP tool, since each retry replays a real-world action rather than a simple computation. A retry can send the same email twice, create duplicate tickets, post duplicate Slack messages, repeat a payment call, rerun a deployment, or call an external tool after the original request eventually succeeds. Use the following safeguards for side-effecting agent steps:
 
 - Pass a stable idempotency key to every external tool that supports one.
-- Store the external operation ID in task output so compensation workflows can find it.
+- Store the external operation ID in task output so failure workflows can find it.
 - Put irreversible actions behind a `HUMAN` task or policy check when risk is high.
-- Use `failureWorkflow` to undo or mitigate partial work, such as closing a duplicate ticket, voiding a payment authorization, or notifying an operator.
+- Use a failure workflow to undo or mitigate partial work, such as closing a duplicate ticket, voiding a payment authorization, or notifying an operator.
 - Prefer `FAILED_WITH_TERMINAL_ERROR` when the agent produced invalid or unsafe input that should not be retried automatically.
 
 ## Task retries
@@ -213,16 +209,15 @@ Based on the timeout configuration in the above figure, the following sequence o
 
 </details>
 
-
 ## Workflow timeouts
 
 A workflow can be configured to timeout in situations where:
 
-- The workflow has been running longer than expected and has not been completed within the defined time frame. 
-- An external dependency required by the workflow is unresponsive or taking too long to respond. 
+- The workflow has been running longer than expected and has not been completed within the defined time frame.
+- An external dependency required by the workflow is unresponsive or taking too long to respond.
 - Business logic requires the workflows to be completed within a strict time limit to maintain efficiency.
 
-### Timeout configuration​
+### Timeout configuration
 
 You can configure the timeout behavior for the workflow using its **workflow definition**. The parameters for a workflow’s timeout behavior are:
 
@@ -230,9 +225,9 @@ You can configure the timeout behavior for the workflow using its **workflow def
 - Timeout policy
 
 | Parameter           | Description                             | Required/Optional |
-| ------------------- | --------------------------------------- | ----------------- | 
+| ------------------- | --------------------------------------- | ----------------- |
 | timeoutSeconds | The timeout, in seconds, after which the workflow will be set as TIMED_OUT if it hasn't reached a terminal state. <br/> <br/> Set to 0 for no timeouts. | Required. |
-| timeoutPolicy | The policy for handling workflow timeout. Supported values:<ul><li>**TIME_OUT_WF**–The workflow is set to TIMED_OUT and is terminated.</li><li>**ALERT_ONLY**–Increments the counter to check the workflow status when it times out and logs relevant messages.</li></ul> | Required. | 
+| timeoutPolicy | The policy for handling workflow timeout. Supported values:<ul><li>**TIME_OUT_WF**–The workflow is set to TIMED_OUT and is terminated.</li><li>**ALERT_ONLY**–Increments the counter to check the workflow status when it times out and logs relevant messages.</li></ul> | Required. |
 
 **Example**
 
@@ -247,7 +242,7 @@ You can configure the timeout behavior for the workflow using its **workflow def
 
 ## Workflow compensation flows
 
-A compensation flow can be configured to take place when a workflow reaches a non-successful terminal state such as FAILED, TIMED_OUT, or TERMINATED. Known as a **failure workflow** in Conductor, this failure workflow must be created in Conductor and added to the main workflow definition. 
+A failure workflow (also called a compensation flow) can be configured to run when a workflow reaches a non-successful terminal state such as FAILED, TIMED_OUT, or TERMINATED. The failure workflow must be created in Conductor and added to the main workflow definition.
 
 When triggered, the failure workflow receives the following details as input:
 
@@ -263,12 +258,11 @@ This enables you to implement compensating logic to handle the failure, such as:
 - Refunding or voiding a payment authorization
 - Notifying operators or customers
 - Creating an incident or ticket
-- Cleaning up side effects created by agent tool calls
-- Marking an AI-assisted action as failed for audit and review
-- Recording audit data
+- Recording audit data, including marking an AI-assisted action as failed for review
 - Marking a business entity as failed
+- Cleaning up side effects created by agent tool calls, such as closing a duplicate ticket or canceling a partially completed action
 
-Design compensation workflows to be idempotent. They can be retried, and they may run after a partial business process has already changed external systems.
+Design failure workflows to be idempotent. They can be retried, and they may run after a partial business process has already changed external systems.
 
 ### Setting a failure workflow
 
@@ -302,6 +296,8 @@ You can set a failure workflow for a workflow in its **workflow definition**. Be
 
 ## Choosing the right failure behavior
 
+Use this table to quickly map a failure scenario to the mechanism covered above:
+
 | Failure mode | Recommended behavior |
 | ------------ | -------------------- |
 | Dependency returned temporary 5xx | Retry with backoff. |
@@ -315,10 +311,7 @@ You can set a failure workflow for a workflow in its **workflow definition**. Be
 
 ## Production notes
 
-- Make every worker task idempotent.
 - Keep retry budgets aligned with user-facing SLAs.
-- Prefer `EXPONENTIAL_BACKOFF` for external dependency failures.
-- Use `FAILED_WITH_TERMINAL_ERROR` for non-retryable worker failures.
 - Alert on repeated task retries and queue depth, not only final workflow failures.
 - Use [Metrics and Observability](/developer-guides/metrics-and-observability) to monitor retries, timeouts, queue depth, and failure rates.
 - Use [Debugging Workflow Executions](/developer-guides/debugging-workflows) to inspect the failed task, resolved inputs, and recovery options.

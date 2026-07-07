@@ -14,7 +14,7 @@ In Conductor, various workflow and task parameters can be hard-coded or dynamica
 These dynamic references are formatted as dot-notation expressions, taking after [JSONPath syntax](https://goessner.net/articles/JsonPath/).
 
 :::tip 5-minute path
-Start with `${workflow.input.<field>}` for request data, `${task_ref.output.<field>}` for prior task output, `${workflow.variables.<field>}` for shared workflow state, and `${workflow.secrets.<name>}` for credentials. Use task input templates for shared defaults, masking for sensitive values, and schema validation for production contracts.
+Start with `${workflow.input.<field>}` for request data, `${task_ref.output.<field>}` for prior task output, `${workflow.variables.<field>}` for shared workflow state, and `${workflow.secrets.<name>}` for credentials. Use [task input templates](#task-input-templates) for shared defaults, [masking](#masking-sensitive-mapped-values) for sensitive values, and [schema validation](#schema-validation) for production contracts.
 :::
 
 ## Basic expression
@@ -418,7 +418,7 @@ To pass parameters from a parent workflow into its sub-workflow, you must declar
 
 **Example**
 
-```
+```jsonc
 // parent workflow definition with task configuration
 
 {
@@ -466,7 +466,7 @@ If needed, these inputs can then be set as workflow variables within the sub-wor
 
 To pass parameters from a sub-workflow back to its parent workflow, you must pass them as the sub-workflow’s output parameters in the sub-workflow definition.
 
-```
+```jsonc
 // sub-workflow definition
 {
  "createTime": 1726651838873,
@@ -513,6 +513,10 @@ In the parent workflow, these sub-workflow outputs can be referenced using the e
 </TabItem>
 </Tabs>
 </details>
+
+## Beyond parameter references
+
+The dynamic references above cover most day-to-day wiring. Conductor also provides three related mechanisms for managing task inputs at scale: reusable **task input templates**, **masking** for sensitive mapped values, and **schema validation** for enforcing input/output contracts.
 
 ## Task input templates
 
@@ -570,34 +574,13 @@ In this example, `channel` and `headers` come from the task definition template.
 
 Mask sensitive values that should not be exposed in workflow execution payloads, task inputs, task outputs, logs, or archived execution data. Use masking for tokens, API keys, credentials, authorization headers, customer identifiers, and similar data.
 
+For credentials stored centrally, referencing `${workflow.secrets.<secretName>}` (see [Referencing secrets](#examples) above) already masks the value as `***` automatically. The mechanisms below cover other cases: runtime-sensitive values passed between tasks, and workflow-level fields that need masking by name.
+
 | Mechanism      | Use when                                                                                                                       |
 | -------------- | ------------------------------------------------------------------------------------------------------------------------------- |
 | `_masked`      | A task input contains runtime-sensitive values that should remain available for restart/archive behavior.                      |
 | `_secrets`     | A task input contains sensitive values that should be permanently replaced with `***` during archiving.                        |
 | `maskedFields` | Specific workflow input or output fields should be masked by name. Available in v5.1.18+/v4.1.68+.                              |
-
-Use `${workflow.secrets.<secretName>}` for centrally stored credentials:
-
-```json
-{
-  "name": "charge_payment",
-  "taskReferenceName": "charge_payment",
-  "type": "HTTP",
-  "inputParameters": {
-    "http_request": {
-      "uri": "https://payments.example.com/charge",
-      "method": "POST",
-      "headers": {
-        "Authorization": "Bearer ${workflow.secrets.payment_api_token}"
-      },
-      "body": {
-        "customerId": "${workflow.input.customerId}",
-        "amount": "${workflow.input.amount}"
-      }
-    }
-  }
-}
-```
 
 Use `_masked` when a sensitive runtime value is produced by one task and consumed by another:
 

@@ -8,7 +8,7 @@ import TableNote from '@site/src/components/TableNote';
 
 # Using Event Handlers
 
-Event handlers in Orkes Conductor listen for messages from message brokers and trigger workflow actions based on configurable conditions. Once the messages from message brokers are received, you can use them to:
+Event handlers in Orkes Conductor listen for messages from message brokers and trigger workflow actions based on configurable conditions. When an event handler receives a message from a message broker, it can trigger one of the following actions:
 
 - Complete a task
 - Terminate a workflow
@@ -17,7 +17,7 @@ Event handlers in Orkes Conductor listen for messages from message brokers and t
 - Start a new workflow
 
 :::tip 5-minute path
-Configure the broker integration, choose the sink string, write a condition, choose one action, test with a representative payload, then add idempotency and monitoring before production.
+To get an event handler running quickly: configure the broker integration, choose the sink string, write a condition, choose one action, and test with a representative payload. Add idempotency and monitoring before moving to production.
 :::
 
 ## Creating an event handler
@@ -40,7 +40,7 @@ Before configuring an event handler, ensure the following:
 | name | A unique name for the event handler. | Required. | 
 | description | A description of the event handler.| Optional. | 
 | event | The event queue sink in the format:<br/> **message-broker-type:integration-name:topic/queue-name**.<br/>Where,<ul><li>**message-broker-type**: The message broker type from where the payload is being received. Supported types:<ul><li>amqp</li><li>sqs</li><li>azure</li><li>kafka</li><li>nats</li><li>gcp_pubsub</li><li>ibm_mq</li></ul></li><li>**integration-name**: The integration name added to the cluster.</li><li>**topic/queue-name**: The name of the queue or topic where the payload is being received.</li></ul><TableNote title="Warning">When configuring via the Conductor UI, the **Event** field lists only message broker integrations configured in your cluster. Select the required integration and append the topic name or queue name. Failure to do so may result in execution errors, as the payload won't have a valid destination.</TableNote> | Required. | 
-| condition | An ECMAScript (JavaScript) function to control message processing. The function should return `true` for the event handler to process the message. [Learn more about filtering events](/content/developer-guides/event-handler#configuring-conditions-to-filter-events). | Required. | 
+| condition | An ECMAScript (JavaScript) function to control message processing. The function should return `true` for the event handler to process the message. [Learn more about filtering events](#filter-events-with-conditions). | Required. | 
 | evaluatorType | The type of evaluator for the condition. Currently supports `javascript`. | Required. | 
 | actions | An array of actions to perform. Each action requires specific input parameters. Supported actions include:<ul><li>[complete_task](/content/developer-guides/event-handler#complete-task)</li><li>[terminate_workflow](/content/developer-guides/event-handler#terminate-workflow)</li><li>[update_workflow_variables](/content/developer-guides/event-handler#update-variables)</li><li>[fail_task](/content/developer-guides/event-handler#fail-task)</li><li>[start_workflow](/content/developer-guides/event-handler#start-workflow)</li></ul> | Required. |
 | active | Whether the event handler is enabled. Set to `true` to enable the event handler or `false` to disable it. | Required. |
@@ -123,11 +123,17 @@ The same fields are accessible in the `condition` expression using `$.fieldName`
 
 ## Configuring actions 
 
-Actions are executed only after the `condition` evaluates to `true`. Multiple actions can be triggered based on the events received. Below are the actions and their configuration details. 
+Actions are executed only after the event handler's `condition` evaluates to `true`. An event handler's `actions` array can trigger multiple actions based on the events received. Orkes Conductor supports the following action types:
+
+- [Complete Task](#complete-task)
+- [Terminate Workflow](#terminate-workflow)
+- [Update Variables](#update-variables)
+- [Fail Task](#fail-task)
+- [Start Workflow](#start-workflow)
 
 ### Complete Task
 
-Mark a task as complete using one of the following methods:
+The `complete_task` action marks a task as complete. You can identify the task to complete using one of the following methods:
 
 * Using `workflowId` and `taskRefName`.
 * Using `taskId`.
@@ -198,7 +204,7 @@ Mark a task as complete using one of the following methods:
 
 ### Terminate Workflow
 
-Terminates a running workflow.
+The `terminate_workflow` action terminates a running workflow.
 
 **Example Payload**
 
@@ -232,7 +238,7 @@ Terminates a running workflow.
 
 ### Update Variables
 
-Updates variables in a running workflow. Useful for controlling inputs in a long-running workflow.
+The `update_workflow_variables` action updates variables in a running workflow. This is useful for controlling inputs in a long-running workflow.
 
 **Example Payload**
 
@@ -258,6 +264,7 @@ Updates variables in a running workflow. Useful for controlling inputs in a long
  ]
 }
 ```
+
 **Parameters**
 
 | Parameter | Description | Required/ Optional | 
@@ -269,10 +276,10 @@ Updates variables in a running workflow. Useful for controlling inputs in a long
 
 ### Fail Task
 
-Marks a task as failed using one of the following methods:
+The `fail_task` action marks a task as failed. You can identify the task to fail using one of the following methods:
 
 * Using `workflowId` and `taskRefName`.
-* Using `taskId`. 
+* Using `taskId`.
 
 **Example Payload**
 
@@ -340,7 +347,7 @@ Marks a task as failed using one of the following methods:
 
 ### Start Workflow
 
-Starts a new workflow instance.
+The `start_workflow` action starts a new workflow instance.
 
 **Example Payload**
 
@@ -372,6 +379,7 @@ Starts a new workflow instance.
  ]
 }
 ```
+
 **Parameters**
 
 | Parameter | Description | Required/ Optional | 
@@ -385,9 +393,9 @@ Starts a new workflow instance.
 | actions. start_workflow. **input** | The input data to be passed to the new workflow. Can be string, number, boolean, null, or object/array. | Optional. | 
 | actions. start_workflow. **taskToDomain** | A mapping of task reference names to domain-specific values to [route the task to defined workers](https://orkes.io/content/developer-guides/task-to-domain). | Optional. | 
 
-**Ordering behavior with Kafka**
+#### Ordering behavior with Kafka
 
-Kafka guarantees message ordering within a partition. However, when an event handler triggers a `start_workflow` action, workflow creation is processed concurrently; meaning two messages from the same partition may result in workflows starting in a different order than the messages arrived.
+Kafka guarantees message ordering within a partition. However, when an event handler triggers a `start_workflow` action, workflow creation is processed concurrently, meaning two messages from the same partition may result in workflows starting in a different order than the messages arrived.
 
 If ordering matters for your use case:
 

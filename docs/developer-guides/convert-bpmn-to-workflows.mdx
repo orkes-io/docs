@@ -15,19 +15,6 @@ In Orkes Conductor, you can quickly convert BPMN (Business Process Model and Not
 Import the BPMN file, inspect the generated workflow JSON, normalize task reference names, add retries and timeouts, then test the workflow with representative input.
 :::
 
-## What gets imported
-
-The importer converts supported BPMN structure into a Conductor workflow definition. After import, the workflow behaves like any other Conductor workflow: it can be versioned, started by API, tested, monitored, and edited.
-
-Common post-import checks:
-
-- Workflow `name`, `version`, `description`, and `ownerEmail`
-- Task names and `taskReferenceName` values
-- Inputs expected by each task
-- Output mappings used by downstream tasks
-- Branches, joins, loops, waits, and sub-process equivalents
-- Retry, timeout, and compensation behavior
-
 ## Importing BPMN files
 
 **To import a BPMN file:**
@@ -71,7 +58,7 @@ With the imported workflow definitions in place, you can:
 
 ## Validate the generated workflow
 
-After import, inspect the generated workflow definition rather than trusting the visual shape alone.
+The BPMN importer converts supported BPMN structure into a Conductor workflow definition. After import, the workflow behaves like any other Conductor workflow: it can be versioned, started by API, tested, monitored, and edited. Inspect the generated workflow definition rather than trusting the visual shape alone.
 
 ```json
 {
@@ -91,13 +78,15 @@ After import, inspect the generated workflow definition rather than trusting the
 }
 ```
 
-Focus on these production requirements:
+Check the following after every BPMN import:
 
-- Use stable task reference names because downstream expressions and recovery operations depend on them.
-- Register task definitions for worker tasks.
-- Add `retryCount`, `retryLogic`, `timeoutSeconds`, `responseTimeoutSeconds`, and `pollTimeoutSeconds` where needed.
-- Add schemas if workflow or task input contracts must be validated.
-- Add a failure workflow if the process needs compensation.
+- Workflow `name`, `version`, `description`, and `ownerEmail`.
+- Task names and `taskReferenceName` values. Use stable reference names because downstream expressions and recovery operations depend on them.
+- Inputs expected by each task and output mappings used by downstream tasks.
+- Branches, joins, loops, waits, and sub-process equivalents.
+- Retry, timeout, and compensation behavior. Register task definitions for worker tasks, and add `retryCount`, `retryLogic`, `timeoutSeconds`, `responseTimeoutSeconds`, and `pollTimeoutSeconds` where needed.
+- Schemas, if workflow or task input contracts must be validated.
+- A failure workflow, if the process needs compensation.
 
 ## Production notes
 
