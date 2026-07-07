@@ -127,16 +127,12 @@ Conductor includes first-class support for building AI-powered workflows through
 
 Conductor integrates with **14+ LLM providers** out of the box:
 
-Anthropic, OpenAI, Azure OpenAI, Google Gemini, AWS Bedrock, Mistral, Cohere, HuggingFace, Ollama, Perplexity, Grok, StabilityAI, and more.
+Anthropic, OpenAI, Azure OpenAI, Google Gemini, AWS Bedrock, Mistral, Cohere, HuggingFace, Ollama, Perplexity, Grok, and more.
 
 Each provider is configured once at the server level; workflows reference them by name, making it straightforward to swap models without changing workflow logic.
 
 ### Vector databases and RAG
 
 For retrieval-augmented generation (RAG), Conductor supports vector stores including **Pinecone**, **Weaviate**, **pgvector**, and **MongoDB Atlas**. The Embeddings and Vector Search system tasks handle the embedding generation and similarity search steps so that RAG pipelines can be expressed as standard workflows.
-
-### Content generation
-
-Beyond text, Conductor's AI tasks support generating images, audio, video, and PDFs — useful for workflows that produce rich media from LLM outputs.
 
 For end-to-end AI agent patterns that combine LLM reasoning with tool use, see the [agents documentation](/content/ai-orchestration).
