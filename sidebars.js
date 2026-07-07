@@ -186,7 +186,7 @@ const sidebars = {
     eventingSidebar: [
         {
             type: 'doc',
-            id: 'event-driven-orchestration/index',
+            id: 'event-driven-orchestration',
             label: 'Event-Driven Orchestration',
             className: 'leftMenuHeader',
         },
