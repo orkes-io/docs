@@ -19,32 +19,7 @@
     {
       "source": "devguide/ai/first-ai-agent.md",
       "docId": "ai-cookbook/first-ai-agent",
-      "route": "ai-orchestration/first-ai-agent"
-    },
-    {
-      "source": "devguide/ai/failure-semantics.md",
-      "docId": "ai-cookbook/failure-semantics",
-      "route": "ai-orchestration/failure-semantics"
-    },
-    {
-      "source": "devguide/ai/durable-agents.md",
-      "docId": "ai-cookbook/durable-agents",
-      "route": "ai-orchestration/durable-agents"
-    },
-    {
-      "source": "devguide/ai/human-in-the-loop.md",
-      "docId": "ai-cookbook/human-in-the-loop",
-      "route": "ai-orchestration/human-in-the-loop"
-    },
-    {
-      "source": "devguide/ai/dynamic-workflows.md",
-      "docId": "ai-cookbook/dynamic-workflows",
-      "route": "ai-orchestration/dynamic-workflows"
-    },
-    {
-      "source": "devguide/ai/token-efficiency.md",
-      "docId": "ai-cookbook/token-efficiency",
-      "route": "ai-orchestration/token-efficiency"
+      "route": "ai-agents/first-ai-agent"
     },
     {
       "source": "documentation/clientsdks/index.md",
@@ -88,9 +63,14 @@
     }
   ],
   "aliases": {
-    "devguide/ai/why-conductor.md": "why-conductor",
+    "devguide/ai/why-conductor.md": "why-conductor-for-ai-agents",
     "devguide/ai/llm-orchestration.md": "ai-orchestration/llm-orchestration",
-    "devguide/ai/production-agent-architecture.md": "ai-orchestration/production-agent-architecture",
+    "devguide/ai/production-agent-architecture.md": "ai-agents/production-agent-architecture",
+    "devguide/ai/failure-semantics.md": "ai-agents/failure-semantics",
+    "devguide/ai/durable-agents.md": "ai-agents/durable-agents",
+    "devguide/ai/dynamic-workflows.md": "ai-agents/dynamic-workflows",
+    "devguide/ai/token-efficiency.md": "ai-agents/token-efficiency",
+    "devguide/ai/human-in-the-loop.md": "ai-agents/human-in-the-loop",
     "devguide/cookbook/ai-llm.md": "ai-orchestration/ai-llm-recipes",
     "quickstart/index.md": "quickstarts",
     "architecture/durable-execution.md": "conductor-architecture",

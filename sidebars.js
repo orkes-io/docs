@@ -367,13 +367,13 @@ const sidebars = {
         },
         {
             type: 'doc',
-            id: 'developer-guides/conductor-skills',
-            label: 'Build with AI Agents',
+            id: 'ai-cookbook/why-conductor',
+            label: 'Why Conductor',
         },
         {
             type: 'doc',
-            id: 'ai-cookbook/why-conductor',
-            label: 'Why Conductor',
+            id: 'developer-guides/conductor-skills',
+            label: 'Build with AI Agents',
         },
         {
             type: 'category',
@@ -382,10 +382,10 @@ const sidebars = {
             className: 'leftMenuHeader',
             items: [
                 { type: 'doc', id: 'ai-cookbook/first-ai-agent', label: 'Build Your First AI Agent' },
-                { type: 'doc', id: 'ai-cookbook/failure-semantics', label: 'Failure Semantics' },
                 { type: 'doc', id: 'ai-cookbook/durable-agents', label: 'Durable Agents' },
                 { type: 'doc', id: 'ai-cookbook/human-in-the-loop', label: 'Human-in-the-Loop' },
                 { type: 'doc', id: 'ai-cookbook/dynamic-workflows', label: 'Dynamic Workflows' },
+                { type: 'doc', id: 'ai-cookbook/failure-semantics', label: 'Failure Semantics' },
                 { type: 'doc', id: 'ai-cookbook/token-efficiency', label: 'Token Efficiency' },
             ],
         },

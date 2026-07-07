@@ -1327,64 +1327,7 @@ function enhancePositioningPage(body, route) {
     );
   }
 
-  if (route === "ai-orchestration/durable-agents") {
-    output = insertAfterIntro(
-      output,
-      [
-        "## Framework plus durable runtime",
-        "",
-        "A durable agent is not a different reasoning framework. Keep an agent framework, custom planner, or model-specific loop where it helps with reasoning. Use Conductor for the execution path that must survive failures: state, queues, retries, waits, human approval, compensation, replay, and audit history.",
-        "",
-        "This is the practical production boundary: the framework decides what should happen next; Conductor makes sure the selected work is executed, recovered, and observable.",
-        "",
-        "| Scenario | Durable runtime behavior |",
-        "| -------- | ------------------------ |",
-        "| Agent process dies after planning | Completed planning output is persisted; execution resumes from the next task. |",
-        "| Human approval spans days | The workflow remains paused without holding a process or thread. |",
-        "| Tool side effect is retried | Idempotency keys and compensation workflows prevent or mitigate duplicate work. |",
-      ].join("\n"),
-    );
-    output = output.replace(
-      "Conductor eliminates all of this. Every step of a durable agent workflow is persisted to storage as it completes. If the process dies, the agent resumes from the last completed step — not from the beginning.",
-      "Conductor moves these recovery concerns into the workflow runtime. Every completed step of a durable agent workflow is persisted to storage. If the process dies, the agent can resume from the last completed step instead of restarting from the beginning.",
-    );
-    output = output.replace(
-      "Most AI frameworks have no concept of compensation. If your LangChain agent sends an email in step 3 and crashes in step 5, the email is already sent and there is no built-in mechanism to undo it. Conductor's failure workflows solve this.",
-      "Many in-process agent runtimes do not provide compensation as a first-class execution primitive. If an agent sends an email in step 3 and crashes in step 5, the email is already sent and the runtime still needs a way to undo, mitigate, or record the partial result. Conductor's failure workflows solve this.",
-    );
-  }
-
-  if (route === "ai-orchestration/failure-semantics") {
-    output = insertAfterIntro(
-      output,
-      [
-        "## Failure-injection checklist",
-        "",
-        "| Scenario | How to test | Expected durable behavior |",
-        "| -------- | ----------- | ------------------------- |",
-        "| Crash after LLM plan | Stop the worker or server after the plan task completes. | Completed prompt, response, and token data remain persisted; execution resumes after restart. |",
-        "| Tool timeout | Configure a short `responseTimeoutSeconds` and delay the tool response. | Only the timed-out tool task retries; upstream LLM calls are not repeated. |",
-        "| Human approval wait | Leave a `HUMAN` task open across a deploy or restart. | The workflow remains paused and resumes when signaled. |",
-        "| Worker deploy | Stop an in-flight worker and start a new version. | The task is requeued after timeout and picked up by a new worker. |",
-        "| Duplicate side effect risk | Retry a side-effecting tool call with the same business key. | The external system deduplicates or the compensation workflow mitigates the duplicate. |",
-        "",
-        "## What to measure",
-        "",
-        "| Metric | Why it matters |",
-        "| ------ | -------------- |",
-        "| Completion rate | Shows whether agents finish business work instead of only starting it. |",
-        "| Recovery time | Measures how quickly workflows resume after crashes, deploys, and dependency failures. |",
-        "| Duplicate tool calls | Validates idempotency and side-effect control. |",
-        "| State consistency | Confirms that completed LLM/tool outputs are reused instead of recomputed. |",
-        "| Manual operator steps | Shows how much recovery work humans still perform. |",
-        "| p95 runtime overhead | Quantifies orchestration overhead against reliability gains. |",
-        "| Cost and token usage | Shows avoided re-execution for expensive LLM calls. |",
-      ].join("\n"),
-    );
-    output = output.replace('"type": "FORK"', '"type": "FORK_JOIN"');
-  }
-
-  if (route === "ai-orchestration/first-ai-agent") {
+  if (route === "ai-agents/first-ai-agent") {
     output = insertBeforeHeading(
       output,
       "Step 5: Add human approval",
@@ -1416,15 +1359,6 @@ function enhancePositioningPage(body, route) {
       ].join("\n"),
     );
     output = output.replace(/any MCP server/g, "any MCP-compatible server");
-  }
-
-  if (route === "ai-orchestration/token-efficiency") {
-    output = output.replace("## Comparison: durable vs non-durable frameworks", "## Comparison: durable vs in-process runtimes");
-    output = output.replace("| | Non-durable (LangChain, CrewAI, custom) | Durable (Conductor) |", "| | In-process or non-durable runtime | Durable (Conductor) |");
-    output = output.replace(
-      "Every crash, retry, pause, or debugging session that would re-execute LLM calls in a non-durable framework is free in Conductor",
-      "Every crash, retry, pause, or debugging session that would re-execute LLM calls in an in-process runtime is free in Conductor",
-    );
   }
 
   if (route === "quickstarts/durable-execution") {
@@ -1577,20 +1511,6 @@ function transformSharedBody(body, entry) {
       "\n\n## When to use NOOP\n\nUse `NOOP` when a workflow branch needs an explicit successful step but does not need to call a worker, system task, or external service. It is useful as a default branch in a `SWITCH`, a placeholder while building workflow definitions, or a safe join point for generated workflows.\n";
   }
 
-  if (entry && entry.route === "ai-orchestration/durable-agents") {
-    output = output.replace(
-      "For `CALL_MCP_TOOL`, `HTTP`, and custom worker tasks:",
-      "For `HTTP` and custom worker tasks:",
-    );
-  }
-
-  if (entry && entry.route === "ai-orchestration/failure-semantics") {
-    output = output.replace(
-      "A `CALL_MCP_TOOL` or `HTTP` task calls an external tool",
-      "An `HTTP` task calls an external tool",
-    );
-  }
-
   return output;
 }
 
@@ -1646,7 +1566,7 @@ description: "Orkes Conductor documentation for building durable workflows, API 
         <span class="hero-ai-sub">Persist state, retries, waits, tool calls, and audit history for production agents.</span>
       </div>
       <div class="hero-ai-item">
-        <a href="${BASE_URL}/ai-orchestration/production-agent-architecture" class="hero-ai-link">Production Agent Architecture &rarr;</a>
+        <a href="${BASE_URL}/ai-agents/production-agent-architecture" class="hero-ai-link">Production Agent Architecture &rarr;</a>
         <span class="hero-ai-sub">Keep reasoning in the agent framework and move execution into Conductor.</span>
       </div>
     </div>
@@ -3053,9 +2973,9 @@ function writeLlmsTxt() {
     .sort();
   const canonicalRoutes = [
     "agentic-workflow-engine",
-    "ai-orchestration/production-agent-architecture",
-    "ai-orchestration/failure-semantics",
-    "ai-orchestration/durable-agents",
+    "ai-agents/production-agent-architecture",
+    "ai-agents/failure-semantics",
+    "ai-agents/durable-agents",
     "conductor-skills",
     "developer-guides/write-workflows-using-code",
     "developer-guides/using-workers",

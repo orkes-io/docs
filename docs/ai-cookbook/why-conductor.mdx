@@ -1,5 +1,5 @@
 ---
-slug: "/why-conductor"
+slug: "/why-conductor-for-ai-agents"
 description: "Why Conductor for AI agents — native LLM tasks, deterministic JSON definitions, durable human-in-the-loop, and dynamic runtime execution."
 ---
 
@@ -51,6 +51,11 @@ An agent needs human approval before a risky action. On Conductor:
   "name": "approval_gate",
   "type": "HUMAN",
   "inputParameters": {
+    "__humanTaskDefinition": {
+      "displayName": "Agent Action Approval",
+      "userFormTemplate": { "name": "AgentActionApproval", "version": 1 },
+      "assignmentCompletionStrategy": "LEAVE_OPEN"
+    },
     "action": "${plan.output.result.action}",
     "reasoning": "${plan.output.result.reasoning}"
   }
@@ -110,7 +115,7 @@ In an in-process loop, a crash can force a restart from the beginning or require
 
 ## Dynamic workflows — LLMs generate execution plans
 
-This is where Conductor's JSON-native runtime is especially useful. An LLM generates a complete workflow definition as JSON. [Register it](/reference-docs/api/metadata/creating-workflow-definition), then start it by name:
+This is where Conductor's JSON-native runtime is especially useful. An LLM generates a complete workflow definition as JSON, and `START_WORKFLOW` executes it directly via its `workflowDef` field — Conductor skips the registered-workflow lookup entirely and runs it through the same execution path as any registered workflow, with no prior registration required:
 
 ```json
 {
@@ -118,14 +123,14 @@ This is where Conductor's JSON-native runtime is especially useful. An LLM gener
   "type": "START_WORKFLOW",
   "inputParameters": {
     "startWorkflow": {
-      "name": "${planner_llm.output.result.workflowName}",
+      "workflowDef": "${planner_llm.output.result}",
       "input": "${workflow.input.taskInput}"
     }
   }
 }
 ```
 
-The LLM's output is a Conductor workflow definition — register it, then start it by name. No code generation. No compilation. No custom deployment pipeline to build and maintain. The generated workflow runs with the same durable execution guarantees as any hand-written workflow — persistence, retries, observability, replay.
+The LLM's output is a Conductor workflow definition, passed straight into the task. No code generation. No compilation. No custom deployment pipeline to build and maintain. The generated workflow runs with the same durable execution guarantees as any hand-written workflow — persistence, retries, observability, replay. The same `workflowDef` field works from application code too, via `POST /api/workflow` directly.
 
 Combined with `DYNAMIC` tasks (resolve which registered task to run at runtime) and `DYNAMIC_FORK` (create N parallel branches at runtime), Conductor is more dynamic than code-only orchestration patterns. Not despite using JSON — because of it. Data is easier to generate, transform, and compose than code.
 
@@ -284,13 +289,13 @@ Every agentic pattern maps to a specific Conductor primitive:
 | **Long wait for external system** | `HUMAN` or `WAIT` task |
 | **High fan-out research** | `DYNAMIC_FORK` + `JOIN` |
 | **RAG pipeline** | `LLM_SEARCH_INDEX` + `LLM_CHAT_COMPLETE` |
-| **Agent that builds its own plan** | `LLM_CHAT_COMPLETE` + `START_WORKFLOW` for a registered generated workflow |
+| **Agent that builds its own plan** | `LLM_CHAT_COMPLETE` + `START_WORKFLOW` with an inline `workflowDef` |
 | **Deterministic post-processing** | `INLINE` (JavaScript) or `JSON_JQ_TRANSFORM` |
 
 
 ## Next steps
 
-- **[Production Agent Architecture](/ai-orchestration/production-agent-architecture)** — The canonical end-to-end agent pattern, fully wired.
-- **[Failure Semantics for AI Agents](/ai-orchestration/failure-semantics)** — The exact failure contract under every scenario.
-- **[Build Your First AI Agent](/ai-orchestration/first-ai-agent)** — From zero to a running agent in 5 minutes.
-- **[Token Efficiency](/ai-orchestration/token-efficiency)** — How durable execution saves tokens and reduces LLM costs.
+- **[Production Agent Architecture](/ai-agents/production-agent-architecture)** — The canonical end-to-end agent pattern, fully wired.
+- **[Failure Semantics for AI Agents](/ai-agents/failure-semantics)** — The exact failure contract under every scenario.
+- **[Build Your First AI Agent](/ai-agents/first-ai-agent)** — From zero to a running agent in 5 minutes.
+- **[Token Efficiency](/ai-agents/token-efficiency)** — How durable execution saves tokens and reduces LLM costs.
