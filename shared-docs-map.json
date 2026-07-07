@@ -42,11 +42,6 @@
       "route": "ai-orchestration/failure-semantics"
     },
     {
-      "source": "devguide/ai/why-conductor.md",
-      "docId": "ai-cookbook/why-conductor",
-      "route": "why-conductor"
-    },
-    {
       "source": "devguide/ai/durable-agents.md",
       "docId": "ai-cookbook/durable-agents",
       "route": "ai-orchestration/durable-agents"

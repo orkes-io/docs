@@ -1327,52 +1327,6 @@ function enhancePositioningPage(body, route) {
     );
   }
 
-  if (route === "why-conductor") {
-    output = output.replace(
-      /Conductor is the original durable workflow orchestration engine[\s\S]*?Here's what that looks like in practice\./,
-      "Conductor is a durable workflow engine for production AI agents and distributed systems. Keep your agent framework for reasoning, planning, and model-specific logic; use Conductor when execution must survive process crashes, tool timeouts, human waits, duplicate callbacks, worker deploys, and partial side effects. Here's what that looks like in practice.",
-    );
-    output = output.replace(
-      "Other engines treat LLM calls as generic function calls. You build the abstraction: prompt construction, provider switching, response parsing, token tracking, retry logic. On Conductor, an LLM call is a system task:",
-      "In many in-process agent runtimes, LLM calls are ordinary function calls. Teams still need to handle prompt construction, provider switching, response parsing, token tracking, and retry policy. In Conductor, an LLM call can be a system task:",
-    );
-    output = output.replace("On other engines, this same task requires:", "Without a durable orchestration layer, this same task usually requires:");
-    output = output.replace(
-      "The agent discovers tools at runtime, the LLM picks the right one, and Conductor executes it with automatic retry, timeout, and full audit trail. Connect to any MCP server — GitHub, Slack, databases, custom APIs — with no wrapper code.",
-      "The agent discovers tools at runtime, the LLM picks the right one, and Conductor executes it with automatic retry, timeout, and full audit trail. Connect to MCP-compatible servers such as GitHub, Slack, databases, and custom APIs with a standard tool interface.",
-    );
-    output = output.replace(
-      'On other engines, you write a "Durable MCP" wrapper: a custom activity/worker that connects to the MCP server, marshals requests, handles errors, and logs results. For every MCP server. For every tool type.',
-      "Without a durable orchestration layer, teams often write a wrapper that connects to the MCP server, marshals requests, handles errors, and logs results for each tool surface.",
-    );
-    output = output.replace(
-      "On other engines, you implement `wait_condition()` with signal handlers, write the signal routing code, and build the approval UI integration yourself. The pause mechanism is in your workflow code, not in the platform.",
-      "Without a platform-level wait state, teams usually implement signal routing, approval storage, and UI integration themselves. The pause mechanism lives in application code instead of the execution runtime.",
-    );
-    output = output.replace(
-      "On other engines, you build the loop in your workflow code. If the process crashes, you either restart from the beginning (burning all tokens again) or build your own checkpointing mechanism.",
-      "In an in-process loop, a crash can force a restart from the beginning or require a custom checkpointing mechanism.",
-    );
-    output = output.replace("This is the capability no other engine can match.", "This is where Conductor's JSON-native runtime is especially useful.");
-    output = output.replace("more dynamic than code-based engines", "more dynamic than code-only orchestration patterns");
-    output = output.replace(
-      "On code-based engines, dynamic workflows require generating source code, compiling it, deploying it, and then executing it. That friction fundamentally limits how dynamically an AI system can operate.",
-      "In code-only orchestration, dynamic workflows often require generating source code, compiling it, deploying it, and then executing it. That friction limits how dynamically an AI system can operate.",
-    );
-    output = output.replace(
-      "Pinecone, pgvector, and MongoDB Atlas are supported natively. No LangChain, no custom retrieval workers, no framework dependencies.",
-      "Pinecone, pgvector, and MongoDB Atlas are supported natively. Use this when you want retrieval inside the workflow instead of pushing orchestration into a separate RAG framework.",
-    );
-    output = output.replace(
-      "## Guaranteed execution — failure is not a choice",
-      "## Durable execution — failures are explicit",
-    );
-    output = output.replace(
-      "On other engines, you build this logging yourself. Every team does it differently, with different coverage and different gaps.",
-      "Without platform-level execution history, teams usually build this logging themselves, with uneven coverage and gaps.",
-    );
-  }
-
   if (route === "ai-orchestration/durable-agents") {
     output = insertAfterIntro(
       output,

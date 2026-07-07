@@ -38,7 +38,7 @@ These are also system tasks but control workflow execution flow rather than perf
 
 ## AI & LLM tasks
 
-Conductor provides native AI system tasks with direct integration with 14+ LLM providers and 3 vector databases — no external frameworks or custom workers needed.
+Conductor provides native AI system tasks with direct integration with 14+ LLM providers and 4 vector databases — no external frameworks or custom workers needed.
 
 ### LLM
 
@@ -59,20 +59,4 @@ Conductor provides native AI system tasks with direct integration with 14+ LLM p
 | Search Index | `LLM_SEARCH_INDEX` | Semantic search using a text query. |
 | Search Embeddings | `LLM_SEARCH_EMBEDDINGS` | Search using embedding vectors directly. |
 
-**Supported vector databases:** Pinecone, pgvector (PostgreSQL), and MongoDB Atlas Vector Search. These enable RAG (retrieval-augmented generation) pipelines as standard Conductor workflows.
-
-### Content Generation
-
-| Task | Type | Description |
-| :--- | :--- | :--- |
-| Generate Image | `GENERATE_IMAGE` | Generate images from text prompts. |
-| Generate Audio | `GENERATE_AUDIO` | Text-to-speech synthesis. |
-| Generate Video | `GENERATE_VIDEO` | Generate videos from text or image prompts (async). |
-| Generate PDF | `GENERATE_PDF` | Convert markdown to PDF documents. |
-
-## Deprecated
-
-| Task | Replacement |
-| :--- | :--- |
-| Lambda | Use [Inline](/content/reference-docs/system-tasks/inline) instead. |
-| Decision | Use [Switch](/content/reference-docs/operators/switch) instead. |
+**Supported vector databases:** Pinecone, Weaviate, pgvector (PostgreSQL), and MongoDB Atlas Vector Search. These enable RAG (retrieval-augmented generation) pipelines as standard Conductor workflows.
