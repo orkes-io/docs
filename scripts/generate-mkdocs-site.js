@@ -256,7 +256,7 @@ const CATEGORY_PAGE_COPY = {
     audience:
       "Use this section when workflows need to react to webhooks, receive events, publish messages, or coordinate with Kafka, RabbitMQ, NATS, SQS, Pub/Sub, and other brokers.",
     outcome:
-      "Start with webhooks or event handlers for inbound events, use Event and Kafka Publish tasks for outbound events, and configure message broker integrations before wiring production workflows.",
+      "Start with webhooks or event handlers for inbound events, use the Event task for outbound events, and configure message broker integrations before wiring production workflows.",
   },
   "category/event-driven-orchestration/receive-events": {
     audience:
@@ -268,7 +268,7 @@ const CATEGORY_PAGE_COPY = {
     audience:
       "Use these pages when a workflow should publish a message as part of durable execution.",
     outcome:
-      "Use the Event task for configured sinks and the Kafka Publish task for Kafka-specific publishing from a workflow.",
+      "Use the Event task to publish messages from a workflow to configured event sinks.",
   },
   "category/event-driven-orchestration/webhook-examples": {
     audience:

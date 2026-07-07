@@ -206,7 +206,6 @@ const sidebars = {
                     },
                     items: [
                         { type: 'doc', id: 'developer-guides/webhook-integration', label: 'Webhooks' },
-                        { type: 'doc', id: 'reference-docs/system-tasks/wait-for-webhook', label: 'Wait for Webhook Task' },
                         { type: 'doc', id: 'developer-guides/event-handler', label: 'Event Handlers' },
                     ],
                 },
@@ -220,7 +219,6 @@ const sidebars = {
                         slug: '/category/event-driven-orchestration/publish-events',
                     },
                     items: [
-                        { type: 'doc', id: 'reference-docs/system-tasks/event', label: 'Event Task' },
                         { type: 'doc', id: 'cookbook/event-driven', label: 'Event Publishing Recipes' },
                         {
                             type: 'doc',
