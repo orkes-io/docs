@@ -22,11 +22,6 @@
       "route": "ai-orchestration/first-ai-agent"
     },
     {
-      "source": "devguide/ai/production-agent-architecture.md",
-      "docId": "ai-cookbook/production-agent-architecture",
-      "route": "ai-orchestration/production-agent-architecture"
-    },
-    {
       "source": "devguide/ai/failure-semantics.md",
       "docId": "ai-cookbook/failure-semantics",
       "route": "ai-orchestration/failure-semantics"
@@ -95,6 +90,7 @@
   "aliases": {
     "devguide/ai/why-conductor.md": "why-conductor",
     "devguide/ai/llm-orchestration.md": "ai-orchestration/llm-orchestration",
+    "devguide/ai/production-agent-architecture.md": "ai-orchestration/production-agent-architecture",
     "devguide/cookbook/ai-llm.md": "ai-orchestration/ai-llm-recipes",
     "quickstart/index.md": "quickstarts",
     "architecture/durable-execution.md": "conductor-architecture",

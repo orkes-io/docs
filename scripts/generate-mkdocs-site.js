@@ -1354,20 +1354,6 @@ function enhancePositioningPage(body, route) {
     );
   }
 
-  if (route === "ai-orchestration/production-agent-architecture") {
-    output = insertAfterIntro(
-      output,
-      [
-        "## Agents are distributed systems",
-        "",
-        "A production agent coordinates models, tools, workers, queues, humans, timers, webhooks, and external callbacks. The agent framework can own reasoning and planning; Conductor owns durable execution, persisted state, task routing, retries, waits, replay, and audit history.",
-        "",
-        "Use this architecture when the agent takes actions that matter: creating records, updating systems, calling internal services, waiting for approval, or coordinating multiple tools over minutes, hours, or days.",
-      ].join("\n"),
-    );
-    output = output.replace(/any MCP server/g, "any MCP-compatible server");
-  }
-
   if (route === "ai-orchestration/failure-semantics") {
     output = insertAfterIntro(
       output,
@@ -3070,7 +3056,6 @@ function writeLlmsTxt() {
     "ai-orchestration/production-agent-architecture",
     "ai-orchestration/failure-semantics",
     "ai-orchestration/durable-agents",
-    "ai-orchestration/mcp-integration",
     "conductor-skills",
     "developer-guides/write-workflows-using-code",
     "developer-guides/using-workers",
