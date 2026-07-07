@@ -446,7 +446,12 @@ function auditGeneratedFiles() {
     if (llms.includes("## Full Documentation")) {
       errors.push("llms.txt should stay concise; full page dump belongs in llms-full.txt");
     }
-    if (llms.length > 60000) {
+    // Sanity cap: the concise map lists one line per doc page, so it grows with
+    // the page count (and with SITE_URL length — the CloudFront domain is longer
+    // than the Pages URL). This guard just catches an accidental full-text dump;
+    // the "## Full Documentation" check above is the primary guard for that.
+    // Kept well below llms-full.txt's size so a real dump still trips it.
+    if (llms.length > 100000) {
       errors.push(`llms.txt is too large for a concise canonical map (${llms.length} chars)`);
     }
   }
