@@ -22,11 +22,6 @@
       "route": "ai-orchestration/first-ai-agent"
     },
     {
-      "source": "devguide/ai/llm-orchestration.md",
-      "docId": "ai-cookbook/llm-orchestration",
-      "route": "ai-orchestration/llm-orchestration"
-    },
-    {
       "source": "devguide/ai/production-agent-architecture.md",
       "docId": "ai-cookbook/production-agent-architecture",
       "route": "ai-orchestration/production-agent-architecture"
@@ -99,6 +94,7 @@
   ],
   "aliases": {
     "devguide/ai/why-conductor.md": "why-conductor",
+    "devguide/ai/llm-orchestration.md": "ai-orchestration/llm-orchestration",
     "devguide/cookbook/ai-llm.md": "ai-orchestration/ai-llm-recipes",
     "quickstart/index.md": "quickstarts",
     "architecture/durable-execution.md": "conductor-architecture",
