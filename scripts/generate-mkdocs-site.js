@@ -323,7 +323,7 @@ const sidebars = require(path.join(ROOT, "sidebars.js"));
 
 const topSections = [
   ["Quickstart", "quickstartSidebar"],
-  ["Guides", "guidesSidebar"],
+  ["Developer Guides", "guidesSidebar"],
   ["AI Agents", "aiSidebar"],
   ["Event Orchestration", "eventingSidebar"],
   ["Cookbook", "cookbookSidebar"],
