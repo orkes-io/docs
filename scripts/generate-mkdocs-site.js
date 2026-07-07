@@ -252,24 +252,6 @@ const CATEGORY_PAGE_COPY = {
     outcome:
       "Tutorials cover production workflow recipes, gateway-based integrations, human approvals, retries, timers, scheduling, and dynamic workflows.",
   },
-  "category/event-driven-orchestration": {
-    audience:
-      "Use this section when workflows need to react to webhooks, receive events, publish messages, or coordinate with Kafka, RabbitMQ, NATS, SQS, Pub/Sub, and other brokers.",
-    outcome:
-      "Start with webhooks or event handlers for inbound events, use the Event task for outbound events, and configure message broker integrations before wiring production workflows.",
-  },
-  "category/event-driven-orchestration/receive-events": {
-    audience:
-      "Use these pages when external events should start a workflow, resume a waiting workflow, or update execution state.",
-    outcome:
-      "Choose webhooks for HTTP callbacks, event handlers for broker/internal event sinks, and Wait for Webhook for long-running external callbacks.",
-  },
-  "category/event-driven-orchestration/publish-events": {
-    audience:
-      "Use these pages when a workflow should publish a message as part of durable execution.",
-    outcome:
-      "Use the Event task to publish messages from a workflow to configured event sinks.",
-  },
   "category/event-driven-orchestration/webhook-examples": {
     audience:
       "Use these examples when you need a concrete webhook implementation for a custom client or SaaS provider.",
@@ -1870,9 +1852,6 @@ function generatedPageCopy(route, title, description, flatChildren) {
   if (route === "tutorials/mcp") {
     return gatewayTutorialPageCopy();
   }
-  if (route === "category/event-driven-orchestration") {
-    return eventDrivenOrchestrationPageCopy();
-  }
 
   const copy = CATEGORY_PAGE_COPY[route];
   const childLabels = flatChildren.slice(0, 5).map((child) => child.label).filter(Boolean);
@@ -1918,35 +1897,14 @@ function gatewayTutorialPageCopy() {
   ];
 }
 
-function eventDrivenOrchestrationPageCopy() {
-  return [
-    "Use this section when Conductor workflows need to react to external events, receive webhooks, publish messages, or coordinate with Kafka, RabbitMQ, NATS, SQS, Pub/Sub, IBM MQ, and other event systems.",
-    "",
-    "The pages here are grouped by job-to-be-done instead of by product feature, so you can move from trigger design to task configuration, broker setup, webhook examples, and API automation without jumping across Guides, Reference, and Integrations.",
-    "",
-    "## Choose a path",
-    "",
-    "- Use **Receive Events** when an outside system should start a workflow, resume a waiting workflow, or send callback data.",
-    "- Use **Publish Events** when a workflow should emit a message to another system as part of durable execution.",
-    "- Use **Message Broker Integrations** before production rollout so Kafka, RabbitMQ/AMQP, NATS, SQS, Azure Service Bus, GCP Pub/Sub, or IBM MQ are configured and permissioned.",
-    "- Use **Webhook Examples** when you need a concrete provider or custom webhook implementation.",
-    "- Use **API Reference** when event handler or webhook definitions need to be automated.",
-    "",
-  ];
-}
-
 function generatedPageListHeading(route) {
   if (route === "tutorials/mcp") return "Tutorials";
-  if (route === "category/event-driven-orchestration") return "Sections";
   return "Pages";
 }
 
 function generatedPageListIntro(route) {
   if (route === "tutorials/mcp") {
     return ["Choose the tutorial that matches the caller:", ""];
-  }
-  if (route === "category/event-driven-orchestration") {
-    return ["Start with the section that matches the event flow you are building:", ""];
   }
   return [];
 }

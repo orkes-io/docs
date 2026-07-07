@@ -187,23 +187,13 @@ const sidebars = {
         {
             type: 'category',
             label: 'Event-Driven Orchestration',
-                link: {
-                    type: 'generated-index',
-                    title: 'Event-Driven Orchestration',
-                    description: 'Build event-driven workflows with webhooks, event handlers, event publishing tasks, and message broker integrations.',
-                    slug: '/category/event-driven-orchestration',
-                },
+            link: { type: 'doc', id: 'event-driven-orchestration/index' },
             className: 'leftMenuHeader',
             items: [
                 {
                     type: 'category',
                     label: 'Receive Events',
-                    link: {
-                        type: 'generated-index',
-                        title: 'Receive Events',
-                        description: 'Trigger workflows or resume waiting executions from webhooks, event handlers, and external event sources.',
-                        slug: '/category/event-driven-orchestration/receive-events',
-                    },
+                    link: { type: 'doc', id: 'event-driven-orchestration/receive-events' },
                     items: [
                         { type: 'doc', id: 'developer-guides/webhook-integration', label: 'Webhooks' },
                         { type: 'doc', id: 'developer-guides/event-handler', label: 'Event Handlers' },
@@ -212,12 +202,7 @@ const sidebars = {
                 {
                     type: 'category',
                     label: 'Publish Events',
-                    link: {
-                        type: 'generated-index',
-                        title: 'Publish Events',
-                        description: 'Publish messages from workflows to external event systems such as Kafka, NATS, AMQP, SQS, and internal Conductor event sinks.',
-                        slug: '/category/event-driven-orchestration/publish-events',
-                    },
+                    link: { type: 'doc', id: 'event-driven-orchestration/publish-events' },
                     items: [
                         { type: 'doc', id: 'cookbook/event-driven', label: 'Event Publishing Recipes' },
                         {
@@ -274,7 +259,7 @@ const sidebars = {
                     link: {
                         type: 'generated-index',
                         title: 'Eventing API Reference',
-                        description: 'API reference for managing event handlers and webhook definitions programmatically.',
+                        description: 'API reference for managing webhook definitions programmatically.',
                         slug: '/category/event-driven-orchestration/api-reference',
                     },
                     items: [
