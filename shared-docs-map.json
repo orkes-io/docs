@@ -17,11 +17,6 @@
       "route": "quickstarts/task-lifecycle"
     },
     {
-      "source": "devguide/ai/first-ai-agent.md",
-      "docId": "ai-cookbook/first-ai-agent",
-      "route": "ai-agents/first-ai-agent"
-    },
-    {
       "source": "documentation/clientsdks/index.md",
       "docId": "sdks/sdk-index",
       "route": "category/sdks"
