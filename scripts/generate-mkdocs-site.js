@@ -1327,26 +1327,6 @@ function enhancePositioningPage(body, route) {
     );
   }
 
-  if (route === "ai-agents/first-ai-agent") {
-    output = insertBeforeHeading(
-      output,
-      "Step 5: Add human approval",
-      [
-        "## Prove durability",
-        "",
-        "After the first successful run, prove that the agent is durable instead of just runnable.",
-        "",
-        "1. Start the agent asynchronously so you can inspect the execution while it runs.",
-        "2. Stop a worker, restart the Conductor server, or interrupt the MCP service after one task completes.",
-        "3. Start the worker or service again.",
-        "4. Open the workflow execution and confirm completed tasks were not repeated and the workflow resumed from the last incomplete step.",
-        "",
-        "Expected result: completed LLM calls keep their prompts, responses, token usage, and timing. Only the interrupted task is retried.",
-      ].join("\n"),
-    );
-    output = output.replace(/any MCP server/g, "any MCP-compatible server");
-  }
-
   if (route === "ai-orchestration/mcp-integration") {
     output = insertAfterIntro(
       output,
