@@ -1,0 +1,260 @@
+---
+title: "Dynamic workflows for agents"
+description: "Dynamic workflow execution for AI agents - agents that build their own plans as JSON workflow definitions and agent loops with DO_WHILE in Orkes Conductor."
+canonical_route: "ai-agents/dynamic-workflows"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, AI orchestration, LLM orchestration, MCP gateway, agent workflows"
+---
+
+# Dynamic workflows for agents
+
+Conductor supports three levels of agent dynamism, from simple tool use to fully self-generating agents.
+
+
+## Agent loop: plan/act/observe with DO_WHILE
+
+The defining pattern of an autonomous agent is the loop: call an LLM, execute a tool, observe the result, decide whether to continue. Conductor models this with `DO_WHILE`:
+
+```json
+{
+  "name": "autonomous_agent",
+  "description": "Agent that loops until the task is complete",
+  "version": 1,
+  "schemaVersion": 2,
+  "tasks": [
+    {
+      "name": "agent_loop",
+      "taskReferenceName": "loop",
+      "type": "DO_WHILE",
+      "loopCondition": "if ($.loop['think'].output.result.done == true) { false; } else { true; }",
+      "loopOver": [
+        {
+          "name": "think",
+          "taskReferenceName": "think",
+          "type": "LLM_CHAT_COMPLETE",
+          "inputParameters": {
+            "llmProvider": "anthropic",
+            "model": "claude-sonnet-4-20250514",
+            "messages": [
+              {
+                "role": "system",
+                "message": "You are an agent. Previous results: ${loop.output.results}. Respond with JSON: {\"action\": \"endpoint_path\", \"arguments\": {}, \"done\": false} or {\"answer\": \"...\", \"done\": true}"
+              },
+              {
+                "role": "user",
+                "message": "${workflow.input.task}"
+              }
+            ],
+            "temperature": 0.1
+          }
+        },
+        {
+          "name": "act",
+          "taskReferenceName": "act",
+          "type": "SWITCH",
+          "evaluatorType": "graaljs",
+          "expression": "$.think.output.result.done ? 'done' : 'call_tool'",
+          "decisionCases": {
+            "call_tool": [
+              {
+                "name": "execute_tool",
+                "taskReferenceName": "tool_call",
+                "type": "HTTP",
+                "inputParameters": {
+                  "uri": "${workflow.input.toolServerUrl}/${think.output.result.action}",
+                  "method": "POST",
+                  "body": "${think.output.result.arguments}"
+                }
+              }
+            ]
+          },
+          "defaultCase": []
+        }
+      ]
+    }
+  ],
+  "outputParameters": {
+    "answer": "${loop.output.think.output.result.answer}",
+    "iterations": "${loop.output.iteration}"
+  }
+}
+```
+
+**What makes this durable:**
+
+- Each iteration of the loop is a persisted checkpoint. If the agent crashes at iteration 12, it resumes from iteration 12 - not from iteration 1.
+- Every LLM call (prompt, response, token usage) is recorded. You can inspect exactly what the agent decided at each step.
+- Every tool call (input, output, status) is tracked. If a tool call fails, it retries according to the task's retry policy without re-running the LLM.
+- The loop counter and all intermediate state survive server restarts.
+
+
+## Dynamic workflow generation: agents that build their own plans
+
+Conductor supports dynamic workflow execution where the complete workflow definition is provided at start time, without pre-registration. This is the most powerful form of agent dynamism - the LLM generates the entire execution plan as JSON, and Conductor runs it immediately.
+
+1. An LLM generates a plan as a JSON workflow definition.
+2. A `START_WORKFLOW` task passes that definition inline via its `workflowDef` field.
+3. Conductor skips the registered-workflow lookup and executes the inline definition immediately - a real, independent, top-level execution.
+4. Every step is durable, observable, and retryable - even though the workflow was generated at runtime.
+
+```json
+{
+  "name": "dynamic_agent_planner",
+  "version": 1,
+  "schemaVersion": 2,
+  "tasks": [
+    {
+      "name": "generate_plan",
+      "taskReferenceName": "planner",
+      "type": "LLM_CHAT_COMPLETE",
+      "inputParameters": {
+        "llmProvider": "anthropic",
+        "model": "claude-sonnet-4-20250514",
+        "messages": [
+          {
+            "role": "system",
+            "message": "You are a workflow planner. Given a user task, generate a Conductor workflow definition as JSON. Available task types: LLM_CHAT_COMPLETE, HTTP, HUMAN, LLM_SEARCH_INDEX, SWITCH, DO_WHILE. The workflow must include a 'name', 'tasks' array, and 'outputParameters'."
+          },
+          {
+            "role": "user",
+            "message": "${workflow.input.task}"
+          }
+        ],
+        "temperature": 0.2
+      }
+    },
+    {
+      "name": "review_plan",
+      "taskReferenceName": "approval",
+      "type": "HUMAN",
+      "inputParameters": {
+        "__humanTaskDefinition": {
+          "displayName": "Generated Workflow Review",
+          "userFormTemplate": { "name": "GeneratedWorkflowReview", "version": 1 },
+          "assignmentCompletionStrategy": "LEAVE_OPEN"
+        },
+        "generatedWorkflow": "${planner.output.result}"
+      }
+    },
+    {
+      "name": "execute_plan",
+      "taskReferenceName": "execution",
+      "type": "START_WORKFLOW",
+      "inputParameters": {
+        "startWorkflow": {
+          "workflowDef": "${planner.output.result}",
+          "input": "${workflow.input.taskInput}"
+        }
+      }
+    }
+  ],
+  "outputParameters": {
+    "generatedPlan": "${planner.output.result}",
+    "executionId": "${execution.output.workflowId}"
+  }
+}
+```
+
+**What happens:**
+
+1. `planner` - `LLM_CHAT_COMPLETE` generates an entire workflow definition as JSON based on the user's task description.
+2. `approval` - `HUMAN` task pauses the workflow so a reviewer can inspect the generated plan before it runs. This is critical - you don't want an LLM-generated workflow executing unsupervised.
+3. `execution` - `START_WORKFLOW` launches the generated workflow definition directly via its inline `workflowDef`. Conductor skips the registry lookup and executes it with full durability. No pre-registration needed.
+
+The generated workflow gets all the same guarantees as any Conductor workflow: persisted state, retry policies, failure handling, full observability. The fact that it was generated by an LLM 30 seconds ago doesn't matter - it runs on the same durable execution engine, as its own independent execution (not a child of `dynamic_agent_planner`).
+
+Combined with `DYNAMIC` tasks (where the task type is resolved at runtime based on input) and `DYNAMIC_FORK` (where the number and type of parallel tasks is determined at runtime), this enables agents that create, modify, and execute their own plans.
+
+
+## Example: agent with tool use and human approval
+
+A more focused example - an agent that plans an action, gets approval, executes it, and summarizes the result. Every step uses a built-in system task.
+
+```json
+{
+  "name": "agent_with_approval",
+  "description": "Plan, execute with approval, summarize",
+  "version": 1,
+  "schemaVersion": 2,
+  "inputParameters": ["task", "toolServerUrl"],
+  "tasks": [
+    {
+      "name": "decide_action",
+      "taskReferenceName": "plan",
+      "type": "LLM_CHAT_COMPLETE",
+      "inputParameters": {
+        "llmProvider": "anthropic",
+        "model": "claude-sonnet-4-20250514",
+        "messages": [
+          {
+            "role": "system",
+            "message": "You are an AI agent. User wants to: ${workflow.input.task}"
+          },
+          {
+            "role": "user",
+            "message": "Decide which action to take and what arguments to use. Respond with JSON: {\"action\": \"endpoint_path\", \"arguments\": {}}"
+          }
+        ],
+        "temperature": 0.1,
+        "maxTokens": 500
+      }
+    },
+    {
+      "name": "human_review",
+      "taskReferenceName": "approval",
+      "type": "HUMAN",
+      "inputParameters": {
+        "__humanTaskDefinition": {
+          "displayName": "Agent Action Approval",
+          "userFormTemplate": { "name": "AgentActionApproval", "version": 1 },
+          "assignmentCompletionStrategy": "LEAVE_OPEN"
+        },
+        "plannedAction": "${plan.output.result}"
+      }
+    },
+    {
+      "name": "execute_tool",
+      "taskReferenceName": "execute",
+      "type": "HTTP",
+      "inputParameters": {
+        "uri": "${workflow.input.toolServerUrl}/${plan.output.result.action}",
+        "method": "POST",
+        "body": "${plan.output.result.arguments}"
+      }
+    },
+    {
+      "name": "summarize_result",
+      "taskReferenceName": "summarize",
+      "type": "LLM_CHAT_COMPLETE",
+      "inputParameters": {
+        "llmProvider": "anthropic",
+        "model": "claude-sonnet-4-20250514",
+        "messages": [
+          {
+            "role": "user",
+            "message": "The user asked: ${workflow.input.task}\n\nTool result: ${execute.output.response.body}\n\nSummarize this result for the user."
+          }
+        ],
+        "maxTokens": 500
+      }
+    }
+  ],
+  "outputParameters": {
+    "plan": "${plan.output.result}",
+    "toolResult": "${execute.output.response.body}",
+    "summary": "${summarize.output.result}",
+    "approvalComments": "${approval.output.comments}"
+  }
+}
+```
+
+Every task type here - `LLM_CHAT_COMPLETE`, `HUMAN`, `HTTP` - is a native Conductor system task. No custom workers, no external frameworks.
+
+
+## Next steps
+
+- **[Durable Agents](/content/ai-agents/durable-agents)** - What persists, what gets retried, and why JSON is AI-native.
+- **[LLM Orchestration](/content/ai-orchestration/llm-orchestration)** - Native LLM providers, vector databases, and content generation.
+- **[Dynamic Fork](/content/reference-docs/operators/dynamic-fork)** - Runtime-determined parallel execution.
+- **[DO_WHILE](/content/reference-docs/operators/do-while)** - Loop operator for agent iterations.
+- **[HUMAN task](/content/reference-docs/operators/human)** - Human-in-the-loop approval.
