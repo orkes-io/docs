@@ -2,21 +2,6 @@
   "sourceRoot": "docs",
   "pages": [
     {
-      "source": "architecture/durable-execution.md",
-      "docId": "quickstart/durable-execution",
-      "route": "quickstarts/durable-execution"
-    },
-    {
-      "source": "architecture/json-native.md",
-      "docId": "quickstart/json-code-native",
-      "route": "quickstarts/json-code-native"
-    },
-    {
-      "source": "devguide/architecture/tasklifecycle.md",
-      "docId": "quickstart/task-lifecycle",
-      "route": "quickstarts/task-lifecycle"
-    },
-    {
       "source": "documentation/clientsdks/index.md",
       "docId": "sdks/sdk-index",
       "route": "category/sdks"

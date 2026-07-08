@@ -22,19 +22,18 @@ generation — enabling AI agent orchestration and LLM orchestration alongside t
 
 ## What can Conductor do?
 
-- **Create Workflows** — Define workflows consisting of multiple tasks that are executed in a specific order. [Learn more](/content/reference-docs/api/metadata/creating-workflow-definition)
+- **Create Workflows** — Define workflows consisting of multiple tasks that are executed in a specific order. [Learn more](/content/developer-guides/workflows#ways-to-create-workflows)
 - **Branch Your Flows** — Use switch-case operators to make branching decisions. [Learn more](/content/reference-docs/operators/switch)
 - **Run Loops** — Use the Do-While loop operator to iterate through a set of tasks. [Learn more](/content/reference-docs/operators/do-while)
 - **Parallelize Your Tasks** — Execute tasks in parallel using either static or dynamic forks. [Learn more](/content/reference-docs/operators/fork-join)
 - **Run Your Tasks Externally** — Implement tasks using external workers in microservices, serverless functions, or applications. [Workers](/content/quickstarts/workers) · [SDKs](/content/category/sdks)
 - **Use Built-In Tasks** — Use built-in tasks for common actions such as calling HTTP endpoints, writing to event queues, and executing inline code. [Learn more](/content/category/reference-docs/system-tasks)
-- **Use LLM Tasks** — Use LLM tasks to build AI-powered workflows, including agentic workflows. [Learn more](/content/ai-orchestration)
-- **Human in the Loop** — Plug in manual steps in your workflows using Human tasks. [Human tasks](/content/reference-docs/operators/human) · [Wait tasks](/content/reference-docs/operators/wait)
+- **Use LLM Tasks** — Use LLM tasks to build AI-powered workflows, including agentic workflows. [Learn more](/content/category/reference-docs/ai-tasks)
+- **Human in the Loop** — Plug in manual steps in your workflows using Human tasks. [Human tasks](/content/reference-docs/operators/human)
 - **Handle Failures** — Set timeouts and rate limits to manage failures for tasks and workflows. [Learn more](/content/error-handling)
 - **Replay Any Workflow** — Replay completed or failed workflows from the beginning, from any task, or retry just the failed step — even months later. Full execution history is always preserved. [Learn more](/content/developer-guides/debugging-workflows)
 - **Integrate With Applications** — Connect Conductor to your ecosystem with event-driven triggers using Kafka, NATS, SQS, AMQP, and webhooks. [Learn more](/content/eventing)
-- **Debug Visually** — Track and debug workflows from the Conductor UI. View inputs, pull logs, and restart from any point. [Get started](/content/quickstarts)
-- **Scale Horizontally** — Run multiple server instances behind a load balancer with shared backends for high availability. [Deployment guide](/content/get-orkes-conductor)
+- **Debug Visually** — Track and debug workflows from the Conductor UI. View inputs, pull logs, and restart from any point. [Get started](/content/developer-guides/debugging-workflows)
 
 ## Core building blocks
 
