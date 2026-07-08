@@ -79,11 +79,19 @@ A workflow starts at version `1`. To create another version, register the same w
 
 To update an existing version, register the workflow with the same `name` and `version`. New executions of that version use the updated definition. Existing running executions continue with the definition snapshot they already have.
 
-In the UI, create a new version from the workflow editor with **Save > Save as new version**. Use the version selector only when you need to inspect, edit, run, or delete a specific version.
+### Managing versions in the UI
+
+| Task | Steps |
+| --- | --- |
+| Create a new version | Open the workflow, make your changes, then select **Save > Save as new version** (**Ctrl+S+N**). |
+| View or edit a specific version | Open the workflow, select the version from the version dropdown in the top bar, then edit and save. |
+| Run a specific version | From the workflow editor, select the version, then **Execute**. Or go to **Executions > Workflow** (or **Definitions > Workflow**), select **Run Workflow**, and choose the workflow name and version. |
 
 ## Runtime behavior
 
 Each execution is bound to a workflow definition snapshot when it starts. Later definition changes do not rewrite the execution graph for workflows that are already running.
+
+<p align="center"><img src="/content/img/dev-guides/Workflow-versioning-at-runtime-V2.jpg" alt="Diagram showing how executions on the latest version vs. a pinned version resolve to different workflow definitions over time" width="100%" height="auto"></img></p>
 
 In this example:
 
@@ -106,6 +114,8 @@ Restarts and upgrades are the area where most production mistakes happen. Choose
 | Upgrade Workflow API | Running workflow execution | Moves the running execution to another workflow version and continues from the last running task. Earlier tasks in the upgraded definition are skipped. | You need a running execution to continue on a newer version without starting over. |
 
 Use [Restart Workflow](/content/reference-docs/api/workflow/restart-workflow) for terminal workflows. Use [Upgrade Workflow](/content/reference-docs/api/workflow/upgrade-workflow) only when the running execution can safely continue from its current point in the newer definition.
+
+**In the UI**, without calling the Upgrade Workflow API directly: go to **Executions > Workflow**, select the running execution, then **Actions > Terminate** followed by **Actions > Restart with latest definitions**. Use the [Skip Task API](/content/reference-docs/api/workflow/skip-task-from-workflow) to skip tasks that already completed, if that's safe for your business process.
 
 ## Migrating running workflows
 

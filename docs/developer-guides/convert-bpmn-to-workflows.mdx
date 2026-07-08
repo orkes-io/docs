@@ -22,16 +22,12 @@ Import the BPMN file, inspect the generated workflow JSON, normalize task refere
 1. Go to **Definitions** > **Workflow** from the left navigation menu on your Conductor cluster.
 2. Select the **⏷** icon next to **+ Define workflow**.
 3. From the dropdown menu, select **Import BPMN**.
-
-<p align="center"><img src="/content/img/import-bpmn.png" alt="Importing BPMN files" width="100%" height="auto"></img></p>
-
+   <p align="center"><img src="/content/img/import-bpmn.png" alt="Importing BPMN files" width="100%" height="auto"></img></p>
 4. Import files using one of the following methods:
     - **Select file**: Upload a .bpmn file from your local device.
     - **Drag and drop**: Drop the BPMN files directly into the designated area in the UI.
     - **Code**: Paste the raw XML content of your BPMN directly in the code tab.
-
-<p align="center"><img src="/content/img/bpmn-importer.png" alt="BPMN Importer" width="50%" height="auto"></img></p>
-
+   <p align="center"><img src="/content/img/bpmn-importer.png" alt="BPMN Importer" width="50%" height="auto"></img></p>
 5. The **Workflow Name** field is pre-filled with the file name by default. Edit it if you want to use a different name.
 6. Toggle **Overwrite workflow** on to replace an existing workflow definition with the same name.  Disable this option if you want to prevent overwrites.
 7. Select **Import**.
@@ -47,14 +43,6 @@ The import will fail with an error if the BPMN file:
 - Contains a circular reference
 - Has multiple start events
 - Is incomplete or malformed
-
-## Next steps
-
-With the imported workflow definitions in place, you can:
-
-- Review and modify the imported workflow as needed.
-- [Run the workflow](https://orkes.io/content/how-to-videos/run-workflow) or integrate it into your [existing code](https://orkes.io/content/category/sdks).
-- Apply [version control](https://orkes.io/content/developer-guides/versioning-workflows).
 
 ## Validate the generated workflow
 
@@ -94,3 +82,4 @@ Check the following after every BPMN import:
 - Imported workflows should go through the same testing and versioning process as hand-authored workflows.
 - Keep existing URLs and external callers pinned to known workflow versions while migrating.
 - Use [Versioning Workflows](/content/developer-guides/versioning-workflows) and [Executing Workflows](/content/developer-guides/running-workflows) before moving traffic.
+

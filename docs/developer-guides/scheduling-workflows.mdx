@@ -3,6 +3,9 @@ slug: "/developer-guides/scheduling-workflows"
 description: "Schedule Orkes Conductor workflows with cron expressions, fixed inputs, timezones, idempotency, monitoring, and production-safe permissions."
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # Scheduling Workflows
 
 Use schedules when time should start the workflow. A schedule creates workflow executions on a cron cadence, in a selected timezone, with a fixed workflow name and input payload.
@@ -28,29 +31,42 @@ Create a schedule, choose the cron cadence and timezone, select the workflow nam
 
 Most schedules only need a name, cron expression, timezone, workflow name, and input. Use the [Create Schedule API](/content/reference-docs/api/schedule/create-schedule) for the full request schema.
 
-| Parameter | Use it for |
-| --------- | ---------- |
-| `name` | Stable schedule identifier. Renaming creates a different schedule. |
-| `description` | Human-readable purpose, owner, or runbook context. |
-| `cronExpression` | The cadence. Conductor uses 6-field Quartz cron with seconds first. |
-| `zoneId` | The timezone used to interpret the cron expression. Use `UTC` unless a business process requires local time. |
-| `startWorkflowRequest.name` | Workflow definition to run. The schedule creator must have EXECUTE permission on it. |
-| `startWorkflowRequest.version` | Workflow version to run. Omit it to use the latest version, or set it when the schedule must stay pinned. |
-| `startWorkflowRequest.input` | Fixed input passed to each workflow execution. |
-| `startWorkflowRequest.correlationId` | Correlates executions created by the schedule. |
-| `startWorkflowRequest.idempotencyKey` and `idempotencyStrategy` | Prevents duplicate executions when schedule creation or trigger delivery is retried. |
-| `startWorkflowRequest.taskToDomain` | Routes worker tasks to a domain-specific worker pool. |
-| `scheduleStartTime` and `scheduleEndTime` | Limits when the schedule is active. |
-| `paused` | Saves the schedule without running it until resumed. |
-| `runCatchupScheduleInstances` | Runs missed schedule instances after downtime when catch-up is desired. |
+| Parameter | Description | Required/Optional |
+| --------- | ----------- | ------------------ |
+| `name` | Stable schedule identifier. Must be alphanumeric and can include underscores. Renaming an existing schedule creates a new one. | Required. |
+| `description` | Human-readable purpose, owner, or runbook context. | Optional. |
+| `cronExpression` | The cadence. Conductor uses 6-field Quartz cron with seconds first. See [Using cron expression](#using-cron-expression). | Required. |
+| `zoneId` | The timezone used to interpret the cron expression. Use `UTC` unless a business process requires local time. | Required. |
+| `startWorkflowRequest` | A JSON object containing the details of the workflow to be scheduled. | Required. |
+| `startWorkflowRequest.name` | Workflow definition to run. The schedule creator must have EXECUTE permission on it. | Required. |
+| `startWorkflowRequest.version` | Workflow version to run. Omit it to use the latest version, or set it when the schedule must stay pinned. | Optional. |
+| `startWorkflowRequest.input` | Fixed input passed to each workflow execution. | Optional. |
+| `startWorkflowRequest.correlationId` | Correlates executions created by the schedule. | Optional. |
+| `startWorkflowRequest.idempotencyKey` | A unique, user-generated key to prevent duplicate workflow executions. Idempotency data is retained throughout the life of the workflow execution. | Optional. |
+| `startWorkflowRequest.idempotencyStrategy` | The idempotency strategy for handling duplicate requests: `RETURN_EXISTING` (return the workflowId of the existing instance), `FAIL` (start a new instance only if none exists with the same key), or `FAIL_ON_RUNNING` (start a new instance only if none is RUNNING or PAUSED with the same key). | Required if `idempotencyKey` is used. |
+| `startWorkflowRequest.priority` | The priority of the workflow. Supports values from 0-99 and can be passed as a variable. | Optional. |
+| `startWorkflowRequest.taskToDomain` | Routes worker tasks to a domain-specific worker pool. | Optional. |
+| `scheduleStartTime` | The start time for the schedule in Unix timestamp format (in milliseconds), based on the local timezone. | Optional. |
+| `scheduleEndTime` | The end time for the schedule in Unix timestamp format (in milliseconds), based on the local timezone. | Optional. |
+| `paused` | Whether the schedule is paused upon saving. If `true`, the schedule will not run until resumed. Default is `false`. | Optional. |
+| `runCatchupScheduleInstances` | If `true`, executes any pending schedules, such as when the server starts after downtime. | Optional. |
 
 ## Using cron expression
 
-Conductor schedules use Quartz cron syntax with six fields:
+The `cronExpression` defines the cadence of the scheduler using a 6-field string. An asterisk (`*`) denotes a blank entry.
 
-```text
-second minute hour day-of-month month day-of-week
 ```
+* * * * * *
+```
+
+The terms, listed from left to right, are as follows:
+
+- Second: Allowed values are 0-59.
+- Minute: Allowed values are 0-59.
+- Hour: Allowed values are 0-23.
+- Day of Month: Allowed values are 1-31.
+- Month: Allowed values are 1-12 or JAN-DEC.
+- Day of Week: Allowed values are 1-7 or MON-SUN.
 
 Examples:
 
@@ -119,7 +135,8 @@ POST /api/scheduler/schedules
 
 You can create schedules from the Scheduler UI, from a completed workflow execution, or through the API.
 
-### Create from Scheduler
+<Tabs>
+<TabItem value="scheduler" label="Using Conductor UI (Scheduler)">
 
 1. Go to **Definitions** > **Scheduler**.
 2. Select **+ Define schedule**.
@@ -131,7 +148,16 @@ You can create schedules from the Scheduler UI, from a completed workflow execut
 8. Set start and end times if the schedule should only run inside a window.
 9. Save as active, or enable **Pause schedule** if it should not run yet.
 
-### Create from a workflow execution
+From the Scheduler definitions list, use **Quick filters** to narrow schedules by active/inactive status, and **Quick search** to find one by name or by tag (format `tagKey:tagValue`, for example `team:marketing`). The row actions let you **Pause**, **Clone**, **Add/Edit Tags**, or **Delete** a schedule.
+
+<p align="center"><img src="/content/img/actions-on-scheduler.png" alt="Quick search, quick filters, and row actions on the Scheduler definitions list" width="90%" height="auto"></img></p>
+
+If the schedule is active, the list also shows its next run time.
+
+<p align="center"><img src="/content/img/next-run-time-for-workflow-schedule.png" alt="Next run time column on the Scheduler definitions list" width="90%" height="auto"></img></p>
+
+</TabItem>
+<TabItem value="execution" label="Conductor UI (Workflow Execution)">
 
 Use this when a completed execution has the exact workflow, input, and task-to-domain mapping you want to reuse.
 
@@ -140,7 +166,10 @@ Use this when a completed execution has the exact workflow, input, and task-to-d
 3. Select **Actions** > **Create Schedule**.
 4. Add the schedule name, cron expression, timezone, and active window.
 
-### Create through the API
+<p align="center"><img src="/content/img/schedule-from-executions.png" alt="Create Schedule option in the Actions menu of a workflow execution" width="90%" height="auto"></img></p>
+
+</TabItem>
+<TabItem value="api" label="Using API">
 
 Use the API when schedules are managed through deployment automation, platform tooling, or tenant provisioning:
 
@@ -150,11 +179,20 @@ Use the API when schedules are managed through deployment automation, platform t
 - [Resume Schedule](/content/reference-docs/api/schedule/resume-schedule)
 - [Delete Schedule](/content/reference-docs/api/schedule/delete-schedule)
 
+</TabItem>
+</Tabs>
+
 ## Monitoring scheduled executions
 
 Go to **Executions** > **Scheduler** to inspect scheduled runs. Use this view to see schedule name, workflow name, workflow ID, scheduled time, execution time, status, failure reason, and error details.
 
-For debugging, open the workflow execution from the scheduled execution row. For automation, use the [Search Schedule Executions API](/content/reference-docs/api/schedule/search-schedule-executions).
+For debugging, open the workflow execution from the scheduled execution row. Select multiple rows and use **Bulk Action** to pause, resume, restart, retry, or terminate them together.
+
+<p align="center"><img src="/content/img/scheduler-executions.jpg" alt="Scheduled workflow executions list with rows selected and the Bulk Action menu" width="90%" height="auto"></img></p>
+
+For automation, use the [Search Schedule Executions API](/content/reference-docs/api/schedule/search-schedule-executions), or select **Show as code** next to Search to get the current search as cURL or JavaScript.
+
+<p align="center"><img src="/content/img/show-as-code-scheduler-executions.png" alt="Show as code option next to the Search button on the scheduled executions page" width="90%" height="auto"></img></p>
 
 ## Troubleshooting schedules
 
@@ -178,8 +216,19 @@ To resolve a schedule paused by permission loss:
 - Leave version unset only when "always run latest" is intentional.
 - Use idempotency keys for schedules that trigger side effects.
 - Give schedules descriptive names that include owner, cadence, and purpose.
-- Tag schedules and workflows together so RBAC can grant teams the right READ and EXECUTE access.
 - Avoid very high-frequency schedules unless workers, rate limits, and downstream systems are sized for the load.
+
+:::tip Granting team access to schedules
+Non-admin users can only view and interact with schedules they have READ access to. Creators are automatically granted full access to the schedules they create.
+
+To give a team access to schedules an admin created, use tags and a user group:
+
+1. Add the same tag to the schedule and its workflow.
+2. Create a user group.
+3. Grant that group EXECUTE and READ access on the tag.
+
+**Example:** A data engineering team manages ETL schedules. Tag the ETL workflow and its schedules with `data-etl`, create a "Data Engineers" user group, then grant that group EXECUTE and READ on the `data-etl` tag. Everyone in the group can now interact with the tagged schedule and workflow.
+:::
 
 ## Frequently asked questions
 
