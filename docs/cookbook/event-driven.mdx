@@ -83,6 +83,7 @@ Register event handlers to start workflows automatically when messages arrive on
   "name": "kafka_order_handler",
   "event": "kafka:<your-integration-name>:order-events",
   "condition": "$.status == 'NEW'",
+  "evaluatorType": "javascript",
   "actions": [
     {
       "action": "start_workflow",
@@ -105,6 +106,8 @@ Register event handlers to start workflows automatically when messages arrive on
 {
   "name": "nats_notification_handler",
   "event": "nats:<your-integration-name>:notifications",
+  "condition": "true",
+  "evaluatorType": "javascript",
   "actions": [
     {
       "action": "start_workflow",
@@ -124,6 +127,8 @@ Register event handlers to start workflows automatically when messages arrive on
 {
   "name": "amqp_task_handler",
   "event": "amqp:<your-integration-name>:task-queue",
+  "condition": "true",
+  "evaluatorType": "javascript",
   "actions": [
     {
       "action": "start_workflow",
@@ -179,6 +184,7 @@ Use a `WAIT` task to pause a workflow until an external system sends an event. A
   "name": "approval_event_handler",
   "event": "kafka:<your-integration-name>:approval-events",
   "condition": "$.approved == true",
+  "evaluatorType": "javascript",
   "actions": [
     {
       "action": "complete_task",

@@ -260,9 +260,9 @@ const CATEGORY_PAGE_COPY = {
   },
   "category/event-driven-orchestration/api-reference": {
     audience:
-      "Use these API references when you need to automate event handler or webhook configuration.",
+      "Use these API references when you need to automate webhook configuration.",
     outcome:
-      "Use the Event Handlers API for event handler definitions and the Webhook API for webhook definitions, verification, and tags.",
+      "Use the Webhook API for webhook definitions, verification, and tags.",
   },
   "general-templates": {
     audience:
