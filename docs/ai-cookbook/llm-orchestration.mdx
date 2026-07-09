@@ -5,7 +5,7 @@ description: "Native LLM orchestration with Conductor - supported LLM providers 
 
 # LLM orchestration
 
-Conductor provides native system tasks for LLM orchestration and integration. No external frameworks or custom workers required - configure a provider and use it in any workflow.
+Orkes Conductor provides native system tasks for LLM orchestration and integration. No external frameworks or custom workers required - configure a provider on your Orkes Conductor cluster and use it in any workflow.
 
 ## Supported LLM providers
 
@@ -26,52 +26,9 @@ Conductor provides native system tasks for LLM orchestration and integration. No
 
 Each provider is a configured integration - switch models by changing a parameter, not your code. Google Gemini AI and Google Vertex AI are separate integrations: use Vertex AI for non-Gemini Google models and for text embeddings.
 
-
-## Advanced capabilities
-
-The `LLM_CHAT_COMPLETE` task supports two capabilities beyond a plain chat call:
-
-### Tool calling
-
-Pass a `tools` array to let the model call something already registered in Conductor - an MCP/AI integration, an HTTP service, or a task definition - referenced by name, not an inline function schema:
-
-```json
-{
-  "type": "LLM_CHAT_COMPLETE",
-  "inputParameters": {
-    "llmProvider": "anthropic",
-    "model": "claude-sonnet-4-20250514",
-    "messages": [{"role": "user", "message": "What's the weather in Paris?"}],
-    "tools": [
-      { "name": "weather_service", "description": "Optional override for the tool description" }
-    ]
-  }
-}
-```
-
-Conductor resolves each `name` at runtime, in order: a matching MCP/AI integration (exposing each of its APIs as a callable tool), then a registered HTTP service (exposing each method), then a task definition (using its own input schema). Register the integration, service, or task first, then reference it here by name.
-
-### Extended thinking
-
-Give the model a token budget for step-by-step reasoning before it responds, using `thinkingTokenLimit`:
-
-```json
-{
-  "type": "LLM_CHAT_COMPLETE",
-  "inputParameters": {
-    "llmProvider": "anthropic",
-    "model": "claude-sonnet-4-20250514",
-    "messages": [{"role": "user", "message": "Prove that there are infinitely many primes"}],
-    "thinkingTokenLimit": 10000,
-    "maxTokens": 16000
-  }
-}
-```
-
-
 ## Vector database workflows
 
-Built-in vector database integration enables RAG (retrieval-augmented generation) pipelines as standard Conductor workflows.
+Orkes Conductor's built-in vector database integration enables RAG (retrieval-augmented generation) pipelines as standard Conductor workflows.
 
 | Vector Database | Store Embeddings | Index Text | Semantic Search |
 |---|---|---|---|
@@ -104,8 +61,7 @@ A complete RAG workflow using native system tasks - index documents, search, and
         "text": "${workflow.input.text}",
         "embeddingModelProvider": "openai",
         "embeddingModel": "text-embedding-3-small",
-        "dimensions": 1536,
-        "metadata": "${workflow.input.metadata}"
+        "dimensions": 1536
       }
     },
     {

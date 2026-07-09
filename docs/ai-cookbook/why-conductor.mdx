@@ -132,7 +132,7 @@ This is where Conductor's JSON-native runtime is especially useful. An LLM gener
 
 The LLM's output is a Conductor workflow definition, passed straight into the task. No code generation. No compilation. No custom deployment pipeline to build and maintain. The generated workflow runs with the same durable execution guarantees as any hand-written workflow — persistence, retries, observability, replay. The same `workflowDef` field works from application code too, via `POST /api/workflow` directly.
 
-Combined with `DYNAMIC` tasks (resolve which registered task to run at runtime) and `DYNAMIC_FORK` (create N parallel branches at runtime), Conductor is more dynamic than code-only orchestration patterns. Not despite using JSON — because of it. Data is easier to generate, transform, and compose than code.
+Combined with `DYNAMIC` tasks (resolve which registered task to run at runtime) and `FORK_JOIN_DYNAMIC` (create N parallel branches at runtime), Conductor is more dynamic than code-only orchestration patterns. Not despite using JSON — because of it. Data is easier to generate, transform, and compose than code.
 
 In code-only orchestration, dynamic workflows often require generating source code, compiling it, deploying it, and then executing it. That friction limits how dynamically an AI system can operate.
 
@@ -180,7 +180,7 @@ A parent agent delegates to specialist agents. Each specialist is a sub-workflow
 ```json
 {
   "name": "parallel_research",
-  "type": "DYNAMIC_FORK",
+  "type": "FORK_JOIN_DYNAMIC",
   "inputParameters": {
     "dynamicTasks": "${planner.output.result.research_tasks}",
     "dynamicTasksInput": "${planner.output.result.task_inputs}"
@@ -285,9 +285,9 @@ Every agentic pattern maps to a specific Conductor primitive:
 | **Tool-calling agent** | `LLM_CHAT_COMPLETE` |
 | **Approval-gated actions** | `HUMAN` task + `SWITCH` for timeout |
 | **Planner/executor loop** | `DO_WHILE` + `SET_VARIABLE` |
-| **Multi-agent delegation** | `SUB_WORKFLOW` or `DYNAMIC_FORK` |
+| **Multi-agent delegation** | `SUB_WORKFLOW` or `FORK_JOIN_DYNAMIC` |
 | **Long wait for external system** | `HUMAN` or `WAIT` task |
-| **High fan-out research** | `DYNAMIC_FORK` + `JOIN` |
+| **High fan-out research** | `FORK_JOIN_DYNAMIC` + `JOIN` |
 | **RAG pipeline** | `LLM_SEARCH_INDEX` + `LLM_CHAT_COMPLETE` |
 | **Agent that builds its own plan** | `LLM_CHAT_COMPLETE` + `START_WORKFLOW` with an inline `workflowDef` |
 | **Deterministic post-processing** | `INLINE` (JavaScript) or `JSON_JQ_TRANSFORM` |

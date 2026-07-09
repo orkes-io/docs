@@ -1,6 +1,6 @@
 ---
 slug: "/ai-orchestration/ai-llm-recipes"
-description: "LLM orchestration cookbook - AI agent orchestration recipes for chat completion, RAG pipelines, web search, and code execution."
+description: "LLM orchestration cookbook - AI agent orchestration recipes for chat completion, RAG pipelines, and web search."
 ---
 
 # AI & LLM orchestration recipes
@@ -163,52 +163,6 @@ curl -X POST 'http://localhost:8080/api/metadata/workflow' \
 curl -X POST 'http://localhost:8080/api/workflow/web_search_workflow' \
   -H 'Content-Type: application/json' \
   -d '{"question": "What are the latest developments in AI regulation?"}'
-```
-
----
-
-### Extended thinking - complex reasoning
-
-Give the LLM a token budget for step-by-step reasoning before generating its final response. Useful for math, logic, code review, and complex analysis.
-
-```json
-{
-  "name": "extended_thinking_workflow",
-  "version": 1,
-  "schemaVersion": 2,
-  "inputParameters": ["problem"],
-  "tasks": [
-    {
-      "name": "think_deeply",
-      "taskReferenceName": "think",
-      "type": "LLM_CHAT_COMPLETE",
-      "inputParameters": {
-        "llmProvider": "anthropic",
-        "model": "claude-sonnet-4-20250514",
-        "messages": [
-          {"role": "user", "message": "${workflow.input.problem}"}
-        ],
-        "thinkingTokenLimit": 10000,
-        "maxTokens": 16000
-      }
-    }
-  ],
-  "outputParameters": {
-    "answer": "${think.output.result}"
-  }
-}
-```
-
-**Register and run:**
-
-```shell
-curl -X POST 'http://localhost:8080/api/metadata/workflow' \
-  -H 'Content-Type: application/json' \
-  -d @extended_thinking_workflow.json
-
-curl -X POST 'http://localhost:8080/api/workflow/extended_thinking_workflow' \
-  -H 'Content-Type: application/json' \
-  -d '{"problem": "Prove that the square root of 2 is irrational."}'
 ```
 
 ---

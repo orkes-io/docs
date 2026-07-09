@@ -141,7 +141,7 @@ A production agent has these concerns. Each one maps to a specific Conductor pri
 | **Select tool at runtime** | `DYNAMIC` task | LLM output determines which task type executes next |
 | **Execute tool** | `HTTP` or `SIMPLE` worker | Tool runs with retry policy, timeout, and full I/O recording |
 | **Retry with backoff** | Task definition `retryLogic` | `FIXED`, `EXPONENTIAL_BACKOFF`, or `LINEAR_BACKOFF` - no code needed |
-| **Parallel tool calls** | `FORK/JOIN` or `DYNAMIC_FORK` | Fan out to N tools in parallel, join when all complete |
+| **Parallel tool calls** | `FORK/JOIN` or `FORK_JOIN_DYNAMIC` | Fan out to N tools in parallel, join when all complete |
 | **Memory / context handoff** | `SET_VARIABLE` + workflow variables | Accumulate results across loop iterations; pass to next LLM call |
 | **Human approval gate** | `HUMAN` task | Durable pause. Survives restarts and deploys. Resumes on API signal. |
 | **Long wait (hours/days)** | `WAIT` task | Timer-based durable pause. Survives server restarts. |
@@ -335,13 +335,13 @@ Open the Conductor UI to see:
 
 ### Add parallel research
 
-Replace a single tool call with `DYNAMIC_FORK` to fan out to multiple tools in parallel:
+Replace a single tool call with `FORK_JOIN_DYNAMIC` to fan out to multiple tools in parallel:
 
 ```json
 {
   "name": "parallel_research",
   "taskReferenceName": "research",
-  "type": "DYNAMIC_FORK",
+  "type": "FORK_JOIN_DYNAMIC",
   "inputParameters": {
     "dynamicTasks": "${plan.output.result.parallel_tasks}",
     "dynamicTasksInput": "${plan.output.result.task_inputs}"
@@ -428,7 +428,7 @@ The parent agent waits for the child to complete. If the child fails, the parent
 | Wait for a tool callback | `WAIT_FOR_WEBHOOK` or `HUMAN` task | Durable pause. Resumes on a matching external callback or API signal. |
 | Sleep until a retry window | `WAIT` task | Timer-based durable pause. Zero resource consumption. |
 | Pick the next tool at runtime | `DYNAMIC` task | LLM output determines task type. Resolved at execution time. |
-| Call multiple tools in parallel | `FORK/JOIN` or `DYNAMIC_FORK` | Static or runtime-determined parallelism. Join waits for all. |
+| Call multiple tools in parallel | `FORK/JOIN` or `FORK_JOIN_DYNAMIC` | Static or runtime-determined parallelism. Join waits for all. |
 | Loop until goal is met | `DO_WHILE` | Checkpointed loop. Each iteration persisted. |
 | Delegate to a specialist agent | `SUB_WORKFLOW` or `START_WORKFLOW` | Child workflow with full lifecycle management. |
 | Accumulate context across steps | `SET_VARIABLE` | Workflow variables persisted to durable storage. |
