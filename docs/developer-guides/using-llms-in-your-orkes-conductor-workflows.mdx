@@ -14,6 +14,9 @@ In this guide, you will learn how to leverage the power of Orkes Conductor and A
 5. Set access limits to govern which applications or groups can use the model, prompt, or vector database.
 6. Add an AI task to your workflow and configure it for the chosen model and prompt template.
 
+:::tip 5-minute path
+Integrate an AI model provider, create a prompt if your task needs one, grant access to the model and prompt via RBAC, then add and configure an AI task in your workflow.
+:::
 
 ## Step 1: Choose an AI model
 
@@ -155,21 +158,13 @@ Once the workflow is saved, you can test the newly added AI task or run the work
 
 <p align="center"><img src="/content/img/using-llm-test-task.png" alt="Test AI task." width="70%" height="auto"></img></p>
 
-## Examples
+## Production notes
 
-<details>
-<summary>Agentic research assistant</summary>
-
-Check out the agentic research assistant quickstart template in Developer Edition for an example that uses multiple prompts.
-
-</details>
-
-<details>
-<summary>AI tutorials</summary>
-
-Explore the [AI tutorials](/content/tutorials/ai) section for step-by-step, end-to-end examples that use different AI tasks and integrations.
-
-</details>
+- Pin model names and versions where the provider supports it, since provider model catalogs and default versions can change over time.
+- Grant access to models, prompts, and vector databases only to the applications or groups that need them, and review permissions periodically.
+- Monitor token usage and cost per integration, especially for text/chat completion and embedding tasks called at high volume.
+- Configure timeouts and retries on AI tasks, since model provider calls can be slow or rate-limited.
+- Version and test prompt template changes before rolling them out, since editing a shared prompt changes behavior for every workflow that references it.
 
 ## More resources
 * [Using AI Prompts](creating-and-managing-gen-ai-prompt-templates)

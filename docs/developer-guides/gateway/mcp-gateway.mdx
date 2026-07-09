@@ -3,165 +3,499 @@ slug: "/developer-guides/mcp-gateway"
 description: "Learn how to expose workflows as MCP tools so AI agents can trigger workflow actions through the MCP Gateway."
 ---
 
-# MCP Gateway: Expose Workflows as MCP Tools
+# MCP Gateway:  Expose Workflows as MCP tools 
 
-MCP Gateway exposes Conductor workflows as Model Context Protocol tools. Each tool maps to a workflow that can run governed business actions, coordinate systems, call workers, wait for durable work, use human approval, and return structured output to an agent.
+Using Conductor’s MCP Gateway, you can expose any workflows as MCP tools for AI agents. Each MCP tool corresponds to a workflow that can perform multi-step operations, coordinate internal systems, and return structured output that AI agents can understand and process. This design allows agents to trigger business actions without manual intervention.
 
-Use MCP Gateway when agents should invoke controlled workflows instead of raw internal APIs. Every tool call becomes a workflow execution, so teams can inspect inputs, outputs, retries, failures, approvals, and downstream service calls.
+MCP tools are defined as **routes** within a **service**. Each route is associated with a workflow that runs when an agent submits a tool request through the Model Context Protocol. **Authentication settings** determine which clients can invoke MCP tools and how they are authorized.
 
-## Why put workflows behind MCP tools?
+Here’s an overview of how to expose workflows as MCP services in Conductor:
 
-MCP tools often become the path from an AI agent to internal systems. Exposing raw APIs makes the agent responsible for policy, validation, retries, permissions, and audit history. MCP Gateway moves that responsibility into a governed workflow.
-
-Use this pattern when a tool can create or change business state: create a ticket, update an account, approve a refund, provision infrastructure, send a notification, query regulated data, or call a downstream service with side effects. The agent still sees a normal MCP tool, but Conductor owns the durable execution path behind it.
-
-MCP Gateway gives production teams:
-
-- A schema-backed input and output contract for every tool.
-- Workflow-level retries, timeouts, compensation, and human approval.
-- Access control through a Conductor application instead of broad internal API credentials.
-- Execution history for each tool call, including inputs, outputs, failures, and approvals.
-- A stable tool surface even when the downstream service graph changes.
+1. Create workflows that represent the actions your AI agents will perform
+2. Create an application with permission to execute the workflows. This is the service account layer.
+3. Configure authentication settings for the MCP service.
+4. Define an MCP service.
+5. Define and test routes.
+6. Connect the service with AI agents as an MCP tool.
 
 :::tip 5-minute path
-Create the workflow that implements the tool, create an application with `Execute` permission, configure authentication, define an MCP-enabled service, add a route with a clear tool description, test it, then connect the MCP endpoint to your agent runtime.
+Create the workflow, create an application with Execute permission on it, configure authentication, define a service, add a route with a clear tool description, test it, then connect the MCP endpoint to your AI agent.
 :::
 
 ## Step 1: Create workflows that define tool behavior
 
-Design each workflow as a tool-safe business action.
+The MCP Gateway allows you to expose Conductor workflows as APIs that can be called by an MCP tool. Before defining any MCP routes, ensure that the workflows implementing your endpoint logic are already created.
 
-Good MCP-backed workflows:
-
-- Have a narrow, well-described purpose.
-- Validate input with schemas.
-- Return small, structured output.
-- Apply access control through the gateway application.
-- Use human approval or policy checks before sensitive side effects.
-- Keep audit history through workflow executions.
-
-Avoid exposing low-level internal operations directly to agents when a workflow can enforce policy, validation, retries, and observability around the action.
+You can [create workflows](https://orkes.io/content/developer-guides/workflows#ways-to-create-workflows) using the Conductor UI, APIs, or SDKs.
 
 ## Step 2: Create an application in Orkes Conductor
 
-Create an [application](/content/access-control-and-security/applications) for the MCP Gateway service account. Grant it only the permissions required to execute workflows exposed as tools.
+[An application in Orkes Conductor](https://orkes.io/content/access-control-and-security/applications) serves as the identity that the MCP Gateway uses when executing workflows on behalf of the AI agent.
 
-Minimum production setup:
+**To create an application:**
 
-- `Execute` permission on each workflow exposed as an MCP tool.
-- Task/domain permissions required by those workflows.
-- No broad application roles unless this service explicitly needs them.
+1. Go to **Access Control** > **Applications**, and select **+ Create application**.
+2. Enter a name for the application.
+3. (Optional) Enable the required **Application role** based on how the service wants to interact with the application.
+4. In **Permissions**, select **+ Add permission**.
+5. In the **Workflow** tab, select the workflow created in [Step 1](/content/developer-guides/mcp-gateway#step-1-create-workflows-that-define-tool-behavior) and enable **EXECUTE** permission.
+
+<p align="center"><img src="/content/img/dev-guides/gateway/create-application-mcp-gateway.png" alt="Create application in Orkes Conductor" width="100%" height="auto"/></p>
+
+6. Save the application.
 
 ## Step 3: Configure authentication settings
 
-Authentication settings control how agent runtimes connect to the MCP service.
+Authentication controls how external agent systems connect to your MCP tools. You can configure these settings at the cluster level and reuse them across multiple services in the MCP Gateway.
 
-| Setting | Purpose |
-| ------- | ------- |
-| ID | Stable identifier for the auth configuration. |
-| Authentication Type | `API Key` for protected tools or `No Authentication` only for intentionally public tools. |
-| API Key | Key used by the MCP client when API key auth is enabled. |
-| Application | Conductor application used to execute the mapped workflows. |
+**To configure authentication settings:**
 
-Use separate auth configurations for different agent runtimes when they need different permissions, environments, or rotation schedules.
+1. Go to **APIs** > **Authentication** from the left navigation menu on your Conductor cluster.
+2. Select **+ New authentication**. 
+3. Configure the following parameters:
+
+| Parameter | Description | Required/Optional | 
+| --------- | ----------- | ----------------- | 
+| ID | A unique identifier for the authentication configuration. This cannot be renamed once saved. | Required. | 
+| Authentication Type | The type of authentication to use. Supported values:<ul><li>**API Key**–Enforces basic authentication using an API key.</li><li>**No Authentication**–No authentication is enforced, and the API will be accessible to anyone.</li></ul> | Required. | 
+| API Key | The API key for authentication. A random key is generated by default. You can also select **Generate** to create one instantly. Copy and store the key securely for future authentication. | Required if *Authentication Type* is *API Key*. | 
+| Application | Select the application created in [Step 2](/content/developer-guides/mcp-gateway#step-2-create-an-application-in-orkes-conductor), which generates an access key and JWT token. The MCP Gateway will use this token to authenticate with the Conductor. The service using this authentication will inherit the application’s permissions. | Required. | 
+
+4. Select **Save**.
 
 ## Step 4: Define an MCP service
 
-An MCP service groups tool routes under shared base path, authentication, CORS, and enablement settings.
+A **service** is a logical container for MCP endpoints, referred to as **routes**. Routes within a service inherit common settings, including the base path, authentication configuration, and CORS (Cross-Origin Resource Sharing) policies. Each route maps to a workflow that the MCP Gateway invokes when the endpoint is called. You must create a service before you can add routes to it.
 
-| Field | Purpose |
-| ----- | ------- |
-| Service ID | Stable lowercase identifier used in endpoint URLs. |
-| Display Name | Human-readable service name. |
-| Service Enabled | Enables or disables the service. |
-| MCP Enabled | Must be enabled for tools to be exposed over MCP. |
-| Base Path | Base path for the service. |
-| Auth Config | Authentication setting used by clients. |
-| CORS | Allowed origins, methods, and headers. |
-| Description | Operational description of the service. |
+**To define a service:**
 
-Create separate services when tool ownership, permissions, environment, or agent audience differs.
+1. Go to **APIs** > **Services** from the left navigation menu on your Conductor cluster.
+2. Select **+ New service**.
+3. Configure the following parameters:
+
+<table>
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Description</th>
+      <th>Required/Optional</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colSpan={3}><strong>Basic information</strong></td>
+    </tr>
+    <tr>
+      <td>Service ID</td>
+      <td>
+        A unique identifier for the service. Use lowercase letters and hyphens,
+        as this value is used in the API URLs. This cannot be renamed once saved.
+      </td>
+      <td>Required.</td>
+    </tr>
+    <tr>
+      <td>Display Name</td>
+      <td>A user-friendly name for the service.</td>
+      <td>Required.</td>
+    </tr>
+    <tr>
+      <td>Service Enabled</td>
+      <td>
+        Determines whether the service is active. Enabled by default.
+        Switch it off if you do not want to activate the service immediately.
+      </td>
+      <td>Required.</td>
+    </tr>
+    <tr>
+      <td>MCP Enabled</td>
+      <td>
+      Determines whether the MCP is active for this service. Enabled by default. Switch it off if you don’t want to activate the MCP service immediately.
+      </td>
+      <td>Required.</td>
+    </tr>
+  </tbody>
+    <tbody>
+    <tr>
+      <td colSpan={3}><strong>API Configuration</strong></td>
+    </tr>
+    <tr>
+      <td>Base Path</td>
+      <td>
+        The base path for all routes in the service. The path must start with a forward slash (for example,` /api/v1/users`). Including `api` in the path is optional. This cannot be renamed once saved.
+      </td>
+      <td>Required.</td>
+    </tr>
+    <tr>
+      <td>Auth Config</td>
+      <td>The authentication configuration to use for this service. Select the configuration created in the previous step, or select **+ Create New Auth Config** from the dropdown, and configure the [authentication settings](/content/developer-guides/mcp-gateway#step-3-configure-authentication-settings).</td>
+      <td>Required.</td>
+    </tr>
+  </tbody>
+      <tbody>
+    <tr>
+      <td colSpan={3}><strong>CORS Configuration</strong></td>
+    </tr>
+    <tr>
+      <td>Allowed Origins</td>
+      <td>
+        The origins (URLs) that can access this service. Press *Enter* after each URL to add multiple origins. Use * to allow all origins. 
+      </td>
+      <td>Required.</td>
+    </tr>
+    <tr>
+      <td>Allowed Methods</td>
+      <td>The HTTP methods that can be used in cross-origin requests. Supported values:<ul><li>GET</li><li>POST</li><li>PUT</li><li>DELETE</li><li>PATCH</li><li>OPTIONS</li></ul></td>
+      <td>Required.</td>
+    </tr>
+        <tr>
+      <td>Allowed Headers</td>
+      <td>The HTTP headers that can be sent in requests from allowed origins. Press *Enter* after each header to add multiple headers. Use * to allow all headers.</td>
+      <td>Required.</td>
+    </tr>
+  </tbody>
+      <tbody>
+    <tr>
+      <td colSpan={3}><strong>Additional Information</strong></td>
+    </tr>
+    <tr>
+      <td>Description</td>
+      <td>
+        A description of the service.
+      </td>
+      <td>Optional.</td>
+    </tr>
+  </tbody>
+</table>
+
+4. Select **Save**. 
 
 ## Step 5: Define and test a route
 
-Each route becomes an MCP tool. Tool descriptions matter because model clients use them to decide when and how to call the tool.
+Each endpoint in a service is defined as a route, and every route maps to a Conductor workflow that implements the endpoint’s logic.
 
-| Field | Purpose |
-| ----- | ------- |
-| HTTP Method | Method used by the underlying route. |
-| Path | Route path. Use `{name}` for path parameters. |
-| Description | Model-facing tool description. Include purpose, inputs, output, and safety constraints. |
-| Workflow Name | Workflow executed by the tool. |
-| Version | Workflow version. Pin for stable tool behavior. |
-| Wait Until Tasks | Optional task reference whose output should be returned early. |
-| Timeout | Maximum response wait time. |
-| Input Schema | Tool input contract. Strongly recommended. |
-| Output Schema | Tool output contract. Strongly recommended. |
-| Query Parameters | Optional route parameters. |
-| Cache / Rate Limit | Optional controls for idempotent or high-volume tools. |
+**To create a route within a service:**
 
-Example tool description:
+1. Go to the **Services** and select the **+** button next to the service created.
 
-```text
-Create a support ticket for a customer issue. Use this tool when the user asks to file, escalate, or track a support request. Required inputs: customerId, summary, severity. Returns ticketId, status, and workflowId. Do not use for billing disputes.
-```
+<p align="center"><img src="/content/img/dev-guides/gateway/create-route-for-mcp-gateway.png" alt="Create route for MCP gateway" width="100%" height="auto"/></p>
 
-Pre-request scripts can normalize MCP input into workflow input:
+2. Configure the following parameters:
 
-```javascript
-(function () {
-  return {
-    customerId: $.customerId,
-    summary: $.summary,
-    severity: $.severity || "normal"
-  };
-})();
-```
+<table>
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Description</th>
+      <th>Required/Optional</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colSpan={3}><strong>Route Definition</strong></td>
+    </tr>
+    <tr>
+      <td>HTTP Method</td>
+      <td>
+        The HTTP method for the route. Supported methods:<ul><li>GET</li><li>POST</li><li>PUT</li><li>DELETE</li><li>PATCH</li></ul>
+      </td>
+      <td>Required.</td>
+    </tr>
+    <tr>
+      <td>Path</td>
+      <td>
+        The path for the request.<ul><li>Must start with a forward slash. For example, `/update`.</li><li>Use {} for path parameters. For example, `/update/{userId}`.</li></ul>
+      </td>
+      <td>Required.</td>
+    </tr>
+    <tr>
+      <td>Description</td>
+      <td>
+        Use this field to describe the purpose and behavior of the route. When the route is exposed as an MCP tool, this description is provided to AI models to help them understand when and how to use the endpoint. Include details such as what the route does, expected inputs, output format, and typical use cases to ensure the model can invoke the route accurately.
+      </td>
+      <td>Optional.</td>
+    </tr>
+  </tbody>
+<tbody>
+    <tr>
+      <td colSpan={3}><strong>Workflow Configuration</strong></td>
+    </tr>
+    <tr>
+      <td>Workflow Name</td>
+      <td>
+        The workflow to be triggered by the route. 
+      </td>
+      <td>Required.</td>
+    </tr>
+    <tr>
+      <td>Version</td>
+      <td>
+        The version of the workflow to use. If unspecified, the latest version will be used.
+      </td>
+      <td>Required.</td>
+    </tr>
+    <tr>
+      <td>Wait Until Tasks</td>
+      <td>
+        The task to wait for before returning a response. The API will return the output of this task, instead of the workflow output.
+        
+        This is useful if the workflow contains tasks that take a long time to complete, but a response from the API is required before the connection times out.
+      </td>
+      <td>Optional.</td>
+    </tr>
+       <tr>
+      <td>Timeout (seconds)</td>
+      <td>
+        The duration in seconds to wait before returning a response. 
+      </td>
+      <td>Optional.</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td colSpan={3}><strong>Schema</strong></td>
+    </tr>
+    <tr>
+      <td>Input Schema</td>
+      <td>
+        The input schema for the request.
+        <ul>
+        <li>If you’ve created a [schema](https://orkes.io/content/developer-guides/schema-validation#using-schemas) in Conductor, select the schema and version to be used as the input schema for the request.</li>
+        <li>If not, enter your schema directly in the **Code** tab.</li>
+        </ul>
+      </td>
+      <td>Optional.</td>
+    </tr>
+    <tr>
+      <td>Output Schema</td>
+      <td>
+        The output schema for the request.
+        <ul>
+        <li>If you’ve created a [schema](https://orkes.io/content/developer-guides/schema-validation#using-schemas) in Conductor, select the schema and version to be used as the output schema for the request.</li>
+        <li>If not, enter your schema directly in the **Code** tab.</li>
+        </ul>
+      </td>
+      <td>Optional.</td>
+    </tr>
+  </tbody>
+    <tbody>
+    <tr>
+      <td colSpan={3}><strong>Query Parameters</strong></td>
+    </tr>
+    <tr>
+      <td>Parameter Name</td>
+      <td>
+        The query parameter that can be accepted by the endpoint. Can contain only letters, numbers, underscores, and hyphens.
+
+        Enable **Required** if the parameters are mandatory.
+      </td>
+      <td>Optional.</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td colSpan={3}><strong>Transformation Scripts</strong></td>
+    </tr>
+    <tr>
+      <td>Pre-request Script</td>
+      <td>
+        A JavaScript function to transform the incoming request payload before passing it to the workflow. The returned object becomes the workflow input.
+
+        Use `$.fieldName` to access input fields.
+
+        **Example**
+
+        ```json
+        (function () {
+        return $.value1 + $.value2;
+        })();
+        ```
+      </td>
+      <td>Optional.</td>
+    </tr>
+    <tr>
+      <td>Test Pre-request Script</td>
+      <td>
+        Test the input processing script.
+
+        **To test the payload:**
+        <ol>
+        <li>In **Test Payload**, enter the values</li>
+        <li>Select **Test Pre-request Script**.</li>
+        <li>In **Test Result**, verify the result to ensure the script is working.</li>
+        </ol>
+      </td>
+      <td>N/A</td>
+    </tr>
+    <tr>
+      <td>Post-response Script</td>
+      <td>
+        A JavaScript function to transform the final workflow output before it is returned in the API response. The returned object is sent as the API response.
+
+        Use `$.fieldName` to access output fields. 
+
+        **Example**
+
+        ```json
+            (function () {
+            return $.result * 2;
+            })();
+        ```
+      </td>
+      <td>Optional.</td>
+    </tr>
+       <tr>
+      <td>Test Post-response Script</td>
+      <td>
+        Test the output processing script.
+
+        **To test the payload:**
+        <ol>
+        <li>In **Test Payload**, enter the values</li>
+        <li>Select **Test Postresponse Script**.</li>
+        <li>In **Test Result**, verify the result to ensure the script is working.</li>
+        </ol>
+      </td>
+      <td>N/A</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td colSpan={3}><strong>Cache Configuration</strong></td>
+    </tr>
+    <tr>
+      <td>Cache Key</td>
+      <td>
+        Enables caching for a route. When caching is enabled, Conductor stores responses for repeated requests and returns the cached result for matching inputs until the entry expires.
+      </td>
+      <td>Optional.</td>
+    </tr>
+    <tr>
+      <td>TTL (Time To Live) in Seconds</td>
+      <td>
+        Set how long the cached value remains valid.
+      </td>
+      <td>Optional.</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td colSpan={3}><strong>Rate Limit Configuration</strong></td>
+    </tr>
+    <tr>
+      <td>Rate Limit Key</td>
+      <td>
+        Key used to identify the rate limit scope for this route. Can be [passed as a variable](/content/developer-guides/passing-inputs-to-task-in-conductor).
+      </td>
+      <td>Optional.</td>
+    </tr>
+    <tr>
+      <td>Concurrent Execution Limit</td>
+      <td>
+        Maximum number of concurrent executions allowed for this route.
+      </td>
+      <td>Optional.</td>
+    </tr>
+  </tbody>
+</table>
+
+3. Select **Save**. 
 
 ### Test a route
 
-Test the route as both an HTTP endpoint and an MCP tool.
+You can test route behavior directly from the Conductor UI before exposing it as an MCP tool.
 
 #### Run a test request
 
-Submit representative input, including invalid or missing fields, to confirm schema validation and error behavior.
+**To test a route:**
+
+1. Go to the **APIs** > **Services**, and select the service.
+2. In **Routes**, select the play icon next to the route to test.
+3. In **Path Parameters**, enter any required parameters for the endpoint.
+4. (If Authentication is using an API key) Replace *** with the API key copied in [Step 3](/content/developer-guides/mcp-gateway#step-3-configure-authentication-settings).
+5. In **Body**, enter the request payload as expected by the workflow.
+6. Select **Test Route**.
+7. Review the **Response** to verify the route works as expected. 
+
+<p align="center"><img src="/content/img/dev-guides/gateway/testing-route.gif" alt="Testing a route" width="100%" height="auto"/></p>
 
 #### Verify workflow execution
 
-Open the workflow execution and verify the tool input, workflow version, task outcomes, and returned output. This is the operational advantage of using Conductor as the tool runtime: tool calls are not opaque.
+**To confirm that the route triggered the workflow:**
+
+1. Go to **Executions** > **Workflow** in your Conductor cluster and verify that the workflow is completed successfully.
+
+<p align="center"><img src="/content/img/dev-guides/gateway/workflow-triggered-by-mcp-gateway.png" alt="Workflow triggered by the route" width="100%" height="auto"/></p>
+
+2. Select the **Workflow ID** to view the complete execution, including the workflow input and output.
+
+<p align="center"><img src="/content/img/dev-guides/gateway/workflow-execution-triggered-by-mcp-gateway.png" alt="Workflow triggered by the route" width="100%" height="auto"/></p>
 
 #### View endpoint details
 
-Use the route details to copy the generated cURL command and inspect the service metadata before connecting external clients.
+**To get the cURL command:**
+
+1. Go to **APIs** > **Services**, and select your service. 
+2. Select a route to open its details. 
+3. You can get the cURL command for the actual endpoint here.
+
+<p align="center"><img src="/content/img/dev-guides/gateway/curl.png" alt="Curl command for API" width="100%" height="auto"/></p>
+
+**To view the OpenAPI documentation for the endpoint:**
+
+1. Go to **APIs** > **Services**, and select the service. 
+2. In **Metadata & Resources**, select **View API documentation**.
+
+<p align="center"><img src="/content/img/dev-guides/gateway/openapi-doc-mcp-gateway.jpg" alt="OpenAPI documentation for the APIs" width="100%" height="auto"/></p>
 
 ## Step 6: Connect the service with AI agents as an MCP tool
 
-Copy the MCP tool remote endpoint from the service configuration and register it with your agent runtime.
+Next, you can connect this MCP service to your preferred AI tool as an MCP tool. You need the MCP endpoint URL for this.
 
-Production checklist:
+**To get the MCP tool endpoint:**
 
-- Use API key auth or your gateway-level identity controls.
-- Prefer schema-backed inputs and outputs.
-- Keep tool output compact and deterministic.
-- Add human approval for sensitive or irreversible actions.
-- Monitor executions and route metrics after rollout.
+1. Go to **APIs** > **Services**, and select the service.
+2. In **Configuration**, copy the **MCP Tool Remote Endpoint**.
+
+<p align="center"><img src="/content/img/dev-guides/gateway/mcp-endpoint.png" alt="MCP Tool endpoint" width="100%" height="auto"/></p>
+
+Use this as the MCP server endpoint when you configure your AI tool.
+
+For example, you can use tools like [Orkes MCP Workbench](https://www.mcp-workbench.ai/) for testing and debugging your MCP endpoints before integrating them with an AI tool.
 
 ### Verify using Orkes MCP Workbench
 
-Use Orkes MCP Workbench or another MCP client to connect to the endpoint, list tools, inspect tool schemas, and call each tool with representative payloads.
+**To test the endpoint in Orkes MCP Workbench:**
 
-For each test call, verify:
+1. Access [Orkes MCP Workbench](https://www.mcp-workbench.ai/).
+2. In **Connections**, select **+ Add.**
+3. In **URL**, enter the **MCP Tool Remote Endpoint** copied from Conductor.
+4. In **Type**, select **Streamable HTTP (Stateless)**.
 
-- The tool appears with a clear name and description.
-- Required inputs are enforced.
-- The workflow starts with the expected input.
-- The tool response matches the output schema.
-- Failures return actionable messages without exposing secrets.
+<p align="center"><img src="/content/img/dev-guides/gateway/orkes-mcp-workbench-ui.png" alt="MCP Inspector UI" width="100%" height="auto"/></p>
+
+5. Leave authentication empty if the service uses no authentication. If the service requires authentication, provide the required key.
+6. Select **Save**, and then select **Connect**.
+
+If the connection is successful, the tools exposed by the service become visible. In **Select Tool**, all available tools from the service are listed. 
+
+<p align="center"><img src="/content/img/dev-guides/gateway/api-listed-as-mcp-tool.png" alt="APIs listed as MCP tools" width="100%" height="auto"/></p>
+
+Each route in the service appears as an MCP tool. You can select a tool, provide input, and call it directly from the Inspector.
+
+Each tool call triggers the workflow mapped to that route. This validation step helps ensure that your MCP service is correctly configured before connecting it to an AI agent.
+
+## Production notes
+
+- Write a specific, detailed route **Description**, since AI agents rely on it to decide when and how to invoke the tool.
+- Use **API Key** authentication for production services. **No Authentication** makes the endpoint callable by anyone with the URL.
+- Pin the route's **Version** once agents are using the tool, so a new workflow version doesn't silently change tool behavior.
+- Set a **Rate Limit Key**, **Concurrent Execution Limit**, and **Timeout** on routes, since agents may call or retry tools more aggressively than typical API clients.
+- Re-verify the tool in a workbench (such as Orkes MCP Workbench) after any route change, before relying on it in a live agent.
 
 ## Examples
 
-See the [ticket service MCP Gateway tutorial](/content/tutorials/expose-ticket-service-using-mcp-gateway).
+See an example of a [ticket service called an MCP tool](/content/tutorials/expose-ticket-service-using-mcp-gateway).
 
 ## Next steps
 
-Use [API Gateway metrics](/content/developer-guides/api-gateway#monitor-api-gateway-metrics) to monitor service and route performance.
+To learn how to monitor service and route performance, see [Gateway Metrics](/developer-guides/gateway-metrics).

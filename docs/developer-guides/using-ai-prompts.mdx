@@ -13,6 +13,10 @@ In Orkes Conductor, AI prompts are reusable and can include variables, allowing 
 
 In this guide, you will learn how to create, test, and use AI prompts in your workflows.
 
+:::tip 5-minute path
+Create an AI prompt with variables, test it against a model, grant access via RBAC, then reference it from an LLM Text Complete or LLM Chat Complete task and map its variables to workflow data.
+:::
+
 ## Create AI prompts
 
 :::info Prerequisites
@@ -206,21 +210,13 @@ AI prompts can be used in workflows with the following LLM tasks:
 7. Set the **Temperature**, **Stop words**, **Stop words Type**, **TopP**, and **Token Limit**. 
 8. Select **Save** > **Confirm**.
 
-## Examples
+## Production notes
 
-<details>
-<summary>Agentic research assistant</summary>
-
-Check out the agentic research assistant quickstart template in Developer Edition for an example that uses multiple prompts.
-
-</details>
-
-<details>
-<summary>AI tutorials</summary>
-
-Explore the [AI tutorials](/content/tutorials/ai) section for step-by-step, end-to-end examples that use different AI tasks and integrations.
-
-</details>
+- Version prompt changes with **Save as new version** rather than editing in place, since editing a shared prompt changes behavior for every workflow that references it.
+- Test prompt changes with representative variable values before rolling out a new version to production workflows.
+- Grant prompt access only to the applications or groups that need it, and confirm they also have access to the associated AI models.
+- Keep variable names in the prompt template consistent with the `promptVariables` mapped in the workflow definition, since a mismatch leaves a variable unresolved at runtime.
+- Set conservative Temperature and TopP values for tasks where consistency matters more than creativity, such as classification or extraction.
 
 ## More resources
 

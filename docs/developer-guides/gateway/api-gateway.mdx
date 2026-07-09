@@ -3,201 +3,463 @@ slug: "/developer-guides/api-gateway"
 description: "Learn how to expose workflows as API endpoints using the API Gateway so applications can trigger workflow logic."
 ---
 
-# API Gateway: Expose Workflows as APIs
+# API Gateway: Expose Workflows as APIs 
 
-API Gateway exposes Conductor workflows as HTTP APIs. Each route maps to a workflow that can coordinate services, run workers, apply retries and timeouts, call AI or human-review steps, enforce schemas, and return a structured response.
+Using Conductor’s API Gateway, you can expose workflows as APIs. Each endpoint is mapped to a Conductor workflow that can run synchronously, coordinate multiple services, apply business logic, and return an aggregated response, all within a single API call. This allows you to build API endpoints that extend beyond simple request routing. 
 
-Use API Gateway when an endpoint should orchestrate work rather than proxy one service. The request becomes an observable workflow execution with durable state, retry history, inputs, outputs, and operational controls.
+Endpoints are defined as **routes** within a **service**. Each route is linked to a Conductor workflow. When a request is made to the route, Conductor executes the associated workflow and returns its output as the response. To secure access, you can configure **authentication settings** that define how clients are authorized to invoke each route.
+
+Here’s an overview of how to expose workflows as APIs in Conductor:
+
+1. Create workflows to define the logic for each endpoint.
+2. Create an application with permission to execute the workflows. This acts as the service account layer.
+3. Configure authentication settings for the API service.
+4. Define an API service.
+5. Define and test routes.
 
 :::tip 5-minute path
-Create the workflow, create an application with `Execute` permission, configure API authentication, define a service, add a route, test it, then publish the generated cURL command or OpenAPI documentation.
+Create the workflow, create an application with Execute permission on it, configure authentication, define a service with a base path and auth config, then add a route mapped to the workflow and test it.
 :::
 
 ## Step 1: Create workflows to define the logic for each endpoint
 
-Create one workflow for each API operation or reusable business action. Keep the workflow input shaped like the API request you want to expose.
+API Gateway exposes workflows as APIs. Before configuring the endpoints, create the required workflows for each endpoint’s logic. 
 
-Use workflow features that are hard to express in a thin API proxy:
-
-- Fan out to multiple services and aggregate the result.
-- Retry transient failures with task-level retry policy.
-- Apply timeouts, rate limits, and circuit breakers.
-- Wait for a human task or external callback.
-- Route work to worker domains.
-- Return early with `waitUntilTask` while the workflow continues asynchronously.
+You can [create workflows](https://orkes.io/content/developer-guides/workflows#ways-to-create-workflows) using Conductor UI, APIs, or SDKs.
 
 ## Step 2: Create an application in Orkes Conductor
 
-Create an [application](/content/access-control-and-security/applications) for the gateway service account. The gateway uses this application identity to execute the mapped workflows.
+[Applications in Orkes Conductor](https://orkes.io/content/access-control-and-security/applications) act as the service account layer that interacts with the Conductor server. Through this application, you assign the permissions required to execute workflows exposed as APIs.
 
-Grant the application:
+**To create an application:**
 
-- `Execute` permission on every workflow exposed through the service.
-- Any additional task or domain permissions required by those workflow executions.
-- No broad roles unless the gateway service explicitly needs them.
+1. Go to **Access Control** > **Applications**, and select **+ Create application**.
+2. Enter a name for the application.
+3. (Optional) Enable the required **Application role** based on how the service wants to interact with the application.
+4. In **Permissions**, select **+ Add permission**.
+5. In the **Workflow** tab, select the workflow created in [Step 1](/content/developer-guides/api-gateway#step-1-create-workflows-to-define-the-logic-for-each-endpoint) and enable **EXECUTE** permission.
 
-Keeping gateway permissions narrow is important: route authentication controls who can call the route, while the application controls what the route can do inside Conductor.
+<p align="center"><img src="/content/img/dev-guides/gateway/create-application-api-gateway.png" alt="Create application in Orkes Conductor" width="100%" height="auto"/></p>
+
+6. Save the application.
+
+The next step is to create an authentication setting for the API service.
 
 ## Step 3: Configure authentication settings
 
-Authentication settings define how callers access the API service.
+Authentication settings control how clients are authorized to access a service. You can create authentication settings globally in your Conductor cluster and reuse them across services.
 
-| Setting | Purpose |
-| ------- | ------- |
-| ID | Stable identifier for this auth configuration. |
-| Authentication Type | `API Key` for protected routes or `No Authentication` for intentionally public routes. |
-| API Key | Caller-facing key when API key auth is enabled. Store it securely. |
-| Application | Conductor application whose permissions are used when the route executes workflows. |
+**To configure authentication settings:**
 
-Use `No Authentication` only for routes that are intentionally public and safe to invoke. For production APIs, use API key auth or place the route behind your existing identity gateway.
+1. Go to **APIs** > **Authentication** from the left navigation menu on your Conductor cluster.
+2. Select **+ New authentication**. 
+3. Configure the following parameters:
+
+| Parameter | Description | Required/Optional | 
+| --------- | ----------- | ----------------- | 
+| ID | A unique identifier for the authentication configuration. This cannot be renamed once saved. | Required. | 
+| Authentication Type | The type of authentication to use. Supported values:<ul><li>**API Key**–Enforces basic authentication using an API key.</li><li>**No Authentication**–No authentication is enforced, and the API will be accessible to anyone.</li></ul> | Required. | 
+| API Key | The API key for authentication. A random key is generated by default. You can also select **Generate** to create one instantly. Copy and store the key securely for future authentication. | Required if *Authentication Type* is *API Key*. | 
+| Application | Select the application created in [Step 2](/content/developer-guides/api-gateway#step-2-create-an-application-in-orkes-conductor), which generates an access key and JWT token. The API Gateway will use this token to authenticate with the Conductor. The service using this authentication will inherit the application’s permissions. | Required. | 
+
+4. Select **Save**.
 
 ## Step 4: Define an API service
 
-A service groups routes under shared configuration.
+A **service** represents a logical grouping of API endpoints (called **routes**) that share common settings such as base path, authentication, and CORS (Cross-Origin Resource Sharing) policies. Each route within a service maps to a specific workflow. You must create a service before adding individual routes.
 
-| Field | Purpose |
-| ----- | ------- |
-| Service ID | Stable lowercase identifier used in route URLs. |
-| Display Name | Human-readable service name. |
-| Service Enabled | Enables or disables the service. |
-| MCP Enabled | Disable for API-only services unless the same service should also expose MCP tools. |
-| Base Path | Base URL path for all routes, such as `/api/orders`. |
-| Auth Config | Authentication setting created in the previous step. |
-| CORS | Allowed origins, methods, and headers for browser clients. |
-| Description | Operational description of the service. |
+**To define a service:**
 
-Create separate services when authentication, ownership, lifecycle, or audience differs.
+1. Go to **APIs** > **Services** from the left navigation menu on your Conductor cluster.
+2. Select **+ New service**.
+3. Configure the following parameters:
+
+<table>
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Description</th>
+      <th>Required/Optional</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colSpan={3}><strong>Basic information</strong></td>
+    </tr>
+    <tr>
+      <td>Service ID</td>
+      <td>
+        A unique identifier for the service. Use lowercase letters and hyphens,
+        as this value is used in the API URLs. This cannot be renamed once saved.
+      </td>
+      <td>Required.</td>
+    </tr>
+    <tr>
+      <td>Display Name</td>
+      <td>A user-friendly name for the service.</td>
+      <td>Required.</td>
+    </tr>
+    <tr>
+      <td>Service Enabled</td>
+      <td>
+        Determines whether the service is active. Enabled by default.
+        Switch it off if you do not want to activate the service immediately.
+      </td>
+      <td>Required.</td>
+    </tr>
+    <tr>
+      <td>MCP Enabled</td>
+      <td>
+        Determines whether the MCP is active for this service. Enabled by default. Since this service is configured as an API gateway, this can be disabled.      
+      </td>
+      <td>Required.</td>
+    </tr>
+  </tbody>
+    <tbody>
+    <tr>
+      <td colSpan={3}><strong>API Configuration</strong></td>
+    </tr>
+    <tr>
+      <td>Base Path</td>
+      <td>
+        The base path for all routes in the service. The path must start with a forward slash (for example,` /api/v1/users`). Including `api` in the path is optional. This cannot be renamed once saved.
+      </td>
+      <td>Required.</td>
+    </tr>
+    <tr>
+      <td>Auth Config</td>
+      <td>The authentication configuration to use for this service. Select the configuration created in the previous step, or select **+ Create New Auth Config** from the dropdown, and configure the [authentication settings](/content/developer-guides/api-gateway#step-3-configure-authentication-settings).</td>
+      <td>Required.</td>
+    </tr>
+  </tbody>
+      <tbody>
+    <tr>
+      <td colSpan={3}><strong>CORS Configuration</strong></td>
+    </tr>
+    <tr>
+      <td>Allowed Origins</td>
+      <td>
+        The origins (URLs) that can access this service. Press *Enter* after each URL to add multiple origins. Use * to allow all origins. 
+      </td>
+      <td>Required.</td>
+    </tr>
+    <tr>
+      <td>Allowed Methods</td>
+      <td>The HTTP methods that can be used in cross-origin requests. Supported values:<ul><li>GET</li><li>POST</li><li>PUT</li><li>DELETE</li><li>PATCH</li><li>OPTIONS</li></ul></td>
+      <td>Required.</td>
+    </tr>
+        <tr>
+      <td>Allowed Headers</td>
+      <td>The HTTP headers that can be sent in requests from allowed origins. Press *Enter* after each header to add multiple headers. Use * to allow all headers.</td>
+      <td>Required.</td>
+    </tr>
+  </tbody>
+      <tbody>
+    <tr>
+      <td colSpan={3}><strong>Additional Information</strong></td>
+    </tr>
+    <tr>
+      <td>Description</td>
+      <td>
+        A description of the service.
+      </td>
+      <td>Optional.</td>
+    </tr>
+  </tbody>
+</table>
+
+4. Select **Save**. 
 
 ## Step 5: Define and test a route
 
-Each route maps one HTTP method and path to one workflow.
+Each endpoint in a service must be defined as a route, which is mapped to the Conductor workflow that executes the logic.
 
-| Field | Purpose |
-| ----- | ------- |
-| HTTP Method | `GET`, `POST`, `PUT`, `PATCH`, or `DELETE`. |
-| Path | Route path. Use `{name}` for path parameters. |
-| Description | What the endpoint does and when clients should call it. |
-| Workflow Name | Workflow executed by the route. |
-| Version | Workflow version. Pin for stable APIs; use latest only deliberately. |
-| Wait Until Tasks | Optional task reference whose output should be returned before the full workflow completes. |
-| Timeout | Maximum time the route waits for a response. |
-| Input Schema | Optional request contract. |
-| Output Schema | Optional response contract. |
-| Query Parameters | Accepted query parameters and required flags. |
-| Cache Key / TTL | Optional response caching for idempotent routes. |
-| Rate Limit Key / Concurrent Limit | Optional request concurrency controls. |
+**To create a route within a service:**
 
-Pre-request scripts transform route input into workflow input:
+1. Go to the **Services** and select the **+** button next to the service created.
 
-```javascript
-(function () {
-  return {
-    orderId: $.path.orderId,
-    includeHistory: $.query.includeHistory === "true",
-    requestId: $.headers["x-request-id"]
-  };
-})();
-```
+<p align="center"><img src="/content/img/dev-guides/gateway/create-route-api-gateway.png" alt="Create route for API gateway" width="100%" height="auto"/></p>
 
-Post-response scripts transform workflow output into the API response:
+2. Configure the following parameters:
 
-```javascript
-(function () {
-  return {
-    status: $.status,
-    result: $.result,
-    workflowId: $.workflowId
-  };
-})();
-```
+<table>
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Description</th>
+      <th>Required/Optional</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colSpan={3}><strong>Route Definition</strong></td>
+    </tr>
+    <tr>
+      <td>HTTP Method</td>
+      <td>
+        The HTTP method for the route. Supported methods:<ul><li>GET</li><li>POST</li><li>PUT</li><li>DELETE</li><li>PATCH</li></ul>
+      </td>
+      <td>Required.</td>
+    </tr>
+    <tr>
+      <td>Path</td>
+      <td>
+        The path for the request.<ul><li>Must start with a forward slash. For example, `/update`.</li><li>Use {} for path parameters. For example, `/update/{userId}`.</li></ul>
+      </td>
+      <td>Required.</td>
+    </tr>
+    <tr>
+      <td>Description</td>
+      <td>
+        A description of the route.
+      </td>
+      <td>Optional.</td>
+    </tr>
+  </tbody>
+<tbody>
+    <tr>
+      <td colSpan={3}><strong>Workflow Configuration</strong></td>
+    </tr>
+    <tr>
+      <td>Workflow Name</td>
+      <td>
+        The workflow to be triggered by the route. 
+      </td>
+      <td>Required.</td>
+    </tr>
+    <tr>
+      <td>Version</td>
+      <td>
+        The version of the workflow to use. If unspecified, the latest version will be used.
+      </td>
+      <td>Required.</td>
+    </tr>
+    <tr>
+      <td>Wait Until Tasks</td>
+      <td>
+        The task to wait for before returning a response. The API will return the output of this task, instead of the workflow output.
+        
+        This is useful if the workflow contains tasks that take a long time to complete, but a response from the API is required before the connection times out.
+      </td>
+      <td>Optional.</td>
+    </tr>
+       <tr>
+      <td>Timeout (seconds)</td>
+      <td>
+        The duration in seconds to wait before returning a response. 
+      </td>
+      <td>Optional.</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td colSpan={3}><strong>Schema</strong></td>
+    </tr>
+    <tr>
+      <td>Input Schema</td>
+      <td>
+        The input schema for the request.
+        <ul>
+        <li>If you’ve created a [schema](https://orkes.io/content/developer-guides/schema-validation#using-schemas) in Conductor, select the schema and version to be used as the input schema for the request.</li>
+        <li>If not, enter your schema directly in the **Code** tab.</li>
+        </ul>
+      </td>
+      <td>Optional.</td>
+    </tr>
+    <tr>
+      <td>Output Schema</td>
+      <td>
+        The output schema for the request.
+        <ul>
+        <li>If you’ve created a [schema](https://orkes.io/content/developer-guides/schema-validation#using-schemas) in Conductor, select the schema and version to be used as the output schema for the request.</li>
+        <li>If not, enter your schema directly in the **Code** tab.</li>
+        </ul>
+      </td>
+      <td>Optional.</td>
+    </tr>
+  </tbody>
+    <tbody>
+    <tr>
+      <td colSpan={3}><strong>Query Parameters</strong></td>
+    </tr>
+    <tr>
+      <td>Parameter Name</td>
+      <td>
+        The query parameter that can be accepted by the endpoint. Can contain only letters, numbers, underscores, and hyphens.
+
+        Enable **Required** if the parameters are mandatory.
+      </td>
+      <td>Optional.</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td colSpan={3}><strong>Transformation Scripts</strong></td>
+    </tr>
+    <tr>
+      <td>Pre-request Script</td>
+      <td>
+        A JavaScript function to transform the incoming request payload before passing it to the workflow. The returned object becomes the workflow input.
+
+        Use `$.fieldName` to access input fields.
+
+        **Example**
+
+        ```json
+        (function () {
+        return $.value1 + $.value2;
+        })();
+        ```
+      </td>
+      <td>Optional.</td>
+    </tr>
+    <tr>
+      <td>Test Pre-request Script</td>
+      <td>
+        Test the input processing script.
+
+        **To test the payload:**
+        <ol>
+        <li>In **Test Payload**, enter the values</li>
+        <li>Select **Test Pre-request Script**.</li>
+        <li>In **Test Result**, verify the result to ensure the script is working.</li>
+        </ol>
+      </td>
+      <td>N/A</td>
+    </tr>
+    <tr>
+      <td>Post-response Script</td>
+      <td>
+        A JavaScript function to transform the final workflow output before it is returned in the API response. The returned object is sent as the API response.
+
+        Use `$.fieldName` to access output fields. 
+
+        **Example**
+
+        ```json
+            (function () {
+            return $.result * 2;
+            })();
+        ```
+      </td>
+      <td>Optional.</td>
+    </tr>
+       <tr>
+      <td>Test Post-response Script</td>
+      <td>
+        Test the output processing script.
+
+        **To test the payload:**
+        <ol>
+        <li>In **Test Payload**, enter the values</li>
+        <li>Select **Test Postresponse Script**.</li>
+        <li>In **Test Result**, verify the result to ensure the script is working.</li>
+        </ol>
+      </td>
+      <td>N/A</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td colSpan={3}><strong>Cache Configuration</strong></td>
+    </tr>
+    <tr>
+      <td>Cache Key</td>
+      <td>
+        Enables caching for a route. When caching is enabled, Conductor stores responses for repeated requests and returns the cached result for matching inputs until the entry expires.
+      </td>
+      <td>Optional.</td>
+    </tr>
+    <tr>
+      <td>TTL (Time To Live) in Seconds</td>
+      <td>
+        Set how long the cached value remains valid.
+      </td>
+      <td>Optional.</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td colSpan={3}><strong>Rate Limit Configuration</strong></td>
+    </tr>
+    <tr>
+      <td>Rate Limit Key</td>
+      <td>
+        Key used to identify the rate limit scope for this route. Can be [passed as a variable](/content/developer-guides/passing-inputs-to-task-in-conductor).
+      </td>
+      <td>Optional.</td>
+    </tr>
+    <tr>
+      <td>Concurrent Execution Limit</td>
+      <td>
+        Maximum number of concurrent executions allowed for this route.
+      </td>
+      <td>Optional.</td>
+    </tr>
+  </tbody>
+</table>
+
+3. Select **Save**. 
 
 ### Test a route
 
-Test the route with a representative request before publishing it. Verify the response, response code, workflow input, workflow output, and execution status.
+You can test route behavior directly from the Conductor UI before exposing it as an API.
 
 #### Run a test request
 
-Use the route tester or generated cURL command. Include path parameters, query parameters, headers, auth key, and request body exactly as a client will send them.
+**To test a route:**
+
+1. Go to the **APIs** > **Services**, and select the service.
+2. In **Routes**, select the play icon next to the route to test.
+3. In **Path Parameters**, enter any required parameters for the endpoint.
+4. (If Authentication is using an API key) Replace *** with the API key copied in [Step 3](/content/developer-guides/api-gateway#step-3-configure-authentication-settings).
+5. In **Body**, enter the request payload as expected by the workflow.
+6. Select **Test Route**.
+7. Review the **Response** to verify the route works as expected. 
+
+<p align="center"><img src="/content/img/dev-guides/gateway/testing-api-route.gif" alt="Testing a route" width="100%" height="auto"/></p>
 
 #### Verify workflow execution
 
-Open the workflow execution created by the route and verify:
+**To confirm that the route triggered the workflow:**
 
-- The pre-request script produced the expected workflow input.
-- The workflow used the expected version.
-- Tasks completed or paused as expected.
-- The response came from the correct workflow output or `waitUntilTask`.
+1. Go to **Executions** > **Workflow** in your Conductor cluster and verify that the workflow is completed successfully.
+
+<p align="center"><img src="/content/img/dev-guides/gateway/api-gateway-triggered-execution.png" alt="Workflow triggered by the route" width="100%" height="auto"/></p>
+
+2. Select the **Workflow ID** to view the complete execution, including the workflow input and output.
+
+<p align="center"><img src="/content/img/dev-guides/gateway/api-gateway-triggered-workflow.png" alt="Workflow triggered by the route" width="100%" height="auto"/></p>
 
 #### View endpoint details
 
-Use the route details to copy the cURL command and publish OpenAPI documentation. Treat the generated OpenAPI document as the external contract for clients.
+**To get the cURL command:**
+
+1. Go to **APIs** > **Services**, and select your service. 
+2. Select a route to open its details. 
+3. You can get the cURL command for the actual endpoint here.
+
+<p align="center"><img src="/content/img/dev-guides/gateway/curl-command-for-api.png" alt="Curl command for API" width="100%" height="auto"/></p>
+
+**To view the OpenAPI documentation for the endpoint:**
+
+1. Go to **APIs** > **Services**, and select the service. 
+2. In **Metadata & Resources**, select **View API documentation**.
+
+<p align="center"><img src="/content/img/dev-guides/gateway/open-api-doc-for-api.jpg" alt="OpenAPI documentation for the APIs" width="100%" height="auto"/></p>
+
+## Production notes
+
+- Restrict **Allowed Origins** to known domains instead of using `*`, since a permissive CORS policy lets any origin call the endpoint from a browser.
+- Use **API Key** authentication for production services. **No Authentication** makes the endpoint publicly callable by anyone with the URL.
+- Pin the route's **Version** once the API is in production, so a new workflow version doesn't silently change API behavior.
+- Set a **Rate Limit Key** and **Concurrent Execution Limit** on routes that handle high or unpredictable traffic to protect the underlying workflow from overload.
+- Re-test pre-request and post-response scripts and schemas after any change, since a malformed script or schema causes valid requests to fail.
 
 ## Examples
 
-See the [feedback service API Gateway tutorial](/content/tutorials/expose-feedback-workflow-as-api).
-
-## Monitor API Gateway metrics
-
-Gateway metrics show how workflow-backed APIs behave in production: request volume, success rate, latency, and error rate at the service and route level.
-
-:::tip 5-minute path
-Monitor request rate, success rate, p95 latency, and error rate for every public route. When a metric degrades, inspect the triggered workflow executions for failed tasks, timeouts, and downstream dependency errors.
-:::
-
-### Metrics to watch
-
-| Metric | Use it for |
-| ------ | ---------- |
-| Total requests | Traffic volume and adoption. |
-| Request rate | Spikes, drops, or unexpected callers. |
-| Success rate | Route-level reliability. |
-| Average latency | General response time trends. |
-| P50/P95/P99 latency | Tail latency and slow dependency detection. |
-| Error rate | Route failures and bad input patterns. |
-| Error breakdown | Separating caller errors from platform, workflow, or dependency failures. |
-
-### Service vs route metrics
-
-Use service-level metrics to understand aggregate traffic across all routes. Use route-level metrics when you need to isolate a specific workflow-backed endpoint.
-
-| Level | Best for |
-| ----- | -------- |
-| Service | Overall API service health. |
-| Route | Debugging one endpoint, one workflow, or one client contract. |
-
-### Debug from gateway metrics to workflows
-
-Gateway metrics show the API symptom. Workflow execution details show the orchestration cause.
-
-1. Identify the route with elevated latency or errors.
-2. Check which workflow the route starts.
-3. Search workflow executions for that workflow and time window.
-4. Inspect failed or slow tasks.
-5. Compare route input schemas with workflow input validation.
-
-Useful follow-up pages:
-
-- [Search / Query Executions](/content/developer-guides/debugging-workflows)
-- [Handling Failures](/content/error-handling)
-- [Metrics and Observability](/content/developer-guides/metrics-and-observability)
-
-### Alerting recommendations
-
-Create alerts for:
-
-- Error rate above baseline for 5 minutes.
-- P95 latency above the route SLA.
-- Request rate dropping to zero for expected traffic.
-- Sudden 4xx increase after a schema or client change.
-- Sudden 5xx increase after a workflow, worker, or dependency change.
-
-### Production notes
-
-- Treat each gateway route as an API contract. Monitor it separately from the backing workflow.
-- Correlate request IDs, workflow IDs, and correlation IDs in logs.
-- Use explicit workflow timeouts for synchronous routes.
-- Keep long-running workflows asynchronous; do not make gateway clients wait for humans, waits, or extended retries.
+See an example of a [feedback service exposing a feedback workflow as a public API](/content/tutorials/expose-feedback-workflow-as-api).
 
 ## Next steps
 
-Use [MCP Gateway](/content/developer-guides/mcp-gateway) when AI agents should invoke workflows as governed tools.
+To learn how to monitor service and route performance, see [Gateway Metrics](/developer-guides/gateway-metrics).
