@@ -86,6 +86,7 @@ description: "Orkes Conductor documentation for building durable workflows, API 
       <div class="hp-feature-list">
         <div>Persisted state &mdash; resume after failure</div>
         <div>Isolated retries &mdash; only failed steps retry</div>
+        <div>Execution history &mdash; inputs, outputs, and a full audit trail</div>
         <div>Polyglot workers &mdash; Python, Java, Go, and more</div>
       </div>
       <a href="/content/quickstarts" class="hp-text-cta">Build your first workflow &rarr;</a>
