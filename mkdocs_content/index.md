@@ -16,7 +16,7 @@ description: "Orkes Conductor documentation for building durable workflows, API 
         <h2>Build unbreakable workflows and AI agents</h2>
         <p>Orkes Conductor is the managed enterprise platform for Conductor OSS &mdash; a durable workflow engine for production AI agents and distributed systems.</p>
         <div>
-          <a href="https://developer.orkescloud.com/" class="hp-cta-pill">Start for free <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+          <a href="https://developer.orkescloud.com/?ga_id=GA1.1.114307086.1749276711&amp;utm_source=google&amp;utm_medium=organic&amp;_gl=1*mi3s3s*_gcl_au*MTU0NDU1MTQuMTc3ODM5MTkyMw.." class="hp-cta-pill">Start for free <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
         </div>
       </div>
       <div class="hp-hero-right">
@@ -88,7 +88,7 @@ description: "Orkes Conductor documentation for building durable workflows, API 
         <div>Isolated retries &mdash; only failed steps retry</div>
         <div>Polyglot workers &mdash; Python, Java, Go, and more</div>
       </div>
-      <a href="/quickstarts" class="hp-text-cta">Build your first workflow &rarr;</a>
+      <a href="/content/quickstarts" class="hp-text-cta">Build your first workflow &rarr;</a>
     </div>
   </div>
   <div class="hp-build-panel agents">
@@ -112,7 +112,7 @@ agent <span style="color:var(--pun)">=</span> <span style="color:var(--fn)">Agen
         <div>Human-in-the-loop approvals and waits</div>
         <div class="hp-inline-chip">Decorate a typed function with <span class="hp-chip">@tool</span> &mdash; its docstring tells the LLM what it does.</div>
       </div>
-      <a href="/ai-agents/first-ai-agent" class="hp-text-cta">Build your first AI agent &rarr;</a>
+      <a href="/content/ai-agents/first-ai-agent" class="hp-text-cta">Build your first AI agent &rarr;</a>
     </div>
   </div>
 </section>
@@ -146,7 +146,7 @@ agent <span style="color:var(--pun)">=</span> <span style="color:var(--fn)">Agen
           <div class="hp-sdk-install-label">Install</div>
           <pre class="hp-sdk-install-cmd">pip install conductor-python</pre>
           <p class="hp-sdk-caption">Decorate a function with @worker_task &mdash; Conductor handles polling, retries, and threads.</p>
-          <a class="hp-sdk-link" href="/sdks/python">Python SDK reference &rarr;</a>
+          <a class="hp-sdk-link" href="/content/sdks/python">Python SDK reference &rarr;</a>
         </div>
         <div class="hp-sdk-code-col">
           <div class="hp-editor-chrome"><span class="hp-dot red"></span><span class="hp-dot yellow"></span><span class="hp-dot green"></span><span class="hp-filename">greet_worker</span></div>
@@ -163,7 +163,7 @@ def greet(name: str) -&gt; str:
           <div class="hp-sdk-install-label">Install</div>
           <pre class="hp-sdk-install-cmd">implementation 'org.conductoross:conductor-client:5.0.1'</pre>
           <p class="hp-sdk-caption">Annotate a method with @WorkerTask &mdash; Conductor handles polling, retries, and thread management.</p>
-          <a class="hp-sdk-link" href="/sdks/java">Java SDK reference &rarr;</a>
+          <a class="hp-sdk-link" href="/content/sdks/java">Java SDK reference &rarr;</a>
         </div>
         <div class="hp-sdk-code-col">
           <div class="hp-editor-chrome"><span class="hp-dot red"></span><span class="hp-dot yellow"></span><span class="hp-dot green"></span><span class="hp-filename">greet_worker</span></div>
@@ -179,7 +179,7 @@ public String greet(@InputParam("name") String name) {
           <div class="hp-sdk-install-label">Install</div>
           <pre class="hp-sdk-install-cmd">npm install @io-orkes/conductor-javascript</pre>
           <p class="hp-sdk-caption">Decorate an async function with @worker and return a task result.</p>
-          <a class="hp-sdk-link" href="/sdks/javascript">JavaScript SDK reference &rarr;</a>
+          <a class="hp-sdk-link" href="/content/sdks/javascript">JavaScript SDK reference &rarr;</a>
         </div>
         <div class="hp-sdk-code-col">
           <div class="hp-editor-chrome"><span class="hp-dot red"></span><span class="hp-dot yellow"></span><span class="hp-dot green"></span><span class="hp-filename">greet_worker</span></div>
@@ -200,7 +200,7 @@ async function greet(task: Task) {
           <div class="hp-sdk-install-label">Install</div>
           <pre class="hp-sdk-install-cmd">go get github.com/conductor-sdk/conductor-go</pre>
           <p class="hp-sdk-caption">Register a plain function as a worker &mdash; Conductor runs the polling loop.</p>
-          <a class="hp-sdk-link" href="/sdks/golang">Go SDK reference &rarr;</a>
+          <a class="hp-sdk-link" href="/content/sdks/golang">Go SDK reference &rarr;</a>
         </div>
         <div class="hp-sdk-code-col">
           <div class="hp-editor-chrome"><span class="hp-dot red"></span><span class="hp-dot yellow"></span><span class="hp-dot green"></span><span class="hp-filename">greet_worker</span></div>
@@ -217,7 +217,7 @@ async function greet(task: Task) {
           <div class="hp-sdk-install-label">Install</div>
           <pre class="hp-sdk-install-cmd">dotnet add package conductor-csharp</pre>
           <p class="hp-sdk-caption">Implement IWorkflowTask for a class-based worker with full control over execution.</p>
-          <a class="hp-sdk-link" href="/sdks/csharp">C# SDK reference &rarr;</a>
+          <a class="hp-sdk-link" href="/content/sdks/csharp">C# SDK reference &rarr;</a>
         </div>
         <div class="hp-sdk-code-col">
           <div class="hp-editor-chrome"><span class="hp-dot red"></span><span class="hp-dot yellow"></span><span class="hp-dot green"></span><span class="hp-filename">greet_worker</span></div>
@@ -247,37 +247,37 @@ async function greet(task: Task) {
     <h2 class="hp-eyebrow" style="margin-bottom:22px;">Core concepts</h2>
     <div class="hp-concepts-grid">
 
-      <a class="hp-concept-card" href="/core-concepts">
+      <a class="hp-concept-card" href="/content/core-concepts">
         <div class="hp-concept-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8"><circle cx="5" cy="6" r="2.2"></circle><circle cx="5" cy="18" r="2.2"></circle><circle cx="19" cy="12" r="2.2"></circle><path d="M7.2 6.6 16.8 11M7.2 17.4 16.8 13"></path></svg></div>
         <h3>Core Concepts</h3>
         <p>Workflows, tasks, workers, and the operators (loops, conditionals, fork/join) that control them.</p>
       </a>
 
-      <a class="hp-concept-card" href="/conductor-architecture">
+      <a class="hp-concept-card" href="/content/conductor-architecture">
         <div class="hp-concept-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8"><path d="M12 3 2 8l10 5 10-5-10-5Z"></path><path d="M2 12l10 5 10-5"></path><path d="M2 16l10 5 10-5"></path></svg></div>
         <h3>Conductor Architecture &amp; Worker Polling</h3>
         <p>The state machine evaluator, task queues, workers, data stores, and APIs behind Conductor.</p>
       </a>
 
-      <a class="hp-concept-card" href="/error-handling">
+      <a class="hp-concept-card" href="/content/error-handling">
         <div class="hp-concept-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8"><path d="M21 12a9 9 0 1 1-3-6.7"></path><path d="M21 4v4h-4"></path></svg></div>
         <h3>Handling Failures</h3>
         <p>Configure retries, timeouts, and failure workflows to keep executions reliable.</p>
       </a>
 
-      <a class="hp-concept-card" href="/agentic-workflow-engine">
+      <a class="hp-concept-card" href="/content/agentic-workflow-engine">
         <div class="hp-concept-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8"><path d="M12 3v3M5 8l1.6 1.6M19 8l-1.6 1.6M12 21a5 5 0 0 0 5-5c0-3-2-4-2-7a3 3 0 0 0-6 0c0 3-2 4-2 7a5 5 0 0 0 5 5Z"></path></svg></div>
         <h3>Agentic Workflow Engine</h3>
         <p>Durable AI agents, reliable tool execution, human approvals, retries, and audit history.</p>
       </a>
 
-      <a class="hp-concept-card" href="/category/event-driven-orchestration">
+      <a class="hp-concept-card" href="/content/category/event-driven-orchestration">
         <div class="hp-concept-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8"><path d="M3 12a9 9 0 0 1 9-9M12 3a9 9 0 0 1 9 9M7 12a5 5 0 0 1 5-5"></path><circle cx="12" cy="12" r="1.6"></circle></svg></div>
         <h3>Event-Driven Orchestration</h3>
         <p>React to webhooks, publish events, and coordinate with Kafka, RabbitMQ, SQS, and more.</p>
       </a>
 
-      <a class="hp-concept-card" href="/category/access-control-and-security">
+      <a class="hp-concept-card" href="/content/category/access-control-and-security">
         <div class="hp-concept-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8"><rect x="4" y="10" width="16" height="11" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></svg></div>
         <h3>Role Based Access Control</h3>
         <p>Configure RBAC for users, groups, applications, roles, permissions, and tags.</p>

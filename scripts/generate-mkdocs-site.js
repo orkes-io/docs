@@ -22,6 +22,10 @@ const DEVELOPER_EDITION_URL =
 const AGENTSPAN_RELATIONSHIP_COPY =
   "Agentspan is the developer-facing agent runtime. Conductor OSS is the durable workflow engine underneath. Orkes Conductor is the managed enterprise platform for operating Conductor-based systems at scale.";
 
+// Home page only — Sora + JetBrains Mono, scoped to .home-wrapper via CSS (rest of the site keeps the OSS base font)
+const HOME_PAGE_FONT_IMPORT =
+  "@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');\n";
+
 const ORKES_COLOR_REPLACEMENTS = [
   [/Zinc \+ Orange Theme/g, "Zinc + Orkes Purple Theme"],
   [/#f97316/gi, "#6c37bd"],
@@ -1527,159 +1531,342 @@ description: "Orkes Conductor documentation for building durable workflows, API 
 
 <div class="home-wrapper">
 
-<div class="hero">
-  <h1 class="hero-title">Build unbreakable workflows<br/><span class="hero-highlight">and AI agents.</span></h1>
-  <p class="hero-subtitle">Orkes Conductor is the managed enterprise platform for Conductor OSS, a durable workflow engine for production AI agents and distributed systems.</p>
-  <p class="hero-differentiators">Keep your frameworks and services. Add durable execution, human waits, retries, replay, and governance.</p>
-  <div class="hero-actions">
-    <a href="${DEVELOPER_EDITION_URL}" class="btn-primary">Start for free<span class="btn-arrow">&rarr;</span></a>
-    <a href="${BASE_URL}/quickstarts" class="btn-ghost">Read the quickstarts</a>
-  </div>
-  <div class="hero-install"><code>$ npm install -g @conductor-oss/conductor-cli</code></div>
-  <div class="hero-ai-card">
-    <div class="hero-ai-header">
-      <h3>Build with AI Agents</h3>
-    </div>
-    <div class="hero-ai-body">
-      <div class="hero-ai-item">
-        <a href="${BASE_URL}/agentic-workflow-engine" class="hero-ai-link">Agentic Workflow Engine &rarr;</a>
-        <span class="hero-ai-sub">Persist state, retries, waits, tool calls, and audit history for production agents.</span>
+<!-- ===================== HERO ===================== -->
+<section class="hp-section">
+  <div class="hp-wrap">
+    <h1 class="hp-title">Orkes Conductor Documentation</h1>
+    <div class="hp-hero-panel">
+      <div class="hp-hero-left">
+        <h2>Build unbreakable workflows and AI agents</h2>
+        <p>Orkes Conductor is the managed enterprise platform for Conductor OSS &mdash; a durable workflow engine for production AI agents and distributed systems.</p>
+        <div>
+          <a href="${DEVELOPER_EDITION_URL}" class="hp-cta-pill">Start for free <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+        </div>
       </div>
-      <div class="hero-ai-item">
-        <a href="${BASE_URL}/ai-agents/production-agent-architecture" class="hero-ai-link">Production Agent Architecture &rarr;</a>
-        <span class="hero-ai-sub">Keep reasoning in the agent framework and move execution into Conductor.</span>
+      <div class="hp-hero-right">
+        <div class="hp-editor-chrome">
+          <span class="hp-dot red"></span><span class="hp-dot yellow"></span><span class="hp-dot green"></span>
+          <span class="hp-filename">order_fulfillment</span>
+        </div>
+        <div class="hp-diagram">
+          <div class="hp-diagram-node">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.9"><path d="M8 5v14l11-7z"></path></svg>
+            <span>Trigger</span>
+          </div>
+          <div class="hp-diagram-connector"></div>
+          <div class="hp-diagram-node accent">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8"><path d="M12 3v3M5 8l1.6 1.6M19 8l-1.6 1.6M12 21a5 5 0 0 0 5-5c0-3-2-4-2-7a3 3 0 0 0-6 0c0 3-2 4-2 7a5 5 0 0 0 5 5Z"></path></svg>
+            <span>Agent reasoning</span>
+          </div>
+          <div class="hp-diagram-connector"></div>
+          <div class="hp-diagram-row">
+            <div class="hp-diagram-node">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.8"><circle cx="12" cy="12" r="3"></circle><path d="M19 12a7 7 0 0 0-.1-1l2-1.5-2-3.4-2.3 1a7 7 0 0 0-1.7-1l-.3-2.5H9.4l-.3 2.5a7 7 0 0 0-1.7 1l-2.3-1-2 3.4L5 11a7 7 0 0 0 0 2l-2 1.5 2 3.4 2.3-1a7 7 0 0 0 1.7 1l.3 2.5h4.2l.3-2.5a7 7 0 0 0 1.7-1l2.3 1 2-3.4-2-1.5c.1-.3.1-.7.1-1Z"></path></svg>
+              <span>Tool</span>
+            </div>
+            <div class="hp-diagram-node">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.8"><circle cx="5" cy="6" r="2"></circle><circle cx="5" cy="18" r="2"></circle><circle cx="19" cy="12" r="2"></circle><path d="M7 6.4 17 11M7 17.6 17 13"></path></svg>
+              <span>Workflow</span>
+            </div>
+            <div class="hp-diagram-node">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.8"><circle cx="12" cy="8" r="3.2"></circle><path d="M5 20a7 7 0 0 1 14 0"></path></svg>
+              <span>Human</span>
+            </div>
+          </div>
+          <div class="hp-diagram-connector"></div>
+          <div class="hp-diagram-node result">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2.2"><path d="M20 6 9 17l-5-5"></path></svg>
+            <span>Result</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</section>
 
-<div class="value-strip">
-  <div class="value-item"><div class="value-metric">Persisted state</div><div class="value-label">Resume After Failure</div></div>
-  <div class="value-divider"></div>
-  <div class="value-item"><div class="value-metric">Isolated retries</div><div class="value-label">Only Failed Steps Retry</div></div>
-  <div class="value-divider"></div>
-  <div class="value-item"><div class="value-metric">Durable waits</div><div class="value-label">Humans, Timers, Callbacks</div></div>
-  <div class="value-divider"></div>
-  <div class="value-item"><div class="value-metric">Execution history</div><div class="value-label">Inputs, Outputs, Audit</div></div>
-</div>
-
-<div class="features-section" id="built-for-production">
-  <div class="section-header-inline">
-    <h2>Built for workflows that can't afford to fail.</h2>
-  </div>
-  <div class="features-grid">
-    <div class="feature-card feature-accent">
-      <div class="feature-tag">Core</div>
-      <h3>Durable execution by default</h3>
-      <p>Workflow state is persisted at every step. Survive server restarts, worker crashes, and network failures with retries, timeouts, and compensation flows.</p>
-      <a href="${BASE_URL}/error-handling" class="feature-link">Failure semantics &rarr;</a>
-    </div>
-    <div class="feature-card">
-      <div class="feature-tag">Primitives</div>
-      <h3>Replay, restart, pause, resume</h3>
-      <p>Pause workflows on time, external signals, webhooks, or human approval. Resume safely after minutes, hours, or days.</p>
-      <a href="${BASE_URL}/developer-guides/running-workflows" class="feature-link">How it works &rarr;</a>
-    </div>
-    <div class="feature-card">
-      <div class="feature-tag">AI</div>
-      <h3>AI agent orchestration</h3>
-      <p>Run production agents as durable workflows. Keep agent frameworks for reasoning and use Conductor for state, tool execution, approvals, retries, and auditability.</p>
-      <a href="${BASE_URL}/agentic-workflow-engine" class="feature-link">Agentic workflow engine &rarr;</a>
-    </div>
-    <div class="feature-card">
-      <div class="feature-tag">Workers</div>
-      <h3>Polyglot workers</h3>
-      <p>Write task workers with SDKs in Python, Java, Go, .NET/C#, Ruby, Rust, and TypeScript, or from any service that can poll the task API.</p>
-      <a href="${BASE_URL}/developer-guides/using-workers" class="feature-link">Worker guide &rarr;</a>
+<!-- ===================== BUILD ON ORKES ===================== -->
+<section class="hp-section" style="padding:52px 40px 18px;">
+  <div class="hp-wrap"><h2 class="hp-eyebrow">Build on Orkes</h2></div>
+</section>
+<section class="hp-build-split">
+  <div class="hp-build-panel workflows">
+    <div class="hp-build-inner">
+      <h3>Build Workflows</h3>
+      <p>Model business logic as durable workflows &mdash; sequential, parallel, conditional, and event-driven.</p>
+      <div class="hp-code-block"><pre><code><span style="color:var(--pun)">{</span>
+  <span style="color:var(--kw)">"name"</span><span style="color:var(--pun)">:</span> <span style="color:var(--str)">"hello_workflow"</span><span style="color:var(--pun)">,</span>
+  <span style="color:var(--kw)">"version"</span><span style="color:var(--pun)">:</span> <span style="color:var(--dec)">1</span><span style="color:var(--pun)">,</span>
+  <span style="color:var(--kw)">"tasks"</span><span style="color:var(--pun)">:</span> <span style="color:var(--pun)">[</span>
+    <span style="color:var(--pun)">{</span>
+      <span style="color:var(--kw)">"name"</span><span style="color:var(--pun)">:</span> <span style="color:var(--str)">"fetch_data"</span><span style="color:var(--pun)">,</span>
+      <span style="color:var(--kw)">"type"</span><span style="color:var(--pun)">:</span> <span style="color:var(--str)">"HTTP"</span>
+    <span style="color:var(--pun)">},</span>
+    <span style="color:var(--pun)">{</span>
+      <span style="color:var(--kw)">"name"</span><span style="color:var(--pun)">:</span> <span style="color:var(--str)">"parse_response"</span><span style="color:var(--pun)">,</span>
+      <span style="color:var(--kw)">"type"</span><span style="color:var(--pun)">:</span> <span style="color:var(--str)">"INLINE"</span>
+    <span style="color:var(--pun)">}</span>
+  <span style="color:var(--pun)">]</span>
+<span style="color:var(--pun)">}</span></code></pre></div>
+      <div class="hp-feature-list">
+        <div>Persisted state &mdash; resume after failure</div>
+        <div>Isolated retries &mdash; only failed steps retry</div>
+        <div>Polyglot workers &mdash; Python, Java, Go, and more</div>
+      </div>
+      <a href="${BASE_URL}/quickstarts" class="hp-text-cta">Build your first workflow &rarr;</a>
     </div>
   </div>
-</div>
+  <div class="hp-build-panel agents">
+    <div class="hp-build-inner">
+      <h3>Build AI Agents</h3>
+      <p>Build tool-calling agents with the Orkes Agent SDK &mdash; durable by default, with automatic crash recovery.</p>
+      <div class="hp-code-block"><pre><code><span style="color:var(--kw)">from</span> agentspan.agents <span style="color:var(--kw)">import</span> Agent<span style="color:var(--pun)">,</span> AgentRuntime<span style="color:var(--pun)">,</span> tool
 
-<div class="arch-section">
-  <div class="section-header-inline">
-    <h2>Understand the engine.</h2>
-  </div>
-  <div class="arch-grid">
-    <a href="${BASE_URL}/conductor-architecture" class="arch-card">
-      <div class="arch-number">01</div>
-      <h3>Architecture</h3>
-      <p>Worker-task queues, persistence, polling, and distributed execution.</p>
-    </a>
-    <a href="${BASE_URL}/core-concepts" class="arch-card">
-      <div class="arch-number">02</div>
-      <h3>Core Concepts</h3>
-      <p>Workflows, tasks, workers, and workflow executions.</p>
-    </a>
-    <a href="${BASE_URL}/reference-docs/worker-task" class="arch-card">
-      <div class="arch-number">03</div>
-      <h3>Worker Tasks</h3>
-      <p>How custom workers poll, execute, and complete tasks.</p>
-    </a>
-    <a href="${BASE_URL}/reference-docs/system-tasks/http" class="arch-card">
-      <div class="arch-number">04</div>
-      <h3>System Tasks</h3>
-      <p>Built-in task primitives for HTTP, events, AI, and more.</p>
-    </a>
-  </div>
-</div>
+<span style="color:var(--dec)">@tool</span>
+<span style="color:var(--kw)">def</span> <span style="color:var(--fn)">get_weather</span><span style="color:var(--pun)">(</span>city<span style="color:var(--pun)">:</span> <span style="color:var(--typ)">str</span><span style="color:var(--pun)">)</span> -&gt; <span style="color:var(--typ)">dict</span><span style="color:var(--pun)">:</span>
+    <span style="color:var(--str)">"""Get current weather for a city."""</span>
+    ...
 
-<div class="resources-section">
-  <div class="section-header-inline">
-    <h2>More resources.</h2>
+agent <span style="color:var(--pun)">=</span> <span style="color:var(--fn)">Agent</span><span style="color:var(--pun)">(</span>
+    name<span style="color:var(--pun)">=</span><span style="color:var(--str)">"weatherbot"</span><span style="color:var(--pun)">,</span>
+    model<span style="color:var(--pun)">=</span><span style="color:var(--str)">"anthropic/claude-sonnet-4-6"</span><span style="color:var(--pun)">,</span>
+    tools<span style="color:var(--pun)">=</span><span style="color:var(--pun)">[</span>get_weather<span style="color:var(--pun)">],</span>
+<span style="color:var(--pun)">)</span></code></pre></div>
+      <div class="hp-feature-list">
+        <div>Durable agent state &mdash; resumes after a crash, no lost progress</div>
+        <div>Human-in-the-loop approvals and waits</div>
+        <div class="hp-inline-chip">Decorate a typed function with <span class="hp-chip">@tool</span> &mdash; its docstring tells the LLM what it does.</div>
+      </div>
+      <a href="${BASE_URL}/ai-agents/first-ai-agent" class="hp-text-cta">Build your first AI agent &rarr;</a>
+    </div>
   </div>
-  <div class="resources-grid">
-    <a href="https://www.orkes.io/changelog" class="resource-card">
-      <span class="resource-kicker">Product updates</span>
+</section>
+
+<!-- ===================== SDK STRIP ===================== -->
+<section class="hp-section" style="padding:72px 40px;">
+  <div class="hp-wrap">
+    <div class="hp-sdk-header">
+      <span class="hp-sdk-eyebrow">Developer first</span>
+      <h2>SDKs in your favorite language</h2>
+      <p>Native clients for the languages your team already ships.</p>
+    </div>
+
+    <input type="radio" name="hp-sdklang" id="hp-sdk-python" class="hp-sdk-input" checked>
+    <input type="radio" name="hp-sdklang" id="hp-sdk-java" class="hp-sdk-input">
+    <input type="radio" name="hp-sdklang" id="hp-sdk-js" class="hp-sdk-input">
+    <input type="radio" name="hp-sdklang" id="hp-sdk-go" class="hp-sdk-input">
+    <input type="radio" name="hp-sdklang" id="hp-sdk-csharp" class="hp-sdk-input">
+
+    <div class="hp-sdk-card">
+      <div class="hp-sdk-tabbar">
+        <label for="hp-sdk-python" class="hp-sdk-tab">Python</label>
+        <label for="hp-sdk-java" class="hp-sdk-tab">Java</label>
+        <label for="hp-sdk-js" class="hp-sdk-tab">JavaScript</label>
+        <label for="hp-sdk-go" class="hp-sdk-tab">Go</label>
+        <label for="hp-sdk-csharp" class="hp-sdk-tab">C#</label>
+      </div>
+
+      <div class="hp-sdk-panel" data-panel="python">
+        <div class="hp-sdk-install-col">
+          <div class="hp-sdk-install-label">Install</div>
+          <pre class="hp-sdk-install-cmd">pip install conductor-python</pre>
+          <p class="hp-sdk-caption">Decorate a function with @worker_task &mdash; Conductor handles polling, retries, and threads.</p>
+          <a class="hp-sdk-link" href="${BASE_URL}/sdks/python">Python SDK reference &rarr;</a>
+        </div>
+        <div class="hp-sdk-code-col">
+          <div class="hp-editor-chrome"><span class="hp-dot red"></span><span class="hp-dot yellow"></span><span class="hp-dot green"></span><span class="hp-filename">greet_worker</span></div>
+          <pre>from conductor.client.worker.worker_task import worker_task
+
+@worker_task(task_definition_name="greet")
+def greet(name: str) -&gt; str:
+    return f"Hello, {name}!"</pre>
+        </div>
+      </div>
+
+      <div class="hp-sdk-panel" data-panel="java">
+        <div class="hp-sdk-install-col">
+          <div class="hp-sdk-install-label">Install</div>
+          <pre class="hp-sdk-install-cmd">implementation 'org.conductoross:conductor-client:5.0.1'</pre>
+          <p class="hp-sdk-caption">Annotate a method with @WorkerTask &mdash; Conductor handles polling, retries, and thread management.</p>
+          <a class="hp-sdk-link" href="${BASE_URL}/sdks/java">Java SDK reference &rarr;</a>
+        </div>
+        <div class="hp-sdk-code-col">
+          <div class="hp-editor-chrome"><span class="hp-dot red"></span><span class="hp-dot yellow"></span><span class="hp-dot green"></span><span class="hp-filename">greet_worker</span></div>
+          <pre>@WorkerTask("greet")
+public String greet(@InputParam("name") String name) {
+    return "Hello, " + name + "!";
+}</pre>
+        </div>
+      </div>
+
+      <div class="hp-sdk-panel" data-panel="js">
+        <div class="hp-sdk-install-col">
+          <div class="hp-sdk-install-label">Install</div>
+          <pre class="hp-sdk-install-cmd">npm install @io-orkes/conductor-javascript</pre>
+          <p class="hp-sdk-caption">Decorate an async function with @worker and return a task result.</p>
+          <a class="hp-sdk-link" href="${BASE_URL}/sdks/javascript">JavaScript SDK reference &rarr;</a>
+        </div>
+        <div class="hp-sdk-code-col">
+          <div class="hp-editor-chrome"><span class="hp-dot red"></span><span class="hp-dot yellow"></span><span class="hp-dot green"></span><span class="hp-filename">greet_worker</span></div>
+          <pre>import { worker } from "@io-orkes/conductor-javascript";
+
+@worker({ taskDefName: "greet" })
+async function greet(task: Task) {
+  return {
+    status: "COMPLETED",
+    outputData: { result: \`Hello \${task.inputData.name}\` },
+  };
+}</pre>
+        </div>
+      </div>
+
+      <div class="hp-sdk-panel" data-panel="go">
+        <div class="hp-sdk-install-col">
+          <div class="hp-sdk-install-label">Install</div>
+          <pre class="hp-sdk-install-cmd">go get github.com/conductor-sdk/conductor-go</pre>
+          <p class="hp-sdk-caption">Register a plain function as a worker &mdash; Conductor runs the polling loop.</p>
+          <a class="hp-sdk-link" href="${BASE_URL}/sdks/golang">Go SDK reference &rarr;</a>
+        </div>
+        <div class="hp-sdk-code-col">
+          <div class="hp-editor-chrome"><span class="hp-dot red"></span><span class="hp-dot yellow"></span><span class="hp-dot green"></span><span class="hp-filename">greet_worker</span></div>
+          <pre>func Greet(task *model.Task) (interface{}, error) {
+    return map[string]interface{}{
+        "hello": "Hello, " + fmt.Sprintf("%v", task.InputData["person_to_be_greated"]),
+    }, nil
+}</pre>
+        </div>
+      </div>
+
+      <div class="hp-sdk-panel" data-panel="csharp">
+        <div class="hp-sdk-install-col">
+          <div class="hp-sdk-install-label">Install</div>
+          <pre class="hp-sdk-install-cmd">dotnet add package conductor-csharp</pre>
+          <p class="hp-sdk-caption">Implement IWorkflowTask for a class-based worker with full control over execution.</p>
+          <a class="hp-sdk-link" href="${BASE_URL}/sdks/csharp">C# SDK reference &rarr;</a>
+        </div>
+        <div class="hp-sdk-code-col">
+          <div class="hp-editor-chrome"><span class="hp-dot red"></span><span class="hp-dot yellow"></span><span class="hp-dot green"></span><span class="hp-filename">greet_worker</span></div>
+          <pre>public class GreetWorker : IWorkflowTask
+{
+    public string TaskType =&gt; "greet";
+    public WorkflowTaskExecutorConfiguration WorkerSettings { get; } = new();
+
+    public TaskResult Execute(Task task)
+    {
+        var name = task.InputData["name"];
+        var result = task.Completed();
+        result.OutputData = new Dictionary&lt;string, object&gt; { ["result"] = $"Hello, {name}!" };
+        return result;
+    }
+}</pre>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CORE CONCEPTS ===================== -->
+<section class="hp-section" style="padding:16px 40px 72px;">
+  <div class="hp-wrap">
+    <h2 class="hp-eyebrow" style="margin-bottom:22px;">Core concepts</h2>
+    <div class="hp-concepts-grid">
+
+      <a class="hp-concept-card" href="${BASE_URL}/core-concepts">
+        <div class="hp-concept-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8"><circle cx="5" cy="6" r="2.2"></circle><circle cx="5" cy="18" r="2.2"></circle><circle cx="19" cy="12" r="2.2"></circle><path d="M7.2 6.6 16.8 11M7.2 17.4 16.8 13"></path></svg></div>
+        <h3>Core Concepts</h3>
+        <p>Workflows, tasks, workers, and the operators (loops, conditionals, fork/join) that control them.</p>
+      </a>
+
+      <a class="hp-concept-card" href="${BASE_URL}/conductor-architecture">
+        <div class="hp-concept-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8"><path d="M12 3 2 8l10 5 10-5-10-5Z"></path><path d="M2 12l10 5 10-5"></path><path d="M2 16l10 5 10-5"></path></svg></div>
+        <h3>Conductor Architecture &amp; Worker Polling</h3>
+        <p>The state machine evaluator, task queues, workers, data stores, and APIs behind Conductor.</p>
+      </a>
+
+      <a class="hp-concept-card" href="${BASE_URL}/error-handling">
+        <div class="hp-concept-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8"><path d="M21 12a9 9 0 1 1-3-6.7"></path><path d="M21 4v4h-4"></path></svg></div>
+        <h3>Handling Failures</h3>
+        <p>Configure retries, timeouts, and failure workflows to keep executions reliable.</p>
+      </a>
+
+      <a class="hp-concept-card" href="${BASE_URL}/agentic-workflow-engine">
+        <div class="hp-concept-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8"><path d="M12 3v3M5 8l1.6 1.6M19 8l-1.6 1.6M12 21a5 5 0 0 0 5-5c0-3-2-4-2-7a3 3 0 0 0-6 0c0 3-2 4-2 7a5 5 0 0 0 5 5Z"></path></svg></div>
+        <h3>Agentic Workflow Engine</h3>
+        <p>Durable AI agents, reliable tool execution, human approvals, retries, and audit history.</p>
+      </a>
+
+      <a class="hp-concept-card" href="${BASE_URL}/category/event-driven-orchestration">
+        <div class="hp-concept-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8"><path d="M3 12a9 9 0 0 1 9-9M12 3a9 9 0 0 1 9 9M7 12a5 5 0 0 1 5-5"></path><circle cx="12" cy="12" r="1.6"></circle></svg></div>
+        <h3>Event-Driven Orchestration</h3>
+        <p>React to webhooks, publish events, and coordinate with Kafka, RabbitMQ, SQS, and more.</p>
+      </a>
+
+      <a class="hp-concept-card" href="${BASE_URL}/category/access-control-and-security">
+        <div class="hp-concept-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8"><rect x="4" y="10" width="16" height="11" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></svg></div>
+        <h3>Role Based Access Control</h3>
+        <p>Configure RBAC for users, groups, applications, roles, permissions, and tags.</p>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===================== WHAT'S NEW + COMMUNITY ===================== -->
+<section class="hp-section" style="padding:8px 40px 80px;">
+  <div class="hp-wrap hp-resources-grid">
+
+    <div class="hp-resource-card featured">
+      <span class="hp-resource-kicker">Product updates</span>
       <h3>Changelog</h3>
-      <p>See what's new in Orkes Conductor: features, enhancements, and product updates.</p>
-      <span class="resource-link">View changelog &rarr;</span>
-    </a>
-    <a href="https://orkes.io/academy/" class="resource-card">
-      <span class="resource-kicker">Learning</span>
+      <div class="hp-changelog-list">
+        <a class="hp-changelog-item" href="https://orkes.io/changelog">
+          <div class="hp-changelog-meta">
+            <span class="hp-changelog-dot"></span><span class="hp-changelog-date">Jun 26, 2026</span><span class="hp-changelog-tag">Integrations</span>
+          </div>
+          <div class="hp-changelog-headline">Connect workflows to Slack, GitHub, Jira &amp; more</div>
+        </a>
+        <a class="hp-changelog-item" href="https://orkes.io/changelog">
+          <div class="hp-changelog-meta">
+            <span class="hp-changelog-date">Jun 05, 2026</span><span class="hp-changelog-tag">Integrations</span>
+          </div>
+          <div class="hp-changelog-headline">Connect workflows to Google Workspace, Notion &amp; more</div>
+        </a>
+        <a class="hp-changelog-item" href="https://orkes.io/changelog">
+          <div class="hp-changelog-meta">
+            <span class="hp-changelog-date">May 01, 2026</span><span class="hp-changelog-tag">Platform</span>
+          </div>
+          <div class="hp-changelog-headline">AI Assistant supports Claude and OpenAI</div>
+        </a>
+      </div>
+      <a class="hp-resource-cta" href="https://orkes.io/changelog">View changelog &rarr;</a>
+    </div>
+
+    <div class="hp-resource-card">
+      <span class="hp-resource-kicker">Learning</span>
       <h3>Academy</h3>
       <p>Learn workflow orchestration with hands-on labs, structured paths, and certification from Orkes.</p>
-      <span class="resource-link">Explore courses &rarr;</span>
-    </a>
-    <a href="https://orkes.io/blog/" class="resource-card">
-      <span class="resource-kicker">Articles</span>
+      <div class="hp-resource-links">
+        <a href="https://orkes.io/academy/introduction">Introduction <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--faint)" stroke-width="2"><path d="M9 6l6 6-6 6"></path></svg></a>
+        <a href="https://orkes.io/academy/architecture-design">Architecture &amp; Design <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--faint)" stroke-width="2"><path d="M9 6l6 6-6 6"></path></svg></a>
+        <a href="https://orkes.io/academy/projects">Projects <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--faint)" stroke-width="2"><path d="M9 6l6 6-6 6"></path></svg></a>
+      </div>
+      <a class="hp-resource-cta" href="https://orkes.io/academy">Explore courses &rarr;</a>
+    </div>
+
+    <div class="hp-resource-card">
+      <span class="hp-resource-kicker">Articles</span>
       <h3>Blog</h3>
       <p>Technical use cases, community posts, and product updates from the Orkes team.</p>
-      <span class="resource-link">Read blogs &rarr;</span>
-    </a>
-  </div>
-</div>
+      <div class="hp-resource-links">
+        <a href="https://orkes.io/blog/how-to-build-a-screenshot-to-react-ai-agent">How to Build a UI Screenshot-to-Code AI Agent <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--faint)" stroke-width="2"><path d="M9 6l6 6-6 6"></path></svg></a>
+        <a href="https://orkes.io/blog/what-is-loop-engineering">What Is Loop Engineering? <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--faint)" stroke-width="2"><path d="M9 6l6 6-6 6"></path></svg></a>
+        <a href="https://orkes.io/blog/building-durable-loops-with-conductor-part-1">Building Durable Loops with Conductor, Part 1 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--faint)" stroke-width="2"><path d="M9 6l6 6-6 6"></path></svg></a>
+      </div>
+      <a class="hp-resource-cta" href="https://orkes.io/blog/">Read blogs &rarr;</a>
+    </div>
 
-<div class="faq-section">
-  <div class="section-header-inline">
-    <h2>Frequently asked questions.</h2>
   </div>
-  <div class="faq-grid">
-    <details class="faq-item">
-      <summary>How do I run Orkes Conductor?</summary>
-      <p>Use Developer Edition to start quickly, or follow the setup guide to connect to Orkes Cloud.</p>
-    </details>
-    <details class="faq-item">
-      <summary>Can Orkes Conductor orchestrate AI agents and LLMs?</summary>
-      <p>Yes. Orkes Conductor supports native AI tasks, LLM providers, vector databases, MCP tools, and human-in-the-loop workflows. It is the durable execution runtime under production agents.</p>
-    </details>
-    <details class="faq-item">
-      <summary>Is Conductor still maintained?</summary>
-      <p>Yes. Conductor OSS continues as an actively maintained open-source project under the Conductor OSS community, with Orkes contributing maintenance, engineering, documentation, and enterprise support.</p>
-    </details>
-    <details class="faq-item">
-      <summary>Is Conductor an AI framework?</summary>
-      <p>No. Use agent frameworks for reasoning, prompts, and model-specific loops; use Conductor for durable execution, persisted state, retries, waits, human approval, auditability, and governance.</p>
-    </details>
-    <details class="faq-item">
-      <summary>Can I replay or retry workflows?</summary>
-      <p>Yes. Conductor preserves execution state so you can retry failed tasks, rerun from a task, or restart workflows.</p>
-    </details>
-    <details class="faq-item">
-      <summary>Is Orkes Conductor compatible with Conductor OSS?</summary>
-      <p>Yes. Orkes Conductor is built on Conductor and keeps compatibility with the core engine and APIs.</p>
-    </details>
-  </div>
-</div>
+</section>
 
 </div>
 `;
@@ -2599,7 +2786,7 @@ function prepareOutput() {
   for (const [pattern, replacement] of ORKES_COLOR_REPLACEMENTS) {
     customCss = customCss.replace(pattern, replacement);
   }
-  write(path.join(OUT_DIR, "css", "custom.css"), customCss);
+  write(path.join(OUT_DIR, "css", "custom.css"), HOME_PAGE_FONT_IMPORT + customCss);
   copyRecursive(path.join(OSS_DOCS, "img", "og-conductor.png"), path.join(OUT_DIR, "img", "og-conductor.png"));
   fs.appendFileSync(
     path.join(OUT_DIR, "css", "custom.css"),
@@ -2908,6 +3095,230 @@ a.repo-link:hover {
     min-height: 0;
   }
 }
+
+/* ---------- Home page tokens (Sora + JetBrains Mono, scoped) ---------- */
+.home-wrapper {
+  font-family: 'Sora', system-ui, sans-serif;
+  --bg: #FFFFFF; --surface: #FFFFFF; --panel-1: #F4F4F7; --panel-2: #F4EFFC;
+  --border: #E7E4F0; --text: #17162B; --muted: #5A5872; --faint: #8E8CA3;
+  --accent: #6D28D9; --accent-soft: rgba(109,40,217,0.09); --shadow: rgba(30,20,70,0.10);
+  --code-bg: #FFFFFF; --code-fg: #2B2A45; --chip-bg: #FFFFFF;
+  --kw: #7C3AED; --str: #16A34A; --pun: #8E8CA3; --dec: #EA580C; --fn: #2563EB; --typ: #0891B2;
+}
+[data-md-color-scheme="slate"] .home-wrapper {
+  --bg: #0E0D1C; --surface: #171533; --panel-1: #15142E; --panel-2: #1B1440;
+  --border: #2A2748; --text: #ECEBF5; --muted: #A6A3C0; --faint: #6F6C90;
+  --accent: #A78BFA; --accent-soft: rgba(167,139,250,0.15); --shadow: rgba(0,0,0,0.4);
+  --code-bg: #0B0A18; --code-fg: #D7D5EA; --chip-bg: #0F0D24;
+  --kw: #C4A6FF; --str: #5FD48A; --pun: #6F6C90; --dec: #FB923C; --fn: #7AA6FF; --typ: #4CC7DE;
+}
+.home-wrapper a { color: var(--accent); text-decoration: none; }
+.home-wrapper a:hover { opacity: .82; }
+@keyframes cdpulse { 0%, 100% { opacity: 1; } 50% { opacity: .3; } }
+
+/* ---------- Page title + Hero ---------- */
+.hp-section { padding: 52px 40px 8px; background: var(--bg); }
+.hp-wrap { max-width: 1160px; margin: 0 auto; }
+.home-wrapper h1.hp-title {
+  font-size: 42px; font-weight: 700; letter-spacing: -.03em; color: var(--text); margin: 0 0 26px;
+}
+.hp-hero-panel {
+  display: grid; grid-template-columns: 0.95fr 1.05fr;
+  background: var(--panel-1); border: 1px solid var(--border); border-radius: 18px; overflow: hidden;
+}
+.hp-hero-left { padding: 44px; display: flex; flex-direction: column; justify-content: center; }
+.home-wrapper .hp-hero-left h2 {
+  font-size: 28px; line-height: 1.2; font-weight: 700; letter-spacing: -.02em; color: var(--text); margin: 0 0 16px;
+}
+.hp-hero-left p {
+  font-size: 16px; line-height: 1.6; color: var(--muted); margin: 0 0 28px; max-width: 400px;
+}
+.hp-cta-pill {
+  display: inline-flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 600;
+  color: #fff !important; background: var(--accent); padding: 12px 26px; border-radius: 999px;
+}
+.hp-hero-right { background: var(--surface); border-left: 1px solid var(--border); min-width: 0; display: flex; flex-direction: column; }
+.hp-editor-chrome { display: flex; align-items: center; gap: 7px; padding: 13px 18px; border-bottom: 1px solid var(--border); }
+.hp-dot { width: 11px; height: 11px; border-radius: 50%; }
+.hp-dot.red { background: #FF5F57; }
+.hp-dot.yellow { background: #FEBC2E; }
+.hp-dot.green { background: #28C840; }
+.hp-filename { margin-left: 8px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--faint); }
+.hp-diagram {
+  flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 32px 24px;
+  background-image: radial-gradient(circle at 1px 1px, var(--border) 1px, transparent 0); background-size: 22px 22px;
+}
+.hp-diagram-node {
+  display: flex; align-items: center; gap: 10px; background: var(--panel-1); border: 1px solid var(--border);
+  border-radius: 12px; padding: 11px 18px; box-shadow: 0 3px 10px var(--shadow);
+}
+.hp-diagram-node span { font-size: 14px; font-weight: 600; color: var(--text); }
+.hp-diagram-node.accent {
+  background: var(--surface); border: 1.5px solid var(--accent); border-radius: 12px; padding: 12px 20px;
+  box-shadow: 0 6px 18px var(--accent-soft);
+}
+.hp-diagram-node.result { background: var(--surface); border: 1px solid #16A34A; }
+.hp-diagram-connector { width: 2px; height: 22px; background: var(--border); }
+.hp-diagram-row { display: flex; gap: 10px; }
+.hp-diagram-row .hp-diagram-node {
+  gap: 7px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 8px 12px;
+  box-shadow: 0 2px 8px var(--shadow);
+}
+.hp-diagram-row .hp-diagram-node span { font-size: 12.5px; }
+
+/* ---------- Build on Orkes ---------- */
+.hp-eyebrow {
+  font-size: 15px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin: 0;
+}
+.hp-build-split {
+  display: grid; grid-template-columns: 1fr 1fr; background: var(--bg);
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+}
+.hp-build-panel { padding: 52px 56px; }
+.hp-build-panel.workflows { background: var(--panel-1); }
+.hp-build-panel.agents { background: var(--panel-2); border-left: 1px solid var(--border); }
+.hp-build-inner { max-width: 520px; }
+.home-wrapper .hp-build-inner h3 {
+  font-size: 30px; font-weight: 700; letter-spacing: -.02em; color: var(--text); margin: 0 0 14px;
+}
+.hp-build-inner > p { font-size: 16px; line-height: 1.55; color: var(--muted); margin: 0 0 26px; min-height: 75px; }
+.hp-code-block {
+  background: var(--code-bg); border: 1px solid var(--border); border-radius: 14px; padding: 20px 22px;
+  box-shadow: 0 6px 24px var(--shadow); margin-bottom: 26px; height: 396px; overflow: auto;
+}
+.hp-code-block pre {
+  margin: 0; font-family: 'JetBrains Mono', monospace; font-size: 13.5px; line-height: 1.85; color: var(--code-fg);
+  white-space: pre;
+}
+.hp-feature-list { display: flex; flex-direction: column; gap: 14px; margin-bottom: 30px; }
+.hp-feature-list div { border-left: 3px solid var(--faint); padding-left: 14px; font-size: 15px; color: var(--text); }
+.hp-build-panel.agents .hp-feature-list div { border-left-color: var(--accent); }
+.hp-feature-list .hp-inline-chip {
+  display: inline-flex; align-items: center; gap: 6px; flex-wrap: wrap;
+}
+.hp-chip {
+  font-family: 'JetBrains Mono', monospace; font-size: 13px; background: var(--chip-bg); border: 1px solid var(--border);
+  border-radius: 6px; padding: 2px 7px; color: var(--accent);
+}
+.hp-text-cta { font-size: 16px; font-weight: 700; color: var(--accent); }
+
+/* ---------- SDK strip ---------- */
+.hp-sdk-header { text-align: center; margin-bottom: 34px; }
+.hp-sdk-eyebrow {
+  font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600; letter-spacing: .16em;
+  text-transform: uppercase; color: var(--accent);
+}
+.home-wrapper .hp-sdk-header h2 {
+  font-size: 34px; font-weight: 700; letter-spacing: -.02em; color: var(--text); margin: 12px 0 6px;
+}
+.hp-sdk-header p { font-size: 16px; color: var(--muted); margin: 0; }
+.hp-sdk-card {
+  background: #141130; border: 1px solid #241f45; border-radius: 18px; overflow: hidden;
+  box-shadow: 0 24px 60px rgba(20,10,50,.25);
+}
+.hp-sdk-tabbar { display: flex; gap: 6px; padding: 12px 16px; border-bottom: 1px solid #241f45; flex-wrap: wrap; }
+.hp-sdk-input { position: absolute; opacity: 0; pointer-events: none; }
+.hp-sdk-tab {
+  padding: 8px 15px; border-radius: 9px; font-size: 13px; font-weight: 600; cursor: pointer;
+  border: 1px solid transparent; font-family: 'JetBrains Mono', monospace; color: #8b86ad; background: transparent;
+  transition: color .15s, border-color .15s, background .15s;
+}
+#hp-sdk-python:checked ~ .hp-sdk-card .hp-sdk-tabbar label[for="hp-sdk-python"],
+#hp-sdk-java:checked ~ .hp-sdk-card .hp-sdk-tabbar label[for="hp-sdk-java"],
+#hp-sdk-js:checked ~ .hp-sdk-card .hp-sdk-tabbar label[for="hp-sdk-js"],
+#hp-sdk-go:checked ~ .hp-sdk-card .hp-sdk-tabbar label[for="hp-sdk-go"],
+#hp-sdk-csharp:checked ~ .hp-sdk-card .hp-sdk-tabbar label[for="hp-sdk-csharp"] {
+  border-color: #7C3AED; color: #fff; background: rgba(124,58,237,.28);
+}
+.hp-sdk-panel { display: none; grid-template-columns: 300px 1fr; }
+#hp-sdk-python:checked ~ .hp-sdk-card [data-panel="python"],
+#hp-sdk-java:checked ~ .hp-sdk-card [data-panel="java"],
+#hp-sdk-js:checked ~ .hp-sdk-card [data-panel="js"],
+#hp-sdk-go:checked ~ .hp-sdk-card [data-panel="go"],
+#hp-sdk-csharp:checked ~ .hp-sdk-card [data-panel="csharp"] { display: grid; }
+.hp-sdk-install-col { padding: 26px 28px; border-right: 1px solid #241f45; }
+.hp-sdk-install-label {
+  font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: .1em;
+  text-transform: uppercase; color: #8b86ad; margin-bottom: 8px;
+}
+.hp-sdk-install-cmd {
+  font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #c9c4e6; background: #0d0b22;
+  border: 1px solid #241f45; border-radius: 9px; padding: 12px 14px; word-break: break-all; margin: 0;
+}
+.hp-sdk-caption { font-size: 14px; line-height: 1.6; color: #a29dc0; margin: 18px 0 0; }
+.hp-sdk-link { display: inline-block; margin-top: 16px; font-size: 14px; font-weight: 600; color: #b39dff !important; }
+.hp-sdk-code-col .hp-editor-chrome { border-bottom: 1px solid #241f45; }
+.hp-sdk-code-col .hp-filename { color: #8b86ad; }
+.hp-sdk-code-col pre {
+  margin: 0; padding: 22px 24px; font-family: 'JetBrains Mono', monospace; font-size: 13.5px; line-height: 1.7;
+  color: #d7d3ee; white-space: pre; overflow: auto; min-height: 180px;
+}
+@media (max-width: 700px) {
+  .hp-hero-panel, .hp-build-split { grid-template-columns: 1fr; }
+  .hp-build-panel.agents { border-left: none; border-top: 1px solid var(--border); }
+  .hp-sdk-panel { grid-template-columns: 1fr; }
+  .hp-sdk-install-col { border-right: none; border-bottom: 1px solid #241f45; }
+}
+
+/* ---------- Core concepts ---------- */
+.hp-concepts-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid var(--border); border-radius: 16px;
+  overflow: hidden; background: var(--surface);
+}
+.hp-concept-card { display: block; padding: 26px; color: inherit; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.hp-concept-card:nth-child(3n) { border-right: none; }
+.hp-concept-card:nth-last-child(-n+3) { border-bottom: none; }
+.hp-concept-icon {
+  width: 40px; height: 40px; border-radius: 11px; background: var(--accent-soft); display: flex;
+  align-items: center; justify-content: center; margin-bottom: 14px;
+}
+.home-wrapper .hp-concept-card h3 { font-size: 17px; font-weight: 600; color: var(--text); margin: 0 0 5px; }
+.hp-concept-card p { font-size: 14px; line-height: 1.5; color: var(--muted); margin: 0; }
+@media (max-width: 900px) {
+  .hp-concepts-grid { grid-template-columns: repeat(2, 1fr); }
+  .hp-concept-card:nth-child(3n) { border-right: 1px solid var(--border); }
+  .hp-concept-card:nth-child(2n) { border-right: none; }
+  .hp-concept-card:nth-last-child(-n+3) { border-bottom: 1px solid var(--border); }
+  .hp-concept-card:nth-last-child(-n+2) { border-bottom: none; }
+}
+@media (max-width: 600px) {
+  .hp-concepts-grid { grid-template-columns: 1fr; }
+  .hp-concept-card { border-right: none !important; border-bottom: 1px solid var(--border) !important; }
+  .hp-concept-card:last-child { border-bottom: none !important; }
+}
+
+/* ---------- What's new + community ---------- */
+.hp-resources-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: stretch; }
+.hp-resource-card {
+  display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 16px; padding: 28px;
+}
+.hp-resource-card.featured { border: 1.5px solid var(--accent); box-shadow: 0 10px 34px var(--accent-soft); }
+.hp-resource-kicker {
+  font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--faint); margin-bottom: 10px;
+}
+.home-wrapper .hp-resource-card h3 { font-size: 24px; font-weight: 700; letter-spacing: -.02em; color: var(--text); margin: 0 0 14px; }
+.hp-resource-card > p { font-size: 15px; line-height: 1.6; color: var(--muted); margin: 0 0 14px; }
+.hp-changelog-list { display: flex; flex-direction: column; flex: 1; }
+.hp-changelog-item { display: block; padding: 12px 0; border-bottom: 1px solid var(--border); color: inherit; }
+.hp-changelog-item:last-child { border-bottom: none; }
+.hp-changelog-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; flex-wrap: wrap; }
+.hp-changelog-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); animation: cdpulse 2s infinite; flex-shrink: 0; }
+.hp-changelog-date { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--faint); }
+.hp-changelog-tag {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; color: var(--accent);
+  border: 1px solid var(--border); border-radius: 999px; padding: 2px 8px;
+}
+.hp-changelog-headline { font-size: 14px; font-weight: 600; line-height: 1.45; color: var(--text); }
+.hp-resource-links { display: flex; flex-direction: column; }
+.hp-resource-links a {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 11px 0;
+  border-bottom: 1px solid var(--border); color: var(--text) !important; font-size: 14px; font-weight: 600;
+}
+.hp-resource-links a:last-child { border-bottom: none; }
+.hp-resource-links svg { flex-shrink: 0; }
+.hp-resource-cta { margin-top: auto; padding-top: 18px; font-size: 15px; font-weight: 700; color: var(--accent); }
 `,
   );
   writeOverrides();
