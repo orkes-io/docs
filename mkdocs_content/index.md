@@ -248,7 +248,7 @@ async function greet(task: Task) {
     <h2 class="hp-eyebrow" style="margin-bottom:22px;">Core concepts</h2>
     <div class="hp-concepts-grid">
 
-      <a class="hp-concept-card" href="/content/core-concepts">
+      <a class="hp-concept-card" href="/content/quickstarts/concepts">
         <div class="hp-concept-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8"><circle cx="5" cy="6" r="2.2"></circle><circle cx="5" cy="18" r="2.2"></circle><circle cx="19" cy="12" r="2.2"></circle><path d="M7.2 6.6 16.8 11M7.2 17.4 16.8 13"></path></svg></div>
         <h3>Core Concepts</h3>
         <p>Workflows, tasks, workers, and the operators (loops, conditionals, fork/join) that control them.</p>
