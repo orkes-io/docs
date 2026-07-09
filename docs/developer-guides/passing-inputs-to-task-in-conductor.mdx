@@ -14,7 +14,7 @@ In Conductor, various workflow and task parameters can be hard-coded or dynamica
 These dynamic references are formatted as dot-notation expressions, taking after [JSONPath syntax](https://goessner.net/articles/JsonPath/).
 
 :::tip 5-minute path
-Start with `${workflow.input.<field>}` for request data, `${task_ref.output.<field>}` for prior task output, `${workflow.variables.<field>}` for shared workflow state, and `${workflow.secrets.<name>}` for credentials. Use [task input templates](#task-input-templates) for shared defaults, [masking](#masking-sensitive-mapped-values) for sensitive values, and [schema validation](#schema-validation) for production contracts.
+Start with `${workflow.input.<field>}` for request data, `${task_ref.output.<field>}` for prior task output, `${workflow.variables.<field>}` for shared workflow state, and `${workflow.secrets.<name>}` for credentials. 
 :::
 
 ## Basic expression
@@ -46,7 +46,7 @@ Depending on where the data is being referenced from, here is a non-exhaustive l
 | `${workflow.output}`                         | References the workflow’s output object.                                                                                                                                                                                                                                                                                                                                                          |
 | `${workflow.input._someKey_}`                | References the current workflow’s input parameter `someKey`.                                                                                                                                                                                                                                                                                                                                      |
 | `${workflow.output._someKey_}`               | References the current workflow’s output parameter `someKey`.                                                                                                                                                                                                                                                                                                                                     |
-| `${workflow.status}`                         | References the current [workflow’s status](/developer-guides/task-and-workflow-status-in-conductor). Possible values: RUNNING, PAUSED, TIMED_OUT, TERMINATED, FAILED, or COMPLETED.                                                                                                                                                                                                               |
+| `${workflow.status}`                         | References the current workflow’s status. Possible values: RUNNING, PAUSED, TIMED_OUT, TERMINATED, FAILED, or COMPLETED.                                                                                                                                                                                                               |
 | `${workflow.workflowId}`                     | References the current workflow (execution) ID.                                                                                                                                                                                                                                                                                                                                                   |
 | `${workflow.parentWorkflowId}`               | (Used in sub-workflows) References the parent workflow (execution) ID.                                                                                                                                                                                                                                                                                                                            |
 | `${workflow.parentWorkflowTaskId}`           | (Used in sub-workflows) References the task execution ID for the [Sub Workflow](/reference-docs/operators/sub-workflow) task in the parent workflow.                                                                                                                                                                                                                                              |
@@ -418,7 +418,7 @@ To pass parameters from a parent workflow into its sub-workflow, you must declar
 
 **Example**
 
-```jsonc
+```json
 // parent workflow definition with task configuration
 
 {
@@ -466,7 +466,7 @@ If needed, these inputs can then be set as workflow variables within the sub-wor
 
 To pass parameters from a sub-workflow back to its parent workflow, you must pass them as the sub-workflow’s output parameters in the sub-workflow definition.
 
-```jsonc
+```json
 // sub-workflow definition
 {
  "createTime": 1726651838873,
@@ -508,187 +508,11 @@ To pass parameters from a sub-workflow back to its parent workflow, you must pas
 }
 ```
 
-In the parent workflow, these sub-workflow outputs can be referenced using the expression format `${*sub_workflow_ref*.output.*someKey*}`.
+In the parent workflow, these sub-workflow outputs can be referenced using the expression format `${sub_workflow_ref.output.someKey}`.
 
 </TabItem>
 </Tabs>
 </details>
-
-## Beyond parameter references
-
-The dynamic references above cover most day-to-day wiring. Conductor also provides three related mechanisms for managing task inputs at scale: reusable **task input templates**, **masking** for sensitive mapped values, and **schema validation** for enforcing input/output contracts.
-
-## Task input templates
-
-Task input templates define default input parameters on a task definition. Every workflow task that uses that task definition receives those defaults unless the workflow task configuration overrides them.
-
-Use templates for defaults shared by many workflows:
-
-- Static service paths
-- Default headers
-- Common worker metadata
-- Provider or integration names
-- Feature flags used by the worker
-- Default task payload shape
-
-Do not use templates for per-workflow data, secrets, customer-specific values, or values that should be obvious in the workflow definition.
-
-Add `inputTemplate` to the task definition:
-
-```json
-{
-  "name": "send_notification",
-  "description": "Send a notification message",
-  "ownerEmail": "platform@example.com",
-  "retryCount": 3,
-  "timeoutSeconds": 300,
-  "responseTimeoutSeconds": 60,
-  "inputTemplate": {
-    "channel": "email",
-    "priority": "normal",
-    "headers": {
-      "source": "conductor"
-    }
-  }
-}
-```
-
-Workflow task input overrides template values with the same key:
-
-```json
-{
-  "name": "send_notification",
-  "taskReferenceName": "send_notification_ref",
-  "type": "SIMPLE",
-  "inputParameters": {
-    "recipient": "${workflow.input.email}",
-    "message": "${workflow.input.message}",
-    "priority": "high"
-  }
-}
-```
-
-In this example, `channel` and `headers` come from the task definition template. `priority` is overridden by the workflow task configuration.
-
-## Masking sensitive mapped values
-
-Mask sensitive values that should not be exposed in workflow execution payloads, task inputs, task outputs, logs, or archived execution data. Use masking for tokens, API keys, credentials, authorization headers, customer identifiers, and similar data.
-
-For credentials stored centrally, referencing `${workflow.secrets.<secretName>}` (see [Referencing secrets](#examples) above) already masks the value as `***` automatically. The mechanisms below cover other cases: runtime-sensitive values passed between tasks, and workflow-level fields that need masking by name.
-
-| Mechanism      | Use when                                                                                                                       |
-| -------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| `_masked`      | A task input contains runtime-sensitive values that should remain available for restart/archive behavior.                      |
-| `_secrets`     | A task input contains sensitive values that should be permanently replaced with `***` during archiving.                        |
-| `maskedFields` | Specific workflow input or output fields should be masked by name. Available in v5.1.18+/v4.1.68+.                              |
-
-Use `_masked` when a sensitive runtime value is produced by one task and consumed by another:
-
-```json
-{
-  "name": "call_private_api",
-  "taskReferenceName": "call_private_api",
-  "type": "HTTP",
-  "inputParameters": {
-    "_masked": {
-      "sessionToken": "${create_session.output.sessionToken}"
-    },
-    "http_request": {
-      "uri": "https://api.example.com/private",
-      "method": "GET",
-      "headers": {
-        "Authorization": "Bearer ${call_private_api.input._masked.sessionToken}"
-      }
-    }
-  }
-}
-```
-
-Use `maskedFields` when specific workflow-level fields should be hidden in execution details:
-
-```json
-{
-  "name": "payment_workflow",
-  "version": 1,
-  "schemaVersion": 2,
-  "inputParameters": ["customerId", "paymentToken"],
-  "maskedFields": ["paymentToken"],
-  "tasks": []
-}
-```
-
-## Schema validation
-
-Schema validation lets you enforce the shape of workflow inputs, workflow outputs, task inputs, and task outputs. Use it when a workflow is called by external clients, webhooks, API Gateway routes, MCP tools, CI/CD automation, or any producer that should be held to a contract.
-
-| Attachment point    | Scope                                                       |
-| -------------------- | ------------------------------------------------------------ |
-| Workflow definition | Validates workflow input and/or workflow output.            |
-| Task definition     | Validates every use of that task definition.                |
-| Task configuration  | Validates one task instance inside one workflow.             |
-
-Schemas are named and versioned. For production workflows, pin versions deliberately so schema changes do not alter existing workflows unexpectedly.
-
-Example schema:
-
-```json
-{
-  "name": "orderInput",
-  "version": 1,
-  "type": "JSON",
-  "data": {
-    "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "type": "object",
-    "properties": {
-      "orderId": {
-        "type": "string"
-      },
-      "amount": {
-        "type": "number",
-        "minimum": 0
-      }
-    },
-    "required": ["orderId", "amount"],
-    "additionalProperties": false
-  }
-}
-```
-
-Attach it at the workflow boundary:
-
-```json
-{
-  "name": "validate_order_input",
-  "version": 1,
-  "schemaVersion": 2,
-  "enforceSchema": true,
-  "inputSchema": {
-    "name": "orderInput",
-    "version": 1,
-    "type": "JSON"
-  },
-  "tasks": [
-    {
-      "name": "process_order",
-      "taskReferenceName": "process_order",
-      "type": "SIMPLE",
-      "inputParameters": {
-        "orderId": "${workflow.input.orderId}",
-        "amount": "${workflow.input.amount}"
-      }
-    }
-  ]
-}
-```
-
-Validation failures are useful operational signals:
-
-| Validation point | Failure behavior                                                     |
-| ----------------- | ----------------------------------------------------------------------- |
-| Workflow input    | The workflow does not start.                                         |
-| Workflow output   | The workflow fails when the output does not match the schema.        |
-| Task input        | The task fails before worker execution.                              |
-| Task output       | The task fails after the worker returns invalid output.              |
 
 ## Troubleshooting
 
@@ -696,12 +520,3 @@ You can verify if the data was passed correctly by checking the input/output val
 
 - If the reference expression is incorrectly formatted, the referencing parameter value may end up with the wrong data or a null value.
 - If the reference parameter (such as a task output) has not been resolved at the point when it is referenced, the dynamic parameter will be null.
-- Template value is not applied: the workflow task may override the same key in `inputParameters`, or the task may not use the expected task definition.
-- Sensitive value appears in execution data: move credentials to secrets, put runtime-sensitive values under `_masked`, or add the field name to `maskedFields`.
-- Schema validation fails: compare the resolved task or workflow payload with the pinned schema version.
-
-## Related pages
-
-- [Masking Parameters](/content/developer-guides/masking-parameters)
-- [Task Input Templates](/content/developer-guides/task-input-templates)
-- [Schema Validation](/content/developer-guides/schema-validation)

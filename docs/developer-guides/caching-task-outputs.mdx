@@ -136,7 +136,7 @@ If no cached output is found, the task is scheduled as usual. When the task comp
 
 ## Example
 
-<details>
+<details markdown="1">
 <summary>Cache hit</summary>
 
 Run the following workflow twice with the same input. The second run returns the cached result.
@@ -191,7 +191,7 @@ Run the following workflow twice with the same input. The second run returns the
 
 </details>
 
-<details>
+<details markdown="1">
 <summary>Cache miss</summary>
 
 Run the workflow with a different input. A different cache key is computed, so no cached result is found and the task executes fresh.
@@ -212,7 +212,7 @@ Each unique cache key has its own independent cache entry. Running with `env: "p
 
 </details>
 
-<details>
+<details markdown="1">
 <summary>Cache expiry (TTL)</summary>
 
 When the TTL expires, the cached result is discarded and the next run executes the task fresh.
@@ -268,7 +268,7 @@ When the TTL expires, the cached result is discarded and the next run executes t
 
 </details>
 
-<details>
+<details markdown="1">
 <summary>Cache output using task input parameters</summary>
 
 Cache the task output based on a value passed directly in the task's `inputParameters`. Here, the `method` field is used as part of the cache key, so GET and POST requests are cached separately.
@@ -327,7 +327,7 @@ Running with `"method": "POST"` computes the key `api_POST` — a cache miss. GE
 
 </details>
 
-<details>
+<details markdown="1">
 <summary>Cache output using workflow inputs</summary>
 
 Cache the task output based on a workflow-level input. Each unique input value gets its own cache entry.
@@ -385,7 +385,7 @@ Running with another workflow input is a cache miss. Each user ID has its own in
 
 </details>
 
-<details>
+<details markdown="1">
 <summary>Cache output using variables from previous tasks</summary>
 
 Cache the task output based on a value set by an earlier task in the workflow. The [Set Variable](/content/reference-docs/operators/set-variable) task captures the input and stores it as a workflow variable, which is then referenced in the cache key.

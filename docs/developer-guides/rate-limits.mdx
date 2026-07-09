@@ -22,17 +22,23 @@ Use task rate limits when:
 - You need to limit concurrent executions of a specific task type.
 - A downstream API has request-per-second or concurrency constraints.
 
-When the limit is reached, Conductor holds additional task executions in `PENDING` until capacity becomes available.
+When the number of tasks scheduled within a given period exceeds the defined rate limit, the Conductor server will place the excess tasks in a PENDING state. Once an IN_PROGRESS task is completed, the rate limit is freed up, and the server will make the next PENDING task available for polling.
 
 ### Rate limit configuration
 
-| Field | Purpose |
-| ----- | ------- |
-| `rateLimitPerFrequency` | Maximum number of task executions allowed in the frequency window. `0` disables this limit. |
-| `rateLimitFrequencyInSeconds` | Window size in seconds for `rateLimitPerFrequency`. |
-| `concurrentExecLimit` | Maximum number of task executions that can be in progress at the same time. `0` disables this limit. |
+You can configure rate limit behavior for tasks in its **task definition**. The parameters for defining a task’s rate limit behavior are:
 
-Example task definition:
+| Parameter | Description | Required/ Optional |
+| --------- | ------------ | ------------------- |
+| `rateLimitPerFrequency` | The maximum number of task executions that can be scheduled in a given duration. Default value is 0. | Optional. |
+| `rateLimitFrequencyInSeconds` | The frequency window (in seconds) for the rate limit. | Optional. |
+| `concurrentExecLimit` | The number of task executions that can be executed concurrently. Default value is 0. <br/><br/> For example, if you have 1000 task executions waiting in the queue and 1000 workers polling it for tasks, but you set `concurrentExecLimit` to 10, only 10 tasks would be given to workers (which would lead to starvation). If any of the workers finish execution, a new task will be removed from the queue while still keeping the current execution count to 10. | Optional. |
+
+:::note
+To configure tasks with no rate limits, set `rateLimitPerFrequency` and `concurrentExecLimit` to 0.
+:::
+
+**Example**
 
 ```json
 {
@@ -46,9 +52,9 @@ Example task definition:
 }
 ```
 
-With `rateLimitPerFrequency` set to `12` and `rateLimitFrequencyInSeconds` set to `5`, Conductor schedules at most 12 executions every 5 seconds, or about 144 executions per minute.
+For example, let’s set `rateLimitFrequencyInSeconds=5`, and `rateLimitPerFrequency=12`. This means our frequency window is 5 seconds in duration, and for each frequency window, the Conductor would only give 12 tasks to workers. So, in a given minute, the Conductor would only give 12*(60/5) = 144 tasks to workers, irrespective of the number of workers polling for the task.
 
-`concurrentExecLimit` is different: it limits in-flight work, not starts per time window. Use both when a dependency has both request-rate and concurrency limits.
+Unlike `concurrentExecLimit`, rate limiting doesn't consider the tasks already in progress or a terminal state. Even if all the previous tasks are executed within 1 sec or would take a few days, the new tasks are still given to workers at the configured frequency, 144 tasks per minute in the above example.
 
 ## Workflow rate limits
 
@@ -61,14 +67,17 @@ Use workflow rate limits when:
 - A scheduled workflow must avoid overlapping runs.
 - A workflow fans out to expensive downstream work.
 
+When the number of scheduled workflows exceeds the defined rate limit, the Conductor server will place these workflows in a RUNNING state with the first task set to a PENDING status. Once a workflow completes, the rate limit is freed up and the server will schedule the next PENDING task for polling.
+
 ### Rate limit configuration
 
-Configure workflow rate limits in the workflow definition.
+Configure workflow rate limits in the **workflow definition**.
 
-| Field | Purpose |
-| ----- | ------- |
-| `rateLimitConfig.rateLimitKey` | Fixed or dynamic key used to group executions. |
-| `rateLimitConfig.concurrentExecLimit` | Maximum concurrent executions for each key. |
+| Parameter | Description | Required/ Optional |
+| --------- | ------------ | ------------------- |
+| `rateLimitConfig` | A map of the workflow rate limit configuration. | Optional. |
+| `rateLimitConfig.rateLimitKey` | A unique identifier to group workflow executions for rate limits. Can be a fixed value (for example, "max") or a dynamic variable from the workflow (for example, `${workflow.input.someKey}`, `${workflow.correlationId}`, `${workflow.workflowType}`, or `${workflow.version}`). | Optional. |
+| `rateLimitConfig.concurrentExecLimit` | The number of workflow executions that can run concurrently for each rate limit key. Cannot be passed as a dynamic variable. | Optional. |
 
 Fixed-key example:
 

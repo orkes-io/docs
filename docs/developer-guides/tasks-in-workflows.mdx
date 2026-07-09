@@ -41,7 +41,7 @@ Use these operators as control structures for managing the execution flow in you
 | Conditional flow | <ul><li>[Switch](../reference-docs/operators/switch): Execute tasks conditionally, like an _if…else…_ statement.</li></ul> | 
 | Looping flow | <ul><li>[Do While](../reference-docs/operators/do-while): Execute tasks repeatedly, like a _do…while…_ statement.</li></ul> |
 | Parallel flows | <ul><li>[Fork](../reference-docs/operators/fork-join): Execute a static number of tasks in parallel.</li><li>[Dynamic Fork](../reference-docs/operators/dynamic-fork): Execute a dynamic number of tasks in parallel.</li><li>[Join](../reference-docs/operators/join): Join the forks after a Fork or Dynamic Fork before proceeding to the next task.</li></ul> | 
-| Jumps or state changes in flow | <ul><li>[Terminate](../reference-docs/operators/terminate): Terminate the current workflow, like a _return_ statement.</li><li>[Terminate Workflow](../reference-docs/operators/terminate-workflow.mdx): Terminate another ongoing workflow.</li><li>[Sub Workflow](../reference-docs/operators/sub-workflow): Synchronously start another workflow, like a subroutine.</li><li>[Start Workflow](../reference-docs/operators/start-workflow): Asynchronously start another workflow.</li></ul> | 
+| Jumps or state changes in flow | <ul><li>[Terminate](../reference-docs/operators/terminate): Terminate the current workflow, like a _return_ statement.</li><li>[Terminate Workflow](../reference-docs/operators/terminate-workflow): Terminate another ongoing workflow.</li><li>[Sub Workflow](../reference-docs/operators/sub-workflow): Synchronously start another workflow, like a subroutine.</li><li>[Start Workflow](../reference-docs/operators/start-workflow): Asynchronously start another workflow.</li></ul> | 
 | State querying | <ul><li>[Get Workflow](../reference-docs/operators/get-workflow): Get the execution details of another ongoing workflow.</li></ul> | 
 | Waits in flow | <ul><li>[Wait](../reference-docs/operators/wait): Pause the current workflow until a set time, duration, or signal is received.</li><li>[Human](/content/reference-docs/operators/human): Pause the current workflow for human input before proceeding to the next task.</li><li>[Yield](../reference-docs/operators/yield): Temporarily yields control over the workflow by pausing the execution until it is explicitly resumed via signal endpoints.</li></ul> | 
 | Dynamic tasks in flow | <ul><li>[Dynamic](../reference-docs/operators/dynamic): Execute a task dynamically, like a function pointer.</li></ul> 
@@ -238,7 +238,7 @@ You can address this situation by:
 
 ## Task lifecycle
 
-Understanding the lifecycle of a task helps you debug and monitor your workflows effectively. Learn more in [Task State Transitions](/content/developer-guides/task-and-workflow-status-in-conductor#task-state-transitions). 
+Understanding the lifecycle of a task helps you debug and monitor your workflows effectively. Learn more in [Task Lifecycle](/content/quickstarts/task-lifecycle#task-statuses). 
 
 Common statuses:
 
