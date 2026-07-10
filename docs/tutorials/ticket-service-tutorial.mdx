@@ -76,6 +76,10 @@ In this step, you create the workflow logic that the MCP Gateway executes when a
 
 4. Select **Save** > **Confirm**.
 
+Your workflow looks like this:
+
+<p align="center"><img src="/content/img/create-ticket-workflow.png" alt="Ticket workflow" width="60%" height="auto"></img></p>
+
 The workflow accepts ticket details as input, generates a mock ticket ID using an Inline task, and formats the output using a JSON JQ Transform task.
 
 :::note 
@@ -168,13 +172,9 @@ Applications act as service accounts that control which workflows the MCP Gatewa
 6. Enable the **EXECUTE** permission.
 7. Select **Add permissions**.
 
-The application now has permission to execute the ticket workflow.
+<p align="center"><img src="/content/img/app-permission-for-ticket-workflow.png" alt="App permission for ticket workflow" width="100%" height="auto"></img></p>
 
-| Setting | Value |
-| --- | --- |
-| Resource | Workflow: `create_ticket_wf` |
-| Permission | `EXECUTE` |
-| Application | Your MCP Gateway service account, or `Default Orkes Application` in Developer Edition |
+The application now has permission to execute the ticket workflow.
 
 ## Step 4: Configure authentication settings
 
@@ -186,12 +186,10 @@ Authentication settings define how MCP clients are authorized to access the tool
 2. Select **+ New authentication**.
 3. Enter a unique name as the **ID** and select **Authentication Type** as **No Authentication**.
 4. In **Application**, select the application created in the previous step. If you are using Orkes Developer Edition, use the application **Default Orkes Application** here.
-5. Select **Save**.
 
-| Setting | Tutorial value | Production note |
-| --- | --- | --- |
-| Authentication Type | `No Authentication` | Use authenticated MCP access outside local testing. |
-| Application | The app with `EXECUTE` on `create_ticket_wf` | Use a dedicated application per MCP service. |
+<p align="center"><img src="/content/img/auth-settings-for-ticket-service.png" alt="Auth configuration for ticket service" width="100%" height="auto"></img></p>
+
+5. Select **Save**.
 
 ## Step 5: Create a ticket service
 
@@ -210,14 +208,10 @@ A service represents a logical grouping of MCP routes that share a common config
     - Set **Allowed Methods** to **Select All**.
     - Set **Allowed Headers** as __*__.
 8. Set an optional **Description** for the service.
-9. Select **Save**.
 
-| Setting | Value |
-| --- | --- |
-| Service ID | `ticket-tools` |
-| Display Name | `Ticket Service` |
-| Base Path | `/api/tickets` |
-| Auth Config | The authentication setting from Step 4 |
+<p align="center"><img src="/content/img/creating-ticket-service.png" alt="Creating ticket service" width="100%" height="auto"></img></p>
+
+9. Select **Save**.
 
 The service is now ready. Next, create a route to connect it to the workflow.
 
@@ -228,19 +222,18 @@ Routes define MCP tool endpoints and map them to workflows.
 **To create a route:**
 
 1. Go to the **Services** and select the __+__ button next to the service created.
+
+<p align="center"><img src="/content/img/adding-route-to-ticket-service.png" alt="Adding route to ticket service" width="100%" height="auto"></img></p>
+
 2. In **Route Definition**, set:
     - **HTTP Method** to **POST**.
     - **Path** to `/create`.
 3. In **Workflow Configuration**, set the **Workflow Name** to the one created in [Step 1](/content/tutorials/expose-ticket-service-using-mcp-gateway#step-1-create-a-ticket-workflow-in-orkes-conductor). 
 4. In **Schema**, set the Input Schema to the schema created in [Step 2](/content/tutorials/expose-ticket-service-using-mcp-gateway#step-2-define-input-schema-for-the-workflow).
-5. Select **Save**.
 
-| Setting | Value |
-| --- | --- |
-| Method | `POST` |
-| Path | `/create` |
-| Workflow | `create_ticket_wf` |
-| Input Schema | `CreateTicketSchema` version `1` |
+<p align="center"><img src="/content/img/create-ticket-route.png" alt="Creating ticket route" width="100%" height="auto"></img></p>
+
+5. Select **Save**.
 
 ## Step 7: Test the endpoint
 
@@ -266,30 +259,9 @@ You can test the route directly from the Conductor UI.
 ```
 
 4. Select **Test Route**.
-5. Review the **Response** to verify the route works as expected.
+5. Review the **Response** to verify the route works as expected. 
 
-The response should include a generated ticket ID:
-
-```json
-{
-  "ticketId": "TCK-12345"
-}
-```
-
-You can also call the route from a client after copying the endpoint from the service details:
-
-```bash
-curl -X POST "https://<your-gateway-host>/api/tickets/create" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "issue": "Unable to log in",
-    "priority": "high",
-    "details": "User receives a 401 error after entering valid credentials.",
-    "email": "john.doe@acme.com",
-    "name": "John Doe",
-    "source": "curl"
-  }'
-```
+<p align="center"><img src="/content/img/testing-ticket-service.gif" alt="Testing route from Conductor UI" width="100%" height="auto"></img></p>
 
 ### Verify workflow execution
 
@@ -297,8 +269,13 @@ curl -X POST "https://<your-gateway-host>/api/tickets/create" \
 
 1. Go to **Executions** > **Workflow**.
 2. Select the latest execution of the **create_ticket_wf** workflow.
-3. Select the **Workflow ID** to view the execution details.
-4. In the **Workflow Input/Output** tab, verify that the ticket fields and generated `ticketId` were passed correctly.
+
+<p align="center"><img src="/content/img/ticket-workflow-executed.png" alt="Workflow executions in Conductor" width="100%" height="auto"></img></p>
+
+3. Select the **Workflow ID** to view the execution details. 
+4. In the **Workflow Input/Output** tab, verify that the metadata was passed correctly. 
+
+<p align="center"><img src="/content/img/ticket-workflow-output.png" alt="Ticket workflow execution in Conductor" width="100%" height="auto"></img></p>
 
 ### Access the endpoint details
 
@@ -306,9 +283,13 @@ curl -X POST "https://<your-gateway-host>/api/tickets/create" \
 
 1. Go to **APIs** > **Services**, and select your service. 
 2. Select a route to open its details. 
-3. Copy the generated cURL command for the endpoint.
+3. You can get the cURL command for the actual endpoint here.
 
-You can also get the OpenAPI documentation for the service. Go to **APIs** > **Services**, select your service, and then open **Metadata & Resources** > **View API Documentation**.
+<p align="center"><img src="/content/img/curl-command-ticket-service.png" alt="Curl command for the route" width="100%" height="auto"></img></p>
+
+You can also get the OpenAPI documentation for the service. Go to **APIs** > **Services**, and select your service. In **Metadata & Resources**, select **View API Documentation**. 
+
+<p align="center"><img src="/content/img/ticket-service-details.gif" alt="OpenAPI documentation of the service" width="100%" height="auto"></img></p>
 
 ## Step 8: Verify using Orkes MCP Workbench
 
@@ -319,7 +300,9 @@ Next, you can connect this MCP service to your preferred AI tool as an MCP tool.
 1. Go to **APIs** > **Services**, and select the service.
 2. In **Configuration**, copy the **MCP Tool Remote Endpoint**.
 
-Use this as the MCP server endpoint when you configure your AI tool. Verify it with Orkes MCP Workbench before plugging it into an agent.
+<p align="center"><img src="/content/img/mcp-endoint-ticket-service.png" alt="MCP Tool Remote Endpoint from Conductor" width="100%" height="auto"></img></p>
+
+Use this as the MCP server endpoint when you configure your AI tool. Let’s verify this using Orkes MCP Workbench before plugging into an AI agent.
 
 **To test the MCP tool:**
 
@@ -329,22 +312,13 @@ Use this as the MCP server endpoint when you configure your AI tool. Verify it w
 4. In **Type**, select **Streamable HTTP (Stateless)**.
 5. Select **Save**, and then select **Connect**.
 6. Once the connection is successful, select **POST_create** from **Select Tool**, and enter the required parameters.
-7. Select **Run Tool**.
+7. Select **Run Tool**. 
 
-Use the same fields you tested in Step 7 as the MCP tool input:
+<p align="center"><img src="/content/img/testing-using-orkes-mcp-workbench.gif" alt="Testing from MCP Inspector" width="100%" height="auto"></img></p>
 
-```json
-{
-  "issue": "Unable to log in",
-  "priority": "high",
-  "details": "User receives a 401 error after entering valid credentials.",
-  "email": "john.doe@acme.com",
-  "name": "John Doe",
-  "source": "mcp-workbench"
-}
-```
+This returns the tool result status as success and returns the ticket ID. To verify the workflow execution in Conductor, go to **Executions** > **Workflow**. Open the latest run of **_create_ticket_wf_**, and review the **Input/Output** tab to confirm the ticket ID.
 
-The tool result should return a `ticketId`. To verify the workflow execution in Conductor, go to **Executions** > **Workflow**, open the latest run of **_create_ticket_wf_**, and review the **Input/Output** tab.
+<p align="center"><img src="/content/img/ticket-service-verification.jpg" alt="Verifying results in Conductor" width="100%" height="auto"></img></p>
 
 That’s it. Next, you can connect this with any AI agent that needs to invoke the MCP tool. When the MCP tool is invoked, the workflow runs automatically. 
 

@@ -33,9 +33,11 @@ Here is the document classification workflow that you’ll build in this tutoria
 </p>
 
 **Workflow input:**
+
 - **document_url**: The HTTP URL of the document file to classify. The workflow supports PDFs that contain scanned images, such as scanned passports or IDs. Text is extracted using OCR before classification.
 
 **Workflow logic:**
+
 - The workflow begins with a [Switch task](https://orkes.io/content/reference-docs/operators/switch) that checks whether the input URL ends with .pdf using an ECMAScript expression.
 - If the input file is not a PDF:
   - An [Inline task](https://orkes.io/content/reference-docs/system-tasks/inline) generates an error message about the unsupported file type. 
@@ -52,6 +54,7 @@ To begin with, we will use OpenAI’s gpt-4o model to service the document class
 ### Add OpenAI integration
 
 **To add an OpenAI integration:**
+
 1. Get your OpenAI API Key from [OpenAI’s platform](https://platform.openai.com/settings/organization/api-keys).
 2. Go to **[Integrations](https://developer.orkescloud.com/integrations)** from the left navigation menu on your Conductor cluster.
 3. Select **+ New integration**.
@@ -110,6 +113,7 @@ This saves your prompt.
 With the integration and prompt ready, let’s create the workflow.
 
 **To create a workflow:**
+
 1. Go to [**Definitions** > **Workflow**](https://developer.orkescloud.com/workflowDef) and select **+ Define workflow**.
 2. In the **Code** tab, enter the following JSON:
 

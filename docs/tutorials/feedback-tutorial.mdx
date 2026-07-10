@@ -62,7 +62,13 @@ In this step, you create a workflow that processes feedback submitted through an
 
 4. Select **Save** > **Confirm**.
 
-This workflow is the backend logic that the API Gateway executes when a request is received. It accepts a rating and comment, formats the values in an Inline task, and returns a confirmation message.
+Your workflow looks like this:
+
+<p align="center"><img src="/content/img/feedback-workflow.png" alt="Feedback workflow" width="60%" height="auto"></img></p>
+
+In this workflow, you define the backend logic that the API Gateway will execute when a request is received.
+
+The workflow accepts a rating and comment as input, processes the values using a simple Inline task, and returns a formatted confirmation message.
 
 The workflow is now ready. The next step is to define a schema that validates incoming API requests.
 
@@ -124,13 +130,9 @@ Applications act as service accounts that control which workflows the API Gatewa
 6. Enable the **EXECUTE** permission.
 7. Select **Add permissions**.
 
-The application now has permission to execute the feedback workflow.
+<p align="center"><img src="/content/img/app-permission-for-feedback-workflow.png" alt="App permission for feedback workflow" width="100%" height="auto"></img></p>
 
-| Setting | Value |
-| --- | --- |
-| Resource | Workflow: `Feedback` |
-| Permission | `EXECUTE` |
-| Application | Your API Gateway service account, or `Default Orkes Application` in Developer Edition |
+The application now has permission to execute the feedback workflow.
 
 ## Step 4: Configure authentication settings
 
@@ -142,12 +144,10 @@ Authentication settings define how clients are authorized to access the API. You
 2. Select **+ New authentication**.
 3. Enter a unique name as the **ID** and select **Authentication Type** as **No Authentication**.
 4. In **Application**, select the application created in the previous step. If you are using Orkes Developer Edition, use the application **Default Orkes Application** here.
-5. Select **Save**.
 
-| Setting | Tutorial value | Production note |
-| --- | --- | --- |
-| Authentication Type | `No Authentication` | Use API key or another approved auth mode for public or shared endpoints. |
-| Application | The app with `EXECUTE` on `Feedback` | Use a dedicated application per service boundary. |
+<p align="center"><img src="/content/img/auth-settings-for-feedback-service.png" alt="Auth configuration for feedback service" width="100%" height="auto"></img></p>
+
+5. Select **Save**.
 
 ## Step 5: Create a feedback service
 
@@ -167,15 +167,10 @@ A service represents a logical grouping of API routes that share common configur
     - Set **Allowed Methods** to **Select All**.
     - Set **Allowed Headers** as __*__.
 9. Set an optional **Description** for the service.
-10. Select **Save**.
 
-| Setting | Value |
-| --- | --- |
-| Service ID | `feedback-service` |
-| Display Name | `Feedback Service` |
-| Base Path | `/api/feedback` |
-| MCP Enabled | Disabled |
-| Auth Config | The authentication setting from Step 4 |
+<p align="center"><img src="/content/img/creating-feedback-service.png" alt="Creating feedback service" width="100%" height="auto"></img></p>
+
+10. Select **Save**.
 
 The service is now ready. Next, create a route to connect it to the workflow.
 
@@ -186,19 +181,18 @@ Routes define individual API endpoints and map them to workflows.
 **To create a route:**
 
 1. Go to the **Services** and select the __+__ button next to the service created.
+
+<p align="center"><img src="/content/img/adding-route-to-feedback-service.png" alt="Adding route to feedback service" width="100%" height="auto"></img></p>
+
 2. In **Route Definition**, set:
     - **HTTP Method** to **POST**.
     - **Path** to `/user-feedback/{user-id}`.
 3. In **Workflow Configuration**, set the **Workflow Name** to the one created in [Step 1](/content/tutorials/expose-feedback-workflow-as-api#step-1-create-a-feedback-workflow-in-orkes-conductor). 
 4. In **Schema**, set the Input Schema to the schema created in [Step 2](/content/tutorials/expose-feedback-workflow-as-api#step-2-define-input-schema-for-the-workflow).
-5. Select **Save**.
 
-| Setting | Value |
-| --- | --- |
-| Method | `POST` |
-| Path | `/user-feedback/{user-id}` |
-| Workflow | `Feedback` |
-| Input Schema | `FeedbackSchema` version `1` |
+<p align="center"><img src="/content/img/create-feedback-route.png" alt="Creating feedback route" width="100%" height="auto"></img></p>
+
+5. Select **Save**.
 
 ## Step 7: Test the endpoint
 
@@ -221,23 +215,9 @@ You can test the route directly from the Conductor UI.
 ```
 
 5. Select **Test Route**.
-6. Review the **Response** to verify the route works as expected.
+6. Review the **Response** to verify the route works as expected. 
 
-The response should include the workflow output message:
-
-```json
-{
-  "message": "Feedback received with rating 4 and comment: \"Good service\"."
-}
-```
-
-You can also call the route from a client after copying the endpoint from the service details:
-
-```bash
-curl -X POST "https://<your-gateway-host>/api/feedback/user-feedback/user-123" \
-  -H "Content-Type: application/json" \
-  -d '{"rating":4,"comment":"Good service"}'
-```
+<p align="center"><img src="/content/img/testing-feedback-service.gif" alt="Testing route from Conductor UI" width="100%" height="auto"></img></p>
 
 ### Verify workflow execution
 
@@ -245,8 +225,13 @@ curl -X POST "https://<your-gateway-host>/api/feedback/user-feedback/user-123" \
 
 1. Go to **Executions** > **Workflow**.
 2. Select the latest execution of the **Feedback** workflow.
-3. Select the **Workflow ID** to view the execution details.
-4. In the **Workflow Input/Output** tab, verify that `rating`, `comment`, and the response message were passed correctly.
+
+<p align="center"><img src="/content/img/feedback-workflow-executed.png" alt="Workflow executions in Conductor" width="100%" height="auto"></img></p>
+
+3. Select the **Workflow ID** to view the execution details. 
+4. In the **Workflow Input/Output** tab, verify that the metadata was passed correctly. 
+
+<p align="center"><img src="/content/img/feedback-workflow-output.png" alt="Feedback workflow execution in Conductor" width="100%" height="auto"></img></p>
 
 ### Access the endpoint details
 
@@ -254,8 +239,12 @@ curl -X POST "https://<your-gateway-host>/api/feedback/user-feedback/user-123" \
 
 1. Go to **APIs** > **Services**, and select your service. 
 2. Select a route to open its details. 
-3. Copy the generated cURL command for the endpoint.
+3. You can get the cURL command for the actual endpoint here.
 
-You can also get the OpenAPI documentation for the service. Go to **APIs** > **Services**, select your service, and then open **Metadata & Resources** > **View API Documentation**.
+<p align="center"><img src="/content/img/curl-command-feedback-service.png" alt="Curl command for the route" width="100%" height="auto"></img></p>
+
+You can also get the OpenAPI documentation for the service. Go to **APIs** > **Services**, and select your service. In **Metadata & Resources**, select **View API Documentation**. 
+
+<p align="center"><img src="/content/img/feedback-service-details.gif" alt="OpenAPI documentation of the service" width="100%" height="auto"></img></p>
 
 When the endpoint is invoked, the workflow runs automatically. You can extend the workflow to add logic such as storing feedback, sending notifications, or triggering downstream processes.

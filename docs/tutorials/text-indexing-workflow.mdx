@@ -12,6 +12,7 @@ The solution uses two workflows:
 - A second workflow searches the indexed content and generates an answer using the top result.
 
 In this tutorial, you will:
+
 - Integrate an AI model provider
 - Integrate Pinecone as the vector database
 - Build a workflow to index text using **LLM Index Text** task
@@ -23,6 +24,7 @@ To follow along, ensure you have access to the free [Orkes Developer Edition](ht
 ## The text knowledge base workflows
 
 The tutorial uses two workflows that work together.
+
 - **KB_Index_Text**: Indexes text content into a vector database.
 - **KB_Search_And_Answer**: Searches the indexed content and generates an answer using the top match.
 
@@ -44,6 +46,7 @@ Here is how the workflow looks like:
 **Workflow logic:**
 
 The workflow uses an [LLM Index Text](/content/reference-docs/ai-tasks/llm-index-text) task to:
+
 - Generate embeddings from the input text
 - Store the embeddings in Pinecone
 - Attach metadata, including the original text, for later retrieval
