@@ -45,6 +45,7 @@ Application roles grant additional access on top of this default behavior and sh
 <TabItem value="unrestricted roles" label="Unrestricted Roles">
 
 Unrestricted roles can only be added by a cluster Admin. Unrestricted roles include:
+
 * **Unrestricted Worker**: Worker role with full access to poll and execute any task in the cluster.
 * **Metadata Manager**: Can manage all workflow and task definitions in the cluster, including performing any action regardless of workflow or task ownership. Can view and manage API Gateway configurations. Can create integrations and secrets.
 * **Workflow Manager**: Can view, execute, and manage all workflow executions in the system, including start, pause, resume, rerun, retry, restart, terminate, and delete actions. Has execute and read access to workflow and task definitions.
@@ -55,6 +56,7 @@ Unrestricted roles can only be added by a cluster Admin. Unrestricted roles incl
 <TabItem value="application roles" label="Application Roles">
 
 Application roles can be added by any user with access to applications. General application roles include:
+
 * **Worker**: Can poll and execute tasks for which it has Execute permissions for. This role should be granted to a task worker application that is responsible for polling and executing a task.
 * **Metadata API**: Can create and view workflow definitions, task definitions, and user forms. This role should be granted to an application that is responsible for retrieving and managing workflow and task definitions, such as for testing or CI/CD integration purposes.
 * **Application API**: Can create and view applications. This role should be granted to an application that is responsible for managing other applications in the cluster.
@@ -69,6 +71,7 @@ Resource permissions still matter. For example, a worker application normally ne
 Configure the application’s roles and permissions to control what your application can do and what resources it can access, including workflows, tasks, secrets, environment variables, tags, domains, integrations, and prompts.
 
 **To configure an application:**
+
 1. Create an application.
     1. Go to **Access Control** > **Applications** from the left navigation menu on your Conductor cluster.
     2. Select **+ Create application**.
