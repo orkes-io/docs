@@ -330,10 +330,10 @@ const topSections = [
   ["Developer Guides", "guidesSidebar"],
   ["AI Agents", "aiSidebar"],
   ["Event Orchestration", "eventingSidebar"],
+  ["Security", "rbacSidebar"],
   ["Cookbook", "cookbookSidebar"],
   ["SDKs", "sdksSidebar"],
   ["Reference", "referenceSidebar"],
-  ["Security", "rbacSidebar"],
 ];
 
 const routeBySource = new Map();
@@ -2273,6 +2273,7 @@ function buildNav() {
   createCookbookGeneratedPages();
 
   const nav = [];
+  nav.push({ Home: "index.md" });
   for (const [label, sidebarId] of topSections) {
     nav.push({ [label]: navFromItems(sidebars[sidebarId]) });
   }

@@ -9,6 +9,7 @@ docs_dir: mkdocs_content
 site_dir: build
 
 nav:
+  - Home: index.md
   - Quickstart:
     - Run Your First Workflow: quickstarts.md
     - Concepts: quickstarts/concepts.md
@@ -123,6 +124,11 @@ nav:
           - Get All Webhooks: reference-docs/api/webhooks/get-all-webhooks.md
           - Add Tags to Webhook: reference-docs/api/webhooks/add-tags-to-webhook.md
           - Get Tags from Webhook: reference-docs/api/webhooks/get-tags-from-webhook.md
+  - Security:
+    - Role Based Access Control: category/access-control-and-security.md
+    - Managing Users and Groups: access-control-and-security/users-and-groups.md
+    - "Application-Level Access": access-control-and-security/applications.md
+    - "Tag-Based Access": access-control-and-security/tags.md
   - Cookbook:
     - Cookbook: category/tutorials.md
     - Microservice orchestration: general-templates.md
@@ -436,11 +442,6 @@ nav:
       - FAQs: category/faqs.md
       - General FAQs: faqs/general-faqs.md
     - Glossary: glossary.md
-  - Security:
-    - Role Based Access Control: category/access-control-and-security.md
-    - Managing Users and Groups: access-control-and-security/users-and-groups.md
-    - "Application-Level Access": access-control-and-security/applications.md
-    - "Tag-Based Access": access-control-and-security/tags.md
   - Integrations:
     - Integrations:
       - Integrations: category/integrations.md
