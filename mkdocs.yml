@@ -49,7 +49,7 @@ nav:
       - Rate Limits: rate-limits.md
       - Writing Workers for Conductor Workflows: developer-guides/using-workers.md
       - Guide to Scaling Workers: developer-guides/scaling-workers.md
-      - Routing Tasks: developer-guides/task-to-domain.md
+      - "Routing Tasks (Task-to-domain)": developer-guides/task-to-domain.md
     - "HITL & AI Orchestration":
       - Human Task Orchestration: developer-guides/orchestrating-human-tasks.md
       - Using AI Models or LLMs: developer-guides/using-llms-in-your-orkes-conductor-workflows.md
@@ -171,13 +171,13 @@ nav:
         - Dynamic: reference-docs/operators/dynamic.md
         - Set Variable: reference-docs/operators/set-variable.md
         - Sub Workflow: reference-docs/operators/sub-workflow.md
-        - Terminate Workflow Operator: reference-docs/operators/terminate-workflow.md
+        - Terminate Workflow: reference-docs/operators/terminate-workflow.md
         - Terminate: reference-docs/operators/terminate.md
         - Fork/Join: reference-docs/operators/fork-join.md
         - Dynamic Fork: reference-docs/operators/dynamic-fork.md
         - Join: reference-docs/operators/join.md
         - Start Workflow: reference-docs/operators/start-workflow.md
-        - Human Operator: reference-docs/operators/human.md
+        - Human: reference-docs/operators/human.md
         - Get Workflow: reference-docs/operators/get-workflow.md
         - Yield: reference-docs/operators/yield.md
       - System Tasks:
@@ -335,7 +335,7 @@ nav:
         - List Grants for a Subject: reference-docs/api/authorization/list-grants-for-subject.md
         - Revoke Grants for a Subject: reference-docs/api/authorization/revoke-grants-for-subject.md
       - Schema:
-        - Input/Output Schema Validation: reference-docs/api/schema.md
+        - Schema: reference-docs/api/schema.md
         - Create Schema: reference-docs/api/schema/create-schema.md
         - Get All Schemas: reference-docs/api/schema/get-all-schemas.md
         - Get Schema by Name: reference-docs/api/schema/get-schema-by-name.md
