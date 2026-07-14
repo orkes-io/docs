@@ -1,9 +1,9 @@
 ---
-title: "Worker Concepts"
+title: "Workers"
 description: "Learn about workers in Conductor — the code that executes tasks in workflows, written in any language and hosted anywhere you choose."
 canonical_route: "quickstarts/workers"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, workflow orchestration, Worker Concepts, workflow tasks, task queues"
+keywords: "Orkes Conductor, workflow orchestration, Workers"
 ---
 
 # Workers

@@ -1,9 +1,9 @@
 ---
-title: "Human Operator"
+title: "Human"
 description: "Learn how the Human task pauses a workflow to collect user input through forms or approvals in Orkes Conductor."
 canonical_route: "reference-docs/operators/human"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, workflow orchestration, Human Operator, Human Operator task"
+keywords: "Orkes Conductor, workflow orchestration, Human, Human task"
 ---
 
 # Human

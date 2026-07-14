@@ -79,4 +79,4 @@ Using the workflow ID, the application can check the Conductor server for the wo
 - [Durable Execution Semantics](/content/quickstarts/durable-execution)
 - [JSON + Code Native Workflow Orchestration](/content/quickstarts/json-code-native)
 - [Workflow Concepts](/content/quickstarts/workflows)
-- [Task Concepts](/content/quickstarts/tasks)
+- [Tasks](/content/quickstarts/tasks)

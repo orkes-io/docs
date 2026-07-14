@@ -1,9 +1,9 @@
 ---
-title: "Routing Tasks"
+title: "Routing Tasks (Task-to-domain)"
 description: "Learn how task domains help route tasks to different worker groups so tasks from the same queue can be handled by the appropriate workers in Orkes Conductor."
 canonical_route: "developer-guides/task-to-domain"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, workflow orchestration, Routing Tasks, workflow tasks, task queues"
+keywords: "Orkes Conductor, workflow orchestration, Routing Tasks (Task-to-domain), workflow tasks, task queues"
 ---
 
 # Routing Tasks (Task-to-domain)

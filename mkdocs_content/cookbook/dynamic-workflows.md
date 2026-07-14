@@ -6,7 +6,7 @@ updated: "2026-05-14"
 keywords: "Orkes Conductor, workflow orchestration, Dynamic Workflows as Code, Dynamic Workflows as Code tutorial, workflow cookbook, workflow recipes"
 ---
 
-# Dynamic workflows in code
+# Dynamic Workflows as Code
 
 ## Workflow as code
 
@@ -368,7 +368,7 @@ For more Python SDK examples, see the [Python SDK documentation](/content/sdks/p
 
 - [Cookbook](/content/category/tutorials)
 - [Microservice orchestration](/content/cookbook/microservice-orchestration)
-- [Dynamic Parallelism](/content/cookbook/dynamic-parallelism)
-- [Wait and Timer Patterns](/content/cookbook/wait-and-timers)
-- [Task Timeouts and Retries](/content/cookbook/task-timeouts-and-retries)
+- [Dynamic parallelism](/content/cookbook/dynamic-parallelism)
+- [Wait and timer patterns](/content/cookbook/wait-and-timers)
+- [Task timeouts and retries](/content/cookbook/task-timeouts-and-retries)
 - [Scheduled Workflows](/content/cookbook/workflow-scheduling)

@@ -1,9 +1,9 @@
 ---
-title: "Task Timeouts and Retries"
+title: "Task timeouts and retries"
 description: "Cookbook recipes for response timeouts, total timeouts, retry policies, exponential backoff, and lease extension in Orkes Conductor."
 canonical_route: "cookbook/task-timeouts-and-retries"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, workflow orchestration, Task Timeouts and Retries, Task Timeouts and Retries tutorial, workflow cookbook, workflow recipes, workflow tasks, task queues"
+keywords: "Orkes Conductor, workflow orchestration, Task timeouts and retries, Task timeouts and retries tutorial, workflow cookbook, workflow recipes, workflow tasks, task queues"
 ---
 
 # Task timeouts and retries
@@ -194,7 +194,7 @@ See the [task definition reference](/content/reference-docs/api/metadata/creatin
 
 - [Cookbook](/content/category/tutorials)
 - [Microservice orchestration](/content/cookbook/microservice-orchestration)
-- [Dynamic Parallelism](/content/cookbook/dynamic-parallelism)
-- [Wait and Timer Patterns](/content/cookbook/wait-and-timers)
+- [Dynamic parallelism](/content/cookbook/dynamic-parallelism)
+- [Wait and timer patterns](/content/cookbook/wait-and-timers)
 - [Scheduled Workflows](/content/cookbook/workflow-scheduling)
 - [Dynamic Workflows as Code](/content/cookbook/dynamic-workflows)

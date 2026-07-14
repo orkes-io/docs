@@ -6,7 +6,7 @@ updated: "2026-05-14"
 keywords: "Orkes Conductor, workflow orchestration, Event Publishing Recipes, event-driven orchestration, webhooks"
 ---
 
-# Event-driven recipes
+# Event Publishing Recipes
 
 ### Publish events to a message broker
 

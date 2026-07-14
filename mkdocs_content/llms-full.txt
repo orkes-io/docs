@@ -4404,13 +4404,13 @@ Use these pages to answer implementation questions, compare available primitives
 - [Dynamic](/content/reference-docs/operators/dynamic)
 - [Set Variable](/content/reference-docs/operators/set-variable)
 - [Sub Workflow](/content/reference-docs/operators/sub-workflow)
-- [Terminate Workflow Operator](/content/reference-docs/operators/terminate-workflow)
+- [Terminate Workflow](/content/reference-docs/operators/terminate-workflow)
 - [Terminate](/content/reference-docs/operators/terminate)
 - [Fork/Join](/content/reference-docs/operators/fork-join)
 - [Dynamic Fork](/content/reference-docs/operators/dynamic-fork)
 - [Join](/content/reference-docs/operators/join)
 - [Start Workflow](/content/reference-docs/operators/start-workflow)
-- [Human Operator](/content/reference-docs/operators/human)
+- [Human](/content/reference-docs/operators/human)
 - [Get Workflow](/content/reference-docs/operators/get-workflow)
 - [Yield](/content/reference-docs/operators/yield)
 
@@ -4710,7 +4710,7 @@ Using the workflow ID, the application can check the Conductor server for the wo
 - [Durable Execution Semantics](/content/quickstarts/durable-execution)
 - [JSON + Code Native Workflow Orchestration](/content/quickstarts/json-code-native)
 - [Workflow Concepts](/content/quickstarts/workflows)
-- [Task Concepts](/content/quickstarts/tasks)
+- [Tasks](/content/quickstarts/tasks)
 
 ---
 URL: https://orkes.io/content/conductor-skills
@@ -4991,7 +4991,7 @@ Do not describe Conductor Skills as the agent runtime. Conductor Skills are inst
 
 ---
 URL: https://orkes.io/content/cookbook/dynamic-parallelism
-Title: Dynamic Parallelism
+Title: Dynamic parallelism
 Route: /content/cookbook/dynamic-parallelism
 ---
 
@@ -5158,8 +5158,8 @@ curl -X POST '/api/workflow/parallel_sub_workflows' \
 
 - [Cookbook](/content/category/tutorials)
 - [Microservice orchestration](/content/cookbook/microservice-orchestration)
-- [Wait and Timer Patterns](/content/cookbook/wait-and-timers)
-- [Task Timeouts and Retries](/content/cookbook/task-timeouts-and-retries)
+- [Wait and timer patterns](/content/cookbook/wait-and-timers)
+- [Task timeouts and retries](/content/cookbook/task-timeouts-and-retries)
 - [Scheduled Workflows](/content/cookbook/workflow-scheduling)
 - [Dynamic Workflows as Code](/content/cookbook/dynamic-workflows)
 
@@ -5169,7 +5169,7 @@ Title: Dynamic Workflows as Code
 Route: /content/cookbook/dynamic-workflows
 ---
 
-# Dynamic workflows in code
+# Dynamic Workflows as Code
 
 ## Workflow as code
 
@@ -5531,9 +5531,9 @@ For more Python SDK examples, see the [Python SDK documentation](/content/sdks/p
 
 - [Cookbook](/content/category/tutorials)
 - [Microservice orchestration](/content/cookbook/microservice-orchestration)
-- [Dynamic Parallelism](/content/cookbook/dynamic-parallelism)
-- [Wait and Timer Patterns](/content/cookbook/wait-and-timers)
-- [Task Timeouts and Retries](/content/cookbook/task-timeouts-and-retries)
+- [Dynamic parallelism](/content/cookbook/dynamic-parallelism)
+- [Wait and timer patterns](/content/cookbook/wait-and-timers)
+- [Task timeouts and retries](/content/cookbook/task-timeouts-and-retries)
 - [Scheduled Workflows](/content/cookbook/workflow-scheduling)
 
 ---
@@ -5798,15 +5798,15 @@ All three HTTP calls execute simultaneously. The JOIN waits for all to complete 
 ## Related pages
 
 - [Cookbook](/content/category/tutorials)
-- [Dynamic Parallelism](/content/cookbook/dynamic-parallelism)
-- [Wait and Timer Patterns](/content/cookbook/wait-and-timers)
-- [Task Timeouts and Retries](/content/cookbook/task-timeouts-and-retries)
+- [Dynamic parallelism](/content/cookbook/dynamic-parallelism)
+- [Wait and timer patterns](/content/cookbook/wait-and-timers)
+- [Task timeouts and retries](/content/cookbook/task-timeouts-and-retries)
 - [Scheduled Workflows](/content/cookbook/workflow-scheduling)
 - [Dynamic Workflows as Code](/content/cookbook/dynamic-workflows)
 
 ---
 URL: https://orkes.io/content/cookbook/task-timeouts-and-retries
-Title: Task Timeouts and Retries
+Title: Task timeouts and retries
 Route: /content/cookbook/task-timeouts-and-retries
 ---
 
@@ -5998,14 +5998,14 @@ See the [task definition reference](/content/reference-docs/api/metadata/creatin
 
 - [Cookbook](/content/category/tutorials)
 - [Microservice orchestration](/content/cookbook/microservice-orchestration)
-- [Dynamic Parallelism](/content/cookbook/dynamic-parallelism)
-- [Wait and Timer Patterns](/content/cookbook/wait-and-timers)
+- [Dynamic parallelism](/content/cookbook/dynamic-parallelism)
+- [Wait and timer patterns](/content/cookbook/wait-and-timers)
 - [Scheduled Workflows](/content/cookbook/workflow-scheduling)
 - [Dynamic Workflows as Code](/content/cookbook/dynamic-workflows)
 
 ---
 URL: https://orkes.io/content/cookbook/wait-and-timers
-Title: Wait and Timer Patterns
+Title: Wait and timer patterns
 Route: /content/cookbook/wait-and-timers
 ---
 
@@ -6165,8 +6165,8 @@ The output data you pass when completing the task is available in subsequent tas
 
 - [Cookbook](/content/category/tutorials)
 - [Microservice orchestration](/content/cookbook/microservice-orchestration)
-- [Dynamic Parallelism](/content/cookbook/dynamic-parallelism)
-- [Task Timeouts and Retries](/content/cookbook/task-timeouts-and-retries)
+- [Dynamic parallelism](/content/cookbook/dynamic-parallelism)
+- [Task timeouts and retries](/content/cookbook/task-timeouts-and-retries)
 - [Scheduled Workflows](/content/cookbook/workflow-scheduling)
 - [Dynamic Workflows as Code](/content/cookbook/dynamic-workflows)
 
@@ -6176,7 +6176,7 @@ Title: Scheduled Workflows
 Route: /content/cookbook/workflow-scheduling
 ---
 
-# Scheduled workflow recipes
+# Scheduled Workflows
 
 ### Run a workflow every minute
 
@@ -6542,9 +6542,9 @@ curl -X DELETE '/api/scheduler/schedules/daily-report-schedule' \
 
 - [Cookbook](/content/category/tutorials)
 - [Microservice orchestration](/content/cookbook/microservice-orchestration)
-- [Dynamic Parallelism](/content/cookbook/dynamic-parallelism)
-- [Wait and Timer Patterns](/content/cookbook/wait-and-timers)
-- [Task Timeouts and Retries](/content/cookbook/task-timeouts-and-retries)
+- [Dynamic parallelism](/content/cookbook/dynamic-parallelism)
+- [Wait and timer patterns](/content/cookbook/wait-and-timers)
+- [Task timeouts and retries](/content/cookbook/task-timeouts-and-retries)
 - [Dynamic Workflows as Code](/content/cookbook/dynamic-workflows)
 
 ---
@@ -8619,7 +8619,7 @@ Hover over the graph to inspect error events by timestamp. Use this to correlate
 - [API and MCP Gateway](/content/developer-guides/mcp-api-gateway)
 - [API Gateway: Expose Workflows as APIs](/content/developer-guides/api-gateway)
 - [MCP Gateway:  Expose Workflows as MCP tools](/content/developer-guides/mcp-gateway)
-- [Remote Services Guide](/content/remote-services)
+- [Remote Services](/content/remote-services)
 
 ---
 URL: https://orkes.io/content/developer-guides/integration-with-cicd
@@ -9196,7 +9196,7 @@ Gateway routes inherit authentication, authorization, schema validation, caching
 - [API Gateway: Expose Workflows as APIs](/content/developer-guides/api-gateway)
 - [MCP Gateway:  Expose Workflows as MCP tools](/content/developer-guides/mcp-gateway)
 - [Monitor Gateway Metrics](/content/developer-guides/gateway-metrics)
-- [Remote Services Guide](/content/remote-services)
+- [Remote Services](/content/remote-services)
 
 ---
 URL: https://orkes.io/content/developer-guides/mcp-gateway
@@ -11684,7 +11684,7 @@ Together, these run the workflow every 90 minutes: 14:30, 16:00, 17:30, 19:00, a
 
 ---
 URL: https://orkes.io/content/developer-guides/schema-validation
-Title: Schema Validation
+Title: Input/Output Schema Validation
 Route: /content/developer-guides/schema-validation
 ---
 
@@ -12848,7 +12848,7 @@ Use the **Override All** button to replace the task input parameters with the te
 
 ---
 URL: https://orkes.io/content/developer-guides/task-to-domain
-Title: Routing Tasks
+Title: Routing Tasks (Task-to-domain)
 Route: /content/developer-guides/task-to-domain
 ---
 
@@ -13876,7 +13876,7 @@ Common statuses:
 - [Rate Limits](/content/rate-limits)
 - [Writing Workers for Conductor Workflows](/content/developer-guides/using-workers)
 - [Guide to Scaling Workers](/content/developer-guides/scaling-workers)
-- [Routing Tasks](/content/developer-guides/task-to-domain)
+- [Routing Tasks (Task-to-domain)](/content/developer-guides/task-to-domain)
 
 ## Related pages
 
@@ -16486,7 +16486,7 @@ Title: Event Publishing Recipes
 Route: /content/eventing
 ---
 
-# Event-driven recipes
+# Event Publishing Recipes
 
 ### Publish events to a message broker
 
@@ -32871,7 +32871,7 @@ Conductor picked up exactly where it left off, reusing the outputs of every task
 - [Durable Execution Semantics](/content/quickstarts/durable-execution)
 - [JSON + Code Native Workflow Orchestration](/content/quickstarts/json-code-native)
 - [Workflow Concepts](/content/quickstarts/workflows)
-- [Task Concepts](/content/quickstarts/tasks)
+- [Tasks](/content/quickstarts/tasks)
 
 ---
 URL: https://orkes.io/content/quickstarts/concepts
@@ -32965,7 +32965,7 @@ These are the facts that matter when comparing workflow and orchestration engine
 - [Durable Execution Semantics](/content/quickstarts/durable-execution)
 - [JSON + Code Native Workflow Orchestration](/content/quickstarts/json-code-native)
 - [Workflow Concepts](/content/quickstarts/workflows)
-- [Task Concepts](/content/quickstarts/tasks)
+- [Tasks](/content/quickstarts/tasks)
 
 ---
 URL: https://orkes.io/content/quickstarts/create-first-workflow
@@ -33617,7 +33617,7 @@ In multi-node deployments, Conductor ensures consistency through:
 - [Conductor Architecture and Worker Polling](/content/conductor-architecture)
 - [JSON + Code Native Workflow Orchestration](/content/quickstarts/json-code-native)
 - [Workflow Concepts](/content/quickstarts/workflows)
-- [Task Concepts](/content/quickstarts/tasks)
+- [Tasks](/content/quickstarts/tasks)
 
 ---
 URL: https://orkes.io/content/quickstarts/json-code-native
@@ -33913,7 +33913,7 @@ Retry and timeout behavior for a task is controlled by its task definition (`ret
 
 ---
 URL: https://orkes.io/content/quickstarts/tasks
-Title: Task Concepts
+Title: Tasks
 Route: /content/quickstarts/tasks
 ---
 
@@ -34059,7 +34059,7 @@ For retrieval-augmented generation (RAG), Conductor supports vector stores inclu
 
 ---
 URL: https://orkes.io/content/quickstarts/workers
-Title: Worker Concepts
+Title: Workers
 Route: /content/quickstarts/workers
 ---
 
@@ -54491,14 +54491,14 @@ Since the request used `start`=0 and `size=2`, sorted by `name` in descending or
 
 ---
 URL: https://orkes.io/content/reference-docs/api/schema
-Title: Input/Output Schema Validation
+Title: Schemas API Reference
 Route: /content/reference-docs/api/schema
 ---
 
-# Input/Output Schema Validation
-Use the Orkes Conductor schemas API to input/Output Schema Validation. Includes endpoint details, authentication, parameters, request bodies, response behavior.
+# Schemas API Reference
+Use the Orkes Conductor schemas API to schemas API Reference. Includes endpoint details, authentication, parameters, request bodies, response behavior.
 
-Use this section when you need documentation about input/output schema validation in Orkes Conductor.
+Use this section when you need documentation about schemas api reference in Orkes Conductor.
 
 Start with the overview pages, then move into the reference or tutorial that matches the workflow, worker, API, or integration you are implementing.
 
@@ -54686,7 +54686,7 @@ Returns 200, indicating that the new schema version was created successfully.
 
 ## Related pages
 
-- [Input/Output Schema Validation](/content/reference-docs/api/schema)
+- [Schemas API Reference](/content/reference-docs/api/schema)
 - [Get All Schemas](/content/reference-docs/api/schema/get-all-schemas)
 - [Get Schema by Name](/content/reference-docs/api/schema/get-schema-by-name)
 - [Get Schema by Name and Version](/content/reference-docs/api/schema/get-schema-by-name-and-version)
@@ -54748,7 +54748,7 @@ Returns 200 OK, indicating that the schema has been deleted.
 
 ## Related pages
 
-- [Input/Output Schema Validation](/content/reference-docs/api/schema)
+- [Schemas API Reference](/content/reference-docs/api/schema)
 - [Create Schema](/content/reference-docs/api/schema/create-schema)
 - [Get All Schemas](/content/reference-docs/api/schema/get-all-schemas)
 - [Get Schema by Name](/content/reference-docs/api/schema/get-schema-by-name)
@@ -54811,7 +54811,7 @@ Returns 200 OK, indicating that the specific version of the schema has been dele
 
 ## Related pages
 
-- [Input/Output Schema Validation](/content/reference-docs/api/schema)
+- [Schemas API Reference](/content/reference-docs/api/schema)
 - [Create Schema](/content/reference-docs/api/schema/create-schema)
 - [Get All Schemas](/content/reference-docs/api/schema/get-all-schemas)
 - [Get Schema by Name](/content/reference-docs/api/schema/get-schema-by-name)
@@ -55053,7 +55053,7 @@ curl -X 'GET' \
 
 ## Related pages
 
-- [Input/Output Schema Validation](/content/reference-docs/api/schema)
+- [Schemas API Reference](/content/reference-docs/api/schema)
 - [Create Schema](/content/reference-docs/api/schema/create-schema)
 - [Get Schema by Name](/content/reference-docs/api/schema/get-schema-by-name)
 - [Get Schema by Name and Version](/content/reference-docs/api/schema/get-schema-by-name-and-version)
@@ -55143,7 +55143,7 @@ curl -X 'GET' \
 
 ## Related pages
 
-- [Input/Output Schema Validation](/content/reference-docs/api/schema)
+- [Schemas API Reference](/content/reference-docs/api/schema)
 - [Create Schema](/content/reference-docs/api/schema/create-schema)
 - [Get All Schemas](/content/reference-docs/api/schema/get-all-schemas)
 - [Get Schema by Name and Version](/content/reference-docs/api/schema/get-schema-by-name-and-version)
@@ -55238,7 +55238,7 @@ curl -X 'GET' \
 
 ## Related pages
 
-- [Input/Output Schema Validation](/content/reference-docs/api/schema)
+- [Schemas API Reference](/content/reference-docs/api/schema)
 - [Create Schema](/content/reference-docs/api/schema/create-schema)
 - [Get All Schemas](/content/reference-docs/api/schema/get-all-schemas)
 - [Get Schema by Name](/content/reference-docs/api/schema/get-schema-by-name)
@@ -62723,7 +62723,7 @@ Title: Terminate Workflow API
 Route: /content/reference-docs/api/workflow/terminate-workflow
 ---
 
-# Terminate Workflow
+# Terminate Workflow API
 
 **Endpoint:** `DELETE /api/workflow/{workflowId}`
 
@@ -67869,7 +67869,7 @@ This allows you to inspect the current state, status, and execution details of a
 
 ---
 URL: https://orkes.io/content/reference-docs/operators/human
-Title: Human Operator
+Title: Human
 Route: /content/reference-docs/operators/human
 ---
 
@@ -69687,7 +69687,7 @@ The `process_fedex` and `process_dhl` tasks in this example use the Inline task.
 
 ---
 URL: https://orkes.io/content/reference-docs/operators/terminate-workflow
-Title: Terminate Workflow Operator
+Title: Terminate Workflow
 Route: /content/reference-docs/operators/terminate-workflow
 ---
 
@@ -74225,7 +74225,7 @@ See an [example of how to add and run a Worker task](/content/quickstarts/write-
 
 ---
 URL: https://orkes.io/content/remote-services
-Title: Remote Services Guide
+Title: Remote Services
 Route: /content/remote-services
 ---
 
@@ -83730,9 +83730,9 @@ Both approaches handle long-running HTTP calls natively in Orkes Conductor, ensu
 
 - [Cookbook](/content/category/tutorials)
 - [Microservice orchestration](/content/cookbook/microservice-orchestration)
-- [Dynamic Parallelism](/content/cookbook/dynamic-parallelism)
-- [Wait and Timer Patterns](/content/cookbook/wait-and-timers)
-- [Task Timeouts and Retries](/content/cookbook/task-timeouts-and-retries)
+- [Dynamic parallelism](/content/cookbook/dynamic-parallelism)
+- [Wait and timer patterns](/content/cookbook/wait-and-timers)
+- [Task timeouts and retries](/content/cookbook/task-timeouts-and-retries)
 - [Scheduled Workflows](/content/cookbook/workflow-scheduling)
 
 ---
@@ -86112,7 +86112,7 @@ Start with the overview pages, then move into the reference or tutorial that mat
 
 ## Recommended path
 
-If you are unsure where to begin, start with **Writing Workers for Conductor Workflows**, **Guide to Scaling Workers**, **Routing Tasks**. These pages cover the most common entry points for this section.
+If you are unsure where to begin, start with **Writing Workers for Conductor Workflows**, **Guide to Scaling Workers**, **Routing Tasks (Task-to-domain)**. These pages cover the most common entry points for this section.
 
 ## When to use this section
 
@@ -86122,5 +86122,5 @@ Use these pages to answer implementation questions, compare available primitives
 
 - [Writing Workers for Conductor Workflows](/content/developer-guides/using-workers)
 - [Guide to Scaling Workers](/content/developer-guides/scaling-workers)
-- [Routing Tasks](/content/developer-guides/task-to-domain)
+- [Routing Tasks (Task-to-domain)](/content/developer-guides/task-to-domain)
 

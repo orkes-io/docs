@@ -1,9 +1,9 @@
 ---
-title: "Wait and Timer Patterns"
+title: "Wait and timer patterns"
 description: "Cookbook recipes for fixed delays, scheduled waits, external signals, and human approval pauses in Orkes Conductor workflows."
 canonical_route: "cookbook/wait-and-timers"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, workflow orchestration, Wait and Timer Patterns, Wait and Timer Patterns tutorial, workflow cookbook, workflow recipes"
+keywords: "Orkes Conductor, workflow orchestration, Wait and timer patterns, Wait and timer patterns tutorial, workflow cookbook, workflow recipes"
 ---
 
 # Wait and timer patterns
@@ -162,7 +162,7 @@ The output data you pass when completing the task is available in subsequent tas
 
 - [Cookbook](/content/category/tutorials)
 - [Microservice orchestration](/content/cookbook/microservice-orchestration)
-- [Dynamic Parallelism](/content/cookbook/dynamic-parallelism)
-- [Task Timeouts and Retries](/content/cookbook/task-timeouts-and-retries)
+- [Dynamic parallelism](/content/cookbook/dynamic-parallelism)
+- [Task timeouts and retries](/content/cookbook/task-timeouts-and-retries)
 - [Scheduled Workflows](/content/cookbook/workflow-scheduling)
 - [Dynamic Workflows as Code](/content/cookbook/dynamic-workflows)

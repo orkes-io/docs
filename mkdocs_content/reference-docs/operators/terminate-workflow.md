@@ -1,9 +1,9 @@
 ---
-title: "Terminate Workflow Operator"
+title: "Terminate Workflow"
 description: "Learn how the Terminate Workflow task terminates another workflow execution from the current workflow in Orkes Conductor."
 canonical_route: "reference-docs/operators/terminate-workflow"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, workflow orchestration, Terminate Workflow Operator, Terminate Workflow Operator task"
+keywords: "Orkes Conductor, workflow orchestration, Terminate Workflow, Terminate Workflow task"
 ---
 
 # Terminate Workflow

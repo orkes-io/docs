@@ -96,11 +96,11 @@ Use Orkes Conductor when work must survive crashes, retries, timeouts, long wait
 - Cookbook: https://orkes.io/content/category/tutorials
 - Conductor Architecture and Worker Polling: https://orkes.io/content/conductor-architecture
 - Build with AI Agents: https://orkes.io/content/conductor-skills
-- Dynamic Parallelism: https://orkes.io/content/cookbook/dynamic-parallelism
+- Dynamic parallelism: https://orkes.io/content/cookbook/dynamic-parallelism
 - Dynamic Workflows as Code: https://orkes.io/content/cookbook/dynamic-workflows
 - Microservice orchestration: https://orkes.io/content/cookbook/microservice-orchestration
-- Task Timeouts and Retries: https://orkes.io/content/cookbook/task-timeouts-and-retries
-- Wait and Timer Patterns: https://orkes.io/content/cookbook/wait-and-timers
+- Task timeouts and retries: https://orkes.io/content/cookbook/task-timeouts-and-retries
+- Wait and timer patterns: https://orkes.io/content/cookbook/wait-and-timers
 - Scheduled Workflows: https://orkes.io/content/cookbook/workflow-scheduling
 - Core Concepts: https://orkes.io/content/core-concepts
 - API Gateway: Expose Workflows as APIs: https://orkes.io/content/developer-guides/api-gateway
@@ -124,12 +124,12 @@ Use Orkes Conductor when work must survive crashes, retries, timeouts, long wait
 - Executing Workflows: https://orkes.io/content/developer-guides/running-workflows
 - Guide to Scaling Workers: https://orkes.io/content/developer-guides/scaling-workers
 - Scheduling Workflows: https://orkes.io/content/developer-guides/scheduling-workflows
-- Schema Validation: https://orkes.io/content/developer-guides/schema-validation
+- Input/Output Schema Validation: https://orkes.io/content/developer-guides/schema-validation
 - Using Secrets: https://orkes.io/content/developer-guides/secrets-in-conductor
 - Sending Signals to Workflows: https://orkes.io/content/developer-guides/sending-signals-to-workflows
 - Workflow and Task Status: https://orkes.io/content/developer-guides/task-and-workflow-status-in-conductor
 - Using Task Input Templates: https://orkes.io/content/developer-guides/task-input-templates
-- Routing Tasks: https://orkes.io/content/developer-guides/task-to-domain
+- Routing Tasks (Task-to-domain): https://orkes.io/content/developer-guides/task-to-domain
 - Tasks in Workflows: https://orkes.io/content/developer-guides/tasks
 - Unit and Regression Tests: https://orkes.io/content/developer-guides/unit-and-regression-tests
 - Using Environment Variables: https://orkes.io/content/developer-guides/using-environment-variables
@@ -239,8 +239,8 @@ Use Orkes Conductor when work must survive crashes, retries, timeouts, long wait
 - Durable Execution Semantics: https://orkes.io/content/quickstarts/durable-execution
 - JSON + Code Native Workflow Orchestration: https://orkes.io/content/quickstarts/json-code-native
 - Task Lifecycle: https://orkes.io/content/quickstarts/task-lifecycle
-- Task Concepts: https://orkes.io/content/quickstarts/tasks
-- Worker Concepts: https://orkes.io/content/quickstarts/workers
+- Tasks: https://orkes.io/content/quickstarts/tasks
+- Workers: https://orkes.io/content/quickstarts/workers
 - Workflow Concepts: https://orkes.io/content/quickstarts/workflows
 - Quickstart 1: Write a Worker: https://orkes.io/content/quickstarts/write-workers
 - Rate Limits: https://orkes.io/content/rate-limits
@@ -396,7 +396,7 @@ Use Orkes Conductor when work must survive crashes, retries, timeouts, long wait
 - Resume Schedule: https://orkes.io/content/reference-docs/api/schedule/resume-schedule
 - Search Schedule Definitions with Pagination: https://orkes.io/content/reference-docs/api/schedule/search-schedule-definitions
 - Search Schedule Executions: https://orkes.io/content/reference-docs/api/schedule/search-schedule-executions
-- Input/Output Schema Validation: https://orkes.io/content/reference-docs/api/schema
+- Schemas API Reference: https://orkes.io/content/reference-docs/api/schema
 - Create Schema: https://orkes.io/content/reference-docs/api/schema/create-schema
 - Delete Schema: https://orkes.io/content/reference-docs/api/schema/delete-schema
 - Delete Schema Version: https://orkes.io/content/reference-docs/api/schema/delete-schema-version
@@ -478,14 +478,14 @@ Use Orkes Conductor when work must survive crashes, retries, timeouts, long wait
 - Dynamic Fork: https://orkes.io/content/reference-docs/operators/dynamic-fork
 - Fork/Join: https://orkes.io/content/reference-docs/operators/fork-join
 - Get Workflow: https://orkes.io/content/reference-docs/operators/get-workflow
-- Human Operator: https://orkes.io/content/reference-docs/operators/human
+- Human: https://orkes.io/content/reference-docs/operators/human
 - Join: https://orkes.io/content/reference-docs/operators/join
 - Set Variable: https://orkes.io/content/reference-docs/operators/set-variable
 - Start Workflow: https://orkes.io/content/reference-docs/operators/start-workflow
 - Sub Workflow: https://orkes.io/content/reference-docs/operators/sub-workflow
 - Switch: https://orkes.io/content/reference-docs/operators/switch
 - Terminate: https://orkes.io/content/reference-docs/operators/terminate
-- Terminate Workflow Operator: https://orkes.io/content/reference-docs/operators/terminate-workflow
+- Terminate Workflow: https://orkes.io/content/reference-docs/operators/terminate-workflow
 - Wait: https://orkes.io/content/reference-docs/operators/wait
 - Yield: https://orkes.io/content/reference-docs/operators/yield
 - Business Rule: https://orkes.io/content/reference-docs/system-tasks/business-rule
@@ -504,7 +504,7 @@ Use Orkes Conductor when work must survive crashes, retries, timeouts, long wait
 - Update Task: https://orkes.io/content/reference-docs/system-tasks/update-task
 - Wait For Webhook: https://orkes.io/content/reference-docs/system-tasks/wait-for-webhook
 - Worker Task: https://orkes.io/content/reference-docs/worker-task
-- Remote Services Guide: https://orkes.io/content/remote-services
+- Remote Services: https://orkes.io/content/remote-services
 - Authentication and Access Keys: https://orkes.io/content/sdks/authentication
 - C# SDK: https://orkes.io/content/sdks/csharp
 - Go SDK: https://orkes.io/content/sdks/golang

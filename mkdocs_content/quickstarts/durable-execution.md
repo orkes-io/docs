@@ -146,4 +146,4 @@ In multi-node deployments, Conductor ensures consistency through:
 - [Conductor Architecture and Worker Polling](/content/conductor-architecture)
 - [JSON + Code Native Workflow Orchestration](/content/quickstarts/json-code-native)
 - [Workflow Concepts](/content/quickstarts/workflows)
-- [Task Concepts](/content/quickstarts/tasks)
+- [Tasks](/content/quickstarts/tasks)

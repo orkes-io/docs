@@ -59,4 +59,4 @@ Hover over the graph to inspect error events by timestamp. Use this to correlate
 - [API and MCP Gateway](/content/developer-guides/mcp-api-gateway)
 - [API Gateway: Expose Workflows as APIs](/content/developer-guides/api-gateway)
 - [MCP Gateway:  Expose Workflows as MCP tools](/content/developer-guides/mcp-gateway)
-- [Remote Services Guide](/content/remote-services)
+- [Remote Services](/content/remote-services)

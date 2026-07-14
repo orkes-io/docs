@@ -227,7 +227,7 @@ Both approaches handle long-running HTTP calls natively in Orkes Conductor, ensu
 
 - [Cookbook](/content/category/tutorials)
 - [Microservice orchestration](/content/cookbook/microservice-orchestration)
-- [Dynamic Parallelism](/content/cookbook/dynamic-parallelism)
-- [Wait and Timer Patterns](/content/cookbook/wait-and-timers)
-- [Task Timeouts and Retries](/content/cookbook/task-timeouts-and-retries)
+- [Dynamic parallelism](/content/cookbook/dynamic-parallelism)
+- [Wait and timer patterns](/content/cookbook/wait-and-timers)
+- [Task timeouts and retries](/content/cookbook/task-timeouts-and-retries)
 - [Scheduled Workflows](/content/cookbook/workflow-scheduling)

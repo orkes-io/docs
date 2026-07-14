@@ -1,9 +1,9 @@
 ---
-title: "Schema Validation"
+title: "Input/Output Schema Validation"
 description: "Learn how to define schemas that validate workflow inputs, outputs, and task parameters to ensure payload structure before workflow execution."
 canonical_route: "developer-guides/schema-validation"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, workflow orchestration, Schema Validation"
+keywords: "Orkes Conductor, workflow orchestration, Input/Output Schema Validation"
 ---
 
 # Input/Output Schema Validation

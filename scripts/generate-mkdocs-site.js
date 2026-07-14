@@ -103,17 +103,17 @@ const ROUTE_METADATA_OVERRIDES = {
       "Orkes Conductor tutorials for exposing workflows as HTTP APIs and MCP tools backed by durable workflow execution.",
   },
   "cookbook/dynamic-parallelism": {
-    title: "Dynamic Parallelism",
+    title: "Dynamic parallelism",
     description:
       "Cookbook recipes for dynamic fork patterns, runtime fan-out, same-task parallelism, and parallel sub-workflows in Orkes Conductor.",
   },
   "cookbook/wait-and-timers": {
-    title: "Wait and Timer Patterns",
+    title: "Wait and timer patterns",
     description:
       "Cookbook recipes for fixed delays, scheduled waits, external signals, and human approval pauses in Orkes Conductor workflows.",
   },
   "cookbook/task-timeouts-and-retries": {
-    title: "Task Timeouts and Retries",
+    title: "Task timeouts and retries",
     description:
       "Cookbook recipes for response timeouts, total timeouts, retry policies, exponential backoff, and lease extension in Orkes Conductor.",
   },
@@ -133,10 +133,13 @@ const ROUTE_METADATA_OVERRIDES = {
       "Cookbook recipes for code-first workflows, conditional branches, loops, parallel execution, sub-workflows, and runtime-generated definitions.",
   },
   "remote-services": {
-    title: "Remote Services Guide",
+    title: "Remote Services",
   },
   "reference-docs/api/remote-services": {
     title: "Remote Services API Reference",
+  },
+  "reference-docs/api/schema": {
+    title: "Schemas API Reference",
   },
   "reference-docs/api/task": {
     title: "Tasks API Reference",
@@ -145,10 +148,10 @@ const ROUTE_METADATA_OVERRIDES = {
     title: "Workflows API Reference",
   },
   "reference-docs/operators/terminate-workflow": {
-    title: "Terminate Workflow Operator",
+    title: "Terminate Workflow",
   },
   "reference-docs/operators/human": {
-    title: "Human Operator",
+    title: "Human",
   },
   "reference-docs/api/workflow/terminate-workflow": {
     title: "Terminate Workflow API",
@@ -157,10 +160,10 @@ const ROUTE_METADATA_OVERRIDES = {
     title: "Workflow Concepts",
   },
   "quickstarts/tasks": {
-    title: "Task Concepts",
+    title: "Tasks",
   },
   "quickstarts/workers": {
-    title: "Worker Concepts",
+    title: "Workers",
   },
 };
 

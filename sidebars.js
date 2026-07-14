@@ -640,7 +640,7 @@ const sidebars = {
                     label: 'Schema',
                     link: {
                         type: 'generated-index',
-                        title: 'Input/Output Schema Validation',
+                        title: 'Schema',
                         slug: '/reference-docs/api/schema',
                         description: 'Learn how to create and manage schema definitions, retrieve schema versions, and delete schemas using the Schema APIs.',
                     },

@@ -1,9 +1,9 @@
 ---
-title: "Dynamic Parallelism"
+title: "Dynamic parallelism"
 description: "Cookbook recipes for dynamic fork patterns, runtime fan-out, same-task parallelism, and parallel sub-workflows in Orkes Conductor."
 canonical_route: "cookbook/dynamic-parallelism"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, workflow orchestration, Dynamic Parallelism, Dynamic Parallelism tutorial, workflow cookbook, workflow recipes"
+keywords: "Orkes Conductor, workflow orchestration, Dynamic parallelism, Dynamic parallelism tutorial, workflow cookbook, workflow recipes"
 ---
 
 # Dynamic parallelism
@@ -169,7 +169,7 @@ curl -X POST '<YOUR-CLUSTER-URL>/api/workflow/parallel_sub_workflows' \
 
 - [Cookbook](/content/category/tutorials)
 - [Microservice orchestration](/content/cookbook/microservice-orchestration)
-- [Wait and Timer Patterns](/content/cookbook/wait-and-timers)
-- [Task Timeouts and Retries](/content/cookbook/task-timeouts-and-retries)
+- [Wait and timer patterns](/content/cookbook/wait-and-timers)
+- [Task timeouts and retries](/content/cookbook/task-timeouts-and-retries)
 - [Scheduled Workflows](/content/cookbook/workflow-scheduling)
 - [Dynamic Workflows as Code](/content/cookbook/dynamic-workflows)

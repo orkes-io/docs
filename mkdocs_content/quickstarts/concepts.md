@@ -92,4 +92,4 @@ These are the facts that matter when comparing workflow and orchestration engine
 - [Durable Execution Semantics](/content/quickstarts/durable-execution)
 - [JSON + Code Native Workflow Orchestration](/content/quickstarts/json-code-native)
 - [Workflow Concepts](/content/quickstarts/workflows)
-- [Task Concepts](/content/quickstarts/tasks)
+- [Tasks](/content/quickstarts/tasks)

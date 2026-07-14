@@ -262,8 +262,8 @@ All three HTTP calls execute simultaneously. The JOIN waits for all to complete 
 ## Related pages
 
 - [Cookbook](/content/category/tutorials)
-- [Dynamic Parallelism](/content/cookbook/dynamic-parallelism)
-- [Wait and Timer Patterns](/content/cookbook/wait-and-timers)
-- [Task Timeouts and Retries](/content/cookbook/task-timeouts-and-retries)
+- [Dynamic parallelism](/content/cookbook/dynamic-parallelism)
+- [Wait and timer patterns](/content/cookbook/wait-and-timers)
+- [Task timeouts and retries](/content/cookbook/task-timeouts-and-retries)
 - [Scheduled Workflows](/content/cookbook/workflow-scheduling)
 - [Dynamic Workflows as Code](/content/cookbook/dynamic-workflows)

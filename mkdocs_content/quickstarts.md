@@ -446,4 +446,4 @@ Conductor picked up exactly where it left off, reusing the outputs of every task
 - [Durable Execution Semantics](/content/quickstarts/durable-execution)
 - [JSON + Code Native Workflow Orchestration](/content/quickstarts/json-code-native)
 - [Workflow Concepts](/content/quickstarts/workflows)
-- [Task Concepts](/content/quickstarts/tasks)
+- [Tasks](/content/quickstarts/tasks)

@@ -6,7 +6,7 @@ updated: "2026-05-14"
 keywords: "Orkes Conductor, workflow orchestration, Scheduled Workflows, Scheduled Workflows tutorial, workflow cookbook, workflow recipes"
 ---
 
-# Scheduled workflow recipes
+# Scheduled Workflows
 
 ### Run a workflow every minute
 
@@ -372,7 +372,7 @@ curl -X DELETE '<YOUR-CLUSTER-URL>/api/scheduler/schedules/daily-report-schedule
 
 - [Cookbook](/content/category/tutorials)
 - [Microservice orchestration](/content/cookbook/microservice-orchestration)
-- [Dynamic Parallelism](/content/cookbook/dynamic-parallelism)
-- [Wait and Timer Patterns](/content/cookbook/wait-and-timers)
-- [Task Timeouts and Retries](/content/cookbook/task-timeouts-and-retries)
+- [Dynamic parallelism](/content/cookbook/dynamic-parallelism)
+- [Wait and timer patterns](/content/cookbook/wait-and-timers)
+- [Task timeouts and retries](/content/cookbook/task-timeouts-and-retries)
 - [Dynamic Workflows as Code](/content/cookbook/dynamic-workflows)

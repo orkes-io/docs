@@ -6,7 +6,7 @@ updated: "2026-05-14"
 keywords: "Orkes Conductor, workflow orchestration, Terminate Workflow API, Terminate Workflow API API, API orchestration, API gateway"
 ---
 
-# Terminate Workflow
+# Terminate Workflow API
 
 **Endpoint:** `DELETE /api/workflow/{workflowId}`
 

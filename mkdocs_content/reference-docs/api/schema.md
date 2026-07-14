@@ -1,11 +1,11 @@
 ---
-title: "Input/Output Schema Validation"
-description: "Use the Orkes Conductor schemas API to input/Output Schema Validation. Includes endpoint details, authentication, parameters, request bodies, response behavior."
+title: "Schemas API Reference"
+description: "Use the Orkes Conductor schemas API to schemas API Reference. Includes endpoint details, authentication, parameters, request bodies, response behavior."
 ---
-# Input/Output Schema Validation
-Use the Orkes Conductor schemas API to input/Output Schema Validation. Includes endpoint details, authentication, parameters, request bodies, response behavior.
+# Schemas API Reference
+Use the Orkes Conductor schemas API to schemas API Reference. Includes endpoint details, authentication, parameters, request bodies, response behavior.
 
-Use this section when you need documentation about input/output schema validation in Orkes Conductor.
+Use this section when you need documentation about schemas api reference in Orkes Conductor.
 
 Start with the overview pages, then move into the reference or tutorial that matches the workflow, worker, API, or integration you are implementing.
 
