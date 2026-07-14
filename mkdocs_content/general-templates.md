@@ -1,9 +1,9 @@
 ---
 title: "Workflow Patterns"
-description: "Cookbook recipes for common Conductor workflow patterns, including API orchestration, long-running workflows, loops, timers, retries, scheduling."
+description: "Cookbook recipes for common Conductor workflow patterns, including API orchestration, long-running workflows, loops, timers, retries, scheduling, and workflows."
 ---
 # Workflow Patterns
-Cookbook recipes for common Conductor workflow patterns, including API orchestration, long-running workflows, loops, timers, retries, scheduling.
+Cookbook recipes for common Conductor workflow patterns, including API orchestration, long-running workflows, loops, timers, retries, scheduling, and workflows.
 
 Use these recipes when you need common workflow shapes: service orchestration, long-running APIs, branching, loops, dynamic fan-out, scheduling, and workflows as code.
 

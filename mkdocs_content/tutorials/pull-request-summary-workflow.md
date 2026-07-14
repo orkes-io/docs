@@ -1,6 +1,6 @@
 ---
 title: "Build a Pull Request Summary Workflow"
-description: "Learn how to build a workflow that converts technical pull request descriptions into concise."
+description: "Learn how to build a workflow that converts technical pull request descriptions into concise, stakeholder-friendly summaries using AI prompts and LLM tasks."
 canonical_route: "tutorials/pull-request-summary-workflow"
 updated: "2026-05-14"
 keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow cookbook, workflow recipes, Conductor examples"

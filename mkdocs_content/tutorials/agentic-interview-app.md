@@ -1,6 +1,6 @@
 ---
 title: "Build an Agentic Interview App with Orkes Conductor"
-description: "Learn how to build an agentic interview application that uses LLMs, Google Docs."
+description: "Learn how to build an agentic interview application that uses LLMs, Google Docs, and SendGrid to run interview workflows and generate follow-up content."
 canonical_route: "tutorials/agentic-interview-app"
 updated: "2026-05-14"
 keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, AI orchestration, LLM orchestration, MCP gateway, agent workflows, workflow cookbook, workflow recipes, Conductor examples"

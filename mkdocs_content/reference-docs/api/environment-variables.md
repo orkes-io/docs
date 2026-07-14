@@ -1,9 +1,9 @@
 ---
 title: "Environment Variables"
-description: "Use the Orkes Conductor environment variables API to environment Variables. Includes endpoint details, authentication, parameters, request bodies."
+description: "Use the Orkes Conductor environment variables API to environment Variables. Includes endpoint details, authentication, parameters, request bodies, response."
 ---
 # Environment Variables
-Use the Orkes Conductor environment variables API to environment Variables. Includes endpoint details, authentication, parameters, request bodies.
+Use the Orkes Conductor environment variables API to environment Variables. Includes endpoint details, authentication, parameters, request bodies, response.
 
 Use this section when you need documentation about environment variables in Orkes Conductor.
 

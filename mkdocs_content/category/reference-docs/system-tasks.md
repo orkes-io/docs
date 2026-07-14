@@ -1,6 +1,6 @@
 ---
 title: "System Tasks"
-description: "Overview of built-in system tasks in Conductor — HTTP, Event, Human, Wait, Inline, JSON JQ Transform, LLM orchestration."
+description: "Overview of built-in system tasks in Conductor — HTTP, Event, Human, Wait, Inline, JSON JQ Transform, LLM orchestration, and more for durable workflow."
 canonical_route: "category/reference-docs/system-tasks"
 updated: "2026-05-14"
 keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow tasks, workflow workers, task queues"

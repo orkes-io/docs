@@ -1,6 +1,6 @@
 ---
 title: "Get Started with Orkes Conductor"
-description: "Get started with Orkes Conductor. Learn core concepts, install the platform, and build your first workflow to orchestrate microservices, APIs."
+description: "Get started with Orkes Conductor. Learn core concepts, install the platform, and build your first workflow to orchestrate microservices, APIs, and distributed."
 canonical_route: "category/getting-started"
 updated: "2026-05-14"
 keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"

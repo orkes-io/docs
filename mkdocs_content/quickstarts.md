@@ -1,6 +1,6 @@
 ---
 title: "Run Your First Workflow"
-description: "Build and run your first Conductor workflow in 5 minutes using the free Developer Edition."
+description: "Build and run your first Conductor workflow in 5 minutes using the free Developer Edition. Call an API, parse the response with server-side JavaScript, and see."
 canonical_route: "quickstarts"
 updated: "2026-05-14"
 keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"

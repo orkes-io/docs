@@ -515,37 +515,51 @@ function sentenceCase(value) {
 // cut can otherwise land between them and leave an orphaned "...in Orkes."
 const DANGLING_TRAILING_WORD = /\b(and|or|but|with|for|in|on|to|of|the|a|an|at|by|from|as|is|are|via|Orkes)$/i;
 
+// scripts/audit-docs-build.js hard-fails the build if a meta description is
+// shorter than 70 chars or longer than 170 — stay well inside that window.
+const META_DESC_MIN = 70;
+const META_DESC_MAX = 160;
+
 function fitMetaDescription(value) {
   const clean = String(value || "").replace(/\s+/g, " ").trim();
-  if (clean.length <= 160) return clean;
+  if (clean.length <= META_DESC_MAX) return clean;
 
-  // Prefer ending at the last complete sentence that still fits the limit.
-  const withinLimit = clean.slice(0, 161);
+  const candidates = [];
+
+  // Candidate: last complete sentence that still fits the limit.
+  const withinLimit = clean.slice(0, META_DESC_MAX + 1);
   const lastSentenceEnd = Math.max(
     withinLimit.lastIndexOf(". "),
     withinLimit.lastIndexOf("! "),
     withinLimit.lastIndexOf("? "),
   );
-  if (lastSentenceEnd >= 80) {
-    return withinLimit.slice(0, lastSentenceEnd + 1).trim();
+  if (lastSentenceEnd > 0) {
+    candidates.push(withinLimit.slice(0, lastSentenceEnd + 1).trim());
   }
 
-  // Next, prefer ending at the last clause boundary (comma) that still fits —
-  // a clause ending in a comma is almost always a grammatically complete unit,
-  // unlike an arbitrary word-boundary cut which can land mid-verb-phrase.
-  const lastComma = clean.slice(0, 160).lastIndexOf(",");
-  if (lastComma >= 60) {
-    return `${clean.slice(0, lastComma).trim()}.`;
+  // Candidate: last clause boundary (comma) that still fits — a clause ending
+  // in a comma is almost always a grammatically complete unit, unlike an
+  // arbitrary word-boundary cut which can land mid-verb-phrase.
+  const lastComma = clean.slice(0, META_DESC_MAX).lastIndexOf(",");
+  if (lastComma > 0) {
+    candidates.push(`${clean.slice(0, lastComma).trim()}.`);
   }
 
-  // Otherwise cut at the last whole word within the limit, then strip any
-  // trailing filler word(s) that would leave a dangling conjunction/preposition
-  // before adding the closing period, so the result always reads as complete.
-  let cut = clean.slice(0, 160).replace(/\s+\S*$/, "").replace(/[,:\-;]\s*$/, "").trim();
-  while (DANGLING_TRAILING_WORD.test(cut)) {
-    cut = cut.replace(/\s*\S+$/, "").replace(/[,:\-;]\s*$/, "").trim();
+  // Candidate: last whole word within the limit, with trailing filler word(s)
+  // stripped so it never ends on a dangling conjunction/preposition.
+  let wordCut = clean.slice(0, META_DESC_MAX).replace(/\s+\S*$/, "").replace(/[,:\-;]\s*$/, "").trim();
+  while (DANGLING_TRAILING_WORD.test(wordCut)) {
+    wordCut = wordCut.replace(/\s*\S+$/, "").replace(/[,:\-;]\s*$/, "").trim();
   }
-  return `${cut}.`;
+  candidates.push(`${wordCut}.`);
+
+  // Prefer the longest candidate that still meets the minimum length (a
+  // shorter-but-earlier boundary like a comma near the start of the sentence
+  // would otherwise win even when a longer, still-clean cut is available).
+  // Fall back to the longest candidate at all if none clear the minimum.
+  const longEnough = candidates.filter((c) => c.length >= META_DESC_MIN);
+  const pool = longEnough.length ? longEnough : candidates;
+  return pool.reduce((best, c) => (c.length > best.length ? c : best));
 }
 
 function hasProductContext(value) {

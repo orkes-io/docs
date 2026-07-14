@@ -1,6 +1,6 @@
 ---
 title: "Update Human Task by Task ID"
-description: "Use the Orkes Conductor human tasks API to update Human Task by Task ID. Includes endpoint details, authentication, parameters, request bodies."
+description: "Use the Orkes Conductor human tasks API to update Human Task by Task ID. Includes endpoint details, authentication, parameters, request bodies, response."
 canonical_route: "reference-docs/api/human-tasks/update-human-task"
 updated: "2026-05-14"
 keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration, workflow tasks, workflow workers, task queues"

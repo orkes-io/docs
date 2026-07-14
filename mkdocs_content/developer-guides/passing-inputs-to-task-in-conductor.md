@@ -1,6 +1,6 @@
 ---
 title: "Wiring Parameters"
-description: "Learn how to wire parameters in Orkes Conductor using dynamic expressions to pass data between workflows, tasks, variables, secrets, and sub-workflows."
+description: "Learn how to wire parameters in Orkes Conductor using dynamic expressions to pass data between workflows, tasks, variables, secrets, and sub-workflows, plus."
 canonical_route: "developer-guides/passing-inputs-to-task-in-conductor"
 updated: "2026-05-14"
 keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow tasks, workflow workers, task queues"

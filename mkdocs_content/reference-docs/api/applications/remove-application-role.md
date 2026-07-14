@@ -1,6 +1,6 @@
 ---
 title: "Remove Role from Application"
-description: "Use the Orkes Conductor applications API to remove Role from Application. Includes endpoint details, authentication, parameters, request bodies."
+description: "Use the Orkes Conductor applications API to remove Role from Application. Includes endpoint details, authentication, parameters, request bodies, response."
 canonical_route: "reference-docs/api/applications/remove-application-role"
 updated: "2026-05-14"
 keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration"

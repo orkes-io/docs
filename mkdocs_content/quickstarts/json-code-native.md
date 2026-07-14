@@ -1,6 +1,6 @@
 ---
 title: "JSON + Code Native Workflow Orchestration"
-description: "Conductor stores workflow definitions as JSON — the canonical runtime format for this durable execution workflow engine."
+description: "Conductor stores workflow definitions as JSON — the canonical runtime format for this durable execution workflow engine. Create dynamic workflows at runtime."
 canonical_route: "quickstarts/json-code-native"
 updated: "2026-05-14"
 keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"

@@ -1,6 +1,6 @@
 ---
 title: "Durable Execution Semantics"
-description: "How Conductor guarantees durable execution for distributed workflows — what persists at every step, at-least-once task delivery, failure matrix."
+description: "How Conductor guarantees durable execution for distributed workflows — what persists at every step, at-least-once task delivery, failure matrix, task state."
 canonical_route: "quickstarts/durable-execution"
 updated: "2026-05-14"
 keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
