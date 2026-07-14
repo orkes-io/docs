@@ -3,7 +3,7 @@ title: "Managing Users and Groups"
 description: "Learn how to create and manage users and groups to assign roles and control access to cluster resources in Orkes Conductor."
 canonical_route: "access-control-and-security/users-and-groups"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, role based access control, workflow security, access control"
+keywords: "Orkes Conductor, workflow orchestration, Managing Users and Groups, role based access control, workflow security"
 ---
 
 # Managing Users and Groups

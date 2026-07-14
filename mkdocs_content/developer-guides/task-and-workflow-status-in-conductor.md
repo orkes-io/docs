@@ -3,7 +3,7 @@ title: "Workflow and Task Status"
 description: "Learn the workflow and task statuses in Orkes Conductor and how they represent execution states such as RUNNING, COMPLETED, FAILED, and other task lifecycle."
 canonical_route: "developer-guides/task-and-workflow-status-in-conductor"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow tasks, workflow workers, task queues"
+keywords: "Orkes Conductor, workflow orchestration, Workflow and Task Status, workflow tasks, task queues"
 ---
 
 # Workflow and Task Status

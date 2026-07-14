@@ -3,7 +3,7 @@ title: "Test Prompts"
 description: "Use the Orkes Conductor Conductor API to test Prompts. Includes endpoint details, authentication, parameters, request bodies, response behavior, and examples."
 canonical_route: "reference-docs/api/prompts/test-prompts"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Test Prompts, Test Prompts API, API orchestration, API gateway"
 ---
 
 # Test Prompts

@@ -3,7 +3,7 @@ title: "Using Task Input Templates"
 description: "Learn how to define task input templates in task definitions and use them as default inputs when configuring tasks in workflows in Orkes Conductor."
 canonical_route: "developer-guides/task-input-templates"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow cookbook, workflow recipes, Conductor examples, workflow tasks, workflow workers, task queues"
+keywords: "Orkes Conductor, workflow orchestration, Using Task Input Templates, workflow tasks, task queues"
 ---
 
 # Using Task Input Templates

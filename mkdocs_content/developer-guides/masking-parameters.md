@@ -3,7 +3,7 @@ title: "Masking Parameters"
 description: "Learn how to securely pass sensitive data in Conductor by masking parameters, ensuring privacy and preventing unauthorized access to confidential data."
 canonical_route: "developer-guides/masking-parameters"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Masking Parameters"
 ---
 
 # Masking Parameters

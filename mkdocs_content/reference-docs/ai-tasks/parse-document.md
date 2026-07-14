@@ -3,7 +3,7 @@ title: "Parse Document"
 description: "Learn how the Parse Document task extracts, converts, and structures documents into Markdown for AI processing and semantic workflows in Orkes Conductor."
 canonical_route: "reference-docs/ai-tasks/parse-document"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, AI orchestration, LLM orchestration, MCP gateway, agent workflows, workflow tasks, workflow workers, task queues"
+keywords: "Orkes Conductor, workflow orchestration, Parse Document, Parse Document AI task"
 ---
 
 # Parse Document

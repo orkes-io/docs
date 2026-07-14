@@ -3,7 +3,7 @@ title: "HTTP Poll"
 description: "Learn how the HTTP Poll task repeatedly calls an HTTP endpoint until a specified condition is met in Orkes Conductor."
 canonical_route: "reference-docs/system-tasks/http-poll"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow tasks, workflow workers, task queues"
+keywords: "Orkes Conductor, workflow orchestration, HTTP Poll, HTTP Poll task"
 ---
 
 # HTTP Poll

@@ -3,7 +3,7 @@ title: "C# SDK"
 description: "Build Conductor workers in C#/.NET with dependency injection, workflow management, and task polling."
 canonical_route: "sdks/csharp"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, Conductor SDKs, workflow workers, Python SDK, Java SDK, Go SDK, TypeScript SDK"
+keywords: "Orkes Conductor, workflow orchestration, C# SDK, C# SDK SDK, Conductor SDKs, workflow workers"
 ---
 
 # C# SDK

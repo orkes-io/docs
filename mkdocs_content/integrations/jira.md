@@ -3,7 +3,7 @@ title: "Jira Integration with Orkes Conductor"
 description: "Learn how to integrate Jira with Orkes Conductor to automate your workflows and manage your Jira directly from Conductor."
 canonical_route: "integrations/jira"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Jira Integration with Orkes Conductor, Jira Integration with Orkes Conductor integration, Jira Integration with Orkes Conductor workflow automation"
 ---
 
 # Jira Integration with Orkes Conductor

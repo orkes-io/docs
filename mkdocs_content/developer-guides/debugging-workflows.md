@@ -3,7 +3,7 @@ title: "Search / Query Executions"
 description: "Learn how to search and query workflow executions, inspect task state, and recover failed or blocked workflow runs in Orkes Conductor."
 canonical_route: "developer-guides/debugging-workflows"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Search / Query Executions"
 ---
 
 # Search / Query Executions

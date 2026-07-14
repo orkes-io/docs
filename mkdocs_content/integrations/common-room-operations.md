@@ -3,7 +3,7 @@ title: "Common Room Operations Reference"
 description: "Look up the input and output parameters for each operation available in the Common Room integration with Orkes Conductor."
 canonical_route: "integrations/common-room-operations"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Common Room Operations Reference, Common Room Operations Reference integration, Common Room Operations Reference workflow automation"
 ---
 
 # Common Room Operations Reference

@@ -3,7 +3,7 @@ title: "Azure OpenAI Integration with Orkes Conductor"
 description: "Learn how to integrate Azure OpenAI so workflows can use GPT models through Conductor AI tasks."
 canonical_route: "integrations/ai-llm/azure-open-ai"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, AI orchestration, LLM orchestration, MCP gateway, agent workflows"
+keywords: "Orkes Conductor, workflow orchestration, Azure OpenAI Integration with Orkes Conductor, Azure OpenAI Integration with Orkes Conductor integration, Azure OpenAI Integration with Orkes Conductor workflow automation, AI orchestration, LLM orchestration, agent workflows"
 ---
 
 # Azure OpenAI Integration with Orkes Conductor

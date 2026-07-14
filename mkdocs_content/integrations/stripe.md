@@ -3,7 +3,7 @@ title: "Stripe Integration with Orkes Conductor"
 description: "Learn how to integrate Stripe with Orkes Conductor to automate your workflows and manage your Stripe directly from Conductor."
 canonical_route: "integrations/stripe"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Stripe Integration with Orkes Conductor, Stripe Integration with Orkes Conductor integration, Stripe Integration with Orkes Conductor workflow automation"
 ---
 
 # Stripe Integration with Orkes Conductor

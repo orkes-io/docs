@@ -3,7 +3,7 @@ title: "Do While"
 description: "Learn how the Do While task repeatedly executes a sequence of tasks while a specified condition remains true in Orkes Conductor."
 canonical_route: "reference-docs/operators/do-while"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Do While, Do While task"
 ---
 
 # Do While

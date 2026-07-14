@@ -3,7 +3,7 @@ title: "Google Calendar Operations Reference"
 description: "Look up the input and output parameters for each operation available in the Google Calendar integration with Orkes Conductor."
 canonical_route: "integrations/google-calendar-operations"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Google Calendar Operations Reference, Google Calendar Operations Reference integration, Google Calendar Operations Reference workflow automation"
 ---
 
 # Google Calendar Operations Reference

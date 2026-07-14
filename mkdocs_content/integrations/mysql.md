@@ -3,7 +3,7 @@ title: "MySQL Integration with Orkes Conductor"
 description: "Learn how to integrate MySQL with Orkes Conductor to automate your workflows and manage your MySQL directly from Conductor."
 canonical_route: "integrations/mysql"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, MySQL Integration with Orkes Conductor, MySQL Integration with Orkes Conductor integration, MySQL Integration with Orkes Conductor workflow automation"
 ---
 
 # MySQL Integration with Orkes Conductor

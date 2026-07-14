@@ -3,7 +3,7 @@ title: "Monitor Gateway Metrics"
 description: "Learn how to monitor API and MCP Gateway services and routes using built-in metrics such as request count, latency, and errors in Orkes Conductor."
 canonical_route: "developer-guides/gateway-metrics"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Monitor Gateway Metrics, API orchestration, API gateway"
 ---
 
 # Monitor Gateway Metrics

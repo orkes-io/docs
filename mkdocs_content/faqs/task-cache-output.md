@@ -3,7 +3,7 @@ title: "Caching Task Outputs"
 description: "Learn how task output caching stores task results based on input parameters so workflows can reuse previous results instead of re-executing the task."
 canonical_route: "faqs/task-cache-output"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow tasks, workflow workers, task queues"
+keywords: "Orkes Conductor, workflow orchestration, Caching Task Outputs, workflow tasks, task queues"
 ---
 
 # Caching Task Outputs

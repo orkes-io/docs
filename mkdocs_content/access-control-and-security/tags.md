@@ -3,7 +3,7 @@ title: "Managing Tags"
 description: "Learn how to use tags to organize resources and grant access to multiple workflows, tasks, and other resources through tag-based permissions in Orkes Conductor."
 canonical_route: "access-control-and-security/tags"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, role based access control, workflow security, access control"
+keywords: "Orkes Conductor, workflow orchestration, Managing Tags, role based access control, workflow security"
 ---
 
 # Managing Tags

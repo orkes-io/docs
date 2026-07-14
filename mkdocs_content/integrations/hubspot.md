@@ -3,7 +3,7 @@ title: "HubSpot Integration with Orkes Conductor"
 description: "Learn how to integrate HubSpot with Orkes Conductor to automate your workflows and manage your HubSpot content directly from Conductor."
 canonical_route: "integrations/hubspot"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, HubSpot Integration with Orkes Conductor, HubSpot Integration with Orkes Conductor integration, HubSpot Integration with Orkes Conductor workflow automation"
 ---
 
 # HubSpot Integration with Orkes Conductor

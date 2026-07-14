@@ -3,7 +3,7 @@ title: "Set Variable"
 description: "Learn how the Set Variable task creates or updates workflow variables during workflow execution in Orkes Conductor."
 canonical_route: "reference-docs/operators/set-variable"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Set Variable, Set Variable task"
 ---
 
 # Set Variable

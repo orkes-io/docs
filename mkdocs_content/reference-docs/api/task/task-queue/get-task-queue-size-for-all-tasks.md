@@ -3,7 +3,7 @@ title: "Get Task Queue Size for All Tasks"
 description: "Use the Orkes Conductor tasks API to get Task Queue Size for All Tasks. Includes endpoint details, authentication, parameters, request bodies, response."
 canonical_route: "reference-docs/api/task/task-queue/get-task-queue-size-for-all-tasks"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration, workflow tasks, workflow workers, task queues"
+keywords: "Orkes Conductor, workflow orchestration, Get Task Queue Size for All Tasks, Get Task Queue Size for All Tasks API, API orchestration, API gateway, workflow tasks, task queues"
 ---
 
 # Get Task Queue Size for All Tasks

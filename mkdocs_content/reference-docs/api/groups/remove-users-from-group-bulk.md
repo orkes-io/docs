@@ -3,7 +3,7 @@ title: "Remove Users from Group in Bulk"
 description: "Use the Orkes Conductor groups API to remove Users from Group in Bulk. Includes endpoint details, authentication, parameters, request bodies, response behavior."
 canonical_route: "reference-docs/api/groups/remove-users-from-group-bulk"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Remove Users from Group in Bulk, Remove Users from Group in Bulk API, API orchestration, API gateway"
 ---
 
 # Remove Users from Group in Bulk

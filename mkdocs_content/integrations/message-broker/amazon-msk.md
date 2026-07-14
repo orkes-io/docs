@@ -3,7 +3,7 @@ title: "Amazon MSK Integration with Orkes Conductor"
 description: "Learn how to integrate Amazon MSK so workflows can publish and receive events through Kafka topics in Orkes Conductor."
 canonical_route: "integrations/message-broker/amazon-msk"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Amazon MSK Integration with Orkes Conductor, Amazon MSK Integration with Orkes Conductor integration, Amazon MSK Integration with Orkes Conductor workflow automation"
 ---
 
 # Amazon MSK Integration with Orkes Conductor

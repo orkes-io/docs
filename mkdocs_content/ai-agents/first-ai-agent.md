@@ -3,7 +3,7 @@ title: "Build Your First AI Agent"
 description: "Build your first durable AI agent in 5 minutes with the Orkes Agent SDK on Orkes Conductor's free Developer Edition. Define a tool-calling agent and run it —."
 canonical_route: "ai-agents/first-ai-agent"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, AI orchestration, LLM orchestration, MCP gateway, agent workflows"
+keywords: "Orkes Conductor, workflow orchestration, Build Your First AI Agent, AI orchestration, LLM orchestration, agent workflows"
 ---
 
 # Build Your First AI Agent

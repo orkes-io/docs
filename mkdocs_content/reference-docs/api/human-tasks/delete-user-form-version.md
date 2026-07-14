@@ -3,7 +3,7 @@ title: "Delete User Form Version"
 description: "Use the Orkes Conductor human tasks API to delete User Form Version. Includes endpoint details, authentication, parameters, request bodies, response behavior."
 canonical_route: "reference-docs/api/human-tasks/delete-user-form-version"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration, workflow tasks, workflow workers, task queues"
+keywords: "Orkes Conductor, workflow orchestration, Delete User Form Version, Delete User Form Version API, API orchestration, API gateway"
 ---
 
 # Delete User Form Version

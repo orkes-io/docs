@@ -3,7 +3,7 @@ title: "Google Docs Integration with Orkes Conductor"
 description: "Learn how to integrate Google Docs with Orkes Conductor to automate workflows that interact with your Google Docs"
 canonical_route: "integrations/google-docs"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Google Docs Integration with Orkes Conductor, Google Docs Integration with Orkes Conductor integration, Google Docs Integration with Orkes Conductor workflow automation"
 ---
 
 # Google Docs Integration with Orkes Conductor

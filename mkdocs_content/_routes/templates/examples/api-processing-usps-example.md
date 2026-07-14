@@ -3,7 +3,7 @@ title: "Build an API Orchestration Workflow with Orkes Conductor"
 description: "Learn how to orchestrate API processing workflows using a shipping service example in Orkes Conductor."
 canonical_route: "templates/examples/api-processing-usps-example"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow cookbook, workflow recipes, Conductor examples, API orchestration, API gateway, service orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Build an API Orchestration Workflow with Orkes Conductor, API orchestration, API gateway"
 ---
 
 # Build an API Orchestration Workflow with Orkes Conductor

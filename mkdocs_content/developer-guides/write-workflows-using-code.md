@@ -3,7 +3,7 @@ title: "Write Workflows Using Code"
 description: "Learn how to write workflows as code using Orkes Conductor SDKs to define tasks, create dynamic workflows, and register them programmatically."
 canonical_route: "developer-guides/write-workflows-using-code"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Write Workflows Using Code"
 ---
 
 # Write Workflows Using Code

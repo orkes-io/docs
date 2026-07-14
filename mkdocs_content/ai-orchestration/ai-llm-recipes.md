@@ -3,7 +3,7 @@ title: "AI & LLM orchestration recipes"
 description: "LLM orchestration cookbook - AI agent orchestration recipes for chat completion, RAG pipelines, and web search in Orkes Conductor."
 canonical_route: "ai-orchestration/ai-llm-recipes"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, AI orchestration, LLM orchestration, MCP gateway, agent workflows"
+keywords: "Orkes Conductor, workflow orchestration, AI & LLM orchestration recipes, AI orchestration, LLM orchestration, agent workflows"
 ---
 
 # AI & LLM orchestration recipes

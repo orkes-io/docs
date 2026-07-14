@@ -3,7 +3,7 @@ title: "Fork/Join"
 description: "Learn how the Fork/Join task runs multiple tasks in parallel using predefined forks in Orkes Conductor."
 canonical_route: "reference-docs/operators/fork-join"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Fork/Join, Fork/Join task"
 ---
 
 # Fork/Join

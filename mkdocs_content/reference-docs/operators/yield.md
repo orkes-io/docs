@@ -3,7 +3,7 @@ title: "Yield"
 description: "Learn how the Yield task temporarily pauses workflow execution and returns control to the caller in Orkes Conductor."
 canonical_route: "reference-docs/operators/yield"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Yield, Yield task"
 ---
 
 # Yield

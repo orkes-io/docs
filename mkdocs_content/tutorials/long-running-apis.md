@@ -3,7 +3,7 @@ title: "Orchestrating Long-Running APIs"
 description: "Learn how to handle long-running APIs using Conductor with asynchronous execution and state persistence patterns."
 canonical_route: "tutorials/long-running-apis"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow cookbook, workflow recipes, Conductor examples, API orchestration, API gateway, service orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Orchestrating Long-Running APIs, Orchestrating Long-Running APIs tutorial"
 ---
 
 # Orchestrating Long-Running APIs

@@ -3,7 +3,7 @@ title: "Build a Question Answering Workflow Using Stored Embeddings"
 description: "Learn how to build a question-answering workflow that generates embeddings from input text, stores them in a vector database, and answers questions using."
 canonical_route: "tutorials/question-answering-with-embeddings"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow cookbook, workflow recipes, Conductor examples"
+keywords: "Orkes Conductor, workflow orchestration, Build a Question Answering Workflow Using Stored Embeddings, Build a Question Answering Workflow Using Stored Embeddings tutorial"
 ---
 
 # Build a Question Answering Workflow Using Stored Embeddings

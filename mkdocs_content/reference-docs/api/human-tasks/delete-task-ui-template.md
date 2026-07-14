@@ -3,7 +3,7 @@ title: "Delete User Form"
 description: "Use the Orkes Conductor human tasks API to delete User Form. Includes endpoint details, authentication, parameters, request bodies, response behavior."
 canonical_route: "reference-docs/api/human-tasks/delete-task-ui-template"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow cookbook, workflow recipes, Conductor examples, API orchestration, API gateway, service orchestration, workflow tasks, workflow workers, task queues"
+keywords: "Orkes Conductor, workflow orchestration, Delete User Form, Delete User Form API, workflow cookbook, workflow recipes, API orchestration, API gateway, workflow tasks, task queues"
 ---
 
 # Delete User Form

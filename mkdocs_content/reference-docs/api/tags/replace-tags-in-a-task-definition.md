@@ -3,7 +3,7 @@ title: "Replace Tags in a Task Definition"
 description: "Use the Orkes Conductor tags API to replace Tags in a Task Definition. Includes endpoint details, authentication, parameters, request bodies, response behavior."
 canonical_route: "reference-docs/api/tags/replace-tags-in-a-task-definition"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration, workflow tasks, workflow workers, task queues"
+keywords: "Orkes Conductor, workflow orchestration, Replace Tags in a Task Definition, Replace Tags in a Task Definition API, API orchestration, API gateway, workflow tasks, task queues"
 ---
 
 # Replace Tags in a Task Definition

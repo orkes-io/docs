@@ -3,7 +3,7 @@ title: "Using Environment Variables"
 description: "Learn how to define environment variables and reference them in workflow definitions to reuse configuration values across workflows in Orkes Conductor."
 canonical_route: "developer-guides/using-environment-variables"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Using Environment Variables"
 ---
 
 # Using Environment Variables

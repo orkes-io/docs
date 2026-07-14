@@ -3,7 +3,7 @@ title: "Versioning Workflows"
 description: "Learn how workflow versions are selected, how definition snapshots affect running executions, and how to upgrade or restart workflows safely in Orkes Conductor."
 canonical_route: "developer-guides/versioning-workflows"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Versioning Workflows"
 ---
 
 # Versioning Workflows

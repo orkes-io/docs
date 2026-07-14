@@ -3,7 +3,7 @@ title: "Grant Access"
 description: "Use the Orkes Conductor Conductor API to grant Access. Includes endpoint details, authentication, parameters, request bodies, response behavior, and examples."
 canonical_route: "reference-docs/api/authorization/grant-access"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration, role based access control, workflow security, access control"
+keywords: "Orkes Conductor, workflow orchestration, Grant Access, Grant Access API, API orchestration, API gateway, role based access control, workflow security"
 ---
 
 # Grant Access

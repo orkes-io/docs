@@ -3,7 +3,7 @@ title: "Build a Ticket Service Using Orkes MCP Gateway"
 description: "Learn how to expose a workflow as an MCP tool so AI agents can create support tickets through structured tool calls in Orkes Conductor."
 canonical_route: "tutorials/expose-ticket-service-using-mcp-gateway"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, AI orchestration, LLM orchestration, MCP gateway, agent workflows, workflow cookbook, workflow recipes, Conductor examples, API orchestration, API gateway, service orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Build a Ticket Service Using Orkes MCP Gateway, Build a Ticket Service Using Orkes MCP Gateway tutorial, AI orchestration, LLM orchestration, agent workflows, API orchestration, API gateway"
 ---
 
 # Build a Ticket Service Using Orkes MCP Gateway

@@ -597,39 +597,64 @@ function pageDescriptionForRoute(route, fallbackDescription, title) {
   return fitted;
 }
 
+// Plain .includes() on route+title false-triggers constantly (e.g. "wait" contains
+// "ai", "domain" contains "ai", "email" contains "ai") — match whole words only.
+function hasWord(haystack, word) {
+  return new RegExp(`\\b${word.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`, "i").test(haystack);
+}
+
 function keywordsForRoute(route, title) {
   const haystack = `${route} ${title}`.toLowerCase();
-  const keywords = [
-    "Orkes Conductor",
-    "Conductor",
-    "durable execution",
-    "workflow orchestration",
-    "agentic workflows",
-    "AI agents",
-    "microservice orchestration",
-    "internet-scale orchestration",
-  ];
+  const cleanTitle = String(title || "").trim();
 
-  if (haystack.includes("sdk") || haystack.includes("client")) {
-    keywords.push("Conductor SDKs", "workflow workers", "Python SDK", "Java SDK", "Go SDK", "TypeScript SDK");
+  // Small universal anchor — page-specific terms below do the real targeting
+  // work instead of every page repeating the same long boilerplate list.
+  const keywords = ["Orkes Conductor", "workflow orchestration"];
+
+  // Every page's own title is always its most specific, most relevant keyword.
+  if (cleanTitle) keywords.push(cleanTitle);
+
+  // Natural phrasing derived from the route's category, paired with the page's
+  // own title so the keyword is unique per page instead of a shared category tag.
+  if (cleanTitle && route.startsWith("integrations/")) {
+    keywords.push(`${cleanTitle} integration`, `${cleanTitle} workflow automation`);
   }
-  if (haystack.includes("ai") || haystack.includes("agent") || haystack.includes("llm") || haystack.includes("mcp")) {
-    keywords.push("AI orchestration", "LLM orchestration", "MCP gateway", "agent workflows");
+  if (cleanTitle && (route.startsWith("reference-docs/operators/") || route.startsWith("reference-docs/system-tasks/"))) {
+    keywords.push(`${cleanTitle} task`);
   }
-  if (haystack.includes("tutorial") || haystack.includes("cookbook") || haystack.includes("template")) {
-    keywords.push("workflow cookbook", "workflow recipes", "Conductor examples");
+  if (cleanTitle && route.startsWith("reference-docs/ai-tasks/")) {
+    keywords.push(`${cleanTitle} AI task`);
   }
-  if (haystack.includes("api") || haystack.includes("gateway") || haystack.includes("service orchestration")) {
-    keywords.push("API orchestration", "API gateway", "service orchestration");
+  if (cleanTitle && route.startsWith("reference-docs/api/")) {
+    keywords.push(`${cleanTitle} API`);
   }
-  if (haystack.includes("event") || haystack.includes("webhook") || haystack.includes("kafka") || haystack.includes("rabbitmq")) {
-    keywords.push("event-driven orchestration", "webhooks", "Kafka orchestration", "RabbitMQ orchestration");
+  if (cleanTitle && route.startsWith("sdks/")) {
+    keywords.push(`${cleanTitle} SDK`);
   }
-  if (haystack.includes("rbac") || haystack.includes("access") || haystack.includes("security") || haystack.includes("secret")) {
-    keywords.push("role based access control", "workflow security", "access control");
+  if (cleanTitle && (route.startsWith("tutorials/") || route.startsWith("cookbook/") || route.startsWith("_routes/templates/"))) {
+    keywords.push(`${cleanTitle} tutorial`);
   }
-  if (haystack.includes("worker") || haystack.includes("task")) {
-    keywords.push("workflow tasks", "workflow workers", "task queues");
+
+  if (hasWord(haystack, "sdk") || hasWord(haystack, "client")) {
+    keywords.push("Conductor SDKs", "workflow workers");
+  }
+  if (hasWord(haystack, "agent") || hasWord(haystack, "llm") || hasWord(haystack, "mcp") || hasWord(haystack, "ai-agent")) {
+    keywords.push("AI orchestration", "LLM orchestration", "agent workflows");
+  }
+  if (hasWord(haystack, "tutorial") || hasWord(haystack, "cookbook") || hasWord(haystack, "template")) {
+    keywords.push("workflow cookbook", "workflow recipes");
+  }
+  if (hasWord(haystack, "api") || hasWord(haystack, "gateway")) {
+    keywords.push("API orchestration", "API gateway");
+  }
+  if (hasWord(haystack, "event") || hasWord(haystack, "webhook") || hasWord(haystack, "kafka") || hasWord(haystack, "rabbitmq")) {
+    keywords.push("event-driven orchestration", "webhooks");
+  }
+  if (hasWord(haystack, "rbac") || hasWord(haystack, "access") || hasWord(haystack, "security") || hasWord(haystack, "secret")) {
+    keywords.push("role based access control", "workflow security");
+  }
+  if (hasWord(haystack, "worker") || hasWord(haystack, "task")) {
+    keywords.push("workflow tasks", "task queues");
   }
 
   return [...new Set(keywords)].join(", ");

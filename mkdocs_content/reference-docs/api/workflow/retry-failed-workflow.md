@@ -3,7 +3,7 @@ title: "Retry Failed Workflow"
 description: "Use the Orkes Conductor workflows API to retry Failed Workflow. Includes endpoint details, authentication, parameters, request bodies, response behavior."
 canonical_route: "reference-docs/api/workflow/retry-failed-workflow"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, AI orchestration, LLM orchestration, MCP gateway, agent workflows, API orchestration, API gateway, service orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Retry Failed Workflow, Retry Failed Workflow API, API orchestration, API gateway"
 ---
 
 # Retry Failed Workflow

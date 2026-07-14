@@ -3,7 +3,7 @@ title: "Common Room Integration with Orkes Conductor"
 description: "Learn how to integrate Common Room with Orkes Conductor to automate your workflows and manage your Common Room content directly from Conductor."
 canonical_route: "integrations/common-room"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Common Room Integration with Orkes Conductor, Common Room Integration with Orkes Conductor integration, Common Room Integration with Orkes Conductor workflow automation"
 ---
 
 # Common Room Integration with Orkes Conductor

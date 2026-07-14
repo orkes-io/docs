@@ -3,7 +3,7 @@ title: "WordPress Integration with Orkes Conductor"
 description: "Learn how to integrate WordPress with Orkes Conductor to automate your workflows and manage your WordPress content directly from Conductor."
 canonical_route: "integrations/wordpress"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, WordPress Integration with Orkes Conductor, WordPress Integration with Orkes Conductor integration, WordPress Integration with Orkes Conductor workflow automation"
 ---
 
 # WordPress Integration with Orkes Conductor

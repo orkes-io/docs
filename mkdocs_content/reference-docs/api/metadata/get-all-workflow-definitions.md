@@ -3,7 +3,7 @@ title: "Get All Workflow Definitions"
 description: "Use the Orkes Conductor metadata API to get All Workflow Definitions. Includes endpoint details, authentication, parameters, request bodies, response behavior."
 canonical_route: "reference-docs/api/metadata/get-all-workflow-definitions"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Get All Workflow Definitions, Get All Workflow Definitions API, API orchestration, API gateway"
 ---
 
 # Get All Workflow Definitions

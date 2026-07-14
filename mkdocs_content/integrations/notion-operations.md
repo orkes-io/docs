@@ -3,7 +3,7 @@ title: "Notion Operations Reference"
 description: "Look up the input and output parameters for each operation available in the Notion integration with Orkes Conductor."
 canonical_route: "integrations/notion-operations"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Notion Operations Reference, Notion Operations Reference integration, Notion Operations Reference workflow automation"
 ---
 
 # Notion Operations Reference

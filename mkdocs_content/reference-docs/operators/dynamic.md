@@ -3,7 +3,7 @@ title: "Dynamic"
 description: "Learn how the Dynamic task selects and executes a registered task at runtime based on workflow data in Orkes Conductor."
 canonical_route: "reference-docs/operators/dynamic"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Dynamic, Dynamic task"
 ---
 
 # Dynamic

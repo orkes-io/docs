@@ -3,7 +3,7 @@ title: "Redis Operations Reference"
 description: "Look up the input and output parameters for each operation available in the Redis integration with Orkes Conductor."
 canonical_route: "integrations/redis-operations"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Redis Operations Reference, Redis Operations Reference integration, Redis Operations Reference workflow automation"
 ---
 
 # Redis Operations Reference

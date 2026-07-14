@@ -3,7 +3,7 @@ title: "Get Prompt"
 description: "Use the Orkes Conductor Conductor API to get Prompt. Includes endpoint details, authentication, parameters, request bodies, response behavior, and examples."
 canonical_route: "reference-docs/api/prompts/get-prompt"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Get Prompt, Get Prompt API, API orchestration, API gateway"
 ---
 
 # Get Prompt

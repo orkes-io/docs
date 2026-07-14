@@ -3,7 +3,7 @@ title: "Human Task Orchestration"
 description: "Learn how to incorporate human-in-the-loop steps in workflows using forms, task assignments, and manual approvals in Orkes Conductor."
 canonical_route: "developer-guides/orchestrating-human-tasks"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow tasks, workflow workers, task queues"
+keywords: "Orkes Conductor, workflow orchestration, Human Task Orchestration, workflow tasks, task queues"
 ---
 
 # Human Task Orchestration

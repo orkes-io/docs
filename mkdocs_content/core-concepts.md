@@ -3,7 +3,7 @@ title: "Core Concepts"
 description: "Understand what workflow orchestration means and how it works. Learn the core concepts behind Orkes Conductor — workflows, tasks, workers, and DAGs explained."
 canonical_route: "core-concepts"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Core Concepts"
 ---
 
 # Core Concepts

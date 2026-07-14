@@ -3,7 +3,7 @@ title: "Azure Functions Operations Reference"
 description: "Look up the input and output parameters for each operation available in the Azure Functions integration with Orkes Conductor."
 canonical_route: "integrations/azure-functions-operations"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Azure Functions Operations Reference, Azure Functions Operations Reference integration, Azure Functions Operations Reference workflow automation"
 ---
 
 # Azure Functions Operations Reference

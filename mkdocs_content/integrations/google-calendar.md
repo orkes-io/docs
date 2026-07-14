@@ -3,7 +3,7 @@ title: "Google Calendar Integration with Orkes Conductor"
 description: "Learn how to integrate Google Calendar with Orkes Conductor to automate calendar management. Covers setup, configuration, and workflow usage."
 canonical_route: "integrations/google-calendar"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Google Calendar Integration with Orkes Conductor, Google Calendar Integration with Orkes Conductor integration, Google Calendar Integration with Orkes Conductor workflow automation"
 ---
 
 # Google Calendar Integration with Orkes Conductor

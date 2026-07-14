@@ -3,7 +3,7 @@ title: "Google Cloud Storage Integration with Orkes Conductor"
 description: "Learn how to integrate Google Cloud Storage with Orkes Conductor to automate your workflows and manage your Google Cloud storage directly from Conductor."
 canonical_route: "integrations/google-cloud-storage"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Google Cloud Storage Integration with Orkes Conductor, Google Cloud Storage Integration with Orkes Conductor integration, Google Cloud Storage Integration with Orkes Conductor workflow automation"
 ---
 
 # Google Cloud Storage Integration with Orkes Conductor

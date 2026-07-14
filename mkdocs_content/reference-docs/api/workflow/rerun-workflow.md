@@ -3,7 +3,7 @@ title: "Rerun Workflow"
 description: "Use the Orkes Conductor workflows API to rerun Workflow. Includes endpoint details, authentication, parameters, request bodies, response behavior, and examples."
 canonical_route: "reference-docs/api/workflow/rerun-workflow"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Rerun Workflow, Rerun Workflow API, API orchestration, API gateway"
 ---
 
 # Rerun Workflow

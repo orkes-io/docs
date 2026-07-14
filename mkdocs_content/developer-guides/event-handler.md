@@ -3,7 +3,7 @@ title: "Using Event Handlers"
 description: "Learn how to configure event handlers in Orkes Conductor to listen for messages from brokers and trigger actions like starting workflows or completing tasks."
 canonical_route: "developer-guides/event-handler"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, event-driven orchestration, webhooks, Kafka orchestration, RabbitMQ orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Using Event Handlers, event-driven orchestration, webhooks"
 ---
 
 # Using Event Handlers

@@ -3,7 +3,7 @@ title: "Update Variable"
 description: "Use the Orkes Conductor workflows API to update Variable. Includes endpoint details, authentication, parameters, request bodies, response behavior."
 canonical_route: "reference-docs/api/workflow/update-variable"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Update Variable, Update Variable API, API orchestration, API gateway"
 ---
 
 # Update Variable

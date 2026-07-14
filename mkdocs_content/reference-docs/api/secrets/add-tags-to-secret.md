@@ -3,7 +3,7 @@ title: "Add Tags to Secret"
 description: "Use the Orkes Conductor secrets API to add Tags to Secret. Includes endpoint details, authentication, parameters, request bodies, response behavior."
 canonical_route: "reference-docs/api/secrets/add-tags-to-secret"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration, role based access control, workflow security, access control"
+keywords: "Orkes Conductor, workflow orchestration, Add Tags to Secret, Add Tags to Secret API, API orchestration, API gateway, role based access control, workflow security"
 ---
 
 # Add Tags to Secret

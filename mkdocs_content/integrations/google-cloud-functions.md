@@ -3,7 +3,7 @@ title: "Google Cloud Functions Integration with Orkes Conductor"
 description: "Learn how to integrate Google Cloud Functions with Orkes Conductor to automate your workflows and manage your Google Cloud functions directly from Conductor."
 canonical_route: "integrations/google-cloud-functions"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Google Cloud Functions Integration with Orkes Conductor, Google Cloud Functions Integration with Orkes Conductor integration, Google Cloud Functions Integration with Orkes Conductor workflow automation"
 ---
 
 # Google Cloud Functions Integration with Orkes Conductor

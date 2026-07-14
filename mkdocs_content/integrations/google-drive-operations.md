@@ -3,7 +3,7 @@ title: "Google Drive Operations Reference"
 description: "Look up the input and output parameters for each operation available in the Google Drive integration with Orkes Conductor."
 canonical_route: "integrations/google-drive-operations"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Google Drive Operations Reference, Google Drive Operations Reference integration, Google Drive Operations Reference workflow automation"
 ---
 
 # Google Drive Operations Reference

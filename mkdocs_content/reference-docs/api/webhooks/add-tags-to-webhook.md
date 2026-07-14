@@ -3,7 +3,7 @@ title: "Add Tags to Webhook"
 description: "Use the Orkes Conductor webhooks API to add Tags to Webhook. Includes endpoint details, authentication, parameters, request bodies, response behavior."
 canonical_route: "reference-docs/api/webhooks/add-tags-to-webhook"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration, event-driven orchestration, webhooks, Kafka orchestration, RabbitMQ orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Add Tags to Webhook, Add Tags to Webhook API, API orchestration, API gateway, event-driven orchestration, webhooks"
 ---
 
 # Add Tags to Webhook

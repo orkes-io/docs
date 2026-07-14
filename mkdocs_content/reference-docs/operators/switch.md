@@ -3,7 +3,7 @@ title: "Switch"
 description: "Learn how the Switch task performs conditional branching and executes different tasks based on evaluated conditions in Orkes Conductor."
 canonical_route: "reference-docs/operators/switch"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Switch, Switch task"
 ---
 
 # Switch

@@ -3,7 +3,7 @@ title: "Scheduled Workflows"
 description: "Cookbook recipes for cron schedules, catchup windows, bounded execution windows, schedule inputs, and concurrent scheduled workflows."
 canonical_route: "cookbook/workflow-scheduling"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow cookbook, workflow recipes, Conductor examples"
+keywords: "Orkes Conductor, workflow orchestration, Scheduled Workflows, Scheduled Workflows tutorial, workflow cookbook, workflow recipes"
 ---
 
 # Scheduled workflow recipes

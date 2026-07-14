@@ -3,7 +3,7 @@ title: "Get Integration Resource"
 description: "Use the Orkes Conductor integrations API to get Integration Resource. Includes endpoint details, authentication, parameters, request bodies, response behavior."
 canonical_route: "reference-docs/api/integrations/get-integration-resource"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Get Integration Resource, Get Integration Resource API, API orchestration, API gateway"
 ---
 
 # Get Integration Resource

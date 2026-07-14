@@ -3,7 +3,7 @@ title: "Create or Update Prompt Version"
 description: "Use the Orkes Conductor Conductor API to create or Update Prompt Version. Includes endpoint details, authentication, parameters, request bodies, response."
 canonical_route: "reference-docs/api/prompts/create-prompt-version"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Create or Update Prompt Version, Create or Update Prompt Version API, API orchestration, API gateway"
 ---
 
 # Create or Update Prompt Version

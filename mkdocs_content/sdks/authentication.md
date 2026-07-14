@@ -3,7 +3,7 @@ title: "Authentication and Access Keys"
 description: "Learn how to authenticate SDK and API access using applications, access keys, and JWT tokens for programmatic access to Conductor."
 canonical_route: "sdks/authentication"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, Conductor SDKs, workflow workers, Python SDK, Java SDK, Go SDK, TypeScript SDK, role based access control, workflow security, access control"
+keywords: "Orkes Conductor, workflow orchestration, Authentication and Access Keys, Authentication and Access Keys SDK, role based access control, workflow security"
 ---
 
 # Authentication and Access Keys

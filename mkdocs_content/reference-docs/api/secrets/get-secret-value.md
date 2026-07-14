@@ -3,7 +3,7 @@ title: "Get Secret Value by Key"
 description: "Use the Orkes Conductor secrets API to get Secret Value by Key. Includes endpoint details, authentication, parameters, request bodies, response behavior."
 canonical_route: "reference-docs/api/secrets/get-secret-value"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration, role based access control, workflow security, access control"
+keywords: "Orkes Conductor, workflow orchestration, Get Secret Value by Key, Get Secret Value by Key API, API orchestration, API gateway, role based access control, workflow security"
 ---
 
 # Get Secret Value by Key

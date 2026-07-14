@@ -3,7 +3,7 @@ title: "Google Cloud Functions Operations Reference"
 description: "Look up the input and output parameters for each operation available in the Google Cloud Functions integration with Orkes Conductor."
 canonical_route: "integrations/google-cloud-functions-operations"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Google Cloud Functions Operations Reference, Google Cloud Functions Operations Reference integration, Google Cloud Functions Operations Reference workflow automation"
 ---
 
 # Google Cloud Functions Operations Reference

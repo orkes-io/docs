@@ -3,7 +3,7 @@ title: "Save All Integrations"
 description: "Use the Orkes Conductor integrations API to save All Integrations. Includes endpoint details, authentication, parameters, request bodies, response behavior."
 canonical_route: "reference-docs/api/integrations/save-all-integrations"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Save All Integrations, Save All Integrations API, API orchestration, API gateway"
 ---
 
 # Save All Integrations

@@ -3,7 +3,7 @@ title: "Check if Secret Exists"
 description: "Use the Orkes Conductor secrets API to check if Secret Exists. Includes endpoint details, authentication, parameters, request bodies, response behavior."
 canonical_route: "reference-docs/api/secrets/check-secret-exists"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration, role based access control, workflow security, access control"
+keywords: "Orkes Conductor, workflow orchestration, Check if Secret Exists, Check if Secret Exists API, API orchestration, API gateway, role based access control, workflow security"
 ---
 
 # Check if Secret Exists

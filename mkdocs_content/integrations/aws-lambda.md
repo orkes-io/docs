@@ -3,7 +3,7 @@ title: "AWS Lambda Integration with Orkes Conductor"
 description: "Learn how to integrate AWS Lambda with Orkes Conductor to automate your workflows and manage your AWS Lambda directly from Conductor."
 canonical_route: "integrations/aws-lambda"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, AWS Lambda Integration with Orkes Conductor, AWS Lambda Integration with Orkes Conductor integration, AWS Lambda Integration with Orkes Conductor workflow automation"
 ---
 
 # AWS Lambda Integration with Orkes Conductor

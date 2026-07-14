@@ -3,7 +3,7 @@ title: "MySQL Operations Reference"
 description: "Look up the input and output parameters for each operation available in the MySQL integration with Orkes Conductor."
 canonical_route: "integrations/mysql-operations"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, MySQL Operations Reference, MySQL Operations Reference integration, MySQL Operations Reference workflow automation"
 ---
 
 # MySQL Operations Reference

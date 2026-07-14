@@ -3,7 +3,7 @@ title: "Build an Alerting Workflow with PagerDuty and Orkes Conductor"
 description: "Learn how to build a workflow that monitors an endpoint and sends alerts to PagerDuty when failures occur in Orkes Conductor."
 canonical_route: "templates/alerting/scanning-an-endpoint-and-triggering-pagerduty-alert"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow cookbook, workflow recipes, Conductor examples"
+keywords: "Orkes Conductor, workflow orchestration, Build an Alerting Workflow with PagerDuty and Orkes Conductor"
 ---
 
 # Build an Alerting Workflow with PagerDuty and Orkes Conductor

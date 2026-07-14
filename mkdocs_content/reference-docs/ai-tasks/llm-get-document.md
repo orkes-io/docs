@@ -3,7 +3,7 @@ title: "Get Document"
 description: "Learn how the Get Document task retrieves stored documents for further AI processing or analysis in Orkes Conductor."
 canonical_route: "reference-docs/ai-tasks/llm-get-document"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, AI orchestration, LLM orchestration, MCP gateway, agent workflows, workflow tasks, workflow workers, task queues"
+keywords: "Orkes Conductor, workflow orchestration, Get Document, Get Document AI task, AI orchestration, LLM orchestration, agent workflows"
 ---
 
 # Get Document

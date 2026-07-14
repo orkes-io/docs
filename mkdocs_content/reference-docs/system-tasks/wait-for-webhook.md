@@ -3,7 +3,7 @@ title: "Wait For Webhook"
 description: "Learn how the Wait for Webhook task pauses workflow execution until a webhook event is received in Orkes Conductor."
 canonical_route: "reference-docs/system-tasks/wait-for-webhook"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, AI orchestration, LLM orchestration, MCP gateway, agent workflows, event-driven orchestration, webhooks, Kafka orchestration, RabbitMQ orchestration, workflow tasks, workflow workers, task queues"
+keywords: "Orkes Conductor, workflow orchestration, Wait For Webhook, Wait For Webhook task, event-driven orchestration, webhooks"
 ---
 
 # Wait For Webhook

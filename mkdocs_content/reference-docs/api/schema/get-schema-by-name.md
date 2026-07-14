@@ -3,7 +3,7 @@ title: "Get Schema by Name"
 description: "Use the Orkes Conductor schemas API to get Schema by Name. Includes endpoint details, authentication, parameters, request bodies, response behavior."
 canonical_route: "reference-docs/api/schema/get-schema-by-name"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Get Schema by Name, Get Schema by Name API, API orchestration, API gateway"
 ---
 
 # Get Schema by Name 

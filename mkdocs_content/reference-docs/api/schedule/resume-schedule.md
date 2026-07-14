@@ -3,7 +3,7 @@ title: "Resume Schedule"
 description: "Use the Orkes Conductor schedules API to resume Schedule. Includes endpoint details, authentication, parameters, request bodies, response behavior."
 canonical_route: "reference-docs/api/schedule/resume-schedule"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Resume Schedule, Resume Schedule API, API orchestration, API gateway"
 ---
 
 # Resume Schedule

@@ -3,7 +3,7 @@ title: "Sub Workflow"
 description: "Learn how the Sub Workflow task runs another workflow as part of the current workflow execution in Orkes Conductor."
 canonical_route: "reference-docs/operators/sub-workflow"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Sub Workflow, Sub Workflow task"
 ---
 
 # Sub Workflow

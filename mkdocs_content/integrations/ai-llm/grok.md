@@ -3,7 +3,7 @@ title: "Grok Integration with Orkes Conductor"
 description: "Learn how to integrate Grok so workflows can use xAI models through Conductor AI tasks."
 canonical_route: "integrations/ai-llm/grok"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, AI orchestration, LLM orchestration, MCP gateway, agent workflows"
+keywords: "Orkes Conductor, workflow orchestration, Grok Integration with Orkes Conductor, Grok Integration with Orkes Conductor integration, Grok Integration with Orkes Conductor workflow automation, AI orchestration, LLM orchestration, agent workflows"
 ---
 
 # Grok Integration with Orkes Conductor

@@ -3,7 +3,7 @@ title: "Workflow Concepts"
 description: "Understand workflows in Conductor — JSON workflow definition, dynamic workflows, distributed workflow execution, and long-running async workflows that power."
 canonical_route: "quickstarts/workflows"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Workflow Concepts"
 ---
 
 # Workflows

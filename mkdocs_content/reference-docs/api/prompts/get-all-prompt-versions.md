@@ -3,7 +3,7 @@ title: "Get All Versions of Prompts"
 description: "Use the Orkes Conductor Conductor API to get All Versions of Prompts. Includes endpoint details, authentication, parameters, request bodies, response behavior."
 canonical_route: "reference-docs/api/prompts/get-all-prompt-versions"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Get All Versions of Prompts, Get All Versions of Prompts API, API orchestration, API gateway"
 ---
 
 # Get All Versions of Prompts

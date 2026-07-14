@@ -3,7 +3,7 @@ title: "Get Task Definition"
 description: "Use the Orkes Conductor metadata API to get Task Definition. Includes endpoint details, authentication, parameters, request bodies, response behavior."
 canonical_route: "reference-docs/api/metadata/get-task-definition"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration, workflow tasks, workflow workers, task queues"
+keywords: "Orkes Conductor, workflow orchestration, Get Task Definition, Get Task Definition API, API orchestration, API gateway, workflow tasks, task queues"
 ---
 
 # Get Task Definition

@@ -3,7 +3,7 @@ title: "Get Application ID using Access Key"
 description: "Use the Orkes Conductor applications API to get Application ID using Access Key. Includes endpoint details, authentication, parameters, request bodies."
 canonical_route: "reference-docs/api/applications/get-application-id-using-access-key"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration, role based access control, workflow security, access control"
+keywords: "Orkes Conductor, workflow orchestration, Get Application ID using Access Key, Get Application ID using Access Key API, API orchestration, API gateway, role based access control, workflow security"
 ---
 
 # Get Application ID using Access Key

@@ -3,7 +3,7 @@ title: "Get Resources by Tag"
 description: "Use the Orkes Conductor tags API to get Resources by Tag. Includes endpoint details, authentication, parameters, request bodies, response behavior."
 canonical_route: "reference-docs/api/tags/get-resources-by-tag"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Get Resources by Tag, Get Resources by Tag API, API orchestration, API gateway"
 ---
 
 # Get Resources by Tag

@@ -3,7 +3,7 @@ title: "Guide to Scaling Workers"
 description: "Learn how to scale workers based on workflow throughput, queue depth, task latency, and worker capacity in Orkes Conductor."
 canonical_route: "developer-guides/scaling-workers"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow tasks, workflow workers, task queues"
+keywords: "Orkes Conductor, workflow orchestration, Guide to Scaling Workers"
 ---
 
 # Guide to Scaling Workers

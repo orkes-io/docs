@@ -3,7 +3,7 @@ title: "Update Secret"
 description: "Learn how the Update Secret task updates the value of an existing secret in Orkes Conductor."
 canonical_route: "reference-docs/system-tasks/update-secret"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, role based access control, workflow security, access control, workflow tasks, workflow workers, task queues"
+keywords: "Orkes Conductor, workflow orchestration, Update Secret, Update Secret task, role based access control, workflow security"
 ---
 
 # Update Secret

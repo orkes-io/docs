@@ -3,7 +3,7 @@ title: "Chunk Text"
 description: "Learn how the Chunk Text task splits large text into smaller segments for efficient AI processing and analysis in Orkes Conductor."
 canonical_route: "reference-docs/ai-tasks/chunk-text"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, AI orchestration, LLM orchestration, MCP gateway, agent workflows, workflow tasks, workflow workers, task queues"
+keywords: "Orkes Conductor, workflow orchestration, Chunk Text, Chunk Text AI task"
 ---
 
 # Chunk Text

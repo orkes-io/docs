@@ -3,7 +3,7 @@ title: "Get Tags from Secret"
 description: "Use the Orkes Conductor secrets API to get Tags from Secret. Includes endpoint details, authentication, parameters, request bodies, response behavior."
 canonical_route: "reference-docs/api/secrets/get-tags-from-secret"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration, role based access control, workflow security, access control"
+keywords: "Orkes Conductor, workflow orchestration, Get Tags from Secret, Get Tags from Secret API, API orchestration, API gateway, role based access control, workflow security"
 ---
 
 # Get Tags from Secret

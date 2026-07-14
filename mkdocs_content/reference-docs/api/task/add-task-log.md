@@ -3,7 +3,7 @@ title: "Log Task Execution"
 description: "Use the Orkes Conductor tasks API to log Task Execution. Includes endpoint details, authentication, parameters, request bodies, response behavior, and examples."
 canonical_route: "reference-docs/api/task/add-task-log"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration, workflow tasks, workflow workers, task queues"
+keywords: "Orkes Conductor, workflow orchestration, Log Task Execution, Log Task Execution API, API orchestration, API gateway, workflow tasks, task queues"
 ---
 
 # Log Task Execution

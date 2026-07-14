@@ -3,7 +3,7 @@ title: "Search Schedule Definitions with Pagination"
 description: "Use the Orkes Conductor schedules API to search Schedule Definitions with Pagination. Includes endpoint details, authentication, parameters, request bodies."
 canonical_route: "reference-docs/api/schedule/search-schedule-definitions"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Search Schedule Definitions with Pagination, Search Schedule Definitions with Pagination API, API orchestration, API gateway"
 ---
 
 # Search Schedule Definitions with Pagination

@@ -3,7 +3,7 @@ title: "List Accessible Secrets"
 description: "Use the Orkes Conductor secrets API to list Accessible Secrets. Includes endpoint details, authentication, parameters, request bodies, response behavior."
 canonical_route: "reference-docs/api/secrets/list-accessible-secrets"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration, role based access control, workflow security, access control"
+keywords: "Orkes Conductor, workflow orchestration, List Accessible Secrets, List Accessible Secrets API, API orchestration, API gateway"
 ---
 
 # List Accessible Secrets

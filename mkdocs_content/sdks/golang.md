@@ -3,7 +3,7 @@ title: "Go SDK"
 description: "Build Conductor workers in Go with type-safe task definitions and workflow management."
 canonical_route: "sdks/golang"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, Conductor SDKs, workflow workers, Python SDK, Java SDK, Go SDK, TypeScript SDK"
+keywords: "Orkes Conductor, workflow orchestration, Go SDK, Go SDK SDK, Conductor SDKs, workflow workers"
 ---
 
 # Go SDK

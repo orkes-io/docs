@@ -3,7 +3,7 @@ title: "Get All Proto Files from gRPC Service"
 description: "Use the Orkes Conductor remote services API to get All Proto Files from gRPC Service. Includes endpoint details, authentication, parameters, request bodies."
 canonical_route: "reference-docs/api/remote-services/get-all-proto-files"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Get All Proto Files from gRPC Service, Get All Proto Files from gRPC Service API, API orchestration, API gateway"
 ---
 
 # Get All Proto Files from gRPC Service

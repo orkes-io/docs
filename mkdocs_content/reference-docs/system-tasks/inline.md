@@ -3,7 +3,7 @@ title: "Inline"
 description: "Learn how the Inline task evaluates JavaScript expressions to execute logic during workflow execution in Orkes Conductor."
 canonical_route: "reference-docs/system-tasks/inline"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow tasks, workflow workers, task queues"
+keywords: "Orkes Conductor, workflow orchestration, Inline, Inline task"
 ---
 
 # Inline

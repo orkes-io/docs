@@ -3,7 +3,7 @@ title: "LLM Search Index"
 description: "Learn how the LLM Search Index task queries a vector database to find documents relevant to a given query in Orkes Conductor."
 canonical_route: "reference-docs/ai-tasks/llm-search-index"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, AI orchestration, LLM orchestration, MCP gateway, agent workflows, workflow tasks, workflow workers, task queues"
+keywords: "Orkes Conductor, workflow orchestration, LLM Search Index, LLM Search Index AI task, AI orchestration, LLM orchestration, agent workflows"
 ---
 
 # LLM Search Index

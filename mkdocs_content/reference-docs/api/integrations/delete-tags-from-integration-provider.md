@@ -3,7 +3,7 @@ title: "Delete Tags from Integration Provider"
 description: "Use the Orkes Conductor integrations API to delete Tags from Integration Provider. Includes endpoint details, authentication, parameters, request bodies."
 canonical_route: "reference-docs/api/integrations/delete-tags-from-integration-provider"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Delete Tags from Integration Provider, Delete Tags from Integration Provider API, API orchestration, API gateway"
 ---
 
 # Delete Tags from Integration Provider

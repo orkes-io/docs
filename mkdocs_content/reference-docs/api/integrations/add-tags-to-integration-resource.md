@@ -3,7 +3,7 @@ title: "Add Tags to Integration Resource"
 description: "Use the Orkes Conductor integrations API to add Tags to Integration Resource. Includes endpoint details, authentication, parameters, request bodies, response."
 canonical_route: "reference-docs/api/integrations/add-tags-to-integration-resource"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Add Tags to Integration Resource, Add Tags to Integration Resource API, API orchestration, API gateway"
 ---
 
 # Add Tags to Integration Resource

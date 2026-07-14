@@ -3,7 +3,7 @@ title: "Scheduling Workflows"
 description: "Schedule Orkes Conductor workflows with cron expressions, fixed inputs, timezones, idempotency, monitoring, and production-safe permissions."
 canonical_route: "developer-guides/scheduling-workflows"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Scheduling Workflows"
 ---
 
 # Scheduling Workflows

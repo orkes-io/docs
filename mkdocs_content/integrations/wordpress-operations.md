@@ -3,7 +3,7 @@ title: "WordPress Operations Reference"
 description: "Look up the input and output parameters for each operation available in the WordPress integration with Orkes Conductor."
 canonical_route: "integrations/wordpress-operations"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, WordPress Operations Reference, WordPress Operations Reference integration, WordPress Operations Reference workflow automation"
 ---
 
 # WordPress Operations Reference

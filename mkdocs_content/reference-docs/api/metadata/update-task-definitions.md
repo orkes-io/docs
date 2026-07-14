@@ -3,7 +3,7 @@ title: "Update Task Definition"
 description: "Use the Orkes Conductor metadata API to update Task Definition. Includes endpoint details, authentication, parameters, request bodies, response behavior."
 canonical_route: "reference-docs/api/metadata/update-task-definitions"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration, workflow tasks, workflow workers, task queues"
+keywords: "Orkes Conductor, workflow orchestration, Update Task Definition, Update Task Definition API, API orchestration, API gateway, workflow tasks, task queues"
 ---
 
 # Update Task Definition

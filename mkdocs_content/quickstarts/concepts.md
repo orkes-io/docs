@@ -3,7 +3,7 @@ title: "Basic Concepts"
 description: "Core concepts of Orkes Conductor — a durable workflow orchestration engine for distributed workflows, microservice orchestration, AI agent orchestration."
 canonical_route: "quickstarts/concepts"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Basic Concepts"
 ---
 
 # Basic Concepts

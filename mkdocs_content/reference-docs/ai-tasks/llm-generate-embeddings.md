@@ -3,7 +3,7 @@ title: "LLM Generate Embeddings"
 description: "Learn how the LLM Generate Embeddings task creates vector embeddings from text or data using an AI model in Orkes Conductor."
 canonical_route: "reference-docs/ai-tasks/llm-generate-embeddings"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, AI orchestration, LLM orchestration, MCP gateway, agent workflows, workflow tasks, workflow workers, task queues"
+keywords: "Orkes Conductor, workflow orchestration, LLM Generate Embeddings, LLM Generate Embeddings AI task, AI orchestration, LLM orchestration, agent workflows"
 ---
 
 # LLM Generate Embeddings

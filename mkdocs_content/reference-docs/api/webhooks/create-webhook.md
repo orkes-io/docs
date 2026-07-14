@@ -3,7 +3,7 @@ title: "Create Webhook"
 description: "Use the Orkes Conductor webhooks API to create Webhook. Includes endpoint details, authentication, parameters, request bodies, response behavior, and examples."
 canonical_route: "reference-docs/api/webhooks/create-webhook"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration, event-driven orchestration, webhooks, Kafka orchestration, RabbitMQ orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Create Webhook, Create Webhook API, API orchestration, API gateway, event-driven orchestration, webhooks"
 ---
 
 # Create Webhook

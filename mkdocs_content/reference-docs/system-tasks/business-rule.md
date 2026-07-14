@@ -3,7 +3,7 @@ title: "Business Rule"
 description: "Learn how the Business Rule task evaluates business rules defined in spreadsheet-based decision tables in Orkes Conductor."
 canonical_route: "reference-docs/system-tasks/business-rule"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow tasks, workflow workers, task queues"
+keywords: "Orkes Conductor, workflow orchestration, Business Rule, Business Rule task"
 ---
 
 # Business Rule

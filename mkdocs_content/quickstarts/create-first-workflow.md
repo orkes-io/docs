@@ -3,7 +3,7 @@ title: "Quickstart 2: Create Your First Workflow"
 description: "Learn how to create your first workflow in Orkes Conductor by defining tasks, connecting workers, and running a distributed workflow orchestration pipeline."
 canonical_route: "quickstarts/create-first-workflow"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Quickstart 2: Create Your First Workflow"
 ---
 
 # Quickstart 2: Create Your First Workflow

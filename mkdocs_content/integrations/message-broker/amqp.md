@@ -3,7 +3,7 @@ title: "AMQP Integration with Orkes Conductor"
 description: "Learn how to integrate AMQP so workflows can publish and receive events through AMQP-compatible message brokers in Orkes Conductor."
 canonical_route: "integrations/message-broker/amqp"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, AMQP Integration with Orkes Conductor, AMQP Integration with Orkes Conductor integration, AMQP Integration with Orkes Conductor workflow automation"
 ---
 
 # AMQP Integration with Orkes Conductor

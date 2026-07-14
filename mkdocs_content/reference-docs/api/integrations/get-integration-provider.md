@@ -3,7 +3,7 @@ title: "Get Integration Provider"
 description: "Use the Orkes Conductor integrations API to get Integration Provider. Includes endpoint details, authentication, parameters, request bodies, response behavior."
 canonical_route: "reference-docs/api/integrations/get-integration-provider"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Get Integration Provider, Get Integration Provider API, API orchestration, API gateway"
 ---
 
 # Get Integration Provider

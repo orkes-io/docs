@@ -3,7 +3,7 @@ title: "IBM MQ Integration with Orkes Conductor"
 description: "Learn how to integrate IBM MQ so workflows can publish and receive messages through MQ queues in Orkes Conductor."
 canonical_route: "integrations/message-broker/ibm-mq"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, IBM MQ Integration with Orkes Conductor, IBM MQ Integration with Orkes Conductor integration, IBM MQ Integration with Orkes Conductor workflow automation"
 ---
 
 # IBM MQ Integration with Orkes Conductor

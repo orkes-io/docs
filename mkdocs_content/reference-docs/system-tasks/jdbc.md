@@ -3,7 +3,7 @@ title: "JDBC Task"
 description: "Learn how the JDBC task executes SQL queries and manages data in relational databases in Orkes Conductor."
 canonical_route: "reference-docs/system-tasks/jdbc"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow tasks, workflow workers, task queues"
+keywords: "Orkes Conductor, workflow orchestration, JDBC Task, JDBC Task task, workflow tasks, task queues"
 ---
 
 # JDBC Task

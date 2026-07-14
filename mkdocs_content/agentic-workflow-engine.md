@@ -3,7 +3,7 @@ title: "Agentic Workflow Engine"
 description: "Use Orkes Conductor as an agentic workflow engine for durable AI agents, reliable tool execution, human approvals, retries, and audit history."
 canonical_route: "agentic-workflow-engine"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, AI orchestration, LLM orchestration, MCP gateway, agent workflows"
+keywords: "Orkes Conductor, workflow orchestration, Agentic Workflow Engine"
 ---
 
 # Agentic Workflow Engine

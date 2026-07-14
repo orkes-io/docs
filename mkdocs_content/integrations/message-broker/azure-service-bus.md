@@ -3,7 +3,7 @@ title: "Azure Service Bus Integration with Orkes Conductor"
 description: "Learn how to integrate Azure Service Bus so workflows can publish and receive messages through Service Bus queues and topics in Orkes Conductor."
 canonical_route: "integrations/message-broker/azure-service-bus"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Azure Service Bus Integration with Orkes Conductor, Azure Service Bus Integration with Orkes Conductor integration, Azure Service Bus Integration with Orkes Conductor workflow automation"
 ---
 
 # Azure Service Bus Integration with Orkes Conductor

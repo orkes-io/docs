@@ -3,7 +3,7 @@ title: "Add Tag to Application"
 description: "Use the Orkes Conductor applications API to add Tag to Application. Includes endpoint details, authentication, parameters, request bodies, response behavior."
 canonical_route: "reference-docs/api/applications/add-tag-to-application"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Add Tag to Application, Add Tag to Application API, API orchestration, API gateway"
 ---
 
 # Add Tag to Application

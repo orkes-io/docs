@@ -3,7 +3,7 @@ title: "AWS Lambda Operations Reference"
 description: "Look up the input and output parameters for each operation available in the AWS Lambda integration with Orkes Conductor."
 canonical_route: "integrations/aws-lambda-operations"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, AWS Lambda Operations Reference, AWS Lambda Operations Reference integration, AWS Lambda Operations Reference workflow automation"
 ---
 
 # AWS Lambda Operations Reference

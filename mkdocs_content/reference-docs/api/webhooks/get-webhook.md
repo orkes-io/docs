@@ -3,7 +3,7 @@ title: "Get Webhook by ID"
 description: "Use the Orkes Conductor webhooks API to get Webhook by ID. Includes endpoint details, authentication, parameters, request bodies, response behavior."
 canonical_route: "reference-docs/api/webhooks/get-webhook"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration, event-driven orchestration, webhooks, Kafka orchestration, RabbitMQ orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Get Webhook by ID, Get Webhook by ID API, API orchestration, API gateway, event-driven orchestration, webhooks"
 ---
 
 # Get Webhook by ID

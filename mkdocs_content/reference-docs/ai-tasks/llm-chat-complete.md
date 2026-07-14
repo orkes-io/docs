@@ -3,7 +3,7 @@ title: "LLM Chat Complete"
 description: "Learn how the LLM Chat Complete task generates conversational responses using chat-based LLM models in Orkes Conductor."
 canonical_route: "reference-docs/ai-tasks/llm-chat-complete"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, AI orchestration, LLM orchestration, MCP gateway, agent workflows, workflow tasks, workflow workers, task queues"
+keywords: "Orkes Conductor, workflow orchestration, LLM Chat Complete, LLM Chat Complete AI task, AI orchestration, LLM orchestration, agent workflows"
 ---
 
 # LLM Chat Complete

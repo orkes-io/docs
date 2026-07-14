@@ -3,7 +3,7 @@ title: "Build a Sequential HTTP Workflow with Orkes Conductor"
 description: "Learn how to build a sequential HTTP workflow by chaining multiple HTTP system tasks in Orkes Conductor."
 canonical_route: "templates/examples/sequential-http-tasks"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow cookbook, workflow recipes, Conductor examples, workflow tasks, workflow workers, task queues"
+keywords: "Orkes Conductor, workflow orchestration, Build a Sequential HTTP Workflow with Orkes Conductor"
 ---
 
 # Build a Sequential HTTP Workflow with Orkes Conductor

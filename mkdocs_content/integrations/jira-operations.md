@@ -3,7 +3,7 @@ title: "Jira Operations Reference"
 description: "Look up the input and output parameters for each operation available in the Jira integration with Orkes Conductor."
 canonical_route: "integrations/jira-operations"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Jira Operations Reference, Jira Operations Reference integration, Jira Operations Reference workflow automation"
 ---
 
 # Jira Operations Reference

@@ -3,7 +3,7 @@ title: "Workflow Versioning and Upgrades at Runtime"
 description: "Learn how workflow versions affect running and new workflow executions and how version changes behave at runtime in Orkes Conductor."
 canonical_route: "developer-guides/workflow-version-behavior-on-execution"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Workflow Versioning and Upgrades at Runtime"
 ---
 
 # Workflow Versioning and Upgrades at Runtime

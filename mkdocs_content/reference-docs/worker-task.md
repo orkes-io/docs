@@ -3,7 +3,7 @@ title: "Worker Task"
 description: "Learn how Worker tasks allow external workers to poll task queues and execute custom business logic in Orkes Conductor."
 canonical_route: "reference-docs/worker-task"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow tasks, workflow workers, task queues"
+keywords: "Orkes Conductor, workflow orchestration, Worker Task, workflow tasks, task queues"
 ---
 
 # Worker Task

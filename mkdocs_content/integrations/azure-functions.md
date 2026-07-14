@@ -3,7 +3,7 @@ title: "Azure Functions Integration with Orkes Conductor"
 description: "Learn how to integrate Azure Functions with Orkes Conductor to automate your workflows and manage your Azure functions directly from Conductor."
 canonical_route: "integrations/azure-functions"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Azure Functions Integration with Orkes Conductor, Azure Functions Integration with Orkes Conductor integration, Azure Functions Integration with Orkes Conductor workflow automation"
 ---
 
 # Azure Functions Integration with Orkes Conductor

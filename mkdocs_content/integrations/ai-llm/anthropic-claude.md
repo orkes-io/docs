@@ -3,7 +3,7 @@ title: "Anthropic Claude Integration with Orkes Conductor"
 description: "Learn how to integrate Anthropic Claude so workflows can use Claude models through Conductor AI tasks."
 canonical_route: "integrations/ai-llm/anthropic-claude"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, AI orchestration, LLM orchestration, MCP gateway, agent workflows"
+keywords: "Orkes Conductor, workflow orchestration, Anthropic Claude Integration with Orkes Conductor, Anthropic Claude Integration with Orkes Conductor integration, Anthropic Claude Integration with Orkes Conductor workflow automation, AI orchestration, LLM orchestration, agent workflows"
 ---
 
 # Anthropic Claude Integration with Orkes Conductor

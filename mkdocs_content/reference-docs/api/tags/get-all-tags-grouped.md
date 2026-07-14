@@ -3,7 +3,7 @@ title: "List Tags Grouped by Resource Type"
 description: "Use the Orkes Conductor tags API to list Tags Grouped by Resource Type. Includes endpoint details, authentication, parameters, request bodies, response."
 canonical_route: "reference-docs/api/tags/get-all-tags-grouped"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration"
+keywords: "Orkes Conductor, workflow orchestration, List Tags Grouped by Resource Type, List Tags Grouped by Resource Type API, API orchestration, API gateway"
 ---
 
 # List Tags Grouped by Resource Type

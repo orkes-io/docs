@@ -3,7 +3,7 @@ title: "Microservice orchestration"
 description: "Conductor cookbook — microservice orchestration recipes with HTTP service chains, conditional branching, and parallel HTTP calls using Fork/Join."
 canonical_route: "cookbook/microservice-orchestration"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow cookbook, workflow recipes, Conductor examples, API orchestration, API gateway, service orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Microservice orchestration, Microservice orchestration tutorial, workflow cookbook, workflow recipes"
 ---
 
 # Microservice orchestration

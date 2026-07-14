@@ -3,7 +3,7 @@ title: "Dynamic workflows for agents"
 description: "Dynamic workflow execution for AI agents - agents that build their own plans as JSON workflow definitions and agent loops with DO_WHILE in Orkes Conductor."
 canonical_route: "ai-agents/dynamic-workflows"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, AI orchestration, LLM orchestration, MCP gateway, agent workflows"
+keywords: "Orkes Conductor, workflow orchestration, Dynamic workflows for agents"
 ---
 
 # Dynamic workflows for agents

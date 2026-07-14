@@ -3,7 +3,7 @@ title: "Update Task Status in Workflow"
 description: "Use the Orkes Conductor tasks API to update Task Status in Workflow. Includes endpoint details, authentication, parameters, request bodies, response behavior."
 canonical_route: "reference-docs/api/task/update-task-status-in-workflow"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration, workflow tasks, workflow workers, task queues"
+keywords: "Orkes Conductor, workflow orchestration, Update Task Status in Workflow, Update Task Status in Workflow API, API orchestration, API gateway, workflow tasks, task queues"
 ---
 
 # Update Task Status in Workflow

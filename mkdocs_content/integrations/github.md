@@ -3,7 +3,7 @@ title: "GitHub Integration with Orkes Conductor"
 description: "Learn how to integrate GitHub with Orkes Conductor to automate your workflows and manage your repository content directly from Conductor."
 canonical_route: "integrations/github"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, GitHub Integration with Orkes Conductor, GitHub Integration with Orkes Conductor integration, GitHub Integration with Orkes Conductor workflow automation"
 ---
 
 # GitHub Integration with Orkes Conductor

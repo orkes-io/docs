@@ -3,7 +3,7 @@ title: "Dynamic Workflows as Code"
 description: "Cookbook recipes for code-first workflows, conditional branches, loops, parallel execution, sub-workflows, and runtime-generated definitions."
 canonical_route: "cookbook/dynamic-workflows"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow cookbook, workflow recipes, Conductor examples"
+keywords: "Orkes Conductor, workflow orchestration, Dynamic Workflows as Code, Dynamic Workflows as Code tutorial, workflow cookbook, workflow recipes"
 ---
 
 # Dynamic workflows in code

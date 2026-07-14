@@ -3,7 +3,7 @@ title: "Managing Applications"
 description: "Learn how applications provide secure authentication for services and clients connecting to your Conductor cluster."
 canonical_route: "access-control-and-security/applications"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, role based access control, workflow security, access control"
+keywords: "Orkes Conductor, workflow orchestration, Managing Applications, role based access control, workflow security"
 ---
 
 # Managing Applications

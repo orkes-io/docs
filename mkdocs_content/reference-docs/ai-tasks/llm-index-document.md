@@ -3,7 +3,7 @@ title: "LLM Index Document"
 description: "Learn how the LLM Index Document task indexes documents into a vector database for semantic search and retrieval in Orkes Conductor."
 canonical_route: "reference-docs/ai-tasks/llm-index-document"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, AI orchestration, LLM orchestration, MCP gateway, agent workflows, workflow tasks, workflow workers, task queues"
+keywords: "Orkes Conductor, workflow orchestration, LLM Index Document, LLM Index Document AI task, AI orchestration, LLM orchestration, agent workflows"
 ---
 
 # LLM Index Document

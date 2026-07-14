@@ -3,7 +3,7 @@ title: "AWS S3 Integration with Orkes Conductor"
 description: "Learn how to integrate AWS S3 with Orkes Conductor to automate your workflows and manage your S3 content directly from Conductor."
 canonical_route: "integrations/aws-s3"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, AWS S3 Integration with Orkes Conductor, AWS S3 Integration with Orkes Conductor integration, AWS S3 Integration with Orkes Conductor workflow automation"
 ---
 
 # AWS S3 Integration with Orkes Conductor

@@ -3,7 +3,7 @@ title: "Directed Acyclic Graph (DAG)"
 description: "Learn how directed acyclic graphs (DAGs) represent Orkes Conductor workflows, where tasks follow a directed path without circular dependencies."
 canonical_route: "faqs/directed-acyclic-graph"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Directed Acyclic Graph (DAG)"
 ---
 
 # Directed Acyclic Graph (DAG)

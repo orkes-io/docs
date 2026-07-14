@@ -3,7 +3,7 @@ title: "Publish Events"
 description: "Publish messages from workflows to external event systems such as Kafka, Confluent Kafka, Amazon MSK, AMQP/RabbitMQ, NATS, AWS SQS, Azure Service Bus, GCP."
 canonical_route: "category/event-driven-orchestration/publish-events"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, event-driven orchestration, webhooks, Kafka orchestration, RabbitMQ orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Publish Events, event-driven orchestration, webhooks"
 ---
 
 # Publish Events

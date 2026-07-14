@@ -3,7 +3,7 @@ title: "General FAQs"
 description: "Explore answers to commonly asked questions about using Conductor and its core features."
 canonical_route: "category/faqs"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, General FAQs"
 ---
 
 # General FAQs

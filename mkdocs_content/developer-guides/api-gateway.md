@@ -3,7 +3,7 @@ title: "API Gateway: Expose Workflows as APIs"
 description: "Learn how to expose workflows as API endpoints using the API Gateway so applications can trigger workflow logic in Orkes Conductor."
 canonical_route: "developer-guides/api-gateway"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration"
+keywords: "Orkes Conductor, workflow orchestration, API Gateway: Expose Workflows as APIs, API orchestration, API gateway"
 ---
 
 # API Gateway: Expose Workflows as APIs 

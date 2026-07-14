@@ -3,7 +3,7 @@ title: "Create Workflows using AI Agents (Conductor MCP Server + Claude)"
 description: "Learn how to use Claude as an AI agent to create, execute, and manage Conductor workflows using natural language through the Conductor MCP server."
 canonical_route: "tutorials/create-workflows-using-ai-agent-claude"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, AI orchestration, LLM orchestration, MCP gateway, agent workflows, workflow cookbook, workflow recipes, Conductor examples"
+keywords: "Orkes Conductor, workflow orchestration, Create Workflows using AI Agents (Conductor MCP Server + Claude), Create Workflows using AI Agents (Conductor MCP Server + Claude) tutorial, AI orchestration, LLM orchestration, agent workflows"
 ---
 
 # Create Workflows using AI Agents (Conductor MCP Server + Claude)

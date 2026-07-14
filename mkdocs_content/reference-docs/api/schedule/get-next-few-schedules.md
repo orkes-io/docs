@@ -3,7 +3,7 @@ title: "Get Next Few Schedules"
 description: "Use the Orkes Conductor schedules API to get Next Few Schedules. Includes endpoint details, authentication, parameters, request bodies, response behavior."
 canonical_route: "reference-docs/api/schedule/get-next-few-schedules"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Get Next Few Schedules, Get Next Few Schedules API, API orchestration, API gateway"
 ---
 
 # Get Next Few Schedules

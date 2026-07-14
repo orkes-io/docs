@@ -3,7 +3,7 @@ title: "Build a GitHub Pull Request Reviewer Assignment Workflow"
 description: "Learn how to trigger workflows from GitHub pull request events and automate actions such as assigning reviewers and sending notifications in Orkes Conductor."
 canonical_route: "tutorials/github-webhook"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow cookbook, workflow recipes, Conductor examples, event-driven orchestration, webhooks, Kafka orchestration, RabbitMQ orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Build a GitHub Pull Request Reviewer Assignment Workflow, Build a GitHub Pull Request Reviewer Assignment Workflow tutorial, event-driven orchestration, webhooks"
 ---
 
 # Build a GitHub Pull Request Reviewer Assignment Workflow

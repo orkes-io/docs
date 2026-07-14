@@ -3,7 +3,7 @@ title: "Add Tag to a Workflow Definition"
 description: "Use the Orkes Conductor tags API to add Tag to a Workflow Definition. Includes endpoint details, authentication, parameters, request bodies, response behavior."
 canonical_route: "reference-docs/api/tags/add-tag-to-a-workflow-definition"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Add Tag to a Workflow Definition, Add Tag to a Workflow Definition API, API orchestration, API gateway"
 ---
 
 # Add Tag to a Workflow Definition

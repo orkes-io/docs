@@ -3,7 +3,7 @@ title: "Notion Integration with Orkes Conductor"
 description: "Learn how to integrate Notion with Orkes Conductor to automate your workflows and manage your Notion content directly from Conductor."
 canonical_route: "integrations/notion"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Notion Integration with Orkes Conductor, Notion Integration with Orkes Conductor integration, Notion Integration with Orkes Conductor workflow automation"
 ---
 
 # Notion Integration with Orkes Conductor

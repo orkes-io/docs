@@ -3,7 +3,7 @@ title: "Discourse Integration with Orkes Conductor"
 description: "Learn how to integrate Discourse with Orkes Conductor to automate your workflows and manage your Discourse content directly from Conductor."
 canonical_route: "integrations/discourse"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Discourse Integration with Orkes Conductor, Discourse Integration with Orkes Conductor integration, Discourse Integration with Orkes Conductor workflow automation"
 ---
 
 # Discourse Integration with Orkes Conductor

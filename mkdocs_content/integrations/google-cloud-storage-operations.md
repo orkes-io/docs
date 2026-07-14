@@ -3,7 +3,7 @@ title: "Google Cloud Storage Operations Reference"
 description: "Look up the input and output parameters for each operation available in the Google Cloud Storage integration with Orkes Conductor."
 canonical_route: "integrations/google-cloud-storage-operations"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Google Cloud Storage Operations Reference, Google Cloud Storage Operations Reference integration, Google Cloud Storage Operations Reference workflow automation"
 ---
 
 # Google Cloud Storage Operations Reference

@@ -3,7 +3,7 @@ title: "List Grants for a Subject"
 description: "Use the Orkes Conductor Conductor API to list Grants for a Subject. Includes endpoint details, authentication, parameters, request bodies, response behavior."
 canonical_route: "reference-docs/api/authorization/list-grants-for-subject"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration"
+keywords: "Orkes Conductor, workflow orchestration, List Grants for a Subject, List Grants for a Subject API, API orchestration, API gateway"
 ---
 
 # List Grants for a Subject

@@ -3,7 +3,7 @@ title: "Assign Role to Application"
 description: "Use the Orkes Conductor applications API to assign Role to Application. Includes endpoint details, authentication, parameters, request bodies, response."
 canonical_route: "reference-docs/api/applications/assign-role-to-application"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Assign Role to Application, Assign Role to Application API, API orchestration, API gateway"
 ---
 
 # Assign Role to Application

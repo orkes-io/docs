@@ -3,7 +3,7 @@ title: "Wait"
 description: "Learn how the Wait task pauses workflow execution until a specified condition or event occurs in Orkes Conductor."
 canonical_route: "reference-docs/operators/wait"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, AI orchestration, LLM orchestration, MCP gateway, agent workflows"
+keywords: "Orkes Conductor, workflow orchestration, Wait, Wait task"
 ---
 
 # Wait

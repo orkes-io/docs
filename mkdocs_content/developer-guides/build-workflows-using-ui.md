@@ -3,7 +3,7 @@ title: "Build Workflows Using Conductor UI"
 description: "Learn how to build workflows in Orkes Conductor using the visual workflow builder or Assistant to add tasks, configure parameters, and run workflows."
 canonical_route: "developer-guides/build-workflows-using-ui"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Build Workflows Using Conductor UI"
 ---
 
 # Build Workflows Using Conductor UI

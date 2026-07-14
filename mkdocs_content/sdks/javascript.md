@@ -3,7 +3,7 @@ title: "JavaScript SDK"
 description: "Build Conductor workers in JavaScript/TypeScript with workflow management and task polling."
 canonical_route: "sdks/javascript"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, Conductor SDKs, workflow workers, Python SDK, Java SDK, Go SDK, TypeScript SDK"
+keywords: "Orkes Conductor, workflow orchestration, JavaScript SDK, JavaScript SDK SDK, Conductor SDKs, workflow workers"
 ---
 
 # JavaScript SDK

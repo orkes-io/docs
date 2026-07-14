@@ -3,7 +3,7 @@ title: "Import BPMN to Workflows"
 description: "Use the Orkes Conductor metadata API to import BPMN to Workflows. Includes endpoint details, authentication, parameters, request bodies, response behavior."
 canonical_route: "reference-docs/api/metadata/import-bpmn"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Import BPMN to Workflows, Import BPMN to Workflows API, API orchestration, API gateway"
 ---
 
 # Import BPMN to Workflows

@@ -3,7 +3,7 @@ title: "Start Workflow"
 description: "Learn how the Start Workflow task triggers another workflow execution from the current workflow in Orkes Conductor."
 canonical_route: "reference-docs/operators/start-workflow"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Start Workflow, Start Workflow task"
 ---
 
 # Start Workflow

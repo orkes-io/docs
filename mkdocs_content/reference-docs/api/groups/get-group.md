@@ -3,7 +3,7 @@ title: "Get Group by ID"
 description: "Use the Orkes Conductor groups API to get Group by ID. Includes endpoint details, authentication, parameters, request bodies, response behavior, and examples."
 canonical_route: "reference-docs/api/groups/get-group"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Get Group by ID, Get Group by ID API, API orchestration, API gateway"
 ---
 
 # Get Group by ID

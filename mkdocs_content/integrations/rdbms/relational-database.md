@@ -3,7 +3,7 @@ title: "Relational Database Integration with Orkes Conductor"
 description: "Learn how to connect relational databases so workflows can query and update data through JDBC tasks in Orkes Conductor."
 canonical_route: "integrations/rdbms/relational-database"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Relational Database Integration with Orkes Conductor, Relational Database Integration with Orkes Conductor integration, Relational Database Integration with Orkes Conductor workflow automation"
 ---
 
 # Relational Database Integration with Orkes Conductor

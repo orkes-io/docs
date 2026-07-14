@@ -3,7 +3,7 @@ title: "Search Human Tasks"
 description: "Use the Orkes Conductor human tasks API to search Human Tasks. Includes endpoint details, authentication, parameters, request bodies, response behavior."
 canonical_route: "reference-docs/api/human-tasks/search-task-list"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration, workflow tasks, workflow workers, task queues"
+keywords: "Orkes Conductor, workflow orchestration, Search Human Tasks, Search Human Tasks API, API orchestration, API gateway, workflow tasks, task queues"
 ---
 
 # Search Human Tasks

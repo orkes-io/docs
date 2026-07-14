@@ -3,7 +3,7 @@ title: "Build a Loan Approval Workflow with Orkes Conductor"
 description: "Learn how to build a loan origination workflow that processes loan applications and orchestrates approval steps in Orkes Conductor."
 canonical_route: "templates/examples/finance"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow cookbook, workflow recipes, Conductor examples"
+keywords: "Orkes Conductor, workflow orchestration, Build a Loan Approval Workflow with Orkes Conductor"
 ---
 
 # Build a Loan Approval Workflow with Orkes Conductor

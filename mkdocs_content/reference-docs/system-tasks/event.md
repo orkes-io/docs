@@ -3,7 +3,7 @@ title: "Event"
 description: "Learn how the Event task publishes events to external eventing systems in Orkes Conductor."
 canonical_route: "reference-docs/system-tasks/event"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, event-driven orchestration, webhooks, Kafka orchestration, RabbitMQ orchestration, workflow tasks, workflow workers, task queues"
+keywords: "Orkes Conductor, workflow orchestration, Event, Event task, event-driven orchestration, webhooks"
 ---
 
 # Event

@@ -3,7 +3,7 @@ title: "Reassign Human Task"
 description: "Use the Orkes Conductor human tasks API to reassign Human Task. Includes endpoint details, authentication, parameters, request bodies, response behavior."
 canonical_route: "reference-docs/api/human-tasks/reassign-human-task"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration, workflow tasks, workflow workers, task queues"
+keywords: "Orkes Conductor, workflow orchestration, Reassign Human Task, Reassign Human Task API, API orchestration, API gateway, workflow tasks, task queues"
 ---
 
 # Reassign Human Task

@@ -3,7 +3,7 @@ title: "Using AI Models or LLMs"
 description: "Learn how to integrate AI models and use LLM system tasks in workflows, including configuring models, prompt templates, and access control in Orkes Conductor."
 canonical_route: "developer-guides/using-llms-in-your-orkes-conductor-workflows"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, AI orchestration, LLM orchestration, MCP gateway, agent workflows"
+keywords: "Orkes Conductor, workflow orchestration, Using AI Models or LLMs"
 ---
 
 # Using AI Models or LLMs

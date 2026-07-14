@@ -3,7 +3,7 @@ title: "Google Sheets Operations Reference"
 description: "Look up the input and output parameters for each operation available in the Google Sheets integration with Orkes Conductor."
 canonical_route: "integrations/google-sheets-operations"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Google Sheets Operations Reference, Google Sheets Operations Reference integration, Google Sheets Operations Reference workflow automation"
 ---
 
 # Google Sheets Operations Reference

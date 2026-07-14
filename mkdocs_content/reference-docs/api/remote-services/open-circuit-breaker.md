@@ -3,7 +3,7 @@ title: "Open Circuit Breaker"
 description: "Use the Orkes Conductor remote services API to open Circuit Breaker. Includes endpoint details, authentication, parameters, request bodies, response behavior."
 canonical_route: "reference-docs/api/remote-services/open-circuit-breaker"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Open Circuit Breaker, Open Circuit Breaker API, API orchestration, API gateway"
 ---
 
 # Open Circuit Breaker 

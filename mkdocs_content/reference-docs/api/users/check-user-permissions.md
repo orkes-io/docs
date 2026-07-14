@@ -3,7 +3,7 @@ title: "Check User Permission over Resources"
 description: "Use the Orkes Conductor users API to check User Permission over Resources. Includes endpoint details, authentication, parameters, request bodies, response."
 canonical_route: "reference-docs/api/users/check-user-permissions"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Check User Permission over Resources, Check User Permission over Resources API, API orchestration, API gateway"
 ---
 
 # Check User Permission over Resources

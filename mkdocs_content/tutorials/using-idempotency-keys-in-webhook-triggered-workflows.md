@@ -3,7 +3,7 @@ title: "Using Variable Idempotency Keys in Webhook-Triggered Workflows"
 description: "Learn how to build reliable webhook-triggered workflows using idempotency keys to prevent duplicate executions in Orkes Conductor."
 canonical_route: "tutorials/using-idempotency-keys-in-webhook-triggered-workflows"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow cookbook, workflow recipes, Conductor examples, event-driven orchestration, webhooks, Kafka orchestration, RabbitMQ orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Using Variable Idempotency Keys in Webhook-Triggered Workflows, Using Variable Idempotency Keys in Webhook-Triggered Workflows tutorial, event-driven orchestration, webhooks"
 ---
 
 # Using Variable Idempotency Keys in Webhook-Triggered Workflows

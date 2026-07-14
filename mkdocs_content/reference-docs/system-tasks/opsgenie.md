@@ -3,7 +3,7 @@ title: "Opsgenie"
 description: "Learn how the Opsgenie task sends alerts from workflows to Opsgenie for incident notification and management in Orkes Conductor."
 canonical_route: "reference-docs/system-tasks/opsgenie"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow tasks, workflow workers, task queues"
+keywords: "Orkes Conductor, workflow orchestration, Opsgenie, Opsgenie task"
 ---
 
 # Opsgenie

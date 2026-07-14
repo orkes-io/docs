@@ -3,7 +3,7 @@ title: "Tasks in Workflows"
 description: "Understand tasks in Orkes Conductor workflows, including system tasks, operators, and custom worker tasks used to build and control workflow execution."
 canonical_route: "developer-guides/tasks"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow tasks, workflow workers, task queues"
+keywords: "Orkes Conductor, workflow orchestration, Tasks in Workflows"
 ---
 
 # Tasks in Workflows

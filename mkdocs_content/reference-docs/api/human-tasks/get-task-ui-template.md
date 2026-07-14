@@ -3,7 +3,7 @@ title: "Get User Form by Task ID"
 description: "Use the Orkes Conductor human tasks API to get User Form by Task ID. Includes endpoint details, authentication, parameters, request bodies, response behavior."
 canonical_route: "reference-docs/api/human-tasks/get-task-ui-template"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow cookbook, workflow recipes, Conductor examples, API orchestration, API gateway, service orchestration, workflow tasks, workflow workers, task queues"
+keywords: "Orkes Conductor, workflow orchestration, Get User Form by Task ID, Get User Form by Task ID API, workflow cookbook, workflow recipes, API orchestration, API gateway, workflow tasks, task queues"
 ---
 
 # Get User Form by Task ID

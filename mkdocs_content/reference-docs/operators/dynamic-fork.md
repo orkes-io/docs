@@ -3,7 +3,7 @@ title: "Dynamic Fork"
 description: "Learn how the Dynamic Fork task runs tasks in parallel with the number of branches determined at runtime in Orkes Conductor."
 canonical_route: "reference-docs/operators/dynamic-fork"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Dynamic Fork, Dynamic Fork task"
 ---
 
 # Dynamic Fork

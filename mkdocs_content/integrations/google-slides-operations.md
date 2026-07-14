@@ -3,7 +3,7 @@ title: "Google Slides Operations Reference"
 description: "Look up the input and output parameters for each operation available in the Google Slides integration with Orkes Conductor."
 canonical_route: "integrations/google-slides-operations"
 updated: "2026-05-14"
-keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
+keywords: "Orkes Conductor, workflow orchestration, Google Slides Operations Reference, Google Slides Operations Reference integration, Google Slides Operations Reference workflow automation"
 ---
 
 # Google Slides Operations Reference
