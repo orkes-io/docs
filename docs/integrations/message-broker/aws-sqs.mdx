@@ -41,9 +41,6 @@ After obtaining the credentials, add an AWS SQS integration to your Conductor cl
 | Access Key | The access key of the AWS account. | Required if **_Connection Type_** is **Access Key/Secret**. | 
 | Access Secret | The access secret of the AWS account. | Required if **_Connection Type_** is **Access Key/Secret**. | 
 | Description | A description of the integration. | Required. | 
-
-<p align="center"><img src="/content/img/integration-aws-sqs.png" alt="Integration configuration for AWS SQS" width="50%" height="auto"/></p>
-
 5. (Optional) Toggle the **Active** button off if you don’t want to activate the integration instantly.
 6. Select **Save**.
 
@@ -57,9 +54,6 @@ Once the integration is configured, set access controls to manage which [applica
 2. Create a new group/application or select an existing one.
 3. In the **Permissions** section, select **+ Add Permission**.
 4. In the **Integration** tab, select the required message broker and toggle the necessary permissions.
-
-<p align="center"><img src="/content/img/rbac-sqs.png" alt="Configuring RBAC for AWS SQS Integration" width="70%" height="auto"/></p>
-
 The group or application can now access the message broker according to the configured permissions.
 
 ## Next steps

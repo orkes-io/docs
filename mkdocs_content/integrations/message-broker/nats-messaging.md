@@ -52,9 +52,6 @@ After obtaining the credentials, add a NATS Messaging integration to your Conduc
 | Pull Period | The polling interval in milliseconds. Default is 500.| Required if:<ul><li>**_Connection Type_** is **JetStream**</li><li>**_Connection Mechanism_** is **With consumer**.</li><li>**_Consumer Type_** is **Pull**.</li></ul> | 
 | Pull batch wait time | The wait time, in milliseconds, for each batch fetch. | Required if:<ul><li>**_Connection Type_** is **JetStream**</li><li>**_Connection Mechanism_** is **With consumer**.</li><li>**_Consumer Type_** is **Pull**.</li></ul> | 
 | Description | A description of the integration. | Required. | 
-
-<p align="center"><img src="/content/img/integration-nats-messaging.png" alt="NATS Messaging Integration with Orkes Conductor" width="50%" height="auto"/></p>
-
 5. (Optional) Toggle the **Active** button off if you don’t want to activate the integration instantly.
 6. Select **Save**.
 
@@ -68,9 +65,6 @@ Once the integration is configured, set access controls to manage which [applica
 2. Create a new group/application or select an existing one.
 3. In the **Permissions** section, select **+ Add Permission**.
 4. In the **Integration** tab, select the required message broker and toggle the necessary permissions.
-
-<p align="center"><img src="/content/img/rbac-nats.png" alt="Configuring RBAC for Nats Messaging Integration" width="70%" height="auto"/></p>
-
 The group or application can now access the message broker according to the configured permissions.
 
 ## Next steps

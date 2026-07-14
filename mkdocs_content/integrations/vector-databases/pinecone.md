@@ -27,14 +27,8 @@ To integrate Pinecone with Orkes Conductor, retrieve the API key, project ID, an
 2. Select an existing project or create a new one.
 3. Go to **API keys** from the left navigation menu and select **+ API key**.
 4. Copy the API key generated.
-
-<p align="center"><img src="/content/img/create-api-key-from-pinecone-db.png" alt="API Key creation from Pinecone Console" width="70%" height="auto"></img></p>
-
 5. In the top navigation bar, select your project.
 6. Copy the Project ID.
-
-<p align="center"><img src="/content/img/project-name.png" alt="Getting Project ID from Pinecone console" width="80%" height="auto"></img></p>
-
 ### Create an index
 
 Create a Pinecone index for the integration. 
@@ -44,15 +38,9 @@ Create a Pinecone index for the integration.
 1. Open your project.
 2. Go to **Database** > **Indexes** from the left navigation menu.
 3. Select **Create index**.
-
-<p align="center"><img src="/content/img/create-index.png" alt="Creating Index in PineCone" width="90%" height="auto"></img></p>
-
 4. Enter an index name.
 5. [Configure the index parameters](https://docs.pinecone.io/guides/indexes/create-an-index). The index dimension must match the output dimension of your embedding model. Common default values are: OpenAI `text-embedding-3-small`: 1536, `text-embedding-3-large`: 3072, and Cohere `embed-english-v3.0`: 1024. 
 6. Select **Create index** and note the **Region**, which is the environment. This parameter is required when adding the Pinecone integration to Conductor.
-
-<p align="center"><img src="/content/img/get-environment-name.png" alt="Get environment name from Pinecone console" width="100%" height="auto"></img></p>
-
 For more information on configuring and connecting indexes, refer to the [Pinecone documentation](https://docs.pinecone.io/guides/get-started/quickstart).
 
 ## Step 2: Add an integration for Pinecone
@@ -73,9 +61,6 @@ After obtaining the credentials, add a Pinecone integration to your Conductor cl
 | Project name | The project ID from the Pinecone console. | 
 | Environment | The index region from the Pinecone console. | 
 | Description | A description of the integration. | 
-
-<p align="center"><img src="/content/img/create-new-pinecone-integration.png" alt="Pinecone Integration with Orkes Conductor" width="60%" height="auto"></img></p>
-
 5. (Optional) Toggle the **Active** button off if you don’t want to activate the integration instantly.
 6. Select **Save**.
 
@@ -86,14 +71,8 @@ Once you’ve integrated Pinecone, the next step is to configure specific indexe
 **To add an index to the Pinecone integration:**
 
 1. Go to **Integrations** and select the **+** button next to the integration created.
-
-<p align="center"><img src="/content/img/create-new-pinecone-integration-index.png" alt="Create Indexes for Pinecone Integration" width="100%" height="auto"></img></p>
-
 2. Select **+ New Index**.
 3. Enter the **Index name** and a **Description**. 
-
-<p align="center"><img src="/content/img/create-new-pinecone-integration-index-model.png" alt="Create Indexes for Pinecone Integration Model" width="60%" height="auto"></img></p>
-
 4. (Optional) Toggle the **Active** button off if you don’t want to activate the index instantly.
 5. Select **Save**.
 
@@ -108,9 +87,6 @@ Once the integration is configured, set access controls to manage which [applica
 3. In the **Permissions** section, select **+ Add Permission**.
 4. In the **Integration** tab, select the required vector database providers and toggle the necessary permissions.
 5. Select **Add Permissions**. 
-
-<p align="center"><img src="/content/img/add-integration-permission-for-vector-db.png" alt="Add Permissions for Vector Database Integration" width="70%" height="auto"></img></p>
-
 The group or application can now access the vector database according to the configured permissions.
 With the integration in place, you can now create workflows using [AI/LLM tasks](https://orkes.io/content/category/reference-docs/ai-tasks).
 

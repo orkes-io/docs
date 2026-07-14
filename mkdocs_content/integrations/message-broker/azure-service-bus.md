@@ -39,9 +39,6 @@ After obtaining the credentials, add an Azure Service Bus integration to your Co
 | Endpoint | The endpoint of the service bus. | Required if **_Connection Type_** is **Connection String**. | 
 | Namespace | The namespace of the service bus. | Required if **_Connection Type_** is **Password Less**. | 
 | Description | A description of the integration. | Required. | 
-
-<p align="center"><img src="/content/img/integration-azure-service-bus.png" alt="Azure Service Bus Integration with Orkes Conductor" width="50%" height="auto"/></p>
-
 5. (Optional) Toggle the **Active** button off if you don’t want to activate the integration instantly.
 6. Select **Save**.
 
@@ -55,9 +52,6 @@ Once the integration is configured, set access controls to manage which [applica
 2. Create a new group/application or select an existing one.
 3. In the **Permissions** section, select **+ Add Permission**.
 4. In the **Integration** tab, select the required message broker and toggle the necessary permissions.
-
-<p align="center"><img src="/content/img/rbac-azure-service-bus.png" alt="Configuring RBAC for Azure Service Bus Integration" width="50%" height="auto"/></p>
-
 The group or application can now access the message broker according to the configured permissions.
 
 ## Next steps

@@ -96,9 +96,6 @@ After obtaining the credentials, add an AWS S3 integration to your Conductor clu
 | Secret Access Key | The Secret Access Key generated from [Step 1](/content/integrations/aws-s3#step-1-get-the-aws-credentials).<br/>If left empty, it uses any AWS credentials already configured in the environment (environment variables, credentials file, or IAM role). | Required. | 
 | Region | The AWS region of your S3 bucket. For example `us-east-1`. | Required. | 
 | Description | A description of the integration. | Required. | 
-
-<p align="center"><img src="/content/img/aws-s3-integration.png" alt="AWS S3 Integration with Orkes Conductor" width="60%" height="auto"></img></p>
-
 5. (Optional) Toggle the **Active** button off if you don’t want to activate the integration instantly.
 6. Select **Save**.
 
@@ -113,9 +110,6 @@ Once the integration is ready, this can be used directly within the workflows.
 1. Go to **Definitions** > **Workflow** from the left navigation menu on your Conductor cluster.
 2. Select **+ Define workflow**.
 3. In your workflow, select the (**+**) icon and select **Connected Apps**.
-
-<p align="center"><img src="/content/img/connected-apps.png" alt="Adding AWS S3 Integration in Conductor workflow" width="100%" height="auto"></img></p>
-
 4. In **Add Task** panel on the right, search for **AWS S3**, and select the integration created in [Step 2](/content/integrations/aws-s3#step-2-add-an-integration-for-aws-s3).
 
 The following operations are available for use with this integration.

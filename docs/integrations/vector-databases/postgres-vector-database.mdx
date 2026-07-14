@@ -42,10 +42,6 @@ After obtaining the credentials, add a Postgres Vector Database integration to y
 | Indexing method | The indexing method. Supported methods:<ul><li>hnsw (Hierarchical Navigable Small World graphs)</li><li>ivfflat (Inverted File Flat)</li></ul> |
 | Number of inverted lists to create for ivfflat index | If *ivfflat* is selected as the indexing method, enter the number of inverted lists to create when using this indexing method. |
 | Description | A description of the integration. | 
-
-<p align="center"><img src="/content/img/create-new-postgres-integration.png" alt="Postgres Vector Database Integration with Orkes Conductor
-" width="40%" height="auto"></img></p>
-
 5. (Optional) Toggle the **Active** button off if you don’t want to activate the integration instantly.
 6. Select **Save**.
 
@@ -56,14 +52,8 @@ Once you’ve integrated Postgres Vector Database, the next step is to configure
 **To add an index to the integration:**
 
 1. Go to **Integrations** and select the **+** button next to the integration created.
-
-<p align="center"><img src="/content/img/create-new-pgvector-integration-index.png" alt="Create Indexes for Postgres Integration" width="100%" height="auto"></img></p>
-
 2. Select **+ New Index**.
 3. Enter the **Index name** and a **Description**. The index must already exist in the connected Postgres database.
-
-<p align="center"><img src="/content/img/create-new-postgres-integration-index-model.png" alt="Create Indexes for Postgres Integration Model" width="60%" height="auto"></img></p>
-
 4. (Optional) Toggle the **Active** button off if you don’t want to activate the index instantly.
 5. Select **Save**.
 
@@ -80,9 +70,6 @@ Once the integration is configured, set access controls to manage which [applica
 3. In the **Permissions** section, select **+ Add Permission**.
 4. In the **Integration** tab, select the required vector database providers and toggle the necessary permissions.
 5. Select **Add Permissions**. 
-
-<p align="center"><img src="/content/img/add-integration-permission-for-postgresvector-db.png" alt="Add Permissions for Postgres Vector Database Integration" width="70%" height="auto"></img></p>
-
 The group or application can now access the vector database according to the configured permissions.
 With the integration in place, you can now create workflows using [AI/LLM tasks](https://orkes.io/content/category/reference-docs/ai-tasks).
 

@@ -29,9 +29,6 @@ To integrate GCP with Orkes Conductor, retrieve the following credentials from t
 1. Sign in to the [Google Cloud Console](https://console.cloud.google.com/).
 2. Create a new project or select an existing one.
 3. Get the **Project ID** from the dashboard.
-
-<p align="center"><img src="/content/img/get-project-id.png" alt="Get project ID from Google Cloud Console" width="100%" height="auto"/></p>
-
 For more information, refer to the official documentation on [creating and managing projects in GCP](https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 
 ### Get the location
@@ -47,14 +44,8 @@ For more information, refer to the official documentation on [Bucket location](h
 1. Go to **IAM & Admin** > **Service Accounts** from the left menu on your GCP console. 
 2. Create a new service or select an existing one.
 3. In the **Keys** tab, select **Add key** > **Create new key**.
-
-<p align="center"><img src="/content/img/get-service-account-json.png" alt="Get Service Account JSON from Google Cloud Console" width="100%" height="auto"/></p>
-
 4. Select the key type as **JSON**.
 5. Select **Create** to download the JSON file.
-
-<p align="center"><img src="/content/img/get-service-account-json-key.png" alt="Get Service Account JSON key from Google Cloud Console" width="60%" height="auto"/></p>
-
 To use GCP with Orkes Conductor, you must enable Cloud Storage from the GCP console.
 
 ### Enable Cloud Storage API
@@ -63,17 +54,8 @@ To use GCP with Orkes Conductor, you must enable Cloud Storage from the GCP cons
 
 1. Go to **APIs & Services** > **Enabled APIs & services** from the left menu on your GCP console.
 2. Select **+ Enable APIs and Services**.
-
-<p align="center"><img src="/content/img/enable-apis-and-services.png" alt="Enabling APIs and services from GCP console" width="100%" height="auto"/></p>
-
 3. In the **API Library**, search for **Cloud Storage API**.
-
-<p align="center"><img src="/content/img/cloud-storage-api.png" alt="Enabling Cloud Storage API" width="100%" height="auto"/></p>
-
 4. Select **Enable**.
-
-<p align="center"><img src="/content/img/enable-cloud-storage.png" alt="Enabling Cloud Storage API" width="70%" height="auto"/></p>
-
 Once enabled, the Cloud Storage API is ready for use with your GCP project.
 
 ## Step 2: Add an integration for GCP
@@ -94,9 +76,6 @@ After obtaining the credentials, add a GCP integration to your Conductor cluster
 | Location | The region where your Google Cloud project or storage bucket is hosted. For example, **us-central1**. |
 | Choose Service account credentials JSON | Upload the service account JSON file (generated previously), which is a key file containing the credentials for authenticating the Orkes Conductor cluster with the GCP services. | 
 | Description | A description of the integration. |
-
-<p align="center"><img src="/content/img/gcp-integration.png" alt="GCP Integration with Orkes Conductor" width="60%" height="auto"/></p>
-
 5. (Optional) Toggle the **Active** button off if you don’t want to activate the integration instantly.
 6. Select **Save**.
 
@@ -110,9 +89,6 @@ Once the integration is configured, set access controls to manage which [applica
 2. Create a new group/application or select an existing one.
 3. In the **Permissions** section, select **+ Add Permission**.
 4. In the **Integration** tab, select the required integration and toggle the necessary permissions.
-
-<p align="center"><img src="/content/img/rbac-gcp.png" alt="Configuring RBAC for GCP Integration" width="70%" height="auto"/></p>
-
 The group or application can now access the integration according to the configured permissions.
 
 With the integration in place, you can now create workflows using the [List Files](/content/reference-docs/ai-tasks/list-files) task or the [Parse Document](/content/reference-docs/ai-tasks/parse-document) task.

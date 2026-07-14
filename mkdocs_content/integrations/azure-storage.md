@@ -40,9 +40,6 @@ To integrate Azure Storage with Orkes Conductor, you need the Azure Storage conn
 3. Select a storage account or create a new one.
 4. Open your storage account and navigate to **Security + networking** > **Access keys** from the left navigation menu.
 5. Select **Show**, then copy the **Connection string** for *key1* or *key2*.
-
-<p align="center"><img src="/content/img/connection-string-azure-portal.png" alt="Retrieving connection string from Azure portal." width="100%" height="auto"></img></p>
-
 6. Store the connection string securely.
 
 ## Step 2: Add an integration for Azure Storage
@@ -61,9 +58,6 @@ After obtaining the credentials, add an Azure Storage integration to your Conduc
 | Integration name | A name for the integration. | Required. |
 | Connection String | The connection string copied from the Azure portal in [Step 1](/content/integrations/azure-storage#step-1-get-the-azure-portal-credentials). | Required. |
 | Description | A description of the integration. | Required. |
-
-<p align="center"><img src="/content/img/azure-storage-integration.png" alt="Azure Storage Integration with Orkes Conductor" width="60%" height="auto"></img></p>
-
 5. (Optional) Toggle the **Active** button off if you don't want to activate the integration instantly.
 6. Select **Save**.
 
@@ -76,9 +70,6 @@ Once the integration is ready, this can be used directly within the workflows.
 1. Go to **Definitions** > **Workflow** from the left navigation menu on your Conductor cluster.
 2. Select **+ Define workflow**.
 3. In your workflow, select the (**+**) icon and select **Connected Apps**.
-
-<p align="center"><img src="/content/img/connected-apps.png" alt="Adding Azure Storage Integration in Conductor workflow" width="100%" height="auto"></img></p>
-
 4. In **Add Task** panel on the right, search for **Azure Storage**, and select the integration created in [Step 2](/content/integrations/azure-storage#step-2-add-an-integration-for-azure-storage).
 
 The following operations are available for use with this integration.

@@ -29,9 +29,6 @@ To integrate Azure OpenAI with Orkes Conductor, retrieve the API key and endpoin
 2. In **Azure services**, select **Azure OpenAI**.
 3. Create a new resource or open an existing one.
 4. Go to **Resource Management** > **Keys and Endpoint** in the left navigation menu.
-
-<p align="center"><img src="/content/img/get-azure-open-ai-api-key.png" alt="Get Azure OpenAI API Key" width="100%" height="auto"></img></p>
-
 5. Copy *KEY 1* or *KEY 2* as the API key.
 6. Copy the endpoint. 
 
@@ -65,9 +62,6 @@ After obtaining the credentials, add an Azure OpenAI integration to your Conduct
 | API Key | The API key copied previously from the Azure portal. |
 | Endpoint | The endpoint copied previously from the Azure portal. | 
 | Description | A description of the integration. | 
-
-<p align="center"><img src="/content/img/create-new-azure-open-ai-integration.png" alt="Azure OpenAI Integration with Orkes Conductor" width="60%" height="auto"></img></p>
-
 5. (Optional) Toggle the **Active** button off if you don’t want to activate the integration instantly.
 6. Select **Save**.
 
@@ -78,14 +72,8 @@ Once you’ve integrated Azure OpenAI, the next step is to add specific models.
 **To add a model to the Azure OpenAI integration:**
 
 1. Go to **Integrations** and select the **+** button next to the integration created.
-
-<p align="center"><img src="/content/img/create-new-azure-open-ai-integration-model-from-integrations-page.png" alt="Create Azure Open AI Integration Model from Listed Integrations" width="100%" height="auto"></img></p>
-
 2. Select **+ New model**.
 3. Enter the **Model name**, which is the **deployment name** used in the Azure portal. For example, if you deployed *gpt-35-turbo* with the deployment name *mySummarizerModel*, enter *mySummarizerModel* here, not the base model name like *gpt-35-turbo*.
-
-<p align="center"><img src="/content/img/create-new-azure-open-ai-integration-model.png" alt="Create Azure Open AI Integration Model" width="60%" height="auto"></img></p>
-
 4. Provide a **Description**.
 5. (Optional) Toggle the **Active** button off if you don’t want to activate the model instantly.
 6. Select **Save**.
@@ -103,9 +91,6 @@ Once the integration is configured, set access controls to manage which [applica
 3. In the **Permissions** section, select **+ Add Permission**.
 4. In the **Integration** tab, select the required AI models and toggle the necessary permissions.
 5. Select **Add Permissions**. 
-
-<p align="center"><img src="/content/img/add-integration-permission.png" alt="Add Permissions for Integrations" width="70%" height="auto"></img></p>
-
 The group or application can now access the AI model according to the configured permissions.
 
 With the integration in place, you can now create workflows using [AI/LLM tasks](https://orkes.io/content/category/reference-docs/ai-tasks).

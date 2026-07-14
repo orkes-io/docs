@@ -49,9 +49,6 @@ After obtaining the credentials, add a Relational Database integration to your C
 | Database Password | The password associated with the database username. | 
 | Database URL | The database URL, which is the JDBC connection string in the format: **jdbc:database://url/databaseName**.<br/><br/>For example: **jdbc:postgresql://localhost:5432/mydb** | 
 | Description | A description of the integration. |
-
-<p align="center"><img src="/content/img/create-new-relational-database-integration.png" alt="Create Relational Database Integration" width="60%" height="auto"></img></p>
-
 5. (Optional) Toggle the **Active** button off if you don’t want to activate the integration instantly.
 6. Select **Save**.
 
@@ -62,14 +59,8 @@ Once you’ve integrated a Relational Database, the next step is to configure sp
 **To add a table to the integration:**
 
 1. Go to **Integrations** and select the **+** button next to the integration created.
-
-<p align="center"><img src="/content/img/create-new-relational-database-integration-table-from-integrations-page.png" alt="Create Relational Database Integration Table from Listed Integrations" width="100%" height="auto"></img></p>
-
 2. Select **+ New Table**.
 3. Enter the **Table name** and a **Description**. The table must already exist in the connected PostgreSQL database.
-
-<p align="center"><img src="/content/img/create-new-relational-database-integration-table.png" alt="Create Relational Database Integration Table" width="60%" height="auto"></img></p>
-
 4. (Optional) Toggle the **Active** button off if you don’t want to activate the table instantly.
 5. Select **Save**.
 
@@ -86,9 +77,6 @@ Once the integration is configured, set access controls to manage which [applica
 3. In the **Permissions** section, select **+ Add Permission**.
 4. In the **Integration** tab, select the required relational database providers and toggle the necessary permissions.
 5. Select **Add Permissions**. 
-
-<p align="center"><img src="/content/img/rbac-relational-database-integration.png" alt="Add Permissions for Integrations" width="70%" height="auto"></img></p>
-
 The group or application can now access the database tables according to the configured permissions.
 
 With the integration in place, you can now create workflows using the [JDBC](https://orkes.io/content/reference-docs/system-tasks/jdbc) task.

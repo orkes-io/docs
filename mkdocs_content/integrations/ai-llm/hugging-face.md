@@ -26,9 +26,6 @@ To integrate Hugging Face with Orkes Conductor, retrieve the API token, namespac
 1. Sign in to the [Hugging Face](https://huggingface.co/) portal.
 2. From your account icon in the top-right corner, select **Settings**.
 3. Go to **Access Tokens** and select **+ Create new token**.
-
-<p align="center"><img src="/content/img/view-api-keys-hf.png" alt="Get API Keys from Hugging Face platform" width="90%" height="auto"></img></p>
-
 4. Enter a **Token name**, select the **Token type**, and configure **User/Repositories/Org permissions**, if required.
 5. Select **Create token**.
 6. Copy and store the generated token.
@@ -73,9 +70,6 @@ After obtaining the credentials, add a Hugging Face integration to your Conducto
 | API Key | The API token copied previously from the Hugging Face portal. |
 | Namespace | The namespace of your Hugging Face account. |
 | Description | A description of the integration. | 
-
-<p align="center"><img src="/content/img/create-new-hugging-face-integration.png" alt="Hugging Face Integration with Orkes Conductor" width="60%" height="auto"></img></p>
-
 5. (Optional) Toggle the **Active** button off if you don’t want to activate the integration instantly.
 6. Select **Save**.
 
@@ -86,15 +80,9 @@ Once you’ve integrated Hugging Face, the next step is to configure specific mo
 **To add a model to the Hugging Face integration:**
 
 1. Go to **Integrations** and select the **+** button next to the integration created.
-
-<p align="center"><img src="/content/img/create-new-model-for-hugging-face-integration.png" alt="Create new model for Hugging Face Integration" width="100%" height="auto"></img></p>
-
 2. Select **+ New model**.
 3. Enter the **Model name**. The name must exactly match the Hugging Face model name. For a complete list, see the [Hugging Face documentation](https://huggingface.co/models). 
 4. Select the **Endpoint** created previously and provide a **Description**. 
-
-<p align="center"><img src="/content/img/creating-new-model-for-hugging-face-integration.png" alt="Creating new model for Hugging Face Integration" width="60%" height="auto"></img></p>
-
 5. (Optional) Toggle the **Active** button off if you don’t want to activate the model instantly.
 6. Select **Save**.
 
@@ -111,9 +99,6 @@ Once the integration is configured, set access controls to manage which [applica
 3. In the **Permissions** section, select **+ Add Permission**.
 4. In the **Integration** tab, select the required AI models and toggle the necessary permissions.
 5. Select **Add Permissions**. 
-
-<p align="center"><img src="/content/img/add-integration-permission-for-hugging-face.png" alt="Add Permissions for Hugging Face Integration" width="70%" height="auto"></img></p>
-
 The group or application can now access the AI model according to the configured permissions.
 
 With the integration in place, you can now create workflows using [AI/LLM tasks](https://orkes.io/content/category/reference-docs/ai-tasks).

@@ -39,9 +39,6 @@ After obtaining the credentials, add a Mongo Vector Database integration to your
 | Distance metric | The distance metric, which is a metric to measure the similarity or distance between vectors. Supported values:<ul><li>Cosine Similarity</li><li>Euclidean Distance</li><li>Dot Product</li></ul> |
 | Number of nearest neighbours | The number of nearest neighbors to be used during the search. | 
 | Description | A description of the integration. |
-
-<p align="center"><img src="/content/img/create-new-mongo-integration.png" alt="Mongo Vector Database Integration with Orkes Conductor" width="60%" height="auto"></img></p>
-
 5. (Optional) Toggle the **Active** button off if you don’t want to activate the integration instantly.
 6. Select **Save**.
 
@@ -52,14 +49,8 @@ Once you’ve integrated the Mongo Vector Database, the next step is to configur
 **To add an index to the integration:**
 
 1. Go to **Integrations** and select the **+** button next to the integration created.
-
-<p align="center"><img src="/content/img/create-new-mongo-integration-index.png" alt="Create Indexes for MongoDB Integration" width="100%" height="auto"></img></p>
-
 2. Select **+ New Index**.
 3. Enter the **Index name** and a **Description**. The index must already exist in the connected MongoDB Atlas database.
-
-<p align="center"><img src="/content/img/create-new-mongo-integration-index-model.png" alt="Create Indexes for MongoDB Integration Model" width="60%" height="auto"></img></p>
-
 4. (Optional) Toggle the **Active** button off if you don’t want to activate the index instantly.
 5. Select **Save**.
 
@@ -76,9 +67,6 @@ Once the integration is configured, set access controls to manage which [applica
 3. In the **Permissions** section, select **+ Add Permission**.
 4. In the **Integration** tab, select the required vector database providers and toggle the necessary permissions.
 5. Select **Add Permissions**. 
-
-<p align="center"><img src="/content/img/add-integration-permission-for-mongo-db.png" alt="Add Permissions for Mongo Vector Database Integration" width="60%" height="auto"></img></p>
-
 The group or application can now access the vector database according to the configured permissions.
 With the integration in place, you can now create workflows using [AI/LLM tasks](https://orkes.io/content/category/reference-docs/ai-tasks).
 

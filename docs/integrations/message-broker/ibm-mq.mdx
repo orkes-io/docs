@@ -53,9 +53,6 @@ After obtaining the credentials, add an IBM MQ integration to your Conductor clu
 | Transport Layer Security | Choose the TLS connection security. Supported values:<ul><li>**NONE**</li><li>**Using Cipher Suite**</li></ul> | Required. | 
 | Cipher Suite | Select an appropriate Cipher Suite for TLS. Supported values:<ul><li>**TLS_RSA_WITH_AES_128_CBC_SHA256**</li><li>**TLS_RSA_WITH_AES_256_CBC_SHA256**</li><li>**TLS_RSA_WITH_AES_256_GCM_SHA384**</li><li>**ANY_TLS12**</li></ul> | Required if **_Transport Layer Security_** is **usingCipherSuite**. | 
 | Description | A description of the integration. | Required. | 
-
-<p align="center"><img src="/content/img/integration-ibm-mq-messaging.png" alt="IBM MQ Integration with Orkes Conductor" width="50%" height="auto"/></p>
-
 5. (Optional) Toggle the **Active** button off if you don’t want to activate the integration instantly.
 6. Select **Save**.
 
@@ -69,9 +66,6 @@ Once the integration is configured, set access controls to manage which [applica
 2. Create a new group/application or select an existing one.
 3. In the **Permissions** section, select **+ Add Permission**.
 4. In the **Integration** tab, select the required message broker and toggle the necessary permissions.
-
-<p align="center"><img src="/content/img/rbac-ibm-mq.png" alt="Configuring RBAC for IBM MQ Integration" width="70%" height="auto"/></p>
-
 The group or application can now access the message broker according to the configured permissions.
 
 ## Next steps

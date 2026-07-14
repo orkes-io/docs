@@ -45,9 +45,6 @@ After obtaining the credentials, add an AWS Bedrock Cohere integration to your C
 | Access key | The access key of the AWS account. | Required if the _Connection Type_ is chosen as _Access Key/Secret_. | 
 | Access secret | The access secret of the AWS account. | Required if the _Connection Type_ is chosen as _Access Key/Secret_. | 
 | Description | A description of your integration. | Required. | 
-
-<p align="center"><img src="/content/img/create-new-aws-bedrock-cohere-integration.png" alt="AWS Bedrock Cohere Integration with Orkes Conductor" width="60%" height="auto"></img></p>
-
 5. (Optional) Toggle the **Active** button off if you don’t want to activate the integration instantly.
 6. Select **Save**.
 
@@ -58,15 +55,9 @@ Once you’ve integrated AWS Bedrock Cohere, the next step is to configure speci
 **To add a model to the AWS Bedrock Cohere integration:**
 
 1. Go to **Integrations** and select the **+** button next to the integration created.
-
-<p align="center"><img src="/content/img/create-new-aws-bedrock-cohere-integration-model-from-integrations-page.png" alt="Create AWS Bedrock Cohere Integration Model from Listed Integrations" width="100%" height="auto"></img></p>
-
 2. Select **+ New model**.
 3. Enter the **Model name**. The name must exactly match the AWS Bedrock Cohere model name. For a complete list, see the [AWS Bedrock Cohere documentation](https://docs.aws.amazon.com/bedrock/latest/userguide/models-supported.html).
 4. Provide a **Description**. 
-
-<p align="center"><img src="/content/img/create-new-aws-bedrock-cohere-integration-model.png" alt="Create AWS Bedrock Cohere Integration Model" width="70%" height="auto"></img></p>
-
 5. (Optional) Toggle the **Active** button off if you don’t want to activate the model instantly.
 6. Select **Save**.
 
@@ -83,9 +74,6 @@ Once the integration is configured, set access controls to manage which [applica
 3. In the **Permissions** section, select **+ Add Permission**.
 4. In the **Integration** tab, select the required AI models and toggle the necessary permissions.
 5. Select **Add Permissions**. 
-
-<p align="center"><img src="/content/img/rbac-aws-bedrock-cohere-integration.png" alt="Add Permissions for Integrations" width="70%" height="auto"></img></p>
-
 The group or application can now access the AI model according to the configured permissions.
 
 With the integration in place, you can now create workflows using [AI/LLM tasks](https://orkes.io/content/category/reference-docs/ai-tasks).

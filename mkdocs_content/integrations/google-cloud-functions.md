@@ -70,9 +70,6 @@ After obtaining the credentials, add a Google Cloud Functions integration to you
 | Default Location | The default region for the cloud function. For example: **us-central1**. | Optional. |
 | Default Function URL | The default HTTP trigger URL to use when the function URL is not explicitly provided in a workflow task. | Optional. |
 | Description | A description of the integration. | Required. |
-
-<p align="center"><img src="/content/img/google-cloud-functions-integration.png" alt="Google Cloud Functions Integration with Orkes Conductor" width="60%" height="auto"></img></p>
-
 5. (Optional) Toggle the **Active** button off if you don't want to activate the integration instantly.
 6. Select **Save**.
 
@@ -85,9 +82,6 @@ Once the integration is ready, this can be used directly within the workflows.
 1. Go to **Definitions** > **Workflow** from the left navigation menu on your Conductor cluster.
 2. Select **+ Define workflow**.
 3. In your workflow, select the (**+**) icon and select **Connected Apps**.
-
-<p align="center"><img src="/content/img/connected-apps.png" alt="Adding Google Cloud Functions Integration in Conductor workflow" width="100%" height="auto"></img></p>
-
 4. In **Add Task** panel on the right, search for **Google Cloud Functions**, and select the integration created in [Step 2](/content/integrations/google-cloud-functions#step-2-add-an-integration-for-google-cloud-functions).
 
 The following operations are available for use with this integration.

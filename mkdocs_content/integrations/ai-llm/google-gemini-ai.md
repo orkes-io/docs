@@ -26,9 +26,6 @@ To integrate Google Gemini AI with Orkes Conductor, retrieve the project ID and 
 1. Sign in to the [Google Cloud Console](https://console.cloud.google.com/).
 2. Create a new project or select an existing one.
 3. Get the **Project ID** from the dashboard.
-
-<p align="center"><img src="/content/img/get-project-id.png" alt="Get project ID from Google Cloud Console" width="100%" height="auto"/></p>
-
 For more information, refer to the official documentation on [creating and managing projects in GCP](https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 
 ### Get the service account JSON
@@ -38,14 +35,8 @@ For more information, refer to the official documentation on [creating and manag
 1. Go to **IAM & Admin** > **Service Accounts** from the left menu on your GCP console. 
 2. Create a new service or select an existing one.
 3. In the **Keys** tab, select **Add key** > **Create new key**.
-
-<p align="center"><img src="/content/img/get-service-account-json.png" alt="Get Service Account JSON from Google Cloud Console" width="100%" height="auto"/></p>
-
 4. Select the key type as **JSON**.
 5. Select **Create** to download the JSON file.
-
-<p align="center"><img src="/content/img/get-service-account-json-key.png" alt="Get Service Account JSON key from Google Cloud Console" width="60%" height="auto"/></p>
-
 To use Google Gemini AI with Orkes Conductor, you must enable the Gemini API from the GCP console.
 
 ### Grant the service account IAM access
@@ -65,9 +56,6 @@ A valid credentials JSON alone is not sufficient, the service account also needs
 
 1. Go to **APIs & Services** > **Enabled APIs & services** from the left menu on your GCP console.
 2. Select **+ Enable APIs and services**.
-
-<p align="center"><img src="/content/img/enable-apis-and-services.png" alt="Enabling APIs and services from GCP console" width="100%" height="auto"/></p>
-
 3. In the **API Library**, search for **Agent Platform API**.
 4. Select **Enable**.
 
@@ -91,9 +79,6 @@ After obtaining the credentials, add a Google Gemini AI integration to your Cond
 | Location | The Google Cloud region where you want to run the Gemini model (for example, `us-central1`). Make sure the selected model is available in this region, otherwise the integration will fail to connect. Refer to the [documentation](https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations#global-endpoint) for the list of supported regions per model. |
 | Choose Service account credentials JSON | Upload the service account JSON file (generated previously), which is a key file containing the credentials for authenticating the Orkes Conductor cluster with the GCP services. | 
 | Description | A description of your integration. |
-
-<p align="center"><img src="/content/img/create-new-google-gemini-ai-integration.png" alt="Google Gemini AI Integration with Orkes Conductor" width="60%" height="auto"></img></p>
-
 5. (Optional) Toggle the **Active** button off if you don’t want to activate the integration instantly.
 6. Select **Save**.
 
@@ -104,15 +89,9 @@ Once you’ve integrated Google Gemini AI, the next step is to configure specifi
 **To add a model to the Google Gemini AI integration:**
 
 1. Go to **Integrations** and select the **+** button next to the integration created.
-
-<p align="center"><img src="/content/img/create-new-google-gemini-ai-integration-model-from-integrations-page.png" alt="Create Google Gemini AI Integration Model from Listed Integrations" width="100%" height="auto"></img></p>
-
 2. Select **+ New model**.
 3. Enter the **Model name**. The name must exactly match the Gemini AI model name. For a complete list, see the [Gemini AI documentation](https://ai.google.dev/gemini-api/docs/models/gemini#model-variations).
 4. Provide a **Description**. 
-
-<p align="center"><img src="/content/img/create-new-google-gemini-ai-integration-model.png" alt="Create Google Gemini AI Integration Model" width="60%" height="auto"></img></p>
-
 5. (Optional) Toggle the **Active** button off if you don’t want to activate the model instantly.
 6. Select **Save**.
 
@@ -128,9 +107,6 @@ Once the integration is configured, set access controls to manage which [applica
 2. Create a new group/application or select an existing one.
 3. In the **Permissions** section, select **+ Add Permission**.
 4. In the **Integration** tab, select the required AI models and toggle the necessary permissions.
-
-<p align="center"><img src="/content/img/rbac-google-gemini-ai-integration.png" alt="Add Permissions for Integrations" width="70%" height="auto"></img></p>
-
 5. Select **Add Permissions**. 
 
 The group or application can now access the AI model according to the configured permissions.

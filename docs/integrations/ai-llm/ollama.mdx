@@ -80,9 +80,6 @@ After running Ollama locally, add an Ollama integration to your Conductor cluste
 | Auth Header Name<br/><br/> <TableNote title="Available since">v5.2.6 and later</TableNote> | The name of the authentication header to include in requests. The name of the authentication header to include in requests. Required only when Ollama is exposed behind a secured endpoint or proxy. | Optional. | 
 | Auth Header <br/><br/> <TableNote title="Available since">v5.2.6 and later</TableNote> | The authentication value associated with the header. | Optional. |
 | Description | A description of the integration. | Required. | 
-
-<p align="center"><img src="/content/img/create-new-ollama-integration.png" alt="Ollama Integration with Orkes Conductor" width="70%" height="auto"></img></p>
-
 5. (Optional) Toggle the **Active** button off if you don’t want to activate the integration instantly.
 6. Select **Save**.
 
@@ -93,15 +90,9 @@ Once you’ve integrated Ollama, the next step is to configure specific models. 
 **To add a model to the Ollama integration:**
 
 1. Go to the **Integrations** and select the **+** button next to the integration created.
-
-<p align="center"><img src="/content/img/create-new-model-for-ollama-integration.png" alt="Create new model for Ollama Integration" width="100%" height="auto"></img></p>
-
 2. Select **+ New model**.
 3. Enter the **Model name**. The model name must exactly match the Ollama model identifier locally set on the device, including any version or tag (for example, *mistral* or *mistral-latest*).
 4. Provide a **Description**. 
-
-<p align="center"><img src="/content/img/creating-new-model-for-ollama-integration.png" alt="Creating new model for Ollama Integration" width="70%" height="auto"></img></p>
-
 5. (Optional) Toggle the **Active** button off if you don’t want to activate the model instantly.
 6. Select **Save**.
 
@@ -118,9 +109,6 @@ Once the integration is configured, set access controls to manage which [applica
 3. In the **Permissions** section, select **+ Add Permission**.
 4. In the **Integration** tab, select the required AI models and toggle the necessary permissions.
 5. Select **Add Permissions**. 
-
-<p align="center"><img src="/content/img/add-integration-permission-for-ollama.png" alt="Add Permissions for Ollama Integration" width="70%" height="auto"></img></p>
-
 The group or application can now access the AI model according to the configured permissions.
 
 With the integration in place, you can now create workflows using [AI/LLM tasks](https://orkes.io/content/category/reference-docs/ai-tasks).

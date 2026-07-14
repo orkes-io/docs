@@ -30,15 +30,9 @@ When creating a collection, set the vector dimension to match the output dimensi
 
 1. Sign in to the [Weaviate Console](https://console.weaviate.cloud/dashboard).
 2. Select your cluster and copy the **REST Endpoint**.
-
-<p align="center"><img src="/content/img/get-weaviate-endpoint.png" alt="Get Weaviate Endpoint" width="100%" height="auto"></img></p>
-
 3. Go to **API Keys**, and select **+ API Key**.
 4. Enter a **Name** and select the **Role** as **admin**.
 5. Select **Create**, and copy/download the key.
-
-<p align="center"><img src="/content/img/get-weaviate-api-key.png" alt="Get Weaviate API Key" width="100%" height="auto"></img></p>
-
 :::note
 If you are using Weaviate locally, [set up a local instance](https://weaviate.io/developers/weaviate/quickstart/local) and retrieve the API key and endpoint.
 :::
@@ -60,9 +54,6 @@ After obtaining the credentials, add a Weaviate integration to your Conductor cl
 | API Key | The API key from the Weaviate cluster. |
 | Endpoint | The REST Endpoint from the Weaviate cluster. |
 | Description | A description of the integration. |
-
-<p align="center"><img src="/content/img/create-new-weaviate-integration.png" alt="Weaviate Integration with Orkes Conductor" width="60%" height="auto"></img></p>
-
 5. (Optional) Toggle the **Active** button off if you don’t want to activate the integration instantly.
 6. Select **Save**.
 
@@ -73,14 +64,8 @@ Once you’ve integrated Weaviate, the next step is to configure specific collec
 **To add a collection to the Weaviate integration:**
 
 1. Go to **Integrations** and select the **+** button next to the integration created.
-
-<p align="center"><img src="/content/img/create-new-weaviate-integration-class.png" alt="Create Collections for Weaviate Integration" width="100%" height="auto"></img></p>
-
 2. Select **+ New Collection**.
 3. Enter the **Collection name** and a **Description**. 
-
-<p align="center"><img src="/content/img/create-new-weaviate-integration-class-model.png" alt="Create New Collection for Weaviate Integration Model" width="60%" height="auto"></img></p>
-
 4. (Optional) Toggle the **Active** button off if you don’t want to activate the collection instantly.
 5. Select **Save**.
 
@@ -97,9 +82,6 @@ Once the integration is configured, set access controls to manage which [applica
 3. In the **Permissions** section, select **+ Add Permission**.
 4. In the **Integration** tab, select the required vector database providers and toggle the necessary permissions.
 5. Select **Add Permissions**. 
-
-<p align="center"><img src="/content/img/add-integration-permission-for-weaviate-db.png" alt="Add Permissions for Weaviate Database Integration" width="70%" height="auto"></img></p>
-
 The group or application can now access the vector database according to the configured permissions.
 With the integration in place, you can now create workflows using [AI/LLM tasks](https://orkes.io/content/category/reference-docs/ai-tasks).
 

@@ -38,13 +38,7 @@ Two types of keys can be generated:
 
     1. Sign in to the [OpenAI platform](https://platform.openai.com/).
     2. Go to **Dashboard** > **[API keys](https://platform.openai.com/api-keys)** from the left menu and select **+ Create new secret key**.
-
-    <p align="center"><img src="/content/img/create-new-api-key.png" alt="Create new API Keys in OpenAI API platform" width="100%" height="auto"></img></p>
-
     3. In **Owned by**, select **You**.
-
-    <p align="center"><img src="/content/img/generating-api-token-user-account.png" alt="Create new API Keys in OpenAI API platform" width="40%" height="auto"></img></p>
-
     4. Configure the following parameters:
 
     - **Name**–A name for your secret.
@@ -60,13 +54,7 @@ Two types of keys can be generated:
 
     1. Sign in to the [OpenAI platform](https://platform.openai.com/).
     2. Go to **Dashboard** > **[API keys](https://platform.openai.com/api-keys)** from the left menu and select **+ Create new secret key**.
-
-    <p align="center"><img src="/content/img/create-new-api-key.png" alt="Create new API Keys in OpenAI API platform" width="100%" height="auto"></img></p>
-
     3. In **Owned by**, select **Service account**.
-
-    <p align="center"><img src="/content/img/generating-api-token-service-account.png" alt="Create new API Keys in OpenAI API platform" width="40%" height="auto"></img></p>
-
     4. Configure the following parameters:
 
     - **Service Key Name**–A name for your service account key.
@@ -85,9 +73,6 @@ An organization ID is a unique identifier that represents your organization or t
 1. Sign in to the [OpenAI platform](https://platform.openai.com/).
 2. Go to **Settings** > **Organization** > **[General](https://platform.openai.com/settings/organization/general)**.
 3. Copy the **Organization ID**.
-
-<p align="center"><img src="/content/img/organization-id.png" alt="Retreving the organization ID from the OpenAI API platform" width="100%" height="auto"></img></p>
-
 ## Step 2: Add an integration for OpenAI
 
 After obtaining the credentials, add an OpenAI integration to your Conductor cluster.
@@ -106,9 +91,6 @@ After obtaining the credentials, add an OpenAI integration to your Conductor clu
 | Base URL | The base URL for the API request. By default, this is set as https://api.openai.com. | 
 | Organization ID | The organization ID copied previously from the OpenAI platform. | 
 | Description | A description of the integration. | 
-
-<p align="center"><img src="/content/img/create-new-open-ai-integration.png" alt="OpenAI Integration with Orkes Conductor" width="70%" height="auto"></img></p>
-
 5. (Optional) Toggle the **Active** button off if you don’t want to activate the integration instantly.
 6. Select **Save**.
 
@@ -119,15 +101,9 @@ Once you’ve integrated OpenAI, the next step is to configure specific models. 
 **To add a model to the OpenAI integration:**
 
 1. Go to **Integrations** and select the **+** button next to the integration created.
-
-<p align="center"><img src="/content/img/create-new-model-for-open-ai-integration.png" alt="Create new model for OpenAI Integration" width="100%" height="auto"></img></p>
-
 2. Select **+ New model**.
 3. Enter the **Model name**. The name must exactly match the OpenAI model name. For a complete list, see the [OpenAI documentation](https://platform.openai.com/docs/models).
 4. Provide a **Description**. 
-
-<p align="center"><img src="/content/img/creating-new-model-for-open-ai-integration.png" alt="Creating new model for OpenAI Integration" width="70%" height="auto"></img></p>
-
 5. (Optional) Toggle the **Active** button off if you don’t want to activate the model instantly.
 6. Select **Save**.
 
@@ -144,9 +120,6 @@ Once the integration is configured, set access controls to manage which [applica
 3. In the **Permissions** section, select **+ Add Permission**.
 4. In the **Integration** tab, select the required AI models and toggle the necessary permissions.
 5. Select **Add Permissions**. 
-
-<p align="center"><img src="/content/img/add-integration-permission-for-azure-open-ai.png" alt="Add Permissions for Azure OpenAI Integration" width="70%" height="auto"></img></p>
-
 The group or application can now access the AI model according to the configured permissions.
 
 With the integration in place, you can now create workflows using [AI/LLM tasks](https://orkes.io/content/category/reference-docs/ai-tasks).

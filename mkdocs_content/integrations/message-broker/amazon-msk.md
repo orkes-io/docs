@@ -48,9 +48,6 @@ After obtaining the credentials, add an Amazon MSK integration to your Conductor
 | Password | The password associated with the username. | 
 | Consumer Group ID | The Consumer Group ID from Kafka. This unique identifier helps manage message processing, load balancing, and fault tolerance within consumer groups. |
 | Description | A description of the integration. |
-
-<p align="center"><img src="/content/img/integration-amazon-msk.png" alt="Amazon MSK Integration with Orkes Conductor" width="50%" height="auto"/></p>
-
 5. (Optional) Toggle the **Active** button off if you don’t want to activate the integration instantly.
 6. Select **Save**.
 
@@ -64,9 +61,6 @@ Once the integration is configured, set access controls to manage which [applica
 2. Create a new group/application or select an existing one.
 3. In the **Permissions** section, select **+ Add Permission**.
 4. In the **Integration** tab, select the required message broker and toggle the necessary permissions.
-
-<p align="center"><img src="/content/img/rbac-amazon-msk.png" alt="Configuring RBAC for Amazon MSK Integration" width="70%" height="auto"/></p>
-
 The group or application can now access the message broker according to the configured permissions.
 
 ## Next steps

@@ -62,9 +62,6 @@ The configuration steps vary depending on the type of Kafka cluster to be integr
     2. Go to **Clients** > **Add new client**.
     3. In **Copy the configuration snippet for your clients** > **schema.registry.url**, copy the URL.
     4. Select **Create Schema Registry API key** to download the file. The downloaded file will have the Schema Registry API key and secret.
-
-    <p align="center"><img src="/content/img/schema-registry-url.png" alt="Getting Schema Registry URL" width="100%" height="auto"/></p>
-
     **For GCP Managed Kafka configuration**
 
     If using **GCP Managed Kafka**: The schema registry uses OAuth2 authentication instead of an API key. You will need a GCP Service Account JSON key, base64-encoded, as the API secret. To get the key:
@@ -121,9 +118,6 @@ After obtaining the credentials, add an Apache Kafka integration to your Conduct
 | Value Subject Name Strategy | The strategy for constructing the subject name under which the AVRO schema will be registered in the schema registry. Supported values:<ul><li>**io.confluent.kafka.serializers.subject.TopicNameStrategy**</li><li>**io.confluent.kafka.serializers.subject.RecordNameStrategy**</li><li>**io.confluent.kafka.serializers.subject.TopicRecordNameStrategy**</li></ul> | Required if **_Sending Protocol_** is **AVRO**. | Not supported for Amazon MSK clusters. | 
 | Consumer Group ID | The Consumer Group ID from Kafka. This unique identifier helps manage message processing, load balancing, and fault tolerance within consumer groups. | Required. | – | 
 | Description | A description of the integration. | Required. | – | 
-
-<p align="center"><img src="/content/img/integration-apache-kafka.png" alt="Apache Kafka Integration with Orkes Conductor" width="60%" height="auto"/></p>
-
 5. (Optional) Toggle the **Active** button off if you don’t want to activate the integration instantly.
 6. Select **Save**.
 
@@ -137,9 +131,6 @@ Once the integration is configured, set access controls to manage which [applica
 2. Create a new group/application or select an existing one.
 3. In the **Permissions** section, select **+ Add Permission**.
 4. In the **Integration** tab, select the required message broker and toggle the necessary permissions.
-
-<p align="center"><img src="/content/img/rbac-apache-kafka.png" alt="Configuring RBAC for Apache Kafka Integration" width="70%" height="auto"/></p>
-
 The group or application can now access the message broker according to the configured permissions.
 
 ## Next steps

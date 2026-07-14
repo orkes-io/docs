@@ -45,9 +45,6 @@ To integrate Google Sheets with Orkes Conductor, retrieve the OAuth client ID an
 2. Select your project or create a new one.
 3. In the left navigation menu, go to **APIs & Services** > **Credentials**
 4. Select **+ Create credentials** > **OAuth client ID**.
-
-<p align="center"><img src="/content/img/oauth-client-id.png" alt="Getting OAuth Client credentials from Google Cloud Console." width="100%" height="auto"></img></p>
-
 5. Choose your application type as **Web application**, and enter a **Name**.
 6. In **Authorized redirect URIs**, select **+Add URI** and enter your redirect URI in the format `https://<YOUR-CONDUCTOR-CLUSTER-NAME>/integrations/oauth/callback`.
 7. Select **+ Create**.
@@ -91,9 +88,6 @@ After obtaining the credentials, add a Google Sheets integration to your Conduct
 | OAuth Client Secret | The OAuth client secret generated from [Step 1](/content/integrations/google-sheets#step-1-get-the-google-console-credentials). | Required.
 | Default Spreadsheet Id | The default spreadsheet ID to use. To get the spreadsheet ID, open the spreadsheet in Google Sheets. The ID is the string of characters at the end of the URL: `https://docs.google.com/spreadsheets/d/<YOUR-SPREADSHEET-ID>/`. | Optional. | 
 | Description | A description of the integration. | Required. | 
-
-<p align="center"><img src="/content/img/google-sheets-integration.png" alt="Google Sheets Integration with Orkes Conductor" width="60%" height="auto"></img></p>
-
 5. (Optional) Toggle the **Active** button off if you don’t want to activate the integration instantly.
 6. Select **Authorize**.
 
@@ -108,9 +102,6 @@ Once the integration is ready, this can be used directly within the workflows.
 1. Go to **Definitions** > **Workflow** from the left navigation menu on your Conductor cluster.
 2. Select **+ Define workflow**.
 3. In your workflow, select the (**+**) icon and select **Connected Apps**.
-
-<p align="center"><img src="/content/img/connected-apps.png" alt="Adding Google Sheets Integration in Conductor workflow" width="100%" height="auto"></img></p>
-
 4. In **Add Task** panel on the right, search for **Google Sheets**, and select the integration created in [Step 2](/content/integrations/google-sheets#step-2-add-an-integration-for-google-sheets).
 
 The following operations are available for use with this integration.

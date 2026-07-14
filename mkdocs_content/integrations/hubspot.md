@@ -98,9 +98,6 @@ After obtaining the credentials, add a HubSpot integration to your Conductor clu
 | Integration name | A name for the integration. | Required. | 
 | API Key | The Access Token copied in [Step 1](/content/integrations/hubspot#step-1-get-the-hubspot-credentials). | Required. | 
 | Description | A description of the integration. | Required. | 
-
-<p align="center"><img src="/content/img/hubspot-integration.png" alt="HubSpot Integration with Orkes Conductor" width="60%" height="auto"></img></p>
-
 5. (Optional) Toggle the **Active** button off if you don’t want to activate the integration instantly.
 6. Select **Save**.
 
@@ -115,9 +112,6 @@ Once the integration is ready, this can be used directly within the workflows.
 1. Go to **Definitions** > **Workflow** from the left navigation menu on your Conductor cluster.
 2. Select **+ Define workflow**.
 3. In your workflow, select the (**+**) icon and select **Connected Apps**.
-
-<p align="center"><img src="/content/img/connected-apps.png" alt="Adding HubSpot Integration in Conductor workflow" width="100%" height="auto"></img></p>
-
 4. In **Add Task** panel on the right, search for **HubSpot**, and select the integration created in [Step 2](/content/integrations/hubspot#step-2-add-an-integration-for-hubspot).
 
 The following operations are available for use with this integration.

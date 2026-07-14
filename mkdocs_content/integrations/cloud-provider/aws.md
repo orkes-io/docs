@@ -44,9 +44,6 @@ After obtaining the credentials, add an AWS integration to your Conductor cluste
 | Access key | The access key of the AWS account. | Required if the _Connection Type_ is chosen as _Access Key/Secret_. | 
 | Access secret | The access secret of the AWS account. | Required if the _Connection Type_ is chosen as _Access Key/Secret_. | 
 | Description | A description of your integration. | Required. | 
-
-<p align="center"><img src="/content/img/aws-integration.png" alt="AWS Integration with Orkes Conductor" width="60%" height="auto"></img></p>
-
 5. (Optional) Toggle the **Active** button off if you don’t want to activate the integration instantly.
 6. Select **Save**.
 
@@ -61,9 +58,6 @@ Once the integration is configured, set access controls to manage which [applica
 3. In the **Permissions** section, select **+ Add Permission**.
 4. In the **Integration** tab, select the required integration and toggle the necessary permissions.
 5. Select **Add Permissions**. 
-
-<p align="center"><img src="/content/img/rbac-aws-integration.png" alt="Add Permissions for Integrations" width="70%" height="auto"></img></p>
-
 The group or application can now access the provider according to the configured permissions.
 
 With the integration in place, you can now create workflows using the [List Files](/content/reference-docs/ai-tasks/list-files) task or the [Parse Document](/content/reference-docs/ai-tasks/parse-document) task.

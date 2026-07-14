@@ -45,9 +45,6 @@ After obtaining the credentials, add an AMQP integration to your Conductor clust
 | Port | The port number on the host where the message broker is running. The default ports are:<ul><li>5671 for amqps</li><li>5672 for amqp</li></ul> |
 | Virtual Host | The namespace that allows multiple messaging environments to coexist within a single broker. |
 | Description | A description of the integration. |
-
-<p align="center"><img src="/content/img/integration-amqp.png" alt="AMQP Integration with Orkes Conductor" width="50%" height="auto"/></p>
-
 5. (Optional) Toggle the **Active** button off if you don’t want to activate the integration instantly.
 6. Select **Save**.
 
@@ -61,9 +58,6 @@ Once the integration is configured, set access controls to manage which [applica
 2. Create a new group/application or select an existing one.
 3. In the **Permissions** section, select **+ Add Permission**.
 4. In the **Integration** tab, select the required message broker and toggle the necessary permissions.
-
-<p align="center"><img src="/content/img/rbac-amqp.png" alt="Configuring RBAC for AMQP Integration" width="70%" height="auto"/></p>
-
 The group or application can now access the message broker according to the configured permissions.
 
 ## Next steps

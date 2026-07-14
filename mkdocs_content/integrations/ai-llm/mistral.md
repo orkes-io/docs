@@ -23,9 +23,6 @@ To integrate Mistral with Orkes Conductor, retrieve the API key and endpoint fro
 
 1. Sign in to the [Mistral console](https://console.mistral.ai/).
 2. Go to [**API Keys**](https://console.mistral.ai/api-keys) > **Create new key**.
-
-<p align="center"><img src="/content/img/generating-api-keys-from-mistral.png" alt="API key creation from Mistral" width="100%" height="auto"></img></p>
-
 3. Enter a **Key name**.
 4. (Optional) Set an **Expiration** for the key.
 5. Select **Create new key**.
@@ -50,9 +47,6 @@ After obtaining the credentials, add a Mistral integration to your Conductor clu
 | API Key | The API key copied previously from the Mistral console. |
 | API Endpoint | The default API endpoint for Mistral, which is https://api.mistral.ai/v1. |
 | Description | A description of the integration. |
-
-<p align="center"><img src="/content/img/create-new-mistral-integration.png" alt="Mistral Integration with Orkes Conductor" width="70%" height="auto"></img></p>
-
 5. (Optional) Toggle the **Active** button off if you don’t want to activate the integration instantly.
 6. Select **Save**.
 
@@ -63,15 +57,9 @@ Once you’ve integrated Mistral, the next step is to configure specific models.
 **To add a model to the Mistral integration:**
 
 1. Go to **Integrations** and select the **+** button next to the integration created.
-
-<p align="center"><img src="/content/img/create-new-mistral-integration-model-from-integrations-page.png" alt="Create Mistral Integration Model from Listed Integrations" width="100%" height="auto"></img></p>
-
 2. Select **+ New model.**
 3. Enter the **Model name**. The name must exactly match the Mistral model name. For a complete list, see the [Mistral documentation](https://docs.mistral.ai/getting-started/models).
 4. Provide a **Description**. 
-
-<p align="center"><img src="/content/img/create-new-mistral-integration-model.png" alt="Create Mistral Integration Model" width="70%" height="auto"></img></p>
-
 5. (Optional) Toggle the **Active** button off if you don’t want to activate the model instantly.
 6. Select **Save**.
 
@@ -88,9 +76,6 @@ Once the integration is configured, set access controls to manage which [applica
 3. In the **Permissions** section, select **+ Add Permission**.
 4. In the **Integration** tab, select the required AI models and toggle the necessary permissions.
 5. Select **Add Permissions**. 
-
-<p align="center"><img src="/content/img/rbac-mistral-integration.png" alt="Add Permissions for Integrations" width="70%" height="auto"></img></p>
-
 The group or application can now access the AI model according to the configured permissions.
 
 With the integration in place, you can now create workflows using [AI/LLM tasks](https://orkes.io/content/category/reference-docs/ai-tasks).
