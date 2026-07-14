@@ -1,9 +1,9 @@
 ---
 title: "Remote Services API Reference"
-description: "Use the Orkes Conductor remote services API to remote Services API Reference. Includes endpoint details, authentication, parameters, request bodies, response."
+description: "Use the Orkes Conductor remote services API to remote Services API Reference. Includes endpoint details, authentication, parameters, request bodies."
 ---
 # Remote Services API Reference
-Use the Orkes Conductor remote services API to remote Services API Reference. Includes endpoint details, authentication, parameters, request bodies, response.
+Use the Orkes Conductor remote services API to remote Services API Reference. Includes endpoint details, authentication, parameters, request bodies.
 
 Use this section when you need documentation about remote services api reference in Orkes Conductor.
 

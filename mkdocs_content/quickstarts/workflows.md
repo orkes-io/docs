@@ -1,6 +1,6 @@
 ---
 title: "Workflow Concepts"
-description: "Understand workflows in Conductor — JSON workflow definition, dynamic workflows, distributed workflow execution, and long-running async workflows that power."
+description: "Understand workflows in Conductor — JSON workflow definition, dynamic workflows, distributed workflow execution."
 canonical_route: "quickstarts/workflows"
 updated: "2026-05-14"
 keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
@@ -27,7 +27,7 @@ Conductor workflows stand apart from traditional orchestration approaches in sev
 - **JSON-native definitions** — Every workflow is a JSON workflow definition you can store in version control, diff across releases, and generate programmatically. No compiled DSL or proprietary format required.
 - **Dynamic workflows** — Workflows can be created and modified at runtime as code-first or JSON definitions, enabling use cases where the task graph is not known ahead of time (for example, when the number of parallel branches depends on an API response).
 - **Versioned** — Each workflow definition carries an explicit version number so you can roll out changes incrementally and run multiple versions side by side.
-- **Language-agnostic** — Workers that execute tasks can be written in any language — Java, Python, Go, JavaScript, C#, or Clojure — and deployed anywhere. The workflow definition itself is decoupled from implementation.
+- **Language-agnostic** — Workers that execute tasks can be written in any language — Java, Python, Go, JavaScript, C#, Ruby, or Rust — and deployed anywhere. The workflow definition itself is decoupled from implementation.
 
 
 ## Workflow definition
@@ -127,11 +127,11 @@ Each workflow execution transitions through a set of well-defined states:
 | State | Description |
 |---|---|
 | **RUNNING** | The workflow is actively executing tasks. |
-| **COMPLETED** | All tasks finished successfully and the workflow reached its terminal state. |
-| **FAILED** | One or more tasks failed and the workflow could not recover. If a `failureWorkflow` is configured, it will be triggered. |
-| **TIMED_OUT** | The workflow exceeded its configured `timeoutSeconds` and the `timeoutPolicy` was set to `TIME_OUT_WF`. |
-| **TERMINATED** | The workflow was explicitly stopped by an API call or system action. |
-| **PAUSED** | The workflow has been paused and will not schedule new tasks until resumed. |
+| **COMPLETED** | Terminal status where all tasks in the workflow have completed successfully. |
+| **FAILED** | Terminal status where one or more tasks failed and the workflow could not recover. If a [`failureWorkflow`](/content/error-handling#workflow-compensation-flows) is configured, it will be triggered. You can [retry the workflow execution from the failed task](/content/developer-guides/debugging-workflows#recovering-from-failures). |
+| **TIMED_OUT** | Terminal status where the workflow's configured `timeoutSeconds` has elapsed, or a task with `timeoutPolicy: TIME_OUT_WF` has timed out. |
+| **TERMINATED** | Terminal status where an incomplete workflow was explicitly stopped by a user, event, or another workflow. |
+| **PAUSED** | The workflow is paused by a user or an external event and is awaiting a manual action to resume. |
 
 The following diagram illustrates how a workflow transitions between states:
 
@@ -145,9 +145,10 @@ stateDiagram-v2
     RUNNING --> PAUSED : pause requested
     PAUSED --> RUNNING : resume requested
     PAUSED --> TERMINATED : API termination
-    FAILED --> RUNNING : retry
-    TIMED_OUT --> RUNNING : retry
+    FAILED --> RUNNING : retry / restart
+    TIMED_OUT --> RUNNING : retry / restart
     TERMINATED --> RUNNING : restart (if restartable)
+    COMPLETED --> RUNNING : restart (if restartable)
     COMPLETED --> [*]
     FAILED --> [*]
     TIMED_OUT --> [*]

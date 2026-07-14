@@ -1,6 +1,6 @@
 ---
 title: "JDBC Task"
-description: "Configure JDBC tasks in Conductor to execute SQL queries and updates against relational databases. Supports SELECT, UPDATE, and parameterized queries with."
+description: "Learn how the JDBC task executes SQL queries and manages data in relational databases in Orkes Conductor."
 canonical_route: "reference-docs/system-tasks/jdbc"
 updated: "2026-05-14"
 keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow tasks, workflow workers, task queues"
@@ -8,261 +8,167 @@ keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration
 
 # JDBC Task
 
-```json
-"type" : "JDBC"
-```
+The JDBC task is used to execute or store information in SQL databases. It enables workflows to interact with SQL databases, allowing for data retrieval and updates based on specified SQL queries.
 
-The JDBC task (`JDBC`) executes SQL statements against relational databases. It supports SELECT queries, UPDATE/INSERT/DELETE statements, parameterized queries, and transaction management with automatic rollback on failure.
-
-Multiple named database connections can be configured, allowing workflows to interact with different databases (MySQL, PostgreSQL, Oracle, etc.) within the same workflow.
+A JDBC task evaluates SQL statements and parameters and executes SQL operations such as SELECT, INSERT, UPDATE, or DELETE. Based on the defined SQL statements and parameters, the appropriate database operations are carried out. 
 
 ## Task parameters
 
-| Parameter          | Type         | Description                                       | Required / Optional  |
-| ------------------ | ------------ | ------------------------------------------------- | -------------------- |
-| connectionId       | String       | The name of the configured JDBC instance to use. Must match a name from `conductor.jdbc.instances` configuration. | Required (unless `integrationName` is used). |
-| integrationName    | String       | The name of a managed integration (multi-tenant). Used instead of `connectionId` for platform-managed connections. | Optional. |
-| type               | String       | The SQL operation type. Supported: `SELECT`, `UPDATE`. | Required. |
-| statement          | String       | The SQL statement to execute. Use `?` for parameterized queries. | Required. |
-| parameters         | List[String] | Ordered list of parameter values for `?` placeholders in the statement. | Optional. |
-| expectedUpdateCount | Integer     | For `UPDATE` type only. If specified, the transaction is rolled back when the actual update count doesn't match. | Optional. |
-| schemaName         | String       | Database schema name (reserved for future use). | Optional. |
+Configure these parameters for the JDBC task.
 
-## Configuration JSON
+| Parameter                                | Description                                                                                                                                                                                                                                                                           | Required/ Optional                                           |
+| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------ | 
+| inputParameters. **integrationName**     | The relational database integration to use with the JDBC task.<br/><br/>If your database isn't configured on your Conductor cluster, go to the **Integrations** tab and configure it under **[RDBMS > Relational Database](/content/integrations/rdbms/relational-database)**. | Required.                                                    |
+| inputParameters. **type**                | The SQL statement type. Supported values:<ul><li>**SELECT**—Used to retrieve data from a database.</li><li>**INSERT/UPDATE/DELETE**—Used to modify or delete existing data from the database.</li></ul>                                                                             | Required.                                                    |
+| inputParameters. **expectedOutputCount** | The number of rows to be inserted/updated/deleted from the database.	                                                                                                                                                                                                               | Required if the statement type is chosen as ‘INSERT/UPDATE/DELETE’. | 
+| inputParameters. **statement**           | The SQL statement to retrieve data from the SQL database.                                                                                                                                                                                                                             | Required.                                                    |
+| inputParameters. **parameters**          | The query parameters to be bound by the SQL statement. It can be a string, number, boolean, or null.                                                                                                                                                                                  | Required.                                                    |
 
-### SELECT query
+The following are generic configuration parameters that can be applied to the task and are not specific to the JDBC task.
+
+<details>
+<summary>Caching parameters</summary>
+
+You can cache the task outputs using the following parameters. Refer to [Caching Task Outputs](/content/faqs/task-cache-output) for a full guide.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| cacheConfig.**ttlInSecond** | The time to live in seconds, which is the duration for the output to be cached. | Required if using *cacheConfig*. |
+| cacheConfig.**key** | The cache key is a unique identifier for the cached output and must be constructed exclusively from the task’s input parameters.<br/>It can be a string concatenation that contains the task’s input keys, such as `${uri}-${method}` or `re_${uri}_${method}`. | Required if using *cacheConfig*. |
+
+</details>
+
+<details>
+<summary>Other generic parameters</summary>
+
+Here are other parameters for configuring the task behavior.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| optional | Whether the task is optional. <br/><br/>If set to`true`, any task failure is ignored, and the workflow continues with the task status updated to `COMPLETED_WITH_ERRORS`. However, the task must reach a terminal state. If the task remains incomplete, the workflow waits until it reaches a terminal state before proceeding. | Optional. | 
+
+</details>
+
+## Task configuration
+
+This is the task configuration for a JDBC task.
 
 ```json
 {
-  "name": "query_users",
-  "taskReferenceName": "query_users_ref",
-  "type": "JDBC",
-  "inputParameters": {
-    "connectionId": "mysql-prod",
-    "type": "SELECT",
-    "statement": "SELECT id, name, email FROM users WHERE status = ?",
-    "parameters": ["active"]
-  }
+     "name": "jdbc",
+     "taskReferenceName": "jdbc_ref",
+     "inputParameters": {
+       "integrationName": "db-name",
+       "statement": "SELECT * FROM tableName WHERE id=?",
+       "parameters": [
+         "${workflow.input.text}"
+       ],
+       "type": "SELECT"
+     },
+     "type": "JDBC"
 }
 ```
 
-### UPDATE with expected count
+## Task output
+
+The JDBC task will return the following parameters.
+
+| Parameter | Description                                 |
+| --------- | ------------------------------------------- |
+| result    | An array of data queried from the database. |
+
+## Adding a JDBC task in UI
+
+**To add a JDBC task:**
+
+1. In your workflow, select the (**+**) icon and add a **JDBC** task.
+2. In **Integration name**, select the integration to be used.
+3. Choose the **Statement** as SELECT or INSERT/UPDATE/DELETE.
+4. Enter the **Expected update count** if the statement type is INSERT/UPDATE/DELETE.
+5. Enter the **Statement** to be queried and the **Query parameters**.
+
+<center><p><img src="/content/img/jdbc-worker-task.png " alt="Adding JDBC task" width="80%" height="auto"/></p></center>
+
+## Examples
+
+Here are some examples for using the JDBC task.
+
+<details>
+<summary>Retrieving data</summary>
+
+In this example, the JDBC task is used to retrieve customer data from a database called *myApp*. The Select SQL statement type is used, along with the statement “SELECT \* FROM customers”.
 
 ```json
 {
-  "name": "update_order_status",
-  "taskReferenceName": "update_order_ref",
-  "type": "JDBC",
+  "name": "jdbc",
+  "taskReferenceName": "jdbc_ref",
   "inputParameters": {
-    "connectionId": "mysql-prod",
-    "type": "UPDATE",
-    "statement": "UPDATE orders SET status = ? WHERE order_id = ?",
-    "parameters": [
-      "shipped",
-      "${workflow.input.orderId}"
-    ],
-    "expectedUpdateCount": 1
-  }
+    "integrationName": "myApp",
+    "statement": "SELECT * FROM customers",
+    "parameters": [],
+    "type": "SELECT"
+  },
+  "type": "JDBC"
 }
 ```
 
-## Output
-
-### SELECT output
-
-| Name   | Type | Description |
-| ------ | ---- | ----------- |
-| result | List[Map[String, Any]] | List of rows, where each row is a map of column names to values. |
-
-Example output:
+Upon completion, the JDBC task will return the customer data in the `result` array.
 
 ```json
 {
   "result": [
-    {"id": 1, "name": "Alice", "email": "alice@example.com"},
-    {"id": 2, "name": "Bob", "email": "bob@example.com"}
+    {
+      "name": "c4ca4238a0",
+      "id": 1,
+      "value": 0.8000853
+    },
+    {
+      "name": "c81e728d9d",
+      "id": 2,
+      "value": 0.5992253
+    },
+    {
+      "name": "eccbc87e4b",
+      "id": 3,
+      "value": 0.50512415
+    },
+    {
+      "name": "a87ff679a2",
+      "id": 4,
+      "value": 0.3834899
+    },
+    {
+      "name": "e4da3b7fbb",
+      "id": 5,
+      "value": 0.38542742
+    },
+    {
+      "name": "1679091c5a",
+      "id": 6,
+      "value": 0.63664705
+    },
+    {
+      "name": "8f14e45fce",
+      "id": 7,
+      "value": 0.6443781
+    },
+    {
+      "name": "c9f0f895fb",
+      "id": 8,
+      "value": 0.81284344
+    },
+    {
+      "name": "45c48cce2e",
+      "id": 9,
+      "value": 0.31227082
+    },
+    {
+      "name": "d3d9446802",
+      "id": 10,
+      "value": 0.6765504
+    }
   ]
 }
 ```
 
-### UPDATE output
-
-| Name   | Type | Description |
-| ------ | ---- | ----------- |
-| update_count | Integer | The number of rows affected by the statement. |
-
-Example output:
-
-```json
-{
-  "update_count": 1
-}
-```
-
-## Transaction behavior
-
-- **SELECT** statements run with auto-commit enabled (default JDBC behavior).
-- **UPDATE** statements run with auto-commit disabled. The transaction is committed on success.
-- If `expectedUpdateCount` is set and the actual count doesn't match, the transaction is **automatically rolled back** and the task fails.
-- If a SQL exception occurs during an UPDATE, the transaction is **automatically rolled back**.
-
-## Connection configuration
-
-JDBC connections are configured using named instances under `conductor.jdbc.instances`.
-
-### Quick setup
-
-```yaml
-conductor:
-  jdbc:
-    instances:
-      - name: "mysql-prod"
-        connection:
-          datasourceURL: "jdbc:mysql://prod-db:3306/myapp"
-          jdbcDriver: "com.mysql.cj.jdbc.Driver"
-          user: "conductor"
-          password: "secret"
-          maximumPoolSize: 20
-
-      - name: "postgres-analytics"
-        connection:
-          datasourceURL: "jdbc:postgresql://analytics-db:5432/warehouse"
-          user: "analyst"
-          password: "secret"
-```
-
-### Connection pool options
-
-| Property | Type | Default | Description |
-|----------|------|---------|-------------|
-| `datasourceURL` | String | Required | JDBC connection URL |
-| `jdbcDriver` | String | Auto-detected | JDBC driver class name |
-| `user` | String | Optional | Database username |
-| `password` | String | Optional | Database password |
-| `maximumPoolSize` | Integer | 32 | Maximum connections in the pool |
-| `minimumIdle` | Integer | 2 | Minimum idle connections |
-| `idleTimeoutMs` | Long | 30000 | Idle connection timeout (ms) |
-| `connectionTimeout` | Long | 30000 | Connection acquisition timeout (ms) |
-| `leakDetectionThreshold` | Long | 60000 | Leak detection threshold (ms) |
-| `maxLifetime` | Long | 1800000 | Maximum connection lifetime (ms) |
-
-## Execution
-
-The JDBC task completes as follows:
-
-- **COMPLETED**: The SQL statement executed successfully. For SELECT, results are in `output.result`. For UPDATE, the count is in `output.update_count`.
-- **FAILED**: The task fails if:
-    - The `connectionId` doesn't match any configured instance.
-    - A SQL exception occurs (syntax error, constraint violation, connection timeout).
-    - The `expectedUpdateCount` doesn't match the actual update count (UPDATE only, triggers rollback).
-
-## Examples
-
-### Parameterized SELECT
-
-```json
-{
-  "name": "find_active_orders",
-  "taskReferenceName": "find_orders_ref",
-  "type": "JDBC",
-  "inputParameters": {
-    "connectionId": "postgres-analytics",
-    "type": "SELECT",
-    "statement": "SELECT order_id, total, created_at FROM orders WHERE customer_id = ? AND status = ? ORDER BY created_at DESC",
-    "parameters": [
-      "${workflow.input.customerId}",
-      "active"
-    ]
-  }
-}
-```
-
-### INSERT with expected count
-
-```json
-{
-  "name": "create_audit_record",
-  "taskReferenceName": "audit_ref",
-  "type": "JDBC",
-  "inputParameters": {
-    "connectionId": "mysql-prod",
-    "type": "UPDATE",
-    "statement": "INSERT INTO audit_log (action, user_id, details, created_at) VALUES (?, ?, ?, NOW())",
-    "parameters": [
-      "${workflow.input.action}",
-      "${workflow.input.userId}",
-      "${workflow.input.details}"
-    ],
-    "expectedUpdateCount": 1
-  }
-}
-```
-
-### Chaining SELECT and UPDATE
-
-Use the output of a SELECT task as input to an UPDATE task:
-
-```json
-[
-  {
-    "name": "get_order",
-    "taskReferenceName": "get_order_ref",
-    "type": "JDBC",
-    "inputParameters": {
-      "connectionId": "mysql-prod",
-      "type": "SELECT",
-      "statement": "SELECT id, total FROM orders WHERE order_id = ?",
-      "parameters": ["${workflow.input.orderId}"]
-    }
-  },
-  {
-    "name": "apply_discount",
-    "taskReferenceName": "apply_discount_ref",
-    "type": "JDBC",
-    "inputParameters": {
-      "connectionId": "mysql-prod",
-      "type": "UPDATE",
-      "statement": "UPDATE orders SET total = total * 0.9 WHERE order_id = ? AND total > 0",
-      "parameters": ["${workflow.input.orderId}"],
-      "expectedUpdateCount": 1
-    }
-  }
-]
-```
-
-### Using with different databases in the same workflow
-
-```json
-[
-  {
-    "name": "read_from_mysql",
-    "taskReferenceName": "mysql_read_ref",
-    "type": "JDBC",
-    "inputParameters": {
-      "connectionId": "mysql-prod",
-      "type": "SELECT",
-      "statement": "SELECT user_id, email FROM users WHERE user_id = ?",
-      "parameters": ["${workflow.input.userId}"]
-    }
-  },
-  {
-    "name": "write_to_postgres",
-    "taskReferenceName": "pg_write_ref",
-    "type": "JDBC",
-    "inputParameters": {
-      "connectionId": "postgres-analytics",
-      "type": "UPDATE",
-      "statement": "INSERT INTO user_activity (user_id, email, event_type, event_time) VALUES (?, ?, ?, NOW())",
-      "parameters": [
-        "${workflow.input.userId}",
-        "${mysql_read_ref.output.result[0].email}",
-        "workflow_triggered"
-      ],
-      "expectedUpdateCount": 1
-    }
-  }
-]
-```
-
-!!! warning "SQL injection"
-    Always use parameterized queries (`?` placeholders with the `parameters` list). Never concatenate user input directly into SQL statements.
+</details>

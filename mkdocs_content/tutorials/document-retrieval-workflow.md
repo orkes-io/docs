@@ -1,6 +1,6 @@
 ---
 title: "Build a Document Retrieval Workflow"
-description: "Learn how to build a workflow that indexes documents, retrieves relevant sections with semantic search, and answers questions using retrieved content in Orkes."
+description: "Learn how to build a workflow that indexes documents, retrieves relevant sections with semantic search."
 canonical_route: "tutorials/document-retrieval-workflow"
 updated: "2026-05-14"
 keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow cookbook, workflow recipes, Conductor examples"

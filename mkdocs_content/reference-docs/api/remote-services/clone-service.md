@@ -1,6 +1,6 @@
 ---
 title: "Clone Service"
-description: "Use the Orkes Conductor remote services API to clone Service. Includes endpoint details, authentication, parameters, request bodies, response behavior, and."
+description: "Use the Orkes Conductor remote services API to clone Service. Includes endpoint details, authentication, parameters, request bodies, response behavior."
 canonical_route: "reference-docs/api/remote-services/clone-service"
 updated: "2026-05-14"
 keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration"
@@ -20,7 +20,7 @@ Use this remote services endpoint to clone Service. It is intended for automatio
 
 
 !!! info "Available since"
-    - v5.4.0 and later
+    - v5.4.2 and later
 
 **Endpoint**: `POST /api/registry/service/{name}/clone`
 

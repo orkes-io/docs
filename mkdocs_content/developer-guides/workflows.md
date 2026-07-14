@@ -35,18 +35,18 @@ Keep domain logic in workers or services when it is complex, private, or heavily
 
 | Building block | What it does | Related guide |
 | -------------- | ------------ | ------------- |
-| Inputs | Defines the request data the workflow expects | [Executing Workflows](/content/developer-guides/running-workflows) |
+| Inputs | Defines the request data the workflow expects | [Wiring Parameters](/content/developer-guides/passing-inputs-to-task-in-conductor) |
 | Tasks | Performs work or controls execution | [Tasks in Workflows](/content/developer-guides/tasks) |
 | Workers | Runs custom code outside Conductor for SIMPLE tasks | [Writing Workers](/content/developer-guides/using-workers) |
 | Operators | Branches, loops, joins, waits, starts sub-workflows, and terminates flows | [Operators Reference](/content/category/reference-docs/operators) |
-| Outputs | Shapes the final workflow result | [Workflow Definition Reference](/content/reference-docs/workflow-definition) |
+| Outputs | Shapes the final workflow result | [Wiring Parameters](/content/developer-guides/passing-inputs-to-task-in-conductor) |
 | Versions | Controls which definition future executions use | [Versioning Workflows](/content/developer-guides/versioning-workflows) |
 | Triggers | Starts or resumes workflows from APIs, schedules, events, webhooks, or signals | [Executing Workflows](/content/developer-guides/running-workflows) |
 | Controls | Adds retries, timeouts, rate limits, schemas, masking, and permissions | [Handling Failures](/content/error-handling) |
 
 ## Workflow definition
 
-A workflow definition is the portable execution format Conductor stores and runs. You only need to understand the shape here; use the [Workflow Definition Reference](/content/reference-docs/workflow-definition) for the full schema.
+A workflow definition is the portable execution format Conductor stores and runs. You only need to understand the shape here; use the [Workflow Definition Reference](/content/reference-docs/api/metadata/creating-workflow-definition) for the full schema.
 
 ```json
 {
@@ -102,4 +102,4 @@ Agentic workflows use LLMs, tools, memory, retrieval, human review, and determin
 - [Tasks in Workflows](/content/developer-guides/tasks)
 - [Versioning Workflows](/content/developer-guides/versioning-workflows)
 - [Executing Workflows](/content/developer-guides/running-workflows)
-- [Workflow Definition Reference](/content/reference-docs/workflow-definition)
+- [Workflow Definition Reference](/content/reference-docs/api/metadata/creating-workflow-definition)

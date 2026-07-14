@@ -1,60 +1,129 @@
 ---
 title: "Start Workflow"
-description: "Start Workflow Task — asynchronously launch a new Conductor workflow execution from within a running workflow."
+description: "Learn how the Start Workflow task triggers another workflow execution from the current workflow in Orkes Conductor."
 canonical_route: "reference-docs/operators/start-workflow"
 updated: "2026-05-14"
 keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
 ---
 
 # Start Workflow
-```json
-"type" : "START_WORKFLOW"
-```
 
-The Start Workflow task (`START_WORKFLOW`) starts another workflow from the current workflow. Unlike the [Sub Workflow](/content/reference-docs/operators/sub-workflow) task, the workflow triggered by the Start Workflow task will execute asynchronously. That means the current workflow proceeds to its next task without waiting for the started workflow to complete.
+The Start Workflow task starts another workflow from the current workflow. Unlike the [Sub Workflow](/content/reference-docs/operators/sub-workflow) task, the workflow triggered by the Start Workflow task executes asynchronously; the current workflow proceeds to its next task without waiting for the started workflow to complete.
 
-A Start Workflow task is marked as COMPLETED when the requested workflow enters the RUNNING state, regardless of its final state.
+A Start Workflow task is considered successful when the requested workflow enters the RUNNING state, regardless of the final status of the workflow that was started.
 
 ## Task parameters
 
-Use these parameters inside `inputParameters` in the Start Workflow task configuration.
+Configure these parameters for the Start Workflow task.
 
-| Parameter          | Type                | Description                                       | Required / Optional  |
-| ------------------ | ------------------- | ------------------------------------------------- | -------------------- |
-| startWorkflow | Map[String, Any] | A map that includes the requested workflow’s configuration, such as the name and version. Refer to the [Start Workflow API](/content/reference-docs/api/workflow/start-workflow-execution) for what to include in this parameter. | Required. |
+| Parameter                                               | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      | Required/ Optional                    |
+| ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------- |
+| inputParameters. **startWorkflow**                      | A map that includes the requested workflow’s configuration, such as the name and version.                                                                                                                                                                                                                                                                                                                                                                                                        | Required.                             |
+| inputParameters. startWorkflow. **name**                | The name of the workflow to be executed. This workflow should have a pre-existing definition in Conductor.                                                                                                                                                                                                                                                                                                                                                                                       | Required.                             |
+| inputParameters. startWorkflow. **version**             | The version of the workflow to be executed. If unspecified, the latest version will be used.                                                                                                                                                                                                                                                                                                                                                                                                     | Optional.                             |
+| inputParameters. startWorkflow. **correlationId**       | A unique identifier for the workflow execution, used to correlate the current workflow instance with other workflows.                                                                                                                                                                                                                                                                                                                                                                            | Optional.                             |
+| inputParameters. startWorkflow. **idempotencyKey**      | A unique, user-generated key to prevent duplicate workflow executions. Idempotency data is retained for the life of the workflow execution.                                                                                                                                                                                                                                                                                                                                                      | Optional.                             |
+| inputParameters. startWorkflow. **idempotencyStrategy** | The idempotency strategy for handling duplicate requests. Supported values:<ul><li>`RETURN_EXISTING`—Return the `workflowId` of the workflow instance with the same idempotency key.</li> <li>`FAIL`—Start a new workflow instance only if there are no workflow executions with the same idempotency key.</li> <li>`FAIL_ON_RUNNING`—Start a new workflow instance only if there are no RUNNING or PAUSED workflows with the same idempotency key. Completed workflows can run again.</li></ul> | Required if `idempotencyKey` is used. |
+| inputParameters. startWorkflow. **input** | Defines the input parameters for the workflow being started. These values are passed directly to the invoked workflow. | Optional. | 
+
+The following are generic configuration parameters that can be applied to the task and are not specific to the Start Workflow task.
+
+<details>
+<summary>Other generic parameters</summary>
+
+Here are other parameters for configuring the task behavior.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| optional | Whether the task is optional. <br/><br/>If set to`true`, any task failure is ignored, and the workflow continues with the task status updated to `COMPLETED_WITH_ERRORS`. However, the task must reach a terminal state. If the task remains incomplete, the workflow waits until it reaches a terminal state before proceeding. | Optional. | 
+
+</details>
 
 ## Task configuration
-Here is the task configuration for a Start Workflow task.​
+
+This is the task configuration for a Start Workflow task.​
 
 ```json
 {
-  "name": "start_workflow",
-  "taskReferenceName": "start_workflow_ref",
-  "inputParameters": {
-    "startWorkflow": {
-      "name": "someName",
-      "input": {
-        "someParameter": "someValue",
-        "anotherParameter": "anotherValue"
-      },
-      "version": 1,
-      "correlationId": ""
-    }
-  },
-  "type": "START_WORKFLOW"
+     "name": "start_workflow",
+     "taskReferenceName": "start_workflow_ref",
+     "inputParameters": {
+       "startWorkflow": {
+         "name": "<WORKFLOW-NAME>",
+         "input": {
+           "someKey": "someValue"
+         },
+         "correlationId": "xyz",
+         "idempotencyKey": "123",
+         "idempotencyStrategy": "RETURN_EXISTING"
+       }
+     },
+     "type": "START_WORKFLOW"
 }
 ```
 
-## Output
-
+## Task output
 
 The Start Workflow task will return the following parameters.
 
-| Name             | Type         | Description                                                   |
-| ---------------- | ------------ | ------------------------------------------------------------- |
-| workflowId | String | The workflow execution ID of the started workflow. |
+| Parameter  | Description                                        |
+| ---------- | -------------------------------------------------- |
+| workflowId | The workflow execution ID of the started workflow execution. |
 
+!!! note
+    The Start Workflow task does not return the output of the started workflow. Because the task executes asynchronously, the parent workflow continues to completion even if the started workflow is still running.
 
-## Limitations
+## Adding a Start Workflow task in UI
 
-Because the Start Workflow task will neither wait for the completion of the started workflow nor pass back its output, it is not possible to access the output of the started workflow from the current workflow. If required, you can use the [Sub Workflow](/content/reference-docs/operators/sub-workflow) task instead.
+**To add a Start Workflow task:**
+
+1. In your workflow, select the **(+)** icon and add a **Start Workflow** task.
+2. Enter the **Workflow name** and **Version**. If the version is unspecified, the latest version will be used. Once selected, the workflow’s input parameters will automatically appear if there are any pre-defined ones.
+3. (Optional) Enter the **Correlation id**.
+4. (Optional) Enter the **Idempotency key** and select the **Idempotency strategy**.
+5. (Optional) Add any additional **Input parameters** for the workflow.
+
+<p><img src="/content/img/ui-guide-start-workflow.png" alt="Screenshot of Start Workflow Task in Orkes Conductor"/></p>
+
+## Examples
+
+Here are some examples for using the Start Workflow task.
+
+<details>
+<summary>Using the Start Workflow task in a workflow</summary>
+<p>
+
+The following example shows how to configure a workflow that starts another workflow.
+
+```json
+{
+ "name": "sample_start_workflow",
+ "description": "Sample Workflow to start a new workflow.",
+ "version": 1,
+ "tasks": [
+   {
+     "name": "start_workflow",
+     "taskReferenceName": "start_workflow_ref",
+     "inputParameters": {
+       "startWorkflow": {
+         "name": "http",
+         "version": 1
+       }
+     },
+     "type": "START_WORKFLOW"
+   }
+ ],
+ "schemaVersion": 2
+}
+```
+
+This configuration starts a workflow named *http* with version 1.
+
+When the workflow runs, the Start Workflow task returns the execution ID of the started workflow. You can view the started workflow by selecting the Start Workflow task in the parent workflow and navigating to the **Summary** tab.
+
+<p align="center"><img src="/content/img/start-workflow-output-in-conductor.png" alt="Completed start workflow type" width="100%" height="auto" /></p>
+
+Even if the started workflow has not completed, the parent workflow continues running to completion.
+
+</p>
+</details>

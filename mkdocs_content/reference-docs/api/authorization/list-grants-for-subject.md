@@ -20,7 +20,7 @@ Use this Conductor endpoint to list Grants for a Subject. It is intended for aut
 
 
 !!! info "Available since"
-    - v5.4.0 and later
+    - v5.4.2 and later
 
 **Endpoint**: `GET /api/auth/subjects/{subjectType}/{subjectId}/grants`
 

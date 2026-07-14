@@ -1,6 +1,6 @@
 ---
 title: "LLM orchestration"
-description: "Native LLM orchestration with Conductor — supported LLM providers, vector database integration for RAG pipelines, and multimodal content generation tasks."
+description: "Native LLM orchestration with Conductor - supported LLM providers and vector database integration for RAG pipelines."
 canonical_route: "ai-orchestration/llm-orchestration"
 updated: "2026-05-14"
 keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, AI orchestration, LLM orchestration, MCP gateway, agent workflows"
@@ -8,112 +8,42 @@ keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration
 
 # LLM orchestration
 
-Conductor provides native system tasks for LLM orchestration and integration. No external frameworks or custom workers required — configure a provider and use it in any workflow. Each provider supports function calling via MCP tool integration.
+Orkes Conductor provides native system tasks for LLM orchestration and integration. No external frameworks or custom workers required - configure a provider on your Orkes Conductor cluster and use it in any workflow.
 
 ## Supported LLM providers
 
 | Provider | Chat Completion | Text Completion | Embeddings |
 |---|---|---|---|
-| Anthropic (Claude) | ✓ | ✓ | — |
-| OpenAI (GPT) | ✓ | ✓ | ✓ |
+| Anthropic Claude | ✓ | ✓ | - |
+| AWS Bedrock | ✓ | ✓ | ✓ (Titan models only) |
 | Azure OpenAI | ✓ | ✓ | ✓ |
-| Google Gemini | ✓ | ✓ | ✓ |
-| AWS Bedrock | ✓ | ✓ | ✓ |
-| Mistral | ✓ | ✓ | ✓ |
+| Google Gemini AI | ✓ | ✓ | - |
+| Google Vertex AI | ✓ | ✓ | ✓ |
 | Cohere | ✓ | ✓ | ✓ |
-| HuggingFace | ✓ | ✓ | ✓ |
+| Grok (xAI) | ✓ | ✓ | - |
+| HuggingFace | ✓ | ✓ | - |
+| Mistral | ✓ | ✓ | ✓ |
 | Ollama | ✓ | ✓ | ✓ |
-| Perplexity | ✓ | — | — |
-| Grok (xAI) | ✓ | ✓ | — |
-| StabilityAI | — | — | — |
+| OpenAI | ✓ | ✓ | ✓ |
+| Perplexity | ✓ | ✓ | - |
 
-No other open source workflow engine provides native LLM orchestration at this breadth. Each provider is a configuration — switch models by changing a parameter, not your code.
-
-
-## Built-in tools & advanced capabilities
-
-Conductor supports provider-native tools that run on the provider's infrastructure — no MCP server or custom worker needed. Enable them with a single parameter in the `LLM_CHAT_COMPLETE` task.
-
-| Capability | Parameter | OpenAI | Anthropic | Google Gemini |
-|---|---|---|---|---|
-| Web Search | `webSearch: true` | ✓ | ✓ | ✓ |
-| Code Execution | `codeInterpreter: true` | ✓ (code_interpreter) | ✓ (code_execution) | ✓ (code_execution) |
-| File Search | `fileSearchVectorStoreIds: [...]` | ✓ | — | — |
-| Extended Thinking | `thinkingTokenLimit: N` | — | ✓ | ✓ |
-| Reasoning Effort | `reasoningEffort: "high"` | ✓ | — | — |
-| Google Search | `googleSearchRetrieval: true` | — | — | ✓ |
-| Custom Functions | `tools: [...]` | ✓ | ✓ | ✓ |
-
-### Web search
-
-The LLM can search the web for real-time information during chat completion. Enable it with `"webSearch": true`:
-
-```json
-{
-  "type": "LLM_CHAT_COMPLETE",
-  "inputParameters": {
-    "llmProvider": "openai",
-    "model": "gpt-4o-mini",
-    "messages": [{"role": "user", "message": "What happened in tech news today?"}],
-    "webSearch": true
-  }
-}
-```
-
-Works with OpenAI, Anthropic, and Google Gemini. Each provider uses its own native web search implementation.
-
-### Code execution
-
-The LLM can write and execute code in a sandboxed environment. Enable it with `"codeInterpreter": true`:
-
-```json
-{
-  "type": "LLM_CHAT_COMPLETE",
-  "inputParameters": {
-    "llmProvider": "google_gemini",
-    "model": "gemini-2.5-flash",
-    "messages": [{"role": "user", "message": "Calculate the first 100 prime numbers and plot them"}],
-    "codeInterpreter": true
-  }
-}
-```
-
-Use this for data analysis, chart generation, mathematical computation, or any task that benefits from running code.
-
-### Extended thinking
-
-Give the LLM a token budget for step-by-step reasoning before it responds. Useful for complex problems that benefit from chain-of-thought reasoning:
-
-```json
-{
-  "type": "LLM_CHAT_COMPLETE",
-  "inputParameters": {
-    "llmProvider": "anthropic",
-    "model": "claude-sonnet-4-20250514",
-    "messages": [{"role": "user", "message": "Prove that there are infinitely many primes"}],
-    "thinkingTokenLimit": 10000,
-    "maxTokens": 16000
-  }
-}
-```
-
-Supported by Anthropic and Google Gemini.
-
+Each provider is a configured integration - switch models by changing a parameter, not your code. Google Gemini AI and Google Vertex AI are separate integrations: use Vertex AI for non-Gemini Google models and for text embeddings.
 
 ## Vector database workflows
 
-Built-in vector database integration enables RAG (retrieval-augmented generation) pipelines as standard vector database workflows.
+Orkes Conductor's built-in vector database integration enables RAG (retrieval-augmented generation) pipelines as standard Conductor workflows.
 
 | Vector Database | Store Embeddings | Index Text | Semantic Search |
 |---|---|---|---|
 | Pinecone | ✓ | ✓ | ✓ |
+| Weaviate | ✓ | ✓ | ✓ |
 | pgvector (PostgreSQL) | ✓ | ✓ | ✓ |
 | MongoDB Atlas Vector Search | ✓ | ✓ | ✓ |
 
 
 ### Example: RAG pipeline
 
-A complete RAG workflow using native system tasks — index documents, search, and generate an answer. No custom workers required.
+A complete RAG workflow using native system tasks - index documents, search, and generate an answer. No custom workers required.
 
 ```json
 {
@@ -134,8 +64,7 @@ A complete RAG workflow using native system tasks — index documents, search, a
         "text": "${workflow.input.text}",
         "embeddingModelProvider": "openai",
         "embeddingModel": "text-embedding-3-small",
-        "dimensions": 1536,
-        "metadata": "${workflow.input.metadata}"
+        "dimensions": 1536
       }
     },
     {
@@ -181,55 +110,11 @@ A complete RAG workflow using native system tasks — index documents, search, a
 }
 ```
 
-Every task type — `LLM_INDEX_TEXT`, `LLM_SEARCH_INDEX`, `LLM_CHAT_COMPLETE` — is a native Conductor system task. The vector database, embedding model, and LLM provider are all configuration parameters. Switch from pgvector to Pinecone or from OpenAI to Anthropic by changing a parameter value.
-
-
-## Content generation
-
-Native system tasks for multimodal content generation:
-
-| Task | Type | Description |
-|---|---|---|
-| Generate Image | `GENERATE_IMAGE` | Text-to-image generation via AI models |
-| Generate Audio | `GENERATE_AUDIO` | Text-to-speech synthesis |
-| Generate Video | `GENERATE_VIDEO` | Text/image-to-video generation (async) |
-| Generate PDF | `GENERATE_PDF` | Markdown-to-PDF document conversion |
-
-
-## Examples
-
-Ready-to-use workflow definitions for every AI task type. Each example is a complete JSON workflow you can register and run directly.
-
-| Example | Task types used |
-|---|---|
-| [Chat Completion](https://github.com/conductor-oss/conductor/blob/main/ai/examples/01-chat-completion.json) | `LLM_CHAT_COMPLETE` |
-| [Generate Embeddings](https://github.com/conductor-oss/conductor/blob/main/ai/examples/02-generate-embeddings.json) | `LLM_GENERATE_EMBEDDINGS` |
-| [Image Generation](https://github.com/conductor-oss/conductor/blob/main/ai/examples/03-image-generation.json) | `GENERATE_IMAGE` |
-| [Audio Generation](https://github.com/conductor-oss/conductor/blob/main/ai/examples/04-audio-generation.json) | `GENERATE_AUDIO` |
-| [Semantic Search](https://github.com/conductor-oss/conductor/blob/main/ai/examples/05-semantic-search.json) | `LLM_SEARCH_INDEX` |
-| [RAG Basic](https://github.com/conductor-oss/conductor/blob/main/ai/examples/06-rag-basic.json) | `LLM_SEARCH_INDEX`, `LLM_CHAT_COMPLETE` |
-| [RAG Complete](https://github.com/conductor-oss/conductor/blob/main/ai/examples/07-rag-complete.json) | `LLM_INDEX_TEXT`, `LLM_SEARCH_INDEX`, `LLM_CHAT_COMPLETE` |
-| [MCP List Tools](https://github.com/conductor-oss/conductor/blob/main/ai/examples/08-mcp-list-tools.json) | `LIST_MCP_TOOLS` |
-| [MCP Call Tool](https://github.com/conductor-oss/conductor/blob/main/ai/examples/09-mcp-call-tool.json) | `CALL_MCP_TOOL` |
-| [MCP AI Agent](https://github.com/conductor-oss/conductor/blob/main/ai/examples/10-mcp-ai-agent.json) | `LIST_MCP_TOOLS`, `LLM_CHAT_COMPLETE`, `CALL_MCP_TOOL` |
-| [Video — OpenAI Sora](https://github.com/conductor-oss/conductor/blob/main/ai/examples/11-video-openai-sora.json) | `GENERATE_VIDEO` |
-| [Video — Gemini Veo](https://github.com/conductor-oss/conductor/blob/main/ai/examples/12-video-gemini-veo.json) | `GENERATE_VIDEO` |
-| [Image-to-Video Pipeline](https://github.com/conductor-oss/conductor/blob/main/ai/examples/13-image-to-video-pipeline.json) | `GENERATE_IMAGE`, `GENERATE_VIDEO` |
-| [StabilityAI Image](https://github.com/conductor-oss/conductor/blob/main/ai/examples/14-stabilityai-image.json) | `GENERATE_IMAGE` |
-| [PDF Generation](https://github.com/conductor-oss/conductor/blob/main/ai/examples/15-pdf-generation.json) | `GENERATE_PDF` |
-| [LLM-to-PDF Pipeline](https://github.com/conductor-oss/conductor/blob/main/ai/examples/16-llm-to-pdf-pipeline.json) | `LLM_CHAT_COMPLETE`, `GENERATE_PDF` |
-| [Web Search](https://github.com/conductor-oss/conductor/blob/main/ai/examples/17-web-search.json) | `LLM_CHAT_COMPLETE` (web search) |
-| [Code Execution](https://github.com/conductor-oss/conductor/blob/main/ai/examples/18-code-execution.json) | `LLM_CHAT_COMPLETE` (code execution) |
-| [Coding Agent](https://github.com/conductor-oss/conductor/blob/main/ai/examples/19-coding-agent.json) | `LLM_CHAT_COMPLETE` (code_interpreter) |
-| [Extended Thinking](https://github.com/conductor-oss/conductor/blob/main/ai/examples/20-extended-thinking.json) | `LLM_CHAT_COMPLETE` (thinking) |
-| [Web Research Agent](https://github.com/conductor-oss/conductor/blob/main/ai/examples/21-web-search-research-agent.json) | `LLM_CHAT_COMPLETE` (web search + thinking), `GENERATE_PDF` |
-| [Multi-Turn Chain](https://github.com/conductor-oss/conductor/blob/main/ai/examples/22-multi-turn-chain.json) | `LLM_CHAT_COMPLETE` (previousResponseId) |
-
-Browse all examples: [`ai/examples/`](https://github.com/conductor-oss/conductor/tree/main/ai/examples)
+Every task type here - `LLM_INDEX_TEXT`, `LLM_SEARCH_INDEX`, `LLM_CHAT_COMPLETE` - is a native Conductor system task. The vector database, embedding model, and LLM provider are all configuration parameters. Switch from pgvector to Pinecone or from OpenAI to Anthropic by changing a parameter value.
 
 
 ## Next steps
 
-- **[Durable Agents](/content/ai-orchestration/durable-agents)** &mdash; What persists, what gets retried, and why JSON is AI-native.
-- **[Dynamic Workflows](/content/ai-orchestration/dynamic-workflows)** &mdash; Agents that build their own execution plans at runtime.
-- **[AI & LLM Recipes](/content/ai-orchestration/ai-llm-recipes)** &mdash; Practical recipes for common LLM workflow patterns.
+- **[Durable Agents](/content/ai-agents/durable-agents)** - What persists, what gets retried, and why JSON is AI-native.
+- **[Dynamic Workflows](/content/ai-agents/dynamic-workflows)** - Agents that build their own execution plans at runtime.
+- **[AI & LLM Recipes](/content/ai-orchestration/ai-llm-recipes)** - Practical recipes for common LLM workflow patterns.

@@ -160,11 +160,11 @@ Conductor models this with `SUB_WORKFLOW` tasks inside a `FORK`/`JOIN` for paral
 }
 ```
 
-Both sub-agents run concurrently. The `JOIN` waits for both to complete before the synthesize step runs. If you don't know the number of sub-agents ahead of time, use `DYNAMIC_FORK` instead - the LLM's plan output determines how many sub-agents to spawn.
+Both sub-agents run concurrently. The `JOIN` waits for both to complete before the synthesize step runs. If you don't know the number of sub-agents ahead of time, use `FORK_JOIN_DYNAMIC` instead - the LLM's plan output determines how many sub-agents to spawn.
 
 **What you get from multi-agent composition in Conductor:**
 
-- **Parallel execution.** Sub-agents run concurrently via `FORK`/`JOIN` or `DYNAMIC_FORK`. The join collects all results before the next step proceeds.
+- **Parallel execution.** Sub-agents run concurrently via `FORK`/`JOIN` or `FORK_JOIN_DYNAMIC`. The join collects all results before the next step proceeds.
 - **Full observability across the agent tree.** The parent workflow shows the status of each sub-agent. You can drill into any sub-workflow to see its individual LLM calls, tool calls, and decisions.
 - **Failure isolation.** A failing sub-agent does not crash the parent. The parent can catch the failure, retry with different parameters, or route to a fallback agent.
 - **Failure propagation with compensation.** If a sub-agent fails and the parent should also fail, `failureWorkflow` runs compensation across the entire agent tree.

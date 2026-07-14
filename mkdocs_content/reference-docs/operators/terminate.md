@@ -1,100 +1,177 @@
 ---
 title: "Terminate"
-description: "Terminate Task — end a Conductor workflow execution with a specified status and output from any point in the flow."
+description: "Learn how the Terminate task stops the current workflow execution in Orkes Conductor."
 canonical_route: "reference-docs/operators/terminate"
 updated: "2026-05-14"
 keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
 ---
 
 # Terminate
-```json
-"type" : "TERMINATE"
-```
 
-The Terminate task (`TERMINATE`) terminates the current workflow with a termination status and reason, and sets the workflow output with any supplied values. 
+The Terminate task is used to terminate the current workflow with a specified termination status and reason, and optionally modify the workflow output.
 
-Often used in [Switch](/content/reference-docs/operators/switch) tasks, the Terminate task can act as a return statement for cases where you want the workflow to be terminated without continuing to the subsequent tasks.
+It can act as a return statement when you want to end a workflow without executing subsequent tasks. For example, you can execute certain tasks only when a condition is met and terminate the workflow otherwise.
 
 ## Task parameters
 
-Use these parameters inside `inputParameters` in the Terminate task configuration.
+Configure these parameters for the Terminate task.
 
-| Parameter          | Type                | Description                                       | Required / Optional  |
-| ------------------ | ------------------- | ------------------------------------------------- | -------------------- |
-| terminationStatus | String (enum) | The termination status. Supported types: <ul><li>COMPLETED</li><li>FAILED</li><li>TERMINATED</li></ul>                                   | Required. |
-| terminationReason | String | The reason for terminating the current workflow, which will provide the context of the termination. <br/><br/> For FAILED workflows, this reason is passed to any configured `failureWorkflow`. | Optional.         |
-| workflowOutput    | Any     | The expected workflow output upon termination.                                                              | Optional.         |
+| Parameter                              | Description                                                                                                                                                                                                          | Required/ Optional |
+| -------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
+| inputParameters. **terminationStatus** | The termination status for the current workflow. Supported values:<ul><li>COMPLETED</li><li> FAILED</li><li> TERMINATED</li></ul>                                                                               | Required.          |
+| inputParameters. **terminationReason** | The reason for terminating the current workflow, which will provide the context of the termination. It can be [passed as a dynamic variable](/content/developer-guides/passing-inputs-to-task-in-conductor). | Optional.          |
+| inputParameters. **workflowOutput**    | A map of the expected workflow output on termination. It can contain a string, number, boolean, null, or object/array.                                                                                               | Optional.          |
 
 
-## Configuration JSON
-Here is the task configuration for a Terminate task.
+## Task configuration
+
+This is the task configuration for a Terminate task.
 
 ```json
 {
   "name": "terminate",
   "taskReferenceName": "terminate_ref",
-  "inputParameters": {
-    "terminationStatus": "TERMINATED",
-    "terminationReason": "",
-    "workflowOutput": "${someTask.output}"
-  },
+    "inputParameters": {
+       "terminationStatus": "TERMINATED",
+       "workflowOutput": {
+         "someKey": "someValue"
+       },
+       "terminationReason": "Terminated due to xxxxxxxx."
+     },
   "type": "TERMINATE"
 }
 ```
 
-
-## Output
+## Task output
 
 The Terminate task will return the following parameters.
 
-| Name   | Type | Description                                                                                               |
-| ------ | ---- | --------------------------------------------------------------------------------------------------------- |
-| output | Map[String, Any]  | A map of the workflow output on termination, as defined in `workflowOutput`. If `workflowOutput` is not set in the Terminate task configuration, the output will be an empty object. |
+| Parameter | Description                                                                                                                                                                                       |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| output    | A map containing the workflow output defined in `inputParameters.workflowOutput`. If `workflowOutput` is not set in the Terminate task definition, the output will be an empty object. |
+
+## Adding a Terminate task in UI
+
+**To add a Terminate task:**
+
+1. In your workflow, select the (+) icon and add a Terminate task.
+2. Select the **Termination status**.
+3. Enter the **Termination reason**.
+4. (Optional) Add the **Workflow output**.
+
+<p><img src="/content/img/ui-guide-terminate-task.png" alt="Adding wait task" /></p>
 
 ## Examples
 
 Here are some examples for using the Terminate task.
 
-### Using the Terminate task in a switch case
+<details>
+<summary>Terminate a workflow for unsupported input</summary>
+<p>
 
-In this example workflow, a decision is made to ship with a specific shipping provider based on the provided workflow input. If the provided input does not match the available shipping providers, then the workflow will terminate with a FAILED status. Here is a snippet that shows the default switch case terminating the workflow:
+In this example, a shipping workflow selects a provider based on runtime input. If the input does not match a supported provider, the workflow terminates immediately using a Terminate task and returns an error in the workflow output.
 
+**To create a workflow:**
+
+1. Go to **Definitions** > **Workflow**, from the left navigation menu on your Conductor cluster.
+2. Select **+ Define workflow**.
+3. In the **Code** tab, paste the following workflow definition:
 
 ```json
 {
-  "name": "switch_task",
-  "taskReferenceName": "switch_task",
-  "type": "SWITCH",
-  "defaultCase": [
-      {
-      "name": "terminate",
-      "taskReferenceName": "terminate_ref",
-      "type": "TERMINATE",
+  "name": "shipping-workflow",
+  "description": "Terminate workflow when shipping provider is unsupported",
+  "version": 1,
+  "tasks": [
+    {
+      "name": "validate_provider",
+      "taskReferenceName": "validate_provider_ref",
       "inputParameters": {
-          "terminationStatus": "FAILED",
-          "terminationReason":"Shipping provider not found."
-      }      
+        "shippingProvider": "${workflow.input.shippingProvider}"
+      },
+      "type": "SWITCH",
+      "decisionCases": {
+        "fedex": [
+          {
+            "name": "process_fedex",
+            "taskReferenceName": "process_fedex_ref",
+            "type": "INLINE",
+            "inputParameters": {
+              "evaluatorType": "graaljs",
+              "expression": "(function(){ return { provider: 'fedex' }; })()"
+            }
+          }
+        ],
+        "dhl": [
+          {
+            "name": "process_dhl",
+            "taskReferenceName": "process_dhl_ref",
+            "type": "INLINE",
+            "inputParameters": {
+              "evaluatorType": "graaljs",
+              "expression": "(function(){ return { provider: 'dhl' }; })()"
+            }
+          }
+        ]
+      },
+      "defaultCase": [
+        {
+          "name": "terminate_workflow",
+          "taskReferenceName": "terminate_workflow_ref",
+          "inputParameters": {
+            "terminationStatus": "FAILED",
+            "terminationReason": "Unsupported shipping provider",
+            "workflowOutput": {
+              "error": "The specified shipping provider is not supported."
+            }
+          },
+          "type": "TERMINATE"
+        }
+      ],
+      "evaluatorType": "value-param",
+      "expression": "shippingProvider"
     }
-   ]
+  ],
+  "inputParameters": [
+    "shippingProvider"
+  ],
+  "schemaVersion": 2
 }
 ```
 
-The workflow flow:
+4. Select **Save** > **Confirm**.
 
-```mermaid
-graph LR
-    A[Start] --> B{Switch}
-    B -->|fedex| C[ship_via_fedex]
-    B -->|ups| D[ship_via_ups]
-    B -->|default| E[Terminate<br/>FAILED]
-    C --> F[End]
-    D --> F
+This workflow supports only two shipping providers: *fedex* and *dhl*. If any other value is provided at runtime, the Switch task executes the default case and terminates the workflow using the Terminate task.
+
+**To run the workflow:**
+
+1. Go to the **Run** tab, and enter the **Input params**. For example:
+
+```json
+{
+  "shippingProvider": "ups"
+}
 ```
 
+2. Select **Execute**.
 
-## Best practices
+This executes the workflow, and because *ups* is not a supported value, the workflow is terminated using the Terminate task.
 
-Here are some best practices for handling workflow termination:
+<p align="center"><img src="/content/img/terminate-example.png" alt="Terminate Example" width="90%" height="auto"></img></p>
 
-* Include a termination reason when terminating the workflow with FAILED status, so that it is easy to understand the cause.
-2. Include any additional details in the workflow output (e.g., output of the tasks, the selected switch case), to add context to the path taken to termination.
+To observe a successful branch, run the workflow again with a supported provider:
+
+```json
+{
+  "shippingProvider": "fedex"
+}
+```
+
+This time, the Switch task matches the `fedex` case and executes `process_fedex_ref`, which completes immediately. The Terminate task is not reached and the workflow completes normally.
+
+<p align="center"><img src="/content/img/terminate-example-fedex.png" alt="Terminate Example" width="90%" height="auto"></img></p>
+
+The `process_fedex` and `process_dhl` tasks in this example use the Inline task. In a production workflow, replace these with your own task types and business logic.
+
+</p>
+</details>

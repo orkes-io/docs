@@ -1,6 +1,6 @@
 ---
 title: "Task Concepts"
-description: "Learn about tasks in Conductor — the reusable building blocks of workflows, including system tasks, worker tasks, operators, LLM tasks with 14+ AI providers."
+description: "Learn about tasks in Conductor — the reusable building blocks of workflows, including system tasks, worker tasks, operators."
 canonical_route: "quickstarts/tasks"
 updated: "2026-05-14"
 keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow tasks, workflow workers, task queues"
@@ -19,21 +19,22 @@ Tasks are categorized into three types, enabling you to flexibly build workflows
 
 ### System tasks
 
-Conductor ships with 20+ [system tasks](/content/category/reference-docs/system-tasks) — built-in, general-purpose tasks designed for common uses like calling an HTTP endpoint, publishing events, or running AI inference.
+Conductor ships with built-in, general-purpose [system tasks](/content/category/reference-docs/system-tasks) designed for common uses like calling an HTTP endpoint, publishing events, or running AI inference.
 
 System tasks are managed by Conductor and executed within its server's JVM, allowing you to get started without having to write custom workers.
 
 | Category | Tasks |
 |---|---|
-| **Core** | HTTP, Inline (script), Event, Wait, Human, Kafka Publish, JSON JQ Transform, No Op |
-| **Flow Control** | Fork/Join, Dynamic Fork, Join, Switch, Do While, Sub Workflow, Start Workflow, Set Variable, Terminate, Dynamic |
-| **AI / LLM** | Chat Completion, Text Completion, Embeddings, Vector Search, Content Generation, MCP Tool Calling |
+| **Core** | HTTP, Inline (script), Event, JSON JQ Transform |
+| **AI / LLM** | Chat Completion, Text Completion, Embeddings, Vector Search |
 
 ### Worker tasks
 
 Worker tasks (`SIMPLE`) can be used to implement custom logic outside the scope of Conductor's system tasks. Also known as Simple tasks, Worker tasks are implemented by your task workers that run in a separate environment from Conductor.
 
 A minimal worker task configuration and its corresponding Python worker:
+
+This is the task configuration, placed in the workflow's `tasks` array:
 
 ```json
 {
@@ -46,6 +47,8 @@ A minimal worker task configuration and its corresponding Python worker:
   }
 }
 ```
+
+This is the worker that fulfills it — its `task_definition_name` must match the task's `name` above, and its parameters must match `inputParameters`:
 
 ```python
 @worker_task(task_definition_name="process_payment")
@@ -60,7 +63,7 @@ def process_payment(orderId: str, amount: float) -> dict:
 
 ## Task definition
 
-[Task definitions](/content/reference-docs/task-definition) are used to define a task's default parameters, like inputs and output keys, timeouts, and retries. This provides reusability across workflows, as the registered task definition will be referenced when a task is configured in a workflow definition.
+[Task definitions](/content/reference-docs/api/metadata/creating-task-definitions) are used to define a task's default parameters, like inputs and output keys, timeouts, and retries. This provides reusability across workflows, as the registered task definition will be referenced when a task is configured in a workflow definition.
 
 ```json
 {
@@ -68,9 +71,7 @@ def process_payment(orderId: str, amount: float) -> dict:
   "retryCount": 3,
   "retryLogic": "EXPONENTIAL_BACKOFF",
   "retryDelaySeconds": 5,
-  "maxRetryDelaySeconds": 60,
-  "backoffJitterMs": 2000,
-  "totalTimeoutSeconds": 300,
+  "backOffScaleFactor": 2,
   "timeoutSeconds": 120,
   "responseTimeoutSeconds": 60,
   "pollTimeoutSeconds": 30
@@ -78,9 +79,7 @@ def process_payment(orderId: str, amount: float) -> dict:
 ```
 
 - **retryCount / retryLogic / retryDelaySeconds** — How many times to retry a failed task, the backoff strategy, and the initial delay between retries.
-- **maxRetryDelaySeconds** — Caps the computed backoff delay. Prevents exponential growth from becoming arbitrarily large.
-- **backoffJitterMs** — Adds random milliseconds to each retry delay to spread concurrent retries over time (thundering herd prevention).
-- **totalTimeoutSeconds** — Hard wall-clock budget across all retry attempts combined. Once exceeded, no further retries are attempted regardless of `retryCount`.
+- **backOffScaleFactor** — The value multiplied with `retryDelaySeconds` to determine the interval for each retry.
 - **timeoutSeconds** — Maximum wall-clock time per individual attempt before the task is marked `TIMED_OUT`.
 - **responseTimeoutSeconds** — Maximum time to wait for a worker to respond after picking up a task. Useful for detecting unresponsive workers.
 - **pollTimeoutSeconds** — Maximum time a worker can hold a long-poll connection before the server releases it.
@@ -124,26 +123,16 @@ A task execution object is created during runtime when an input is passed into a
 
 ## AI and LLM tasks
 
-Conductor includes first-class support for building AI-powered workflows through its AI/LLM [system tasks](/content/category/reference-docs/system-tasks).
+Conductor includes first-class support for building AI-powered workflows through its AI/LLM [system tasks](/content/category/reference-docs/ai-tasks).
 
 ### Supported LLM providers
 
-Conductor integrates with **14+ LLM providers** out of the box:
+Conductor integrates with **[14+ LLM providers](/content/category/integrations/ai-llm)** out of the box:
 
-Anthropic, OpenAI, Azure OpenAI, Google Gemini, AWS Bedrock, Mistral, Cohere, HuggingFace, Ollama, Perplexity, Grok, StabilityAI, and more.
+Anthropic, OpenAI, Azure OpenAI, Google Gemini, AWS Bedrock, Mistral, Cohere, HuggingFace, Ollama, Perplexity, Grok, and more.
 
 Each provider is configured once at the server level; workflows reference them by name, making it straightforward to swap models without changing workflow logic.
 
-### MCP tool calling
-
-The **LIST_MCP_TOOLS** and **CALL_MCP_TOOL** system tasks let your workflows discover and invoke tools exposed by any MCP-compatible server. This enables LLM agents to interact with external APIs, databases, and services through a standardized protocol.
-
 ### Vector databases and RAG
 
-For retrieval-augmented generation (RAG), Conductor supports vector stores including **Pinecone**, **pgvector**, and **MongoDB Atlas**. The Embeddings and Vector Search system tasks handle the embedding generation and similarity search steps so that RAG pipelines can be expressed as standard workflows.
-
-### Content generation
-
-Beyond text, Conductor's AI tasks support generating images, audio, video, and PDFs — useful for workflows that produce rich media from LLM outputs.
-
-For end-to-end AI agent patterns that combine LLM reasoning with tool use, see the [agents documentation](/content/ai-orchestration).
+For retrieval-augmented generation (RAG), Conductor supports vector stores including **Pinecone**, **Weaviate**, **pgvector**, and **MongoDB Atlas**. The Embeddings and Vector Search system tasks handle the embedding generation and similarity search steps so that RAG pipelines can be expressed as standard workflows.

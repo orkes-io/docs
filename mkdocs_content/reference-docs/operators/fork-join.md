@@ -1,35 +1,41 @@
 ---
-title: "Fork"
-description: "Configure Fork (FORK_JOIN) tasks in Conductor to run task sequences in parallel. Learn parameters, JSON configuration, and Join task pairing."
+title: "Fork/Join"
+description: "Learn how the Fork/Join task runs multiple tasks in parallel using predefined forks in Orkes Conductor."
 canonical_route: "reference-docs/operators/fork-join"
 updated: "2026-05-14"
 keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
 ---
 
-# Fork
-```json
-"type" : "FORK_JOIN"
-```
+# Fork/Join
 
-Also known as a static fork, a Fork task (`FORK_JOIN`) is used to run task sequences in parallel, including [Sub Workflow](/content/reference-docs/operators/sub-workflow) tasks.
-
-The Fork task must be followed by a [Join](/content/reference-docs/operators/join) that waits on the forked tasks to finish before moving to the next task. This Join task collects the outputs from each forked tasks.
+A Fork/Join task is used to run tasks in parallel. It contains two components: the fork and the join operation. The fork operation lets you run lists of tasks, including [Sub Workflow](/content/reference-docs/operators/sub-workflow) tasks, in parallel. The fork operation is followed by a join operation that waits on the forked tasks to finish before moving to the next task. This [Join](/content/reference-docs/operators/join) task collects the outputs from each forked task.
 
 ## Task parameters
-  
-Use these parameters in top level of the Fork task configuration.
 
-| Parameter          | Type                | Description                                       | Required / Optional  |
-| ------------------ | ------------------- | ------------------------------------------------- | -------------------- |
-| forkTasks         | List[List[Task]] | A list of tasks lists to be invoked in parallel (`[[...], [...]]`). <br/><br/> Each item in the outer list represents a fork that will be invoked in parallel, while each inner list contains the task configurations for a particular fork. The tasks defined within each sublist can be sequential or even more nested forks. | Required. |
+Configure these parameters for the Fork/Join task.
 
-The [Join](/content/reference-docs/operators/join) task must run after the forked tasks. Configure the Join task as well to complete the fork-join operations.
+**For the Fork task:**
 
-## JSON configuration
+| Parameter | Description                                                                                                                                  | Required/ Optional |
+| --------- | -------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
+| forkTasks | An array of task lists. Each list represents a fork branch that will run in parallel, and each list contains a sequence of task configurations. | Required.       |
+| inputParameters | Input parameters for the Fork task. Use an empty object if no inputs are required. | Optional. | 
 
-This is the task configuration for a Fork task.
+The [Join](/content/reference-docs/operators/join) task will run after the forked tasks. Configure the Join task as well to complete the fork-join operations.
+
+**For the Join task:**
+
+| Parameter  | Description                                                                                                      | Required/ Optional |
+| ---------- | ---------------------------------------------------------------------------------------------------------------- | ------------------ |
+| joinOn     | A list of task reference names that the Join task will wait for completion before proceeding with the next task. | Required.          |
+| expression | The join script, which controls how the Join task completes if specified.                                        | Optional.          |
+
+## Task configuration
+
+This is the task configuration for a Fork/Join task.
 
 ```json
+// JSON schema for the Fork task
 {
   "name": "fork",
   "taskReferenceName": "fork_ref",
@@ -37,105 +43,165 @@ This is the task configuration for a Fork task.
   "type": "FORK_JOIN",
   "forkTasks": [
     [ // fork branch
-      {
-        // task configuration
-      },
-      {
-        // task configuration
-      }
+      {// task configuration},
+      {// task configuration}
     ],
-    [ // another fork branch 
-      {
-        // task configuration
-      },
-      {
-        // task configuration
-      }
-    ]
+    [ // another fork branch ]
+  ]
+}
+
+// JSON schema for the Join task
+{
+  "name": "join",
+  "taskReferenceName": "join_ref",
+  "inputParameters": {},
+  "type": "JOIN",
+  "joinOn": [
+    // List of task reference names that the join should wait for
   ]
 }
 ```
 
-## Output
+!!! info "Note"
+    A `FORK_JOIN` task must be immediately followed by a `JOIN` task in the `tasks` array. Otherwise, workflow registration will fail.
 
-The Fork task has no output. It is used in conjunction with the [JOIN](/content/reference-docs/operators/join) task, which aggregates the outputs from the parallelized forks.
+## Task output
+
+The Fork task does not produce output. The Join task returns a map containing the outputs of the tasks listed in `joinOn`, keyed by their task reference names. [Learn more about the Join task output](https://orkes.io/content/reference-docs/operators/join#task-output).
+
+## Adding a Fork/Join task in UI
+
+**To add a Fork/Join task:**
+
+1. In your workflow, select the **(+)** icon and add a **Fork/Join** task.
+2. Select **Add fork** to add as many forks as required.
+3. In each fork branch, select the **(+)** icon to add tasks.
+4. Select the Join task and configure its settings to complete the fork/join operations.
+
+<p><img src="/content/img/ui-guide-fork-join.png" alt="Screenshot of Fork/Join Task in Orkes Conductor"/></p>
+
+!!! info "Notes"
+    - When a Join task is used after a [Switch](/content/reference-docs/operators/switch) task, the Join task can complete when the Switch task completes, even if the tasks within the switch branches have not finished. To handle this, add a task such as [Set Variable](https://orkes.io/content/reference-docs/operators/set-variable) at the end of the outermost Switch task and configure the Join task to join on that task. This ensures the Join task waits until all switch branch execution is complete before the workflow continues.
+    - If a fork branch containing a [Sub Workflow task](/content/reference-docs/operators/sub-workflow) fails, sibling tasks in other branches are cancelled and the parent workflow moves to a FAILED state. When the failed sub-workflow is retried, all cancelled sibling tasks are automatically rescheduled and the parent workflow resumes to RUNNING.
 
 ## Examples
 
-In this example workflow, three notifications are sent: email, SMS, and HTTP. Since none of these tasks depend on each other, they can be run in parallel with a Fork task.
+Here are some examples for using the Fork/Join task.
 
-```mermaid
-graph LR
-    A[Start] --> B[Fork]
-    B --> C1[process_notification_payload_email]
-    B --> C2[process_notification_payload_sms]
-    B --> C3[process_notification_payload_http]
-    C1 --> D1[email_notification]
-    C2 --> D2[sms_notification]
-    C3 --> D3[http_notification]
-    D1 --> E[Join]
-    D2 --> E
-    D3 --> E
-    E --> F[End]
-```
+<details>
+<summary>Sending notifications in parallel</summary>
+<p>
 
-Here's the JSON configuration for the Fork task, along with its corresponding Join task:
+In this example workflow, email, SMS, and HTTP notifications are triggered in parallel using a Fork/Join task. The workflow continues only after the email and SMS notifications are complete, while the HTTP notification runs independently and does not block execution.
+
+**To create a workflow:**
+
+1. Go to **Definitions** > **Workflow**, from the left navigation menu on your Conductor cluster.
+2. Select **+ Define workflow**.
+3. In the **Code** tab, paste the following workflow definition:
 
 ```json
-[
-  {
-    "name": "fork_join",
-    "taskReferenceName": "my_fork_join_ref",
-    "type": "FORK_JOIN",
-    "forkTasks": [
-      [
-        {
-          "name": "process_notification_payload",
-          "taskReferenceName": "process_notification_payload_email",
-          "type": "SIMPLE"
-        },
-        {
-          "name": "email_notification",
-          "taskReferenceName": "email_notification_ref",
-          "type": "SIMPLE"
-        }
-      ],
-      [
-        {
-          "name": "process_notification_payload",
-          "taskReferenceName": "process_notification_payload_sms",
-          "type": "SIMPLE"
-        },
-        {
-          "name": "sms_notification",
-          "taskReferenceName": "sms_notification_ref",
-          "type": "SIMPLE"
-        }
-      ],
-      [
-        {
-          "name": "process_notification_payload",
-          "taskReferenceName": "process_notification_payload_http",
-          "type": "SIMPLE"
-        },
-        {
-          "name": "http_notification",
-          "taskReferenceName": "http_notification_ref",
-          "type": "SIMPLE"
-        }
+{
+  "name": "ForkJoin_Notifications",
+  "description": "Runs multiple notification branches in parallel using a Fork/Join task.",
+  "version": 1,
+  "schemaVersion": 2,
+  "tasks": [
+    {
+      "name": "notifications_fork",
+      "taskReferenceName": "notifications_fork_ref",
+      "type": "FORK_JOIN",
+      "inputParameters": {},
+      "forkTasks": [
+        [
+          {
+            "name": "email_payload",
+            "taskReferenceName": "email_payload_ref",
+            "type": "INLINE",
+            "inputParameters": {
+              "evaluatorType": "graaljs",
+              "expression": "(function () { return { channel: 'email', to: 'test@example.com', message: 'Email sent' }; })();"
+            }
+          }
+        ],
+        [
+          {
+            "name": "sms_payload",
+            "taskReferenceName": "sms_payload_ref",
+            "type": "INLINE",
+            "inputParameters": {
+              "evaluatorType": "graaljs",
+              "expression": "(function () { return { channel: 'sms', to: '+1-xxx-xxx-xxxx', message: 'SMS sent' }; })();"
+            }
+          }
+        ],
+        [
+          {
+            "name": "http_notification",
+            "taskReferenceName": "http_notification_ref",
+            "type": "HTTP",
+            "inputParameters": {
+              "uri": "https://orkes-api-tester.orkesconductor.com/api",
+              "method": "GET",
+              "accept": "application/json",
+              "contentType": "application/json",
+              "encode": true
+            }
+          }
+        ]
       ]
-    ]
-  },
-  {
-    "name": "notification_join",
-    "taskReferenceName": "notification_join_ref",
-    "type": "JOIN",
-    "joinOn": [
-      "email_notification_ref",
-      "sms_notification_ref"
-    ]
+    },
+    {
+      "name": "notifications_join",
+      "taskReferenceName": "notifications_join_ref",
+      "type": "JOIN",
+      "inputParameters": {},
+      "joinOn": [
+        "email_payload_ref",
+        "sms_payload_ref"
+      ]
+    }
+  ],
+  "outputParameters": {
+    "joinedOutputs": "${notifications_join_ref.output}"
   }
-]
+}
 ```
 
-Refer to the [Join](/content/reference-docs/operators/join) task for more details on the Join aspect of the Fork.
+4. Select **Save** > **Confirm**.
+
+**To run the workflow:**
+
+1. Go to the **Run** tab.
+2. Select **Execute**.
+
+Each fork runs tasks for each notification type (email, SMS, HTTP) in parallel, meaning that they are run independently. 
+
+<p><img src="/content/img/fork-join-example-execution.png" alt="Workflow execution"/></p>
+
+Although three forks are running in parallel, only two forks are required to continue with the workflow. The parameter `joinOn` is defined so that only email and SMS tasks are joined, leaving the HTTP task as optional for completing the Join task.
+
+```json
+// Join task configuration
+{
+     "name": "notifications_join",
+     "taskReferenceName": "notifications_join_ref",
+     "inputParameters": {},
+     "joinOn": [
+       "email_payload_ref",
+       "sms_payload_ref"
+     ],
+     "type": "JOIN"
+}
+```
+
+This workflow is completed when the email and SMS notifications are sent and does not depend on the HTTP notification status.
+
+This is the output of `notification_join`. The output is a map, where the keys are the reference names of tasks being joined, and the corresponding values are the outputs of those tasks.
+
+<p><img src="/content/img/fork-join-output.png" alt="Output of a join task execution"/></p>
+
+Outputs from the HTTP branch are not included because the HTTP notification is not listed in the `joinOn` parameter.
+
+</p>
+</details>

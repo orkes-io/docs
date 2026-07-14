@@ -13,6 +13,7 @@ keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration
 
 !!! note
     You can use this integration in the following scenarios:
+    
     - [Conductor is running locally](https://orkes.io/content/get-orkes-conductor#local-setup-with-docker), and Ollama is running locally.
     - Conductor is running in the cloud, and your AI models are hosted on a server accessible to Ollama.
 

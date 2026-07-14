@@ -1,6 +1,6 @@
 ---
 title: "System Tasks"
-description: "Overview of built-in system tasks in Conductor — HTTP, Event, Human, Wait, Inline, Kafka Publish, JSON JQ Transform, LLM orchestration, MCP function calling."
+description: "Overview of built-in system tasks in Conductor — HTTP, Event, Human, Wait, Inline, JSON JQ Transform, LLM orchestration."
 canonical_route: "category/reference-docs/system-tasks"
 updated: "2026-05-14"
 keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow tasks, workflow workers, task queues"
@@ -19,9 +19,7 @@ System tasks are built-in tasks that run on the Conductor server. They execute w
 | [Event](/content/reference-docs/system-tasks/event) | `EVENT` | Publish events to external systems — Kafka, NATS, NATS Streaming, AMQP (RabbitMQ), SQS, or Conductor's internal queue. |
 | [Wait](/content/reference-docs/operators/wait) | `WAIT` | Pause workflow execution until a specified time, duration, or external signal. |
 | [Human](/content/reference-docs/operators/human) | `HUMAN` | Wait for an external signal, typically a human approval or manual action. The task stays `IN_PROGRESS` until completed via API. |
-| [Kafka Publish](/content/reference-docs/system-tasks/kafka-publish) | `KAFKA_PUBLISH` | Publish messages directly to a Kafka topic with configurable serializers and headers. |
 | [JSON JQ Transform](/content/reference-docs/system-tasks/jq-transform) | `JSON_JQ_TRANSFORM` | Transform JSON data using [jq](https://jqlang.org/) expressions. Powerful for reshaping, filtering, and aggregating data. |
-| [No Op](/content/reference-docs/system-tasks/noop) | `NOOP` | Do nothing. Useful as a placeholder or to merge branches in fork/join patterns. |
 | [JDBC](/content/reference-docs/system-tasks/jdbc) | `JDBC` | Execute SQL queries and updates against relational databases (MySQL, PostgreSQL, Oracle, etc.) with connection pooling and transaction management. |
 
 ## Operators (flow control)
@@ -43,7 +41,7 @@ These are also system tasks but control workflow execution flow rather than perf
 
 ## AI & LLM tasks
 
-Conductor is the only open-source workflow engine with native AI system tasks. These tasks require the `ai` module to be enabled and provide direct integration with 14+ LLM providers, 3 vector databases, and MCP servers — no external frameworks or custom workers needed.
+Conductor provides native AI system tasks with direct integration with 14+ LLM providers and 4 vector databases — no external frameworks or custom workers needed.
 
 ### LLM
 
@@ -52,7 +50,7 @@ Conductor is the only open-source workflow engine with native AI system tasks. T
 | Chat Completion | `LLM_CHAT_COMPLETE` | Multi-turn conversational AI with optional tool calling. Supports all major LLM providers. |
 | Text Completion | `LLM_TEXT_COMPLETE` | Single prompt completion. |
 
-**Supported providers:** Anthropic (Claude), OpenAI (GPT), Azure OpenAI, Google Gemini, AWS Bedrock, Mistral, Cohere, HuggingFace, Ollama, Perplexity, Grok (xAI), StabilityAI, and more. Switch providers by changing a configuration parameter — no code changes required.
+**Supported providers:** Anthropic (Claude), OpenAI (GPT), Azure OpenAI, Google Gemini, AWS Bedrock, Mistral, Cohere, HuggingFace, Ollama, Perplexity, Grok (xAI), and more. Switch providers by changing a configuration parameter — no code changes required.
 
 ### Embeddings & Vector Search
 
@@ -64,29 +62,4 @@ Conductor is the only open-source workflow engine with native AI system tasks. T
 | Search Index | `LLM_SEARCH_INDEX` | Semantic search using a text query. |
 | Search Embeddings | `LLM_SEARCH_EMBEDDINGS` | Search using embedding vectors directly. |
 
-**Supported vector databases:** Pinecone, pgvector (PostgreSQL), and MongoDB Atlas Vector Search. These enable RAG (retrieval-augmented generation) pipelines as standard Conductor workflows.
-
-### Content Generation
-
-| Task | Type | Description |
-| :--- | :--- | :--- |
-| Generate Image | `GENERATE_IMAGE` | Generate images from text prompts. |
-| Generate Audio | `GENERATE_AUDIO` | Text-to-speech synthesis. |
-| Generate Video | `GENERATE_VIDEO` | Generate videos from text or image prompts (async). |
-| Generate PDF | `GENERATE_PDF` | Convert markdown to PDF documents. |
-
-### MCP (Model Context Protocol)
-
-| Task | Type | Description |
-| :--- | :--- | :--- |
-| List MCP Tools | `LIST_MCP_TOOLS` | List available tools from an MCP server. |
-| Call MCP Tool | `CALL_MCP_TOOL` | Execute a tool on an MCP server. |
-
-MCP integration enables Conductor workflows to discover and use tools from any MCP-compatible server, and to expose Conductor workflows as MCP tools for use by LLMs and AI agents.
-
-## Deprecated
-
-| Task | Replacement |
-| :--- | :--- |
-| Lambda | Use [Inline](/content/reference-docs/system-tasks/inline) instead. |
-| Decision | Use [Switch](/content/reference-docs/operators/switch) instead. |
+**Supported vector databases:** Pinecone, Weaviate, pgvector (PostgreSQL), and MongoDB Atlas Vector Search. These enable RAG (retrieval-augmented generation) pipelines as standard Conductor workflows.

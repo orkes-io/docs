@@ -11,7 +11,7 @@ The section follows the main implementation path: build with AI agents, understa
 
 ## Recommended path
 
-If you are unsure where to begin, start with **Build with AI Agents**, **Why Conductor**, **Workflows**, **Tasks**, **API Gateway & Service Orchestration**. These pages cover the most common entry points for this section.
+If you are unsure where to begin, start with **Workflows**, **Tasks**, **API Gateway & Service Orchestration**. These pages cover the most common entry points for this section.
 
 ## When to use this section
 
@@ -19,8 +19,6 @@ Use these pages to answer implementation questions, compare available primitives
 
 ## Pages
 
-- [Build with AI Agents](/content/developer-guides/conductor-skills)
-- [Why Conductor](/content/ai-orchestration/why-conductor)
 - [Workflows](/content/developer-guides/workflows)
 - [Tasks](/content/developer-guides/tasks)
 - [API Gateway & Service Orchestration](/content/developer-guides/mcp-api-gateway)

@@ -15,9 +15,23 @@ Orkes Conductor exposes workflow and task metrics that can be used in Prometheus
 
 ## Dashboard setup
 
-For Orkes-hosted cloud deployments, metrics integrations are enabled with the Orkes team. For customer-hosted or on-prem deployments, connect your own Prometheus-compatible monitoring stack to the Conductor metrics endpoint and build dashboards in Grafana or Datadog.
+Orkes Conductor uses Prometheus to capture a comprehensive set of metrics, which are readily available in your cluster deployment. On request, these metrics can be pushed to Grafana or Datadog.
 
-Use the Conductor UI for quick inspection, but treat Prometheus queries and alert rules as the production source of truth. They can be versioned, reviewed, tested, and shared across environments.
+!!! note
+    For cloud deployments, Prometheus and Grafana/Datadog are provisioned by the Orkes team. For on-premise deployments, you must set up your own monitoring tools.
+
+## Accessing the dashboard
+
+To access the dashboard, go to **Metrics** from the left navigation menu on your Conductor cluster.
+
+<p align="center"><img src="/content/img/accessing-dashboard.png" alt="Accessing dashboard from Conductor UI" width="90%" height="auto"></img></p>
+
+!!! note
+    To enable Metrics for your cluster, please [get in touch with the Orkes team](https://orkes.io/talk-to-an-expert).
+
+Example dashboard set up using Prometheus and Grafana:
+
+<p align="center"><img src="/content/img/sample-dashboard.png" alt="Sample Dashboard" width="90%" height="auto"></img></p>
 
 ## Conductor metrics
 
@@ -36,8 +50,53 @@ Use the Conductor UI for quick inspection, but treat Prometheus queries and aler
 | ------ | ---- | ------------- | ---------- |
 | `task_completed_seconds` | Timer | `taskType`, `quantile` | Task latency and slow dependency detection. |
 | `task_completed_seconds_count` | Counter | `taskType`, `status` | Task success, failure, and timeout rates. |
-| `task_queue_depth` | Gauge or counter | `taskType` | Backlog, insufficient workers, or stuck polling. |
+| `task_queue_depth` | Counter | `taskType` | Backlog, insufficient workers, or stuck polling. |
 | `task_poll_request_seconds_count` | Counter | `taskType` | Worker poll activity and worker availability. |
+
+### Payload size metrics
+
+!!! info "Available since"
+    - v5.4.2 and later
+
+| Metrics | Description | Tags |
+| ------- | ----------- | ---- |
+| task_size_bytes | Distribution summary of the serialized task payload size in bytes. | taskType, orgId |
+| task_size_ratio | Ratio of the task payload size to the configured limit (e.g., 0.7 = 70% of limit). | taskType, orgId |
+| workflow_size_bytes | Distribution summary of the serialized workflow payload size in bytes, including all tasks. | workflowName, orgId |
+| workflow_size_ratio | Ratio of the workflow payload size to the configured limit. | workflowName, orgId |
+| limit_breach | Counter incremented when a payload size exceeds the configured limit. | workflowName, taskType, orgId |
+
+**Recommended alert**: Set an alert on `*_size_ratio_max > 0.7` to get early warning before a hard size breach causes workflow truncation.
+
+## Alerting starting points
+
+| Alert | Example condition | First response |
+| ----- | ----------------- | -------------- |
+| Workflow failures | Failed workflow rate is above baseline for 5 minutes. | Search failed executions by workflow name and inspect `reasonForIncompletion`. |
+| Task timeouts | Timed-out task rate is above baseline. | Check `responseTimeoutSeconds`, worker logs, dependency health, and queue depth. |
+| Queue backlog | `task_queue_depth` increases while poll rate is flat or zero. | Scale workers, check task domain routing, and verify worker credentials. |
+| No worker polling | Poll rate drops to zero for a task type with scheduled work. | Check worker deployment, network access, and permissions. |
+| Long workflow duration | p95 or p99 duration exceeds SLA. | Inspect slow tasks, retries, wait tasks, and external dependencies. |
+
+## Debug from metrics to execution
+
+Metrics tell you where to look; execution records tell you why the workflow failed.
+
+1. Use the metric labels to identify the workflow name or task type.
+2. Search executions for that workflow and status.
+3. Fetch the full execution JSON.
+4. Inspect the failed or slow task.
+5. Correlate `workflowId`, `taskId`, `correlationId`, and `workerId` with application logs.
+
+Example search:
+
+```shell
+curl -sS -G "$CONDUCTOR_SERVER_URL/workflow/search" \
+  -H "X-Authorization: $CONDUCTOR_AUTH_TOKEN" \
+  --data-urlencode 'query=status=FAILED AND workflowType=payment_flow' \
+  --data-urlencode 'size=20' \
+  --data-urlencode 'sort=startTime:DESC'
+```
 
 ## Useful PromQL patterns
 
@@ -84,53 +143,33 @@ histogram_quantile(
 )
 ```
 
-### Payload size metrics (v5.4.0 and later)
-
-| Metrics | Description | Tags |
-| ------- | ----------- | ---- |
-| task_size_bytes | Distribution summary of the serialized task payload size in bytes. | taskType, orgId |
-| task_size_ratio | Ratio of the task payload size to the configured limit (e.g., 0.7 = 70% of limit). | taskType, orgId |
-| workflow_size_bytes | Distribution summary of the serialized workflow payload size in bytes, including all tasks. | workflowName, orgId |
-| workflow_size_ratio | Ratio of the workflow payload size to the configured limit. | workflowName, orgId |
-| limit_breach | Counter incremented when a payload size exceeds the configured limit. | workflowName, taskType, orgId |
-
-**Recommended alert**: Set an alert on `*_size_ratio_max > 0.7` to get early warning before a hard size breach causes workflow truncation.
-
-## Configuring alerts via Grafana
-
 Metric bucket names can vary by metrics backend and exporter configuration. If your backend exposes summary quantiles instead of histogram buckets, use the available `quantile` label instead of `histogram_quantile`.
 
-## Alerting starting points
-
-| Alert | Example condition | First response |
-| ----- | ----------------- | -------------- |
-| Workflow failures | Failed workflow rate is above baseline for 5 minutes. | Search failed executions by workflow name and inspect `reasonForIncompletion`. |
-| Task timeouts | Timed-out task rate is above baseline. | Check `responseTimeoutSeconds`, worker logs, dependency health, and queue depth. |
-| Queue backlog | `task_queue_depth` increases while poll rate is flat or zero. | Scale workers, check task domain routing, and verify worker credentials. |
-| No worker polling | Poll rate drops to zero for a task type with scheduled work. | Check worker deployment, network access, and permissions. |
-| Long workflow duration | p95 or p99 duration exceeds SLA. | Inspect slow tasks, retries, wait tasks, and external dependencies. |
-
-## Debug from metrics to execution
-
-Metrics tell you where to look; execution records tell you why the workflow failed.
-
-1. Use the metric labels to identify the workflow name or task type.
-2. Search executions for that workflow and status.
-3. Fetch the full execution JSON.
-4. Inspect the failed or slow task.
-5. Correlate `workflowId`, `taskId`, `correlationId`, and `workerId` with application logs.
-
-Example search:
-
-```shell
-curl -sS -G "$CONDUCTOR_SERVER_URL/workflow/search" \
-  -H "X-Authorization: $CONDUCTOR_AUTH_TOKEN" \
-  --data-urlencode 'query=status=FAILED AND workflowType=payment_flow' \
-  --data-urlencode 'size=20' \
-  --data-urlencode 'sort=startTime:DESC'
-```
-
 ## Configuring alerts via Grafana
+
+Alerts can be configured for any metric from your dashboard, or via the **Alerting** section in Grafana.
+
+=== "From a dashboard panel"
+
+    1. Open your Grafana dashboard and select the metric.
+    2. Select **Edit**.
+
+    <p align="center"><img src="/content/img/editing-metric.png" alt="Editing a metric from dashboard" width="90%" height="auto"></img></p>
+
+    3. Go to the **Alerts** tab and select **Create alert rule from this panel**.
+
+    <p align="center"><img src="/content/img/creating-alerts-for-metrics.png" alt="Creating alerts for a metrics in dashboard" width="90%" height="auto"></img></p>
+
+    4. [Create the alert](https://grafana.com/tutorials/alerting-get-started/#create-an-alert) based on your requirements.
+
+=== "From the Alerting section"
+
+    1. Go to **Alerting > Alert rules** from the left navigation menu on your Grafana dashboard.
+    2. Select **+ New alert rule**.
+    3. [Create the alert](https://grafana.com/tutorials/alerting-get-started/#create-an-alert) based on your requirements.
+
+
+Refer to the [official Grafana documentation](https://grafana.com/tutorials/alerting-get-started/) for more information on setting up alerts.
 
 Create alert rules from the PromQL queries you use in dashboards. Keep the alert tied to a clear runbook action, not just a chart threshold.
 

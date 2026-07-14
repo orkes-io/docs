@@ -34,9 +34,34 @@ Guidelines:
 - Avoid personal tags for production access control.
 - Review tag membership before granting broad permissions to a tag.
 
+You can add or remove multiple tags to various resources.
+
+**To add or remove a tag:**
+
+1. In the left navigation menu, go to one of the following locations based on the resource you want to tag:
+    - **Definitions** > **Workflow** / **Task** / **User Forms** / **Event Handler** / **Scheduler** / **Secrets** / **Webhook** / **AI Prompts**  /  **Environment Variables**
+    - **Integrations**
+    - **APIs** > **Services**
+    - **Access Control** > **Applications**
+2. Locate the specific resource.
+    <p align="center"><img src="/content/img/RBAC/adding-tags-to-workflow.png" alt="Adding a tag to an existing workflow" width="90%" height="auto"></img></p>
+3. In the **Actions** column, select the **Tag** icon. <br/>A pop-up window for Edit Tags appears.
+    <p align="center"><img src="/content/img/RBAC/editing-tags-in-conductor.png" alt="Editing a tag" width="60%" height="auto"></img></p>
+4. To create a tag, enter a tag in the `key:value` format and select **Enter.**
+5. To remove a tag, select **x** next to the tag.
+6. Once tagged, select **Save**.
+
 ## Tags dashboard
 
-The tags dashboard shows tags in the cluster and the resources associated with each tag. Use it to audit whether tag-based permissions are still scoped correctly.
+The tags dashboard provides a complete overview of all tags in the cluster and the resources associated with each tag. Use it to audit whether tag-based permissions are still scoped correctly.
+
+**To view the tags dashboard:**
+
+1. Go to **Definitions** > **Tags Dashboard** from the left navigation menu on your Conductor cluster.
+
+<p align="center"><img src="/content/img/tags-dashboard.png" alt="Tags dashboard in Orkes Conductor" width="90%" height="auto"></img></p>
+
+The page displays the total number of tags in the cluster, along with the count of resources associated with each tag.
 
 Useful review questions:
 
@@ -76,3 +101,50 @@ Permission levels are:
 | Delete | Delete resources with the tag. |
 
 Before granting tag permissions, confirm that the resources already using the tag are intended to be included. Future resources that receive the same tag can inherit access through the existing permission grant, so tag assignment should be part of your release review process.
+
+
+=== "For Groups"
+
+    !!! info
+        This feature is only available to Admins.
+
+    **To add permissions to a group:**
+
+    1. Go to **Access Control** > **Groups** from the left navigation menu on your Conductor cluster.
+    2. Select the group name or the **Edit** icon located next to the group name.
+    3. In the **Permissions** section, select **+ Add Permission**.
+    4. Toggle to the **Tag** tab and select the tag to provide access to.
+    5. Toggle the access levels for your selected resource:
+        - **Read**: Users will be able to view the resource.
+        - **Update**: Users will be able to update the resource.
+        - **Execute**: Users will be able to execute the resource.
+        - **Delete**: Users will be able to delete the resource.
+    6. Select **Add permissions**.
+
+    All users in the group now have access to all resources associated with the tag. You can select the drop-down icon to view all of the tagged resources.
+
+    <p align="center"><img src="/content/img/RBAC/adding-tags-to-a-user-group-in-conductor.png" alt="Adding tags to a user group" width="90%" height="auto"></img></p>
+
+=== "For Applications"
+
+    **To add permissions to an application:**
+
+    1. Go to **Access Control** > **Applications** from the left navigation menu on your Conductor cluster.
+    2. Select the application name or the **Edit** icon located next to the application name.
+    3. In the **Permissions** section, select **+ Add permission**.
+    4. Toggle to the **Tag** tab and select the tag to provide access to.
+    5. Toggle the access levels for your selected resource:
+        - **Read**: The application will be able to view the resource.
+        - **Update**: The application will be able to update the resource.
+        - **Execute**: The application will be able to execute the resource.
+        - **Delete**: The application will be able to delete the resource.
+    6. Select **Add permissions**.
+
+    The application now has access to all resources associated with the tag. You can select the drop-down icon to view all of the tagged resources.
+
+    <p align="center"><img src="/content/img/RBAC/adding-tags-to-application-in-orkes-conductor.png" alt="Adding tags to application in Conductor" width="90%" height="auto"></img></p>
+
+
+## APIs
+
+Manage tags programmatically with the [Tags API](/content/reference-docs/api/tags), including adding, listing, and removing tags on resources.

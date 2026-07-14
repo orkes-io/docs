@@ -42,7 +42,7 @@ Let's analyze the app in 3 steps.
 >
 > For details on how to run Conductor take a look at [our guide](https://conductor-oss.github.io/conductor/devguide/running/deploy.html).
 >
-> The examples expect the server to be listening on http://localhost:8080.
+> The examples expect the server to be listening on <YOUR-CLUSTER-URL>.
 
 
 ### Step 1: Creating the workflow by code
@@ -131,7 +131,7 @@ The Go code translates to this JSON defininition. You can view this in your Cond
 > Workflows can also be registered using the API. Using the JSON you can make the following request:
 > ```shell
 > curl -X POST -H "Content-Type:application/json" \
-> http://localhost:8080/api/metadata/workflow -d @greetings_workflow.json
+> <YOUR-CLUSTER-URL>/api/metadata/workflow -d @greetings_workflow.json
 > ```
 
 In [Step 3](#step-3-running-the-application) you will see how to create an instance of `executor.WorkflowExecutor`.
@@ -230,7 +230,7 @@ The `workflowExecutor` gives us an abstraction on top of the `apiClient` to mana
 
 #### Running the example with a local Conductor OSS server:
 ```shell
-export CONDUCTOR_SERVER_URL="http://localhost:8080/api"
+export CONDUCTOR_SERVER_URL="<YOUR-CLUSTER-URL>/api"
 cd examples
 go run hello_world/main.go
 ```

@@ -1,6 +1,6 @@
 ---
 title: "Set Variable"
-description: "Set Variable Task — store and update workflow-level variables in Conductor for use across subsequent tasks."
+description: "Learn how the Set Variable task creates or updates workflow variables during workflow execution in Orkes Conductor."
 canonical_route: "reference-docs/operators/set-variable"
 updated: "2026-05-14"
 keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
@@ -8,25 +8,34 @@ keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration
 
 # Set Variable
 
-```json
-"type" : "SET_VARIABLE"
-```
+The Set Variable task allows you to create or update workflow-level variables. Use this task to define shared variables at the workflow level that can be accessed or overwritten by subsequent tasks in the workflow.
 
-The Set Variable task (`SET_VARIABLE`) allows you to construct shared variables at the workflow level across tasks. 
-
-These variables can be initialized, accessed, or overwritten at any point in the workflow:
-
-* Once initialized, the variable can be referenced in any subsequent task using "${workflow.variables._someName_}" (replacing _someName_ with the actual variable name).
-* Initialized values can be overwritten by a subsequent Set Variable task.
+Variables can be initialized or updated at any point during workflow execution. If a variable with the same name is set again, the new value overwrites the existing value.
 
 ## Task parameters
 
-To configure the Set Variable task, set your desired variable names and their respective values in `inputParameters`. The values can be set in two ways:
+Configure these parameters for the Set Variable task.
 
-* Hard-coded in the workflow definition, or
-* A dynamic reference.
+| Parameter     | Description                                                                                                                                                                                                | Required/ Optional |
+| ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
+| **inputParameters** | Defines one or more workflow-level variables as key-value pairs. Each key represents the variable name, and the corresponding value is the variable value to be set. Can be a string, number, boolean, null, or object/array.<br/><br/>Values can be hard-coded in the workflow definition or [passed as a dynamic variable](/content/developer-guides/passing-inputs-to-task-in-conductor). | Required. |
 
-## JSON configuration
+Once a variable is initialized, it can be accessed in any subsequent task using the expression `${workflow.variables.variableName}`.
+
+The following are generic configuration parameters that can be applied to the task and are not specific to the Set Variable task.
+
+<details>
+<summary>Other generic parameters</summary>
+
+Here are other parameters for configuring the task behavior.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| optional | Whether the task is optional. <br/><br/>If set to`true`, any task failure is ignored, and the workflow continues with the task status updated to `COMPLETED_WITH_ERRORS`. However, the task must reach a terminal state. If the task remains incomplete, the workflow waits until it reaches a terminal state before proceeding. | Optional. | 
+
+</details>
+
+## Task configuration
 
 This is the task configuration for a Set Variable task.
 
@@ -36,56 +45,121 @@ This is the task configuration for a Set Variable task.
   "taskReferenceName": "set_variable_ref",
   "type": "SET_VARIABLE",
   "inputParameters": {
-    "variableName": "value",
-    "variableName2": "${workflow.input.someKey}"
-    "variableName3": 5,
+    "variableName": "value"
   }
 }
 ```
 
+## Adding a Set Variable task in UI
+
+**To add a Set Variable task:**
+
+1. In your workflow, select the **(+)** icon and add a **Set Variable** task.
+2. In **Variables**, add the desired workflow variables that will be initialized or replaced with a new value.
+3. For each workflow variable, configure the following:
+   - **Key**—The variable name.
+   - **Value**—The variable value, which can be a [dynamic input](/content/developer-guides/passing-inputs-to-task-in-conductor) (for example, `${workflow.input.someKey}`) or a fixed value.
+
+<p><img src="/content/img/ui-guide-set-variable.png" alt="Screenshot of Set Variable Task in Orkes Conductor"/></p>
+
+## Use cases
+
+**Passing Do While loop output to downstream tasks**
+
+Use a Set Variable task inside a Do While loop to make loop output available to tasks after the loop completes. Task outputs inside a loop are stored with iteration-suffixed references (for example, `loopTaskRef__1.output.result`), which return null when referenced outside the loop. Storing the value as a workflow variable using Set Variable is the required workaround. For more information, see [Do While](/content/reference-docs/operators/do-while#passing-loop-output-to-downstream-tasks) task.
+
+**Sharing variables across workflows**
+
+The scope of the Set Variable task is limited to its workflow. An initialized variable in one workflow will not carry over to another workflow or sub-workflow and will have to be initialized again using a new Set Variable task. In some cases, you can consider setting up [global environment variables](https://orkes.io/content/developer-guides/using-environment-variables) to manage frequently accessed variables across workflows.
+
 ## Examples
 
-In this example workflow, a username is stored as a variable so that it can be reused in other tasks that require the username.
+Here are some examples for using the Set Variable task.
+
+<details>
+<summary>Using the Set Variable task in a workflow</summary>
+<p>
+
+In this example, the workflow accepts an `orderId` as input. The Set Variable task stores the value as a workflow-level variable, which is then reused in multiple HTTP tasks without repeating the original expression.
+
+**To create a workflow:**
+
+1. Go to **Definitions** > **Workflow**, from the left navigation menu on your Conductor cluster.
+2. Select **+ Define workflow**.
+3. In the **Code** tab, paste the following workflow definition:
 
 ```json
 {
-  "name": "Welcome_User_Workflow",
-  "description": "Designate a user to be welcomed",
-  "tasks": [
-    {
-      "name": "set_name",
-      "taskReferenceName": "set_name_ref",
-      "type": "SET_VARIABLE",
-      "inputParameters": {
-        "name": "${workflow.input.userName}"
-      }
-    },
-    {
-      "name": "greet_user",
-      "taskReferenceName": "greet_user_ref",
-      "inputParameters": {
-        "var_name": "${workflow.variables.name}"
-      },
-      "type": "SIMPLE"
-    },
-    {
-      "name": "send_reminder_email",
-      "taskReferenceName": "send_reminder_email_ref",
-      "inputParameters": {
-        "var_name": "${workflow.variables.name}"
-      },
-      "type": "SIMPLE"
-    }
-  ]
+ "name": "Reuse_Order_Id_With_Echo",
+ "description": "Store an order ID as a workflow variable and reuse it",
+ "version": 1,
+ "tasks": [
+   {
+     "name": "set_order_id",
+     "taskReferenceName": "set_order_id_ref",
+     "inputParameters": {
+       "orderId": "${workflow.input.orderId}"
+     },
+     "type": "SET_VARIABLE"
+   },
+   {
+     "name": "echo_order_id_get",
+     "taskReferenceName": "echo_order_id_get_ref",
+     "inputParameters": {
+       "method": "GET",
+       "uri": "https://postman-echo.com/get?orderId=${workflow.variables.orderId}",
+       "encode": true
+     },
+     "type": "HTTP"
+   },
+   {
+     "name": "echo_order_id_post",
+     "taskReferenceName": "echo_order_id_post_ref",
+     "inputParameters": {
+       "method": "POST",
+       "uri": "https://postman-echo.com/post",
+       "headers": {
+         "Content-Type": "application/json"
+       },
+       "body": {
+         "orderId": "${workflow.variables.orderId}"
+       }
+     },
+     "type": "HTTP"
+   }
+ ],
+ "inputParameters": [
+   "orderId"
+ ],
+ "schemaVersion": 2
 }
 ```
 
-In the example above, `set_name` is a Set Variable task that initializes a variable `name` using a workflow input reference. In subsequent tasks, the variable is later referenced using "${workflow.variables.name}".
+4. Select **Save** > **Confirm**.
 
+**To run the workflow:**
 
-## Limitations
+1. Go to the **Run** tab, and enter the **Input params**. For example:
 
-Here are some limitation when using the Set Variable task:
+```json
+{
+  "orderId": "ORD-1001"
+}
+```
 
-* **Payload limit**—By default, there is a hard limit for the payload size of variables defined in the JVM system properties (`conductor.max.workflow.variables.payload.threshold.kb`) of 256KB. Exceeding this limit will cause the Set Variable task to fail.
-* **Variable scope**—The scope of the Set Variable task is limited to its workflow. An initialized variable in one workflow will not carry over to another workflow or sub-workflow and will have to be re-initialized using another Set Variable task.
+2. Select **Execute**.
+
+Once the workflow completes, verify that the variable was reused:
+
+- Open the **echo_order_id_get_ref** task output and confirm that the response contains `args.orderId: "ORD-1001"`:
+
+<p><img src="/content/img/set-variable-example.png" alt="Task output verifying that the variable was passed."/></p>
+
+- Open the **echo_order_id_post_ref** task output and confirm that the response body contains `json.orderId: "ORD-1001"`:
+
+<p><img src="/content/img/set-variable-example-reused.png" alt="Task output verifying that the variable was passed."/></p>
+
+This confirms that the `orderId` value was stored once using the Set Variable task and reused across multiple downstream tasks using `${workflow.variables.orderId}`.
+
+</p>
+</details>

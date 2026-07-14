@@ -57,6 +57,7 @@ In this tutorial, we’ll use SendGrid to send emails. To do that, you must set 
     - [A verified sender email in SendGrid](https://www.twilio.com/docs/sendgrid/ui/sending-email/sender-verification)
 
 **To create a SendGrid integration:**
+
 1. Go to [**Integrations**](https://developer.orkescloud.com/integrations) from the left navigation menu on your Conductor cluster.
 2. Select **+ New integration**.
 3. In the **Integrations** section, choose [**SendGrid Email**](https://orkes.io/content/integrations/email/sendgrid#step-2-add-an-integration-for-sendgrid-email).
@@ -70,6 +71,7 @@ The workflow uses a Human task in Orkes Conductor to route the loan request for 
 In this tutorial, you’ll use the Conductor UI to complete approvals. For this, a user form is to be created in Conductor.
 
 **To create a user form:**
+
 1. Go to [**Definitions** > **User Forms**](https://developer.orkescloud.com/human/templates) from the left navigation menu on your Conductor cluster.
 2. Select **+ New form.**
 3. In the **Code** tab, paste the following code:
@@ -239,6 +241,7 @@ Update the **Model(s)** drop-down with the OpenAI integration created in [Step 1
 Orkes Conductor lets you define workflows as JSON, through [SDKs](https://orkes.io/content/category/sdks), [APIs](https://orkes.io/content/category/ref-docs/api), or the [UI](https://orkes.io/content/developer-guides/build-workflows-using-ui).
 
 **To create a workflow using Conductor UI:**
+
 1. Go to [**Definitions** > **Workflow**](https://developer.orkescloud.com/workflowDef) from the left navigation menu on your Conductor cluster.
 2. Select **+ Define workflow**.
 3. In the **Code** tab, paste the following code:
@@ -432,6 +435,7 @@ Next, replace all placeholder values with your actual reviewer information and i
 ## Step 6: Execute workflow
 
 **To test the workflow:**
+
 1. From your workflow definition, go to the **Run** tab.
 2. Set the input parameter. For example:
 

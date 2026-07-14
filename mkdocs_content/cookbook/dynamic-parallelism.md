@@ -24,7 +24,7 @@ Use `dynamicForkTasksParam` + `dynamicForkTasksInputParamName` when each paralle
       "type": "INLINE",
       "inputParameters": {
         "evaluatorType": "graaljs",
-        "expression": "(function() { return { dynamicTasks: [{name: 'HTTP', taskReferenceName: 'fetch_weather', type: 'HTTP'}, {name: 'HTTP', taskReferenceName: 'fetch_news', type: 'HTTP'}], dynamicTasksInput: { fetch_weather: { http_request: {uri: 'https://api.weather.gov/points/39.7456,-104.9994', method: 'GET'}}, fetch_news: { http_request: {uri: 'https://hacker-news.firebaseio.com/v0/topstories.json', method: 'GET'}}}}; })()"
+        "expression": "(function() { return { dynamicTasks: [{name: 'HTTP', taskReferenceName: 'fetch_weather', type: 'HTTP'}, {name: 'HTTP', taskReferenceName: 'fetch_news', type: 'HTTP'}], dynamicTasksInput: { fetch_weather: { uri: 'https://api.weather.gov/points/39.7456,-104.9994', method: 'GET'}, fetch_news: { uri: 'https://hacker-news.firebaseio.com/v0/topstories.json', method: 'GET'}}}; })()"
       }
     },
     {
@@ -52,12 +52,14 @@ Use `dynamicForkTasksParam` + `dynamicForkTasksInputParamName` when each paralle
 **Register and run:**
 
 ```shell
-curl -X POST 'http://localhost:8080/api/metadata/workflow' \
+curl -X POST '<YOUR-CLUSTER-URL>/api/metadata/workflow' \
   -H 'Content-Type: application/json' \
+  -H "X-Authorization: $TOKEN" \
   -d @dynamic_fork_different_tasks.json
 
-curl -X POST 'http://localhost:8080/api/workflow/dynamic_fork_different_tasks' \
+curl -X POST '<YOUR-CLUSTER-URL>/api/workflow/dynamic_fork_different_tasks' \
   -H 'Content-Type: application/json' \
+  -H "X-Authorization: $TOKEN" \
   -d '{}'
 ```
 
@@ -80,9 +82,9 @@ Use `forkTaskName` + `forkTaskInputs` when running the **same** task type across
       "inputParameters": {
         "forkTaskName": "HTTP",
         "forkTaskInputs": [
-          {"http_request": {"uri": "https://jsonplaceholder.typicode.com/posts/1", "method": "GET"}},
-          {"http_request": {"uri": "https://jsonplaceholder.typicode.com/posts/2", "method": "GET"}},
-          {"http_request": {"uri": "https://jsonplaceholder.typicode.com/posts/3", "method": "GET"}}
+          {"uri": "https://jsonplaceholder.typicode.com/posts/1", "method": "GET"},
+          {"uri": "https://jsonplaceholder.typicode.com/posts/2", "method": "GET"},
+          {"uri": "https://jsonplaceholder.typicode.com/posts/3", "method": "GET"}
         ]
       }
     },
@@ -101,12 +103,14 @@ Use `forkTaskName` + `forkTaskInputs` when running the **same** task type across
 **Register and run:**
 
 ```shell
-curl -X POST 'http://localhost:8080/api/metadata/workflow' \
+curl -X POST '<YOUR-CLUSTER-URL>/api/metadata/workflow' \
   -H 'Content-Type: application/json' \
+  -H "X-Authorization: $TOKEN" \
   -d @fan_out_http_calls.json
 
-curl -X POST 'http://localhost:8080/api/workflow/fan_out_http_calls' \
+curl -X POST '<YOUR-CLUSTER-URL>/api/workflow/fan_out_http_calls' \
   -H 'Content-Type: application/json' \
+  -H "X-Authorization: $TOKEN" \
   -d '{}'
 ```
 
@@ -150,11 +154,13 @@ Each element in `forkTaskInputs` spawns one instance of the `process_region` wor
 **Register and run:**
 
 ```shell
-curl -X POST 'http://localhost:8080/api/metadata/workflow' \
+curl -X POST '<YOUR-CLUSTER-URL>/api/metadata/workflow' \
   -H 'Content-Type: application/json' \
+  -H "X-Authorization: $TOKEN" \
   -d @parallel_sub_workflows.json
 
-curl -X POST 'http://localhost:8080/api/workflow/parallel_sub_workflows' \
+curl -X POST '<YOUR-CLUSTER-URL>/api/workflow/parallel_sub_workflows' \
   -H 'Content-Type: application/json' \
+  -H "X-Authorization: $TOKEN" \
   -d '{}'
 ```

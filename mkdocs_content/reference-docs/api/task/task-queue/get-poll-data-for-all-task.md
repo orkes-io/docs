@@ -1,6 +1,6 @@
 ---
 title: "Get Poll Data for All Tasks"
-description: "Use the Orkes Conductor tasks API to get Poll Data for All Tasks. Includes endpoint details, authentication, parameters, request bodies, response behavior, and."
+description: "Use the Orkes Conductor tasks API to get Poll Data for All Tasks. Includes endpoint details, authentication, parameters, request bodies, response behavior."
 canonical_route: "reference-docs/api/task/task-queue/get-poll-data-for-all-task"
 updated: "2026-05-14"
 keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration, workflow tasks, workflow workers, task queues"

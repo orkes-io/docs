@@ -20,7 +20,7 @@ If you don't already have a Conductor server running, pick one:
 ```shell
 docker run -p 8080:8080 conductoross/conductor:latest
 ```
-The UI will be available at `http://localhost:8080` and the API at `http://localhost:8080/api`
+The UI will be available at `<YOUR-CLUSTER-URL>` and the API at `<YOUR-CLUSTER-URL>/api`
 
 **MacOS / Linux (one-liner):** (If you don't want to use docker, you can install and run the binary directly)
 ```shell
@@ -169,7 +169,7 @@ Run it:
 > ```
 
 That's it -- you just defined a worker, built a workflow, and executed it. Open the Conductor UI (default:
-[http://localhost:8080](http://localhost:8080)) to see the execution.
+<YOUR-CLUSTER-URL>) to see the execution.
 
 ## Comprehensive worker example
 
@@ -357,7 +357,7 @@ workflowClient.restartWorkflow(workflowId, false);
 - Monitor JVM memory and GC pauses
 
 **Connection refused errors:**
-- Verify Conductor server is running: `curl http://localhost:8080/health`
+- Verify Conductor server is running: `curl <YOUR-CLUSTER-URL>/health`
 - Check firewall rules if connecting to remote server
 - For Orkes Conductor, verify auth credentials are correct
 
@@ -380,7 +380,7 @@ workflowClient.restartWorkflow(workflowId, false);
 
 ## File handling
 
-For workflows that move binary file payloads, the SDK exposes `FileHandler` — a worker-facing reference to a file in the configured backend. Pass it as a worker input/output and the runtime handles upload, download, and the metadata roundtrip transparently. See [File Storage](https://docs.conductor-oss.org/documentation/advanced/file-storage) for the operator-side configuration and [File API](/content/reference-docs/api/files) for the underlying REST surface.
+For workflows that move binary file payloads, the SDK exposes `FileHandler` — a worker-facing reference to a file in the configured backend. Pass it as a worker input/output and the runtime handles upload, download, and the metadata roundtrip transparently. See [File Storage](https://docs.conductor-oss.org/documentation/advanced/file-storage) for the operator-side configuration and [File API](/content/category/ref-docs/api) for the underlying REST surface.
 
 The relevant types in `org.conductoross.conductor.sdk.file`:
 
@@ -507,7 +507,7 @@ workflow.add(indexTask);
 Run all agentic examples:
 
 ```shell
-export CONDUCTOR_SERVER_URL=http://localhost:8080/api
+export CONDUCTOR_SERVER_URL=<YOUR-CLUSTER-URL>/api
 export OPENAI_API_KEY=your-key   # or ANTHROPIC_API_KEY
 
 # Run all examples end-to-end

@@ -20,12 +20,12 @@ For quick testing and experimentation, use the [Developer Edition](https://devel
 
 ## Orkes Cloud
 
-Orkes Cloud is the fully managed, enterprise version of Orkes Conductor. It provides dedicated Conductor instances and can be deployed in one of the following ways:
+[Orkes Cloud](https://orkes.io/cloud) is the fully managed, enterprise version of Orkes Conductor. It provides dedicated Conductor instances and can be deployed in one of the following ways:
 
 - **Orkes-hosted**, where Orkes manages the infrastructure.
 - **Customer-hosted**, where Orkes Cloud runs within your cloud environment, such as AWS, Azure, or GCP.
 
-Orkes Cloud includes enterprise capabilities such as security, scalability, observability, and operational management. For details, see https://orkes.io/cloud. 
+Orkes Cloud includes enterprise capabilities such as security, scalability, observability, and operational management.
 
 ## Local setup with Docker
 
@@ -45,7 +45,7 @@ For enterprise customers to conduct local development and testing, Orkes provide
 
     **To download and run the container:**
     1. Log in to DockerHub using your Orkes access credentials. When prompted for a password, use the access token provided by Orkes.
-    2. Download and run the latest container build​​:
+    2. Download and run the latest container build:
 
     ```bash
     export orkes_access_key=<ACCESS_KEY_PROVIDED_BY_ORKES>

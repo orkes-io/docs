@@ -1,9 +1,9 @@
 ---
 title: "Task Workers and Queues"
-description: "Learn how to configure and manage task workers and queues, including writing workers, scaling them, and routing tasks to the appropriate workers in Orkes Conductor."
+description: "Learn how to configure and manage task workers and queues, including writing workers, scaling them."
 ---
 # Task Workers and Queues
-Learn how to configure and manage task workers and queues, including writing workers, scaling them, and routing tasks to the appropriate workers in Orkes Conductor.
+Learn how to configure and manage task workers and queues, including writing workers, scaling them.
 
 Use this section when you need documentation about task workers and queues in Orkes Conductor.
 

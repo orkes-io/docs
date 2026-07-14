@@ -9,35 +9,45 @@ keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration
 # Import BPMN Files as Workflows
 
 !!! info "Available since"
-    v5.0.1 and later
+    - v5.0.1 and later
 
-Use the BPMN importer when you already have process models in BPMN or XML and want to bootstrap equivalent Conductor workflow definitions. Treat the imported workflow as a starting point: review task names, inputs, outputs, error handling, and worker boundaries before using it in production.
+In Orkes Conductor, you can quickly convert BPMN (Business Process Model and Notation) files into workflow definitions. This simplifies the migration from BPMN-based systems by supporting standard XML and BPMN formats. Whether you’re transitioning from legacy tools or starting with predefined processes, the BPMN importer enables a fast, code-free transition into the Conductor ecosystem.
 
 !!! tip "5-minute path"
     Import the BPMN file, inspect the generated workflow JSON, normalize task reference names, add retries and timeouts, then test the workflow with representative input.
 
-## What gets imported
-
-The importer converts supported BPMN structure into a Conductor workflow definition. After import, the workflow behaves like any other Conductor workflow: it can be versioned, started by API, tested, monitored, and edited.
-
-Common post-import checks:
-
-- Workflow `name`, `version`, `description`, and `ownerEmail`
-- Task names and `taskReferenceName` values
-- Inputs expected by each task
-- Output mappings used by downstream tasks
-- Branches, joins, loops, waits, and sub-process equivalents
-- Retry, timeout, and compensation behavior
-
 ## Importing BPMN files
 
-Import from **Definitions > Workflows > Import BPMN** in the Conductor UI. You can upload a `.bpmn` file, drag and drop the file, or paste raw BPMN XML.
+**To import a BPMN file:**
 
-Before importing into a shared environment, decide whether the importer may overwrite an existing workflow with the same name. For production, prefer creating a new workflow name or version, then promote it deliberately.
+1. Go to **Definitions** > **Workflow** from the left navigation menu on your Conductor cluster.
+2. Select the **⏷** icon next to **+ Define workflow**.
+3. From the dropdown menu, select **Import BPMN**.
+   <p align="center"><img src="/content/img/import-bpmn.png" alt="Importing BPMN files" width="100%" height="auto"></img></p>
+4. Import files using one of the following methods:
+    - **Select file**: Upload a .bpmn file from your local device.
+    - **Drag and drop**: Drop the BPMN files directly into the designated area in the UI.
+    - **Code**: Paste the raw XML content of your BPMN directly in the code tab.
+   <p align="center"><img src="/content/img/bpmn-importer.png" alt="BPMN Importer" width="50%" height="auto"></img></p>
+5. The **Workflow Name** field is pre-filled with the file name by default. Edit it if you want to use a different name.
+6. Toggle **Overwrite workflow** on to replace an existing workflow definition with the same name.  Disable this option if you want to prevent overwrites.
+7. Select **Import**.
+
+The BPMN file is converted into workflow definitions in Orkes Conductor. Each process defined in the imported BPMN file is converted into an equivalent Orkes Conductor workflow definition. 
+ 
+<p align="center"><img src="/content/img/converting-bpmn-to-workflow.gif" alt="BPMN Importer" width="100%" height="auto"></img></p>
+
+After importing, the newly created workflows appear in **Definitions** > **Workflows**. 
+
+The import will fail with an error if the BPMN file:
+
+- Contains a circular reference
+- Has multiple start events
+- Is incomplete or malformed
 
 ## Validate the generated workflow
 
-After import, inspect the generated workflow definition rather than trusting the visual shape alone.
+The BPMN importer converts supported BPMN structure into a Conductor workflow definition. After import, the workflow behaves like any other Conductor workflow: it can be versioned, started by API, tested, monitored, and edited. Inspect the generated workflow definition rather than trusting the visual shape alone.
 
 ```json
 {
@@ -57,13 +67,15 @@ After import, inspect the generated workflow definition rather than trusting the
 }
 ```
 
-Focus on these production requirements:
+Check the following after every BPMN import:
 
-- Use stable task reference names because downstream expressions and recovery operations depend on them.
-- Register task definitions for worker tasks.
-- Add `retryCount`, `retryLogic`, `timeoutSeconds`, `responseTimeoutSeconds`, and `pollTimeoutSeconds` where needed.
-- Add schemas if workflow or task input contracts must be validated.
-- Add a failure workflow if the process needs compensation.
+- Workflow `name`, `version`, `description`, and `ownerEmail`.
+- Task names and `taskReferenceName` values. Use stable reference names because downstream expressions and recovery operations depend on them.
+- Inputs expected by each task and output mappings used by downstream tasks.
+- Branches, joins, loops, waits, and sub-process equivalents.
+- Retry, timeout, and compensation behavior. Register task definitions for worker tasks, and add `retryCount`, `retryLogic`, `timeoutSeconds`, `responseTimeoutSeconds`, and `pollTimeoutSeconds` where needed.
+- Schemas, if workflow or task input contracts must be validated.
+- A failure workflow, if the process needs compensation.
 
 ## Production notes
 

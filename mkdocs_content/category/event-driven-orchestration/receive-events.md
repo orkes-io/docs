@@ -1,25 +1,25 @@
 ---
 title: "Receive Events"
 description: "Trigger workflows or resume waiting executions from webhooks, event handlers, and external event sources in Orkes Conductor."
+canonical_route: "category/event-driven-orchestration/receive-events"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, event-driven orchestration, webhooks, Kafka orchestration, RabbitMQ orchestration"
 ---
+
 # Receive Events
-Trigger workflows or resume waiting executions from webhooks, event handlers, and external event sources in Orkes Conductor.
+
+Trigger workflows or resume waiting executions from webhooks, event handlers, and external event sources.
 
 Use these pages when external events should start a workflow, resume a waiting workflow, or update execution state.
 
-Choose webhooks for HTTP callbacks, event handlers for broker/internal event sinks, and Wait for Webhook for long-running external callbacks.
+Choose webhooks for HTTP callbacks, event handlers for broker/internal event sinks, and the Wait for Webhook task for long-running external callbacks.
 
-## Recommended path
+## Wait for Webhook Task
 
-If you are unsure where to begin, start with **Webhooks**, **Wait for Webhook Task**, **Event Handlers**, **Event Handler Reference**. These pages cover the most common entry points for this section.
+The Wait for Webhook task pauses a workflow until a matching external callback arrives, then resumes execution with the callback payload. Use it when a workflow needs to wait on an asynchronous, long-running external process — such as a third-party approval, payment confirmation, or human review — before continuing, and see the [Wait for Webhook Task reference](/content/reference-docs/system-tasks/wait-for-webhook) for the matching criteria, timeout behavior, and payload schema.
 
-## When to use this section
 
-Use these pages to answer implementation questions, compare available primitives, and find the exact guide or reference page for the next step in your Orkes Conductor project.
-
-## Pages
+## In this section
 
 - [Webhooks](/content/developer-guides/webhook-integration)
-- [Wait for Webhook Task](/content/reference-docs/system-tasks/wait-for-webhook)
 - [Event Handlers](/content/developer-guides/event-handler)
-- [Event Handler Reference](/content/reference-docs/event-handlers)

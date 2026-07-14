@@ -1,127 +1,332 @@
 ---
-title: "Event Task"
-description: "Event Task — publish events to message brokers (Kafka, SQS, NATS) from Conductor workflows for event-driven orchestration."
+title: "Event"
+description: "Learn how the Event task publishes events to external eventing systems in Orkes Conductor."
 canonical_route: "reference-docs/system-tasks/event"
 updated: "2026-05-14"
 keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, event-driven orchestration, webhooks, Kafka orchestration, RabbitMQ orchestration, workflow tasks, workflow workers, task queues"
 ---
 
-# Event Task
+# Event
 
-```json
-"type" : "EVENT"
-```
+The Event task is used to publish events into message brokers. It supports various message brokers, including AMQP, Amazon MSK, AWS SQS, Azure Service Bus, Confluent Kafka, Apache Kafka, NATS Messaging, GCP Pub/Sub, and IBM MQ.
 
-The Event task (`EVENT`) is used to publish events to supported eventing systems. It enables event-based dependencies within workflows and tasks, making it possible to trigger external systems as part of the workflow execution.
+An Event task publishes a message to an event queue or topic. The specific message broker used depends on the configured sink. The sink parameter defines the message broker type, integration name, and queue/topic name. The task execution payload is sent to this sink, and Conductor automatically appends additional system input parameters to the payload.
 
-The following queuing systems are supported:
-
-- Conductor internal queue
-- AMQP (RabbitMQ)
-- Kafka
-- NATS
-- NATS Streaming
-- SQS
-
-For details on configuring connections to these event buses (Kafka bootstrap servers, NATS URLs, AMQP credentials, etc.), see the [Event Bus Orchestration](/content/eventing) guide.
-
+!!! info "Prerequisites"
+    
+    - [Integrate the required message broker](/content/category/integrations/message-broker) with Orkes Conductor.
+    - Ensure the required topic/queue is created within your message broker.
 
 ## Task parameters
 
-Use these parameters in top level of the Event task configuration.
+Configure these parameters for the Event task.
 
-| Parameter          | Type                | Description                                       | Required / Optional  |
-| ------------------ | ------------------- | ------------------------------------------------- | -------------------- |
-| sink               | String              | The target event queue in the format `prefix:location`, where the prefix denotes the queuing system, and the location represents the specific queue name (e.g., `send_email_queue`). Supported prefixes: <ul><li>`conductor`</li> <li>`ampq`, `amqp_queue`, or `amqp_exchange`</li> <li>`kafka`</li> <li>`nats`</li> <li>`nats-stream`</li> <li>`sqs`</li></ul> <br/> **Note:** For all queuing systems except the Conductor queue, you should use the queue's name, not the URI in `location`. The URI will be looked up based on the queue name. Refer to [Conductor sink configuration](#conductor-sink-configuration) for more details on how to use the Conductor queue.         | Required. |
-| inputParameters   | Map[String, Any].    | Any other input parameters for the Event task, which will be published to the queuing system.  | Optional. |
-| asyncComplete     | Boolean              | Whether the task is completed asynchronously. The default value is false. <ul><li>**false**—Task status is set to COMPLETED upon successful execution.</li> <li>**true**—Task status is kept as IN_PROGRESS until an external event marks it as complete.</li></ul> | Optional. |
+| Parameter       | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | Required/ Optional |
+| --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
+| sink            | The event queue sink in the format: <br/>**message-broker-type:integration-name:topic/queue-name**<br/>Where,<ul><li>**message-broker-type**—The message broker type where the payload is being sent. Supported types:<ul><li>amqp</li><li>sqs</li><li>azure</li><li>kafka</li><li>nats</li><li>gcp_pubsub</li><li>ibm_mq</li></ul></li><li>**integration-name**—The integration name added to the cluster.</li><li>**topic/queue-name**—The name of the queue or topic where the payload is being sent.</li></ul> | Required.          |
+| inputParameters | The input parameters for the Event task, which can be [passed as a dynamic variable](/content/developer-guides/passing-inputs-to-task-in-conductor) or a fixed value. These parameters determine the payload sent to the event sink during task execution.                                                                                                                                                                                                           | Optional.          |
 
+### System-appended input payloads
 
-### Conductor sink configuration
+During workflow execution, Conductor automatically adds the following parameters to the payload sent to the message broker. Ensure that these fields are not present in the input payload, as they will be overwritten at runtime.
 
-When using Conductor as sink, you have two options to set the sink: 
-* `conductor` 
-* `conductor:<workflow_name>:<queue_name>` (same as the `event` value of the event handler)
+- **workflowInstanceId**–Workflow (execution) ID from where this event was sent.
+- **workflowType**–Name of the workflow definition.
+- **workflowVersion**–Version of the workflow definition.
+- **correlationId**–Correlation ID of the workflow execution.
 
-If the workflow name and queue name is omitted, it will default to the Event task's workflow name and its own `taskReferenceName` for the queue name.
+**Example**
 
-## Configuration JSON
-
-Here is the task configuration for an Event task.
+Given the following task configuration:
 
 ```json
 {
-  "name": "event",
-  "taskReferenceName": "event_ref",
+  "name": "event_task",
+  "taskReferenceName": "event_task_ref",
   "type": "EVENT",
-  "inputParameters": {},
-  "sink": "sqs:sqs_queue_name",
-  "asyncComplete": false
+  "sink": "kafka:integration-name:topic-name",
+  "inputParameters": {
+    "myKey": "myValue",
+    "myNumber": 100
+  }
 }
 ```
 
-## Output
+The execution will produce the following input parameters:
 
-The Event task will return the following parameters.
+```json
+{
+  "myKey": "myValue",
+  "myNumber": 100,
+  "workflowInstanceId": "967b19ae-10d1-4b23-b0e7-ae324524dac0",
+  "workflowType": "my-workflow-name",
+  "workflowVersion": "1",
+  "correlationId": "fbdcafd2-69c7-4b75-8dd1-653e33d48746"
+}
+```
 
-| Name             | Type         | Description                                                   |
-| ---------------- | ------------ | ------------------------------------------------------------- |
-| event_produced     | String  | The name of the event produced. When producing an event with Conductor as a sink, the event name will be formatted as
-`conductor:<workflow_name>:<task_reference_name>`.           |
-| workflowInstanceId | String  | The workflow execution ID.                 |
-| workflowType       | String  | The workflow name.                         |
-| workflowVersion    | Integer | The workflow version.                      |
-| correlationId      | String  | The workflow correlation ID.               |
-| sink               | String  | The `sink` value.                          |
-| asyncComplete      | Boolean | The `asyncComplete` value.                 |
-| taskToDomain       | Map[String, String] | The Event task's domain mapping, if any. |
+The following are generic configuration parameters that can be applied to the task and are not specific to the Event task.
 
+<details>
+<summary>Other generic parameters</summary>
 
-The published event's payload is identical to the task output, minus `event_produced`.
+Here are other parameters for configuring the task behavior.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| optional | Whether the task is optional. <br/><br/>If set to`true`, any task failure is ignored, and the workflow continues with the task status updated to `COMPLETED_WITH_ERRORS`. However, the task must reach a terminal state. If the task remains incomplete, the workflow waits until it reaches a terminal state before proceeding. | Optional. |
+| asyncComplete | Whether the task is completed asynchronously. The default value is false.<ul><li>**false**—Task status is set to COMPLETED upon successful execution.</li><li>**true**—Task status is kept as IN_PROGRESS until an external event marks it as complete.</li></ul><span class="table-note"><strong>Available since:</strong> v4.1.40 and later</span> | Optional. | 
+
+</details>
+
+## Task configuration
+
+This is the task configuration for an Event task.
+
+```json
+{
+     "name": "event",
+     "taskReferenceName": "event_ref",
+     "type": "EVENT",
+     "sink": "message-broker-type:integration-name:topic/queue-name",
+     "inputParameters": {
+       "someKey": "someValue"
+     }
+}
+```
+
+## Task output
+
+The task output mirrors the payload sent during execution, including system-appended parameters, and additional metadata. For example:
+
+```json
+{
+ "eventId": "13a6bdfa-e375-4e87-af46-8ba66572ad9c",
+ "sink": "messaging-type:integration-name:queue-or-topic-name",
+ "workflowType": "eventTest",
+ "correlationId": null,
+ "workflowVersion": 1,
+ "_createdBy": "john.doe@acme.com",
+ "workflowInstanceId": "2610b755-c147-11f0-92e1-ae47cf6bc1ce"
+}
+```
+
+## Adding an Event task in UI
+
+**To add an Event task:**
+
+1. In your workflow, select the (**+**) icon and add an **Event** task.
+2. In **Destination** > **Sink**, select the required integration from the drop-down list, then manually append the topic or queue name. The drop-down lists only the integration name. If you do not append a valid topic or queue, the task fails because the payload has no destination.
+3. (Optional) Add any additional input parameters.
+
+<center><p><img src="/content/img/ui-guide-event-task.png" alt="Adding event task" width="1024" height="auto"/></p></center>
 
 ## Examples
 
-In this example, the Event task sends a message to the Conductor queue.
+Here are some examples for using the Event task.
 
-``` json
+<details>
+<summary>Using an Event task to publish events to AWS SQS</summary>
+
+In this example, we will integrate AWS SQS with Orkes Conductor to publish messages to an SQS queue.
+
+1. Integrate AWS SQS with Orkes Conductor.
+2. Create a Workflow with an Event task.
+3. Run Workflow.
+4. Verify message delivery in AWS SQS.
+
+**Step 1: Integrate AWS SQS with Orkes Conductor**
+
+In this example, you integrate AWS SQS using the connection type “Access Key/Secret.” For this, you need the following credentials from your AWS account:
+
+- **Region**: The region of your AWS account. For example, _**us-east-1**_.
+- **Account ID**: The account ID available in your AWS account details.
+- **Access Key** and **Access Secret**: Create an IAM user with the ***AmazonSQSFullAccess*** permission, and then generate the access credentials.
+- **SQS queue**: A queue to receive events from Conductor.
+
+Once you have these credentials, add the integration to your Conductor cluster.
+
+1. Go to **Integrations** > **Connections and Resources** from the left navigation menu on your Conductor cluster.
+2. [Create a new integration for Amazon SQS](https://orkes.io/content/integrations/message-broker/aws-sqs) using the credentials you retrieved.
+
+<center><p><img src="/content/img/aws-sqs-integration.png" alt="AWS SQS sample integration" width="50%" height="auto"/></p></center>
+
+**Step 2: Create a Workflow with an Event task**
+
+This step involves creating a workflow with an Event task. Here, you use the AWS SQS queue as the sink for the event.
+
+For testing purposes, you can quickly build a workflow using the Conductor UI.
+
+**To create a workflow:**
+
+1. Go to **Definitions** > **Workflow**, and select **+ Define Workflow**.
+2. Add an **Event** task with the Sink `sqs:<your-integration-name>:<your-queue-name>`.
+
+Here’s the complete workflow definition JSON:
+
+```json
 {
-  "name": "event_task",
-  "taskReferenceName": "event_0",
-  "inputParameters": {
-    "mod": "${workflow.input.mod}",
-    "oddEven": "${workflow.input.oddEven}",
-    "sink": "conductor",
-    "asyncComplete": false
-  },
-  "type": "EVENT",
-  "decisionCases": {},
-  "defaultCase": [],
-  "forkTasks": [],
-  "startDelay": 0,
-  "joinOn": [],
-  "sink": "conductor",
-  "optional": false,
-  "defaultExclusiveJoinTask": [],
-  "asyncComplete": false,
-  "loopOver": [],
-  "onStateChange": {},
-  "permissive": false
+ "name": "eventTest",
+ "description": "A workflow that sends workflow details to AWS SQS queue",
+ "version": 1,
+ "tasks": [
+   {
+     "name": "event",
+     "taskReferenceName": "event_ref",
+     "type": "EVENT",
+     "sink": "sqs:<your-integration-name>:<your-queue-name>" //Replace with your integration and queue name
+   }
+ ],
+ "schemaVersion": 2
 }
 ```
 
-Here is the Event task output upon execution:
+4. Save the workflow.
 
-``` json
+**Step 3: Run Workflow**
+
+To run the workflow, select the **Execute** button from the workflow definition page.
+
+<center><p><img src="/content/img/running-sqs-workflow-from-ui.png" alt="Running workflow from Conductor UI" width="80%" height="auto"/></p></center>
+
+This takes you to the workflow execution page, where you can view the workflow status. Once the workflow is complete, you can view the workflow output payload sent to the SQS queue.
+
+<center><p><img src="/content/img/workflow-output.png" alt="Workflow output passed into SQS queue" width="100%" height="auto"/></p></center>
+
+**Step 4: Verify message delivery in AWS SQS**
+
+Next, verify the message delivery in the SQS console.
+
+1. In your Amazon SQS console, go to **Amazon SQS** > **Queues** > Select your queue.
+2. Select **Send and receive messages**.
+
+<center><p><img src="/content/img/sqs-queue.png" alt="Viewing the SQS queue in SQS console" width="100%" height="auto"/></p></center>
+
+3. Scroll down to **Receive messages** and select **Poll for messages**.
+
+<center><p><img src="/content/img/poll-for-messages.png" alt="Polling for messages from the queue" width="100%" height="auto"/></p></center>
+
+4. The message ID appears, which is the `eventId` passed from Conductor. Select it to view the message body, which is the output of the Conductor workflow.
+
+<center><p><img src="/content/img/message-body.png" alt="SQS message body received" width="100%" height="auto"/></p></center>
+
+5. In the **Attributes** tab, you can view the task ID and the workflow execution ID.
+
+<center><p><img src="/content/img/queue-attribute.png" alt="Attribute containing the task and workflow execution ID" width="70%" height="auto"/></p></center>
+
+That’s it, you have sent the message to the SQS queue. You can extend this workflow based on your requirements by customizing the Event task’s input to suit your use case.
+
+</details>
+
+<details>
+<summary>Using an Event task to publish events to Confluent Kafka</summary>
+
+In this example, we’ll integrate Confluent Kafka with Orkes Conductor to publish messages to a Kafka topic.
+
+1. Integrate Confluent Kafka with Orkes Conductor.
+2. Create a Workflow with an Event task.
+3. Run Workflow.
+4. Verify message delivery in the Confluent portal.
+
+**Step 1: Integrate Confluent Kafka with Orkes Conductor**
+
+Get the configuration credentials and [integrate Kafka as a message broker in Conductor cluster](/content/integrations/message-broker/confluent-kafka).
+
+<center><p><img src="/content/img/confluent-kafka-integration.png" alt="Confluent Kafka sample integration" width="100%" height="auto"/></p></center>
+
+**Step 2: Create a Workflow with an Event task**
+
+This step involves creating a workflow with an Event task. Here, we utilize the Kafka topic as a sink for the event.
+
+For testing purposes, we can quickly build a workflow using Conductor UI.
+
+**To create a workflow:**
+
+1. Go to **Definitions** > **Workflow**, and select **+ Define Workflow**.
+2. Add an Event task with the Sink `kafka_confluent:confluent-kafka-test:topic_0`.
+3. In **Input parameters**, add the following parameters:
+
+   - **\_schema**—Set it to the topic name, including the schema subject.<br/>To locate the schema subject name from Confluent console:
+     - Go to **Home** > **Environment** > [Choose your environment].
+     - Under **Schema Registry**, find the subject name.
+     <p align="center"><img src="/content/img/subject-name-confluent.png" alt="Identifying subject name in Confluent Kafka" width="80%" height="auto"/></p>
+     - Add this subject name as the input parameter: `"_schema": "topic_0-value"`
+   - Add all fields in the topic’s schema as the input parameters as well.
+
+     - Locate the schema for your topic by navigating to the **Schema** sub-tab from your topic and selecting **Evolve schema**.
+     <p align="center"><img src="/content/img/schema-confluent.png" alt="Identifying Schema parameters" width="80%" height="auto"/></p>
+     For example, The topic here is `topic_0`, which has the following schema:
+
+     ```json
+     {
+       "doc": "Sample schema to help you get started.",
+       "fields": [
+         {
+           "doc": "The string is a unicode character sequence.",
+           "name": "my_field3",
+           "type": "string"
+         }
+       ],
+       "name": "sampleRecord",
+       "namespace": "com.mycorp.mynamespace", //Use a unique `name` and `namespace` to avoid any conflicts.
+       "type": "record"
+     }
+     ```
+
+     Ensure that each field in the schema is mapped as input parameters in the Event task.
+
+     So, in this example, the input parameters (including the schema fields and schema subject name) are as follows :
+
+     ```json
+      "inputParameters": {
+      "_schema": "topic_0-value",
+      "my_field3": "Some-Value-71gfy"
+      },
+     ```
+
+Here’s the complete workflow definition JSON:
+
+```json
 {
-  "event_produced": "conductor:test workflow:event_0",
-  "mod": "2",
-  "oddEven": "5",
-  "asyncComplete": false,
-  "sink": "conductor",
-  "workflowType": "test workflow",
-  "correlationId": null,
-  "taskToDomain": {},
-  "workflowVersion": 1,
-  "workflowInstanceId": "b7c1e6d9-4a80-48b6-b901-487afef9d7c1"
+  "name": "Confluent-Kafka-workflow",
+  "description": "Sample Workflow for Confluent Kafka Integration",
+  "version": 1,
+  "tasks": [
+    {
+      "name": "event",
+      "taskReferenceName": "event_ref",
+      "inputParameters": {
+        "_schema": "topic_0-value",
+        "my_field3": "Some-Value-71gfy"
+      },
+      "type": "EVENT",
+      "sink": "kafka_confluent:confluent-kafka-test:topic_name"
+    }
+  ],
+  "schemaVersion": 2,
+  "ownerEmail": "john.doe@acme.com"
 }
 ```
+
+4. Save the workflow.
+
+**Step 3: Run Workflow**
+
+1. Go to **Run Workflow** from the left menu on the Conductor cluster.
+2. Select the **Workflow name** and **Version**.
+3. Enter the input parameters.
+4. Click **Run Workflow**.
+
+<p align="center"><img src="/content/img/running-kafka-workflow-from-ui.png" alt="Identifying Schema parameters" width="80%" height="auto"/></p>
+
+Once started, you can track execution progress in **Executions** > **Workflow** in the Conductor UI.
+
+**Step 4: Verify message delivery in the Confluent portal**
+
+After successful execution, verify the message's delivery in the Confluent portal.
+
+1. From your cluster details page, navigate to **Topics** in the left menu.
+2. In the **Messages** tab, verify that the message is consumed successfully.
+<p align="center"><img src="/content/img/verifying-confluent.png" alt="Verifying the consumed message from Confluent Kafka" width="100%" height="auto"/></p>
+
+</details>

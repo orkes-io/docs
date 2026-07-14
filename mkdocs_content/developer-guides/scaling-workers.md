@@ -74,6 +74,9 @@ If wait time is high, check:
 - Task domain configuration.
 - Whether the workflow task name exactly matches the worker task definition name.
 
+!!! note
+    Reducing the polling interval could increase the number of API requests to the server, triggering system limits.
+
 ## Production notes
 
 - Keep workers idempotent. Conductor can redeliver tasks after worker crashes, timeouts, or network failures.

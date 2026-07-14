@@ -1,6 +1,6 @@
 ---
 title: "Handling Failures"
-description: "Learn how to configure retries, timeouts, and failure workflows to handle task and workflow failures and maintain reliable workflow execution in Orkes Conductor."
+description: "Learn how to configure retries, timeouts, and failure workflows to handle task and workflow failures and maintain reliable workflow execution."
 canonical_route: "error-handling"
 updated: "2026-05-14"
 keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, AI orchestration, LLM orchestration, MCP gateway, agent workflows"
@@ -8,199 +8,292 @@ keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration
 
 # Handling Failures
 
-Conductor handles failure at the orchestration layer: retry transient task failures, reschedule work when workers disappear, time out stuck execution paths, and start a compensation workflow when a business process cannot complete.
+Orkes Conductor automatically handles transient workflow and task failures without the need to write custom code. Various failure-handling configurations can be set ahead of time, which will take effect during execution.
+
+For tasks, you can configure the following resilience parameters in its task definition:
+
+- Retries
+- Timeouts
+
+For workflows, you can configure the following resilience parameters in its workflow definition:
+
+- Timeouts
+- Failure workflows (also known as compensation flows)
 
 !!! tip "5-minute path"
     Configure retries and timeouts on task definitions, configure an end-to-end timeout on workflow definitions, make workers idempotent, and use a failure workflow for cleanup, rollback, notification, or compensation.
 
 !!! note
-    To inspect a specific failed execution, see [Search / Query Executions](/content/developer-guides/debugging-workflows).
+    To deal with workflow failures post-execution, refer to [Debugging Workflow Executions](/content/developer-guides/debugging-workflows).
 
 ## Message delivery guarantees
 
-Conductor uses at-least-once delivery for worker tasks. A task can be delivered more than once if a worker crashes, times out, loses network connectivity, or returns a retryable failure.
+Conductor guarantees at least once message delivery, meaning all messages are persistent and will be delivered to task workers one or more times. In the event of failure, the message will be delivered more than once. This semantics ensures that:
 
-This gives workflows durability, but it also means worker code must be idempotent. A retried worker should be safe to run again with the same task input.
+1. If a workflow has started, it will run to completion as long as all its tasks are completed.
+2. If a task worker fails due to restarts, crashes, or other issues, the message will be redelivered to another worker node that is alive and responding.
 
-Common idempotency patterns:
+This durability guarantee also means worker code must be idempotent, since a retried worker should be safe to run again with the same task input. Common idempotency patterns include:
 
 - Use a business key, such as `orderId` or `paymentId`, when calling external systems.
 - Make writes conditional or upsert-based.
 - Store external operation IDs in task output.
 - Return `FAILED_WITH_TERMINAL_ERROR` for invalid input that should not be retried.
-- Use [idempotency keys](/content/idempotency) when starting workflows from APIs, queues, or webhooks that can redeliver.
+- Use idempotency keys when starting workflows from APIs, queues, or webhooks that can redeliver.
 
-For AI agents and MCP tools, treat every real-world action as a side effect. A retry can otherwise send the same email twice, create duplicate tickets, post duplicate Slack messages, repeat a payment call, rerun a deployment, or call an external tool after the original request eventually succeeds.
-
-Use these safeguards for side-effecting agent steps:
+These same idempotency principles are especially important when a worker's task involves an AI agent or MCP tool, since each retry replays a real-world action rather than a simple computation. A retry can send the same email twice, create duplicate tickets, post duplicate Slack messages, repeat a payment call, rerun a deployment, or call an external tool after the original request eventually succeeds. Use the following safeguards for side-effecting agent steps:
 
 - Pass a stable idempotency key to every external tool that supports one.
-- Store the external operation ID in task output so compensation workflows can find it.
+- Store the external operation ID in task output so failure workflows can find it.
 - Put irreversible actions behind a `HUMAN` task or policy check when risk is high.
-- Use `failureWorkflow` to undo or mitigate partial work, such as closing a duplicate ticket, voiding a payment authorization, or notifying an operator.
+- Use a failure workflow to undo or mitigate partial work, such as closing a duplicate ticket, voiding a payment authorization, or notifying an operator.
 - Prefer `FAILED_WITH_TERMINAL_ERROR` when the agent produced invalid or unsafe input that should not be retried automatically.
 
 ## Task retries
 
-Task retries are configured on the task definition. They apply to worker tasks and supported system tasks that use the task definition.
-
-Use retries for transient failures:
-
-- Temporary HTTP 5xx responses
-- Rate limits
-- Network errors
-- Worker restarts
-- Short-lived dependency outages
-
-Do not use retries to hide deterministic failures, such as invalid input, missing permissions, or a malformed request.
+Automatic retries are a key strategy for handling transient task failures. If a task fails to complete, the Conductor server will make it available for polling again after a specified duration.
 
 ### Retry configuration
 
-| Parameter | Description |
-| --------- | ----------- |
-| `retryCount` | Number of retry attempts after the original attempt fails. |
-| `retryDelaySeconds` | Delay before the next retry is made available for polling. |
-| `retryLogic` | `FIXED`, `LINEAR_BACKOFF`, or `EXPONENTIAL_BACKOFF`. |
-| `backoffScaleFactor` | Multiplier used by linear or exponential backoff. |
+You can configure retry behavior for tasks in its **task definition**. The parameters for defining a task’s retry behavior are:
 
-Example task definition:
+- Retry count
+- Retry delay seconds
+- Retry logic
+- Backoff scale factor
+
+| Parameter          | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | Required/ Optional |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
+| retryCount         | The number of retry attempts if the task fails. Default value is 3.                                                                                                                                                                                                                                                                                                                                                                                                                                     | Optional.          |
+| retryDelaySeconds  | The time (in seconds) to wait before each retry attempt. This provides time for the task service to recover from any transient failure before it is retried. Default value is 60. <br/><br/>                                                                                                                                                                                                                              | Optional.          |
+| retryLogic         | The policy that determines the retry mechanism for the tasks. Supported values: <ul><li>**`FIXED`**: Retries after a fixed interval defined by `retryDelaySeconds`.</li> <li>**`LINEAR_BACKOFF`**: Retries occur with a delay that increases linearly based on `retryDelaySeconds` x `backoffScaleFactor` x `attemptNumber`.</li><li>**`EXPONENTIAL_BACKOFF`**: Retries occur with a delay that increases exponentially based on `retryDelaySeconds` x (`2` ^ `attemptNumber`).</li></ul> Default is FIXED. | Optional.          |
+| backoffScaleFactor | The value multiplied with `retryDelaySeconds`to determine the interval for retry. Default value is 1.                                                                                                                                                                                                                                                                                                                                                                                                   | Optional.          |
+
+**Example**
 
 ```json
+// task definition
 {
-  "name": "charge_payment",
-  "description": "Charge a payment provider",
+  "name": "someTaskDefName",
+  ...
   "retryCount": 3,
-  "retryDelaySeconds": 10,
-  "retryLogic": "EXPONENTIAL_BACKOFF",
-  "backoffScaleFactor": 2,
-  "timeoutSeconds": 300,
-  "responseTimeoutSeconds": 60,
-  "pollTimeoutSeconds": 120,
-  "timeoutPolicy": "RETRY",
-  "ownerEmail": "payments@example.com"
+  "retryLogic": "FIXED|EXPONENTIAL_BACKOFF|LINEAR_BACKOFF",
+  "retryDelaySeconds": 1,
+  "backoffScaleFactor": 1
 }
 ```
 
-With this configuration, a transient failure is retried up to three times. The delay increases according to the retry policy before the task is made available again.
+### Example retry behavior
+
+<p align="center">
+  <img
+    src="/content/img/dev-guides/handling_failures-retry_example.jpg"
+    alt="Diagram showing how the Conductor server and worker interact in the event of a retry."
+    width="100%"
+    height="auto"
+  ></img>
+</p>
+
+Based on the retry configuration in the above figure, the following sequence of events will occur in the event of a retry:
+
+1. Worker (W1) polls the Conductor server for task T1 and receives the task.
+2. After processing the task, the worker determines that the task execution is a failure and reports to the server with a `FAILED` status after 10 seconds.
+3. The server will persist this failed execution of T1.
+4. A new task execution T1 is created and scheduled for polling. Based on the retry configuration, the task will be available for polling after 5 seconds.
 
 ## Task timeouts
 
-Task timeouts protect workflows from workers that disappear, queues that are not being polled, and tasks that exceed their SLA.
+A task timeout can occur if:
+
+- There are no workers available for a given task type. This could be due to longer-than-expected system downtime or a system misconfiguration.
+- The worker receives the message but dies before fully processing the task, so the task never completes.
+- The worker has completed the task but could not communicate with the Conductor server due to network failures, the server being down, or other issues.
 
 ### Timeout configuration
 
-| Parameter | What it detects | Typical use |
-| --------- | --------------- | ----------- |
-| `pollTimeoutSeconds` | Task was scheduled but no worker picked it up. | Missing worker, wrong task name, wrong domain, or queue backlog. |
-| `responseTimeoutSeconds` | Worker picked up the task but did not report progress in time. | Worker crash, network issue, or long task without heartbeat/update. |
-| `timeoutSeconds` | Task did not reach a terminal state in time. | End-to-end task SLA. |
-| `timeoutPolicy` | What Conductor does when timeout occurs. | `RETRY`, `TIME_OUT_WF`, or `ALERT_ONLY`. |
+You can configure timeout behavior for tasks in its **task definition** to handle the various abovementioned cases. The parameters for a task’s timeout behavior are:
 
-Recommended starting point:
+- Response timeout seconds
+- Timeout seconds
+- Poll timeout seconds
+- Timeout policy
+
+| Parameter              | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | Required/ Optional |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------ |
+| responseTimeoutSeconds | The maximum duration in seconds that a worker has to respond to the server with a status update before it gets marked as `TIMED_OUT`. When configured with a value > 0, Conductor will wait for the worker to return a status update, starting from when the task was picked up. <br/><br/> If a task requires more time to complete, the worker can respond with the `IN_PROGRESS` status. <br/> <br/> Default value is 600.                                                                          | Optional.          |
+| timeoutSeconds         | The maximum duration in seconds for the task to reach a terminal state before it gets marked as `TIMED_OUT`. When configured with a value > 0, Conductor will wait for the task to complete, starting from when the task was picked up. <br/><br/> Useful for governing the overall SLA for completion. <br/><br/> Default value is 3600.                                                                                                                                                              | Optional.          |
+| pollTimeoutSeconds     | The maximum duration in seconds that a worker has to poll a task before it gets marked as `TIMED_OUT`. When configured with a value > 0, Conductor will wait for the task to be picked up by a worker. <br/> <br/> Useful for detecting a backlogged task queue with insufficient workers. <br/> <br/> Default value is 3600.                                                                                                                                                                          | Optional.          |
+| timeoutPolicy          | The policy for handling timeout. Supported values: <ul><li><strong>RETRY</strong>: Retries the task based on the retry configuration.</li> <li><strong>TIME_OUT_WF</strong>: The task is marked as TIMED_OUT and is terminated, which also sets the workflow status as TIMED_OUT.</li> <li><strong>ALERT_ONLY</strong>: An alert message is logged when the timeout occurs.</li></ul>**Note:** The ALERT_ONLY option should be used only when you have your own metrics monitoring system to send alerts. | Optional.          |
+
+!!! note
+    To configure tasks that never timeout, set `timeoutSeconds` and `pollTimeoutSeconds` to 0.
+
+**Example**
 
 ```json
+// task definition
 {
-  "name": "generate_invoice",
-  "retryCount": 2,
-  "retryDelaySeconds": 30,
-  "retryLogic": "FIXED",
-  "pollTimeoutSeconds": 120,
-  "responseTimeoutSeconds": 60,
-  "timeoutSeconds": 600,
-  "timeoutPolicy": "RETRY"
+  "name": "someTaskDefName",
+  ...
+  "retryCount": 3,
+  "retryLogic": "FIXED|EXPONENTIAL_BACKOFF|LINEAR_BACKOFF",
+  "retryDelaySeconds": 1,
+  "backoffScaleFactor": 1
 }
 ```
 
-Use `responseTimeoutSeconds` with worker heartbeats or `IN_PROGRESS` updates for long-running work. Use `pollTimeoutSeconds` to detect insufficient worker capacity or bad routing. Use `timeoutSeconds` as the hard ceiling for a single task attempt.
+### Example timeout behavior
 
-!!! note
-    Set `timeoutSeconds` and `pollTimeoutSeconds` to `0` only when the task is intentionally unbounded. For production workflows, explicit timeouts are usually safer.
+<details markdown="1">
+<summary>Poll timeout</summary>
+
+In the figure below, task T1 isn’t polled by the worker within 60 seconds, so Conductor marks it as `TIMED_OUT`.
+
+<p align="center">
+  <img
+    src="/content/img/dev-guides/handling_failures-poll_timeout_example.jpg"
+    alt="Diagram showing how the Conductor server and worker interact in the event of a poll timeout."
+    width="100%"
+    height="auto"
+  ></img>
+</p>
+
+</details>
+
+<details markdown="1">
+<summary>Response timeout</summary>
+
+<p align="center">
+  <img
+    src="/content/img/dev-guides/handling_failures-response_timeout_example.jpg"
+    alt="Diagram showing how the Conductor server and worker interact in the event of a response timeout."
+    width="100%"
+    height="auto"
+  ></img>
+</p>
+
+Based on the timeout configuration in the above figure, the following sequence of events will occur in the event of a delayed worker response:
+
+1. At 0 seconds, the worker polls the Conductor server for task T1 and receives it. T1 is marked as IN_PROGRESS by the server.
+2. The worker starts processing the task, but the worker instance dies during the execution.
+3. At 20 seconds (T1’s `responseTimeoutSeconds`), the server marks T1 as TIMED_OUT since the worker has not updated the task within the configured duration.
+4. A new instance of task T1 is scheduled based on the retry configuration.
+5. At 25 seconds, the retried instance of T1 is available for polling after the `retryDelaySeconds` set to 5 has elapsed.
+
+</details>
+
+<details markdown="1">
+<summary>Timeout</summary>
+
+<p align="center">
+  <img
+    src="/content/img/dev-guides/handling_failures-timeout_example.jpg"
+    alt="Diagram showing how the Conductor server and worker interact in the event of a timeout."
+    width="100%"
+    height="auto"
+  ></img>
+</p>
+
+Based on the timeout configuration in the above figure, the following sequence of events will occur when a task cannot be completed within the given duration:
+
+1. At 0 seconds, a worker polls the Conductor server for task T1 and receives the task. T1 is marked as IN_PROGRESS by the server.
+2. The worker starts processing the task, but is unable to complete it within the response timeout. The worker updates the server with T1 set to an IN_PROGRESS status and a callback of 9 seconds (part of worker configuration).
+3. The server puts T1 back in the queue but makes it invisible and the worker continues to poll for the task but does not receive T1 for 9 seconds.
+4. After 9 seconds, the worker receives T1 from the server but is still unable to finish processing the task. As such, the worker updates the server again with a callback of 9 seconds.
+5. The same cycle repeats for the next few seconds.
+6. At 30 seconds (T1 timeout), the server marks T1 as TIMED_OUT because it is not in a terminal state after first being moved to IN_PROGRESS status. The server schedules a new task based on the retry count.
+7. At 32 seconds, the worker finishes processing T1 and updates the server with a COMPLETED status. The server ignores this update since T1 has already been moved to a terminal status (TIMED_OUT).
+
+</details>
 
 ## Workflow timeouts
 
-Workflow timeouts protect the full business process. They are configured on the workflow definition and apply across all tasks, waits, retries, and branches.
+A workflow can be configured to timeout in situations where:
 
-Use workflow timeouts for:
-
-- Customer-facing SLAs
-- Batch windows
-- Scheduled maintenance jobs
-- Agentic workflows that must stop after a budget
-- Flows that should escalate if humans or external systems do not respond
+- The workflow has been running longer than expected and has not been completed within the defined time frame.
+- An external dependency required by the workflow is unresponsive or taking too long to respond.
+- Business logic requires the workflows to be completed within a strict time limit to maintain efficiency.
 
 ### Timeout configuration
 
-| Parameter | Description |
-| --------- | ----------- |
-| `timeoutSeconds` | Maximum workflow runtime before timeout. Use `0` for no timeout. |
-| `timeoutPolicy` | `TIME_OUT_WF` to time out and terminate the workflow, or `ALERT_ONLY` to record the timeout signal without terminating. |
+You can configure the timeout behavior for the workflow using its **workflow definition**. The parameters for a workflow’s timeout behavior are:
 
-Example workflow definition:
+- Timeout seconds
+- Timeout policy
+
+| Parameter           | Description                             | Required/Optional |
+| ------------------- | --------------------------------------- | ----------------- |
+| timeoutSeconds | The timeout, in seconds, after which the workflow will be set as TIMED_OUT if it hasn't reached a terminal state. <br/> <br/> Set to 0 for no timeouts. | Required. |
+| timeoutPolicy | The policy for handling workflow timeout. Supported values:<ul><li>**TIME_OUT_WF**–The workflow is set to TIMED_OUT and is terminated.</li><li>**ALERT_ONLY**–Increments the counter to check the workflow status when it times out and logs relevant messages.</li></ul> | Required. |
+
+**Example**
 
 ```json
+// workflow definition
 {
-  "name": "order_fulfillment",
-  "version": 1,
-  "schemaVersion": 2,
-  "timeoutPolicy": "TIME_OUT_WF",
-  "timeoutSeconds": 1800,
-  "tasks": [
-    {
-      "name": "reserve_inventory",
-      "taskReferenceName": "reserve_inventory_ref",
-      "type": "SIMPLE"
-    }
-  ]
+ "name": "someWorkflow",
+ "timeoutPolicy": "TIME_OUT_WF",
+ "timeoutSeconds": 1800
 }
 ```
 
-Keep workflow timeout larger than the expected sum of task execution, retry delays, waits, and external dependency latency. If a workflow has a strict SLA, work backward from that SLA and set task-level timeout and retry values accordingly.
-
 ## Workflow compensation flows
 
-A compensation flow is a workflow that runs when another workflow fails. In Conductor, this is configured with `failureWorkflow` on the main workflow definition.
+A failure workflow (also called a compensation flow) can be configured to run when a workflow reaches a non-successful terminal state such as FAILED, TIMED_OUT, or TERMINATED. The failure workflow must be created in Conductor and added to the main workflow definition.
 
-Use a failure workflow for:
+When triggered, the failure workflow receives the following details as input:
+
+- `workflowId`: The ID of the failed workflow.
+- `reason`: The reason for failure.
+- `failureStatus`: The terminal status of the failed workflow (FAILED, TIMED_OUT, or TERMINATED).
+- `failureTaskId`: The ID of the task that caused the failure, if applicable.
+- `failedWorkflow`: The complete workflow object, including all task details.
+
+This enables you to implement compensating logic to handle the failure, such as:
 
 - Releasing reserved inventory
 - Refunding or voiding a payment authorization
 - Notifying operators or customers
 - Creating an incident or ticket
-- Cleaning up side effects created by agent tool calls
-- Marking an AI-assisted action as failed for audit and review
-- Recording audit data
+- Recording audit data, including marking an AI-assisted action as failed for review
 - Marking a business entity as failed
+- Cleaning up side effects created by agent tool calls, such as closing a duplicate ticket or canceling a partially completed action
+
+Design failure workflows to be idempotent. They can be retried, and they may run after a partial business process has already changed external systems.
 
 ### Setting a failure workflow
 
-Create the compensation workflow first, then reference it from the main workflow:
+You can set a failure workflow for a workflow in its **workflow definition**. Before setting the failure workflow, ensure it has been created in Conductor.
+
+**To set a failure workflow:**
+
+1. Go to **Definitions** > **Workflow**.
+2. Select the workflow that you want to add a failure workflow to.
+3. In the **Workflow** tab on the right, scroll down to **Execution Parameters** > **Failure/Compensation** > **Failure/Compensation workflow name**, and select the failure workflow from the dropdown box.
+4. Select **Save** > **Confirm save**.
+
+<p align="center">
+  <img
+    src="/content/img/failure-workflow.png"
+    alt="Configuring failure workflow in UI."
+    width="100%"
+    height="auto"
+  ></img>
+</p>
+
+**Example**
 
 ```json
+// workflow definition
 {
-  "name": "order_fulfillment",
-  "version": 1,
-  "schemaVersion": 2,
-  "failureWorkflow": "order_fulfillment_compensation",
-  "timeoutPolicy": "TIME_OUT_WF",
-  "timeoutSeconds": 1800,
-  "tasks": [
-    {
-      "name": "reserve_inventory",
-      "taskReferenceName": "reserve_inventory_ref",
-      "type": "SIMPLE"
-    },
-    {
-      "name": "charge_payment",
-      "taskReferenceName": "charge_payment_ref",
-      "type": "SIMPLE"
-    }
-  ]
+  ...
+  "failureWorkflow": "<name of the workflow that will run upon failure>"
 }
 ```
 
-Design compensation workflows to be idempotent. They can be retried, and they may run after a partial business process has already changed external systems.
-
 ## Choosing the right failure behavior
+
+Use this table to quickly map a failure scenario to the mechanism covered above:
 
 | Failure mode | Recommended behavior |
 | ------------ | -------------------- |
@@ -215,10 +308,7 @@ Design compensation workflows to be idempotent. They can be retried, and they ma
 
 ## Production notes
 
-- Make every worker task idempotent.
 - Keep retry budgets aligned with user-facing SLAs.
-- Prefer `EXPONENTIAL_BACKOFF` for external dependency failures.
-- Use `FAILED_WITH_TERMINAL_ERROR` for non-retryable worker failures.
 - Alert on repeated task retries and queue depth, not only final workflow failures.
 - Use [Metrics and Observability](/content/developer-guides/metrics-and-observability) to monitor retries, timeouts, queue depth, and failure rates.
-- Use [Search / Query Executions](/content/developer-guides/debugging-workflows) to inspect the failed task, resolved inputs, and recovery options.
+- Use [Debugging Workflow Executions](/content/developer-guides/debugging-workflows) to inspect the failed task, resolved inputs, and recovery options.

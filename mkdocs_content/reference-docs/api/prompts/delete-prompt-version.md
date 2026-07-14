@@ -1,6 +1,6 @@
 ---
 title: "Delete Prompt Version"
-description: "Use the Orkes Conductor Conductor API to delete Prompt Version. Includes endpoint details, authentication, parameters, request bodies, response behavior, and."
+description: "Use the Orkes Conductor Conductor API to delete Prompt Version. Includes endpoint details, authentication, parameters, request bodies, response behavior."
 canonical_route: "reference-docs/api/prompts/delete-prompt-version"
 updated: "2026-05-14"
 keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration"

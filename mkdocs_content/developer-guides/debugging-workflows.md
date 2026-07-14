@@ -10,7 +10,7 @@ keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration
 
 Search and query workflow executions when you need to find a run by workflow name, workflow ID, status, correlation ID, idempotency key, time window, or payload value. Once you find the execution, the same record gives you workflow status, task status, inputs, outputs, retry counts, timestamps, and `reasonForIncompletion`.
 
-The UI is useful for visual inspection, but the same execution data is available through APIs and can be used from scripts, CI checks, runbooks, and incident tooling.
+All viewable workflow executions are listed in **Executions > Workflow**, where Orkes Conductor's visual workflow diagrams let you quickly inspect and debug executions during development. The UI is useful for visual inspection, but the same execution data is available through APIs and can be used from scripts, CI checks, runbooks, and incident tooling.
 
 !!! tip "5-minute path"
     Find the execution, open or fetch the full execution JSON, identify the first failed or blocked task, compare resolved task input with task output, then retry, restart, rerun, signal, or terminate based on the failure mode.
@@ -43,6 +43,8 @@ Common search filters:
 ### Partial search
 
 Use `*` for prefix-style matches in workflow name or free text search. For example, `payment*` returns executions whose workflow name or indexed payload fields start with `payment`.
+
+<p align="center"><img src="/content/img/workflow-partial-search.png" alt="Workflow search with wildcard support" width="90%" height="auto"></img></p>
 
 ### SQL search
 
@@ -96,6 +98,12 @@ curl -sS "$CONDUCTOR_SERVER_URL/workflow/$WORKFLOW_ID?includeTasks=true" \
   -H "X-Authorization: $CONDUCTOR_AUTH_TOKEN"
 ```
 
+**In the UI**, select the ⏷ icon beside **Search > Show as Code** to get the current search as a cURL or JavaScript request.
+
+<p align="center"><img src="/content/img/show-as-code-in-workflow-search.png" alt="Show as code option in Workflow Search" width="90%" height="auto"></img></p>
+
+<p align="center"><img src="/content/img/workflow-search-in-code.png" alt="Workflow search data in code" width="90%" height="auto"></img></p>
+
 ## Inspecting a workflow execution
 
 Inspect the workflow-level fields first:
@@ -109,6 +117,27 @@ Inspect the workflow-level fields first:
 - `tasks`: Ordered task execution history.
 
 Then inspect the task list in execution order. Look for the first task with `FAILED`, `TIMED_OUT`, `FAILED_WITH_TERMINAL_ERROR`, or a long-running `IN_PROGRESS` state. Later tasks may be symptoms of the first bad task.
+
+**In the UI**, opening an execution from **Executions > Workflow** gives you the same information across these tabs:
+
+| Tab | Shows |
+| --- | ----- |
+| Diagram | Visual task sequence and status, with zoom, search, and download. |
+| Task List | All tasks in the workflow, filterable by status. |
+| Timeline | Chronological task execution duration, with zoom for granularity. |
+| Workflow Introspection | Conductor's internal scheduling and decision steps, with timing overhead. |
+| Summary | Key details: `workflowId`, status, version, start/end time, duration, reason for incompletion. |
+| Workflow Input/Output | The workflow's inputs and outputs. |
+| JSON | The full workflow execution JSON. |
+| Variables | Workflow variables created using the Set Variable task. |
+| Task-to-domain | Task-to-domain mappings used in the execution. |
+| Assistant | AI-based Conductor Agent for debugging the execution in natural language. |
+
+<p align="center"><img src="/content/img/workflow-execution-tabs.png" alt="Sample Workflow Executions page, with the different tab views" width="90%" height="auto"></img></p>
+
+The **Diagram** tab colors each task by status: green (successful), red (failed), orange (completed with errors).
+
+<p align="center"><img src="/content/img/types-of-errors.png" alt="Different types of errors in a failed workflow" width="90%" height="auto"></img></p>
 
 ## Inspecting a task execution
 
@@ -124,6 +153,21 @@ For a failed or blocked task, review these fields:
 | `reasonForIncompletion` | Worker exception, timeout, validation failure, or terminal error reason. |
 | `retryCount` | Shows how many times this task has already been retried. |
 | `workerId` | Identifies the worker process that picked up the task. |
+
+**In the UI**, selecting a task in the **Diagram** tab opens a panel with the same data across these tabs: **Summary**, **Input**, **Output**, **Logs** (if the worker attached any), **JSON**, and **Definition**.
+
+<p align="center"><img src="/content/img/debugging-task-executions.png" alt="Sample Workflow Executions page, with the task tab details" width="90%" height="auto"></img></p>
+
+If the task was retried, select an attempt from the dropdown to view details for that specific attempt.
+
+<p align="center"><img src="/content/img/retry-attempts-debugging.png" alt="Task attempt dropdown selection" width="90%" height="auto"></img></p>
+
+To debug a failed task, inspect these areas:
+
+- **Reason for incompletion**: In the task's **Summary** tab, this captures exceptions thrown by the worker or task, such as "Failed to invoke HTTP endpoint."
+- **Worker**: In the task's **Summary** tab, this identifies the worker instance that polled for the task — useful for finding logs that aren't captured in Conductor.
+- **Task inputs**: Verify the task's inputs were correctly provided and computed.
+- **Task outputs**: Verify the task's outputs were correctly provided and computed, and compare them with any downstream task inputs that reference these outputs.
 
 If you have the task ID directly:
 
@@ -142,8 +186,11 @@ Choose the recovery action based on whether the workflow definition, input data,
 | Restart with current definition | You want to run from the beginning using the same definition version that started the execution. |
 | Restart with latest definition | A workflow definition fix has been deployed and the execution should use the newest version. |
 | Rerun workflow | You need a new execution with corrected input, correlation ID, idempotency key, or task-to-domain mapping. |
+| Retry - resume subworkflow | The workflow contains a sub-workflow, and you want to retry the parent from the sub-workflow's last failed task. |
 | Signal task | A WAIT, HUMAN, or async task is blocked and should be completed or failed externally. |
 | Terminate | The execution should stop and should not be retried. |
+
+<p align="center"><img src="/content/img/recovering-from-failures.png" alt="Workflow Recovery Options" width="90%" height="auto"></img></p>
 
 Retry a failed workflow:
 
@@ -163,7 +210,8 @@ curl -sS -X POST "$CONDUCTOR_SERVER_URL/tasks/$WORKFLOW_ID/COMPLETED/signal/sync
 
 ## Common failure patterns
 
-### Task stuck in SCHEDULED state
+<details markdown="1">
+<summary>Task stuck in SCHEDULED state</summary>
 
 `SCHEDULED` means the task is waiting to be picked up. Check in this order:
 
@@ -174,7 +222,10 @@ curl -sS -X POST "$CONDUCTOR_SERVER_URL/tasks/$WORKFLOW_ID/COMPLETED/signal/sync
 5. The task definition exists and has sensible `pollTimeoutSeconds`.
 6. Queue depth is not growing faster than workers can drain it.
 
-### Task keeps failing
+</details>
+
+<details markdown="1">
+<summary>Task keeps failing</summary>
 
 Repeated `FAILED` or `TIMED_OUT` tasks usually mean the worker is deterministically failing on the same input, the external dependency is unavailable, or the task timeout is shorter than real processing time.
 
@@ -188,7 +239,10 @@ Check:
 
 Use `FAILED_WITH_TERMINAL_ERROR` from workers for failures that should not be retried, such as invalid customer input.
 
-### Workflow hangs
+</details>
+
+<details markdown="1">
+<summary>Workflow hangs</summary>
 
 A workflow that remains `RUNNING` with no task progress is usually waiting on one of these:
 
@@ -200,7 +254,10 @@ A workflow that remains `RUNNING` with no task progress is usually waiting on on
 
 For long-running workflows, this can be normal. For request/response flows, prefer explicit workflow and task timeouts.
 
-### Workflow timed out
+</details>
+
+<details markdown="1">
+<summary>Workflow timed out</summary>
 
 `TIMED_OUT` means the workflow or task exceeded configured timeout settings. Review:
 
@@ -210,6 +267,8 @@ For long-running workflows, this can be normal. For request/response flows, pref
 - Whether retry delays and backoff make the total execution exceed the workflow SLA
 
 See [Handling Failures](/content/error-handling) for retry, timeout, and compensation configuration.
+
+</details>
 
 ## Production notes
 

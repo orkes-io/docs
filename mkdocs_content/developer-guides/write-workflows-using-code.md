@@ -20,6 +20,62 @@ Use workflow-as-code when you need:
 !!! tip "5-minute path"
     Define the workflow in your SDK, register it with Conductor, start an execution, then implement any custom task as a [worker](/content/developer-guides/using-workers). Workflow code describes the graph; worker code performs the business logic.
 
+## How it works
+
+The following steps use Java examples. The same concepts apply across all supported SDKs.
+
+### 1. Define tasks
+
+Each step in a workflow is a task. You define a task by providing two names: the task definition name (what the worker polls for) and a reference name (used to refer to this task's output later in the workflow).
+
+```java
+SimpleTask getUserDetails = new SimpleTask("get_user_info", "get_user_info");
+//                                          ^ task def name  ^ reference name
+```
+
+### 2. Wire inputs and outputs
+
+Tasks receive inputs either from the workflow's initial input or from a previous task's output. Use the expression syntax `${source.output.field}` to reference values.
+
+```java
+// From workflow input
+getUserDetails.input("userId", "${workflow.input.userId}");
+
+// From a previous task's output
+sendEmail.input("email", "${get_user_info.output.email}");
+```
+
+### 3. Add control flow
+
+Use a Switch task to branch execution based on a value, similar to a switch/case statement.
+
+```java
+Switch emailOrSMS = new Switch("emailorsms", "${workflow.input.notificationPref}")
+        .switchCase("EMAIL", sendEmail)
+        .switchCase("SMS", sendSMS);
+```
+
+Other operators like Fork/Join, Do-While, and Dynamic Task are available for more complex flows. See the [Operators Reference](/content/category/reference-docs/operators) for the full list.
+
+### 4. Register the workflow
+
+Add your tasks to the workflow and register it with the Conductor server. Registration saves the workflow definition as JSON on the server so it can be executed.
+
+```java
+workflow.add(getUserDetails);
+workflow.add(emailOrSMS);
+workflow.registerWorkflow(true); // true = overwrite if already exists
+```
+
+### 5. Execute
+
+Run the workflow and wait for it to complete.
+
+```java
+CompletableFuture<Workflow> future = workflow.executeDynamic(input);
+Workflow result = future.get(10, TimeUnit.SECONDS);
+```
+
 ## Create workflows in code
 
 The workflow in the following examples performs these steps:
@@ -240,3 +296,6 @@ Select your preferred language and use the code example to define and register t
 
     return wf;
     ```
+
+
+Once running, go to **Executions > Workflow** in the Conductor UI to view run status, task outputs, and any failures. See [Debugging Workflow Executions](/content/developer-guides/debugging-workflows).

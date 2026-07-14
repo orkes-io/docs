@@ -509,11 +509,43 @@ function sentenceCase(value) {
   return clean.charAt(0).toLowerCase() + clean.slice(1);
 }
 
+// Words that must not be left dangling at the end of a truncated description
+// (e.g. "...AI agent orchestration, and." reads as a broken sentence). Also
+// covers the first half of the two-word "Orkes Conductor" brand name, since a
+// cut can otherwise land between them and leave an orphaned "...in Orkes."
+const DANGLING_TRAILING_WORD = /\b(and|or|but|with|for|in|on|to|of|the|a|an|at|by|from|as|is|are|via|Orkes)$/i;
+
 function fitMetaDescription(value) {
   const clean = String(value || "").replace(/\s+/g, " ").trim();
   if (clean.length <= 160) return clean;
-  const sentence = clean.slice(0, 160).replace(/\s+\S*$/, "");
-  return `${sentence.replace(/[,.:\-;]\s*$/, "")}.`;
+
+  // Prefer ending at the last complete sentence that still fits the limit.
+  const withinLimit = clean.slice(0, 161);
+  const lastSentenceEnd = Math.max(
+    withinLimit.lastIndexOf(". "),
+    withinLimit.lastIndexOf("! "),
+    withinLimit.lastIndexOf("? "),
+  );
+  if (lastSentenceEnd >= 80) {
+    return withinLimit.slice(0, lastSentenceEnd + 1).trim();
+  }
+
+  // Next, prefer ending at the last clause boundary (comma) that still fits —
+  // a clause ending in a comma is almost always a grammatically complete unit,
+  // unlike an arbitrary word-boundary cut which can land mid-verb-phrase.
+  const lastComma = clean.slice(0, 160).lastIndexOf(",");
+  if (lastComma >= 60) {
+    return `${clean.slice(0, lastComma).trim()}.`;
+  }
+
+  // Otherwise cut at the last whole word within the limit, then strip any
+  // trailing filler word(s) that would leave a dangling conjunction/preposition
+  // before adding the closing period, so the result always reads as complete.
+  let cut = clean.slice(0, 160).replace(/\s+\S*$/, "").replace(/[,:\-;]\s*$/, "").trim();
+  while (DANGLING_TRAILING_WORD.test(cut)) {
+    cut = cut.replace(/\s*\S+$/, "").replace(/[,:\-;]\s*$/, "").trim();
+  }
+  return `${cut}.`;
 }
 
 function hasProductContext(value) {
@@ -542,14 +574,13 @@ function pageDescriptionForRoute(route, fallbackDescription, title) {
   const contextual = description && !/(Orkes|Conductor)/i.test(description)
     ? `${description.replace(/\.$/, "")} in Orkes Conductor.`
     : description;
-  if (contextual.length > 165) {
-    const fitted = fitMetaDescription(contextual);
-    if (!hasProductContext(fitted)) {
-      return fitMetaDescription(`${title} in Orkes Conductor: ${description}`);
-    }
-    return fitted;
+  if (!contextual) return contextual;
+
+  const fitted = fitMetaDescription(contextual);
+  if (!hasProductContext(fitted)) {
+    return fitMetaDescription(`${title} in Orkes Conductor: ${description}`);
   }
-  return contextual;
+  return fitted;
 }
 
 function keywordsForRoute(route, title) {

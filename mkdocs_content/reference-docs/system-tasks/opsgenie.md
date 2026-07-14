@@ -60,7 +60,7 @@ This is the task configuration for an Opsgenie task.
     "alias": "${workflow.input.opsGenieAlias}",
     "description": "${query_processor_ref.output.result.workflowsUrl}",
     "visibleTo": "${workflow.input.opsGenieVisibleTo}",
-    "message": "Failed Worklows detected",
+    "message": "Failed Workflows detected",
     "responders": "${workflow.input.opsGenieResponders}",
     "details": {
       "key": "value"

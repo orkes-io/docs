@@ -20,7 +20,7 @@ If you don't already have a Conductor server running, pick one:
 ```shell
 docker run -p 8080:8080 conductoross/conductor:latest
 ```
-The UI will be available at `http://localhost:8080` and the API at `http://localhost:8080/api`
+The UI will be available at `<YOUR-CLUSTER-URL>` and the API at `<YOUR-CLUSTER-URL>/api`
 
 **MacOS / Linux (one-liner):** (If you don't want to use docker, you can install and run the binary directly)
 ```shell

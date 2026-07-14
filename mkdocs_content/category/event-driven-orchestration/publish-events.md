@@ -1,24 +1,25 @@
 ---
 title: "Publish Events"
-description: "Publish messages from workflows to external event systems such as Kafka, NATS, AMQP, SQS, and internal Conductor event sinks."
+description: "Publish messages from workflows to external event systems such as Kafka, Confluent Kafka, Amazon MSK, AMQP/RabbitMQ, NATS, AWS SQS, Azure Service Bus."
+canonical_route: "category/event-driven-orchestration/publish-events"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, event-driven orchestration, webhooks, Kafka orchestration, RabbitMQ orchestration"
 ---
+
 # Publish Events
-Publish messages from workflows to external event systems such as Kafka, NATS, AMQP, SQS, and internal Conductor event sinks.
+
+Publish messages from workflows to external event systems such as Kafka, Confluent Kafka, Amazon MSK, AMQP/RabbitMQ, NATS, AWS SQS, Azure Service Bus, GCP Pub/Sub, and IBM MQ, plus internal Conductor event sinks.
 
 Use these pages when a workflow should publish a message as part of durable execution.
 
-Use the Event task for configured sinks and the Kafka Publish task for Kafka-specific publishing from a workflow.
+Use the Event task to publish messages from a workflow to configured event sinks.
 
-## Recommended path
+## Event Task
 
-If you are unsure where to begin, start with **Event Task**, **Kafka Publish Task**, **Event Publishing Recipes**. These pages cover the most common entry points for this section.
+The Event task publishes a message to a configured sink — an internal Conductor event queue, or an external system such as Kafka, SQS, or another broker — as a step in the workflow, without waiting for a response. Use it when a downstream system or workflow needs to be notified as part of durable execution, and see the [Event Task reference](/content/reference-docs/system-tasks/event) for the full input/output schema, sink configuration, and examples.
 
-## When to use this section
 
-Use these pages to answer implementation questions, compare available primitives, and find the exact guide or reference page for the next step in your Orkes Conductor project.
+## In this section
 
-## Pages
-
-- [Event Task](/content/reference-docs/system-tasks/event)
-- [Kafka Publish Task](/content/reference-docs/system-tasks/kafka-publish)
 - [Event Publishing Recipes](/content/eventing)
+- [Change Data Capture](/content/developer-guides/enabling-cdc-on-conductor-workflows)

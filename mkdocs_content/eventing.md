@@ -8,9 +8,9 @@ keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration
 
 # Event-driven recipes
 
-### Publish events to Kafka, NATS, and RabbitMQ
+### Publish events to a message broker
 
-Use the `EVENT` task type to publish messages. The `sink` field determines the destination.
+Use the `EVENT` task type to publish messages. The `sink` field determines the destination, in the format `message-broker-type:integration-name:topic-or-queue-name`. The `integration-name` is the name you gave the broker connection when you added it under **Integrations > Connections and Resources**.
 
 **Kafka:**
 
@@ -19,7 +19,7 @@ Use the `EVENT` task type to publish messages. The `sink` field determines the d
   "name": "publish_to_kafka",
   "taskReferenceName": "kafka_event",
   "type": "EVENT",
-  "sink": "kafka:order-events",
+  "sink": "kafka:<your-integration-name>:order-events",
   "inputParameters": {
     "orderId": "${workflow.input.orderId}",
     "status": "PROCESSED"
@@ -34,7 +34,7 @@ Use the `EVENT` task type to publish messages. The `sink` field determines the d
   "name": "publish_to_nats",
   "taskReferenceName": "nats_event",
   "type": "EVENT",
-  "sink": "nats:order-events",
+  "sink": "nats:<your-integration-name>:order-events",
   "inputParameters": {
     "orderId": "${workflow.input.orderId}",
     "status": "PROCESSED"
@@ -42,14 +42,14 @@ Use the `EVENT` task type to publish messages. The `sink` field determines the d
 }
 ```
 
-**RabbitMQ (AMQP):**
+**AMQP (RabbitMQ):**
 
 ```json
 {
-  "name": "publish_to_rabbitmq",
+  "name": "publish_to_amqp",
   "taskReferenceName": "amqp_event",
   "type": "EVENT",
-  "sink": "amqp_exchange:order-events",
+  "sink": "amqp:<your-integration-name>:order-events",
   "inputParameters": {
     "orderId": "${workflow.input.orderId}",
     "status": "PROCESSED"
@@ -59,28 +59,34 @@ Use the `EVENT` task type to publish messages. The `sink` field determines the d
 
 **Sink format reference:**
 
-| Sink | Format |
-|---|---|
-| Kafka | `kafka:topic-name` |
-| NATS | `nats:subject-name` |
-| RabbitMQ queue | `amqp:queue-name` |
-| RabbitMQ exchange | `amqp_exchange:exchange-name` |
-| SQS | `sqs:queue-name` |
-| Conductor internal | `conductor` |
+| Message Broker | Type Keyword | Sink Format |
+|---|---|---|
+| Apache Kafka | `kafka` | `kafka:integration-name:topic-name` |
+| Confluent Kafka | `kafka_confluent` | `kafka_confluent:integration-name:topic-name` |
+| Amazon MSK | `kafka` | `kafka:integration-name:topic-name` |
+| AWS SQS | `sqs` | `sqs:integration-name:queue-name` |
+| AMQP (RabbitMQ) | `amqp` | `amqp:integration-name:queue-or-exchange-name` |
+| Azure Service Bus | `azure` | `azure:integration-name:topic-or-queue-name` |
+| GCP Pub/Sub | `gcp_pubsub` | `gcp_pubsub:integration-name:topic-name` |
+| IBM MQ | `ibm_mq` | `ibm_mq:integration-name:queue-name` |
+| NATS | `nats` | `nats:integration-name:subject-name` |
+
+See the [Event task reference](/content/reference-docs/system-tasks/event) for the full parameter list, and [Message Broker Integrations](/content/category/integrations/message-broker) for how to connect each broker.
 
 ---
 
 ### Listen for events to trigger workflows
 
-Register event handlers to start workflows automatically when messages arrive on a queue or topic.
+Register event handlers to start workflows automatically when messages arrive on a queue or topic. The `event` field uses the same `message-broker-type:integration-name:topic-name` format as the Event task's `sink`.
 
 **Kafka event handler:**
 
 ```json
 {
   "name": "kafka_order_handler",
-  "event": "kafka:order-events",
+  "event": "kafka:<your-integration-name>:order-events",
   "condition": "$.status == 'NEW'",
+  "evaluatorType": "javascript",
   "actions": [
     {
       "action": "start_workflow",
@@ -102,7 +108,9 @@ Register event handlers to start workflows automatically when messages arrive on
 ```json
 {
   "name": "nats_notification_handler",
-  "event": "nats:notifications",
+  "event": "nats:<your-integration-name>:notifications",
+  "condition": "true",
+  "evaluatorType": "javascript",
   "actions": [
     {
       "action": "start_workflow",
@@ -121,7 +129,9 @@ Register event handlers to start workflows automatically when messages arrive on
 ```json
 {
   "name": "amqp_task_handler",
-  "event": "amqp:task-queue",
+  "event": "amqp:<your-integration-name>:task-queue",
+  "condition": "true",
+  "evaluatorType": "javascript",
   "actions": [
     {
       "action": "start_workflow",
@@ -135,19 +145,13 @@ Register event handlers to start workflows automatically when messages arrive on
 }
 ```
 
-**Register an event handler:**
-
-```shell
-curl -X POST 'http://localhost:8080/api/event' \
-  -H 'Content-Type: application/json' \
-  -d @handler.json
-```
+Event handlers are registered from the Conductor UI, not a public REST endpoint — see [Using Event Handlers](/content/developer-guides/event-handler) for the full setup flow, including conditions, evaluators, and all available actions.
 
 ---
 
 ### Complete a task from an external event
 
-Use a WAIT task to pause a workflow until an external system sends an event. An event handler listens for that event and completes the task, resuming the workflow.
+Use a `WAIT` task to pause a workflow until an external system sends an event. An event handler listens for that event and completes the task, resuming the workflow.
 
 **Workflow with WAIT task:**
 
@@ -181,8 +185,9 @@ Use a WAIT task to pause a workflow until an external system sends an event. An 
 ```json
 {
   "name": "approval_event_handler",
-  "event": "kafka:approval-events",
+  "event": "kafka:<your-integration-name>:approval-events",
   "condition": "$.approved == true",
+  "evaluatorType": "javascript",
   "actions": [
     {
       "action": "complete_task",
@@ -200,55 +205,13 @@ Use a WAIT task to pause a workflow until an external system sends an event. An 
 }
 ```
 
-When a message with `approved: true` arrives on the `approval-events` Kafka topic, the handler completes the WAIT task and the workflow continues to `ship_order`.
+When a message with `approved: true` arrives on the `approval-events` Kafka topic, the handler completes the `WAIT` task and the workflow continues to `ship_order`.
 
-**Register both:**
+Register the workflow definition via the Metadata API, then create the event handler from the Conductor UI:
 
 ```shell
-# Register the workflow
-curl -X POST 'http://localhost:8080/api/metadata/workflow' \
+curl -X POST '<YOUR-CLUSTER-URL>/api/metadata/workflow' \
   -H 'Content-Type: application/json' \
+  -H "X-Authorization: $TOKEN" \
   -d @order_with_approval.json
-
-# Register the event handler
-curl -X POST 'http://localhost:8080/api/event' \
-  -H 'Content-Type: application/json' \
-  -d @approval_event_handler.json
-```
-
----
-
-### Server configuration for event buses
-
-Add the relevant properties to your `application.properties` to enable each event bus.
-
-**Kafka:**
-
-```properties
-conductor.event-queues.kafka.enabled=true
-conductor.event-queues.kafka.bootstrap-servers=kafka:9092
-```
-
-**NATS:**
-
-```properties
-conductor.event-queues.nats.enabled=true
-conductor.event-queues.nats.url=nats://localhost:4222
-```
-
-**AMQP (RabbitMQ):**
-
-```properties
-conductor.event-queues.amqp.enabled=true
-conductor.event-queues.amqp.hosts=rabbitmq
-conductor.event-queues.amqp.port=5672
-conductor.event-queues.amqp.username=guest
-conductor.event-queues.amqp.password=guest
-```
-
-**SQS:**
-
-```properties
-conductor.event-queues.sqs.enabled=true
-# Uses AWS default credential chain (env vars, IAM role, etc.)
 ```

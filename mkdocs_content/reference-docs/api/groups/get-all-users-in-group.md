@@ -1,6 +1,6 @@
 ---
 title: "Get All Users in Group"
-description: "Use the Orkes Conductor groups API to get All Users in Group. Includes endpoint details, authentication, parameters, request bodies, response behavior, and."
+description: "Use the Orkes Conductor groups API to get All Users in Group. Includes endpoint details, authentication, parameters, request bodies, response behavior."
 canonical_route: "reference-docs/api/groups/get-all-users-in-group"
 updated: "2026-05-14"
 keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration"

@@ -1,233 +1,171 @@
 ---
 title: "Human Operator"
-description: "Configure Human tasks in Conductor to pause workflows for manual approval or external signals. Supports human-in-the-loop and agentic workflow patterns."
+description: "Learn how the Human task pauses a workflow to collect user input through forms or approvals in Orkes Conductor."
 canonical_route: "reference-docs/operators/human"
 updated: "2026-05-14"
 keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
 ---
 
-# Human Task
-```json
-"type" : "HUMAN"
-```
+# Human
 
-The Human task (`HUMAN`) is used to pause the workflow and wait for an external signal. It acts as a gate that remains in IN_PROGRESS until marked as COMPLETED or FAILED by an external trigger.
+The Human task allows human interaction within a workflow. When execution reaches a Human task, Conductor assigns a form to a user or group and waits for it to be completed. After the form is submitted, the task records the input, and the workflow continues.
 
-The Human task can be used when the workflow needs to pause and wait for human intervention, such as manual approval. It can also be used with an event coming from external source such as Kafka, SQS, or Conductor's internal queueing mechanism.
+A Human task can be used for a variety of human-involved tasks, such as manual approval in an expense approval workflow or a user intake form in a hotel booking workflow.
+
+To support human-involved tasks, the Human task can be used alongside the following:
+
+- **User Forms**—A form builder to create user forms hosted on your Conductor cluster.
+- **Human Tasks API**—A suite of APIs that manage the lifecycle of Human tasks connected to Conductor workflows.
+
+!!! info "Prerequisites"
+    Before adding a Human task to a workflow, you should complete the following:
+    
+    - Create a user form in Orkes Conductor.
+    - Define the Human task in Conductor.
+    
+    For a complete guide on how to use human-involved tasks, refer to the [Human Task Orchestration guide](/content/developer-guides/orchestrating-human-tasks).
 
 ## Task parameters
 
-No parameters are required to configure the Human task.
+When creating a workflow, you can configure the Human task with assignment and trigger policies.
 
-## JSON configuration
+- **Assignment policy**—Define who can fill out the form, how long the form is assigned to them, and what to do if the assignment times out.
+  
+  - If not configured, the task is not restricted and can be completed by anyone.
+  - Multiple assignment policies can be added to create a multi-level assignment chain. If the first group fails to pick the assignment within the specified timeframe, the task will be escalated to the next assigned group.
+  - Additional assignment policies cannot be added if the preceding assignment policy has no specified expiry timeframe.
+- **Trigger policy**—Trigger a workflow to start if the task state or details change.
 
-Here is the task configuration for a Human task.
+Here are all the parameters for the Human task.
+
+| Parameter                              | Description                                                            | Required/ Optional |
+| -------------------------------------- | ---------------------------------------------------------------------- | ------------------ |
+| displayName                            | The task display name, which will appear on the connected UI for the user. Use a unique human-friendly name (for example, “Loan Approval” or “Booking Form”).                                                                                                                                                                                                                                        | Required.          |
+| userFormTemplate                       | The user form associated with the Human task. This form will be assigned when the Human task is executed. <br/><br/>**Note**: If you haven’t created the user form, go to **Definitions** > **User Forms** and set it up. Refer to the documentation for [creating user forms](/content/developer-guides/orchestrating-human-tasks#step-1-create-a-user-form-schema).                                                                                                                                                                              | Required.          |
+| userFormTemplate. **name**             | The name of the user form.                                                                                                                                                                                                                                                                             | -                  |
+| userFormTemplate. **version**          | The version of the user form.                                                                                                                                                                                                                                                                             | -                  |
+| assignments                            | The assignment policy for the Human task.                                                                                                                                                                                                                                                                                         | Optional.          |
+| assignments. **userType**              | The type of user or group that will be assigned to the task. Supported values: <ul> <li>**EXTERNAL_USER**—The assignee is a user residing outside the Conductor cluster in an external system.</li> <li>**EXTERNAL_GROUP**—The assignee is a group residing outside the Conductor cluster in an external system.</li> <li>**CONDUCTOR_USER**—The assignee is a user in the Conductor cluster.</li> <li>**CONDUCTOR_GROUP**—The assignee is a group in the Conductor cluster.</li></ul>                                                                                                                                                                                                                                                                                                                                                                       | -                  |
+| assignments. **user**                  | The user or group ID for the assignee. The value depends on the user type. <ul> <li>**EXTERNAL_USER**—Provide the user's email that is managed and verified in an external system.</li> <li>**EXTERNAL_GROUP**—Provide the name of the group that is managed and verified in an external system.</li> <li>**CONDUCTOR_USER**—Provide the user’s Conductor email.</li> <li>**CONDUCTOR_GROUP**—Provide the [Conductor group name](/content/access-control-and-security/users-and-groups#groups).</li></ul>                                                                                                                                                                                                                                                                                                                                    | -                  |
+| assignments. **slaMinutes**            | The duration in minutes for which the Human task will be assigned. Use 0 minutes for a non-expiring duration.                                                                                                                                                      | -                  |
+| autoClaim | Enables automatic claiming of the Human task by the first assignee in the assignment policy list when the task execution starts.<br/><br/>When set to `true`, the task moves directly to the *In progress* state without requiring manual claiming. Set to `false` to keep the task in *Assigned* state until manually claimed. | Optional. | 
+| assignmentCompletion Strategy          | The action that will occur if the assignment policy times out. Supported values: <ul> <li>**LEAVE_OPEN**—The Human task execution remains open to be picked up by anyone.</li> <li>**TERMINATE**—The Human task execution is terminated and marked as deleted, and the workflow fails with the error “Task terminated as no more assignments pending and completion strategy is TERMINATE”.</li></ul>                                                                                                                                                                                                                                 | Required.          |
+| taskTriggers                           | The trigger policy for the Human task.                                                          | Optional.          |
+| taskTriggers. **triggerType**          | The condition that will trigger a specified workflow. Supported conditions are: <ul> <li>**PENDING**—A workflow will be triggered if the Human task enters the Pending state.</li> <li>**ASSIGNED**—A workflow will be triggered once the Human task is assigned to a specific assignee.</li> <li>**IN_PROGRESS**—A workflow will be triggered if the Human task enters the In Progress state.</li> <li>**COMPLETED**—A workflow will be triggered if the Human task enters the Completed state.</li> <li>**TIMED_OUT**—A workflow will be triggered if the Human task times out.</li> <li>**ASSIGNEE_CHANGED**—A workflow will be triggered if the assignee changes due to the assignment policy or because the task has been left open and picked up by anyone.</li> <li>**CLAIMANT_CHANGED**—A workflow will be triggered if the claimant changes.</li></ul> | -                  |
+| taskTriggers. **startWorkflowRequest** | The details of the workflow to be triggered, including its name, version, input parameters, correlation ID, and task-to-domain mapping.                                                                                                                                                                                         | -                  |
+
+In addition, you should also configure Human task’s `inputParameters`, which contain the fields taken from its associated user form. The configuration depends on the input source:
+
+- If the field is to be filled up by the assignee, leave the value empty.
+- If the field is read-only, set the value explicitly. You can use static values or [dynamic variables](/content/developer-guides/passing-inputs-to-task-in-conductor) to pass data from workflow inputs or previous task outputs.
+
+The following are generic configuration parameters that can be applied to the task and are not specific to the Human task.
+
+<details>
+<summary>Other generic parameters</summary>
+
+Here are other parameters for configuring the task behavior.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| optional | Whether the task is optional. <br/><br/>If set to`true`, any task failure is ignored, and the workflow continues with the task status updated to `COMPLETED_WITH_ERRORS`. However, the task must reach a terminal state. If the task remains incomplete, the workflow waits until it reaches a terminal state before proceeding. | Optional. | 
+
+</details>
+
+## Task configuration
+
+This is the task configuration for a Human task.
+
+```json
+   {
+     "name": "human",
+     "taskReferenceName": "human_ref",
+     "inputParameters": {
+       "__humanTaskDefinition": {
+         "assignmentCompletionStrategy": "LEAVE_OPEN",
+         "assignments": [
+           {
+             "assignee": {
+               "user": "<ENGINEERS>",
+               "userType": "CONDUCTOR_GROUP"
+             },
+             "slaMinutes": 10
+           }
+         ],
+         "displayName": "Loan Approval",
+         "userFormTemplate": {
+           "name": "Approval",
+           "version": 1
+         },
+         "autoClaim": true,
+         "taskTriggers": [
+           {
+             "triggerType": "COMPLETED",
+             "startWorkflowRequest": {
+               "name": "email-notification-workflow",
+               "version": 1
+             }
+           }
+         ]
+       }
+     },
+     "type": "HUMAN"
+   }
+```
+
+## Task output
+
+The Human task will return a JSON object containing the form response. For example:
 
 ```json
 {
-	"name": "human",
-  "taskReferenceName": "human_ref",
-	"inputParameters": {},
-	"type": "HUMAN"
+ "approve": "Yes",
+ "comments": "Research paper approved.",
+ "paperUrl": "<URL>"
 }
 ```
 
-## Completing the Human task
-
-There are several ways to complete the Human task:
-
-- Using the Task Update API
-- Using an event handler
+## Adding a Human task in UI
 
 
-### Task Update API
-Use the Task Update API (`POST api/tasks`) to complete a Human task. Provide the `taskId`, the task status, and the desired task output.
+**To add a Human task:**
 
-Using the CLI:
+1. In your workflow, select the **(+)** icon and add a **Human** task.
+2. Enter the **Task display name**, which will appear on the connected UI for the user. Use a unique human-friendly name, such as “Loan Approval” or “Booking Form”.
+3. Select the **User form template** previously created in Conductor and its Version.
+4. (Optional) Add an **Assignment policy** to control who can fill out the form.
+   1. In Assignment policy, select **(+) New assignment**.
+   2. In Assign, select the **User type** for the assignee(s) and enter the corresponding user or group ID.
+      - **External User** or **Group**—Select this if the assignees are managed and verified in an external system, and access an external UI to complete the task.
+      - **Conductor User** or **Group**—Select this if the assignees are Conductor users, and use Conductor UI to complete the task.
+   3. Enter the **SLA minutes** to specify the assignment duration before it times out. Use 0 minutes to set a non-expiring assignment.
+   4. Select **Auto claim** if you want the first assignee in the list to automatically claim the Human task when it starts execution.
+   5. In **After assignments**, select the strategy for when the assignment times out.
+   6. If needed, add another assignment to create a multi-level assignment chain.
+5. (Optional) Add a **Trigger policy** to start new workflows when the state of the Human task changes.
+   1. In Trigger policy, select **(+) New trigger**.
+   2. Select the **Trigger event**.
+   3. Select the **Workflow** to start and its **Version**.
+   4. (Optional) Select **Additional inputs** to configure the workflow’s input parameters, correlation ID, and task-to-domain mapping.
+   5. If needed, add another trigger policy to start another workflow.
+6. In **Input parameters**, configure the form fields depending on the input source:
+   - If the field is to be filled up by the assignee, leave the value empty.
+   - If the field is read-only, set the value explicitly. You can use static values or [dynamic variables](/content/developer-guides/passing-inputs-to-task-in-conductor) to pass data from workflow inputs or previous task outputs.
 
-```bash
-conductor task update-execution --workflow-id {workflowId} --task-ref-name waiting_around_ref --status COMPLETED --output '{"data_key":"somedatatoWait1","data_key2":"somedatatoWAit2"}'
-```
+<p>
+  <img
+    src="/content/img/ui-guide-human-task.png"
+    alt="Screenshot of Human Task in Orkes Conductor"
+  />
+</p>
 
-### Event handler
-If SQS integration is enabled, the Human task can also be resolved using the Update Queue APIs:
+## Examples
 
-1. `POST api/queue/update/{workflowId}/{taskRefName}/{status}`
-2. `POST api/queue/update/{workflowId}/task/{taskId}/{status}`
+Here are some examples for using the Human task.
 
-Any parameter that is sent in the body of the POST message will be repeated as the output of the task. For example, if we send a COMPLETED message as follows:
+<details>
+<summary>Document approval</summary>
 
-??? note "Using cURL"
-    ```bash
-    curl -X "POST" "{{ server_host }}{{ api_prefix }}/queue/update/{workflowId}/waiting_around_ref/COMPLETED" \
-      -H 'Content-Type: application/json' \
-      -d '{"data_key":"somedatatoWait1","data_key2":"somedatatoWAit2"}'
-    ```
+See an example of a [document approval workflow](https://orkes.io/content/templates/examples/document-approvals) in Orkes Conductor, where two reviewers evaluate a submission, and the workflow either sends an approval email or requests revisions based on their decisions.
 
-The output of the Human task will be:
-
-```json
-{
-  "data_key":"somedatatoWait1",
-  "data_key2":"somedatatoWAit2"
-}
-```
-
-
-Alternatively, an [event handler](/content/reference-docs/event-handlers) using the `complete_task` action can also be configured.
-
-## Monitoring Human Tasks: Getting Callbacks and Notifications
-
-When a workflow reaches a Human task, you may want to receive a notification or callback to trigger the next action (e.g., send an email, notify a Slack channel, or trigger an external system). Here are the recommended patterns:
-
-### Pattern 1: Polling the Workflow Status API
-
-The simplest approach is to poll the workflow execution status and check for Human tasks in `IN_PROGRESS` state:
-
-```bash
-# Get workflow execution status
-curl '{{ server_host }}/api/workflow/{workflowId}' \
-  -H 'accept: application/json'
-```
-
-Parse the response to find tasks with `taskType: "HUMAN"` and `status: "IN_PROGRESS"`.
-
-**Pros:** Simple to implement, no additional configuration
-**Cons:** Requires polling, not real-time
-
-### Pattern 2: Event Handlers with Conductor Internal Events
-
-Conductor can publish internal events when tasks change state. You can configure an event handler to listen for these events:
-
-```json
-{
-  "name": "human_task_notification_handler",
-  "event": "conductor:TASK_STATUS_CHANGE",
-  "condition": "$.taskType == 'HUMAN' && $.status == 'IN_PROGRESS'",
-  "actions": [
-    {
-      "action": "start_workflow",
-      "start_workflow": {
-        "name": "notification_workflow",
-        "input": {
-          "workflowId": "${workflowId}",
-          "taskRefName": "${taskRefName}",
-          "taskStatus": "${status}"
-        }
-      }
-    }
-  ]
-}
-```
-
-This triggers a notification workflow whenever a Human task enters `IN_PROGRESS` state.
-
-### Pattern 3: Webhook Integration via Event Task
-
-Add an EVENT task immediately before the Human task to send a webhook notification:
-
-```json
-{
-  "name": "notify_human_task",
-  "taskReferenceName": "notify_ref",
-  "type": "EVENT",
-  "sink": "kafka:human-task-notifications",
-  "inputParameters": {
-    "workflowId": "${workflow.input.workflowId}",
-    "taskRefName": "human_ref",
-    "eventType": "HUMAN_TASK_PENDING"
-  }
-},
-{
-  "name": "human_approval",
-  "taskReferenceName": "human_ref",
-  "type": "HUMAN"
-}
-```
-
-Then configure an event handler or external consumer to process these notifications.
-
-### Pattern 4: Complete Task with Callback Output
-
-When completing the Human task, include callback information in the output:
-
-```bash
-curl -X POST "{{ server_host }}/api/tasks" \
-  -H 'Content-Type: application/json' \
-  -d '{
-    "taskId": "${taskId}",
-    "status": "COMPLETED",
-    "output": {
-      "approvedBy": "user@example.com",
-      "approvedAt": "2026-04-22T10:30:00Z",
-      "comments": "Approved for production deployment"
-    }
-  }'
-```
-
-The output becomes available to downstream tasks and can be used for audit trails or further notifications.
-
-### Pattern 5: External System Integration
-
-For real-time notifications, integrate with external systems:
-
-1. **Slack/Teams**: Use an event handler to trigger a notification workflow that posts to Slack/Teams webhooks
-2. **Email**: Send email notifications via SMTP or email service APIs
-3. **SMS/Push**: Integrate with Twilio, Pushover, or similar services
-4. **Custom Webhooks**: POST to your internal systems when human tasks are pending
-
-### Best Practices
-
-- **Use correlation IDs**: Include `workflowId` and `taskRefName` in all notifications for easy tracking
-- **Set timeouts**: Consider adding timeout logic to escalate unapproved human tasks
-- **Audit trail**: Log all human task completions with timestamps and user information
-- **Idempotency**: Ensure notification handlers are idempotent to handle duplicate events
-
-## Example: Complete Notification Flow
-
-```json
-{
-  "name": "approval_workflow",
-  "version": 1,
-  "tasks": [
-    {
-      "name": "send_approval_request",
-      "taskReferenceName": "send_request_ref",
-      "type": "HTTP",
-      "inputParameters": {
-        "http_request": {
-          "method": "POST",
-          "url": "https://hooks.slack.com/services/xxx",
-          "body": {
-            "text": "Approval needed for workflow ${workflow.input.requestId}"
-          }
-        }
-      }
-    },
-    {
-      "name": "wait_for_approval",
-      "taskReferenceName": "approval_ref",
-      "type": "HUMAN"
-    },
-    {
-      "name": "send_approval_result",
-      "taskReferenceName": "send_result_ref",
-      "type": "HTTP",
-      "inputParameters": {
-        "http_request": {
-          "method": "POST",
-          "url": "https://hooks.slack.com/services/xxx",
-          "body": {
-            "text": "Approval ${approval_ref.output.status} by ${approval_ref.output.approvedBy}"
-          }
-        }
-      }
-    }
-  ]
-}
-```
-
-This workflow:
-1. Sends a Slack notification when approval is needed
-2. Waits for human approval
-3. Sends a follow-up notification with the approval result
+</details>

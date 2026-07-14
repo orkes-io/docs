@@ -11,7 +11,7 @@ Choose an integration by system type, configure credentials once, then reuse it 
 
 ## Recommended path
 
-If you are unsure where to begin, start with **AI / LLM**, **Vector Databases**, **Cloud Providers**, **RDBMS**, **Email/Git**. These pages cover the most common entry points for this section.
+If you are unsure where to begin, start with **AI / LLM**, **Vector Databases**, **Message Broker**, **Cloud Providers**, **RDBMS**. These pages cover the most common entry points for this section.
 
 ## When to use this section
 
@@ -21,6 +21,7 @@ Use these pages to answer implementation questions, compare available primitives
 
 - [AI / LLM](/content/category/integrations/ai-llm)
 - [Vector Databases](/content/category/integrations/vector-databases)
+- [Message Broker](/content/category/integrations/message-broker)
 - [Cloud Providers](/content/category/integrations/cloud-provider)
 - [RDBMS](/content/category/integrations/rdbms)
 - [Email/Git](/content/category/integrations/email)

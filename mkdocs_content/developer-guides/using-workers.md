@@ -193,6 +193,21 @@ Start the SDK task runner so the process begins polling Conductor.
     select {}
     ```
 
+=== "C#"
+
+    ```csharp
+    var conf = new Configuration
+    {
+        BasePath = Environment.GetEnvironmentVariable("CONDUCTOR_SERVER_URL"),
+        AuthenticationSettings = new OrkesAuthenticationSettings(
+            Environment.GetEnvironmentVariable("CONDUCTOR_AUTH_KEY"),
+            Environment.GetEnvironmentVariable("CONDUCTOR_AUTH_SECRET"))
+    };
+
+    var host = WorkflowTaskHost.CreateWorkerHost(conf, LogLevel.Debug);
+    host.Start();
+    ```
+
 === "JavaScript / TypeScript"
 
     ```typescript
@@ -215,33 +230,70 @@ Before a workflow can execute a worker task, Conductor must know the task defini
 
 ### Register worker task
 
-Register a task definition for the worker task name. The `name` must match the workflow task `name` and the worker's task type.
+All worker tasks should be registered to the Conductor server, which is done by creating a task definition. The task definition contains configuration options for failure handling and expected input/output payloads. The `name` must match the workflow task `name` and the worker's task type.
 
-```json
-{
-  "name": "process_order",
-  "description": "Processes an order in the order service",
-  "retryCount": 3,
-  "retryLogic": "FIXED",
-  "retryDelaySeconds": 30,
-  "timeoutSeconds": 300,
-  "responseTimeoutSeconds": 60,
-  "timeoutPolicy": "TIME_OUT_WF",
-  "ownerEmail": "orders@example.com"
-}
-```
+=== "Using API"
 
-Production task definitions should include retry behavior, response timeout, total timeout, rate limits when needed, and input/output schemas for externally owned contracts.
+    ```json
+    {
+      "name": "process_order",
+      "description": "Processes an order in the order service",
+      "retryCount": 3,
+      "retryLogic": "FIXED",
+      "retryDelaySeconds": 30,
+      "timeoutSeconds": 300,
+      "responseTimeoutSeconds": 60,
+      "timeoutPolicy": "TIME_OUT_WF",
+      "ownerEmail": "orders@example.com"
+    }
+    ```
+
+    Refer to the [Create Task Definition API](/content/reference-docs/api/metadata/creating-task-definitions).
+
+    Production task definitions should include retry behavior, response timeout, total timeout, rate limits when needed, and input/output schemas for externally owned contracts.
+
+=== "Using Conductor UI"
+
+    1. Go to **Definitions > Task** from the left navigation menu on your Conductor cluster.
+    2. Select **+ Define task**.
+    3. Enter the task details, such as the rate limits, retry settings, timeout settings, and expected inputs and outputs. The **Name** must match the task name defined previously in your code.
+
+    ![Define task in Orkes Conductor](/content/img/using-workers/using_workers-define_custom_task.png)
+
+    4. Select **Save > Confirm Save**.
+
 
 ### Set up authorized access
 
-Use an [application](/content/access-control-and-security/applications) as the worker service account.
+In Orkes Conductor, an [application account](/content/category/access-control-and-security#applications) with a `Worker` role type enables workers to authenticate and authorize against the Conductor server. To set up authorized access, you need to add the worker to an application and grant it `Execute` permission.
 
-1. Create or select an application for the worker runtime.
-2. Enable the `Worker` application role.
-3. Generate an access key and store the secret securely.
-4. Grant `Execute` permission on the task definition or on the task domain.
-5. Configure the worker with the server URL, key ID, and key secret.
+!!! tip "For Developer Edition"
+    If you are using the Developer Edition to create your worker, you can simply grab the access key ID and secret from the application in **Access Control > Applications** for your worker project and skip the rest of the steps in this section.
+
+!!! note
+    For well-defined access controls, your worker application should be kept separate from your workflow client application. Learn more about [proper application separation](https://orkes.io/content/access-control-and-security/applications#example-application-setup).
+
+**To set up authorized access:**
+
+1. Configure an application account.
+   - Go to **Access Control > Applications** from the left navigation menu on your Conductor cluster.
+   - Create a new application or select an application to which you will be adding your worker. Ensure that the application role has **Worker** enabled.
+
+![Add worker to application account in Orkes Conductor](/content/img/using-workers/using_workers-application_roles.png)
+
+2. Get the application access key for your worker project.
+   - In **Access Keys**, select **Create access key** and store your credentials securely.
+   - Set the Key ID and Key Secret in your project.
+3. Grant Execute permission to the application.
+   - In **Permissions**, select **+ Add permission**.
+   - Select the **Task** tab and then your worker task.
+   - Enable the **Execute** toggle.
+   - (If [task-to-domain](/content/developer-guides/task-to-domain) is used) In **Domain**, enter the domain name used in your worker code.
+   - Select **Add Permissions**.
+
+The application account can now execute the worker task.
+
+![Add permissions to application account in Orkes Conductor](/content/img/using-workers/using_workers-app_permissions.png)
 
 Keep worker applications separate from workflow-starting applications. A worker needs permission to poll and complete tasks; it usually does not need permission to start workflows.
 
@@ -249,17 +301,36 @@ Keep worker applications separate from workflow-starting applications. A worker 
 
 Launch the worker with your normal process manager, container runtime, or deployment system.
 
-```bash
-python3 worker.py
-```
+=== "Python"
 
-```bash
-./gradlew run
-```
+    ```bash
+    python3 worker.py
+    ```
 
-```bash
-node index.js
-```
+=== "Java"
+
+    ```bash
+    ./gradlew run
+    ```
+
+=== "Go"
+
+    ```bash
+    go run main.go
+    ```
+
+=== "C#"
+
+    ```bash
+    dotnet run
+    ```
+
+=== "JavaScript / TypeScript"
+
+    ```bash
+    node index.js
+    ```
+
 
 If the workflow task remains `SCHEDULED`, check:
 
@@ -271,23 +342,40 @@ If the workflow task remains `SCHEDULED`, check:
 
 ## Using the worker task
 
-Add a SIMPLE task to the workflow definition.
+To use a [Worker task](/content/reference-docs/worker-task), add it to a workflow definition.
 
 ### Add to workflow
 
-```json
-{
-  "name": "process_order",
-  "taskReferenceName": "process_order",
-  "type": "SIMPLE",
-  "inputParameters": {
-    "orderId": "${workflow.input.orderId}",
-    "amount": "${workflow.input.amount}"
-  }
-}
-```
+=== "Using API"
 
-The worker registered for `process_order` will poll and execute this task when the workflow reaches it.
+    ```json
+    {
+      "name": "process_order",
+      "taskReferenceName": "process_order",
+      "type": "SIMPLE",
+      "inputParameters": {
+        "orderId": "${workflow.input.orderId}",
+        "amount": "${workflow.input.amount}"
+      }
+    }
+    ```
+
+    Refer to the [Create Workflow Definition](/content/reference-docs/api/metadata/creating-workflow-definition) or [Update Workflow Definition](/content/reference-docs/api/metadata/update-workflow-definitions) APIs.
+
+    The worker registered for `process_order` will poll and execute this task when the workflow reaches it.
+
+=== "Using Conductor UI"
+
+    1. Go to **Definitions > Workflow** from the left navigation menu on your Conductor cluster.
+    2. Select or create a workflow.
+    3. In the visual workflow builder, select the **(+)** icon to add a new task. There are two ways to add a worker task:
+       - Search for your task using its task name and select to add it to the workflow.
+       - Add a **Worker Task (Simple)** and enter the task name in **Task Definition**.
+    4. Configure the task, such as its inputs, caching, and optionality.
+    5. On the top right, select **Save > Confirm**.
+
+    ![Add task in Orkes Conductor](/content/img/using-workers/using_workers-add_task_to_workflow.png)
+
 
 ### Run workflow
 

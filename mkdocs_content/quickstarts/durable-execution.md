@@ -1,6 +1,6 @@
 ---
 title: "Durable Execution Semantics"
-description: "How Conductor guarantees durable code execution for distributed workflows — what persists at every step, at-least-once task delivery, saga pattern."
+description: "How Conductor guarantees durable execution for distributed workflows — what persists at every step, at-least-once task delivery, failure matrix."
 canonical_route: "quickstarts/durable-execution"
 updated: "2026-05-14"
 keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
@@ -31,7 +31,7 @@ When a workflow executes, Conductor persists:
 - Every **task execution**: status, input, output, timestamps, retry count, and worker ID.
 - The **task queue state**: which tasks are scheduled, in progress, or completed.
 
-All state is written to the configured persistence store (Redis, PostgreSQL, MySQL, or Cassandra) before the next step proceeds. If the server restarts, execution resumes from the last persisted state.
+All state is written to the configured persistence store (Redis and PostgreSQL) before the next step proceeds. If the server restarts, execution resumes from the last persisted state.
 
 
 ## Task delivery guarantees
@@ -87,7 +87,7 @@ Each transition is persisted before any subsequent action is taken.
 
 ## Timeout and retry configuration
 
-Durability is configurable per task via the [task definition](/content/reference-docs/task-definition):
+Durability is configurable per task via the [task definition](/content/reference-docs/api/metadata/creating-task-definitions):
 
 | Parameter | What it controls |
 |---|---|
@@ -127,11 +127,9 @@ All three operations work on workflows in any terminal state (COMPLETED, FAILED,
 
 In multi-node deployments, Conductor ensures consistency through:
 
-- **Distributed locking**: Only one `decide` evaluation runs per workflow at a time across the cluster (pluggable: Zookeeper, Redis).
+- **Distributed locking**: Only one `decide` evaluation runs per workflow at a time across the cluster.
 - **Fencing tokens**: Prevent stale updates from nodes with expired locks.
 - **Persistent queues**: Task queues survive node failures. Configurable sharding strategies (round-robin or local-only) trade off distribution vs. consistency.
-
-See the [deployment guide](/content/get-orkes-conductor) for distributed lock configuration.
 
 
 ## What this means for your code

@@ -1,9 +1,9 @@
 ---
 title: "Building Workflows"
-description: "Learn the fundamentals of building workflows in Orkes Conductor, including workflow structure, task configuration, parameter wiring, validation, secrets, error."
+description: "Learn the fundamentals of building workflows in Orkes Conductor, including workflow structure, task configuration, parameter wiring, validation, secrets."
 ---
 # Building Workflows
-Learn the fundamentals of building workflows in Orkes Conductor, including workflow structure, task configuration, parameter wiring, validation, secrets, error.
+Learn the fundamentals of building workflows in Orkes Conductor, including workflow structure, task configuration, parameter wiring, validation, secrets.
 
 Use this section when you need documentation about building workflows in Orkes Conductor.
 

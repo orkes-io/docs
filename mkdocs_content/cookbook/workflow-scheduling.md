@@ -40,12 +40,10 @@ The workflow:
       "taskReferenceName": "fetch_report_data_ref",
       "type": "HTTP",
       "inputParameters": {
-        "http_request": {
-          "uri": "https://jsonplaceholder.typicode.com/todos?userId=1",
-          "method": "GET",
-          "connectionTimeOut": 3000,
-          "readTimeOut": 3000
-        }
+        "uri": "https://jsonplaceholder.typicode.com/todos?userId=1",
+        "method": "GET",
+        "connectionTimeOut": 3000,
+        "readTimeOut": 3000
       }
     }
   ],
@@ -62,17 +60,20 @@ The workflow:
 
 ```shell
 # Register workflow
-curl -X PUT 'http://localhost:8080/api/metadata/workflow' \
+curl -X POST '<YOUR-CLUSTER-URL>/api/metadata/workflow' \
   -H 'Content-Type: application/json' \
+  -H "X-Authorization: $TOKEN" \
   -d @daily-report-workflow.json
 
 # Create schedule
-curl -X POST 'http://localhost:8080/api/scheduler/schedules' \
+curl -X POST '<YOUR-CLUSTER-URL>/api/scheduler/schedules' \
   -H 'Content-Type: application/json' \
+  -H "X-Authorization: $TOKEN" \
   -d @every-minute-schedule.json
 
 # Watch executions
-curl 'http://localhost:8080/api/scheduler/search/executions?freeText=every-minute-demo-schedule&size=10'
+curl '<YOUR-CLUSTER-URL>/api/scheduler/search/executions?freeText=every-minute-demo-schedule&query=*&size=10' \
+  -H "X-Authorization: $TOKEN"
 ```
 
 ---
@@ -135,8 +136,9 @@ Restrict a schedule to fire only within a time window using `scheduleStartTime` 
 START_MS=$(date +%s000)
 END_MS=$(( $(date +%s) + 300 ))000
 
-curl -X POST 'http://localhost:8080/api/scheduler/schedules' \
+curl -X POST '<YOUR-CLUSTER-URL>/api/scheduler/schedules' \
   -H 'Content-Type: application/json' \
+  -H "X-Authorization: $TOKEN" \
   -d "{
     \"name\": \"bounded-demo-schedule\",
     \"cronExpression\": \"0 * * * * *\",
@@ -192,7 +194,7 @@ Workflow that uses the injected timestamps to compute a 24-hour report window:
       "inputParameters": {
         "scheduledTime": "${workflow.input._scheduledTime}",
         "executionTime": "${workflow.input._executedTime}",
-        "evaluatorType": "javascript",
+        "evaluatorType": "graaljs",
         "expression": "function toISO(ms) { return new Date(ms).toISOString(); } ({ reportWindowStart: toISO($.scheduledTime - 86400000), reportWindowEnd: toISO($.scheduledTime), scheduledAt: toISO($.scheduledTime), triggeredAt: toISO($.executionTime) })"
       }
     }
@@ -212,7 +214,7 @@ Workflow that uses the injected timestamps to compute a 24-hour report window:
 
 ### Schedule a parallel (FORK/JOIN) workflow
 
-A scheduled workflow can use any Conductor construct. This example fetches two timezones in parallel using FORK_JOIN:
+A scheduled workflow can use any Conductor construct. This example fetches two timezones in parallel using `FORK_JOIN`:
 
 ```json
 {
@@ -231,10 +233,8 @@ A scheduled workflow can use any Conductor construct. This example fetches two t
             "taskReferenceName": "fetch_utc_time",
             "type": "HTTP",
             "inputParameters": {
-              "http_request": {
-                "uri": "https://timeapi.io/api/time/current/zone?timeZone=UTC",
-                "method": "GET"
-              }
+              "uri": "https://timeapi.io/api/time/current/zone?timeZone=UTC",
+              "method": "GET"
             }
           }
         ],
@@ -244,10 +244,8 @@ A scheduled workflow can use any Conductor construct. This example fetches two t
             "taskReferenceName": "fetch_ny_time",
             "type": "HTTP",
             "inputParameters": {
-              "http_request": {
-                "uri": "https://timeapi.io/api/time/current/zone?timeZone=America/New_York",
-                "method": "GET"
-              }
+              "uri": "https://timeapi.io/api/time/current/zone?timeZone=America/New_York",
+              "method": "GET"
             }
           }
         ]
@@ -300,10 +298,8 @@ The scheduler fires on every cron tick regardless of whether the previous execut
       "taskReferenceName": "fetch_start_time",
       "type": "HTTP",
       "inputParameters": {
-        "http_request": {
-          "uri": "https://timeapi.io/api/time/current/zone?timeZone=UTC",
-          "method": "GET"
-        }
+        "uri": "https://timeapi.io/api/time/current/zone?timeZone=UTC",
+        "method": "GET"
       }
     },
     {
@@ -317,10 +313,8 @@ The scheduler fires on every cron tick regardless of whether the previous execut
       "taskReferenceName": "fetch_end_time",
       "type": "HTTP",
       "inputParameters": {
-        "http_request": {
-          "uri": "https://timeapi.io/api/time/current/zone?timeZone=UTC",
-          "method": "GET"
-        }
+        "uri": "https://timeapi.io/api/time/current/zone?timeZone=UTC",
+        "method": "GET"
       }
     }
   ],
@@ -344,25 +338,32 @@ Complete lifecycle in one session — create, verify, pause, resume, delete:
 
 ```shell
 # Create
-curl -X POST 'http://localhost:8080/api/scheduler/schedules' \
+curl -X POST '<YOUR-CLUSTER-URL>/api/scheduler/schedules' \
   -H 'Content-Type: application/json' \
+  -H "X-Authorization: $TOKEN" \
   -d @daily-report-schedule.json
 
 # Preview next 5 execution times
-curl 'http://localhost:8080/api/scheduler/nextFewSchedules?cronExpression=0+0+9+*+*+MON-FRI&limit=5'
+curl '<YOUR-CLUSTER-URL>/api/scheduler/nextFewSchedules?cronExpression=0+0+9+*+*+MON-FRI&limit=5' \
+  -H "X-Authorization: $TOKEN"
 
 # Check execution history
-curl 'http://localhost:8080/api/scheduler/search/executions?freeText=daily-report-schedule&size=10'
+curl '<YOUR-CLUSTER-URL>/api/scheduler/search/executions?freeText=daily-report-schedule&query=*&size=10' \
+  -H "X-Authorization: $TOKEN"
 
 # Pause
-curl -X PUT 'http://localhost:8080/api/scheduler/schedules/daily-report-schedule/pause?reason=maintenance'
+curl '<YOUR-CLUSTER-URL>/api/scheduler/schedules/daily-report-schedule/pause' \
+  -H "X-Authorization: $TOKEN"
 
 # Verify paused state
-curl 'http://localhost:8080/api/scheduler/schedules/daily-report-schedule'
+curl '<YOUR-CLUSTER-URL>/api/scheduler/schedules/daily-report-schedule' \
+  -H "X-Authorization: $TOKEN"
 
 # Resume
-curl -X PUT 'http://localhost:8080/api/scheduler/schedules/daily-report-schedule/resume'
+curl '<YOUR-CLUSTER-URL>/api/scheduler/schedules/daily-report-schedule/resume' \
+  -H "X-Authorization: $TOKEN"
 
 # Delete
-curl -X DELETE 'http://localhost:8080/api/scheduler/schedules/daily-report-schedule'
+curl -X DELETE '<YOUR-CLUSTER-URL>/api/scheduler/schedules/daily-report-schedule' \
+  -H "X-Authorization: $TOKEN"
 ```

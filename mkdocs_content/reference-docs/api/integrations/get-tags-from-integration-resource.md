@@ -1,6 +1,6 @@
 ---
 title: "Get Tags from Integration Resource"
-description: "Use the Orkes Conductor integrations API to get Tags from Integration Resource. Includes endpoint details, authentication, parameters, request bodies, response."
+description: "Use the Orkes Conductor integrations API to get Tags from Integration Resource. Includes endpoint details, authentication, parameters, request bodies."
 canonical_route: "reference-docs/api/integrations/get-tags-from-integration-resource"
 updated: "2026-05-14"
 keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration"

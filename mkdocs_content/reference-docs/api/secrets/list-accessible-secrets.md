@@ -1,6 +1,6 @@
 ---
 title: "List Accessible Secrets"
-description: "Use the Orkes Conductor secrets API to list Accessible Secrets. Includes endpoint details, authentication, parameters, request bodies, response behavior, and."
+description: "Use the Orkes Conductor secrets API to list Accessible Secrets. Includes endpoint details, authentication, parameters, request bodies, response behavior."
 canonical_route: "reference-docs/api/secrets/list-accessible-secrets"
 updated: "2026-05-14"
 keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration, role based access control, workflow security, access control"
@@ -27,7 +27,7 @@ Retrieves all secret names that the user has access to. Use the `access` query p
 
 | Parameter | Description                                    | Type   | Required/ Optional |
 | --------- | ---------------------------------------------- | ------ | ------------------ |
-| access<br/><br/><span class="table-note"><strong>Available since:</strong> v5.4.0 and later</span> | Filter secrets by access type. Supported values:<ul><li>`READ`</li><li>`CREATE`</li><li>`UPDATE`</li><li>`DELETE`</li><li>`EXECUTE`</li></ul> Defaults to `READ` if not specified. Multiple values use AND semantics. Only secrets where the user has all specified access types are returned. | array of strings | Optional. |
+| access<br/><br/><span class="table-note"><strong>Available since:</strong> v5.4.2 and later</span> | Filter secrets by access type. Supported values:<ul><li>`READ`</li><li>`CREATE`</li><li>`UPDATE`</li><li>`DELETE`</li><li>`EXECUTE`</li></ul> Defaults to `READ` if not specified. Multiple values use AND semantics. Only secrets where the user has all specified access types are returned. | array of strings | Optional. |
 
 ## Response
 

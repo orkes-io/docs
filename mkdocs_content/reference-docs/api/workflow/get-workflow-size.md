@@ -1,6 +1,6 @@
 ---
 title: "Get Workflow Size"
-description: "Use the Orkes Conductor workflows API to get Workflow Size. Includes endpoint details, authentication, parameters, request bodies, response behavior, and."
+description: "Use the Orkes Conductor workflows API to get Workflow Size. Includes endpoint details, authentication, parameters, request bodies, response behavior."
 canonical_route: "reference-docs/api/workflow/get-workflow-size"
 updated: "2026-05-14"
 keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration"
@@ -9,7 +9,7 @@ keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration
 # Get Workflow Size
 
 !!! info "Available since"
-    - v5.4.0 and later
+    - v5.4.2 and later
 
 Endpoint: `GET /api/workflow/{workflowId}/size`
 

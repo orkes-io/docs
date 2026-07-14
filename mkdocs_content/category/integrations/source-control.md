@@ -1,9 +1,9 @@
 ---
 title: "Source Control"
-description: "Learn how to connect source control platforms to Conductor workflows."
+description: "Learn how to connect source control platforms and repositories to Conductor workflows."
 ---
 # Source Control
-Learn how to connect source control platforms to Conductor workflows.
+Learn how to connect source control platforms and repositories to Conductor workflows.
 
 Use this section when you need documentation about source control in Orkes Conductor.
 

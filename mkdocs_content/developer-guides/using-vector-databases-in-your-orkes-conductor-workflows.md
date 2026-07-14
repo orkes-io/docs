@@ -40,6 +40,9 @@ Here is an overview of using vector databases in Orkes Conductor:
 3. Set access limits to the vector database to govern which applications or groups can use it.
 4. Use a vector database in your workflow by adding an AI task and configuring it for the chosen vector database.
 
+!!! tip "5-minute path"
+    Integrate a vector database provider, grant access to it via RBAC, then add an AI task to your workflow and configure it with the chosen database and index/collection.
+
 ## Step 1: Choose a vector database provider
 
 The following vector database providers are available for integration with Orkes Conductor:
@@ -127,14 +130,13 @@ Vector databases can be used in workflows with the following AI tasks:
 
 6. Select **Save** > **Confirm**.
 
-## Examples
+## Production notes
 
-<details>
-<summary>AI tutorials</summary>
-
-Explore the [AI tutorials](/content/tutorials/ai) section for step-by-step, end-to-end examples that use different AI tasks and vector database integrations.
-
-</details>
+- Choose indexes/namespaces deliberately, since embeddings stored under the wrong index or namespace return irrelevant or no results at query time.
+- Grant access to vector database integrations only to the applications or groups that need them, and review permissions periodically.
+- Keep the embedding model consistent between the store and search steps, since embeddings from different models are not comparable.
+- Monitor index size and query latency as embeddings grow, especially for high-volume ingestion or search workloads.
+- Configure timeouts and retries on AI tasks, since vector database and embedding provider calls can be slow or rate-limited.
 
 ## More resources
 

@@ -1,6 +1,6 @@
 ---
 title: "Get Workflows by Correlation ID"
-description: "Use the Orkes Conductor workflows API to get Workflows by Correlation ID. Includes endpoint details, authentication, parameters, request bodies, response."
+description: "Use the Orkes Conductor workflows API to get Workflows by Correlation ID. Includes endpoint details, authentication, parameters, request bodies."
 canonical_route: "reference-docs/api/workflow/get-workflows-by-correlation-id"
 updated: "2026-05-14"
 keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration"

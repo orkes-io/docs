@@ -92,12 +92,14 @@ The `until` field supports formats: `yyyy-MM-dd HH:mm z` (e.g., `2025-06-15 09:0
 **Register and run:**
 
 ```shell
-curl -X POST 'http://localhost:8080/api/metadata/workflow' \
+curl -X POST '<YOUR-CLUSTER-URL>/api/metadata/workflow' \
   -H 'Content-Type: application/json' \
+  -H "X-Authorization: $TOKEN" \
   -d @scheduled_report.json
 
-curl -X POST 'http://localhost:8080/api/workflow/scheduled_report' \
+curl -X POST '<YOUR-CLUSTER-URL>/api/workflow/scheduled_report' \
   -H 'Content-Type: application/json' \
+  -H "X-Authorization: $TOKEN" \
   -d '{"reportDate": "2025-06-15 09:00 GMT+00:00"}'
 ```
 
@@ -148,8 +150,9 @@ Complete the WAIT task externally (e.g., from a UI or webhook):
 
 ```shell
 # Complete the wait task and resume the workflow
-curl -X POST 'http://localhost:8080/api/tasks/{workflowId}/approval/COMPLETED/sync' \
+curl -X POST '<YOUR-CLUSTER-URL>/api/tasks/{workflowId}/approval/COMPLETED' \
   -H 'Content-Type: application/json' \
+  -H "X-Authorization: $TOKEN" \
   -d '{"approvedBy": "manager@example.com"}'
 ```
 

@@ -12,9 +12,9 @@ Practical recipes for making workers resilient. Each recipe is a complete task d
 
 ---
 
-### Exponential backoff with a cap
+### Exponential backoff
 
-Retries with exponential backoff for a task that calls an external API. The cap prevents the delay from growing indefinitely; jitter prevents multiple failing workers from hammering the API at the same time.
+Retries with a delay that grows exponentially for a task that calls an external API, using `retryDelaySeconds x (backOffScaleFactor ^ attemptNumber)`.
 
 ```json
 {
@@ -23,24 +23,25 @@ Retries with exponential backoff for a task that calls an external API. The cap 
   "retryCount": 6,
   "retryLogic": "EXPONENTIAL_BACKOFF",
   "retryDelaySeconds": 2,
-  "maxRetryDelaySeconds": 60,
-  "backoffJitterMs": 3000,
+  "backOffScaleFactor": 2,
   "responseTimeoutSeconds": 30,
   "timeoutSeconds": 600,
   "timeoutPolicy": "RETRY"
 }
 ```
 
-**Delay schedule** (`retryDelaySeconds=2`, `maxRetryDelaySeconds=60`, `backoffJitterMs=3000`):
+**Delay schedule** (`retryDelaySeconds=2`, `backOffScaleFactor=2`):
 
-| Attempt | Base delay | After cap | Actual range |
-| :--- | :--- | :--- | :--- |
-| 1 | 2s | 2s | 2.0 – 5.0s |
-| 2 | 4s | 4s | 4.0 – 7.0s |
-| 3 | 8s | 8s | 8.0 – 11.0s |
-| 4 | 16s | 16s | 16.0 – 19.0s |
-| 5 | 32s | 32s | 32.0 – 35.0s |
-| 6 | 64s | **60s** | 60.0 – 63.0s |
+| Attempt | Delay |
+| :--- | :--- |
+| 1 | 2s |
+| 2 | 4s |
+| 3 | 8s |
+| 4 | 16s |
+| 5 | 32s |
+| 6 | 64s |
+
+Orkes' task definition doesn't have a built-in delay cap or jitter — the delay keeps growing with each attempt. If you need to bound the maximum wait, lower `retryCount` or `backOffScaleFactor` to keep the last attempt's delay within an acceptable range.
 
 ---
 
@@ -158,7 +159,7 @@ t=30s  totalTimeoutSeconds exceeded → workflow FAILED, no more retries
 
 ### Thundering herd prevention
 
-When hundreds of tasks fail simultaneously (e.g., a downstream service goes down), all retries are scheduled at the same time. Without jitter, they all hit the recovering service at once. `backoffJitterMs` spreads them across a time window.
+When hundreds of tasks fail simultaneously (e.g., a downstream service goes down), all retries are scheduled at the same time and can overwhelm the recovering service. Orkes doesn't have a built-in jitter parameter, but `concurrentExecLimit` caps how many instances of a task can run at once, spreading the load out over time as the limit throttles new executions:
 
 ```json
 {
@@ -167,14 +168,13 @@ When hundreds of tasks fail simultaneously (e.g., a downstream service goes down
   "retryCount": 5,
   "retryLogic": "EXPONENTIAL_BACKOFF",
   "retryDelaySeconds": 1,
-  "maxRetryDelaySeconds": 30,
-  "backoffJitterMs": 5000,
+  "backOffScaleFactor": 2,
   "responseTimeoutSeconds": 10,
-  "concurrentExecLimit": 200
+  "concurrentExecLimit": 50
 }
 ```
 
-With `backoffJitterMs: 5000`, 500 tasks that all fail at `t=0` will retry at uniformly random times between `t=1s` and `t=6s` — spreading the retry load across 5 seconds instead of hitting the service in a single burst.
+With `concurrentExecLimit: 50`, only 50 executions of `send_webhook` run at a time — if 500 tasks fail simultaneously, the remaining 450 queue up and drain gradually instead of hitting the downstream service all at once.
 
 ---
 
@@ -182,10 +182,10 @@ With `backoffJitterMs: 5000`, 500 tasks that all fail at `t=0` will retry at uni
 
 | Scenario | Recommended config |
 | :--- | :--- |
-| External API with rate limits | `EXPONENTIAL_BACKOFF` + `maxRetryDelaySeconds` + `backoffJitterMs` |
+| External API with rate limits | `EXPONENTIAL_BACKOFF` + `backOffScaleFactor` + `concurrentExecLimit` |
 | Long-running processing job | `responseTimeoutSeconds` (short) + heartbeats from worker + `timeoutSeconds` (long) |
 | SLA-bounded task | `totalTimeoutSeconds` + `FIXED` or `EXPONENTIAL_BACKOFF` |
-| High fan-out with many concurrent failures | `backoffJitterMs` + `concurrentExecLimit` |
+| High fan-out with many concurrent failures | `concurrentExecLimit` |
 | Non-retryable error | Return `FAILED_WITH_TERMINAL_ERROR` from the worker |
 
-See the [Task Definition reference](/content/reference-docs/task-definition) for all available parameters.
+See the [task definition reference](/content/reference-docs/api/metadata/creating-task-definitions) for all available parameters.

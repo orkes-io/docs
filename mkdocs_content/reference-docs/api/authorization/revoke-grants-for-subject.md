@@ -20,7 +20,7 @@ Use this Conductor endpoint to revoke Grants for a Subject. It is intended for a
 
 
 !!! info "Available since"
-    - v5.4.0 and later
+    - v5.4.2 and later
 
 **Endpoint**: `DELETE /api/auth/subjects/{subjectType}/{subjectId}/grants`
 

@@ -8,131 +8,134 @@ keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration
 
 # Using Secrets
 
-Use secrets for credentials, API keys, tokens, passwords, private keys, and any value that should not appear in workflow definitions, execution input, task output, logs, or screenshots. A workflow references a secret by name; Conductor resolves the value at runtime for authorized users and masks it in execution data.
+Secrets in Conductor allow you to store and use sensitive data, such as API keys, passwords, authorization tokens, and environment-specific variables, without exposing it directly in workflow definitions. After storing a value as a secret in Conductor, you can reference it by its secret name in your workflows.
 
-!!! tip "5-minute path"
-    Create a secret with a stable key name, reference it as `${workflow.secrets.secret_name}`, grant the workflow or application permission to read it, and rotate the value without changing the workflow definition.
+If a user does not have access to a referenced secret, the workflow will fail.
 
 ## Configuring secrets
 
-Secrets can be created through the UI or API. For automation and environment promotion, prefer the API so secret setup can be handled by deployment tooling.
+Secrets can be created through the Conductor UI or API. For automation and environment promotion, prefer the API so secret setup can be handled by deployment tooling.
 
-Create or update a secret:
+=== "Using API"
 
-```shell
-curl -sS -X PUT "$CONDUCTOR_SERVER_URL/secrets/payment_api_token" \
-  -H "X-Authorization: $CONDUCTOR_AUTH_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '"secret-value"'
-```
+    Create or update a secret:
 
-List secret names:
+    ```shell
+    curl -sS -X PUT "$CONDUCTOR_SERVER_URL/secrets/payment_api_token" \
+      -H "X-Authorization: $CONDUCTOR_AUTH_TOKEN" \
+      -H "Content-Type: application/json" \
+      -d '"secret-value"'
+    ```
 
-```shell
-curl -sS -X POST "$CONDUCTOR_SERVER_URL/secrets" \
-  -H "X-Authorization: $CONDUCTOR_AUTH_TOKEN"
-```
+    List secret names:
 
-Related APIs:
+    ```shell
+    curl -sS -X POST "$CONDUCTOR_SERVER_URL/secrets" \
+      -H "X-Authorization: $CONDUCTOR_AUTH_TOKEN"
+    ```
 
-- [Create or update secret](/content/reference-docs/api/secrets/create-secret)
-- [List all secrets](/content/reference-docs/api/secrets/list-all-secrets)
-- [Check secret exists](/content/reference-docs/api/secrets/check-secret-exists)
-- [Delete secret](/content/reference-docs/api/secrets/delete-secret)
+    Related APIs:
 
-## Using secrets in workflow
+    - [Create or update secret](/content/reference-docs/api/secrets/create-secret)
+    - [List all secrets](/content/reference-docs/api/secrets/list-all-secrets)
+    - [Check secret exists](/content/reference-docs/api/secrets/check-secret-exists)
+    - [Delete secret](/content/reference-docs/api/secrets/delete-secret)
 
-Reference a secret with:
+=== "Using Conductor UI"
+
+    **To create a secret:**
+
+    1. Go to **Definitions** > **Secrets** from the left navigation menu on your Conductor cluster.
+    2. Select **+ Add secret**.
+    3. Enter the following parameters:
+
+    | Parameter    | Description                                                                                         | Required/ Optional |
+    | ------------ | --------------------------------------------------------------------------------------------------- | ------------------ |
+    | Secret name  | A unique name for the secret. Used to reference the secret in workflow definitions.                 | Required.          |
+    | Secret value | The value to be stored as secret. Can be a plain string or a JSON object.                           | Required.          |
+
+    4. Select **Add** to save the secret.
+
+
+### Using secrets in workflows
+
+To use a secret in a workflow, use the following expression:
 
 ```text
 ${workflow.secrets.secret_name}
 ```
 
-Example HTTP task:
+Here, `secret_name` is the name of the secret saved in Conductor. This expression dynamically retrieves the secret value during workflow execution, ensuring it is not exposed directly in the workflow definition.
 
-```json
-{
-  "name": "call_payment_api",
-  "taskReferenceName": "call_payment_api_ref",
-  "type": "HTTP",
-  "inputParameters": {
-    "http_request": {
-      "uri": "https://payments.example.com/charges",
-      "method": "POST",
-      "headers": {
-        "Authorization": "Bearer ${workflow.secrets.payment_api_token}",
-        "Content-Type": "application/json"
-      },
-      "body": {
-        "orderId": "${workflow.input.orderId}",
-        "amount": "${workflow.input.amount}"
-      }
-    }
-  }
-}
+If the secret value is a JSON object, you can access individual fields using dot notation:
+
+```text
+${workflow.secrets.secret_name.field_name}
 ```
 
-When the workflow runs, Conductor resolves `${workflow.secrets.payment_api_token}` only if the caller has permission to access that secret. The resolved value is masked in workflow and task execution data.
+For example, if a secret named `db-credentials` has the value `{"username": "admin", "password": "secret123"}`, you can reference the username as `${workflow.secrets.db-credentials.username}`.
 
 ## Updating secrets
 
-Updating a secret does not require changing or redeploying workflow definitions. Keep the secret key stable and rotate the value behind it.
+Updating a secret does not require changing or redeploying workflow definitions, since workflows reference the secret name rather than its value. Keep the secret name stable and rotate the value stored behind it.
 
-Use the same `PUT` API to update an existing secret:
+Secrets can be updated in three ways:
 
-```shell
-curl -sS -X PUT "$CONDUCTOR_SERVER_URL/secrets/payment_api_token" \
-  -H "X-Authorization: $CONDUCTOR_AUTH_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '"rotated-secret-value"'
-```
+- Using the Conductor UI
+- Using the API
+- Using the [Update Secret task](/content/reference-docs/system-tasks/update-secret) within a workflow
 
-For rotation workflows, use the [Update Secret task](/content/reference-docs/system-tasks/update-secret). This is useful when a workflow obtains a short-lived token and must replace the stored value for later executions.
+=== "Using API"
 
-```json
-{
-  "name": "update_secret",
-  "taskReferenceName": "update_secret_ref",
-  "type": "UPDATE_SECRET",
-  "inputParameters": {
-    "_secrets": {
-      "secretKey": "payment_api_token",
-      "secretValue": "${refresh_token.output.access_token}"
+    Use the same `PUT` API used to create a secret to update an existing one:
+
+    ```shell
+    curl -sS -X PUT "$CONDUCTOR_SERVER_URL/secrets/payment_api_token" \
+      -H "X-Authorization: $CONDUCTOR_AUTH_TOKEN" \
+      -H "Content-Type: application/json" \
+      -d '"rotated-secret-value"'
+    ```
+
+=== "Using Conductor UI"
+
+    **To update the secret:**
+
+    1. Go to **Definitions** > **Secrets**, and select the secret to update.
+    2. In **Secret value**, enter the updated value, then select **Edit** to confirm.
+
+    <p align="center"><img src="/content/img/updating-secrets.png" alt="Updating secrets via Conductor UI" width="80%" height="auto"></img></p>
+
+=== "Using Update Secret task"
+
+    Use the [Update Secret](/content/reference-docs/system-tasks/update-secret) task when secrets need to be replaced programmatically within a workflow; for example, when an access token expires and must be rotated automatically.
+
+    ```json
+    {
+      "name": "update_secret",
+      "taskReferenceName": "update_secret_ref",
+      "type": "UPDATE_SECRET",
+      "inputParameters": {
+        "_secrets": {
+          "secretKey": "payment_api_token",
+          "secretValue": "${refresh_token.output.access_token}"
+        }
+      }
     }
-  }
-}
-```
+    ```
 
-## Examples
+    The task requires the following input structure:
 
-### Environment-specific credentials
+    ```json
+    {
+      "_secrets": {
+        "secretKey": "my-secret-name",
+        "secretValue": "${workflow.secrets.new-token-secret}"
+      }
+    }
+    ```
 
-Use the same workflow definition across environments and change only the secret values:
+    If `_secrets`, `secretKey`, or `secretValue` are missing or empty, the task terminates the workflow immediately.
 
-| Environment | Secret key | Example reference |
-| ----------- | ---------- | ----------------- |
-| Development | `payment_api_token` | `${workflow.secrets.payment_api_token}` |
-| Staging | `payment_api_token` | `${workflow.secrets.payment_api_token}` |
-| Production | `payment_api_token` | `${workflow.secrets.payment_api_token}` |
-
-The workflow remains portable. The cluster controls which value is returned.
-
-### Passing sensitive task output
-
-If a task produces a sensitive value that must be passed to another task, place it under `_secrets` or `_masked` so execution data does not expose it. See [Masking Parameters](/content/developer-guides/masking-parameters) for details.
-
-## Use cases
-
-Use secrets for:
-
-- API tokens and OAuth access tokens
-- Database passwords
-- Private keys and signing keys
-- Webhook signing secrets
-- LLM provider keys
-- Integration credentials used by HTTP, gRPC, event, and custom worker tasks
-
-Use [environment variables](/content/developer-guides/using-environment-variables) instead for non-sensitive configuration such as base URLs, feature flags, region names, and numeric thresholds.
 
 ## Production notes
 
@@ -141,3 +144,65 @@ Use [environment variables](/content/developer-guides/using-environment-variable
 - Grant read and update permissions narrowly through [Role Based Access Control](/content/category/access-control-and-security).
 - Keep secret creation and rotation in deployment automation where possible.
 - Test secret access with the same application identity that starts the workflow.
+
+## Examples
+
+<details markdown="1">
+<summary>Using a secret in an HTTP task</summary>
+
+Suppose you have a secret named `sampletask-api-token`. Here is an example of how to use this secret in a workflow definition:
+
+```json
+// workflow definition
+{
+  "name": "sample_task_http",
+  "taskReferenceName": "sample_task_http",
+  "inputParameters": {
+    "http_request": {
+      "uri": "https://orkes-api-tester.orkesconductor.com/api",
+      "method": "GET",
+      "connectionTimeOut": 3000,
+      "readTimeOut": 3000,
+      "accept": "application/json",
+      "contentType": "application/json",
+      "headers": {
+        "Authorization": "Bearer: ${workflow.secrets.sampletask-api-token}"
+      }
+    }
+  },
+  "type": "HTTP"
+}
+```
+
+When this workflow runs, the expression `${workflow.secrets.sampletask-api-token}` will be dynamically replaced with the secret value, provided the user running the workflow has READ permission over the secret.
+
+</details>
+
+<details markdown="1">
+<summary>Using a JSON secret with dot notation</summary>
+
+Suppose you have a secret named `db-credentials` with the following JSON value:
+
+```json
+{
+  "username": "admin",
+  "password": "secret123"
+}
+```
+
+Reference individual fields in a task input using dot notation:
+
+```json
+{
+  "name": "db_query_task",
+  "taskReferenceName": "db_query_task",
+  "inputParameters": {
+    "username": "${workflow.secrets.db-credentials.username}",
+    "password": "${workflow.secrets.db-credentials.password}",
+    "query": "SELECT * FROM orders WHERE status = 'pending'"
+  },
+  "type": "SIMPLE"
+}
+```
+
+</details>

@@ -17,7 +17,7 @@ To use system AI tasks in Orkes Conductor, you must integrate your Conductor clu
 
 ## Step 1: Get the Google Gemini AI credentials
 
-To integrate Google Gemini AI with Orkes Conductor, retrieve the project ID and service account JSON from the Google Cloud console. You must also enable the Gemini API for the selected GCP project.
+To integrate Google Gemini AI with Orkes Conductor, retrieve the project ID and service account JSON from the Google Cloud console. You must also enable the Agent Platform API for the selected GCP project, and grant the service account the Agent Platform User role.
 
 ### Get the project ID
 
@@ -48,24 +48,30 @@ For more information, refer to the official documentation on [creating and manag
 
 To use Google Gemini AI with Orkes Conductor, you must enable the Gemini API from the GCP console.
 
-### Enable Gemini API
+### Grant the service account IAM access
 
-**To enable Gemini API:**
+A valid credentials JSON alone is not sufficient, the service account also needs an IAM role bound at the project level.
+
+**To grant the service account IAM access:**
+
+1. Go to **IAM & Admin** > **IAM** from the left menu on your GCP console.
+2. Find the service account, and select the **Edit** icon.
+3. Select **+ Add another role**, and choose **Agent Platform User**.
+4. Select **Save**.
+
+### Enable the Agent Platform API 
+
+**To enable the API:**
 
 1. Go to **APIs & Services** > **Enabled APIs & services** from the left menu on your GCP console.
 2. Select **+ Enable APIs and services**.
 
 <p align="center"><img src="/content/img/enable-apis-and-services.png" alt="Enabling APIs and services from GCP console" width="100%" height="auto"/></p>
 
-3. In the **API Library**, search for **Gemini API**.
-
-<p align="center"><img src="/content/img/gemini-api.png" alt="Searching for Gemini API in API Library" width="100%" height="auto"/></p>
-
+3. In the **API Library**, search for **Agent Platform API**.
 4. Select **Enable**.
 
-<p align="center"><img src="/content/img/enable-gemini-api.png" alt="Enabling Gemini API" width="60%" height="auto"/></p>
-
-Once enabled, the Gemini  API is ready for use with your GCP project.
+Once enabled, the Agent Platform  API is ready for use with your GCP project.
 
 ## Step 2: Add an integration for Google Gemini AI
 
@@ -82,7 +88,7 @@ After obtaining the credentials, add a Google Gemini AI integration to your Cond
 | --------- | ----------- |
 | Integration name | A name for the integration. |
 | Project ID | The Project ID retrieved from the GCP console. | 
-| Location | The Google Cloud region of your GCP account. |
+| Location | The Google Cloud region where you want to run the Gemini model (for example, `us-central1`). Make sure the selected model is available in this region, otherwise the integration will fail to connect. Refer to the [documentation](https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations#global-endpoint) for the list of supported regions per model. |
 | Choose Service account credentials JSON | Upload the service account JSON file (generated previously), which is a key file containing the credentials for authenticating the Orkes Conductor cluster with the GCP services. | 
 | Description | A description of your integration. |
 

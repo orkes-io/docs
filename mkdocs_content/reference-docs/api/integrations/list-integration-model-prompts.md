@@ -1,6 +1,6 @@
 ---
 title: "List Integration Model Prompts"
-description: "Use the Orkes Conductor integrations API to list Integration Model Prompts. Includes endpoint details, authentication, parameters, request bodies, response."
+description: "Use the Orkes Conductor integrations API to list Integration Model Prompts. Includes endpoint details, authentication, parameters, request bodies."
 canonical_route: "reference-docs/api/integrations/list-integration-model-prompts"
 updated: "2026-05-14"
 keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration"

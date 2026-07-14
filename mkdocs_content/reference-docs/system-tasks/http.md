@@ -1,41 +1,302 @@
 ---
-title: "HTTP Task"
-description: "Configure HTTP tasks in Conductor to call remote APIs and services. Supports GET, POST, PUT, DELETE methods with headers, body, and timeout options."
+title: "HTTP"
+description: "Learn how the HTTP task calls remote services through HTTP or HTTPS endpoints in Orkes Conductor."
 canonical_route: "reference-docs/system-tasks/http"
 updated: "2026-05-14"
 keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow tasks, workflow workers, task queues"
 ---
 
-# HTTP Task
+# HTTP
 
-```json
-"type" : "HTTP"
-```
+The HTTP task is used to make calls to remote services exposed over HTTP/HTTPS. It supports various HTTP methods, headers, body content, and other configurations needed for interacting with APIs or remote services.
 
-The HTTP task (`HTTP`) is useful for make calls to remote services exposed over HTTP/HTTPS. It supports various HTTP methods, headers, body content, and other configurations needed for interacting with APIs or remote services.
-
-The data returned in the HTTP call can be referenced in subsequent tasks as inputs, enabling you to chain multiple tasks or HTTP calls to create complex flows without writing any additional code.
-
+The HTTP task evaluates the parameters provided, constructs the HTTP request accordingly, and sends it to the specified URI. It handles the response by extracting useful information, such as the status code, headers, and body content, which can be used in subsequent tasks within the workflow.
 
 ## Task parameters
 
-The HTTP request parameters can be specified directly in `inputParameters` or nested inside `inputParameters.http_request`. Both forms are supported — the flat form is simpler for most use cases.
+Configure these parameters for the HTTP task.
 
-| Parameter          | Type                | Description                                       | Required / Optional  |
-| ------------------ | ------------------- | ------------------------------------------------- | -------------------- |
-| uri | String        | The URI for the HTTP service. Supports dynamic references like `${workflow.input.url}`.                                  | Required. |
-| method            | String           | The HTTP method. Supported methods: `GET`, `PUT`, `POST`, `PATCH`, `DELETE`, `OPTIONS`, `HEAD`, `TRACE`.                                       | Required. |
-| accept            | String           | The accept header required by the server. Default: `application/json`.                                     | Optional. |
-| contentType       | String           | The content type for the request. Default: `application/json`.                                                              | Optional. |
-| headers           | Map[String, Any] | A map of additional HTTP headers to be sent along with the request. See [Sending headers](#sending-headers) below.                | Optional. |
-| body              | Map[String, Any]            | The request body.                                          | Required for POST, PUT, or PATCH methods. |
-| asyncComplete     | Boolean          | Whether the task is completed asynchronously. Default: `false`. When `true`, the task stays `IN_PROGRESS` until an external event marks it as complete. | Optional. |
-| connectionTimeOut | Integer          | The connection timeout in milliseconds. Default: 100. Set to 0 for no timeout.                       | Optional. |
-| readTimeOut       | Integer          | Read timeout in milliseconds. Default: 150. Set to 0 for no timeout.                       | Optional. |
+| Parameter                         | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      | Required/ Optional                |
+| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------- |
+| inputParameters. **uri**           | The URI for the service. It can be a partial value when using `vipAddress` or it can be the server address.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      | Required.                         |
+| inputParameters. **method**        | The HTTP method. Supported methods:<ul><li>GET</li><li>HEAD</li><li>POST</li><li>PUT</li><li>PATCH</li><li>DELETE</li><li>OPTIONS</li><li>TRACE</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | Required.                         |
+| inputParameters. **accept**        | The accept header required by the server. The default value is `application/json`. Supported types: <ul><li>application/java-archive</li><li>application/EDI-X12</li><li>application/EDIFACT</li><li>application/javascript</li><li>application/octet-stream</li><li>application/ogg</li><li>application/pdf</li><li>application/xhtml+xml</li><li>application/x-shockwave-flash</li><li>application/json</li><li>application/ld+json</li><li>application/xml</li><li>application/zip</li><li>application/x-www-form-urlencoded</li><li>audio/mpeg</li><li>audio/x-ms-wma</li><li>audio/vnd.rn-realaudio</li><li>audio/x-wav</li><li>image/gif</li><li>image/jpeg</li><li>image/png</li><li>image/tiff</li><li>image/vnd.microsoft.icon</li><li>image/x-icon</li><li>image/vnd.djvu</li><li>image/svg+xml</li></ul>Any other headers can be [passed as a dynamic variable](/content/developer-guides/passing-inputs-to-task-in-conductor). | Optional.                         |
+| inputParameters. **contentType**   | The content type for the server. The default value is `application/json`. Supported types: <ul><li>application/java-archive</li><li>application/EDI-X12</li><li>application/EDIFACT</li><li>application/javascript</li><li>application/octet-stream</li><li>application/ogg</li><li>application/pdf</li><li>application/xhtml+xml</li><li>application/x-shockwave-flash</li><li>application/json</li><li>application/ld+json</li><li>application/xml</li><li>application/zip</li><li>application/x-www-form-urlencoded</li><li>audio/mpeg</li><li>audio/x-ms-wma</li><li>audio/vnd.rn-realaudio</li><li>audio/x-wav</li><li>image/gif</li><li>image/jpeg</li><li>image/png</li><li>image/tiff</li><li>image/vnd.microsoft.icon</li><li>image/x-icon</li><li>image/vnd.djvu</li><li>image/svg+xml</li></ul>It can be [passed as a dynamic variable](/content/developer-guides/passing-inputs-to-task-in-conductor).                       | Optional.                         |
+| inputParameters. **hedgingConfig**.**maxAttempts** | The maximum number of parallel requests to send. The system will use the response from the first successful attempt, helping reduce tail latencies in remote services. <br/>**Note:** Hedging makes parallel requests, so use it only for idempotent services. | Optional. | 
+| inputParameters. **headers**       | A map of additional HTTP headers to be sent along with the request. Supported types:<ul><li>Accept-Language</li><li>Authorization</li><li>Cache Control</li><li>Content-MD5</li><li>From</li><li>If-Match</li><li>If-Modified-Since</li><li>If-None-Match</li><li>Max-Forwards</li><li>Pragma</li><li>If-Range</li><li>If-Unmodified-Since</li><li>Proxy-Authorization</li><li>Range</li><li>Warning</li><li>x-api-key</li><li>Accept-Charset</li><li>Accept-Encoding</li><li>Accept-Control-Request-Headers</li><li>Accept-Control-Request-Method</li><li>Content-Transfer-Encoding</li><li>Expect</li><li>Transfer-Encoding</li><li>Trailer</li></ul>                                                                                                                                                                                                                                                                                          | Optional.                         |
+| inputParameters. **body**          | The request body for POST, PUT, or PATCH methods. Can be text or parameters such as string, number, boolean, null, or object/array.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | Required for POST, PUT, or PATCH. |
+| inputParameters. **encode**        | Determines whether the URI needs encoding. When set to `true`, the Conductor will automatically encode the query parameters before sending the HTTP request. Set this to `false` if the URI is already encoded. The default value is `true`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | Optional.                         |
+| inputParameters. **acceptedStatusCodes**<br/><span class="table-note"><strong>Available since:</strong> v5.2.97 and later.</span> | List of HTTP status codes or families to treat as successful. Supports exact codes (such as "404", "302") and family wildcards ("1xx", "2xx", "3xx", "4xx", "5xx").<br/><br/>When not set, only 2xx responses are treated as successful. When explicitly set, only the listed codes are accepted, i.e.; "2xx" is not implicitly included. | Optional. | 
 
-## Configuration JSON
+The following are generic configuration parameters that can be applied to the task and are not specific to the HTTP task.
 
-Here is the task configuration for an HTTP task. Note that parameters are specified directly in `inputParameters`:
+<details>
+<summary>Caching parameters</summary>
+
+You can cache the task outputs using the following parameters. Refer to [Caching Task Outputs](/content/faqs/task-cache-output) for a full guide.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| cacheConfig.**ttlInSecond** | The time to live in seconds, which is the duration for the output to be cached. | Required if using *cacheConfig*. |
+| cacheConfig.**key** | The cache key is a unique identifier for the cached output and must be constructed exclusively from the task’s input parameters.<br/>It can be a string concatenation that contains the task’s input keys, such as `${uri}-${method}` or `re_${uri}_${method}`. | Required if using *cacheConfig*. |
+
+</details>
+
+<details>
+<summary>Other generic parameters</summary>
+
+Here are other parameters for configuring the task behavior.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| optional | Whether the task is optional. <br/><br/>If set to`true`, any task failure is ignored, and the workflow continues with the task status updated to `COMPLETED_WITH_ERRORS`. However, the task must reach a terminal state. If the task remains incomplete, the workflow waits until it reaches a terminal state before proceeding. | Optional. | 
+| asyncComplete | Whether the task is completed asynchronously. The default value is false.<ul><li>**false**—Task status is set to COMPLETED upon successful execution.</li><li>**true**—Task status is kept as IN_PROGRESS until an external event marks it as complete.</li></ul> | Optional. | 
+
+</details>
+
+## Task configuration
+
+This is the task configuration for an HTTP task.
+
+```json
+{
+     "name": "http",
+     "taskReferenceName": "http_ref",
+     "type": "HTTP",
+     "inputParameters": {
+       "uri": "https://orkes-api-tester.orkesconductor.com/api",
+       "method": "GET",
+       "accept": "application/json",
+       "contentType": "application/json",
+       "encode": true,
+       "hedgingConfig": {
+         "maxAttempts": 4
+       },
+       "headers": {
+         "header-1": "${workflow.input.header-1}"
+       }
+     }
+}
+```
+
+## Task output
+
+The HTTP task will return the following parameters.
+
+| Parameter    | Description                                                                                                                   |
+| ------------ | ----------------------------------------------------------------------------------------------------------------------------- |
+| response     | A JSON object representing the response, if present.                                                                          |
+| response.**headers**      | An object containing the metadata about the response.                                                                         |
+| response.**statusCode**   | The [HTTP status code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes) indicating success or failure of the request. |
+| response.**reasonPhrase** | The reason phrase associated with the HTTP status code.                                                                       |
+| response.**body**.        | A JSON object containing the data returned by the API.                                                                |
+
+## Adding an HTTP task in UI
+
+An HTTP task can be configured manually through the UI or automatically populated using registered service definitions.
+
+
+=== "Using registered services"
+
+    !!! info "Prerequisites"
+        [Register the remote service in Orkes Conductor](https://orkes.io/content/remote-services).
+
+    **To add an HTTP task using registered services:**
+
+    1. In your workflow, select the (**+**) icon and add an **HTTP** task.
+    2. Select **Populate from remote services**.
+    3. In **Service**, select the registered HTTP service.
+    4. In **Host**, select the required host for the service.
+    5. In **Service method**, select the required endpoint.
+    6. Select **Populate**.
+    7. (Optional) In **Hedging Config** > **Maximum attempts**, enter a value for parallel hedged requests to reduce latency.
+
+    <p align="center"><img src="/content/img/adding-service-to-http-task.gif" alt="Adding the registered service to an HTTP task" width="100%" height="auto"></img></p>
+
+    This method automatically fills in the HTTP task parameters based on the selected service. It is recommended if you have already registered your HTTP services in Orkes Conductor.
+
+=== "Manually configuring an HTTP tasks"
+
+    **To add an HTTP task:**
+
+    1. In your workflow, select the (**+**) icon and add an **HTTP** task.
+    2. Choose the HTTP method for sending requests from the **Method** drop-down.
+    3. In **URL**, add the URI to be called by the HTTP task.
+    4. In **Accept**, select the accept header as required by the server.
+    5. In **Content-Type**, select the content type for the server.
+    6. (Optional) Enable or disable **Encode** to specify if the URI needs to be encoded.
+    7. (Optional) In **Hedging Config** > **Maximum attempts**, enter a value for parallel hedged requests to reduce latency.
+    8. (Optional) In **Additional headers**, add any additional HTTP headers to be sent along with the request.
+    9. In **Body**, add the request body when using PUT, POST, or PATCH method.
+    10. (Optional) Set **Async complete** to true if the task is to be completed asynchronously.
+
+    <center><p><img src="/content/img/ui-guide-http-task.png" alt="Adding HTTP task" width="100%" height="auto"/></p></center>
+
+
+## Examples
+
+Here are some examples for using the HTTP task.
+
+<details>
+<summary>Sending an HTTP POST request</summary>
+<p>
+
+This example creates a workflow that sends an HTTP POST request to a public test API and returns the created resource in the task output.
+
+**To create a workflow:**
+
+1. Go to **Definitions** > **Workflow**, from the left navigation menu on your Conductor cluster.
+2. Select **+ Define workflow**.
+3. In the **Code** tab, paste the following workflow definition:
+
+```json
+{
+  "name": "http_post_end_to_end_example",
+  "description": "Sends an HTTP POST request and returns the response body",
+  "version": 1,
+  "tasks": [
+    {
+      "name": "http",
+      "taskReferenceName": "post_request",
+      "type": "HTTP",
+      "inputParameters": {
+        "uri": "https://jsonplaceholder.typicode.com/posts",
+        "method": "POST",
+        "accept": "application/json",
+        "contentType": "application/json",
+        "headers": {
+          "x-source": "orkes-conductor"
+        },
+        "body": {
+          "title": "Sample post created by Conductor",
+          "body": "This payload was sent by an HTTP task.",
+          "userId": 1
+        }
+      }
+    }
+  ],
+  "outputParameters": {
+    "createdPost": "${post_request.output.response.body}",
+    "statusCode": "${post_request.output.statusCode}"
+  },
+  "schemaVersion": 2
+}
+```
+
+4. Select **Save** > **Confirm**.
+5. Select **Execute** to run the workflow.
+
+<center><p><img src="/content/img/http-send-post-request-example.png" alt="Example workflow on sending a POST request" width="100%" height="auto"/></p></center>
+
+This takes you to the workflow execution page, where you can inspect the task output and workflow output. 
+
+<center><p><img src="/content/img/http-example-output.png" alt="Workflow output" width="100%" height="auto"/></p></center>
+
+</p>
+</details>
+
+<details>
+<summary>Use `asyncComplete` to complete an HTTP task asynchronously</summary>
+<p>
+
+The `asyncComplete` parameter allows an HTTP task to be completed asynchronously. When enabled, the task remains in progress until an external signal marks it as completed.
+
+This example shows how to pause a workflow after an HTTP task starts and resume it later using asynchronous completion.
+
+In this example, you’ll build a workflow that:
+
+- Executes an HTTP request
+- Pauses execution using `asyncComplete`
+- Resumes only when an external signal marks the task as completed
+
+**To create a workflow:**
+
+1. Go to **Definitions** > **Workflow**, from the left navigation menu on your Conductor cluster.
+2. Select **+ Define workflow**.
+3. In the **Code** tab, paste the following workflow definition:
+
+```json
+{
+ "name": "async_complete_example",
+ "description": "Edit or extend this sample workflow. Set the workflow name to get started",
+ "version": 1,
+ "tasks": [
+   {
+     "name": "http_task_85tf2",
+     "taskReferenceName": "http_task_85tf2_ref",
+     "inputParameters": {
+         "uri": "https://orkes-api-tester.orkesconductor.com/api",
+         "method": "GET",
+         "connectionTimeOut": 3000,
+         "readTimeOut": "3000",
+         "accept": "application/json",
+         "contentType": "application/json"
+     },
+     "type": "HTTP",
+     "asyncComplete": true
+   }
+ ],
+ "schemaVersion": 2
+}
+```
+
+4. Save the workflow.
+5. Select **Execute** to run the workflow.
+
+Upon execution, the HTTP task remains “In Progress” instead of completing immediately, allowing for asynchronous completion. The task can be completed using various methods:            
+
+
+=== "Method 1: Complete the task using API"
+
+    1. From the workflow execution page, copy the workflow ID and task reference name.
+
+    <p align="center"><img src="/content/img/workflowid.png" alt="Workflow (execution) ID in Conductor" width="100%" height="auto"></img></p>
+
+    2. Use this `workflowId` along with the `taskRefName` to complete the task using the [Update Task Status in a Workflow API](https://orkes.io/content/reference-docs/api/task/update-task-status-in-workflow). 
+
+    ```
+    POST /api/tasks/{workflowId}/{taskRefName}/{status}
+    ```
+
+    **Example Request**
+
+    ```json
+    curl -X 'POST' \
+      'https://developer.orkescloud.com/api/tasks/0cc5dd20-e49d-11f0-a0ca-c60c4ebc4813/http_task_85tf2_ref/COMPLETED' \
+      -H 'accept: text/plain' \
+      -H 'X-Authorization: <TOKEN>' \
+      -H 'Content-Type: application/json' \
+      -d '{}'
+    ```
+
+    **Example Response**
+
+    ```json
+    0cc73cb9-e49d-11f0-a0ca-c60c4ebc4813
+    ```
+
+    This API call marks the task as completed, allowing the workflow to finish its execution.
+
+=== "Method 2: Complete the task using API Conductor UI"
+
+    Alternatively, you can complete the task manually using Conductor UI.
+
+    1. Open the workflow execution.
+    2. Select the HTTP task.
+    3. Update the status to `COMPLETED`.
+
+    <p align="center"><img src="/content/img/workflow-status-update-from-ui.png" alt="Updating workflow status from Conductor UI" width="100%" height="auto"></img></p>
+
+
+These methods allow you to asynchronously complete your workflow, which is beneficial when pausing the workflow for external interventions.
+
+</p>
+</details>
+
+<details>
+<summary>Accepting non-2xx status codes</summary>
+
+Use `acceptedStatusCodes` when your workflow should continue even if the HTTP response is not a 2xx status code.
 
 ```json
 {
@@ -43,193 +304,22 @@ Here is the task configuration for an HTTP task. Note that parameters are specif
   "taskReferenceName": "http_ref",
   "type": "HTTP",
   "inputParameters": {
-    "uri": "https://api.example.com/data",
-    "method": "POST",
-    "headers": {
-      "Authorization": "Bearer ${workflow.input.api_token}",
-      "X-Request-Id": "${workflow.correlationId}"
-    },
-    "body": {
-      "key": "value"
-    }
-  }
-}
-```
-
-!!! note "Legacy `http_request` form"
-    The nested `inputParameters.http_request` form is still supported for backward compatibility:
-    ```json
-    "inputParameters": {
-      "http_request": {
-        "uri": "https://api.example.com/data",
-        "method": "POST",
-        "body": { "key": "value" }
-      }
-    }
-    ```
-    Both forms work identically. The flat form (shown above) is recommended for new workflows.
-
-## Sending headers
-
-Use the `headers` parameter to send custom HTTP headers, including authentication:
-
-### Bearer token authentication
-
-```json
-{
-  "name": "call_api",
-  "taskReferenceName": "call_api_ref",
-  "type": "HTTP",
-  "inputParameters": {
-    "uri": "https://api.example.com/protected/resource",
+    "uri": "https://example.com/api/resource/123",
     "method": "GET",
-    "headers": {
-      "Authorization": "Bearer ${workflow.input.access_token}"
-    }
+    "accept": "application/json",
+    "contentType": "application/json",
+    "acceptedStatusCodes": ["2xx", "404"]
   }
 }
 ```
 
-### API key authentication
-
-```json
-{
-  "name": "call_api",
-  "taskReferenceName": "call_api_ref",
-  "type": "HTTP",
-  "inputParameters": {
-    "uri": "https://api.example.com/data",
-    "method": "GET",
-    "headers": {
-      "X-API-Key": "${workflow.input.api_key}"
-    }
-  }
-}
-```
-
-### Basic authentication
-
-```json
-{
-  "name": "call_api",
-  "taskReferenceName": "call_api_ref",
-  "type": "HTTP",
-  "inputParameters": {
-    "uri": "https://api.example.com/data",
-    "method": "GET",
-    "headers": {
-      "Authorization": "Basic ${workflow.input.basic_auth_token}"
-    }
-  }
-}
-```
-
-### Multiple custom headers
-
-```json
-{
-  "name": "call_api",
-  "taskReferenceName": "call_api_ref",
-  "type": "HTTP",
-  "inputParameters": {
-    "uri": "https://api.example.com/data",
-    "method": "POST",
-    "headers": {
-      "Authorization": "Bearer ${workflow.input.token}",
-      "X-Correlation-Id": "${workflow.correlationId}",
-      "X-Request-Source": "conductor",
-      "Accept-Language": "en-US"
-    },
-    "body": {
-      "data": "${workflow.input.payload}"
-    }
-  }
-}
-```
-
-## Output
-
-The HTTP task will return the following parameters.
-
-| Name   | Type | Description                                                                                               |
-| ------ | ---- | --------------------------------------------------------------------------------------------------------- |
-| response     | Map[String, Any]              | The JSON body containing the request response, if available.                         |
-| response.headers      | Map[String, Any] | The response headers.                                                            |
-| response.statusCode   | Integer          | The [HTTP status code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes) indicating the request outcome. |
-| response.reasonPhrase | String           | The reason phrase associated with the HTTP status code.                                            |
-| response.body | Map[String, Any] | The response body containing the data returned by the endpoint.
-
-## Execution
-
-The HTTP task is moved to COMPLETED status once the remote service responds successfully.
-
-If your HTTP tasks are not getting picked up, you might have too many HTTP tasks in the task queue. Consider using Isolation Groups to prioritize certain HTTP tasks over others. 
-
-## Examples
-
-Here are some examples for using the HTTP task.
+When `acceptedStatusCodes` is set, "2xx" is not automatically included. Add it explicitly if you want both 2xx and other codes to be accepted.
+</details>
 
 
-### GET Method
-
-```json
-{
-  "name": "Get Example",
-  "taskReferenceName": "get_example",
-  "type": "HTTP",
-  "inputParameters": {
-    "uri": "https://jsonplaceholder.typicode.com/posts/${workflow.input.queryid}",
-    "method": "GET"
-  }
-}
-```
-
-### POST Method
-
-```json
-{
-  "name": "http_post_example",
-  "taskReferenceName": "post_example",
-  "type": "HTTP",
-  "inputParameters": {
-    "uri": "https://jsonplaceholder.typicode.com/posts/",
-    "method": "POST",
-    "body": {
-      "title": "${get_example.output.response.body.title}",
-      "userId": "${get_example.output.response.body.userId}",
-      "action": "doSomething"
-    }
-  }
-}
-```
-
-### PUT Method
-```json
-{
-  "name": "http_put_example",
-  "taskReferenceName": "put_example",
-  "type": "HTTP",
-  "inputParameters": {
-    "uri": "https://jsonplaceholder.typicode.com/posts/1",
-    "method": "PUT",
-    "body": {
-      "title": "${get_example.output.response.body.title}",
-      "userId": "${get_example.output.response.body.userId}",
-      "action": "doSomethingDifferent"
-    }
-  }
-}
-```
-
-### DELETE Method
-```json
-{
-  "name": "DELETE Example",
-  "taskReferenceName": "delete_example",
-  "type": "HTTP",
-  "inputParameters": {
-    "uri": "https://jsonplaceholder.typicode.com/posts/1",
-    "method": "DELETE"
-  }
-}
-```
+<details>
+<summary>Orchestrating long-running APIs</summary>
+<p>
+Explore the full tutorial on [orchestrating long-running APIs](/content/tutorials/long-running-apis).
+</p>
+</details>

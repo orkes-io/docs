@@ -21,7 +21,7 @@ If you don't already have a Conductor server running, pick one:
 docker run -p 8080:8080 conductoross/conductor:latest
 ```
 
-The UI will be available at `http://localhost:8080` and the API at `http://localhost:8080/api`.
+The UI will be available at `<YOUR-CLUSTER-URL>` and the API at `<YOUR-CLUSTER-URL>/api`.
 
 **MacOS / Linux (one-liner):**
 
@@ -129,7 +129,7 @@ main();
 Run it:
 
 ```shell
-export CONDUCTOR_SERVER_URL=http://localhost:8080
+export CONDUCTOR_SERVER_URL=<YOUR-CLUSTER-URL>
 npx ts-node quickstart.ts
 ```
 
@@ -142,7 +142,7 @@ npx ts-node quickstart.ts
 > export CONDUCTOR_AUTH_SECRET="your-secret"
 > ```
 
-That's it — you defined a worker, built a workflow, and executed it. Open the Conductor UI (default: [http://localhost:8080](http://localhost:8080)) to see the execution.
+That's it — you defined a worker, built a workflow, and executed it. Open the Conductor UI (default: <YOUR-CLUSTER-URL>) to see the execution.
 
 ## What You Can Build
 

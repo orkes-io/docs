@@ -1,9 +1,9 @@
 ---
 title: "Applications"
-description: "Use the Orkes Conductor applications API to applications. Includes endpoint details, authentication, parameters, request bodies, response behavior, and."
+description: "Use the Orkes Conductor applications API to applications. Includes endpoint details, authentication, parameters, request bodies, response behavior."
 ---
 # Applications
-Use the Orkes Conductor applications API to applications. Includes endpoint details, authentication, parameters, request bodies, response behavior, and.
+Use the Orkes Conductor applications API to applications. Includes endpoint details, authentication, parameters, request bodies, response behavior.
 
 Use this section when you need documentation about applications in Orkes Conductor.
 

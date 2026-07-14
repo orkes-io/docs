@@ -39,11 +39,10 @@ This boundary keeps the agent flexible while making the work recoverable. The mo
 
 ## Build paths
 
-- [Production Agent Architecture](/content/ai-orchestration/production-agent-architecture) shows how to separate reasoning from durable execution.
-- [Failure Semantics](/content/ai-orchestration/failure-semantics) shows how to test crashes, retries, timeouts, and recovery behavior.
-- [Durable Agents](/content/ai-orchestration/durable-agents) explains persisted state, long waits, compensation, and replay.
-- [MCP Integration](/content/ai-orchestration/mcp-integration) shows how to make tool calls durable and auditable.
-- [Build Your First AI Agent](/content/ai-orchestration/first-ai-agent) walks through the first runnable agent workflow.
+- [Production Agent Architecture](/content/ai-agents/production-agent-architecture) shows how to separate reasoning from durable execution.
+- [Failure Semantics](/content/ai-agents/failure-semantics) shows how to test crashes, retries, timeouts, and recovery behavior.
+- [Durable Agents](/content/ai-agents/durable-agents) explains persisted state, long waits, compensation, and replay.
+- [Build Your First AI Agent](/content/ai-agents/first-ai-agent) walks through the first runnable agent workflow.
 
 ## Why workflows are code-native, not JSON-only
 

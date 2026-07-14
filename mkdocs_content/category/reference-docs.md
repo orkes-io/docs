@@ -11,7 +11,7 @@ Reference pages explain what each task does, how to configure it, what it return
 
 ## Recommended path
 
-If you are unsure where to begin, start with **Worker Task**, **Workflow Definition**, **Task Definition**, **Operators**, **System Tasks**. These pages cover the most common entry points for this section.
+If you are unsure where to begin, start with **Worker Task**, **Operators**, **System Tasks**. These pages cover the most common entry points for this section.
 
 ## When to use this section
 
@@ -20,7 +20,5 @@ Use these pages to answer implementation questions, compare available primitives
 ## Pages
 
 - [Worker Task](/content/reference-docs/worker-task)
-- [Workflow Definition](/content/reference-docs/workflow-definition)
-- [Task Definition](/content/reference-docs/task-definition)
 - [Operators](/content/category/reference-docs/operators)
 - [System Tasks](/content/category/reference-docs/system-tasks)

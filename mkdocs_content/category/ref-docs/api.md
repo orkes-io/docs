@@ -1,6 +1,6 @@
 ---
 title: "API Reference"
-description: "Conductor REST API reference — complete endpoint documentation for workflow orchestration including metadata, execution management, task polling, bulk."
+description: "REST API reference for Orkes Conductor — base URL, authentication, request/response formats, and links to every API section."
 canonical_route: "category/ref-docs/api"
 updated: "2026-05-14"
 keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration"
@@ -15,20 +15,20 @@ Conductor exposes a full REST API for managing workflow definitions, executions,
 All API endpoints are relative to your Conductor server's base URL:
 
 ```
-http://localhost:8080/api/
+<YOUR-CLUSTER-URL>/api/
 ```
 
 For example, to list all workflow definitions:
 
 ```shell
-curl http://localhost:8080/api/metadata/workflow
+curl <YOUR-CLUSTER-URL>/api/metadata/workflow
 ```
-
-If your Conductor server runs on a different host or port, replace `localhost:8080` accordingly.
 
 ## Authentication
 
-Conductor OSS does not require authentication by default. All API endpoints are open. If you need to secure your Conductor instance, you can add authentication via a reverse proxy (e.g., Nginx, Envoy) or by implementing a custom security filter in Spring Boot.
+Every request to Orkes Conductor requires an `X-Authorization` header containing a valid JSON Web Token (JWT). Generate a JWT from an application's access key and secret, then include it on every API call.
+
+See [Authentication and Access Keys](/content/sdks/authentication) for how to create an application, retrieve an access key, and generate a token.
 
 ## Content Type
 
@@ -66,12 +66,18 @@ When an error occurs, the response body contains:
 
 ## Quick Start
 
-Register a workflow definition, start it, and check its status — all in three commands:
+Generate a token, register a workflow definition, start it, and check its status:
 
 ```shell
-# 1. Register a workflow definition
-curl -X POST 'http://localhost:8080/api/metadata/workflow' \
+# 1. Generate a JWT token
+TOKEN=$(curl -s -X POST '<YOUR-CLUSTER-URL>/api/token' \
   -H 'Content-Type: application/json' \
+  -d '{"keyId": "<YOUR-KEY-ID>", "keySecret": "<YOUR-KEY-SECRET>"}' | jq -r '.token')
+
+# 2. Register a workflow definition
+curl -X POST '<YOUR-CLUSTER-URL>/api/metadata/workflow' \
+  -H 'Content-Type: application/json' \
+  -H "X-Authorization: $TOKEN" \
   -d '{
     "name": "hello_workflow",
     "version": 1,
@@ -89,14 +95,16 @@ curl -X POST 'http://localhost:8080/api/metadata/workflow' \
     "schemaVersion": 2
   }'
 
-# 2. Start a workflow execution
-WORKFLOW_ID=$(curl -s -X POST 'http://localhost:8080/api/workflow/hello_workflow' \
+# 3. Start a workflow execution
+WORKFLOW_ID=$(curl -s -X POST '<YOUR-CLUSTER-URL>/api/workflow/hello_workflow' \
   -H 'Content-Type: application/json' \
+  -H "X-Authorization: $TOKEN" \
   -d '{}')
 echo "Started workflow: $WORKFLOW_ID"
 
-# 3. Check workflow status
-curl "http://localhost:8080/api/workflow/$WORKFLOW_ID"
+# 4. Check workflow status
+curl "<YOUR-CLUSTER-URL>/api/workflow/$WORKFLOW_ID" \
+  -H "X-Authorization: $TOKEN"
 ```
 
 ## API Sections
@@ -104,16 +112,27 @@ curl "http://localhost:8080/api/workflow/$WORKFLOW_ID"
 | Section | Base Path | Description |
 |---|---|---|
 | **[Metadata](/content/reference-docs/api/metadata)** | `/api/metadata` | Register, update, validate, and delete workflow and task definitions |
-| **[Start Workflow](/content/reference-docs/api/workflow/start-workflow-execution)** | `/api/workflow` | Start workflows asynchronously, synchronously, or with dynamic definitions |
-| **[Workflow](/content/reference-docs/api/workflow)** | `/api/workflow` | Manage executions: get status, pause, resume, retry, restart, terminate, search |
+| **[Workflow](/content/reference-docs/api/workflow)** | `/api/workflow` | Start workflows, manage executions, search, pause, resume, retry, terminate |
 | **[Task](/content/reference-docs/api/task)** | `/api/tasks` | Poll for tasks, update results, manage queues, view logs, search |
-| **[Bulk Operations](/content/reference-docs/api/bulk)** | `/api/workflow/bulk` | Pause, resume, restart, retry, terminate, or remove workflows in batch |
-| **[Event Handlers](/content/reference-docs/api/event-handlers)** | `/api/event` | Create and manage event-driven workflow triggers |
-| **[Task Domains](/content/reference-docs/api/task-domains)** | — | Route tasks to specific worker pools at runtime |
+| **[Users](/content/reference-docs/api/users)** | `/api/users` | Create and manage users, retrieve details, check permissions |
+| **[Groups](/content/reference-docs/api/groups)** | `/api/groups` | Manage groups, group membership, and permissions |
+| **[Applications](/content/reference-docs/api/applications)** | `/api/applications` | Manage applications, access keys, and roles |
+| **[Tags](/content/reference-docs/api/tags)** | `/api/metadata`, `/api/secrets`, ... | Add, list, and delete tags on workflow, task, and other definitions |
+| **[Secrets](/content/reference-docs/api/secrets)** | `/api/secrets` | Create and manage secrets, retrieve values, manage secret tags |
+| **[Tokens](/content/reference-docs/api/tokens)** | `/api/token` | Generate and manage authentication tokens |
+| **[Authorization](/content/reference-docs/api/authorization)** | `/api/auth` | Grant or revoke access to resources for users, groups, or roles |
+| **[Schema](/content/reference-docs/api/schema)** | `/api/schema` | Create, retrieve, and delete input/output schema definitions |
+| **[Environment Variables](/content/reference-docs/api/environment-variables)** | `/api/environment` | Create and manage environment variables and their tags |
+| **[Schedule](/content/reference-docs/api/schedule)** | `/api/scheduler` | Create, manage, and search workflow schedules |
+| **[Human Task](/content/reference-docs/api/human-tasks)** | `/api/human` | Manage human task executions, assignments, and user forms |
+| **[Remote Services](/content/reference-docs/api/remote-services)** | `/api/registry` | Register and manage HTTP/gRPC service endpoints |
+| **[Integrations](/content/reference-docs/api/integrations)** | `/api/integrations` | Create and update integration providers |
+| **[Prompts](/content/reference-docs/api/prompts)** | `/api/prompts` | Create and manage AI prompts |
+| **[Webhooks](/content/reference-docs/api/webhooks)** | `/api/metadata/webhook` | Create, update, retrieve, delete, and tag webhook definitions |
 
 ## Swagger UI
 
-The Swagger UI at `http://localhost:8080/swagger-ui/index.html` provides an interactive API explorer where you can try endpoints directly from your browser.
+The Swagger UI at `<YOUR-CLUSTER-URL>/swagger-ui/index.html` provides an interactive API explorer where you can try endpoints directly from your browser.
 
 ## SDKs
 

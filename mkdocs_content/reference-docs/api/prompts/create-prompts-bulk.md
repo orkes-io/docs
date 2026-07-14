@@ -1,6 +1,6 @@
 ---
 title: "Create Prompts in Bulk"
-description: "Use the Orkes Conductor Conductor API to create Prompts in Bulk. Includes endpoint details, authentication, parameters, request bodies, response behavior, and."
+description: "Use the Orkes Conductor Conductor API to create Prompts in Bulk. Includes endpoint details, authentication, parameters, request bodies, response behavior."
 canonical_route: "reference-docs/api/prompts/create-prompts-bulk"
 updated: "2026-05-14"
 keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, API orchestration, API gateway, service orchestration"

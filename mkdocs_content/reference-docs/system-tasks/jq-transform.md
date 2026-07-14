@@ -1,34 +1,45 @@
 ---
-title: "JSON JQ Transform Task"
-description: "JSON JQ Transform Task — transform and filter JSON data inside Conductor workflows using JQ expressions."
+title: "JSON JQ Transform"
+description: "Learn how the JSON JQ Transform task processes and transforms JSON data using jq expressions in Orkes Conductor."
 canonical_route: "reference-docs/system-tasks/jq-transform"
 updated: "2026-05-14"
 keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow tasks, workflow workers, task queues"
 ---
 
-# JSON JQ Transform Task
-```json
-"type" : "JSON_JQ_TRANSFORM"
-```
+# JSON JQ Transform
 
-The JSON JQ Transform task (`JSON_JQ_TRANSFORM`) processes JSON data using jq. It is useful for transforming data from one task's output into the input of another task.
+The JSON JQ Transform task allows the processing of JSON data using jq.
+
+A JSON JQ Transform task evaluates a `queryExpression` using jq syntax to transform JSON data provided as input parameters. The task processes the data based on the specified query, and the output is a transformed JSON object or array.
 
 ## Task parameters
 
-Use these parameters inside `inputParameters` in the JSON JQ Transform task configuration.
+Configure these parameters for the JSON JQ Transform task.
 
+| Parameter                           | Description                                                                                                                 | Required/ Optional |
+| ----------------------------------- | --------------------------------------------------------------------------------------------------------------------------- | ------------------ |
+| inputParameters                     | JSON object containing the configuration data for task execution. Supports string, number, boolean, null, and object/array. | Required.          |
+| inputParameters.**queryExpression** | A string representing a JQ (JSON Query) expression. This expression is used to transform the JSON data.                     | Required.          |
 
-`queryExpression` is appended to the `inputParameters` of `JSON_JQ_TRANSFORM`, along side any other input values needed for the evaluation.
+!!! info "Note"
+    If your JSON JQ Transform expression references a workflow secret (such as `${workflow.secrets.<secret-name>}`), the resolved value is automatically masked in the task output. For details on masking behavior, see [Masking Parameters](/content/developer-guides/masking-parameters#masking-secret-references-and-secret-values).
 
-| Parameter          | Type                | Description                                       | Required / Optional  |
-| ------------------ | ------------------- | ------------------------------------------------- | -------------------- |
-| queryExpression | String | The jq filter expression used to transform the JSON data. <br/><br/> Refer to the [jq documentation](https://jqlang.org/) and the [jq manual](https://jqlang.org/manual/) for information on constructing filters. You can test expressions interactively at [jqplay.org](https://jqplay.org/). | Required. |
-| inputParameters | Map[String, Any] | Contains the inputs for the jq transformation. | Required. |
+The following are generic configuration parameters that can be applied to the task and are not specific to the JSON JQ Transform task.
 
-## JSON configuration
+<details>
+<summary>Other generic parameters</summary>
 
+Here are other parameters for configuring the task behavior.
 
-Here is the task configuration for a JSON JQ Transform task.
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| optional | Whether the task is optional. <br/><br/>If set to`true`, any task failure is ignored, and the workflow continues with the task status updated to `COMPLETED_WITH_ERRORS`. However, the task must reach a terminal state. If the task remains incomplete, the workflow waits until it reaches a terminal state before proceeding. | Optional. | 
+
+</details>
+
+## Task configuration
+
+This is the task configuration for a JSON JQ Transform task.
 
 ```json
 {
@@ -55,138 +66,284 @@ Here is the task configuration for a JSON JQ Transform task.
 }
 ```
 
-## Output
+## Task output
 
 The JSON JQ Transform task will return the following parameters.
 
-| Name             | Type         | Description                                                   |
-| ---------------- | ------------ | ------------------------------------------------------------- |
-| result     | List[Map[String, Any]] | The first element of the `resultList` returned by the jq filter.                           |
-| resultList | List[List[Map[String, Any]]] | A list of results returned by the jq filter.                           |
-| error      | String | An optional error message if the jq filter failed. |
+| Parameter  | Description                                    |
+| ---------- | ---------------------------------------------- |
+| resultList | List of results returned by the JQ expression. |
+| result     | The first element of the resultList.           |
+| error      | Optional error message if the JQ query fails.  |
 
+## Adding a JSON JQ Transform task in UI
+
+**To add a JSON JQ Transform task:**
+
+1. In your workflow, select the (**+**) icon and add a **JSON JQ Transform** task.
+2. In **Script Parameters**, add the parameter that the JQ expression will evaluate.
+3. In **JQ expression**, enter the expression to be evaluated.
+
+<center>
+  <p>
+    <img
+      src="/content/img/ui-guide-jq-task.png"
+      alt="Adding JQ Transform task"
+      width="80%"
+      height="auto"
+    />
+  </p>
+</center>
 
 ## Examples
 
 Here are some examples for using the JSON JQ Transform task.
 
-### Simple example
+<details>
+<summary>Using JSON JQ Transform task in a workflow</summary>
+<p>
 
-In this example, the jq filter expression `key3: (.key1.value1 + .key2.value2)` will concatenate the two provided string arrays in `key1` and `key2` into a single array named `key3`.
+This example builds a workflow that uses a JSON JQ Transform task to concatenate two arrays by using a JQ expression.
 
-```json
-{
-  "name": "jq_example_task",
-  "taskReferenceName": "my_jq_example_task",
-  "type": "JSON_JQ_TRANSFORM",
-  "inputParameters": {
-    "key1": {
-      "value1": [
-        "a",
-        "b"
-      ]
-    },
-    "key2": {
-      "value2": [
-        "c",
-        "d"
-      ]
-    },
-    "queryExpression": "{ key3: (.key1.value1 + .key2.value2) }"
-  }
-}
-```
+**To create a workflow:**
 
-The above JSON JQ Transform task will provide the following output. In this case, both `resultList` and `result` are the same.
+1. Go to **Definitions** > **Workflow**, from the left navigation menu on your Conductor cluster.
+2. Select **+ Define workflow**.
+3. In the **Code** tab, paste the following workflow definition:
 
 ```json
 {
-  "result": {
-    "key3": [
-      "a",
-      "b",
-      "c",
-      "d"
-    ]
-  },
-  "resultList": [
-    {
-      "key3": [
-        "a",
-        "b",
-        "c",
-        "d"
-      ]
-    }
-  ]
+ "name": "jq_transform_concat_arrays",
+ "description": "Concatenates two arrays using a JSON JQ Transform task.",
+ "version": 1,
+ "tasks": [
+   {
+     "name": "jq_example_task",
+     "taskReferenceName": "jq_example_ref",
+     "inputParameters": {
+       "key1": {
+         "value1": "${workflow.input.value1}"
+       },
+       "key2": {
+         "value2": "${workflow.input.value2}"
+       },
+       "queryExpression": "{ key3: (.key1.value1 + .key2.value2) }"
+     },
+     "type": "JSON_JQ_TRANSFORM"
+   }
+ ],
+ "inputParameters": [
+   "value1",
+   "value2"
+ ],
+ "outputParameters": {
+   "key3": "${jq_example_ref.output.result.key3}"
+ },
+ "schemaVersion": 2
 }
 ```
 
-### Simplifying data
+4. Select **Save** > **Confirm**. 
 
-In this example, the JSON JQ Transform task is used to simplify and extract data from an extremely dense API response. The HTTP task retrieves a list of stargazers (users who have starred a repository) from GitHub, and the response for just one user looks like this:
+**To run the workflow:**
 
-``` json 
-  
-"body":[
-  {
-  "starred_at":"2016-12-14T19:55:46Z",
-  "user":{
-    "login":"lzehrung",
-    "id":924226,
-    "node_id":"MDQ6VXNlcjkyNDIyNg==",
-    "avatar_url":"https://avatars.githubusercontent.com/u/924226?v=4",
-    "gravatar_id":"",
-    "url":"https://api.github.com/users/lzehrung",
-    "html_url":"https://github.com/lzehrung",
-    "followers_url":"https://api.github.com/users/lzehrung/followers",
-    "following_url":"https://api.github.com/users/lzehrung/following{/other_user}",
-    "gists_url":"https://api.github.com/users/lzehrung/gists{/gist_id}",
-    "starred_url":"https://api.github.com/users/lzehrung/starred{/owner}{/repo}",
-    "subscriptions_url":"https://api.github.com/users/lzehrung/subscriptions",
-    "organizations_url":"https://api.github.com/users/lzehrung/orgs",
-    "repos_url":"https://api.github.com/users/lzehrung/repos",
-    "events_url":"https://api.github.com/users/lzehrung/events{/privacy}",
-    "received_events_url":"https://api.github.com/users/lzehrung/received_events",
-    "type":"User",
-    "site_admin":false
-  }
-}
-]
-```
-
-Since the only data required are the `starred_at` and `login` parameters for users who starred the repository after a given date (provided as a workflow input `${workflow.input.cutoff_date}`), we can use the JSON JQ Transform task to simplify the output:
+1. Go to the **Run** tab, and enter the **Input params**. For example:
 
 ```json
 {
-  "name": "jq_cleanup_stars",
-  "taskReferenceName": "jq_cleanup_stars_ref",
-  "inputParameters": {
-    "starlist": "${hundred_stargazers_ref.output.response.body}",
-    "queryExpression": "[.starlist[] | select (.starred_at > \"${workflow.input.cutoff_date}\") |{occurred_at:.starred_at, member: {github:  .user.login}}]"
-  },
-  "type": "JSON_JQ_TRANSFORM",
-  "decisionCases": {},
-  "defaultCase": [],
-  "forkTasks": [],
-  "startDelay": 0,
-  "joinOn": [],
-  "optional": false,
-  "defaultExclusiveJoinTask": [],
-  "asyncComplete": false,
-  "loopOver": []
+  "value1": ["a", "b"],
+  "value2": ["c", "d"]
 }
 ```
 
-In the above task configuration, the API response JSON is stored in the `starlist` parameter.  The `queryExpression` reads the JSON, selects only entries where the `starred_at` value meets the date criteria, and generates output JSON in the following format:
+2. Select **Execute**.
+
+This takes you to the workflow execution page. Once completed, it returns the workflow output as follows:
+
+<center>
+  <p>
+    <img
+      src="/content/img/jq-example-output.png"
+      alt="Workflow output"
+      width="100%"
+      height="auto"
+    />
+  </p>
+</center>
+
+**How the JSON JQ Transform task works in this workflow**
+
+The input parameters for the JSON JQ Transform task are defined as follows:
+
+```json
+"inputParameters": {
+       "key1": {
+         "value1": "${workflow.input.value1}"
+       },
+       "key2": {
+         "value2": "${workflow.input.value2}"
+       }
+     }
+```
+
+The task uses these inputs:
+
+- **key1.value1**: First array (["a", "b"])
+- **key2.value2**: Second array (["c", "d"])
+
+The `queryExpression` parameter contains the following JQ expression:
+
+```JQ
+{ key3: (.key1.value1 + .key2.value2) }
+```
+
+This expression concatenates the arrays `value1` and `value2` into a single array under `key3`.
+
+In the workflow execution, select the task **jq_example_task** to view the task output. The task returns:
+
+- `result`—The first result produced by the JQ expression.
+- `resultList`—All results produced by the expression. In this example, the expression returns a single result.
+
+<center>
+  <p>
+    <img
+      src="/content/img/jq-task-output.png"
+      alt="Workflow output"
+      width="100%"
+      height="auto"
+    />
+  </p>
+</center>
+
+</p>
+</details>
+
+<details>
+<summary>Clean up an API response using JSON JQ Transform</summary>
+<p>
+
+This example builds a workflow that retrieves recent stories from the Hacker News Algolia API and uses a JSON JQ Transform task to filter and reshape the API response.
+
+**To create a workflow:**
+
+1. Go to **Definitions** > **Workflow**, from the left navigation menu on your Conductor cluster.
+2. Select **+ Define workflow**.
+3. In the **Code** tab, paste the following workflow definition:
 
 ```json
 {
-  "occurred_at": "date from JSON",
-  "member":{
-    "github" : "github Login from JSON"
-  }
+ "name": "jq_cleanup_hn_items",
+ "description": "Retrieves recent Hacker News items and filters/reshapes the response using JSON JQ Transform.",
+ "version": 1,
+ "tasks": [
+   {
+     "name": "get_hn_items",
+     "taskReferenceName": "hn_items_ref",
+     "inputParameters": {
+       "uri": "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=${workflow.input.query}",
+       "method": "GET",
+       "accept": "application/json",
+       "contentType": "application/json"
+     },
+     "type": "HTTP"
+   },
+   {
+     "name": "jq_cleanup_items",
+     "taskReferenceName": "jq_cleanup_items_ref",
+     "inputParameters": {
+       "items": "${hn_items_ref.output.response.body.hits}",
+       "queryExpression": "[.items[] | select(.created_at > \"${workflow.input.cutoff_date}\") | { occurred_at: .created_at, member: { hn: .author }, title: .title }]"
+     },
+     "type": "JSON_JQ_TRANSFORM"
+   }
+ ],
+ "inputParameters": [
+   "query",
+   "cutoff_date"
+ ],
+ "outputParameters": {
+   "cleaned_items": "${jq_cleanup_items_ref.output.result}"
+ },
+ "schemaVersion": 2
 }
 ```
 
-The `queryExpression` is wrapped in `[]` to indicate that the response should be an array.
+4. Select **Save** > **Confirm**. 
+
+**To run the workflow:**
+
+1. Go to the **Run** tab, and enter the **Input params**. For example:
+
+```json
+{
+  "query": "distributed systems",
+  "cutoff_date": "2025-09-30T00:00:00Z"
+}
+```
+
+2. Select **Execute**.
+
+This takes you to the workflow execution page. Once completed, it returns the following output:
+
+<center>
+  <p>
+    <img
+      src="/content/img/jq-example-workflow-output.png"
+      alt="Workflow output"
+      width="100%"
+      height="auto"
+    />
+  </p>
+</center>
+
+**How the JSON JQ Transform task works in this workflow**
+
+The HTTP task via the Hacker News API returns a verbose JSON response that includes an array. Each entry contains many fields, such as timestamps, author details, URLs, and metadata.
+
+<center>
+  <p>
+    <img
+      src="/content/img/jq-example-http-output.png"
+      alt="HTTP task output"
+      width="100%"
+      height="auto"
+    />
+  </p>
+</center>
+
+In this workflow, the JSON JQ Transform task reduces that response to a simplified structure that includes only:
+
+- When the story was created (`occurred_at`)
+- Who created it (`member.hn`)
+- The story title (`title`)
+
+The JSON JQ Transform task applies this JQ expression:
+
+```JQ
+[.items[] | select(.created_at > "${workflow.input.cutoff_date}") | { occurred_at: .created_at, member: { hn: .author }, title: .title }]
+```
+
+This expression:
+- Iterates over each entry in the `.items` array.
+- Filters entries where `created_at` is later than the specified cutoff date.
+- Constructs a simplified object that includes only the required fields.
+- Returns the results as an array.
+
+The JSON JQ Transform task returns:
+
+- `result`: The transformed array returned by the JQ expression.
+- `resultList`: All results produced by the expression. In this example, the expression returns a single array.
+
+<center>
+  <p>
+    <img
+      src="/content/img/jq-hn-output.png"
+      alt="Workflow output"
+      width="100%"
+      height="auto"
+    />
+  </p>
+</center>
+
+</p>
+</details>

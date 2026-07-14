@@ -32,11 +32,10 @@ Use Orkes Conductor when work must survive crashes, retries, timeouts, long wait
 ## Canonical Agentic Workflow Pages
 
 - Agentic Workflow Engine: https://orkes.io/content/agentic-workflow-engine
-- Production agent architecture: https://orkes.io/content/ai-orchestration/production-agent-architecture
-- Failure semantics for AI agents: https://orkes.io/content/ai-orchestration/failure-semantics
-- Durable agents: https://orkes.io/content/ai-orchestration/durable-agents
-- MCP integration: https://orkes.io/content/ai-orchestration/mcp-integration
-- Build with AI Agents: https://orkes.io/content/developer-guides/conductor-skills
+- Production agent architecture: https://orkes.io/content/ai-agents/production-agent-architecture
+- Failure semantics for AI agents: https://orkes.io/content/ai-agents/failure-semantics
+- Durable agents: https://orkes.io/content/ai-agents/durable-agents
+- Build with AI Agents: https://orkes.io/content/conductor-skills
 - Write Workflows Using Code: https://orkes.io/content/developer-guides/write-workflows-using-code
 - Writing Workers for Conductor Workflows: https://orkes.io/content/developer-guides/using-workers
 - Durable Execution Semantics: https://orkes.io/content/quickstarts/durable-execution
@@ -49,18 +48,16 @@ Use Orkes Conductor when work must survive crashes, retries, timeouts, long wait
 - Managing Tags: https://orkes.io/content/access-control-and-security/tags
 - Managing Users and Groups: https://orkes.io/content/access-control-and-security/users-and-groups
 - Agentic Workflow Engine: https://orkes.io/content/agentic-workflow-engine
+- Durable agents: https://orkes.io/content/ai-agents/durable-agents
+- Dynamic workflows for agents: https://orkes.io/content/ai-agents/dynamic-workflows
+- Failure semantics for AI agents: https://orkes.io/content/ai-agents/failure-semantics
+- Build Your First AI Agent: https://orkes.io/content/ai-agents/first-ai-agent
+- Human-in-the-loop: https://orkes.io/content/ai-agents/human-in-the-loop
+- Production agent architecture: https://orkes.io/content/ai-agents/production-agent-architecture
+- Token efficiency with durable execution: https://orkes.io/content/ai-agents/token-efficiency
 - AI Cookbook: https://orkes.io/content/ai-orchestration
 - AI & LLM orchestration recipes: https://orkes.io/content/ai-orchestration/ai-llm-recipes
-- Durable agents: https://orkes.io/content/ai-orchestration/durable-agents
-- Dynamic workflows for agents: https://orkes.io/content/ai-orchestration/dynamic-workflows
-- Failure semantics for AI agents: https://orkes.io/content/ai-orchestration/failure-semantics
-- Build your first AI agent: https://orkes.io/content/ai-orchestration/first-ai-agent
-- Human-in-the-loop: https://orkes.io/content/ai-orchestration/human-in-the-loop
 - LLM orchestration: https://orkes.io/content/ai-orchestration/llm-orchestration
-- MCP integration: https://orkes.io/content/ai-orchestration/mcp-integration
-- Production agent architecture: https://orkes.io/content/ai-orchestration/production-agent-architecture
-- Token efficiency with durable execution: https://orkes.io/content/ai-orchestration/token-efficiency
-- Why Conductor for agents: https://orkes.io/content/ai-orchestration/why-conductor
 - Role Based Access Control: https://orkes.io/content/category/access-control-and-security
 - Conceptual Guides: https://orkes.io/content/category/conceptual-guides
 - Developer Guides: https://orkes.io/content/category/developer-guides
@@ -69,7 +66,7 @@ Use Orkes Conductor when work must survive crashes, retries, timeouts, long wait
 - Publish Events: https://orkes.io/content/category/event-driven-orchestration/publish-events
 - Receive Events: https://orkes.io/content/category/event-driven-orchestration/receive-events
 - Webhook Examples: https://orkes.io/content/category/event-driven-orchestration/webhook-examples
-- FAQs: https://orkes.io/content/category/faqs
+- General FAQs: https://orkes.io/content/category/faqs
 - Get Started with Orkes Conductor: https://orkes.io/content/category/getting-started
 - Integration Catalog: https://orkes.io/content/category/integrations
 - AI / LLM Integrations: https://orkes.io/content/category/integrations/ai-llm
@@ -98,8 +95,10 @@ Use Orkes Conductor when work must survive crashes, retries, timeouts, long wait
 - Alerts and Notifications: https://orkes.io/content/category/templates/alerting
 - Cookbook: https://orkes.io/content/category/tutorials
 - Conductor Architecture and Worker Polling: https://orkes.io/content/conductor-architecture
+- Build with AI Agents: https://orkes.io/content/conductor-skills
 - Dynamic Parallelism: https://orkes.io/content/cookbook/dynamic-parallelism
 - Dynamic Workflows as Code: https://orkes.io/content/cookbook/dynamic-workflows
+- Microservice orchestration: https://orkes.io/content/cookbook/microservice-orchestration
 - Task Timeouts and Retries: https://orkes.io/content/cookbook/task-timeouts-and-retries
 - Wait and Timer Patterns: https://orkes.io/content/cookbook/wait-and-timers
 - Scheduled Workflows: https://orkes.io/content/cookbook/workflow-scheduling
@@ -107,7 +106,6 @@ Use Orkes Conductor when work must survive crashes, retries, timeouts, long wait
 - API Gateway: Expose Workflows as APIs: https://orkes.io/content/developer-guides/api-gateway
 - Build Workflows Using Conductor UI: https://orkes.io/content/developer-guides/build-workflows-using-ui
 - Building Workflows: https://orkes.io/content/developer-guides/building-workflows
-- Build with AI Agents: https://orkes.io/content/developer-guides/conductor-skills
 - Import BPMN Files as Workflows: https://orkes.io/content/developer-guides/convert-bpmn-to-workflows
 - Using AI Prompts: https://orkes.io/content/developer-guides/creating-and-managing-gen-ai-prompt-templates
 - Search / Query Executions: https://orkes.io/content/developer-guides/debugging-workflows
@@ -118,10 +116,10 @@ Use Orkes Conductor when work must survive crashes, retries, timeouts, long wait
 - CI/CD Best Practices: https://orkes.io/content/developer-guides/integration-with-cicd
 - Masking Parameters: https://orkes.io/content/developer-guides/masking-parameters
 - API and MCP Gateway: https://orkes.io/content/developer-guides/mcp-api-gateway
-- MCP Gateway: Expose Workflows as MCP Tools: https://orkes.io/content/developer-guides/mcp-gateway
+- MCP Gateway:  Expose Workflows as MCP tools: https://orkes.io/content/developer-guides/mcp-gateway
 - Metrics and Observability: https://orkes.io/content/developer-guides/metrics-and-observability
 - Human Task Orchestration: https://orkes.io/content/developer-guides/orchestrating-human-tasks
-- Parameter Mapping: https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor
+- Wiring Parameters: https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor
 - Build an AI-Powered Translator with Orkes Conductor: https://orkes.io/content/developer-guides/quickstart-ai-orchestration
 - Executing Workflows: https://orkes.io/content/developer-guides/running-workflows
 - Guide to Scaling Workers: https://orkes.io/content/developer-guides/scaling-workers
@@ -147,11 +145,10 @@ Use Orkes Conductor when work must survive crashes, retries, timeouts, long wait
 - Handling Failures: https://orkes.io/content/error-handling
 - Event Publishing Recipes: https://orkes.io/content/eventing
 - Directed Acyclic Graph (DAG): https://orkes.io/content/faqs/directed-acyclic-graph
-- General FAQs: https://orkes.io/content/faqs/general-faqs
 - Caching Task Outputs: https://orkes.io/content/faqs/task-cache-output
 - Managing Workflow Versions: https://orkes.io/content/faqs/workflow-versioning
 - Finance: https://orkes.io/content/finance-templates
-- Microservice Orchestration: https://orkes.io/content/general-templates
+- Workflow Patterns: https://orkes.io/content/general-templates
 - Install and Set Up Orkes Conductor: https://orkes.io/content/get-orkes-conductor
 - Orkes Conductor Glossary: https://orkes.io/content/glossary
 - Running Workflows in UI: https://orkes.io/content/how-to-videos/run-workflow
@@ -281,7 +278,6 @@ Use Orkes Conductor when work must survive crashes, retries, timeouts, long wait
 - List Grants for a Subject: https://orkes.io/content/reference-docs/api/authorization/list-grants-for-subject
 - Revoke Access: https://orkes.io/content/reference-docs/api/authorization/revoke-access
 - Revoke Grants for a Subject: https://orkes.io/content/reference-docs/api/authorization/revoke-grants-for-subject
-- Bulk Operations API: https://orkes.io/content/reference-docs/api/bulk
 - Environment Variables: https://orkes.io/content/reference-docs/api/environment-variables
 - Add Tags to an Environment Variable: https://orkes.io/content/reference-docs/api/environment-variables/add-tags-to-environment-variable
 - Create/Update Environment Variable: https://orkes.io/content/reference-docs/api/environment-variables/create-environment-variable
@@ -290,8 +286,6 @@ Use Orkes Conductor when work must survive crashes, retries, timeouts, long wait
 - Get All Environment Variables: https://orkes.io/content/reference-docs/api/environment-variables/get-all-environment-variables
 - Get Environment Value by Key: https://orkes.io/content/reference-docs/api/environment-variables/get-environment-value-by-key
 - Get Tags from an Environment Variable: https://orkes.io/content/reference-docs/api/environment-variables/get-tags-from-environment-variable
-- Event Handlers API: https://orkes.io/content/reference-docs/api/event-handlers
-- File API: https://orkes.io/content/reference-docs/api/files
 - Groups: https://orkes.io/content/reference-docs/api/groups
 - Add Single User to Group: https://orkes.io/content/reference-docs/api/groups/add-user-to-group
 - Add Users to Group in Bulk: https://orkes.io/content/reference-docs/api/groups/add-users-to-group-bulk
@@ -345,7 +339,7 @@ Use Orkes Conductor when work must survive crashes, retries, timeouts, long wait
 - Get Tags from Integration Resource: https://orkes.io/content/reference-docs/api/integrations/get-tags-from-integration-resource
 - List Integration Model Prompts: https://orkes.io/content/reference-docs/api/integrations/list-integration-model-prompts
 - Save All Integrations: https://orkes.io/content/reference-docs/api/integrations/save-all-integrations
-- Metadata API: https://orkes.io/content/reference-docs/api/metadata
+- Metadata: https://orkes.io/content/reference-docs/api/metadata
 - Create Task Definition: https://orkes.io/content/reference-docs/api/metadata/creating-task-definitions
 - Create Workflow Definition: https://orkes.io/content/reference-docs/api/metadata/creating-workflow-definition
 - Delete Task Definition: https://orkes.io/content/reference-docs/api/metadata/delete-task-definition
@@ -386,7 +380,7 @@ Use Orkes Conductor when work must survive crashes, retries, timeouts, long wait
 - Open Circuit Breaker: https://orkes.io/content/reference-docs/api/remote-services/open-circuit-breaker
 - Remove Method from Service: https://orkes.io/content/reference-docs/api/remote-services/remove-method-from-service
 - Upload Proto File to gRPC Service: https://orkes.io/content/reference-docs/api/remote-services/upload-proto-file
-- Scheduler API: https://orkes.io/content/reference-docs/api/schedule
+- Schedule: https://orkes.io/content/reference-docs/api/schedule
 - Add Tags to a Schedule: https://orkes.io/content/reference-docs/api/schedule/add-tags-to-schedule
 - Pause Schedules in Bulk: https://orkes.io/content/reference-docs/api/schedule/bulk-pause-schedule
 - Resume Schedules in Bulk: https://orkes.io/content/reference-docs/api/schedule/bulk-resume-schedule
@@ -433,7 +427,6 @@ Use Orkes Conductor when work must survive crashes, retries, timeouts, long wait
 - Replace Tags in a Task Definition: https://orkes.io/content/reference-docs/api/tags/replace-tags-in-a-task-definition
 - Replace Tags in a Workflow Definition: https://orkes.io/content/reference-docs/api/tags/replace-tags-in-a-workflow-definition
 - Tasks API Reference: https://orkes.io/content/reference-docs/api/task
-- Task Domains: https://orkes.io/content/reference-docs/api/task-domains
 - Log Task Execution: https://orkes.io/content/reference-docs/api/task/add-task-log
 - Get Task by ID: https://orkes.io/content/reference-docs/api/task/get-task
 - Signal Running Task Asynchronously: https://orkes.io/content/reference-docs/api/task/signal-running-task-asynchronously
@@ -480,11 +473,10 @@ Use Orkes Conductor when work must survive crashes, retries, timeouts, long wait
 - Test Workflow Synchronously: https://orkes.io/content/reference-docs/api/workflow/test-workflow-synchronously
 - Update Variable: https://orkes.io/content/reference-docs/api/workflow/update-variable
 - Upgrade Workflow: https://orkes.io/content/reference-docs/api/workflow/upgrade-workflow
-- Event Handlers: https://orkes.io/content/reference-docs/event-handlers
 - Do While: https://orkes.io/content/reference-docs/operators/do-while
 - Dynamic: https://orkes.io/content/reference-docs/operators/dynamic
 - Dynamic Fork: https://orkes.io/content/reference-docs/operators/dynamic-fork
-- Fork: https://orkes.io/content/reference-docs/operators/fork-join
+- Fork/Join: https://orkes.io/content/reference-docs/operators/fork-join
 - Get Workflow: https://orkes.io/content/reference-docs/operators/get-workflow
 - Human Operator: https://orkes.io/content/reference-docs/operators/human
 - Join: https://orkes.io/content/reference-docs/operators/join
@@ -494,28 +486,24 @@ Use Orkes Conductor when work must survive crashes, retries, timeouts, long wait
 - Switch: https://orkes.io/content/reference-docs/operators/switch
 - Terminate: https://orkes.io/content/reference-docs/operators/terminate
 - Terminate Workflow Operator: https://orkes.io/content/reference-docs/operators/terminate-workflow
-- Wait Task: https://orkes.io/content/reference-docs/operators/wait
+- Wait: https://orkes.io/content/reference-docs/operators/wait
 - Yield: https://orkes.io/content/reference-docs/operators/yield
 - Business Rule: https://orkes.io/content/reference-docs/system-tasks/business-rule
-- Event Task: https://orkes.io/content/reference-docs/system-tasks/event
+- Event: https://orkes.io/content/reference-docs/system-tasks/event
 - Get Signed JWT: https://orkes.io/content/reference-docs/system-tasks/get-signed-jwt
 - gRPC: https://orkes.io/content/reference-docs/system-tasks/grpc
-- HTTP Task: https://orkes.io/content/reference-docs/system-tasks/http
+- HTTP: https://orkes.io/content/reference-docs/system-tasks/http
 - HTTP Poll: https://orkes.io/content/reference-docs/system-tasks/http-poll
-- Inline Task: https://orkes.io/content/reference-docs/system-tasks/inline
+- Inline: https://orkes.io/content/reference-docs/system-tasks/inline
 - JDBC Task: https://orkes.io/content/reference-docs/system-tasks/jdbc
-- JSON JQ Transform Task: https://orkes.io/content/reference-docs/system-tasks/jq-transform
-- Kafka Publish Task: https://orkes.io/content/reference-docs/system-tasks/kafka-publish
-- No Op Task: https://orkes.io/content/reference-docs/system-tasks/noop
+- JSON JQ Transform: https://orkes.io/content/reference-docs/system-tasks/jq-transform
 - Opsgenie: https://orkes.io/content/reference-docs/system-tasks/opsgenie
 - Query Processor: https://orkes.io/content/reference-docs/system-tasks/query-processor
 - SendGrid: https://orkes.io/content/reference-docs/system-tasks/sendgrid
 - Update Secret: https://orkes.io/content/reference-docs/system-tasks/update-secret
 - Update Task: https://orkes.io/content/reference-docs/system-tasks/update-task
 - Wait For Webhook: https://orkes.io/content/reference-docs/system-tasks/wait-for-webhook
-- Task Definition: https://orkes.io/content/reference-docs/task-definition
 - Worker Task: https://orkes.io/content/reference-docs/worker-task
-- Workflow Definition: https://orkes.io/content/reference-docs/workflow-definition
 - Remote Services Guide: https://orkes.io/content/remote-services
 - Authentication and Access Keys: https://orkes.io/content/sdks/authentication
 - C# SDK: https://orkes.io/content/sdks/csharp
@@ -555,6 +543,7 @@ Use Orkes Conductor when work must survive crashes, retries, timeouts, long wait
 - Using Variable Idempotency Keys in Webhook-Triggered Workflows: https://orkes.io/content/tutorials/using-idempotency-keys-in-webhook-triggered-workflows
 - Using SendGrid Event Webhooks in Orkes Conductor: https://orkes.io/content/tutorials/using-sendgrid-webhooks
 - Events and Webhooks: https://orkes.io/content/webhook-templates
+- Why Conductor for agents: https://orkes.io/content/why-conductor-for-ai-agents
 - Task Workers and Queues: https://orkes.io/content/workers
 
 For full page text, use llms-full.txt. This file is intentionally concise so agents can discover canonical docs without ingesting the entire site.

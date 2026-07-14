@@ -117,4 +117,4 @@ The bottom line: **durable execution is a cost optimization**, not just a reliab
 
 - **[Durable Agents](/content/ai-agents/durable-agents)** - What persists, what gets retried, and why JSON is AI-native.
 - **[Durable Execution Semantics](/content/quickstarts/durable-execution)** - The full persistence and recovery model.
-- **[LLM Orchestration](/content/ai-orchestration/llm-orchestration)** - 12 native LLM providers, vector databases, and RAG pipelines.
+- **[LLM Orchestration](/content/ai-orchestration/llm-orchestration)** - 14+ native LLM providers, vector databases, and RAG pipelines.

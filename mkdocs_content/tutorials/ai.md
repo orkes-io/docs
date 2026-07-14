@@ -26,3 +26,5 @@ Use these pages to answer implementation questions, compare available primitives
 - [Document Retrieval Workflow](/content/tutorials/document-retrieval-workflow)
 - [Pull Request Summary Workflow](/content/tutorials/pull-request-summary-workflow)
 - [Text Indexing and Search Workflow](/content/tutorials/text-indexing-search-workflow)
+- [Loan Approval Workflow](/content/templates/examples/finance)
+- [Handling Fraud Disputes](/content/templates/examples/fraud-dispute)

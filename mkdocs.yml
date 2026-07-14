@@ -20,54 +20,125 @@ nav:
     - Tasks: quickstarts/tasks.md
     - Task Lifecycle: quickstarts/task-lifecycle.md
     - Workers: quickstarts/workers.md
-  - Guides:
-    - Build with AI Agents: developer-guides/conductor-skills.md
-    - Why Conductor: ai-orchestration/why-conductor.md
+    - Install and Set Up Orkes Conductor: get-orkes-conductor.md
+  - Developer Guides:
     - Workflows:
       - Workflows: developer-guides/workflows.md
       - Write Workflows Using Code: developer-guides/write-workflows-using-code.md
+      - Build Workflows Using Conductor UI: developer-guides/build-workflows-using-ui.md
       - Import BPMN Files as Workflows: developer-guides/convert-bpmn-to-workflows.md
       - Versioning Workflows: developer-guides/versioning-workflows.md
       - Executing Workflows: developer-guides/running-workflows.md
       - Scheduling Workflows: developer-guides/scheduling-workflows.md
       - Sending Signals to Workflows: developer-guides/sending-signals-to-workflows.md
-      - Change Data Capture: developer-guides/enabling-cdc-on-conductor-workflows.md
+      - Schema Validation: developer-guides/schema-validation.md
+      - Using Secrets: developer-guides/secrets-in-conductor.md
+      - Using Environment Variables: developer-guides/using-environment-variables.md
       - Idempotency: idempotency.md
+      - Handling Failures: error-handling.md
       - Search / Query Executions: developer-guides/debugging-workflows.md
       - Unit and Regression Tests: developer-guides/unit-and-regression-tests.md
       - Metrics and Observability: developer-guides/metrics-and-observability.md
       - CI/CD Best Practices: developer-guides/integration-with-cicd.md
-      - Using Secrets: developer-guides/secrets-in-conductor.md
-      - Using Environment Variables: developer-guides/using-environment-variables.md
-      - Handling Failures: error-handling.md
     - Tasks:
       - Tasks: developer-guides/tasks.md
       - Parameter Mapping: developer-guides/passing-inputs-to-task-in-conductor.md
+      - Masking Parameters: developer-guides/masking-parameters.md
+      - Task Input Templates: developer-guides/task-input-templates.md
       - Caching Task Outputs: faqs/task-cache-output.md
       - Rate Limits: rate-limits.md
       - Writing Workers for Conductor Workflows: developer-guides/using-workers.md
       - Guide to Scaling Workers: developer-guides/scaling-workers.md
       - Routing Tasks: developer-guides/task-to-domain.md
+    - "HITL & AI Orchestration":
+      - Human Task Orchestration: developer-guides/orchestrating-human-tasks.md
+      - Using AI Models or LLMs: developer-guides/using-llms-in-your-orkes-conductor-workflows.md
+      - Using Vector Databases: developer-guides/using-vector-databases-in-your-orkes-conductor-workflows.md
+      - Creating AI Prompts: developer-guides/creating-and-managing-gen-ai-prompt-templates.md
     - "API Gateway & Service Orchestration":
       - "API Gateway & Service Orchestration": developer-guides/mcp-api-gateway.md
       - API Gateway: developer-guides/api-gateway.md
       - MCP Gateway: developer-guides/mcp-gateway.md
+      - Gateway Metrics: developer-guides/gateway-metrics.md
       - Remote Services: remote-services.md
   - AI Agents:
     - Agentic Workflow Engine: agentic-workflow-engine.md
+    - Why Conductor: why-conductor-for-ai-agents.md
+    - Build with AI Agents: conductor-skills.md
     - Production Agents:
-      - Production Agents: ai-orchestration/production-agent-architecture.md
-      - Build Your First AI Agent: ai-orchestration/first-ai-agent.md
-      - Failure Semantics: ai-orchestration/failure-semantics.md
-      - Durable Agents: ai-orchestration/durable-agents.md
-      - "Human-in-the-Loop": ai-orchestration/human-in-the-loop.md
-      - Dynamic Workflows: ai-orchestration/dynamic-workflows.md
-      - Token Efficiency: ai-orchestration/token-efficiency.md
+      - Production Agents: ai-agents/production-agent-architecture.md
+      - Build Your First AI Agent: ai-agents/first-ai-agent.md
+      - Durable Agents: ai-agents/durable-agents.md
+      - "Human-in-the-Loop": ai-agents/human-in-the-loop.md
+      - Dynamic Workflows: ai-agents/dynamic-workflows.md
+      - Failure Semantics: ai-agents/failure-semantics.md
+      - Token Efficiency: ai-agents/token-efficiency.md
     - AI Cookbook:
       - AI Cookbook: ai-orchestration.md
       - "AI & LLM Recipes": ai-orchestration/ai-llm-recipes.md
       - LLM Orchestration: ai-orchestration/llm-orchestration.md
-      - MCP Integration: ai-orchestration/mcp-integration.md
+  - Event Orchestration:
+    - "Event-Driven Orchestration": category/event-driven-orchestration.md
+    - Receive Events:
+      - Receive Events: category/event-driven-orchestration/receive-events.md
+      - Webhooks: developer-guides/webhook-integration.md
+      - Event Handlers: developer-guides/event-handler.md
+    - Publish Events:
+      - Publish Events: category/event-driven-orchestration/publish-events.md
+      - Event Publishing Recipes: eventing.md
+      - Change Data Capture: developer-guides/enabling-cdc-on-conductor-workflows.md
+    - Message Broker Integrations:
+      - Message Broker Integrations: category/integrations/message-broker.md
+      - Apache Kafka: integrations/message-broker/apache-kafka.md
+      - Confluent Kafka: integrations/message-broker/confluent-kafka.md
+      - Amazon MSK: integrations/message-broker/amazon-msk.md
+      - AMQP / RabbitMQ: integrations/message-broker/amqp.md
+      - NATS Messaging: integrations/message-broker/nats-messaging.md
+      - AWS SQS: integrations/message-broker/aws-sqs.md
+      - Azure Service Bus: integrations/message-broker/azure-service-bus.md
+      - GCP Pub/Sub: integrations/message-broker/gcp-pub-sub.md
+      - IBM MQ: integrations/message-broker/ibm-mq.md
+    - Webhook Examples:
+      - Webhook Examples: category/event-driven-orchestration/webhook-examples.md
+      - Custom Webhook with cURL: _routes/templates/examples/custom-conductor-webhook-using-curl.md
+      - Incoming Webhook with Postman: _routes/templates/examples/incoming-webhook-using-postman.md
+      - Webhook Idempotency Keys: tutorials/using-idempotency-keys-in-webhook-triggered-workflows.md
+      - GitHub Webhook: tutorials/github-webhook.md
+      - Stripe Webhook: tutorials/stripe-webhook.md
+      - SendGrid Webhook: tutorials/using-sendgrid-webhooks.md
+      - Microsoft Teams Webhook: tutorials/microsoft-teams-webhook.md
+      - Slack Webhook: _routes/templates/daily-scrum-automation-using-standup-bot.md
+    - API Reference:
+      - Eventing API Reference: category/event-driven-orchestration/api-reference.md
+      - Webhook API:
+        - Webhook API: reference-docs/api/webhooks.md
+        - Create Webhook: reference-docs/api/webhooks/create-webhook.md
+        - Update Webhook: reference-docs/api/webhooks/update-webhook.md
+        - Get Webhook by ID: reference-docs/api/webhooks/get-webhook.md
+        - Delete Webhook: reference-docs/api/webhooks/delete-webhook.md
+        - Get All Webhooks: reference-docs/api/webhooks/get-all-webhooks.md
+        - Add Tags to Webhook: reference-docs/api/webhooks/add-tags-to-webhook.md
+        - Get Tags from Webhook: reference-docs/api/webhooks/get-tags-from-webhook.md
+  - Security:
+    - Role Based Access Control: category/access-control-and-security.md
+    - Managing Users and Groups: access-control-and-security/users-and-groups.md
+    - "Application-Level Access": access-control-and-security/applications.md
+    - "Tag-Based Access": access-control-and-security/tags.md
+  - Cookbook:
+    - Cookbook: category/tutorials.md
+    - Microservice orchestration: cookbook/microservice-orchestration.md
+    - Dynamic parallelism: cookbook/dynamic-parallelism.md
+    - Wait and timer patterns: cookbook/wait-and-timers.md
+    - Task timeouts and retries: cookbook/task-timeouts-and-retries.md
+    - Scheduled workflows: cookbook/workflow-scheduling.md
+    - Dynamic workflows as code: cookbook/dynamic-workflows.md
+    - Document Approval: _routes/templates/examples/document-approvals.md
+    - "Long-Running APIs": tutorials/long-running-apis.md
+    - PagerDuty Alert Workflow: _routes/templates/alerting/scanning-an-endpoint-and-triggering-pagerduty-alert.md
+    - Gateway tutorials:
+      - Gateway Tutorials: tutorials/mcp.md
+      - Build a Feedback API: tutorials/expose-feedback-workflow-as-api.md
+      - Build an MCP Ticket Service: tutorials/expose-ticket-service-using-mcp-gateway.md
     - AI Tutorials:
       - AI Tutorials: tutorials/ai.md
       - "AI-Powered Translator": developer-guides/quickstart-ai-orchestration.md
@@ -77,71 +148,8 @@ nav:
       - Document Retrieval Workflow: tutorials/document-retrieval-workflow.md
       - Pull Request Summary Workflow: tutorials/pull-request-summary-workflow.md
       - Text Indexing and Search Workflow: tutorials/text-indexing-search-workflow.md
-  - Event Orchestration:
-    - "Event-Driven Orchestration":
-      - "Event-Driven Orchestration": category/event-driven-orchestration.md
-      - Receive Events:
-        - Receive Events: category/event-driven-orchestration/receive-events.md
-        - Webhooks: developer-guides/webhook-integration.md
-        - Wait for Webhook Task: reference-docs/system-tasks/wait-for-webhook.md
-        - Event Handlers: developer-guides/event-handler.md
-        - Event Handler Reference: reference-docs/event-handlers.md
-      - Publish Events:
-        - Publish Events: category/event-driven-orchestration/publish-events.md
-        - Event Task: reference-docs/system-tasks/event.md
-        - Kafka Publish Task: reference-docs/system-tasks/kafka-publish.md
-        - Event Publishing Recipes: eventing.md
-      - Message Broker Integrations:
-        - Message Broker Integrations: category/integrations/message-broker.md
-        - Apache Kafka: integrations/message-broker/apache-kafka.md
-        - Confluent Kafka: integrations/message-broker/confluent-kafka.md
-        - Amazon MSK: integrations/message-broker/amazon-msk.md
-        - AMQP / RabbitMQ: integrations/message-broker/amqp.md
-        - NATS Messaging: integrations/message-broker/nats-messaging.md
-        - AWS SQS: integrations/message-broker/aws-sqs.md
-        - Azure Service Bus: integrations/message-broker/azure-service-bus.md
-        - GCP Pub/Sub: integrations/message-broker/gcp-pub-sub.md
-        - IBM MQ: integrations/message-broker/ibm-mq.md
-      - Webhook Examples:
-        - Webhook Examples: category/event-driven-orchestration/webhook-examples.md
-        - Custom Webhook with cURL: _routes/templates/examples/custom-conductor-webhook-using-curl.md
-        - Incoming Webhook with Postman: _routes/templates/examples/incoming-webhook-using-postman.md
-        - Webhook Idempotency Keys: tutorials/using-idempotency-keys-in-webhook-triggered-workflows.md
-        - GitHub Webhook: tutorials/github-webhook.md
-        - Stripe Webhook: tutorials/stripe-webhook.md
-        - SendGrid Webhook: tutorials/using-sendgrid-webhooks.md
-        - Microsoft Teams Webhook: tutorials/microsoft-teams-webhook.md
-        - Slack Webhook: _routes/templates/daily-scrum-automation-using-standup-bot.md
-      - API Reference:
-        - Eventing API Reference: category/event-driven-orchestration/api-reference.md
-        - Event Handlers API: reference-docs/api/event-handlers.md
-        - Webhook API:
-          - Webhook API: reference-docs/api/webhooks.md
-          - Create Webhook: reference-docs/api/webhooks/create-webhook.md
-          - Update Webhook: reference-docs/api/webhooks/update-webhook.md
-          - Get Webhook by ID: reference-docs/api/webhooks/get-webhook.md
-          - Delete Webhook: reference-docs/api/webhooks/delete-webhook.md
-          - Get All Webhooks: reference-docs/api/webhooks/get-all-webhooks.md
-          - Add Tags to Webhook: reference-docs/api/webhooks/add-tags-to-webhook.md
-          - Get Tags from Webhook: reference-docs/api/webhooks/get-tags-from-webhook.md
-  - Security:
-    - Role Based Access Control: category/access-control-and-security.md
-    - Managing Users and Groups: access-control-and-security/users-and-groups.md
-    - "Application-Level Access": access-control-and-security/applications.md
-    - "Tag-Based Access": access-control-and-security/tags.md
-  - Cookbook:
-    - Cookbook: category/tutorials.md
-    - Microservice orchestration: general-templates.md
-    - Dynamic parallelism: cookbook/dynamic-parallelism.md
-    - Wait and timer patterns: cookbook/wait-and-timers.md
-    - Human in the loop: developer-guides/orchestrating-human-tasks.md
-    - Task timeouts and retries: cookbook/task-timeouts-and-retries.md
-    - Scheduled workflows: cookbook/workflow-scheduling.md
-    - Dynamic workflows as code: cookbook/dynamic-workflows.md
-    - Gateway tutorials:
-      - Gateway Tutorials: tutorials/mcp.md
-      - Build a Feedback API: tutorials/expose-feedback-workflow-as-api.md
-      - Build an MCP Ticket Service: tutorials/expose-ticket-service-using-mcp-gateway.md
+      - Loan Approval Workflow: _routes/templates/examples/finance.md
+      - Handling Fraud Disputes: _routes/templates/examples/fraud-dispute.md
   - SDKs:
     - SDKs: category/sdks.md
     - Python: sdks/python.md
@@ -155,19 +163,17 @@ nav:
     - Task Reference:
       - Task Reference: category/reference-docs.md
       - Worker Task: reference-docs/worker-task.md
-      - Workflow Definition: reference-docs/workflow-definition.md
-      - Task Definition: reference-docs/task-definition.md
       - Operators:
         - Operators: category/reference-docs/operators.md
         - Switch: reference-docs/operators/switch.md
         - Do While: reference-docs/operators/do-while.md
-        - Wait Task: reference-docs/operators/wait.md
+        - Wait: reference-docs/operators/wait.md
         - Dynamic: reference-docs/operators/dynamic.md
         - Set Variable: reference-docs/operators/set-variable.md
         - Sub Workflow: reference-docs/operators/sub-workflow.md
         - Terminate Workflow Operator: reference-docs/operators/terminate-workflow.md
         - Terminate: reference-docs/operators/terminate.md
-        - Fork: reference-docs/operators/fork-join.md
+        - Fork/Join: reference-docs/operators/fork-join.md
         - Dynamic Fork: reference-docs/operators/dynamic-fork.md
         - Join: reference-docs/operators/join.md
         - Start Workflow: reference-docs/operators/start-workflow.md
@@ -176,13 +182,14 @@ nav:
         - Yield: reference-docs/operators/yield.md
       - System Tasks:
         - System Tasks: category/reference-docs/system-tasks.md
-        - HTTP Task: reference-docs/system-tasks/http.md
+        - Event: reference-docs/system-tasks/event.md
+        - HTTP: reference-docs/system-tasks/http.md
         - HTTP Poll: reference-docs/system-tasks/http-poll.md
-        - Inline Task: reference-docs/system-tasks/inline.md
-        - JSON JQ Transform Task: reference-docs/system-tasks/jq-transform.md
-        - No Op Task: reference-docs/system-tasks/noop.md
+        - Inline: reference-docs/system-tasks/inline.md
+        - JSON JQ Transform: reference-docs/system-tasks/jq-transform.md
         - Business Rule: reference-docs/system-tasks/business-rule.md
         - SendGrid: reference-docs/system-tasks/sendgrid.md
+        - Wait For Webhook: reference-docs/system-tasks/wait-for-webhook.md
         - JDBC Task: reference-docs/system-tasks/jdbc.md
         - Update Secret: reference-docs/system-tasks/update-secret.md
         - Get Signed JWT: reference-docs/system-tasks/get-signed-jwt.md
@@ -209,9 +216,6 @@ nav:
     - API Reference:
       - API Reference: category/ref-docs/api.md
       - Authentication: sdks/authentication.md
-      - Bulk: reference-docs/api/bulk.md
-      - Files: reference-docs/api/files.md
-      - Task Domains: reference-docs/api/task-domains.md
       - Metadata:
         - Metadata: reference-docs/api/metadata.md
         - Create Task Definition: reference-docs/api/metadata/creating-task-definitions.md
@@ -227,15 +231,16 @@ nav:
         - Get Workflow Definition: reference-docs/api/metadata/get-workflow-definition.md
       - Tasks:
         - Tasks: reference-docs/api/task.md
-        - Get Poll Data for All Tasks: reference-docs/api/task/task-queue/get-poll-data-for-all-task.md
-        - Log Task Execution: reference-docs/api/task/add-task-log.md
         - Get Task by ID: reference-docs/api/task/get-task.md
-        - Get Task Queue Size for All Tasks: reference-docs/api/task/task-queue/get-task-queue-size-for-all-tasks.md
-        - Get Task Queue Size for a Task Type: reference-docs/api/task/task-queue/get-task-queue-size-for-individual-tasks.md
+        - Log Task Execution: reference-docs/api/task/add-task-log.md
         - Update Task Status in Workflow: reference-docs/api/task/update-task-status-in-workflow.md
         - Signal Running Task Asynchronously: reference-docs/api/task/signal-running-task-asynchronously.md
         - Signal Running Task Synchronously: reference-docs/api/task/signal-running-task-synchronously.md
-        - Task Queues: reference-docs/api/task/task-queue.md
+        - Task Queue:
+          - Task Queue: reference-docs/api/task/task-queue.md
+          - Get Poll Data for All Tasks: reference-docs/api/task/task-queue/get-poll-data-for-all-task.md
+          - Get Task Queue Size for All Tasks: reference-docs/api/task/task-queue/get-task-queue-size-for-all-tasks.md
+          - Get Task Queue Size for a Task Type: reference-docs/api/task/task-queue/get-task-queue-size-for-individual-tasks.md
       - Workflows:
         - Workflows: reference-docs/api/workflow.md
         - Execute Workflow Asynchronously: reference-docs/api/workflow/start-workflow-execution.md
@@ -363,6 +368,15 @@ nav:
         - Search Schedule Executions: reference-docs/api/schedule/search-schedule-executions.md
         - Get All Schedules: reference-docs/api/schedule/get-all-schedules.md
         - Get Next Few Schedules: reference-docs/api/schedule/get-next-few-schedules.md
+      - Webhook:
+        - Webhook: reference-docs/api/webhooks.md
+        - Create Webhook: reference-docs/api/webhooks/create-webhook.md
+        - Update Webhook: reference-docs/api/webhooks/update-webhook.md
+        - Get Webhook by ID: reference-docs/api/webhooks/get-webhook.md
+        - Delete Webhook: reference-docs/api/webhooks/delete-webhook.md
+        - Get All Webhooks: reference-docs/api/webhooks/get-all-webhooks.md
+        - Add Tags to Webhook: reference-docs/api/webhooks/add-tags-to-webhook.md
+        - Get Tags from Webhook: reference-docs/api/webhooks/get-tags-from-webhook.md
       - Human Task:
         - Human Task: reference-docs/api/human-tasks.md
         - Get Human Task: reference-docs/api/human-tasks/get-task.md
@@ -438,9 +452,7 @@ nav:
         - Get Tags from Prompt: reference-docs/api/prompts/get-tags-from-prompt.md
         - Delete Tags from Prompt: reference-docs/api/prompts/delete-tags-from-prompt.md
         - Test Prompts: reference-docs/api/prompts/test-prompts.md
-    - FAQs:
-      - FAQs: category/faqs.md
-      - General FAQs: faqs/general-faqs.md
+    - FAQs: category/faqs.md
     - Glossary: glossary.md
   - Integrations:
     - Integrations:
@@ -467,6 +479,17 @@ nav:
         - Weaviate: integrations/vector-databases/weaviate.md
         - Postgres Vector Database: integrations/vector-databases/postgres-vector-database.md
         - Mongo Vector Database: integrations/vector-databases/mongo-vector-database.md
+      - Message Broker:
+        - Message Broker Integrations: category/integrations/message-broker.md
+        - Apache Kafka: integrations/message-broker/apache-kafka.md
+        - Confluent Kafka: integrations/message-broker/confluent-kafka.md
+        - Amazon MSK: integrations/message-broker/amazon-msk.md
+        - AMQP / RabbitMQ: integrations/message-broker/amqp.md
+        - NATS Messaging: integrations/message-broker/nats-messaging.md
+        - AWS SQS: integrations/message-broker/aws-sqs.md
+        - Azure Service Bus: integrations/message-broker/azure-service-bus.md
+        - GCP Pub/Sub: integrations/message-broker/gcp-pub-sub.md
+        - IBM MQ: integrations/message-broker/ibm-mq.md
       - Cloud Providers:
         - Cloud Providers: category/integrations/cloud-provider.md
         - AWS: integrations/cloud-provider/aws.md

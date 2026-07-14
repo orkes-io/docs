@@ -1,33 +1,79 @@
 ---
-title: "Inline Task"
-description: "Inline Task — execute JavaScript expressions inside Conductor workflows for data transformation and conditional logic."
+title: "Inline"
+description: "Learn how the Inline task evaluates JavaScript expressions to execute logic during workflow execution in Orkes Conductor."
 canonical_route: "reference-docs/system-tasks/inline"
 updated: "2026-05-14"
 keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration, workflow tasks, workflow workers, task queues"
 ---
 
-# Inline Task
-```json
-"type": "INLINE"
-```
+# Inline
 
-The Inline task (`INLINE`) executes lightweight scripting logic inside the Conductor server JVM and immediately returns a result that can be wired into downstream tasks.
-
-The Inline task is best for small, deterministic logic like simple validation or calculation. For heavy, custom logic, it is best to use a Worker task (`SIMPLE`) instead.
+The inline task is used to execute scripting logic during workflow runtime by evaluating a JavaScript expression using an evaluator like GraalJS.
 
 ## Task parameters
 
-Use these parameters inside `inputParameters` in the Inline task configuration.
+Configure these parameters for the Inline task.
 
-| Parameter          | Type                | Description                                       | Required / Optional  |
-| ------------------ | ------------------- | ------------------------------------------------- | -------------------- |
-| evaluatorType | String | The type of evaluator used. Supported types: `graaljs` (recommended), `javascript`, `python`, `value-param`. | Required. |
-| expression    | String | The expression to be evaluated by the evaluator. The expression must return a value. <br/><br/> The `graaljs` evaluator uses GraalVM JavaScript and supports modern ECMAScript. The `python` evaluator runs Python via GraalVM polyglot. The `javascript` evaluator is a legacy option. The `value-param` evaluator returns a parameter value directly. | Required. |
-| inputParameters    | Map[String, Any] | Any other input parameters for the Inline task. You can include any other input values required for evaluation here, which can be referenced in `expression` as `$.value`. | Optional. |
+| Parameter                          | Description                                                                                                                           | Required/ Optional |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
+| inputParameters. **expression**    | The JavaScript expression to be evaluated by the GraalJS evaluator.                                                                   | Required.          |
+| inputParameters. **evaluatorType** | The type of evaluator used. Supported types:<ul><li>`graaljs` - Evaluates the JavaScript expression and computes the value.</li></ul> | Required.          |
+| inputParameters                    | The parameters for evaluating the script. Any property can be accessed as `$.value` for the expression to evaluate.                   | Required.          |
 
-## JSON configuration
+### Variable access inside expressions
 
-Here is the task configuration for an Inline task.
+Every key you add to `inputParameters`, other than `expression` and `evaluatorType`, is automatically available inside your JavaScript as a property of the `$` object.
+
+For example, given:
+
+```json
+"inputParameters": {
+  "expression": "...",
+  "evaluatorType": "graaljs",
+  "value1": "${workflow.input.x}",
+  "value2": 42
+}
+```
+
+You can read `$.value1` and `$.value2` inside the expression. This is why custom keys appear at the same indentation level as `expression` and `evaluatorType`—they are input variables, not configuration keys.
+
+If your Inline expression references a workflow secret (such as `${workflow.secrets.<secret-name>}`), the resolved value is masked in the task output. For details on masking behavior, see [Masking Parameters](https://orkes.io/content/developer-guides/masking-parameters#masking-secret-references-and-secret-values).
+
+### Console logging
+
+The GraalJS evaluator does not expose a built-in console object, but Orkes Conductor provides a console bridge that makes `console.log`, `console.info`, and `console.error` available inside Inline task scripts.
+
+The console bridge accepts a single string argument. To include variable values, use string concatenation. 
+
+```java
+// Correct
+console.log('Discount value: ' + $.discount);
+
+// Incorrect - will fail
+console.log('Discount value:', $.discount);
+```
+
+The output appears in the task's execution logs. [See example](#examples).
+
+!!! info "Note"
+    As of v5.4.2, the `console.*` log destination is configurable. By default, logs appear in the task's execution logs in the UI, but can be redirected to server logs or discarded entirely. Contact the Orkes team to change this for your cluster.
+
+The following are generic configuration parameters that can be applied to the task and are not specific to the Inline task.
+
+<details>
+<summary>Other generic parameters</summary>
+
+Here are other parameters for configuring the task behavior.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| optional | Whether the task is optional. <br/><br/>If set to`true`, any task failure is ignored, and the workflow continues with the task status updated to `COMPLETED_WITH_ERRORS`. However, the task must reach a terminal state. If the task remains incomplete, the workflow waits until it reaches a terminal state before proceeding. | Optional. | 
+
+</details>
+
+## Task configuration
+
+This is the task configuration for an Inline task.
 
 ```json
 {
@@ -35,62 +81,164 @@ Here is the task configuration for an Inline task.
   "taskReferenceName": "inline_ref",
   "type": "INLINE",
   "inputParameters": {
-    "evaluatorType": "javascript",
-    "expression": "(function(){ return $.input1 + $.input2; })()",
-    "input1": 1,
-    "input2": 2
+    "expression": "(function () {\n  return $.value1 + $.value2;\n})();",
+    "evaluatorType": "graaljs",
+    "value1": 1,
+    "value2": 2
   }
 }
 ```
 
-
-## Output
+## Task output
 
 The Inline task will return the following parameters.
 
-| Name             | Type         | Description                                                   |
-| ---------------- | ------------ | ------------------------------------------------------------- |
-| result | Map  | Contains the output returned by the evaluator based on the `expression`. |
+| Parameter | Description                                  |
+| --------- | -------------------------------------------- |
+| result    | Returns the results of the evaluated script. |
+
+## Adding an Inline task in UI
+
+**To add an Inline task:**
+
+1. In your workflow, select the (**+**) icon and add an **Inline** task.
+2. In **Script Parameters**, add the parameters that will be evaluated in the expression.
+3. Enter the expression to be evaluated in the **Code** section. The JSON definition offers a concise string representation of the script, whereas the UI representation typically incorporates formatted indentation and line breaks to enhance user readability.
+
+<center>
+  <p>
+    <img
+      src="/content/img/ui-guide-inline-task.png"
+      alt="Adding wait task"
+      width="80%"
+      height="auto"
+    />
+  </p>
+</center>
 
 ## Examples
 
 Here are some examples for using the Inline task.
 
-### Simple example
+<details>
+<summary>Using the Inline task in a workflow</summary>
 
-``` json
+An Inline task can be used for simple scripting logic that does not require a dedicated custom worker. This example builds a workflow that takes a string as input, reverses it using an Inline task, and returns the reversed value in the workflow output.
+
+**To create a workflow:**
+
+1. Go to **Definitions** > **Workflow**, from the left navigation menu on your Conductor cluster.
+2. Select **+ Define workflow**.
+3. In the **Code** tab, paste the following workflow definition:
+
+```json
 {
-  "name": "INLINE_TASK",
-  "taskReferenceName": "inline_test",
-  "type": "INLINE",
-  "inputParameters": {
-      "inlineValue": "${workflow.input.inlineValue}",
-      "evaluatorType": "javascript",
-      "expression": "function scriptFun(){if ($.inlineValue == 1){ return {testvalue: true} } else { return
-      {testvalue: false} }} scriptFun();"
-  }
+  "name": "String_Reverser",
+  "description": "A workflow to reverse a string",
+  "version": 1,
+  "tasks": [
+    {
+      "name": "string_reverser",
+      "taskReferenceName": "string_reverser_ref",
+      "inputParameters": {
+        "expression": "(function(){  return $.input_string.split('').reverse().join('');})();",
+        "evaluatorType": "graaljs",
+        "input_string": "${workflow.input.in_str}"
+      },
+      "type": "INLINE"
+    }
+  ],
+  "inputParameters": [
+    "in_str"
+  ],
+  "schemaVersion": 2
 }
 ```
 
-The Inline task output can then be referenced in downstream tasks using the expression
-`"${inline_test.output.result.testvalue}"`.
+4. Select **Save** > **Confirm**.
 
+**To run the workflow:**
 
-### Formatting data
+1. Go to the **Run** tab, and enter the **Input params**. For example:
 
-In this example, the Inline task is used to ensure that downstream tasks only receive weather data in Celcius.
-
-``` json
+```json
 {
-  "name": "INLINE_TASK",
-  "taskReferenceName": "inline_test",
-  "type": "INLINE",
-  "inputParameters": {
-      "scale": "${workflow.input.tempScale}",
-	    "temperature": "${workflow.input.temperature}",
-      "evaluatorType": "javascript",
-      "expression": "function SIvaluesOnly(){if ($.scale === "F"){ centigrade = ($.temperature -32)*5/9; return {temperature: centigrade} } else { return 
-      {temperature: $.temperature} }} SIvaluesOnly();"
-  }
+  "in_str": "Orkes"
 }
 ```
+
+2. Select **Execute**.
+
+This takes you to the workflow execution page. Once the execution is completed, verify that the string is reversed.
+
+<center>
+  <p>
+    <img
+      src="/content/img/inline-task-example-output.png"
+      alt="Workflow output"
+      width="100%"
+      height="auto"
+    />
+  </p>
+</center>
+
+</details>
+
+<details>
+<summary>Using console logging in an Inline task</summary>
+
+This example builds a workflow that validates a discount percentage and logs the input and result for debugging.
+
+**To create a workflow:**
+
+1. Go to **Definitions** > **Workflow**, from the left navigation menu on your Conductor cluster.
+2. Select **+ Define workflow**.
+3. In the **Code** tab, paste the following workflow definition:
+
+```json
+{
+  "name": "Discount_Validator",
+  "description": "Validates a discount percentage and logs the result",
+  "version": 1,
+  "tasks": [
+    {
+      "name": "validate_discount",
+      "taskReferenceName": "validate_discount_ref",
+      "inputParameters": {
+        "expression": "(function () { console.log('Validating discount: ' + $.discount); var isValid = $.discount >= 0 && $.discount <= 100; console.log('Result: ' + isValid); return isValid; })();",
+        "evaluatorType": "graaljs",
+        "discount": "${workflow.input.discount}"
+      },
+      "type": "INLINE"
+    }
+  ],
+  "inputParameters": ["discount"],
+  "schemaVersion": 2
+}
+```
+
+4. Select **Save** > **Confirm**.
+5. Go to the **Run** tab, and enter the **Input params**. For example:
+
+```json
+{
+  "discount": 15
+}
+```
+
+6. Select **Execute**.
+
+Once completed, open the task execution and check the **Logs** tab to see the `console.log` output.
+
+<center>
+  <p>
+    <img
+      src="/content/img/inline-console-log-example.png"
+      alt="Workflow output"
+      width="100%"
+      height="auto"
+    />
+  </p>
+</center>
+
+</details>

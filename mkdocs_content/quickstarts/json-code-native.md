@@ -1,6 +1,6 @@
 ---
 title: "JSON + Code Native Workflow Orchestration"
-description: "Conductor stores workflow definitions as JSON — the canonical runtime format for this durable execution workflow engine. Create dynamic workflows at runtime."
+description: "Conductor stores workflow definitions as JSON — the canonical runtime format for this durable execution workflow engine."
 canonical_route: "quickstarts/json-code-native"
 updated: "2026-05-14"
 keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration, agentic workflows, AI agents, microservice orchestration, internet-scale orchestration"
@@ -8,7 +8,7 @@ keywords: "Orkes Conductor, Conductor, durable execution, workflow orchestration
 
 # JSON + Code Native Workflow Orchestration
 
-Conductor stores workflow definitions as JSON. This is not a UI convenience or a simplified mode&mdash;JSON is the canonical runtime representation. Every workflow, whether created via SDK, API, UI, or file, is stored, versioned, and executed as a JSON document.
+Conductor stores workflow definitions as JSON. This is not a UI convenience or a simplified mode—JSON is the canonical runtime representation. Every workflow, whether created via SDK, API, UI, or file, is stored, versioned, and executed as a JSON document.
 
 For agent orchestration and dynamic workloads, this is a structural advantage.
 
@@ -23,7 +23,7 @@ For agent orchestration and dynamic workloads, this is a structural advantage.
 
 ## Why this matters for agents
 
-### Agents produce structured output&mdash;JSON is native
+### Agents produce structured output—JSON is native
 
 LLMs already communicate in structured formats: function calls, tool-use schemas, JSON mode responses. Conductor's JSON workflow definitions are in the same format that agents already produce. An LLM can generate a workflow definition directly, and Conductor can execute it.
 
@@ -34,7 +34,7 @@ Traditional workflow engines require you to define workflows in code, compile, a
 - A planner agent can generate a new workflow definition as JSON.
 - Your code sends that JSON to `POST /api/workflow` with the definition inline.
 - Conductor validates, persists, and executes it immediately.
-- The workflow is fully durable, observable, and retryable&mdash;identical to any pre-registered workflow.
+- The workflow is fully durable, observable, and retryable—identical to any pre-registered workflow.
 
 This enables patterns like:
 
@@ -61,7 +61,7 @@ Because definitions are JSON, you can:
 - Roll back by re-registering a previous version.
 - Run canary deployments by routing traffic between versions.
 
-Running executions are never affected by definition changes&mdash;they use the snapshot taken at start time.
+Running executions are never affected by definition changes—they use the snapshot taken at start time.
 
 
 ## Dynamic workflows in detail
@@ -187,11 +187,11 @@ conductor workflow status {executionId}
 
 ??? note "Using cURL"
     ```bash
-    curl -X POST http://localhost:8080/api/workflow/my_agent \
+    curl -X POST <YOUR-CLUSTER-URL>/api/workflow/my_agent \
       -H 'Content-Type: application/json' \
       -d '{"query": "summarize this document"}'
 
-    curl http://localhost:8080/api/workflow/{executionId}
+    curl <YOUR-CLUSTER-URL>/api/workflow/{executionId}
     ```
 
 Workflows return structured JSON output defined by `outputParameters` in the definition. This makes them directly consumable by other agents, services, or MCP-compatible tools.
@@ -201,8 +201,8 @@ For MCP integration, a Conductor workflow can be registered as an MCP tool, allo
 
 ## Next steps
 
-- **[Durable Execution Semantics](/content/quickstarts/durable-execution)** &mdash; What persists, what gets retried, failure matrix.
-- **[Why Conductor for Agents](/content/ai-orchestration)** &mdash; How Conductor's primitives map to agent patterns.
-- **[Quickstart](/content/quickstarts)** &mdash; Get running in 5 minutes.
-- **[Workflow Definition Reference](/content/reference-docs/workflow-definition)** &mdash; Full JSON schema for workflow definitions.
-- **[Dynamic Fork](/content/reference-docs/operators/dynamic-fork)** &mdash; Runtime-determined parallel execution.
+- **[Durable Execution Semantics](/content/quickstarts/durable-execution)** — What persists, what gets retried, failure matrix.
+- **[Why Conductor for Agents](/content/why-conductor-for-ai-agents)** — How Conductor's primitives map to agent patterns.
+- **[Quickstart](/content/quickstarts)** — Get running in 5 minutes.
+- **[Workflow Definition Reference](/content/reference-docs/api/metadata/creating-workflow-definition)** — Full JSON schema for workflow definitions.
+- **[Dynamic Fork](/content/reference-docs/operators/dynamic-fork)** — Runtime-determined parallel execution.

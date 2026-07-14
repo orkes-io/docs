@@ -369,7 +369,7 @@ Run examples:
 
 ```bash
 # Set environment variables
-export CONDUCTOR_SERVER_URL=http://localhost:8080/api
+export CONDUCTOR_SERVER_URL=<YOUR-CLUSTER-URL>/api
 # For Orkes Cloud:
 # export CONDUCTOR_AUTH_KEY=your_key
 # export CONDUCTOR_AUTH_SECRET=your_secret
@@ -433,7 +433,7 @@ sleep while runner.running?
 ### Environment Variables
 
 ```bash
-export CONDUCTOR_SERVER_URL=http://localhost:8080/api
+export CONDUCTOR_SERVER_URL=<YOUR-CLUSTER-URL>/api
 export CONDUCTOR_AUTH_KEY=your_key        # For Orkes Cloud
 export CONDUCTOR_AUTH_SECRET=your_secret  # For Orkes Cloud
 ```
@@ -489,7 +489,7 @@ workflow_executor = clients.get_workflow_executor
 bundle exec rspec spec/conductor/
 
 # Integration tests (requires Conductor server)
-CONDUCTOR_SERVER_URL=http://localhost:8080/api bundle exec rspec spec/integration/
+CONDUCTOR_SERVER_URL=<YOUR-CLUSTER-URL>/api bundle exec rspec spec/integration/
 ```
 
 ## Requirements
