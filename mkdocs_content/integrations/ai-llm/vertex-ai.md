@@ -8,7 +8,7 @@ keywords: "Orkes Conductor, workflow orchestration, Google Vertex AI Integration
 
 # Google Vertex AI Integration with Orkes Conductor
 
-To use system AI tasks in Orkes Conductor, you must integrate your Conductor cluster with the necessary AI/LLM providers. This guide explains how to integrate Google Vertex AI with Orkes Conductor. Here’s an overview:
+To use [system AI tasks](/content/glossary#ai-tasks) in Orkes Conductor, you must integrate your Conductor cluster with the necessary AI/LLM providers. This guide explains how to integrate Google Vertex AI with Orkes Conductor. Here’s an overview:
 
 1. Get the required credentials from Google Vertex AI.
 2. Configure a new Google Vertex AI integration in Orkes Conductor.

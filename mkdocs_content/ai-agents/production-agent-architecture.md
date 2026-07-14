@@ -315,7 +315,7 @@ If the tool endpoint is down, Conductor retries with exponential backoff. The LL
 
 ### Budget cap prevents runaway agents
 
-The `loopCondition` checks both the agent's `done` flag and an iteration cap. You can also check token usage or cost in the condition. The agent terminates cleanly when the budget is exhausted.
+The [`loopCondition`](/content/glossary#loop-condition) checks both the agent's `done` flag and an iteration cap. You can also check token usage or cost in the condition. The agent terminates cleanly when the budget is exhausted.
 
 ### Compensation handles side effects
 

@@ -17,7 +17,7 @@ keywords: "Orkes Conductor, workflow orchestration, Ollama Integration with Orke
     - [Conductor is running locally](https://orkes.io/content/get-orkes-conductor#local-setup-with-docker), and Ollama is running locally.
     - Conductor is running in the cloud, and your AI models are hosted on a server accessible to Ollama.
 
-To use system AI tasks in Orkes Conductor, you must integrate your Conductor cluster with the necessary AI/LLM providers. This guide explains how to integrate Ollama with Orkes Conductor. Here’s an overview:
+To use [system AI tasks](/content/glossary#ai-tasks) in Orkes Conductor, you must integrate your Conductor cluster with the necessary AI/LLM providers. This guide explains how to integrate Ollama with Orkes Conductor. Here’s an overview:
 
 1. Set up the Ollama app locally.
 2. Configure a new Ollama integration in Orkes Conductor.

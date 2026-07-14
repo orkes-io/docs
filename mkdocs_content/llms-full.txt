@@ -1506,7 +1506,7 @@ Running executions are **not affected**. Each execution uses an immutable snapsh
 
 - Keep `responseTimeoutSeconds` short (10-60 seconds for most tasks).
 - Use graceful shutdown in your workers - complete in-progress tasks before stopping.
-- For the Conductor server itself: the sweeper service re-evaluates in-progress workflows on startup and requeues stalled tasks.
+- For the Conductor server itself: the [sweeper service](/content/glossary#sweeper-service) re-evaluates in-progress workflows on startup and requeues stalled tasks.
 
 **What is never lost:** Completed task outputs. The workflow state. The execution history. Only the in-progress task is affected, and it is automatically retried.
 
@@ -2164,7 +2164,7 @@ If the tool endpoint is down, Conductor retries with exponential backoff. The LL
 
 ### Budget cap prevents runaway agents
 
-The `loopCondition` checks both the agent's `done` flag and an iteration cap. You can also check token usage or cost in the condition. The agent terminates cleanly when the budget is exhausted.
+The [`loopCondition`](/content/glossary#loop-condition) checks both the agent's `done` flag and an iteration cap. You can also check token usage or cost in the condition. The agent terminates cleanly when the budget is exhausted.
 
 ### Compensation handles side effects
 
@@ -17513,6 +17513,10 @@ Instruction-driven reasoning techniques such as Reason and Act (ReAct), Chain-of
 
 An [AI Prompt](/content/developer-guides/creating-and-managing-gen-ai-prompt-templates) is a  set of instructions and context used in Orkes Conductor workflows to guide the behavior and output of a large language model.
 
+## AI Tasks
+
+[AI Tasks](/content/category/reference-docs/ai-tasks) are a family of built-in system tasks for AI and LLM workloads, such as calling a chat completion model, generating or storing embeddings, indexing documents, and searching a vector index. Like other system tasks, they run without custom worker code — you configure the task type and its parameters directly in the workflow definition.
+
 ## Agentic Workflow
 
 A multi-step, dynamic process that orchestrates multiple services, tasks, AI agents, and even humans-in-the-loop within a dynamic control graph. Unlike a typical workflow, an agentic workflow in Conductor involves an LLM that dynamically chooses execution paths at runtime.
@@ -17590,6 +17594,10 @@ Event-driven architecture facilitates loose coupling between services and respon
 
 A module that listens for specific events in an event-driven system. This can be a piece of code, as simple as a callback function, or in Conductor, a JSON configuration. As its name implies, the [event handler](/content/developer-guides/event-handler) reacts to specific events and triggers subsequent actions, such as starting a workflow or updating a workflow variable.
 
+## Fencing Token
+
+A value attached to a distributed lock that prevents a node with an expired or stale lock from applying updates after another node has taken over. In a multi-node Conductor cluster, fencing tokens stop a server that briefly lost its lock (due to a slow GC pause or network blip, for example) from writing stale workflow state once a different node has already taken ownership of that evaluation.
+
 ## Gateway
 
 Gateway enables exposing any Conductor workflow as APIs or MCP tools.  Workflows can be exposed as HTTP APIs via the [API Gateway](/content/developer-guides/api-gateway) or as MCP tools via the [MCP Gateway](/content/developer-guides/mcp-gateway) for AI agent integration.
@@ -17621,6 +17629,10 @@ A standard Java API for connecting to relational databases such as PostgreSQL. I
 ## LLM (Large Language Model)
 
 An AI model trained on large volumes of data that can understand and generate natural language using deep learning architectures. In Orkes Conductor, LLMs are used within workflows to perform tasks such as text generation, translation, question answering, and reasoning. Orkes Conductor supports [integrations with multiple LLM providers](/content/category/integrations/ai-llm).
+
+## Loop Condition
+
+The `loopCondition` parameter of a [Do While](/content/reference-docs/operators/do-while) task. Conductor evaluates it after every iteration to decide whether the loop continues; it commonly checks an agent's completion flag, an iteration count against a maximum, or a token/cost budget. It is a common building block for agent loops and other iterative or budget-capped patterns.
 
 ## Operator
 
@@ -17663,6 +17675,10 @@ In Orkes Conductor, a [schema definition](/content/developer-guides/schema-valid
 A workflow that executes within another workflow (usually referred to as the parent workflow).
 
 [Sub-workflows](/content/reference-docs/operators/sub-workflow) promote modularity and reusability of common processes across different workflows. For example, a notification workflow can be used as a sub-workflow across CI/CD pipelines or system monitoring workflows.
+
+## Sweeper Service
+
+A background process on the Conductor server that continuously scans for stalled work and requeues it. If a task is `IN_PROGRESS` but its worker has gone silent past `responseTimeoutSeconds`, the sweeper requeues the task. If the server itself restarts, the sweeper re-evaluates all in-progress workflows on startup and resumes them from their last persisted state. This is part of what makes Conductor workflows [durable](#durable-execution) — server or worker restarts do not lose in-flight work.
 
 ## Synchronous Execution
 
@@ -18181,7 +18197,7 @@ Route: /content/integrations/ai-llm/anthropic-claude
 
 # Anthropic Claude Integration with Orkes Conductor
 
-To use system AI tasks in Orkes Conductor, you must integrate your Conductor cluster with the necessary AI/LLM providers. This guide explains how to integrate Anthropic Claude with Orkes Conductor. Here’s an overview:
+To use [system AI tasks](/content/glossary#ai-tasks) in Orkes Conductor, you must integrate your Conductor cluster with the necessary AI/LLM providers. This guide explains how to integrate Anthropic Claude with Orkes Conductor. Here’s an overview:
 
 1. Get the required credentials from Anthropic Claude.
 2. Configure a new Anthropic Claude integration in Orkes Conductor.
@@ -18300,7 +18316,7 @@ Route: /content/integrations/ai-llm/aws-bedrock-anthropic
 
 # AWS Bedrock Anthropic Integration with Orkes Conductor
 
-To use system AI tasks in Orkes Conductor, you must integrate your Conductor cluster with the necessary AI providers. This guide explains how to integrate AWS Bedrock Anthropic with Orkes Conductor. Here’s an overview:
+To use [system AI tasks](/content/glossary#ai-tasks) in Orkes Conductor, you must integrate your Conductor cluster with the necessary AI providers. This guide explains how to integrate AWS Bedrock Anthropic with Orkes Conductor. Here’s an overview:
 
 1. Get the required credentials from AWS Bedrock Anthropic.
 2. Configure a new AWS Bedrock Anthropic integration in Orkes Conductor.
@@ -18413,7 +18429,7 @@ Route: /content/integrations/ai-llm/aws-bedrock-cohere
 
 # AWS Bedrock Cohere Integration with Orkes Conductor
 
-To use system AI tasks in Orkes Conductor, you must integrate your Conductor cluster with the necessary AI providers. This guide explains how to integrate AWS Bedrock Cohere with Orkes Conductor. Here’s an overview:
+To use [system AI tasks](/content/glossary#ai-tasks) in Orkes Conductor, you must integrate your Conductor cluster with the necessary AI providers. This guide explains how to integrate AWS Bedrock Cohere with Orkes Conductor. Here’s an overview:
 
 1. Get the required credentials from AWS Bedrock Cohere.
 2. Configure a new AWS Bedrock Cohere integration in Orkes Conductor.
@@ -18529,7 +18545,7 @@ Route: /content/integrations/ai-llm/aws-bedrock-llama2
 !!! info "Retired since"
     - v5.2.0 and later
 
-To use system AI tasks in Orkes Conductor, you must integrate your Conductor cluster with the necessary AI providers. This guide explains how to integrate AWS Bedrock Llama3 with Orkes Conductor. Here’s an overview:
+To use [system AI tasks](/content/glossary#ai-tasks) in Orkes Conductor, you must integrate your Conductor cluster with the necessary AI providers. This guide explains how to integrate AWS Bedrock Llama3 with Orkes Conductor. Here’s an overview:
 
 1. Get the required credentials from AWS Bedrock Llama3.
 2. Configure a new AWS Bedrock Llama3 integration in Orkes Conductor.
@@ -18633,7 +18649,7 @@ Route: /content/integrations/ai-llm/aws-bedrock-titan
 
 # AWS Bedrock Titan Integration with Orkes Conductor
 
-To use system AI tasks in Orkes Conductor, you must integrate your Conductor cluster with the necessary AI providers. This guide explains how to integrate AWS Bedrock Titan with Orkes Conductor. Here’s an overview:
+To use [system AI tasks](/content/glossary#ai-tasks) in Orkes Conductor, you must integrate your Conductor cluster with the necessary AI providers. This guide explains how to integrate AWS Bedrock Titan with Orkes Conductor. Here’s an overview:
 
 1. Get the required credentials from AWS Bedrock Titan.
 2. Configure a new AWS Bedrock Titan integration in Orkes Conductor.
@@ -18746,7 +18762,7 @@ Route: /content/integrations/ai-llm/azure-open-ai
 
 # Azure OpenAI Integration with Orkes Conductor
 
-To use system AI tasks in Orkes Conductor, you must integrate your Conductor cluster with the necessary AI/LLM providers. This guide explains how to integrate Azure OpenAI with Orkes Conductor. Here’s an overview:
+To use [system AI tasks](/content/glossary#ai-tasks) in Orkes Conductor, you must integrate your Conductor cluster with the necessary AI/LLM providers. This guide explains how to integrate Azure OpenAI with Orkes Conductor. Here’s an overview:
 
 1. Get the required credentials from Azure OpenAI.
 2. Deploy models in the Azure portal.
@@ -18877,7 +18893,7 @@ Route: /content/integrations/ai-llm/cohere
 
 # Cohere Integration with Orkes Conductor
 
-To use system AI tasks in Orkes Conductor, you must integrate your Conductor cluster with the necessary AI/LLM providers. This guide explains how to integrate Cohere with Orkes Conductor. Here’s an overview:
+To use [system AI tasks](/content/glossary#ai-tasks) in Orkes Conductor, you must integrate your Conductor cluster with the necessary AI/LLM providers. This guide explains how to integrate Cohere with Orkes Conductor. Here’s an overview:
 
 1. Get the required credentials from Cohere.
 2. Configure a new Cohere integration in Orkes Conductor.
@@ -19011,7 +19027,7 @@ Route: /content/integrations/ai-llm/google-gemini-ai
 
 # Google Gemini AI Integration with Orkes Conductor
 
-To use system AI tasks in Orkes Conductor, you must integrate your Conductor cluster with the necessary AI/LLM providers. This guide explains how to integrate Google Gemini AI with Orkes Conductor. Here’s an overview:
+To use [system AI tasks](/content/glossary#ai-tasks) in Orkes Conductor, you must integrate your Conductor cluster with the necessary AI/LLM providers. This guide explains how to integrate Google Gemini AI with Orkes Conductor. Here’s an overview:
 
 1. Get the required credentials from Google Gemini AI.
 2. Configure a new Google Gemini AI integration in Orkes Conductor.
@@ -19172,7 +19188,7 @@ Route: /content/integrations/ai-llm/grok
 
 # Grok Integration with Orkes Conductor
 
-To use system AI tasks in Orkes Conductor, you must integrate your Conductor cluster with the necessary AI/LLM providers. This guide explains how to integrate Grok with Orkes Conductor. Here’s an overview:
+To use [system AI tasks](/content/glossary#ai-tasks) in Orkes Conductor, you must integrate your Conductor cluster with the necessary AI/LLM providers. This guide explains how to integrate Grok with Orkes Conductor. Here’s an overview:
 
 1. Get the required credentials from Grok.
 2. Configure a new Grok integration in Orkes Conductor.
@@ -19283,7 +19299,7 @@ Route: /content/integrations/ai-llm/hugging-face
 
 # Hugging Face Integration with Orkes Conductor
 
-To use system AI tasks in Orkes Conductor, you must integrate your Conductor cluster with the necessary AI/LLM providers. This guide explains how to integrate Hugging Face with Orkes Conductor. Here’s an overview:
+To use [system AI tasks](/content/glossary#ai-tasks) in Orkes Conductor, you must integrate your Conductor cluster with the necessary AI/LLM providers. This guide explains how to integrate Hugging Face with Orkes Conductor. Here’s an overview:
 
 1. Get the required credentials from Hugging Face.
 2. Configure a new Hugging Face integration in Orkes Conductor.
@@ -19422,7 +19438,7 @@ Route: /content/integrations/ai-llm/mistral
 
 # Mistral Integration with Orkes Conductor
 
-To use system AI tasks in Orkes Conductor, you must integrate your Conductor cluster with the necessary AI/LLM providers. This guide explains how to integrate Mistral with Orkes Conductor. Here’s an overview:
+To use [system AI tasks](/content/glossary#ai-tasks) in Orkes Conductor, you must integrate your Conductor cluster with the necessary AI/LLM providers. This guide explains how to integrate Mistral with Orkes Conductor. Here’s an overview:
 
 1. Get the required credentials from Mistral.
 2. Configure a new Mistral integration in Orkes Conductor.
@@ -19547,7 +19563,7 @@ Route: /content/integrations/ai-llm/ollama
     - [Conductor is running locally](https://orkes.io/content/get-orkes-conductor#local-setup-with-docker), and Ollama is running locally.
     - Conductor is running in the cloud, and your AI models are hosted on a server accessible to Ollama.
 
-To use system AI tasks in Orkes Conductor, you must integrate your Conductor cluster with the necessary AI/LLM providers. This guide explains how to integrate Ollama with Orkes Conductor. Here’s an overview:
+To use [system AI tasks](/content/glossary#ai-tasks) in Orkes Conductor, you must integrate your Conductor cluster with the necessary AI/LLM providers. This guide explains how to integrate Ollama with Orkes Conductor. Here’s an overview:
 
 1. Set up the Ollama app locally.
 2. Configure a new Ollama integration in Orkes Conductor.
@@ -19685,7 +19701,7 @@ Route: /content/integrations/ai-llm/open-ai
 
 # OpenAI Integration with Orkes Conductor
 
-To use system AI tasks in Orkes Conductor, you must integrate your Conductor cluster with the necessary AI/LLM providers. This guide explains how to integrate OpenAI with Orkes Conductor. Here’s an overview:
+To use [system AI tasks](/content/glossary#ai-tasks) in Orkes Conductor, you must integrate your Conductor cluster with the necessary AI/LLM providers. This guide explains how to integrate OpenAI with Orkes Conductor. Here’s an overview:
 
 1. Get the required credentials from OpenAI.
 2. Configure a new OpenAI integration in Orkes Conductor.
@@ -19861,7 +19877,7 @@ Route: /content/integrations/ai-llm/perplexity
 
 # Perplexity Integration with Orkes Conductor
 
-To use system AI tasks in Orkes Conductor, you must integrate your Conductor cluster with the necessary AI/LLM providers. This guide explains how to integrate Perplexity with Orkes Conductor. Here’s an overview:
+To use [system AI tasks](/content/glossary#ai-tasks) in Orkes Conductor, you must integrate your Conductor cluster with the necessary AI/LLM providers. This guide explains how to integrate Perplexity with Orkes Conductor. Here’s an overview:
 
 1. Get the required credentials from Perplexity.
 2. Configure a new Perplexity integration in Orkes Conductor.
@@ -19977,7 +19993,7 @@ Route: /content/integrations/ai-llm/vertex-ai
 
 # Google Vertex AI Integration with Orkes Conductor
 
-To use system AI tasks in Orkes Conductor, you must integrate your Conductor cluster with the necessary AI/LLM providers. This guide explains how to integrate Google Vertex AI with Orkes Conductor. Here’s an overview:
+To use [system AI tasks](/content/glossary#ai-tasks) in Orkes Conductor, you must integrate your Conductor cluster with the necessary AI/LLM providers. This guide explains how to integrate Google Vertex AI with Orkes Conductor. Here’s an overview:
 
 1. Get the required credentials from Google Vertex AI.
 2. Configure a new Google Vertex AI integration in Orkes Conductor.
@@ -33511,7 +33527,7 @@ Here is exactly what happens in each failure scenario:
 | **Worker crashes after side effect, before completion update** | Response timeout fires. Task is redelivered to another worker. | Task executes again. Workers must be idempotent for side effects, or use the task's `updateTime` to detect redelivery. |
 | **Worker reports FAILED** | Conductor creates a new task execution based on retry configuration (`retryCount`, `retryDelaySeconds`, `retryLogic`). | Retried up to the configured limit. After exhaustion, task moves to `FAILED` and the workflow's failure handling kicks in. |
 | **Worker reports FAILED_WITH_TERMINAL_ERROR** | No retry. Task is terminal. | Workflow fails or executes the configured `failureWorkflow`. |
-| **Server restarts during workflow execution** | On restart, the sweeper service picks up in-progress workflows from persistent storage and re-evaluates them. | Execution resumes from the last persisted state. No manual intervention needed. |
+| **Server restarts during workflow execution** | On restart, the [sweeper service](/content/glossary#sweeper-service) picks up in-progress workflows from persistent storage and re-evaluates them. | Execution resumes from the last persisted state. No manual intervention needed. |
 | **Long wait across deploys** | WAIT and HUMAN tasks remain `IN_PROGRESS` in persistent storage. The timer or signal resolution is durable. | When the duration elapses or signal arrives (even days later, after multiple deploys), the task completes and the workflow advances. |
 | **Signal/webhook arrives for a paused workflow** | The Task Update API or event handler sets the WAIT/HUMAN task to `COMPLETED` with the provided output. | Workflow resumes immediately with the signal payload available as task output. |
 | **Workflow definition updated while executions are running** | Running executions continue using the **snapshot** of the definition taken at start time. New executions use the updated definition. | No running execution is affected by definition changes. Zero-downtime upgrades. |
@@ -33583,7 +33599,7 @@ All three operations work on workflows in any terminal state (COMPLETED, FAILED,
 In multi-node deployments, Conductor ensures consistency through:
 
 - **Distributed locking**: Only one `decide` evaluation runs per workflow at a time across the cluster.
-- **Fencing tokens**: Prevent stale updates from nodes with expired locks.
+- **[Fencing tokens](/content/glossary#fencing-token)**: Prevent stale updates from nodes with expired locks.
 - **Persistent queues**: Task queues survive node failures. Configurable sharding strategies (round-robin or local-only) trade off distribution vs. consistency.
 
 
@@ -65314,7 +65330,7 @@ curl -X 'POST' \
 
 **Response**
 
-The workflow execution details are returned with the updated `loopCondition` variable set to `false` in the `variables` field. The loop will terminate after the current iteration completes.
+The workflow execution details are returned with the updated [`loopCondition`](/content/glossary#loop-condition) variable set to `false` in the `variables` field. The loop will terminate after the current iteration completes.
 
 ```json
 {
@@ -86006,7 +86022,7 @@ Conductor was built as a state machine engine at Netflix to orchestrate microser
 The guarantees:
 
 - **At-least-once task delivery** — Every task is persisted to durable storage before execution. If a worker crashes, the task is automatically requeued and delivered to another worker. Tasks do not disappear.
-- **Sweeper recovery** — A background sweeper service continuously scans for stalled tasks. If a task is `IN_PROGRESS` but its worker has gone silent (no heartbeat, past `responseTimeoutSeconds`), the sweeper requeues it. If the Conductor server itself restarts, the sweeper recovers all in-flight work on startup.
+- **Sweeper recovery** — A background [sweeper service](/content/glossary#sweeper-service) continuously scans for stalled tasks. If a task is `IN_PROGRESS` but its worker has gone silent (no heartbeat, past `responseTimeoutSeconds`), the sweeper requeues it. If the Conductor server itself restarts, the sweeper recovers all in-flight work on startup.
 - **Configurable retry policies** — Every task has retry count, delay, and backoff strategy. Retries are managed by the engine, not your code. Exponential backoff, fixed delay, and linear backoff are built in.
 - **Failure workflows** — When a workflow fails after exhausting retries, a `failureWorkflow` runs automatically. This is where you put compensation logic: undo API calls, release resources, send alerts. The failure workflow has the full context of what failed and why.
 - **Terminal state is always reached** — A workflow always reaches `COMPLETED`, `FAILED`, or `TERMINATED`. There is no limbo state. You can query, alert, and act on any terminal state.

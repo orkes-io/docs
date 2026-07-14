@@ -56,7 +56,7 @@ Here is exactly what happens in each failure scenario:
 | **Worker crashes after side effect, before completion update** | Response timeout fires. Task is redelivered to another worker. | Task executes again. Workers must be idempotent for side effects, or use the task's `updateTime` to detect redelivery. |
 | **Worker reports FAILED** | Conductor creates a new task execution based on retry configuration (`retryCount`, `retryDelaySeconds`, `retryLogic`). | Retried up to the configured limit. After exhaustion, task moves to `FAILED` and the workflow's failure handling kicks in. |
 | **Worker reports FAILED_WITH_TERMINAL_ERROR** | No retry. Task is terminal. | Workflow fails or executes the configured `failureWorkflow`. |
-| **Server restarts during workflow execution** | On restart, the sweeper service picks up in-progress workflows from persistent storage and re-evaluates them. | Execution resumes from the last persisted state. No manual intervention needed. |
+| **Server restarts during workflow execution** | On restart, the [sweeper service](/content/glossary#sweeper-service) picks up in-progress workflows from persistent storage and re-evaluates them. | Execution resumes from the last persisted state. No manual intervention needed. |
 | **Long wait across deploys** | WAIT and HUMAN tasks remain `IN_PROGRESS` in persistent storage. The timer or signal resolution is durable. | When the duration elapses or signal arrives (even days later, after multiple deploys), the task completes and the workflow advances. |
 | **Signal/webhook arrives for a paused workflow** | The Task Update API or event handler sets the WAIT/HUMAN task to `COMPLETED` with the provided output. | Workflow resumes immediately with the signal payload available as task output. |
 | **Workflow definition updated while executions are running** | Running executions continue using the **snapshot** of the definition taken at start time. New executions use the updated definition. | No running execution is affected by definition changes. Zero-downtime upgrades. |
@@ -128,7 +128,7 @@ All three operations work on workflows in any terminal state (COMPLETED, FAILED,
 In multi-node deployments, Conductor ensures consistency through:
 
 - **Distributed locking**: Only one `decide` evaluation runs per workflow at a time across the cluster.
-- **Fencing tokens**: Prevent stale updates from nodes with expired locks.
+- **[Fencing tokens](/content/glossary#fencing-token)**: Prevent stale updates from nodes with expired locks.
 - **Persistent queues**: Task queues survive node failures. Configurable sharding strategies (round-robin or local-only) trade off distribution vs. consistency.
 
 

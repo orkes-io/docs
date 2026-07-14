@@ -8,7 +8,7 @@ keywords: "Orkes Conductor, workflow orchestration, Cohere Integration with Orke
 
 # Cohere Integration with Orkes Conductor
 
-To use system AI tasks in Orkes Conductor, you must integrate your Conductor cluster with the necessary AI/LLM providers. This guide explains how to integrate Cohere with Orkes Conductor. Here’s an overview:
+To use [system AI tasks](/content/glossary#ai-tasks) in Orkes Conductor, you must integrate your Conductor cluster with the necessary AI/LLM providers. This guide explains how to integrate Cohere with Orkes Conductor. Here’s an overview:
 
 1. Get the required credentials from Cohere.
 2. Configure a new Cohere integration in Orkes Conductor.

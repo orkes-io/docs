@@ -8,7 +8,7 @@ keywords: "Orkes Conductor, workflow orchestration, Perplexity Integration with 
 
 # Perplexity Integration with Orkes Conductor
 
-To use system AI tasks in Orkes Conductor, you must integrate your Conductor cluster with the necessary AI/LLM providers. This guide explains how to integrate Perplexity with Orkes Conductor. Here’s an overview:
+To use [system AI tasks](/content/glossary#ai-tasks) in Orkes Conductor, you must integrate your Conductor cluster with the necessary AI/LLM providers. This guide explains how to integrate Perplexity with Orkes Conductor. Here’s an overview:
 
 1. Get the required credentials from Perplexity.
 2. Configure a new Perplexity integration in Orkes Conductor.

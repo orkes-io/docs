@@ -20,6 +20,10 @@ Instruction-driven reasoning techniques such as Reason and Act (ReAct), Chain-of
 
 An [AI Prompt](/content/developer-guides/creating-and-managing-gen-ai-prompt-templates) is a  set of instructions and context used in Orkes Conductor workflows to guide the behavior and output of a large language model.
 
+## AI Tasks
+
+[AI Tasks](/content/category/reference-docs/ai-tasks) are a family of built-in system tasks for AI and LLM workloads, such as calling a chat completion model, generating or storing embeddings, indexing documents, and searching a vector index. Like other system tasks, they run without custom worker code — you configure the task type and its parameters directly in the workflow definition.
+
 ## Agentic Workflow
 
 A multi-step, dynamic process that orchestrates multiple services, tasks, AI agents, and even humans-in-the-loop within a dynamic control graph. Unlike a typical workflow, an agentic workflow in Conductor involves an LLM that dynamically chooses execution paths at runtime.
@@ -97,6 +101,10 @@ Event-driven architecture facilitates loose coupling between services and respon
 
 A module that listens for specific events in an event-driven system. This can be a piece of code, as simple as a callback function, or in Conductor, a JSON configuration. As its name implies, the [event handler](/content/developer-guides/event-handler) reacts to specific events and triggers subsequent actions, such as starting a workflow or updating a workflow variable.
 
+## Fencing Token
+
+A value attached to a distributed lock that prevents a node with an expired or stale lock from applying updates after another node has taken over. In a multi-node Conductor cluster, fencing tokens stop a server that briefly lost its lock (due to a slow GC pause or network blip, for example) from writing stale workflow state once a different node has already taken ownership of that evaluation.
+
 ## Gateway
 
 Gateway enables exposing any Conductor workflow as APIs or MCP tools.  Workflows can be exposed as HTTP APIs via the [API Gateway](/content/developer-guides/api-gateway) or as MCP tools via the [MCP Gateway](/content/developer-guides/mcp-gateway) for AI agent integration.
@@ -128,6 +136,10 @@ A standard Java API for connecting to relational databases such as PostgreSQL. I
 ## LLM (Large Language Model)
 
 An AI model trained on large volumes of data that can understand and generate natural language using deep learning architectures. In Orkes Conductor, LLMs are used within workflows to perform tasks such as text generation, translation, question answering, and reasoning. Orkes Conductor supports [integrations with multiple LLM providers](/content/category/integrations/ai-llm).
+
+## Loop Condition
+
+The `loopCondition` parameter of a [Do While](/content/reference-docs/operators/do-while) task. Conductor evaluates it after every iteration to decide whether the loop continues; it commonly checks an agent's completion flag, an iteration count against a maximum, or a token/cost budget. It is a common building block for agent loops and other iterative or budget-capped patterns.
 
 ## Operator
 
@@ -170,6 +182,10 @@ In Orkes Conductor, a [schema definition](/content/developer-guides/schema-valid
 A workflow that executes within another workflow (usually referred to as the parent workflow).
 
 [Sub-workflows](/content/reference-docs/operators/sub-workflow) promote modularity and reusability of common processes across different workflows. For example, a notification workflow can be used as a sub-workflow across CI/CD pipelines or system monitoring workflows.
+
+## Sweeper Service
+
+A background process on the Conductor server that continuously scans for stalled work and requeues it. If a task is `IN_PROGRESS` but its worker has gone silent past `responseTimeoutSeconds`, the sweeper requeues the task. If the server itself restarts, the sweeper re-evaluates all in-progress workflows on startup and resumes them from their last persisted state. This is part of what makes Conductor workflows [durable](#durable-execution) — server or worker restarts do not lose in-flight work.
 
 ## Synchronous Execution
 

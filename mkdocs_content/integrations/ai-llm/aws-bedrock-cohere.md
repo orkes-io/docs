@@ -8,7 +8,7 @@ keywords: "Orkes Conductor, workflow orchestration, AWS Bedrock Cohere Integrati
 
 # AWS Bedrock Cohere Integration with Orkes Conductor
 
-To use system AI tasks in Orkes Conductor, you must integrate your Conductor cluster with the necessary AI providers. This guide explains how to integrate AWS Bedrock Cohere with Orkes Conductor. Here’s an overview:
+To use [system AI tasks](/content/glossary#ai-tasks) in Orkes Conductor, you must integrate your Conductor cluster with the necessary AI providers. This guide explains how to integrate AWS Bedrock Cohere with Orkes Conductor. Here’s an overview:
 
 1. Get the required credentials from AWS Bedrock Cohere.
 2. Configure a new AWS Bedrock Cohere integration in Orkes Conductor.

@@ -231,7 +231,7 @@ Running executions are **not affected**. Each execution uses an immutable snapsh
 
 - Keep `responseTimeoutSeconds` short (10-60 seconds for most tasks).
 - Use graceful shutdown in your workers - complete in-progress tasks before stopping.
-- For the Conductor server itself: the sweeper service re-evaluates in-progress workflows on startup and requeues stalled tasks.
+- For the Conductor server itself: the [sweeper service](/content/glossary#sweeper-service) re-evaluates in-progress workflows on startup and requeues stalled tasks.
 
 **What is never lost:** Completed task outputs. The workflow state. The execution history. Only the in-progress task is affected, and it is automatically retried.
 
