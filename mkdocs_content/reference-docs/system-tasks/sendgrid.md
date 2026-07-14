@@ -84,20 +84,6 @@ The SendGrid task will return the following parameters.
 | statusCode   | The [HTTP status code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes) indicating success or failure of the request. |
 | body         | The response body containing the data returned by the API.                                                                    |
 
-## Adding a SendGrid task in UI
-
-**To add a SendGrid task:**
-
-1. In your workflow, select the (**+**) icon and add a **SendGrid** task.
-2. In **From**, enter the [verified SendGrid sender email](https://www.twilio.com/docs/sendgrid/for-developers/sending-email/sender-identity).
-3. In **To**, enter the recipient’s email address.
-4. In **Subject**, enter the email subject.
-5. In **Content Type**, select the type of email content as *text/plain* or *text/html*.
-6. In **Content**, enter the email body.
-7. In **SendGrid Configuration**, select the SendGrid integration added to the cluster.
-
-<center><p><img src="/content/img/sendgrid-ui.png " alt="Adding SendGrid task" width="80%" height="auto"/></p></center>
-
 ## Examples
 
 Here are some examples for using the SendGrid task.

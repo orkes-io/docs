@@ -78,17 +78,6 @@ This is the task configuration for a Get Signed JWT task.
 
 The Get Signed JWT task returns the signed JWT in the `_secrets` variable. The signed JWT will be masked (`***`). 
 
-## Adding a Get Signed JWT task in UI
-
-**To add a Get Signed JWT task:**
-
-1. In your workflow, select the (**+**) icon and add a **Get Signed JWT** task.
-2. Enter the **Subject** and **Issuer** of the JWT.
-3. Provide the **PrivateKey** and **PrivateKeyId** used for signing JWT.
-4. Set the **Audience**, **TTL (in seconds)**, **Scopes**, and **Algorithm** as required.
-
-<center><p><img src="/content/img/get-signed-jwt-ui.png" alt="Adding Get Signed JWT task" width="80%" height="auto"/></p></center>
-
 ## Examples
 
 Here are some examples for using the Get Signed JWT task.

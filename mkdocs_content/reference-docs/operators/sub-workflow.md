@@ -93,26 +93,6 @@ The Sub Workflow task will return the following parameters.
 
 In addition to the execution ID, the output of the sub-workflow itself is also included in the Sub Workflow task output.
 
-## Adding a Sub Workflow task in UI
-
-**To add a Sub Workflow task:**
-
-1. In your workflow, select the **(+)** icon and add a **Sub Workflow** task.
-2. Enter the **Workflow name** and **Version**.
-   Once selected, the sub-workflow’s input parameters will automatically appear if there are any pre-defined ones.
-3. If the workflow doesn’t have a pre-existing definition in Conductor, enter the definition in the **Workflow definition**.
-4. (Optional) Enter the **Idempotency key** and select the **Idempotency strategy**.
-5. (Optional) Add any additional **Input parameters** for the sub-workflow.
-6. (Optional) Add **Task-to-domain** mapping for the sub-workflow tasks.
-
-To view the sub-workflow tasks within the parent workflow, select **Expand** to display them in the visual diagram editor.
-<p>
-  <img
-    src="/content/img/ui-guide-sub-workflow-task.png"
-    alt="Screenshot of Sub Workflow Task in Orkes Conductor"
-  />
-</p>
-
 ## Examples
 
 Here are some examples for using the Sub Workflow task.

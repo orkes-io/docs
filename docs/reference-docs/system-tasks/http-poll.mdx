@@ -96,59 +96,6 @@ The HTTP Poll task will return the following parameters.
 | reasonPhrase | The reason phrase associated with the HTTP status code.                                                                       |
 | body         | The response body containing the data returned by the API.                                                                    |
 
-## Adding an HTTP Poll task in UI
-
-An HTTP Poll task can be configured manually through the UI or automatically populated using registered service definitions.
-
-<Tabs>
-
-<TabItem value="Using registered services" label="Using registered services">
-
-:::info Prerequisites
-[Register the remote service in Orkes Conductor](https://orkes.io/content/remote-services).
-:::
-
-**To add an HTTP task using registered services:**
-
-1. In your workflow, select the (**+**) icon and add an **HTTP Poll** task.
-2. Select **Populate from remote services**.
-3. In **Service**, select the registered HTTP service.
-4. In **Host**, select the required host for the service.
-5. In **Service method**, select the required endpoint.
-6. Select **Populate**.
-7. In **Termination Condition**, set the condition to be evaluated after every API invocation.
-8. Set the **Polling Interval** and **Polling Strategy**.
-
-<p align="center"><img src="/content/img/adding-service-to-http-poll-task.gif" alt="Adding the registered service to an HTTP Poll task" width="100%" height="auto"></img></p>
-
-This method automatically fills in the HTTP Poll task parameters based on the selected service. It is recommended if you have already registered your HTTP services in Orkes Conductor.
-
-:::info Note
-When an HTTP service with circuit breaker configuration is applied in an HTTP Poll task, the circuit breaker settings are not applied.
-:::
-
-</TabItem>
-
-<TabItem value="Manually configuring an HTTP Poll task" label="Manually configuring an HTTP Poll task">
-
-**To add an HTTP Poll task:**
-
-1. In your workflow, select the (**+**) icon and add an **HTTP Poll** task.
-2. Choose the HTTP method for sending requests from the **Method** drop-down.
-3. In **URL**, add the URI to be called by the HTTP Poll task.
-4. In **Accept**, select the accept header as required by the server.
-5. In **Content-Type**, select the content type for the server.
-6. In **Termination Condition**, set the condition to be evaluated after every API invocation.
-7. Set the **Polling Interval** and **Polling Strategy**.
-8. (Optional) In **Other-headers**, add any additional HTTP headers to be sent along with the request.
-9. In **Body**, add the request body when using PUT, POST, or PATCH method.
-10. (Optional) Enable or disable **Encode** to specify if the URI needs to be encoded.
-
-<center><p><img src="/content/img/ui-guide-http-poll-task.png" alt="Adding HTTP Poll Task" width="100%" height="auto"/></p></center>
-
-</TabItem>
-</Tabs>
-
 ## Examples
 
 Here are some examples for using the HTTP Poll task.

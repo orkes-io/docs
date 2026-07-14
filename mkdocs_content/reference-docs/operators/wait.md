@@ -93,15 +93,6 @@ This is the task configuration for a Wait task.
     ```
 
 
-## Adding a Wait task in UI
-
-**To add a Wait task:**
-
-1. In your workflow, select the **(+)** icon and add a **Wait** task.
-2. Select the **Wait type** and configure it.
-
-<p><img src="/content/img/ui-guide-wait-task.png" alt="Adding wait task" /></p>
-
 ## Examples
 
 Here are some examples for using the Wait task.

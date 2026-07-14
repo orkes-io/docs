@@ -73,18 +73,6 @@ The Start Workflow task will return the following parameters.
 !!! note
     The Start Workflow task does not return the output of the started workflow. Because the task executes asynchronously, the parent workflow continues to completion even if the started workflow is still running.
 
-## Adding a Start Workflow task in UI
-
-**To add a Start Workflow task:**
-
-1. In your workflow, select the **(+)** icon and add a **Start Workflow** task.
-2. Enter the **Workflow name** and **Version**. If the version is unspecified, the latest version will be used. Once selected, the workflow’s input parameters will automatically appear if there are any pre-defined ones.
-3. (Optional) Enter the **Correlation id**.
-4. (Optional) Enter the **Idempotency key** and select the **Idempotency strategy**.
-5. (Optional) Add any additional **Input parameters** for the workflow.
-
-<p><img src="/content/img/ui-guide-start-workflow.png" alt="Screenshot of Start Workflow Task in Orkes Conductor"/></p>
-
 ## Examples
 
 Here are some examples for using the Start Workflow task.

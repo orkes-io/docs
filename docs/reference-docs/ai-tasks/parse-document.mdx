@@ -71,18 +71,6 @@ The Parse Document task will return the following parameters.
 | --------- | ----------- |
 | result | Array of strings containing the parsed document text. Each element is one text segment; if *chunkSize* is 0, the array contains a single element with the full content. |
 
-## Adding a Parse Document task in UI
-
-**To add a Parse Document task:**
-
-1. In your workflow, select the (**+**) icon and add a **Parse Document** task.
-2. (Optional) For non-public URLs, in **Integration Name**, select the integration already added to the cluster from where the documents are to be parsed.
-3. In **Document URL**, enter the document URL to be parsed. 
-4. (Optional) In **Media Type**, select the document type. Use **Auto-detect** for automatically detecting based on the content and file extension. 
-5. (Optional) In **Chunking Configuration**, enter the **Chunk Size**.
-
-<center><p><img src="/content/img/parse-document-task-ui.png" alt="Parse Document Task" width="100%" height="auto"/></p></center>
-
 ## Examples
 
 Here are some examples for using the Parse Document task.

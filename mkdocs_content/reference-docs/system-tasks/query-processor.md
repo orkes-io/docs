@@ -117,35 +117,6 @@ The Query Processor task will return the following parameters.
     | values    | An array containing the queried metric at each timestamp interval.                                                                  |
 
 
-## Adding a Query Processor task in UI
-
-**To add a Query Processor task:**
-
-1. In your workflow, select the **(+)** icon and add a **Query Processor** task.
-2. Select the Query type as **Conductor Search API** or **Conductor Metrics (Prometheus)**.
-3. For **Conductor Search API**, set the following parameters:
-   - Workflow name
-   - Correlation ids
-   - Statuses
-   - Start time from - to (in mins)
-   - End time from - to (in mins)
-   - Free text search
-4. For **Conductor Metrics (Prometheus)**, set the following parameters:
-   - PromQL code
-   - Start time from - to (in mins)
-   - Step
-
-<center>
-  <p>
-    <img
-      src="/content/img/query-processor-ui-method.png "
-      alt="Adding Query Processor task"
-      width="100%"
-      height="auto"
-    />
-  </p>
-</center>
-
 ## Examples
 
 Here are some examples for using the Query Processor task.

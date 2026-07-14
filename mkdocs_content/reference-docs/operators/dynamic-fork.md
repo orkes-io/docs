@@ -195,34 +195,6 @@ This is the task configuration for a Dynamic Fork task.
 !!! note
     `forkTaskName` and `forkTaskInputs` will take precedence even if `dynamicForkTasksParam` and `dynamicForkTasksInputParamName` are present in the task definition.
 
-## Adding a Dynamic Fork task in UI
-
-**To add a Dynamic Fork task:**
-
-
-=== "For different tasks"
-
-    1. In your workflow, select the **(+)** icon and add a **Dynamic Fork **task.
-    2. In **Input parameters**, configure the `dynamicTask` parameter as an array of task configurations.
-    3. In **Input parameters**, configure the `dynamicTasksInput` parameter as a map of input parameters for each task.
-    4. Include the **Join** task to complete the fork/join operation.
-
-=== "For the same task"
-
-    1. In your workflow, select the **(+)** icon and add a **Dynamic Fork** task.
-    2. In **Input parameters**, remove all current parameters and add the following parameters and its values:
-       - `forkTaskWorkflow`, `forkTaskWorkflowVersion`, and `forkTaskInputs` for Sub Workflow tasks.
-       - `forkTaskName` and `forkTaskInputs` for all other task types.
-    3. Include the **Join** task to complete the fork/join operation.
-
-    <p>
-      <img
-        src="/content/img/ui-guide-dynamic-fork.png"
-        alt="Screenshot of Dynamic Fork Task in Orkes Conductor"
-      />
-    </p>
-
-
 ## Examples
 
 Here are some examples for using the Dynamic Fork task.

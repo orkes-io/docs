@@ -71,22 +71,6 @@ A `FORK_JOIN` task must be immediately followed by a `JOIN` task in the `tasks` 
 
 The Fork task does not produce output. The Join task returns a map containing the outputs of the tasks listed in `joinOn`, keyed by their task reference names. [Learn more about the Join task output](https://orkes.io/content/reference-docs/operators/join#task-output).
 
-## Adding a Fork/Join task in UI
-
-**To add a Fork/Join task:**
-
-1. In your workflow, select the **(+)** icon and add a **Fork/Join** task.
-2. Select **Add fork** to add as many forks as required.
-3. In each fork branch, select the **(+)** icon to add tasks.
-4. Select the Join task and configure its settings to complete the fork/join operations.
-
-<p><img src="/content/img/ui-guide-fork-join.png" alt="Screenshot of Fork/Join Task in Orkes Conductor"/></p>
-
-:::info Notes
-- When a Join task is used after a [Switch](/content/reference-docs/operators/switch) task, the Join task can complete when the Switch task completes, even if the tasks within the switch branches have not finished. To handle this, add a task such as [Set Variable](https://orkes.io/content/reference-docs/operators/set-variable) at the end of the outermost Switch task and configure the Join task to join on that task. This ensures the Join task waits until all switch branch execution is complete before the workflow continues.
-- If a fork branch containing a [Sub Workflow task](/content/reference-docs/operators/sub-workflow) fails, sibling tasks in other branches are cancelled and the parent workflow moves to a FAILED state. When the failed sub-workflow is retried, all cancelled sibling tasks are automatically rescheduled and the parent workflow resumes to RUNNING.
-:::
-
 ## Examples
 
 Here are some examples for using the Fork/Join task.

@@ -86,15 +86,6 @@ The task returns the output passed through the [synchronous](/content/reference-
 }
 ```
 
-## Adding a Yield task in UI
-
-**To add a Yield task:**
-
-1. In your workflow, select the **(+)** icon and add a **Yield** task.
-2. Configure the **Input parameters**. 
-
-<p><img src="/content/img/yield-task-ui.png" alt="Adding yield task" /></p>
-
 ## Examples
 
 Here are some examples for using the Yield task.

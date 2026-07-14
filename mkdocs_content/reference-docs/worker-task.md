@@ -80,21 +80,6 @@ This is the task configuration for a Worker task.
 
 The Worker task will return the output defined in your worker code.
 
-## Adding a Worker task in UI
-
-**To add a Worker task:**
-
-1. In your workflow, select the **(+)** icon to add a new task. You can add a Worker task in either of these ways:
-   - Search for your task by its name, then select to add it to the workflow.
-   - Add a **Worker Task** and enter the task name in **Task Definition**.
-2. Configure the task, such as its inputs, caching, schema validation, and optionality.
-
-<center><p><img src="/content/img/worker-task-ui-guide.png" alt="Adding a Worker task" width="1024" height="auto"/></p></center>
-
-Sample worker code snippets are available in the Conductor UI for reference.
-
-<center><p><img src="/content/img/sample-worker-code-in-ui.png" alt="Sample workers available in Conductor UI" width="1024" height="auto"/></p></center>
-
 ## Examples
 
 <details>

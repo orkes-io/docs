@@ -105,21 +105,6 @@ The Switch task will return the following parameters.
 
 You can access the output of the Switch task in subsequent tasks by referring to the output value `selectedCase`, using `${switchTaskName.output.selectedCase}` (replacing `switchTaskName` with the actual task reference name).
 
-## Adding a Switch task in UI
-
-**To add a Switch task:**
-
-1. In your workflow, select the **(+)** icon and add a **Switch** task.
-2. In **Script params**, add the parameter that will be evaluated in the expression.
-3. In **Evaluate**, select the evaluator type and enter the expression.
-   - **Value-Param**—Ensure that the expression value matches the parameter key you have defined in Script params.
-   - **ECMASCRIPT**—Enter a JavaScript script.
-4. In **Switch cases**, add different cases, and label them with the relevant parameter values.
-5. In your workflow, select the **(+)** icon to add tasks to each switch case.
-6. (Optional) Add tasks to the default case.
-
-<p><img src="/content/img/ui-guide-switch-task.png" alt="Screenshot of Switch Task in Orkes Conductor"/></p>
-
 ## Examples
 
 Here are some examples for using the Switch task.

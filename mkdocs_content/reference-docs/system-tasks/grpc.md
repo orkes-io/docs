@@ -90,51 +90,6 @@ This is the task configuration for a gRPC task.
 
 The gRPC task returns the server’s response as task output, making it available for use in subsequent workflow steps. The structure of the output depends on the response of the gRPC method.
 
-## Adding a gRPC task in UI
-
-gRPC task parameters can be automatically populated using registered services or configured manually through the UI.
-
-
-=== "Using registered services"
-
-    !!! info "Prerequisites"
-        [Register the remote service in Orkes Conductor](https://orkes.io/content/remote-services).
-
-    **To add a gRPC task using registered services:**
-
-    1. In your workflow, select the (**+**) icon and add a **gRPC** task.
-    2. Select **Populate from remote services**.
-    3. In **Service**, select the registered service.
-    4. In **Host:Port**, select the host and port for the service.
-    5. In **Service method**, select the required endpoint.
-    6. Select **Populate**.
-    7. (Optional) In **Hedging Config** > **Maximum attempts**, enter a value for parallel hedged requests to reduce latency.
-    8. (Optional) Enable **Use SSL** if the connection should be secured using TLS.
-    9. (Optional) Enable **Trust Certificate** to allow trusting the server’s certificate.
-
-    <p align="center"><img src="/content/img/adding-service-to-gRPC-task.gif" alt="Adding the registered service to a gRPC task" width="100%" height="auto"></img></p>
-
-    This method automatically populates gRPC task parameters based on the selected service. 
-
-=== "Manually configuring a gRPC task"
-
-    **To add a gRPC task manually:**
-
-    1. In your workflow, select the (**+**) icon and add a **gRPC** task.
-    2. In **Method name**, enter the name of the method to invoke.
-    3. In **Host**, enter the hostname or IP address of the gRPC server.
-    4. In **Port**, enter the port where the gRPC server is running.
-    5. In **Request**, provide a JSON object representing the request payload.
-    6. In **Method type**, select one of the following: *UNARY*, *SERVER_STREAMING*, *CLIENT_STREAMING*, or *BIDI_STREAMING*.
-    7. (Optional) Enable **Use SSL** if the connection should be secured using TLS.
-    8. (Optional) Enable **Trust Certificate** to allow trusting the server’s certificate.
-    9. (Optional) In **Hedging Config** > **Maximum attempts**, enter a value for parallel hedged requests to reduce latency.
-    10. (Optional) Select **+Add header**, and add any additional headers to be sent along with the request.
-    11. (Optional) In **Input type**, select the input schema for the request.
-    12. (Optional) In **Output type**, select the output schema for the request.
-
-    <p align="center"><img src="/content/img/grpc-task.png" alt="Adding a gRPC task in Conductor UI" width="100%" height="auto"></img></p>
-
 ## Related pages
 
 - [System Tasks](/content/category/reference-docs/system-tasks)

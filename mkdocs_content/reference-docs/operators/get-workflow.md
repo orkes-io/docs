@@ -57,15 +57,6 @@ This is the task configuration for a Get Workflow task.
 
 The Get Workflow task returns the execution details of the workflow identified by the specified workflow ID, including task execution details when **Include tasks** is enabled.
 
-## Adding a Get Workflow task in UI
-
-**To add a Get Workflow task:**
-1. In your workflow, select the **(+)** icon and add a **Get Workflow** task.
-2. Enter the **Workflow ID**.
-3. (Optional) Select **Include tasks** if you need to retrieve the task details.
-
-<p><img src="/content/img/ui-guide-get-workflow-task.png" alt="Screenshot of Get Workflow Task in Orkes Conductor"/></p>
-
 ## Examples
 
 Here are some examples for using the Get Workflow task.

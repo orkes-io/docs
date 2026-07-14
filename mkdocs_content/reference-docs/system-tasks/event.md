@@ -111,16 +111,6 @@ The task output mirrors the payload sent during execution, including system-appe
 }
 ```
 
-## Adding an Event task in UI
-
-**To add an Event task:**
-
-1. In your workflow, select the (**+**) icon and add an **Event** task.
-2. In **Destination** > **Sink**, select the required integration from the drop-down list, then manually append the topic or queue name. The drop-down lists only the integration name. If you do not append a valid topic or queue, the task fails because the payload has no destination.
-3. (Optional) Add any additional input parameters.
-
-<center><p><img src="/content/img/ui-guide-event-task.png" alt="Adding event task" width="1024" height="auto"/></p></center>
-
 ## Examples
 
 Here are some examples for using the Event task.

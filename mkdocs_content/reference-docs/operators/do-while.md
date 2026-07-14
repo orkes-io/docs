@@ -245,21 +245,6 @@ From **v4.1.52** onwards, Do While executions that exceed 300 tasks across their
     - **Nested loops**: Nested Do While tasks are not supported. To achieve a similar functionality as a nested loop, you can use a [Sub Workflow](/content/reference-docs/operators/sub-workflow) task inside the Do While task.
     - **Isolation group execution**: Isolation group execution is not supported. However, the domain is supported for loop tasks inside the Do While task.
 
-## Adding a Do While task in UI
-
-**To add a Do While task:**
-
-1. In your workflow, select the **(+)** icon and add a **Do While** task.
-2. In **Script params**, add the parameter that will be evaluated in the expression.
-3. In **Loop condition**, select the evaluator type and enter the loop condition in the **Code** field.
-   - **Value-Param**— Enter the parameter key you have defined in Script params.
-   - **ECMASCRIPT**—Enter a JavaScript script. Refer to [Script expression](#script-expression) for information.
-4. In your workflow, select the **(+)** icon to add tasks to the Do While loop.
-5. (Optional) If the number of iterations is expected to be large, turn off **No Limits** to set the number of iterations for which execution data to retain. By default, there is no limit on the execution data kept if the task size is below 300.
-6. (Optional) Use the **Sample scripts** to insert example JavaScript expressions for ECMASCRIPT evaluation.
-
-<p><img src="/content/img/ui-guide-do-while-task.png" alt="Screenshot of Do While Task in Orkes Conductor"/></p>
-
 ## Examples
 
 Here are some examples for using the Do While task.

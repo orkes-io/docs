@@ -93,54 +93,6 @@ The HTTP task will return the following parameters.
 | response.**reasonPhrase** | The reason phrase associated with the HTTP status code.                                                                       |
 | response.**body**.        | A JSON object containing the data returned by the API.                                                                |
 
-## Adding an HTTP task in UI
-
-An HTTP task can be configured manually through the UI or automatically populated using registered service definitions.
-
-<Tabs>
-
-<TabItem value="Using registered services" label="Using registered services">
-
-:::info Prerequisites
-[Register the remote service in Orkes Conductor](https://orkes.io/content/remote-services).
-:::
-
-**To add an HTTP task using registered services:**
-
-1. In your workflow, select the (**+**) icon and add an **HTTP** task.
-2. Select **Populate from remote services**.
-3. In **Service**, select the registered HTTP service.
-4. In **Host**, select the required host for the service.
-5. In **Service method**, select the required endpoint.
-6. Select **Populate**.
-7. (Optional) In **Hedging Config** > **Maximum attempts**, enter a value for parallel hedged requests to reduce latency.
-
-<p align="center"><img src="/content/img/adding-service-to-http-task.gif" alt="Adding the registered service to an HTTP task" width="100%" height="auto"></img></p>
-
-This method automatically fills in the HTTP task parameters based on the selected service. It is recommended if you have already registered your HTTP services in Orkes Conductor.
-
-</TabItem>
-
-<TabItem value="Manually configuring an HTTP task" label="Manually configuring an HTTP tasks">
-
-**To add an HTTP task:**
-
-1. In your workflow, select the (**+**) icon and add an **HTTP** task.
-2. Choose the HTTP method for sending requests from the **Method** drop-down.
-3. In **URL**, add the URI to be called by the HTTP task.
-4. In **Accept**, select the accept header as required by the server.
-5. In **Content-Type**, select the content type for the server.
-6. (Optional) Enable or disable **Encode** to specify if the URI needs to be encoded.
-7. (Optional) In **Hedging Config** > **Maximum attempts**, enter a value for parallel hedged requests to reduce latency.
-8. (Optional) In **Additional headers**, add any additional HTTP headers to be sent along with the request.
-9. In **Body**, add the request body when using PUT, POST, or PATCH method.
-10. (Optional) Set **Async complete** to true if the task is to be completed asynchronously.
-
-<center><p><img src="/content/img/ui-guide-http-task.png" alt="Adding HTTP task" width="100%" height="auto"/></p></center>
-
-</TabItem>
-</Tabs>
-
 ## Examples
 
 Here are some examples for using the HTTP task.

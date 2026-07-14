@@ -77,18 +77,6 @@ The JDBC task will return the following parameters.
 | --------- | ------------------------------------------- |
 | result    | An array of data queried from the database. |
 
-## Adding a JDBC task in UI
-
-**To add a JDBC task:**
-
-1. In your workflow, select the (**+**) icon and add a **JDBC** task.
-2. In **Integration name**, select the integration to be used.
-3. Choose the **Statement** as SELECT or INSERT/UPDATE/DELETE.
-4. Enter the **Expected update count** if the statement type is INSERT/UPDATE/DELETE.
-5. Enter the **Statement** to be queried and the **Query parameters**.
-
-<center><p><img src="/content/img/jdbc-worker-task.png " alt="Adding JDBC task" width="80%" height="auto"/></p></center>
-
 ## Examples
 
 Here are some examples for using the JDBC task.

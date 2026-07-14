@@ -78,16 +78,6 @@ The LLM Generate Embeddings task will return the following parameters.
 | --------- | ----------- | 
 | result | A JSON array containing the vectors of the indexed data. | 
 
-## Adding an LLM Generate Embeddings task in UI
-
-**To add an LLM Generate Embeddings task:**
-
-1. In your workflow, select the (**+**) icon and add an **LLM Generate Embeddings** task.
-2. In **Provider and Model**, select the **LLM provider**, and **Model**.
-3. In **Embedding Configuration**, enter the **Text**, and **Dimensions**.
-
-<center><p><img src="/content/img/llm-generate-embeddings-ui-method.png" alt="LLM Generate Embeddings Task" width="100%" height="auto"/></p></center>
-
 ## Examples
 
 Here are some examples for using the LLM Generate Embeddings task.

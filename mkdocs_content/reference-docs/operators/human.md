@@ -125,40 +125,6 @@ The Human task will return a JSON object containing the form response. For examp
 }
 ```
 
-## Adding a Human task in UI
-
-
-**To add a Human task:**
-
-1. In your workflow, select the **(+)** icon and add a **Human** task.
-2. Enter the **Task display name**, which will appear on the connected UI for the user. Use a unique human-friendly name, such as “Loan Approval” or “Booking Form”.
-3. Select the **User form template** previously created in Conductor and its Version.
-4. (Optional) Add an **Assignment policy** to control who can fill out the form.
-   1. In Assignment policy, select **(+) New assignment**.
-   2. In Assign, select the **User type** for the assignee(s) and enter the corresponding user or group ID.
-      - **External User** or **Group**—Select this if the assignees are managed and verified in an external system, and access an external UI to complete the task.
-      - **Conductor User** or **Group**—Select this if the assignees are Conductor users, and use Conductor UI to complete the task.
-   3. Enter the **SLA minutes** to specify the assignment duration before it times out. Use 0 minutes to set a non-expiring assignment.
-   4. Select **Auto claim** if you want the first assignee in the list to automatically claim the Human task when it starts execution.
-   5. In **After assignments**, select the strategy for when the assignment times out.
-   6. If needed, add another assignment to create a multi-level assignment chain.
-5. (Optional) Add a **Trigger policy** to start new workflows when the state of the Human task changes.
-   1. In Trigger policy, select **(+) New trigger**.
-   2. Select the **Trigger event**.
-   3. Select the **Workflow** to start and its **Version**.
-   4. (Optional) Select **Additional inputs** to configure the workflow’s input parameters, correlation ID, and task-to-domain mapping.
-   5. If needed, add another trigger policy to start another workflow.
-6. In **Input parameters**, configure the form fields depending on the input source:
-   - If the field is to be filled up by the assignee, leave the value empty.
-   - If the field is read-only, set the value explicitly. You can use static values or [dynamic variables](/content/developer-guides/passing-inputs-to-task-in-conductor) to pass data from workflow inputs or previous task outputs.
-
-<p>
-  <img
-    src="/content/img/ui-guide-human-task.png"
-    alt="Screenshot of Human Task in Orkes Conductor"
-  />
-</p>
-
 ## Examples
 
 Here are some examples for using the Human task.
