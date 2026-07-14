@@ -7258,15 +7258,6 @@ When opened from any other area of the UI, the Assistant answers questions about
     - Conversations are preserved within a session; you can iterate on a workflow across multiple messages.
     - When the Assistant needs an integration that isn't configured yet, it will pause and prompt you to provide credentials before continuing.
 
-## Related pages
-
-- [Workflows](/content/developer-guides/workflows)
-- [Write Workflows Using Code](/content/developer-guides/write-workflows-using-code)
-- [Import BPMN Files as Workflows](/content/developer-guides/convert-bpmn-to-workflows)
-- [Versioning Workflows](/content/developer-guides/versioning-workflows)
-- [Executing Workflows](/content/developer-guides/running-workflows)
-- [Scheduling Workflows](/content/developer-guides/scheduling-workflows)
-
 ---
 URL: https://orkes.io/content/developer-guides/building-workflows
 Title: Building Workflows
@@ -7383,10 +7374,10 @@ Check the following after every BPMN import:
 
 - [Workflows](/content/developer-guides/workflows)
 - [Write Workflows Using Code](/content/developer-guides/write-workflows-using-code)
-- [Build Workflows Using Conductor UI](/content/developer-guides/build-workflows-using-ui)
 - [Versioning Workflows](/content/developer-guides/versioning-workflows)
 - [Executing Workflows](/content/developer-guides/running-workflows)
 - [Scheduling Workflows](/content/developer-guides/scheduling-workflows)
+- [Sending Signals to Workflows](/content/developer-guides/sending-signals-to-workflows)
 
 ---
 URL: https://orkes.io/content/developer-guides/creating-and-managing-gen-ai-prompt-templates
@@ -7612,9 +7603,6 @@ Common search filters:
 
 Use `*` for prefix-style matches in workflow name or free text search. For example, `payment*` returns executions whose workflow name or indexed payload fields start with `payment`.
 
-Image: Workflow search with wildcard support
-
-
 ### SQL search
 
 SQL-format search supports simple field filters:
@@ -7669,12 +7657,6 @@ curl -sS "$CONDUCTOR_SERVER_URL/workflow/$WORKFLOW_ID?includeTasks=true" \
 
 **In the UI**, select the ⏷ icon beside **Search > Show as Code** to get the current search as a cURL or JavaScript request.
 
-Image: Show as code option in Workflow Search
-
-
-Image: Workflow search data in code
-
-
 ## Inspecting a workflow execution
 
 Inspect the workflow-level fields first:
@@ -7704,13 +7686,7 @@ Then inspect the task list in execution order. Look for the first task with `FAI
 | Task-to-domain | Task-to-domain mappings used in the execution. |
 | Assistant | AI-based Conductor Agent for debugging the execution in natural language. |
 
-Image: Sample Workflow Executions page, with the different tab views
-
-
 The **Diagram** tab colors each task by status: green (successful), red (failed), orange (completed with errors).
-
-Image: Different types of errors in a failed workflow
-
 
 ## Inspecting a task execution
 
@@ -7729,13 +7705,7 @@ For a failed or blocked task, review these fields:
 
 **In the UI**, selecting a task in the **Diagram** tab opens a panel with the same data across these tabs: **Summary**, **Input**, **Output**, **Logs** (if the worker attached any), **JSON**, and **Definition**.
 
-Image: Sample Workflow Executions page, with the task tab details
-
-
 If the task was retried, select an attempt from the dropdown to view details for that specific attempt.
-
-Image: Task attempt dropdown selection
-
 
 To debug a failed task, inspect these areas:
 
@@ -7764,9 +7734,6 @@ Choose the recovery action based on whether the workflow definition, input data,
 | Retry - resume subworkflow | The workflow contains a sub-workflow, and you want to retry the parent from the sub-workflow's last failed task. |
 | Signal task | A WAIT, HUMAN, or async task is blocked and should be completed or failed externally. |
 | Terminate | The execution should stop and should not be retried. |
-
-Image: Workflow Recovery Options
-
 
 Retry a failed workflow:
 
@@ -7855,10 +7822,10 @@ See [Handling Failures](/content/error-handling) for retry, timeout, and compens
 
 - [Workflows](/content/developer-guides/workflows)
 - [Write Workflows Using Code](/content/developer-guides/write-workflows-using-code)
-- [Build Workflows Using Conductor UI](/content/developer-guides/build-workflows-using-ui)
 - [Import BPMN Files as Workflows](/content/developer-guides/convert-bpmn-to-workflows)
 - [Versioning Workflows](/content/developer-guides/versioning-workflows)
 - [Executing Workflows](/content/developer-guides/running-workflows)
+- [Scheduling Workflows](/content/developer-guides/scheduling-workflows)
 
 ---
 URL: https://orkes.io/content/developer-guides/deploying-workflows
@@ -8667,10 +8634,10 @@ Worker deployment checklist:
 
 - [Workflows](/content/developer-guides/workflows)
 - [Write Workflows Using Code](/content/developer-guides/write-workflows-using-code)
-- [Build Workflows Using Conductor UI](/content/developer-guides/build-workflows-using-ui)
 - [Import BPMN Files as Workflows](/content/developer-guides/convert-bpmn-to-workflows)
 - [Versioning Workflows](/content/developer-guides/versioning-workflows)
 - [Executing Workflows](/content/developer-guides/running-workflows)
+- [Scheduling Workflows](/content/developer-guides/scheduling-workflows)
 
 ---
 URL: https://orkes.io/content/developer-guides/masking-parameters
@@ -9797,10 +9764,10 @@ Recommended alert metadata:
 
 - [Workflows](/content/developer-guides/workflows)
 - [Write Workflows Using Code](/content/developer-guides/write-workflows-using-code)
-- [Build Workflows Using Conductor UI](/content/developer-guides/build-workflows-using-ui)
 - [Import BPMN Files as Workflows](/content/developer-guides/convert-bpmn-to-workflows)
 - [Versioning Workflows](/content/developer-guides/versioning-workflows)
 - [Executing Workflows](/content/developer-guides/running-workflows)
+- [Scheduling Workflows](/content/developer-guides/scheduling-workflows)
 
 ---
 URL: https://orkes.io/content/developer-guides/orchestrating-human-tasks
@@ -11114,10 +11081,10 @@ Use webhooks or event handlers when an external system is the trigger:
 
 - [Workflows](/content/developer-guides/workflows)
 - [Write Workflows Using Code](/content/developer-guides/write-workflows-using-code)
-- [Build Workflows Using Conductor UI](/content/developer-guides/build-workflows-using-ui)
 - [Import BPMN Files as Workflows](/content/developer-guides/convert-bpmn-to-workflows)
 - [Versioning Workflows](/content/developer-guides/versioning-workflows)
 - [Scheduling Workflows](/content/developer-guides/scheduling-workflows)
+- [Sending Signals to Workflows](/content/developer-guides/sending-signals-to-workflows)
 
 ---
 URL: https://orkes.io/content/developer-guides/scaling-workers
@@ -11465,10 +11432,10 @@ Together, these run the workflow every 90 minutes: 14:30, 16:00, 17:30, 19:00, a
 
 - [Workflows](/content/developer-guides/workflows)
 - [Write Workflows Using Code](/content/developer-guides/write-workflows-using-code)
-- [Build Workflows Using Conductor UI](/content/developer-guides/build-workflows-using-ui)
 - [Import BPMN Files as Workflows](/content/developer-guides/convert-bpmn-to-workflows)
 - [Versioning Workflows](/content/developer-guides/versioning-workflows)
 - [Executing Workflows](/content/developer-guides/running-workflows)
+- [Sending Signals to Workflows](/content/developer-guides/sending-signals-to-workflows)
 
 ---
 URL: https://orkes.io/content/developer-guides/schema-validation
@@ -11600,9 +11567,6 @@ Attach schemas through the task definition, task configuration, or workflow defi
     }
     ```
 
-    Image: Screenshot of adding a schema to a task definition
-
-
 === "Task configuration"
 
     Schema validation at the task-configuration level is currently supported for **Worker (Simple)** and **Yield** task types.
@@ -11633,9 +11597,6 @@ Attach schemas through the task definition, task configuration, or workflow defi
       }
     }
     ```
-
-    Image: Screenshot of adding a schema to a task configuration in the workflow definition
-
 
 === "Workflow definition"
 
@@ -11669,8 +11630,6 @@ Attach schemas through the task definition, task configuration, or workflow defi
       ]
     }
     ```
-
-    Image: Screenshot of adding a schema to the workflow definition
 
 
 Once the schema is added, modify your workflow or task inputs/outputs to match the schema. Use task-definition validation when every use of a task should follow the same contract. Use task-configuration validation when a shared task is used differently by one workflow.
@@ -11961,10 +11920,10 @@ Image: Schema validation failed for a workflow definition
 
 - [Workflows](/content/developer-guides/workflows)
 - [Write Workflows Using Code](/content/developer-guides/write-workflows-using-code)
-- [Build Workflows Using Conductor UI](/content/developer-guides/build-workflows-using-ui)
 - [Import BPMN Files as Workflows](/content/developer-guides/convert-bpmn-to-workflows)
 - [Versioning Workflows](/content/developer-guides/versioning-workflows)
 - [Executing Workflows](/content/developer-guides/running-workflows)
+- [Scheduling Workflows](/content/developer-guides/scheduling-workflows)
 
 ---
 URL: https://orkes.io/content/developer-guides/secrets-in-conductor
@@ -12148,10 +12107,10 @@ Reference individual fields in a task input using dot notation:
 
 - [Workflows](/content/developer-guides/workflows)
 - [Write Workflows Using Code](/content/developer-guides/write-workflows-using-code)
-- [Build Workflows Using Conductor UI](/content/developer-guides/build-workflows-using-ui)
 - [Import BPMN Files as Workflows](/content/developer-guides/convert-bpmn-to-workflows)
 - [Versioning Workflows](/content/developer-guides/versioning-workflows)
 - [Executing Workflows](/content/developer-guides/running-workflows)
+- [Scheduling Workflows](/content/developer-guides/scheduling-workflows)
 
 ---
 URL: https://orkes.io/content/developer-guides/sending-signals-to-workflows
@@ -12342,10 +12301,10 @@ Terminate when the work is no longer valid: user cancellation, duplicate request
 
 - [Workflows](/content/developer-guides/workflows)
 - [Write Workflows Using Code](/content/developer-guides/write-workflows-using-code)
-- [Build Workflows Using Conductor UI](/content/developer-guides/build-workflows-using-ui)
 - [Import BPMN Files as Workflows](/content/developer-guides/convert-bpmn-to-workflows)
 - [Versioning Workflows](/content/developer-guides/versioning-workflows)
 - [Executing Workflows](/content/developer-guides/running-workflows)
+- [Scheduling Workflows](/content/developer-guides/scheduling-workflows)
 
 ---
 URL: https://orkes.io/content/developer-guides/task-and-workflow-status-in-conductor
@@ -12467,8 +12426,6 @@ Task input templates are part of a task definition, and you can create them when
     5. Enter the template parameters as key-value pairs. Supports string, number, boolean, null, and object/array.
     6. Select **Save > Confirm Save**.
 
-    ![Task input template in task definition](/content/img/task-input-template-in-task-definition.png)
-
     ```json
     // Example of a task input template in a task definition JSON
     "inputTemplate": {
@@ -12490,15 +12447,9 @@ Task input templates are part of a task definition, and you can create them when
 
 When a task definition is added to the workflow, the parameters supplied via the task input template are automatically included.
 
-Image: Workflow definition with task input template supplied already
-
-
 If you provide the same value as an input parameter to the task, the template values get overridden by the task input parameter.
 
 For example, a parameter `someKey` with the value `someValue` has been supplied through a task input template. If the same `someKey` is defined as an input parameter to the task, those values override the values from the template.
-
-Image: Overriding task input template parameters from Workflow definition
-
 
 Use the **Override All** button to replace the task input parameters with the template's parameters.
 
@@ -12632,8 +12583,6 @@ When you start a workflow, you can specify which tasks must run on which domains
     }
     ```
 
-    ![Task To Domain mapping while invoking workflows](/content/img/task-to-domain.png)
-
 === "Using API"
 
     Use the [Start Workflow Execution API](https://orkes.io/content/reference-docs/api/workflow/start-workflow-execution) to trigger the workflow by providing the `taskToDomain` as the input payload.
@@ -12682,8 +12631,6 @@ To enable domain permissions:
 
 The application/group can now execute all tasks under the specified domain.
 
-![RBAC to Domain](/content/img/domain-permission.png)
-
 ## Fallback task-to-domain
 
 Fallback domains let Conductor try another domain if no active worker is polling the primary domain.
@@ -12708,544 +12655,6 @@ Notes:
 - Put `NO_DOMAIN` last when you want a safe final fallback.
 - Domain selection is made when the task is scheduled. A worker appearing later in a higher-priority domain does not move an already scheduled task.
 - Worker activity is based on recent polling. The active-worker threshold is configured server-side.
-
-## Example
-
-
-Task-to-domain implementation using Java Spring Boot
-
-
-Let’s create a simple workflow that includes a worker task ([SIMPLE](https://orkes.io/content/reference-docs/worker-task)) and configure it to poll only from a specific domain.
-
-**Step 1: Create a task definition**
-
-**To create a task definition:**
-
-1. Go to **Definitions** > **Task** from the left menu on your Conductor cluster.
-2. Select **+ Define task**.
-3. In **Code** tab, paste the following JSON:
-
-```json
-{
- "name": "hello_task",
- "description": "Sample",
- "retryCount": 3,
- "timeoutSeconds": 3600,
- "inputKeys": [],
- "outputKeys": [],
- "timeoutPolicy": "TIME_OUT_WF",
- "retryLogic": "FIXED",
- "retryDelaySeconds": 60,
- "responseTimeoutSeconds": 600,
- "concurrentExecLimit": 0,
- "inputTemplate": {},
- "rateLimitPerFrequency": 0,
- "rateLimitFrequencyInSeconds": 1,
- "ownerEmail": "john.doe@acme.com",
- "pollTimeoutSeconds": 3600,
- "backoffScaleFactor": 1,
- "totalTimeoutSeconds": 0,
- "enforceSchema": false
-}
-```
-
-4. Select **Save** > **Confirm Save**.
-
-**Step 2: Create a workflow definition**
-
-**To create a workflow definition:**
-
-1. Go to **Definitions** > **Workflow** from the left menu on your Conductor cluster.
-2. Select **+ Define workflow**.
-3. In **Code** tab, paste the following JSON:
-
-```json
-{
- "name": "hello_world_workflow",
- "description": "A simple workflow that runs the hello_task in test_domain",
- "version": 1,
- "tasks": [
-   {
-     "name": "hello_task",
-     "taskReferenceName": "hello_ref",
-     "type": "SIMPLE"
-   }
- ],
- "schemaVersion": 2
-}
-```
-
-4. Select **Save** > **Confirm Save**.
-
-**Step 3: Configure task-to-domain routing in Spring Boot**
-
-This Spring Boot worker configuration connects to your Orkes Conductor cluster and sets up domain-based task polling. This configuration:
-
-- Loads a task-to-domain mapping
-- Registers the worker
-- Routes `hello_task` to `test_domain`
-
-```java
-package com.example.demo.condutor;
-
-import com.netflix.conductor.client.automator.TaskRunnerConfigurer;
-import com.netflix.conductor.client.http.TaskClient;
-import com.netflix.conductor.client.worker.Worker;
-import io.orkes.conductor.client.ApiClient;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
-@Configuration
-public class ConductorConfig {
-
-   private static final String CONDUCTOR_SERVER = "http:///api";
-   private static final String KEY = "";
-   private static final String SECRET = "";
-
-   // Environment properties simulation
-   private static final Map environment = new ConcurrentHashMap<>();
-
-   static {
-       // Initialize environment properties
-       environment.put("conductor.server.url", CONDUCTOR_SERVER);
-       environment.put("conductor.security.client.key-id", KEY);
-       environment.put("conductor.security.client.secret", SECRET);
-       environment.put("verifySsl", "N");
-       environment.put("isTaskToDomainEnabled", "Y");
-
-       // Sample task to domain mapping
-       environment.put("taskToDomain",
-               "{\"task_example\": \"test_domain\", \"hello_task\": \"test_domain\", \"*\": \"default_domain\"}");
-   }
-
-   @Bean
-   public TaskClient taskClient(ApiClient apiClient) {
-       return new TaskClient(apiClient);
-   }
-
-   @Bean
-   @Primary
-   public TaskRunnerConfigurer domainAwareTaskRunnerConfigurer(TaskClient taskClient) {
-       List workers = List.of(new HelloWorldWorker());
-       // Create taskToDomain map from properties
-       Map taskToDomain = loadTaskToDomainMap();
-
-       // Log what we're doing (for debugging)
-       System.out.println("Creating domain-aware TaskRunnerConfigurer with domains: " + taskToDomain);
-
-       // Create the TaskRunnerConfigurer with domain settings
-       TaskRunnerConfigurer configurer = new TaskRunnerConfigurer.Builder(taskClient, workers)
-               .withThreadCount(5)  // Use your desired thread count
-               .withTaskToDomain(taskToDomain)
-               .build();
-
-       configurer.init();
-       return configurer;
-   }
-
-   private Map loadTaskToDomainMap() {
-       Map taskToDomain = new HashMap<>();
-       String isTaskToDomainEnabled = "Y";
-
-       if ("Y".equals(isTaskToDomainEnabled)) {
-           String taskToDomainJsonStr = environment.get("taskToDomain");
-           if (taskToDomainJsonStr != null && !taskToDomainJsonStr.isEmpty()) {
-               try {
-                   JSONParser parser = new JSONParser();
-                   JSONObject taskToDomainJson = (JSONObject) parser.parse(taskToDomainJsonStr);
-
-                   // Convert JSON object to Map
-                   for (Object key : taskToDomainJson.keySet()) {
-                       String taskName = (String) key;
-                       String domainValue = (String) taskToDomainJson.get(key);
-                       taskToDomain.put(taskName, domainValue);
-                   }
-
-               } catch (Exception e) {
-                   System.err.println("Error parsing taskToDomain JSON: " + e.getMessage());
-               }
-           }
-       }
-
-       return taskToDomain;
-   }
-
-   @Bean
-   public static ApiClient getApiClientForOrkes() throws Exception {
-       // Initialize the API client first
-        String envKey = (String) env.getProperty("conductor.security.client.key-id");
-        String envSecret = (String) env.getProperty("conductor.security.client.secret");
-        String rootUrl = (String) env.getProperty("conductor.server.url");
-       boolean verifySsl = env.getProperty("verifySsl", "N").equals("Y");
-
-       ApiClient apiClient = ApiClient.builder()
-               .basePath(CONDUCTOR_SERVER)
-                .credentials(envKey, envSecret)
-               .verifyingSsl(verifySsl)
-               .readTimeout(50000)
-               .build();
-
-       // Initialize TaskClient with the API client
-       TaskClient taskClient = new TaskClient(apiClient);
-
-       // Set up taskToDomain mapping
-       Map taskToDomain = new HashMap<>();
-       String isTaskToDomainEnabled = "Y";
-
-       if ("Y".equals(isTaskToDomainEnabled)) {
-           String taskToDomainJsonStr = environment.get("taskToDomain");
-           if (taskToDomainJsonStr != null && !taskToDomainJsonStr.isEmpty()) {
-               try {
-                   JSONParser parser = new JSONParser();
-                   JSONObject taskToDomainJson = (JSONObject) parser.parse(taskToDomainJsonStr);
-
-                   // Convert JSON object to Map
-                   for (Object key : taskToDomainJson.keySet()) {
-                       String taskName = (String) key;
-                       String domainValue = (String) taskToDomainJson.get(key);
-                       taskToDomain.put(taskName, domainValue);
-                   }
-
-                   // Log the taskToDomain map to verify it's populated
-                   System.out.println("Task to Domain mapping: " + taskToDomain);
-
-               } catch (org.json.simple.parser.ParseException e) {
-                   System.err.println("Error parsing taskToDomain JSON: " + e.getMessage());
-                   // Don't throw runtime exception - continue with empty map instead
-               }
-           }
-       }
-
-       return apiClient;
-   }
-}
-```
-
-**Step 4: Generate access keys**
-
-To connect your Java Spring Boot worker to a Conductor cluster, you must generate application credentials with the required permissions:
-
-**To generate the access keys:**
-
-1. Go to **Access Control** > **Applications** from the left navigation menu on your Conductor cluster.
-2. Select **+ Create application**.
-3. Name your application and enable **Application roles** > **Worker**.
-4. Select **+ Create access key**.
-5. Store the key ID and key secret, as the secret would be shown only once.
-6. In **Permissions** section, select **+ Add permission**.
-   - In the **Workflow** tab, search for `hello_world_workflow` and enable **EXECUTE** permission.
-   - In the **Task** tab, search for `hello_task` and enable **EXECUTE** permission.
-
-Then update the following lines in your worker code with your credentials:
-
-```java
-private static final String CONDUCTOR_SERVER = "http:///api";
-private static final String KEY = "";
-private static final String SECRET = "";
-```
-
-**Step 5: Run your Spring Boot application**
-
-Once configured, start your Java application. Your worker will register and start polling tasks.
-
-**Step 6: Run the workflow**
-
-**To run the workflow:**
-
-1. From your workflow definition, go to the **Run** tab.
-2. In **Tasks to domain** mapping, enter the following mapping:
-
-```json
-{
-   "hello_task": "test_domain"
-}
-```
-
-3. Select **Run workflow**.
-
-The `hello_task` will be picked up only by the worker polling `test_domain`. You can verify this in the Conductor UI under **Executions** > **Workflows**, where the task’s domain will be shown as `test_domain`.
-
-![Task to domain workflow example](/content/img/task-to-domain-example-workflow.png)
-
-
-Task-to-domain implementation using a Java client
-
-
-This example shows how to configure domain-based task routing in a Java application.
-
-**What this setup does:**
-
-- Connects to your Orkes Conductor cluster using access credentials
-- Maps `hello_task` to the `test_domain` using a task-to-domain map
-- Defines a `HelloWorldWorker` to process the task
-- Registers a sample workflow (`hello_world_workflow`)
-- Starts the workflow and verifies that the task runs in the right domain
-- Prints workflow status and task output
-
-**How to run this example:**
-
-To connect your Java worker to a Conductor cluster, you must generate access keys.
-
-**To generate the access keys:**
-
-1. Go to **Access Control** > **Applications** from the left navigation menu on your Conductor cluster.
-2. Select **+ Create application**.
-3. Name your application and enable **Application roles** > **Worker**.
-4. Select **+ Create access key**.
-5. Store the key ID and key secret, as the secret would be shown only once.
-6. Replace the credentials and cluster URL in the code below:
-
-```java
-import com.netflix.conductor.client.automator.TaskRunnerConfigurer;
-import com.netflix.conductor.client.http.MetadataClient;
-import com.netflix.conductor.client.http.TaskClient;
-import com.netflix.conductor.client.worker.Worker;
-import com.netflix.conductor.common.metadata.tasks.Task;
-import com.netflix.conductor.common.metadata.tasks.TaskResult;
-import com.netflix.conductor.common.metadata.workflow.StartWorkflowRequest;
-import com.netflix.conductor.common.metadata.workflow.WorkflowDef;
-import com.netflix.conductor.common.run.Workflow;
-import io.orkes.conductor.client.ApiClient;
-import io.orkes.conductor.client.http.OrkesWorkflowClient;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-
-public class ConductorClientTest {
-
-    private static final String CONDUCTOR_SERVER = "http:///api";
-    private static final String KEY = "";
-    private static final String SECRET = "";
-
-    private static final Map environment = new ConcurrentHashMap<>();
-
-    static {
-        environment.put("conductor.server.url", CONDUCTOR_SERVER);
-        environment.put("conductor.security.client.key-id", KEY);
-        environment.put("conductor.security.client.secret", SECRET);
-        environment.put("verifySsl", "N");
-        environment.put("isTaskToDomainEnabled", "Y");
-        environment.put("taskToDomain",
-                "{\"task_example\": \"test_domain\", \"hello_task\": \"test_domain\", \"*\": \"default_domain\"}");
-    }
-
-    public static class HelloWorldWorker implements Worker {
-        @Override
-        public String getTaskDefName() {
-            return "hello_task";
-        }
-
-        @Override
-        public TaskResult execute(Task task) {
-            System.out.println("===> Worker started executing task: " + task.getTaskDefName());
-            TaskResult result = new TaskResult(task);
-            result.setStatus(TaskResult.Status.COMPLETED);
-            result.addOutputData("greeting", "Hello " + task.getInputData().getOrDefault("name", "World"));
-            System.out.println("===> Task completed with output: " + result.getOutputData());
-            return result;
-        }
-    }
-
-    public static class Environment {
-        public Object getProperty(String key) {
-            return environment.get(key);
-        }
-
-        public Object getProperty(String key, String defaultValue) {
-            return environment.getOrDefault(key, defaultValue);
-        }
-    }
-
-    public static ApiClient getApiClientForOrkes(Environment env) throws Exception {
-        String envKey = (String) env.getProperty("conductor.security.client.key-id");
-        String envSecret = (String) env.getProperty("conductor.security.client.secret");
-        String rootUrl = (String) env.getProperty("conductor.server.url");
-        boolean verifySsl = env.getProperty("verifySsl", "N").equals("Y");
-
-        ApiClient apiClient = ApiClient.builder()
-                .basePath(rootUrl)
-                .credentials(envKey, envSecret)
-                .verifyingSsl(verifySsl)
-                .readTimeout(50000)
-                .build();
-
-        TaskClient taskClient = new TaskClient(apiClient);
-
-        Map taskToDomain = new HashMap<>();
-        String taskToDomainJsonStr = (String) env.getProperty("taskToDomain");
-        if (taskToDomainJsonStr != null && !taskToDomainJsonStr.isEmpty()) {
-            JSONParser parser = new JSONParser();
-            JSONObject taskToDomainJson = (JSONObject) parser.parse(taskToDomainJsonStr);
-            for (Object key : taskToDomainJson.keySet()) {
-                taskToDomain.put((String) key, (String) taskToDomainJson.get(key));
-            }
-            System.out.println("Task to Domain mapping: " + taskToDomain);
-        }
-
-        List workers = List.of(new HelloWorldWorker());
-
-        TaskRunnerConfigurer configurer = new TaskRunnerConfigurer.Builder(taskClient, workers)
-                .withTaskToDomain(taskToDomain)
-                .withThreadCount(5)
-                .build();
-        configurer.init();
-
-        return apiClient;
-    }
-
-    public static void registerWorkflow(ApiClient apiClient, String workflowJson) throws Exception {
-        MetadataClient metadataClient = new MetadataClient(apiClient);
-        JSONParser parser = new JSONParser();
-        JSONObject workflowObj = (JSONObject) parser.parse(workflowJson);
-
-        WorkflowDef workflowDef = new WorkflowDef();
-        workflowDef.setName((String) workflowObj.get("name"));
-        workflowDef.setDescription((String) workflowObj.get("description"));
-        workflowDef.setVersion(((Long) workflowObj.getOrDefault("version", 1L)).intValue());
-        workflowDef.setSchemaVersion(((Long) workflowObj.getOrDefault("schemaVersion", 2L)).intValue());
-
-        List workflowTasks = new ArrayList<>();
-        org.json.simple.JSONArray tasksArray = (org.json.simple.JSONArray) workflowObj.get("tasks");
-
-        for (Object taskObj : tasksArray) {
-            JSONObject task = (JSONObject) taskObj;
-            com.netflix.conductor.common.metadata.workflow.WorkflowTask workflowTask =
-                    new com.netflix.conductor.common.metadata.workflow.WorkflowTask();
-            workflowTask.setName((String) task.get("name"));
-            workflowTask.setTaskReferenceName((String) task.get("taskReferenceName"));
-            workflowTask.setType((String) task.get("type"));
-
-            if (task.containsKey("inputParameters")) {
-                JSONObject inputParams = (JSONObject) task.get("inputParameters");
-                Map inputMap = new HashMap<>();
-                for (Object key : inputParams.keySet()) {
-                    inputMap.put((String) key, inputParams.get(key));
-                }
-                workflowTask.setInputParameters(inputMap);
-            }
-            workflowTasks.add(workflowTask);
-        }
-
-        workflowDef.setTasks(workflowTasks);
-
-        if (workflowObj.containsKey("outputParameters")) {
-            JSONObject outputParams = (JSONObject) workflowObj.get("outputParameters");
-            Map outputMap = new HashMap<>();
-            for (Object key : outputParams.keySet()) {
-                outputMap.put((String) key, outputParams.get(key));
-            }
-            workflowDef.setOutputParameters(outputMap);
-        }
-
-        metadataClient.registerWorkflowDef(workflowDef);
-        System.out.println("Workflow registered successfully: " + workflowDef.getName());
-    }
-
-    public static void startWorkflow(ApiClient apiClient, String workflowName) throws Exception {
-        OrkesWorkflowClient workflowClient = new OrkesWorkflowClient(apiClient);
-        StartWorkflowRequest request = new StartWorkflowRequest();
-        request.setName(workflowName);
-        request.setVersion(1);
-
-        Map input = new HashMap<>();
-        input.put("name", "Orkes User");
-        request.setInput(input);
-
-        Map taskToDomainForWorkflow = new HashMap<>();
-        taskToDomainForWorkflow.put("hello_task", "test_domain");
-        request.setTaskToDomain(taskToDomainForWorkflow);
-
-        String workflowId = workflowClient.startWorkflow(request);
-        System.out.println("Workflow started with ID: " + workflowId);
-
-        Workflow workflow = workflowClient.getWorkflow(workflowId, true);
-        System.out.println("Workflow status: " + workflow.getStatus());
-        if (!workflow.getTasks().isEmpty()) {
-            System.out.println("First task status: " + workflow.getTasks().get(0).getStatus());
-            System.out.println("First task domain: " + workflow.getTasks().get(0).getDomain());
-        }
-    }
-
-    public static void main(String[] args) {
-        try {
-            Environment env = new Environment();
-            ApiClient apiClient = getApiClientForOrkes(env);
-
-            String sampleWorkflowJson = getSampleWorkflowJson();
-            registerWorkflow(apiClient, sampleWorkflowJson);
-            startWorkflow(apiClient, "hello_world_workflow");
-
-            System.out.println("Worker is polling. Press Ctrl+C to exit.");
-            Thread.sleep(Long.MAX_VALUE);
-
-        } catch (Exception e) {
-            System.err.println("Error running client: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    private static String getSampleWorkflowJson() {
-        return "{\n" +
-                "  \"name\": \"hello_world_workflow\",\n" +
-                "  \"description\": \"A simple Hello World workflow\",\n" +
-                "  \"version\": 1,\n" +
-                "  \"tasks\": [\n" +
-                "    {\n" +
-                "      \"name\": \"hello_task\",\n" +
-                "      \"taskReferenceName\": \"hello_ref\",\n" +
-                "      \"inputParameters\": {\n" +
-                "        \"name\": \"${workflow.input.name}\"\n" +
-                "      },\n" +
-                "      \"type\": \"SIMPLE\"\n" +
-                "    }\n" +
-                "  ],\n" +
-                "  \"outputParameters\": {\n" +
-                "    \"greeting\": \"${hello_ref.output.greeting}\"\n" +
-                "  },\n" +
-                "  \"schemaVersion\": 2\n" +
-                "}";
-    }
-}
-```
-
-Compile and run the Java worker. This registers and starts the workflow.
-
-The `hello_task` will be picked up only by the worker polling `test_domain`. You can verify this in the Conductor UI under **Executions** > **Workflows**, where the task’s domain will be shown as `test_domain`.
-
-![Task to domain workflow example](/content/img/task-to-domain-example-workflow.png)
-
-
-Using fallback domain
-
-
-In this example, we’ll assume the `taskToDomain` mapping is as follows:
-
-```json
-"taskToDomain": {
-  "*": "mydomain",
-  "task-a": "NO_DOMAIN",
-  "task-b": "abc, NO_DOMAIN",
-  "task-c": "someInactiveDomain1, someInactiveDomain2"
-}
-```
-
-Here,
-
-- The `task-a` is routed to the `NO_DOMAIN` queue, meaning it doesn't have an assigned domain.
-- The `task-b` is routed first to the `abc` domain if available, or otherwise to the default domain (`NO_DOMAIN`).
-- The `task-c` is routed to the `someInactiveDomain1` and then to the `someInactiveDomain2`, but these are inactive, so they may not be processed in these domains.
-- All other tasks in this workflow are routed to `mydomain`.
-
 
 ## Related pages
 
@@ -13974,10 +13383,10 @@ Refer to the full [RegressionTest.java](https://github.com/orkes-io/workflow-cic
 
 - [Workflows](/content/developer-guides/workflows)
 - [Write Workflows Using Code](/content/developer-guides/write-workflows-using-code)
-- [Build Workflows Using Conductor UI](/content/developer-guides/build-workflows-using-ui)
 - [Import BPMN Files as Workflows](/content/developer-guides/convert-bpmn-to-workflows)
 - [Versioning Workflows](/content/developer-guides/versioning-workflows)
 - [Executing Workflows](/content/developer-guides/running-workflows)
+- [Scheduling Workflows](/content/developer-guides/scheduling-workflows)
 
 ---
 URL: https://orkes.io/content/developer-guides/using-environment-variables
@@ -14093,8 +13502,6 @@ Updating a variable changes the value used by future workflow executions without
     1. Go to **Definitions > Environment Variables**, and select the variable to update.
     2. In **Value**, enter the updated value.
     3. Select **Edit** to confirm.
-
-    Image: Editing an environment variable in Orkes Conductor
 
 
 Before changing a value used by production workflows, check which workflows reference it and verify the expected shape. JSON variables are especially easy to break if a field is renamed.
@@ -14213,10 +13620,10 @@ Image: Environment variable parsed as JSON in workflow
 
 - [Workflows](/content/developer-guides/workflows)
 - [Write Workflows Using Code](/content/developer-guides/write-workflows-using-code)
-- [Build Workflows Using Conductor UI](/content/developer-guides/build-workflows-using-ui)
 - [Import BPMN Files as Workflows](/content/developer-guides/convert-bpmn-to-workflows)
 - [Versioning Workflows](/content/developer-guides/versioning-workflows)
 - [Executing Workflows](/content/developer-guides/running-workflows)
+- [Scheduling Workflows](/content/developer-guides/scheduling-workflows)
 
 ---
 URL: https://orkes.io/content/developer-guides/using-llms-in-your-orkes-conductor-workflows
@@ -15449,11 +14856,11 @@ Agentic workflows use LLMs, tools, memory, retrieval, human review, and determin
 ## Related pages
 
 - [Write Workflows Using Code](/content/developer-guides/write-workflows-using-code)
-- [Build Workflows Using Conductor UI](/content/developer-guides/build-workflows-using-ui)
 - [Import BPMN Files as Workflows](/content/developer-guides/convert-bpmn-to-workflows)
 - [Versioning Workflows](/content/developer-guides/versioning-workflows)
 - [Executing Workflows](/content/developer-guides/running-workflows)
 - [Scheduling Workflows](/content/developer-guides/scheduling-workflows)
+- [Sending Signals to Workflows](/content/developer-guides/sending-signals-to-workflows)
 
 ---
 URL: https://orkes.io/content/developer-guides/write-workflows-using-code
@@ -15759,11 +15166,11 @@ Once running, go to **Executions > Workflow** in the Conductor UI to view run st
 ## Related pages
 
 - [Workflows](/content/developer-guides/workflows)
-- [Build Workflows Using Conductor UI](/content/developer-guides/build-workflows-using-ui)
 - [Import BPMN Files as Workflows](/content/developer-guides/convert-bpmn-to-workflows)
 - [Versioning Workflows](/content/developer-guides/versioning-workflows)
 - [Executing Workflows](/content/developer-guides/running-workflows)
 - [Scheduling Workflows](/content/developer-guides/scheduling-workflows)
+- [Sending Signals to Workflows](/content/developer-guides/sending-signals-to-workflows)
 
 ---
 URL: https://orkes.io/content/document-templates
@@ -16086,10 +15493,10 @@ Use this table to quickly map a failure scenario to the mechanism covered above:
 
 - [Workflows](/content/developer-guides/workflows)
 - [Write Workflows Using Code](/content/developer-guides/write-workflows-using-code)
-- [Build Workflows Using Conductor UI](/content/developer-guides/build-workflows-using-ui)
 - [Import BPMN Files as Workflows](/content/developer-guides/convert-bpmn-to-workflows)
 - [Versioning Workflows](/content/developer-guides/versioning-workflows)
 - [Executing Workflows](/content/developer-guides/running-workflows)
+- [Scheduling Workflows](/content/developer-guides/scheduling-workflows)
 
 ---
 URL: https://orkes.io/content/eventing
@@ -17781,10 +17188,10 @@ This is useful for verifying whether a duplicate request was correctly deduplica
 
 - [Workflows](/content/developer-guides/workflows)
 - [Write Workflows Using Code](/content/developer-guides/write-workflows-using-code)
-- [Build Workflows Using Conductor UI](/content/developer-guides/build-workflows-using-ui)
 - [Import BPMN Files as Workflows](/content/developer-guides/convert-bpmn-to-workflows)
 - [Versioning Workflows](/content/developer-guides/versioning-workflows)
 - [Executing Workflows](/content/developer-guides/running-workflows)
+- [Scheduling Workflows](/content/developer-guides/scheduling-workflows)
 
 ---
 URL: https://orkes.io/content/integrations/ai-llm/anthropic-claude
@@ -64918,31 +64325,7 @@ You can use `console.log`, `console.info`, and `console.error` inside the `loopC
 ```java
 (function () {
   console.log('Iteration: ' + $.iteration + ', limit: ' + $.number);
-  return $.iteration Image: List of iterations during workflow execution.
-
-
-If `keepLastN` is used, the latest **n** iterations will be retained. In the example below, where `keepLastN=2`, the latest two iterations are accessible from the dropdown box in the UI.
-
-Image: List of iterations during workflow execution where keepLastN is enabled.
-
-
-From **v4.1.52** onwards, Do While executions that exceed 300 tasks across their iterations will be summarized, and the Conductor UI will only display the latest two iterations. If required, u​​se `keepLastN` to display more iterations.
-
-Image: List of iterations during workflow execution where workflow is summarized.
-
-
-!!! info "Notes"
-    Here are several considerations to keep in mind when using the Do While task:
-
-    - **Branching**: Within a Do While task, branching using Switch, Fork/Join, and Dynamic Fork tasks is supported. However, the Do While task may not execute as expected if the branching crosses outside its scope, since the loop tasks will be executed within the scope.
-    - **Nested loops**: Nested Do While tasks are not supported. To achieve a similar functionality as a nested loop, you can use a [Sub Workflow](/content/reference-docs/operators/sub-workflow) task inside the Do While task.
-    - **Isolation group execution**: Isolation group execution is not supported. However, the domain is supported for loop tasks inside the Do While task.
-
-## Examples
-
-Here are some examples for using the Do While task.
-
-
+  return $.iteration
 Using `value-param` evaluator
 
 
@@ -66682,22 +66065,6 @@ If a join script is used, the output will also return the following parameters.
   }
 }
 ```
-
-## Configuring a Join task in UI
-
-A Join task is automatically added whenever a Fork/Join task or a Dynamic Fork task is added.
-
-**To configure a Join task:**
-
-1. In your workflow, which contains either a Fork or Dynamic Fork task, select the **Join** task.
-2. In **Input joins**, select the forks that are required for joining.
-3. (Optional) Use a script to control how the Join task completes.
-   1. In **Join script**, enable **Use scripting to determine join**.
-   2. Enter the script in the code box.
-   3. If necessary, add the **Script Parameters** that will be passed into the Join task.
-
-Image: Adding Join task
-
 
 ## Examples
 

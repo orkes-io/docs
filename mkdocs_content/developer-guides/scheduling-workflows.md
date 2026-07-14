@@ -252,7 +252,7 @@ Together, these run the workflow every 90 minutes: 14:30, 16:00, 17:30, 19:00, a
 
 - [Workflows](/content/developer-guides/workflows)
 - [Write Workflows Using Code](/content/developer-guides/write-workflows-using-code)
-- [Build Workflows Using Conductor UI](/content/developer-guides/build-workflows-using-ui)
 - [Import BPMN Files as Workflows](/content/developer-guides/convert-bpmn-to-workflows)
 - [Versioning Workflows](/content/developer-guides/versioning-workflows)
 - [Executing Workflows](/content/developer-guides/running-workflows)
+- [Sending Signals to Workflows](/content/developer-guides/sending-signals-to-workflows)

@@ -327,7 +327,7 @@ This is useful for verifying whether a duplicate request was correctly deduplica
 
 - [Workflows](/content/developer-guides/workflows)
 - [Write Workflows Using Code](/content/developer-guides/write-workflows-using-code)
-- [Build Workflows Using Conductor UI](/content/developer-guides/build-workflows-using-ui)
 - [Import BPMN Files as Workflows](/content/developer-guides/convert-bpmn-to-workflows)
 - [Versioning Workflows](/content/developer-guides/versioning-workflows)
 - [Executing Workflows](/content/developer-guides/running-workflows)
+- [Scheduling Workflows](/content/developer-guides/scheduling-workflows)

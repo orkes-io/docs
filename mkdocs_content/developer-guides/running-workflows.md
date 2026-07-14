@@ -103,7 +103,7 @@ Use webhooks or event handlers when an external system is the trigger:
 
 - [Workflows](/content/developer-guides/workflows)
 - [Write Workflows Using Code](/content/developer-guides/write-workflows-using-code)
-- [Build Workflows Using Conductor UI](/content/developer-guides/build-workflows-using-ui)
 - [Import BPMN Files as Workflows](/content/developer-guides/convert-bpmn-to-workflows)
 - [Versioning Workflows](/content/developer-guides/versioning-workflows)
 - [Scheduling Workflows](/content/developer-guides/scheduling-workflows)
+- [Sending Signals to Workflows](/content/developer-guides/sending-signals-to-workflows)

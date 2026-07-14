@@ -303,8 +303,8 @@ Once running, go to **Executions > Workflow** in the Conductor UI to view run st
 ## Related pages
 
 - [Workflows](/content/developer-guides/workflows)
-- [Build Workflows Using Conductor UI](/content/developer-guides/build-workflows-using-ui)
 - [Import BPMN Files as Workflows](/content/developer-guides/convert-bpmn-to-workflows)
 - [Versioning Workflows](/content/developer-guides/versioning-workflows)
 - [Executing Workflows](/content/developer-guides/running-workflows)
 - [Scheduling Workflows](/content/developer-guides/scheduling-workflows)
+- [Sending Signals to Workflows](/content/developer-guides/sending-signals-to-workflows)

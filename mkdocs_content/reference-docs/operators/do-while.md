@@ -228,15 +228,9 @@ If an exception occurs during evaluation of the `loopCondition`, the task is set
 
 During execution, each iteration execution can be accessed from the dropdown box in the Conductor UI for the Do While task and all its loop tasks.
 
-<p><img src="/content/img/do-while-iterations.png" alt="List of iterations during workflow execution."/></p>
-
 If `keepLastN` is used, the latest **n** iterations will be retained. In the example below, where `keepLastN=2`, the latest two iterations are accessible from the dropdown box in the UI.
 
-<p><img src="/content/img/do-while-keeplastn-iterations.png" alt="List of iterations during workflow execution where keepLastN is enabled."/></p>
-
 From **v4.1.52** onwards, Do While executions that exceed 300 tasks across their iterations will be summarized, and the Conductor UI will only display the latest two iterations. If required, u​​se `keepLastN` to display more iterations.
-
-<p><img src="/content/img/do-while-summarized-iterations.png" alt="List of iterations during workflow execution where workflow is summarized."/></p>
 
 !!! info "Notes"
     Here are several considerations to keep in mind when using the Do While task:

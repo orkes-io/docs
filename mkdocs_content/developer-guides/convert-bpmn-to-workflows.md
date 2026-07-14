@@ -84,7 +84,7 @@ Check the following after every BPMN import:
 
 - [Workflows](/content/developer-guides/workflows)
 - [Write Workflows Using Code](/content/developer-guides/write-workflows-using-code)
-- [Build Workflows Using Conductor UI](/content/developer-guides/build-workflows-using-ui)
 - [Versioning Workflows](/content/developer-guides/versioning-workflows)
 - [Executing Workflows](/content/developer-guides/running-workflows)
 - [Scheduling Workflows](/content/developer-guides/scheduling-workflows)
+- [Sending Signals to Workflows](/content/developer-guides/sending-signals-to-workflows)

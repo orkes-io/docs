@@ -65,8 +65,6 @@ Task input templates are part of a task definition, and you can create them when
     5. Enter the template parameters as key-value pairs. Supports string, number, boolean, null, and object/array.
     6. Select **Save > Confirm Save**.
 
-    ![Task input template in task definition](/content/img/task-input-template-in-task-definition.png)
-
     ```json
     // Example of a task input template in a task definition JSON
     "inputTemplate": {
@@ -88,15 +86,9 @@ Task input templates are part of a task definition, and you can create them when
 
 When a task definition is added to the workflow, the parameters supplied via the task input template are automatically included.
 
-<p align="center"><img src="/content/img/workflow-definition-with-task-input-template.png" alt="Workflow definition with task input template supplied already" width="90%"
-                       height="auto"/></p>
-
 If you provide the same value as an input parameter to the task, the template values get overridden by the task input parameter. 
 
 For example, a parameter `someKey` with the value `someValue` has been supplied through a task input template. If the same `someKey` is defined as an input parameter to the task, those values override the values from the template.
-
-<p align="center"><img src="/content/img/overriding-values.png" alt="Overriding task input template parameters from Workflow definition" width="90%"
-                       height="auto"/></p>
 
 Use the **Override All** button to replace the task input parameters with the template's parameters.
 

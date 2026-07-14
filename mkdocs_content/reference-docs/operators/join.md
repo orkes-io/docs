@@ -138,21 +138,6 @@ If a join script is used, the output will also return the following parameters.
 }
 ```
 
-## Configuring a Join task in UI
-
-A Join task is automatically added whenever a Fork/Join task or a Dynamic Fork task is added.
-
-**To configure a Join task:**
-
-1. In your workflow, which contains either a Fork or Dynamic Fork task, select the **Join** task.
-2. In **Input joins**, select the forks that are required for joining.
-3. (Optional) Use a script to control how the Join task completes.
-   1. In **Join script**, enable **Use scripting to determine join**.
-   2. Enter the script in the code box.
-   3. If necessary, add the **Script Parameters** that will be passed into the Join task.
-
-<p><img src="/content/img/ui-guide-join-task.png" alt="Adding Join task" /></p>
-
 ## Examples
 
 Here are some examples for using the Join task.

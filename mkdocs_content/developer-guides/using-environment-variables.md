@@ -115,8 +115,6 @@ Updating a variable changes the value used by future workflow executions without
     2. In **Value**, enter the updated value.
     3. Select **Edit** to confirm.
 
-    <p align="center"><img src="/content/img/editing-environment-variable.png" alt="Editing an environment variable in Orkes Conductor" width="90%" height="auto"></img></p>
-
 
 Before changing a value used by production workflows, check which workflows reference it and verify the expected shape. JSON variables are especially easy to break if a field is renamed.
 
@@ -233,7 +231,7 @@ Run the workflow. To verify that the stored variable is passed correctly, open t
 
 - [Workflows](/content/developer-guides/workflows)
 - [Write Workflows Using Code](/content/developer-guides/write-workflows-using-code)
-- [Build Workflows Using Conductor UI](/content/developer-guides/build-workflows-using-ui)
 - [Import BPMN Files as Workflows](/content/developer-guides/convert-bpmn-to-workflows)
 - [Versioning Workflows](/content/developer-guides/versioning-workflows)
 - [Executing Workflows](/content/developer-guides/running-workflows)
+- [Scheduling Workflows](/content/developer-guides/scheduling-workflows)

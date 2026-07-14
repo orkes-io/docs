@@ -44,8 +44,6 @@ Common search filters:
 
 Use `*` for prefix-style matches in workflow name or free text search. For example, `payment*` returns executions whose workflow name or indexed payload fields start with `payment`.
 
-<p align="center"><img src="/content/img/workflow-partial-search.png" alt="Workflow search with wildcard support" width="90%" height="auto"></img></p>
-
 ### SQL search
 
 SQL-format search supports simple field filters:
@@ -100,10 +98,6 @@ curl -sS "$CONDUCTOR_SERVER_URL/workflow/$WORKFLOW_ID?includeTasks=true" \
 
 **In the UI**, select the ⏷ icon beside **Search > Show as Code** to get the current search as a cURL or JavaScript request.
 
-<p align="center"><img src="/content/img/show-as-code-in-workflow-search.png" alt="Show as code option in Workflow Search" width="90%" height="auto"></img></p>
-
-<p align="center"><img src="/content/img/workflow-search-in-code.png" alt="Workflow search data in code" width="90%" height="auto"></img></p>
-
 ## Inspecting a workflow execution
 
 Inspect the workflow-level fields first:
@@ -133,11 +127,7 @@ Then inspect the task list in execution order. Look for the first task with `FAI
 | Task-to-domain | Task-to-domain mappings used in the execution. |
 | Assistant | AI-based Conductor Agent for debugging the execution in natural language. |
 
-<p align="center"><img src="/content/img/workflow-execution-tabs.png" alt="Sample Workflow Executions page, with the different tab views" width="90%" height="auto"></img></p>
-
 The **Diagram** tab colors each task by status: green (successful), red (failed), orange (completed with errors).
-
-<p align="center"><img src="/content/img/types-of-errors.png" alt="Different types of errors in a failed workflow" width="90%" height="auto"></img></p>
 
 ## Inspecting a task execution
 
@@ -156,11 +146,7 @@ For a failed or blocked task, review these fields:
 
 **In the UI**, selecting a task in the **Diagram** tab opens a panel with the same data across these tabs: **Summary**, **Input**, **Output**, **Logs** (if the worker attached any), **JSON**, and **Definition**.
 
-<p align="center"><img src="/content/img/debugging-task-executions.png" alt="Sample Workflow Executions page, with the task tab details" width="90%" height="auto"></img></p>
-
 If the task was retried, select an attempt from the dropdown to view details for that specific attempt.
-
-<p align="center"><img src="/content/img/retry-attempts-debugging.png" alt="Task attempt dropdown selection" width="90%" height="auto"></img></p>
 
 To debug a failed task, inspect these areas:
 
@@ -189,8 +175,6 @@ Choose the recovery action based on whether the workflow definition, input data,
 | Retry - resume subworkflow | The workflow contains a sub-workflow, and you want to retry the parent from the sub-workflow's last failed task. |
 | Signal task | A WAIT, HUMAN, or async task is blocked and should be completed or failed externally. |
 | Terminate | The execution should stop and should not be retried. |
-
-<p align="center"><img src="/content/img/recovering-from-failures.png" alt="Workflow Recovery Options" width="90%" height="auto"></img></p>
 
 Retry a failed workflow:
 
@@ -282,7 +266,7 @@ See [Handling Failures](/content/error-handling) for retry, timeout, and compens
 
 - [Workflows](/content/developer-guides/workflows)
 - [Write Workflows Using Code](/content/developer-guides/write-workflows-using-code)
-- [Build Workflows Using Conductor UI](/content/developer-guides/build-workflows-using-ui)
 - [Import BPMN Files as Workflows](/content/developer-guides/convert-bpmn-to-workflows)
 - [Versioning Workflows](/content/developer-guides/versioning-workflows)
 - [Executing Workflows](/content/developer-guides/running-workflows)
+- [Scheduling Workflows](/content/developer-guides/scheduling-workflows)

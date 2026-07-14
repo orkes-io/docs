@@ -130,8 +130,6 @@ Attach schemas through the task definition, task configuration, or workflow defi
     }
     ```
 
-    <p align="center"><img src="/content/img/adding-schema-to-task-definition.png" alt="Screenshot of adding a schema to a task definition" width="90%" height="auto"></img></p>
-
 === "Task configuration"
 
     Schema validation at the task-configuration level is currently supported for **Worker (Simple)** and **Yield** task types.
@@ -162,8 +160,6 @@ Attach schemas through the task definition, task configuration, or workflow defi
       }
     }
     ```
-
-    <p align="center"><img src="/content/img/adding-schema-to-task-configuration.png" alt="Screenshot of adding a schema to a task configuration in the workflow definition" width="90%" height="auto"></img></p>
 
 === "Workflow definition"
 
@@ -197,8 +193,6 @@ Attach schemas through the task definition, task configuration, or workflow defi
       ]
     }
     ```
-
-    <p align="center"><img src="/content/img/add-schema-to-workflow.png" alt="Screenshot of adding a schema to the workflow definition" width="90%" height="auto"></img></p>
 
 
 Once the schema is added, modify your workflow or task inputs/outputs to match the schema. Use task-definition validation when every use of a task should follow the same contract. Use task-configuration validation when a shared task is used differently by one workflow.
@@ -484,7 +478,7 @@ Now rerun with an invalid input, for example `{ "customerId": 123 }`. Execution 
 
 - [Workflows](/content/developer-guides/workflows)
 - [Write Workflows Using Code](/content/developer-guides/write-workflows-using-code)
-- [Build Workflows Using Conductor UI](/content/developer-guides/build-workflows-using-ui)
 - [Import BPMN Files as Workflows](/content/developer-guides/convert-bpmn-to-workflows)
 - [Versioning Workflows](/content/developer-guides/versioning-workflows)
 - [Executing Workflows](/content/developer-guides/running-workflows)
+- [Scheduling Workflows](/content/developer-guides/scheduling-workflows)

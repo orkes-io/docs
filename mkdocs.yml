@@ -25,7 +25,6 @@ nav:
     - Workflows:
       - Workflows: developer-guides/workflows.md
       - Write Workflows Using Code: developer-guides/write-workflows-using-code.md
-      - Build Workflows Using Conductor UI: developer-guides/build-workflows-using-ui.md
       - Import BPMN Files as Workflows: developer-guides/convert-bpmn-to-workflows.md
       - Versioning Workflows: developer-guides/versioning-workflows.md
       - Executing Workflows: developer-guides/running-workflows.md
