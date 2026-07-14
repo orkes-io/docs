@@ -26,3 +26,10 @@ Gateway routes inherit authentication, authorization, schema validation, caching
 - [MCP Gateway](/content/developer-guides/mcp-gateway)
 - [Gateway Metrics](/content/developer-guides/gateway-metrics)
 - [Remote Services](/content/remote-services)
+
+## Related pages
+
+- [API Gateway: Expose Workflows as APIs](/content/developer-guides/api-gateway)
+- [MCP Gateway:  Expose Workflows as MCP tools](/content/developer-guides/mcp-gateway)
+- [Monitor Gateway Metrics](/content/developer-guides/gateway-metrics)
+- [Remote Services Guide](/content/remote-services)

@@ -223,3 +223,12 @@ Returns an array containing all the task definitions in the cluster without any 
 ```
 
 </details>
+
+## Related pages
+
+- [Metadata](/content/reference-docs/api/metadata)
+- [Create Task Definition](/content/reference-docs/api/metadata/creating-task-definitions)
+- [Update Task Definition](/content/reference-docs/api/metadata/update-task-definitions)
+- [Delete Task Definition](/content/reference-docs/api/metadata/delete-task-definition)
+- [Get Task Definition](/content/reference-docs/api/metadata/get-task-definition)
+- [Create Workflow Definition](/content/reference-docs/api/metadata/creating-workflow-definition)

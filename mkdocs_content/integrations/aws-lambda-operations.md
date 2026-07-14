@@ -114,3 +114,7 @@ Permanently deletes an existing Lambda function.
 === "Output Parameters"
 
     Returns the `status`, `functionName`, and `message` confirming deletion.
+
+## Related pages
+
+- [AWS Lambda Integration with Orkes Conductor](/content/integrations/aws-lambda)

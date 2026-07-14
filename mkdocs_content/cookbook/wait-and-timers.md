@@ -157,3 +157,12 @@ curl -X POST '<YOUR-CLUSTER-URL>/api/tasks/{workflowId}/approval/COMPLETED' \
 ```
 
 The output data you pass when completing the task is available in subsequent tasks via `${approval.output.approvedBy}`.
+
+## Related pages
+
+- [Cookbook](/content/category/tutorials)
+- [Microservice orchestration](/content/cookbook/microservice-orchestration)
+- [Dynamic Parallelism](/content/cookbook/dynamic-parallelism)
+- [Task Timeouts and Retries](/content/cookbook/task-timeouts-and-retries)
+- [Scheduled Workflows](/content/cookbook/workflow-scheduling)
+- [Dynamic Workflows as Code](/content/cookbook/dynamic-workflows)

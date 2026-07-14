@@ -250,3 +250,8 @@ You can also get the OpenAPI documentation for the service. Go to **APIs** > **S
 <p align="center"><img src="/content/img/feedback-service-details.gif" alt="OpenAPI documentation of the service" width="100%" height="auto"></img></p>
 
 When the endpoint is invoked, the workflow runs automatically. You can extend the workflow to add logic such as storing feedback, sending notifications, or triggering downstream processes.
+
+## Related pages
+
+- [Gateway Tutorials](/content/tutorials/mcp)
+- [Build a Ticket Service Using Orkes MCP Gateway](/content/tutorials/expose-ticket-service-using-mcp-gateway)

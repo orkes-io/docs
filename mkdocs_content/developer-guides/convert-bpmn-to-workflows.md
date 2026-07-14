@@ -83,3 +83,12 @@ Check the following after every BPMN import:
 - Imported workflows should go through the same testing and versioning process as hand-authored workflows.
 - Keep existing URLs and external callers pinned to known workflow versions while migrating.
 - Use [Versioning Workflows](/content/developer-guides/versioning-workflows) and [Executing Workflows](/content/developer-guides/running-workflows) before moving traffic.
+
+## Related pages
+
+- [Workflows](/content/developer-guides/workflows)
+- [Write Workflows Using Code](/content/developer-guides/write-workflows-using-code)
+- [Build Workflows Using Conductor UI](/content/developer-guides/build-workflows-using-ui)
+- [Versioning Workflows](/content/developer-guides/versioning-workflows)
+- [Executing Workflows](/content/developer-guides/running-workflows)
+- [Scheduling Workflows](/content/developer-guides/scheduling-workflows)

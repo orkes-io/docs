@@ -141,3 +141,7 @@ The following operations are available for use with this integration.
 
 
 For the complete operations parameters and output reference, see [AWS S3 Operation Reference](/content/integrations/aws-s3-operations).
+
+## Related pages
+
+- [AWS S3 Operations Reference](/content/integrations/aws-s3-operations)

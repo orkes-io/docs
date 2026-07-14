@@ -62,3 +62,12 @@ Returns an array of all tags in the cluster.
 ```
 
 </details>
+
+## Related pages
+
+- [Tags](/content/reference-docs/api/tags)
+- [List Tags Grouped by Resource Type](/content/reference-docs/api/tags/get-all-tags-grouped)
+- [Add Tags to a Task Definition](/content/reference-docs/api/tags/add-tags-to-a-task-definition)
+- [Replace Tags in a Task Definition](/content/reference-docs/api/tags/replace-tags-in-a-task-definition)
+- [Get Tags from a Task Definition](/content/reference-docs/api/tags/get-tags-from-task-definition)
+- [Delete Tag from Task Definition](/content/reference-docs/api/tags/delete-tag-from-task-definition)

@@ -112,3 +112,10 @@ With the integration in place, you can now create workflows using [AI/LLM tasks]
 - [AI Orchestration](https://orkes.io/content/ai-orchestration)
 - [Using AI Models or LLMs](https://orkes.io/content/developer-guides/using-llms-in-your-orkes-conductor-workflows)
 - [Using Vector Databases](https://orkes.io/content/developer-guides/using-vector-databases-in-your-orkes-conductor-workflows)
+
+## Related pages
+
+- [Vector Databases Integrations](/content/category/integrations/vector-databases)
+- [Pinecone Integration with Orkes Conductor](/content/integrations/vector-databases/pinecone)
+- [Postgres Vector Database Integration with Orkes Conductor](/content/integrations/vector-databases/postgres-vector-database)
+- [Mongo Vector Database Integration with Orkes Conductor](/content/integrations/vector-databases/mongo-vector-database)

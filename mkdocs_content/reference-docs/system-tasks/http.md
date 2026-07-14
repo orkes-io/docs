@@ -323,3 +323,12 @@ When `acceptedStatusCodes` is set, "2xx" is not automatically included. Add it e
 Explore the full tutorial on [orchestrating long-running APIs](/content/tutorials/long-running-apis).
 </p>
 </details>
+
+## Related pages
+
+- [System Tasks](/content/category/reference-docs/system-tasks)
+- [Event](/content/reference-docs/system-tasks/event)
+- [HTTP Poll](/content/reference-docs/system-tasks/http-poll)
+- [Inline](/content/reference-docs/system-tasks/inline)
+- [JSON JQ Transform](/content/reference-docs/system-tasks/jq-transform)
+- [Business Rule](/content/reference-docs/system-tasks/business-rule)

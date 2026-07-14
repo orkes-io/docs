@@ -290,3 +290,11 @@ Returns a 200 OK response indicating that the task status was updated successful
 }
 ```
 </details>
+
+## Related pages
+
+- [Tasks API Reference](/content/reference-docs/api/task)
+- [Get Task by ID](/content/reference-docs/api/task/get-task)
+- [Log Task Execution](/content/reference-docs/api/task/add-task-log)
+- [Update Task Status in Workflow](/content/reference-docs/api/task/update-task-status-in-workflow)
+- [Signal Running Task Asynchronously](/content/reference-docs/api/task/signal-running-task-asynchronously)

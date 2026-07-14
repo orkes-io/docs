@@ -163,3 +163,12 @@ This confirms that the `orderId` value was stored once using the Set Variable ta
 
 </p>
 </details>
+
+## Related pages
+
+- [Operators](/content/category/reference-docs/operators)
+- [Switch](/content/reference-docs/operators/switch)
+- [Do While](/content/reference-docs/operators/do-while)
+- [Wait](/content/reference-docs/operators/wait)
+- [Dynamic](/content/reference-docs/operators/dynamic)
+- [Sub Workflow](/content/reference-docs/operators/sub-workflow)

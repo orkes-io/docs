@@ -289,3 +289,10 @@ Once the services are registered, you can add them to HTTP, HTTP Poll, and gRPC 
 - Use hedging only for idempotent calls.
 - Keep service credentials in secrets or auth configuration, not in workflow input.
 - Monitor service failures through workflow executions and gateway/service metrics.
+
+## Related pages
+
+- [API and MCP Gateway](/content/developer-guides/mcp-api-gateway)
+- [API Gateway: Expose Workflows as APIs](/content/developer-guides/api-gateway)
+- [MCP Gateway:  Expose Workflows as MCP tools](/content/developer-guides/mcp-gateway)
+- [Monitor Gateway Metrics](/content/developer-guides/gateway-metrics)

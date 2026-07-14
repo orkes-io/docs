@@ -299,3 +299,7 @@ Delete a range of rows or columns from a sheet. Use this when you need to remove
     | startIndex | The start index of the deleted range. | 
     | endIndex | The end index of the deleted range. | 
     | deleted | Confirms whether the rows or columns were successfully deleted. |
+
+## Related pages
+
+- [Google Sheets Integration with Orkes Conductor](/content/integrations/google-sheets)

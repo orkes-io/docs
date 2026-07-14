@@ -69,3 +69,12 @@ curl -X 'POST' \
 Returns 204, indicating that the workflow execution has been restarted successfully with the latest version.
 
 </details>
+
+## Related pages
+
+- [Workflows API Reference](/content/reference-docs/api/workflow)
+- [Execute Workflow Asynchronously](/content/reference-docs/api/workflow/start-workflow-execution)
+- [Execute Workflow Synchronously](/content/reference-docs/api/workflow/synchronous-workflow-execution)
+- [Get Workflow by ID](/content/reference-docs/api/workflow/get-workflow-by-id)
+- [Get Workflows by Correlation ID](/content/reference-docs/api/workflow/get-workflows-by-correlation-id)
+- [Get Workflow Size](/content/reference-docs/api/workflow/get-workflow-size)

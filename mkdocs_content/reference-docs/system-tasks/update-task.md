@@ -189,3 +189,12 @@ Finally, verify that the Wait task status is updated successfully in the initial
 
 </p>
 </details>
+
+## Related pages
+
+- [System Tasks](/content/category/reference-docs/system-tasks)
+- [Event](/content/reference-docs/system-tasks/event)
+- [HTTP](/content/reference-docs/system-tasks/http)
+- [HTTP Poll](/content/reference-docs/system-tasks/http-poll)
+- [Inline](/content/reference-docs/system-tasks/inline)
+- [JSON JQ Transform](/content/reference-docs/system-tasks/jq-transform)

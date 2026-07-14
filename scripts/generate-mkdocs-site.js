@@ -344,6 +344,64 @@ const docIdBySource = new Map();
 const sourceFileByRel = new Map();
 const warnings = [];
 
+// Auto-generated "Related pages" support — populated from the nav tree once
+// buildNav() runs, then read per-page in convertEntry(). Skips pages that
+// already hand-author a related/next-steps section of their own.
+const RELATED_HEADING_RE = /^#{1,3}\s*(Related( pages| topics)?|See also|Next steps|What'?s next)\b/im;
+const RELATED_LINKS_MAX = 6;
+let siblingsByRoute = new Map();
+
+function collectNavLeafGroups(node, groups) {
+  if (!Array.isArray(node)) return;
+  const leaves = [];
+  for (const item of node) {
+    if (!item || typeof item !== "object") continue;
+    for (const [label, value] of Object.entries(item)) {
+      if (typeof value === "string" && value.endsWith(".md")) {
+        leaves.push({ label, route: value.slice(0, -3) });
+      }
+    }
+  }
+  if (leaves.length > 1) groups.push(leaves);
+  for (const item of node) {
+    if (!item || typeof item !== "object") continue;
+    for (const value of Object.values(item)) {
+      if (Array.isArray(value)) collectNavLeafGroups(value, groups);
+    }
+  }
+}
+
+function buildSiblingMap(nav) {
+  const groups = [];
+  collectNavLeafGroups(nav, groups);
+  const map = new Map();
+  for (const group of groups) {
+    for (const leaf of group) {
+      const others = group.filter((sibling) => sibling.route !== leaf.route);
+      map.set(leaf.route, (map.get(leaf.route) || []).concat(others));
+    }
+  }
+  for (const [route, list] of map.entries()) {
+    const seen = new Set();
+    map.set(
+      route,
+      list.filter((sibling) => (seen.has(sibling.route) ? false : (seen.add(sibling.route), true))),
+    );
+  }
+  return map;
+}
+
+function relatedPagesBlock(route, body) {
+  if (RELATED_HEADING_RE.test(body)) return "";
+  const siblings = siblingsByRoute.get(route);
+  if (!siblings || !siblings.length) return "";
+  const lines = siblings.slice(0, RELATED_LINKS_MAX).map((sibling) => {
+    const title = titleByRoute.get(sibling.route) || sibling.label;
+    return `- [${title}](${BASE_URL}/${sibling.route})`;
+  });
+  return `\n## Related pages\n\n${lines.join("\n")}\n`;
+}
+
 function resolveOssDocsDir() {
   const configured = process.env.OSS_DOCS_DIR;
   if (configured) {
@@ -1588,7 +1646,8 @@ function convertEntry(entry) {
     enhanceApiReferencePage(cleanMdx(sourceBody, sourceRel), route, pageTitle, pageDescription),
     route,
   );
-  return `${buildFrontMatter(frontMatter, route, pageTitle)}${cleaned}`;
+  const related = relatedPagesBlock(route, cleaned);
+  return `${buildFrontMatter(frontMatter, route, pageTitle)}${cleaned}${related}`;
 }
 
 function makeHomePage() {
@@ -3523,6 +3582,7 @@ function main() {
   prepareOutput();
   copySharedAssets(entries);
   const nav = buildNav();
+  siblingsByRoute = buildSiblingMap(nav);
 
   for (const entry of entries) {
     const sourceRel = entry.sourceRel;

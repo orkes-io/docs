@@ -248,3 +248,7 @@ The execution ID of a Conductor workflow instance. The workflow ID can be used t
 ## Workflow Scheduler
 
 Allows workflows to be scheduled and executed on a regular basis. The [workflow scheduler](/content/developer-guides/scheduling-workflows) is configured using cron expressions.
+
+## Related pages
+
+- [General FAQs](/content/category/faqs)

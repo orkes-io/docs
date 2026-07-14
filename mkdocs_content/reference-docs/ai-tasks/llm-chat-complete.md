@@ -307,3 +307,12 @@ Once completed, verify the workflow output — `sentiment` should resolve to `po
 <center><p><img src="/content/img/llm-chat-output.png" alt="LLM Chat Complete Task output" width="100%" height="auto"/></p></center>
 
 </details>
+
+## Related pages
+
+- [AI Tasks](/content/category/reference-docs/ai-tasks)
+- [LLM Text Complete](/content/reference-docs/ai-tasks/llm-text-complete)
+- [LLM Generate Embeddings](/content/reference-docs/ai-tasks/llm-generate-embeddings)
+- [LLM Store Embeddings](/content/reference-docs/ai-tasks/llm-store-embeddings)
+- [LLM Get Embeddings](/content/reference-docs/ai-tasks/llm-get-embeddings)
+- [LLM Index Document](/content/reference-docs/ai-tasks/llm-index-document)

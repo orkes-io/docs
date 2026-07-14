@@ -409,3 +409,12 @@ On the workflow execution page, you can observe the following behavior:
 <p align="center"><img src="/content/img/join-task-completed-state.png" alt="Join task completed" width="70%"height="auto"/></p>
 
 </details>
+
+## Related pages
+
+- [Operators](/content/category/reference-docs/operators)
+- [Switch](/content/reference-docs/operators/switch)
+- [Do While](/content/reference-docs/operators/do-while)
+- [Wait](/content/reference-docs/operators/wait)
+- [Dynamic](/content/reference-docs/operators/dynamic)
+- [Set Variable](/content/reference-docs/operators/set-variable)

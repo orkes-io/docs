@@ -111,3 +111,7 @@ The following operations are available for use with this integration.
 6. Select **Execute** to run the workflow.
 
 For the complete operations parameters and output reference, see [Discourse Operations Reference](/content/integrations/discourse-operations).
+
+## Related pages
+
+- [Discourse Operations Reference](/content/integrations/discourse-operations)

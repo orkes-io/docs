@@ -70,3 +70,12 @@ Returns a JSON array of tag objects associated with the task definition.
 ```
 
 </details>
+
+## Related pages
+
+- [Tags](/content/reference-docs/api/tags)
+- [List All Tags](/content/reference-docs/api/tags/list-all-tags)
+- [List Tags Grouped by Resource Type](/content/reference-docs/api/tags/get-all-tags-grouped)
+- [Add Tags to a Task Definition](/content/reference-docs/api/tags/add-tags-to-a-task-definition)
+- [Replace Tags in a Task Definition](/content/reference-docs/api/tags/replace-tags-in-a-task-definition)
+- [Delete Tag from Task Definition](/content/reference-docs/api/tags/delete-tag-from-task-definition)

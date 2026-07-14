@@ -282,3 +282,7 @@ Remove one or more users from a group.
 === "Output Parameters"
 
     The operation returns the `status` of the request, along with the list of successfully removed `usernames` and `emails`.
+
+## Related pages
+
+- [Discourse Integration with Orkes Conductor](/content/integrations/discourse)

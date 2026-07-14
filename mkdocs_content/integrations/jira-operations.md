@@ -401,3 +401,7 @@ Retrieves the details of a Jira user by their account ID.
 === "Output Parameters"
 
     Returns the user's account ID, account type, display name, email address, active status, time zone, locale, and URL.
+
+## Related pages
+
+- [Jira Integration with Orkes Conductor](/content/integrations/jira)

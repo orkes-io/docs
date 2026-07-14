@@ -585,3 +585,7 @@ Submits data to a HubSpot form using the public submission endpoint.
 === "Output Parameters"
 
     Returns the form submission status.
+
+## Related pages
+
+- [HubSpot Integration with Orkes Conductor](/content/integrations/hubspot)

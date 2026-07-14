@@ -115,3 +115,7 @@ The following operations are available for use with this integration.
 6. Select **Execute** to run the workflow.
 
 For the complete operations parameters and output reference, see [Common Room Operations Reference](/content/integrations/common-room-operations).
+
+## Related pages
+
+- [Common Room Operations Reference](/content/integrations/common-room-operations)

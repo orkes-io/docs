@@ -249,3 +249,12 @@ This payment confirmation workflow can be extended by:
 - Adding logic to detect refunded or failed payments and trigger follow-up workflows for customer communication or internal review.
 - Triggering additional downstream tasks such as creating an invoice, updating a CRM, registering the order in an internal system, or provisioning access to a purchased service.
 - Introducing a Human task step if manual verification is required for certain payments, such as high-risk transactions.
+
+## Related pages
+
+- [Webhook Examples](/content/category/event-driven-orchestration/webhook-examples)
+- [Custom Webhook with cURL](/content/_routes/templates/examples/custom-conductor-webhook-using-curl)
+- [Incoming Webhook with Postman](/content/_routes/templates/examples/incoming-webhook-using-postman)
+- [Using Variable Idempotency Keys in Webhook-Triggered Workflows](/content/tutorials/using-idempotency-keys-in-webhook-triggered-workflows)
+- [Build a GitHub Pull Request Reviewer Assignment Workflow](/content/tutorials/github-webhook)
+- [Using SendGrid Event Webhooks in Orkes Conductor](/content/tutorials/using-sendgrid-webhooks)

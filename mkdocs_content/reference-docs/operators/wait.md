@@ -270,3 +270,12 @@ This example configures a Wait task to pause execution for 1 hour while allowing
 When the workflow reaches this task, the 1-hour timer starts in the background. If you are [executing the workflow synchronously](/content/reference-docs/api/workflow/synchronous-workflow-execution) or [sending a signal to a running task synchronously](/content/reference-docs/api/task/signal-running-task-synchronously), the response is returned immediately instead of holding the HTTP connection open for the full hour.
 
 </details>
+
+## Related pages
+
+- [Operators](/content/category/reference-docs/operators)
+- [Switch](/content/reference-docs/operators/switch)
+- [Do While](/content/reference-docs/operators/do-while)
+- [Dynamic](/content/reference-docs/operators/dynamic)
+- [Set Variable](/content/reference-docs/operators/set-variable)
+- [Sub Workflow](/content/reference-docs/operators/sub-workflow)

@@ -224,3 +224,12 @@ curl -X 'GET' \
 ```
 
 </details>
+
+## Related pages
+
+- [Groups](/content/reference-docs/api/groups)
+- [Create/Update Groups](/content/reference-docs/api/groups/create-group)
+- [Add Users to Group in Bulk](/content/reference-docs/api/groups/add-users-to-group-bulk)
+- [Add Single User to Group](/content/reference-docs/api/groups/add-user-to-group)
+- [Remove Users from Group in Bulk](/content/reference-docs/api/groups/remove-users-from-group-bulk)
+- [Remove Single User from Group](/content/reference-docs/api/groups/remove-users-from-group)

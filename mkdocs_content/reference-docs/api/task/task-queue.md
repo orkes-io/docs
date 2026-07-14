@@ -20,3 +20,9 @@ These APIs are useful for dashboards, alerts, worker autoscaling, and incident r
 - [Get Poll Data for All Tasks](/content/reference-docs/api/task/task-queue/get-poll-data-for-all-task)
 - [Get Task Queue Size for All Tasks](/content/reference-docs/api/task/task-queue/get-task-queue-size-for-all-tasks)
 - [Get Task Queue Size for a Task Type](/content/reference-docs/api/task/task-queue/get-task-queue-size-for-individual-tasks)
+
+## Related pages
+
+- [Get Poll Data for All Tasks](/content/reference-docs/api/task/task-queue/get-poll-data-for-all-task)
+- [Get Task Queue Size for All Tasks](/content/reference-docs/api/task/task-queue/get-task-queue-size-for-all-tasks)
+- [Get Task Queue Size for a Task Type](/content/reference-docs/api/task/task-queue/get-task-queue-size-for-individual-tasks)

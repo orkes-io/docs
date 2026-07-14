@@ -137,3 +137,7 @@ The Swagger UI at `<YOUR-CLUSTER-URL>/swagger-ui/index.html` provides an interac
 ## SDKs
 
 For programmatic access, use one of the official [Conductor SDKs](/content/category/sdks) which wrap these REST APIs with language-native interfaces for Java, Python, Go, JavaScript, C#, Ruby, and Rust.
+
+## Related pages
+
+- [Authentication and Access Keys](/content/sdks/authentication)

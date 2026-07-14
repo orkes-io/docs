@@ -225,3 +225,12 @@ The workflow successfully converts a technical pull request description into a c
 
 !!! info "Note"
     You can also use the LLM Text Complete task for simple prompt-based text generation. LLM Chat Complete can be used when you need chat-style instructions and role-based context, which provides better control over how the model interprets and completes the job.
+
+## Related pages
+
+- [AI Tutorials](/content/tutorials/ai)
+- [Build an AI-Powered Translator with Orkes Conductor](/content/developer-guides/quickstart-ai-orchestration)
+- [Build an Agentic Interview App with Orkes Conductor](/content/tutorials/agentic-interview-app)
+- [Document Classification](/content/_routes/templates/document-classifier)
+- [Build a Question Answering Workflow Using Stored Embeddings](/content/tutorials/question-answering-with-embeddings)
+- [Build a Document Retrieval Workflow](/content/tutorials/document-retrieval-workflow)

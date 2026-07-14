@@ -166,3 +166,7 @@ Fetch a thumbnail image URL for a slide. Use this when you need a preview image 
     | contentUrl | The URL of the generated thumbnail image. | 
     | width | The width of the thumbnail in pixels. | 
     | height | The height of the thumbnail in pixels. |
+
+## Related pages
+
+- [Google Slides Integration with Orkes Conductor](/content/integrations/google-slides)

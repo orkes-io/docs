@@ -101,3 +101,7 @@ The following operations are available for use with this integration.
 6. Select **Execute** to run the workflow.
 
 For the complete operations parameters and output reference, see [Google Cloud Functions Operations Reference](/content/integrations/google-cloud-functions-operations).
+
+## Related pages
+
+- [Google Cloud Functions Operations Reference](/content/integrations/google-cloud-functions-operations)

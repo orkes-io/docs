@@ -97,3 +97,7 @@ Invokes an HTTP-triggered Azure Function with a custom request.
 === "Output Parameters"
 
     A JSON object containing the `statusCode`, `body`, `headers` (a map of response header names to value lists), `functionName`, `method`, and the resolved `url` that was called. For error status codes (4xx/5xx), the `body` includes additional error detail along with the request URL and method for debugging.
+
+## Related pages
+
+- [Azure Functions Integration with Orkes Conductor](/content/integrations/azure-functions)

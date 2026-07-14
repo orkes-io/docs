@@ -367,3 +367,12 @@ curl '<YOUR-CLUSTER-URL>/api/scheduler/schedules/daily-report-schedule/resume' \
 curl -X DELETE '<YOUR-CLUSTER-URL>/api/scheduler/schedules/daily-report-schedule' \
   -H "X-Authorization: $TOKEN"
 ```
+
+## Related pages
+
+- [Cookbook](/content/category/tutorials)
+- [Microservice orchestration](/content/cookbook/microservice-orchestration)
+- [Dynamic Parallelism](/content/cookbook/dynamic-parallelism)
+- [Wait and Timer Patterns](/content/cookbook/wait-and-timers)
+- [Task Timeouts and Retries](/content/cookbook/task-timeouts-and-retries)
+- [Dynamic Workflows as Code](/content/cookbook/dynamic-workflows)

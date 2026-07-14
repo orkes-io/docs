@@ -215,3 +215,8 @@ curl -X POST '<YOUR-CLUSTER-URL>/api/metadata/workflow' \
   -H "X-Authorization: $TOKEN" \
   -d @order_with_approval.json
 ```
+
+## Related pages
+
+- [Publish Events](/content/category/event-driven-orchestration/publish-events)
+- [Enabling CDC (Change Data Capture)](/content/developer-guides/enabling-cdc-on-conductor-workflows)

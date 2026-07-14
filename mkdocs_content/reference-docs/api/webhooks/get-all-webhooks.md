@@ -73,3 +73,12 @@ curl -X 'GET' \
 ```
 
 </details>
+
+## Related pages
+
+- [Webhook API](/content/reference-docs/api/webhooks)
+- [Create Webhook](/content/reference-docs/api/webhooks/create-webhook)
+- [Update Webhook](/content/reference-docs/api/webhooks/update-webhook)
+- [Get Webhook by ID](/content/reference-docs/api/webhooks/get-webhook)
+- [Delete Webhook](/content/reference-docs/api/webhooks/delete-webhook)
+- [Add Tags to Webhook](/content/reference-docs/api/webhooks/add-tags-to-webhook)

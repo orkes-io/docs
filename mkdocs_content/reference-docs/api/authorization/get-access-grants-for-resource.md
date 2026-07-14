@@ -132,3 +132,11 @@ curl -X 'GET' \
 ```
 
 </details>
+
+## Related pages
+
+- [Authorization](/content/reference-docs/api/authorization)
+- [Grant Access](/content/reference-docs/api/authorization/grant-access)
+- [Revoke Access](/content/reference-docs/api/authorization/revoke-access)
+- [List Grants for a Subject](/content/reference-docs/api/authorization/list-grants-for-subject)
+- [Revoke Grants for a Subject](/content/reference-docs/api/authorization/revoke-grants-for-subject)

@@ -98,3 +98,12 @@ Here are some examples for using the LLM Generate Embeddings task.
 See an example of [building a question answering workflow using stored embeddings](https://orkes.io/content/tutorials/question-answering-with-embeddings).
 
 </details>
+
+## Related pages
+
+- [AI Tasks](/content/category/reference-docs/ai-tasks)
+- [LLM Text Complete](/content/reference-docs/ai-tasks/llm-text-complete)
+- [LLM Store Embeddings](/content/reference-docs/ai-tasks/llm-store-embeddings)
+- [LLM Get Embeddings](/content/reference-docs/ai-tasks/llm-get-embeddings)
+- [LLM Index Document](/content/reference-docs/ai-tasks/llm-index-document)
+- [Get Document](/content/reference-docs/ai-tasks/llm-get-document)

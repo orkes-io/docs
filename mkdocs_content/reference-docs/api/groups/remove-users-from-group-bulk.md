@@ -73,3 +73,12 @@ curl -X 'DELETE' \
 Returns 200 OK, indicating that the users have been removed from the group.
 
 </details>
+
+## Related pages
+
+- [Groups](/content/reference-docs/api/groups)
+- [Create/Update Groups](/content/reference-docs/api/groups/create-group)
+- [Add Users to Group in Bulk](/content/reference-docs/api/groups/add-users-to-group-bulk)
+- [Add Single User to Group](/content/reference-docs/api/groups/add-user-to-group)
+- [Remove Single User from Group](/content/reference-docs/api/groups/remove-users-from-group)
+- [Get Group Permission over Resources](/content/reference-docs/api/groups/get-group-permissions)

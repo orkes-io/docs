@@ -53,3 +53,12 @@ curl -X 'DELETE' \
 Returns a 200 OK, indicating that the compiled binary protobuf file has been deleted successfully.
 
 </details>
+
+## Related pages
+
+- [Remote Services API Reference](/content/reference-docs/api/remote-services)
+- [Create Service](/content/reference-docs/api/remote-services/create-service)
+- [Clone Service](/content/reference-docs/api/remote-services/clone-service)
+- [Get Service](/content/reference-docs/api/remote-services/get-service)
+- [Delete Service](/content/reference-docs/api/remote-services/delete-service)
+- [Get All Services](/content/reference-docs/api/remote-services/get-all-services)

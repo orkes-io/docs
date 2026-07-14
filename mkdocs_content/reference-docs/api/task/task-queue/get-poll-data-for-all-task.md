@@ -117,3 +117,9 @@ curl -X 'GET' \
 }
 ```
 </details>
+
+## Related pages
+
+- [Task Queues](/content/reference-docs/api/task/task-queue)
+- [Get Task Queue Size for All Tasks](/content/reference-docs/api/task/task-queue/get-task-queue-size-for-all-tasks)
+- [Get Task Queue Size for a Task Type](/content/reference-docs/api/task/task-queue/get-task-queue-size-for-individual-tasks)

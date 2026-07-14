@@ -220,3 +220,9 @@ AI prompts can be used in workflows with the following LLM tasks:
 - [Using AI Models or LLMs](https://orkes.io/content/developer-guides/using-llms-in-your-orkes-conductor-workflows)
 - [Using Vector Databases](https://orkes.io/content/developer-guides/using-vector-databases-in-your-orkes-conductor-workflows)
 - [AI Task Reference](https://orkes.io/content/category/reference-docs/ai-tasks)
+
+## Related pages
+
+- [Human Task Orchestration](/content/developer-guides/orchestrating-human-tasks)
+- [Using AI Models or LLMs](/content/developer-guides/using-llms-in-your-orkes-conductor-workflows)
+- [Using Vector Databases](/content/developer-guides/using-vector-databases-in-your-orkes-conductor-workflows)

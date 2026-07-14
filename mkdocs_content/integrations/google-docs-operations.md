@@ -102,3 +102,7 @@ Append text to the end of an existing Google Doc. Use this when you want to prog
     | documentId | The ID of the document that was updated. | 
     | replies | An array of operation results. | 
     | writeControl.**requiredRevisionId** | The revision ID confirming the write operation. |
+
+## Related pages
+
+- [Google Docs Integration with Orkes Conductor](/content/integrations/google-docs)

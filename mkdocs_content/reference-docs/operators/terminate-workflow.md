@@ -279,3 +279,12 @@ At the top of the execution details, you can view the termination reason that wa
 
 </p>
 </details>
+
+## Related pages
+
+- [Operators](/content/category/reference-docs/operators)
+- [Switch](/content/reference-docs/operators/switch)
+- [Do While](/content/reference-docs/operators/do-while)
+- [Wait](/content/reference-docs/operators/wait)
+- [Dynamic](/content/reference-docs/operators/dynamic)
+- [Set Variable](/content/reference-docs/operators/set-variable)

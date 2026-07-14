@@ -73,3 +73,12 @@ curl -X 'POST' \
 Returns 200 OK, indicating that the users have been added to the group.
 
 </details>
+
+## Related pages
+
+- [Groups](/content/reference-docs/api/groups)
+- [Create/Update Groups](/content/reference-docs/api/groups/create-group)
+- [Add Single User to Group](/content/reference-docs/api/groups/add-user-to-group)
+- [Remove Users from Group in Bulk](/content/reference-docs/api/groups/remove-users-from-group-bulk)
+- [Remove Single User from Group](/content/reference-docs/api/groups/remove-users-from-group)
+- [Get Group Permission over Resources](/content/reference-docs/api/groups/get-group-permissions)

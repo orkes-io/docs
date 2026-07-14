@@ -134,3 +134,12 @@ gRPC task parameters can be automatically populated using registered services or
     12. (Optional) In **Output type**, select the output schema for the request.
 
     <p align="center"><img src="/content/img/grpc-task.png" alt="Adding a gRPC task in Conductor UI" width="100%" height="auto"></img></p>
+
+## Related pages
+
+- [System Tasks](/content/category/reference-docs/system-tasks)
+- [Event](/content/reference-docs/system-tasks/event)
+- [HTTP](/content/reference-docs/system-tasks/http)
+- [HTTP Poll](/content/reference-docs/system-tasks/http-poll)
+- [Inline](/content/reference-docs/system-tasks/inline)
+- [JSON JQ Transform](/content/reference-docs/system-tasks/jq-transform)

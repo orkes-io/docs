@@ -168,3 +168,7 @@ Retrieves information and statistics about the Redis instance.
 === "Output Parameters"
 
     Returns the requested section name, the parsed info fields as an object, and the raw INFO response string.
+
+## Related pages
+
+- [Redis Integration with Orkes Conductor](/content/integrations/redis)

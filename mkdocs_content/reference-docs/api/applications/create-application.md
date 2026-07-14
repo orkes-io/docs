@@ -74,3 +74,12 @@ curl -X 'POST' \
 ```
 
 </details>
+
+## Related pages
+
+- [Applications](/content/reference-docs/api/applications)
+- [Assign Role to Application](/content/reference-docs/api/applications/assign-role-to-application)
+- [Create an Access Key for Application](/content/reference-docs/api/applications/create-application-access-key)
+- [Update Application](/content/reference-docs/api/applications/update-application)
+- [Toggle Access Key Status](/content/reference-docs/api/applications/toggle-access-key-status)
+- [Delete Access Key](/content/reference-docs/api/applications/delete-access-key)

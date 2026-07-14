@@ -126,3 +126,7 @@ The following operations are available for use with this integration.
 6. Select **Execute** to run the workflow.
 
 For the complete operations parameters and output reference, see [Google Cloud Storage Operations Reference](/content/integrations/google-cloud-storage-operations).
+
+## Related pages
+
+- [Google Cloud Storage Operations Reference](/content/integrations/google-cloud-storage-operations)

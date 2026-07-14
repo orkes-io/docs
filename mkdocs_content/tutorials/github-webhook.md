@@ -345,3 +345,12 @@ This dynamic PR reviewer workflow can be extended by:
 - Sending notifications to Slack using a Slack webhook when a PR is opened or a reviewer is assigned.
 - Replacing the JSON JQ Transform task with a Switch task as your routing logic grows to support multiple reviewer groups or more complex branching.
 - Adding approval or QA steps before merging to include additional verification in the process.
+
+## Related pages
+
+- [Webhook Examples](/content/category/event-driven-orchestration/webhook-examples)
+- [Custom Webhook with cURL](/content/_routes/templates/examples/custom-conductor-webhook-using-curl)
+- [Incoming Webhook with Postman](/content/_routes/templates/examples/incoming-webhook-using-postman)
+- [Using Variable Idempotency Keys in Webhook-Triggered Workflows](/content/tutorials/using-idempotency-keys-in-webhook-triggered-workflows)
+- [Build a Stripe Payment Confirmation Workflow](/content/tutorials/stripe-webhook)
+- [Using SendGrid Event Webhooks in Orkes Conductor](/content/tutorials/using-sendgrid-webhooks)

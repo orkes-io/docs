@@ -103,3 +103,7 @@ Sample worker code snippets are available in the Conductor UI for reference.
 See an [example of how to add and run a Worker task](/content/quickstarts/write-workers) in our Quickstart guide.
 
 </details>
+
+## Related pages
+
+- [Task Reference](/content/category/reference-docs)

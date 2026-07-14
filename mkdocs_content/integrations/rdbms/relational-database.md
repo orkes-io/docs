@@ -92,3 +92,7 @@ Once the integration is configured, set access controls to manage which [applica
 The group or application can now access the database tables according to the configured permissions.
 
 With the integration in place, you can now create workflows using the [JDBC](https://orkes.io/content/reference-docs/system-tasks/jdbc) task.
+
+## Related pages
+
+- [RDBMS Integrations](/content/category/integrations/rdbms)

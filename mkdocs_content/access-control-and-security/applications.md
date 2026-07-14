@@ -119,3 +119,9 @@ To satisfy the principle of least privilege, we will create three applications i
 
 With this set-up, the worker application has no access to the workflows, since it only needs to poll the task. Likewise, the other two applications only have the required access to execute the workflow and its necessary tasks, and no other workflows.
 </details>
+
+## Related pages
+
+- [Role Based Access Control](/content/category/access-control-and-security)
+- [Managing Users and Groups](/content/access-control-and-security/users-and-groups)
+- [Managing Tags](/content/access-control-and-security/tags)

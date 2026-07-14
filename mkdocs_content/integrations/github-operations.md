@@ -1093,3 +1093,7 @@ Marks all notifications as read for the authenticated user.
 === "Output Parameters"
 
     Returns `status: success` upon successfully marking all notifications as read.
+
+## Related pages
+
+- [GitHub Integration with Orkes Conductor](/content/integrations/github)

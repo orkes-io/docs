@@ -265,3 +265,12 @@ Terminate when the work is no longer valid: user cancellation, duplicate request
 - Use task output schemas for externally signaled tasks when downstream code depends on the signal payload.
 - Restrict signal APIs with application permissions; recovery operations are powerful production controls.
 - Emit an audit event from the caller when automated runbooks send pause, retry, rerun, update-task, or terminate signals.
+
+## Related pages
+
+- [Workflows](/content/developer-guides/workflows)
+- [Write Workflows Using Code](/content/developer-guides/write-workflows-using-code)
+- [Build Workflows Using Conductor UI](/content/developer-guides/build-workflows-using-ui)
+- [Import BPMN Files as Workflows](/content/developer-guides/convert-bpmn-to-workflows)
+- [Versioning Workflows](/content/developer-guides/versioning-workflows)
+- [Executing Workflows](/content/developer-guides/running-workflows)

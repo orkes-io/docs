@@ -117,3 +117,12 @@ Here are some examples for using the LLM Text Complete task.
 See an example of [building an AI-powered translator using the LLM Text Complete task](https://orkes.io/content/developer-guides/quickstart-ai-orchestration).
 
 </details>
+
+## Related pages
+
+- [AI Tasks](/content/category/reference-docs/ai-tasks)
+- [LLM Generate Embeddings](/content/reference-docs/ai-tasks/llm-generate-embeddings)
+- [LLM Store Embeddings](/content/reference-docs/ai-tasks/llm-store-embeddings)
+- [LLM Get Embeddings](/content/reference-docs/ai-tasks/llm-get-embeddings)
+- [LLM Index Document](/content/reference-docs/ai-tasks/llm-index-document)
+- [Get Document](/content/reference-docs/ai-tasks/llm-get-document)

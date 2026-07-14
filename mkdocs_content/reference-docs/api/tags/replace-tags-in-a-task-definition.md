@@ -99,3 +99,12 @@ curl -X 'PUT' \
 Returns 200 OK, indicating that the tags have been replaced in the task definition.
 
 </details>
+
+## Related pages
+
+- [Tags](/content/reference-docs/api/tags)
+- [List All Tags](/content/reference-docs/api/tags/list-all-tags)
+- [List Tags Grouped by Resource Type](/content/reference-docs/api/tags/get-all-tags-grouped)
+- [Add Tags to a Task Definition](/content/reference-docs/api/tags/add-tags-to-a-task-definition)
+- [Get Tags from a Task Definition](/content/reference-docs/api/tags/get-tags-from-task-definition)
+- [Delete Tag from Task Definition](/content/reference-docs/api/tags/delete-tag-from-task-definition)

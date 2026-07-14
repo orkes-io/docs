@@ -67,3 +67,11 @@ e4cb73f4-0588-11f1-8b8d-6219b54da7fe
 ```
 
 </details>
+
+## Related pages
+
+- [Tasks API Reference](/content/reference-docs/api/task)
+- [Get Task by ID](/content/reference-docs/api/task/get-task)
+- [Log Task Execution](/content/reference-docs/api/task/add-task-log)
+- [Signal Running Task Asynchronously](/content/reference-docs/api/task/signal-running-task-asynchronously)
+- [Signal Running Task Synchronously](/content/reference-docs/api/task/signal-running-task-synchronously)

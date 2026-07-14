@@ -160,3 +160,7 @@ Deletes a specific blob from a container. Use this for cleanup operations, remov
 === "Output Parameters"
 
     A JSON object containing the deletion `status`, `blob` name, and  `container`name containing the deleted blob.
+
+## Related pages
+
+- [Azure Storage Integration with Orkes Conductor](/content/integrations/azure-storage)

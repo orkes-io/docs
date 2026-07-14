@@ -23,3 +23,8 @@ The Event task publishes a message to a configured sink — an internal Conducto
 
 - [Event Publishing Recipes](/content/eventing)
 - [Change Data Capture](/content/developer-guides/enabling-cdc-on-conductor-workflows)
+
+## Related pages
+
+- [Event Publishing Recipes](/content/eventing)
+- [Enabling CDC (Change Data Capture)](/content/developer-guides/enabling-cdc-on-conductor-workflows)

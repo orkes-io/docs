@@ -305,3 +305,12 @@ With the integrations and prompt ready, let’s create the workflow.
 The workflow retrieves the stored text and generates an answer.
 
 <p align="center"><img src="/content/img/rag-workflow-output.png" alt="Viewing workflow output" width="100%" height="auto" /></p>
+
+## Related pages
+
+- [AI Tutorials](/content/tutorials/ai)
+- [Build an AI-Powered Translator with Orkes Conductor](/content/developer-guides/quickstart-ai-orchestration)
+- [Build an Agentic Interview App with Orkes Conductor](/content/tutorials/agentic-interview-app)
+- [Document Classification](/content/_routes/templates/document-classifier)
+- [Build a Document Retrieval Workflow](/content/tutorials/document-retrieval-workflow)
+- [Build a Pull Request Summary Workflow](/content/tutorials/pull-request-summary-workflow)

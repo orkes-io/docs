@@ -383,3 +383,7 @@ Deletes a shared drive. Use this when decommissioning a team workspace. The driv
     | id | The unique ID of the deleted shared drive. | 
     | name | The name of the deleted shared drive. | 
     | deleted | Indicates whether the shared drive was successfully deleted. |
+
+## Related pages
+
+- [Google Drive Integration with Orkes Conductor](/content/integrations/google-drive)

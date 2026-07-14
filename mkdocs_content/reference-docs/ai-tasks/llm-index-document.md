@@ -109,3 +109,12 @@ Here are some examples for using the LLM Index Document task.
 See an example of [building a document retrieval workflow using Orkes Conductor](https://orkes.io/content/tutorials/document-retrieval-workflow).
 
 </details>
+
+## Related pages
+
+- [AI Tasks](/content/category/reference-docs/ai-tasks)
+- [LLM Text Complete](/content/reference-docs/ai-tasks/llm-text-complete)
+- [LLM Generate Embeddings](/content/reference-docs/ai-tasks/llm-generate-embeddings)
+- [LLM Store Embeddings](/content/reference-docs/ai-tasks/llm-store-embeddings)
+- [LLM Get Embeddings](/content/reference-docs/ai-tasks/llm-get-embeddings)
+- [Get Document](/content/reference-docs/ai-tasks/llm-get-document)

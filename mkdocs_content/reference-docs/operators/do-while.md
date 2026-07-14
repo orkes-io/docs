@@ -642,3 +642,12 @@ Once completed, open the Do While task and check the **Logs** tab to see the `co
 <p><img src="/content/img/do-while-console-log-example.png" alt="Workflow output"/></p>
 
 </details>
+
+## Related pages
+
+- [Operators](/content/category/reference-docs/operators)
+- [Switch](/content/reference-docs/operators/switch)
+- [Wait](/content/reference-docs/operators/wait)
+- [Dynamic](/content/reference-docs/operators/dynamic)
+- [Set Variable](/content/reference-docs/operators/set-variable)
+- [Sub Workflow](/content/reference-docs/operators/sub-workflow)

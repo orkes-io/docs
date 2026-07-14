@@ -44,3 +44,7 @@ Invokes an HTTP-triggered Google Cloud Function with an optional JSON payload.
 === "Output Parameters"
 
     Returns an object containing the HTTP status code returned by the function and the response body; parsed as JSON if valid, otherwise returned as a raw string.
+
+## Related pages
+
+- [Google Cloud Functions Integration with Orkes Conductor](/content/integrations/google-cloud-functions)

@@ -127,3 +127,12 @@ Even if the started workflow has not completed, the parent workflow continues ru
 
 </p>
 </details>
+
+## Related pages
+
+- [Operators](/content/category/reference-docs/operators)
+- [Switch](/content/reference-docs/operators/switch)
+- [Do While](/content/reference-docs/operators/do-while)
+- [Wait](/content/reference-docs/operators/wait)
+- [Dynamic](/content/reference-docs/operators/dynamic)
+- [Set Variable](/content/reference-docs/operators/set-variable)

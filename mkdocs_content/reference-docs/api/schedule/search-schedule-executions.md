@@ -106,3 +106,12 @@ Since the request used `start`=0 and `size=2`, sorted by `name` in descending or
 ```
 
 </details>
+
+## Related pages
+
+- [Schedule](/content/reference-docs/api/schedule)
+- [Create Schedule](/content/reference-docs/api/schedule/create-schedule)
+- [Get Schedule](/content/reference-docs/api/schedule/get-schedule)
+- [Pause Schedule](/content/reference-docs/api/schedule/pause-schedule)
+- [Resume Schedule](/content/reference-docs/api/schedule/resume-schedule)
+- [Pause Schedules in Bulk](/content/reference-docs/api/schedule/bulk-pause-schedule)

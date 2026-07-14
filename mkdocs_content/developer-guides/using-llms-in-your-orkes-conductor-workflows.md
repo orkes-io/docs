@@ -173,3 +173,9 @@ Once the workflow is saved, you can test the newly added AI task or run the work
 * [Using Vector Databases](/content/developer-guides/using-vector-databases-in-your-orkes-conductor-workflows)
 * [AI/LLM Integration Guides](/content/category/integrations/ai-llm)
 * [AI Task Reference](/content/category/reference-docs/ai-tasks)
+
+## Related pages
+
+- [Human Task Orchestration](/content/developer-guides/orchestrating-human-tasks)
+- [Using Vector Databases](/content/developer-guides/using-vector-databases-in-your-orkes-conductor-workflows)
+- [Using AI Prompts](/content/developer-guides/creating-and-managing-gen-ai-prompt-templates)

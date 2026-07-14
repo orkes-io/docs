@@ -468,3 +468,12 @@ This takes you to the workflow execution page. Since the shipping input is set t
 
 </p>
 </details>
+
+## Related pages
+
+- [Operators](/content/category/reference-docs/operators)
+- [Do While](/content/reference-docs/operators/do-while)
+- [Wait](/content/reference-docs/operators/wait)
+- [Dynamic](/content/reference-docs/operators/dynamic)
+- [Set Variable](/content/reference-docs/operators/set-variable)
+- [Sub Workflow](/content/reference-docs/operators/sub-workflow)

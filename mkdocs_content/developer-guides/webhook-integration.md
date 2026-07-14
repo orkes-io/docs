@@ -172,3 +172,8 @@ You can also use the search option to filter results based on these parameters.
 - Use an idempotency key when **Start workflow when webhook event comes** is enabled, so a retried webhook delivery from the source platform doesn't start a duplicate workflow execution.
 - If both **Workflow to receive webhook event** and **Start workflow when webhook event comes** are configured, confirm both workflows are designed to receive the same payload, since Conductor sends it to both.
 - Monitor the webhook execution history regularly to catch unverified URLs, unmatched headers, or events that failed to trigger the expected workflow.
+
+## Related pages
+
+- [Receive Events](/content/category/event-driven-orchestration/receive-events)
+- [Using Event Handlers](/content/developer-guides/event-handler)

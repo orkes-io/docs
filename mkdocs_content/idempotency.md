@@ -322,3 +322,12 @@ This is useful for verifying whether a duplicate request was correctly deduplica
 - **Use dynamic keys in event-driven workflows**. Reference an input variable as the idempotency key (e.g., `${workflow.input.event_id}`) to deduplicate repeated event deliveries automatically.
 - **Design workers to be idempotent**. Workflow-level idempotency prevents duplicate executions, but worker task-level idempotency ensures correct behavior if a task is retried within an execution.
 - **Test deduplication explicitly**. Trigger the same workflow request twice with the same key and verify that the call behaves as expected for your chosen strategy.
+
+## Related pages
+
+- [Workflows](/content/developer-guides/workflows)
+- [Write Workflows Using Code](/content/developer-guides/write-workflows-using-code)
+- [Build Workflows Using Conductor UI](/content/developer-guides/build-workflows-using-ui)
+- [Import BPMN Files as Workflows](/content/developer-guides/convert-bpmn-to-workflows)
+- [Versioning Workflows](/content/developer-guides/versioning-workflows)
+- [Executing Workflows](/content/developer-guides/running-workflows)

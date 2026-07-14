@@ -148,3 +148,9 @@ Before granting tag permissions, confirm that the resources already using the ta
 ## APIs
 
 Manage tags programmatically with the [Tags API](/content/reference-docs/api/tags), including adding, listing, and removing tags on resources.
+
+## Related pages
+
+- [Role Based Access Control](/content/category/access-control-and-security)
+- [Managing Users and Groups](/content/access-control-and-security/users-and-groups)
+- [Managing Applications](/content/access-control-and-security/applications)

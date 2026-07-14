@@ -347,3 +347,12 @@ The JSON JQ Transform task returns:
 
 </p>
 </details>
+
+## Related pages
+
+- [System Tasks](/content/category/reference-docs/system-tasks)
+- [Event](/content/reference-docs/system-tasks/event)
+- [HTTP](/content/reference-docs/system-tasks/http)
+- [HTTP Poll](/content/reference-docs/system-tasks/http-poll)
+- [Inline](/content/reference-docs/system-tasks/inline)
+- [Business Rule](/content/reference-docs/system-tasks/business-rule)

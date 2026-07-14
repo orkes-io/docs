@@ -72,3 +72,8 @@ curl -X 'POST' \
 ```
 
 </details>
+
+## Related pages
+
+- [Tokens](/content/reference-docs/api/tokens)
+- [Get User Info](/content/reference-docs/api/tokens/get-user-info)

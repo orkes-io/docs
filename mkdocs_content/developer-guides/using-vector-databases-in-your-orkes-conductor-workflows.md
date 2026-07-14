@@ -143,3 +143,9 @@ Vector databases can be used in workflows with the following AI tasks:
 - [Using AI Models or LLMs](https://orkes.io/content/developer-guides/using-llms-in-your-orkes-conductor-workflows)
 - [Vector Database Integration Guides](https://orkes.io/content/category/integrations/vector-databases)
 - [AI Task Reference](https://orkes.io/content/category/reference-docs/ai-tasks)
+
+## Related pages
+
+- [Human Task Orchestration](/content/developer-guides/orchestrating-human-tasks)
+- [Using AI Models or LLMs](/content/developer-guides/using-llms-in-your-orkes-conductor-workflows)
+- [Using AI Prompts](/content/developer-guides/creating-and-managing-gen-ai-prompt-templates)

@@ -97,3 +97,8 @@ The task returns a response with headers containing alert details such as alert 
 - **Token**—The API token for integrating with Opsgenie. Refer to the official [Opsgenie documentation](https://support.atlassian.com/opsgenie/docs/create-a-default-api-integration/) on how to get the API keys.
 
 <center><p><img src="/content/img/opsgenie-ui-guide.png" alt="Adding Opsgenie task" width="100%" height="auto"/></p></center>
+
+## Related pages
+
+- [Alerting Tasks](/content/category/reference-docs/alerting-tasks)
+- [Query Processor](/content/reference-docs/system-tasks/query-processor)

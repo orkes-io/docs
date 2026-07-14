@@ -134,3 +134,12 @@ After successful execution, the **Parse Document** task produces the following o
 Each segment preserves the structure and order of the document, including section headers and line breaks. The extracted segments are returned in the result array and are ready for downstream processing, such as summarization, embedding generation, or indexing.
 
 </details>
+
+## Related pages
+
+- [AI Tasks](/content/category/reference-docs/ai-tasks)
+- [LLM Text Complete](/content/reference-docs/ai-tasks/llm-text-complete)
+- [LLM Generate Embeddings](/content/reference-docs/ai-tasks/llm-generate-embeddings)
+- [LLM Store Embeddings](/content/reference-docs/ai-tasks/llm-store-embeddings)
+- [LLM Get Embeddings](/content/reference-docs/ai-tasks/llm-get-embeddings)
+- [LLM Index Document](/content/reference-docs/ai-tasks/llm-index-document)

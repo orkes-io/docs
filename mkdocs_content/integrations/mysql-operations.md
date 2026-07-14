@@ -144,3 +144,7 @@ Executes a raw SQL query against the database.
 === "Output Parameters"
 
     Returns the status of the operation, the query results as an array of objects for SELECT queries, and the number of rows affected for INSERT, UPDATE, or DELETE queries.
+
+## Related pages
+
+- [MySQL Integration with Orkes Conductor](/content/integrations/mysql)

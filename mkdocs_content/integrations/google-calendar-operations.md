@@ -137,3 +137,7 @@ Delete a calendar event by its unique event ID. Use it when you need to cancel m
 === "Output Parameters"
 
     The output contains the details of the deleted event as a snapshot captured before deletion. For a full list of output parameters, see the [Google Calendar Events API reference](https://developers.google.com/workspace/calendar/api/v3/reference/events#resource).
+
+## Related pages
+
+- [Google Calendar Integration with Orkes Conductor](/content/integrations/google-calendar)

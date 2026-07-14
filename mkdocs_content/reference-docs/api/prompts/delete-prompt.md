@@ -56,3 +56,12 @@ curl -X 'DELETE' \
 Returns 200 OK, indicating that the prompt was deleted successfully.
 
 </details>
+
+## Related pages
+
+- [Prompts](/content/reference-docs/api/prompts)
+- [Create or Update Prompt](/content/reference-docs/api/prompts/create-prompt)
+- [Create or Update Prompt Version](/content/reference-docs/api/prompts/create-prompt-version)
+- [Create Prompts in Bulk](/content/reference-docs/api/prompts/create-prompts-bulk)
+- [Delete Prompt Version](/content/reference-docs/api/prompts/delete-prompt-version)
+- [Get Prompt](/content/reference-docs/api/prompts/get-prompt)

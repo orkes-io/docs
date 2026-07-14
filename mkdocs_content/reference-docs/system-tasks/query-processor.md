@@ -300,3 +300,8 @@ Use the Query Processor task to monitor failure workflows and send alerts to dow
 
 </p>
 </details>
+
+## Related pages
+
+- [Alerting Tasks](/content/category/reference-docs/alerting-tasks)
+- [Opsgenie](/content/reference-docs/system-tasks/opsgenie)

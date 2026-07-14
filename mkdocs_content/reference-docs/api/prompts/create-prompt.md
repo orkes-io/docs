@@ -79,3 +79,12 @@ curl -X 'PUT' \
 Returns 200 OK, indicating that the prompt has been created successfully. 
 
 </details>
+
+## Related pages
+
+- [Prompts](/content/reference-docs/api/prompts)
+- [Create or Update Prompt Version](/content/reference-docs/api/prompts/create-prompt-version)
+- [Create Prompts in Bulk](/content/reference-docs/api/prompts/create-prompts-bulk)
+- [Delete Prompt](/content/reference-docs/api/prompts/delete-prompt)
+- [Delete Prompt Version](/content/reference-docs/api/prompts/delete-prompt-version)
+- [Get Prompt](/content/reference-docs/api/prompts/get-prompt)

@@ -412,3 +412,12 @@ Refer to the full [RegressionTest.java](https://github.com/orkes-io/workflow-cic
 - Keep mock outputs realistic and schema-valid.
 - Test idempotency and signal behavior separately when clients depend on them.
 - Run workflow tests before registering definitions in production.
+
+## Related pages
+
+- [Workflows](/content/developer-guides/workflows)
+- [Write Workflows Using Code](/content/developer-guides/write-workflows-using-code)
+- [Build Workflows Using Conductor UI](/content/developer-guides/build-workflows-using-ui)
+- [Import BPMN Files as Workflows](/content/developer-guides/convert-bpmn-to-workflows)
+- [Versioning Workflows](/content/developer-guides/versioning-workflows)
+- [Executing Workflows](/content/developer-guides/running-workflows)

@@ -363,3 +363,12 @@ export CONDUCTOR_SERVER_URL=<YOUR-CLUSTER-URL>/api
 ```
 
 For more Python SDK examples, see the [Python SDK documentation](/content/sdks/python) and the [examples on GitHub](https://github.com/conductor-oss/python-sdk/tree/main/examples).
+
+## Related pages
+
+- [Cookbook](/content/category/tutorials)
+- [Microservice orchestration](/content/cookbook/microservice-orchestration)
+- [Dynamic Parallelism](/content/cookbook/dynamic-parallelism)
+- [Wait and Timer Patterns](/content/cookbook/wait-and-timers)
+- [Task Timeouts and Retries](/content/cookbook/task-timeouts-and-retries)
+- [Scheduled Workflows](/content/cookbook/workflow-scheduling)

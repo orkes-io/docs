@@ -221,3 +221,7 @@ Deletes a folder and all objects within it.
 === "Output Parameters"
 
     The operation returns the `status` of the deletion, the `bucket` name, the `folderPath`, the number of `deletedObjects`, and a `deletedKeys` array listing all deleted object keys.
+
+## Related pages
+
+- [AWS S3 Integration with Orkes Conductor](/content/integrations/aws-s3)

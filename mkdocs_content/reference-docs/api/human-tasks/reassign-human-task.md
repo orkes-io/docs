@@ -104,3 +104,12 @@ curl -X 'POST' \
 Returns 200 OK, indicating that the Human task has been reassigned successfully.
 
 </details>
+
+## Related pages
+
+- [Human Task](/content/reference-docs/api/human-tasks)
+- [Get Human Task](/content/reference-docs/api/human-tasks/get-task)
+- [Get Conductor Task by Human Task ID](/content/reference-docs/api/human-tasks/get-conductor-task-by-human-task-id)
+- [Claim Task (Conductor User)](/content/reference-docs/api/human-tasks/claim-task-conductor-user)
+- [Claim Task (External/All Users)](/content/reference-docs/api/human-tasks/claim-task-external-user)
+- [Release Human Task](/content/reference-docs/api/human-tasks/release-human-task)

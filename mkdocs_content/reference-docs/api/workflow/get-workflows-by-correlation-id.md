@@ -410,3 +410,12 @@ The response includes both running and completed workflow executions for each co
 ```
 
 </details>
+
+## Related pages
+
+- [Workflows API Reference](/content/reference-docs/api/workflow)
+- [Execute Workflow Asynchronously](/content/reference-docs/api/workflow/start-workflow-execution)
+- [Execute Workflow Synchronously](/content/reference-docs/api/workflow/synchronous-workflow-execution)
+- [Get Workflow by ID](/content/reference-docs/api/workflow/get-workflow-by-id)
+- [Get Workflow Size](/content/reference-docs/api/workflow/get-workflow-size)
+- [Update Variable](/content/reference-docs/api/workflow/update-variable)

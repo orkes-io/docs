@@ -162,3 +162,8 @@ When the workflow starts, Conductor emits an event each time its state changes, 
 - Consumers should be idempotent because events can be redelivered.
 - Use a schema registry and version schemas deliberately.
 - Keep sensitive data out of workflow input if downstream CDC consumers do not need it.
+
+## Related pages
+
+- [Publish Events](/content/category/event-driven-orchestration/publish-events)
+- [Event Publishing Recipes](/content/eventing)

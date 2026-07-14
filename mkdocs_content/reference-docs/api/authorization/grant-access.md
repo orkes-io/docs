@@ -75,3 +75,11 @@ This grants the user READ and EXECUTE access over the workflow named `rate_limit
 ```
 
 </details>
+
+## Related pages
+
+- [Authorization](/content/reference-docs/api/authorization)
+- [Revoke Access](/content/reference-docs/api/authorization/revoke-access)
+- [Get Access Grants for a Resource](/content/reference-docs/api/authorization/get-access-grants-for-resource)
+- [List Grants for a Subject](/content/reference-docs/api/authorization/list-grants-for-subject)
+- [Revoke Grants for a Subject](/content/reference-docs/api/authorization/revoke-grants-for-subject)

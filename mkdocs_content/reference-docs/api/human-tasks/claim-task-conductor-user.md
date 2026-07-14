@@ -663,3 +663,12 @@ Returns the claimed task, including the complete user form schema and layout def
 ```
 
 </details>
+
+## Related pages
+
+- [Human Task](/content/reference-docs/api/human-tasks)
+- [Get Human Task](/content/reference-docs/api/human-tasks/get-task)
+- [Get Conductor Task by Human Task ID](/content/reference-docs/api/human-tasks/get-conductor-task-by-human-task-id)
+- [Claim Task (External/All Users)](/content/reference-docs/api/human-tasks/claim-task-external-user)
+- [Reassign Human Task](/content/reference-docs/api/human-tasks/reassign-human-task)
+- [Release Human Task](/content/reference-docs/api/human-tasks/release-human-task)

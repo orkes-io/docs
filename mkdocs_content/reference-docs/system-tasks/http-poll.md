@@ -192,3 +192,12 @@ Conductor will execute the HTTP API call every 60 seconds until the condition (r
 Explore the full tutorial on [orchestrating long-running APIs](/content/tutorials/long-running-apis).
 </p>
 </details>
+
+## Related pages
+
+- [System Tasks](/content/category/reference-docs/system-tasks)
+- [Event](/content/reference-docs/system-tasks/event)
+- [HTTP](/content/reference-docs/system-tasks/http)
+- [Inline](/content/reference-docs/system-tasks/inline)
+- [JSON JQ Transform](/content/reference-docs/system-tasks/jq-transform)
+- [Business Rule](/content/reference-docs/system-tasks/business-rule)

@@ -53,3 +53,10 @@ The **Errors** tab visualizes failure trends and error types.
 <p align="center"><img src="/content/img/dev-guides/gateway/error-rate.png" alt="Error Rate" width="100%" height="auto"/></p>
 
 Hover over the graph to inspect error events by timestamp. Use this to correlate API failures with recent deployments or configuration changes.
+
+## Related pages
+
+- [API and MCP Gateway](/content/developer-guides/mcp-api-gateway)
+- [API Gateway: Expose Workflows as APIs](/content/developer-guides/api-gateway)
+- [MCP Gateway:  Expose Workflows as MCP tools](/content/developer-guides/mcp-gateway)
+- [Remote Services Guide](/content/remote-services)

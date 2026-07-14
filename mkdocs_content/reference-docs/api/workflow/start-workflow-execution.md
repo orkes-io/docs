@@ -73,3 +73,12 @@ curl -X 'POST' \
 ```
 
 </details>
+
+## Related pages
+
+- [Workflows API Reference](/content/reference-docs/api/workflow)
+- [Execute Workflow Synchronously](/content/reference-docs/api/workflow/synchronous-workflow-execution)
+- [Get Workflow by ID](/content/reference-docs/api/workflow/get-workflow-by-id)
+- [Get Workflows by Correlation ID](/content/reference-docs/api/workflow/get-workflows-by-correlation-id)
+- [Get Workflow Size](/content/reference-docs/api/workflow/get-workflow-size)
+- [Update Variable](/content/reference-docs/api/workflow/update-variable)

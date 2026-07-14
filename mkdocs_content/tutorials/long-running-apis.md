@@ -222,3 +222,12 @@ You can adapt this workflow to use any callback method to mark completion, depen
 Use the HTTP Poll task method when the API exposes a status endpoint that you can query until the job completes. Use `asyncComplete` when the API call is asynchronous and notifies completion through a callback. 
 
 Both approaches handle long-running HTTP calls natively in Orkes Conductor, ensuring reliable orchestration and preventing timeout issues.
+
+## Related pages
+
+- [Cookbook](/content/category/tutorials)
+- [Microservice orchestration](/content/cookbook/microservice-orchestration)
+- [Dynamic Parallelism](/content/cookbook/dynamic-parallelism)
+- [Wait and Timer Patterns](/content/cookbook/wait-and-timers)
+- [Task Timeouts and Retries](/content/cookbook/task-timeouts-and-retries)
+- [Scheduled Workflows](/content/cookbook/workflow-scheduling)

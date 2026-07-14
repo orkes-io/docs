@@ -356,3 +356,12 @@ After the workflow completes:
 <p align="center"><img src="/content/img/search-index-workflow-execution.png" alt="Workflow output inspection" width="100%" height="auto" /></p>
 
 The returned answer is based only on the indexed text. This confirms that the workflow successfully retrieved and used content from the knowledge base.
+
+## Related pages
+
+- [AI Tutorials](/content/tutorials/ai)
+- [Build an AI-Powered Translator with Orkes Conductor](/content/developer-guides/quickstart-ai-orchestration)
+- [Build an Agentic Interview App with Orkes Conductor](/content/tutorials/agentic-interview-app)
+- [Document Classification](/content/_routes/templates/document-classifier)
+- [Build a Question Answering Workflow Using Stored Embeddings](/content/tutorials/question-answering-with-embeddings)
+- [Build a Document Retrieval Workflow](/content/tutorials/document-retrieval-workflow)

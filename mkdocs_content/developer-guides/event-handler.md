@@ -396,3 +396,8 @@ If ordering matters for your use case:
 - Use a consistent partition key for messages that must be processed in order, so they land on the same partition.
 - Use `idempotencyKey` on the `start_workflow` action to prevent duplicate workflows from being created if a message is redelivered.
 - Handle ordering inside the workflow; pass a sequence number or timestamp in the event payload and use it within the workflow to detect and respond to out-of-order execution.
+
+## Related pages
+
+- [Receive Events](/content/category/event-driven-orchestration/receive-events)
+- [Using Webhooks](/content/developer-guides/webhook-integration)

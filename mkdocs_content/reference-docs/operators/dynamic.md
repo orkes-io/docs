@@ -297,3 +297,12 @@ This takes you to the workflow execution page. You can verify that:
 <p><img src="/content/img/sub-workflow-dynamically-executed.png" alt="Task output of a HTTP task executed via Sub Workflow"/></p>
 
 </details>
+
+## Related pages
+
+- [Operators](/content/category/reference-docs/operators)
+- [Switch](/content/reference-docs/operators/switch)
+- [Do While](/content/reference-docs/operators/do-while)
+- [Wait](/content/reference-docs/operators/wait)
+- [Set Variable](/content/reference-docs/operators/set-variable)
+- [Sub Workflow](/content/reference-docs/operators/sub-workflow)

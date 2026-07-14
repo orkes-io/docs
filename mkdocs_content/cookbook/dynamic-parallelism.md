@@ -164,3 +164,12 @@ curl -X POST '<YOUR-CLUSTER-URL>/api/workflow/parallel_sub_workflows' \
   -H "X-Authorization: $TOKEN" \
   -d '{}'
 ```
+
+## Related pages
+
+- [Cookbook](/content/category/tutorials)
+- [Microservice orchestration](/content/cookbook/microservice-orchestration)
+- [Wait and Timer Patterns](/content/cookbook/wait-and-timers)
+- [Task Timeouts and Retries](/content/cookbook/task-timeouts-and-retries)
+- [Scheduled Workflows](/content/cookbook/workflow-scheduling)
+- [Dynamic Workflows as Code](/content/cookbook/dynamic-workflows)

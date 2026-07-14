@@ -129,3 +129,12 @@ With the integration in place, you can now create workflows using [AI/LLM tasks]
 - [Using Vector Databases](https://orkes.io/content/developer-guides/using-vector-databases-in-your-orkes-conductor-workflows)
 - [Using AI Prompts](https://orkes.io/content/developer-guides/creating-and-managing-gen-ai-prompt-templates)
 - [AI Orchestration Tutorials](https://orkes.io/content/tutorials/ai)
+
+## Related pages
+
+- [AI / LLM Integrations](/content/category/integrations/ai-llm)
+- [Azure OpenAI Integration with Orkes Conductor](/content/integrations/ai-llm/azure-open-ai)
+- [OpenAI Integration with Orkes Conductor](/content/integrations/ai-llm/open-ai)
+- [Perplexity Integration with Orkes Conductor](/content/integrations/ai-llm/perplexity)
+- [Grok Integration with Orkes Conductor](/content/integrations/ai-llm/grok)
+- [Cohere Integration with Orkes Conductor](/content/integrations/ai-llm/cohere)

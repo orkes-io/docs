@@ -54,3 +54,12 @@ curl -X 'DELETE' \
 ```
 
 </details>
+
+## Related pages
+
+- [Environment Variables](/content/reference-docs/api/environment-variables)
+- [Create/Update Environment Variable](/content/reference-docs/api/environment-variables/create-environment-variable)
+- [Get Environment Value by Key](/content/reference-docs/api/environment-variables/get-environment-value-by-key)
+- [Get All Environment Variables](/content/reference-docs/api/environment-variables/get-all-environment-variables)
+- [Add Tags to an Environment Variable](/content/reference-docs/api/environment-variables/add-tags-to-environment-variable)
+- [Get Tags from an Environment Variable](/content/reference-docs/api/environment-variables/get-tags-from-environment-variable)

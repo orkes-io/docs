@@ -54,3 +54,12 @@ sampleValue
 ```
 
 </details>
+
+## Related pages
+
+- [Environment Variables](/content/reference-docs/api/environment-variables)
+- [Create/Update Environment Variable](/content/reference-docs/api/environment-variables/create-environment-variable)
+- [Get All Environment Variables](/content/reference-docs/api/environment-variables/get-all-environment-variables)
+- [Delete Environment Variable](/content/reference-docs/api/environment-variables/delete-environment-variable)
+- [Add Tags to an Environment Variable](/content/reference-docs/api/environment-variables/add-tags-to-environment-variable)
+- [Get Tags from an Environment Variable](/content/reference-docs/api/environment-variables/get-tags-from-environment-variable)

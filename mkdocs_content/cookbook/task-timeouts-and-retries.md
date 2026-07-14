@@ -189,3 +189,12 @@ With `concurrentExecLimit: 50`, only 50 executions of `send_webhook` run at a ti
 | Non-retryable error | Return `FAILED_WITH_TERMINAL_ERROR` from the worker |
 
 See the [task definition reference](/content/reference-docs/api/metadata/creating-task-definitions) for all available parameters.
+
+## Related pages
+
+- [Cookbook](/content/category/tutorials)
+- [Microservice orchestration](/content/cookbook/microservice-orchestration)
+- [Dynamic Parallelism](/content/cookbook/dynamic-parallelism)
+- [Wait and Timer Patterns](/content/cookbook/wait-and-timers)
+- [Scheduled Workflows](/content/cookbook/workflow-scheduling)
+- [Dynamic Workflows as Code](/content/cookbook/dynamic-workflows)

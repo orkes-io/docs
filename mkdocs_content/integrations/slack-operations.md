@@ -659,3 +659,7 @@ Retrieves the list of user groups in the workspace.
 === "Output Parameters"
 
     Returns a list of user group objects, each including `id`, `name`, `handle`, `description`, `is_disabled`, and a `users` array of member user IDs.
+
+## Related pages
+
+- [Slack Integration with Orkes Conductor](/content/integrations/slack)

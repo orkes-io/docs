@@ -76,3 +76,11 @@ curl -X 'POST' \
 Returns 200 OK, indicating that the task has been signaled successfully.
 
 </details>
+
+## Related pages
+
+- [Tasks API Reference](/content/reference-docs/api/task)
+- [Get Task by ID](/content/reference-docs/api/task/get-task)
+- [Log Task Execution](/content/reference-docs/api/task/add-task-log)
+- [Update Task Status in Workflow](/content/reference-docs/api/task/update-task-status-in-workflow)
+- [Signal Running Task Synchronously](/content/reference-docs/api/task/signal-running-task-synchronously)

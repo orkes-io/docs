@@ -77,3 +77,12 @@ false
 ```
 
 </details>
+
+## Related pages
+
+- [Secrets](/content/reference-docs/api/secrets)
+- [Create/Update Secret](/content/reference-docs/api/secrets/create-secret)
+- [Delete Secret](/content/reference-docs/api/secrets/delete-secret)
+- [Get Secret Value by Key](/content/reference-docs/api/secrets/get-secret-value)
+- [List All Secrets](/content/reference-docs/api/secrets/list-all-secrets)
+- [List Accessible Secrets](/content/reference-docs/api/secrets/list-accessible-secrets)

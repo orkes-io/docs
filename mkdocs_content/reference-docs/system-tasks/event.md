@@ -330,3 +330,12 @@ After successful execution, verify the message's delivery in the Confluent porta
 <p align="center"><img src="/content/img/verifying-confluent.png" alt="Verifying the consumed message from Confluent Kafka" width="100%" height="auto"/></p>
 
 </details>
+
+## Related pages
+
+- [System Tasks](/content/category/reference-docs/system-tasks)
+- [HTTP](/content/reference-docs/system-tasks/http)
+- [HTTP Poll](/content/reference-docs/system-tasks/http-poll)
+- [Inline](/content/reference-docs/system-tasks/inline)
+- [JSON JQ Transform](/content/reference-docs/system-tasks/jq-transform)
+- [Business Rule](/content/reference-docs/system-tasks/business-rule)

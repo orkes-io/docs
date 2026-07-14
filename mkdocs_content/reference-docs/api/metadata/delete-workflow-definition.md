@@ -43,3 +43,12 @@ curl -X 'DELETE' \
 Returns 200 OK, indicating that the particular version of the workflow definition has been deleted successfully.
 
 </details>
+
+## Related pages
+
+- [Metadata](/content/reference-docs/api/metadata)
+- [Create Task Definition](/content/reference-docs/api/metadata/creating-task-definitions)
+- [Update Task Definition](/content/reference-docs/api/metadata/update-task-definitions)
+- [Delete Task Definition](/content/reference-docs/api/metadata/delete-task-definition)
+- [Get All Task Definitions](/content/reference-docs/api/metadata/get-all-task-definitions)
+- [Get Task Definition](/content/reference-docs/api/metadata/get-task-definition)

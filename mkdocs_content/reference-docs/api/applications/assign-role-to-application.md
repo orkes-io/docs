@@ -56,3 +56,12 @@ curl -X 'POST' \
 Returns 200 OK, indicating that the role is assigned to the application.
 
 </details>
+
+## Related pages
+
+- [Applications](/content/reference-docs/api/applications)
+- [Create Application](/content/reference-docs/api/applications/create-application)
+- [Create an Access Key for Application](/content/reference-docs/api/applications/create-application-access-key)
+- [Update Application](/content/reference-docs/api/applications/update-application)
+- [Toggle Access Key Status](/content/reference-docs/api/applications/toggle-access-key-status)
+- [Delete Access Key](/content/reference-docs/api/applications/delete-access-key)

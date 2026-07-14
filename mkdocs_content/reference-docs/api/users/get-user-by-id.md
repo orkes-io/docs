@@ -153,3 +153,12 @@ curl -X 'GET' \
 ```
 
 </details>
+
+## Related pages
+
+- [Users](/content/reference-docs/api/users)
+- [Create/Update User](/content/reference-docs/api/users/create-user)
+- [Delete User](/content/reference-docs/api/users/delete-user)
+- [Get All Users](/content/reference-docs/api/users/get-all-users)
+- [Get User Permission over Resources](/content/reference-docs/api/users/get-user-permissions)
+- [Check User Permission over Resources](/content/reference-docs/api/users/check-user-permissions)

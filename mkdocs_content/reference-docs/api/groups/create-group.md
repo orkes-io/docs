@@ -341,3 +341,12 @@ This confirms that the group was automatically granted `READ` and `EXECUTE` acce
 Therefore, any workflow definitions created by any member of the `TechWriters` will automatically have `READ` and `EXECUTE` access granted to the group.
 
 </details>
+
+## Related pages
+
+- [Groups](/content/reference-docs/api/groups)
+- [Add Users to Group in Bulk](/content/reference-docs/api/groups/add-users-to-group-bulk)
+- [Add Single User to Group](/content/reference-docs/api/groups/add-user-to-group)
+- [Remove Users from Group in Bulk](/content/reference-docs/api/groups/remove-users-from-group-bulk)
+- [Remove Single User from Group](/content/reference-docs/api/groups/remove-users-from-group)
+- [Get Group Permission over Resources](/content/reference-docs/api/groups/get-group-permissions)

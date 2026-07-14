@@ -67,3 +67,9 @@ curl -X 'GET' \
 ```
 
 </details>
+
+## Related pages
+
+- [Task Queues](/content/reference-docs/api/task/task-queue)
+- [Get Poll Data for All Tasks](/content/reference-docs/api/task/task-queue/get-poll-data-for-all-task)
+- [Get Task Queue Size for All Tasks](/content/reference-docs/api/task/task-queue/get-task-queue-size-for-all-tasks)

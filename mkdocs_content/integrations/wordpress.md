@@ -112,3 +112,7 @@ The following operations are available for use with this integration.
 
 
 For the complete operations parameters and output reference, see [WordPress Operations Reference](/content/integrations/wordpress-operations).
+
+## Related pages
+
+- [WordPress Operations Reference](/content/integrations/wordpress-operations)

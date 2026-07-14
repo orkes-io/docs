@@ -99,3 +99,12 @@ curl -X 'POST' \
 Returns 200 OK, indicating that the model description is updated successfully.
 
 </details>
+
+## Related pages
+
+- [Integrations API Reference](/content/reference-docs/api/integrations)
+- [Create or Update Integration Provider](/content/reference-docs/api/integrations/create-integration-provider)
+- [Get Integration Provider](/content/reference-docs/api/integrations/get-integration-provider)
+- [Delete Integration Provider](/content/reference-docs/api/integrations/delete-integration-provider)
+- [Add Tags to Integration Provider](/content/reference-docs/api/integrations/add-tags-to-integration-provider)
+- [Get Tags from Integration Provider](/content/reference-docs/api/integrations/get-tags-from-integration-provider)

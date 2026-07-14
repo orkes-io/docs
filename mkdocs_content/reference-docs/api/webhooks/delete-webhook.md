@@ -54,3 +54,12 @@ curl -X 'DELETE' \
 Returns 200 OK, indicating that the webhook has been deleted successfully.
 
 </details>
+
+## Related pages
+
+- [Webhook API](/content/reference-docs/api/webhooks)
+- [Create Webhook](/content/reference-docs/api/webhooks/create-webhook)
+- [Update Webhook](/content/reference-docs/api/webhooks/update-webhook)
+- [Get Webhook by ID](/content/reference-docs/api/webhooks/get-webhook)
+- [Get All Webhooks](/content/reference-docs/api/webhooks/get-all-webhooks)
+- [Add Tags to Webhook](/content/reference-docs/api/webhooks/add-tags-to-webhook)

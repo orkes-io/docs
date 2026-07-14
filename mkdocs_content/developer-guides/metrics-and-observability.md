@@ -190,3 +190,12 @@ Recommended alert metadata:
 - Track queue depth and poll rate together. Queue depth alone does not tell you whether workers are missing or just busy.
 - Separate workflow-level alerts from task-level alerts. Workflow failure rate tells you customer impact; task metrics tell you where to fix it.
 - Keep dashboard and alert definitions in source control when possible.
+
+## Related pages
+
+- [Workflows](/content/developer-guides/workflows)
+- [Write Workflows Using Code](/content/developer-guides/write-workflows-using-code)
+- [Build Workflows Using Conductor UI](/content/developer-guides/build-workflows-using-ui)
+- [Import BPMN Files as Workflows](/content/developer-guides/convert-bpmn-to-workflows)
+- [Versioning Workflows](/content/developer-guides/versioning-workflows)
+- [Executing Workflows](/content/developer-guides/running-workflows)

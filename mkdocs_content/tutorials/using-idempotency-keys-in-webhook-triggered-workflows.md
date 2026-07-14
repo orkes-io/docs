@@ -294,3 +294,12 @@ Here are a few common issues you might encounter while setting up the Jira ticke
 | Jira ticket isn’t created | <ul><li>Make sure your Jira portal and project key are correctly set in the workflow definition. </li><li>Verify that the secret *atlassian-token* contains a valid Base64-encoded token. </li><li>Confirm that your user has the permission to create tickets.</li></ul> | 
 | Authentication fails with Jira API | <ul><li>Verify the format of the Base64-encoded authentication string `email:api_token`.</li><li>Regenerate your API token from Atlassian if it has expired. </li><li>Make sure the workflow uses the correct secret name (*atlassian-token*).</li><li>Double-check that the email address used in the Base64 string matches the account tied to the API token.</li></ul> | 
 | Workflow execution fails | <ul><li>Review the workflow execution logs in **Executions** > **Workflow**.</li><li>Make sure the webhook payload includes all required input parameters: *bug_id*, *title*, and *reported_by*.</li></ul> |
+
+## Related pages
+
+- [Webhook Examples](/content/category/event-driven-orchestration/webhook-examples)
+- [Custom Webhook with cURL](/content/_routes/templates/examples/custom-conductor-webhook-using-curl)
+- [Incoming Webhook with Postman](/content/_routes/templates/examples/incoming-webhook-using-postman)
+- [Build a GitHub Pull Request Reviewer Assignment Workflow](/content/tutorials/github-webhook)
+- [Build a Stripe Payment Confirmation Workflow](/content/tutorials/stripe-webhook)
+- [Using SendGrid Event Webhooks in Orkes Conductor](/content/tutorials/using-sendgrid-webhooks)

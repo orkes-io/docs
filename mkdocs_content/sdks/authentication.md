@@ -137,3 +137,7 @@ In the bottom left corner of the Conductor UI, select **Copy Token**.
     height="auto"
   ></img>
 </p>
+
+## Related pages
+
+- [API Reference](/content/category/ref-docs/api)

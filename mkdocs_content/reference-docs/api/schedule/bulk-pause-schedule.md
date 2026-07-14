@@ -106,3 +106,12 @@ curl -X 'PUT' \
 ```
 
 </details>
+
+## Related pages
+
+- [Schedule](/content/reference-docs/api/schedule)
+- [Create Schedule](/content/reference-docs/api/schedule/create-schedule)
+- [Get Schedule](/content/reference-docs/api/schedule/get-schedule)
+- [Pause Schedule](/content/reference-docs/api/schedule/pause-schedule)
+- [Resume Schedule](/content/reference-docs/api/schedule/resume-schedule)
+- [Resume Schedules in Bulk](/content/reference-docs/api/schedule/bulk-resume-schedule)

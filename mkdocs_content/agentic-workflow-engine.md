@@ -59,3 +59,8 @@ Before moving an agent workflow into production, run these checks:
 3. Leave a human task open across a deploy and confirm the workflow resumes when approved.
 4. Retry a side-effecting task with the same idempotency key and confirm duplicate work is prevented or compensated.
 5. Inspect the execution history and confirm operators can see inputs, outputs, timing, retry counts, and failure reasons.
+
+## Related pages
+
+- [Why Conductor for agents](/content/why-conductor-for-ai-agents)
+- [Build with AI Agents](/content/conductor-skills)

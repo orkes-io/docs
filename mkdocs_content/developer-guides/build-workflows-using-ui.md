@@ -150,3 +150,12 @@ When opened from any other area of the UI, the Assistant answers questions about
 !!! info "Tips"
     - Conversations are preserved within a session; you can iterate on a workflow across multiple messages.
     - When the Assistant needs an integration that isn't configured yet, it will pause and prompt you to provide credentials before continuing.
+
+## Related pages
+
+- [Workflows](/content/developer-guides/workflows)
+- [Write Workflows Using Code](/content/developer-guides/write-workflows-using-code)
+- [Import BPMN Files as Workflows](/content/developer-guides/convert-bpmn-to-workflows)
+- [Versioning Workflows](/content/developer-guides/versioning-workflows)
+- [Executing Workflows](/content/developer-guides/running-workflows)
+- [Scheduling Workflows](/content/developer-guides/scheduling-workflows)

@@ -93,3 +93,12 @@ curl -X 'POST' \
 Returns 200 OK, indicating that the prompts have been created successfully.
 
 </details>
+
+## Related pages
+
+- [Prompts](/content/reference-docs/api/prompts)
+- [Create or Update Prompt](/content/reference-docs/api/prompts/create-prompt)
+- [Create or Update Prompt Version](/content/reference-docs/api/prompts/create-prompt-version)
+- [Delete Prompt](/content/reference-docs/api/prompts/delete-prompt)
+- [Delete Prompt Version](/content/reference-docs/api/prompts/delete-prompt-version)
+- [Get Prompt](/content/reference-docs/api/prompts/get-prompt)

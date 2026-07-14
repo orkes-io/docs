@@ -333,3 +333,12 @@ Here are a few common issues and how to fix them:
 | Conductor workflows don’t start | <ul><li>Check that Orkes Conductor credentials (AUTH_KEY, AUTH_SECRET, and SERVER_URL) are set correctly.</li><li>Ensure the Conductor application has the correct roles: *Worker* and *Metadata API*.</li></ul> | 
 | OpenAI responses fail | <ul><li>Verify that your OpenAI API key is active and has a usage quota.</li><li>Ensure that the environment variable is correctly set and accessible from your backend process.</li></ul> | 
 | Frontend displays a blank page or a 500 error | <ul><li>Open the browser dev tools and inspect the network requests.</li><li>Check if the backend server is reachable at the expected endpoint (default: http://localhost:5000).</li></ul> |
+
+## Related pages
+
+- [AI Tutorials](/content/tutorials/ai)
+- [Build an AI-Powered Translator with Orkes Conductor](/content/developer-guides/quickstart-ai-orchestration)
+- [Document Classification](/content/_routes/templates/document-classifier)
+- [Build a Question Answering Workflow Using Stored Embeddings](/content/tutorials/question-answering-with-embeddings)
+- [Build a Document Retrieval Workflow](/content/tutorials/document-retrieval-workflow)
+- [Build a Pull Request Summary Workflow](/content/tutorials/pull-request-summary-workflow)

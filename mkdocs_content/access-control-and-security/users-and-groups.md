@@ -115,3 +115,9 @@ Delete a group only after confirming no users, applications, or operational proc
 ### APIs
 
 Manage groups programmatically with the [Groups API](/content/reference-docs/api/groups), including creating groups, adding or removing users, and managing group permissions.
+
+## Related pages
+
+- [Role Based Access Control](/content/category/access-control-and-security)
+- [Managing Applications](/content/access-control-and-security/applications)
+- [Managing Tags](/content/access-control-and-security/tags)

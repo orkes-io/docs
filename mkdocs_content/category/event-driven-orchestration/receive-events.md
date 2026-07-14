@@ -23,3 +23,8 @@ The Wait for Webhook task pauses a workflow until a matching external callback a
 
 - [Webhooks](/content/developer-guides/webhook-integration)
 - [Event Handlers](/content/developer-guides/event-handler)
+
+## Related pages
+
+- [Using Webhooks](/content/developer-guides/webhook-integration)
+- [Using Event Handlers](/content/developer-guides/event-handler)

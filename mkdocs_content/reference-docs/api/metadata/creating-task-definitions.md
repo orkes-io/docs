@@ -146,3 +146,12 @@ curl -X 'POST' \
 Returns 200 OK, indicating that the task definition has been created successfully.
 
 </details>
+
+## Related pages
+
+- [Metadata](/content/reference-docs/api/metadata)
+- [Update Task Definition](/content/reference-docs/api/metadata/update-task-definitions)
+- [Delete Task Definition](/content/reference-docs/api/metadata/delete-task-definition)
+- [Get All Task Definitions](/content/reference-docs/api/metadata/get-all-task-definitions)
+- [Get Task Definition](/content/reference-docs/api/metadata/get-task-definition)
+- [Create Workflow Definition](/content/reference-docs/api/metadata/creating-workflow-definition)

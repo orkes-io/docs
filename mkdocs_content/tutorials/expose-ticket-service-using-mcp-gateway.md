@@ -324,3 +324,8 @@ This returns the tool result status as success and returns the ticket ID. To ver
 That’s it. Next, you can connect this with any AI agent that needs to invoke the MCP tool. When the MCP tool is invoked, the workflow runs automatically. 
 
 You can extend this workflow to integrate with real ticketing systems, trigger notifications, or support downstream automation.
+
+## Related pages
+
+- [Gateway Tutorials](/content/tutorials/mcp)
+- [Build a Feedback API Using Orkes Conductor API Gateway](/content/tutorials/expose-feedback-workflow-as-api)

@@ -250,3 +250,12 @@ curl -X 'GET' \
 ```
 
 </details>
+
+## Related pages
+
+- [Human Task](/content/reference-docs/api/human-tasks)
+- [Get Human Task](/content/reference-docs/api/human-tasks/get-task)
+- [Claim Task (Conductor User)](/content/reference-docs/api/human-tasks/claim-task-conductor-user)
+- [Claim Task (External/All Users)](/content/reference-docs/api/human-tasks/claim-task-external-user)
+- [Reassign Human Task](/content/reference-docs/api/human-tasks/reassign-human-task)
+- [Release Human Task](/content/reference-docs/api/human-tasks/release-human-task)

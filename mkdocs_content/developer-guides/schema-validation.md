@@ -479,3 +479,12 @@ Now rerun with an invalid input, for example `{ "customerId": 123 }`. Execution 
 <p align="center"><img src="/content/img/schema-validation-failed-for-workflow-definition.png" alt="Schema validation failed for a workflow definition" width="90%" height="auto"></img></p>
 
 </details>
+
+## Related pages
+
+- [Workflows](/content/developer-guides/workflows)
+- [Write Workflows Using Code](/content/developer-guides/write-workflows-using-code)
+- [Build Workflows Using Conductor UI](/content/developer-guides/build-workflows-using-ui)
+- [Import BPMN Files as Workflows](/content/developer-guides/convert-bpmn-to-workflows)
+- [Versioning Workflows](/content/developer-guides/versioning-workflows)
+- [Executing Workflows](/content/developer-guides/running-workflows)

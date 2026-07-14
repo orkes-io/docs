@@ -52,3 +52,12 @@ curl -X 'DELETE' \
 Returns 200 OK, indicating that the secret is deleted.
 
 </details>
+
+## Related pages
+
+- [Secrets](/content/reference-docs/api/secrets)
+- [Create/Update Secret](/content/reference-docs/api/secrets/create-secret)
+- [Get Secret Value by Key](/content/reference-docs/api/secrets/get-secret-value)
+- [Check if Secret Exists](/content/reference-docs/api/secrets/check-secret-exists)
+- [List All Secrets](/content/reference-docs/api/secrets/list-all-secrets)
+- [List Accessible Secrets](/content/reference-docs/api/secrets/list-accessible-secrets)

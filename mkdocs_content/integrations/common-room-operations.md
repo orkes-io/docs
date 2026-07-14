@@ -246,3 +246,7 @@ Retrieve the details of a specific tag in your Common Room community.
     | entityTypes | The entity types the tag applies to. | 
     | createdAt | The date and time the tag was created, in ISO 8601 format. | 
     | deletedAt | The date and time the tag was deleted, in ISO 8601 format. Returns `null` if the tag has not been deleted. |
+
+## Related pages
+
+- [Common Room Integration with Orkes Conductor](/content/integrations/common-room)

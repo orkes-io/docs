@@ -397,3 +397,9 @@ Use the [Human Tasks APIs](/content/reference-docs/api/human-tasks) to connect y
 - Log who claimed and submitted the task in your own identity system.
 - Define timeout and escalation behavior for tasks that are not completed.
 - Use trigger policies for notification workflows instead of embedding notification logic in the UI.
+
+## Related pages
+
+- [Using AI Models or LLMs](/content/developer-guides/using-llms-in-your-orkes-conductor-workflows)
+- [Using Vector Databases](/content/developer-guides/using-vector-databases-in-your-orkes-conductor-workflows)
+- [Using AI Prompts](/content/developer-guides/creating-and-managing-gen-ai-prompt-templates)

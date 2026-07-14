@@ -339,3 +339,7 @@ Search for pages and databases in the Notion workspace by title.
 === "Output Parameters"
 
     Returns a list of page and database objects matching the search query, a `nextCursor` for pagination, and a `hasMore` flag indicating whether there are more results. If `hasMore` is `true`, pass the `nextCursor` value into the Start Cursor parameter to retrieve the next page.
+
+## Related pages
+
+- [Notion Integration with Orkes Conductor](/content/integrations/notion)

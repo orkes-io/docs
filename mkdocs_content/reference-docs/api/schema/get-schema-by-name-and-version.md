@@ -85,3 +85,12 @@ curl -X 'GET' \
 ```
 
 </details>
+
+## Related pages
+
+- [Input/Output Schema Validation](/content/reference-docs/api/schema)
+- [Create Schema](/content/reference-docs/api/schema/create-schema)
+- [Get All Schemas](/content/reference-docs/api/schema/get-all-schemas)
+- [Get Schema by Name](/content/reference-docs/api/schema/get-schema-by-name)
+- [Delete Schema](/content/reference-docs/api/schema/delete-schema)
+- [Delete Schema Version](/content/reference-docs/api/schema/delete-schema-version)

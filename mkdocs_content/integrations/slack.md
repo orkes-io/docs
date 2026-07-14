@@ -213,3 +213,7 @@ The following operations are available for use with this integration.
 6. Select **Execute** to run the workflow.
 
 For the complete operations parameters and output reference, see [Slack Operations Reference](/content/integrations/slack-operations).
+
+## Related pages
+
+- [Slack Operations Reference](/content/integrations/slack-operations)

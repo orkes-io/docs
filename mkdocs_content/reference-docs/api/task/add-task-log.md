@@ -57,3 +57,11 @@ To verify the logs, open your workflow execution, select the task where the mess
 <p align="center"><img src="/content/img/log-messages-using-api.png" alt="Log messages to task using API" width="100%" height="auto"></img></p>
 
 </details>
+
+## Related pages
+
+- [Tasks API Reference](/content/reference-docs/api/task)
+- [Get Task by ID](/content/reference-docs/api/task/get-task)
+- [Update Task Status in Workflow](/content/reference-docs/api/task/update-task-status-in-workflow)
+- [Signal Running Task Asynchronously](/content/reference-docs/api/task/signal-running-task-asynchronously)
+- [Signal Running Task Synchronously](/content/reference-docs/api/task/signal-running-task-synchronously)

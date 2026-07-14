@@ -225,3 +225,12 @@ This tutorial demonstrates the basic pattern for receiving SendGrid Event Webhoo
 - Forwarding events to your internal services, such as logging pipelines, analytics dashboards, or monitoring systems, by replacing the test HTTP endpoints with your production APIs.
 - Enriching or transforming webhook payloads using JSON JQ Transform tasks before sending them to downstream applications.
 - Triggering additional automation workflows when specific events occur, for example, starting a remediation flow on bounces or updating user engagement records on clicks.
+
+## Related pages
+
+- [Webhook Examples](/content/category/event-driven-orchestration/webhook-examples)
+- [Custom Webhook with cURL](/content/_routes/templates/examples/custom-conductor-webhook-using-curl)
+- [Incoming Webhook with Postman](/content/_routes/templates/examples/incoming-webhook-using-postman)
+- [Using Variable Idempotency Keys in Webhook-Triggered Workflows](/content/tutorials/using-idempotency-keys-in-webhook-triggered-workflows)
+- [Build a GitHub Pull Request Reviewer Assignment Workflow](/content/tutorials/github-webhook)
+- [Build a Stripe Payment Confirmation Workflow](/content/tutorials/stripe-webhook)

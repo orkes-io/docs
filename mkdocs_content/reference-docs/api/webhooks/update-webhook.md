@@ -100,3 +100,12 @@ curl -X 'PUT' \
 ```
 
 </details>
+
+## Related pages
+
+- [Webhook API](/content/reference-docs/api/webhooks)
+- [Create Webhook](/content/reference-docs/api/webhooks/create-webhook)
+- [Get Webhook by ID](/content/reference-docs/api/webhooks/get-webhook)
+- [Delete Webhook](/content/reference-docs/api/webhooks/delete-webhook)
+- [Get All Webhooks](/content/reference-docs/api/webhooks/get-all-webhooks)
+- [Add Tags to Webhook](/content/reference-docs/api/webhooks/add-tags-to-webhook)

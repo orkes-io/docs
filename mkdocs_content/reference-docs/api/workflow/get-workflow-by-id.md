@@ -315,3 +315,12 @@ The tasks array is empty because `includeTasks` is set to false:
 ```
 
 </details>
+
+## Related pages
+
+- [Workflows API Reference](/content/reference-docs/api/workflow)
+- [Execute Workflow Asynchronously](/content/reference-docs/api/workflow/start-workflow-execution)
+- [Execute Workflow Synchronously](/content/reference-docs/api/workflow/synchronous-workflow-execution)
+- [Get Workflows by Correlation ID](/content/reference-docs/api/workflow/get-workflows-by-correlation-id)
+- [Get Workflow Size](/content/reference-docs/api/workflow/get-workflow-size)
+- [Update Variable](/content/reference-docs/api/workflow/update-variable)

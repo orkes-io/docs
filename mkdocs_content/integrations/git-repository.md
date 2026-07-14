@@ -69,3 +69,8 @@ Once the integration is configured, set access controls to manage which [applica
 The group or application can now access the integration according to the configured permissions.
 
 With the integration in place, you can now create workflows using the [List Files](/content/reference-docs/ai-tasks/list-files) task or the [Parse Document](/content/reference-docs/ai-tasks/parse-document) task.
+
+## Related pages
+
+- [Email/Git](/content/category/integrations/email)
+- [SendGrid Email Integration with Orkes Conductor](/content/integrations/email/sendgrid)

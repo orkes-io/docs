@@ -174,3 +174,7 @@ Remove a Google Cloud Storage bucket. Can delete only empty buckets.
 === "Output Parameters"
 
     Returns `true` if the bucket was successfully deleted.
+
+## Related pages
+
+- [Google Cloud Storage Integration with Orkes Conductor](/content/integrations/google-cloud-storage)

@@ -61,3 +61,12 @@ curl -X 'GET' \
 ```
 
 </details>
+
+## Related pages
+
+- [Environment Variables](/content/reference-docs/api/environment-variables)
+- [Create/Update Environment Variable](/content/reference-docs/api/environment-variables/create-environment-variable)
+- [Get Environment Value by Key](/content/reference-docs/api/environment-variables/get-environment-value-by-key)
+- [Delete Environment Variable](/content/reference-docs/api/environment-variables/delete-environment-variable)
+- [Add Tags to an Environment Variable](/content/reference-docs/api/environment-variables/add-tags-to-environment-variable)
+- [Get Tags from an Environment Variable](/content/reference-docs/api/environment-variables/get-tags-from-environment-variable)

@@ -379,3 +379,8 @@ These recipes require an LLM provider integration, and the RAG recipe additional
 - [Vector database integrations](/content/category/integrations/vector-databases) - Pinecone, Weaviate, pgvector, and MongoDB Atlas.
 
 Once configured, reference the integration's name as `llmProvider` (or `embeddingModelProvider`/`vectorDB`) in your task definitions.
+
+## Related pages
+
+- [AI Cookbook](/content/ai-orchestration)
+- [LLM orchestration](/content/ai-orchestration/llm-orchestration)

@@ -99,3 +99,12 @@ curl -X 'DELETE' \
 Returns 200 OK, indicating that the tags have been deleted from the secret.
 
 </details>
+
+## Related pages
+
+- [Secrets](/content/reference-docs/api/secrets)
+- [Create/Update Secret](/content/reference-docs/api/secrets/create-secret)
+- [Delete Secret](/content/reference-docs/api/secrets/delete-secret)
+- [Get Secret Value by Key](/content/reference-docs/api/secrets/get-secret-value)
+- [Check if Secret Exists](/content/reference-docs/api/secrets/check-secret-exists)
+- [List All Secrets](/content/reference-docs/api/secrets/list-all-secrets)

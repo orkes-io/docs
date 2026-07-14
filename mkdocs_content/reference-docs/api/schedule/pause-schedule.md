@@ -53,3 +53,12 @@ curl -X 'GET' \
 Returns 200 OK, indicating that the schedule is paused.
 
 </details>
+
+## Related pages
+
+- [Schedule](/content/reference-docs/api/schedule)
+- [Create Schedule](/content/reference-docs/api/schedule/create-schedule)
+- [Get Schedule](/content/reference-docs/api/schedule/get-schedule)
+- [Resume Schedule](/content/reference-docs/api/schedule/resume-schedule)
+- [Pause Schedules in Bulk](/content/reference-docs/api/schedule/bulk-pause-schedule)
+- [Resume Schedules in Bulk](/content/reference-docs/api/schedule/bulk-resume-schedule)

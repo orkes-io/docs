@@ -145,3 +145,8 @@ curl -X 'GET' \
 ```
 
 </details>
+
+## Related pages
+
+- [Tokens](/content/reference-docs/api/tokens)
+- [Generate JWT Token](/content/reference-docs/api/tokens/generate-token)

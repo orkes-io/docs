@@ -69,3 +69,8 @@ Once the integration is configured, set access controls to manage which [applica
 The group or application can now access the integration according to the configured permissions.
 
 With the integration in place, you can now create workflows using the [SendGrid task](/content/reference-docs/system-tasks/sendgrid).
+
+## Related pages
+
+- [Email/Git](/content/category/integrations/email)
+- [Git Repository Integration with Orkes Conductor](/content/integrations/git-repository)

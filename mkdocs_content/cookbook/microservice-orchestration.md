@@ -258,3 +258,12 @@ When tasks are independent, run them in parallel with a static fork.
 ```
 
 All three HTTP calls execute simultaneously. The JOIN waits for all to complete before the workflow continues.
+
+## Related pages
+
+- [Cookbook](/content/category/tutorials)
+- [Dynamic Parallelism](/content/cookbook/dynamic-parallelism)
+- [Wait and Timer Patterns](/content/cookbook/wait-and-timers)
+- [Task Timeouts and Retries](/content/cookbook/task-timeouts-and-retries)
+- [Scheduled Workflows](/content/cookbook/workflow-scheduling)
+- [Dynamic Workflows as Code](/content/cookbook/dynamic-workflows)

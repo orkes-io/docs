@@ -89,3 +89,12 @@ curl -X 'POST' \
 Returns 200 OK, indicating that the schedule has been created successfully.
 
 </details>
+
+## Related pages
+
+- [Schedule](/content/reference-docs/api/schedule)
+- [Get Schedule](/content/reference-docs/api/schedule/get-schedule)
+- [Pause Schedule](/content/reference-docs/api/schedule/pause-schedule)
+- [Resume Schedule](/content/reference-docs/api/schedule/resume-schedule)
+- [Pause Schedules in Bulk](/content/reference-docs/api/schedule/bulk-pause-schedule)
+- [Resume Schedules in Bulk](/content/reference-docs/api/schedule/bulk-resume-schedule)
