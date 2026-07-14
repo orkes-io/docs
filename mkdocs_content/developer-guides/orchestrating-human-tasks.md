@@ -49,15 +49,6 @@ It is a best practice to create user forms in Conductor UI, even if the form is 
 5. Preview your form at any time by selecting **Preview** on the top right.
 6. Once the form is ready, select **Save** > **Confirm** on the top right.
 
-<p align="center">
-  <img
-    src="/content/img/creating-forms-human-task.png"
-    alt="Creating user forms for human task in Orkes Conductor"
-    width="100%"
-    height="auto"
-  ></img>
-</p>
-
 <details>
 <summary>Supported form layout and components</summary>
 
@@ -89,14 +80,6 @@ Following are the pre-built form components available on Orkes Conductor:
 **To configure a component:**
 
 1. Select the Edit icon beside the component. <br/> A pop-up box appears.
-   <p align="center">
-     <img
-       src="/content/img/making-form-fields-mandatory.png"
-       alt="Making form field mandatory in human tasks in Conductor"
-       width="50%"
-       height="auto"
-     ></img>
-   </p>
 2. Enter the **Field Name**, which serves as the input parameter name in the Human task configuration.
 3. Enter the **Label**, which is the text that end-users see when filling out the form.
 4. Configure the remaining settings:
@@ -148,24 +131,15 @@ Add the Human task to your workflow and configure its assignment and trigger pol
 | --------- | -------------------------------- | ----------------- | 
 | Task display name | The display name for the human task that appears in the human task execution. Use a unique human-friendly name, such as “Loan Approval” or “Booking Form”.<br/><br/>**Note**: Whenever a workflow containing a human task is executed, the execution status of the human task can be viewed under **Executions** > **Human Tasks** from the left menu on your Conductor cluster. The name specified under this field can be used to identify your human task execution from the list. | Required. |
 | User form template | Select the **User form template** previously created in [Step 1](/content/developer-guides/orchestrating-human-tasks#step-1-create-a-user-form-schema) and its **Version**. | Required. |
-| Assignment policy | Add an assignment policy to control who can fill out the form. If not configured, the Human task will not be limited to a certain group or user; anyone can complete the form.<br/><br/>**To add an assignment policy:**<ol><li>Select **+ New assignment**.</li><li>In **Assign**, select the **User type** for the assignee(s) and enter the corresponding user or group ID.</li><ul><li>**External User** or **Group**: Select this if the assignees are managed and verified in an external system, and will access your own UI to complete the task.</li><li>**Conductor User** or **Group**: Select this if the assignees are Conductor users and will access Orkes Conductor to complete the task.</li></ul><li>Enter the **SLA minutes** to specify the assignment duration before it times out. Use 0 minutes to set a non-expiring assignment.</li></ol><br/>**Notes:**<ul><li>You can add multiple assignment policies to create an escalation chain. If the first user/group fails to pick the assignment within the specified timeframe, the task will be escalated to the subsequent assignment policy in the order added here.<img src="/content/img/assignment-policy-human-task-hierarchy.png" alt="Assignment policy of human task in hierarchical order" width="100%" height="auto"></img></li><li>Additional assignment policies cannot be added if the preceding assignment policy has 0 SLA minutes.</li></ul> | Optional. |
+| Assignment policy | Add an assignment policy to control who can fill out the form. If not configured, the Human task will not be limited to a certain group or user; anyone can complete the form.<br/><br/>**To add an assignment policy:**<ol><li>Select **+ New assignment**.</li><li>In **Assign**, select the **User type** for the assignee(s) and enter the corresponding user or group ID.</li><ul><li>**External User** or **Group**: Select this if the assignees are managed and verified in an external system, and will access your own UI to complete the task.</li><li>**Conductor User** or **Group**: Select this if the assignees are Conductor users and will access Orkes Conductor to complete the task.</li></ul><li>Enter the **SLA minutes** to specify the assignment duration before it times out. Use 0 minutes to set a non-expiring assignment.</li></ol><br/>**Notes:**<ul><li>You can add multiple assignment policies to create an escalation chain. If the first user/group fails to pick the assignment within the specified timeframe, the task will be escalated to the subsequent assignment policy in the order added here.</li><li>Additional assignment policies cannot be added if the preceding assignment policy has 0 SLA minutes.</li></ul> | Optional. |
 | Auto claim | When enabled, the Human task is automatically claimed by the first assignee in the assignment list as soon as the task execution begins. This eliminates the need for manual claiming from the *Human Task inbox*. Disable this option if you want assignees to claim the task manually. | Optional. | 
 | After assignments | Select the action to be carried out after the assignment policy is timed out. You can select one of the following actions:<ul><li>**Leave open**: The Human task execution remains open to be picked up by anyone.</li><li>**Terminate**: The Human task execution is terminated and marked as deleted, and the workflow fails with the error “Task terminated as no more assignments pending and completion strategy is TERMINATE”.</li></ul> | Optional. |
-| Trigger policy | Add a trigger policy to start new workflows when the state of the Human task changes. The trigger policy works based on the human task state in the **Executions** > **Human Tasks** list. <img src="/content/img/human-task-states.png" alt="States in Human tasks based on which trigger policies can be defined" width="100%" height="auto"></img> **To add a trigger policy:**<ol><li>Select **+ New trigger**.</li><li>Select the **Trigger event**, the **Workflow** to start, and its **Version**.<ul><li>**Pending**: If the human task execution is in the pending state, the trigger workflow is executed.</li><li>**Assigned**: Once the human task is assigned to a specific assignee, the trigger workflow is executed.</li><li>**In progress**: Once the human task execution is in the progress state, the trigger workflow is executed.</li><li>**Completed**: Once the human task execution is completed, the trigger workflow is executed.</li><li>**Timed out**: Once the human task execution is timed out, the trigger workflow is executed.</li><li>**Assignee changed**: Once the human task assignee changes (as per the assignment policy or if left open and picked by anyone), the trigger workflow is executed.</li><li>**Claimant changed**: When the claimant of a human task changes (e.g., if the initially assigned user does not claim the task and it remains open, allowing another user to claim it), the trigger workflow is executed.<img src="/content/img/trigger-policy-human-task.png" alt=" Trigger policy for human task" width="100%" height="auto" ></img></li></ul></li><li>(Optional) Select **Additional inputs** to configure the workflow’s input parameters, correlation ID, and task-to-domain mapping.</li></ol>If needed, add another trigger to start another workflow. | Optional. |
+| Trigger policy | Add a trigger policy to start new workflows when the state of the Human task changes. The trigger policy works based on the human task state in the **Executions** > **Human Tasks** list. **To add a trigger policy:**<ol><li>Select **+ New trigger**.</li><li>Select the **Trigger event**, the **Workflow** to start, and its **Version**.<ul><li>**Pending**: If the human task execution is in the pending state, the trigger workflow is executed.</li><li>**Assigned**: Once the human task is assigned to a specific assignee, the trigger workflow is executed.</li><li>**In progress**: Once the human task execution is in the progress state, the trigger workflow is executed.</li><li>**Completed**: Once the human task execution is completed, the trigger workflow is executed.</li><li>**Timed out**: Once the human task execution is timed out, the trigger workflow is executed.</li><li>**Assignee changed**: Once the human task assignee changes (as per the assignment policy or if left open and picked by anyone), the trigger workflow is executed.</li><li>**Claimant changed**: When the claimant of a human task changes (e.g., if the initially assigned user does not claim the task and it remains open, allowing another user to claim it), the trigger workflow is executed.</li></ul></li><li>(Optional) Select **Additional inputs** to configure the workflow’s input parameters, correlation ID, and task-to-domain mapping.</li></ol>If needed, add another trigger to start another workflow. | Optional. |
 | Input parameters | Configure the form fields depending on the input source:<ul><li>If the field is to be filled up by the assignee, you can leave the parameter value empty or pass in a default value that can be modified before submission.</li><li>If the field is read-only and will be passed from somewhere in the workflow, enter a parameter value. The value can be passed as a variable.</li></ul> | Optional. | 
 
 Refer to the [Human task reference](/content/reference-docs/operators/human) for more information and examples on configuring the task.
 
 4. Save the workflow.
-
-<p align="center">
-  <img
-    src="/content/img/human-task.png"
-    alt="Human Task in Orkes Conductor"
-    width="100%"
-    height="auto"
-  ></img>
-</p>
 
 !!! tip
     During development, you can set the assignment policy to Conductor User or Group first to test the form. Once the Human task is connected to your own UI, you can easily switch to External User or Group. 
@@ -191,15 +165,6 @@ Run the workflow to trigger a Human task execution. The Human task will remain i
 
 The workflow (execution) ID is generated. You can use it to view the execution progress and details.
 
-<p align="center">
-  <img
-    src="/content/img/human-task-in-running-state.png"
-    alt="Human Task in Running state"
-    width="50%"
-    height="auto"
-  ></img>
-</p>
-
 ### Complete the Human task
 
 As a Conductor user, you can also access all the Human task executions on Orkes Conductor. The list of Human task executions can be found in the left navigation menu under **Executions** > **Human Tasks**, allowing you to claim and complete pending Human tasks and view past Human task executions.
@@ -219,40 +184,13 @@ Depending on your permission level, there are two tab views available on the pag
     3. Select a task.
     4. Select **Claim** to claim a task. Alternatively, select the drop-down arrow > **Override claim** to claim a previously-claimed task.
 
-    <p align="center">
-      <img
-        src="/content/img/claiming-forms.png"
-        alt="Claiming human tasks forms "
-        width="80%"
-        height="auto"
-      ></img>
-    </p>
-
     Once claimed, you can **Update** or **Complete** the task. In addition, you can **Release** the task to remove your claim so that someone else can claim it.
-
-    <p align="center">
-      <img
-        src="/content/img/update-complete-release-forms.png"
-        alt="Update/Complete/Release forms"
-        width="80%"
-        height="auto"
-      ></img>
-    </p>
 
 === "To skip a task"
 
     **To skip a task:**
 
     In your selected Human task, select **Skip** to bypass it. Alternatively, select the drop-down arrow > **Skip with reason** to include a reason for skipping the task.
-
-    <p align="center">
-      <img
-        src="/content/img/claiming-forms.png"
-        alt="Claiming human tasks forms "
-        width="80%"
-        height="auto"
-      ></img>
-    </p>
 
 === "To assign the task to a different user or group"
 
@@ -264,15 +202,6 @@ Depending on your permission level, there are two tab views available on the pag
        - **Conductor User** or **Group**: Select this if the assignees are Conductor users and will access Orkes Conductor to complete the task.
     3. Enter the **SLA minutes** to specify the assignment duration before it times out. Use 0 minutes to set a non-expiring assignment.
     4. If needed, add another assignment to create a multi-level assignment chain.
-
-    <p align="center">
-      <img
-        src="/content/img/assign-to-different-subject.png"
-        alt="Assigning to a different subject"
-        width="60%"
-        height="auto"
-      ></img>
-    </p>
 
 
 ### Search Human task executions
@@ -287,15 +216,6 @@ You can search for Human task executions in Orkes Conductor. The search page pro
 
     The task inbox view is the non-admin regular user view that lists all the tasks assigned to you, your group, or left open.
 
-    <p align="center">
-      <img
-        src="/content/img/human-task-inbox-view.png"
-        alt="Task inbox view of human task execution"
-        width="100%"
-        height="auto"
-      ></img>
-    </p>
-
     **Task inbox filters**
 
     | Filter | Description | 
@@ -305,22 +225,13 @@ You can search for Human task executions in Orkes Conductor. The search page pro
     | Start time | Filters based on the task execution time. | 
     | Output data search | Filters based on the output data. | 
     | Input data search | Filters based on the input data. | 
-    | Full-text search    | Searches all data within the execution columns based on an “AND” and “OR” query. <p align="center"><img src="/content/img/full-text-search-human-task.png" alt="Full text view of human task executions" width="100%" height="auto"></img></p> For example, `“loan" OR "cc3d2dc-18d4-11ef-a811-8a584d19ffea"`. The search will return all results that contain either the text “loan” or the specific task ID “cc3d2dc-18d4-11ef-a811-8a584d19ffea”. To get results matching both criteria, use “AND” instead of “OR”. |
+    | Full-text search    | Searches all data within the execution columns based on an “AND” and “OR” query. For example, `“loan" OR "cc3d2dc-18d4-11ef-a811-8a584d19ffea"`. The search will return all results that contain either the text “loan” or the specific task ID “cc3d2dc-18d4-11ef-a811-8a584d19ffea”. To get results matching both criteria, use “AND” instead of “OR”. |
 
     You can also filter the executions by *Available*, *Completed*, or *All*.
 
 === "Admin search"
 
     If you are a cluster admin or workflow creator for the Human task, you can use the **Admin search** tab in **Executions** > **Human Tasks** to filter and sort through all Human task executions for testing and debugging.
-
-    <p align="center">
-      <img
-        src="/content/img/admin-view-human-task.png"
-        alt="Admin view of human task executions"
-        width="100%"
-        height="auto"
-      ></img>
-    </p>
 
     **Admin search filters**
 
@@ -333,7 +244,7 @@ You can search for Human task executions in Orkes Conductor. The search page pro
     | Task reference name | Filters based on the task reference name. Multiple entries can be selected.                                                                                                                                                                                                                                                                                                                                                                                                                                                |
     | Start time          | Filters based on the task's last updated time.                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
     | Input data search   | Filters based on the input data. Supports partial search using the `*` wildcard. For example, entering `name="*doe"` returns all tasks where the input key name ends with “doe”.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
-    | Full-text search    | Searches all data within the execution columns based on an “AND” and “OR” query. <p align="center"><img src="/content/img/full-text-search-human-task.png" alt="Full text view of human task executions" width="100%" height="auto"></img></p> For example, `“loan" OR "cc3d2dc-18d4-11ef-a811-8a584d19ffea"`. The search will return all results that contain either the text “loan” or the specific task ID “cc3d2dc-18d4-11ef-a811-8a584d19ffea”. To get results matching both criteria, use “AND” instead of “OR”. |
+    | Full-text search    | Searches all data within the execution columns based on an “AND” and “OR” query. For example, `“loan" OR "cc3d2dc-18d4-11ef-a811-8a584d19ffea"`. The search will return all results that contain either the text “loan” or the specific task ID “cc3d2dc-18d4-11ef-a811-8a584d19ffea”. To get results matching both criteria, use “AND” instead of “OR”. |
     | Workflow IDs        | Filters based on the workflow (execution) IDs.                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
     | Filter by actors    | Filters based on Claimant or Assignee.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
     | Actor type          | Filters based on the actor type for the selected actor. Supported values: <ul><li>Conductor User</li> <li>Conductor Group</li> <li>External User</li> <li>External Group</li> </ul>                                                                                                                                                                                                                                                                                                                                        |

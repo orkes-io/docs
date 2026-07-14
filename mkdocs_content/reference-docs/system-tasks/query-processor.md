@@ -182,17 +182,6 @@ The output includes information such as:
 - Execution duration
 - Workflow inputs and outputs
 
-<center>
-  <p>
-    <img
-      src="/content/img/using-conductor-api.png "
-      alt="Example using Conductor API method"
-      width="100%"
-      height="auto"
-    />
-  </p>
-</center>
-
 </p>
 </details>
 

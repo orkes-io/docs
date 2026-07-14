@@ -90,16 +90,6 @@ In this method, the workflow uses two tasks to manage a long-running API.
 
 Your workflow looks like this:
 
-<p align="center">
-  <img
-    src="/content/img/long-running-api-workflow-method-1.png"
-    alt="Long Running Workflow using HTTP Poll task"
-    width="40%"
-    height="auto"
-    style="padding-bottom: 40px; padding-top: 40px;"
-  />
-</p>
-
 In this workflow, the HTTP task triggers the API that starts a job. The HTTP Poll task queries the status endpoint every 5 seconds until the termination condition is met. The workflow completes once that condition evaluates to true.
 
 Let’s run the workflow using Conductor UI. Open your workflow definition, and select **Execute**.
@@ -154,16 +144,6 @@ When `asyncComplete` is set to true, Conductor expects the HTTP endpoint to perf
 
 Your workflow looks like this:
 
-<p align="center">
-  <img
-    src="/content/img/long-running-api-workflow-method-2.png"
-    alt="Long Running Workflow using async complete"
-    width="40%"
-    height="auto"
-    style="padding-bottom: 40px; padding-top: 40px;"
-  />
-</p>
-
 Let’s run the workflow using Conductor UI.
 
 **To run the workflow:**
@@ -188,16 +168,6 @@ POST /api/tasks/{workflowId}/{taskRefName}/{status}
 ```
 
 You can get the `workflowId` and `taskRefName` from the workflow execution view in the Conductor UI.
-
-<p align="center">
-  <img
-    src="/content/img/long-running-workflow-using-async-complete.png"
-    alt="Long Running Workflow using async complete"
-    width="100%"
-    height="auto"
-    style="padding-bottom: 40px; padding-top: 40px;"
-  />
-</p>
 
 Next, send a POST request with the status set to COMPLETED. After the callback, the task status changes to COMPLETED, and the workflow ends.
 

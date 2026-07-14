@@ -24,14 +24,8 @@ Orkes Conductor uses Prometheus to capture a comprehensive set of metrics, which
 
 To access the dashboard, go to **Metrics** from the left navigation menu on your Conductor cluster.
 
-<p align="center"><img src="/content/img/accessing-dashboard.png" alt="Accessing dashboard from Conductor UI" width="90%" height="auto"></img></p>
-
 !!! note
     To enable Metrics for your cluster, please [get in touch with the Orkes team](https://orkes.io/talk-to-an-expert).
-
-Example dashboard set up using Prometheus and Grafana:
-
-<p align="center"><img src="/content/img/sample-dashboard.png" alt="Sample Dashboard" width="90%" height="auto"></img></p>
 
 ## Conductor metrics
 
@@ -153,13 +147,7 @@ Alerts can be configured for any metric from your dashboard, or via the **Alerti
 
     1. Open your Grafana dashboard and select the metric.
     2. Select **Edit**.
-
-    <p align="center"><img src="/content/img/editing-metric.png" alt="Editing a metric from dashboard" width="90%" height="auto"></img></p>
-
     3. Go to the **Alerts** tab and select **Create alert rule from this panel**.
-
-    <p align="center"><img src="/content/img/creating-alerts-for-metrics.png" alt="Creating alerts for a metrics in dashboard" width="90%" height="auto"></img></p>
-
     4. [Create the alert](https://grafana.com/tutorials/alerting-get-started/#create-an-alert) based on your requirements.
 
 === "From the Alerting section"

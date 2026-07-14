@@ -76,16 +76,6 @@ curl -X 'POST' \
 
 Returns 200 OK, indicating that the workflow execution has been upgraded successfully. All new tasks before the currently running task are skipped in the execution.
 
-<p align="center">
-  <img
-    src="/content/img//upgrade_workflow_api-skipped_task.png"
-    alt="Screenshot of Conductor UI showing the skipped tasks in the upgraded workflow execution."
-    width="90%"
-    height="auto"
-    style="padding-bottom: 40px; padding-top: 40px;"
-  />
-</p>
-
 </details>
 
 <details>
@@ -111,16 +101,6 @@ curl -X 'POST' \
 **Response**
 
 Returns 200 OK, indicating that the workflow execution has been upgraded successfully, and the `workflowInput` is updated in the running execution.
-
-<p align="center">
-  <img
-    src="/content/img/upgrade-workflow-with-updated-input.png"
-    alt="Screenshot of Conductor UI showing updated workflow input using upgrade workflow API."
-    width="90%"
-    height="auto"
-    style="padding-bottom: 40px; padding-top: 40px;"
-  />
-</p>
 
 </details>
 
@@ -150,16 +130,6 @@ Returns 200 OK, indicating that the workflow execution has been upgraded success
 **Response**
 
 Returns 200 OK, indicating that the workflow execution has been upgraded successfully.  The output for the skipped task (event_ref) is added to the execution.
-
-<p align="center">
-  <img
-    src="/content/img/skipped-task-updated-output.png"
-    alt="Screenshot of Conductor UI showing updated task output for a skipped task."
-    width="90%"
-    height="auto"
-    style="padding-bottom: 40px; padding-top: 40px;"
-  />
-</p>
 
 </details>
 

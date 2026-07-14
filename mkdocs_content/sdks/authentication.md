@@ -129,15 +129,6 @@ For quick testing on Orkes Conductor without creating an application, you can ob
 
 In the bottom left corner of the Conductor UI, select **Copy Token**.
 
-<p align="center">
-  <img
-    src="/content/img/authentication-copying-token.png"
-    alt="Copying user-based token in Orkes Conductor"
-    width="80%"
-    height="auto"
-  ></img>
-</p>
-
 ## Related pages
 
 - [API Reference](/content/category/ref-docs/api)

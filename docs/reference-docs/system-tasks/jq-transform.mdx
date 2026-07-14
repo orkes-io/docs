@@ -143,17 +143,6 @@ This example builds a workflow that uses a JSON JQ Transform task to concatenate
 
 This takes you to the workflow execution page. Once completed, it returns the workflow output as follows:
 
-<center>
-  <p>
-    <img
-      src="/content/img/jq-example-output.png"
-      alt="Workflow output"
-      width="100%"
-      height="auto"
-    />
-  </p>
-</center>
-
 **How the JSON JQ Transform task works in this workflow**
 
 The input parameters for the JSON JQ Transform task are defined as follows:
@@ -186,17 +175,6 @@ In the workflow execution, select the task **jq_example_task** to view the task 
 
 - `result`—The first result produced by the JQ expression.
 - `resultList`—All results produced by the expression. In this example, the expression returns a single result.
-
-<center>
-  <p>
-    <img
-      src="/content/img/jq-task-output.png"
-      alt="Workflow output"
-      width="100%"
-      height="auto"
-    />
-  </p>
-</center>
 
 </p>
 </details>
@@ -268,31 +246,9 @@ This example builds a workflow that retrieves recent stories from the Hacker New
 
 This takes you to the workflow execution page. Once completed, it returns the following output:
 
-<center>
-  <p>
-    <img
-      src="/content/img/jq-example-workflow-output.png"
-      alt="Workflow output"
-      width="100%"
-      height="auto"
-    />
-  </p>
-</center>
-
 **How the JSON JQ Transform task works in this workflow**
 
 The HTTP task via the Hacker News API returns a verbose JSON response that includes an array. Each entry contains many fields, such as timestamps, author details, URLs, and metadata.
-
-<center>
-  <p>
-    <img
-      src="/content/img/jq-example-http-output.png"
-      alt="HTTP task output"
-      width="100%"
-      height="auto"
-    />
-  </p>
-</center>
 
 In this workflow, the JSON JQ Transform task reduces that response to a simplified structure that includes only:
 
@@ -316,17 +272,6 @@ The JSON JQ Transform task returns:
 
 - `result`: The transformed array returned by the JQ expression.
 - `resultList`: All results produced by the expression. In this example, the expression returns a single array.
-
-<center>
-  <p>
-    <img
-      src="/content/img/jq-hn-output.png"
-      alt="Workflow output"
-      width="100%"
-      height="auto"
-    />
-  </p>
-</center>
 
 </p>
 </details>

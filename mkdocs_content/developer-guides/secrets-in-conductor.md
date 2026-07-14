@@ -16,46 +16,28 @@ If a user does not have access to a referenced secret, the workflow will fail.
 
 Secrets can be created through the Conductor UI or API. For automation and environment promotion, prefer the API so secret setup can be handled by deployment tooling.
 
-=== "Using API"
+Create or update a secret:
 
-    Create or update a secret:
+```shell
+curl -sS -X PUT "$CONDUCTOR_SERVER_URL/secrets/payment_api_token" \
+  -H "X-Authorization: $CONDUCTOR_AUTH_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '"secret-value"'
+```
 
-    ```shell
-    curl -sS -X PUT "$CONDUCTOR_SERVER_URL/secrets/payment_api_token" \
-      -H "X-Authorization: $CONDUCTOR_AUTH_TOKEN" \
-      -H "Content-Type: application/json" \
-      -d '"secret-value"'
-    ```
+List secret names:
 
-    List secret names:
+```shell
+curl -sS -X POST "$CONDUCTOR_SERVER_URL/secrets" \
+  -H "X-Authorization: $CONDUCTOR_AUTH_TOKEN"
+```
 
-    ```shell
-    curl -sS -X POST "$CONDUCTOR_SERVER_URL/secrets" \
-      -H "X-Authorization: $CONDUCTOR_AUTH_TOKEN"
-    ```
+Related APIs:
 
-    Related APIs:
-
-    - [Create or update secret](/content/reference-docs/api/secrets/create-secret)
-    - [List all secrets](/content/reference-docs/api/secrets/list-all-secrets)
-    - [Check secret exists](/content/reference-docs/api/secrets/check-secret-exists)
-    - [Delete secret](/content/reference-docs/api/secrets/delete-secret)
-
-=== "Using Conductor UI"
-
-    **To create a secret:**
-
-    1. Go to **Definitions** > **Secrets** from the left navigation menu on your Conductor cluster.
-    2. Select **+ Add secret**.
-    3. Enter the following parameters:
-
-    | Parameter    | Description                                                                                         | Required/ Optional |
-    | ------------ | --------------------------------------------------------------------------------------------------- | ------------------ |
-    | Secret name  | A unique name for the secret. Used to reference the secret in workflow definitions.                 | Required.          |
-    | Secret value | The value to be stored as secret. Can be a plain string or a JSON object.                           | Required.          |
-
-    4. Select **Add** to save the secret.
-
+- [Create or update secret](/content/reference-docs/api/secrets/create-secret)
+- [List all secrets](/content/reference-docs/api/secrets/list-all-secrets)
+- [Check secret exists](/content/reference-docs/api/secrets/check-secret-exists)
+- [Delete secret](/content/reference-docs/api/secrets/delete-secret)
 
 ### Using secrets in workflows
 
@@ -79,9 +61,8 @@ For example, if a secret named `db-credentials` has the value `{"username": "adm
 
 Updating a secret does not require changing or redeploying workflow definitions, since workflows reference the secret name rather than its value. Keep the secret name stable and rotate the value stored behind it.
 
-Secrets can be updated in three ways:
+Secrets can be updated in two ways:
 
-- Using the Conductor UI
 - Using the API
 - Using the [Update Secret task](/content/reference-docs/system-tasks/update-secret) within a workflow
 
@@ -95,15 +76,6 @@ Secrets can be updated in three ways:
       -H "Content-Type: application/json" \
       -d '"rotated-secret-value"'
     ```
-
-=== "Using Conductor UI"
-
-    **To update the secret:**
-
-    1. Go to **Definitions** > **Secrets**, and select the secret to update.
-    2. In **Secret value**, enter the updated value, then select **Edit** to confirm.
-
-    <p align="center"><img src="/content/img/updating-secrets.png" alt="Updating secrets via Conductor UI" width="80%" height="auto"></img></p>
 
 === "Using Update Secret task"
 

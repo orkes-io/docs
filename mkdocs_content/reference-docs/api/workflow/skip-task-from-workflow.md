@@ -91,26 +91,6 @@ curl -X 'PUT' \
 
 Returns 200 OK, indicating that the task has been skipped successfully. You can verify the update by reviewing the task’s input and output in the workflow execution details.
 
-<p align="center">
-  <img
-    src="/content/img/updated-task-input-for-a-skipped-task.png"
-    alt="Screenshot of Conductor UI showing updated task input for a skipped task."
-    width="90%"
-    height="auto"
-    style="padding-bottom: 40px; padding-top: 40px;"
-  />
-</p>
-
-<p align="center">
-  <img
-    src="/content/img/updated-task-output-for-a-skipped-task.png"
-    alt="Screenshot of Conductor UI showing updated task output for a skipped task."
-    width="90%"
-    height="auto"
-    style="padding-bottom: 40px; padding-top: 40px;"
-  />
-</p>
-
 </details>
 
 ## Related pages

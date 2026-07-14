@@ -77,13 +77,9 @@ The next step is to create a webhook in Orkes Conductor.
 !!! note
     When both the options, **Workflow to receive webhook event** and **Start workflow when webhook event comes**, are configured, the webhook payload will be sent to both workflows.
 
-<p align="center"><img src="/content/img/creating-webhook-in-orkes-conductor.png" alt="Creating Webhook in Orkes Conductor" width="50%" height="auto"></img></p>
-
 4. Select **Save**. 
 
 An unverified webhook URL will be generated.
-
-<p align="center"><img src="/content/img/Webhook-with-an-unverified-URL-in-Conductor.png" alt="Webhook with an unverified UR" width="100%" height="auto"></img></p>
 
 Here is the JSON schema for a webhook:
 
@@ -145,8 +141,6 @@ Verification depends on the selected source platform. Use the following table to
 
 Once the URLs are verified (using the respective verification method), the URL status will be marked as **Verified** in Conductor.
 
-<p align="center"><img src="/content/img/Webhook-with-a-verified-URL-in-Conductor.png" alt="Webhook with a verified UR" width="100%" height="auto"></img></p>
-
 ## Step 4: Verify that Conductor received webhook events
 
 The incoming webhook payload triggers the workflow in different ways, depending on your configuration:
@@ -157,13 +151,9 @@ The incoming webhook payload triggers the workflow in different ways, depending 
 
 To verify that the webhook events have been received by Conductor, open the webhook by navigating to **Definitions** > **Webhook**, and access the webhook execution history. 
 
-<p align="center"><img src="/content/img/webhook-execution-history.png" alt="Verifying Webhook execution in Orkes Conductor" width="100%" height="auto"></img></p>
-
 This includes details such as the event ID, whether the headers are matched, the triggered workflow (execution) IDs, and the timestamp of when the event was received.
 
 You can also use the search option to filter results based on these parameters.
-
-<p align="center"><img src="/content/img/filter-webhook-exeuctions.png" alt="Filtering Webhook execution in Orkes Conductor" width="100%" height="auto"></img></p>
 
 ## Production notes
 

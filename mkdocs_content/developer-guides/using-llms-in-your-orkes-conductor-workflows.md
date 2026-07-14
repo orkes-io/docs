@@ -62,8 +62,6 @@ Before using an AI model in a workflow, you must integrate it with your Orkes Co
 1. Go to **Integrations** from the left menu on your Conductor cluster.
 2. Select **+ New integration**.
 3. In the **AI/LLM** section, select **+ Add** to integrate your preferred model provider.
-   <p align="center"><img src="/content/img/quickstart-add-integrations.png" alt="Quickstart - Add Integrations" width="100%" height="auto"></img></p>
-
 4. Enter the required parameters for the chosen provider.
 
     :::note
@@ -132,9 +130,6 @@ As best practice, use Orkes’ [RBAC feature](/content/category/access-control-a
 2. Create a new group/application or select an existing one.
 3. In the **Permissions** section, select **+ Add permission**.
 4. In the **Integration** tab, select the required AI models and/or vector databases and toggle the necessary permissions.
-
-    <p align="center"><img src="/content/img/add-integration-permission.png" alt="Add Permissions for Integrations" width="70%" height="auto"></img></p>
-
 5. In the **Prompt** tab, select the required prompt and toggle the necessary permissions.
 6. Select **Add Permissions**.
 
@@ -157,8 +152,6 @@ With the AI/LLM integration and AI prompt ready, you can add an AI task to your 
 5. Save the workflow.
 
 Once the workflow is saved, you can test the newly added AI task or run the workflow.
-
-<p align="center"><img src="/content/img/using-llm-test-task.png" alt="Test AI task." width="70%" height="auto"></img></p>
 
 ## Production notes
 

@@ -257,9 +257,6 @@ All worker tasks should be registered to the Conductor server, which is done by 
     1. Go to **Definitions > Task** from the left navigation menu on your Conductor cluster.
     2. Select **+ Define task**.
     3. Enter the task details, such as the rate limits, retry settings, timeout settings, and expected inputs and outputs. The **Name** must match the task name defined previously in your code.
-
-    ![Define task in Orkes Conductor](/content/img/using-workers/using_workers-define_custom_task.png)
-
     4. Select **Save > Confirm Save**.
 
 
@@ -278,9 +275,6 @@ In Orkes Conductor, an [application account](/content/category/access-control-an
 1. Configure an application account.
    - Go to **Access Control > Applications** from the left navigation menu on your Conductor cluster.
    - Create a new application or select an application to which you will be adding your worker. Ensure that the application role has **Worker** enabled.
-
-![Add worker to application account in Orkes Conductor](/content/img/using-workers/using_workers-application_roles.png)
-
 2. Get the application access key for your worker project.
    - In **Access Keys**, select **Create access key** and store your credentials securely.
    - Set the Key ID and Key Secret in your project.
@@ -292,8 +286,6 @@ In Orkes Conductor, an [application account](/content/category/access-control-an
    - Select **Add Permissions**.
 
 The application account can now execute the worker task.
-
-![Add permissions to application account in Orkes Conductor](/content/img/using-workers/using_workers-app_permissions.png)
 
 Keep worker applications separate from workflow-starting applications. A worker needs permission to poll and complete tasks; it usually does not need permission to start workflows.
 
@@ -373,8 +365,6 @@ To use a [Worker task](/content/reference-docs/worker-task), add it to a workflo
        - Add a **Worker Task (Simple)** and enter the task name in **Task Definition**.
     4. Configure the task, such as its inputs, caching, and optionality.
     5. On the top right, select **Save > Confirm**.
-
-    ![Add task in Orkes Conductor](/content/img/using-workers/using_workers-add_task_to_workflow.png)
 
 
 ### Run workflow

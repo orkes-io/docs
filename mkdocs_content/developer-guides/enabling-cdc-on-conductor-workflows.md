@@ -20,69 +20,27 @@ In Orkes Conductor, Change Data Capture (CDC) allows you to send [workflow state
 
 You can configure CDC using the workflow JSON definition or Conductor UI.
 
-=== "Using workflow JSON"
+**To enable CDC:**
 
-    **To enable CDC:**
+1. Go to **Definitions** > **Workflow** from the left navigation menu on your Conductor cluster.
+2. Create a new workflow or select an existing one. 
+3. Add the following parameters to the workflow definition code:
 
-    1. Go to **Definitions** > **Workflow** from the left navigation menu on your Conductor cluster.
-    2. Create a new workflow or select an existing one. 
-    3. Add the following parameters to the workflow definition code:
+| Parameter | Description | 
+| --------- | ----------- | 
+| workflowStatusListenerEnabled | Set to `true` to enable CDC. | 
+| workflowStatusListenerSink | The event sink in the format:<br/> **message-broker-type:integration-name:topic/queue-name**<br/>where,<ul><li>**message-broker-type**: The message broker type where the payloads are sent. Supported types:<ul><li>amqp</li><li>sqs</li><li>azure</li><li>kafka</li><li>nats</li><li>gcp_pubsub</li><li>Ibm_mq</li></ul></li><li>**integration-name**: The message broker integration name added to the cluster.</li><li>**topic/queue-name**: The queue name or topic name where the payloads are sent.</li></ul>
 
-    | Parameter | Description | 
-    | --------- | ----------- | 
-    | workflowStatusListenerEnabled | Set to `true` to enable CDC. | 
-    | workflowStatusListenerSink | The event sink in the format:<br/> **message-broker-type:integration-name:topic/queue-name**<br/>where,<ul><li>**message-broker-type**: The message broker type where the payloads are sent. Supported types:<ul><li>amqp</li><li>sqs</li><li>azure</li><li>kafka</li><li>nats</li><li>gcp_pubsub</li><li>Ibm_mq</li></ul></li><li>**integration-name**: The message broker integration name added to the cluster.</li><li>**topic/queue-name**: The queue name or topic name where the payloads are sent.</li></ul>
+**Example**
 
-    **Example**
+```JSON
+// workflow definition
 
-    ```JSON
-    // workflow definition
+"workflowStatusListenerEnabled": true,
+"workflowStatusListenerSink": "message-broker-type:integration-name:topic/queue-name" // event sink
+```
 
-    "workflowStatusListenerEnabled": true,
-    "workflowStatusListenerSink": "message-broker-type:integration-name:topic/queue-name" // event sink
-    ```
-
-    4. Save the workflow.
-
-=== "Using Conductor UI"
-
-    **To enable CDC:**
-
-    1. Go to **Definitions** > **Workflow** from the left navigation menu on your Conductor cluster.
-    2. Create a new workflow or select an existing one. 
-    3. In **Workflow** tab, go to **Execution Parameters**, and toggle on **Enable workflow status listener**.
-
-    <p align="center">
-      <img
-        src="/content/img/workflow-listener-sink-ui.png"
-        alt="Enabling workflow status listener via UI"
-        width="100%"
-        height="auto"
-      ></img>
-    </p>
-
-    4. In **Workflow listener sink**, select the required integration already added to the cluster.
-    5. Enter the topic or queue name manually into the sink.
-
-    For example, if you have added an AMQP integration named `amqp-test`, it appears in the drop-down list of available integrations as follows:
-
-    <p align="center">
-      <img
-        src="/content/img/workflow-listener-sink-ui-drop-down.png"
-        alt="Drop-down listing the integrations for workflow listener sink"
-        width="100%"
-        height="auto"
-      ></img>
-    </p>
-
-    Select the integration and enter the queue name to update the workflow listener sink as follows:
-
-    ```JSON
-    "workflowStatusListenerSink": "amqp:amqp-test:queue-name"
-    ```
-
-    6. Save the workflow.
-
+4. Save the workflow.
 
 ### Using CDC with Kafka and AVRO
 

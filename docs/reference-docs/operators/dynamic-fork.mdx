@@ -314,8 +314,6 @@ This takes you to the workflow execution page.
 
 You can verify the execution by inspecting the completed tasks and their outputs on the workflow execution page.
 
-<p><img src="/content/img/dynamic-fork-different-tasks.png" alt="Example execution of a workflow with Dynamic Fork/Join running different tasks"/></p>
-
 </details>
 
 <details>
@@ -386,7 +384,6 @@ This takes you to the workflow execution page.
 
 To verify, open the forked HTTP task instances under the Dynamic Fork task and confirm that each task completed successfully and returned a response.
 
-<center><p><img src="/content/img/dynamic-fork-same-tasks.png" alt="Example execution of a workflow with Dynamic Fork/Join running same tasks" width="40%" height="auto"/></p></center>
 </details>
 
 <details>
@@ -459,15 +456,6 @@ During execution, Conductor inserts an additional parameter called `__index` int
   "__index": 2 // index of the element in the source array
 }
 ```
-
-<p align="center">
-  <img
-    src="/content/img/dynamic-fork-task-fruit-example-input-UI.png"
-    alt="UI screenshot of one input instance for the Dynamic Fork task at run-time"
-    width="70%"
-    height="auto"
-  />
-</p>
 
 If `forkTaskInputs` contains simple values (for example, ["apple", "orange", "kiwi"]), Conductor  will set each array element in a parameter called `input`, and still adds `__index`:
 

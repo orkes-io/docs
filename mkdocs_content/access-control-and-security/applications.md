@@ -38,8 +38,6 @@ Application roles grant additional access on top of this default behavior and sh
 - **Unrestricted Roles**: Roles that can be granted only by a cluster Admin.
 - **Application Roles**: The roles available to any user with access to applications.
 
-<p align="center"><img src="/content/img/RBAC/app-roles.png" alt="App roles" width="80%" height="auto"></img></p>
-
 === "Unrestricted Roles"
 
     Unrestricted roles can only be added by a cluster Admin. Unrestricted roles include:
@@ -107,8 +105,6 @@ Manage applications programmatically with the [Applications API](/content/refere
 <summary>Example</summary>
 
 In this example, two programs have access to Orkes Conductor workflows. Both of these workflows rely on the same task, Task X, which is performed by a worker application, Worker X.
-
-<p align="center"><img src="/content/img/RBAC/application_access_example.jpg" alt="Example application" width="90%" height="auto"></img></p>
 
 One way to handle this is to create a single application with **Execute** access to Workflow 1, Workflow 2, and Task X and provide the application keys/secrets to Program 1, Program 2, and Worker X. However, this setup violates the principle of least privilege, where applications should only have access to the endpoints they require. In this case, Worker X should not have **Execute** access for the workflows.
 

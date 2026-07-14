@@ -44,9 +44,7 @@ You can add or remove multiple tags to various resources.
     - **APIs** > **Services**
     - **Access Control** > **Applications**
 2. Locate the specific resource.
-    <p align="center"><img src="/content/img/RBAC/adding-tags-to-workflow.png" alt="Adding a tag to an existing workflow" width="90%" height="auto"></img></p>
 3. In the **Actions** column, select the **Tag** icon. <br/>A pop-up window for Edit Tags appears.
-    <p align="center"><img src="/content/img/RBAC/editing-tags-in-conductor.png" alt="Editing a tag" width="60%" height="auto"></img></p>
 4. To create a tag, enter a tag in the `key:value` format and select **Enter.**
 5. To remove a tag, select **x** next to the tag.
 6. Once tagged, select **Save**.
@@ -58,8 +56,6 @@ The tags dashboard provides a complete overview of all tags in the cluster and t
 **To view the tags dashboard:**
 
 1. Go to **Definitions** > **Tags Dashboard** from the left navigation menu on your Conductor cluster.
-
-<p align="center"><img src="/content/img/tags-dashboard.png" alt="Tags dashboard in Orkes Conductor" width="90%" height="auto"></img></p>
 
 The page displays the total number of tags in the cluster, along with the count of resources associated with each tag.
 
@@ -123,8 +119,6 @@ Before granting tag permissions, confirm that the resources already using the ta
 
     All users in the group now have access to all resources associated with the tag. You can select the drop-down icon to view all of the tagged resources.
 
-    <p align="center"><img src="/content/img/RBAC/adding-tags-to-a-user-group-in-conductor.png" alt="Adding tags to a user group" width="90%" height="auto"></img></p>
-
 === "For Applications"
 
     **To add permissions to an application:**
@@ -141,8 +135,6 @@ Before granting tag permissions, confirm that the resources already using the ta
     6. Select **Add permissions**.
 
     The application now has access to all resources associated with the tag. You can select the drop-down icon to view all of the tagged resources.
-
-    <p align="center"><img src="/content/img/RBAC/adding-tags-to-application-in-orkes-conductor.png" alt="Adding tags to application in Conductor" width="90%" height="auto"></img></p>
 
 
 ## APIs

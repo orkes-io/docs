@@ -116,26 +116,6 @@ Before a task is scheduled, the server checks if there is cached output for the 
 
 If no cached output is found, the task is scheduled as usual. When the task completes successfully, the output is cached under the specified cache key for the specified duration.
 
-## Enable caching in the UI
-
-**To cache task output:**
-
-1. Go to **Definitions** > **Workflow** from the left navigation menu on your Conductor cluster.
-2. Select a workflow.
-3. In the visual workflow editor, select the task you want to cache.
-4. Turn on the **Cache output** toggle.
-5. Enter the **Cache key** and **TTL (in seconds).**
-
-<p align="center">
-  <img
-    src="/content/img/dev-guides/caching_task_outputs-UI_screen.png"
-    alt="Configuring cache output in UI."
-    width="100%"
-    height="auto"
-  ></img>
-</p>
-
-
 ## Example
 
 <details markdown="1">

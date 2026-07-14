@@ -85,15 +85,6 @@ You can configure retry behavior for tasks in its **task definition**. The param
 
 ### Example retry behavior
 
-<p align="center">
-  <img
-    src="/content/img/dev-guides/handling_failures-retry_example.jpg"
-    alt="Diagram showing how the Conductor server and worker interact in the event of a retry."
-    width="100%"
-    height="auto"
-  ></img>
-</p>
-
 Based on the retry configuration in the above figure, the following sequence of events will occur in the event of a retry:
 
 1. Worker (W1) polls the Conductor server for task T1 and receives the task.
@@ -149,28 +140,10 @@ You can configure timeout behavior for tasks in its **task definition** to handl
 
 In the figure below, task T1 isn’t polled by the worker within 60 seconds, so Conductor marks it as `TIMED_OUT`.
 
-<p align="center">
-  <img
-    src="/content/img/dev-guides/handling_failures-poll_timeout_example.jpg"
-    alt="Diagram showing how the Conductor server and worker interact in the event of a poll timeout."
-    width="100%"
-    height="auto"
-  ></img>
-</p>
-
 </details>
 
 <details markdown="1">
 <summary>Response timeout</summary>
-
-<p align="center">
-  <img
-    src="/content/img/dev-guides/handling_failures-response_timeout_example.jpg"
-    alt="Diagram showing how the Conductor server and worker interact in the event of a response timeout."
-    width="100%"
-    height="auto"
-  ></img>
-</p>
 
 Based on the timeout configuration in the above figure, the following sequence of events will occur in the event of a delayed worker response:
 
@@ -184,15 +157,6 @@ Based on the timeout configuration in the above figure, the following sequence o
 
 <details markdown="1">
 <summary>Timeout</summary>
-
-<p align="center">
-  <img
-    src="/content/img/dev-guides/handling_failures-timeout_example.jpg"
-    alt="Diagram showing how the Conductor server and worker interact in the event of a timeout."
-    width="100%"
-    height="auto"
-  ></img>
-</p>
 
 Based on the timeout configuration in the above figure, the following sequence of events will occur when a task cannot be completed within the given duration:
 
@@ -271,15 +235,6 @@ You can set a failure workflow for a workflow in its **workflow definition**. Be
 2. Select the workflow that you want to add a failure workflow to.
 3. In the **Workflow** tab on the right, scroll down to **Execution Parameters** > **Failure/Compensation** > **Failure/Compensation workflow name**, and select the failure workflow from the dropdown box.
 4. Select **Save** > **Confirm save**.
-
-<p align="center">
-  <img
-    src="/content/img/failure-workflow.png"
-    alt="Configuring failure workflow in UI."
-    width="100%"
-    height="auto"
-  ></img>
-</p>
 
 **Example**
 

@@ -41,8 +41,6 @@ A service can be registered for use in [HTTP](https://orkes.io/content/reference
     7. (If the endpoint requires authorization) Enter the key and value in the **Authorization key** and **Value** fields.
     8. Select **Save**.
 
-    <p align="center"><img src="/content/img/creating-sample-http-services.png" alt="Creating sample service registry definition for HTTP services" width="100%" height="auto"></img></p>
-
 === "gRPC services"
 
     **To define a service:**
@@ -57,12 +55,8 @@ A service can be registered for use in [HTTP](https://orkes.io/content/reference
     8. (If the endpoint requires authorization) Enter the key and value in the **Authorization key** and **Value** fields.
     9. Select **Save**.
 
-    <p align="center"><img src="/content/img/creating-sample-grpc-services.png" alt="Creating sample service registry definition for gRPC services" width="100%" height="auto"></img></p>
-
 
 To clone an existing service definition, select the clone icon next to the service in the Remote Services list. Enter a new name for the cloned service and select Clone. The new service is created with all the configuration and methods copied from the original.
-
-<p align="center"><img src="/content/img/clone-service.png" alt="Cloning services" width="100%" height="auto"></img></p>
 
 ## Discover or add endpoints
 
@@ -78,11 +72,7 @@ After defining a service, you can either automatically discover its endpoints or
     1. Open your service definition.
     2. Select **Discover methods** to fetch all endpoints automatically.
 
-    <p align="center"><img src="/content/img/fetching-endpoints-http-services.png" alt="Fetching endpoints from the HTTP services" width="100%" height="auto"></img></p>
-
     Conductor fetches all endpoints defined in the Swagger specification. The corresponding schemas are automatically registered under [Schemas](https://orkes.io/content/developer-guides/schema-validation) in Conductor.
-
-    <p align="center"><img src="/content/img/registered-schema-from-fetched-endpoints.png" alt="Schema registered from the fetched endpoints of HTTP service" width="100%" height="auto"></img></p>
 
 === "gRPC services"
 
@@ -96,8 +86,6 @@ After defining a service, you can either automatically discover its endpoints or
     1. Open your service definition.
     2. Select **Discover methods** to fetch all endpoints automatically.
 
-    <p align="center"><img src="/content/img/fetching-endpoints-grpc-services.png" alt="Fetching endpoints from the gRPC services" width="100%" height="auto"></img></p>
-
     **To generate the compiled binary protobuf files for reflection-disabled services:**
 
     1. [Install protoc](https://grpc.io/docs/protoc-installation/) if not already installed.
@@ -110,8 +98,6 @@ After defining a service, you can either automatically discover its endpoints or
     3. Open your service registry definition in Conductor, and go to **Proto Files**.
     4. Select **+ Upload Proto File**, and upload the ***compiled.bin*** file.
 
-    <p align="center"><img src="/content/img/uploading-proto-files-grpc-services.png" alt="Uploading proto files for the gRPC services" width="100%" height="auto"></img></p>
-
     Once uploaded, Conductor extracts and registers the services, making them ready for use in workflows.
 
 
@@ -123,8 +109,6 @@ After defining a service, you can either automatically discover its endpoints or
     **To add a new endpoint to the HTTP services:**
 
     1. From your service definition, select **+ Add New Method.**
-
-    <p align="center"><img src="/content/img/adding-new-methods.png" alt="Adding a new method to the service registry definition" width="100%" height="auto"></img></p>
 
     2. Enter the following endpoint parameters:
 
@@ -154,8 +138,6 @@ After defining a service, you can either automatically discover its endpoints or
     **To add a new endpoint to the gRPC services:**
 
     1. From your service definition, select **+ Add New Method.**
-
-    <p align="center"><img src="/content/img/adding-new-methods-grpc.png" alt="Adding a new method to the service registry definition" width="100%" height="auto"></img></p>
 
     2. Enter the following endpoint parameters:
 
@@ -223,15 +205,9 @@ Once the endpoints are fetched or added, you can test them before adding them to
 1. From your service registry definition page, select the test (▶) icon next to the endpoint.
 2. Make the required configuration changes, and select **Execute**.
 
-<p align="center"><img src="/content/img/endpoint-testing.gif" alt="Testing endpoints" width="100%" height="auto"></img></p>
-
 The test returns the server response and generates a link to a sample workflow execution.
 
-<p align="center"><img src="/content/img/endpoint-testing-interface.png" alt="Interface for testing endpoints with sample workflow execution link" width="100%" height="auto"></img></p>
-
 While testing the endpoints, you can also select the required host from the testing interface:
-
-<p align="center"><img src="/content/img/host-switching.png" alt="Switching between hosts while testing from Conductor UI" width="100%" height="auto"></img></p>
 
 ## Add services to workflows
 
@@ -250,8 +226,6 @@ Once the services are registered, you can add them to HTTP, HTTP Poll, and gRPC 
     6. In **Host**, select the required host for the service.
     7. In **Service method**, select the required endpoint.
     8. Select **Populate**.
-
-    <p align="center"><img src="/content/img/adding-service-to-http-task.gif" alt="Adding the registered service to an HTTP task" width="100%" height="auto"></img></p>
 
     This auto-populates the HTTP task parameters in the workflow.
 
@@ -272,8 +246,6 @@ Once the services are registered, you can add them to HTTP, HTTP Poll, and gRPC 
     6. In **Host:Port**, select the host and port for the service.
     7. In **Service method**, select the required endpoint.
     8. Select **Populate**.
-
-    <p align="center"><img src="/content/img/adding-service-to-gRPC-task.gif" alt="Adding the registered service to a gRPC task" width="100%" height="auto"></img></p>
 
     This auto-populates the gRPC task parameters in the workflow.
 

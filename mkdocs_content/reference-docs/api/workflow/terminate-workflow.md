@@ -49,16 +49,6 @@ curl -X 'DELETE' \
 
 Returns 200 OK, indicating that the workflow execution has been terminated successfully. You can view the termination reason in the Conductor UI.
 
-<p align="center">
-  <img
-    src="/content/img/terminate-workflow-example.png"
-    alt="Screenshot of Conductor UI showing terminated workflow with the termination reason."
-    width="100%"
-    height="auto"
-    style="padding-bottom: 40px; padding-top: 40px;"
-  />
-</p>
-
 </details>
 
 
@@ -77,16 +67,6 @@ curl -X 'DELETE' \
 **Response**
 
 Returns 200 OK, indicating that the workflow execution has been terminated successfully, triggering the failure workflow.
-
-<p align="center">
-  <img
-    src="/content/img/terminated-workflow-that-triggered-a-compensation-workflow.png"
-    alt="Screenshot of Conductor UI showing terminated workflow that triggered a compensation workflow."
-    width="100%"
-    height="auto"
-    style="padding-bottom: 40px; padding-top: 40px;"
-  />
-</p>
 
 </details>
 

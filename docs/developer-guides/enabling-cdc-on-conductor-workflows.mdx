@@ -3,9 +3,6 @@ slug: "/developer-guides/enabling-cdc-on-conductor-workflows"
 description: "Learn how to enable Change Data Capture (CDC) to stream workflow state changes to external message brokers."
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
 # Enabling CDC (Change Data Capture)
 
 In Orkes Conductor, Change Data Capture (CDC) allows you to send [workflow state changes](https://orkes.io/content/developer-guides/task-and-workflow-status-in-conductor#workflow-status) to external message brokers such as Kafka. This enables downstream systems to react to workflow state changes in real time, making it easier to build responsive and decoupled architectures.
@@ -21,9 +18,6 @@ Before configuring CDC, make sure the required [message broker](https://orkes.io
 :::
 
 You can configure CDC using the workflow JSON definition or Conductor UI.
-
-<Tabs>
-<TabItem value="Using workflow JSON" title ="Using workflow JSON">
 
 **To enable CDC:**
 
@@ -46,48 +40,6 @@ You can configure CDC using the workflow JSON definition or Conductor UI.
 ```
 
 4. Save the workflow.
-
-</TabItem>
-<TabItem value="Using Conductor UI" title ="Using Conductor UI">
-
-**To enable CDC:**
-
-1. Go to **Definitions** > **Workflow** from the left navigation menu on your Conductor cluster.
-2. Create a new workflow or select an existing one. 
-3. In **Workflow** tab, go to **Execution Parameters**, and toggle on **Enable workflow status listener**.
-
-<p align="center">
-  <img
-    src="/content/img/workflow-listener-sink-ui.png"
-    alt="Enabling workflow status listener via UI"
-    width="100%"
-    height="auto"
-  ></img>
-</p>
-
-4. In **Workflow listener sink**, select the required integration already added to the cluster.
-5. Enter the topic or queue name manually into the sink.
-
-For example, if you have added an AMQP integration named `amqp-test`, it appears in the drop-down list of available integrations as follows:
-
-<p align="center">
-  <img
-    src="/content/img/workflow-listener-sink-ui-drop-down.png"
-    alt="Drop-down listing the integrations for workflow listener sink"
-    width="100%"
-    height="auto"
-  ></img>
-</p>
-
-Select the integration and enter the queue name to update the workflow listener sink as follows:
-
-```JSON
-"workflowStatusListenerSink": "amqp:amqp-test:queue-name"
-```
-
-6. Save the workflow.
-</TabItem>
-</Tabs>
 
 ### Using CDC with Kafka and AVRO
 

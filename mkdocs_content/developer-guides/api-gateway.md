@@ -41,8 +41,6 @@ You can [create workflows](https://orkes.io/content/developer-guides/workflows#w
 4. In **Permissions**, select **+ Add permission**.
 5. In the **Workflow** tab, select the workflow created in [Step 1](/content/developer-guides/api-gateway#step-1-create-workflows-to-define-the-logic-for-each-endpoint) and enable **EXECUTE** permission.
 
-<p align="center"><img src="/content/img/dev-guides/gateway/create-application-api-gateway.png" alt="Create application in Orkes Conductor" width="100%" height="auto"/></p>
-
 6. Save the application.
 
 The next step is to create an authentication setting for the API service.
@@ -179,8 +177,6 @@ Each endpoint in a service must be defined as a route, which is mapped to the Co
 **To create a route within a service:**
 
 1. Go to the **Services** and select the **+** button next to the service created.
-
-<p align="center"><img src="/content/img/dev-guides/gateway/create-route-api-gateway.png" alt="Create route for API gateway" width="100%" height="auto"/></p>
 
 2. Configure the following parameters:
 
@@ -419,19 +415,13 @@ You can test route behavior directly from the Conductor UI before exposing it as
 6. Select **Test Route**.
 7. Review the **Response** to verify the route works as expected. 
 
-<p align="center"><img src="/content/img/dev-guides/gateway/testing-api-route.gif" alt="Testing a route" width="100%" height="auto"/></p>
-
 #### Verify workflow execution
 
 **To confirm that the route triggered the workflow:**
 
 1. Go to **Executions** > **Workflow** in your Conductor cluster and verify that the workflow is completed successfully.
 
-<p align="center"><img src="/content/img/dev-guides/gateway/api-gateway-triggered-execution.png" alt="Workflow triggered by the route" width="100%" height="auto"/></p>
-
 2. Select the **Workflow ID** to view the complete execution, including the workflow input and output.
-
-<p align="center"><img src="/content/img/dev-guides/gateway/api-gateway-triggered-workflow.png" alt="Workflow triggered by the route" width="100%" height="auto"/></p>
 
 #### View endpoint details
 
@@ -441,14 +431,10 @@ You can test route behavior directly from the Conductor UI before exposing it as
 2. Select a route to open its details. 
 3. You can get the cURL command for the actual endpoint here.
 
-<p align="center"><img src="/content/img/dev-guides/gateway/curl-command-for-api.png" alt="Curl command for API" width="100%" height="auto"/></p>
-
 **To view the OpenAPI documentation for the endpoint:**
 
 1. Go to **APIs** > **Services**, and select the service. 
 2. In **Metadata & Resources**, select **View API documentation**.
-
-<p align="center"><img src="/content/img/dev-guides/gateway/open-api-doc-for-api.jpg" alt="OpenAPI documentation for the APIs" width="100%" height="auto"/></p>
 
 ## Production notes
 

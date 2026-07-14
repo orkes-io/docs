@@ -23,15 +23,6 @@ To follow along, ensure you have access to the free [Orkes Developer Edition](ht
 
 Here is the document classification workflow that you’ll build in this tutorial:
 
-<p align="center">
-  <img
-    src="/content/img/document-classifier-workflow.png"
-    alt="Document Classifier Workflow"
-    width="50%"
-    height="auto"
-  ></img>
-</p>
-
 **Workflow input:**
 
 - **document_url**: The HTTP URL of the document file to classify. The workflow supports PDFs that contain scanned images, such as scanned passports or IDs. Text is extracted using OCR before classification.
@@ -72,8 +63,6 @@ The OpenAI integration is added. The next step is to add a specific model.
 
 1. In the **Integrations** page, select the + button next to your newly-created OpenAI integration.
 
-<p align="center"><img src="/content/img/tutorial/ai_orch_quickstart-add_new_model.png" alt="Screenshot of the + icon in the OpenAI integration." width="100%" height="auto"></img></p>
-
 2. Select **+ New model**.
 3. Enter the **Model Name** as “gpt-4o” and an optional description like “OpenAI’s gpt-4o model”.
 4. Ensure that the **Active** toggle is switched on and select **Save**.
@@ -92,15 +81,6 @@ The integration is now ready to use. The next step is creating an AI prompt temp
 6. In **Prompt Template**, enter your prompt, which will classify the document into appropriate categories. For example:
 
 _We have a document that was scanned using OCR. The content is {'${text}'}. You need to classify the document based on the provided OCR content. The document could be one of these: W2, Drivers License, Pay stub, Employment Verification Letter, or Mortgage Application. Suppose the provided content does not match with any of those documents. In that case, you must reply NO_MATCH, and in the following line, you must give a human-understandable message about the result and why that determination was made in under three sentences. If the provided content matches, return the values found, including the document type. If the social security number is part of the values, obfuscate the first five digits._
-
-<p align="center">
-  <img
-    src="/content/img/doc-classifier-prompt-template.png"
-    alt="Creating a prompt template in Orkes Conductor"
-    width="100%"
-    height="auto"
-  ></img>
-</p>
 
 Here, we have defined `${text}` as a variable derived from the previous tasks' output. This will become clearer once we incorporate this prompt into the workflow.
 
@@ -203,16 +183,6 @@ With the integration and prompt ready, let’s create the workflow.
 
 3. Select **Save** > **Confirm**.
 4. After saving, update the **LLM Text Complete** task with your actual values:
-  
-<p align="center">
-  <img
-    src="/content/img/modifying-document-classification-template.png"
-    alt="Modifying the workflow template with configured parameters"
-    width="80%"
-    height="auto"
-  ></img>
-</p>
-
     - In **LLM provider**, replace \<YOUR-LLM-PROVIDER> with your OpenAI integration name created in [Step 1](/content/templates/document-classifier#add-openai-integration).
     - In **Model**, replace \<YOUR-LLM-MODEL> with your integrated model in [Step 1](/content/templates/document-classifier#add-gpt-4o-models).
     - In **Prompt template**, replace \<YOUR-PROMPT> with your prompt created in [Step 2](/content/templates/document-classifier#step-2-create-the-ai-prompt-for-document-classification).
@@ -236,31 +206,4 @@ The document must be accessible via an HTTP URL and end with *.pdf*.
 
 3. Select **Execute**.
 
-<p align="center">
-  <img
-    src="/content/img/running-workflow-doc-classification-template.png"
-    alt="Running workflow from Conductor UI"
-    width="80%"
-    height="auto"
-  ></img>
-</p>
-
-The workflow output will provide the category to which the document is classified. Here is an example output based on a W2 document passed as the input:
-
-<p align="center">
-  <img
-    src="/content/img/doc-classifier-workflow-output.png"
-    alt="Example workflow output"
-    width="100%"
-    height="auto"
-  ></img>
-</p>
-
-<p align="center">
-  <img
-    src="/content/img/doc-classifier-workflow-input-output.png"
-    alt="Example for doc classification using Orkes Conductor"
-    width="100%"
-    height="auto"
-  ></img>
-</p>
+The workflow output will provide the category to which the document is classified.

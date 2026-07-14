@@ -85,13 +85,10 @@ Design groups around operational responsibilities, not individual projects. For 
     | Default group role | Optional. Roles that all group members inherit in addition to their individually assigned roles. The available roles are: <ul><li>**Admin**: Superuser. Full access to the system and resources. Can manage users and groups.</li> <li>**User**: Regular user group with permissions to create workflow definitions, task definitions, applications, integrations, secrets, and user forms. Has full API Gateway access, including view and management permissions. Can search workflows.</li> <li>**Metadata Manager**: Can manage all workflow and task definitions in the cluster, including performing any action regardless of workflow or task ownership. Can view and manage API Gateway configurations. Can create integrations and secrets.</li> <li>**Workflow Manager**: Can view, execute, and manage all workflow executions in the system, including start, pause, resume, rerun, retry, restart, terminate, and delete actions. Has execute and read access to workflow and task definitions.</li> <li>**Read Only User**: Can view applications, metadata, workflows, API gateway, and search workflows.</li></ul>                           |
     4. Select **Save**.<br/>The group has been created. You can proceed to add members or permissions to the group.
 
-<p align="center"><img src="/content/img/RBAC/managing_users_and_groups-editing_group_information.png" alt="Group configuration screen in Conductor UI." width="90%" height="auto"></img></p>
-
 2. Add members to the group.
     1. In the **Members** section, select **+ Add User** to add an existing user to the group. If the user you are looking for does not exist, you must first add them to your cluster.
 3. Add permissions to grant group-level access to resources such as Workflows, Tasks, Secrets, Environment Variables, Tags, Domains, Integrations, and Prompts.
     1. In the **Permissions** section, select **+ Add Permission**.
-    <p align="center"><img src="/content/img/RBAC/managing_users_and_groups-adding_group_permissions.png" alt="Granting access to specific tasks and workflows" width="90%" height="auto"></img></p>
     2. Toggle between each resource type and select the resources to provide access to.
     3. Toggle the access levels for your selected resource:
         * **Read**: Users will be able to view the resource.

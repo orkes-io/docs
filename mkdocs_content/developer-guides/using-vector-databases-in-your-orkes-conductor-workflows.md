@@ -63,9 +63,6 @@ Before using a vector database in a workflow, you must integrate it with your Or
 1. Go to **Integrations** > **Connections and Resources** from the left navigation menu on your Conductor cluster.
 2. Select **+ New integration**.
 3. In the **Vector Databases** section, select **+ Add** to integrate your preferred database provider.
-
-<p align="center"><img src="/content/img/add-integrations-for-dbs.png" alt="Add New Integrations for Databases" width="100%" height="auto"></img></p>
-
 4. Enter the required parameters for the chosen provider.
 
 !!! note
@@ -97,9 +94,6 @@ As best practice, use Orkes’ [RBAC feature](https://orkes.io/content/category/
 2. Create a new group/application or select an existing one.
 3. In the **Permissions** section, select **+Add permission**.
 4. In the **Integration** tab, select the required vector databases and toggle the necessary permissions.
-
-<p align="center"><img src="/content/img/add-integration-permission-for-vector-db.png" alt="Add Permissions for Integrations with Vector Database" width="60%" height="auto"></img></p>
-
 5. Select **Add Permissions**. 
 
 The group or application can now access the vector databases according to the configured permissions.
@@ -120,9 +114,6 @@ Vector databases can be used in workflows with the following AI tasks:
 2. Select **+ Define workflow**.
 3. In the visual workflow builder, select **Start** and add the relevant AI task based on your use case.
 4. Select the configured vector database and indexes.
-
-<p align="center"><img src="/content/img/using-vector-database-in-workflow.png" alt="Using vector database integration in a Conductor workflow" width="90%" height="auto"></img></p>
-
 5. Configure the remaining task parameters. 
 
 !!! note

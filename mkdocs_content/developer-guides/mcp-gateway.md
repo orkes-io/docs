@@ -42,8 +42,6 @@ You can [create workflows](https://orkes.io/content/developer-guides/workflows#w
 4. In **Permissions**, select **+ Add permission**.
 5. In the **Workflow** tab, select the workflow created in [Step 1](/content/developer-guides/mcp-gateway#step-1-create-workflows-that-define-tool-behavior) and enable **EXECUTE** permission.
 
-<p align="center"><img src="/content/img/dev-guides/gateway/create-application-mcp-gateway.png" alt="Create application in Orkes Conductor" width="100%" height="auto"/></p>
-
 6. Save the application.
 
 ## Step 3: Configure authentication settings
@@ -178,8 +176,6 @@ Each endpoint in a service is defined as a route, and every route maps to a Cond
 **To create a route within a service:**
 
 1. Go to the **Services** and select the **+** button next to the service created.
-
-<p align="center"><img src="/content/img/dev-guides/gateway/create-route-for-mcp-gateway.png" alt="Create route for MCP gateway" width="100%" height="auto"/></p>
 
 2. Configure the following parameters:
 
@@ -418,19 +414,13 @@ You can test route behavior directly from the Conductor UI before exposing it as
 6. Select **Test Route**.
 7. Review the **Response** to verify the route works as expected. 
 
-<p align="center"><img src="/content/img/dev-guides/gateway/testing-route.gif" alt="Testing a route" width="100%" height="auto"/></p>
-
 #### Verify workflow execution
 
 **To confirm that the route triggered the workflow:**
 
 1. Go to **Executions** > **Workflow** in your Conductor cluster and verify that the workflow is completed successfully.
 
-<p align="center"><img src="/content/img/dev-guides/gateway/workflow-triggered-by-mcp-gateway.png" alt="Workflow triggered by the route" width="100%" height="auto"/></p>
-
 2. Select the **Workflow ID** to view the complete execution, including the workflow input and output.
-
-<p align="center"><img src="/content/img/dev-guides/gateway/workflow-execution-triggered-by-mcp-gateway.png" alt="Workflow triggered by the route" width="100%" height="auto"/></p>
 
 #### View endpoint details
 
@@ -440,14 +430,10 @@ You can test route behavior directly from the Conductor UI before exposing it as
 2. Select a route to open its details. 
 3. You can get the cURL command for the actual endpoint here.
 
-<p align="center"><img src="/content/img/dev-guides/gateway/curl.png" alt="Curl command for API" width="100%" height="auto"/></p>
-
 **To view the OpenAPI documentation for the endpoint:**
 
 1. Go to **APIs** > **Services**, and select the service. 
 2. In **Metadata & Resources**, select **View API documentation**.
-
-<p align="center"><img src="/content/img/dev-guides/gateway/openapi-doc-mcp-gateway.jpg" alt="OpenAPI documentation for the APIs" width="100%" height="auto"/></p>
 
 ## Step 6: Connect the service with AI agents as an MCP tool
 
@@ -457,8 +443,6 @@ Next, you can connect this MCP service to your preferred AI tool as an MCP tool.
 
 1. Go to **APIs** > **Services**, and select the service.
 2. In **Configuration**, copy the **MCP Tool Remote Endpoint**.
-
-<p align="center"><img src="/content/img/dev-guides/gateway/mcp-endpoint.png" alt="MCP Tool endpoint" width="100%" height="auto"/></p>
 
 Use this as the MCP server endpoint when you configure your AI tool.
 
@@ -473,14 +457,10 @@ For example, you can use tools like [Orkes MCP Workbench](https://www.mcp-workbe
 3. In **URL**, enter the **MCP Tool Remote Endpoint** copied from Conductor.
 4. In **Type**, select **Streamable HTTP (Stateless)**.
 
-<p align="center"><img src="/content/img/dev-guides/gateway/orkes-mcp-workbench-ui.png" alt="MCP Inspector UI" width="100%" height="auto"/></p>
-
 5. Leave authentication empty if the service uses no authentication. If the service requires authentication, provide the required key.
 6. Select **Save**, and then select **Connect**.
 
 If the connection is successful, the tools exposed by the service become visible. In **Select Tool**, all available tools from the service are listed. 
-
-<p align="center"><img src="/content/img/dev-guides/gateway/api-listed-as-mcp-tool.png" alt="APIs listed as MCP tools" width="100%" height="auto"/></p>
 
 Each route in the service appears as an MCP tool. You can select a tool, provide input, and call it directly from the Inspector.
 

@@ -367,9 +367,6 @@ Application roles grant additional access on top of this default behavior and sh
 - **Unrestricted Roles**: Roles that can be granted only by a cluster Admin.
 - **Application Roles**: The roles available to any user with access to applications.
 
-Image: App roles
-
-
 === "Unrestricted Roles"
 
     Unrestricted roles can only be added by a cluster Admin. Unrestricted roles include:
@@ -439,9 +436,6 @@ Example
 
 In this example, two programs have access to Orkes Conductor workflows. Both of these workflows rely on the same task, Task X, which is performed by a worker application, Worker X.
 
-Image: Example application
-
-
 One way to handle this is to create a single application with **Execute** access to Workflow 1, Workflow 2, and Task X and provide the application keys/secrets to Program 1, Program 2, and Worker X. However, this setup violates the principle of least privilege, where applications should only have access to the endpoints they require. In this case, Worker X should not have **Execute** access for the workflows.
 
 To satisfy the principle of least privilege, we will create three applications instead:
@@ -502,12 +496,8 @@ You can add or remove multiple tags to various resources.
     - **APIs** > **Services**
     - **Access Control** > **Applications**
 2. Locate the specific resource.
-    Image: Adding a tag to an existing workflow
-
 3. In the **Actions** column, select the **Tag** icon.
 A pop-up window for Edit Tags appears.
-    Image: Editing a tag
-
 4. To create a tag, enter a tag in the `key:value` format and select **Enter.**
 5. To remove a tag, select **x** next to the tag.
 6. Once tagged, select **Save**.
@@ -519,9 +509,6 @@ The tags dashboard provides a complete overview of all tags in the cluster and t
 **To view the tags dashboard:**
 
 1. Go to **Definitions** > **Tags Dashboard** from the left navigation menu on your Conductor cluster.
-
-Image: Tags dashboard in Orkes Conductor
-
 
 The page displays the total number of tags in the cluster, along with the count of resources associated with each tag.
 
@@ -585,9 +572,6 @@ Before granting tag permissions, confirm that the resources already using the ta
 
     All users in the group now have access to all resources associated with the tag. You can select the drop-down icon to view all of the tagged resources.
 
-    Image: Adding tags to a user group
-
-
 === "For Applications"
 
     **To add permissions to an application:**
@@ -604,8 +588,6 @@ Before granting tag permissions, confirm that the resources already using the ta
     6. Select **Add permissions**.
 
     The application now has access to all resources associated with the tag. You can select the drop-down icon to view all of the tagged resources.
-
-    Image: Adding tags to application in Conductor
 
 
 ## APIs
@@ -714,15 +696,10 @@ Design groups around operational responsibilities, not individual projects. For 
     4. Select **Save**.
 The group has been created. You can proceed to add members or permissions to the group.
 
-Image: Group configuration screen in Conductor UI.
-
-
 2. Add members to the group.
     1. In the **Members** section, select **+ Add User** to add an existing user to the group. If the user you are looking for does not exist, you must first add them to your cluster.
 3. Add permissions to grant group-level access to resources such as Workflows, Tasks, Secrets, Environment Variables, Tags, Domains, Integrations, and Prompts.
     1. In the **Permissions** section, select **+ Add Permission**.
-    Image: Granting access to specific tasks and workflows
-
     2. Toggle between each resource type and select the resources to provide access to.
     3. Toggle the access levels for your selected resource:
         * **Read**: Users will be able to view the resource.
@@ -6666,9 +6643,6 @@ You can [create workflows](https://orkes.io/content/developer-guides/workflows#w
 4. In **Permissions**, select **+ Add permission**.
 5. In the **Workflow** tab, select the workflow created in [Step 1](/content/developer-guides/api-gateway#step-1-create-workflows-to-define-the-logic-for-each-endpoint) and enable **EXECUTE** permission.
 
-Image: Create application in Orkes Conductor
-
-
 6. Save the application.
 
 The next step is to create an authentication setting for the API service.
@@ -6823,9 +6797,6 @@ Each endpoint in a service must be defined as a route, which is mapped to the Co
 **To create a route within a service:**
 
 1. Go to the **Services** and select the **+** button next to the service created.
-
-Image: Create route for API gateway
-
 
 2. Configure the following parameters:
 
@@ -7091,22 +7062,13 @@ You can test route behavior directly from the Conductor UI before exposing it as
 6. Select **Test Route**.
 7. Review the **Response** to verify the route works as expected.
 
-Image: Testing a route
-
-
 #### Verify workflow execution
 
 **To confirm that the route triggered the workflow:**
 
 1. Go to **Executions** > **Workflow** in your Conductor cluster and verify that the workflow is completed successfully.
 
-Image: Workflow triggered by the route
-
-
 2. Select the **Workflow ID** to view the complete execution, including the workflow input and output.
-
-Image: Workflow triggered by the route
-
 
 #### View endpoint details
 
@@ -7116,16 +7078,10 @@ Image: Workflow triggered by the route
 2. Select a route to open its details.
 3. You can get the cURL command for the actual endpoint here.
 
-Image: Curl command for API
-
-
 **To view the OpenAPI documentation for the endpoint:**
 
 1. Go to **APIs** > **Services**, and select the service.
 2. In **Metadata & Resources**, select **View API documentation**.
-
-Image: OpenAPI documentation for the APIs
-
 
 ## Production notes
 
@@ -7366,22 +7322,15 @@ In Orkes Conductor, you can quickly convert BPMN (Business Process Model and Not
 1. Go to **Definitions** > **Workflow** from the left navigation menu on your Conductor cluster.
 2. Select the **⏷** icon next to **+ Define workflow**.
 3. From the dropdown menu, select **Import BPMN**.
-   Image: Importing BPMN files
-
 4. Import files using one of the following methods:
     - **Select file**: Upload a .bpmn file from your local device.
     - **Drag and drop**: Drop the BPMN files directly into the designated area in the UI.
     - **Code**: Paste the raw XML content of your BPMN directly in the code tab.
-   Image: BPMN Importer
-
 5. The **Workflow Name** field is pre-filled with the file name by default. Edit it if you want to use a different name.
 6. Toggle **Overwrite workflow** on to replace an existing workflow definition with the same name.  Disable this option if you want to prevent overwrites.
 7. Select **Import**.
 
 The BPMN file is converted into workflow definitions in Orkes Conductor. Each process defined in the imported BPMN file is converted into an equivalent Orkes Conductor workflow definition.
-
-Image: BPMN Importer
-
 
 After importing, the newly created workflows appear in **Definitions** > **Workflows**.
 
@@ -7449,7 +7398,7 @@ Route: /content/developer-guides/creating-and-managing-gen-ai-prompt-templates
 
 To effectively use AI tasks in workflows, you must provide clear and structured instructions called prompts that define the model’s behavior and output. Orkes Conductor allows you to create, manage, and securely share AI prompts within your organization.
 
-In Orkes Conductor, AI prompts are reusable and can include variables, allowing you to customize the input to AI models based on runtime data.  This approach acts like parameterized API calls, where variables in the prompt are replaced with actual values during workflow execution. It ensures flexibility, reusability, and consistency when integrating AI models into complex workflows.
+In Orkes Conductor, AI prompts are reusable and can include variables, allowing you to customize the input to AI models based on runtime data. This approach acts like parameterized API calls, where variables in the prompt are replaced with actual values during workflow execution. It ensures flexibility, reusability, and consistency when integrating AI models into complex workflows.
 
 In this guide, you will learn how to create, test, and use AI prompts in your workflows.
 
@@ -7481,10 +7430,6 @@ In the above prompt, `${country}` and `${year}` are variables that can be dynami
 
 4. Select **Save** > **Confirm Save**.
 
-
-  Image: Creating AI Prompts
-
-
 Here’s the JSON definition for an AI prompt:
 
 ```json
@@ -7508,17 +7453,9 @@ You can create and manage multiple versions of an AI prompt. By default, version
 
 After making changes to the AI prompt definition in the Conductor UI, select the ⏷ (down arrow) icon beside **Save** > **Save as new version** to create a new version.
 
-
-  Image: Saving an AI prompt as a new version in Orkes Conductor
-
-
 **To view available versions:**
 
 - In the AI prompt editor, select the **Version** dropdown and choose the required version.
-
-
-  Image: Viewing all prompt versions in Orkes Conductor
-
 
 ## Test AI prompts
 
@@ -7527,10 +7464,6 @@ After creating an AI prompt, test it to ensure it produces the expected results.
 ### Test parameters
 
 In the AI prompt’s testing interface, define the following parameters:
-
-
-  Image: Testing AI Prompts
-
 
 | Parameter            | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -7582,10 +7515,6 @@ In your Orkes Conductor cluster, you can assign specific permissions to various 
 3. In the **Permissions** section, select **+ Add permission**.
 4. In the **Prompt** tab, select the required prompt and toggle the necessary permissions.
 
-
-  Image: RBAC for prompts
-
-
 5. Select **Add Permissions**.
 
 The group or application can now access the prompt according to the configured permissions.
@@ -7604,10 +7533,6 @@ AI prompts can be used in workflows with the following LLM tasks:
 3. In the visual workflow builder, select **Start** and add the **LLM Text Complete**/**LLM Chat Complete** task.
 4. Select the required AI provider and model. Ensure it matches the models associated with the prompt.
 5. Select the created AI prompt, in the **Prompt Name** field.
-
-
-  Image: Using AI prompts in a workflow
-
 
 6. If the prompt contains variables, [map them to corresponding variables](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor) in the workflow. For example:
 
@@ -7983,18 +7908,16 @@ In Orkes Conductor, Change Data Capture (CDC) allows you to send [workflow state
 
 You can configure CDC using the workflow JSON definition or Conductor UI.
 
-=== "Using workflow JSON"
+**To enable CDC:**
 
-    **To enable CDC:**
+1. Go to **Definitions** > **Workflow** from the left navigation menu on your Conductor cluster.
+2. Create a new workflow or select an existing one.
+3. Add the following parameters to the workflow definition code:
 
-    1. Go to **Definitions** > **Workflow** from the left navigation menu on your Conductor cluster.
-    2. Create a new workflow or select an existing one.
-    3. Add the following parameters to the workflow definition code:
-
-    | Parameter | Description |
-    | --------- | ----------- |
-    | workflowStatusListenerEnabled | Set to `true` to enable CDC. |
-    | workflowStatusListenerSink | The event sink in the format:
+| Parameter | Description |
+| --------- | ----------- |
+| workflowStatusListenerEnabled | Set to `true` to enable CDC. |
+| workflowStatusListenerSink | The event sink in the format:
  **message-broker-type:integration-name:topic/queue-name**
 where,**message-broker-type**: The message broker type where the payloads are sent. Supported types:amqp
 sqs
@@ -8008,46 +7931,16 @@ Ibm_mq
 **topic/queue-name**: The queue name or topic name where the payloads are sent.
 
 
-    **Example**
+**Example**
 
-    ```JSON
-    // workflow definition
+```JSON
+// workflow definition
 
-    "workflowStatusListenerEnabled": true,
-    "workflowStatusListenerSink": "message-broker-type:integration-name:topic/queue-name" // event sink
-    ```
+"workflowStatusListenerEnabled": true,
+"workflowStatusListenerSink": "message-broker-type:integration-name:topic/queue-name" // event sink
+```
 
-    4. Save the workflow.
-
-=== "Using Conductor UI"
-
-    **To enable CDC:**
-
-    1. Go to **Definitions** > **Workflow** from the left navigation menu on your Conductor cluster.
-    2. Create a new workflow or select an existing one.
-    3. In **Workflow** tab, go to **Execution Parameters**, and toggle on **Enable workflow status listener**.
-
-
-      Image: Enabling workflow status listener via UI
-
-
-    4. In **Workflow listener sink**, select the required integration already added to the cluster.
-    5. Enter the topic or queue name manually into the sink.
-
-    For example, if you have added an AMQP integration named `amqp-test`, it appears in the drop-down list of available integrations as follows:
-
-
-      Image: Drop-down listing the integrations for workflow listener sink
-
-
-    Select the integration and enter the queue name to update the workflow listener sink as follows:
-
-    ```JSON
-    "workflowStatusListenerSink": "amqp:amqp-test:queue-name"
-    ```
-
-    6. Save the workflow.
-
+4. Save the workflow.
 
 ### Using CDC with Kafka and AVRO
 
@@ -8192,10 +8085,6 @@ Warning: When configuring via the Conductor UI, the **Event** field lists only m
 [start_workflow](/content/developer-guides/event-handler#start-workflow)
  | Required. |
 | active | Whether the event handler is enabled. Set to `true` to enable the event handler or `false` to disable it. | Required. |
-
-
-Image: Creating event handler via UI in Orkes Conductor
-
 
 4. Select **Save** > **Confirm Save**.
 
@@ -9240,9 +9129,6 @@ You can [create workflows](https://orkes.io/content/developer-guides/workflows#w
 4. In **Permissions**, select **+ Add permission**.
 5. In the **Workflow** tab, select the workflow created in [Step 1](/content/developer-guides/mcp-gateway#step-1-create-workflows-that-define-tool-behavior) and enable **EXECUTE** permission.
 
-Image: Create application in Orkes Conductor
-
-
 6. Save the application.
 
 ## Step 3: Configure authentication settings
@@ -9395,9 +9281,6 @@ Each endpoint in a service is defined as a route, and every route maps to a Cond
 **To create a route within a service:**
 
 1. Go to the **Services** and select the **+** button next to the service created.
-
-Image: Create route for MCP gateway
-
 
 2. Configure the following parameters:
 
@@ -9663,22 +9546,13 @@ You can test route behavior directly from the Conductor UI before exposing it as
 6. Select **Test Route**.
 7. Review the **Response** to verify the route works as expected.
 
-Image: Testing a route
-
-
 #### Verify workflow execution
 
 **To confirm that the route triggered the workflow:**
 
 1. Go to **Executions** > **Workflow** in your Conductor cluster and verify that the workflow is completed successfully.
 
-Image: Workflow triggered by the route
-
-
 2. Select the **Workflow ID** to view the complete execution, including the workflow input and output.
-
-Image: Workflow triggered by the route
-
 
 #### View endpoint details
 
@@ -9688,16 +9562,10 @@ Image: Workflow triggered by the route
 2. Select a route to open its details.
 3. You can get the cURL command for the actual endpoint here.
 
-Image: Curl command for API
-
-
 **To view the OpenAPI documentation for the endpoint:**
 
 1. Go to **APIs** > **Services**, and select the service.
 2. In **Metadata & Resources**, select **View API documentation**.
-
-Image: OpenAPI documentation for the APIs
-
 
 ## Step 6: Connect the service with AI agents as an MCP tool
 
@@ -9707,9 +9575,6 @@ Next, you can connect this MCP service to your preferred AI tool as an MCP tool.
 
 1. Go to **APIs** > **Services**, and select the service.
 2. In **Configuration**, copy the **MCP Tool Remote Endpoint**.
-
-Image: MCP Tool endpoint
-
 
 Use this as the MCP server endpoint when you configure your AI tool.
 
@@ -9724,16 +9589,10 @@ For example, you can use tools like [Orkes MCP Workbench](https://www.mcp-workbe
 3. In **URL**, enter the **MCP Tool Remote Endpoint** copied from Conductor.
 4. In **Type**, select **Streamable HTTP (Stateless)**.
 
-Image: MCP Inspector UI
-
-
 5. Leave authentication empty if the service uses no authentication. If the service requires authentication, provide the required key.
 6. Select **Save**, and then select **Connect**.
 
 If the connection is successful, the tools exposed by the service become visible. In **Select Tool**, all available tools from the service are listed.
-
-Image: APIs listed as MCP tools
-
 
 Each route in the service appears as an MCP tool. You can select a tool, provide input, and call it directly from the Inspector.
 
@@ -9779,16 +9638,8 @@ Orkes Conductor uses Prometheus to capture a comprehensive set of metrics, which
 
 To access the dashboard, go to **Metrics** from the left navigation menu on your Conductor cluster.
 
-Image: Accessing dashboard from Conductor UI
-
-
 !!! note
     To enable Metrics for your cluster, please [get in touch with the Orkes team](https://orkes.io/talk-to-an-expert).
-
-Example dashboard set up using Prometheus and Grafana:
-
-Image: Sample Dashboard
-
 
 ## Conductor metrics
 
@@ -9910,15 +9761,7 @@ Alerts can be configured for any metric from your dashboard, or via the **Alerti
 
     1. Open your Grafana dashboard and select the metric.
     2. Select **Edit**.
-
-    Image: Editing a metric from dashboard
-
-
     3. Go to the **Alerts** tab and select **Create alert rule from this panel**.
-
-    Image: Creating alerts for a metrics in dashboard
-
-
     4. [Create the alert](https://grafana.com/tutorials/alerting-get-started/#create-an-alert) based on your requirements.
 
 === "From the Alerting section"
@@ -10009,9 +9852,6 @@ It is a best practice to create user forms in Conductor UI, even if the form is 
 6. Once the form is ready, select **Save** > **Confirm** on the top right.
 
 
-  Image: Creating user forms for human task in Orkes Conductor
-
-
 Supported form layout and components
 
 
@@ -10042,10 +9882,6 @@ Configuring form components
 
 1. Select the Edit icon beside the component.
  A pop-up box appears.
-
-     Image: Making form field mandatory in human tasks in Conductor
-
-
 2. Enter the **Field Name**, which serves as the input parameter name in the Human task configuration.
 3. Enter the **Label**, which is the text that end-users see when filling out the form.
 4. Configure the remaining settings:
@@ -10113,21 +9949,21 @@ In **Assign**, select the **User type** for the assignee(s) and enter the corres
 **Conductor User** or **Group**: Select this if the assignees are Conductor users and will access Orkes Conductor to complete the task.
 Enter the **SLA minutes** to specify the assignment duration before it times out. Use 0 minutes to set a non-expiring assignment.
 
-**Notes:**You can add multiple assignment policies to create an escalation chain. If the first user/group fails to pick the assignment within the specified timeframe, the task will be escalated to the subsequent assignment policy in the order added here.Image: Assignment policy of human task in hierarchical order
+**Notes:**You can add multiple assignment policies to create an escalation chain. If the first user/group fails to pick the assignment within the specified timeframe, the task will be escalated to the subsequent assignment policy in the order added here.
 Additional assignment policies cannot be added if the preceding assignment policy has 0 SLA minutes.
  | Optional. |
 | Auto claim | When enabled, the Human task is automatically claimed by the first assignee in the assignment list as soon as the task execution begins. This eliminates the need for manual claiming from the *Human Task inbox*. Disable this option if you want assignees to claim the task manually. | Optional. |
 | After assignments | Select the action to be carried out after the assignment policy is timed out. You can select one of the following actions:**Leave open**: The Human task execution remains open to be picked up by anyone.
 **Terminate**: The Human task execution is terminated and marked as deleted, and the workflow fails with the error “Task terminated as no more assignments pending and completion strategy is TERMINATE”.
  | Optional. |
-| Trigger policy | Add a trigger policy to start new workflows when the state of the Human task changes. The trigger policy works based on the human task state in the **Executions** > **Human Tasks** list. Image: States in Human tasks based on which trigger policies can be defined **To add a trigger policy:**Select **+ New trigger**.
+| Trigger policy | Add a trigger policy to start new workflows when the state of the Human task changes. The trigger policy works based on the human task state in the **Executions** > **Human Tasks** list. **To add a trigger policy:**Select **+ New trigger**.
 Select the **Trigger event**, the **Workflow** to start, and its **Version**.**Pending**: If the human task execution is in the pending state, the trigger workflow is executed.
 **Assigned**: Once the human task is assigned to a specific assignee, the trigger workflow is executed.
 **In progress**: Once the human task execution is in the progress state, the trigger workflow is executed.
 **Completed**: Once the human task execution is completed, the trigger workflow is executed.
 **Timed out**: Once the human task execution is timed out, the trigger workflow is executed.
 **Assignee changed**: Once the human task assignee changes (as per the assignment policy or if left open and picked by anyone), the trigger workflow is executed.
-**Claimant changed**: When the claimant of a human task changes (e.g., if the initially assigned user does not claim the task and it remains open, allowing another user to claim it), the trigger workflow is executed.Image:  Trigger policy for human task
+**Claimant changed**: When the claimant of a human task changes (e.g., if the initially assigned user does not claim the task and it remains open, allowing another user to claim it), the trigger workflow is executed.
 
 (Optional) Select **Additional inputs** to configure the workflow’s input parameters, correlation ID, and task-to-domain mapping.
 If needed, add another trigger to start another workflow. | Optional. |
@@ -10138,10 +9974,6 @@ If the field is read-only and will be passed from somewhere in the workflow, ent
 Refer to the [Human task reference](/content/reference-docs/operators/human) for more information and examples on configuring the task.
 
 4. Save the workflow.
-
-
-  Image: Human Task in Orkes Conductor
-
 
 !!! tip
     During development, you can set the assignment policy to Conductor User or Group first to test the form. Once the Human task is connected to your own UI, you can easily switch to External User or Group.
@@ -10167,10 +9999,6 @@ Run the workflow to trigger a Human task execution. The Human task will remain i
 
 The workflow (execution) ID is generated. You can use it to view the execution progress and details.
 
-
-  Image: Human Task in Running state
-
-
 ### Complete the Human task
 
 As a Conductor user, you can also access all the Human task executions on Orkes Conductor. The list of Human task executions can be found in the left navigation menu under **Executions** > **Human Tasks**, allowing you to claim and complete pending Human tasks and view past Human task executions.
@@ -10190,25 +10018,13 @@ Depending on your permission level, there are two tab views available on the pag
     3. Select a task.
     4. Select **Claim** to claim a task. Alternatively, select the drop-down arrow > **Override claim** to claim a previously-claimed task.
 
-
-      Image: Claiming human tasks forms
-
-
     Once claimed, you can **Update** or **Complete** the task. In addition, you can **Release** the task to remove your claim so that someone else can claim it.
-
-
-      Image: Update/Complete/Release forms
-
 
 === "To skip a task"
 
     **To skip a task:**
 
     In your selected Human task, select **Skip** to bypass it. Alternatively, select the drop-down arrow > **Skip with reason** to include a reason for skipping the task.
-
-
-      Image: Claiming human tasks forms
-
 
 === "To assign the task to a different user or group"
 
@@ -10220,9 +10036,6 @@ Depending on your permission level, there are two tab views available on the pag
        - **Conductor User** or **Group**: Select this if the assignees are Conductor users and will access Orkes Conductor to complete the task.
     3. Enter the **SLA minutes** to specify the assignment duration before it times out. Use 0 minutes to set a non-expiring assignment.
     4. If needed, add another assignment to create a multi-level assignment chain.
-
-
-      Image: Assigning to a different subject
 
 
 ### Search Human task executions
@@ -10237,10 +10050,6 @@ You can search for Human task executions in Orkes Conductor. The search page pro
 
     The task inbox view is the non-admin regular user view that lists all the tasks assigned to you, your group, or left open.
 
-
-      Image: Task inbox view of human task execution
-
-
     **Task inbox filters**
 
     | Filter | Description |
@@ -10250,18 +10059,13 @@ You can search for Human task executions in Orkes Conductor. The search page pro
     | Start time | Filters based on the task execution time. |
     | Output data search | Filters based on the output data. |
     | Input data search | Filters based on the input data. |
-    | Full-text search    | Searches all data within the execution columns based on an “AND” and “OR” query. Image: Full text view of human task executions
- For example, `“loan" OR "cc3d2dc-18d4-11ef-a811-8a584d19ffea"`. The search will return all results that contain either the text “loan” or the specific task ID “cc3d2dc-18d4-11ef-a811-8a584d19ffea”. To get results matching both criteria, use “AND” instead of “OR”. |
+    | Full-text search    | Searches all data within the execution columns based on an “AND” and “OR” query. For example, `“loan" OR "cc3d2dc-18d4-11ef-a811-8a584d19ffea"`. The search will return all results that contain either the text “loan” or the specific task ID “cc3d2dc-18d4-11ef-a811-8a584d19ffea”. To get results matching both criteria, use “AND” instead of “OR”. |
 
     You can also filter the executions by *Available*, *Completed*, or *All*.
 
 === "Admin search"
 
     If you are a cluster admin or workflow creator for the Human task, you can use the **Admin search** tab in **Executions** > **Human Tasks** to filter and sort through all Human task executions for testing and debugging.
-
-
-      Image: Admin view of human task executions
-
 
     **Admin search filters**
 
@@ -10280,8 +10084,7 @@ You can search for Human task executions in Orkes Conductor. The search page pro
     | Task reference name | Filters based on the task reference name. Multiple entries can be selected.                                                                                                                                                                                                                                                                                                                                                                                                                                                |
     | Start time          | Filters based on the task's last updated time.                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
     | Input data search   | Filters based on the input data. Supports partial search using the `*` wildcard. For example, entering `name="*doe"` returns all tasks where the input key name ends with “doe”.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
-    | Full-text search    | Searches all data within the execution columns based on an “AND” and “OR” query. Image: Full text view of human task executions
- For example, `“loan" OR "cc3d2dc-18d4-11ef-a811-8a584d19ffea"`. The search will return all results that contain either the text “loan” or the specific task ID “cc3d2dc-18d4-11ef-a811-8a584d19ffea”. To get results matching both criteria, use “AND” instead of “OR”. |
+    | Full-text search    | Searches all data within the execution columns based on an “AND” and “OR” query. For example, `“loan" OR "cc3d2dc-18d4-11ef-a811-8a584d19ffea"`. The search will return all results that contain either the text “loan” or the specific task ID “cc3d2dc-18d4-11ef-a811-8a584d19ffea”. To get results matching both criteria, use “AND” instead of “OR”. |
     | Workflow IDs        | Filters based on the workflow (execution) IDs.                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
     | Filter by actors    | Filters based on Claimant or Assignee.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
     | Actor type          | Filters based on the actor type for the selected actor. Supported values: Conductor User
@@ -11557,13 +11360,7 @@ You can create schedules from the Scheduler UI, from a completed workflow execut
 
     From the Scheduler definitions list, use **Quick filters** to narrow schedules by active/inactive status, and **Quick search** to find one by name or by tag (format `tagKey:tagValue`, for example `team:marketing`). The row actions let you **Pause**, **Clone**, **Add/Edit Tags**, or **Delete** a schedule.
 
-    Image: Quick search, quick filters, and row actions on the Scheduler definitions list
-
-
     If the schedule is active, the list also shows its next run time.
-
-    Image: Next run time column on the Scheduler definitions list
-
 
 === "Conductor UI (Workflow Execution)"
 
@@ -11573,9 +11370,6 @@ You can create schedules from the Scheduler UI, from a completed workflow execut
     2. Open the completed execution.
     3. Select **Actions** > **Create Schedule**.
     4. Add the schedule name, cron expression, timezone, and active window.
-
-    Image: Create Schedule option in the Actions menu of a workflow execution
-
 
 === "Using API"
 
@@ -11594,13 +11388,7 @@ Go to **Executions** > **Scheduler** to inspect scheduled runs. Use this view to
 
 For debugging, open the workflow execution from the scheduled execution row. Select multiple rows and use **Bulk Action** to pause, resume, restart, retry, or terminate them together.
 
-Image: Scheduled workflow executions list with rows selected and the Bulk Action menu
-
-
 For automation, use the [Search Schedule Executions API](/content/reference-docs/api/schedule/search-schedule-executions), or select **Show as code** next to Search to get the current search as cURL or JavaScript.
-
-Image: Show as code option next to the Search button on the scheduled executions page
-
 
 ## Troubleshooting schedules
 
@@ -12194,46 +11982,28 @@ If a user does not have access to a referenced secret, the workflow will fail.
 
 Secrets can be created through the Conductor UI or API. For automation and environment promotion, prefer the API so secret setup can be handled by deployment tooling.
 
-=== "Using API"
+Create or update a secret:
 
-    Create or update a secret:
+```shell
+curl -sS -X PUT "$CONDUCTOR_SERVER_URL/secrets/payment_api_token" \
+  -H "X-Authorization: $CONDUCTOR_AUTH_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '"secret-value"'
+```
 
-    ```shell
-    curl -sS -X PUT "$CONDUCTOR_SERVER_URL/secrets/payment_api_token" \
-      -H "X-Authorization: $CONDUCTOR_AUTH_TOKEN" \
-      -H "Content-Type: application/json" \
-      -d '"secret-value"'
-    ```
+List secret names:
 
-    List secret names:
+```shell
+curl -sS -X POST "$CONDUCTOR_SERVER_URL/secrets" \
+  -H "X-Authorization: $CONDUCTOR_AUTH_TOKEN"
+```
 
-    ```shell
-    curl -sS -X POST "$CONDUCTOR_SERVER_URL/secrets" \
-      -H "X-Authorization: $CONDUCTOR_AUTH_TOKEN"
-    ```
+Related APIs:
 
-    Related APIs:
-
-    - [Create or update secret](/content/reference-docs/api/secrets/create-secret)
-    - [List all secrets](/content/reference-docs/api/secrets/list-all-secrets)
-    - [Check secret exists](/content/reference-docs/api/secrets/check-secret-exists)
-    - [Delete secret](/content/reference-docs/api/secrets/delete-secret)
-
-=== "Using Conductor UI"
-
-    **To create a secret:**
-
-    1. Go to **Definitions** > **Secrets** from the left navigation menu on your Conductor cluster.
-    2. Select **+ Add secret**.
-    3. Enter the following parameters:
-
-    | Parameter    | Description                                                                                         | Required/ Optional |
-    | ------------ | --------------------------------------------------------------------------------------------------- | ------------------ |
-    | Secret name  | A unique name for the secret. Used to reference the secret in workflow definitions.                 | Required.          |
-    | Secret value | The value to be stored as secret. Can be a plain string or a JSON object.                           | Required.          |
-
-    4. Select **Add** to save the secret.
-
+- [Create or update secret](/content/reference-docs/api/secrets/create-secret)
+- [List all secrets](/content/reference-docs/api/secrets/list-all-secrets)
+- [Check secret exists](/content/reference-docs/api/secrets/check-secret-exists)
+- [Delete secret](/content/reference-docs/api/secrets/delete-secret)
 
 ### Using secrets in workflows
 
@@ -12257,9 +12027,8 @@ For example, if a secret named `db-credentials` has the value `{"username": "adm
 
 Updating a secret does not require changing or redeploying workflow definitions, since workflows reference the secret name rather than its value. Keep the secret name stable and rotate the value stored behind it.
 
-Secrets can be updated in three ways:
+Secrets can be updated in two ways:
 
-- Using the Conductor UI
 - Using the API
 - Using the [Update Secret task](/content/reference-docs/system-tasks/update-secret) within a workflow
 
@@ -12273,16 +12042,6 @@ Secrets can be updated in three ways:
       -H "Content-Type: application/json" \
       -d '"rotated-secret-value"'
     ```
-
-=== "Using Conductor UI"
-
-    **To update the secret:**
-
-    1. Go to **Definitions** > **Secrets**, and select the secret to update.
-    2. In **Secret value**, enter the updated value, then select **Edit** to confirm.
-
-    Image: Updating secrets via Conductor UI
-
 
 === "Using Update Secret task"
 
@@ -12434,20 +12193,11 @@ Use sync execution for request/response flows, including API Gateway routes. Use
 
 Pause a running workflow when you need to stop scheduling new tasks while preserving execution state.
 
-=== "Using API"
+Use the [Pause Workflow](/content/reference-docs/api/workflow/pause-workflow) API on a running workflow.
 
-    Use the [Pause Workflow](/content/reference-docs/api/workflow/pause-workflow) API on a running workflow.
-
-    ```http
-    PUT /api/workflow/{workflowId}/pause
-    ```
-
-=== "Using UI"
-
-    In the workflow execution page (**Executions > Workflow > someWorkflow**), select **Actions > Pause**.
-
-    Image: Pausing a workflow from the Conductor UI
-
+```http
+PUT /api/workflow/{workflowId}/pause
+```
 
 Use pause for operator-controlled holds, incident response, external dependency outages, or planned maintenance. Already running worker tasks may still finish; the pause prevents the workflow from advancing further.
 
@@ -12455,20 +12205,11 @@ Use pause for operator-controlled holds, incident response, external dependency 
 
 Resume a paused workflow after the external condition is resolved.
 
-=== "Using API"
+Use the [Resume Workflow](/content/reference-docs/api/workflow/resume-workflow) API on a paused workflow.
 
-    Use the [Resume Workflow](/content/reference-docs/api/workflow/resume-workflow) API on a paused workflow.
-
-    ```http
-    PUT /api/workflow/{workflowId}/resume
-    ```
-
-=== "Using UI"
-
-    In the workflow execution page (**Executions > Workflow > someWorkflow**), select **Actions > Resume**.
-
-    Image: Resuming a workflow from the Conductor UI
-
+```http
+PUT /api/workflow/{workflowId}/resume
+```
 
 Before resuming, verify that the dependency or data condition that caused the pause has actually been fixed. Resuming without the fix usually just moves the failure forward.
 
@@ -12476,20 +12217,11 @@ Before resuming, verify that the dependency or data condition that caused the pa
 
 Restart begins a terminal workflow again from the beginning using the same workflow input.
 
-=== "Using API"
+Use the [Restart Workflow](/content/reference-docs/api/workflow/restart-workflow) API on a terminal workflow.
 
-    Use the [Restart Workflow](/content/reference-docs/api/workflow/restart-workflow) API on a terminal workflow.
-
-    ```http
-    POST /api/workflow/{workflowId}/restart
-    ```
-
-=== "Using UI"
-
-    In the workflow execution page (**Executions > Workflow > someTerminalWorkflow**), select **Actions > Restart with current definitions** or **Actions > Restart with latest definitions**.
-
-    Image: Restarting a workflow from the Conductor UI
-
+```http
+POST /api/workflow/{workflowId}/restart
+```
 
 Use restart when:
 
@@ -12506,37 +12238,24 @@ Restart options determine whether Conductor uses the original workflow definitio
 
 Rerun lets you re-execute a workflow while changing input, correlation ID, or task-to-domain mapping. The original workflow (execution) ID is retained.
 
-=== "Using API"
+Use the [Rerun Workflow](/content/reference-docs/api/workflow/rerun-workflow) API to rerun the workflow from the beginning with updated inputs.
 
-    Use the [Rerun Workflow](/content/reference-docs/api/workflow/rerun-workflow) API to rerun the workflow from the beginning with updated inputs.
+```http
+POST /api/workflow/{workflowId}/rerun
+Content-Type: application/json
 
-    ```http
-    POST /api/workflow/{workflowId}/rerun
-    Content-Type: application/json
-
-    {
-      "workflowInput": {
-        "orderId": "ORD-1001",
-        "customerId": "CUST-9",
-        "priority": "manual-review"
-      },
-      "correlationId": "order-ORD-1001",
-      "taskToDomain": {
-        "fraud_review": "review-team-a"
-      }
-    }
-    ```
-
-=== "Using UI"
-
-    In the workflow execution page (**Executions > Workflow > someTerminalWorkflow**), select **Actions > Re-run Workflow**. You'll be redirected to the Run Workflow page to update inputs, correlation ID, and task-to-domain mapping.
-
-    Image: Rerunning a workflow from the Conductor UI
-
-
-    !!! note
-        The UI cannot rerun a workflow using the same execution ID — it always creates a new execution instance. To retain the original execution ID, use the API.
-
+{
+  "workflowInput": {
+    "orderId": "ORD-1001",
+    "customerId": "CUST-9",
+    "priority": "manual-review"
+  },
+  "correlationId": "order-ORD-1001",
+  "taskToDomain": {
+    "fraud_review": "review-team-a"
+  }
+}
+```
 
 Use rerun when the previous execution should be corrected with new input rather than replayed exactly.
 
@@ -12544,32 +12263,19 @@ Use rerun when the previous execution should be corrected with new input rather 
 
 Rerun from a task when earlier tasks are still valid and only a later task or branch needs to be re-executed.
 
-=== "Using API"
+Use the [Rerun Workflow](/content/reference-docs/api/workflow/rerun-workflow) API to rerun from a specific task, with the option to provide updated task inputs.
 
-    Use the [Rerun Workflow](/content/reference-docs/api/workflow/rerun-workflow) API to rerun from a specific task, with the option to provide updated task inputs.
+```http
+POST /api/workflow/{workflowId}/rerun
+Content-Type: application/json
 
-    ```http
-    POST /api/workflow/{workflowId}/rerun
-    Content-Type: application/json
-
-    {
-      "reRunFromTaskId": "8b8c3f7a-8f8d-4f83-89bf-0a84c9c4b446",
-      "taskInput": {
-        "retryReason": "corrected address"
-      }
-    }
-    ```
-
-=== "Using UI"
-
-    In the workflow execution page (**Executions > Workflow > someWorkflow**), select a task in the visual diagram, then select **Re-Run from Task**. The previous attempt is marked `CANCELED`.
-
-    Image: Rerunning a workflow from a specific task in the Conductor UI
-
-
-    !!! note
-        To provide updated task inputs, use the API instead.
-
+{
+  "reRunFromTaskId": "8b8c3f7a-8f8d-4f83-89bf-0a84c9c4b446",
+  "taskInput": {
+    "retryReason": "corrected address"
+  }
+}
+```
 
 Use this for targeted repair. Do not use it to hide non-idempotent behavior; workers should still tolerate retries and duplicate deliveries.
 
@@ -12577,20 +12283,11 @@ Use this for targeted repair. Do not use it to hide non-idempotent behavior; wor
 
 Retry resumes a failed workflow from its failed task.
 
-=== "Using API"
+Use the [Retry Failed Workflow](/content/reference-docs/api/workflow/retry-failed-workflow) API to retry from the last failed task.
 
-    Use the [Retry Failed Workflow](/content/reference-docs/api/workflow/retry-failed-workflow) API to retry from the last failed task.
-
-    ```http
-    POST /api/workflow/{workflowId}/retry
-    ```
-
-=== "Using UI"
-
-    In the workflow execution page (**Executions > Workflow > someWorkflow**), select **Actions > Retry - from failed task**.
-
-    Image: Retrying a failed workflow from the Conductor UI
-
+```http
+POST /api/workflow/{workflowId}/retry
+```
 
 Use retry when the workflow failed because of a transient worker, network, service, or dependency issue and the task input is still valid. Fix deterministic bugs or bad input before retrying, otherwise the same task will fail again.
 
@@ -12598,30 +12295,17 @@ Use retry when the workflow failed because of a transient worker, network, servi
 
 Update a task when an external system or human action must complete, fail, or progress a task. This is common for [Wait](/content/reference-docs/operators/wait), [Human](/content/reference-docs/operators/human), and externally completed tasks.
 
-=== "Using API"
+Use the [Update Task Status in Workflow](/content/reference-docs/api/task/update-task-status-in-workflow) API.
 
-    Use the [Update Task Status in Workflow](/content/reference-docs/api/task/update-task-status-in-workflow) API.
+```http
+POST /api/tasks/{workflowId}/{taskRefName}/COMPLETED
+Content-Type: application/json
 
-    ```http
-    POST /api/tasks/{workflowId}/{taskRefName}/COMPLETED
-    Content-Type: application/json
-
-    {
-      "paymentId": "pay_123",
-      "approved": true
-    }
-    ```
-
-=== "Using UI"
-
-    In the workflow execution page (**Executions > Workflow > someWorkflow**), select a task in the visual diagram. In the **Summary** tab, select a status in the **Update task** field, optionally add task outputs in the **Code** field, then select **Update**.
-
-    Image: Updating a task
-
-
-    !!! note
-        Once a task is updated via the UI, its worker is automatically set to `conductor-ui`, providing better traceability for manual overrides.
-
+{
+  "paymentId": "pay_123",
+  "approved": true
+}
+```
 
 Supported statuses include:
 
@@ -12638,20 +12322,11 @@ Use task reference names, not display names. Keep output small and structured be
 
 Terminate stops a running workflow and marks it terminal.
 
-=== "Using API"
+Use the [Terminate Workflow](/content/reference-docs/api/workflow/terminate-workflow) API on an ongoing workflow.
 
-    Use the [Terminate Workflow](/content/reference-docs/api/workflow/terminate-workflow) API on an ongoing workflow.
-
-    ```http
-    DELETE /api/workflow/{workflowId}?reason=cancelled-by-customer
-    ```
-
-=== "Using UI"
-
-    In the workflow execution page (**Executions > Workflow > someWorkflow**), select **Actions > Terminate**.
-
-    Image: Terminating a workflow from the Conductor UI
-
+```http
+DELETE /api/workflow/{workflowId}?reason=cancelled-by-customer
+```
 
 Terminate when the work is no longer valid: user cancellation, duplicate request, compliance hold, or an operator decision to stop the execution. Include a reason so operators can distinguish intentional termination from failures.
 
@@ -14605,9 +14280,6 @@ Before using an AI model in a workflow, you must integrate it with your Orkes Co
 1. Go to **Integrations** from the left menu on your Conductor cluster.
 2. Select **+ New integration**.
 3. In the **AI/LLM** section, select **+ Add** to integrate your preferred model provider.
-   Image: Quickstart - Add Integrations
-
-
 4. Enter the required parameters for the chosen provider.
 
     :::note
@@ -14676,10 +14348,6 @@ As best practice, use Orkes’ [RBAC feature](/content/category/access-control-a
 2. Create a new group/application or select an existing one.
 3. In the **Permissions** section, select **+ Add permission**.
 4. In the **Integration** tab, select the required AI models and/or vector databases and toggle the necessary permissions.
-
-    Image: Add Permissions for Integrations
-
-
 5. In the **Prompt** tab, select the required prompt and toggle the necessary permissions.
 6. Select **Add Permissions**.
 
@@ -14702,9 +14370,6 @@ With the AI/LLM integration and AI prompt ready, you can add an AI task to your 
 5. Save the workflow.
 
 Once the workflow is saved, you can test the newly added AI task or run the workflow.
-
-Image: Test AI task.
-
 
 ## Production notes
 
@@ -14789,10 +14454,6 @@ Before using a vector database in a workflow, you must integrate it with your Or
 1. Go to **Integrations** > **Connections and Resources** from the left navigation menu on your Conductor cluster.
 2. Select **+ New integration**.
 3. In the **Vector Databases** section, select **+ Add** to integrate your preferred database provider.
-
-Image: Add New Integrations for Databases
-
-
 4. Enter the required parameters for the chosen provider.
 
 !!! note
@@ -14824,10 +14485,6 @@ As best practice, use Orkes’ [RBAC feature](https://orkes.io/content/category/
 2. Create a new group/application or select an existing one.
 3. In the **Permissions** section, select **+Add permission**.
 4. In the **Integration** tab, select the required vector databases and toggle the necessary permissions.
-
-Image: Add Permissions for Integrations with Vector Database
-
-
 5. Select **Add Permissions**.
 
 The group or application can now access the vector databases according to the configured permissions.
@@ -14848,10 +14505,6 @@ Vector databases can be used in workflows with the following AI tasks:
 2. Select **+ Define workflow**.
 3. In the visual workflow builder, select **Start** and add the relevant AI task based on your use case.
 4. Select the configured vector database and indexes.
-
-Image: Using vector database integration in a Conductor workflow
-
-
 5. Configure the remaining task parameters.
 
 !!! note
@@ -15136,9 +14789,6 @@ All worker tasks should be registered to the Conductor server, which is done by 
     1. Go to **Definitions > Task** from the left navigation menu on your Conductor cluster.
     2. Select **+ Define task**.
     3. Enter the task details, such as the rate limits, retry settings, timeout settings, and expected inputs and outputs. The **Name** must match the task name defined previously in your code.
-
-    ![Define task in Orkes Conductor](/content/img/using-workers/using_workers-define_custom_task.png)
-
     4. Select **Save > Confirm Save**.
 
 
@@ -15157,9 +14807,6 @@ In Orkes Conductor, an [application account](/content/category/access-control-an
 1. Configure an application account.
    - Go to **Access Control > Applications** from the left navigation menu on your Conductor cluster.
    - Create a new application or select an application to which you will be adding your worker. Ensure that the application role has **Worker** enabled.
-
-![Add worker to application account in Orkes Conductor](/content/img/using-workers/using_workers-application_roles.png)
-
 2. Get the application access key for your worker project.
    - In **Access Keys**, select **Create access key** and store your credentials securely.
    - Set the Key ID and Key Secret in your project.
@@ -15171,8 +14818,6 @@ In Orkes Conductor, an [application account](/content/category/access-control-an
    - Select **Add Permissions**.
 
 The application account can now execute the worker task.
-
-![Add permissions to application account in Orkes Conductor](/content/img/using-workers/using_workers-app_permissions.png)
 
 Keep worker applications separate from workflow-starting applications. A worker needs permission to poll and complete tasks; it usually does not need permission to start workflows.
 
@@ -15252,8 +14897,6 @@ To use a [Worker task](/content/reference-docs/worker-task), add it to a workflo
        - Add a **Worker Task (Simple)** and enter the task name in **Task Definition**.
     4. Configure the task, such as its inputs, caching, and optionality.
     5. On the top right, select **Save > Confirm**.
-
-    ![Add task in Orkes Conductor](/content/img/using-workers/using_workers-add_task_to_workflow.png)
 
 
 ### Run workflow
@@ -15535,15 +15178,9 @@ When the webhook event is received, its payload is passed as input to the starte
 !!! note
     When both the options, **Workflow to receive webhook event** and **Start workflow when webhook event comes**, are configured, the webhook payload will be sent to both workflows.
 
-Image: Creating Webhook in Orkes Conductor
-
-
 4. Select **Save**.
 
 An unverified webhook URL will be generated.
-
-Image: Webhook with an unverified UR
-
 
 Here is the JSON schema for a webhook:
 
@@ -15625,9 +15262,6 @@ URL becomes verified when Conductor receives a signed Stripe event and validates
 
 Once the URLs are verified (using the respective verification method), the URL status will be marked as **Verified** in Conductor.
 
-Image: Webhook with a verified UR
-
-
 ## Step 4: Verify that Conductor received webhook events
 
 The incoming webhook payload triggers the workflow in different ways, depending on your configuration:
@@ -15638,15 +15272,9 @@ The incoming webhook payload triggers the workflow in different ways, depending 
 
 To verify that the webhook events have been received by Conductor, open the webhook by navigating to **Definitions** > **Webhook**, and access the webhook execution history.
 
-Image: Verifying Webhook execution in Orkes Conductor
-
-
 This includes details such as the event ID, whether the headers are matched, the triggered workflow (execution) IDs, and the timestamp of when the event was received.
 
 You can also use the search option to filter results based on these parameters.
-
-Image: Filtering Webhook execution in Orkes Conductor
-
 
 ## Production notes
 
@@ -16254,10 +15882,6 @@ You can configure retry behavior for tasks in its **task definition**. The param
 
 ### Example retry behavior
 
-
-  Image: Diagram showing how the Conductor server and worker interact in the event of a retry.
-
-
 Based on the retry configuration in the above figure, the following sequence of events will occur in the event of a retry:
 
 1. Worker (W1) polls the Conductor server for task T1 and receives the task.
@@ -16330,13 +15954,7 @@ Poll timeout
 In the figure below, task T1 isn’t polled by the worker within 60 seconds, so Conductor marks it as `TIMED_OUT`.
 
 
-  Image: Diagram showing how the Conductor server and worker interact in the event of a poll timeout.
-
-
 Response timeout
-
-
-  Image: Diagram showing how the Conductor server and worker interact in the event of a response timeout.
 
 
 Based on the timeout configuration in the above figure, the following sequence of events will occur in the event of a delayed worker response:
@@ -16349,9 +15967,6 @@ Based on the timeout configuration in the above figure, the following sequence o
 
 
 Timeout
-
-
-  Image: Diagram showing how the Conductor server and worker interact in the event of a timeout.
 
 
 Based on the timeout configuration in the above figure, the following sequence of events will occur when a task cannot be completed within the given duration:
@@ -16434,10 +16049,6 @@ You can set a failure workflow for a workflow in its **workflow definition**. Be
 2. Select the workflow that you want to add a failure workflow to.
 3. In the **Workflow** tab on the right, scroll down to **Execution Parameters** > **Failure/Compensation** > **Failure/Compensation workflow name**, and select the failure workflow from the dropdown box.
 4. Select **Save** > **Confirm save**.
-
-
-  Image: Configuring failure workflow in UI.
-
 
 **Example**
 
@@ -16865,20 +16476,6 @@ For example, the following task maps `workflow.input.url` and `workflow.input.us
 Before a task is scheduled, the server checks if there is cached output for the given task definition name by matching the cache key. If a match is found, the task is not scheduled, and the cached output is used to complete it.
 
 If no cached output is found, the task is scheduled as usual. When the task completes successfully, the output is cached under the specified cache key for the specified duration.
-
-## Enable caching in the UI
-
-**To cache task output:**
-
-1. Go to **Definitions** > **Workflow** from the left navigation menu on your Conductor cluster.
-2. Select a workflow.
-3. In the visual workflow editor, select the task you want to cache.
-4. Turn on the **Cache output** toggle.
-5. Enter the **Cache key** and **TTL (in seconds).**
-
-
-  Image: Configuring cache output in UI.
-
 
 ## Example
 
@@ -60872,8 +60469,6 @@ Returns 204, indicating that the workflow execution has been restarted successfu
 
 In the Conductor UI, the workflow execution will re-enter the RUNNING status, and the last failed task will be re-attempted.
 
-Image: Conductor UI showing task being retried
-
 
 Retry failed workflow from last failed Sub Workflow task when resumeSubworkflowTasks=true
 
@@ -60893,8 +60488,6 @@ curl -X 'POST' \
 Returns 204, indicating that the workflow execution has been restarted successfully from the last failed task.
 
 In the Conductor UI, both the parent workflow and sub-workflow execution will re-enter the RUNNING status.
-
-Image: Conductor UI showing both workflows in RUNNING state.
 
 
 Retry failed workflow from last failed Sub Workflow task when resumeSubworkflowTasks=false
@@ -60916,8 +60509,6 @@ Returns 204, indicating that the workflow execution has been restarted successfu
 
 In the Conductor UI, the parent workflow execution will re-enter the RUNNING status, and a new sub-workflow execution instance will be created.
 
-Image: Conductor UI showing parent workflow in RUNNING state and a new sub-workflow instance.
-
 
 Retry sub-workflow when retryIfRetriedByParent=false
 
@@ -60930,15 +60521,7 @@ This example demonstrates how a retry attempt on a sub-workflow is blocked when:
 
 Start a workflow that includes a sub-workflow. Initially, both executions are in RUNNING status.
 
-
-  Image: Both workflows in RUNNING state.
-
-
 Now, let’s assume the sub workflow failed, resulting in both the sub-workflow and the parent workflow entering FAILED status.
-
-
-  Image: Both workflows in FAILED state.
-
 
 Use the following API call to retry the parent workflow:
 
@@ -61343,12 +60926,6 @@ curl -X 'PUT' \
 **Response**
 
 Returns 200 OK, indicating that the task has been skipped successfully. You can verify the update by reviewing the task’s input and output in the workflow execution details.
-
-
-  Image: Screenshot of Conductor UI showing updated task input for a skipped task.
-
-
-  Image: Screenshot of Conductor UI showing updated task output for a skipped task.
 
 
 ## Related pages
@@ -61797,9 +61374,6 @@ curl -X 'DELETE' \
 Returns 200 OK, indicating that the workflow execution has been terminated successfully. You can view the termination reason in the Conductor UI.
 
 
-  Image: Screenshot of Conductor UI showing terminated workflow with the termination reason.
-
-
 Terminate a workflow execution triggering a failure workflow
 
 
@@ -61815,9 +61389,6 @@ curl -X 'DELETE' \
 **Response**
 
 Returns 200 OK, indicating that the workflow execution has been terminated successfully, triggering the failure workflow.
-
-
-  Image: Screenshot of Conductor UI showing terminated workflow that triggered a compensation workflow.
 
 
 ## Related pages
@@ -65205,9 +64776,6 @@ curl -X 'POST' \
 Returns 200 OK, indicating that the workflow execution has been upgraded successfully. All new tasks before the currently running task are skipped in the execution.
 
 
-  Image: Screenshot of Conductor UI showing the skipped tasks in the upgraded workflow execution.
-
-
 Upgrade to the next version with updated workflow input
 
 
@@ -65231,9 +64799,6 @@ curl -X 'POST' \
 **Response**
 
 Returns 200 OK, indicating that the workflow execution has been upgraded successfully, and the `workflowInput` is updated in the running execution.
-
-
-  Image: Screenshot of Conductor UI showing updated workflow input using upgrade workflow API.
 
 
 Upgrade to the next version with updated task output for a skipped task
@@ -65262,9 +64827,6 @@ Upgrade to the next version with updated task output for a skipped task
 **Response**
 
 Returns 200 OK, indicating that the workflow execution has been upgraded successfully.  The output for the skipped task (event_ref) is added to the execution.
-
-
-  Image: Screenshot of Conductor UI showing updated task output for a skipped task.
 
 
 ## Related pages
@@ -66313,8 +65875,6 @@ This takes you to the workflow execution page.
 
 You can verify the execution by inspecting the completed tasks and their outputs on the workflow execution page.
 
-Image: Example execution of a workflow with Dynamic Fork/Join running different tasks
-
 
 Running the same task: HTTP task
 
@@ -66383,8 +65943,6 @@ This takes you to the workflow execution page.
 - The Join task completes after all forked HTTP tasks complete.
 
 To verify, open the forked HTTP task instances under the Dynamic Fork task and confirm that each task completed successfully and returned a response.
-
-Image: Example execution of a workflow with Dynamic Fork/Join running same tasks
 
 
 Running the same task: Worker task
@@ -66457,10 +66015,6 @@ During execution, Conductor inserts an additional parameter called `__index` int
   "__index": 2 // index of the element in the source array
 }
 ```
-
-
-  Image: UI screenshot of one input instance for the Dynamic Fork task at run-time
-
 
 If `forkTaskInputs` contains simple values (for example, ["apple", "orange", "kiwi"]), Conductor  will set each array element in a parameter called `input`, and still adds `__index`:
 
@@ -67817,17 +67371,9 @@ This example demonstrates how to reuse a payment workflow within a larger subscr
 
 Assume you have an existing workflow named `payment_for_subscription` that contains the payment logic for subscriptions. This workflow is relatively long and is used in multiple places.
 
-
-  Image: Payment sub workflow
-
-
 Instead of copying the payment logic into every workflow that requires it, you can invoke it as a sub-workflow. This ensures that any updates to the payment workflow are automatically reflected wherever it is used.
 
 In the subscription renewal workflow, the payment workflow is added as a Sub Workflow task. When the subscription renewal workflow runs, it executes the sub-workflow synchronously and waits for it to complete before continuing.
-
-
-  Image: Payment workflow as sub-workflow in a subscription flow
-
 
 This approach enhances maintainability by centralizing payment logic within a single workflow across the organization.
 
@@ -67904,14 +67450,7 @@ Run the workflow by dynamically passing the workflow definition.
 
 On viewing the execution, verify that the workflow definition was correctly passed by inspecting the input of the Sub Workflow task.
 
-
-  Image: Inspecting Sub Worlflow
-
-
 Here, the workflow isn’t saved in your cluster but executes dynamically at runtime. You can view the sub-workflow execution from **Summary** > **Subworkflow ID**.
-
-
-  Image: Viewing sub-workflow execution that was passed dynamically
 
 
 ## Related pages
@@ -70926,9 +70465,6 @@ An Inline task can be used for simple scripting logic that does not require a de
 This takes you to the workflow execution page. Once the execution is completed, verify that the string is reversed.
 
 
-    Image: Workflow output
-
-
 Using console logging in an Inline task
 
 
@@ -70962,9 +70498,6 @@ This example builds a workflow that validates a discount percentage and logs the
 6. Select **Execute**.
 
 Once completed, open the task execution and check the **Logs** tab to see the `console.log` output.
-
-
-    Image: Workflow output
 
 
 ## Related pages
@@ -71295,10 +70828,6 @@ This example builds a workflow that uses a JSON JQ Transform task to concatenate
 
 This takes you to the workflow execution page. Once completed, it returns the workflow output as follows:
 
-
-    Image: Workflow output
-
-
 **How the JSON JQ Transform task works in this workflow**
 
 The input parameters for the JSON JQ Transform task are defined as follows:
@@ -71331,9 +70860,6 @@ In the workflow execution, select the task **jq_example_task** to view the task 
 
 - `result`—The first result produced by the JQ expression.
 - `resultList`—All results produced by the expression. In this example, the expression returns a single result.
-
-
-    Image: Workflow output
 
 
 Clean up an API response using JSON JQ Transform
@@ -71402,17 +70928,9 @@ This example builds a workflow that retrieves recent stories from the Hacker New
 
 This takes you to the workflow execution page. Once completed, it returns the following output:
 
-
-    Image: Workflow output
-
-
 **How the JSON JQ Transform task works in this workflow**
 
 The HTTP task via the Hacker News API returns a verbose JSON response that includes an array. Each entry contains many fields, such as timestamps, author details, URLs, and metadata.
-
-
-    Image: HTTP task output
-
 
 In this workflow, the JSON JQ Transform task reduces that response to a simplified structure that includes only:
 
@@ -71436,9 +70954,6 @@ The JSON JQ Transform task returns:
 
 - `result`: The transformed array returned by the JQ expression.
 - `resultList`: All results produced by the expression. In this example, the expression returns a single array.
-
-
-    Image: Workflow output
 
 
 ## Related pages
@@ -71725,9 +71240,6 @@ The output includes information such as:
 - Start and end times
 - Execution duration
 - Workflow inputs and outputs
-
-
-    Image: Example using Conductor API method
 
 
 Using METRICS
@@ -72757,9 +72269,6 @@ A service can be registered for use in [HTTP](https://orkes.io/content/reference
     7. (If the endpoint requires authorization) Enter the key and value in the **Authorization key** and **Value** fields.
     8. Select **Save**.
 
-    Image: Creating sample service registry definition for HTTP services
-
-
 === "gRPC services"
 
     **To define a service:**
@@ -72774,13 +72283,8 @@ A service can be registered for use in [HTTP](https://orkes.io/content/reference
     8. (If the endpoint requires authorization) Enter the key and value in the **Authorization key** and **Value** fields.
     9. Select **Save**.
 
-    Image: Creating sample service registry definition for gRPC services
-
 
 To clone an existing service definition, select the clone icon next to the service in the Remote Services list. Enter a new name for the cloned service and select Clone. The new service is created with all the configuration and methods copied from the original.
-
-Image: Cloning services
-
 
 ## Discover or add endpoints
 
@@ -72796,13 +72300,7 @@ After defining a service, you can either automatically discover its endpoints or
     1. Open your service definition.
     2. Select **Discover methods** to fetch all endpoints automatically.
 
-    Image: Fetching endpoints from the HTTP services
-
-
     Conductor fetches all endpoints defined in the Swagger specification. The corresponding schemas are automatically registered under [Schemas](https://orkes.io/content/developer-guides/schema-validation) in Conductor.
-
-    Image: Schema registered from the fetched endpoints of HTTP service
-
 
 === "gRPC services"
 
@@ -72816,9 +72314,6 @@ After defining a service, you can either automatically discover its endpoints or
     1. Open your service definition.
     2. Select **Discover methods** to fetch all endpoints automatically.
 
-    Image: Fetching endpoints from the gRPC services
-
-
     **To generate the compiled binary protobuf files for reflection-disabled services:**
 
     1. [Install protoc](https://grpc.io/docs/protoc-installation/) if not already installed.
@@ -72831,9 +72326,6 @@ After defining a service, you can either automatically discover its endpoints or
     3. Open your service registry definition in Conductor, and go to **Proto Files**.
     4. Select **+ Upload Proto File**, and upload the ***compiled.bin*** file.
 
-    Image: Uploading proto files for the gRPC services
-
-
     Once uploaded, Conductor extracts and registers the services, making them ready for use in workflows.
 
 
@@ -72845,9 +72337,6 @@ After defining a service, you can either automatically discover its endpoints or
     **To add a new endpoint to the HTTP services:**
 
     1. From your service definition, select **+ Add New Method.**
-
-    Image: Adding a new method to the service registry definition
-
 
     2. Enter the following endpoint parameters:
 
@@ -72935,9 +72424,6 @@ Available since: v5.4.2 and later | Select **+ Add Parameter** and add the reque
 
     1. From your service definition, select **+ Add New Method.**
 
-    Image: Adding a new method to the service registry definition
-
-
     2. Enter the following endpoint parameters:
 
 
@@ -73018,18 +72504,9 @@ Once the endpoints are fetched or added, you can test them before adding them to
 1. From your service registry definition page, select the test (▶) icon next to the endpoint.
 2. Make the required configuration changes, and select **Execute**.
 
-Image: Testing endpoints
-
-
 The test returns the server response and generates a link to a sample workflow execution.
 
-Image: Interface for testing endpoints with sample workflow execution link
-
-
 While testing the endpoints, you can also select the required host from the testing interface:
-
-Image: Switching between hosts while testing from Conductor UI
-
 
 ## Add services to workflows
 
@@ -73048,9 +72525,6 @@ Once the services are registered, you can add them to HTTP, HTTP Poll, and gRPC 
     6. In **Host**, select the required host for the service.
     7. In **Service method**, select the required endpoint.
     8. Select **Populate**.
-
-    Image: Adding the registered service to an HTTP task
-
 
     This auto-populates the HTTP task parameters in the workflow.
 
@@ -73071,9 +72545,6 @@ Once the services are registered, you can add them to HTTP, HTTP Poll, and gRPC 
     6. In **Host:Port**, select the host and port for the service.
     7. In **Service method**, select the required endpoint.
     8. Select **Populate**.
-
-    Image: Adding the registered service to a gRPC task
-
 
     This auto-populates the gRPC task parameters in the workflow.
 
@@ -73225,10 +72696,6 @@ For quick testing on Orkes Conductor without creating an application, you can ob
 **To retrieve the user-based JWT token:**
 
 In the bottom left corner of the Conductor UI, select **Copy Token**.
-
-
-  Image: Copying user-based token in Orkes Conductor
-
 
 ## Related pages
 
@@ -77300,10 +76767,6 @@ To follow along, ensure you have access to the free [Orkes Developer Edition](ht
 
 Here is the document classification workflow that you’ll build in this tutorial:
 
-
-  Image: Document Classifier Workflow
-
-
 **Workflow input:**
 
 - **document_url**: The HTTP URL of the document file to classify. The workflow supports PDFs that contain scanned images, such as scanned passports or IDs. Text is extracted using OCR before classification.
@@ -77344,9 +76807,6 @@ The OpenAI integration is added. The next step is to add a specific model.
 
 1. In the **Integrations** page, select the + button next to your newly-created OpenAI integration.
 
-Image: Screenshot of the + icon in the OpenAI integration.
-
-
 2. Select **+ New model**.
 3. Enter the **Model Name** as “gpt-4o” and an optional description like “OpenAI’s gpt-4o model”.
 4. Ensure that the **Active** toggle is switched on and select **Save**.
@@ -77365,10 +76825,6 @@ The integration is now ready to use. The next step is creating an AI prompt temp
 6. In **Prompt Template**, enter your prompt, which will classify the document into appropriate categories. For example:
 
 _We have a document that was scanned using OCR. The content is {'${text}'}. You need to classify the document based on the provided OCR content. The document could be one of these: W2, Drivers License, Pay stub, Employment Verification Letter, or Mortgage Application. Suppose the provided content does not match with any of those documents. In that case, you must reply NO_MATCH, and in the following line, you must give a human-understandable message about the result and why that determination was made in under three sentences. If the provided content matches, return the values found, including the document type. If the social security number is part of the values, obfuscate the first five digits._
-
-
-  Image: Creating a prompt template in Orkes Conductor
-
 
 Here, we have defined `${text}` as a variable derived from the previous tasks' output. This will become clearer once we incorporate this prompt into the workflow.
 
@@ -77471,11 +76927,6 @@ With the integration and prompt ready, let’s create the workflow.
 
 3. Select **Save** > **Confirm**.
 4. After saving, update the **LLM Text Complete** task with your actual values:
-
-
-  Image: Modifying the workflow template with configured parameters
-
-
     - In **LLM provider**, replace \ with your OpenAI integration name created in [Step 1](/content/templates/document-classifier#add-openai-integration).
     - In **Model**, replace \ with your integrated model in [Step 1](/content/templates/document-classifier#add-gpt-4o-models).
     - In **Prompt template**, replace \ with your prompt created in [Step 2](/content/templates/document-classifier#step-2-create-the-ai-prompt-for-document-classification).
@@ -77499,17 +76950,7 @@ The document must be accessible via an HTTP URL and end with *.pdf*.
 
 3. Select **Execute**.
 
-
-  Image: Running workflow from Conductor UI
-
-
-The workflow output will provide the category to which the document is classified. Here is an example output based on a W2 document passed as the input:
-
-
-  Image: Example workflow output
-
-
-  Image: Example for doc classification using Orkes Conductor
+The workflow output will provide the category to which the document is classified.
 
 ---
 URL: https://orkes.io/content/templates/examples/api-processing-usps-example
@@ -82104,10 +81545,6 @@ In this method, the workflow uses two tasks to manage a long-running API.
 
 Your workflow looks like this:
 
-
-  Image: Long Running Workflow using HTTP Poll task
-
-
 In this workflow, the HTTP task triggers the API that starts a job. The HTTP Poll task queries the status endpoint every 5 seconds until the termination condition is met. The workflow completes once that condition evaluates to true.
 
 Let’s run the workflow using Conductor UI. Open your workflow definition, and select **Execute**.
@@ -82162,10 +81599,6 @@ When `asyncComplete` is set to true, Conductor expects the HTTP endpoint to perf
 
 Your workflow looks like this:
 
-
-  Image: Long Running Workflow using async complete
-
-
 Let’s run the workflow using Conductor UI.
 
 **To run the workflow:**
@@ -82190,10 +81623,6 @@ POST /api/tasks/{workflowId}/{taskRefName}/{status}
 ```
 
 You can get the `workflowId` and `taskRefName` from the workflow execution view in the Conductor UI.
-
-
-  Image: Long Running Workflow using async complete
-
 
 Next, send a POST request with the status set to COMPLETED. After the callback, the task status changes to COMPLETED, and the workflow ends.
 

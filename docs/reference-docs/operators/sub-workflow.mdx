@@ -108,29 +108,9 @@ This example demonstrates how to reuse a payment workflow within a larger subscr
 
 Assume you have an existing workflow named `payment_for_subscription` that contains the payment logic for subscriptions. This workflow is relatively long and is used in multiple places.
 
-<p align="center">
-  <img
-    src="/content/img/payment-sub-workflow-example.jpg"
-    alt="Payment sub workflow"
-    width="100%"
-    height="auto"
-    style={{ paddingBottom: 40, paddingTop: 40 }}
-  />
-</p>
-
 Instead of copying the payment logic into every workflow that requires it, you can invoke it as a sub-workflow. This ensures that any updates to the payment workflow are automatically reflected wherever it is used.
 
 In the subscription renewal workflow, the payment workflow is added as a Sub Workflow task. When the subscription renewal workflow runs, it executes the sub-workflow synchronously and waits for it to complete before continuing.
-
-<p align="center">
-  <img
-    src="/content/img/payment-sub-workflow-in-main-workflow.png"
-    alt="Payment workflow as sub-workflow in a subscription flow"
-    width="90%"
-    height="auto"
-    style={{ paddingBottom: 40, paddingTop: 40 }}
-  />
-</p>
 
 This approach enhances maintainability by centralizing payment logic within a single workflow across the organization.
 
@@ -210,27 +190,7 @@ Run the workflow by dynamically passing the workflow definition.
 
 On viewing the execution, verify that the workflow definition was correctly passed by inspecting the input of the Sub Workflow task.
 
-<p align="center">
-  <img
-    src="/content/img/inspecting-sub-workflow-input.png"
-    alt="Inspecting Sub Worlflow's input parameter"
-    width="100%"
-    height="auto"
-    style={{ paddingBottom: 40, paddingTop: 40 }}
-  />
-</p>
-
 Here, the workflow isn’t saved in your cluster but executes dynamically at runtime. You can view the sub-workflow execution from **Summary** > **Subworkflow ID**.
-
-<p align="center">
-  <img
-    src="/content/img/sub-workflow-execution-id.png"
-    alt="Viewing sub-workflow execution that was passed dynamically"
-    width="100%"
-    height="auto"
-    style={{ paddingBottom: 40, paddingTop: 40 }}
-  />
-</p>
 
 </p>
 </details>

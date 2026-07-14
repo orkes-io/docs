@@ -50,8 +50,6 @@ Returns 204, indicating that the workflow execution has been restarted successfu
 
 In the Conductor UI, the workflow execution will re-enter the RUNNING status, and the last failed task will be re-attempted.
 
-<p align="center"><img src="/content/img/SDKs/retry_failed_workflow-workflow_status.png" alt="Conductor UI showing task being retried" width="90%" height="auto"></img></p>
-
 </details>
 
 <details>
@@ -72,8 +70,6 @@ curl -X 'POST' \
 Returns 204, indicating that the workflow execution has been restarted successfully from the last failed task.
 
 In the Conductor UI, both the parent workflow and sub-workflow execution will re-enter the RUNNING status.
-
-<p align="center"><img src="/content/img/SDKs/retry_failed_workflow-resumeSubworkflowTasks_true.png" alt="Conductor UI showing both workflows in RUNNING state." width="90%" height="auto"></img></p>
 
 </details>
 
@@ -97,8 +93,6 @@ Returns 204, indicating that the workflow execution has been restarted successfu
 
 In the Conductor UI, the parent workflow execution will re-enter the RUNNING status, and a new sub-workflow execution instance will be created.
 
-<p align="center"><img src="/content/img/SDKs/retry_failed_workflow-resumeSubworkflowTasks_false.png" alt="Conductor UI showing parent workflow in RUNNING state and a new sub-workflow instance." width="90%" height="auto"></img></p>
-
 </details>
 
 
@@ -114,27 +108,7 @@ This example demonstrates how a retry attempt on a sub-workflow is blocked when:
 
 Start a workflow that includes a sub-workflow. Initially, both executions are in RUNNING status.
 
-<p align="center">
-  <img
-    src="/content/img/parent-and-child-workflow-in-running-state.png"
-    alt="Both workflows in RUNNING state."
-    width="100%"
-    height="auto"
-    style={{ paddingBottom: 40, paddingTop: 40 }}
-  />
-</p>
-
 Now, let’s assume the sub workflow failed, resulting in both the sub-workflow and the parent workflow entering FAILED status.
-
-<p align="center">
-  <img
-    src="/content/img/parent-and-child-workflow-in-failed-state.png"
-    alt="Both workflows in FAILED state."
-    width="100%"
-    height="auto"
-    style={{ paddingBottom: 40, paddingTop: 40 }}
-  />
-</p>
 
 Use the following API call to retry the parent workflow:
 

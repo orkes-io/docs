@@ -43,9 +43,6 @@ Event handlers in Orkes Conductor listen for messages from message brokers and t
 | actions | An array of actions to perform. Each action requires specific input parameters. Supported actions include:<ul><li>[complete_task](/content/developer-guides/event-handler#complete-task)</li><li>[terminate_workflow](/content/developer-guides/event-handler#terminate-workflow)</li><li>[update_workflow_variables](/content/developer-guides/event-handler#update-variables)</li><li>[fail_task](/content/developer-guides/event-handler#fail-task)</li><li>[start_workflow](/content/developer-guides/event-handler#start-workflow)</li></ul> | Required. |
 | active | Whether the event handler is enabled. Set to `true` to enable the event handler or `false` to disable it. | Required. |
 
-
-<p align="center"><img src="/content/img/creating-event-handler-ui-method.png" alt="Creating event handler via UI in Orkes Conductor" width="100%" height="auto"/></p>
-
 4. Select **Save** > **Confirm Save**.
 
 **Example JSON Schema**

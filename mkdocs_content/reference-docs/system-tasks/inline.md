@@ -152,17 +152,6 @@ An Inline task can be used for simple scripting logic that does not require a de
 
 This takes you to the workflow execution page. Once the execution is completed, verify that the string is reversed.
 
-<center>
-  <p>
-    <img
-      src="/content/img/inline-task-example-output.png"
-      alt="Workflow output"
-      width="100%"
-      height="auto"
-    />
-  </p>
-</center>
-
 </details>
 
 <details>
@@ -210,17 +199,6 @@ This example builds a workflow that validates a discount percentage and logs the
 6. Select **Execute**.
 
 Once completed, open the task execution and check the **Logs** tab to see the `console.log` output.
-
-<center>
-  <p>
-    <img
-      src="/content/img/inline-console-log-example.png"
-      alt="Workflow output"
-      width="100%"
-      height="auto"
-    />
-  </p>
-</center>
 
 </details>
 

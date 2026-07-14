@@ -147,11 +147,7 @@ You can create schedules from the Scheduler UI, from a completed workflow execut
 
     From the Scheduler definitions list, use **Quick filters** to narrow schedules by active/inactive status, and **Quick search** to find one by name or by tag (format `tagKey:tagValue`, for example `team:marketing`). The row actions let you **Pause**, **Clone**, **Add/Edit Tags**, or **Delete** a schedule.
 
-    <p align="center"><img src="/content/img/actions-on-scheduler.png" alt="Quick search, quick filters, and row actions on the Scheduler definitions list" width="90%" height="auto"></img></p>
-
     If the schedule is active, the list also shows its next run time.
-
-    <p align="center"><img src="/content/img/next-run-time-for-workflow-schedule.png" alt="Next run time column on the Scheduler definitions list" width="90%" height="auto"></img></p>
 
 === "Conductor UI (Workflow Execution)"
 
@@ -161,8 +157,6 @@ You can create schedules from the Scheduler UI, from a completed workflow execut
     2. Open the completed execution.
     3. Select **Actions** > **Create Schedule**.
     4. Add the schedule name, cron expression, timezone, and active window.
-
-    <p align="center"><img src="/content/img/schedule-from-executions.png" alt="Create Schedule option in the Actions menu of a workflow execution" width="90%" height="auto"></img></p>
 
 === "Using API"
 
@@ -181,11 +175,7 @@ Go to **Executions** > **Scheduler** to inspect scheduled runs. Use this view to
 
 For debugging, open the workflow execution from the scheduled execution row. Select multiple rows and use **Bulk Action** to pause, resume, restart, retry, or terminate them together.
 
-<p align="center"><img src="/content/img/scheduler-executions.jpg" alt="Scheduled workflow executions list with rows selected and the Bulk Action menu" width="90%" height="auto"></img></p>
-
 For automation, use the [Search Schedule Executions API](/content/reference-docs/api/schedule/search-schedule-executions), or select **Show as code** next to Search to get the current search as cURL or JavaScript.
-
-<p align="center"><img src="/content/img/show-as-code-scheduler-executions.png" alt="Show as code option next to the Search button on the scheduled executions page" width="90%" height="auto"></img></p>
 
 ## Troubleshooting schedules
 
