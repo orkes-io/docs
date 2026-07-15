@@ -111,13 +111,7 @@ Execution ID: fd7sc684fbfc-7a0d-11f1-9d8c-4e41cb2964e1
 
 Exact temperature and token count vary by run and by city.
 
-To view the agent execution in UI, open your Developer Edition cluster and go to [Agents > Executions](https://developer.orkescloud.com/agent-executions) to see the agent's execution. Open the latest run of the `weatherbot` execution.
-
-<p align="center"><img src="/content/img/agent-execution.png" alt="Latest weatherbot execution in the Agents to Executions UI" width="100%" height="auto"></img></p>
-
-You can also view the underlying Conductor workflow that ran behind the hood.
-
-<p align="center"><img src="/content/img/workflow-under-hood.gif" alt="Conductor workflow diagram compiled from the weatherbot agent" width="100%" height="auto"></img></p>
+To view the agent execution in UI, open your Developer Edition cluster and go to [Agents > Executions](https://developer.orkescloud.com/agent-executions) to see the agent's execution. Open the latest run of the `weatherbot` execution. You can also view the underlying Conductor workflow that ran behind the hood.
 
 :::tip What just happened
 The agent looped through reasoning and tool-calling on its own (up to `max_turns`, default 25) until it had enough information to answer. If your process had crashed mid-call, the next `AgentRuntime` connected to the same cluster would have resumed from the last completed step instead of starting over.

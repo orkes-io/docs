@@ -1704,7 +1704,7 @@ description: "Orkes Conductor documentation for building durable workflows, API 
         </div>
         <span class="hp-text-cta">Build your first workflow &rarr;</span>
       </a>
-      <a href="${BASE_URL}/ai-agents/first-ai-agent" class="hp-choose-card agents">
+      <a href="${BASE_URL}/ai-agents/first-ai-agent" class="hp-choose-card">
         <div class="hp-choose-icon"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8"><path d="M12 3v3M5 8l1.6 1.6M19 8l-1.6 1.6M12 21a5 5 0 0 0 5-5c0-3-2-4-2-7a3 3 0 0 0-6 0c0 3-2 4-2 7a5 5 0 0 0 5 5Z"></path></svg></div>
         <h3>Build AI Agents</h3>
         <p>Build tool-calling agents with the Orkes Agent SDK &mdash; durable by default, with automatic crash recovery.</p>
@@ -3258,7 +3258,6 @@ a.repo-link:hover {
 .hp-choose-card .hp-feature-list div {
   border-left: 3px solid var(--faint); padding-left: 12px; font-size: 13px; line-height: 1.4; color: var(--muted);
 }
-.hp-choose-card.agents .hp-feature-list div { border-left-color: var(--accent); }
 .hp-choose-card .hp-inline-chip { display: inline-flex; align-items: center; gap: 6px; flex-wrap: wrap; }
 .hp-choose-card .hp-chip {
   font-family: 'JetBrains Mono', monospace; font-size: 12px; background: var(--chip-bg); border: 1px solid var(--border);
