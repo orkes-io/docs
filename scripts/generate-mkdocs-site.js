@@ -1901,7 +1901,7 @@ async function greet(task: Task) {
     <h2 class="hp-section-title" style="margin-bottom:22px;">Keep learning</h2>
     <div class="hp-resources-grid">
 
-    <div class="hp-resource-card featured">
+    <div class="hp-resource-card">
       <span class="hp-resource-kicker">Product updates</span>
       <h3>Changelog</h3>
       <div class="hp-changelog-list">
@@ -3350,7 +3350,6 @@ a.repo-link:hover {
   display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--border);
   border-radius: 16px; padding: 28px;
 }
-.hp-resource-card.featured { border: 1.5px solid var(--accent); box-shadow: 0 10px 34px var(--accent-soft); }
 .hp-resource-kicker {
   font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600; letter-spacing: .12em;
   text-transform: uppercase; color: var(--faint); margin-bottom: 10px;
