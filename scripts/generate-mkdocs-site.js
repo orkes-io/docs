@@ -1664,68 +1664,25 @@ description: "Orkes Conductor documentation for building durable workflows, API 
 <div class="home-wrapper">
 
 <!-- ===================== HERO ===================== -->
-<section class="hp-section">
+<section class="hp-section" style="padding-top:44px;">
   <div class="hp-wrap">
-    <h1 class="hp-title">Orkes Conductor Documentation</h1>
-    <div class="hp-hero-panel">
-      <div class="hp-hero-left">
-        <h2>Build unbreakable workflows and AI agents</h2>
-        <p>Orkes Conductor is the managed enterprise platform for Conductor OSS &mdash; a durable workflow engine for production AI agents and distributed systems.</p>
-        <div>
-          <a href="${DEVELOPER_EDITION_URL}" class="hp-cta-pill">Start for free <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
-        </div>
-      </div>
-      <div class="hp-hero-right">
-        <div class="hp-editor-chrome">
-          <span class="hp-dot red"></span><span class="hp-dot yellow"></span><span class="hp-dot green"></span>
-          <span class="hp-filename">order_fulfillment</span>
-        </div>
-        <div class="hp-diagram">
-          <div class="hp-diagram-node">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.9"><path d="M8 5v14l11-7z"></path></svg>
-            <span>Trigger</span>
-          </div>
-          <div class="hp-diagram-connector"></div>
-          <div class="hp-diagram-node accent">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8"><path d="M12 3v3M5 8l1.6 1.6M19 8l-1.6 1.6M12 21a5 5 0 0 0 5-5c0-3-2-4-2-7a3 3 0 0 0-6 0c0 3-2 4-2 7a5 5 0 0 0 5 5Z"></path></svg>
-            <span>Agent reasoning</span>
-          </div>
-          <div class="hp-diagram-connector"></div>
-          <div class="hp-diagram-row">
-            <div class="hp-diagram-node">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.8"><circle cx="12" cy="12" r="3"></circle><path d="M19 12a7 7 0 0 0-.1-1l2-1.5-2-3.4-2.3 1a7 7 0 0 0-1.7-1l-.3-2.5H9.4l-.3 2.5a7 7 0 0 0-1.7 1l-2.3-1-2 3.4L5 11a7 7 0 0 0 0 2l-2 1.5 2 3.4 2.3-1a7 7 0 0 0 1.7 1l.3 2.5h4.2l.3-2.5a7 7 0 0 0 1.7-1l2.3 1 2-3.4-2-1.5c.1-.3.1-.7.1-1Z"></path></svg>
-              <span>Tool</span>
-            </div>
-            <div class="hp-diagram-node">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.8"><circle cx="5" cy="6" r="2"></circle><circle cx="5" cy="18" r="2"></circle><circle cx="19" cy="12" r="2"></circle><path d="M7 6.4 17 11M7 17.6 17 13"></path></svg>
-              <span>Workflow</span>
-            </div>
-            <div class="hp-diagram-node">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.8"><circle cx="12" cy="8" r="3.2"></circle><path d="M5 20a7 7 0 0 1 14 0"></path></svg>
-              <span>Human</span>
-            </div>
-          </div>
-          <div class="hp-diagram-connector"></div>
-          <div class="hp-diagram-node result">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2.2"><path d="M20 6 9 17l-5-5"></path></svg>
-            <span>Result</span>
-          </div>
-        </div>
-      </div>
+    <div class="hp-eyebrow-hero">Orkes Conductor</div>
+    <h1 class="hp-title" style="font-size:44px;margin-bottom:18px;">Start building with Orkes Conductor</h1>
+    <p class="hp-hero-sub">Everything you need to orchestrate durable workflows and production AI agents &mdash; from your first task to running at scale.</p>
+    <div style="margin-bottom:38px;">
+      <a href="${DEVELOPER_EDITION_URL}" class="hp-cta-pill">Start for free <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
     </div>
-  </div>
-</section>
 
-<!-- ===================== BUILD ON ORKES ===================== -->
-<section class="hp-section" style="padding:52px 40px 18px;">
-  <div class="hp-wrap"><h2 class="hp-eyebrow">Build on Orkes</h2></div>
-</section>
-<section class="hp-build-split">
-  <div class="hp-build-panel workflows">
-    <div class="hp-build-inner">
-      <h3>Build Workflows</h3>
-      <p>Model business logic as durable workflows &mdash; sequential, parallel, conditional, and event-driven.</p>
-      <div class="hp-code-block"><pre><code><span style="color:var(--pun)">{</span>
+    <!-- ===================== CHOOSE HOW YOU BUILD ===================== -->
+    <div class="hp-eyebrow-section">Platform</div>
+    <h2 class="hp-section-title">Choose how you build</h2>
+    <p class="hp-section-sub">Pick the surface that matches your approach &mdash; model durable business logic, or ship autonomous agents.</p>
+    <div class="hp-choose-grid">
+      <a href="${BASE_URL}/quickstarts" class="hp-choose-card">
+        <div class="hp-choose-icon"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8"><circle cx="5" cy="6" r="2.2"></circle><circle cx="5" cy="18" r="2.2"></circle><circle cx="19" cy="12" r="2.2"></circle><path d="M7.2 6.6 16.8 11M7.2 17.4 16.8 13"></path></svg></div>
+        <h3>Build Workflows</h3>
+        <p>Model business logic as durable workflows &mdash; sequential, parallel, conditional, and event-driven.</p>
+        <div class="hp-code-block"><pre><code><span style="color:var(--pun)">{</span>
   <span style="color:var(--kw)">"name"</span><span style="color:var(--pun)">:</span> <span style="color:var(--str)">"hello_workflow"</span><span style="color:var(--pun)">,</span>
   <span style="color:var(--kw)">"version"</span><span style="color:var(--pun)">:</span> <span style="color:var(--dec)">1</span><span style="color:var(--pun)">,</span>
   <span style="color:var(--kw)">"tasks"</span><span style="color:var(--pun)">:</span> <span style="color:var(--pun)">[</span>
@@ -1739,20 +1696,19 @@ description: "Orkes Conductor documentation for building durable workflows, API 
     <span style="color:var(--pun)">}</span>
   <span style="color:var(--pun)">]</span>
 <span style="color:var(--pun)">}</span></code></pre></div>
-      <div class="hp-feature-list">
-        <div>Persisted state &mdash; resume after failure</div>
-        <div>Isolated retries &mdash; only failed steps retry</div>
-        <div>Execution history &mdash; inputs, outputs, and a full audit trail</div>
-        <div>Polyglot workers &mdash; Python, Java, Go, and more</div>
-      </div>
-      <a href="${BASE_URL}/quickstarts" class="hp-text-cta">Build your first workflow &rarr;</a>
-    </div>
-  </div>
-  <div class="hp-build-panel agents">
-    <div class="hp-build-inner">
-      <h3>Build AI Agents</h3>
-      <p>Build tool-calling agents with the Orkes Agent SDK &mdash; durable by default, with automatic crash recovery.</p>
-      <div class="hp-code-block"><pre><code><span style="color:var(--kw)">from</span> agentspan.agents <span style="color:var(--kw)">import</span> Agent<span style="color:var(--pun)">,</span> AgentRuntime<span style="color:var(--pun)">,</span> tool
+        <div class="hp-feature-list">
+          <div>Persisted state &mdash; resume after failure</div>
+          <div>Isolated retries &mdash; only failed steps retry</div>
+          <div>Execution history &mdash; inputs, outputs, and a full audit trail</div>
+          <div>Polyglot workers &mdash; Python, Java, Go, and more</div>
+        </div>
+        <span class="hp-text-cta">Build your first workflow &rarr;</span>
+      </a>
+      <a href="${BASE_URL}/ai-agents/first-ai-agent" class="hp-choose-card agents">
+        <div class="hp-choose-icon"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8"><path d="M12 3v3M5 8l1.6 1.6M19 8l-1.6 1.6M12 21a5 5 0 0 0 5-5c0-3-2-4-2-7a3 3 0 0 0-6 0c0 3-2 4-2 7a5 5 0 0 0 5 5Z"></path></svg></div>
+        <h3>Build AI Agents</h3>
+        <p>Build tool-calling agents with the Orkes Agent SDK &mdash; durable by default, with automatic crash recovery.</p>
+        <div class="hp-code-block"><pre><code><span style="color:var(--kw)">from</span> agentspan.agents <span style="color:var(--kw)">import</span> Agent<span style="color:var(--pun)">,</span> AgentRuntime<span style="color:var(--pun)">,</span> tool
 
 <span style="color:var(--dec)">@tool</span>
 <span style="color:var(--kw)">def</span> <span style="color:var(--fn)">get_weather</span><span style="color:var(--pun)">(</span>city<span style="color:var(--pun)">:</span> <span style="color:var(--typ)">str</span><span style="color:var(--pun)">)</span> -&gt; <span style="color:var(--typ)">dict</span><span style="color:var(--pun)">:</span>
@@ -1764,19 +1720,16 @@ agent <span style="color:var(--pun)">=</span> <span style="color:var(--fn)">Agen
     model<span style="color:var(--pun)">=</span><span style="color:var(--str)">"anthropic/claude-sonnet-4-6"</span><span style="color:var(--pun)">,</span>
     tools<span style="color:var(--pun)">=</span><span style="color:var(--pun)">[</span>get_weather<span style="color:var(--pun)">],</span>
 <span style="color:var(--pun)">)</span></code></pre></div>
-      <div class="hp-feature-list">
-        <div>Durable agent state &mdash; resumes after a crash, no lost progress</div>
-        <div>Human-in-the-loop approvals and waits</div>
-        <div class="hp-inline-chip">Decorate a typed function with <span class="hp-chip">@tool</span> &mdash; its docstring tells the LLM what it does.</div>
-      </div>
-      <a href="${BASE_URL}/ai-agents/first-ai-agent" class="hp-text-cta">Build your first AI agent &rarr;</a>
+        <div class="hp-feature-list">
+          <div>Durable agent state &mdash; resumes after a crash, no lost progress</div>
+          <div>Human-in-the-loop approvals and waits</div>
+          <div class="hp-inline-chip">Decorate a typed function with <span class="hp-chip">@tool</span> &mdash; its docstring tells the LLM what it does.</div>
+        </div>
+        <span class="hp-text-cta">Build your first agent &rarr;</span>
+      </a>
     </div>
-  </div>
-</section>
 
-<!-- ===================== SDK STRIP ===================== -->
-<section class="hp-section" style="padding:72px 40px;">
-  <div class="hp-wrap">
+    <!-- ===================== SDK STRIP ===================== -->
     <div class="hp-sdk-header">
       <span class="hp-sdk-eyebrow">Developer first</span>
       <h2>SDKs in your favorite language</h2>
@@ -1789,7 +1742,7 @@ agent <span style="color:var(--pun)">=</span> <span style="color:var(--fn)">Agen
     <input type="radio" name="hp-sdklang" id="hp-sdk-go" class="hp-sdk-input">
     <input type="radio" name="hp-sdklang" id="hp-sdk-csharp" class="hp-sdk-input">
 
-    <div class="hp-sdk-card">
+    <div class="hp-sdk-card" style="margin-bottom:66px;">
       <div class="hp-sdk-tabbar">
         <label for="hp-sdk-python" class="hp-sdk-tab">Python</label>
         <label for="hp-sdk-java" class="hp-sdk-tab">Java</label>
@@ -1895,58 +1848,58 @@ async function greet(task: Task) {
       </div>
 
     </div>
-  </div>
-</section>
 
-<!-- ===================== CORE CONCEPTS ===================== -->
-<section class="hp-section" style="padding:16px 40px 72px;">
-  <div class="hp-wrap">
-    <h2 class="hp-eyebrow" style="margin-bottom:22px;">Core concepts</h2>
-    <div class="hp-concepts-grid">
+    <!-- ===================== DEVELOPER JOURNEY ===================== -->
+    <div class="hp-eyebrow-section" style="margin-top:66px;">Developer journey</div>
+    <h2 class="hp-section-title" style="margin-bottom:26px;">From idea to production</h2>
+    <div class="hp-journey">
 
-      <a class="hp-concept-card" href="${BASE_URL}/quickstarts/concepts">
-        <div class="hp-concept-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8"><circle cx="5" cy="6" r="2.2"></circle><circle cx="5" cy="18" r="2.2"></circle><circle cx="19" cy="12" r="2.2"></circle><path d="M7.2 6.6 16.8 11M7.2 17.4 16.8 13"></path></svg></div>
-        <h3>Core Concepts</h3>
-        <p>Workflows, tasks, workers, and the operators (loops, conditionals, fork/join) that control them.</p>
-      </a>
+      <div class="hp-journey-step">
+        <div class="hp-journey-badge">1</div>
+        <h3>Get Started</h3>
+        <div class="hp-journey-links">
+          <a href="${BASE_URL}/quickstarts" class="hp-journey-chip">Run Your First Workflow</a>
+          <a href="${BASE_URL}/get-orkes-conductor" class="hp-journey-chip">Install and Set Up</a>
+          <a href="${BASE_URL}/quickstarts/concepts" class="hp-journey-chip">Concepts</a>
+        </div>
+      </div>
 
-      <a class="hp-concept-card" href="${BASE_URL}/conductor-architecture">
-        <div class="hp-concept-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8"><path d="M12 3 2 8l10 5 10-5-10-5Z"></path><path d="M2 12l10 5 10-5"></path><path d="M2 16l10 5 10-5"></path></svg></div>
-        <h3>Conductor Architecture &amp; Worker Polling</h3>
-        <p>The state machine evaluator, task queues, workers, data stores, and APIs behind Conductor.</p>
-      </a>
+      <div class="hp-journey-step">
+        <div class="hp-journey-badge">2</div>
+        <h3>Build Workflows &amp; Tasks</h3>
+        <div class="hp-journey-links">
+          <a href="${BASE_URL}/developer-guides/workflows" class="hp-journey-chip">Workflows</a>
+          <a href="${BASE_URL}/developer-guides/tasks" class="hp-journey-chip">Tasks</a>
+          <a href="${BASE_URL}/developer-guides/using-workers" class="hp-journey-chip">Workers</a>
+        </div>
+      </div>
 
-      <a class="hp-concept-card" href="${BASE_URL}/error-handling">
-        <div class="hp-concept-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8"><path d="M21 12a9 9 0 1 1-3-6.7"></path><path d="M21 4v4h-4"></path></svg></div>
-        <h3>Handling Failures</h3>
-        <p>Configure retries, timeouts, and failure workflows to keep executions reliable.</p>
-      </a>
+      <div class="hp-journey-step">
+        <div class="hp-journey-badge">3</div>
+        <h3>Make It Reliable</h3>
+        <div class="hp-journey-links">
+          <a href="${BASE_URL}/cookbook/task-timeouts-and-retries" class="hp-journey-chip">Retries &amp; Timeouts</a>
+          <a href="${BASE_URL}/error-handling" class="hp-journey-chip">Error Handling</a>
+          <a href="${BASE_URL}/rate-limits" class="hp-journey-chip">Rate Limits</a>
+        </div>
+      </div>
 
-      <a class="hp-concept-card" href="${BASE_URL}/agentic-workflow-engine">
-        <div class="hp-concept-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8"><path d="M12 3v3M5 8l1.6 1.6M19 8l-1.6 1.6M12 21a5 5 0 0 0 5-5c0-3-2-4-2-7a3 3 0 0 0-6 0c0 3-2 4-2 7a5 5 0 0 0 5 5Z"></path></svg></div>
-        <h3>Agentic Workflow Engine</h3>
-        <p>Durable AI agents, reliable tool execution, human approvals, retries, and audit history.</p>
-      </a>
-
-      <a class="hp-concept-card" href="${BASE_URL}/category/event-driven-orchestration">
-        <div class="hp-concept-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8"><path d="M3 12a9 9 0 0 1 9-9M12 3a9 9 0 0 1 9 9M7 12a5 5 0 0 1 5-5"></path><circle cx="12" cy="12" r="1.6"></circle></svg></div>
-        <h3>Event-Driven Orchestration</h3>
-        <p>React to webhooks, publish events, and coordinate with Kafka, RabbitMQ, SQS, and more.</p>
-      </a>
-
-      <a class="hp-concept-card" href="${BASE_URL}/category/access-control-and-security">
-        <div class="hp-concept-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8"><rect x="4" y="10" width="16" height="11" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></svg></div>
-        <h3>Role Based Access Control</h3>
-        <p>Configure RBAC for users, groups, applications, roles, permissions, and tags.</p>
-      </a>
+      <div class="hp-journey-step">
+        <div class="hp-journey-badge">4</div>
+        <h3>Operate &amp; Secure</h3>
+        <div class="hp-journey-links">
+          <a href="${BASE_URL}/developer-guides/integration-with-cicd" class="hp-journey-chip">CI/CD Integration</a>
+          <a href="${BASE_URL}/category/access-control-and-security" class="hp-journey-chip">RBAC</a>
+          <a href="${BASE_URL}/developer-guides/secrets-in-conductor" class="hp-journey-chip">Secrets Management</a>
+        </div>
+      </div>
 
     </div>
-  </div>
-</section>
 
-<!-- ===================== WHAT'S NEW + COMMUNITY ===================== -->
-<section class="hp-section" style="padding:8px 40px 80px;">
-  <div class="hp-wrap hp-resources-grid">
+    <!-- ===================== WHAT'S NEW + COMMUNITY ===================== -->
+    <div class="hp-eyebrow-section" style="margin-top:66px;">Resources</div>
+    <h2 class="hp-section-title" style="margin-bottom:22px;">Keep learning</h2>
+    <div class="hp-resources-grid">
 
     <div class="hp-resource-card featured">
       <span class="hp-resource-kicker">Product updates</span>
@@ -1996,6 +1949,8 @@ async function greet(task: Task) {
         <a href="https://orkes.io/blog/building-durable-loops-with-conductor-part-1">Building Durable Loops with Conductor, Part 1 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--faint)" stroke-width="2"><path d="M9 6l6 6-6 6"></path></svg></a>
       </div>
       <a class="hp-resource-cta" href="https://orkes.io/blog/">Read blogs &rarr;</a>
+    </div>
+
     </div>
 
   </div>
@@ -3252,89 +3207,63 @@ a.repo-link:hover {
 
 /* ---------- Page title + Hero ---------- */
 .hp-section { padding: 52px 40px 8px; background: var(--bg); }
-.hp-wrap { max-width: 1160px; margin: 0 auto; }
+.hp-wrap { max-width: 960px; margin: 0 auto; }
+.hp-eyebrow-hero {
+  font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600; letter-spacing: .16em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: 14px;
+}
 .home-wrapper h1.hp-title {
-  font-size: 42px; font-weight: 700; letter-spacing: -.03em; color: var(--text); margin: 0 0 26px;
+  font-size: 42px; font-weight: 700; letter-spacing: -.03em; color: var(--text); margin: 0 0 18px;
 }
-.hp-hero-panel {
-  display: grid; grid-template-columns: 0.95fr 1.05fr;
-  background: var(--panel-1); border: 1px solid var(--border); border-radius: 18px; overflow: hidden;
-}
-.hp-hero-left { padding: 44px; display: flex; flex-direction: column; justify-content: center; }
-.home-wrapper .hp-hero-left h2 {
-  font-size: 28px; line-height: 1.2; font-weight: 700; letter-spacing: -.02em; color: var(--text); margin: 0 0 16px;
-}
-.hp-hero-left p {
-  font-size: 16px; line-height: 1.6; color: var(--muted); margin: 0 0 28px; max-width: 400px;
-}
+.hp-hero-sub { font-size: 18px; line-height: 1.6; color: var(--muted); margin: 0 0 26px; max-width: 640px; }
 .hp-cta-pill {
-  display: inline-flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 600;
-  color: #fff !important; background: var(--accent); padding: 12px 26px; border-radius: 999px;
+  display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600;
+  color: #fff !important; background: var(--accent); padding: 11px 22px; border-radius: 999px;
 }
-.hp-hero-right { background: var(--surface); border-left: 1px solid var(--border); min-width: 0; display: flex; flex-direction: column; }
-.hp-editor-chrome { display: flex; align-items: center; gap: 7px; padding: 13px 18px; border-bottom: 1px solid var(--border); }
-.hp-dot { width: 11px; height: 11px; border-radius: 50%; }
-.hp-dot.red { background: #FF5F57; }
-.hp-dot.yellow { background: #FEBC2E; }
-.hp-dot.green { background: #28C840; }
-.hp-filename { margin-left: 8px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--faint); }
-.hp-diagram {
-  flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 32px 24px;
-  background-image: radial-gradient(circle at 1px 1px, var(--border) 1px, transparent 0); background-size: 22px 22px;
-}
-.hp-diagram-node {
-  display: flex; align-items: center; gap: 10px; background: var(--panel-1); border: 1px solid var(--border);
-  border-radius: 12px; padding: 11px 18px; box-shadow: 0 3px 10px var(--shadow);
-}
-.hp-diagram-node span { font-size: 14px; font-weight: 600; color: var(--text); }
-.hp-diagram-node.accent {
-  background: var(--surface); border: 1.5px solid var(--accent); border-radius: 12px; padding: 12px 20px;
-  box-shadow: 0 6px 18px var(--accent-soft);
-}
-.hp-diagram-node.result { background: var(--surface); border: 1px solid #16A34A; }
-.hp-diagram-connector { width: 2px; height: 22px; background: var(--border); }
-.hp-diagram-row { display: flex; gap: 10px; }
-.hp-diagram-row .hp-diagram-node {
-  gap: 7px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 8px 12px;
-  box-shadow: 0 2px 8px var(--shadow);
-}
-.hp-diagram-row .hp-diagram-node span { font-size: 12.5px; }
 
-/* ---------- Build on Orkes ---------- */
-.hp-eyebrow {
-  font-size: 15px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin: 0;
+/* ---------- Section headers (shared) ---------- */
+.hp-eyebrow-section {
+  font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--faint); margin-bottom: 10px;
 }
-.hp-build-split {
-  display: grid; grid-template-columns: 1fr 1fr; background: var(--bg);
-  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+.home-wrapper h2.hp-section-title {
+  font-size: 28px; font-weight: 700; letter-spacing: -.02em; color: var(--text); margin: 0 0 8px;
 }
-.hp-build-panel { padding: 52px 56px; }
-.hp-build-panel.workflows { background: var(--panel-1); }
-.hp-build-panel.agents { background: var(--panel-2); border-left: 1px solid var(--border); }
-.hp-build-inner { max-width: 520px; }
-.home-wrapper .hp-build-inner h3 {
-  font-size: 30px; font-weight: 700; letter-spacing: -.02em; color: var(--text); margin: 0 0 14px;
+.hp-section-sub { font-size: 16px; line-height: 1.6; color: var(--muted); margin: 0 0 26px; max-width: 620px; }
+.hp-text-cta { font-size: 14px; font-weight: 700; color: var(--accent); display: inline-flex; align-items: center; gap: 7px; }
+
+/* ---------- Choose how you build ---------- */
+.hp-choose-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px; margin-bottom: 66px; }
+.hp-choose-card {
+  display: flex; flex-direction: column; min-width: 0; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 16px; padding: 28px; color: inherit; transition: border-color .15s, box-shadow .15s;
 }
-.hp-build-inner > p { font-size: 16px; line-height: 1.55; color: var(--muted); margin: 0 0 26px; min-height: 75px; }
-.hp-code-block {
-  background: var(--code-bg); border: 1px solid var(--border); border-radius: 14px; padding: 20px 22px;
-  box-shadow: 0 6px 24px var(--shadow); margin-bottom: 26px; height: 396px; overflow: auto;
+.hp-choose-card .hp-text-cta { margin-top: auto; }
+.hp-choose-card:hover { border-color: var(--accent); box-shadow: 0 10px 34px var(--accent-soft); opacity: 1; }
+.hp-choose-icon {
+  width: 42px; height: 42px; border-radius: 11px; background: var(--accent-soft); display: flex;
+  align-items: center; justify-content: center; margin-bottom: 16px;
 }
-.hp-code-block pre {
-  margin: 0; font-family: 'JetBrains Mono', monospace; font-size: 13.5px; line-height: 1.85; color: var(--code-fg);
+.home-wrapper .hp-choose-card h3 { font-size: 20px; font-weight: 700; color: var(--text); margin: 0 0 8px; }
+.hp-choose-card > p { font-size: 14.5px; line-height: 1.55; color: var(--muted); margin: 0 0 18px; }
+.hp-choose-card .hp-code-block {
+  background: var(--code-bg); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px;
+  margin-bottom: 20px; overflow: auto;
+}
+.hp-choose-card .hp-code-block pre {
+  margin: 0; font-family: 'JetBrains Mono', monospace; font-size: 12.5px; line-height: 1.75; color: var(--code-fg);
   white-space: pre;
 }
-.hp-feature-list { display: flex; flex-direction: column; gap: 14px; margin-bottom: 30px; }
-.hp-feature-list div { border-left: 3px solid var(--faint); padding-left: 14px; font-size: 15px; color: var(--text); }
-.hp-build-panel.agents .hp-feature-list div { border-left-color: var(--accent); }
-.hp-feature-list .hp-inline-chip {
-  display: inline-flex; align-items: center; gap: 6px; flex-wrap: wrap;
+.hp-choose-card .hp-feature-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 18px; }
+.hp-choose-card .hp-feature-list div {
+  border-left: 3px solid var(--faint); padding-left: 12px; font-size: 13px; line-height: 1.4; color: var(--muted);
 }
-.hp-chip {
-  font-family: 'JetBrains Mono', monospace; font-size: 13px; background: var(--chip-bg); border: 1px solid var(--border);
+.hp-choose-card.agents .hp-feature-list div { border-left-color: var(--accent); }
+.hp-choose-card .hp-inline-chip { display: inline-flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.hp-choose-card .hp-chip {
+  font-family: 'JetBrains Mono', monospace; font-size: 12px; background: var(--chip-bg); border: 1px solid var(--border);
   border-radius: 6px; padding: 2px 7px; color: var(--accent);
 }
-.hp-text-cta { font-size: 16px; font-weight: 700; color: var(--accent); }
 
 /* ---------- SDK strip ---------- */
 .hp-sdk-header { text-align: center; margin-bottom: 34px; }
@@ -3381,6 +3310,12 @@ a.repo-link:hover {
 }
 .hp-sdk-caption { font-size: 14px; line-height: 1.6; color: #a29dc0; margin: 18px 0 0; }
 .hp-sdk-link { display: inline-block; margin-top: 16px; font-size: 14px; font-weight: 600; color: #b39dff !important; }
+.hp-editor-chrome { display: flex; align-items: center; gap: 7px; padding: 13px 18px; border-bottom: 1px solid var(--border); }
+.hp-dot { width: 11px; height: 11px; border-radius: 50%; }
+.hp-dot.red { background: #FF5F57; }
+.hp-dot.yellow { background: #FEBC2E; }
+.hp-dot.green { background: #28C840; }
+.hp-filename { margin-left: 8px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--faint); }
 .hp-sdk-code-col .hp-editor-chrome { border-bottom: 1px solid #241f45; }
 .hp-sdk-code-col .hp-filename { color: #8b86ad; }
 .hp-sdk-code-col pre {
@@ -3388,38 +3323,26 @@ a.repo-link:hover {
   color: #d7d3ee; white-space: pre; overflow: auto; min-height: 180px;
 }
 @media (max-width: 700px) {
-  .hp-hero-panel, .hp-build-split { grid-template-columns: 1fr; }
-  .hp-build-panel.agents { border-left: none; border-top: 1px solid var(--border); }
   .hp-sdk-panel { grid-template-columns: 1fr; }
   .hp-sdk-install-col { border-right: none; border-bottom: 1px solid #241f45; }
 }
 
-/* ---------- Core concepts ---------- */
-.hp-concepts-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid var(--border); border-radius: 16px;
-  overflow: hidden; background: var(--surface);
+/* ---------- Developer journey ---------- */
+.hp-journey { display: flex; flex-direction: column; margin-bottom: 66px; border-left: 2px solid var(--border); padding-left: 26px; }
+.hp-journey-step { position: relative; padding-bottom: 30px; }
+.hp-journey-step:last-child { padding-bottom: 0; }
+.hp-journey-badge {
+  position: absolute; left: -38px; top: -2px; width: 24px; height: 24px; border-radius: 50%;
+  background: var(--accent); color: #fff; font-family: 'JetBrains Mono', monospace; font-size: 12px;
+  font-weight: 600; display: flex; align-items: center; justify-content: center;
 }
-.hp-concept-card { display: block; padding: 26px; color: inherit; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-.hp-concept-card:nth-child(3n) { border-right: none; }
-.hp-concept-card:nth-last-child(-n+3) { border-bottom: none; }
-.hp-concept-icon {
-  width: 40px; height: 40px; border-radius: 11px; background: var(--accent-soft); display: flex;
-  align-items: center; justify-content: center; margin-bottom: 14px;
+.home-wrapper .hp-journey-step h3 { font-size: 18px; font-weight: 700; color: var(--text); margin: 0 0 12px; }
+.hp-journey-links { display: flex; flex-wrap: wrap; gap: 8px; }
+.hp-journey-chip {
+  font-size: 13px; font-weight: 600; color: var(--muted) !important; border: 1px solid var(--border);
+  border-radius: 8px; padding: 6px 13px; background: var(--surface);
 }
-.home-wrapper .hp-concept-card h3 { font-size: 17px; font-weight: 600; color: var(--text); margin: 0 0 5px; }
-.hp-concept-card p { font-size: 14px; line-height: 1.5; color: var(--muted); margin: 0; }
-@media (max-width: 900px) {
-  .hp-concepts-grid { grid-template-columns: repeat(2, 1fr); }
-  .hp-concept-card:nth-child(3n) { border-right: 1px solid var(--border); }
-  .hp-concept-card:nth-child(2n) { border-right: none; }
-  .hp-concept-card:nth-last-child(-n+3) { border-bottom: 1px solid var(--border); }
-  .hp-concept-card:nth-last-child(-n+2) { border-bottom: none; }
-}
-@media (max-width: 600px) {
-  .hp-concepts-grid { grid-template-columns: 1fr; }
-  .hp-concept-card { border-right: none !important; border-bottom: 1px solid var(--border) !important; }
-  .hp-concept-card:last-child { border-bottom: none !important; }
-}
+.hp-journey-chip:hover { border-color: var(--accent); color: var(--accent) !important; opacity: 1; }
 
 /* ---------- What's new + community ---------- */
 .hp-resources-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: stretch; }

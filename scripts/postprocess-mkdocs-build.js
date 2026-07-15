@@ -126,10 +126,25 @@ function dropOneParentDirSegment(href) {
   return href.startsWith("../") ? href.slice(3) : href;
 }
 
+function addOneParentDirSegment(href) {
+  return `../${href}`;
+}
+
+function isRelativeHref(href) {
+  return !/^(https?:|mailto:|tel:|javascript:|data:|#|\/\/|\/)/.test(href);
+}
+
 function rewriteAssetDepthForRouteAlias(html) {
   return html.replace(/\b(href|src|content)=["']([^"']+)["']/g, (all, attr, href) => {
     if (!isAssetHref(href) || !href.startsWith("../")) return all;
     return `${attr}="${dropOneParentDirSegment(href)}"`;
+  });
+}
+
+function rewriteAssetDepthForTrailingSlashAlias(html) {
+  return html.replace(/\b(href|src|content)=["']([^"']+)["']/g, (all, attr, href) => {
+    if (!isAssetHref(href) || !isRelativeHref(href)) return all;
+    return `${attr}="${addOneParentDirSegment(href)}"`;
   });
 }
 
@@ -166,8 +181,13 @@ function createTrailingSlashAliases() {
     }
 
     fs.mkdirSync(aliasDir, { recursive: true });
-    const source = fs.readFileSync(file);
-    if (fs.existsSync(aliasFile) && fs.readFileSync(aliasFile).equals(source)) continue;
+    // The alias sits one directory level deeper than the original flat file, so its
+    // relative asset paths (skipped by rewriteHtml's canonical-path pass, which already
+    // ran before this step) need one more "../" prepended — same bug class as
+    // rewriteAssetDepthForRouteAlias above, just the opposite direction.
+    const html = fs.readFileSync(file, "utf8");
+    const source = rewriteAssetDepthForTrailingSlashAlias(html);
+    if (fs.existsSync(aliasFile) && fs.readFileSync(aliasFile, "utf8") === source) continue;
     fs.writeFileSync(aliasFile, source);
     count += 1;
   }
