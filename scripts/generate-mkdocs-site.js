@@ -1967,6 +1967,12 @@ function generatedPageCopy(route, title, description, flatChildren) {
   if (route === "tutorials/mcp") {
     return gatewayTutorialPageCopy();
   }
+  if (route === "category/reference-docs") {
+    return taskReferenceHubCopy();
+  }
+  if (route === "category/integrations") {
+    return integrationsCatalogCopy();
+  }
 
   const copy = CATEGORY_PAGE_COPY[route];
   const childLabels = flatChildren.slice(0, 5).map((child) => child.label).filter(Boolean);
@@ -2008,6 +2014,38 @@ function gatewayTutorialPageCopy() {
     "Pick API Gateway when an application or internal service should call a workflow over HTTP. Pick MCP Gateway when an AI agent should call a governed workflow as a tool.",
     "",
     "For concepts, configuration details, and production guidance, use **Guides > API Gateway & Service Orchestration**. The links below stay focused on buildable tutorials.",
+    "",
+  ];
+}
+
+function taskReferenceHubCopy() {
+  return [
+    "Use this section when you need the exact behavior, configuration, and output of a specific task type in a workflow — whether it's a task your own service implements, a built-in operator that controls flow, or a system task Conductor runs natively.",
+    "",
+    "## Sections",
+    "",
+    "- **[Worker Task](/reference-docs/worker-task)** — the task type your own service implements; it polls for the task and runs the custom business logic.",
+    "- **[Operators](/category/reference-docs/operators)** — built-in control-flow tasks: branching, loops, forks/joins, waits, sub-workflows, termination.",
+    "- **[System Tasks](/category/reference-docs/system-tasks)** — built-in tasks Conductor executes directly on the server (HTTP, transforms, JDBC, alerting, AI tasks) with no worker required.",
+    "",
+  ];
+}
+
+function integrationsCatalogCopy() {
+  return [
+    "**An integration is a reusable, credential-backed connection from a Conductor workflow to an external system — a model provider, database, queue, or third-party app.**",
+    "",
+    "Use this catalog when a workflow needs to call an external system — a model provider, a queue, a database, a cloud service, or a third-party app. Configure the integration once, then reuse it from workflows, AI tasks, system tasks, and remote services.",
+    "",
+    "## Sections",
+    "",
+    "- **[AI / LLM](/category/integrations/ai-llm)** — model providers (OpenAI, Anthropic, Bedrock, Vertex AI, Gemini, Mistral, Cohere, Grok, Perplexity, Hugging Face, Ollama) for chat, completion, and agent tasks.",
+    "- **[Vector Databases](/category/integrations/vector-databases)** — Pinecone, Weaviate, pgvector, or MongoDB Atlas for embeddings, indexing, and retrieval.",
+    "- **[Message Broker](/category/integrations/message-broker)** — Kafka, Confluent, Amazon MSK, AMQP/RabbitMQ, NATS, SQS, Azure Service Bus, GCP Pub/Sub, or IBM MQ for event-driven orchestration.",
+    "- **[Cloud Providers](/category/integrations/cloud-provider)** — AWS or GCP for cloud storage and resource access.",
+    "- **[RDBMS](/category/integrations/rdbms)** — relational databases for querying and managing structured data.",
+    "- **[Email/Git](/category/integrations/email)** — SendGrid for notification emails, Git for source-controlled files.",
+    "- **[Connected Apps](/category/integrations/connected-apps)** — third-party productivity, project-management, and dev tools.",
     "",
   ];
 }
@@ -2108,6 +2146,15 @@ function cookbookPageCopy() {
   ];
 }
 
+// These routes build their own full "Sections"/"Recipe categories" annotated
+// list inside generatedPageCopy() — appending the generic auto-built ## Pages
+// list on top would just repeat the same links a second time, undescribed.
+const SELF_CONTAINED_CATEGORY_ROUTES = new Set([
+  "category/tutorials",
+  "category/reference-docs",
+  "category/integrations",
+]);
+
 function createGeneratedPage(route, title, description, children) {
   if (generatedPages.has(route) || titleByRoute.has(route)) {
     return;
@@ -2125,7 +2172,9 @@ function createGeneratedPage(route, title, description, children) {
     "",
   ].filter((line) => line !== "");
   lines.push(...generatedPageCopy(route, pageTitle, pageDescription, flat));
-  lines.push(...generatedPageListCopy(route, flat));
+  if (!SELF_CONTAINED_CATEGORY_ROUTES.has(route)) {
+    lines.push(...generatedPageListCopy(route, flat));
+  }
   generatedPages.set(route, lines.join("\n"));
   titleByRoute.set(route, pageTitle);
 }

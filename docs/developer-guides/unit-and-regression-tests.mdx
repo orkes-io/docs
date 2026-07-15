@@ -73,7 +73,7 @@ testRequest.setName(workflowName);
 testRequest.setWorkflowDef(workflowDef);
 ```
 
-`setWorkflowDef()` can also be used to modify the remote workflow definition locally before running the unit tests — for example, replacing Sub Workflow tasks with a dummy task, or using a dummy URL in an HTTP task. See [the full example on modifying workflows](#examples) below.
+`setWorkflowDef()` can also be used to modify the remote workflow definition locally before running the unit tests — for example, replacing Sub Workflow tasks with a dummy task, or using a dummy URL in an HTTP task. See [the full example on modifying workflows](#unit-test-examples) below.
 
 **Mocking Worker tasks**
 
@@ -89,7 +89,7 @@ testRequest.setTaskRefToMockOutput(Map.of(
 ));
 ```
 
-See [the full example on mocking Worker tasks](#examples) below.
+See [the full example on mocking Worker tasks](#unit-test-examples) below.
 
 **Mocking Worker tasks in sub-workflows**
 
@@ -105,12 +105,12 @@ testRequest.setSubWorkflowTestRequest(Map.of(
 ));
 ```
 
-See [the full example on mocking Worker tasks in sub-workflows](#examples) below.
+See [the full example on mocking Worker tasks in sub-workflows](#unit-test-examples) below.
 
 </TabItem>
 </Tabs>
 
-### Examples
+### Unit test examples
 
 <details markdown="1">
 <summary>Pull workflows locally</summary>
@@ -355,7 +355,7 @@ Common regression inputs:
 - Representative branch cases for each switch path.
 - Failure cases for retry, timeout, and terminal error behavior.
 
-### Examples
+### Regression test examples
 
 <details markdown="1">
 <summary>Use a previous execution as golden input/output</summary>
