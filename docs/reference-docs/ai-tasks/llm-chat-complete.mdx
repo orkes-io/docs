@@ -49,7 +49,7 @@ Parsed fields are accessible downstream as `${taskReferenceName.output.result.<f
 
 The following are generic configuration parameters that can be applied to the task and are not specific to the LLM Chat Complete task.
 
-<details>
+<details markdown="1">
 <summary>Caching parameters</summary>
 
 You can cache the task outputs using the following parameters. Refer to [Caching Task Outputs](/faqs/task-cache-output) for a full guide.
@@ -61,7 +61,7 @@ You can cache the task outputs using the following parameters. Refer to [Caching
 
 </details>
 
-<details>
+<details markdown="1">
 <summary>Other generic parameters</summary>
 
 Here are other parameters for configuring the task behavior.
@@ -117,14 +117,14 @@ The LLM Chat Complete task will return the following parameters.
 
 Here are some examples for using the LLM Chat Complete task.
 
-<details>
+<details markdown="1">
 <summary>Using an LLM Chat Complete task in a workflow</summary>
 
 See an example of [building a pull request summary workflow](https://orkes.io/content/tutorials/pull-request-summary-workflow).
 
 </details>
 
-<details>
+<details markdown="1">
 <summary>Building a multi-turn conversation</summary>
 
 This example demonstrates how to pass conversation history to the model using `system`, `user`, and `assistant` roles. The caller is responsible for managing and passing the history across invocations.
@@ -205,7 +205,7 @@ Once completed, verify the workflow output — the model's reply should reflect 
 
 </details>
 
-<details>
+<details markdown="1">
 <summary>Extracting structured data with JSON output</summary>
 
 This example builds a workflow that takes a product review as input and analyzes its sentiment using an LLM Chat Complete task with `jsonOutput: true`.

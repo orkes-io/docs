@@ -88,7 +88,7 @@ For a Dynamic Fork, no specific configuration is required, but the Join task mus
 
 The following are generic configuration parameters that can be applied to the task and are not specific to the Dynamic Fork task.
 
-<details>
+<details markdown="1">
 <summary>Other generic parameters</summary>
 
 Here are other parameters for configuring the task behavior.
@@ -213,7 +213,7 @@ This is the task configuration for a Dynamic Fork task.
 
 Here are some examples for using the Dynamic Fork task.
 
-<details>
+<details markdown="1">
 <summary>Running different tasks</summary>
 
 A Dynamic Fork task can be used to run multiple tasks in parallel when the set of tasks is determined at runtime. This example builds a workflow that dynamically forks into three parallel branches, each running a different task type, and then waits for all branches to complete before continuing.
@@ -316,7 +316,7 @@ You can verify the execution by inspecting the completed tasks and their outputs
 
 </details>
 
-<details>
+<details markdown="1">
 <summary>Running the same task: HTTP task</summary>
 
 In this example, the dynamic fork runs HTTP tasks in parallel. The provided input in `forkTaskInputs` contains the typical payload expected in an HTTP task. 
@@ -386,7 +386,7 @@ To verify, open the forked HTTP task instances under the Dynamic Fork task and c
 
 </details>
 
-<details>
+<details markdown="1">
 <summary>Running the same task: Worker task</summary>
 
 In this example workflow, the Dynamic Fork task runs a worker task named `update_fruit_list_task` in parallel. The task input is taken from the workflow input parameter fruits, which is an array. Each array element results in one forked task execution.

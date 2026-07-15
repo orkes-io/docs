@@ -62,7 +62,7 @@ In the example script, `$.joinOn` is an array of task reference name strings, ma
 
 The following are generic configuration parameters that can be applied to the task and are not specific to the Join task.
 
-<details>
+<details markdown="1">
 <summary>Other generic parameters</summary>
 
 Here are other parameters for configuring the task behavior.
@@ -143,7 +143,7 @@ If a join script is used, the output will also return the following parameters.
 
 Here are some examples for using the Join task.
 
-<details>
+<details markdown="1">
 <summary>Join on all forks</summary>
 <p>
 
@@ -163,7 +163,7 @@ In this example, the Join task waits for all forks to complete. The task will wa
 </p>
 </details>
 
-<details>
+<details markdown="1">
 <summary>Ignore one fork</summary>
 <p>
 
@@ -281,7 +281,7 @@ Outputs from the HTTP branch are excluded because it is not specified in the `jo
 </p>
 </details>
 
-<details>
+<details markdown="1">
 <summary>Using a join script</summary>
 
 In this example, a Fork/Join task runs two branches in parallel. One branch waits for 5 seconds, and the other waits for 30 seconds. Both forked tasks are marked as `optional`. A Join task uses a join script to control when the workflow can proceed by explicitly checking the completion status of the forked tasks.

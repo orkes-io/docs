@@ -31,7 +31,7 @@ Returns 400 if an invalid workflow execution is provided.
 
 ## Examples
 
-<details>
+<details markdown="1">
 <summary>Retry failed workflow from last failed task</summary>
 
 **Request**
@@ -52,7 +52,7 @@ In the Conductor UI, the workflow execution will re-enter the RUNNING status, an
 
 </details>
 
-<details>
+<details markdown="1">
 <summary>Retry failed workflow from last failed Sub Workflow task when resumeSubworkflowTasks=true</summary>
 
 **Request**
@@ -74,7 +74,7 @@ In the Conductor UI, both the parent workflow and sub-workflow execution will re
 </details>
 
 
-<details>
+<details markdown="1">
 <summary>Retry failed workflow from last failed Sub Workflow task when resumeSubworkflowTasks=false</summary>
 
 **Request**
@@ -97,7 +97,7 @@ In the Conductor UI, the parent workflow execution will re-enter the RUNNING sta
 
 
 
-<details>
+<details markdown="1">
 <summary>Retry sub-workflow when retryIfRetriedByParent=false</summary>
 
 This example demonstrates how a retry attempt on a sub-workflow is blocked when:

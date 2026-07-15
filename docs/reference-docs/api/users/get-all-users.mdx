@@ -24,7 +24,7 @@ Returns 403 if a non-admin invokes the API.
 
 ## Examples
 
-<details>
+<details markdown="1">
 <summary>Get all users (excluding application users)</summary>
 
 **Request**
@@ -143,7 +143,7 @@ curl -X 'GET' \
 
 </details>
 
-<details>
+<details markdown="1">
 <summary>Get all users (including application users)</summary>
 
 When `apps=true`, the response includes both human users and application users. Application users can be identified by `"applicationUser": true` in the response object, and their `id` field is prefixed with `app:`.

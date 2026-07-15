@@ -41,7 +41,7 @@ If you are [executing a workflow synchronously](/content/reference-docs/api/work
 
 The following are generic configuration parameters that can be applied to the task and are not specific to the Wait task.
 
-<details>
+<details markdown="1">
 <summary>Other generic parameters</summary>
 
 Here are other parameters for configuring the task behavior.
@@ -105,7 +105,7 @@ This is the task configuration for a Wait task.
 
 Here are some examples for using the Wait task.
 
-<details>
+<details markdown="1">
 <summary>Until wait type</summary>
 
 This example configures a Wait task to pause execution until December 25, 2026, at 9:00 AM (GMT+04:00).
@@ -164,7 +164,7 @@ Based on the input, the workflow waits until 9:00 AM on December 25, 2026.
 
 </details>
 
-<details>
+<details markdown="1">
 <summary>Duration wait type</summary>
 
 This example configures a Wait task to pause execution for a fixed duration.
@@ -227,7 +227,7 @@ Based on the input, the workflow waits for 1 minute and 2 seconds.
 
 </details>
 
-<details>
+<details markdown="1">
 <summary>Signal wait type</summary>
 
 You can configure the wait type to be a signal, which can be triggered by an event handler, a direct API call, or a webhook.
@@ -249,7 +249,7 @@ Once the workflow is run, the Wait task will be in an “In Progress” state. Y
 
 </details>
 
-<details>
+<details markdown="1">
 <summary>Using `yield: true` with a duration wait</summary>
 
 This example configures a Wait task to pause execution for 1 hour while allowing the synchronous API to return immediately.

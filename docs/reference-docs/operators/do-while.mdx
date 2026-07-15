@@ -27,7 +27,7 @@ Configure these parameters for the Do While task.
 
 The following are generic configuration parameters that can be applied to the task and are not specific to the Do While task. 
 
-<details>
+<details markdown="1">
 <summary>Other generic parameters</summary>
 
 Here are other parameters for configuring the task behavior.
@@ -255,7 +255,7 @@ Here are several considerations to keep in mind when using the Do While task:
 
 Here are some examples for using the Do While task.
 
-<details>
+<details markdown="1">
 <summary>Using `value-param` evaluator</summary>
 
 A Do While task can be used to repeatedly execute a set of tasks as long as a condition evaluates to true. This example builds a workflow that executes an HTTP task followed by a Wait task while a boolean input remains `true`, using the `value-param` evaluator type.
@@ -346,7 +346,7 @@ Since the workflow input `active` is set to `false`, the loop stops after the fi
 
 </details>
 
-<details>
+<details markdown="1">
 <summary>Using `graaljs` evaluator</summary>
 
 A Do While task can evaluate a JavaScript expression as the loop condition using the `graaljs` evaluator type. This example builds a workflow that runs a set of tasks a fixed number of times by comparing the Do While task’s iteration value with a workflow input.
@@ -461,7 +461,7 @@ The Do While task output is returned as follows:
 
 </details>
 
-<details>
+<details markdown="1">
 <summary>Iterate over a list of `items`</summary>
 
 A Do While task can iterate over a list of items when you provide `items` in `inputParameters`. When `items` is used, the loop runs once for each item, and you do not need a loop condition. The current item is available in each iteration as `${do_while_ref.output.item}`.
@@ -569,7 +569,7 @@ In each iteration, the HTTP task receives a different value for `someInput` (a, 
 
 </details>
 
-<details>
+<details markdown="1">
 <summary>Using console logging in a Do While loop condition</summary>
 
 This example builds a workflow that runs an HTTP task a fixed number of times and logs the iteration count and limit at each step.

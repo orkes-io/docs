@@ -64,7 +64,7 @@ Depending on where the data is being referenced from, here is a non-exhaustive l
 
 Here are some examples for using dynamic references in workflows.
 
-<details>
+<details markdown="1">
 <summary>Referencing workflow inputs​​</summary>
 
 For the given workflow input:
@@ -100,7 +100,7 @@ At runtime, the parameters will be:
 
 </details>
 
-<details>
+<details markdown="1">
 <summary>Referencing other task outputs​​</summary>
 
 If a task `previousTaskReference` produced the following output:
@@ -135,7 +135,7 @@ At runtime, the parameters will be:
 
 </details>
 
-<details>
+<details markdown="1">
 <summary>Referencing secrets​​</summary>
 
 If a secret named `api_key` with the value `Xxhhjiu0nbfdinvdHyj` is stored in your Conductor cluster, you can reference it in a workflow using the following expression:
@@ -156,7 +156,7 @@ At runtime, the dynamic parameter `auth` resolves to the value of the secret `ap
 
 </details>
 
-<details>
+<details markdown="1">
 <summary>Referencing workflow variables</summary>
 
 If a workflow variable is set using the [Set Variable](/reference-docs/operators/set-variable) task:
@@ -213,7 +213,7 @@ Workflow variables cannot be re-referenced across workflows, even between a pare
 
 </details>
 
-<details>
+<details markdown="1">
 <summary>Referencing environment variables​</summary>
 
 If an environment variable named `location` with the value `US` is stored in your Conductor cluster, you can reference it in a workflow using the following expression:
@@ -234,7 +234,7 @@ At runtime, the parameters will be:
 
 </details>
 
-<details>
+<details markdown="1">
 <summary>Referencing the workflow ID</summary>
 
 To reference the current workflow's execution ID, use the following expression:
@@ -255,7 +255,7 @@ At runtime, it will be replaced with the workflow’s execution ID:
 
 </details>
 
-<details>
+<details markdown="1">
 <summary>Referencing the workflow status</summary>
 
 To reference the current workflow's status, use the following expression:
@@ -276,7 +276,7 @@ At runtime, it will be replaced with the workflow’s current status:
 
 </details>
 
-<details>
+<details markdown="1">
 <summary>Referencing the workflow name and version</summary>
 
 To reference the current workflow's name and version, use the following expressions:
@@ -299,7 +299,7 @@ At runtime, it will be replaced with the workflow’s name and version:
 
 </details>
 
-<details>
+<details markdown="1">
 <summary>Referencing the correlation ID</summary>
 
 To reference the current workflow's correlation ID, use the following expression:
@@ -320,7 +320,7 @@ At runtime, it will be replaced with the workflow’s correlation ID:
 
 </details>
 
-<details>
+<details markdown="1">
 <summary>Referencing the idempotency key</summary>
 
 To reference the idempotency key used when starting the workflow, use the following expression:
@@ -341,7 +341,7 @@ At runtime, it will be replaced with the the idempotency key used when starting 
 
 </details>
 
-<details>
+<details markdown="1">
 <summary>Referencing the task domain</summary>
 
 To reference the domain mapped to a specific task in the workflow execution, use the following expression. This is useful when you need to pass the task's routing domain as an input to a downstream task.
@@ -362,7 +362,7 @@ At runtime, it will be replaced with the domain name that ran the task execution
 
 </details>
 
-<details>
+<details markdown="1">
 <summary>Referencing the workflow start time</summary>
 
 To reference the start time of the workflow execution, use the following expression. The value is a Unix timestamp in milliseconds.
@@ -383,7 +383,7 @@ At runtime, it will be replaced with the workflow execution start time:
 
 </details>
 
-<details>
+<details markdown="1">
 <summary>Referencing the parent workflow (in sub-workflows)</summary>
 
 To reference the parent workflow and its task execution ID from within a sub-workflow, use the following expressions:
@@ -408,7 +408,7 @@ These return null if the workflow is not running as a sub-workflow.
 
 </details>
 
-<details>
+<details markdown="1">
 <summary>Referencing data between parent workflow and sub-workflow​</summary>
 
 <Tabs>

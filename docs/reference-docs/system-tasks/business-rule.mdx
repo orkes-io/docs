@@ -42,7 +42,7 @@ If the input name is "Phone":
 
 The following are generic configuration parameters that can be applied to the task and are not specific to the Business Rule task.
 
-<details>
+<details markdown="1">
 <summary>Caching parameters</summary>
 
 You can cache the task outputs using the following parameters. Refer to [Caching Task Outputs](/faqs/task-cache-output) for a full guide.
@@ -53,7 +53,7 @@ You can cache the task outputs using the following parameters. Refer to [Caching
 | cacheConfig.**key** | The cache key is a unique identifier for the cached output and must be constructed exclusively from the task’s input parameters.<br/>It can be a string concatenation that contains the task’s input keys, such as `${uri}-${method}` or `re_${uri}_${method}`. | Required if using *cacheConfig*. |
 </details>
 
-<details>
+<details markdown="1">
 <summary>Other generic parameters</summary>
 
 Here are other parameters for configuring the task behavior.
@@ -119,7 +119,7 @@ The Business rule task will return the following parameters.
 
 Here are some examples for using the Business Rule task.
 
-<details>
+<details markdown="1">
 <summary>Using Business Rule task in a workflow</summary>
 
 To illustrate the use of the Business Rule task in a workflow, consider the following rule file:
@@ -285,7 +285,7 @@ Based on these conditions, the input meets the criteria defined by the third rul
 
 </details>
 
-<details>
+<details markdown="1">
 <summary>Using `cacheTimeoutMinutes`</summary>
 
 To illustrate the use of the `cacheTimeoutMinutes` parameter, consider a rule file that is used by multiple Business Rule tasks.
