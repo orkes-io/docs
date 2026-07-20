@@ -3485,6 +3485,24 @@ a.repo-link:hover {
   font-weight: 600;
   color: var(--c-text);
 }
+
+/*
+ * Footer prev/next navigation. The OSS base CSS recolors the footer nav using
+ * legacy Material class names (.md-footer-nav__*), but this Material build uses
+ * BEM names (.md-footer__*), so those rules never match — leaving Material's
+ * default white text on our light footer band (invisible in light mode).
+ * Re-apply the color using the current class names.
+ */
+.md-footer__link,
+.md-footer__title {
+  color: var(--c-text) !important;
+}
+.md-footer__direction {
+  color: var(--c-text-muted) !important;
+}
+.md-footer__link:hover .md-footer__title {
+  color: var(--c-accent) !important;
+}
 `,
   );
   writeOverrides();
