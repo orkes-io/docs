@@ -350,7 +350,7 @@ const warnings = [];
 // Auto-generated "Related pages" support — populated from the nav tree once
 // buildNav() runs, then read per-page in convertEntry(). Skips pages that
 // already hand-author a related/next-steps section of their own.
-const RELATED_HEADING_RE = /^#{1,3}\s*(Related( pages| topics)?|See also|Next steps|Next pages|What'?s next)\b/im;
+const RELATED_HEADING_RE = /^#{1,3}\s*(Related( pages| topics)?|See also|Next steps|Next pages|In this section|What'?s next)\b/im;
 const RELATED_LINKS_MAX = 6;
 let siblingsByRoute = new Map();
 
