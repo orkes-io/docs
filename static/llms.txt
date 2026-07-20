@@ -4455,7 +4455,7 @@ When you start a workflow, you can specify which tasks must run on which domains
 <Tabs>
 <TabItem value="Using Conductor UI" label="Using Conductor UI">
 
-For running a workflow from the Conductor UI, define the following task-to-domain mapping:
+When [running a workflow from the Conductor UI](/content/how-to-videos/run-workflow#run-workflow), enter the mapping in the **Tasks to domain mapping** field on the **Run Workflow** panel:
 
 ```json
 {
