@@ -165,7 +165,6 @@ const sidebars = {
                     items: [
                         { type: 'doc', id: 'developer-guides/gateway/api-gateway', label: 'API Gateway' },
                         { type: 'doc', id: 'developer-guides/gateway/mcp-gateway', label: 'MCP Gateway' },
-                        { type: 'doc', id: 'developer-guides/gateway/gateway-metrics', label: 'Gateway Metrics' },
                         {
                             type: 'doc',
                             id: 'developer-guides/remote-services',

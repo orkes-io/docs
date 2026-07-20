@@ -9058,9 +9058,45 @@ You can test route behavior directly from the Conductor UI before exposing it as
 
 See an example of a [feedback service exposing a feedback workflow as a public API](/content/tutorials/expose-feedback-workflow-as-api).
 
-## Next steps
+## Monitor gateway metrics
 
-To learn how to monitor service and route performance, see [Gateway Metrics](/developer-guides/gateway-metrics).
+Orkes Conductor's API and MCP Gateways provide built-in metrics at both service and route levels. These metrics help you monitor performance, identify usage trends, and troubleshoot issues in real time.
+
+You can view metrics by selecting the **Metrics** tab from any service or route.
+
+### Performance metrics
+
+| Metric | Description |
+| ------ | ----------- |
+| Total Requests | Total number of requests made to the service or route. |
+| Request Rate | Average number of requests per second. |
+| Success Rate | Percentage of successful workflow executions triggered by the service or route. |
+| Avg Latency | Average time (in milliseconds) taken to complete a request. |
+
+### Statistics
+
+The Statistics view provides detailed insights into request volume, latency patterns, and error trends for each service or route. Use this section to analyze performance behavior over time and identify issues that may need attention.
+
+#### Requests
+
+The **Requests** tab includes a line graph showing request volume over time. Use this view to monitor usage patterns, performance degradation, or abnormal error spikes across all routes in the service.
+
+#### Latency
+
+The **Latency** tab shows percentile-based response time distribution. Use this view to identify spikes or inconsistencies in performance.
+
+- **P50 (median)**: Half the requests responded faster than this latency.
+- **P95**: 95% of requests completed faster than this latency.
+- **P99**: 99% of the requests are faster than this latency.
+
+#### Errors
+
+The **Errors** tab visualizes failure trends and error types.
+
+- **Error Rate**: Percentage of failed requests over time.
+- **Error Breakdown**: Types of errors returned (e.g., 400 Bad Request, 500 Internal Server Error) and their frequency.
+
+Hover over the graph to inspect error events by timestamp. Use this to correlate API failures with recent deployments or configuration changes.
 
 ================================================
 FILE: docs/developer-guides/gateway/mcp-gateway.mdx
@@ -9527,34 +9563,30 @@ Each tool call triggers the workflow mapped to that route. This validation step 
 
 See an example of a [ticket service called an MCP tool](/content/tutorials/expose-ticket-service-using-mcp-gateway).
 
-## Next steps
+## Monitor gateway metrics
 
-To learn how to monitor service and route performance, see [Gateway Metrics](/developer-guides/gateway-metrics).
-
-# Monitor Gateway Metrics
-
-Orkes Conductor’s [MCP](/content/developer-guides/mcp-gateway)/[API Gateway](/content/developer-guides/api-gateway) provides built-in metrics at both service and route levels. These metrics help you monitor performance, and identify usage trends, allowing you to troubleshoot issues in real time. 
+Orkes Conductor's API and MCP Gateways provide built-in metrics at both service and route levels. These metrics help you monitor performance, identify usage trends, and troubleshoot issues in real time.
 
 You can view metrics by selecting the **Metrics** tab from any service or route.
 
-## Performance metrics
+### Performance metrics
 
-| Metric | Description | 
-| ------ | ----------- | 
-| Total Requests | Total number of requests made to the service or route. | 
-| Request Rate | Average number of requests per second. | 
-| Success Rate | Percentage of successful workflow executions triggered by the service or route. | 
-| Avg Latency | Average time (in milliseconds) taken to complete a request. | 
+| Metric | Description |
+| ------ | ----------- |
+| Total Requests | Total number of requests made to the service or route. |
+| Request Rate | Average number of requests per second. |
+| Success Rate | Percentage of successful workflow executions triggered by the service or route. |
+| Avg Latency | Average time (in milliseconds) taken to complete a request. |
 
-## Statistics
+### Statistics
 
 The Statistics view provides detailed insights into request volume, latency patterns, and error trends for each service or route. Use this section to analyze performance behavior over time and identify issues that may need attention.
 
-### Requests
+#### Requests
 
 The **Requests** tab includes a line graph showing request volume over time. Use this view to monitor usage patterns, performance degradation, or abnormal error spikes across all routes in the service.
 
-### Latency
+#### Latency
 
 The **Latency** tab shows percentile-based response time distribution. Use this view to identify spikes or inconsistencies in performance.
 
@@ -9562,7 +9594,7 @@ The **Latency** tab shows percentile-based response time distribution. Use this 
 - **P95**: 95% of requests completed faster than this latency.
 - **P99**: 99% of the requests are faster than this latency.
 
-### Errors
+#### Errors
 
 The **Errors** tab visualizes failure trends and error types.
 
