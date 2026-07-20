@@ -9,11 +9,28 @@ Trigger workflows or resume waiting executions from webhooks, event handlers, an
 
 Use these pages when external events should start a workflow, resume a waiting workflow, or update execution state.
 
-Choose webhooks for HTTP callbacks, event handlers for broker/internal event sinks, and the Wait for Webhook task for long-running external callbacks.
+Choose webhooks for HTTP callbacks or event handlers for broker/internal event sinks. If a workflow itself needs to pause and wait for a matching webhook callback before resuming, use the Wait for Webhook task.
 
-## Wait for Webhook Task
+## Webhooks
 
-The Wait for Webhook task pauses a workflow until a matching external callback arrives, then resumes execution with the callback payload. Use it when a workflow needs to wait on an asynchronous, long-running external process — such as a third-party approval, payment confirmation, or human review — before continuing, and see the [Wait for Webhook Task reference](/reference-docs/system-tasks/wait-for-webhook) for the matching criteria, timeout behavior, and payload schema.
+Webhooks let an external system notify Conductor over HTTP when an event occurs. A single webhook can:
+
+- **Start a new workflow** — Conductor auto-starts the configured workflow, passing the event payload as input.
+- **Resume a waiting workflow** — a workflow containing a Wait for Webhook task pauses until a matching event arrives, then resumes with the payload.
+
+See [Using Webhooks](/developer-guides/webhook-integration) for setup and event-matching configuration.
+
+### Wait for Webhook Task
+
+The Wait for Webhook task pauses a workflow until a matching external callback arrives, then resumes execution with the callback payload. Use it when the workflow itself needs to wait on an asynchronous, long-running external process — such as a third-party approval, payment confirmation, or human review — before continuing.
+
+See the [Wait for Webhook Task reference](/reference-docs/system-tasks/wait-for-webhook) for the matching criteria, timeout behavior, and payload schema.
+
+## Event Handlers
+
+Event handlers listen for messages from a configured broker or internal Conductor event sink and trigger an action — such as starting a workflow or completing a task — when a matching message arrives. Use them when workflows should react to messages already flowing through a broker like Kafka or SQS.
+
+See [Using Event Handlers](/developer-guides/event-handler) for configuration and matching criteria.
 
 ```mdx-code-block
 import DocCardList from '@theme/DocCardList';

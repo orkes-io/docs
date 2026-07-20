@@ -7,13 +7,27 @@ description: "Publish messages from workflows to external event systems such as 
 
 Publish messages from workflows to external event systems such as Kafka, Confluent Kafka, Amazon MSK, AMQP/RabbitMQ, NATS, AWS SQS, Azure Service Bus, GCP Pub/Sub, and IBM MQ, plus internal Conductor event sinks.
 
-Use these pages when a workflow should publish a message as part of durable execution.
+Use these pages when a workflow should publish a message as part of durable execution, or when workflow state changes themselves should stream to a broker automatically.
 
-Use the Event task to publish messages from a workflow to configured event sinks.
+Use the Event task to publish messages explicitly as a workflow step, or enable Change Data Capture to stream workflow status changes without adding a task.
 
-## Event Task
+## Event Publishing Recipes
 
-The Event task publishes a message to a configured sink — an internal Conductor event queue, or an external system such as Kafka, SQS, or another broker — as a step in the workflow, without waiting for a response. Use it when a downstream system or workflow needs to be notified as part of durable execution, and see the [Event Task reference](/reference-docs/system-tasks/event) for the full input/output schema, sink configuration, and examples.
+Practical recipes for publishing events to a message broker, triggering workflows from external events, and completing tasks from event payloads, all built on the Event task.
+
+See [Event Publishing Recipes](/eventing) for examples across Kafka, SQS, and other brokers.
+
+### Event Task
+
+The Event task publishes a message to a configured sink — an internal Conductor event queue, or an external system such as Kafka, SQS, or another broker — as a step in the workflow, without waiting for a response. Use it when a downstream system or workflow needs to be notified as part of durable execution.
+
+See the [Event Task reference](/reference-docs/system-tasks/event) for the full input/output schema, sink configuration, and examples.
+
+## Change Data Capture
+
+Change Data Capture (CDC) streams workflow state changes to an external message broker automatically, without adding a task to the workflow. Use it when downstream systems need to react to workflow status changes in real time.
+
+See [Enabling CDC](/developer-guides/enabling-cdc-on-conductor-workflows) for configuration and setup.
 
 ```mdx-code-block
 import DocCardList from '@theme/DocCardList';
