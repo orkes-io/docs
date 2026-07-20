@@ -229,16 +229,6 @@ const CATEGORY_PAGE_COPY = {
     outcome:
       "Reference pages explain what each task does, how to configure it, what it returns, and which related primitives to use with it.",
   },
-  "category/reference-docs/ai-tasks": {
-    audience: "Use AI tasks when workflows need model calls, embeddings, indexing, search, document parsing, or MCP tool execution.",
-    outcome:
-      "AI task pages document provider configuration, model inputs, output fields, and how to build deterministic agentic workflows.",
-  },
-  "category/reference-docs/alerting-tasks": {
-    audience: "Use alerting tasks when workflow failures, checks, or operational events should notify incident-management systems.",
-    outcome:
-      "Combine alerting tasks with retries, timeouts, rate limits, and compensation workflows for production operations.",
-  },
   "category/sdks": {
     audience: "Use SDK pages when you want to define workflows as code, run workers, authenticate clients, or automate workflow operations.",
     outcome:
@@ -348,6 +338,8 @@ const RELATED_LINKS_MAX = 6;
 const NO_AUTO_RELATED_ROUTES = new Set([
   "category/reference-docs/operators",
   "category/reference-docs/system-tasks",
+  "category/reference-docs/alerting-tasks",
+  "category/reference-docs/ai-tasks",
 ]);
 let siblingsByRoute = new Map();
 

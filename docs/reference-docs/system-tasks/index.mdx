@@ -24,13 +24,6 @@ System tasks are built-in tasks that run on the Conductor server. They execute w
 | [Update Task](/content/reference-docs/system-tasks/update-task) | `UPDATE_TASK` | Update the status of a different task in a running workflow. |
 | [Update Secret](/content/reference-docs/system-tasks/update-secret) | `UPDATE_SECRET` | Update the value of an existing secret. |
 | [Get Signed JWT](/content/reference-docs/system-tasks/get-signed-jwt) | `GET_SIGNED_JWT` | Generate a signed JSON Web Token (JWT) for authenticating with another system. |
-
-## Alerting tasks
-
-Alerting tasks send notifications from workflows to incident-management or messaging platforms.
-
-| Alerting Task | Type | Description |
-| :--- | :--- | :--- |
 | [Opsgenie](/content/reference-docs/system-tasks/opsgenie) | `OPS_GENIE` | Create, close, or manage alerts in Opsgenie. |
 | [Query Processor](/content/reference-docs/system-tasks/query-processor) | `QUERY_PROCESSOR` | Run queries against systems such as Conductor APIs and Prometheus metrics to evaluate conditions for alerting workflows. |
 
@@ -38,23 +31,21 @@ Alerting tasks send notifications from workflows to incident-management or messa
 
 Conductor provides native AI system tasks with direct integration with 14+ LLM providers and 4 vector databases — no external frameworks or custom workers needed.
 
-### LLM
-
 | Task | Type | Description |
 | :--- | :--- | :--- |
-| Chat Completion | `LLM_CHAT_COMPLETE` | Multi-turn conversational AI with optional tool calling. Supports all major LLM providers. |
-| Text Completion | `LLM_TEXT_COMPLETE` | Single prompt completion. |
+| [LLM Chat Complete](/content/reference-docs/ai-tasks/llm-chat-complete) | `LLM_CHAT_COMPLETE` | Multi-turn conversational AI with optional tool calling. Supports all major LLM providers. |
+| [LLM Text Complete](/content/reference-docs/ai-tasks/llm-text-complete) | `LLM_TEXT_COMPLETE` | Single prompt completion. |
+| [LLM Generate Embeddings](/content/reference-docs/ai-tasks/llm-generate-embeddings) | `LLM_GENERATE_EMBEDDINGS` | Create vector embeddings from text or data using an AI model. |
+| [LLM Store Embeddings](/content/reference-docs/ai-tasks/llm-store-embeddings) | `LLM_STORE_EMBEDDINGS` | Store generated embeddings in a vector database for later retrieval. |
+| [LLM Get Embeddings](/content/reference-docs/ai-tasks/llm-get-embeddings) | `LLM_GET_EMBEDDINGS` | Retrieve stored embeddings from a vector database. |
+| [LLM Index Text](/content/reference-docs/ai-tasks/llm-index-text) | `LLM_INDEX_TEXT` | Index text content into a vector database for semantic search. |
+| [LLM Index Document](/content/reference-docs/ai-tasks/llm-index-document) | `LLM_INDEX_DOCUMENT` | Index documents into a vector database for semantic search and retrieval. |
+| [LLM Search Index](/content/reference-docs/ai-tasks/llm-search-index) | `LLM_SEARCH_INDEX` | Query a vector database to find documents relevant to a given query. |
+| [Get Document](/content/reference-docs/ai-tasks/llm-get-document) | `GET_DOCUMENT` | Retrieve stored documents for further AI processing or analysis. |
+| [Parse Document](/content/reference-docs/ai-tasks/parse-document) | `PARSE_DOCUMENT` | Extract, convert, and structure documents into Markdown for AI processing. |
+| [Chunk Text](/content/reference-docs/ai-tasks/chunk-text) | `CHUNK_TEXT` | Split large text into smaller segments for efficient AI processing. |
+| [List Files](/content/reference-docs/ai-tasks/list-files) | `LIST_FILES` | Retrieve file listings from cloud storage, Git repositories, or websites for downstream processing. |
 
 **Supported providers:** Anthropic (Claude), OpenAI (GPT), Azure OpenAI, Google Gemini, AWS Bedrock, Mistral, Cohere, HuggingFace, Ollama, Perplexity, Grok (xAI), and more. Switch providers by changing a configuration parameter — no code changes required.
-
-### Embeddings & Vector Search
-
-| Task | Type | Description |
-| :--- | :--- | :--- |
-| Generate Embeddings | `LLM_GENERATE_EMBEDDINGS` | Convert text to vector embeddings. |
-| Store Embeddings | `LLM_STORE_EMBEDDINGS` | Store pre-computed embeddings in a vector database. |
-| Index Text | `LLM_INDEX_TEXT` | Store text with auto-generated embeddings in a vector database. |
-| Search Index | `LLM_SEARCH_INDEX` | Semantic search using a text query. |
-| Search Embeddings | `LLM_SEARCH_EMBEDDINGS` | Search using embedding vectors directly. |
 
 **Supported vector databases:** Pinecone, Weaviate, pgvector (PostgreSQL), and MongoDB Atlas Vector Search. These enable RAG (retrieval-augmented generation) pipelines as standard Conductor workflows.
