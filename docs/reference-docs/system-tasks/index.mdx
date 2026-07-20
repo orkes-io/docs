@@ -1,6 +1,6 @@
 ---
 slug: "/category/reference-docs/system-tasks"
-description: "Overview of built-in system tasks in Conductor — HTTP, Event, Human, Wait, Inline, JSON JQ Transform, and LLM orchestration tasks."
+description: "Overview of built-in system tasks in Conductor — HTTP, Event, JDBC, Inline, JSON JQ Transform, alerting, and LLM orchestration tasks."
 ---
 
 # System Tasks
@@ -12,29 +12,27 @@ System tasks are built-in tasks that run on the Conductor server. They execute w
 | System Task | Type | Description |
 | :--- | :--- | :--- |
 | [HTTP](/content/reference-docs/system-tasks/http) | `HTTP` | Call any HTTP/REST endpoint. Supports GET, POST, PUT, DELETE with headers, body, and connection/read timeouts. |
+| [HTTP Poll](/content/reference-docs/system-tasks/http-poll) | `HTTP_POLL` | Repeatedly call an HTTP endpoint until a specified condition is met — useful for polling a long-running external job. |
+| [gRPC](/content/reference-docs/system-tasks/grpc) | `GRPC` | Invoke a remote gRPC service endpoint from a workflow. |
 | [Inline](/content/reference-docs/system-tasks/inline) | `INLINE` | Execute lightweight JavaScript or Python expressions server-side using GraalJS. Useful for data transformation, validation, and simple logic. |
-| [Event](/content/reference-docs/system-tasks/event) | `EVENT` | Publish events to external systems — Kafka, NATS, NATS Streaming, AMQP (RabbitMQ), SQS, or Conductor's internal queue. |
-| [Wait](/content/reference-docs/operators/wait) | `WAIT` | Pause workflow execution until a specified time, duration, or external signal. |
-| [Human](/content/reference-docs/operators/human) | `HUMAN` | Wait for an external signal, typically a human approval or manual action. The task stays `IN_PROGRESS` until completed via API. |
 | [JSON JQ Transform](/content/reference-docs/system-tasks/jq-transform) | `JSON_JQ_TRANSFORM` | Transform JSON data using [jq](https://jqlang.org/) expressions. Powerful for reshaping, filtering, and aggregating data. |
+| [Business Rule](/content/reference-docs/system-tasks/business-rule) | `BUSINESS_RULE` | Evaluate business rules defined in a spreadsheet-based decision table. |
 | [JDBC](/content/reference-docs/system-tasks/jdbc) | `JDBC` | Execute SQL queries and updates against relational databases (MySQL, PostgreSQL, Oracle, etc.) with connection pooling and transaction management. |
+| [Event](/content/reference-docs/system-tasks/event) | `EVENT` | Publish events to external systems — Kafka, NATS, NATS Streaming, AMQP (RabbitMQ), SQS, or Conductor's internal queue. |
+| [Wait for Webhook](/content/reference-docs/system-tasks/wait-for-webhook) | `WAIT_FOR_WEBHOOK` | Pause workflow execution until a matching webhook callback is received. |
+| [SendGrid](/content/reference-docs/system-tasks/sendgrid) | `SENDGRID` | Send transactional or notification emails through the SendGrid email service. |
+| [Update Task](/content/reference-docs/system-tasks/update-task) | `UPDATE_TASK` | Update the status of a different task in a running workflow. |
+| [Update Secret](/content/reference-docs/system-tasks/update-secret) | `UPDATE_SECRET` | Update the value of an existing secret. |
+| [Get Signed JWT](/content/reference-docs/system-tasks/get-signed-jwt) | `GET_SIGNED_JWT` | Generate a signed JSON Web Token (JWT) for authenticating with another system. |
 
-## Operators (flow control)
+## Alerting tasks
 
-These are also system tasks but control workflow execution flow rather than performing work:
+Alerting tasks send notifications from workflows to incident-management or messaging platforms.
 
-| Operator | Type | Description |
+| Alerting Task | Type | Description |
 | :--- | :--- | :--- |
-| [Fork/Join](/content/reference-docs/operators/fork-join) | `FORK_JOIN` | Execute tasks in parallel branches, then join. |
-| [Dynamic Fork](/content/reference-docs/operators/dynamic-fork) | `FORK_JOIN_DYNAMIC` | Dynamically create parallel branches at runtime. |
-| [Join](/content/reference-docs/operators/join) | `JOIN` | Wait for parallel branches to complete. |
-| [Switch](/content/reference-docs/operators/switch) | `SWITCH` | Conditional branching based on expressions or values. |
-| [Do While](/content/reference-docs/operators/do-while) | `DO_WHILE` | Loop over tasks until a condition is met. |
-| [Sub Workflow](/content/reference-docs/operators/sub-workflow) | `SUB_WORKFLOW` | Execute another workflow as a task. |
-| [Start Workflow](/content/reference-docs/operators/start-workflow) | `START_WORKFLOW` | Start another workflow asynchronously (fire-and-forget). |
-| [Set Variable](/content/reference-docs/operators/set-variable) | `SET_VARIABLE` | Set or update workflow-level variables. |
-| [Terminate](/content/reference-docs/operators/terminate) | `TERMINATE` | Terminate the workflow with a specified status. |
-| [Dynamic](/content/reference-docs/operators/dynamic) | `DYNAMIC` | Determine the task type to execute at runtime. |
+| [Opsgenie](/content/reference-docs/system-tasks/opsgenie) | `OPS_GENIE` | Create, close, or manage alerts in Opsgenie. |
+| [Query Processor](/content/reference-docs/system-tasks/query-processor) | `QUERY_PROCESSOR` | Run queries against systems such as Conductor APIs and Prometheus metrics to evaluate conditions for alerting workflows. |
 
 ## AI & LLM tasks
 

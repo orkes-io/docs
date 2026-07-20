@@ -342,6 +342,13 @@ const warnings = [];
 // already hand-author a related/next-steps section of their own.
 const RELATED_HEADING_RE = /^#{1,3}\s*(Related( pages| topics)?|See also|Next steps|Next pages|In this section|What'?s next)\b/im;
 const RELATED_LINKS_MAX = 6;
+// Routes that already link every sibling doc via their own content table —
+// an auto-generated "Related pages" list of the same siblings would just
+// repeat those links a second time, undescribed.
+const NO_AUTO_RELATED_ROUTES = new Set([
+  "category/reference-docs/operators",
+  "category/reference-docs/system-tasks",
+]);
 let siblingsByRoute = new Map();
 
 function collectNavLeafGroups(node, groups) {
@@ -385,6 +392,7 @@ function buildSiblingMap(nav) {
 }
 
 function relatedPagesBlock(route, body) {
+  if (NO_AUTO_RELATED_ROUTES.has(route)) return "";
   if (RELATED_HEADING_RE.test(body)) return "";
   const siblings = siblingsByRoute.get(route);
   if (!siblings || !siblings.length) return "";
