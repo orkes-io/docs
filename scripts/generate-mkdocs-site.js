@@ -2014,9 +2014,9 @@ function taskReferenceHubCopy() {
     "",
     "## Sections",
     "",
-    "- **[Worker Task](/reference-docs/worker-task)** — the task type your own service implements; it polls for the task and runs the custom business logic.",
-    "- **[Operators](/category/reference-docs/operators)** — built-in control-flow tasks: branching, loops, forks/joins, waits, sub-workflows, termination.",
-    "- **[System Tasks](/category/reference-docs/system-tasks)** — built-in tasks Conductor executes directly on the server (HTTP, transforms, JDBC, alerting, AI tasks) with no worker required.",
+    "- **[Worker Task](/content/reference-docs/worker-task)** — the task type your own service implements; it polls for the task and runs the custom business logic.",
+    "- **[Operators](/content/category/reference-docs/operators)** — built-in control-flow tasks: branching, loops, forks/joins, waits, sub-workflows, termination.",
+    "- **[System Tasks](/content/category/reference-docs/system-tasks)** — built-in tasks Conductor executes directly on the server (HTTP, transforms, JDBC, alerting, AI tasks) with no worker required.",
     "",
   ];
 }
@@ -2029,13 +2029,13 @@ function integrationsCatalogCopy() {
     "",
     "## Sections",
     "",
-    "- **[AI / LLM](/category/integrations/ai-llm)** — model providers (OpenAI, Anthropic, Bedrock, Vertex AI, Gemini, Mistral, Cohere, Grok, Perplexity, Hugging Face, Ollama) for chat, completion, and agent tasks.",
-    "- **[Vector Databases](/category/integrations/vector-databases)** — Pinecone, Weaviate, pgvector, or MongoDB Atlas for embeddings, indexing, and retrieval.",
-    "- **[Message Broker](/category/integrations/message-broker)** — Kafka, Confluent, Amazon MSK, AMQP/RabbitMQ, NATS, SQS, Azure Service Bus, GCP Pub/Sub, or IBM MQ for event-driven orchestration.",
-    "- **[Cloud Providers](/category/integrations/cloud-provider)** — AWS or GCP for cloud storage and resource access.",
-    "- **[RDBMS](/category/integrations/rdbms)** — relational databases for querying and managing structured data.",
-    "- **[Email/Git](/category/integrations/email)** — SendGrid for notification emails, Git for source-controlled files.",
-    "- **[Connected Apps](/category/integrations/connected-apps)** — third-party productivity, project-management, and dev tools.",
+    "- **[AI / LLM](/content/category/integrations/ai-llm)** — model providers (OpenAI, Anthropic, Bedrock, Vertex AI, Gemini, Mistral, Cohere, Grok, Perplexity, Hugging Face, Ollama) for chat, completion, and agent tasks.",
+    "- **[Vector Databases](/content/category/integrations/vector-databases)** — Pinecone, Weaviate, pgvector, or MongoDB Atlas for embeddings, indexing, and retrieval.",
+    "- **[Message Broker](/content/category/integrations/message-broker)** — Kafka, Confluent, Amazon MSK, AMQP/RabbitMQ, NATS, SQS, Azure Service Bus, GCP Pub/Sub, or IBM MQ for event-driven orchestration.",
+    "- **[Cloud Providers](/content/category/integrations/cloud-provider)** — AWS or GCP for cloud storage and resource access.",
+    "- **[RDBMS](/content/category/integrations/rdbms)** — relational databases for querying and managing structured data.",
+    "- **[Email/Git](/content/category/integrations/email)** — SendGrid for notification emails, Git for source-controlled files.",
+    "- **[Connected Apps](/content/category/integrations/connected-apps)** — third-party productivity, project-management, and dev tools.",
     "",
   ];
 }
