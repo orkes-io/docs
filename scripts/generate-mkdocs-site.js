@@ -229,16 +229,6 @@ const CATEGORY_PAGE_COPY = {
     outcome:
       "Reference pages explain what each task does, how to configure it, what it returns, and which related primitives to use with it.",
   },
-  "category/reference-docs/operators": {
-    audience: "Use operators when a workflow needs control flow such as branching, loops, parallelism, waiting, sub-workflows, or termination.",
-    outcome:
-      "Operators define orchestration structure while workers and system tasks execute the business logic at each step.",
-  },
-  "category/reference-docs/system-tasks": {
-    audience: "Use system tasks when Conductor should execute common operations without requiring a custom worker service.",
-    outcome:
-      "System tasks cover HTTP calls, transforms, events, waits, JDBC, SendGrid, gRPC, secret updates, and other managed workflow actions.",
-  },
   "category/reference-docs/ai-tasks": {
     audience: "Use AI tasks when workflows need model calls, embeddings, indexing, search, document parsing, or MCP tool execution.",
     outcome:

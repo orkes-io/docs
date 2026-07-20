@@ -12845,7 +12845,7 @@ Sample worker code snippets are available in the Conductor UI for reference.
 <details>
 <summary>Using a Worker task</summary>
 
-See an [example of how to add and run a Worker task](/quickstarts/write-workers) in our Quickstart guide.
+See an [example of how to add and run a Worker task](/developer-guides/using-workers) in our Writing Workers guide.
 
 </details>
 

@@ -1,0 +1,28 @@
+---
+slug: "/category/reference-docs/operators"
+description: "Overview of built-in operators in Conductor — Switch, Do While, Fork/Join, Dynamic Fork, Sub Workflow, Wait, Human, and more for controlling workflow execution flow."
+---
+
+# Operators
+
+Operators are built-in tasks that control workflow execution flow — branching, looping, parallelism, waiting, and termination — rather than performing external work.
+
+## Available operators
+
+| Operator | Type | Description |
+| :--- | :--- | :--- |
+| [Switch](/content/reference-docs/operators/switch) | `SWITCH` | Branch based on a single evaluated condition — if/else or multi-case logic. |
+| [Do While](/content/reference-docs/operators/do-while) | `DO_WHILE` | Repeat a sequence of tasks while a condition remains true. |
+| [Fork/Join](/content/reference-docs/operators/fork-join) | `FORK_JOIN` | Run a fixed, known number of parallel branches, then wait for all of them with Join. |
+| [Dynamic Fork](/content/reference-docs/operators/dynamic-fork) | `FORK_JOIN_DYNAMIC` | Run parallel branches where the number and tasks are determined at runtime, then wait for them with Join. |
+| [Join](/content/reference-docs/operators/join) | `JOIN` | Wait for parallel branches created by Fork/Join or Dynamic Fork to complete. |
+| [Dynamic](/content/reference-docs/operators/dynamic) | `DYNAMIC` | Pick and run one registered task at runtime based on workflow data, instead of hardcoding it in the definition. |
+| [Sub Workflow](/content/reference-docs/operators/sub-workflow) | `SUB_WORKFLOW` | Run another workflow as a nested part of this workflow's execution. |
+| [Start Workflow](/content/reference-docs/operators/start-workflow) | `START_WORKFLOW` | Trigger a separate, non-nested workflow execution from this workflow. |
+| [Terminate Workflow](/content/reference-docs/operators/terminate-workflow) | `TERMINATE_WORKFLOW` | Stop a different, already-running workflow execution from this workflow. |
+| [Terminate](/content/reference-docs/operators/terminate) | `TERMINATE` | Stop the current workflow's own execution. |
+| [Wait](/content/reference-docs/operators/wait) | `WAIT` | Pause execution until a time, duration, or external signal/event occurs. |
+| [Human](/content/reference-docs/operators/human) | `HUMAN` | Pause execution to collect input or approval through a form. |
+| [Yield](/content/reference-docs/operators/yield) | `YIELD` | Pause execution and return control to the caller without waiting on an external condition. |
+| [Set Variable](/content/reference-docs/operators/set-variable) | `SET_VARIABLE` | Create or update a workflow-level variable during execution. |
+| [Get Workflow](/content/reference-docs/operators/get-workflow) | `GET_WORKFLOW` | Look up details of another workflow execution by its ID. |
