@@ -629,6 +629,7 @@ theme:
 
 extra:
   generator: false
+  homepage: https://orkes.io
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/conductor-oss/conductor

@@ -2564,6 +2564,7 @@ theme:
 
 extra:
   generator: false
+  homepage: https://orkes.io
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/conductor-oss/conductor
@@ -2936,12 +2937,24 @@ function prepareOutput() {
   --c-accent-hover: #492687;
   --c-accent-soft: #f5f4ff;
   --c-accent-border: #dddcf4;
+  /* Align with the marketing site: purple links + cool-navy text/neutrals (light). */
+  --c-blue: #6c37bd;
+  --c-blue-hover: #492687;
+  --c-text: #1e2941;
+  --c-text-muted: #3b4a6f;
+  --c-text-dim:rgb(108, 115, 134);
+  --c-border: #dcdfe8;
+  --c-border-dim: #eef0f4;
+  --c-bg-secondary: #f7f7f9;
+  --c-bg-tertiary: #f1f3f5;
   --c-secondary-accent: #1dcaff;
-  --c-header-bg: #1b1730;
-  --c-header-border: rgba(255, 255, 255, 0.08);
-  --c-header-text: #ffffff;
-  --c-header-muted: rgba(255, 255, 255, 0.74);
-  --c-header-subtle: rgba(255, 255, 255, 0.08);
+  /* Light nav to match the marketing site: transparent over the top gradient,
+     navy text, becomes solid white on scroll (rule below). */
+  --c-header-bg: transparent;
+  --c-header-border: transparent;
+  --c-header-text: #1e2941;
+  --c-header-muted: #57637f;
+  --c-header-subtle: #f1f3f5;
   --md-accent-fg-color: var(--c-accent);
 }
 [data-md-color-scheme="slate"] {
@@ -2949,6 +2962,9 @@ function prepareOutput() {
   --c-accent-hover: #dddcf4;
   --c-accent-soft: #27223d;
   --c-accent-border: #342960;
+  /* Align with the marketing site: purple links (dark). */
+  --c-blue: #baaeff;
+  --c-blue-hover: #dddcf4;
   --c-secondary-accent: #1dcaff;
   --c-header-bg: #1b1730;
   --c-header-border: rgba(255, 255, 255, 0.08);
@@ -2967,6 +2983,36 @@ function prepareOutput() {
 }
 .md-header[data-md-state="shadow"] {
   box-shadow: none !important;
+}
+/* Marketing-site top gradient: lavender glow at top-right, flowing behind the
+   transparent nav and into the page (light scheme only). data-md-color-scheme is
+   set on <body>, so target the body element directly. */
+body[data-md-color-scheme="default"] {
+  background:
+    radial-gradient(1100px 720px at 100% 0%, #efeafb 0%, rgba(239, 234, 251, 0) 62%) fixed no-repeat,
+    var(--c-bg) !important;
+}
+/* The base paints .md-main / .md-content solid white, hiding the body gradient.
+   Make the content wrappers transparent so the gradient flows through the page. */
+body[data-md-color-scheme="default"] .md-main,
+body[data-md-color-scheme="default"] .md-content {
+  background: transparent !important;
+}
+/* Paint the gradient directly on the nav, viewport-fixed, so it shows on the bar
+   itself and lines up seamlessly with the page gradient. */
+body[data-md-color-scheme="default"] .md-header,
+body[data-md-color-scheme="default"] .md-tabs {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-bottom-color: transparent !important;
+}
+/* Once scrolled, the nav becomes a solid, blurred white bar (same specificity but
+   later + the --shadow class, so it wins over the gradient rule above). */
+body[data-md-color-scheme="default"] .md-header--shadow,
+body[data-md-color-scheme="default"] .md-header--shadow ~ .md-tabs {
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  // border-bottom-color: var(--c-border) !important;
 }
 .md-header__title,
 .md-header__topic,
@@ -3034,16 +3080,16 @@ function prepareOutput() {
   padding: 0 !important;
 }
 .md-logo img {
-  height: 34px !important;
+  height: 44px !important;
   width: auto !important;
   max-width: 148px;
   object-fit: contain;
 }
 .md-logo .md-logo__light {
-  display: none !important;
+  display: block !important;
 }
 .md-logo .md-logo__dark {
-  display: block !important;
+  display: none !important;
 }
 [data-md-color-scheme="slate"] .md-logo img {
   filter: none !important;
@@ -3194,11 +3240,17 @@ a.repo-link:hover {
   font-size: 14px;
   font-weight: 600;
 }
+.md-sidebar {
+  background: transparent !important;
+}
 .md-sidebar--primary .md-nav__title,
 .md-sidebar--primary .md-nav__title[for],
 .md-sidebar--primary .md-nav__item--section > .md-nav__link {
   background: var(--c-bg) !important;
   z-index: 3;
+}
+.md-sidebar__scrollwrap {
+ scrollbar-color: var(--c-border) transparent !important;
 }
 .md-sidebar--primary .md-nav__title,
 .md-sidebar--primary .md-nav__title[for] {
@@ -3239,23 +3291,22 @@ a.repo-link:hover {
   font-family: 'Sora', system-ui, sans-serif;
   --bg: #FFFFFF; --surface: #FFFFFF; --panel-1: #F4F4F7; --panel-2: #F4EFFC;
   --border: #E7E4F0; --text: #17162B; --muted: #5A5872; --faint: #8E8CA3;
-  --accent: #6D28D9; --accent-soft: rgba(109,40,217,0.09); --shadow: rgba(30,20,70,0.10);
+  --accent: #6c37bd; --accent-soft: rgba(109,40,217,0.09); --shadow: rgba(30,20,70,0.10); --accent-hover: #492687;
   --code-bg: #FFFFFF; --code-fg: #2B2A45; --chip-bg: #FFFFFF;
   --kw: #7C3AED; --str: #16A34A; --pun: #8E8CA3; --dec: #EA580C; --fn: #2563EB; --typ: #0891B2;
 }
 [data-md-color-scheme="slate"] .home-wrapper {
   --bg: #0E0D1C; --surface: #171533; --panel-1: #15142E; --panel-2: #1B1440;
   --border: #2A2748; --text: #ECEBF5; --muted: #A6A3C0; --faint: #6F6C90;
-  --accent: #A78BFA; --accent-soft: rgba(167,139,250,0.15); --shadow: rgba(0,0,0,0.4);
+  --accent: #492687; --accent-soft: rgba(167,139,250,0.15); --shadow: rgba(0,0,0,0.4);
   --code-bg: #0B0A18; --code-fg: #D7D5EA; --chip-bg: #0F0D24;
   --kw: #C4A6FF; --str: #5FD48A; --pun: #6F6C90; --dec: #FB923C; --fn: #7AA6FF; --typ: #4CC7DE;
 }
 .home-wrapper a { color: var(--accent); text-decoration: none; }
-.home-wrapper a:hover { opacity: .82; }
 @keyframes cdpulse { 0%, 100% { opacity: 1; } 50% { opacity: .3; } }
 
 /* ---------- Page title + Hero ---------- */
-.hp-section { padding: 52px 40px 8px; background: var(--bg); }
+.hp-section { padding: 52px 40px 8px; background: transparent; }
 .hp-wrap { max-width: 960px; margin: 0 auto; }
 .hp-eyebrow-hero {
   font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600; letter-spacing: .16em;
@@ -3267,8 +3318,9 @@ a.repo-link:hover {
 .hp-hero-sub { font-size: 18px; line-height: 1.6; color: var(--muted); margin: 0 0 26px; max-width: 640px; }
 .hp-cta-pill {
   display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600;
-  color: #fff !important; background: var(--accent); padding: 11px 22px; border-radius: 999px;
+  color: #fff !important; background: var(--accent); padding-left: 22px; padding-right: 22px; border-radius: 6px; min-height: 40px;
 }
+.hp-cta-pill:hover { background: var(--accent-hover); }
 
 /* ---------- Section headers (shared) ---------- */
 .hp-eyebrow-section {
@@ -3423,6 +3475,16 @@ a.repo-link:hover {
 .hp-resource-links a:last-child { border-bottom: none; }
 .hp-resource-links svg { flex-shrink: 0; }
 .hp-resource-cta { margin-top: auto; padding-top: 18px; font-size: 15px; font-weight: 700; color: var(--accent); }
+.hp-resource-cta:hover { color: var(--accent-hover) !important; }
+
+/* Align headings with the marketing site: semibold, navy (Material h1 defaults to light 300). */
+.md-typeset h1,
+.md-typeset h2,
+.md-typeset h3,
+.md-typeset h4 {
+  font-weight: 600;
+  color: var(--c-text);
+}
 `,
   );
   writeOverrides();
