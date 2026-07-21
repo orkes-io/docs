@@ -91,12 +91,14 @@ The integration is now ready to use. The next step is to create an AI prompt for
 
 **To create an AI prompt:**
 
-1. Go to [**Definitions** > **AI Prompts**](https://developer.orkescloud.com/ai_prompts) from the left navigation menu on your Conductor cluster.
-2. Select **+ Add AI prompt**.
-3. In **Prompt Name**, enter a unique name for your prompt, such as _Document-Retrieval_.
-4. In **Model(s)**, select the OpenAI integration you configured earlier. The dropdown lists the integration and its available models. Choose **openAI:chatgpt-4o-latest** for this prompt.
-5. Enter a **Description** of what the prompt does. For example: “Generates an answer to a user question using only the context retrieved from the vector database.”
-6. In **Prompt Template**, enter the following prompt:
+<ol>
+<li>Go to <a href="https://developer.orkescloud.com/ai_prompts"><strong>Definitions</strong> &gt; <strong>AI Prompts</strong></a> from the left navigation menu on your Conductor cluster.</li>
+<li>Select <strong>+ Add AI prompt</strong>.</li>
+<li>In <strong>Prompt Name</strong>, enter a unique name for your prompt, such as <em>Document-Retrieval</em>.</li>
+<li>In <strong>Model(s)</strong>, select the OpenAI integration you configured earlier. The dropdown lists the integration and its available models. Choose <strong>openAI:chatgpt-4o-latest</strong> for this prompt.</li>
+<li>Enter a <strong>Description</strong> of what the prompt does. For example: “Generates an answer to a user question using only the context retrieved from the vector database.”</li>
+<li>In <strong>Prompt Template</strong>, enter the following prompt:</li>
+</ol>
 
 ```text
 You are an assistant that answers questions using only the provided context.
@@ -126,12 +128,16 @@ The workflow uses Pinecone to store and retrieve embedding vectors. Add a Pineco
 
 **To get your Pinecone credentials:**
 
-1. Log in to the [Pinecone console](https://app.pinecone.io/), and [get the API key and project ID](https://orkes.io/content/integrations/vector-databases/pinecone#get-the-api-key-and-project-id).
-2. [Create an index](https://orkes.io/content/integrations/vector-databases/pinecone#create-an-index), setting the **Configuration** to **text-embedding-3-large** and the **Dimension** to **3072**.
+<ol>
+<li>Log in to the <a href="https://app.pinecone.io/">Pinecone console</a>, and <a href="https://orkes.io/content/integrations/vector-databases/pinecone#get-the-api-key-and-project-id">get the API key and project ID</a>.</li>
+<li><a href="https://orkes.io/content/integrations/vector-databases/pinecone#create-an-index">Create an index</a>, setting the <strong>Configuration</strong> to <strong>text-embedding-3-large</strong> and the <strong>Dimension</strong> to <strong>3072</strong>.</li>
+</ol>
 
 <p align="center"><img src="/content/img/pinecone-index.png" alt="Creating an index in Pinecone" width="100%" height="auto" /></p>
 
-3. Note the index name, as you will need to reference it when setting up the Pinecone integration in Conductor.
+<ol start="3">
+<li>Note the index name, as you will need to reference it when setting up the Pinecone integration in Conductor.</li>
+</ol>
 
 The **text-embedding-3-large model** generates vectors with a dimension of **3072**. Your Pinecone index must be configured with this same dimension to store and query embeddings correctly. A mismatched dimension will cause Conductor workflow failures.
 
@@ -155,13 +161,17 @@ The next step is to add the index to the Conductor cluster.
 
 **To add an index:**
 
-1. In the **Integrations** page, select the **+** button next to your newly-created Pinecone integration.
+<ol>
+<li>In the <strong>Integrations</strong> page, select the <strong>+</strong> button next to your newly-created Pinecone integration.</li>
+</ol>
 
 <p align="center"><img src="/content/img/adding-pinecone-index-in-conductor.png" alt="Adding Pinecone index in Conductor" width="100%" height="auto" /></p>
 
-2. Select **+ New Index**.
-3. Enter the **Index name** as `<YOUR-INDEX-NAME-IN-PINECONE>` and a description.
-4. Ensure that the **Active** toggle is switched on and select **Save**.
+<ol start="2">
+<li>Select <strong>+ New Index</strong>.</li>
+<li>Enter the <strong>Index name</strong> as <code>&lt;YOUR-INDEX-NAME-IN-PINECONE&gt;</code> and a description.</li>
+<li>Ensure that the <strong>Active</strong> toggle is switched on and select <strong>Save</strong>.</li>
+</ol>
 
 With the integrations and prompt ready, let’s create the workflow.
 
@@ -169,8 +179,10 @@ With the integrations and prompt ready, let’s create the workflow.
 
 **To create a workflow:**
 
-1. Go to [**Definitions** > **Workflow**](https://developer.orkescloud.com/workflowDef) and select **+ Define workflow**.
-2. In the **Code** tab, paste the following JSON:
+<ol>
+<li>Go to <a href="https://developer.orkescloud.com/workflowDef"><strong>Definitions</strong> &gt; <strong>Workflow</strong></a> and select <strong>+ Define workflow</strong>.</li>
+<li>In the <strong>Code</strong> tab, paste the following JSON:</li>
+</ol>
 
 ```json
 {
@@ -291,8 +303,10 @@ With the integrations and prompt ready, let’s create the workflow.
 
 **To run the workflow using Conductor UI:**
 
-1. From your workflow definition, go to the **Run** tab.
-2. Enter the **Input Params**. 
+<ol>
+<li>From your workflow definition, go to the <strong>Run</strong> tab.</li>
+<li>Enter the <strong>Input Params</strong>.</li>
+</ol>
 
 ```json
 // example input params
@@ -303,7 +317,9 @@ With the integrations and prompt ready, let’s create the workflow.
 }
 ```
 
-3. Select **Execute**.
+<ol start="3">
+<li>Select <strong>Execute</strong>.</li>
+</ol>
 
 <p align="center"><img src="/content/img/running-document-workflow.png" alt="Running workflow from Conductor UI" width="100%" height="auto" /></p>
 
