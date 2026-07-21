@@ -74,16 +74,22 @@ Design groups around operational responsibilities, not individual projects. For 
 **To configure a group:**
 
 1. Create a group.
-    1. Go to **Access Control** > **Groups** from the left navigation menu on your Conductor cluster.
-    2. Select **+ Create group**.
-    3. Enter the following details:
+
+   <ol>
+   <li>Go to <strong>Access Control</strong> &gt; <strong>Groups</strong> from the left navigation menu on your Conductor cluster.</li>
+   <li>Select <strong>+ Create group</strong>.</li>
+   <li>Enter the following details:</li>
+   </ol>
 
     | Parameter | Description                                                                                                                                                                                                                                                     |
     | ------ |-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
     | Name | A name to identify your group. For example, “Engineering”. This cannot be changed later.                                                                     |
     | Description | A description of the group.                                        |
     | Default group role | Optional. Roles that all group members inherit in addition to their individually assigned roles. The available roles are: <ul><li>**Admin**: Superuser. Full access to the system and resources. Can manage users and groups.</li> <li>**User**: Regular user group with permissions to create workflow definitions, task definitions, applications, integrations, secrets, and user forms. Has full API Gateway access, including view and management permissions. Can search workflows.</li> <li>**Metadata Manager**: Can manage all workflow and task definitions in the cluster, including performing any action regardless of workflow or task ownership. Can view and manage API Gateway configurations. Can create integrations and secrets.</li> <li>**Workflow Manager**: Can view, execute, and manage all workflow executions in the system, including start, pause, resume, rerun, retry, restart, terminate, and delete actions. Has execute and read access to workflow and task definitions.</li> <li>**Read Only User**: Can view applications, metadata, workflows, API gateway, and search workflows.</li></ul>                           |
-    4. Select **Save**. The group has been created. You can proceed to add members or permissions to the group.
+
+   <ol start="4">
+   <li>Select <strong>Save</strong>. The group has been created. You can proceed to add members or permissions to the group.</li>
+   </ol>
 
 2. Add members to the group.
     1. In the **Members** section, select **+ Add User** to add an existing user to the group. If the user you are looking for does not exist, you must first add them to your cluster.

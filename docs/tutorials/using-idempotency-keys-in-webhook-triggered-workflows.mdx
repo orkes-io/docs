@@ -21,6 +21,7 @@ In this tutorial, you will:
 
 :::info Prerequisites
 To follow along, make sure you have access to the following:
+
 - A free account in [Developer Edition](https://developer.orkescloud.com/).
 - An [Atlassian account](https://id.atlassian.com/) with access to [Jira](https://www.atlassian.com/software/jira) with permission to create tickets.
 :::
@@ -51,15 +52,19 @@ This tutorial uses Jira to create tickets from event payloads received through a
 
 **To generate an API token:**
 
-1. Log in to the [Atlassian account](https://id.atlassian.com/).
-2. Go to  **Security** > **[API tokens](https://id.atlassian.com/manage-profile/security/api-tokens)**.
-3. Select **Create API token**.
+<ol>
+<li>Log in to the <a href="https://id.atlassian.com/">Atlassian account</a>.</li>
+<li>Go to <strong>Security</strong> &gt; <strong><a href="https://id.atlassian.com/manage-profile/security/api-tokens">API tokens</a></strong>.</li>
+<li>Select <strong>Create API token</strong>.</li>
+</ol>
 
 <p align="center"><img src="/content/img/api-token-atlassion.png" alt="Creating API token from Atlassian account" width="100%" height="auto"></img></p>
 
-4. Enter a name for the token and set an expiration.
-5. Select **Create**.
-6. Copy and securely store the token.
+<ol start="4">
+<li>Enter a name for the token and set an expiration.</li>
+<li>Select <strong>Create</strong>.</li>
+<li>Copy and securely store the token.</li>
+</ol>
 
 ## Step 2: Store the token as a secret in Orkes Conductor
 
@@ -71,27 +76,35 @@ Jira uses Basic Authentication, which requires a Base64-encoded string containin
 
 **To create the basic authentication string:**
 
-1. Open a Terminal.
-2. Run the following command, replacing the placeholders with your credentials:
+<ol>
+<li>Open a Terminal.</li>
+<li>Run the following command, replacing the placeholders with your credentials:</li>
+</ol>
 
 ```shell
 echo -n "your-email@example.com:<your_api_token>" | base64
 ```
 
-3. Copy the output, which is your Base64-encoded authentication string.
+<ol start="3">
+<li>Copy the output, which is your Base64-encoded authentication string.</li>
+</ol>
 
 ### Store as a secret in Orkes Conductor
 
 **To store the basic authentication token as a secret:**
 
-1. Go to [**Definitions** > **Secret**](https://developer.orkescloud.com/secrets) from the left navigation menu on your Conductor cluster.
-2. Select **+ Add secret**.
-3. Set the **Secret name** as *atlassian-token*.
-4. Paste the Base64 encoded string as the **Secret value**.
+<ol>
+<li>Go to <a href="https://developer.orkescloud.com/secrets"><strong>Definitions</strong> &gt; <strong>Secret</strong></a> from the left navigation menu on your Conductor cluster.</li>
+<li>Select <strong>+ Add secret</strong>.</li>
+<li>Set the <strong>Secret name</strong> as <em>atlassian-token</em>.</li>
+<li>Paste the Base64 encoded string as the <strong>Secret value</strong>.</li>
+</ol>
 
 <p align="center"><img src="/content/img/saving-as-secret.png" alt="Saving Base64 encoded token as a secret in Orkes Conductor" width="100%" height="auto"></img></p>
 
-5. Select **Add** to save the secret.
+<ol start="5">
+<li>Select <strong>Add</strong> to save the secret.</li>
+</ol>
 
 ## Step 3: Create the ticket automation workflow
 
@@ -101,8 +114,10 @@ Next, define a workflow in Orkes Conductor that creates a Jira ticket when trigg
 
 **To create the ticket automation workflow:**
 
-1. Go to [**Definitions** > **Workflows**](https://developer.orkescloud.com/workflowDef) and select **+ Define workflow.**
-2. In the **Code** tab, paste the following JSON:
+<ol>
+<li>Go to <a href="https://developer.orkescloud.com/workflowDef"><strong>Definitions</strong> &gt; <strong>Workflows</strong></a> and select <strong>+ Define workflow.</strong></li>
+<li>In the <strong>Code</strong> tab, paste the following JSON:</li>
+</ol>
 
 ```json
 {
@@ -161,7 +176,9 @@ Next, define a workflow in Orkes Conductor that creates a Jira ticket when trigg
 }
 ```
 
-3. Select **Save** > **Confirm**.
+<ol start="3">
+<li>Select <strong>Save</strong> &gt; <strong>Confirm</strong>.</li>
+</ol>
 
 ### Edit workflow
 
@@ -184,21 +201,29 @@ Create a webhook that triggers the workflow you defined. Configure it to use the
 
 **To create a webhook:**
 
-1. Go to [**Definitions** > **Webhook**](https://developer.orkescloud.com/configure-webhooks) from the left navigation menu on your Conductor cluster.
-2. Select **+ New webhook**.
-3. Configure the following parameters:
+<ol>
+<li>Go to <a href="https://developer.orkescloud.com/configure-webhooks"><strong>Definitions</strong> &gt; <strong>Webhook</strong></a> from the left navigation menu on your Conductor cluster.</li>
+<li>Select <strong>+ New webhook</strong>.</li>
+<li>Configure the following parameters:
 
 <p align="center"><img src="/content/img/webhook-for-ticket-automation-flow.png" alt="Webhook in Orkes Conductor triggering a workflow on receiving an event" width="80%" height="auto"></img></p>
 
-    - In **Webhook name**, enter a webhook name such as *CreateJiraTickets*.
-    - Select **Source platform** as **Custom**.
-    - Set a request **Header** for the webhook.
-    - Enable **Start workflow when webhook event comes**.
-    - In the **Workflow name**, select *ticket-automation-workflow*.
-    - In the **Idempotency key**, enter `${workflow.input.bug_id}`.
-    - Set the **Idempotency strategy** as **Return Existing**.
+<ul>
+<li>In <strong>Webhook name</strong>, enter a webhook name such as <em>CreateJiraTickets</em>.</li>
+<li>Select <strong>Source platform</strong> as <strong>Custom</strong>.</li>
+<li>Set a request <strong>Header</strong> for the webhook.</li>
+<li>Enable <strong>Start workflow when webhook event comes</strong>.</li>
+<li>In the <strong>Workflow name</strong>, select <em>ticket-automation-workflow</em>.</li>
+<li>In the <strong>Idempotency key</strong>, enter <code>${workflow.input.bug_id}</code>.</li>
+<li>Set the <strong>Idempotency strategy</strong> as <strong>Return Existing</strong>.</li>
+</ul>
 
-4. Select **Save**.
+</li>
+</ol>
+
+<ol start="4">
+<li>Select <strong>Save</strong>.</li>
+</ol>
 
 After saving, Conductor generates an unverified webhook URL. 
 
@@ -244,7 +269,9 @@ Consider a scenario where the same bug report is submitted multiple times due to
 
 **To simulate this behavior:**
 
-1. Re-run the same cURL request using the same *bug_id* value as before.
+<ol>
+<li>Re-run the same cURL request using the same <em>bug_id</em> value as before.</li>
+</ol>
 
 ```shell
 curl -X POST "<YOUR-CONDUCTOR-WEBHOOK-URL>" \
@@ -257,7 +284,9 @@ curl -X POST "<YOUR-CONDUCTOR-WEBHOOK-URL>" \
   }'
 ```
 
-2. Check the webhook activity in Conductor. A new event is received, but no new workflow is triggered. You can verify this by comparing timestamps.
+<ol start="2">
+<li>Check the webhook activity in Conductor. A new event is received, but no new workflow is triggered. You can verify this by comparing timestamps.</li>
+</ol>
 
 <p align="center"><img src="/content/img/idempotent-behavior.png" alt="Idempotent behavior showing no workflow triggered for the same idempotency key event" width="100%" height="auto"></img></p>
 

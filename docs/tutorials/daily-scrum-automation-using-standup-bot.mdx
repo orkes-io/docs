@@ -12,6 +12,7 @@ import Install from '@site/src/components/install.mdx';
 This tutorial demonstrates how to build a standup bot that automates the daily standup process using Slack webhooks and Orkes Conductor. The bot collects updates from team members via personalized Slack messages, waits for a set timeframe, and compiles the responses. Once individual updates are received or the app timeout is reached, the bot posts them to a shared team channel, streamlining your team’s standup routine.
 
 In this tutorial, you will:
+
 1. Create standup bot workflows in Orkes Conductor.
 2. Create a webhook to receive Slack events.
 3. Create a Slack app.
@@ -23,6 +24,7 @@ To follow along, ensure you have access to the free [Orkes Developer Edition](ht
 ## The standup updates workflow
 
 This tutorial includes two workflows:
+
 - **standup_updates_main**: The main workflow, triggered at the scheduled standup time
 - **individual_updates**: A sub workflow invoked for each employee to collect their update
 
@@ -46,14 +48,18 @@ This tutorial includes two workflows:
 ## Step 1: Create the standup updates workflow
 
 You’ll create two workflows:
+
 - **standup_updates_main**: The parent workflow.
 - **individual_updates**: The sub-workflow used to collect updates from each user.
 
 ### Create the standup_updates_main
 
 **To create the workflow:**
-1. Go to [**Definitions** > **Workflow**](https://developer.orkescloud.com/workflowDef) and select **+ Define workflow**.
-2. In the **Code** tab, enter the following JSON:
+
+<ol>
+<li>Go to <a href="https://developer.orkescloud.com/workflowDef"><strong>Definitions</strong> &gt; <strong>Workflow</strong></a> and select <strong>+ Define workflow</strong>.</li>
+<li>In the <strong>Code</strong> tab, enter the following JSON:</li>
+</ol>
 
 ```JSON
 {
@@ -110,13 +116,19 @@ You’ll create two workflows:
  "schemaVersion": 2
 }
 ```
-3. Select **Save** > **Confirm**.
+
+<ol start="3">
+<li>Select <strong>Save</strong> &gt; <strong>Confirm</strong>.</li>
+</ol>
 
 ### Create the individual_updates workflow
 
 **To create the workflow:**
-1. Go to [**Definitions** > **Workflow**](https://developer.orkescloud.com/workflowDef) and select **+ Define workflow**.
-2. In the **Code** tab, enter the following JSON:
+
+<ol>
+<li>Go to <a href="https://developer.orkescloud.com/workflowDef"><strong>Definitions</strong> &gt; <strong>Workflow</strong></a> and select <strong>+ Define workflow</strong>.</li>
+<li>In the <strong>Code</strong> tab, enter the following JSON:</li>
+</ol>
 
 ```JSON
 {
@@ -224,7 +236,10 @@ You’ll create two workflows:
  "schemaVersion": 2
 }
 ```
-3. Select **Save** > **Confirm**.
+
+<ol start="3">
+<li>Select <strong>Save</strong> &gt; <strong>Confirm</strong>.</li>
+</ol>
 
 :::tip
 If you change the name of the **individual_updates** workflow, make sure to update the corresponding Sub Workflow task in the **standup_updates_main** to match the new name.
@@ -237,15 +252,19 @@ The Wait for Webhook task in the **individual_updates** workflow captures the us
 
 **To create a webhook in Conductor:**
 
-1. Go to [**Definitions** > **Webhook**](https://developer.orkescloud.com/configure-webhooks) from the left navigation menu on your Conductor cluster.
-2. Select **+ New webhook.**
+<ol>
+<li>Go to <a href="https://developer.orkescloud.com/configure-webhooks"><strong>Definitions</strong> &gt; <strong>Webhook</strong></a> from the left navigation menu on your Conductor cluster.</li>
+<li>Select <strong>+ New webhook.</strong></li>
+</ol>
 
 <p align="center"><img src="/content/img/webhook-standupbot.png" alt="Slack Webhook in Conductor for Standup bot" width="80%" height="auto"></img></p>
 
-3. In **Webhook name**, enter a unique name for the webhook.
-4. In **Workflows to receive webhook event**, select both the workflows created in the previous step.
-5. In **Source platform**, select **Slack**.
-6. Select **Save**.
+<ol start="3">
+<li>In <strong>Webhook name</strong>, enter a unique name for the webhook.</li>
+<li>In <strong>Workflows to receive webhook event</strong>, select both the workflows created in the previous step.</li>
+<li>In <strong>Source platform</strong>, select <strong>Slack</strong>.</li>
+<li>Select <strong>Save</strong>.</li>
+</ol>
 
 An unverified webhook URL is generated. The next step is to create a Slack app that sends events to the workflow through this webhook.
 
@@ -259,14 +278,14 @@ An unverified webhook URL is generated. The next step is to create a Slack app t
 4. Select **Create App**.
 5. From the left navigation menu, go to **Features** > **Incoming Webhooks**, and turn on **Activate Incoming Webhooks**.
 6. Go to **Features** > **Event Subscriptions**, and turn on **Enable events**.
-    - In **Request URL**, enter the Webhook URL created in Conductor.
-    - In **Subscribe to bot events**, select **Add Bot User Event** and choose **message.im** event.
-    - Select **Save changes**.
+   - In **Request URL**, enter the Webhook URL created in Conductor.
+   - In **Subscribe to bot events**, select **Add Bot User Event** and choose **message.im** event.
+   - Select **Save changes**.
 7. Go to **Features** > **App Home** > **Show Tabs**.
-    - In **Messages** Tab, enable the option *Allow users to send Slash commands and messages from the messages tab*.
+   - In **Messages** Tab, enable the option *Allow users to send Slash commands and messages from the messages tab*.
 8. Enable permissions for the Slack app by going to **Feature** > **OAuth & Permissions**.
-    - In **Scopes** > **Bot Token Scopes**, select **Add an OAuth scope**.
-    - Add **chat:write** permission.
+   - In **Scopes** > **Bot Token Scopes**, select **Add an OAuth scope**.
+   - Add **chat:write** permission.
 
 The Slack app has been created.
 
@@ -290,8 +309,8 @@ Once the app is installed in your workspace, a **Bot User OAuth Token** and a **
 
 1. Go to [**Definitions** > **Secrets**](https://developer.orkescloud.com/secrets) from the left menu on your Conductor cluster.
 2. Select **+ Add secret** and add the following:
-    - Enter **Secret name** as *slack_standup_token*.
-    - In **Secret** value, enter the *Bot User OAuth token* generated in the previous step.
+   - Enter **Secret name** as *slack_standup_token*.
+   - In **Secret** value, enter the *Bot User OAuth token* generated in the previous step.
 3. Select **Add** to save the secret.
 
 Repeat the process to create another secret, where:
@@ -307,21 +326,28 @@ The workflow is configured to use specific secret names, so the secrets must be 
 
 Make the following changes to the workflow using your employee’s Slack details:
 
-In the *standup_updates_main* workflow, replace **user_name** and **user_id** in the sub-workflow tasks with the respective employee details.  
+In the *standup_updates_main* workflow, replace **user_name** and **user_id** in the sub-workflow tasks with the respective employee details.
+
 - **user_name**–The employee’s name.
-- **user_id**–The member ID from Slack.<br/>
-    
+- **user_id**–The member ID from Slack.
+
 **To get the Member ID:**
+
 Go to **Slack workspace** > Select the user profile > **View the profile** > Click on three dots > **Copy member ID**.
 
 <p align="center"><img src="/content/img/member-id-slack.png" alt="Getting member ID from Slack" width="30%" height="auto"></img></p>
 
 **To modify the workflow with these details:**
-1. Go to *standup_updates_main* workflow, and update both the Sub Workflow tasks with the user details.
+
+<ol>
+<li>Go to <em>standup_updates_main</em> workflow, and update both the Sub Workflow tasks with the user details.</li>
+</ol>
 
 <p align="center"><img src="/content/img/modifying-standup-bot-main-workflow.png" alt="Modifying workflow" width="100%" height="auto"></img></p>
 
-2. Select **Save** > **Confirm**.
+<ol start="2">
+<li>Select <strong>Save</strong> &gt; <strong>Confirm</strong>.</li>
+</ol>
 
 ## Step 5: Run workflow
 
@@ -356,7 +382,7 @@ The Scheduler allows you to set a predefined cadence for running a workflow. Onc
 3. Provide a schedule name, select the workflow name and version, and set the schedule using the cron expression. 
 4. Select **Save** > **Confirm**.
 
-Refer to [Scheduling Workflows](https://orkes.io/content/developer-guides/scheduling-workflows) documentation for more details.
+Refer to [Scheduling Workflows](/content/developer-guides/scheduling-workflows) documentation for more details.
 
 ## Example Modifications
 

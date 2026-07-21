@@ -5,7 +5,7 @@ description: "Learn how to enable Change Data Capture (CDC) to stream workflow s
 
 # Enabling CDC (Change Data Capture)
 
-In Orkes Conductor, Change Data Capture (CDC) allows you to send [workflow state changes](https://orkes.io/content/developer-guides/task-and-workflow-status-in-conductor#workflow-status) to external message brokers such as Kafka. This enables downstream systems to react to workflow state changes in real time, making it easier to build responsive and decoupled architectures.
+In Orkes Conductor, Change Data Capture (CDC) allows you to send [workflow state changes](/content/quickstarts/workflows#workflow-execution-states) to external message brokers such as Kafka. This enables downstream systems to react to workflow state changes in real time, making it easier to build responsive and decoupled architectures.
 
 :::tip 5-minute path
 Create a broker integration, enable `workflowStatusListenerEnabled`, set `workflowStatusListenerSink`, run a workflow, and verify messages in the target topic or queue.
