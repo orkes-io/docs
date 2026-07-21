@@ -54,9 +54,9 @@ Add an OpenAI integration to your Conductor cluster, then add the required model
 2. Go to **[Integrations](https://developer.orkescloud.com/integrations)** from the left navigation menu on your Conductor cluster.
 3. Select **+ New integration**.
 4. Create the integration by providing the following mandatory parameters:
-    - **Integration name**: “openAI”
-    - **API Key**: `<YOUR_OPENAI_API_KEY>`
-    - **Description**: “OpenAI Integration”
+   - **Integration name**: “openAI”
+   - **API Key**: `<YOUR_OPENAI_API_KEY>`
+   - **Description**: “OpenAI Integration”
 5. Ensure that the **Active** toggle is switched on, then select **Save**.
 
 The OpenAI integration has been added. The next step is to add a specific model.
@@ -65,13 +65,17 @@ The OpenAI integration has been added. The next step is to add a specific model.
 
 **To add a model:**
 
-1. In the **Integrations** page, select the **+** button next to your newly-created OpenAI integration.
+<ol>
+<li>In the <strong>Integrations</strong> page, select the <strong>+</strong> button next to your newly-created OpenAI integration.</li>
+</ol>
 
 <p align="center"><img src="/content/img/adding-open-ai-model.png" alt="Adding model to an OpenAI integration" width="100%" height="auto" /></p>
 
-2. Select **+ New model**.
-3. Enter the **Model Name** as “chatgpt-4o-latest” and an optional description like “OpenAI’s chatgpt-4o-latest model”.
-4. Ensure that the **Active** toggle is switched on and select **Save**.
+<ol start="2">
+<li>Select <strong>+ New model</strong>.</li>
+<li>Enter the <strong>Model Name</strong> as “chatgpt-4o-latest” and an optional description like “OpenAI’s chatgpt-4o-latest model”.</li>
+<li>Ensure that the <strong>Active</strong> toggle is switched on and select <strong>Save</strong>.</li>
+</ol>
 
 The integration is now ready to use. The next step is to create an AI prompt for the LLM Chat Complete task, which the workflow uses for summarization.
 
@@ -83,12 +87,14 @@ In this step, you define the prompt that controls how pull request descriptions 
 
 **To create an AI prompt:**
 
-1. Go to [**Definitions** > **AI Prompts**](https://developer.orkescloud.com/ai_prompts) from the left navigation menu on your Conductor cluster.
-2. Select **+ Add AI prompt**.
-3. In **Prompt Name**, enter a unique name for your prompt, such as _Summarize_PR_For_Stakeholders_.
-4. In **Model(s)**, select the OpenAI integration you configured earlier. The dropdown lists the integration and its available models. Choose **openAI:chatgpt-4o-latest** for this prompt.
-5. Enter a **Description** of what the prompt does. For example: “Generates a non-technical summary of a pull request for stakeholders.”
-6. In **Prompt Template**, enter the following prompt:
+<ol>
+<li>Go to <a href="https://developer.orkescloud.com/ai_prompts"><strong>Definitions</strong> &gt; <strong>AI Prompts</strong></a> from the left navigation menu on your Conductor cluster.</li>
+<li>Select <strong>+ Add AI prompt</strong>.</li>
+<li>In <strong>Prompt Name</strong>, enter a unique name for your prompt, such as <em>Summarize_PR_For_Stakeholders</em>.</li>
+<li>In <strong>Model(s)</strong>, select the OpenAI integration you configured earlier. The dropdown lists the integration and its available models. Choose <strong>openAI:chatgpt-4o-latest</strong> for this prompt.</li>
+<li>Enter a <strong>Description</strong> of what the prompt does. For example: “Generates a non-technical summary of a pull request for stakeholders.”</li>
+<li>In <strong>Prompt Template</strong>, enter the following prompt:</li>
+</ol>
 
 ```text
 You summarize pull request descriptions for non-technical stakeholders.
@@ -109,7 +115,9 @@ ${prDescription}
 
 <p align="center"><img src="/content/img/pr-summary-prompt.png" alt="Creating a prompt template in Orkes Conductor" width="100%" height="auto" /></p>
 
-7. Select **Save** > **Confirm save**.
+<ol start="7">
+<li>Select <strong>Save</strong> &gt; <strong>Confirm save</strong>.</li>
+</ol>
 
 This saves your prompt. 
 
@@ -144,8 +152,10 @@ In this step, you create a workflow that uses the AI prompt to generate a stakeh
 
 **To create a workflow:**
 
-1. Go to [**Definitions** > **Workflow**](https://developer.orkescloud.com/workflowDef) and select **+ Define workflow**.
-2. In the **Code** tab, paste the following JSON:
+<ol>
+<li>Go to <a href="https://developer.orkescloud.com/workflowDef"><strong>Definitions</strong> &gt; <strong>Workflow</strong></a> and select <strong>+ Define workflow</strong>.</li>
+<li>In the <strong>Code</strong> tab, paste the following JSON:</li>
+</ol>
 
 ```json
 {
@@ -186,24 +196,36 @@ In this step, you create a workflow that uses the AI prompt to generate a stakeh
 }
 ```
 
-3. Select **Save** > **Confirm**.
-4. After saving, update the **LLM Chat Complete** task with your actual values:
+<ol start="3">
+<li>Select <strong>Save</strong> &gt; <strong>Confirm</strong>.</li>
+<li>After saving, update the <strong>LLM Chat Complete</strong> task with your actual values:</li>
+</ol>
 
 <p align="center"><img src="/content/img/modifying-prompt-summary-workflow.png" alt="Modifying workflow" width="80%" height="auto" /></p>
 
-    - In **LLM provider**, replace `<YOUR-LLM-PROVIDER>` with your OpenAI integration name created in [Step 1](/content/tutorials/pull-request-summary-workflow#step-1-integrate-an-ai-model-provider).
-    - In **Model**, replace `<YOUR-LLM-MODEL>` with `chatgpt-4o-latest`.
-    - In **Prompt Name**, replace `<YOUR-AI-PROMPT>` with your prompt created in [Step 2](/content/tutorials/pull-request-summary-workflow#step-2-create-and-test-the-ai-prompt).
-    - Make sure to update the **promptVariable** as follows:
-        - **prDescription** - `${workflow.input.pullRequestDescription}`
-5. Select **Save** > **Confirm**.
+<ul>
+<li>In <strong>LLM provider</strong>, replace <code>&lt;YOUR-LLM-PROVIDER&gt;</code> with your OpenAI integration name created in <a href="/content/tutorials/pull-request-summary-workflow#step-1-integrate-an-ai-model-provider">Step 1</a>.</li>
+<li>In <strong>Model</strong>, replace <code>&lt;YOUR-LLM-MODEL&gt;</code> with <code>chatgpt-4o-latest</code>.</li>
+<li>In <strong>Prompt Name</strong>, replace <code>&lt;YOUR-AI-PROMPT&gt;</code> with your prompt created in <a href="/content/tutorials/pull-request-summary-workflow#step-2-create-and-test-the-ai-prompt">Step 2</a>.</li>
+<li>Make sure to update the <strong>promptVariable</strong> as follows:
+<ul>
+<li><strong>prDescription</strong> - <code>${workflow.input.pullRequestDescription}</code></li>
+</ul>
+</li>
+</ul>
+
+<ol start="5">
+<li>Select <strong>Save</strong> &gt; <strong>Confirm</strong>.</li>
+</ol>
 
 ## Step 4: Run the workflow
 
 **To run the workflow using Conductor UI:**
 
-1. From your workflow definition, go to the **Run** tab.
-2. Enter the **Input Params**. 
+<ol>
+<li>From your workflow definition, go to the <strong>Run</strong> tab.</li>
+<li>Enter the <strong>Input Params</strong>.</li>
+</ol>
 
 ```json
 // example input params
@@ -212,7 +234,9 @@ In this step, you create a workflow that uses the AI prompt to generate a stakeh
 }
 ```
 
-3. Select **Execute**.
+<ol start="3">
+<li>Select <strong>Execute</strong>.</li>
+</ol>
 
 <p align="center"><img src="/content/img/pr-summary-run-workflow.png" alt="Running workflow from Conductor UI" width="100%" height="auto" /></p>
 

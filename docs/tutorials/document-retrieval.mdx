@@ -55,9 +55,9 @@ Add an OpenAI integration to your Conductor cluster, then add the required model
 2. Go to **[Integrations](https://developer.orkescloud.com/integrations)** from the left navigation menu on your Conductor cluster.
 3. Select **+ New integration**.
 4. Create the integration by providing the following mandatory parameters:
-    - **Integration name**: “openAI”
-    - **API Key**: `<YOUR_OPENAI_API_KEY>`
-    - **Description**: “OpenAI Integration”
+   - **Integration name**: “openAI”
+   - **API Key**: `<YOUR_OPENAI_API_KEY>`
+   - **Description**: “OpenAI Integration”
 5. Ensure that the **Active** toggle is switched on, then select **Save**.
 
 The OpenAI integration has been added. The next step is to add a specific model.
@@ -71,13 +71,17 @@ You will add two models to your OpenAI integration:
 
 **To add a model:**
 
-1. In the **Integrations** page, select the **+** button next to your newly-created OpenAI integration.
+<ol>
+<li>In the <strong>Integrations</strong> page, select the <strong>+</strong> button next to your newly-created OpenAI integration.</li>
+</ol>
 
 <p align="center"><img src="/content/img/adding-open-ai-model.png" alt="Adding model to an OpenAI integration" width="100%" height="auto" /></p>
 
-2. Select **+ New model**.
-3. Enter the **Model Name** as “text-embedding-3-large” and an optional description like “OpenAI’s text-embedding-3-large model”.
-4. Ensure that the **Active** toggle is switched on and select **Save**.
+<ol start="2">
+<li>Select <strong>+ New model</strong>.</li>
+<li>Enter the <strong>Model Name</strong> as “text-embedding-3-large” and an optional description like “OpenAI’s text-embedding-3-large model”.</li>
+<li>Ensure that the <strong>Active</strong> toggle is switched on and select <strong>Save</strong>.</li>
+</ol>
 
 Repeat the steps and create a model for `chatgpt-4o-latest`.
 
@@ -138,11 +142,11 @@ The **text-embedding-3-large model** generates vectors with a dimension of **307
 1. Go to **[Integrations](https://developer.orkescloud.com/integrations)** from the left navigation menu on your Conductor cluster.
 2. Select **+ New integration**.
 3. Create the integration by providing the following details:
-    - **Integration name**: Enter Pinecone.
-    - **API Key**: `<YOUR-PINECONE-API-KEY>`.
-    - **Project name**: `<YOUR-PINECONE-PROJECT-NAME>`.
-    - **Environment**: Your index’s region name.
-    - **Description**: An optional description.
+   - **Integration name**: Enter Pinecone.
+   - **API Key**: `<YOUR-PINECONE-API-KEY>`.
+   - **Project name**: `<YOUR-PINECONE-PROJECT-NAME>`.
+   - **Environment**: Your index’s region name.
+   - **Description**: An optional description.
 4. Ensure that the **Active** toggle is switched on, then select **Save**.
 
 ### Add indexes
@@ -244,28 +248,44 @@ With the integrations and prompt ready, let’s create the workflow.
 }
 ```
 
-3. Select **Save** > **Confirm**.
-4. After saving, update the **LLM Index Document** task with your actual values:
+<ol start="3">
+<li>Select <strong>Save</strong> &gt; <strong>Confirm</strong>.</li>
+<li>After saving, update the <strong>LLM Index Document</strong> task with your actual values:</li>
+</ol>
 
 <p align="center"><img src="/content/img/modifying-document-workflow.png" alt="Modifying workflow" width="80%" height="auto" /></p>
 
-    -  In **Vector database**, replace `<YOUR-VECTOR-DB-INTEGRATION>` with your integration name created in [Step 3](/content/tutorials/document-retrieval-workflow#step-3-integrate-pinecone-as-the-vector-database).
-    - In **Index**, replace `<YOUR-INDEX-NAME>` with your index name created in [Step 3](/content/tutorials/document-retrieval-workflow#step-3-integrate-pinecone-as-the-vector-database).
-    - In **Embedding model provider**, replace `<YOUR-LLM-PROVIDER>` with your OpenAI integration name created in [Step 1](/content/tutorials/document-retrieval-workflow#step-1-integrate-an-ai-model-provider).
-    - In **Model**, replace `<YOUR-LLM-MODEL>` with `text-embedding-3-large`.
-6. Update the **LLM Search Index** task with your actual values:
-    -  In **Vector database**, replace `<YOUR-VECTOR-DB-INTEGRATION>` with your integration name created in [Step 3](/content/tutorials/document-retrieval-workflow#step-3-integrate-pinecone-as-the-vector-database).
-    - In **Index**, replace `<YOUR-INDEX-NAME>` with your index name created in [Step 3](/content/tutorials/document-retrieval-workflow#step-3-integrate-pinecone-as-the-vector-database).
-    - In **Embedding model provider**, replace `<YOUR-LLM-PROVIDER>` with your OpenAI integration name created in [Step 1](/content/tutorials/document-retrieval-workflow#step-1-integrate-an-ai-model-provider).
-    - In **Model**, replace `<YOUR-LLM-MODEL>` with `text-embedding-3-large`.
-7. Update the **LLM Chat Complete** task with your actual values:
-    - In **LLM provider**, replace `<YOUR-LLM-PROVIDER>` with your OpenAI integration name created in [Step 1](/content/tutorials/document-retrieval-workflow#step-1-integrate-an-ai-model-provider).
-    - In **Model**, replace `<YOUR-LLM-MODEL>` with `chatgpt-4o-latest`.
-    - In **Prompt template**, replace `<YOUR-LLM-PROMPT>` with your prompt created in [Step 2](/content/tutorials/document-retrieval-workflow#step-2-create-the-ai-prompt).
-    - Make sure to update the **promptVariable** as follows:
-        - **retrievedContext** - `${search_index_ref.output.result[0].text}`
-        - **queryText** - `${workflow.input.question}`
-8. Select **Save** > **Confirm**.
+<ul>
+<li>In <strong>Vector database</strong>, replace <code>&lt;YOUR-VECTOR-DB-INTEGRATION&gt;</code> with your integration name created in <a href="/content/tutorials/document-retrieval-workflow#step-3-integrate-pinecone-as-the-vector-database">Step 3</a>.</li>
+<li>In <strong>Index</strong>, replace <code>&lt;YOUR-INDEX-NAME&gt;</code> with your index name created in <a href="/content/tutorials/document-retrieval-workflow#step-3-integrate-pinecone-as-the-vector-database">Step 3</a>.</li>
+<li>In <strong>Embedding model provider</strong>, replace <code>&lt;YOUR-LLM-PROVIDER&gt;</code> with your OpenAI integration name created in <a href="/content/tutorials/document-retrieval-workflow#step-1-integrate-an-ai-model-provider">Step 1</a>.</li>
+<li>In <strong>Model</strong>, replace <code>&lt;YOUR-LLM-MODEL&gt;</code> with <code>text-embedding-3-large</code>.</li>
+</ul>
+
+<ol start="5">
+<li>Update the <strong>LLM Search Index</strong> task with your actual values:
+<ul>
+<li>In <strong>Vector database</strong>, replace <code>&lt;YOUR-VECTOR-DB-INTEGRATION&gt;</code> with your integration name created in <a href="/content/tutorials/document-retrieval-workflow#step-3-integrate-pinecone-as-the-vector-database">Step 3</a>.</li>
+<li>In <strong>Index</strong>, replace <code>&lt;YOUR-INDEX-NAME&gt;</code> with your index name created in <a href="/content/tutorials/document-retrieval-workflow#step-3-integrate-pinecone-as-the-vector-database">Step 3</a>.</li>
+<li>In <strong>Embedding model provider</strong>, replace <code>&lt;YOUR-LLM-PROVIDER&gt;</code> with your OpenAI integration name created in <a href="/content/tutorials/document-retrieval-workflow#step-1-integrate-an-ai-model-provider">Step 1</a>.</li>
+<li>In <strong>Model</strong>, replace <code>&lt;YOUR-LLM-MODEL&gt;</code> with <code>text-embedding-3-large</code>.</li>
+</ul>
+</li>
+<li>Update the <strong>LLM Chat Complete</strong> task with your actual values:
+<ul>
+<li>In <strong>LLM provider</strong>, replace <code>&lt;YOUR-LLM-PROVIDER&gt;</code> with your OpenAI integration name created in <a href="/content/tutorials/document-retrieval-workflow#step-1-integrate-an-ai-model-provider">Step 1</a>.</li>
+<li>In <strong>Model</strong>, replace <code>&lt;YOUR-LLM-MODEL&gt;</code> with <code>chatgpt-4o-latest</code>.</li>
+<li>In <strong>Prompt template</strong>, replace <code>&lt;YOUR-LLM-PROMPT&gt;</code> with your prompt created in <a href="/content/tutorials/document-retrieval-workflow#step-2-create-the-ai-prompt">Step 2</a>.</li>
+<li>Make sure to update the <strong>promptVariable</strong> as follows:
+<ul>
+<li><strong>retrievedContext</strong> - <code>${search_index_ref.output.result[0].text}</code></li>
+<li><strong>queryText</strong> - <code>${workflow.input.question}</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Select <strong>Save</strong> &gt; <strong>Confirm</strong>.</li>
+</ol>
 
 ## Step 5: Run the workflow
 

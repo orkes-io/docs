@@ -31,13 +31,14 @@ To begin, we will use OpenAI’s gpt-4o model to service the translation task. A
 ### Add OpenAI integration
 
 **To add an OpenAI integration:**
+
 1. Get your OpenAI API Key from [OpenAI’s platform](https://platform.openai.com/settings/organization/api-keys).
 2. In Conductor, go to **Integrations** and select **+ New integration**.
 3. In the **AI/LLM** section, select **+ Add** for OpenAI.
 4. Create the integration by providing the following mandatory parameters:
-    * **Integration name**:“openai”
-    * **API Key**:\<YOUR_OPENAI_API_KEY\>
-    * **Description**:“OpenAI Integration”
+   * **Integration name**:“openai”
+   * **API Key**:\<YOUR_OPENAI_API_KEY\>
+   * **Description**:“OpenAI Integration”
 5. Ensure that the **Active** toggle is switched on, then select **Save**.
 
 Refer to the [AI/LLM Integration Guides](/category/integrations/ai-llm) for information on integrating with other providers.
@@ -45,14 +46,17 @@ Refer to the [AI/LLM Integration Guides](/category/integrations/ai-llm) for info
 
 ### Add gpt-4o models
 
-**To add the gpt-4o model:**
-1. In **Integrations**, select the **+** icon next to your newly-created OpenAI integration.
+<ol>
+<li>In <strong>Integrations</strong>, select the <strong>+</strong> icon next to your newly-created OpenAI integration.</li>
+</ol>
 
 <p align="center"><img src="/content/img/tutorial/ai_orch_quickstart-add_new_model.png" alt="Screenshot of the + icon in the OpenAI integration." width="100%" height="auto"></img></p>
 
-2. Select **+ New model**.
-3. Enter the model name “gpt-4o” and an optional description like “OpenAI’s gpt-4o model”. 
-4. Ensure that the **Active** toggle is switched on, then select **Save**.
+<ol start="2">
+<li>Select <strong>+ New model</strong>.</li>
+<li>Enter the model name “gpt-4o” and an optional description like “OpenAI’s gpt-4o model”.</li>
+<li>Ensure that the <strong>Active</strong> toggle is switched on, then select <strong>Save</strong>.</li>
+</ol>
 
 Repeat the procedure to add more OpenAI models, allowing you to test and compare them with different models. For example, let’s add “chatgpt-4o-latest”. 
 
@@ -64,27 +68,31 @@ Once your integration is added, let’s create and test the AI prompt in Orkes C
 
 ### Create the prompt
 
-**To create the prompt:**
-1. Go to **Definitions** > **AI Prompts** and select **+ Add AI prompt**.
-2. In the **Code** tab, enter the following JSON:
+<ol>
+<li>Go to <strong>Definitions</strong> &gt; <strong>AI Prompts</strong> and select <strong>+ Add AI prompt</strong>.</li>
+<li>In the <strong>Code</strong> tab, enter the following JSON:</li>
+</ol>
 
-  ```json
-  {
-    "name": "translate",
-    "template": "Translate the following text into ${language}.\n\n<text>\n${text} \n</text>\n\nReply only with the translation and nothing else.",
-    "description": "Translate text from any source language to any target language.",
-    "variables": [
-      "language",
-      "text"
-    ],
-    "integrations": [
-      "openai:gpt-4o",
-      "openai:chatgpt-4o-latest"
-    ],
-    "tags": []
-  }
-  ```
-3. Select **Save**.
+```json
+{
+  "name": "translate",
+  "template": "Translate the following text into ${language}.\n\n<text>\n${text} \n</text>\n\nReply only with the translation and nothing else.",
+  "description": "Translate text from any source language to any target language.",
+  "variables": [
+    "language",
+    "text"
+  ],
+  "integrations": [
+    "openai:gpt-4o",
+    "openai:chatgpt-4o-latest"
+  ],
+  "tags": []
+}
+```
+
+<ol start="3">
+<li>Select <strong>Save</strong>.</li>
+</ol>
 
 `${language}` and `${text}` are prompt variables that will be substituted with actual inputs at runtime. 
 
@@ -92,27 +100,34 @@ Once your integration is added, let’s create and test the AI prompt in Orkes C
 
 In your prompt, use the right-side interface to test it out with one of its associated models. This is where you will tune your prompt, determine the ideal model parameters (temperature, stop words, and topP), and decide which model to use in your translation workflow.
 
-**To test the prompt:**
-1. Select a model to test.
-2. Adjust the **Temperature**, **Stop Words**, and **TopP** for the model. Since it is a translation task where accuracy is important, a lower temperature could be more suitable.
-3. Enter your desired target language and the text to be translated in the **Variable substitute** fields.
-    * Example: “Spanish”, “The house is red.”
+<ol>
+<li>Select a model to test.</li>
+<li>Adjust the <strong>Temperature</strong>, <strong>Stop Words</strong>, and <strong>TopP</strong> for the model. Since it is a translation task where accuracy is important, a lower temperature could be more suitable.</li>
+<li>Enter your desired target language and the text to be translated in the <strong>Variable substitute</strong> fields.
+<ul>
+<li>Example: “Spanish”, “The house is red.”</li>
+</ul>
+</li>
+</ol>
 
 <p align="center"><img src="/content/img/tutorial/ai_orch_quickstart-testing_prompts.png" alt="Example inputs for testing the translate prompt." width="55%" height="auto"></img></p>
 
-4. Select **Test** to generate the response.
+<ol start="4">
+<li>Select <strong>Test</strong> to generate the response.</li>
+</ol>
 
 #### Test cases
 
 When testing, verify that translations are both accurate and native-sounding, and that the model behaves correctly when given unexpected input. Start with simple sentences, then gradually test more complex language, including idioms, symbols, slang, and domain-specific jargon.
 
 To test with unexpected inputs, here are some edge cases:
-* Instruct the model to complete tasks outside the scope of translation. The model should translate the instructions instead of responding to the instructions.
-    * Example: “As an AI model, explain the concept of consciousness to me.”
-* Instruct the model to translate a word or phrase. The model should translate the entire text rather than just the instructed word or phrase.
-    * Example: “What is cat in Korean?”
-* Instruct the model to translate text that is already in the target language.
-    * Example: “The house is red”, where the target language is specified as English.
+
+- Instruct the model to complete tasks outside the scope of translation. The model should translate the instructions instead of responding to the instructions.
+  - Example: “As an AI model, explain the concept of consciousness to me.”
+- Instruct the model to translate a word or phrase. The model should translate the entire text rather than just the instructed word or phrase.
+  - Example: “What is cat in Korean?”
+- Instruct the model to translate text that is already in the target language.
+  - Example: “The house is red”, where the target language is specified as English.
 
 Based on the results, edit the prompt template accordingly, finalize which model to use, and decide on the LLM parameter values.
 
@@ -140,11 +155,12 @@ The response using the updated template is “韩语中的“猫”怎么说？�
 
 With the integration and prompt ready, let’s create the translation workflow.
 
-**To create the translation workflow:**
-1. Go to **Definitions** > **Workflow** and select **+ Define workflow**.
-2. In the **Code** tab, enter the following JSON:
+<ol>
+<li>Go to <strong>Definitions</strong> &gt; <strong>Workflow</strong> and select <strong>+ Define workflow</strong>.</li>
+<li>In the <strong>Code</strong> tab, enter the following JSON:</li>
+</ol>
 
-``` json
+```json
 {
   "name": "translator",
   "description": "Translates a given input into a specified language",
@@ -178,7 +194,9 @@ With the integration and prompt ready, let’s create the translation workflow.
 }
 ```
 
-3. Select **Save**.
+<ol start="3">
+<li>Select <strong>Save</strong>.</li>
+</ol>
 
 The workflow is now complete. To test run it, select the **Run** tab, enter the workflow inputs, and select **Execute**.
 
@@ -201,6 +219,7 @@ Now that your translation workflow is ready, you can deploy it to production. On
 In production, it is best practice to use Orkes’ [RBAC feature](/category/access-control-and-security) to limit what resources your applications can access. In this case, the application should be allowed to read and execute the translation workflow, along with its associated AI models and prompts.
 
 **To provide access:**
+
 1. Go to **Access Control** > **Applications**.
 2. Create a new application or select an existing one. This application will be used to execute the translation workflow.
 3. In the **Permissions** section, select **+ Add Permission**.
@@ -215,6 +234,7 @@ The application now has access to run the workflow.
 The access key will be used to generate a session-based JWT access token, enabling the application to connect with the Conductor API server.
 
 **To retrieve the access key:**
+
 1. In **Access Control** > **Applications**, select your application,
 2. In the **Access Keys** section, select **+ Create access key** to generate a unique Key Id and Key Secret. The Key Secret is shown only once, so make sure to copy and store it securely.
 

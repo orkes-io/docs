@@ -12,6 +12,7 @@ import Install from "@site/src/components/install.mdx";
 This tutorial demonstrates how to build a document classification workflow using AI tasks in Orkes Conductor. The workflow processes a text-based PDF and classifies it into predefined categories such as W2, driver’s license, paystub, employment verification letter, or mortgage application.
 
 In this tutorial, you will:
+
 1. Integrate the required AI models with your cluster. OpenAI will be used in this tutorial.
 2. Create a prompt to classify the document content.
 3. Create a workflow to classify text-based PDFs.
@@ -29,14 +30,22 @@ Here is the document classification workflow that you’ll build in this tutoria
 
 **Workflow logic:**
 
-- The workflow begins with a [Switch task](https://orkes.io/content/reference-docs/operators/switch) that checks whether the input URL ends with .pdf using an ECMAScript expression.
-- If the input file is not a PDF:
-  - An [Inline task](https://orkes.io/content/reference-docs/system-tasks/inline) generates an error message about the unsupported file type. 
-  - A [Terminate task](https://orkes.io/content/reference-docs/operators/terminate) terminates the workflow with an error message on the unsupported file type.
-- If the input file is a PDF:
-  - An [LLM Get Document task](https://orkes.io/content/reference-docs/ai-tasks/llm-get-document) retrieves the content of the PDF document.
-  - An [LLM Text Complete task](https://orkes.io/content/reference-docs/ai-tasks/llm-text-complete) classifies the document as a W2, driver's license, paystub, employment verification letter, or mortgage application. This task determines the file type using an [AI prompt](https://orkes.io/content/developer-guides/creating-and-managing-gen-ai-prompt-templates) in Conductor.
-  - An [Inline task](https://orkes.io/content/reference-docs/system-tasks/inline) that extracts and formats the classification result based on the previous LLM Text Complete task’s output. It also returns a message indicating the category to which the document type has been classified.
+<ul>
+<li>The workflow begins with a <a href="/content/reference-docs/operators/switch">Switch task</a> that checks whether the input URL ends with .pdf using an ECMAScript expression.</li>
+<li>If the input file is not a PDF:
+<ul>
+<li>An <a href="/content/reference-docs/system-tasks/inline">Inline task</a> generates an error message about the unsupported file type.</li>
+<li>A <a href="/content/reference-docs/operators/terminate">Terminate task</a> terminates the workflow with an error message on the unsupported file type.</li>
+</ul>
+</li>
+<li>If the input file is a PDF:
+<ul>
+<li>An <a href="/content/reference-docs/ai-tasks/llm-get-document">LLM Get Document task</a> retrieves the content of the PDF document.</li>
+<li>An <a href="/content/reference-docs/ai-tasks/llm-text-complete">LLM Text Complete task</a> classifies the document as a W2, driver's license, paystub, employment verification letter, or mortgage application. This task determines the file type using an <a href="/content/developer-guides/creating-and-managing-gen-ai-prompt-templates">AI prompt</a> in Conductor.</li>
+<li>An <a href="/content/reference-docs/system-tasks/inline">Inline task</a> that extracts and formats the classification result based on the previous LLM Text Complete task’s output. It also returns a message indicating the category to which the document type has been classified.</li>
+</ul>
+</li>
+</ul>
 
 ## Step 1: Integrate the model provider for document classification
 
@@ -50,9 +59,9 @@ To begin with, we will use OpenAI’s gpt-4o model to service the document class
 2. Go to **[Integrations](https://developer.orkescloud.com/integrations)** from the left navigation menu on your Conductor cluster.
 3. Select **+ New integration**.
 4. Create the integration by providing the following mandatory parameters:
-    - **Integration name**: “openAI”
-    - **API Key**: \<YOUR_OPENAI_API_KEY\>
-    - **Description**: “OpenAI Integration”
+   - **Integration name**: “openAI”
+   - **API Key**: \<YOUR_OPENAI_API_KEY\>
+   - **Description**: “OpenAI Integration”
 5. Ensure that the **Active** toggle is switched on, then select **Save**.
 
 The OpenAI integration is added. The next step is to add a specific model.
@@ -94,8 +103,10 @@ With the integration and prompt ready, let’s create the workflow.
 
 **To create a workflow:**
 
-1. Go to [**Definitions** > **Workflow**](https://developer.orkescloud.com/workflowDef) and select **+ Define workflow**.
-2. In the **Code** tab, enter the following JSON:
+<ol>
+<li>Go to <a href="https://developer.orkescloud.com/workflowDef"><strong>Definitions</strong> &gt; <strong>Workflow</strong></a> and select <strong>+ Define workflow</strong>.</li>
+<li>In the <strong>Code</strong> tab, enter the following JSON:</li>
+</ol>
 
 ```JSON
 {
@@ -181,20 +192,27 @@ With the integration and prompt ready, let’s create the workflow.
 }
 ```
 
-3. Select **Save** > **Confirm**.
-4. After saving, update the **LLM Text Complete** task with your actual values:
-    - In **LLM provider**, replace \<YOUR-LLM-PROVIDER> with your OpenAI integration name created in [Step 1](/content/templates/document-classifier#add-openai-integration).
-    - In **Model**, replace \<YOUR-LLM-MODEL> with your integrated model in [Step 1](/content/templates/document-classifier#add-gpt-4o-models).
-    - In **Prompt template**, replace \<YOUR-PROMPT> with your prompt created in [Step 2](/content/templates/document-classifier#step-2-create-the-ai-prompt-for-document-classification).
-    - Make sure to update the *promptVariable* **text** parameter as `${get_document_task_ref.output.result}`. This is the output of **get_document_task**, which retrieves the content of the PDF document. 
-5. Select **Save** > **Confirm**.
+<ol start="3">
+<li>Select <strong>Save</strong> &gt; <strong>Confirm</strong>.</li>
+<li>After saving, update the <strong>LLM Text Complete</strong> task with your actual values:
+<ul>
+<li>In <strong>LLM provider</strong>, replace &lt;YOUR-LLM-PROVIDER&gt; with your OpenAI integration name created in <a href="/content/templates/document-classifier#add-openai-integration">Step 1</a>.</li>
+<li>In <strong>Model</strong>, replace &lt;YOUR-LLM-MODEL&gt; with your integrated model in <a href="/content/templates/document-classifier#add-gpt-4o-models">Step 1</a>.</li>
+<li>In <strong>Prompt template</strong>, replace &lt;YOUR-PROMPT&gt; with your prompt created in <a href="/content/templates/document-classifier#step-2-create-the-ai-prompt-for-document-classification">Step 2</a>.</li>
+<li>Make sure to update the <em>promptVariable</em> <strong>text</strong> parameter as <code>${get_document_task_ref.output.result}</code>. This is the output of <strong>get_document_task</strong>, which retrieves the content of the PDF document.</li>
+</ul>
+</li>
+<li>Select <strong>Save</strong> &gt; <strong>Confirm</strong>.</li>
+</ol>
 
 ## Step 4: Run the workflow
 
 **To run the workflow using Conductor UI:**
 
-1. From your workflow definition, go to the **Run** tab.
-2. Enter the **Input Params**. 
+<ol>
+<li>From your workflow definition, go to the <strong>Run</strong> tab.</li>
+<li>Enter the <strong>Input Params</strong>.</li>
+</ol>
 
 ```JSON
 // example input params
@@ -202,8 +220,11 @@ With the integration and prompt ready, let’s create the workflow.
  "document_url": "<YOUR-DOCUMENT-URL-IN-PDF-FORMAT>"
 }
 ```
+
 The document must be accessible via an HTTP URL and end with *.pdf*.
 
-3. Select **Execute**.
+<ol start="3">
+<li>Select <strong>Execute</strong>.</li>
+</ol>
 
 The workflow output will provide the category to which the document is classified.
