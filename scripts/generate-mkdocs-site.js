@@ -1658,7 +1658,7 @@ description: "Orkes Conductor documentation for building durable workflows, API 
   <div class="hp-wrap">
     <div class="hp-eyebrow-hero">Orkes Conductor</div>
     <h1 class="hp-title" style="font-size:44px;margin-bottom:18px;">Start building with Orkes Conductor</h1>
-    <p class="hp-hero-sub">Everything you need to orchestrate durable workflows and production AI agents &mdash; from your first task to running at scale.</p>
+    <p class="hp-hero-sub">Everything you need to orchestrate durable workflows and production AI agents &mdash; from prototype to production.</p>
     <div style="margin-bottom:38px;">
       <a href="${DEVELOPER_EDITION_URL}" class="hp-cta-pill">Start for free <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
     </div>
@@ -1666,7 +1666,7 @@ description: "Orkes Conductor documentation for building durable workflows, API 
     <!-- ===================== CHOOSE HOW YOU BUILD ===================== -->
     <div class="hp-eyebrow-section">Platform</div>
     <h2 class="hp-section-title">Choose how you build</h2>
-    <p class="hp-section-sub">Pick the surface that matches your approach &mdash; model durable business logic, or ship autonomous agents.</p>
+    <p class="hp-section-sub">Choose how you want to build &mdash; model durable business logic, or ship autonomous agents.</p>
     <div class="hp-choose-grid">
       <a href="${BASE_URL}/quickstarts" class="hp-choose-card">
         <div class="hp-choose-icon"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8"><circle cx="5" cy="6" r="2.2"></circle><circle cx="5" cy="18" r="2.2"></circle><circle cx="19" cy="12" r="2.2"></circle><path d="M7.2 6.6 16.8 11M7.2 17.4 16.8 13"></path></svg></div>
@@ -1697,7 +1697,7 @@ description: "Orkes Conductor documentation for building durable workflows, API 
       <a href="${BASE_URL}/ai-agents/first-ai-agent" class="hp-choose-card">
         <div class="hp-choose-icon"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8"><path d="M12 3v3M5 8l1.6 1.6M19 8l-1.6 1.6M12 21a5 5 0 0 0 5-5c0-3-2-4-2-7a3 3 0 0 0-6 0c0 3-2 4-2 7a5 5 0 0 0 5 5Z"></path></svg></div>
         <h3>Build AI Agents</h3>
-        <p>Build tool-calling agents with the Orkes Agent SDK &mdash; durable by default, with automatic crash recovery.</p>
+        <p>Build tool-calling agents with the Conductor Agent SDK &mdash; durable by default, with automatic crash recovery.</p>
         <div class="hp-code-block"><pre><code><span style="color:var(--kw)">from</span> agentspan.agents <span style="color:var(--kw)">import</span> Agent<span style="color:var(--pun)">,</span> AgentRuntime<span style="color:var(--pun)">,</span> tool
 
 <span style="color:var(--dec)">@tool</span>
