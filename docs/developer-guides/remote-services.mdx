@@ -96,15 +96,19 @@ Depending on the gRPC configuration, you can:
 
 **To generate the compiled binary protobuf files for reflection-disabled services:**
 
-1. [Install protoc](https://grpc.io/docs/protoc-installation/) if not already installed.
-2. Generate the *compiled binary protobuf* files using the `protoc`utility:
+<ol>
+<li><a href="https://grpc.io/docs/protoc-installation/">Install protoc</a> if not already installed.</li>
+<li>Generate the <em>compiled binary protobuf</em> files using the <code>protoc</code> utility:</li>
+</ol>
 
 ```shell
 protoc --proto_path=. --descriptor_set_out=compiled.bin *.proto
 ```
 
-3. Open your service registry definition in Conductor, and go to **Proto Files**.
-4. Select **+ Upload Proto File**, and upload the ***compiled.bin*** file.
+<ol start="3">
+<li>Open your service registry definition in Conductor, and go to <strong>Proto Files</strong>.</li>
+<li>Select <strong>+ Upload Proto File</strong>, and upload the <strong><em>compiled.bin</em></strong> file.</li>
+</ol>
 
 Once uploaded, Conductor extracts and registers the services, making them ready for use in workflows.
 
@@ -118,9 +122,10 @@ Once uploaded, Conductor extracts and registers the services, making them ready 
 
 **To add a new endpoint to the HTTP services:**
 
-1. From your service definition, select **+ Add New Method.**
-
-2. Enter the following endpoint parameters:
+<ol>
+<li>From your service definition, select <strong>+ Add New Method.</strong></li>
+<li>Enter the following endpoint parameters:</li>
+</ol>
 
 <details markdown="1">
 
@@ -141,7 +146,9 @@ Once uploaded, Conductor extracts and registers the services, making them ready 
 
 </details>
 
-3. Select **Add**.
+<ol start="3">
+<li>Select <strong>Add</strong>.</li>
+</ol>
 
 </TabItem>
 
@@ -149,9 +156,10 @@ Once uploaded, Conductor extracts and registers the services, making them ready 
 
 **To add a new endpoint to the gRPC services:**
 
-1. From your service definition, select **+ Add New Method.**
-
-2. Enter the following endpoint parameters:
+<ol>
+<li>From your service definition, select <strong>+ Add New Method.</strong></li>
+<li>Enter the following endpoint parameters:</li>
+</ol>
 
 <details markdown="1">
 
@@ -169,7 +177,9 @@ Once uploaded, Conductor extracts and registers the services, making them ready 
 
 </details>
 
-3. Select **Add**.
+<ol start="3">
+<li>Select <strong>Add</strong>.</li>
+</ol>
 
 </TabItem>
 </Tabs>
@@ -181,14 +191,17 @@ This saves the endpoint within the service definition.
 Circuit breaker patterns help prevent cascading failures by halting calls to unhealthy services, thus protecting the workflows.
 
 The Circuit Breaker pattern has two circuit states:
+
 - **Closed** - Normal operation state where all requests pass through normally.
 - **Open** - Failure state where the requests fail fast, thus protecting the service.
 
 **To configure the circuit breaker pattern for a service:**
 
-1. Go to the **Circuit Breaker Configuration** tab in your remote service definition.
-2. Toggle on **Circuit Breaker Configuration**.
-3. Configure the following parameters:
+<ol>
+<li>Go to the <strong>Circuit Breaker Configuration</strong> tab in your remote service definition.</li>
+<li>Toggle on <strong>Circuit Breaker Configuration</strong>.</li>
+<li>Configure the following parameters:</li>
+</ol>
 
 <details markdown="1">
 
@@ -208,7 +221,9 @@ The Circuit Breaker pattern has two circuit states:
 
 </details>
 
-4. Select **Save**.
+<ol start="4">
+<li>Select <strong>Save</strong>.</li>
+</ol>
 
 ## Test endpoints
 
@@ -232,20 +247,24 @@ Once the services are registered, you can add them to HTTP, HTTP Poll, and gRPC 
 <Tabs>
 <TabItem value="For HTTP/HTTP Poll tasks" label="For HTTP/HTTP Poll tasks">
 
-1. Go to **Definitions** > **Workflows**.
-2. Create a new workflow or select an existing one.
-3. Add an **HTTP**/**HTTP Poll** task. 
-4. Select **Populate from remote services**.
-5. In **Service**, select the registered service.
-6. In **Host**, select the required host for the service.
-7. In **Service method**, select the required endpoint.
-8. Select **Populate**.
+<ol>
+<li>Go to <strong>Definitions</strong> &gt; <strong>Workflows</strong>.</li>
+<li>Create a new workflow or select an existing one.</li>
+<li>Add an <strong>HTTP</strong>/<strong>HTTP Poll</strong> task.</li>
+<li>Select <strong>Populate from remote services</strong>.</li>
+<li>In <strong>Service</strong>, select the registered service.</li>
+<li>In <strong>Host</strong>, select the required host for the service.</li>
+<li>In <strong>Service method</strong>, select the required endpoint.</li>
+<li>Select <strong>Populate</strong>.</li>
+</ol>
 
 This auto-populates the HTTP task parameters in the workflow.
 
-9. For [HTTP Poll tasks](https://orkes.io/content/reference-docs/system-tasks/http-poll), configure the additional parameters such as *Termination condition*, *Polling interval*, and *Polling strategy*.
-10. (For HTTP task) In the **Hedging config**, set the **Maximum attempts**, which specifies the number of parallel requests the system should make when executing the task. The system returns the response from the first successful attempt, which helps reduce tail latencies for remote services. Hedging sends multiple parallel requests; hence, use this feature only with idempotent services to prevent unintended side effects from duplicate executions.
-11. Select **Save** > **Confirm**.
+<ol start="9">
+<li>For <a href="https://orkes.io/content/reference-docs/system-tasks/http-poll">HTTP Poll tasks</a>, configure the additional parameters such as <em>Termination condition</em>, <em>Polling interval</em>, and <em>Polling strategy</em>.</li>
+<li>(For HTTP task) In the <strong>Hedging config</strong>, set the <strong>Maximum attempts</strong>, which specifies the number of parallel requests the system should make when executing the task. The system returns the response from the first successful attempt, which helps reduce tail latencies for remote services. Hedging sends multiple parallel requests; hence, use this feature only with idempotent services to prevent unintended side effects from duplicate executions.</li>
+<li>Select <strong>Save</strong> &gt; <strong>Confirm</strong>.</li>
+</ol>
 
 :::info Note
 A registered HTTP service can be reused across both HTTP and HTTP Poll tasks. Global service settings apply to both task types. However, circuit breaker configuration is applied only when the service is used with an HTTP task.
@@ -255,20 +274,24 @@ A registered HTTP service can be reused across both HTTP and HTTP Poll tasks. Gl
 
 <TabItem value="For gRPC tasks" label="For gRPC tasks">
 
-1. Go to **Definitions** > **Workflows**.
-2. Create a new workflow or select an existing one.
-3. Add a **gRPC** task. 
-4. Select **Populate from remote services**.
-5. In **Service**, select the registered service.
-6. In **Host:Port**, select the host and port for the service.
-7. In **Service method**, select the required endpoint.
-8. Select **Populate**.
+<ol>
+<li>Go to <strong>Definitions</strong> &gt; <strong>Workflows</strong>.</li>
+<li>Create a new workflow or select an existing one.</li>
+<li>Add a <strong>gRPC</strong> task.</li>
+<li>Select <strong>Populate from remote services</strong>.</li>
+<li>In <strong>Service</strong>, select the registered service.</li>
+<li>In <strong>Host:Port</strong>, select the host and port for the service.</li>
+<li>In <strong>Service method</strong>, select the required endpoint.</li>
+<li>Select <strong>Populate</strong>.</li>
+</ol>
 
 This auto-populates the gRPC task parameters in the workflow.
 
-8. Enable/disable the fields **Use SSL** and **Trust Certificate** as per the requirement.
-9. In the **Hedging config**, set the **Maximum attempts**, which specifies the number of parallel requests the system should make when executing the task. The system returns the response from the first successful attempt, which helps reduce tail latencies for remote services. Hedging sends multiple parallel requests; hence, use this feature only with idempotent services to prevent unintended side effects from duplicate executions.
-10. Select **Save** > **Confirm**.
+<ol start="9">
+<li>Enable/disable the fields <strong>Use SSL</strong> and <strong>Trust Certificate</strong> as per the requirement.</li>
+<li>In the <strong>Hedging config</strong>, set the <strong>Maximum attempts</strong>, which specifies the number of parallel requests the system should make when executing the task. The system returns the response from the first successful attempt, which helps reduce tail latencies for remote services. Hedging sends multiple parallel requests; hence, use this feature only with idempotent services to prevent unintended side effects from duplicate executions.</li>
+<li>Select <strong>Save</strong> &gt; <strong>Confirm</strong>.</li>
+</ol>
 
 </TabItem>
 </Tabs>

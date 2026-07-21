@@ -48,6 +48,7 @@ The `orkes-conductor-standalone` container is ideal for local development and te
 :::
 
 **To download and run the container:**
+
 1. Log in to DockerHub using your Orkes access credentials. When prompted for a password, use the access token provided by Orkes.
 2. Download and run the latest container build:
 
@@ -93,6 +94,7 @@ docker run -i -p 8080:8080 -p 3000:5000 --mount source=redis,target=/redis --mou
 The Windows devices must have Windows Subsystem for Linux (WSL) installed.
 
 **To install WSL:**
+
 1. Open PowerShell or Windows Command Prompt in administrator mode by right-clicking and selecting **Run as administrator**.
 2. Enter the following command and restart your computer once completed:
 ```bash
@@ -105,6 +107,7 @@ If you encounter issues, refer to Microsoft's [WSL installation guide](https://l
 Orkes containers are distributed as Docker containers and require a Docker runtime with WSL support. 
 
 **To install Docker Desktop for Windows:**
+
 1. Follow the [instructions on Docker](https://docs.docker.com/desktop/install/windows-install/) to download and install Docker Desktop. Make sure to download the correct binary for your CPU type.
 2. When prompted, select WSL.
 3. Restart your computer.
@@ -112,6 +115,7 @@ Orkes containers are distributed as Docker containers and require a Docker runti
 Ensure that the Docker is running automatically after the restart. If not, search for *Docker* in your *Applications* and start it.
 
 **Step 3: Download and run container**
+
 1. Open PowerShell in administrator mode by right-clicking and selecting **Run as administrator**.
 2. Run the following PowerShell commands individually, or save the commands into a script file (e.g., orkes-enterprise.ps1) and run the script.
 ```bash

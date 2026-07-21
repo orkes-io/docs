@@ -5,7 +5,7 @@ description: "Execute Orkes Conductor workflows by starting asynchronously, exec
 
 # Executing Workflows
 
-Running a workflow means creating a workflow execution from a saved workflow definition. In production, the important choice is not "how do I click run?" It is whether the caller should wait for a result, fire and forget, run on a clock, or react to an external event.
+Running a workflow means creating a workflow execution from a saved workflow definition. The key decision is how it gets triggered: synchronously (the caller waits for a result), asynchronously (fire and forget), on a schedule, or in response to an external event.
 
 :::tip 5-minute path
 Use **start** for durable asynchronous execution, **execute** for request/response calls that need an immediate result, and **schedules** for recurring or future runs. Use webhooks, events, or gateways when another system should trigger the workflow.

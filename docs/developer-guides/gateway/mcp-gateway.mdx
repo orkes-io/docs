@@ -125,7 +125,7 @@ A **service** is a logical container for MCP endpoints, referred to as **routes*
     </tr>
     <tr>
       <td>Auth Config</td>
-      <td>The authentication configuration to use for this service. Select the configuration created in the previous step, or select **+ Create New Auth Config** from the dropdown, and configure the [authentication settings](/content/developer-guides/mcp-gateway#step-3-configure-authentication-settings).</td>
+      <td>The authentication configuration to use for this service. Select the configuration created in the previous step, or select <strong>+ Create New Auth Config</strong> from the dropdown, and configure the <a href="/content/developer-guides/mcp-gateway#step-3-configure-authentication-settings">authentication settings</a>.</td>
       <td>Required.</td>
     </tr>
   </tbody>
@@ -255,8 +255,8 @@ Each endpoint in a service is defined as a route, and every route maps to a Cond
       <td>
         The input schema for the request.
         <ul>
-        <li>If you’ve created a [schema](https://orkes.io/content/developer-guides/schema-validation#using-schemas) in Conductor, select the schema and version to be used as the input schema for the request.</li>
-        <li>If not, enter your schema directly in the **Code** tab.</li>
+        <li>If you’ve created a <a href="https://orkes.io/content/developer-guides/schema-validation#using-schemas">schema</a> in Conductor, select the schema and version to be used as the input schema for the request.</li>
+        <li>If not, enter your schema directly in the <strong>Code</strong> tab.</li>
         </ul>
       </td>
       <td>Optional.</td>
@@ -266,8 +266,8 @@ Each endpoint in a service is defined as a route, and every route maps to a Cond
       <td>
         The output schema for the request.
         <ul>
-        <li>If you’ve created a [schema](https://orkes.io/content/developer-guides/schema-validation#using-schemas) in Conductor, select the schema and version to be used as the output schema for the request.</li>
-        <li>If not, enter your schema directly in the **Code** tab.</li>
+        <li>If you’ve created a <a href="https://orkes.io/content/developer-guides/schema-validation#using-schemas">schema</a> in Conductor, select the schema and version to be used as the output schema for the request.</li>
+        <li>If not, enter your schema directly in the <strong>Code</strong> tab.</li>
         </ul>
       </td>
       <td>Optional.</td>
@@ -282,7 +282,7 @@ Each endpoint in a service is defined as a route, and every route maps to a Cond
       <td>
         The query parameter that can be accepted by the endpoint. Can contain only letters, numbers, underscores, and hyphens.
 
-        Enable **Required** if the parameters are mandatory.
+        Enable <strong>Required</strong> if the parameters are mandatory.
       </td>
       <td>Optional.</td>
     </tr>
@@ -298,7 +298,7 @@ Each endpoint in a service is defined as a route, and every route maps to a Cond
 
         Use `$.fieldName` to access input fields.
 
-        **Example**
+        <strong>Example</strong>
 
         ```json
         (function () {
@@ -313,11 +313,13 @@ Each endpoint in a service is defined as a route, and every route maps to a Cond
       <td>
         Test the input processing script.
 
-        **To test the payload:**
+        <strong>To test the payload:</strong>
 
-        1. In **Test Payload**, enter the values.
-        2. Select **Test Pre-request Script**.
-        3. In **Test Result**, verify the result to ensure the script is working.
+        <ol>
+        <li>In <strong>Test Payload</strong>, enter the values.</li>
+        <li>Select <strong>Test Pre-request Script</strong>.</li>
+        <li>In <strong>Test Result</strong>, verify the result to ensure the script is working.</li>
+        </ol>
       </td>
       <td>N/A</td>
     </tr>
@@ -328,7 +330,7 @@ Each endpoint in a service is defined as a route, and every route maps to a Cond
 
         Use `$.fieldName` to access output fields. 
 
-        **Example**
+        <strong>Example</strong>
 
         ```json
             (function () {
@@ -343,11 +345,13 @@ Each endpoint in a service is defined as a route, and every route maps to a Cond
       <td>
         Test the output processing script.
 
-        **To test the payload:**
+        <strong>To test the payload:</strong>
 
-        1. In **Test Payload**, enter the values.
-        2. Select **Test Postresponse Script**.
-        3. In **Test Result**, verify the result to ensure the script is working.
+        <ol>
+        <li>In <strong>Test Payload</strong>, enter the values.</li>
+        <li>Select <strong>Test Postresponse Script</strong>.</li>
+        <li>In <strong>Test Result</strong>, verify the result to ensure the script is working.</li>
+        </ol>
       </td>
       <td>N/A</td>
     </tr>

@@ -62,9 +62,9 @@ Before using an AI model in a workflow, you must integrate it with your Orkes Co
 3. In the **AI/LLM** section, select **+ Add** to integrate your preferred model provider.
 4. Enter the required parameters for the chosen provider.
 
-    :::note
-    The integration configuration differs with each model provider. For detailed steps on integrating with each provider, refer to [AI/LLM Integrations](/content/category/integrations/ai-llm).
-    :::
+   :::note
+   The integration configuration differs with each model provider. For detailed steps on integrating with each provider, refer to [AI/LLM Integrations](/content/category/integrations/ai-llm).
+   :::
 
 5. (Optional) Toggle the **Active** button off if you don’t want to activate the integration instantly.
 6. Select **Save**.
@@ -95,6 +95,7 @@ Once the AI/LLM integration is added, you can begin adding models from the provi
 </details>
 
 **To add a model:**
+
 1. In **Integrations**, select the **+** icon next to your newly-created integration.
 2. Select **+ New model**.
 3. Enter the model name and an optional description for the model. 
@@ -124,6 +125,7 @@ Refer to [Using Vector Databases](using-vector-databases-in-your-orkes-conductor
 As best practice, use Orkes’ [RBAC feature](../category/access-control-and-security) to govern which applications or user groups can access the AI models, prompts, and vector databases.
 
 **To provide access to an application or group:**
+
 1. Go to **Access Control** > **Applications** or **Groups** from the left menu on your Conductor cluster.
 2. Create a new group/application or select an existing one.
 3. In the **Permissions** section, select **+ Add permission**.
@@ -138,14 +140,15 @@ The group or application can now access the AI resources according to the config
 With the AI/LLM integration and AI prompt ready, you can add an AI task to your workflow and configure the task for the chosen model and prompt.
 
 **To add an AI task:**
+
 1. Go to **Definitions** > **Workflow** from the left menu on your Conductor cluster.
 2. Create a new workflow or select an existing workflow.
 3. Add an AI task and select the desired model provider and model.
 4. Configure the remaining task parameters. If you are using an LLM Text Complete or LLM Chat Complete task, you can select the prompt template from the dropdown based on the chosen model.
     
-    :::note
-    Refer to the [AI Task Reference](../category/reference-docs/ai-tasks) for more details on configuring the task parameters.
-    :::
+   :::note
+   Refer to the [AI Task Reference](../category/reference-docs/ai-tasks) for more details on configuring the task parameters.
+   :::
 
 5. Save the workflow.
 
