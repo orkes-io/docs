@@ -3606,6 +3606,19 @@ a.repo-link:hover {
 }
 
 /*
+ * Inline code inside a link. Material colours it with --md-typeset-a-color,
+ * which resolves to white on the scheme body here, making linked inline
+ * code invisible on its light pill. Colour it with the link purple explicitly.
+ */
+.md-typeset a code {
+  color: var(--c-blue) !important;
+}
+.md-typeset a:hover code,
+.md-typeset a:focus code {
+  color: var(--c-blue-hover) !important;
+}
+
+/*
  * Footer prev/next navigation. The OSS base CSS recolors the footer nav using
  * legacy Material class names (.md-footer-nav__*), but this Material build uses
  * BEM names (.md-footer__*), so those rules never match — leaving Material's
