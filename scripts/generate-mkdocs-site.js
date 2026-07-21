@@ -2613,6 +2613,125 @@ function writeOverrides() {
 `,
   );
 
+  // Footer override: keep Material's prev/next page navigation, drop the default
+  // meta bar (copyright/social), and append the marketing-site footer so the docs
+  // match orkes.io. Links are absolute so they resolve from the docs domain.
+  write(
+    path.join(OVERRIDES_DIR, "partials", "footer.html"),
+    `<footer class="md-footer">
+  {% if "navigation.footer" in features %}
+    {% if page.previous_page or page.next_page %}
+      {% if page.meta and page.meta.hide %}
+        {% set hidden = "hidden" if "footer" in page.meta.hide %}
+      {% endif %}
+      <nav class="md-footer__inner md-grid" aria-label="{{ lang.t('footer') }}" {{ hidden }}>
+        {% if page.previous_page %}
+          {% set direction = lang.t("footer.previous") %}
+          <a href="{{ page.previous_page.url | url }}" class="md-footer__link md-footer__link--prev" aria-label="{{ direction }}: {{ page.previous_page.title | e }}">
+            <div class="md-footer__button md-icon">
+              {% set icon = config.theme.icon.previous or "material/arrow-left" %}
+              {% include ".icons/" ~ icon ~ ".svg" %}
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">{{ direction }}</span>
+              <div class="md-ellipsis">{{ page.previous_page.title }}</div>
+            </div>
+          </a>
+        {% endif %}
+        {% if page.next_page %}
+          {% set direction = lang.t("footer.next") %}
+          <a href="{{ page.next_page.url | url }}" class="md-footer__link md-footer__link--next" aria-label="{{ direction }}: {{ page.next_page.title | e }}">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">{{ direction }}</span>
+              <div class="md-ellipsis">{{ page.next_page.title }}</div>
+            </div>
+            <div class="md-footer__button md-icon">
+              {% set icon = config.theme.icon.next or "material/arrow-right" %}
+              {% include ".icons/" ~ icon ~ ".svg" %}
+            </div>
+          </a>
+        {% endif %}
+      </nav>
+    {% endif %}
+  {% endif %}
+</footer>
+
+<footer class="orkes-footer">
+  <div class="orkes-footer__inner">
+    <div class="orkes-footer__top">
+      <div class="orkes-footer__cols">
+        <div class="orkes-footer__col">
+          <h3>Company</h3>
+          <ul>
+            <li><a href="/platform">Platform</a></li>
+            <li><a href="/careers">Opportunities</a></li>
+            <li><a href="https://orkesio.partnerportal.io/sign-in" target="_blank" rel="noopener noreferrer">Partners</a></li>
+            <li><a href="/about-us">About us</a></li>
+            <li><a href="/legal">Legal Hub</a></li>
+            <li><a href="/security">Security</a></li>
+          </ul>
+        </div>
+        <div class="orkes-footer__col">
+          <h3>Product</h3>
+          <ul>
+            <li><a href="https://cloud.orkes.io/" target="_blank" rel="noopener noreferrer">Cloud</a></li>
+            <li><a href="/platform">Platform</a></li>
+            <li><a href="https://support.orkes.io" target="_blank" rel="noopener noreferrer">Support</a></li>
+          </ul>
+        </div>
+        <div class="orkes-footer__col">
+          <h3>Community</h3>
+          <ul>
+            <li><a href="/content">Docs</a></li>
+            <li><a href="/blog">Blogs</a></li>
+            <li><a href="/events">Events</a></li>
+          </ul>
+        </div>
+        <div class="orkes-footer__col">
+          <h3>Use cases</h3>
+          <ul>
+            <li><a href="/use-cases/microservices-orchestration">Microservices Workflow Orchestration</a></li>
+            <li><a href="/use-cases/api-orchestration">Realtime API Orchestration</a></li>
+            <li><a href="/use-cases/event-driven-architecture">Event Driven Architecture</a></li>
+            <li><a href="/use-cases/agentic-workflows">Agentic Workflows</a></li>
+            <li><a href="/use-cases/human-workflow-orchestration">Human Workflow Orchestration</a></li>
+            <li><a href="/use-cases/process-orchestration">Process Orchestration</a></li>
+          </ul>
+        </div>
+        <div class="orkes-footer__col">
+          <h3>Compare</h3>
+          <ul>
+            <li><a href="/compare/orkes-conductor-vs-camunda-bpmn">Orkes vs Camunda</a></li>
+            <li><a href="/bpmn-switch">Orkes vs BPMN</a></li>
+            <li><a href="/compare/orkes-conductor-vs-langchain">Orkes vs LangChain</a></li>
+            <li><a href="/compare/orkes-conductor-vs-temporal">Orkes vs Temporal</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="orkes-footer__social">
+        <a href="https://twitter.com/orkesio" target="_blank" rel="noopener noreferrer" aria-label="X">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 5.9c-.7.3-1.5.5-2.3.6.8-.5 1.5-1.3 1.8-2.3-.8.5-1.7.8-2.6 1a4.1 4.1 0 0 0-7 3.7A11.6 11.6 0 0 1 3.4 4.6a4.1 4.1 0 0 0 1.3 5.5c-.7 0-1.3-.2-1.9-.5v.1a4.1 4.1 0 0 0 3.3 4 4.1 4.1 0 0 1-1.8.1 4.1 4.1 0 0 0 3.8 2.9A8.3 8.3 0 0 1 2 18.4a11.6 11.6 0 0 0 6.3 1.8c7.5 0 11.7-6.3 11.7-11.7v-.5c.8-.6 1.5-1.3 2-2.1z"/></svg>
+        </a>
+        <a href="https://www.youtube.com/channel/UCI7sk4DD6F6r9CWg9gHRlVg" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23 7.5a3 3 0 0 0-2.1-2.1C19 4.9 12 4.9 12 4.9s-7 0-8.9.5A3 3 0 0 0 1 7.5 31 31 0 0 0 .5 12 31 31 0 0 0 1 16.5a3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-4.5 31 31 0 0 0-.5-4.5zM9.8 15.3V8.7l5.7 3.3-5.7 3.3z"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/company/orkes-inc" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.9 8.8H3.6V20h3.3V8.8zM5.2 3.5A1.9 1.9 0 1 0 5.2 7.3 1.9 1.9 0 0 0 5.2 3.5zM20.4 20v-6.1c0-3-1.6-4.4-3.8-4.4-1.7 0-2.5.9-2.9 1.6V8.8H10.4c0 .9 0 11.2 0 11.2h3.3v-6.3c0-.3 0-.7.1-.9.3-.7.9-1.3 1.8-1.3 1.3 0 1.8 1 1.8 2.4V20h3z"/></svg>
+        </a>
+        <a href="https://join.slack.com/t/orkes-conductor/shared_invite/zt-3dpcskdyd-W895bJDm8psAV7viYG3jFA" target="_blank" rel="noopener noreferrer" aria-label="Slack">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 15a2 2 0 1 1-2-2h2v2zm1 0a2 2 0 1 1 4 0v5a2 2 0 1 1-4 0v-5zM9 5a2 2 0 1 1 2-2v2H9zm0 1a2 2 0 1 1 0 4H4a2 2 0 1 1 0-4h5zm10 4a2 2 0 1 1 2 2h-2v-2zm-1 0a2 2 0 1 1-4 0V5a2 2 0 1 1 4 0v5zm-4 10a2 2 0 1 1-2 2v-2h2zm0-1a2 2 0 1 1 0-4h5a2 2 0 1 1 0 4h-5z"/></svg>
+        </a>
+        <a href="https://github.com/conductor-oss/conductor" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5C5.37.5 0 5.87 0 12.5c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58 0-.28-.01-1.04-.02-2.03-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.2.09 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.5.99.11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.29-1.55 3.3-1.23 3.3-1.23.66 1.65.25 2.87.12 3.17.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.62-5.49 5.92.43.37.81 1.1.81 2.22 0 1.6-.01 2.9-.01 3.29 0 .32.22.7.83.58A12 12 0 0 0 24 12.5C24 5.87 18.63.5 12 .5z"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="orkes-footer__legal">© 2026 Orkes. All Rights Reserved</div>
+</footer>
+`,
+  );
+
   const mainPath = path.join(OVERRIDES_DIR, "main.html");
   let main = read(mainPath);
   main = main.replace(
@@ -3502,6 +3621,89 @@ a.repo-link:hover {
 }
 .md-footer__link:hover .md-footer__title {
   color: var(--c-accent) !important;
+}
+
+/* Marketing-site footer (ported from orkes.io). Always dark navy, both schemes. */
+.orkes-footer {
+  background: #1e2941;
+  color: #a2a8b5;
+  padding: 64px 32px 32px;
+}
+.orkes-footer * {
+  box-sizing: border-box;
+}
+.orkes-footer__inner {
+  max-width: 1312px;
+  margin: 0 auto;
+}
+.orkes-footer__top {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+.orkes-footer__cols {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px 56px;
+}
+.orkes-footer__col h3 {
+  font-size: 15px;
+  line-height: 24px;
+  font-weight: 700;
+  color: #ccd1dc;
+  margin: 0 0 20px;
+}
+.orkes-footer__col ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.orkes-footer__col a {
+  font-size: 14px;
+  line-height: 22px;
+  color: #a2a8b5;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.15s ease;
+}
+.orkes-footer__col a:hover {
+  color: #fff;
+}
+.orkes-footer__social {
+  display: flex;
+  gap: 20px;
+  padding-top: 4px;
+}
+.orkes-footer__social a {
+  color: #a2a8b5;
+  display: inline-flex;
+  transition: color 0.15s ease;
+}
+.orkes-footer__social a:hover {
+  color: #fff;
+}
+.orkes-footer__social svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+.orkes-footer__legal {
+  max-width: 1312px;
+  margin: 48px auto 0;
+  border-top: 1px solid #3b4a6f;
+  padding-top: 24px;
+  text-align: center;
+  font-size: 12.5px;
+  color: #7a8296;
+}
+@media (min-width: 960px) {
+  .orkes-footer__top {
+    flex-direction: row;
+    justify-content: space-between;
+  }
 }
 `,
   );
