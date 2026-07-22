@@ -3725,6 +3725,21 @@ a.repo-link:hover {
     justify-content: space-between;
   }
 }
+.md-typeset table .table-note {
+  display: inline-block;
+  margin-top: 0.35em;
+  padding: 0.1em 0.5em;
+  font-size: 0.72em;
+  font-weight: 400;
+  color: var(--c-text-dim);
+  background: var(--c-bg-secondary);
+  border: 1px solid var(--c-border-dim);
+  border-radius: 4px;
+}
+.md-typeset table .table-note strong {
+  color: var(--c-text-muted);
+  font-weight: 600;
+}
 `,
   );
   writeOverrides();

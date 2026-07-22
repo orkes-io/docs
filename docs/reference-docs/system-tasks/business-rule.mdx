@@ -187,6 +187,7 @@ Ensure to update the `ruleFileLocation` to your location where the Excel file is
 Let’s test the different cases by running the workflow with varying input parameters.
 
 **To run the workflow for any case:**
+
 1. Go to the **Run** tab, and enter the **Input params** for the case you want to test.
 2. Select **Execute**.
 
@@ -299,6 +300,7 @@ In this example, the Business Rule tasks A, B, C, and D use the same rule file `
 When multiple Business Rule tasks use the same rule file, the cache timeout is determined by the first task that loads the file. All other tasks share that cached version until it expires, regardless of their own `cacheTimeoutMinutes` value.
 
 For example:
+
 - At 10:00 AM, task A runs with `cacheTimeoutMinutes` set to 10. It downloads `fileA` and caches it for 10 minutes, until 10:10 AM.
 - At 10:05 AM, task B runs with `cacheTimeoutMinutes` set to 60. It uses the cached `fileA`.
 - At 10:08 AM, task C runs with `cacheTimeoutMinutes` set to 5 . It also uses the cached `fileA`.
