@@ -1,0 +1,86 @@
+---
+slug: "/audit-logs"
+description: "Learn how to use audit logs to track who changed what and when across workflows, secrets, access control, and other Conductor cluster resources."
+---
+
+# Audit Logs
+
+Audit logs record who changed what and when across your Conductor cluster's configuration and management resources. Use them to investigate unexpected changes, support compliance reviews, and troubleshoot issues caused by a recent update to a workflow, task, secret, or access control setting.
+
+Audit logs capture management-plane changes, such as updating a workflow definition or rotating a secret. They do not capture workflow execution data, such as individual workflow or task runs.
+
+Viewing audit logs requires administrator access. Users and applications without administrator permissions cannot view audit log data, even if they have access to the underlying resources.
+
+:::tip 5-minute path
+Go to Audit Logs in the left navigation, filter by resource type and a lookback window, then open an entry and select View Difference to compare it against the resource's previous state.
+:::
+
+## When to use audit logs
+
+Use audit logs when you need to answer "who changed this, and what did it look like before." Common cases include investigating an unexpected workflow behavior after a definition change, reviewing access control changes for a security audit, and confirming when a secret or environment variable was last rotated.
+
+## What gets audited
+
+Audit logs track create, update, and delete actions on the following resource types:
+
+- Workflow definitions
+- Task definitions
+- Secrets
+- Environment variables
+- Users, groups, and roles
+- Applications and access keys
+- Tags
+- Event handlers
+- Schedules
+- Webhooks
+- Integrations and remote services
+- AI prompts
+- Schemas
+- Human task and user form templates
+
+## What's captured for each entry
+
+Each entry captures the following:
+
+```json
+{
+  "timestamp": "2026-07-20T14:32:05Z",
+  "user": "jane.doe@example.com",
+  "action": "WRITE",
+  "resourceType": "WORKFLOW_DEF",
+  "resourceId": "order_status_lookup",
+  "resourceState": { "...": "the resource's state at the time of the change" }
+}
+```
+
+| Field | Description |
+| --- | --- |
+| Timestamp | When the change occurred. |
+| User | The user or application that made the change. |
+| Action | Whether the resource was created/updated (Write), deleted (Delete), or read (Read). |
+| Resource type | The type of resource affected, such as Workflow Definition or Secret. |
+| Resource ID | The name or ID of the affected resource. |
+| Resource state | A snapshot of the resource at the time of the change. If a previous entry exists for the same resource, you can view a side-by-side difference between the two. |
+
+## Viewing audit logs
+
+**To view audit logs:**
+
+1. Go to Audit Logs from the left navigation menu on your Conductor cluster.
+2. Use the filters to narrow your search:
+    - **Resource Type**: Filter by a specific resource type, such as Workflow Definition or Secret.
+    - **Resource ID**: Filter by the name or ID of a specific resource.
+    - **User**: Filter by the user or application that made the change.
+    - **Action**: Filter by Write, Read, or Delete.
+    - **Date range or Lookback**: Limit results to a specific time window. The default lookback window is 30 days.
+3. Select an entry to view details. If the entry has a resource state and a prior version exists, select View Difference to compare the before and after state side by side.
+
+## Viewing change history for a resource
+
+To see every recorded change for a single resource, select its Resource Type and Resource ID from a search result to open its change history. This view lists every audited change to that resource in chronological order, so you can trace how its configuration evolved over time.
+
+## Best practices
+
+- Pair audit logs with RBAC so only administrators can view sensitive change history.
+- Review audit logs regularly after onboarding new team members or applications with write access.
+- Check audit history before rolling back a workflow or task definition, to confirm exactly what changed and when.
