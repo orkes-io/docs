@@ -5,7 +5,7 @@ description: "Learn how to use audit logs to track who changed what and when acr
 
 # Audit Logs
 
-Audit logs record who changed what and when across your Conductor cluster's configuration and management resources. Use them to investigate unexpected changes, support compliance reviews, and troubleshoot issues caused by a recent update to a workflow, task, secret, or access control setting.
+Audit logs record who changed what and when across your Orkes Conductor cluster's configuration and management resources. Use them to investigate unexpected changes, support compliance reviews, and troubleshoot issues caused by a recent update to a workflow, task, secret, or access control setting.
 
 Audit logs capture management-plane changes, such as updating a workflow definition or rotating a secret. They do not capture workflow execution data, such as individual workflow or task runs.
 
@@ -33,10 +33,12 @@ Audit logs track create, update, and delete actions on the following resource ty
 - Event handlers
 - Schedules
 - Webhooks
-- Integrations and remote services
+- Remote services
 - AI prompts
 - Schemas
-- Human task and user form templates
+- Human task's user form templates
+- Task queues
+- Event publisher
 
 ## What's captured for each entry
 
