@@ -48,8 +48,8 @@ To integrate Confluent Kafka with Orkes Conductor, retrieve the following creden
 1. Sign in to the [Confluent Cloud portal](https://confluent.cloud/).
 2. Go to **Environments**, and select the Confluent cluster to integrate with Orkes Conductor.
 3. Go to **API Keys**, select **Create Key** > **+ Add key**.
-5. Choose either **Global access** or **Granular access**.
-6. Copy and store the **Key** and **Secret**.
+4. Choose either **Global access** or **Granular access**.
+5. Copy and store the **Key** and **Secret**.
 
 **To retrieve the Bootstrap server:**
 
@@ -64,6 +64,7 @@ The schema registry server, API key, and secret are only required if you are int
 2. Go to **Clients** > **Add new client**.
 3. In **Copy the configuration snippet for your clients** > **schema.registry.url**, copy the URL.
 4. Select **Create Schema Registry API key** to download the file. The downloaded file will have the Schema Registry API key and secret.
+
 **For GCP Managed Kafka configuration**
 
 If using **GCP Managed Kafka**: The schema registry uses OAuth2 authentication instead of an API key. You will need a GCP Service Account JSON key, base64-encoded, as the API secret. To get the key:
