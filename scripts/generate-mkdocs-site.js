@@ -325,6 +325,7 @@ const titleByRoute = new Map();
 const generatedPages = new Map();
 const docIdBySource = new Map();
 const sourceFileByRel = new Map();
+const sourceRelByRoute = new Map();
 const warnings = [];
 
 // Auto-generated "Related pages" support — populated from the nav tree once
@@ -624,15 +625,65 @@ function apiResourceLabel(route) {
   return API_RESOURCE_LABELS[parts[2]] || "Conductor";
 }
 
-function pageDescriptionForRoute(route, fallbackDescription, title) {
+function isApiIndexRoute(route) {
+  return route.startsWith("reference-docs/api/");
+}
+
+function endpointForRoute(route) {
+  const sourceRel = sourceRelByRoute.get(route);
+  const file = sourceRel && sourceFileByRel.get(sourceRel);
+  if (!file || !fs.existsSync(file)) return "";
+  const match = read(file).match(/\*\*Endpoint\*?\*?:\*?\*?\s*`([^`]+)`/i);
+  return match ? match[1].trim() : "";
+}
+
+function apiIndexQuickReferenceLines(route, flatChildren) {
+  if (!isApiIndexRoute(route)) return [];
+
+  const rows = flatChildren
+    .map((child) => {
+      const endpoint = endpointForRoute(routeFromOutRel(child.outRel));
+      if (!endpoint) return null;
+      return { label: child.label, outRel: child.outRel, endpoint };
+    })
+    .filter(Boolean);
+  if (!rows.length) return [];
+
+  const resource = apiResourceLabel(route);
+  const lines = [
+    "## Quick reference",
+    "",
+    `Use this ${resource} API when you need to manage ${resource} from automation scripts, CI/CD jobs, backend services, or internal tools rather than the Conductor UI.`,
+    "",
+    "| Endpoint | Description |",
+    "| --- | --- |",
+  ];
+  for (const row of rows) {
+    lines.push(`| \`${row.endpoint}\` | [${row.label}](${BASE_URL}/${routeFromOutRel(row.outRel)}) |`);
+  }
+  lines.push("");
+  lines.push(
+    "Authentication: every endpoint above requires Orkes Conductor API credentials with permission for the target resource. See individual pages for path/query parameters, request bodies, and response examples.",
+    "",
+  );
+  return lines;
+}
+
+function pageDescriptionForRoute(route, fallbackDescription, title, isIndex) {
   const override = ROUTE_METADATA_OVERRIDES[route];
   if (override && override.description) return override.description;
 
   const description = String(fallbackDescription || "").trim();
   if (route.startsWith("reference-docs/api/")) {
+    const resource = apiResourceLabel(route);
+    if (isIndex) {
+      return fitMetaDescription(
+        `Reference documentation for the Orkes Conductor ${resource} API. Covers all available endpoints — method, path, parameters, request bodies, and response behavior.`,
+      );
+    }
     const action = sentenceCase(stripLearnPrefix(title));
     return fitMetaDescription(
-      `Use the Orkes Conductor ${apiResourceLabel(route)} API to ${action}. Includes endpoint details, authentication, parameters, request bodies, response behavior, and examples.`,
+      `Use the Orkes Conductor ${resource} API to ${action}. Includes endpoint details, authentication, parameters, request bodies, response behavior, and examples.`,
     );
   }
 
@@ -836,6 +887,7 @@ function collectRoutes(entries) {
     titleByRoute.set(route, title);
     docIdBySource.set(sourceRel, docId);
     sourceFileByRel.set(sourceRel, file);
+    sourceRelByRoute.set(route, sourceRel);
   }
 }
 
@@ -1355,47 +1407,6 @@ function cleanMdx(body, sourceRel) {
   return output.replace(/\n{4,}/g, "\n\n\n").trim() + "\n";
 }
 
-function endpointForApiPage(body) {
-  const match = body.match(/\*\*Endpoint\*\*:\s*`([^`]+)`/i);
-  return match ? match[1].trim() : "";
-}
-
-function methodFromEndpoint(endpoint) {
-  const match = endpoint.match(/^([A-Z]+)\s+/);
-  return match ? match[1] : "";
-}
-
-function pathFromEndpoint(endpoint) {
-  return endpoint.replace(/^[A-Z]+\s+/, "").trim();
-}
-
-function enhanceApiReferencePage(body, route, title, description) {
-  if (!route.startsWith("reference-docs/api/")) return body;
-  if (body.includes("## Quick reference")) return body;
-
-  const endpoint = endpointForApiPage(body);
-  if (!endpoint) return body;
-
-  const method = methodFromEndpoint(endpoint);
-  const endpointPath = pathFromEndpoint(endpoint);
-  const purpose = sentenceCase(stripLearnPrefix(title));
-  const resource = apiResourceLabel(route);
-  const quickReference = [
-    "## Quick reference",
-    "",
-    `Use this ${resource} endpoint to ${purpose}. It is intended for automation scripts, CI/CD jobs, backend services, and internal tools that need to manage Orkes Conductor programmatically.`,
-    "",
-    `- **Method and path**: \`${method}\` \`${endpointPath}\``,
-    "- **Authentication**: Requires Orkes Conductor API credentials with permission for the target resource.",
-    "- **Inputs**: Use the path parameters, query parameters, and request body fields documented below.",
-    "- **Output**: Returns the Conductor API response for the requested operation. Check the response examples and status codes before wiring the endpoint into production automation.",
-    "- **Operational note**: Treat API calls as part of your deployment or runtime control plane. Log request IDs, handle 4xx/5xx responses, and avoid embedding secrets in workflow definitions or source code.",
-    "",
-  ].join("\n");
-
-  return body.replace(/^(# .+\n)/, `$1\n${quickReference}\n`);
-}
-
 function insertAfterIntro(body, addition) {
   const cleanAddition = addition.trim();
   if (!cleanAddition) return body;
@@ -1633,12 +1644,8 @@ function convertEntry(entry) {
   }
   const title = extractTitle(body, frontMatter, route);
   const pageTitle = pageTitleForRoute(route, title);
-  const pageDescription = pageDescriptionForRoute(route, frontMatter.description, pageTitle);
   const sourceBody = entry.shared ? transformSharedBody(body, entry) : body;
-  const cleaned = enhancePositioningPage(
-    enhanceApiReferencePage(cleanMdx(sourceBody, sourceRel), route, pageTitle, pageDescription),
-    route,
-  );
+  const cleaned = enhancePositioningPage(cleanMdx(sourceBody, sourceRel), route);
   const related = relatedPagesBlock(route, cleaned);
   return `${buildFrontMatter(frontMatter, route, pageTitle)}${cleaned}${related}`;
 }
@@ -1977,6 +1984,7 @@ function generatedPageCopy(route, title, description, flatChildren) {
   if (description) lines.push(description, "");
   lines.push(intro, "");
   lines.push(outcome, "");
+  lines.push(...apiIndexQuickReferenceLines(route, flatChildren));
 
   if (childLabels.length) {
     lines.push("## Recommended path", "");
@@ -2167,7 +2175,7 @@ function createGeneratedPage(route, title, description, children) {
     return;
   }
   const pageTitle = pageTitleForRoute(route, title);
-  const pageDescription = pageDescriptionForRoute(route, description, pageTitle);
+  const pageDescription = pageDescriptionForRoute(route, description, pageTitle, true);
   const flat = flattenNavItems(children || []);
   const lines = [
     "---",
