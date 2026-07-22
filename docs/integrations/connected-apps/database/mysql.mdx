@@ -54,10 +54,12 @@ After obtaining the credentials, add a MySQL integration to your Conductor clust
 
 **To create an integration:**
 
-1. Go to **Integrations** > **Connected Apps** from the left navigation menu on your Conductor cluster.
-2. Select **+ New integration**.
-3. In the **Database** section, choose **MySQL**.
-4. Select **+ Add** and enter the following parameters:
+<ol>
+<li>Go to <strong>Integrations</strong> &gt; <strong>Connected Apps</strong> from the left navigation menu on your Conductor cluster.</li>
+<li>Select <strong>+ New integration</strong>.</li>
+<li>In the <strong>Database</strong> section, choose <strong>MySQL</strong>.</li>
+<li>Select <strong>+ Add</strong> and enter the following parameters:</li>
+</ol>
 
 | Parameter | Description | Required/Optional |
 | --------- | ----------- | ----------------- |
@@ -77,8 +79,11 @@ After obtaining the credentials, add a MySQL integration to your Conductor clust
 :::note
 CA Certificate, Client Private Key, and Client Certificate are applicable only when **_SSL Enabled_** is set to true. Within SSL mode, these fields are optional — CA Certificate is applied if provided, and Client Certificate and Client Private Key are applied only if both are provided.
 :::
-5. (Optional) Toggle the **Active** button off if you don't want to activate the integration instantly.
-6. Select **Save**.
+
+<ol start="5">
+<li>(Optional) Toggle the <strong>Active</strong> button off if you don't want to activate the integration instantly.</li>
+<li>Select <strong>Save</strong>.</li>
+</ol>
 
 ## Step 3: Use MySQL integration in workflows
 
@@ -86,10 +91,12 @@ Once the integration is ready, this can be used directly within the workflows.
 
 **To use MySQL integration in a workflow:**
 
-1. Go to **Definitions** > **Workflow** from the left navigation menu on your Conductor cluster.
-2. Select **+ Define workflow**.
-3. In your workflow, select the (**+**) icon and select **Connected Apps**.
-4. In **Add Task** panel on the right, search for **MySQL**, and select the integration created in [Step 2](/content/integrations/mysql#step-2-add-an-integration-for-mysql).
+<ol>
+<li>Go to <strong>Definitions</strong> &gt; <strong>Workflow</strong> from the left navigation menu on your Conductor cluster.</li>
+<li>Select <strong>+ Define workflow</strong>.</li>
+<li>In your workflow, select the (<strong>+</strong>) icon and select <strong>Connected Apps</strong>.</li>
+<li>In <strong>Add Task</strong> panel on the right, search for <strong>MySQL</strong>, and select the integration created in <a href="/content/integrations/mysql#step-2-add-an-integration-for-mysql">Step 2</a>.</li>
+</ol>
 
 The following operations are available for use with this integration.
 
@@ -104,7 +111,9 @@ The following operations are available for use with this integration.
 | [Delete Rows](/content/integrations/mysql-operations#delete-rows) | Deletes rows from a table based on specified conditions. |
 | [Execute SQL](/content/integrations/mysql-operations#execute-sql) | Executes a raw SQL query against the database. |
 
-5. Select the required operation, configure the parameters, and select **Save** > **Confirm**.
-6. Select **Execute** to run the workflow.
+<ol start="5">
+<li>Select the required operation, configure the parameters, and select <strong>Save</strong> &gt; <strong>Confirm</strong>.</li>
+<li>Select <strong>Execute</strong> to run the workflow.</li>
+</ol>
 
 For the complete operations parameters and output reference, see [MySQL Operations Reference](/content/integrations/mysql-operations).
