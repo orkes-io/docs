@@ -26,6 +26,7 @@ To integrate Pinecone with Orkes Conductor, retrieve the API key, project ID, an
 4. Copy the API key generated.
 5. In the top navigation bar, select your project.
 6. Copy the Project ID.
+
 ### Create an index
 
 Create a Pinecone index for the integration. 
@@ -38,6 +39,7 @@ Create a Pinecone index for the integration.
 4. Enter an index name.
 5. [Configure the index parameters](https://docs.pinecone.io/guides/indexes/create-an-index). The index dimension must match the output dimension of your embedding model. Common default values are: OpenAI `text-embedding-3-small`: 1536, `text-embedding-3-large`: 3072, and Cohere `embed-english-v3.0`: 1024. 
 6. Select **Create index** and note the **Region**, which is the environment. This parameter is required when adding the Pinecone integration to Conductor.
+
 For more information on configuring and connecting indexes, refer to the [Pinecone documentation](https://docs.pinecone.io/guides/get-started/quickstart).
 
 ## Step 2: Add an integration for Pinecone
@@ -46,10 +48,12 @@ After obtaining the credentials, add a Pinecone integration to your Conductor cl
 
 **To create a Pinecone integration:**
 
-1. Go to **Integrations** > **Connections and Resources** from the left navigation menu on your Conductor cluster.
-2. Select **+ New integration**.
-3. In the **Vector Databases** section, choose **Pinecone**.
-4. Select **+ Add** and enter the following parameters:
+<ol>
+<li>Go to **Integrations** > **Connections and Resources** from the left navigation menu on your Conductor cluster.</li>
+<li>Select **+ New integration**.</li>
+<li>In the **Vector Databases** section, choose **Pinecone**.</li>
+<li>Select **+ Add** and enter the following parameters:</li>
+</ol>
 
 | Parameters | Description |
 | ---------- | ----------- | 
@@ -58,8 +62,11 @@ After obtaining the credentials, add a Pinecone integration to your Conductor cl
 | Project name | The project ID from the Pinecone console. | 
 | Environment | The index region from the Pinecone console. | 
 | Description | A description of the integration. | 
-5. (Optional) Toggle the **Active** button off if you don’t want to activate the integration instantly.
-6. Select **Save**.
+
+<ol start="5">
+<li>(Optional) Toggle the **Active** button off if you don’t want to activate the integration instantly.</li>
+<li>Select **Save**.</li>
+</ol>
 
 ## Step 3: Add Pinecone indexes
 

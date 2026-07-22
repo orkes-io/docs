@@ -17,7 +17,9 @@ To use LLM embedding tasks in Orkes Conductor, you must integrate your Conductor
 To integrate Weaviate with Orkes Conductor, retrieve the API key and endpoint from the Weaviate Console. 
 
 :::info Prerequisites 
+<br/>
 For Weaviate Cloud:
+
 1. Sign up for [Weaviate Cloud](https://console.weaviate.cloud/dashboard).
 2. [Create a cluster](https://weaviate.io/developers/wcs/quickstart#create-a-weaviate-cluster).
 3. [Create a collection](https://weaviate.io/developers/wcs/tools/collections-tool#create-a-collection) within the cluster.
@@ -43,10 +45,12 @@ After obtaining the credentials, add a Weaviate integration to your Conductor cl
 
 **To create a Weaviate integration:**
 
-1. Go to **Integrations** > **Connections and Resources** from the left navigation menu on your Conductor cluster.
-2. Select **+ New integration**.
-3. In the **Vector Databases** section, choose **Weaviate**.
-4. Select **+ Add** and enter the following parameters:
+<ol>
+<li>Go to **Integrations** > **Connections and Resources** from the left navigation menu on your Conductor cluster.</li>
+<li>Select **+ New integration**.</li>
+<li>In the **Vector Databases** section, choose **Weaviate**.</li>
+<li>Select **+ Add** and enter the following parameters:</li>
+</ol>
 
 |  Parameters | Description |
 | ---------- | ----------- | 
@@ -54,8 +58,11 @@ After obtaining the credentials, add a Weaviate integration to your Conductor cl
 | API Key | The API key from the Weaviate cluster. |
 | Endpoint | The REST Endpoint from the Weaviate cluster. |
 | Description | A description of the integration. |
-5. (Optional) Toggle the **Active** button off if you don’t want to activate the integration instantly.
-6. Select **Save**.
+
+<ol start="5">
+<li>(Optional) Toggle the **Active** button off if you don’t want to activate the integration instantly.</li>
+<li>Select **Save**.</li>
+</ol>
 
 ## Step 3: Add Weaviate collections
 
