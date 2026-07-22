@@ -152,8 +152,10 @@ For testing purposes, you can quickly build a workflow using the Conductor UI.
 
 **To create a workflow:**
 
-1. Go to **Definitions** > **Workflow**, and select **+ Define Workflow**.
-2. Add an **Event** task with the Sink `sqs:<your-integration-name>:<your-queue-name>`.
+<ol>
+<li>Go to <strong>Definitions</strong> &gt; <strong>Workflow</strong>, and select <strong>+ Define Workflow</strong>.</li>
+<li>Add an <strong>Event</strong> task with the Sink <code>sqs:&lt;your-integration-name&gt;:&lt;your-queue-name&gt;</code>.</li>
+</ol>
 
 Here’s the complete workflow definition JSON:
 
@@ -174,7 +176,9 @@ Here’s the complete workflow definition JSON:
 }
 ```
 
-4. Save the workflow.
+<ol start="3">
+<li>Save the workflow.</li>
+</ol>
 
 **Step 3: Run Workflow**
 
@@ -190,20 +194,28 @@ This takes you to the workflow execution page, where you can view the workflow s
 
 Next, verify the message delivery in the SQS console.
 
-1. In your Amazon SQS console, go to **Amazon SQS** > **Queues** > Select your queue.
-2. Select **Send and receive messages**.
+<ol>
+<li>In your Amazon SQS console, go to <strong>Amazon SQS</strong> &gt; <strong>Queues</strong> &gt; Select your queue.</li>
+<li>Select <strong>Send and receive messages</strong>.</li>
+</ol>
 
 <center><p><img src="/content/img/sqs-queue.png" alt="Viewing the SQS queue in SQS console" width="100%" height="auto"/></p></center>
 
-3. Scroll down to **Receive messages** and select **Poll for messages**.
+<ol start="3">
+<li>Scroll down to <strong>Receive messages</strong> and select <strong>Poll for messages</strong>.</li>
+</ol>
 
 <center><p><img src="/content/img/poll-for-messages.png" alt="Polling for messages from the queue" width="100%" height="auto"/></p></center>
 
-4. The message ID appears, which is the `eventId` passed from Conductor. Select it to view the message body, which is the output of the Conductor workflow.
+<ol start="4">
+<li>The message ID appears, which is the <code>eventId</code> passed from Conductor. Select it to view the message body, which is the output of the Conductor workflow.</li>
+</ol>
 
 <center><p><img src="/content/img/message-body.png" alt="SQS message body received" width="100%" height="auto"/></p></center>
 
-5. In the **Attributes** tab, you can view the task ID and the workflow execution ID.
+<ol start="5">
+<li>In the <strong>Attributes</strong> tab, you can view the task ID and the workflow execution ID.</li>
+</ol>
 
 <center><p><img src="/content/img/queue-attribute.png" alt="Attribute containing the task and workflow execution ID" width="70%" height="auto"/></p></center>
 
@@ -301,7 +313,9 @@ Here’s the complete workflow definition JSON:
 }
 ```
 
-4. Save the workflow.
+<ol start="4">
+<li>Save the workflow.</li>
+</ol>
 
 **Step 3: Run Workflow**
 

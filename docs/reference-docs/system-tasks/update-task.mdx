@@ -104,15 +104,16 @@ Here are some examples for using the Update Task.
 
 <details markdown="1">
 <summary>Using Update Task in a workflow</summary>
-<p>
 
 To demonstrate the Update Task, consider the following workflow, which contains a Wait task.
 
 **To create a workflow:**
 
-1. Go to **Definitions** > **Workflow**, from the left navigation menu on your Conductor cluster.
-2. Select **+ Define workflow**.
-3. In the **Code** tab, paste the following workflow definition:
+<ol>
+<li>Go to <strong>Definitions</strong> &gt; <strong>Workflow</strong>, from the left navigation menu on your Conductor cluster.</li>
+<li>Select <strong>+ Define workflow</strong>.</li>
+<li>In the <strong>Code</strong> tab, paste the following workflow definition:</li>
+</ol>
 
 ```json
 {
@@ -131,8 +132,10 @@ To demonstrate the Update Task, consider the following workflow, which contains 
 }
 ```
 
-4. Save the workflow.
-5. Select **Execute** to run the workflow.
+<ol start="4">
+<li>Save the workflow.</li>
+<li>Select <strong>Execute</strong> to run the workflow.</li>
+</ol>
 
 This workflow waits indefinitely for an external signal to complete the Wait task.
 
@@ -180,5 +183,4 @@ Finally, verify that the Wait task status is updated successfully in the initial
 
 <center><p><img src="/content/img/completed-workflow-using-update-task.png" alt="Completed workflow using update task" width="80%" height="auto"/></p></center>
 
-</p>
 </details>
