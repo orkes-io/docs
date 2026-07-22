@@ -290,17 +290,20 @@ const CATEGORY_PAGE_COPY = {
 
 const API_RESOURCE_LABELS = {
   applications: "applications",
+  authorization: "authorization",
   "environment-variables": "environment variables",
   groups: "groups",
   "human-tasks": "human tasks",
   integrations: "integrations",
   metadata: "metadata",
+  prompts: "prompts",
   "remote-services": "remote services",
   schedule: "schedules",
   schema: "schemas",
   secrets: "secrets",
   tags: "tags",
   task: "tasks",
+  tokens: "tokens",
   users: "users",
   webhooks: "webhooks",
   workflow: "workflows",
@@ -622,7 +625,13 @@ function hasProductContext(value) {
 
 function apiResourceLabel(route) {
   const parts = route.split("/");
-  return API_RESOURCE_LABELS[parts[2]] || "Conductor";
+  const segment = parts[2];
+  if (API_RESOURCE_LABELS[segment]) return API_RESOURCE_LABELS[segment];
+  // Falls back to a derived label instead of a generic constant so a new
+  // reference-docs/api/<resource> folder never silently collides with
+  // another resource's description (audit-docs-build.js hard-fails on
+  // duplicate meta descriptions) — see commit 913a2d41's CI failure.
+  return segment ? segment.replace(/-/g, " ") : "Conductor";
 }
 
 function isApiIndexRoute(route) {
