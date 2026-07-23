@@ -134,18 +134,35 @@ function isRelativeHref(href) {
   return !/^(https?:|mailto:|tel:|javascript:|data:|#|\/\/|\/)/.test(href);
 }
 
-function rewriteAssetDepthForRouteAlias(html) {
-  return html.replace(/\b(href|src|content)=["']([^"']+)["']/g, (all, attr, href) => {
-    if (!isAssetHref(href) || !href.startsWith("../")) return all;
-    return `${attr}="${dropOneParentDirSegment(href)}"`;
+// Material stores the site root as a relative path in its __config JSON
+// ("base":"../.."). The search worker builds the search_index.json URL from that
+// base, so it must shift in lockstep with the asset depth below. Otherwise a flat
+// (no-trailing-slash) page keeps the deeper base, requests /search/search_index.json
+// at the DOMAIN ROOT, gets 403, and the uncaught error crashes the whole Material
+// bundle — search, palette toggle, and sidebar scroll all die together.
+function shiftConfigBaseDepth(html, delta) {
+  return html.replace(/("base"\s*:\s*")([^"']*)(")/, (all, pre, val, post) => {
+    const depth = (val.match(/\.\./g) || []).length;
+    const next = Math.max(0, depth + delta);
+    const v = next === 0 ? "." : Array(next).fill("..").join("/");
+    return `${pre}${v}${post}`;
   });
 }
 
+function rewriteAssetDepthForRouteAlias(html) {
+  html = html.replace(/\b(href|src|content)=["']([^"']+)["']/g, (all, attr, href) => {
+    if (!isAssetHref(href) || !href.startsWith("../")) return all;
+    return `${attr}="${dropOneParentDirSegment(href)}"`;
+  });
+  return shiftConfigBaseDepth(html, -1);
+}
+
 function rewriteAssetDepthForTrailingSlashAlias(html) {
-  return html.replace(/\b(href|src|content)=["']([^"']+)["']/g, (all, attr, href) => {
+  html = html.replace(/\b(href|src|content)=["']([^"']+)["']/g, (all, attr, href) => {
     if (!isAssetHref(href) || !isRelativeHref(href)) return all;
     return `${attr}="${addOneParentDirSegment(href)}"`;
   });
+  return shiftConfigBaseDepth(html, +1);
 }
 
 function copyRouteAliasHtml(file) {
