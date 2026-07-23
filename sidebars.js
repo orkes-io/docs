@@ -293,6 +293,11 @@ const sidebars = {
             id: 'access-control-and-security/tags',
             label: 'Tag-Based Access',
         },
+        {
+            type: 'doc',
+            id: 'access-control-and-security/custom-roles',
+            label: 'Custom Roles',
+        },
     ],
 
     // ==========================================================================
