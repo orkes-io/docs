@@ -143,6 +143,11 @@ const sidebars = {
                         },
                         {
                             type: 'doc',
+                            id: 'developer-guides/guardrails',
+                            label: 'Guardrails',
+                        },
+                        {
+                            type: 'doc',
                             id: 'developer-guides/using-llms-in-your-orkes-conductor-workflows',
                             label: 'Using AI Models or LLMs',
                         },
