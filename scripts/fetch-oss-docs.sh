@@ -24,7 +24,11 @@ if [[ ! -d "${CACHE_DIR}/.git" ]]; then
 fi
 
 git -C "${CACHE_DIR}" fetch --depth 1 origin "${REF}"
-git -C "${CACHE_DIR}" checkout --detach "${REF}"
+# Check out the fetched commit directly. Using the branch name here triggers
+# git's "create + track a local branch" DWIM, which errors when combined with
+# --detach ("'--detach' cannot be used with -b/-B/--orphan").
+SHA="$(git -C "${CACHE_DIR}" rev-parse FETCH_HEAD)"
+git -C "${CACHE_DIR}" checkout --detach "${SHA}"
 
 PATHS=()
 while IFS= read -r path; do
@@ -38,7 +42,7 @@ fi
 
 if git -C "${CACHE_DIR}" sparse-checkout list >/dev/null 2>&1; then
   git -C "${CACHE_DIR}" sparse-checkout disable
-  git -C "${CACHE_DIR}" checkout --detach "${REF}" >/dev/null
+  git -C "${CACHE_DIR}" checkout --detach "${SHA}" >/dev/null
 fi
 
 MISSING_PATHS=()
