@@ -6,9 +6,9 @@
     "generate": "node scripts/generate-mkdocs-site.js",
     "fetch:oss-docs": "scripts/fetch-oss-docs.sh",
     "audit:docs": "node scripts/audit-docs-build.js",
-    "build": "node scripts/generate-mkdocs-site.js && mkdocs build && node scripts/postprocess-mkdocs-build.js",
-    "start": "node scripts/generate-mkdocs-site.js && mkdocs build && node scripts/postprocess-mkdocs-build.js && node scripts/serve-build.js",
-    "serve": "node scripts/generate-mkdocs-site.js && mkdocs build && node scripts/postprocess-mkdocs-build.js && node scripts/serve-build.js",
+    "build": "node scripts/generate-mkdocs-site.js && PYTHONPATH=$PWD mkdocs build && node scripts/postprocess-mkdocs-build.js",
+    "start": "node scripts/generate-mkdocs-site.js && PYTHONPATH=$PWD mkdocs build && node scripts/postprocess-mkdocs-build.js && node scripts/serve-build.js",
+    "serve": "node scripts/generate-mkdocs-site.js && PYTHONPATH=$PWD mkdocs build && node scripts/postprocess-mkdocs-build.js && node scripts/serve-build.js",
     "dev": "node scripts/dev-watch.js"
   },
   "engines": {

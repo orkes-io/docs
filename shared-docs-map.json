@@ -40,6 +40,366 @@
       "source": "documentation/clientsdks/rust-sdk.md",
       "docId": "sdks/rust",
       "route": "sdks/rust"
+    },
+    {
+      "source": "documentation/configuration/workflowdef/operators/do-while-task.md",
+      "docId": "reference-docs/operators/do-while",
+      "route": "reference-docs/operators/do-while"
+    },
+    {
+      "source": "documentation/configuration/workflowdef/operators/dynamic-task.md",
+      "docId": "reference-docs/operators/dynamic",
+      "route": "reference-docs/operators/dynamic"
+    },
+    {
+      "source": "documentation/configuration/workflowdef/operators/dynamic-fork-task.md",
+      "docId": "reference-docs/operators/dynamic-fork",
+      "route": "reference-docs/operators/dynamic-fork"
+    },
+    {
+      "source": "documentation/configuration/workflowdef/operators/fork-task.md",
+      "docId": "reference-docs/operators/fork-join",
+      "route": "reference-docs/operators/fork-join"
+    },
+    {
+      "source": "documentation/configuration/workflowdef/operators/join-task.md",
+      "docId": "reference-docs/operators/join",
+      "route": "reference-docs/operators/join"
+    },
+    {
+      "source": "documentation/configuration/workflowdef/operators/set-variable-task.md",
+      "docId": "reference-docs/operators/set-variable",
+      "route": "reference-docs/operators/set-variable"
+    },
+    {
+      "source": "documentation/configuration/workflowdef/operators/start-workflow-task.md",
+      "docId": "reference-docs/operators/start-workflow",
+      "route": "reference-docs/operators/start-workflow"
+    },
+    {
+      "source": "documentation/configuration/workflowdef/operators/sub-workflow-task.md",
+      "docId": "reference-docs/operators/sub-workflow",
+      "route": "reference-docs/operators/sub-workflow"
+    },
+    {
+      "source": "documentation/configuration/workflowdef/operators/switch-task.md",
+      "docId": "reference-docs/operators/switch",
+      "route": "reference-docs/operators/switch"
+    },
+    {
+      "source": "documentation/configuration/workflowdef/operators/terminate-task.md",
+      "docId": "reference-docs/operators/terminate",
+      "route": "reference-docs/operators/terminate"
+    },
+    {
+      "source": "documentation/configuration/workflowdef/systemtasks/human-task.md",
+      "docId": "reference-docs/operators/human",
+      "route": "reference-docs/operators/human"
+    },
+    {
+      "source": "documentation/configuration/workflowdef/systemtasks/wait-task.md",
+      "docId": "reference-docs/operators/wait",
+      "route": "reference-docs/operators/wait"
+    },
+    {
+      "source": "documentation/configuration/workflowdef/systemtasks/event-task.md",
+      "docId": "reference-docs/system-tasks/event",
+      "route": "reference-docs/system-tasks/event"
+    },
+    {
+      "source": "documentation/configuration/workflowdef/systemtasks/http-task.md",
+      "docId": "reference-docs/system-tasks/http",
+      "route": "reference-docs/system-tasks/http"
+    },
+    {
+      "source": "documentation/configuration/workflowdef/systemtasks/inline-task.md",
+      "docId": "reference-docs/system-tasks/inline",
+      "route": "reference-docs/system-tasks/inline"
+    },
+    {
+      "source": "documentation/configuration/workflowdef/systemtasks/jdbc-task.md",
+      "docId": "reference-docs/system-tasks/jdbc",
+      "route": "reference-docs/system-tasks/jdbc"
+    },
+    {
+      "source": "documentation/configuration/workflowdef/systemtasks/json-jq-transform-task.md",
+      "docId": "reference-docs/system-tasks/jq-transform",
+      "route": "reference-docs/system-tasks/jq-transform"
+    },
+    {
+      "source": "devguide/cookbook/ai-llm.md",
+      "docId": "ai-cookbook/ai-llm-recipes",
+      "route": "ai-cookbook/ai-llm-recipes"
+    },
+    {
+      "source": "devguide/ai/durable-agents.md",
+      "docId": "ai-cookbook/durable-agents",
+      "route": "ai-cookbook/durable-agents"
+    },
+    {
+      "source": "devguide/ai/dynamic-workflows.md",
+      "docId": "ai-cookbook/dynamic-workflows",
+      "route": "ai-cookbook/dynamic-workflows"
+    },
+    {
+      "source": "devguide/ai/failure-semantics.md",
+      "docId": "ai-cookbook/failure-semantics",
+      "route": "ai-cookbook/failure-semantics"
+    },
+    {
+      "source": "devguide/ai/first-ai-agent.md",
+      "docId": "ai-cookbook/first-ai-agent",
+      "route": "ai-cookbook/first-ai-agent"
+    },
+    {
+      "source": "devguide/ai/human-in-the-loop.md",
+      "docId": "ai-cookbook/human-in-the-loop",
+      "route": "ai-cookbook/human-in-the-loop"
+    },
+    {
+      "source": "devguide/ai/production-agent-architecture.md",
+      "docId": "ai-cookbook/production-agent-architecture",
+      "route": "ai-cookbook/production-agent-architecture"
+    },
+    {
+      "source": "devguide/ai/token-efficiency.md",
+      "docId": "ai-cookbook/token-efficiency",
+      "route": "ai-cookbook/token-efficiency"
+    },
+    {
+      "source": "devguide/ai/why-conductor.md",
+      "docId": "ai-cookbook/why-conductor",
+      "route": "ai-cookbook/why-conductor"
+    },
+    {
+      "source": "devguide/architecture/directed-acyclic-graph.md",
+      "docId": "conceptual-guides/directed-acyclic-graph",
+      "route": "conceptual-guides/directed-acyclic-graph"
+    },
+    {
+      "source": "devguide/how-tos/workflow-status-events.md",
+      "docId": "conceptual-guides/workflow-and-task-status",
+      "route": "conceptual-guides/workflow-and-task-status"
+    },
+    {
+      "source": "devguide/cookbook/dynamic-parallelism.md",
+      "docId": "cookbook/dynamic-parallelism",
+      "route": "cookbook/dynamic-parallelism"
+    },
+    {
+      "source": "devguide/cookbook/dynamic-workflows.md",
+      "docId": "cookbook/dynamic-workflows",
+      "route": "cookbook/dynamic-workflows"
+    },
+    {
+      "source": "devguide/cookbook/microservice-orchestration.md",
+      "docId": "cookbook/microservice-orchestration",
+      "route": "cookbook/microservice-orchestration"
+    },
+    {
+      "source": "devguide/cookbook/task-timeouts-and-retries.md",
+      "docId": "cookbook/task-timeouts-and-retries",
+      "route": "cookbook/task-timeouts-and-retries"
+    },
+    {
+      "source": "devguide/cookbook/wait-and-timers.md",
+      "docId": "cookbook/wait-and-timers",
+      "route": "cookbook/wait-and-timers"
+    },
+    {
+      "source": "devguide/cookbook/workflow-scheduling.md",
+      "docId": "cookbook/workflow-scheduling",
+      "route": "cookbook/workflow-scheduling"
+    },
+    {
+      "source": "devguide/how-tos/conductor-skills.md",
+      "docId": "developer-guides/conductor-skills",
+      "route": "developer-guides/conductor-skills"
+    },
+    {
+      "source": "devguide/how-tos/Workflows/debugging-workflows.md",
+      "docId": "developer-guides/debugging-workflows",
+      "route": "developer-guides/debugging-workflows"
+    },
+    {
+      "source": "devguide/how-tos/Workflows/handling-errors.md",
+      "docId": "developer-guides/error-handling",
+      "route": "developer-guides/error-handling"
+    },
+    {
+      "source": "devguide/how-tos/cicd-integration.md",
+      "docId": "developer-guides/integration-with-cicd",
+      "route": "developer-guides/integration-with-cicd"
+    },
+    {
+      "source": "documentation/metrics/server.md",
+      "docId": "developer-guides/metrics-and-observability",
+      "route": "developer-guides/metrics-and-observability"
+    },
+    {
+      "source": "documentation/configuration/taskdef.md",
+      "docId": "developer-guides/rate-limits",
+      "route": "developer-guides/rate-limits"
+    },
+    {
+      "source": "devguide/how-tos/Workflows/starting-workflows.md",
+      "docId": "developer-guides/running-workflows",
+      "route": "developer-guides/running-workflows"
+    },
+    {
+      "source": "devguide/how-tos/Workers/scaling-workers.md",
+      "docId": "developer-guides/scaling-workers",
+      "route": "developer-guides/scaling-workers"
+    },
+    {
+      "source": "devguide/how-tos/Workflows/scheduling-workflows.md",
+      "docId": "developer-guides/scheduling-workflows",
+      "route": "developer-guides/scheduling-workflows"
+    },
+    {
+      "source": "devguide/how-tos/schema-validation.md",
+      "docId": "developer-guides/schema-validation",
+      "route": "developer-guides/schema-validation"
+    },
+    {
+      "source": "devguide/cookbook/sending-signals.md",
+      "docId": "developer-guides/sending-signals-to-workflows",
+      "route": "developer-guides/sending-signals-to-workflows"
+    },
+    {
+      "source": "documentation/api/taskdomains.md",
+      "docId": "developer-guides/task-to-domain",
+      "route": "developer-guides/task-to-domain"
+    },
+    {
+      "source": "devguide/how-tos/Workflows/testing-workflows.md",
+      "docId": "developer-guides/unit-and-regression-tests",
+      "route": "developer-guides/unit-and-regression-tests"
+    },
+    {
+      "source": "devguide/how-tos/incoming-webhooks.md",
+      "docId": "developer-guides/webhook-integration",
+      "route": "developer-guides/webhook-integration"
+    },
+    {
+      "source": "devguide/how-tos/Workflows/creating-workflows.md",
+      "docId": "developer-guides/write-workflows-using-code",
+      "route": "developer-guides/write-workflows-using-code"
+    },
+    {
+      "source": "devguide/how-tos/publish-events.md",
+      "docId": "event-driven-orchestration/publish-events",
+      "route": "event-driven-orchestration/publish-events"
+    },
+    {
+      "source": "devguide/how-tos/consume-route-events.md",
+      "docId": "event-driven-orchestration/receive-events",
+      "route": "event-driven-orchestration/receive-events"
+    },
+    {
+      "source": "devguide/faq.md",
+      "docId": "faqs/general-faqs",
+      "route": "faqs/general-faqs"
+    },
+    {
+      "source": "architecture/durable-execution.md",
+      "docId": "quickstart/durable-execution",
+      "route": "quickstart/durable-execution"
+    },
+    {
+      "source": "architecture/json-native.md",
+      "docId": "quickstart/json-code-native",
+      "route": "quickstart/json-code-native"
+    },
+    {
+      "source": "devguide/architecture/tasklifecycle.md",
+      "docId": "quickstart/task-lifecycle",
+      "route": "quickstart/task-lifecycle"
+    },
+    {
+      "source": "documentation/api/index.md",
+      "docId": "reference-docs/api",
+      "route": "reference-docs/api"
+    },
+    {
+      "source": "documentation/api/startworkflow.md",
+      "docId": "reference-docs/api/workflow/start-workflow-execution",
+      "route": "reference-docs/api/workflow/start-workflow-execution"
+    },
+    {
+      "source": "documentation/clientsdks/index.md",
+      "docId": "sdks/sdk-index",
+      "route": "sdks/sdk-index"
+    },
+    {
+      "source": "documentation/api/workflow.md",
+      "docId": "reference-docs/api/workflow",
+      "route": "reference-docs/api/workflow"
+    },
+    {
+      "source": "documentation/api/scheduler.md",
+      "docId": "reference-docs/api/schedule",
+      "route": "reference-docs/api/schedule"
+    },
+    {
+      "source": "documentation/api/metadata.md",
+      "docId": "reference-docs/api/metadata",
+      "route": "reference-docs/api/metadata"
+    },
+    {
+      "source": "documentation/api/task.md",
+      "docId": "reference-docs/api/task",
+      "route": "reference-docs/api/task"
+    },
+    {
+      "source": "documentation/configuration/workflowdef/systemtasks/ai-tasks.md",
+      "docId": "reference-docs/ai-tasks",
+      "route": "reference-docs/ai-tasks"
+    },
+    {
+      "source": "devguide/ai/llm-orchestration.md",
+      "docId": "developer-guides/ai-orchestration",
+      "route": "developer-guides/ai-orchestration"
+    },
+    {
+      "source": "devguide/concepts/conductor.md",
+      "docId": "core-concepts",
+      "route": "core-concepts"
+    },
+    {
+      "source": "devguide/concepts/tasks.md",
+      "docId": "quickstart/tasks",
+      "route": "quickstart/tasks"
+    },
+    {
+      "source": "devguide/concepts/workers.md",
+      "docId": "quickstart/workers",
+      "route": "quickstart/workers"
+    },
+    {
+      "source": "devguide/concepts/workflows.md",
+      "docId": "quickstart/workflows",
+      "route": "quickstart/workflows"
+    },
+    {
+      "source": "devguide/how-tos/Workflows/versioning-workflows.md",
+      "docId": "developer-guides/versioning-workflows",
+      "route": "developer-guides/versioning-workflows"
+    },
+    {
+      "source": "devguide/how-tos/Tasks/task-inputs.md",
+      "docId": "developer-guides/passing-inputs-to-task-in-conductor",
+      "route": "developer-guides/passing-inputs-to-task-in-conductor"
+    },
+    {
+      "source": "devguide/cookbook/event-driven.md",
+      "docId": "cookbook/event-driven",
+      "route": "cookbook/event-driven"
+    },
+    {
+      "source": "quickstart/first-workflow.md",
+      "docId": "getting-started/quickstart-index",
+      "route": "quickstarts"
     }
   ],
   "aliases": {
@@ -99,6 +459,7 @@
     "documentation/api/files.md": "category/ref-docs/api",
     "documentation/api/bulk.md": "category/ref-docs/api",
     "documentation/api/eventhandlers.md": "developer-guides/event-handler",
-    "devguide/cookbook/microservice-orchestration.md": "cookbook/microservice-orchestration"
+    "devguide/cookbook/microservice-orchestration.md": "cookbook/microservice-orchestration",
+    "quickstart/first-workflow.md": "quickstarts"
   }
 }

@@ -15,12 +15,12 @@ const sidebars = {
         {
             type: 'doc',
             label: 'Concepts',
-            id: 'quickstart/concepts',
+            id: 'core-concepts',
         },
         {
             type: 'doc',
             label: 'Architecture',
-            id: 'conceptual-guides/architecture',
+            id: 'core-concepts',
         },
         {
             type: 'doc',
@@ -57,6 +57,14 @@ const sidebars = {
             label: 'Install and Set Up Orkes Conductor',
             id: 'get-orkes-conductor',
         },
+        // OSS Get Started pages with no Orkes counterpart
+        { type: 'doc', id: 'quickstart/framework-agents', label: 'Framework Agent Quickstarts' },
+        { type: 'doc', id: 'devguide/ai/conductor-for-ai-assistants', label: 'Conductor for AI Assistants' },
+        // Remaining OSS Get Started pages (distinct source files from our entries above)
+        { type: 'doc', id: 'devguide/concepts', label: 'Core Concepts' },
+        { type: 'doc', id: 'quickstart/connect', label: 'Connect to Conductor' },
+        { type: 'doc', id: 'quickstart/first-worker', label: 'Write Your First Worker' },
+        { type: 'doc', id: 'devguide/architecture', label: 'Conductor Architecture' },
     ],
 
     // ==========================================================================
@@ -66,7 +74,7 @@ const sidebars = {
                 {
                     type: 'category',
                     label: 'Workflows',
-                    link: { type: 'doc', id: 'developer-guides/workflows' },
+                    link: { type: 'doc', id: 'quickstart/workflows' },
                     items: [
                         'developer-guides/write-workflows-using-code',
                         'developer-guides/convert-bpmn-to-workflows',
@@ -100,15 +108,14 @@ const sidebars = {
                             id: 'developer-guides/debugging-workflows',
                             label: 'Search / Query Executions',
                         },
+                        { type: 'doc', id: 'devguide/how-tos/Workflows/searching-workflows', label: 'Searching Workflows' },
                         'developer-guides/unit-and-regression-tests',
-                        'developer-guides/metrics-and-observability',
-                        'developer-guides/integration-with-cicd',
                     ],
                 },
                 {
                     type: 'category',
                     label: 'Tasks',
-                    link: { type: 'doc', id: 'developer-guides/tasks-in-workflows' },
+                    link: { type: 'doc', id: 'quickstart/tasks' },
                     items: [
                         {
                             type: 'doc',
@@ -122,12 +129,12 @@ const sidebars = {
                         },
                         {
                             type: 'doc',
-                            id: 'developer-guides/task-input-templates',
+                            id: 'developer-guides/passing-inputs-to-task-in-conductor',
                             label: 'Task Input Templates',
                         },
                         'developer-guides/caching-task-outputs',
                         'developer-guides/rate-limits',
-                        'developer-guides/using-workers',
+                        'quickstart/workers',
                         'developer-guides/scaling-workers',
                         'developer-guides/task-to-domain',
                     ],
@@ -138,17 +145,17 @@ const sidebars = {
                     items: [
                         {
                             type: 'doc',
-                            id: 'developer-guides/orchestrating-human-tasks',
+                            id: 'reference-docs/operators/human',
                             label: 'Human Task Orchestration',
                         },
                         {
                             type: 'doc',
-                            id: 'developer-guides/using-llms-in-your-orkes-conductor-workflows',
+                            id: 'developer-guides/ai-orchestration',
                             label: 'Using AI Models or LLMs',
                         },
                         {
                             type: 'doc',
-                            id: 'developer-guides/using-vector-databases-in-your-orkes-conductor-workflows',
+                            id: 'reference-docs/ai-tasks',
                             label: 'Using Vector Databases',
                         },
                         {
@@ -178,9 +185,11 @@ const sidebars = {
     // EVENTING — Event-driven orchestration, webhooks, event publishing, brokers
     // ==========================================================================
     eventingSidebar: [
+        // OSS event-driven overview
+        { type: 'doc', id: 'devguide/how-tos/event-bus', label: 'Overview' },
         {
             type: 'doc',
-            id: 'event-driven-orchestration',
+            id: 'cookbook/event-driven',
             label: 'Event-Driven Orchestration',
             className: 'leftMenuHeader',
         },
@@ -307,6 +316,9 @@ const sidebars = {
         { type: 'doc', id: 'cookbook/task-timeouts-and-retries', label: 'Task timeouts and retries' },
         { type: 'doc', id: 'cookbook/workflow-scheduling', label: 'Scheduled workflows' },
         { type: 'doc', id: 'cookbook/dynamic-workflows', label: 'Dynamic workflows as code' },
+        // OSS-only cookbook recipes (no Orkes counterpart)
+        { type: 'doc', id: 'devguide/cookbook/saga-compensation', label: 'Saga & Compensation' },
+        { type: 'doc', id: 'devguide/cookbook/http-poll-long-running-job', label: 'Polling a Long-Running Job' },
         { type: 'doc', id: 'tutorials/document-approvals', label: 'Document Approval' },
         { type: 'doc', id: 'tutorials/long-running-apis', label: 'Long-Running APIs' },
         { type: 'doc', id: 'tutorials/scanning-an-endpoint-and-triggering-pagerduty-alert', label: 'PagerDuty Alert Workflow' },
@@ -387,7 +399,70 @@ const sidebars = {
             link: { type: 'doc', id: 'developer-guides/ai-orchestration' },
             items: [
                 { type: 'doc', id: 'ai-cookbook/ai-llm-recipes', label: 'AI & LLM Recipes' },
-                { type: 'doc', id: 'ai-cookbook/llm-orchestration', label: 'LLM Orchestration' },
+                { type: 'doc', id: 'developer-guides/ai-orchestration', label: 'LLM Orchestration' },
+            ],
+        },
+        // OSS "Agents & AI" pages with no existing Orkes counterpart (mirrors the
+        // OSS menu; pages already covered by ai-cookbook/* above are omitted).
+        { type: 'doc', id: 'devguide/ai', label: 'Overview' },
+        { type: 'doc', id: 'devguide/concepts/agents', label: 'Agent Concepts' },
+        { type: 'doc', id: 'devguide/ai/conductor-agents', label: 'Conductor Agents' },
+        { type: 'doc', id: 'devguide/ai/multi-agent-architecture', label: 'Multi-Agent Architecture' },
+        { type: 'doc', id: 'devguide/ai/deploying-agents', label: 'Deploying Agents' },
+        { type: 'doc', id: 'devguide/ai/agent-configuration', label: 'Agent Configuration' },
+        { type: 'doc', id: 'devguide/ai/scheduling-agents', label: 'Scheduling Agents' },
+        { type: 'doc', id: 'devguide/ai/agent-framework-recipes', label: 'Framework Agent Bridges' },
+        { type: 'doc', id: 'devguide/ai/a2a-integration', label: 'A2A Integration' },
+        {
+            type: 'category',
+            label: 'Govern',
+            items: [
+                { type: 'doc', id: 'devguide/ai/agent-guardrails', label: 'Agent Guardrails' },
+                { type: 'doc', id: 'devguide/ai/agent-evals', label: 'Agent Evals' },
+            ],
+        },
+    ],
+
+    // ==========================================================================
+    // AI COOKBOOK — OSS agentic-workflow / AI-agent recipes (mirrors the OSS
+    // "AI Cookbook" top-level menu: Overview + Agentic Workflows + AI Agents)
+    // ==========================================================================
+    aiCookbookSidebar: [
+        {
+            type: 'doc',
+            id: 'devguide/ai/cookbook',
+            label: 'AI Cookbook',
+            className: 'leftMenuHeader',
+        },
+        {
+            type: 'category',
+            label: 'Agentic Workflows',
+            items: [
+                { type: 'doc', id: 'devguide/ai/cookbook/rag-agent', label: 'RAG Agent' },
+                { type: 'doc', id: 'devguide/ai/cookbook/mcp-tool-calling', label: 'MCP Tool Calling' },
+                { type: 'doc', id: 'devguide/ai/cookbook/a2a-orchestration', label: 'A2A Agent Orchestration' },
+                { type: 'doc', id: 'devguide/ai/cookbook/hitl-approval', label: 'HITL Workflow' },
+                { type: 'doc', id: 'devguide/ai/cookbook/llm-guardrails', label: 'LLM with Guardrails' },
+                { type: 'doc', id: 'devguide/ai/cookbook/deep-research', label: 'Deep Research Agent' },
+                { type: 'doc', id: 'devguide/ai/cookbook/remote-a2a-delegation', label: 'A2A Delegation' },
+            ],
+        },
+        {
+            type: 'category',
+            label: 'AI Agents',
+            items: [
+                { type: 'doc', id: 'devguide/ai/cookbook/agent-tool-calling', label: 'Tool calling agent' },
+                { type: 'doc', id: 'devguide/ai/cookbook/agent-guardrails', label: 'Agent with guardrails' },
+                { type: 'doc', id: 'devguide/ai/cookbook/agent-handoff', label: 'Multi-agent handoff' },
+                { type: 'doc', id: 'devguide/ai/cookbook/agent-memory', label: 'Agent with memory' },
+                { type: 'doc', id: 'devguide/ai/cookbook/agent-cli-tools', label: 'Agent with CLI tools' },
+                { type: 'doc', id: 'devguide/ai/cookbook/agent-scatter-gather', label: 'Massively parallel agents' },
+                { type: 'doc', id: 'devguide/ai/cookbook/reusable-conductor-agent', label: 'Conductor agent' },
+                { type: 'doc', id: 'devguide/ai/cookbook/langchain-entitlement-investigator', label: 'LangChain investigator' },
+                { type: 'doc', id: 'devguide/ai/cookbook/google-adk-order-triage', label: 'ADK triage' },
+                { type: 'doc', id: 'devguide/ai/cookbook/parallel-specialist-review', label: 'Specialist review' },
+                { type: 'doc', id: 'devguide/ai/cookbook/human-approved-action', label: 'Agent approval' },
+                { type: 'doc', id: 'devguide/ai/cookbook/conductor-agent-cancellation', label: 'Agent cancellation' },
             ],
         },
     ],
@@ -404,6 +479,52 @@ const sidebars = {
         { type: 'doc', id: 'sdks/golang', label: 'Go' },
         { type: 'doc', id: 'sdks/ruby', label: 'Ruby' },
         { type: 'doc', id: 'sdks/rust', label: 'Rust' },
+    ],
+
+    // ==========================================================================
+    // DEPLOY — OSS self-managed deployment + advanced configuration
+    // ==========================================================================
+    deploySidebar: [
+        { type: 'doc', id: 'devguide/running/deploy', label: 'Docker', className: 'leftMenuHeader' },
+        { type: 'doc', id: 'devguide/running/source', label: 'From Source' },
+        { type: 'doc', id: 'devguide/running/hosted', label: 'Hosted' },
+        { type: 'doc', id: 'devguide/bestpractices', label: 'Best Practices' },
+        { type: 'doc', id: 'developer-guides/integration-with-cicd', label: 'CI/CD Integration' },
+        { type: 'doc', id: 'documentation/configuration/appconf', label: 'Configuration' },
+        {
+            type: 'category',
+            label: 'Metrics',
+            items: [
+                { type: 'doc', id: 'developer-guides/metrics-and-observability', label: 'Server Metrics' },
+                { type: 'doc', id: 'documentation/metrics/client', label: 'Client Metrics' },
+            ],
+        },
+        {
+            type: 'category',
+            label: 'Advanced',
+            items: [
+                { type: 'doc', id: 'documentation/advanced/extend', label: 'Extending Conductor' },
+                { type: 'doc', id: 'documentation/advanced/isolationgroups', label: 'Isolation Groups' },
+                { type: 'doc', id: 'documentation/advanced/archival-of-workflows', label: 'Archiving Workflows' },
+                { type: 'doc', id: 'documentation/advanced/externalpayloadstorage', label: 'External Payload Storage' },
+                { type: 'doc', id: 'documentation/advanced/file-storage', label: 'File Storage' },
+                { type: 'doc', id: 'documentation/advanced/redis', label: 'Redis' },
+                { type: 'doc', id: 'documentation/advanced/postgresql', label: 'PostgreSQL' },
+                { type: 'doc', id: 'documentation/advanced/opensearch', label: 'OpenSearch' },
+            ],
+        },
+    ],
+
+    // ==========================================================================
+    // CONTRIBUTE — conductor-oss project contribution docs
+    // ==========================================================================
+    contributeSidebar: [
+        { type: 'doc', id: 'resources/contribute', label: 'Overview', className: 'leftMenuHeader' },
+        { type: 'doc', id: 'resources/contribute/repositories', label: 'Repositories' },
+        { type: 'doc', id: 'resources/contributing', label: 'Contribution Guide' },
+        { type: 'doc', id: 'resources/contribute/best-practices', label: 'Best Practices' },
+        { type: 'doc', id: 'resources/contribute/code-of-conduct', label: 'Code of Conduct' },
+        { type: 'doc', id: 'resources/contribute/get-help', label: 'Get Help' },
     ],
 
     // ==========================================================================
@@ -443,6 +564,8 @@ const sidebars = {
                         { type: 'doc', id: 'reference-docs/operators/yield', label: 'Yield' },
                         { type: 'doc', id: 'reference-docs/operators/set-variable', label: 'Set Variable' },
                         { type: 'doc', id: 'reference-docs/operators/get-workflow', label: 'Get Workflow' },
+                        // OSS-only operator (no Orkes counterpart)
+                        { type: 'doc', id: 'documentation/configuration/workflowdef/operators/exclusive-join-task', label: 'Exclusive Join' },
                     ],
                 },
                 {
@@ -463,6 +586,10 @@ const sidebars = {
                         'reference-docs/system-tasks/get-signed-jwt',
                         'reference-docs/system-tasks/update-task',
                         'reference-docs/system-tasks/grpc',
+                        // OSS-only system tasks (no Orkes counterpart)
+                        { type: 'doc', id: 'documentation/configuration/workflowdef/systemtasks/kafka-publish-task', label: 'Kafka Publish' },
+                        { type: 'doc', id: 'documentation/configuration/workflowdef/systemtasks/noop-task', label: 'No-op' },
+                        { type: 'doc', id: 'documentation/configuration/workflowdef/systemtasks/pull-workflow-messages-task', label: 'Pull Workflow Messages' },
                         {
                             type: 'category',
                             label: 'Alerting Tasks',
@@ -477,22 +604,20 @@ const sidebars = {
                             label: 'AI Tasks',
                             link: { type: 'doc', id: 'reference-docs/ai-tasks' },
                             items: [
-                                { type: 'doc', id: 'reference-docs/ai-tasks/llm-chat-complete', label: 'LLM Chat Complete' },
-                                { type: 'doc', id: 'reference-docs/ai-tasks/llm-text-complete', label: 'LLM Text Complete' },
-                                { type: 'doc', id: 'reference-docs/ai-tasks/llm-generate-embeddings', label: 'LLM Generate Embeddings' },
-                                { type: 'doc', id: 'reference-docs/ai-tasks/llm-store-embeddings', label: 'LLM Store Embeddings' },
-                                { type: 'doc', id: 'reference-docs/ai-tasks/llm-get-embeddings', label: 'LLM Get Embeddings' },
-                                { type: 'doc', id: 'reference-docs/ai-tasks/llm-index-text', label: 'LLM Index Text' },
-                                { type: 'doc', id: 'reference-docs/ai-tasks/llm-index-document', label: 'LLM Index Document' },
-                                { type: 'doc', id: 'reference-docs/ai-tasks/llm-search-index', label: 'LLM Search Index' },
-                                { type: 'doc', id: 'reference-docs/ai-tasks/llm-get-document', label: 'Get Document' },
-                                { type: 'doc', id: 'reference-docs/ai-tasks/parse-document', label: 'Parse Document' },
-                                { type: 'doc', id: 'reference-docs/ai-tasks/chunk-text', label: 'Chunk Text' },
-                                { type: 'doc', id: 'reference-docs/ai-tasks/list-files', label: 'List Files' },
+                                { type: 'doc', id: 'reference-docs/ai-tasks', label: 'LLM Chat Complete' },
                             ],
                         },
                     ],
                 },
+            ],
+        },
+        {
+            // OSS-only workflow-definition reference pages (no Orkes counterpart)
+            type: 'category',
+            label: 'Workflow Definition',
+            items: [
+                { type: 'doc', id: 'documentation/configuration/workflowdef', label: 'Workflow Definition' },
+                { type: 'doc', id: 'documentation/configuration/schemas', label: 'Schemas' },
             ],
         },
         {
@@ -508,6 +633,10 @@ const sidebars = {
             className: 'leftMenuHeader',
             items: [
                 { type: 'doc', id: 'sdks/authentication', label: 'Authentication' },
+                // OSS-only API references (no Orkes counterpart)
+                { type: 'doc', id: 'documentation/api/agents', label: 'Conductor Agents API' },
+                { type: 'doc', id: 'documentation/api/bulk', label: 'Bulk API' },
+                { type: 'doc', id: 'documentation/api/files', label: 'Files API' },
                 {
                     type: 'category',
                     label: 'Metadata',
@@ -529,11 +658,7 @@ const sidebars = {
                         description: 'Use the Task APIs to manage task executions, retrieve task details, update task status, and log task messages programmatically.',
                     },
                     items: [
-                        'reference-docs/api/task/get-task',
-                        'reference-docs/api/task/add-task-log',
-                        'reference-docs/api/task/update-task-status-in-workflow',
-                        'reference-docs/api/task/signal-running-task-asynchronously',
-                        'reference-docs/api/task/signal-running-task-synchronously',
+                        'reference-docs/api/task',
                         {
                             type: 'category',
                             label: 'Task Queue',

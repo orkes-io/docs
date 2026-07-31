@@ -10,7 +10,7 @@ name: Deploy Docs to S3 — non-prod
 
 on:
   push:
-    branches: [docs_site_revamp]
+    branches: [refactor/docs-oss-enterprise-merge]
   workflow_dispatch:
 
 permissions:

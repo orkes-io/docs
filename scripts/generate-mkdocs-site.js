@@ -71,7 +71,7 @@ const ROUTE_METADATA_OVERRIDES = {
     description:
       "Developer guides for building, running, monitoring, and operating Orkes Conductor workflows, workers, AI agents, eventing, gateways, and security.",
   },
-  "category/event-driven-orchestration": {
+  "category/cookbook/event-driven": {
     title: "Event-Driven Orchestration",
     description:
       "Build event-driven workflows with webhooks, event handlers, event publishing tasks, and message broker integrations.",
@@ -153,7 +153,7 @@ const ROUTE_METADATA_OVERRIDES = {
   "reference-docs/operators/human": {
     title: "Human",
   },
-  "reference-docs/api/workflow/terminate-workflow": {
+  "reference-docs/api/workflow": {
     title: "Terminate Workflow API",
   },
   "quickstarts/workflows": {
@@ -315,11 +315,14 @@ const topSections = [
   ["Quickstart", "quickstartSidebar"],
   ["Developer Guides", "guidesSidebar"],
   ["AI Agents", "aiSidebar"],
+  ["AI Cookbook", "aiCookbookSidebar"],
   ["Event Orchestration", "eventingSidebar"],
   ["Security", "rbacSidebar"],
   ["Cookbook", "cookbookSidebar"],
   ["SDKs", "sdksSidebar"],
+  ["Deploy", "deploySidebar"],
   ["Reference", "referenceSidebar"],
+  ["Contribute", "contributeSidebar"],
 ];
 
 const routeBySource = new Map();
@@ -450,6 +453,27 @@ function copyRecursive(src, dest) {
   fs.copyFileSync(src, dest);
 }
 
+// Copy every non-markdown file under OSS_DOCS into OUT_DIR at the same relative
+// path so cross-directory asset references in OSS pages resolve. Skips css/
+// (regenerated) and overrides/ (theme dir); never overwrites existing files so
+// static/ and Orkes branding copied earlier win.
+function mirrorOssAssets(dir) {
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const abs = path.join(dir, entry.name);
+    const rel = posixPath(path.relative(OSS_DOCS, abs));
+    if (entry.isDirectory()) {
+      if (rel === "css" || rel === "overrides") continue;
+      mirrorOssAssets(abs);
+    } else if (!/\.(md|mdx)$/i.test(entry.name)) {
+      const dest = path.join(OUT_DIR, rel);
+      if (!fs.existsSync(dest)) {
+        ensureDir(path.dirname(dest));
+        fs.copyFileSync(abs, dest);
+      }
+    }
+  }
+}
+
 function listMarkdownFiles(dir) {
   const files = [];
   function walk(current) {
@@ -510,7 +534,30 @@ function collectSourceEntries() {
     const list = missing.map((entry) => `- ${entry.sourceRel}`).join("\n");
     throw new Error(`Missing shared OSS docs. Run scripts/fetch-oss-docs.sh or set OSS_DOCS_DIR.\n${list}`);
   }
-  return [...entries, ...sharedEntries];
+
+  // Full-tree merge: surface EVERY OSS page not explicitly mapped above, at its
+  // native OSS route, so all of conductor-oss/docs appears under /content/.
+  // Skip the site-root index (would clobber the homepage) and any route that
+  // collides with a mapped OSS page or a kept Orkes page.
+  const mappedSources = new Set(sharedEntries.map((e) => e.sourceRel));
+  const usedRoutes = new Set([
+    ...entries.map((e) => docIdFromRel(e.sourceRel)),
+    ...sharedEntries.map((e) => e.route),
+  ]);
+  const fullTree = [];
+  for (const file of listMarkdownFiles(OSS_DOCS)) {
+    const sourceRel = posixPath(path.relative(OSS_DOCS, file));
+    if (mappedSources.has(sourceRel)) continue;
+    // Never surface the OSS site-root index — the Orkes homepage is generated
+    // separately and written to index.md; letting OSS's index.md through here
+    // would clobber it.
+    if (sourceRel === "index.md" || sourceRel === "index.mdx") continue;
+    const route = docIdFromRel(sourceRel);
+    if (!route || route === "index" || usedRoutes.has(route)) continue;
+    usedRoutes.add(route);
+    fullTree.push({ file, sourceRel, docId: route, route, shared: true });
+  }
+  return [...entries, ...sharedEntries, ...fullTree];
 }
 
 function splitFrontMatter(contents) {
@@ -788,6 +835,18 @@ function buildFrontMatter(frontMatter, route, title) {
   }
   if (description) {
     lines.push(`description: ${yamlString(description)}`);
+  }
+  // Preserve the front-matter keys the OSS macros plugin (main.py) keys off of:
+  // sdk_page drives the shared SDK "Start here"/"Featured examples" tables,
+  // source_repo the summary-card source line, redirect_to the canonical URL.
+  if (frontMatter.sdk_page) {
+    lines.push(`sdk_page: ${yamlString(frontMatter.sdk_page)}`);
+  }
+  if (frontMatter.source_repo) {
+    lines.push(`source_repo: ${yamlString(frontMatter.source_repo)}`);
+  }
+  if (frontMatter.redirect_to) {
+    lines.push(`redirect_to: ${yamlString(frontMatter.redirect_to)}`);
   }
   if (route !== "") {
     lines.push(`canonical_route: ${yamlString(route)}`);
@@ -1874,9 +1933,9 @@ async function greet(task: Task) {
         <div class="hp-journey-badge">2</div>
         <h3>Build Workflows &amp; Tasks</h3>
         <div class="hp-journey-links">
-          <a href="${BASE_URL}/developer-guides/workflows" class="hp-journey-chip">Workflows</a>
+          <a href="${BASE_URL}/quickstart/workflows" class="hp-journey-chip">Workflows</a>
           <a href="${BASE_URL}/developer-guides/tasks" class="hp-journey-chip">Tasks</a>
-          <a href="${BASE_URL}/developer-guides/using-workers" class="hp-journey-chip">Workers</a>
+          <a href="${BASE_URL}/quickstart/workers" class="hp-journey-chip">Workers</a>
         </div>
       </div>
 
@@ -2256,42 +2315,58 @@ function readPositionForSource(sourceRel) {
   return readPosition(file);
 }
 
-function navFromItems(items) {
+// `seen` (optional) is a shared Set of output paths used to deduplicate the main
+// navigation: the same page listed in multiple sidebar sections (some pre-existing,
+// some from migration route-repointing) otherwise renders as duplicate menu items.
+// First occurrence wins; a category left with no children after dedupe is dropped.
+function navFromItems(items, seen) {
+  const takeOnce = (outRel) => {
+    if (!seen) return true;
+    if (seen.has(outRel)) return false;
+    seen.add(outRel);
+    return true;
+  };
   const nav = [];
   for (const item of items || []) {
     if (typeof item === "string") {
       const outRel = outByDocId.get(item);
-      if (outRel) nav.push({ [titleForOutRel(outRel, item)]: outRel });
-      else warnings.push(`Missing doc id in nav: ${item}`);
+      if (!outRel) warnings.push(`Missing doc id in nav: ${item}`);
+      else if (takeOnce(outRel)) nav.push({ [titleForOutRel(outRel, item)]: outRel });
       continue;
     }
     if (!item || typeof item !== "object") continue;
     if (item.type === "doc") {
       const outRel = outByDocId.get(item.id);
-      if (outRel) nav.push({ [item.label || titleForOutRel(outRel, item.id)]: outRel });
-      else warnings.push(`Missing doc id in nav: ${item.id}`);
+      if (!outRel) warnings.push(`Missing doc id in nav: ${item.id}`);
+      else if (takeOnce(outRel)) nav.push({ [item.label || titleForOutRel(outRel, item.id)]: outRel });
       continue;
     }
     if (item.type === "link") {
       const href = String(item.href || "").trim();
       const route = routeFromSidebarHref(href);
-      if (route === null) nav.push({ [item.label || href]: href });
-      else nav.push({ [item.label || titleForOutRel(routeToOutRel(route), route)]: routeToOutRel(route) });
+      if (route === null) {
+        nav.push({ [item.label || href]: href });
+      } else {
+        const outRel = routeToOutRel(route);
+        if (takeOnce(outRel)) nav.push({ [item.label || titleForOutRel(outRel, route)]: outRel });
+      }
       continue;
     }
     if (item.type === "category") {
       const page = categoryPageForLink(item.link, item.label, item.items);
       const children = [];
-      if (page && page.outRel) {
+      if (page && page.outRel && takeOnce(page.outRel)) {
         children.push({ [page.label || item.label]: page.outRel });
       }
-      children.push(...navFromItems(item.items || []));
-      nav.push({ [item.label]: children });
+      children.push(...navFromItems(item.items || [], seen));
+      // Drop a category that has become empty after dedupe (e.g. a duplicate
+      // group whose every page already appears in an earlier section).
+      if (children.length) nav.push({ [item.label]: children });
       continue;
     }
     if (item.type === "autogenerated") {
       for (const generated of autogeneratedItems(item.dirName)) {
-        nav.push({ [generated.label]: generated.outRel });
+        if (takeOnce(generated.outRel)) nav.push({ [generated.label]: generated.outRel });
       }
     }
   }
@@ -2433,12 +2508,13 @@ function buildNav() {
   createCookbookGeneratedPages();
 
   const nav = [];
+  const navSeen = new Set(["index.md"]);
   nav.push({ Home: "index.md" });
   for (const [label, sidebarId] of topSections) {
-    nav.push({ [label]: navFromItems(sidebars[sidebarId]) });
+    nav.push({ [label]: navFromItems(sidebars[sidebarId], navSeen) });
   }
 
-  nav.push({ Integrations: navFromItems(sidebars.integrationsSidebar) });
+  nav.push({ Integrations: navFromItems(sidebars.integrationsSidebar, navSeen) });
   nav.push({ Blog: "https://orkes.io/blog/" });
 
   // Keep legacy indexed category URLs even when their groups are intentionally
@@ -2457,7 +2533,7 @@ function buildNav() {
     [
       {
         type: "doc",
-        id: "conceptual-guides/architecture",
+        id: "core-concepts",
         label: "Conductor Architecture and Worker Polling",
       },
       { type: "doc", id: "core-concepts" },
@@ -2469,7 +2545,7 @@ function buildNav() {
     "Building Workflows",
     "Learn the fundamentals of building workflows in Orkes Conductor, including workflow structure, task configuration, parameter wiring, validation, secrets, error handling, and rate limits.",
     [
-      { type: "doc", id: "developer-guides/workflows" },
+      { type: "doc", id: "quickstart/workflows" },
       { type: "doc", id: "developer-guides/write-workflows-using-code" },
       {
         type: "doc",
@@ -2477,7 +2553,7 @@ function buildNav() {
         label: "Build Workflows Using UI",
       },
       { type: "doc", id: "developer-guides/convert-bpmn-to-workflows" },
-      { type: "doc", id: "developer-guides/tasks-in-workflows" },
+      { type: "doc", id: "quickstart/tasks" },
       {
         type: "doc",
         id: "developer-guides/passing-inputs-to-task-in-conductor",
@@ -2493,7 +2569,7 @@ function buildNav() {
     "Task Workers and Queues",
     "Learn how to configure and manage task workers and queues, including writing workers, scaling them, and routing tasks to the appropriate workers.",
     [
-      { type: "doc", id: "developer-guides/using-workers" },
+      { type: "doc", id: "quickstart/workers" },
       { type: "doc", id: "developer-guides/scaling-workers" },
       { type: "doc", id: "developer-guides/task-to-domain" },
     ],
@@ -2602,6 +2678,7 @@ extra_css:
 
 plugins:
   - search
+  - macros
 
 markdown_extensions:
   - admonition
@@ -2612,19 +2689,62 @@ markdown_extensions:
   - pymdownx.highlight:
       anchor_linenums: true
   - pymdownx.inlinehilite
-  - pymdownx.snippets
+  - pymdownx.snippets:
+      base_path:
+        - ${path.dirname(OSS_DOCS)}
+        - .
+      check_paths: false
   - pymdownx.superfences:
       custom_fences:
         - name: mermaid
           class: mermaid
-          format: !!python/name:pymdownx.superfences.fence_code_format
+          format: !!python/name:main.mermaid_fence
   - pymdownx.tabbed:
       alternate_style: true
   - pymdownx.details
 
 copyright: Orkes, Inc.
 `;
-  write(path.join(ROOT, "mkdocs.yml"), mkdocs);
+  // Wire the mkdocs-redirects plugin from docs-redirects.json (old Orkes route
+  // → canonical route, for the many:1 pages served from a single OSS page).
+  let mkdocsOut = mkdocs;
+  const redirectsFile = path.join(ROOT, "docs-redirects.json");
+  if (fs.existsSync(redirectsFile)) {
+    const redirects = JSON.parse(read(redirectsFile));
+    const entries = Object.entries(redirects)
+      .map(([from, to]) => `        ${from}.md: ${to}.md`)
+      .join("\n");
+    if (entries) {
+      mkdocsOut = mkdocsOut.replace(
+        "plugins:\n  - search\n",
+        `plugins:\n  - search\n  - redirects:\n      redirect_maps:\n${entries}\n`,
+      );
+    }
+  }
+  // The `macros` plugin (above) runs conductor-oss/main.py's on_pre_page_macros
+  // hook at build time: it injects the per-page summary card after each H1 and
+  // the shared SDK "Start here"/"Featured examples" tables. mkdocs-macros loads
+  // `main.py` from the config dir (repo root), so vendor a copy of the OSS file
+  // there on every build to stay in sync with the OSS source.
+  const ossMainPy = path.join(OSS_DOCS, "..", "main.py");
+  if (fs.existsSync(ossMainPy)) {
+    let mainPy = read(ossMainPy);
+    // "Run your first workflow" is served at the Orkes /quickstarts URL (1:1
+    // remap in shared-docs-map.json), so point the SDK-intro link there.
+    mainPy = mainPy.replace(/\.\.\/\.\.\/quickstart\/first-workflow\.md/g, "../quickstarts.md");
+    // sdk_intro()'s remaining quickstart links assume the OSS 2-level path
+    // (documentation/clientsdks/*.md), but we remap SDK pages to a 1-level route
+    // (sdks/*.md). Adjust the relative depth so mkdocs resolves them from our
+    // layout (mkdocs_content/sdks/<name>.md -> ../quickstart/...).
+    mainPy = mainPy.replace(/\.\.\/\.\.\/quickstart\//g, "../quickstart/");
+    write(path.join(ROOT, "main.py"), mainPy);
+  } else {
+    throw new Error(
+      `macros plugin is enabled but OSS main.py was not found at ${ossMainPy}. ` +
+        "It provides on_pre_page_macros (summary cards + SDK intro).",
+    );
+  }
+  write(path.join(ROOT, "mkdocs.yml"), mkdocsOut);
 }
 
 function writeOverrides() {
@@ -2798,7 +2918,21 @@ function writeOverrides() {
   {% endif %}
 {% endblock %}
 
-{% block extrahead %}`,
+{% block extrahead %}
+  {% if page and page.url %}
+    {% if page.url == "index.html" or page.url.endswith("/index.html") %}
+      {% set page_path = page.url[:-10] %}
+    {% elif page.url.endswith(".html") %}
+      {% set page_path = page.url[:-5] %}
+    {% else %}
+      {% set page_path = page.url %}
+    {% endif %}
+  {% else %}
+    {% set page_path = "" %}
+  {% endif %}
+  {% if page and page.meta and page.meta.canonical_route %}
+    {% set page_path = page.meta.canonical_route %}
+  {% endif %}`,
   );
   main = main.replace(
     /{% set page_title = page\.title ~ " — " ~ config\.site_name if page and page\.title else config\.site_name ~ " — Durable Execution Engine" %}/,
@@ -2943,7 +3077,7 @@ function writeOverrides() {
   {% if page and page.url and page.url != '404.html' and (
     page_path.startswith("sdks/")
     or page_path.startswith("developer-guides/write-workflows")
-    or page_path.startswith("developer-guides/using-workers")
+    or page_path.startswith("quickstart/workers")
     or page_path.startswith("developer-guides/scaling-workers")
     or page_path == "developer-guides/tasks"
     or page_path.startswith("quickstarts/")
@@ -3070,6 +3204,19 @@ function prepareOutput() {
   }
   write(path.join(OUT_DIR, "css", "custom.css"), HOME_PAGE_FONT_IMPORT + customCss);
   copyRecursive(path.join(OSS_DOCS, "img", "og-conductor.png"), path.join(OUT_DIR, "img", "og-conductor.png"));
+  // Mirror every OSS non-markdown asset (images, svgs, json snippets, …) into the
+  // docs dir at its original OSS-relative path. copySharedAssets() only colocates
+  // files next to a page, so cross-directory references (e.g. deploy.md ->
+  // ../architecture/conductor-architecture.png) and shared trees (assets/…,
+  // img/logo.svg) otherwise render broken. Skip css/ (generated below) and
+  // overrides/ (the theme dir), and never clobber files already written.
+  mirrorOssAssets(OSS_DOCS);
+  // The hero graphics reference img/logo.svg as the Conductor logo, but our
+  // static/ dir ships a stale Docusaurus mascot at that path which the mirror
+  // won't overwrite. Force the OSS Conductor logo to win.
+  if (fs.existsSync(path.join(OSS_DOCS, "img", "logo.svg"))) {
+    fs.copyFileSync(path.join(OSS_DOCS, "img", "logo.svg"), path.join(OUT_DIR, "img", "logo.svg"));
+  }
   fs.appendFileSync(
     path.join(OUT_DIR, "css", "custom.css"),
     `
@@ -3759,6 +3906,7 @@ a.repo-link:hover {
 }
 `,
   );
+
   writeOverrides();
   write(
     path.join(OUT_DIR, "robots.txt"),
@@ -3807,7 +3955,7 @@ function writeLlmsTxt() {
     "ai-agents/durable-agents",
     "conductor-skills",
     "developer-guides/write-workflows-using-code",
-    "developer-guides/using-workers",
+    "quickstart/workers",
     "quickstarts/durable-execution",
     "quickstarts/json-code-native",
   ].filter((route) => titleByRoute.has(route));
