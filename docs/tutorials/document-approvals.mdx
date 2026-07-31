@@ -20,7 +20,7 @@ In this tutorial, you’ll build a workflow where:
 - If **Reviewer 2** approves, the user receives an approval email.
 - If **Reviewer 2** rejects, the user receives an email with the reviewer's feedback.
 
-The workflow is configured so that if the assigned reviewer does not act on the task within the SLA period of 24 hours, the task automatically becomes available for anyone to claim and complete. Learn more about [how assignment policies work for Human tasks](https://orkes.io/content/developer-guides/orchestrating-human-tasks#step-3-configure-the-human-task).
+The workflow is configured so that if the assigned reviewer does not act on the task within the SLA period of 24 hours, the task automatically becomes available for anyone to claim and complete. Learn more about [how assignment policies work for Human tasks](https://orkes.io/content/developer-guides/orchestrating-human-tasks).
 
 Here’s how the workflow looks like:
 
@@ -406,5 +406,5 @@ This is a basic document approval workflow with a two-step review process. You c
 - Adding additional review stages.
 - Integrating any LLM  for an AI-based review before human approval.
 - Adjusting the review SLA (currently set to 24 hours) to meet your specific timing requirements.
-- Configure the [Human task definition](https://orkes.io/content/developer-guides/orchestrating-human-tasks#step-2-define-a-human-task) with a [*timeoutSeconds*](https://orkes.io/content/error-handling#task-timeouts) value to enforce a task-level timeout. Additionally, [set up a trigger policy in Human task](https://orkes.io/content/developer-guides/orchestrating-human-tasks#step-3-configure-the-human-task) so that a notification workflow is automatically started if the task times out.
+- Configure the [Human task definition](https://orkes.io/content/developer-guides/orchestrating-human-tasks) with a [*timeoutSeconds*](https://orkes.io/content/error-handling#per-task-timeout-configuration) value to enforce a task-level timeout. Additionally, [set up a trigger policy in Human task](https://orkes.io/content/developer-guides/orchestrating-human-tasks) so that a notification workflow is automatically started if the task times out.
 - Configuring escalations at each review level based on SLA breaches, allowing reassignment to alternate reviewers.

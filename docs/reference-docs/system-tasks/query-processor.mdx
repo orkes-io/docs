@@ -14,7 +14,7 @@ The Query Processor task is used to execute queries across different data source
 Conductor supports querying from two primary sources:
 
 - **Conductor Search API**—This query type retrieves workflow execution data from the Conductor Search API using various parameters.
-- **Conductor Metrics (Prometheus)**—This query type retrieves [workflow and task performance metrics](/content/developer-guides/metrics-and-observability#conductor-metrics) as well as system statistics through Prometheus.
+- **Conductor Metrics (Prometheus)**—This query type retrieves [workflow and task performance metrics](/content/developer-guides/metrics-and-observability) as well as system statistics through Prometheus.
 
 ## Task parameters
 
@@ -43,7 +43,7 @@ Configure these parameters for the Query Processor task.
 
 | Parameter                         | Description                                                                                                                                                                                                                    | Required/ Optional |
 | --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------ |
-| inputParameters. **metricsQuery** | The Prometheus query to execute. Refer to [the list of metrics published to the Conductor server](docs/developer-guides/metrics-and-observability.mdx#conductor-metrics) to formulate your query.                              | Required.          |
+| inputParameters. **metricsQuery** | The Prometheus query to execute. Refer to [the list of metrics published to the Conductor server](/content/developer-guides/metrics-and-observability) to formulate your query.                              | Required.          |
 | inputParameters. **metricsStart** | The beginning of the time range for the query, in minutes from the current time. For example, setting this to 15 means the query will include data starting from 15 minutes ago.                                               | Required.          |
 | inputParameters. **metricsEnd**   | The end of the time range for the query, in minutes from the current time. Setting this to 0 means the query will include data up to the current time.                                                                         | Required.          |
 | inputParameters. **metricsStep**  | The time duration, in seconds, between data points in the query result (also known as the step or interval of the metrics query). For example, setting this to 1 means the query will include a data point for every 1 second. | Required.          |

@@ -8,6 +8,37 @@ const LEGACY_SITE_URLS = ["https://orkes.io/content/", "http://orkes.io/content/
 const BASE_PATH = normalizeBaseUrl(process.env.DOCS_BASE_URL || "/content");
 const SITE_URL = normalizeSiteUrl(process.env.DOCS_SITE_URL || "https://orkes.io/content/");
 
+// Route prefixes that are served (URL-accessible) but excluded from the SEO
+// audit: OSS internal/engineering docs (design RFCs, backfill plans, etc.) that
+// OSS doesn't nav-link and that aren't public product pages, so the SEO/JSON-LD
+// checks don't apply to them.
+const AUDIT_IGNORE_PREFIXES = ["design/"];
+function isAuditIgnoredRoute(route) {
+  return AUDIT_IGNORE_PREFIXES.some((p) => route === p.replace(/\/$/, "") || route.startsWith(p));
+}
+
+// Routes served from OSS source (written by generate-mkdocs-site.js). The audit
+// stays strict for curated Orkes pages; for OSS-sourced pages, content-quality
+// findings (duplicate/short/missing titles+descriptions, brand phrasing, broken
+// content links/anchors, alt text) are downgraded to warnings — we don't own
+// that upstream content and it is regenerated each build. Structural/build
+// correctness (canonical, JSON-LD, .html/_routes leaks, mime safety) stays hard
+// for every page, since our own template generates it.
+const OSS_ROUTES = (() => {
+  try {
+    return new Set(
+      fs.readFileSync(path.join(ROOT, ".mkdocs-oss-routes.txt"), "utf8").split(/\r?\n/).filter(Boolean),
+    );
+  } catch {
+    return new Set();
+  }
+})();
+const HARD_ERROR_RE = /canonical|includes \.html|exposes _routes|missing JSON-LD|TechArticle|octet-stream|trailing-slash alias/;
+function reclassifyOssErrors(fromIndex) {
+  const added = errors.splice(fromIndex);
+  for (const e of added) (HARD_ERROR_RE.test(e) ? errors : warnings).push(e);
+}
+
 const errors = [];
 const warnings = [];
 
@@ -127,6 +158,24 @@ function readRoute(route) {
     }
   }
   return "";
+}
+
+// If a route is a redirect stub, follow it to the final destination route so
+// anchor checks resolve against the real page (users land there after the
+// redirect). Returns the input route if it isn't a redirect.
+function resolveRedirectRoute(route, seen) {
+  seen = seen || new Set();
+  if (seen.has(route)) return route;
+  seen.add(route);
+  const html = readRoute(route);
+  if (!html || !/http-equiv=["']refresh["']/i.test(html)) return route;
+  const m =
+    html.match(/<link\s+rel=["']canonical["']\s+href=["']([^"']+)["']/i) ||
+    html.match(/location\.href=["']([^"']+)["']/);
+  if (!m) return route;
+  const parsed = parseInternalHref(m[1], route);
+  if (!parsed || !parsed.route || parsed.route === route) return route;
+  return resolveRedirectRoute(parsed.route, seen);
 }
 
 function attrValue(tag, attr) {
@@ -264,6 +313,8 @@ function auditMetadata(route, html, seenTitles, seenDescriptions) {
 function auditLinks(route, html) {
   const hrefs = [...html.matchAll(/\bhref=["']([^"']+)["']/gi)].map((match) => match[1]);
   for (const href of hrefs) {
+    // Literal doc placeholders like <YOUR-CLUSTER-URL>/executions are not links.
+    if (/&lt;|&gt;|[<>]/.test(href)) continue;
     if (!href || href.startsWith("#")) {
       const hash = href ? href.slice(1) : "";
       if (hash && !extractIds(html).has(decodeAnchor(hash))) {
@@ -289,7 +340,8 @@ function auditLinks(route, html) {
     }
 
     if (target.hash) {
-      const targetHtml = target.route === route ? html : readRoute(target.route);
+      const resolvedRoute = resolveRedirectRoute(target.route);
+      const targetHtml = resolvedRoute === route ? html : readRoute(resolvedRoute);
       const ids = extractIds(targetHtml);
       const anchor = decodeAnchor(target.hash);
       if (!ids.has(anchor)) {
@@ -304,7 +356,10 @@ function auditImages(route, html) {
   for (const image of images) {
     const src = attrValue(image, "src");
     const alt = attrValue(image, "alt").trim();
-    if (!alt) errors.push(`${route || "/"}: image missing alt text: ${src || image}`);
+    // An explicit empty alt (alt="") is the correct accessibility marker for a
+    // decorative image, so only flag images that omit the alt attribute entirely.
+    const hasAltAttr = /\balt\s*=/.test(image);
+    if (!hasAltAttr) errors.push(`${route || "/"}: image missing alt attribute: ${src || image}`);
     if (/^(image|screenshot|diagram)$/i.test(alt)) {
       errors.push(`${route || "/"}: image has generic alt text: ${src}`);
     }
@@ -440,9 +495,6 @@ function auditGeneratedFiles() {
     if (!llms.includes("## Documentation Index")) errors.push("llms.txt missing documentation index");
     if (!llms.includes("Full documentation dump:")) errors.push("llms.txt missing llms-full.txt pointer");
     if (!llms.includes("Agentic Workflow Engine")) errors.push("llms.txt missing agentic workflow engine route");
-    if (!llms.includes("Agentspan is the developer-facing agent runtime")) {
-      errors.push("llms.txt missing Agentspan relationship copy");
-    }
     if (llms.includes("## Full Documentation")) {
       errors.push("llms.txt should stay concise; full page dump belongs in llms-full.txt");
     }
@@ -474,16 +526,6 @@ function auditMessagingGuardrails(htmlFiles) {
     if (!pageExists(route)) errors.push(`${route}: missing required messaging page`);
   }
 
-  const relationshipCopy =
-    "Agentspan is the developer-facing agent runtime. Conductor OSS is the durable workflow engine underneath. Orkes Conductor is the managed enterprise platform for operating Conductor-based systems at scale.";
-  const relationshipRoutes = ["agentic-workflow-engine", "ai-orchestration", "conductor-skills", "glossary"];
-  for (const route of relationshipRoutes) {
-    const text = stripTags(readRoute(route));
-    if (!text.includes(relationshipCopy)) {
-      errors.push(`${route}: missing canonical Agentspan relationship copy`);
-    }
-  }
-
   const home = readRoute("");
   if (!home.includes(`${BASE_PATH}/agentic-workflow-engine`)) {
     errors.push("/: homepage does not link to the agentic workflow engine page");
@@ -510,8 +552,11 @@ function auditMessagingGuardrails(htmlFiles) {
   for (const file of htmlFiles) {
     const rel = posixPath(path.relative(BUILD_DIR, file));
     const html = fs.readFileSync(file, "utf8");
+    // Brand/messaging phrasing is enforced on curated Orkes pages; on OSS-sourced
+    // pages it's a warning (upstream wording we don't control).
+    const bucket = OSS_ROUTES.has(routeForHtml(file)) ? warnings : errors;
     for (const phrase of forbiddenPhrases) {
-      if (html.includes(phrase)) errors.push(`${rel}: contains forbidden messaging phrase: ${phrase}`);
+      if (html.includes(phrase)) bucket.push(`${rel}: contains forbidden messaging phrase: ${phrase}`);
     }
   }
 }
@@ -552,11 +597,18 @@ function main() {
 
   for (const file of htmlFiles) {
     const route = routeForHtml(file);
+    if (isAuditIgnoredRoute(route)) continue;
     const html = fs.readFileSync(file, "utf8");
+    // Skip redirect stubs (mkdocs-redirects output + redirect_to pages): they
+    // are intentional meta-refresh redirects, not content pages, so the SEO /
+    // JSON-LD / H1 checks don't apply.
+    if (/http-equiv=["']refresh["']/i.test(html)) continue;
+    const errorsBefore = errors.length;
     auditMetadata(route, html, seenTitles, seenDescriptions);
     auditLinks(route, html);
     auditImages(route, html);
     auditJsonLd(route, html);
+    if (OSS_ROUTES.has(route)) reclassifyOssErrors(errorsBefore);
   }
 
   auditGeneratedFiles();

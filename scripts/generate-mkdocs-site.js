@@ -2939,26 +2939,19 @@ function writeOverrides() {
     `{% set resolved_title = page.meta.title if page and page.meta and page.meta.title else page.title if page and page.title else "" %}
   {% set page_title = resolved_title ~ " | Orkes Docs" if resolved_title else "Orkes Conductor Docs" %}`,
   );
+  // Define the schema/JSON-LD vars the TechArticle block needs. Anchored on the
+  // page_url `{% set %}` line in whatever form the OSS main.html uses — the
+  // agent_docs branch rewrote it to add redirect handling, which broke the old
+  // exact-match anchor and left these vars undefined (empty @id/keywords/
+  // dateModified → SEO audit failed on every page). We compute the schema @ids
+  // from page_path (the canonical route, set above), so they resolve to
+  // SITE_URL + route with no trailing slash — matching the audit's expectation.
   main = main.replace(
-    /{% set page_url = config\.site_url ~ page\.url if page and page\.url else config\.site_url %}/,
-    `{% if page and page.url %}
-    {% if page.url == "index.html" or page.url.endswith("/index.html") %}
-      {% set page_path = page.url[:-10] %}
-    {% elif page.url.endswith(".html") %}
-      {% set page_path = page.url[:-5] %}
-    {% else %}
-      {% set page_path = page.url %}
-    {% endif %}
-  {% else %}
-    {% set page_path = "" %}
-  {% endif %}
-  {% if page and page.meta and page.meta.canonical_route %}
-    {% set page_path = page.meta.canonical_route %}
-  {% endif %}
-  {% set page_url = config.site_url ~ page_path %}
-  {% set page_schema_id = page_url ~ "#webpage" %}
-  {% set article_schema_id = page_url ~ "#techarticle" %}
-  {% set source_code_schema_id = page_url ~ "#sourcecode" %}
+    /(\n\s*\{%\s*set page_url =[^\n]*%\})/,
+    `$1
+  {% set page_schema_id = config.site_url ~ page_path ~ "#webpage" %}
+  {% set article_schema_id = config.site_url ~ page_path ~ "#techarticle" %}
+  {% set source_code_schema_id = config.site_url ~ page_path ~ "#sourcecode" %}
   {% set page_keywords = page.meta.keywords if page and page.meta and page.meta.keywords else "Orkes Conductor, durable execution, workflow orchestration, agentic workflows, AI agents" %}
   {% set page_updated = page.meta.updated if page and page.meta and page.meta.updated else "${DOCS_LAST_MODIFIED}" %}`,
   );
@@ -4056,6 +4049,18 @@ function main() {
 
   const routeList = [...titleByRoute.keys()].sort();
   write(path.join(ROOT, ".mkdocs-routes.txt"), `${routeList.join("\n")}\n`);
+  // Routes served from OSS source. The SEO/brand audit stays strict for curated
+  // Orkes pages but is relaxed (content-quality issues become warnings) for
+  // these, since the OSS content is upstream-owned and regenerated each build.
+  const ossRouteList = [
+    ...new Set(
+      entries
+        .filter((entry) => entry.shared)
+        .map((entry) => routeBySource.get(entry.sourceRel) ?? entry.route)
+        .filter(Boolean),
+    ),
+  ].sort();
+  write(path.join(ROOT, ".mkdocs-oss-routes.txt"), `${ossRouteList.join("\n")}\n`);
 
   if (warnings.length) {
     console.warn("MkDocs conversion warnings:");
