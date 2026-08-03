@@ -223,8 +223,8 @@
     },
     {
       "source": "devguide/how-tos/Workflows/handling-errors.md",
-      "docId": "developer-guides/error-handling",
-      "route": "developer-guides/error-handling"
+      "docId": "error-handling",
+      "route": "error-handling"
     },
     {
       "source": "devguide/how-tos/cicd-integration.md",

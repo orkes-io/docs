@@ -76,7 +76,7 @@
   "ai-orchestration": "developer-guides/ai-orchestration",
   "conductor-architecture": "core-concepts",
   "conductor-skills": "developer-guides/conductor-skills",
-  "error-handling": "developer-guides/error-handling",
+  "developer-guides/error-handling": "error-handling",
   "rate-limits": "developer-guides/rate-limits",
   "why-conductor-for-ai-agents": "ai-cookbook/why-conductor",
   "ai-agents/durable-agents": "ai-cookbook/production-agent-architecture",
