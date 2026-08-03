@@ -102,7 +102,7 @@ const sidebars = {
                             id: 'developer-guides/idempotency',
                             label: 'Idempotency',
                         },
-                        'developer-guides/error-handling',
+                        'error-handling',
                         {
                             type: 'doc',
                             id: 'developer-guides/debugging-workflows',
