@@ -1819,46 +1819,46 @@ agent <span style="color:var(--pun)">=</span> <span style="color:var(--fn)">Agen
       <div class="hp-sdk-panel" data-panel="python">
         <div class="hp-sdk-install-col">
           <div class="hp-sdk-install-label">Install</div>
-          <pre class="hp-sdk-install-cmd">pip install conductor-python</pre>
+          <pre class="hp-sdk-install-cmd"><code>pip install conductor-python</code></pre>
           <p class="hp-sdk-caption">Decorate a function with @worker_task &mdash; Conductor handles polling, retries, and threads.</p>
           <a class="hp-sdk-link" href="${BASE_URL}/sdks/python">Python SDK reference &rarr;</a>
         </div>
         <div class="hp-sdk-code-col">
           <div class="hp-editor-chrome"><span class="hp-dot red"></span><span class="hp-dot yellow"></span><span class="hp-dot green"></span><span class="hp-filename">greet_worker</span></div>
-          <pre>from conductor.client.worker.worker_task import worker_task
+          <pre><code>from conductor.client.worker.worker_task import worker_task
 
 @worker_task(task_definition_name="greet")
 def greet(name: str) -&gt; str:
-    return f"Hello, {name}!"</pre>
+    return f"Hello, {name}!"</code></pre>
         </div>
       </div>
 
       <div class="hp-sdk-panel" data-panel="java">
         <div class="hp-sdk-install-col">
           <div class="hp-sdk-install-label">Install</div>
-          <pre class="hp-sdk-install-cmd">implementation 'org.conductoross:conductor-client:5.0.1'</pre>
+          <pre class="hp-sdk-install-cmd"><code>implementation 'org.conductoross:conductor-client:5.0.1'</code></pre>
           <p class="hp-sdk-caption">Annotate a method with @WorkerTask &mdash; Conductor handles polling, retries, and thread management.</p>
           <a class="hp-sdk-link" href="${BASE_URL}/sdks/java">Java SDK reference &rarr;</a>
         </div>
         <div class="hp-sdk-code-col">
           <div class="hp-editor-chrome"><span class="hp-dot red"></span><span class="hp-dot yellow"></span><span class="hp-dot green"></span><span class="hp-filename">greet_worker</span></div>
-          <pre>@WorkerTask("greet")
+          <pre><code>@WorkerTask("greet")
 public String greet(@InputParam("name") String name) {
     return "Hello, " + name + "!";
-}</pre>
+}</code></pre>
         </div>
       </div>
 
       <div class="hp-sdk-panel" data-panel="js">
         <div class="hp-sdk-install-col">
           <div class="hp-sdk-install-label">Install</div>
-          <pre class="hp-sdk-install-cmd">npm install @io-orkes/conductor-javascript</pre>
+          <pre class="hp-sdk-install-cmd"><code>npm install @io-orkes/conductor-javascript</code></pre>
           <p class="hp-sdk-caption">Decorate an async function with @worker and return a task result.</p>
           <a class="hp-sdk-link" href="${BASE_URL}/sdks/javascript">JavaScript SDK reference &rarr;</a>
         </div>
         <div class="hp-sdk-code-col">
           <div class="hp-editor-chrome"><span class="hp-dot red"></span><span class="hp-dot yellow"></span><span class="hp-dot green"></span><span class="hp-filename">greet_worker</span></div>
-          <pre>import { worker } from "@io-orkes/conductor-javascript";
+          <pre><code>import { worker } from "@io-orkes/conductor-javascript";
 
 @worker({ taskDefName: "greet" })
 async function greet(task: Task) {
@@ -1866,37 +1866,37 @@ async function greet(task: Task) {
     status: "COMPLETED",
     outputData: { result: \`Hello \${task.inputData.name}\` },
   };
-}</pre>
+}</code></pre>
         </div>
       </div>
 
       <div class="hp-sdk-panel" data-panel="go">
         <div class="hp-sdk-install-col">
           <div class="hp-sdk-install-label">Install</div>
-          <pre class="hp-sdk-install-cmd">go get github.com/conductor-sdk/conductor-go</pre>
+          <pre class="hp-sdk-install-cmd"><code>go get github.com/conductor-sdk/conductor-go</code></pre>
           <p class="hp-sdk-caption">Register a plain function as a worker &mdash; Conductor runs the polling loop.</p>
           <a class="hp-sdk-link" href="${BASE_URL}/sdks/golang">Go SDK reference &rarr;</a>
         </div>
         <div class="hp-sdk-code-col">
           <div class="hp-editor-chrome"><span class="hp-dot red"></span><span class="hp-dot yellow"></span><span class="hp-dot green"></span><span class="hp-filename">greet_worker</span></div>
-          <pre>func Greet(task *model.Task) (interface{}, error) {
+          <pre><code>func Greet(task *model.Task) (interface{}, error) {
     return map[string]interface{}{
         "hello": "Hello, " + fmt.Sprintf("%v", task.InputData["person_to_be_greated"]),
     }, nil
-}</pre>
+}</code></pre>
         </div>
       </div>
 
       <div class="hp-sdk-panel" data-panel="csharp">
         <div class="hp-sdk-install-col">
           <div class="hp-sdk-install-label">Install</div>
-          <pre class="hp-sdk-install-cmd">dotnet add package conductor-csharp</pre>
+          <pre class="hp-sdk-install-cmd"><code>dotnet add package conductor-csharp</code></pre>
           <p class="hp-sdk-caption">Implement IWorkflowTask for a class-based worker with full control over execution.</p>
           <a class="hp-sdk-link" href="${BASE_URL}/sdks/csharp">C# SDK reference &rarr;</a>
         </div>
         <div class="hp-sdk-code-col">
           <div class="hp-editor-chrome"><span class="hp-dot red"></span><span class="hp-dot yellow"></span><span class="hp-dot green"></span><span class="hp-filename">greet_worker</span></div>
-          <pre>public class GreetWorker : IWorkflowTask
+          <pre><code>public class GreetWorker : IWorkflowTask
 {
     public string TaskType =&gt; "greet";
     public WorkflowTaskExecutorConfiguration WorkerSettings { get; } = new();
@@ -1908,7 +1908,7 @@ async function greet(task: Task) {
         result.OutputData = new Dictionary&lt;string, object&gt; { ["result"] = $"Hello, {name}!" };
         return result;
     }
-}</pre>
+}</code></pre>
         </div>
       </div>
 
@@ -3689,7 +3689,8 @@ a.repo-link:hover {
 }
 .hp-sdk-install-cmd {
   font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #c9c4e6; background: #0d0b22;
-  border: 1px solid #241f45; border-radius: 9px; padding: 12px 14px; word-break: break-all; margin: 0;
+  border: 1px solid #241f45; border-radius: 9px; padding: 12px 14px; margin: 0;
+  white-space: pre-wrap; overflow-wrap: anywhere;
 }
 .hp-sdk-caption { font-size: 14px; line-height: 1.6; color: #a29dc0; margin: 18px 0 0; }
 .hp-sdk-link { display: inline-block; margin-top: 16px; font-size: 14px; font-weight: 600; color: #b39dff !important; }
@@ -3699,12 +3700,29 @@ a.repo-link:hover {
 .hp-dot.yellow { background: #FEBC2E; }
 .hp-dot.green { background: #28C840; }
 .hp-filename { margin-left: 8px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--faint); }
+.hp-sdk-code-col { min-width: 0; }
 .hp-sdk-code-col .hp-editor-chrome { border-bottom: 1px solid #241f45; }
 .hp-sdk-code-col .hp-filename { color: #8b86ad; }
 .hp-sdk-code-col pre {
   margin: 0; padding: 22px 24px; font-family: 'JetBrains Mono', monospace; font-size: 13.5px; line-height: 1.7;
   color: #d7d3ee; white-space: pre; overflow: auto; min-height: 180px;
 }
+/* These SDK blocks are hand-styled dark panels. We wrap them in <pre><code> only
+   to opt into the code-copy button, so we must strip the docs-wide light code
+   styling (.md-typeset pre > code, specificity 0,1,2 with !important) and let the
+   dark panel show through. Prefix with .hp-sdk-panel (0,2,x) to out-specify it. */
+.hp-sdk-panel .hp-sdk-install-cmd code,
+.hp-sdk-panel .hp-sdk-code-col pre code {
+  background: none !important; color: inherit !important;
+  padding: 0 !important; margin: 0 !important; border: 0 !important;
+  border-radius: 0 !important; box-shadow: none !important;
+  font: inherit !important; white-space: inherit !important; overflow-wrap: inherit !important;
+}
+/* Copy button: visible on the dark panel. */
+.hp-sdk-install-cmd .md-code__button,
+.hp-sdk-code-col .md-code__button { color: #8b86ad; }
+.hp-sdk-install-cmd .md-code__button:hover,
+.hp-sdk-code-col .md-code__button:hover { color: #fff; }
 @media (max-width: 700px) {
   .hp-sdk-panel { grid-template-columns: 1fr; }
   .hp-sdk-install-col { border-right: none; border-bottom: 1px solid #241f45; }
